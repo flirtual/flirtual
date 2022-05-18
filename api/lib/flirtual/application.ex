@@ -15,7 +15,8 @@ defmodule Flirtual.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Flirtual.PubSub},
       # Start the Endpoint (http/https)
-      FlirtualWeb.Endpoint
+      FlirtualWeb.Endpoint,
+      {Finch, name: Swoosh.Finch}
       # Start a worker by calling: Flirtual.Worker.start_link(arg)
       # {Flirtual.Worker, arg}
     ]
