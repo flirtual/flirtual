@@ -1,0 +1,55 @@
+<%= if @current_user do %>
+  <div id="nav">
+    <div id="nav_personal_menu">
+      <a id="nav_personal_menu_close">
+        <img data-blink-ops="scale-crop: 64x64; scale-crop-position: smart_faces_points"
+             data-blink-uuid="%($avatar%)"
+             alt="Me" height="65" />
+      </a>
+      <a href="/me">Profile</a>
+      <a href="/settings">Settings</a>
+      <a href="/premium">Premium</a>
+      <a href="/logout">Logout</a>
+    </div>
+    <div id="nav_items">
+      <a id="nav_personal">
+        <img data-blink-ops="scale-crop: 64x64; scale-crop-position: smart_faces_points"
+             data-blink-uuid="{@current_user.avatar}"
+             alt="Me" height="65" />
+      </a>
+      <div id="nav_switch">
+        <%= if @conn.request_path == "/" do %>
+          <a id="nav_browse" href="/" class="active">
+            <img src="/images/like.svg" alt="Browse" height="44" />
+          </a>
+        <% else %>
+          <a id="nav_browse" href="/">
+            <img src="/images/likes.svg" alt="Browse" height="44" />
+          </a>
+        <% end %>
+        <%= if @conn.request_path == "/homies" do %>
+          <a id="nav_homies" href="/homies" class="active">
+            <img src="/images/homie.svg" alt="Homies" height="44" />
+          </a>
+        <% else %>
+          <a id="nav_homies" href="/homies">
+            <img src="/images/homies.svg" alt="Homies" height="44" />
+          </a>
+        <% end %>
+      </div>
+      <a id="nav_matches" href="/matches">
+        <img src="/images/msg.svg" alt="Matches" height="65" />
+        <div id="unread_counter"></div>
+      </a>
+    </div>
+  </div>
+  <script>
+    document.getElementById("nav_personal").onclick = toggle_personal;
+    document.getElementById("nav_personal_menu_close").onclick = toggle_personal;
+  </script>
+<% else %>
+  <nav class="home">
+    <a href="/"></a>
+    <span><img src="/images/home.svg" /></span>
+  </nav>
+<% end %>
