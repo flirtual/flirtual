@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/nunito-v22-latin-regular.eot');
+  /* IE9 Compat Modes */
+  src: local(''),
+      url('/fonts/nunito-v22-latin-regular.eot?#iefix') format('embedded-opentype'),
+      /* IE6-IE8 */
+      url('/fonts/nunito-v22-latin-regular.woff2') format('woff2'),
+      /* Super Modern Browsers */
+      url('/fonts/nunito-v22-latin-regular.woff') format('woff'),
+      /* Modern Browsers */
+      url('/fonts/nunito-v22-latin-regular.ttf') format('truetype'),
+      /* Safari, Android, iOS */
+      url('/fonts/nunito-v22-latin-regular.svg#Nunito') format('svg');
+  /* Legacy iOS */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  src: url('/fonts/montserrat-v23-latin-800.eot');
+  /* IE9 Compat Modes */
+  src: local(''),
+      url('/fonts/montserrat-v23-latin-800.eot?#iefix') format('embedded-opentype'),
+      /* IE6-IE8 */
+      url('/fonts/montserrat-v23-latin-800.woff2') format('woff2'),
+      /* Super Modern Browsers */
+      url('/fonts/montserrat-v23-latin-800.woff') format('woff'),
+      /* Modern Browsers */
+      url('/fonts/montserrat-v23-latin-800.ttf') format('truetype'),
+      /* Safari, Android, iOS */
+      url('/fonts/montserrat-v23-latin-800.svg#Montserrat') format('svg');
+  /* Legacy iOS */
+  font-display: swap;
+}
+
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";

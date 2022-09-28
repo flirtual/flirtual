@@ -21,6 +21,8 @@ defmodule FlirtualWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/landing/old", LandingController, :index
+    get "/landing", LandingController, :new
   end
 
   # Other scopes may use custom stacks.

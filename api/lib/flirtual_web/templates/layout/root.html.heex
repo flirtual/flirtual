@@ -20,176 +20,19 @@
     <meta name="theme-color" content="#e9658b">
 
     <%= csrf_meta_tag() %>
-
-    <%= if String.starts_with?(@conn.request_path, "/onboarding/") || @conn.request_path == "/nsfw" do %>
-      <link rel="stylesheet" href="/assets/tagify.css" media="print" onload="this.media='all'; this.onload=null;">
-    <% end %>
-    <link rel="stylesheet" href="/assets/microtip.css" media="print" onload="this.media='all'; this.onload=null;">
-    <link rel="stylesheet" href="/assets/swiper.css" media="print" onload="this.media='all'; this.onload=null;">
-    <link rel="stylesheet" href="/assets/style.css" onload="this.media='all'; this.onload=null;">
-
-    <%= if @conn.request_path == "/homies" do %>
-      <style>
-        :root {
-          --gradient-l: #82bf72;
-          --gradient-r: #4d8888;
-          --bg: #e9f7ef;
-        }
-      </style>
-    <% end %>
-
-    <%= if String.starts_with?(@conn.request_path, "/onboarding/") || @conn.request_path == "/nsfw" do %>
-      <script src="/assets/tagify.js"></script>
-    <% end %>
-    <script src="/assets/swiper.js"></script>
-    <script>
-      (function(src, cb) {
-        var s = document.createElement('script');
-        s.setAttribute('src', src);
-        s.onload = cb;
-        (document.head || document.body).appendChild(s);
-      })('https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js', function() {
-        window.Blinkloader.optimize({
-          "pubkey": "130267e8346d9a7e9bea",
-          "cdnBase": "https://media.flirtu.al",
-          "smartCompression": true,
-          "retina": true,
-          "webp": true,
-          "lazyload": true,
-          "responsive": true,
-          "fadeIn": true,
-          "progressive": true
-        });
-      })
-    </script>
-    <script src="/assets/main.js"></script>
+    <script src="https://unpkg.com/@uploadcare/blocks@0.11.0/web/lr-img.min.js" type="module"></script>
+    <style>
+      lr-img {
+        --lr-img-pubkey: '130267e8346d9a7e9bea';
+      }
+    </style>
+    <link rel="stylesheet" href="/assets/tailwind.css"/>
+    <script src="/assets/app.js"></script>
   </head>
   <body>
-    <%= render "_navbar.html", assigns %>
+    
     <%= @inner_content %>
-    <%= render "_footer.html", assigns %>
 
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function() {
-          navigator.serviceWorker.register("/sw.js").then(function(registration) {
-            console.log("ServiceWorker registration successful with scope: ", registration.scope);
-          }, function(err) {
-            console.log("ServiceWorker registration failed: ", err);
-          });
-        });
-      }
-
-      if ((window.matchMedia("(display-mode: standalone)").matches) ||
-          (window.navigator.standalone) ||
-          document.referrer.includes("android-app://")) {
-          document.querySelector(".appbadges").style.display = "none";
-      }
-    </script>
-
-    <%= if @current_user && @current_user.konami == true do %>
-      <script>
-        window.addEventListener("load", function(event) {
-          daynight();
-        }, true);
-      </script>
-    <% end %>
-
-    <%= if @current_user do %>
-      <script>
-        (function(t,a,l,k,j,s){
-        s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
-        ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
-        .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
-
-        Talk.ready.then(function () {
-          var me = new Talk.User(<%= raw Jason.encode!(@current_user.username) %>);
-          window.talkSession = new Talk.Session({
-            appId: <%= raw Jason.encode!(Application.fetch_env!(:talkjs, :appid)) %>,
-            me: me,
-            signature: <%= raw Jason.encode!(@current_user.talkjs_signature) %>
-          });
-
-          <%= if @conn.request_path == "/matches" do %>
-            var inbox = talkSession.createInbox({ showFeedHeader: false });
-            inbox.select(null);
-            inbox.onSelectConversation(function(event) {
-              event.preventDefault();
-              talkjs_convo(event.conversation.id);
-            });
-            inbox.mount(document.getElementById("talkjs-container"));
-          <% end %>
-
-          window.talkSession.unreads.onChange(function (unreadConversations) {
-            var unreadCount = unreadConversations.length;
-            var unreadCounter = document.getElementById("unread_counter");
-            if (unreadCount >= 10) {
-              unreadCounter.innerHTML = "+";
-            } else {
-              unreadCounter.innerHTML = unreadCount;
-            }
-            if (unreadCount >= 1) {
-              unreadCounter.style.display = "block";
-              document.title = '(' + unreadCount + ') Flirtual';
-            } else {
-              unreadCounter.style.display = "none";
-              document.title = 'Flirtual';
-            }
-          });
-        });
-
-        function talkjs_convo(id) {
-          var conversation = window.talkSession.getOrCreateConversation(id);
-          if (window.matchMedia("(max-width: 991px)").matches) {
-            var chatbox = window.talkSession.createChatbox({ theme: "mobile" });
-            chatbox.select(conversation);
-            chatbox.mount(document.getElementById("talkjs-mobile"));
-            document.getElementById("talkjs-mobile").style.display = "block";
-            document.getElementById("talkjs-back").style.display = "block";
-          } else {
-            var popup = window.talkSession.createPopup({ keepOpen: true, launcher: "never", showCloseInHeader: true });
-            popup.select(conversation);
-            popup.mount({ show: true });
-          }
-        }
-      </script>
-
-      <div id="talkjs-mobile" class="mobile"></div>
-      <div id="talkjs-back" class="mobile" onclick="window.talkSession.getChatboxes()[0].destroy(); document.getElementById('talkjs-mobile').style.display = 'none'; document.getElementById('talkjs-back').style.display = 'none'">
-        <svg width="50" height="50" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.0037 18L9.9707 10.9927L2.99634 17.9416L2 16.9489L8.97436 10L2 3.05109L2.99634 2.05839L9.9707 9.0073L17.0037 2L18 2.9927L10.967 10L18 17.0073L17.0037 18Z" fill="#fffafa"></path></svg>
-      </div>
-    <% end %>
-
-    <%= if @current_user && @current_user.optout == true do %>
-      <script>
-        var _paq = window._paq = window._paq || [];
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-          var u="//analytics.flirtu.al/";
-          _paq.push(['setTrackerUrl', u+'matomo.php']);
-          _paq.push(['setSiteId', '1']);
-          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-          g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-        })();
-      </script>
-      <noscript translated><p><img src="//analytics.flirtu.al/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
-    <% end %>
-
-    <script>
-      window.fwSettings={
-        'widget_id':73000002566
-      };
-      !function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
-      FreshworksWidget('hide', 'launcher');
-      <%= if @current_user do %>
-        FreshworksWidget('identify', 'ticketForm', {
-          name: <%= raw Jason.encode!(@current_user.username) %>,
-          email: <%= raw Jason.encode!(@current_user.email) %>
-        });
-        FreshworksWidget('hide', 'ticketForm', ['name', 'email']);
-      <% end %>
-    </script>
-    <script type='text/javascript' src='https://widget.freshworks.com/widgets/73000002566.js' async defer></script>
+    
   </body>
 </html>
