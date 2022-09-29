@@ -6,6 +6,6 @@ defmodule FlirtualWeb.LandingController do
   end
 
   def new(conn, _params) do
-    render(conn, :new)
+    render(conn, :new, page_title: "The First VR Dating App 💘🥽")
   end
 end

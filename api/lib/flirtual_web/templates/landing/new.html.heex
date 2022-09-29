@@ -1,56 +1,52 @@
 
-<div class="h-screen overflow-x-hidden overflow-y-scroll text-white bg-black snap-y snap-mandatory">
+<div class="h-screen overflow-x-hidden text-white bg-black snap-y snap-mandatory scroll-smooth">
 	<.snap_section class="relative flex flex-col items-center justify-center font-montserrat">	
 		<div class="z-10 flex flex-col items-center px-8 py-16 md:px-16">
 			<img src="https://flirtu.al/img/logo-new.svg?v=0"/>
-			<h1 class="text-6xl font-bold">The VR Dating App</h1>
+			<h1 class="text-3xl font-bold sm:text-4xl md:text-6xl">The VR Dating App</h1>
 			<div class="flex flex-col gap-4 mt-8 md:flex-row gap-y-8">
-				<.landing_button kind="primary">Join now</.landing_button>
-				<.landing_button kind="secondary">Login</.landing_button>
+				<.landing_button kind="primary" href="/register">Sign up</.landing_button>
+				<.landing_button kind="secondary" href="/login">Login</.landing_button>
 			</div>
 		</div>
 		<video class="absolute top-0 left-0 object-cover w-full h-full brightness-50" poster="https://media.flirtu.al/6be390d0-4479-4a98-8c7a-10257ea5585a/-/format/auto/-/quality/smart/-/resize/1920x/" autoplay loop muted playsinline disablepictureinpicture disableremoteplayback x-webkit-airplay="deny">
 			<source src="https://media.flirtu.al/300c30ee-6b22-48a7-8d40-dc0deaf673ed/video.webm" type="video/webm; codecs=vp9">
 			<source src="https://media.flirtu.al/e67df8d2-295c-4bc0-9ebf-33f477267edd/video.mp4" type="video/mp4">
-			<.blink_image src="6be390d0-4479-4a98-8c7a-10257ea5585a" />
+			<.uc_image src="6be390d0-4479-4a98-8c7a-10257ea5585a" />
 		</video>
-		<div class="absolute bottom-0 mb-8">
-			<img src="/images/down.svg" class="w-12 animate-bounce"/>
-		</div>
+		<button @click="sectionProfile.scrollIntoView()" class="absolute bottom-0 mb-8">
+			<.icon name="chevron-down" type="outline" class="w-12 animate-bounce"/>
+		</button>
 	</.snap_section>
-	<.snap_section class="flex gap-16 px-8 py-16 md:px-16 bg-gradient-to-r from-brand-coral to-brand-pink">	
-		<div class="relative w-full h-full">
-			<.profile_image_swipe src="c3dc9ffc-ec55-4452-8680-d71ab0b2ea5f"/>
-			<.profile_image_swipe src="52bd312c-bfed-4724-9241-971e4e6e9fd3"/>
-			<.profile_image_swipe src="e644c457-fe50-4429-9b94-f203e02d2368"/>
-		</div>
-		<div class="flex flex-col items-center justify-center gap-8 text-center">
-			<h1 class="font-bold text-7xl">Avatar profiles</h1>
-			<span class="text-5xl leading-snug">When you can choose how you look, it's personality that makes the difference.</span>
-		</div>
+	<.snap_section id="sectionProfile" class="px-8 py-16 md:px-16 bg-gradient-to-r from-brand-coral to-brand-pink">	
+		<.avatar_profiles_section/>
 	</.snap_section>
 	<.snap_section class="relative">
-		<div class="absolute z-10 flex justify-center w-full px-8 py-16 text-4xl font-semibold md:px-16 font-montserrat">
-			<span class="text-center [text-shadow:0_0_16px_#000]">Safe, magical dates <br/>with people all over the world</span>
+		<div class="absolute z-10 flex justify-center w-full px-8 py-16 md:px-16">
+			<span class="font-montserrat text-2xl md:text-4xl font-semibold text-center [text-shadow:0_0_16px_#000]">
+				Safe, magical dates <br/>with people all over the world
+			</span>
 		</div>
-		<div class="flex overflow-x-scroll snap-x snap-mandatory">
-			<.snap_image label="Feed some ducks" src="b9326c15-c996-488f-8d68-d7ea4cb8649b"/>
-			<.snap_image label="Swim with sharks" src="738f3d22-6f38-4059-9dd3-7fdd672acccd"/>
-			<.snap_image label="Chill in a cafe" src="be840a83-86f9-4ba2-87ae-3cd93f73f099"/>
-			<.snap_image label="Observe a black hole" src="107737a5-d694-43db-a082-0d71bdfc4105"/>
-			<.snap_image label="Touch grass" src="30023b24-f08a-43d4-918a-aa8940cefb24"/>
-			<.snap_image label="Paint together" src="09402677-a01e-4f6b-9171-f8c533ec774f"/>
-			<.snap_image label="Play some pool" src="7e736467-63c4-4ff4-9989-54546b24cc6f"/>
-		</div>
+		<.snap_carousel/>
 	</.snap_section>
-	<.snap_section class="bg-gradient-to-r from-brand-coral to-brand-pink">
-		testimonial section
+	<.snap_section class="bg-gradient-to-r from-brand-coral to-brand-pink grid grid-rows-[max-content,1fr,max-content] flex-col">
+		<div class="flex items-center justify-center p-8 md:p-16">
+			<span class="text-3xl font-montserrat md:text-5xl">Thousands of matches (and memories) made.</span>
+		</div>
+		<.testimonial_marquee/>
+		<.testimonial_press/>
 	</.snap_section>
 	<.snap_section class="flex flex-col bg-gradient-to-r from-brand-coral to-brand-pink">
-		<div class="flex items-center justify-center h-full p-16">
-			<div class="flex flex-col items-center gap-16">
-				<h1 class="font-bold text-7xl md:text-8xl">Get Flirtual</h1>
-				<.landing_button kind="secondary-cta">Join now</.landing_button>
+		<div class="flex items-center justify-center h-full p-16 pb-0 md:pb-16">
+			<div class="flex flex-col items-center gap-8 md:gap-16">
+				<h1 class="text-4xl font-bold sm:text-7xl md:text-8xl font-montserrat">Get Flirtual</h1>
+				<.landing_button kind="secondary-cta" href="/register">Sign up</.landing_button>
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 gap-y-2">
+					<.mobile_button icon="google_play" label="Play Store" href="https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"/>
+					<.mobile_button icon="apple" label="iPhone/iPad" href="/ios"/>
+					<.mobile_button icon="microsoft" label="Windows" href="https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3?cid=storebadge&ocid=badge&rtc=1"/>
+					<.mobile_button icon="meta" label="Side Quest" href="https://sidequestvr.com/app/9195"/>
+				</div>
 			</div>
 		</div>
 		<.footer/>

@@ -38,6 +38,15 @@
   font-display: swap;
 }
 
+*::-webkit-scrollbar {
+  width: 10px;
+  background-color: black;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: white;
+}
+
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";

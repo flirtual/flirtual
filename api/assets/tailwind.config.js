@@ -25,6 +25,14 @@ module.exports = {
           grey: "#E4E4E4",
           cream: "#FFFAF0"
         }
+      },
+      animation: {
+        "scroll-x-screen": "scroll-x-screen 5s linear infinite"
+      },
+      keyframes: {
+        "scroll-x-screen": {
+          "0%": { translate: "" }
+        }
       }
     },
   },
