@@ -6,37 +6,26 @@
     <% else %>
       <%= live_title_tag "Flirtual" %>
     <% end %>
-
-    <title>Flirtual - The First VR Dating App 💘🥽</title>
-        <meta name="description" content="Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat. Formerly VRLFP.">
-
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=new">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=new">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=new">
-        <link rel="manifest" href="/site.webmanifest?v=6">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg?v=new" color="#e9658b">
-        <link rel="shortcut icon" href="/favicon.ico?v=new">
-
-        <meta name="apple-mobile-web-app-title" content="Flirtual">
-        <meta name="application-name" content="Flirtual">
-        <meta name="msapplication-TileColor" content="#e9658b">
-        <meta name="theme-color" content="#e9658b">
-
-        <meta charset="UTF-8">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-
-        <meta property="og:url" content="https://flirtu.al" />
-        <meta name="twitter:site" content="@getflirtual" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Flirtual" />
-        <meta property="og:description" content="The first and largest VR dating app. Join thousands for dates in VR apps like VRChat." />
-        <meta property="og:image" content="https://flirtu.al/android-chrome-512x512.png?v=new" />
-        <meta property="og:image:width" content="512" />
-        <meta property="og:image:width" content="512" />
-        <meta name="twitter:card" content="summary" />
-
-    <%= csrf_meta_tag() %>
+    <meta name="description" content="Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat. Formerly VRLFP.">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#e9658b">
+    <link rel="shortcut icon" href="/favicon.ico">  <meta name="apple-mobile-web-app-title" content="Flirtual">
+    <meta name="application-name" content="Flirtual">
+    <meta name="msapplication-TileColor" content="#e9658b">
+    <meta name="theme-color" content="#e9658b"> <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />  <meta property="og:url" content="https://flirtu.al" />
+    <meta name="twitter:site" content="@getflirtual" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Flirtual" />
+    <meta property="og:description" content="The first and largest VR dating app. Join thousands for dates in VR apps like VRChat." />
+    <meta property="og:image" content={"#{FlirtualWeb.Endpoint.url()}/images/android-chrome-512x512.png"} />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:width" content="512" />
+    <meta name="twitter:card" content="summary" />   <%= csrf_meta_tag() %>
     <link rel="stylesheet" href="/assets/tailwind.css"/>
     <script src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"></script>
     <script src="/assets/app.js"></script>
@@ -51,5 +40,5 @@
     !function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
     FreshworksWidget("hide", "launcher");
   </script>
-  <script type='text/javascript' src='https://widget.freshworks.com/widgets/73000002566.js' async defer></script>
+  <script type="text/javascript" src="https://widget.freshworks.com/widgets/73000002566.js" async defer></script>
 </html>

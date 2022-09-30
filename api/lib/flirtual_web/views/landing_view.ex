@@ -111,7 +111,13 @@ defmodule FlirtualWeb.LandingView do
       "eea60bde-de1a-4f43-9f02-a218fddf2a73",
       "ad5cba2d-03ff-43eb-9cf3-e6986bb0be54",
       "40122187-d831-4131-ab8e-ee0f5544ce73",
-      "17b87f45-0ef8-4dfa-80c4-c23450f09b30"
+      "17b87f45-0ef8-4dfa-80c4-c23450f09b30",
+      "28eaf327-e2bd-4fd2-a7f9-4dd6be153bfc",
+      "5bbf00fc-2c97-49b2-9f16-9d3c1a180ae8",
+      "f3b27da8-4f36-4c7f-bd65-094421d28f22",
+      "c0d8ad7f-a6df-4de8-a429-a8fa729bf447",
+      "9f2de017-6b5a-4ca9-b858-95057889fd64",
+      "b8b087b9-3ab3-4a05-b01a-166b502789f5"
     ]
 
     ~H"""
