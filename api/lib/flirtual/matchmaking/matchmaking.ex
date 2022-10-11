@@ -1,5 +1,4 @@
 defmodule Flirtual.Matchmaking do
-
   def get_user(id) do
     Elasticsearch.get!(Flirtual.Elasticsearch, "/users/_doc/#{id}")["_source"]
   end
@@ -58,16 +57,67 @@ defmodule Flirtual.Matchmaking do
     ])
   end
 
+  def get_user_personality_query(user) do
+    List.flatten([
+      %{
+        "function_score" => %{
+          "linear" => %{
+            "openness" => %{
+              "origin" => user["openness"],
+              "scale" => 6,
+              "decay" => 0.1
+            }
+          },
+          "boost" => 1.5
+        }
+      },
+      %{
+        "function_score" => %{
+          "linear" => %{
+            "conscientiousness" => %{
+              "origin" => user["conscientiousness"],
+              "scale" => 6,
+              "decay" => 0.1
+            }
+          },
+          "boost" => 1.5
+        }
+      },
+      %{
+        "function_score" => %{
+          "linear" => %{
+            "agreeableness" => %{
+              "origin" => user["agreeableness"],
+              "scale" => 6,
+              "decay" => 0.1
+            }
+          },
+          "boost" => 1.5
+        }
+      }
+    ])
+  end
+
   def compute_potential_matches(id) do
     user = get_user(id)
-    IO.inspect(user)
 
     query = %{
       "query" => %{
         "bool" => %{
           "must_not" => [
             # $a and $b must not be the same user
-            %{"term" => %{id: user["id"]}}
+            %{
+              "ids" => %{
+                "values" => [
+                  user["id"]
+                ]
+              }
+            },
+            %{
+              "ids" => %{
+                "values" => user["likes"]
+              }
+            }
           ],
           "filter" => [
             # $a and $b must both have completed onboarding OR be an old VRLFP user[1],
@@ -76,10 +126,42 @@ defmodule Flirtual.Matchmaking do
             %{"term" => %{"visible" => true}},
             # $b must be looking for one or more of $a’s genders, and vice versa
             %{"terms" => %{"gender_lf" => user["gender"]}},
-            %{"terms" => %{"gender" => user["gender_lf"]}}
+            %{"terms" => %{"gender" => user["gender_lf"]}},
+            %{
+              "range" => %{
+                "dob" => %{
+                  "lte" => "now-#{user["agemin"]}y",
+                  "gte" => "now-#{user["agemax"]}y"
+                }
+              }
+            }
+            # %{
+            #   "range" => %{
+            #     "agemin" => %{
+            #       "gte" => "#{NaiveDateTime.from_iso8601(user["dob"])
+            #       |> elem(1)
+            #       |> NaiveDateTime.diff(DateTime.utc_now(), :day)}"
+            #     }
+            #   }
+            # },
+            # %{
+            #   "range" => %{
+            #     "agemax" => %{
+            #       "lte" => "now-#{user["dob"]}",
+            #     }
+            #   }
+            # }
           ],
           "should" =>
             List.flatten([
+              %{
+                "term" => %{
+                  "likes" => %{
+                    "value" => user["id"],
+                    "boost" => 100
+                  }
+                }
+              },
               get_user_interests_query(user),
               # Which VR games do $a and $b both play?
               Enum.map(
@@ -94,33 +176,59 @@ defmodule Flirtual.Matchmaking do
                 }
               ),
               # Are $a and $b from the same country?
-              %{
-                "term" => %{
-                  "country" => %{
-                    "value" => user["country"],
-                    "boost" => 3
+              user["country"] &&
+                %{
+                  "term" => %{
+                    "country" => %{
+                      "value" => user["country"],
+                      "boost" => 3
+                    }
                   }
-                }
-              },
+                },
               # Are $a and $b both monogamous, or both non-monogamous?
-              %{
-                "term" => %{
-                  "monopoly" => %{
-                    "value" => user["monopoly"],
-                    "boost" => 5
+              user["monopoly"] &&
+                %{
+                  "term" => %{
+                    "monopoly" => %{
+                      "value" => user["monopoly"],
+                      "boost" => 5
+                    }
                   }
-                }
-              },
+                },
               # Are $a and $b both looking for a serious relationship?
-              %{
-                "term" => %{
-                  "serious" => %{
-                    "value" => user["serious"],
-                    "boost" => 5
+              user["serious"] &&
+                %{
+                  "term" => %{
+                    "serious" => %{
+                      "value" => user["serious"],
+                      "boost" => 5
+                    }
                   }
+                },
+              user["nsfw"] &&
+                %{
+                  "term" => %{
+                    "nsfw" => %{
+                      "value" => user["nsfw"],
+                      "boost" => 5
+                    }
+                  }
+                },
+              %{
+                "terms" => %{
+                  "kinks_lf" => user["kinks"],
+                  "boost" => 3
                 }
               },
+              %{
+                "terms" => %{
+                  "kinks" => user["kinks_lf"],
+                  "boost" => 3
+                }
+              },
+              get_user_personality_query(user)
             ])
+            |> Enum.filter(&(!is_nil(&1)))
         }
       }
     }
@@ -128,9 +236,22 @@ defmodule Flirtual.Matchmaking do
     IO.inspect(query)
 
     matches = Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_search", query)["hits"]["hits"]
-    Enum.map(matches, &(%{
-      "id" => &1["_id"],
-      "score" => &1["_score"],
-    }))
+    Enum.map(matches, & &1["_id"])
+  end
+
+  def patch_user(id, contents) do
+    Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_update/#{id}", %{
+      "doc" => contents
+    })
+  end
+
+  def update_user(id, source, params \\ %{}) do
+    Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_update/#{id}", %{
+      "script" => %{
+        "source" => source,
+        "lang" => "painless",
+        "params" => params
+      }
+    })
   end
 end
