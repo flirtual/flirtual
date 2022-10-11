@@ -105,17 +105,10 @@ defmodule Flirtual.Matchmaking do
       "query" => %{
         "bool" => %{
           "must_not" => [
-            # $a and $b must not be the same user
+            # $a and $b must not be the same user and must not be an already liked user.
             %{
               "ids" => %{
-                "values" => [
-                  user["id"]
-                ]
-              }
-            },
-            %{
-              "ids" => %{
-                "values" => user["likes"]
+                "values" => [user["id"] | user["likes"]]
               }
             }
           ],
