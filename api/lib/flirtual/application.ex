@@ -10,6 +10,7 @@ defmodule Flirtual.Application do
     children = [
       # Start the Ecto repository
       Flirtual.Repo,
+      Flirtual.Elasticsearch,
       # Start the Telemetry supervisor
       FlirtualWeb.Telemetry,
       # Start the PubSub system

@@ -23,6 +23,12 @@ defmodule FlirtualWeb.Router do
     get "/", LandingController, :index
   end
 
+  scope "/elastic", FlirtualWeb do
+    pipe_through :browser
+
+    get "/", ElasticsearchController, :get
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", FlirtualWeb do
   #   pipe_through :api

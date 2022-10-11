@@ -17,6 +17,15 @@ config :flirtual, FlirtualWeb.Endpoint,
   pubsub_server: Flirtual.PubSub,
   live_view: [signing_salt: "***REMOVED***/"]
 
+config :flirtual, Flirtual.Elasticsearch,
+  url: "***REMOVED***",
+  default_headers: [
+    {"authorization", "ApiKey NzM5QnI0TUJ1Xzd5M3AyRVhhSDQ6emUzUnQ4MmNUa3VWdWNKRWlqdmtadw=="}
+  ],
+  api: Elasticsearch.API.HTTP,
+  json_library: Jason
+
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

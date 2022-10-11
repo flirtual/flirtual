@@ -21,7 +21,7 @@ defmodule FlirtualWeb.LandingView do
     ~H"""
     <section {assigns |> Map.drop([:inner_block, :class])} class={"w-full h-screen snap-always snap-center #{assigns[:class]}"}>
     <%= render_slot(@inner_block) %>
-	  </section>
+    </section>
     """
   end
 
@@ -44,7 +44,7 @@ defmodule FlirtualWeb.LandingView do
       ["107737a5-d694-43db-a082-0d71bdfc4105", "Observe a black hole"],
       ["30023b24-f08a-43d4-918a-aa8940cefb24", "Touch grass"],
       ["09402677-a01e-4f6b-9171-f8c533ec774f", "Paint together"],
-      ["7e736467-63c4-4ff4-9989-54546b24cc6f", "Play some pool"],
+      ["7e736467-63c4-4ff4-9989-54546b24cc6f", "Play some pool"]
     ]
 
     ~H"""
@@ -76,7 +76,7 @@ defmodule FlirtualWeb.LandingView do
         <.uc_image src={src} class="object-cover w-full h-full shrink-0 brightness-75"/>
       </button>
       <% end %>
-		</div>
+    </div>
     """
   end
 
@@ -93,12 +93,12 @@ defmodule FlirtualWeb.LandingView do
         $data.active = ($data.active + 1) % $data.content.length;
       }
     }" x-init="setInterval(update, 5000)">
-			<div class="flex flex-col items-center justify-center gap-8 text-center">
-				<h1 class="mt-8 text-5xl font-bold md:text-7xl font-montserrat">Avatar profiles</h1>
-				<span x-text="content[active]" class="text-2xl sm:text-3xl md:text-5xl leading-snug font-nunito max-w-4xl h-[8ch] md:h-[5ch]"/>
-			</div>
-			<img src="/images/profile-showcase.png" class="lg:h-[60vh]"/>
-		</div>
+    <div class="flex flex-col items-center justify-center gap-8 text-center">
+    <h1 class="mt-8 text-5xl font-bold md:text-7xl font-montserrat">Avatar profiles</h1>
+    <span x-text="content[active]" class="text-2xl sm:text-3xl md:text-5xl leading-snug font-nunito max-w-4xl h-[8ch] md:h-[5ch]"/>
+    </div>
+    <img src="/images/profile-showcase.png" class="lg:h-[60vh]"/>
+    </div>
     """
   end
 
@@ -135,10 +135,10 @@ defmodule FlirtualWeb.LandingView do
       }
     }" x-init="requestAnimationFrame(animate)">
       <%= for src <- images do %>
-			<.uc_image src={src} class="object-cover h-full" />
-			<% end %>
+    <.uc_image src={src} class="object-cover h-full" />
+    <% end %>
 
-		</div>
+    </div>
     """
   end
 
@@ -155,11 +155,11 @@ defmodule FlirtualWeb.LandingView do
     ]
 
     ~H"""
-    <div class="flex flex-wrap items-center gap-8 m-8 md:m-16 justify-evenly md:flex-nowrap">
-      <%= for src <- images do %>
-			<.uc_image src={src} class="w-24 md:w-full "/>
-			<% end %>
-		</div>
+      <div class="flex flex-wrap items-center gap-8 m-8 md:m-16 justify-evenly md:flex-nowrap">
+        <%= for src <- images do %>
+     <.uc_image src={src} class="w-24 md:w-full "/>
+     <% end %>
+    </div>
     """
   end
 
