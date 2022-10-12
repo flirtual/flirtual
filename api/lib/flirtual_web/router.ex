@@ -3,6 +3,8 @@ defmodule FlirtualWeb.Router do
 
   import FlirtualWeb.UserAuth
 
+  @internal_api_key "***REMOVED***"
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -23,11 +25,30 @@ defmodule FlirtualWeb.Router do
     get "/", LandingController, :index
   end
 
-  scope "/api/v1/internal", FlirtualWeb do
+  def require_internal_authorization(conn, _opts) do
+    if List.first(Plug.Conn.get_req_header(conn, "api-key")) === @internal_api_key do
+      conn
+    else
+      conn
+      |> resp(:forbidden, "")
+      |> halt()
+    end
+  end
+
+  scope "/api", FlirtualWeb do
     pipe_through :api
 
-    get "/compute/:id", MatchmakingController, :compute
-    post "/update/:id", MatchmakingController, :update
+    scope "/v1/" do
+      scope "/internal" do
+        pipe_through :require_internal_authorization
+
+        scope "/user/:id" do
+          post "/", MatchmakingController, :update
+          get "/matches", MatchmakingController, :compute
+          post "/like/:target_id", MatchmakingController, :like
+        end
+      end
+    end
   end
 
   # Other scopes may use custom stacks.
