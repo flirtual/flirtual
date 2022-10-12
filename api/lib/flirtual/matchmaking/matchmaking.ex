@@ -156,7 +156,7 @@ defmodule Flirtual.Matchmaking do
                 "term" => %{
                   "likes" => %{
                     "value" => user["id"],
-                    "boost" => 100
+                    "boost" => 20
                   }
                 }
               },
@@ -226,7 +226,7 @@ defmodule Flirtual.Matchmaking do
               },
               get_user_personality_query(user)
             ])
-            |> Enum.filter(&(!is_nil(&1)))
+            |> Enum.filter(&(!is_nil(&1) && !is_boolean(&1)))
         }
       }
     }
