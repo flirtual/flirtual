@@ -64,8 +64,7 @@ defmodule Flirtual.Matchmaking do
           "linear" => %{
             "openness" => %{
               "origin" => user["openness"],
-              "scale" => 6,
-              "decay" => 0.1
+              "scale" => 3,
             }
           },
           "boost" => 1.5
@@ -76,8 +75,7 @@ defmodule Flirtual.Matchmaking do
           "linear" => %{
             "conscientiousness" => %{
               "origin" => user["conscientiousness"],
-              "scale" => 6,
-              "decay" => 0.1
+              "scale" => 3,
             }
           },
           "boost" => 1.5
@@ -88,8 +86,7 @@ defmodule Flirtual.Matchmaking do
           "linear" => %{
             "agreeableness" => %{
               "origin" => user["agreeableness"],
-              "scale" => 6,
-              "decay" => 0.1
+              "scale" => 3,
             }
           },
           "boost" => 1.5
