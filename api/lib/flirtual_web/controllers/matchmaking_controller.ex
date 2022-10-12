@@ -3,13 +3,10 @@ defmodule FlirtualWeb.MatchmakingController do
 
   def compute(conn, %{"id" => id}) do
     # Flirtual.Elasticsearch.dev_seed()
-
-    matches = Flirtual.Matchmaking.compute_potential_matches(id)
-    json(conn, matches)
+    conn |> json(Flirtual.Matchmaking.compute_potential_matches(id))
   end
 
   def update(conn, %{"id" => id}) do
-    result = Flirtual.Matchmaking.patch_user(id, conn.body_params)
-    json(conn, result)
+    conn |> json(Flirtual.Matchmaking.patch_user(id, conn.body_params))
   end
 end
