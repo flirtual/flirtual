@@ -1,4 +1,11 @@
 defmodule Flirtual.Matchmaking do
+
+  @year_in_milliseconds 3.154e+10
+
+  def get_age_in_years(dob) do
+    floor(DateTime.diff(DateTime.utc_now(), dob, :millisecond) / @year_in_milliseconds)
+  end
+
   def get_user(id) do
     Elasticsearch.get!(Flirtual.Elasticsearch, "/users/_doc/#{id}")["_source"]
   end
@@ -98,6 +105,9 @@ defmodule Flirtual.Matchmaking do
   def compute_potential_matches(id) do
     user = get_user(id)
 
+    {:ok, dob, 0} = DateTime.from_iso8601(user["dob"])
+    user_age = get_age_in_years(dob)
+
     query = %{
       "query" => %{
         "bool" => %{
@@ -124,23 +134,21 @@ defmodule Flirtual.Matchmaking do
                   "gte" => "now-#{user["agemax"]}y"
                 }
               }
+            },
+            %{
+              "range" => %{
+                "agemin" => %{
+                  "lte" => user_age
+                }
+              }
+            },
+            %{
+              "range" => %{
+                "agemax" => %{
+                  "gte" => user_age
+                }
+              }
             }
-            # %{
-            #   "range" => %{
-            #     "agemin" => %{
-            #       "gte" => "#{NaiveDateTime.from_iso8601(user["dob"])
-            #       |> elem(1)
-            #       |> NaiveDateTime.diff(DateTime.utc_now(), :day)}"
-            #     }
-            #   }
-            # },
-            # %{
-            #   "range" => %{
-            #     "agemax" => %{
-            #       "lte" => "now-#{user["dob"]}",
-            #     }
-            #   }
-            # }
           ],
           "should" =>
             List.flatten([
