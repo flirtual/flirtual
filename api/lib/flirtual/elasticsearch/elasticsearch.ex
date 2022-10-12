@@ -10,4 +10,8 @@ defmodule Flirtual.Elasticsearch do
       Elasticsearch.put!(Flirtual.Elasticsearch, "/users/_doc/#{Map.get(user, "id")}", Map.drop(user, [:id]))
     end
   end
+
+  def get_user(id) do
+    Elasticsearch.get!(Flirtual.Elasticsearch, "/users/_doc/#{id}")["_source"]
+  end
 end

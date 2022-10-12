@@ -1,14 +1,10 @@
 defmodule Flirtual.Matchmaking do
-
   @year_in_milliseconds 3.154e+10
 
   def get_age_in_years(dob) do
     floor(DateTime.diff(DateTime.utc_now(), dob, :millisecond) / @year_in_milliseconds)
   end
 
-  def get_user(id) do
-    Elasticsearch.get!(Flirtual.Elasticsearch, "/users/_doc/#{id}")["_source"]
-  end
 
   def get_user_interests_query(user) do
     List.flatten([
@@ -71,7 +67,7 @@ defmodule Flirtual.Matchmaking do
           "linear" => %{
             "openness" => %{
               "origin" => user["openness"],
-              "scale" => 3,
+              "scale" => 3
             }
           },
           "boost" => 1.5
@@ -82,7 +78,7 @@ defmodule Flirtual.Matchmaking do
           "linear" => %{
             "conscientiousness" => %{
               "origin" => user["conscientiousness"],
-              "scale" => 3,
+              "scale" => 3
             }
           },
           "boost" => 1.5
@@ -93,7 +89,7 @@ defmodule Flirtual.Matchmaking do
           "linear" => %{
             "agreeableness" => %{
               "origin" => user["agreeableness"],
-              "scale" => 3,
+              "scale" => 3
             }
           },
           "boost" => 1.5
@@ -103,12 +99,14 @@ defmodule Flirtual.Matchmaking do
   end
 
   def compute_potential_matches(id) do
-    user = get_user(id)
+    user = Flirtual.Elasticsearch.get_user(id)
 
     {:ok, dob, 0} = DateTime.from_iso8601(user["dob"])
     user_age = get_age_in_years(dob)
 
     query = %{
+      # "explain" => true,
+      "size" => 15,
       "query" => %{
         "bool" => %{
           "must_not" => [
@@ -233,8 +231,21 @@ defmodule Flirtual.Matchmaking do
 
     IO.inspect(query)
 
-    matches = Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_search", query)["hits"]["hits"]
-    Enum.map(matches, & &1["_id"])
+    Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_search", query)["hits"]["hits"]
+    |> Enum.map(& &1["_id"])
+  end
+
+  def like_user(id, target_id) do
+    update_user(
+      id,
+      %{
+        "id" => id,
+        "target_id" => target_id
+      },
+      """
+        ctx._source.likes.add(params.target_id)
+      """
+    )
   end
 
   def patch_user(id, contents) do
@@ -243,7 +254,7 @@ defmodule Flirtual.Matchmaking do
     })
   end
 
-  def update_user(id, source, params \\ %{}) do
+  def update_user(id, params, source) do
     Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_update/#{id}", %{
       "script" => %{
         "source" => source,
