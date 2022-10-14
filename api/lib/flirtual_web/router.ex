@@ -42,10 +42,14 @@ defmodule FlirtualWeb.Router do
       scope "/internal" do
         pipe_through :require_internal_authorization
 
+        post "/seed", MatchmakingController, :seed
+
         scope "/user/:id" do
           post "/", MatchmakingController, :update
           get "/matches", MatchmakingController, :compute
           post "/like/:target_id", MatchmakingController, :like
+          post "/pass/:target_id", MatchmakingController, :pass
+          post "/block/:target_id", MatchmakingController, :block
         end
       end
     end

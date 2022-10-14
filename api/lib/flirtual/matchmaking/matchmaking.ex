@@ -1,11 +1,4 @@
 defmodule Flirtual.Matchmaking do
-  @year_in_milliseconds 3.154e+10
-
-  def get_age_in_years(dob) do
-    floor(DateTime.diff(DateTime.utc_now(), dob, :millisecond) / @year_in_milliseconds)
-  end
-
-
   def get_user_interests_query(user) do
     List.flatten([
       # Which default-weighted interests do $a and $b have in common?
@@ -15,7 +8,7 @@ defmodule Flirtual.Matchmaking do
           "term" => %{
             "default_interests" => %{
               "value" => &1,
-              "boost" => 3
+              "boost" => 3 * user["weight_default_interests"]
             }
           }
         }
@@ -27,7 +20,7 @@ defmodule Flirtual.Matchmaking do
           "term" => %{
             "strong_interests" => %{
               "value" => &1,
-              "boost" => 5
+              "boost" => 5 * user["weight_default_interests"]
             }
           }
         }
@@ -39,7 +32,7 @@ defmodule Flirtual.Matchmaking do
           "term" => %{
             "stronger_interests" => %{
               "value" => &1,
-              "boost" => 15
+              "boost" => 15 * user["weight_default_interests"]
             }
           }
         }
@@ -51,8 +44,7 @@ defmodule Flirtual.Matchmaking do
           "term" => %{
             "custom_interests" => %{
               "value" => &1,
-              # TODO: Custom interest weights?
-              "boost" => 5
+              "boost" => 5 * user["weight_custom_interests"]
             }
           }
         }
@@ -70,7 +62,7 @@ defmodule Flirtual.Matchmaking do
               "scale" => 3
             }
           },
-          "boost" => 1.5
+          "boost" => 1.5 * user["weight_personality"]
         }
       },
       %{
@@ -81,7 +73,7 @@ defmodule Flirtual.Matchmaking do
               "scale" => 3
             }
           },
-          "boost" => 1.5
+          "boost" => 1.5 * user["weight_personality"]
         }
       },
       %{
@@ -92,7 +84,7 @@ defmodule Flirtual.Matchmaking do
               "scale" => 3
             }
           },
-          "boost" => 1.5
+          "boost" => 1.5 * user["weight_personality"]
         }
       }
     ])
@@ -102,7 +94,7 @@ defmodule Flirtual.Matchmaking do
     user = Flirtual.Elasticsearch.get_user(id)
 
     {:ok, dob, 0} = DateTime.from_iso8601(user["dob"])
-    user_age = get_age_in_years(dob)
+    user_age = Flirtual.Utilities.get_years_since(dob)
 
     query = %{
       # "explain" => true,
@@ -113,15 +105,17 @@ defmodule Flirtual.Matchmaking do
             # $a and $b must not be the same user and must not be an already liked user.
             %{
               "ids" => %{
-                "values" => [user["id"] | user["likes"]]
+                "values" =>
+                  List.flatten([
+                    user["id"],
+                    user["likes"],
+                    user["passes"],
+                    user["blocked"]
+                  ])
               }
             }
           ],
           "filter" => [
-            # $a and $b must both have completed onboarding OR be an old VRLFP user[1],
-            # $a and $b must both have either uploaded an avatar[2] OR filled out a bio[3],
-            # $a and $b must both not be banned from Flirtual
-            %{"term" => %{"visible" => true}},
             # $b must be looking for one or more of $a’s genders, and vice versa
             %{"terms" => %{"gender_lf" => user["gender"]}},
             %{"terms" => %{"gender" => user["gender_lf"]}},
@@ -154,7 +148,7 @@ defmodule Flirtual.Matchmaking do
                 "term" => %{
                   "likes" => %{
                     "value" => user["id"],
-                    "boost" => 20
+                    "boost" => 20 * user["weight_likes"]
                   }
                 }
               },
@@ -166,7 +160,7 @@ defmodule Flirtual.Matchmaking do
                   "term" => %{
                     "games" => %{
                       "value" => &1,
-                      "boost" => 3
+                      "boost" => 3 * user["weight_games"]
                     }
                   }
                 }
@@ -177,7 +171,7 @@ defmodule Flirtual.Matchmaking do
                   "term" => %{
                     "country" => %{
                       "value" => user["country"],
-                      "boost" => 3
+                      "boost" => 3 * user["weight_country"]
                     }
                   }
                 },
@@ -187,7 +181,7 @@ defmodule Flirtual.Matchmaking do
                   "term" => %{
                     "monopoly" => %{
                       "value" => user["monopoly"],
-                      "boost" => 5
+                      "boost" => 5 * user["weight_monopoly"]
                     }
                   }
                 },
@@ -197,7 +191,7 @@ defmodule Flirtual.Matchmaking do
                   "term" => %{
                     "serious" => %{
                       "value" => user["serious"],
-                      "boost" => 5
+                      "boost" => 5 * user["weight_serious"]
                     }
                   }
                 },
@@ -213,13 +207,13 @@ defmodule Flirtual.Matchmaking do
               %{
                 "terms" => %{
                   "kinks_lf" => user["kinks"],
-                  "boost" => 3
+                  "boost" => 3 * user["weight_kinks"]
                 }
               },
               %{
                 "terms" => %{
                   "kinks" => user["kinks_lf"],
-                  "boost" => 3
+                  "boost" => 3 * user["weight_kinks"]
                 }
               },
               get_user_personality_query(user)
@@ -244,6 +238,32 @@ defmodule Flirtual.Matchmaking do
       },
       """
         ctx._source.likes.add(params.target_id)
+      """
+    )
+  end
+
+  def pass_user(id, target_id) do
+    update_user(
+      id,
+      %{
+        "id" => id,
+        "target_id" => target_id
+      },
+      """
+        ctx._source.passes.add(params.target_id)
+      """
+    )
+  end
+
+  def block_user(id, target_id) do
+    update_user(
+      id,
+      %{
+        "id" => id,
+        "target_id" => target_id
+      },
+      """
+        ctx._source.blocked.add(params.target_id)
       """
     )
   end
