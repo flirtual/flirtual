@@ -52,6 +52,33 @@ defmodule Flirtual.Matchmaking do
     ])
   end
 
+  def get_user_kinks_query(user) do
+    List.flatten([
+      Enum.map(
+        user["kinks_lf"],
+        &%{
+          "term" => %{
+            "kinks" => %{
+              "value" => &1,
+              "boost" => 3 * user["weight_kinks"]
+            }
+          }
+        }
+      ),
+      Enum.map(
+        user["kinks"],
+        &%{
+          "term" => %{
+            "kinks_lf" => %{
+              "value" => &1,
+              "boost" => 3 * user["weight_kinks"]
+            }
+          }
+        }
+      )
+    ])
+  end
+
   def get_user_personality_query(user) do
     List.flatten([
       %{
@@ -204,18 +231,7 @@ defmodule Flirtual.Matchmaking do
                     }
                   }
                 },
-              %{
-                "terms" => %{
-                  "kinks_lf" => user["kinks"],
-                  "boost" => 3 * user["weight_kinks"]
-                }
-              },
-              %{
-                "terms" => %{
-                  "kinks" => user["kinks_lf"],
-                  "boost" => 3 * user["weight_kinks"]
-                }
-              },
+              get_user_kinks_query(user),
               get_user_personality_query(user)
             ])
             |> Enum.filter(&(!is_nil(&1) && !is_boolean(&1)))
