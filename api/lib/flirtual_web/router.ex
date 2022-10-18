@@ -23,6 +23,7 @@ defmodule FlirtualWeb.Router do
     pipe_through :browser
 
     get "/", LandingController, :index
+    get "/login", SoleModelController, :login
   end
 
   def require_internal_authorization(conn, _opts) do

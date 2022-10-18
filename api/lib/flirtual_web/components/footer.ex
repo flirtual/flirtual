@@ -23,7 +23,7 @@ defmodule FlirtualWeb.Components.Footer do
 
   def footer(assigns) do
     ~H"""
-    <footer class="flex justify-center w-full px-8 py-16 md:px-16 font-nunito bg-gradient-to-r from-brand-coral to-brand-pink">
+    <footer class="flex justify-center w-full px-8 py-16 md:px-16 font-nunito bg-brand-gradient">
     <div class="flex flex-col w-full max-w-screen-lg gap-4 md:gap-8 p-4">
         <div class="flex gap-4 md:mx-auto md:justify-center">
           <.footer_list_icon_link icon="envelope" icon_type="solid" @click="() => FreshworksWidget('open')"/>

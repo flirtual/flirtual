@@ -1,0 +1,45 @@
+<div class="flex items-center justify-center py-32 md:px-32 text-black grow bg-brand-cream">
+	<div class="">
+		<div class="bg-brand-gradient text-white rounded-t-[4rem] pt-8 px-16 pb-4 w-fit shadow-brand-1">
+			<span class="text-4xl font-montserrat">Login</span>
+		</div>
+		<div class="shadow-brand-1 flex flex-col overflow-hidden bg-white border-4 rounded-tl-none rounded-3xl border-brand-coral">
+			<div class="flex flex-col gap-8 px-16 py-10">
+				<div class="flex flex-col gap-2">
+					<.input_label for="username">
+						Username
+						<:hint>(or email)</:hint>
+					</.input_label>
+					<.input_text name="username"/>
+				</div>
+				<div class="flex flex-col gap-2">
+					<.input_label for="password">Password</.input_label>
+					<.input_text type="password" name="password"/>
+				</div>
+				<div class="flex items-center gap-4">
+					<.input_checkbox name="remember_me"/>
+					<.input_label for="remember_me" inline>
+						Remember me
+						<:hint class="max-w-[34ch]">
+							Keep your account logged in for 30 days, 
+							not recommended on public or shared devices.
+						</:hint>
+					</.input_label>
+				</div>
+			</div>
+			<div class="flex flex-col gap-4 px-16 pb-10">
+				<button type="button" class="p-4 bg-brand-gradient rounded-xl shadow-brand-1">
+					<span class="text-white text-xl font-montserrat">Login</span>
+				</button>
+				<div class="flex flex-col font-nunito text-lg">
+					<.alt_action_link href="/register">
+						Don't have an account yet? Sign up!
+					</.alt_action_link>
+					<.alt_action_link href="/forgot">
+						Forgot your password?
+					</.alt_action_link>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

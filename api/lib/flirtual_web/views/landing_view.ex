@@ -3,6 +3,7 @@ defmodule FlirtualWeb.LandingView do
 
   import FlirtualWeb.Components.Footer
   import FlirtualWeb.Components.UploadCareImage
+  import FlirtualWeb.Components.Input.LandingButton
   import FlirtualWeb.Components.Icon
 
   def mobile_button(assigns) do
@@ -160,39 +161,6 @@ defmodule FlirtualWeb.LandingView do
      <.uc_image src={src} class="w-24 md:w-full "/>
      <% end %>
     </div>
-    """
-  end
-
-  def landing_button(%{kind: "primary"} = assigns) do
-    ~H"""
-    <a
-      {assigns |> Map.drop([:inner_block])}
-      class="w-48 p-4 text-2xl text-center text-white cursor-pointer font-montserrat rounded-xl bg-gradient-to-br from-brand-coral to-brand-pink"
-    >
-      <span><%= render_slot(@inner_block) %></span>
-    </a>
-    """
-  end
-
-  def landing_button(%{kind: "secondary"} = assigns) do
-    ~H"""
-    <a
-      {assigns |> Map.drop([:inner_block])}
-      class="w-48 p-4 text-2xl text-center bg-white cursor-pointer font-montserrat rounded-xl text-brand-pink"
-    >
-      <span><%= render_slot(@inner_block) %></span>
-    </a>
-    """
-  end
-
-  def landing_button(%{kind: "secondary-cta"} = assigns) do
-    ~H"""
-    <a
-      {assigns |> Map.drop([:inner_block])}
-      class="w-64 p-4 text-3xl text-center bg-white cursor-pointer font-montserrat rounded-xl text-brand-pink"
-    >
-      <span><%= render_slot(@inner_block) %></span>
-    </a>
     """
   end
 end
