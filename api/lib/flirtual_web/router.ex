@@ -24,6 +24,7 @@ defmodule FlirtualWeb.Router do
 
     get "/", LandingController, :index
     get "/login", SoleModelController, :login
+    get "/register", SoleModelController, :register
   end
 
   def require_internal_authorization(conn, _opts) do

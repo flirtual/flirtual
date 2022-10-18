@@ -1,0 +1,48 @@
+<.model>
+	<:title>Register</:title>
+	<div class="flex flex-col gap-8">
+		<div class="flex flex-col gap-2">
+			<.input_label for="username">Username</.input_label>
+			<.input_text name="username"/>
+		</div>
+		<div class="flex flex-col gap-2">
+			<.input_label for="email">Email Address</.input_label>
+			<.input_text type="email" name="email"/>
+		</div>
+		<div class="flex flex-col gap-2">
+			<.input_label for="password">Password</.input_label>
+			<.input_text type="password" name="password"/>
+		</div>
+		<div class="flex items-center gap-4">
+			<.input_checkbox name="service_agreement"/>
+			<.input_label for="service_agreement" inline>
+				Service Agreement
+				<:hint class="max-w-[34ch]">
+					I agree to the <a href="/terms" class="underline">Terms of Service</a> & 
+					<a href="/privacy" class="underline">Privacy Policy</a> and I'm at 
+					least 18 years of age.
+				</:hint>
+			</.input_label>
+		</div>
+		<div class="flex items-center gap-4">
+			<.input_checkbox name="noti"/>
+			<.input_label for="remember_me" inline>
+				Notifications
+				<:hint class="max-w-[34ch]">
+					Subscribe to Flirtual updates, account 
+					notifications, and marketing campaigns.
+				</:hint>
+			</.input_label>
+		</div>
+		<div class="flex flex-col gap-4">
+			<button type="button" class="p-4 bg-brand-gradient rounded-xl shadow-brand-1">
+				<span class="text-white text-xl font-montserrat">Create my account</span>
+			</button>
+			<div class="flex flex-col font-nunito text-lg">
+				<.alt_action_link href="/login">
+					Already have an account? Login!
+				</.alt_action_link>
+			</div>
+		</div>
+	</div>
+</.model>
