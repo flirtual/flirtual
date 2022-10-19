@@ -18,9 +18,9 @@ config :flirtual, FlirtualWeb.Endpoint,
   live_view: [signing_salt: "***REMOVED***/"]
 
 config :flirtual, Flirtual.Elasticsearch,
-  url: "***REMOVED***",
+  url: "https://***REMOVED***",
   default_headers: [
-    {"authorization", "ApiKey NzM5QnI0TUJ1Xzd5M3AyRVhhSDQ6emUzUnQ4MmNUa3VWdWNKRWlqdmtadw=="}
+    {"authorization", "ApiKey ***REMOVED***"}
   ],
   api: Elasticsearch.API.HTTP,
   json_library: Jason
