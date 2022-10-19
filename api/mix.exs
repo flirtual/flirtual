@@ -36,6 +36,7 @@ defmodule Flirtual.MixProject do
       {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.6.6"},
       {:phoenix_ecto, "~> 4.4"},
+      {:plug_redirect, "~> 1.0"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:elasticsearch, "~> 1.0.0"},
