@@ -27,7 +27,13 @@
     <meta property="og:image:width" content="512" />
     <meta name="twitter:card" content="summary" />
     <%= csrf_meta_tag() %>
-    <meta name="current-view" content={Kernel.inspect(@conn.private.phoenix_view) |> String.split(".") |> Enum.at(1) |> String.downcase |> String.replace_suffix("view", "")} />
+    <meta name="current-view" content={
+      Kernel.inspect(@conn.private.phoenix_view) 
+      |> String.split(".") 
+      |> Enum.at(1) 
+      |> String.downcase 
+      |> String.replace_suffix("view", "")
+    } />
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"></script>
     <script phx-track-static type="module" src={Routes.static_path(@conn, "/assets/app.js")}></script>

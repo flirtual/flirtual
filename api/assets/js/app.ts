@@ -25,21 +25,13 @@ function getComponentElements() {
 	return [...document.querySelectorAll("*[x-component]")] as Array<HTMLElement>;
 }
 
-/* Alpine.directive("component", async (element, { expression, modifiers }) => {
-	if (!(element instanceof HTMLElement) || element.getAttribute("x-data") === expression) return;
-
-	const data = await getComponentData(expression, modifiers.includes("local"));
-	Alpine.data(expression, data);
-
-	element.setAttribute("x-data", expression);
-	Alpine.initTree(element);
-}); */
-
 document.addEventListener("DOMContentLoaded", async () => {
 	const nodes = getComponentElements();
 	for (const node of nodes) {
 		const name = node.getAttribute("x-component") || "";
-		const data = await getComponentData(name, true);
+		const local = node.hasAttribute("x-local");
+
+		const data = await getComponentData(name, local);
 		Alpine.data(name, data);
 
 		node.setAttribute("x-data", name);

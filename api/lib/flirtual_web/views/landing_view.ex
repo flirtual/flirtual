@@ -49,7 +49,7 @@ defmodule FlirtualWeb.LandingView do
     ]
 
     ~H"""
-    <div class="flex" x-component="snap_carousel">
+    <div class="flex" x-component="snap_carousel" x-local>
       <%= for [src, label] <- content do %>
       <button x-bind="button" x-cloak data-src={src} class="absolute flex w-screen h-screen shrink-0 snap-always snap-center" >
         <div class="absolute z-10 flex items-center justify-center w-full h-full p-16 select-none">
@@ -64,7 +64,7 @@ defmodule FlirtualWeb.LandingView do
 
   def avatar_profiles_section(assigns) do
     ~H"""
-    <div x-component="avatar_profiles_section" class="flex flex-col items-center justify-center w-full h-full gap-8 mx-auto max-w-screen-2xl">
+    <div x-component="avatar_profiles_section" x-local class="flex flex-col items-center justify-center w-full h-full gap-8 mx-auto max-w-screen-2xl">
       <div class="flex flex-col items-center justify-center gap-8 text-center">
         <h1 class="mt-8 text-5xl font-bold md:text-7xl font-montserrat">Avatar profiles</h1>
         <span x-bind="span" class="text-2xl sm:text-3xl md:text-5xl leading-snug font-nunito max-w-4xl h-[8ch] md:h-[5ch]">
@@ -95,7 +95,7 @@ defmodule FlirtualWeb.LandingView do
     ]
 
     ~H"""
-    <div x-component="testimonial_marquee" class="flex overflow-x-hidden">
+    <div x-component="testimonial_marquee" x-local class="flex overflow-x-hidden">
     <%= for src <- images do %>
       <.uc_image src={src} class="object-cover h-full" />
     <% end %>
