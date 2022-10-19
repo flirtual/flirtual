@@ -25,7 +25,6 @@ config :flirtual, Flirtual.Elasticsearch,
   api: Elasticsearch.API.HTTP,
   json_library: Jason
 
-
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
@@ -41,14 +40,19 @@ config :swoosh, :api_client, false
 config :esbuild,
   version: "0.14.0",
   default: [
-    args: [
-      "js/app.js",
-      "--bundle",
-      "--target=es2018",
-      "--outdir=../priv/static/assets",
-      "--external:/fonts/*",
-      "--external:/images/*"
-    ],
+    args:
+      List.flatten([
+        Path.wildcard("assets/js/**/*.ts")
+        |> Enum.map(&Path.relative_to(&1, "assets")),
+        "--bundle",
+        "--minify",
+        "--splitting",
+        "--chunk-names=chunks/[hash]",
+        "--outdir=../priv/static/assets",
+        "--format=esm",
+        "--external:/fonts/*",
+        "--external:/images/*"
+      ]),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]

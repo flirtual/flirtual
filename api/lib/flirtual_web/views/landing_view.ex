@@ -49,28 +49,9 @@ defmodule FlirtualWeb.LandingView do
     ]
 
     ~H"""
-    <div class="flex" x-data={"{
-      active: '#{content |> List.first |> List.first}',
-      interval: null,
-      reset: () => {
-        clearInterval($data.interval);
-        $data.interval = setInterval($data.move, 5000);
-      },
-      move: () => {
-        const children = [...$el.children].map((el) => el.dataset.src);
-
-        let next = children[children.indexOf($data.active) + 1];
-        if (!next) next = children[0];
-
-        $data.active = next;
-      },
-      click: () => {
-        $data.reset();
-        $data.move();
-      }
-    }"} x-init="reset()">
+    <div class="flex" x-component="snap_carousel">
       <%= for [src, label] <- content do %>
-      <button x-on:click="click" x-transition.opacity.duration.500ms data-src={src} x-show="active === $el.dataset.src" class="absolute flex w-screen h-screen shrink-0 snap-always snap-center" >
+      <button x-bind="button" x-cloak data-src={src} class="absolute flex w-screen h-screen shrink-0 snap-always snap-center" >
         <div class="absolute z-10 flex items-center justify-center w-full h-full p-16 select-none">
           <span class="font-bold [text-shadow:0_0_16px_#000] text-5xl md:text-7xl font-nunito"><%= label %></span>
         </div>
@@ -83,22 +64,14 @@ defmodule FlirtualWeb.LandingView do
 
   def avatar_profiles_section(assigns) do
     ~H"""
-    <div class="flex flex-col items-center justify-center w-full h-full gap-8 mx-auto max-w-screen-2xl" x-data="{
-      active: 0,
-      content: [
-        'When you can choose how you look, it\'s personality that makes the difference.',
-        'VR lets you be more real.',
-        'Vibe check in VR before sending IRL pics or video calling.'
-      ],
-      update: () => {
-        $data.active = ($data.active + 1) % $data.content.length;
-      }
-    }" x-init="setInterval(update, 5000)">
-    <div class="flex flex-col items-center justify-center gap-8 text-center">
-    <h1 class="mt-8 text-5xl font-bold md:text-7xl font-montserrat">Avatar profiles</h1>
-    <span x-text="content[active]" class="text-2xl sm:text-3xl md:text-5xl leading-snug font-nunito max-w-4xl h-[8ch] md:h-[5ch]"/>
-    </div>
-    <img src="/images/profile-showcase.png" class="lg:h-[60vh]"/>
+    <div x-component="avatar_profiles_section" class="flex flex-col items-center justify-center w-full h-full gap-8 mx-auto max-w-screen-2xl">
+      <div class="flex flex-col items-center justify-center gap-8 text-center">
+        <h1 class="mt-8 text-5xl font-bold md:text-7xl font-montserrat">Avatar profiles</h1>
+        <span x-bind="span" class="text-2xl sm:text-3xl md:text-5xl leading-snug font-nunito max-w-4xl h-[8ch] md:h-[5ch]">
+          When you can choose how you look, it's personality that makes the difference.
+        </span>
+      </div>
+      <img src="/images/profile-showcase.png" class="lg:h-[60vh]"/>
     </div>
     """
   end
@@ -122,23 +95,10 @@ defmodule FlirtualWeb.LandingView do
     ]
 
     ~H"""
-    <div class="flex overflow-x-hidden" x-data="{
-      direction: true,
-      animate: () => {
-        requestAnimationFrame($data.animate);
-
-        const scrollLeftMax = $el.scrollWidth - $el.clientWidth;
-        $el.scrollLeft += $data.direction ? 2 : -2;
-
-        if ($el.scrollLeft >= scrollLeftMax || $el.scrollLeft === 0) {
-          $data.direction = !$data.direction;
-        }
-      }
-    }" x-init="requestAnimationFrame(animate)">
-      <%= for src <- images do %>
-    <.uc_image src={src} class="object-cover h-full" />
+    <div x-component="testimonial_marquee" class="flex overflow-x-hidden">
+    <%= for src <- images do %>
+      <.uc_image src={src} class="object-cover h-full" />
     <% end %>
-
     </div>
     """
   end
@@ -156,10 +116,10 @@ defmodule FlirtualWeb.LandingView do
     ]
 
     ~H"""
-      <div class="flex flex-wrap items-center gap-8 m-8 md:m-16 justify-evenly md:flex-nowrap">
-        <%= for src <- images do %>
-     <.uc_image src={src} class="w-24 md:w-full "/>
-     <% end %>
+    <div class="flex flex-wrap items-center gap-8 m-8 md:m-16 justify-evenly md:flex-nowrap">
+    <%= for src <- images do %>
+      <.uc_image src={src} class="w-24 md:w-full "/>
+    <% end %>
     </div>
     """
   end
