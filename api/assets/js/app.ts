@@ -50,3 +50,13 @@ window.Blinkloader.optimize({
 	responsive: true,
 	fadeIn: true
 });
+
+// @ts-expect-error: untyped module.
+import { Socket } from "phoenix";
+// @ts-expect-error: untyped module.
+import { LiveSocket } from "phoenix_live_view";
+
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const csrfToken = document.querySelector(`meta[name="csrf-token"]`)!.getAttribute("content");
+const liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } });
+liveSocket.connect();

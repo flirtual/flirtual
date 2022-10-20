@@ -5,17 +5,18 @@ defmodule FlirtualWeb.Components.Input.Label do
 
   def input_label(assigns) do
     assigns = assigns |> assign_new(:hint, fn -> [] end)
+    hint = assigns.hint |> List.first
 
     ~H"""
-    <label
-      class={cls(["font-nunito select-none", assigns[:inline] && "flex flex-col"])}
-      for={assigns.for}
-    >
+    <label {attr_merge(assigns, %{
+      class: ["font-nunito select-none", assigns[:inline] && "flex flex-col"],
+      for: assigns.for
+    }, [:hint])}>
       <span class="text-xl">
         <%= render_slot(@inner_block) %>
       </span>
-      <%= if length(assigns.hint) !== 0 do %>
-      <span class={cls(["text-gray-700", List.first(assigns.hint)[:class]])}>
+      <%= if not is_nil(hint) do %>
+      <span {attr_merge(hint, %{class: ["text-gray-700"]})}>
         <%= render_slot(@hint) %>
       </span>
       <% end %>

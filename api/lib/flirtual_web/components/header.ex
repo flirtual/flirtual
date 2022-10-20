@@ -8,7 +8,7 @@ defmodule FlirtualWeb.Components.Header do
 
     ~H"""
     <a href={assigns.href} class="group focus:outline-none">
-      <.icon {icon} class="w-16 p-2 rounded-full hover:text-white group-focus:text-white hover:bg-brand-gradient group-focus:bg-brand-gradient"/>
+      <.icon {icon} class="w-16 p-2 rounded-full text-brand-pink hover:text-white group-focus:text-white hover:bg-brand-gradient group-focus:bg-brand-gradient"/>
     </a>
     """
   end
@@ -21,13 +21,10 @@ defmodule FlirtualWeb.Components.Header do
           <:icon name="home" type="solid"/>
         </.header_link>
         <.header_link href="/login">
-          <:icon name="lock-closed" type="solid"/>
+          <:icon name="arrow-left-on-rectangle" type="solid"/>
         </.header_link>
       </div>
     </header>
-    <script>
-      console.log("a")
-    </script>
     """
   end
 end

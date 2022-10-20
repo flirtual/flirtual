@@ -8,6 +8,7 @@ defmodule FlirtualWeb.SoleModelView do
 
   import FlirtualWeb.Components.Input.FormAlternativeActionLink
   import FlirtualWeb.Components.Input.Label
+  import FlirtualWeb.Components.Input.DuelRangeSlider
   import FlirtualWeb.Components.Model
 
 end

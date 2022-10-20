@@ -10,4 +10,8 @@ defmodule FlirtualWeb.SoleModelController do
   def register(conn, _params) do
     render(conn, :register, page_title: "Register")
   end
+
+  def onboarding(conn, _params) do
+    render(conn, :onboarding_1, page_title: "Matchmaking")
+  end
 end
