@@ -25,6 +25,19 @@ function getComponentElements() {
 	return [...document.querySelectorAll("*[x-component]")] as Array<HTMLElement>;
 }
 
+Alpine.directive("hoist", (el, { expression, modifiers, value }) => {
+	Alpine.effect(() => {
+		const nths = modifiers.map(Number.parseInt);
+		for (const nth of nths) {
+			const data = Alpine.closestDataStack(el)[nth];
+			const curStack = Alpine.closestDataStack(el)[0];
+
+			// @ts-expect-error: no types, oops.
+			data[expression || value] = curStack[value];
+		}
+	});
+});
+
 document.addEventListener("DOMContentLoaded", async () => {
 	const nodes = getComponentElements();
 	for (const node of nodes) {

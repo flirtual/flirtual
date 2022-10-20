@@ -2,7 +2,7 @@ defmodule FlirtualWeb.Utilities do
   import Phoenix.LiveView.Helpers
 
   def tw_class(assigns, classes) do
-    tw_class(classes ++ [assigns[:class]])
+    tw_class([assigns[:class] | classes])
   end
 
   def tw_class(classes) do

@@ -3,25 +3,26 @@ import { clamp } from "../utilities";
 
 export default component(function () {
 	return {
-		_value: {
-			min: null,
-			max: null
-		},
-		get value() {
+		_min: null,
+		get min() {
 			const { $data } = this;
-
-			$data._value.min ??= $data.default.min;
-			$data._value.max ??= $data.default.max;
-			return $data._value;
+			return $data._min ?? $data.default.min;
 		},
-		set value(value: { min: number; max: number }) {
+		set min(value: number) {
 			const { $data } = this;
-
-			$data._value = {
-				min: clamp(value.min, $data.limit.min, $data.value.max),
-				max: clamp(value.max, $data.value.min, $data.limit.max)
-			};
+			this.$data._min = clamp(value, $data.limit.min, $data.max);
 		},
+
+		_max: null,
+		get max() {
+			const { $data } = this;
+			return $data._max ?? $data.default.max;
+		},
+		set max(value: number) {
+			const { $data } = this;
+			this.$data._max = clamp(value, $data.min, $data.limit.max);
+		},
+
 		get default() {
 			const { $data, $el } = this;
 
@@ -47,11 +48,8 @@ export default component(function () {
 
 		xRoot: {},
 		xLowerInput: {
-			"x-modelable"() {
-				return this.$data.value.min;
-			},
 			":value"() {
-				return this.$data.value.min;
+				return this.$data.min;
 			},
 			":min"() {
 				return this.$data.limit.min;
@@ -64,15 +62,12 @@ export default component(function () {
 			},
 			"@input"(event: InputEvent) {
 				if (!(event.target instanceof HTMLInputElement)) return;
-				this.$data.value = { ...this.$data.value, min: event.target.valueAsNumber };
+				this.$data.min = event.target.valueAsNumber;
 			}
 		},
 		xUpperInput: {
-			"x-modelable"() {
-				return this.$data.value.max;
-			},
 			":value"() {
-				return this.$data.value.max;
+				return this.$data.max;
 			},
 			":min"() {
 				return this.$data.limit.min;
@@ -85,18 +80,18 @@ export default component(function () {
 			},
 			"@input"(event: InputEvent) {
 				if (!(event.target instanceof HTMLInputElement)) return;
-				this.$data.value = { ...this.$data.value, max: event.target.valueAsNumber };
+				this.$data.max = event.target.valueAsNumber;
 			}
 		},
 		xSelection: {
 			":style"() {
 				const {
-					$data: { value, limit }
+					$data: { min, max, limit }
 				} = this;
 
 				return {
-					"margin-left": `${((value.min - limit.min) / limit.diff) * 100}%`,
-					width: `${((value.max - value.min) / limit.diff) * 100}%`
+					"margin-left": `${((min - limit.min) / limit.diff) * 100}%`,
+					width: `${((max - min) / limit.diff) * 100}%`
 				};
 			}
 		}
