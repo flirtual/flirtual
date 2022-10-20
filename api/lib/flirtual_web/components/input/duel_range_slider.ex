@@ -20,10 +20,12 @@ defmodule FlirtualWeb.Components.Input.DuelRangeSlider do
     min = assigns.min |> List.first()
     min_default = min[:default] || 0
     min_limit = min[:limit] || 0
+    min = min |> Map.drop([:default, :limit])
 
     max = assigns.max |> List.first()
     max_default = max[:default] || 100
     max_limit = max[:limit] || 100
+    max = max |> Map.drop([:default, :limit])
 
     ~H"""
     <div x-component="duel_range_slider" x-bind="xRoot" {attr_merge(assigns, %{
@@ -35,8 +37,8 @@ defmodule FlirtualWeb.Components.Input.DuelRangeSlider do
     }, [:min, :max])}>
       <div class="absolute w-full h-2 rounded-full bg-brand-black shadow-brand-1"/>
       <div x-bind="xSelection" class="absolute h-2 rounded-full bg-brand-gradient"/>
-      <.range_input x-bind="xLowerInput"/>
-      <.range_input x-bind="xUpperInput"/>
+      <.range_input x-bind="xLowerInput" {attr_merge(min)}/>
+      <.range_input x-bind="xUpperInput" {attr_merge(max)}/>
     </div>
     """
   end

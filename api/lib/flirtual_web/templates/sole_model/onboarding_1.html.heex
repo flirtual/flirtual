@@ -24,17 +24,17 @@
 				</.input_label>
 			</div>
 		</div>
-		<div class="flex flex-col gap-2" x-data="{ a: {} }">
+		<div class="flex flex-col gap-2" x-data="{ a: 0, b: 0 }">
 			<.input_label for="remember_me">
 				Age range
 				<:hint>
-					<span x-text="a.min"></span> to 
-					<span x-text="a.max"></span>
+					<span x-text="a"></span> to 
+					<span x-text="b"></span>
 				</:hint>
 			</.input_label>
 			<.duel_range_slider>
-				<:min limit={18}/>
-				<:max limit={125} default={40}/>
+				<:min limit={18} x-model="a"/>
+				<:max limit={125} default={40} x-model="b"/>
 			</.duel_range_slider>
 		</div>
 		<div class="flex gap-4 items-center">

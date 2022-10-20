@@ -47,6 +47,9 @@ export default component(function () {
 
 		xRoot: {},
 		xLowerInput: {
+			"x-modelable"() {
+				return this.$data.value.min;
+			},
 			":value"() {
 				return this.$data.value.min;
 			},
@@ -65,6 +68,9 @@ export default component(function () {
 			}
 		},
 		xUpperInput: {
+			"x-modelable"() {
+				return this.$data.value.max;
+			},
 			":value"() {
 				return this.$data.value.max;
 			},
