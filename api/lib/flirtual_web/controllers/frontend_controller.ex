@@ -1,4 +1,4 @@
-defmodule FlirtualWeb.LandingController do
+defmodule FlirtualWeb.FrontendController do
   use FlirtualWeb, :controller
 
   def index(conn, _params) do
