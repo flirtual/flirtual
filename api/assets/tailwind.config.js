@@ -15,7 +15,7 @@ const colors = {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ["./js/**/*.js", "../lib/*_web.ex", "../lib/*_web/**/*.*ex"],
+	content: ["./js/**/*.{js,jsx,ts,tsx}"],
 	theme: {
 		extend: {
 			fontFamily: {
@@ -36,11 +36,12 @@ module.exports = {
 					"0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)"
 			},
 			animation: {
-				"scroll-x-screen": "scroll-x-screen 5s linear infinite"
+				"scroll-x-screen": "scroll-x-screen 30s linear infinite"
 			},
 			keyframes: {
 				"scroll-x-screen": {
-					"0%": { translate: "" }
+					from: { transform: "translateX(0)" },
+					to: { transform: "translateX(-100%)" }
 				}
 			}
 		}

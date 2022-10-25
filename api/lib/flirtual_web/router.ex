@@ -19,15 +19,6 @@ defmodule FlirtualWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", FlirtualWeb do
-    pipe_through :browser
-
-    get "/", LandingController, :index
-    get "/login", SoleModelController, :login
-    get "/register", SoleModelController, :register
-    get "/onboarding/1", SoleModelController, :onboarding
-  end
-
   def require_internal_authorization(conn, _opts) do
     if List.first(Plug.Conn.get_req_header(conn, "api-key")) === @internal_api_key do
       conn
@@ -123,5 +114,11 @@ defmodule FlirtualWeb.Router do
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
+  end
+
+  scope "/", FlirtualWeb do
+    pipe_through :browser
+
+    get "/*any", LandingController, :index
   end
 end

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <%= if assigns[:page_title] do %>
       <%= live_title_tag assigns[:page_title], suffix: " - Flirtual" %>
     <% else %>
@@ -12,12 +13,14 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#e9658b">
-    <link rel="shortcut icon" href="/favicon.ico">  <meta name="apple-mobile-web-app-title" content="Flirtual">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Flirtual">
     <meta name="application-name" content="Flirtual">
     <meta name="msapplication-TileColor" content="#e9658b">
-    <meta name="theme-color" content="#e9658b"> <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />  <meta property="og:url" content="https://flirtu.al" />
+    <meta name="theme-color" content="#e9658b">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta property="og:url" content={FlirtualWeb.Endpoint.url()} />
     <meta name="twitter:site" content="@getflirtual" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Flirtual" />
@@ -27,26 +30,10 @@
     <meta property="og:image:width" content="512" />
     <meta name="twitter:card" content="summary" />
     <%= csrf_meta_tag() %>
-    <meta name="current-view" content={
-      Kernel.inspect(@conn.private.phoenix_view) 
-      |> String.split(".") 
-      |> Enum.at(1) 
-      |> String.downcase 
-      |> String.replace_suffix("view", "")
-    } />
-    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
-    <script src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"></script>
-    <script phx-track-static type="module" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <link rel="stylesheet" href="/assets/index.css"/>
+    <script type="module" src="/assets/index.js"></script>
   </head>
   <body>
     <%= @inner_content %>
   </body>
-  <script>
-    window.fwSettings={
-      "widget_id":73000002566
-    };
-    !function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
-    FreshworksWidget("hide", "launcher");
-  </script>
-  <script type="text/javascript" src="https://widget.freshworks.com/widgets/73000002566.js" async defer></script>
 </html>

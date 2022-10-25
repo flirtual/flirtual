@@ -1,0 +1,13 @@
+lockfileVersion: 5.4
+
+specifiers:
+  tailwind-merge: ^1.7.0
+
+dependencies:
+  tailwind-merge: 1.7.0
+
+packages:
+
+  /tailwind-merge/1.7.0:
+    resolution: {integrity: sha512-A7oBapTWhV9M4bwLtxLQS9ZpPrvcikp21l+Xhwbet5SbaxUVogbHGLy+VDZcHe4LHWE99RpRbSpCBKaVqBs5Og==}
+    dev: false

@@ -42,12 +42,9 @@ config :esbuild,
   default: [
     args:
       List.flatten([
-        Path.wildcard("assets/js/**/*.ts")
-        |> Enum.map(&Path.relative_to(&1, "assets")),
+        "js/index.tsx",
         "--bundle",
         "--minify",
-        "--splitting",
-        "--chunk-names=chunks/[hash]",
         "--outdir=../priv/static/assets",
         "--format=esm",
         "--external:/fonts/*",
@@ -62,8 +59,8 @@ config :tailwind,
   default: [
     args: ~w(
       --config=tailwind.config.js
-      --input=css/app.css
-      --output=../priv/static/assets/app.css
+      --input=css/index.css
+      --output=../priv/static/assets/index.css
     ),
     cd: Path.expand("../assets", __DIR__)
   ]
