@@ -6,6 +6,7 @@ import { ErrorPage } from "./pages/error";
 import { LoginPage } from "./pages/login";
 import { RootLayout } from "./components/layout/root";
 import { RegisterPage } from "./pages/register";
+import { Onboarding1Page } from "./pages/onboarding/1-matching";
 
 export const router = createBrowserRouter([
 	{
@@ -24,6 +25,15 @@ export const router = createBrowserRouter([
 			{
 				path: "register",
 				element: <RegisterPage />
+			},
+			{
+				path: "onboarding",
+				children: [
+					{
+						path: "1",
+						element: <Onboarding1Page />
+					}
+				]
 			}
 		]
 	}

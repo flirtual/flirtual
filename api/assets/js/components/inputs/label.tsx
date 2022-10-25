@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement } from "react";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 
 export type LabelProps = React.ComponentProps<"label"> & {
@@ -29,5 +29,3 @@ export const Label = Object.assign<React.FC<LabelProps>, { Hint: typeof LabelHin
 	},
 	{ Hint: LabelHint }
 );
-
-Label.displayName = "Label";

@@ -44,7 +44,6 @@ config :esbuild,
       List.flatten([
         "js/index.tsx",
         "--bundle",
-        "--minify",
         "--outdir=../priv/static/assets",
         "--format=esm",
         "--external:/fonts/*",
