@@ -119,6 +119,6 @@ defmodule FlirtualWeb.Router do
   scope "/", FlirtualWeb do
     pipe_through :browser
 
-    get "/*any", LandingController, :index
+    get "/*any", FrontendController, :index
   end
 end
