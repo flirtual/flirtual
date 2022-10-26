@@ -5,9 +5,9 @@ specifiers:
   '@heroicons/react': ^2.0.12
   '@types/phoenix': ^1.5.4
   '@types/phoenix_live_view': ^0.15.1
-  '@types/react': ^18.0.22
+  '@types/react': ^18.0.23
   '@types/react-dom': ^18.0.7
-  '@uploadcare/blocks': ^0.11.1
+  '@uploadcare/blocks': ^0.14.0
   esbuild: ^0.15.12
   eslint: ^8.26.0
   fast-fuzzy: ^1.11.2
@@ -20,7 +20,7 @@ specifiers:
 
 dependencies:
   '@heroicons/react': 2.0.12_react@18.2.0
-  '@uploadcare/blocks': 0.11.1
+  '@uploadcare/blocks': 0.14.0
   fast-fuzzy: 1.11.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -31,7 +31,7 @@ devDependencies:
   '@ariesclark/eslint-config': 1.4.0_typescript@4.8.4
   '@types/phoenix': 1.5.4
   '@types/phoenix_live_view': 0.15.1
-  '@types/react': 18.0.22
+  '@types/react': 18.0.23
   '@types/react-dom': 18.0.7
   esbuild: 0.15.12
   eslint: 8.26.0
@@ -157,8 +157,8 @@ packages:
     resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
     dev: true
 
-  /@symbiotejs/symbiote/1.11.1:
-    resolution: {integrity: sha512-iLDGxeTlnOBdwQcwVLEEwwHUy2cVyVNW+otBRaxUF6jrLkgrlpmZm3Le/Nyu6YMP5YopRm6YgJAfNCa8Onau2Q==}
+  /@symbiotejs/symbiote/1.11.2:
+    resolution: {integrity: sha512-P2TUImgZ7jTL/OGEJWr0v3NWgyA27Jj1nrgpdovc/hriYcT14UG5wOYH/Gy9jXs0JlZqPFPU1U9wu0RB6R1XOQ==}
     dev: false
 
   /@types/json-schema/7.0.11:
@@ -186,11 +186,11 @@ packages:
   /@types/react-dom/18.0.7:
     resolution: {integrity: sha512-HaXc+BbqAZE1RdsK3tC8SbkFy6UL2xF76lT9rQs5JkPrJg3rWA3Ou/Lhw3YJQzEDkBpmJ79nBsfnd05WrBd2QQ==}
     dependencies:
-      '@types/react': 18.0.22
+      '@types/react': 18.0.23
     dev: true
 
-  /@types/react/18.0.22:
-    resolution: {integrity: sha512-4yWc5PyCkZN8ke8K9rQHkTXxHIWHxLzzW6RI1kXVoepkD3vULpKzC2sDtAMKn78h92BRYuzf+7b/ms7ajE6hFw==}
+  /@types/react/18.0.23:
+    resolution: {integrity: sha512-R1wTULtCiJkudAN2DJGoYYySbGtOdzZyUWAACYinKdiQC8auxso4kLDUhQ7AJ2kh3F6A6z4v69U6tNY39hihVQ==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -333,10 +333,10 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@uploadcare/blocks/0.11.1:
-    resolution: {integrity: sha512-V0o7rOzqaaFf0EQO5xD6Mv10c6lI944DosmgLUxmcJxipXQrrI60sGdNnL36cMqgY/cYSybduUXH0eyxQ4+axw==}
+  /@uploadcare/blocks/0.14.0:
+    resolution: {integrity: sha512-6Mqr7Ria4LtqQki4sYUpKlgc4cJme2ZOeZlrve6o80AosUMJWgkqYDQbIn5EIuqF6o9s3XlkK37janFBYlhErQ==}
     dependencies:
-      '@symbiotejs/symbiote': 1.11.1
+      '@symbiotejs/symbiote': 1.11.2
       '@uploadcare/upload-client': 4.3.1
     transitivePeerDependencies:
       - bufferutil
