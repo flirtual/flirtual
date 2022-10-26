@@ -42,15 +42,7 @@
   font-display: swap;
 }
 
-[x-cloak] {
-  display: none !important;
-}
 
 *::-webkit-scrollbar {
-  width: 8px;
-  background-color: #131516;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #E9658B;
+  @apply bg-transparent w-0
 }
