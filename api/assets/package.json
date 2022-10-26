@@ -3,9 +3,9 @@
     "build": "esbuild js/index.tsx --bundle --minify --outdir=../priv/static/assets --format=esm --external:/fonts/* --external:/images/*"
   },
   "dependencies": {
-    "@alpine-collective/toolkit": "^1.0.0",
     "@heroicons/react": "^2.0.12",
     "@uploadcare/blocks": "^0.11.1",
+    "fast-fuzzy": "^1.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
