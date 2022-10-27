@@ -14,6 +14,7 @@ module.exports = {
 	},
 	rules: {
 		"import/no-named-as-default": "off",
-		"react/display-name": "off"
+		"react/display-name": "off",
+		"no-mixed-operators": "off"
 	}
 };

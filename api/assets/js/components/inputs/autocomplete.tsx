@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch } from "fast-fuzzy";
 
+import { OptionWindow } from "./select";
+
 export interface AutocompleteOption {
 	key: string;
 	label: string;
@@ -18,7 +20,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
 
-	const selectionRef = useRef<HTMLDivElement>(null);
+	const optionWindowRef = useRef<HTMLDivElement>(null);
 
 	const onInputChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
 		({ currentTarget }) => {
@@ -26,19 +28,6 @@ export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
 		},
 		[]
 	);
-
-	const focusSuggestion = useCallback((direction: -1 | 1) => {
-		const { current: root } = selectionRef;
-		if (!root) return;
-
-		if (!root.contains(document.activeElement) || !document.activeElement) {
-			if (root.firstChild instanceof HTMLElement) root.firstChild.focus();
-			return;
-		}
-
-		const sibling = document.activeElement[direction === -1 ? "previousSibling" : "nextSibling"];
-		if (sibling instanceof HTMLElement) sibling.focus();
-	}, []);
 
 	const suggestions = useMemo(() => {
 		const excludedOptions = options.filter((option) => !values.includes(option.key));
@@ -56,18 +45,15 @@ export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
 				setInputValue("");
 			}}
 			onKeyDown={(event) => {
-				switch (event.key) {
-					case "ArrowUp": {
-						event.preventDefault();
-						focusSuggestion(-1);
-						return;
-					}
-					case "ArrowDown": {
-						event.preventDefault();
-						focusSuggestion(1);
-						return;
-					}
-				}
+				if (
+					(event.key !== "ArrowUp" && event.key !== "ArrowDown") ||
+					optionWindowRef.current?.contains(document.activeElement)
+				)
+					return;
+
+				console.log("a", optionWindowRef.current);
+				optionWindowRef.current?.focus();
+				event.preventDefault();
 			}}
 		>
 			<div className="bg-brand-grey shadow-brand-1 group-focus-within:ring-brand-coral flex group-focus-within:ring-offset-2 rounded-xl group-focus-within:ring-2 p-2">
@@ -109,24 +95,16 @@ export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
 					/>
 				</div>
 			</div>
-			<div className="bg-brand-white shadow-brand-1 focus-within:ring-brand-coral focus:outline-none hidden focus-within:ring-2 focus-within:ring-offset-2 group-focus-within:flex absolute w-full mt-4 rounded-xl max-h-52 overflow-y-scroll overflow-x-hidden">
-				<div className="flex flex-col w-full" ref={selectionRef}>
-					{suggestions.map(({ key, label }) => (
-						<button
-							className="hover:bg-brand-gradient focus:bg-brand-gradient focus:text-white hover:text-white focus:outline-none px-4 py-2 text-left"
-							key={key}
-							type="button"
-							onClick={() => {
-								props.onChange.call(null, (values) => [...values, key]);
-								inputRef.current?.focus();
-								setInputValue("");
-							}}
-						>
-							<span className="font-nunito text-lg">{label}</span>
-						</button>
-					))}
-				</div>
-			</div>
+			<OptionWindow
+				className="hidden group-focus-within:flex absolute mt-4"
+				options={suggestions}
+				ref={optionWindowRef}
+				onChange={props.onChange}
+				onOptionClick={() => {
+					inputRef.current?.focus();
+					setInputValue("");
+				}}
+			/>
 		</div>
 	);
 };
