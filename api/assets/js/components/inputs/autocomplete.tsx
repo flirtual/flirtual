@@ -51,7 +51,6 @@ export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
 				)
 					return;
 
-				console.log("a", optionWindowRef.current);
 				optionWindowRef.current?.focus();
 				event.preventDefault();
 			}}
@@ -99,8 +98,9 @@ export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
 				className="hidden group-focus-within:flex absolute mt-4"
 				options={suggestions}
 				ref={optionWindowRef}
-				onChange={props.onChange}
-				onOptionClick={() => {
+				onOptionClick={({ option }) => {
+					props.onChange.call(null, (values) => [...values, option.key]);
+
 					inputRef.current?.focus();
 					setInputValue("");
 				}}

@@ -1,3 +1,4 @@
+import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";

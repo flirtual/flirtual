@@ -6,12 +6,7 @@ import { ModelCard } from "~/components/model-card";
 
 export const Onboarding2Page: React.FC = () => {
 	const [birthday, setBirthday] = useState(new Date());
-
-	const [sexualities, setSexualities] = useState<Array<string>>([
-		"bisexual",
-		"pansexual",
-		"asexual"
-	]);
+	const [sexualities, setSexualities] = useState<Array<string>>([]);
 
 	return (
 		<SoleModelLayout>
