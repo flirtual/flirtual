@@ -8,7 +8,7 @@ const RangeInput: React.FC<Omit<React.ComponentProps<"input">, "type">> = (props
 		{...props}
 		type="range"
 		className={twMerge(
-			"absolute w-full bg-transparent appearance-none pointer-events-none focus:range-thumb:ring-brand-coral range-thumb:border-none focus:outline-none focus:range-thumb:ring-2 focus:range-thumb:ring-offset-2 range-thumb:bg-brand-gradient range-thumb:pointer-events-auto range-thumb:w-6 range-thumb:h-6 range-thumb:shadow-brand-1 range-thumb:rounded-full",
+			"focus:range-thumb:ring-brand-coral range-thumb:border-none focus:range-thumb:ring-2 focus:range-thumb:ring-offset-2 range-thumb:bg-brand-gradient range-thumb:pointer-events-auto range-thumb:w-6 range-thumb:h-6 range-thumb:shadow-brand-1 range-thumb:rounded-full absolute w-full bg-transparent appearance-none pointer-events-none focus:outline-none",
 			props.className
 		)}
 	/>

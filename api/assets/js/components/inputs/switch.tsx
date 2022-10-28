@@ -10,7 +10,7 @@ const SwitchInput: React.FC<React.ComponentProps<"input"> & { text: string }> = 
 			{...props}
 			type="radio"
 			className={twMerge(
-				"absolute h-full w-full bg-transparent focus:shadow-none focus:ring-transparent focus:ring-offset-0 focus:outline-none rounded-none border-none checked:bg-brand-gradient peer",
+				"checked:bg-brand-gradient peer absolute h-full w-full bg-transparent focus:shadow-none focus:ring-transparent focus:ring-offset-0 focus:outline-none rounded-none border-none",
 				props.className
 			)}
 		/>

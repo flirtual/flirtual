@@ -1,15 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
 	ChevronDoubleLeftIcon,
 	ChevronDoubleRightIcon,
 	ChevronDownIcon,
 	ChevronLeftIcon,
-	ChevronRightIcon,
-	XMarkIcon
+	ChevronRightIcon
 } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
 
-import { OptionWindow, OptionEvent, SelectOption } from ".";
+import { OptionWindow, OptionEvent, SelectOption } from "./select";
 
 import { IconComponent } from "~/components/icons";
 
@@ -49,7 +48,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 		{...props}
 		type="button"
 		className={twMerge(
-			"bg-brand-gradient shadow-brand-1 p-1 rounded-full w-7 h-7 flex items-center justify-center text-white",
+			"bg-brand-gradient shadow-brand-1 focus:ring-brand-coral p-1 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full w-7 h-7 flex items-center justify-center text-white",
 			props.className
 		)}
 	>
@@ -79,7 +78,7 @@ export const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 			}}
 		>
 			<button
-				className="font-montserrat text-xl px-3 flex gap-2 items-center focus:outline-none "
+				className="font-montserrat bg-brand-pink text-xl px-3 flex gap-2 items-center focus:outline-none"
 				type="button"
 			>
 				<span className="">{props.children}</span>
@@ -136,13 +135,13 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"shadow-brand-1 select-none focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2 rounded-3xl p-4 bg-white md:w-96",
+				"shadow-brand-1 font-nunito focus-within:ring-brand-coral select-none focus-within:ring-2 focus-within:ring-offset-2 rounded-3xl p-4 bg-white md:w-96",
 				elementProps.className
 			)}
 		>
 			<div className="w-full">
 				<div className="flex items-center justify-between mb-4">
-					<div className="flex gap-1">
+					<div className="flex gap-2">
 						<CalendarButton Icon={ChevronDoubleLeftIcon} onClick={() => progressYear(-1)} />
 						<CalendarButton Icon={ChevronLeftIcon} onClick={() => progressMonth(-1)} />
 					</div>
@@ -166,7 +165,7 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
 							{displayDate.toLocaleDateString("en-CA", { year: "numeric" })}
 						</LabelSelect>
 					</div>
-					<div className="flex gap-1">
+					<div className="flex gap-2">
 						<CalendarButton Icon={ChevronRightIcon} onClick={() => progressMonth(1)} />
 						<CalendarButton Icon={ChevronDoubleRightIcon} onClick={() => progressYear(1)} />
 					</div>
@@ -177,7 +176,7 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
 						<thead>
 							<tr>
 								{["S", "M", "T", "W", "T", "F", "S"].map((name, idx) => (
-									<th className="w-10 h-10 select-none" key={idx}>
+									<th className="w-10 h-10 select-none font-extrabold" key={idx}>
 										{name}
 									</th>
 								))}
@@ -207,7 +206,7 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
 													<button
 														type="button"
 														className={twMerge(
-															"w-10 h-10 text-center font-mono focus:ring-2 focus:ring-brand-coral hover:bg-brand-grey focus:ring-offset-2 rounded-xl focus:outline-none",
+															"focus:ring-brand-coral hover:bg-brand-grey w-10 h-10 text-center focus:ring-2 focus:ring-offset-2 rounded-xl focus:outline-none",
 															!currentMonth && "text-gray-500",
 															dateEqual(props.value, date) && "bg-brand-gradient text-white"
 														)}

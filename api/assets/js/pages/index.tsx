@@ -31,11 +31,11 @@ const LandingButton: React.FC<LandingButtonProps> = (props) => (
 	<Link
 		{...props}
 		className={twMerge(
-			"cursor-pointer rounded-xl font-montserrat shadow-brand-1 text-center",
+			"font-montserrat shadow-brand-1 cursor-pointer rounded-xl text-center",
 			{
-				primary: "bg-brand-gradient w-48 p-4 text-2xl text-white",
-				secondary: "w-48 p-4 text-2xl bg-white text-brand-pink",
-				"secondary-cta": "w-64 p-4 text-3xl bg-white text-brand-pink"
+				primary: "bg-brand-gradient p-4 w-48 text-2xl text-white",
+				secondary: "text-brand-pink w-48 p-4 text-2xl bg-white",
+				"secondary-cta": "text-brand-pink w-64 p-4 text-3xl bg-white"
 			}[props.kind]
 		)}
 	>

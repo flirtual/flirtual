@@ -10,7 +10,7 @@ export const Checkbox: React.FC<CheckboxProps> = (props) => (
 			{...props}
 			type="checkbox"
 			className={twMerge(
-				"w-full h-full focus:ring-brand-coral focus:ring-2 peer focus:ring-offset-2  rounded-xl checked:bg-brand-gradient text-white shadow-brand-1 border-4 border-brand-black items-center justify-center text-2xl",
+				"focus:ring-brand-coral peer checked:bg-brand-gradient shadow-brand-1 border-brand-black w-full  h-full focus:ring-2 focus:ring-offset-2 rounded-xl text-white border-4 items-center justify-center text-2xl",
 				props.className
 			)}
 		/>

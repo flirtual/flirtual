@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 export const FormAlternativeActionLink: React.FC<LinkProps> = ({ children, ...props }) => (
 	<Link
 		{...props}
-		className={twMerge("flex items-center gap-2 text-lg font-nunito", props.className)}
+		className={twMerge("font-nunito flex items-center gap-2 text-lg", props.className)}
 	>
 		<ArrowLongRightIcon className="inline w-6" />
 		{children}

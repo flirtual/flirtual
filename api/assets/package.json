@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.12",
-    "@uploadcare/blocks": "^0.14.0",
+    "@uploadcare/blocks": "^0.14.1",
     "fast-fuzzy": "^1.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -12,11 +12,11 @@
     "tailwind-merge": "^1.7.0"
   },
   "devDependencies": {
-    "@ariesclark/eslint-config": "^1.4.0",
+    "@ariesclark/eslint-config": "^1.4.2",
     "@types/phoenix": "^1.5.4",
     "@types/phoenix_live_view": "^0.15.1",
-    "@types/react": "^18.0.23",
-    "@types/react-dom": "^18.0.7",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
     "esbuild": "^0.15.12",
     "eslint": "^8.26.0",
     "tailwindcss": "^3.2.1",

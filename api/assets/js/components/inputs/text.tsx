@@ -28,7 +28,7 @@ export const Text: React.FC<TextProps> = (props) => {
 				ref={inputRef}
 				type={props.type === "date" ? "text" : props.type || "text"}
 				className={twMerge(
-					"w-full bg-transparent border-none text-xl font-nunito focus:outline-none focus:ring-0 px-4 py-2",
+					"font-nunito w-full bg-transparent border-none text-xl focus:outline-none focus:ring-0 px-4 py-2",
 					Icon && "pl-2",
 					props.className
 				)}

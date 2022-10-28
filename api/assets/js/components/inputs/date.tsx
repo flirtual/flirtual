@@ -1,6 +1,4 @@
-/* eslint-disable import/named */
-/* eslint-disable import/default */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { Calendar, CalendarProps } from "./calendar";
 import { Text } from "./text";
