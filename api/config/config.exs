@@ -13,7 +13,8 @@ config :flirtual,
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
   url: [host: "localhost"],
-  pubsub_server: Flirtual.PubSub
+  pubsub_server: Flirtual.PubSub,
+  live_view: [signing_salt: "***REMOVED***"]
 
 config :flirtual, Flirtual.Elasticsearch,
   url: "https://***REMOVED***",
