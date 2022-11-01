@@ -1,0 +1,8 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+*::-webkit-scrollbar {
+  @apply bg-transparent w-0
+}
