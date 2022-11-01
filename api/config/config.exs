@@ -13,9 +13,7 @@ config :flirtual,
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: FlirtualWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Flirtual.PubSub,
-  live_view: [signing_salt: "***REMOVED***/"]
+  pubsub_server: Flirtual.PubSub
 
 config :flirtual, Flirtual.Elasticsearch,
   url: "https://***REMOVED***",
@@ -36,33 +34,6 @@ config :flirtual, Flirtual.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false
-
-config :esbuild,
-  version: "0.14.0",
-  default: [
-    args:
-      List.flatten([
-        "js/index.tsx",
-        "--bundle",
-        "--outdir=../priv/static/assets",
-        "--format=esm",
-        "--external:/fonts/*",
-        "--external:/images/*"
-      ]),
-    cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
-  ]
-
-config :tailwind,
-  version: "3.1.6",
-  default: [
-    args: ~w(
-      --config=tailwind.config.js
-      --input=css/index.css
-      --output=../priv/static/assets/index.css
-    ),
-    cd: Path.expand("../assets", __DIR__)
-  ]
 
 # Configures Elixir's Logger
 config :logger, :console,

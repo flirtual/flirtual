@@ -115,10 +115,4 @@ defmodule FlirtualWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
   end
-
-  scope "/", FlirtualWeb do
-    pipe_through :browser
-
-    get "/*any", FrontendController, :index
-  end
 end
