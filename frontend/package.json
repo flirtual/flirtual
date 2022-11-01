@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^1.4.2",
+    "@types/node": "^18.11.8",
     "@types/phoenix": "^1.5.4",
     "@types/phoenix_live_view": "^0.15.1",
     "@types/react": "^18.0.24",
