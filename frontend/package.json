@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "esbuild js/index.tsx --bundle --minify --outdir=../priv/static/assets --format=esm --external:/fonts/* --external:/images/*"
+    "build": "next build",
+    "dev": "next dev"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.12",
