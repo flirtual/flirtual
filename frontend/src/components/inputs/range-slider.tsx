@@ -50,7 +50,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = (props) => {
 	);
 
 	return (
-		<div className="relative flex items-center h-6">
+		<div className="relative flex items-center h-6 shrink-0">
 			<div className="bg-brand-black shadow-brand-1 absolute w-full h-2 rounded-full" />
 			<div
 				className="bg-brand-gradient absolute h-2 rounded-full"

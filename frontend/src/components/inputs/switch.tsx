@@ -1,10 +1,8 @@
-import React, { useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
-const SwitchInput: React.FC<React.ComponentProps<"input"> & { text: string }> = ({
-	text,
-	...props
-}) => (
+type SwitchInputProps = React.ComponentProps<"input"> & { label: string };
+
+const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
 	<div className="flex relative items-center justify-center h-10 w-14">
 		<input
 			{...props}
@@ -15,7 +13,7 @@ const SwitchInput: React.FC<React.ComponentProps<"input"> & { text: string }> = 
 			)}
 		/>
 		<label className={twMerge("absolute pointer-events-none", props.checked && "text-white")}>
-			{text}
+			{label}
 		</label>
 	</div>
 );
@@ -29,17 +27,22 @@ export interface SwitchProps {
 export const Switch: React.FC<SwitchProps> = (props) => {
 	const { value, name } = props;
 
-	const onChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
-		(event) => {
-			props.onChange.call(null, event.target.value === "yes");
-		},
-		[props.onChange]
-	);
-
 	return (
-		<div className="bg-brand-grey shadow-brand-1 focus-within:ring-brand-coral rounded-xl flex overflow-hidden focus-within:ring-2 focus-within:ring-offset-2">
-			<SwitchInput checked={value} name={name} text="Yes" value="yes" onChange={onChange} />
-			<SwitchInput checked={!value} name={name} text="No" value="no" onChange={onChange} />
+		<div className="bg-brand-grey shadow-brand-1 grow-0 w-fit shrink-0 focus-within:ring-brand-coral rounded-xl flex overflow-hidden focus-within:ring-2 focus-within:ring-offset-2">
+			<SwitchInput
+				checked={value}
+				label="Yes"
+				name={name}
+				value="yes"
+				onChange={() => props.onChange(true)}
+			/>
+			<SwitchInput
+				checked={!value}
+				label="No"
+				name={name}
+				value="no"
+				onChange={() => props.onChange(false)}
+			/>
 		</div>
 	);
 };

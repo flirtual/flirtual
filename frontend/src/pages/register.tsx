@@ -32,7 +32,7 @@ export const RegisterPage: React.FC = () => (
 								<a className="underline" href="/terms">
 									Terms of Service
 								</a>{" "}
-								&
+								&{" "}
 								<a className="underline" href="/privacy">
 									Privacy Policy
 								</a>{" "}

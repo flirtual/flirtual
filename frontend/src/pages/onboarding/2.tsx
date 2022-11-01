@@ -10,10 +10,12 @@ export const Onboarding2Page: React.FC = () => {
 
 	return (
 		<SoleModelLayout>
-			<ModelCard className="md:w-2/4 grow-0" title="Info & tags">
+			<ModelCard className="lg:w-2/4 shrink-0" title="Info & tags">
 				<div className="flex flex-col gap-8">
 					<div className="flex flex-col gap-2">
-						<Input.Label hint="(only your age will be visible)">Date of birth</Input.Label>
+						<Input.Label className="flex-col sm:flex-row" hint="(only your age will be visible)">
+							Date of birth
+						</Input.Label>
 						<Input.Date value={birthday} onChange={setBirthday} />
 					</div>
 					<div className="flex flex-col gap-2">

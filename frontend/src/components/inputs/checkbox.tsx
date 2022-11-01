@@ -5,7 +5,7 @@ import React from "react";
 export type CheckboxProps = Omit<React.ComponentProps<"input">, "type">;
 
 export const Checkbox: React.FC<CheckboxProps> = (props) => (
-	<div className="relative w-8 h-8 flex justify-center items-center">
+	<div className="relative w-8 h-8 flex shrink-0 justify-center items-center">
 		<input
 			{...props}
 			type="checkbox"

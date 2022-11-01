@@ -18,7 +18,7 @@ export const Label = Object.assign<React.FC<LabelProps>, { Hint: typeof LabelHin
 				{...elementProps}
 				className={twMerge(
 					"flex font-nunito select-none gap-x-1 items-baseline",
-					inline && "flex flex-col",
+					inline && "flex-col",
 					props.className
 				)}
 			>

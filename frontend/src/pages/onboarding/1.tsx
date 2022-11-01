@@ -43,7 +43,7 @@ export const Onboarding1Page: React.FC = () => {
 						</Input.Label>
 						<RangeSlider max={100} min={18} value={ageRange} onChange={setAgeRange} />
 					</div>
-					<div className="flex gap-4 items-center">
+					<div className="flex gap-4 sm:items-center flex-col-reverse sm:flex-row">
 						<Input.Switch name="serious" value={serious} onChange={setSerious} />
 						<Input.Label inline>Are you open to serious dating?</Input.Label>
 					</div>

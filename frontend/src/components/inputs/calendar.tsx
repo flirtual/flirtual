@@ -78,7 +78,7 @@ export const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 			}}
 		>
 			<button
-				className="font-montserrat text-xl px-3 flex gap-2 items-center focus:outline-none"
+				className="font-montserrat font-semibold text-xl px-3 flex gap-2 items-center focus:outline-none"
 				type="button"
 			>
 				<span className="">{props.children}</span>
@@ -135,7 +135,7 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"shadow-brand-1 font-nunito focus-within:ring-brand-coral select-none focus-within:ring-2 focus-within:ring-offset-2 rounded-3xl p-4 bg-white md:w-96",
+				"shadow-brand-1 font-nunito focus-within:ring-brand-coral select-none focus-within:ring-2 focus-within:ring-offset-2 rounded-3xl p-4 bg-white",
 				elementProps.className
 			)}
 		>
