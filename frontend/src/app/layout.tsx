@@ -4,8 +4,8 @@ import { twMerge } from "tailwind-merge";
 import { ClientScripts } from "./client-scripts";
 import "~/css/index.css";
 
-const montserrat = Montserrat({ variable: "--font-montserrat" });
-const nunito = Nunito({ variable: "--font-nunito" });
+const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
+const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
 const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
 	return (
