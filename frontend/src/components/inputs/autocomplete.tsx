@@ -1,21 +1,26 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+"use client";
+
+import { useCallback, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch } from "fast-fuzzy";
 
-import { OptionWindow } from "./select";
+import { InputOptionWindow } from "./select";
 
-export interface AutocompleteOption {
+export interface InputAutocompleteOption {
 	key: string;
 	label: string;
 }
 
-export interface AutocompleteProps {
-	options: Array<AutocompleteOption>;
+export interface InputAutocompleteProps {
+	options: Array<InputAutocompleteOption>;
 	values: Array<string>;
+	placeholder?: string;
 	onChange: React.Dispatch<React.SetStateAction<Array<string>>>;
 }
 
-export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
+export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 	const { values, options } = props;
+
+	const placeholder = values.length ? "" : props.placeholder;
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
@@ -73,11 +78,12 @@ export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
 					))}
 					<input
 						className="text-xl grow border-none bg-transparent focus:ring-transparent"
+						placeholder={placeholder}
 						ref={inputRef}
 						type="text"
 						value={inputValue}
 						style={{
-							width: `${inputValue.length + 1}em`
+							width: `${(inputValue.length || placeholder?.length || 1) + 1}em`
 						}}
 						onChange={onInputChange}
 						onKeyDown={(event) => {
@@ -94,7 +100,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = (props) => {
 					/>
 				</div>
 			</div>
-			<OptionWindow
+			<InputOptionWindow
 				className="hidden group-focus-within:flex absolute mt-4"
 				options={suggestions}
 				ref={optionWindowRef}

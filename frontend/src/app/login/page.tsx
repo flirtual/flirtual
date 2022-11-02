@@ -1,35 +1,35 @@
 import React from "react";
 
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
-import { Input } from "~/components/inputs";
+import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 
-export const LoginPage: React.FC = () => (
+const LoginPage: React.FC = () => (
 	<SoleModelLayout>
 		<ModelCard title="Login">
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-2">
-					<Input.Label hint="(or email)">Username</Input.Label>
-					<Input.Text name="username" />
+					<InputLabel hint="(or email)">Username</InputLabel>
+					<InputText />
 				</div>
 				<div className="flex flex-col gap-2">
-					<Input.Label>Password</Input.Label>
-					<Input.Text name="password" type="password" />
+					<InputLabel>Password</InputLabel>
+					<InputText type="password" />
 				</div>
 				<div className="flex items-center gap-4">
-					<Input.Checkbox name="remember_me" />
-					<Input.Label
+					<InputCheckbox />
+					<InputLabel
 						inline
 						hint={
-							<Input.Label.Hint className="max-w-[34ch]">
+							<InputLabelHint className="max-w-[34ch]">
 								Keep your account logged in for 30 days, not recommended on public or shared
 								devices.
-							</Input.Label.Hint>
+							</InputLabelHint>
 						}
 					>
 						Remember me
-					</Input.Label>
+					</InputLabel>
 				</div>
 				<div className="flex flex-col gap-4">
 					<button className="bg-brand-gradient shadow-brand-1 p-4 rounded-xl" type="button">

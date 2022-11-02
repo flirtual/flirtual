@@ -1,3 +1,5 @@
+"use client";
+
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import React, { useCallback } from "react";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import React, { useRef } from "react";
 import { twMerge } from "tailwind-merge";
@@ -6,9 +8,9 @@ import { omit } from "~/utilities";
 
 import { IconComponent } from "../icons";
 
-export type TextProps = React.ComponentProps<"input"> & { Icon?: IconComponent };
+export type InputTextProps = React.ComponentProps<"input"> & { Icon?: IconComponent };
 
-export const Text: React.FC<TextProps> = (props) => {
+export const InputText: React.FC<InputTextProps> = (props) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const Icon = props.Icon ?? props.type === "date" ? CalendarDaysIcon : undefined;

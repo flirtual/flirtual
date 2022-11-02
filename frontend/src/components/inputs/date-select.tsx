@@ -1,7 +1,9 @@
-import React, { useCallback, useState } from "react";
+"use client";
 
-import { Calendar, CalendarProps } from "./calendar";
-import { Text } from "./text";
+import { useCallback, useState } from "react";
+
+import { InputCalendar, InputCalendarProps } from "./calendar";
+import { InputText } from "./text";
 
 function toDateString(value: Date): string {
 	return value.toLocaleDateString("en-CA");
@@ -9,14 +11,12 @@ function toDateString(value: Date): string {
 
 function fromDateString(value: string): globalThis.Date {
 	const [year, month, day] = value.split("-");
-	return new globalThis.Date(
-		Number.parseInt(year),
-		Number.parseInt(month) - 1,
-		Number.parseInt(day)
-	);
+	return new Date(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day));
 }
 
-export const Date: React.FC<Pick<CalendarProps, "value" | "onChange">> = (props) => {
+export type InputDateSelectProps = Pick<InputCalendarProps, "value" | "onChange">;
+
+export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	const [inputValue, setInputValue] = useState(toDateString(props.value));
 
 	const progressDate = useCallback(
@@ -40,13 +40,13 @@ export const Date: React.FC<Pick<CalendarProps, "value" | "onChange">> = (props)
 				const value = fromDateString(inputValue);
 
 				if (!Number.isNaN(value.getTime())) return;
-				const now = new globalThis.Date();
+				const now = new Date();
 
 				setInputValue(toDateString(now));
 				props.onChange(now);
 			}}
 		>
-			<Text
+			<InputText
 				className="w-full"
 				type="date"
 				value={inputValue}
@@ -94,7 +94,7 @@ export const Date: React.FC<Pick<CalendarProps, "value" | "onChange">> = (props)
 					}
 				}}
 			/>
-			<Calendar
+			<InputCalendar
 				className="hidden group-focus-within:flex absolute z-10 mt-4"
 				value={props.value}
 				onChange={(value) => {

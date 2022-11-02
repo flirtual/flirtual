@@ -1,33 +1,33 @@
 import React from "react";
 
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
-import { Input } from "~/components/inputs";
+import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 
-export const RegisterPage: React.FC = () => (
+const RegisterPage: React.FC = () => (
 	<SoleModelLayout>
 		<ModelCard title="Register">
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-2">
-					<Input.Label htmlFor="username">Username</Input.Label>
-					<Input.Text name="username" />
+					<InputLabel htmlFor="username">Username</InputLabel>
+					<InputText name="username" />
 				</div>
 				<div className="flex flex-col gap-2">
-					<Input.Label htmlFor="email">Email Address</Input.Label>
-					<Input.Text name="email" type="email" />
+					<InputLabel htmlFor="email">Email Address</InputLabel>
+					<InputText name="email" type="email" />
 				</div>
 				<div className="flex flex-col gap-2">
-					<Input.Label htmlFor="password">Password</Input.Label>
-					<Input.Text name="password" type="password" />
+					<InputLabel htmlFor="password">Password</InputLabel>
+					<InputText name="password" type="password" />
 				</div>
 				<div className="flex items-center gap-4">
-					<Input.Checkbox name="service_agreement" />
-					<Input.Label
+					<InputCheckbox name="service_agreement" />
+					<InputLabel
 						inline
 						htmlFor="service_agreement"
 						hint={
-							<Input.Label.Hint className="max-w-[34ch]">
+							<InputLabelHint className="max-w-[34ch]">
 								I agree to the{" "}
 								<a className="underline" href="/terms">
 									Terms of Service
@@ -37,26 +37,26 @@ export const RegisterPage: React.FC = () => (
 									Privacy Policy
 								</a>{" "}
 								and I&apos;m at least 18 years of age.
-							</Input.Label.Hint>
+							</InputLabelHint>
 						}
 					>
 						Service Agreement
-					</Input.Label>
+					</InputLabel>
 				</div>
 				<div className="flex items-center gap-4">
-					<Input.Checkbox name="noti" />
-					<Input.Label
+					<InputCheckbox name="noti" />
+					<InputLabel
 						inline
 						htmlFor="remember_me"
 						hint={
-							<Input.Label.Hint className="max-w-[34ch]">
+							<InputLabelHint className="max-w-[34ch]">
 								Get updated about new features, changes, and offers. (
 								<i>we promise not to spam you</i>)
-							</Input.Label.Hint>
+							</InputLabelHint>
 						}
 					>
 						Notifications
-					</Input.Label>
+					</InputLabel>
 				</div>
 				<div className="flex flex-col gap-4">
 					<a className="w-full" href="/onboarding/1">

@@ -1,10 +1,9 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
-import React from "react";
 
-export type CheckboxProps = Omit<React.ComponentProps<"input">, "type">;
+export type InputCheckboxProps = Omit<React.ComponentProps<"input">, "type">;
 
-export const Checkbox: React.FC<CheckboxProps> = (props) => (
+export const InputCheckbox: React.FC<InputCheckboxProps> = (props) => (
 	<div className="relative w-8 h-8 flex shrink-0 justify-center items-center">
 		<input
 			{...props}

@@ -1,9 +1,16 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { Montserrat, Nunito } from "@next/font/google";
+import { twMerge } from "tailwind-merge";
 
-export default function Document() {
+import { ClientScripts } from "./client-scripts";
+import "~/css/index.css";
+
+const montserrat = Montserrat({ variable: "--font-montserrat" });
+const nunito = Nunito({ variable: "--font-nunito" });
+
+const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
 	return (
-		<Html>
-			<Head>
+		<html lang="en">
+			<head>
 				<title>Flirtual</title>
 				<meta
 					content="Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat. Formerly VRLFP."
@@ -35,17 +42,11 @@ export default function Document() {
 				<meta content="512" property="og:image:width" />
 				<meta content="512" property="og:image:width" />
 				<meta content="summary" name="twitter:card" />
-				<link href="https://fonts.googleapis.com" rel="preconnect" />
-				<link href="https://fonts.gstatic.com" rel="preconnect" />
-				<link
-					href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap"
-					rel="stylesheet"
-				/>
-			</Head>
-			<body>
-				<Main />
-				<NextScript />
-			</body>
-		</Html>
+				<ClientScripts />
+			</head>
+			<body className={twMerge(montserrat.variable, nunito.variable)}>{children}</body>
+		</html>
 	);
-}
+};
+
+export default RootLayout;

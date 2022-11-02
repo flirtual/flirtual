@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -14,17 +16,17 @@ const RangeInput: React.FC<Omit<React.ComponentProps<"input">, "type">> = (props
 	/>
 );
 
-export type RangeSliderValue = [min: number, max: number];
+export type InputRangeSliderValue = [min: number, max: number];
 
-export interface RangeSliderProps {
+export interface InputRangeSliderProps {
 	min?: number;
 	max?: number;
 	step?: number;
-	value: RangeSliderValue;
-	onChange: (value: RangeSliderValue) => void;
+	value: InputRangeSliderValue;
+	onChange: React.Dispatch<InputRangeSliderValue>;
 }
 
-export const RangeSlider: React.FC<RangeSliderProps> = (props) => {
+export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 	const step = props.step ?? 1;
 
 	const limit = useMemo(() => {
@@ -43,7 +45,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = (props) => {
 	const max = props.value[1];
 
 	const onChange = useCallback(
-		([min, max]: RangeSliderValue) => {
+		([min, max]: InputRangeSliderValue) => {
 			props.onChange.call(null, [clamp(min, limit.min, max), clamp(max, min, limit.max)]);
 		},
 		[limit, props.onChange]

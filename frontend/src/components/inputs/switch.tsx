@@ -1,3 +1,5 @@
+"use client";
+
 import { twMerge } from "tailwind-merge";
 
 type SwitchInputProps = React.ComponentProps<"input"> & { label: string };
@@ -18,13 +20,13 @@ const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
 	</div>
 );
 
-export interface SwitchProps {
+export interface InputSwitchProps {
 	value: boolean;
 	name: string;
-	onChange: (value: boolean) => void;
+	onChange: React.Dispatch<boolean>;
 }
 
-export const Switch: React.FC<SwitchProps> = (props) => {
+export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const { value, name } = props;
 
 	return (

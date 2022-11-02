@@ -19,8 +19,8 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				nunito: ["Nunito", "sans-serif"],
-				montserrat: ["Montserrat", "sans-serif"]
+				nunito: "var(--font-nunito)",
+				montserrat: "var(--font-montserrat)"
 			},
 			colors: {
 				brand: colors
@@ -55,6 +55,6 @@ module.exports = {
 				"&::-ms-track"
 			]);
 			addVariant("range-thumb", ["&::-webkit-slider-thumb", "&::-moz-range-thumb", "&::-ms-thumb"]);
-		}),
+		})
 	]
 };

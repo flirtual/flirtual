@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
 import {
 	ChevronDoubleLeftIcon,
 	ChevronDoubleRightIcon,
@@ -10,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 
 import { IconComponent } from "~/components/icons";
 
-import { OptionWindow, OptionEvent, SelectOption } from "./select";
+import { InputOptionWindow, InputOptionEvent, InputSelectOption } from "./select";
 
 const MonthNames = Object.freeze(
 	new Array(12).fill(undefined).map((_, monthIdx) => {
@@ -56,13 +58,13 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 	</button>
 );
 
-export interface LabelSelectProps {
-	options: Array<SelectOption>;
-	onOptionAction: React.EventHandler<OptionEvent<React.SyntheticEvent<HTMLButtonElement>>>;
+interface LabelSelectProps {
+	options: Array<InputSelectOption>;
+	onOptionAction: React.EventHandler<InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>>>;
 	children: React.ReactNode;
 }
 
-export const LabelSelect: React.FC<LabelSelectProps> = (props) => {
+const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 	const [visible, setVisible] = useState(false);
 
 	return (
@@ -84,7 +86,7 @@ export const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				<span className="">{props.children}</span>
 				<ChevronDownIcon className="w-4 h-4" strokeWidth={3} />
 			</button>
-			<OptionWindow
+			<InputOptionWindow
 				className={twMerge("absolute w-fit mt-4", visible ? "flex" : "hidden")}
 				options={props.options}
 				onOptionClick={props.onOptionAction}
@@ -94,12 +96,12 @@ export const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 	);
 };
 
-export type CalendarProps = Omit<React.ComponentProps<"div">, "onChange"> & {
+export type InputCalendarProps = Omit<React.ComponentProps<"div">, "onChange"> & {
 	value: Date;
 	onChange: React.Dispatch<Date>;
 };
 
-export const Calendar: React.FC<CalendarProps> = (props) => {
+export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	const { value, onChange, ...elementProps } = props;
 	const [displayDate, setDisplayDate] = useState(value);
 
