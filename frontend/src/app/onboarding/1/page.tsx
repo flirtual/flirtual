@@ -12,7 +12,7 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 
-export const Onboarding1Page: React.FC = () => {
+const Onboarding1Page: React.FC = () => {
 	const [ageRange, setAgeRange] = useState<InputRangeSliderValue>([18, 100]);
 	const [serious, setSerious] = useState(false);
 

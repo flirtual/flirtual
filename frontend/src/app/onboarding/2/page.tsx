@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { InputAutocomplete, InputCheckbox, InputDateSelect, InputLabel } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 
-export const Onboarding2Page: React.FC = () => {
+const Onboarding2Page: React.FC = () => {
 	const [birthday, setBirthday] = useState(new Date());
 	const [sexualities, setSexualities] = useState<Array<string>>([]);
 

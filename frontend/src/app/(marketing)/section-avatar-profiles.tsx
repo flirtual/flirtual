@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useState } from "react";
 
 import { useInterval } from "~/hooks/use-interval";
@@ -29,7 +30,7 @@ export const SectionAvatarProfiles: React.FC<{ values: Array<string> }> = ({ val
 						{activeValue}
 					</span>
 				</div>
-				<img className="lg:h-[60vh]" src="/images/profile-showcase.png" />
+				<Image alt="Profile showcase" className="lg:h-[60vh]" src="/images/profile-showcase.png" />
 			</div>
 		</SnapSection>
 	);
