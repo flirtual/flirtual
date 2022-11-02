@@ -10,6 +10,7 @@ module.exports = {
 		"@ariesclark/eslint-config/atoms/tailwindcss"
 	],
 	rules: {
-		"react/display-name": "off"
+		"react/display-name": "off",
+		"@next/next/no-img-element": "off"
 	}
 };
