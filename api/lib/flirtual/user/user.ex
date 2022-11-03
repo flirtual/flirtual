@@ -1,12 +1,29 @@
-defmodule Flirtual.Accounts.User do
-  use Ecto.Schema
+defmodule Flirtual.User do
+  use Flirtual.Schema
   import Ecto.Changeset
 
   schema "users" do
     field :email, :string
+    field :username, :string
     field :password, :string, virtual: true, redact: true
-    field :hashed_password, :string, redact: true
-    field :confirmed_at, :naive_datetime
+    field :password_hash, :string, redact: true
+    field :talkjs_signature, :string
+    field :language, :string
+
+    field :tags, {:array, Ecto.Enum}, values: [:admin, :moderator, :beta_tester, :debugger, :verified]
+
+    field :born_at, :naive_datetime
+    field :email_confirmed_at, :naive_datetime
+    field :banned_at, :naive_datetime
+    field :shadowbanned_at, :naive_datetime
+    field :disabled_at, :naive_datetime
+    field :incognito_at, :naive_datetime
+
+    has_many :connections, Flirtual.User.Connections
+
+    has_one :preferences, Flirtual.User.Preferences
+    has_one :subscription, Flirtual.User.Subscription
+    has_one :profile, Flirtual.User.Profile
 
     timestamps()
   end
@@ -47,7 +64,7 @@ defmodule Flirtual.Accounts.User do
   defp validate_password(changeset, opts) do
     changeset
     |> validate_required([:password])
-    |> validate_length(:password, min: 12, max: 72)
+    |> validate_length(:password, min: 8, max: 72)
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
@@ -55,14 +72,14 @@ defmodule Flirtual.Accounts.User do
   end
 
   defp maybe_hash_password(changeset, opts) do
-    hash_password? = Keyword.get(opts, :hash_password, true)
+    hash_password? = Keyword.get(opts, :password_hash, true)
     password = get_change(changeset, :password)
 
     if hash_password? && password && changeset.valid? do
       changeset
       # If using Bcrypt, then further validate it is at most 72 bytes long
       |> validate_length(:password, max: 72, count: :bytes)
-      |> put_change(:hashed_password, Bcrypt.hash_pwd_salt(password))
+      |> put_change(:password_hash, Bcrypt.hash_pwd_salt(password))
       |> delete_change(:password)
     else
       changeset
@@ -106,9 +123,9 @@ defmodule Flirtual.Accounts.User do
   @doc """
   Confirms the account by setting `confirmed_at`.
   """
-  def confirm_changeset(user) do
+  def confirm_email_changeset(user) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-    change(user, confirmed_at: now)
+    change(user, email_confirmed_at: now)
   end
 
   @doc """
@@ -117,9 +134,9 @@ defmodule Flirtual.Accounts.User do
   If there is no user or the user doesn't have a password, we call
   `Bcrypt.no_user_verify/0` to avoid timing attacks.
   """
-  def valid_password?(%Flirtual.Accounts.User{hashed_password: hashed_password}, password)
-      when is_binary(hashed_password) and byte_size(password) > 0 do
-    Bcrypt.verify_pass(password, hashed_password)
+  def valid_password?(%Flirtual.User{password_hash: password_hash}, password)
+      when is_binary(password_hash) and byte_size(password) > 0 do
+    Bcrypt.verify_pass(password, password_hash)
   end
 
   def valid_password?(_, _) do

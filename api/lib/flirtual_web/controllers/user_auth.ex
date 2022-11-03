@@ -31,7 +31,6 @@ defmodule FlirtualWeb.UserAuth do
     conn
     |> renew_session()
     |> put_session(:user_token, token)
-    |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
     |> maybe_write_remember_me_cookie(token, params)
     |> redirect(to: user_return_to || signed_in_path(conn))
   end
@@ -121,20 +120,12 @@ defmodule FlirtualWeb.UserAuth do
     end
   end
 
-  @doc """
-  Used for routes that require the user to be authenticated.
-
-  If you want to enforce the user email is confirmed before
-  they use the application at all, here would be a good place.
-  """
   def require_authenticated_user(conn, _opts) do
     if conn.assigns[:current_user] do
       conn
     else
       conn
-      |> put_flash(:error, "You must log in to access this page.")
-      |> maybe_store_return_to()
-      |> redirect(to: Routes.user_session_path(conn, :new))
+      |> resp(:unauthorized, "")
       |> halt()
     end
   end

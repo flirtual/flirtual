@@ -2,8 +2,12 @@ defmodule FlirtualWeb.UserRegistrationController do
   use FlirtualWeb, :controller
 
   alias Flirtual.Accounts
-  alias Flirtual.Accounts.User
+  alias Flirtual.User
   alias FlirtualWeb.UserAuth
+
+  import FlirtualWeb.ErrorHelpers
+
+  action_fallback FlirtualWeb.FallbackController
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})
@@ -11,20 +15,8 @@ defmodule FlirtualWeb.UserRegistrationController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    case Accounts.register_user(user_params) do
-      {:ok, user} ->
-        {:ok, _} =
-          Accounts.deliver_user_confirmation_instructions(
-            user,
-            &Routes.user_confirmation_url(conn, :edit, &1)
-          )
-
-        conn
-        |> put_flash(:info, "User created successfully.")
-        |> UserAuth.log_in_user(user)
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+    with {:ok, user} <- Accounts.register_user(user_params) do
+      conn |> put_status(:created) |> json(user)
     end
   end
 end

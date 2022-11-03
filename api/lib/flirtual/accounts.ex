@@ -6,7 +6,8 @@ defmodule Flirtual.Accounts do
   import Ecto.Query, warn: false
   alias Flirtual.Repo
 
-  alias Flirtual.Accounts.{User, UserToken, UserNotifier}
+  alias Flirtual.Accounts.{UserToken, UserNotifier}
+  alias Flirtual.User
 
   ## Database getters
 
