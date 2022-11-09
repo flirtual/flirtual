@@ -1,6 +1,7 @@
 defmodule Flirtual.Accounts.UserToken do
   use Ecto.Schema
   import Ecto.Query
+  import Ecto
   alias Flirtual.Accounts.UserToken
 
   @hash_algorithm :sha256

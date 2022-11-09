@@ -2,10 +2,49 @@ defmodule Flirtual.User.Profile do
   use Flirtual.Schema
 
   alias Flirtual.User
-  alias Flirtual.User.Profile.{Images,Preferences,CustomWeights,Likes}
+  alias Flirtual.User.Profile.{Images, Preferences, CustomWeights, Likes}
 
-  @genders [:woman, :man, :she_her, :he_him, :they_them, :agender, :androgynous, :bigender, :cis_woman, :cis_man, :genderfluid, :genderqueer, :gender_nonconforming, :hijra, :intersex, :non_binary, :pangender, :transgender, :transsexual, :trans_woman, :trans_man, :transfeminine, :transmasculine, :two_spirit, :other]
-  @sexualities [:straight, :lesbian, :gay, :bisexual, :pansexual, :asexual, :demisexual, :heteroflexible, :homoflexible, :queer, :questioning, :experimenting_in_vr]
+  @genders [
+    :woman,
+    :man,
+    :she_her,
+    :he_him,
+    :they_them,
+    :agender,
+    :androgynous,
+    :bigender,
+    :cis_woman,
+    :cis_man,
+    :genderfluid,
+    :genderqueer,
+    :gender_nonconforming,
+    :hijra,
+    :intersex,
+    :non_binary,
+    :pangender,
+    :transgender,
+    :transsexual,
+    :trans_woman,
+    :trans_man,
+    :transfeminine,
+    :transmasculine,
+    :two_spirit,
+    :other
+  ]
+  @sexualities [
+    :straight,
+    :lesbian,
+    :gay,
+    :bisexual,
+    :pansexual,
+    :asexual,
+    :demisexual,
+    :heteroflexible,
+    :homoflexible,
+    :queer,
+    :questioning,
+    :experimenting_in_vr
+  ]
 
   @kink_pairs [
     [:brat_tamer, :brat],
@@ -18,7 +57,7 @@ defmodule Flirtual.User.Profile do
     [:hunter, :prey],
     [:degrader, :degradee],
     [:ageplayer, :ageplayer],
-    [:experimentalist, :experimentalist],
+    [:experimentalist, :experimentalist]
   ]
 
   def get_kink_pairs() do
@@ -26,8 +65,24 @@ defmodule Flirtual.User.Profile do
   end
 
   def get_kink_list() do
-    @kink_pairs |> List.flatten |> Enum.uniq
+    @kink_pairs |> List.flatten() |> Enum.uniq()
   end
+
+  @derive {Jason.Encoder,
+           only: [
+             :display_name,
+             :biography,
+             :gender,
+             :sexuality,
+             :games,
+             :languages,
+             :platforms,
+             :interests,
+             :preferences,
+             :custom_weights,
+             :images,
+             :updated_at
+           ]}
 
   schema "user_profiles" do
     belongs_to :user, User
@@ -46,5 +101,15 @@ defmodule Flirtual.User.Profile do
 
     has_many :images, Images
     many_to_many :likes, User, join_through: Likes
+
+    timestamps(inserted_at: false)
+  end
+
+  def default_assoc do
+    [
+      :preferences,
+      :custom_weights,
+      :images
+    ]
   end
 end

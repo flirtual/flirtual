@@ -3,6 +3,20 @@ defmodule Flirtual.User.Profile.CustomWeights do
 
   alias Flirtual.User.Profile
 
+  @derive {Jason.Encoder,
+           only: [
+             :country,
+             :monopoly,
+             :games,
+             :default_interests,
+             :custom_interests,
+             :personality,
+             :serious,
+             :domsub,
+             :kinks,
+             :likes
+           ]}
+
   schema "user_profile_custom_weights" do
     belongs_to :profile, Profile
 

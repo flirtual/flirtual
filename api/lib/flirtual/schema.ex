@@ -6,8 +6,6 @@ defmodule Flirtual.Schema do
       @primary_key {:id, :binary_id, autogenerate: true}
       @foreign_key_type :binary_id
       @derive {Phoenix.Param, key: :id}
-
-      @derive {Jason.Encoder, except: [:__meta__]}
     end
   end
 end

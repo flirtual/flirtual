@@ -3,6 +3,15 @@ defmodule Flirtual.User.Subscription do
 
   alias Flirtual.User
 
+  @derive {Jason.Encoder,
+           only: [
+             :type,
+             :stripe_id,
+             :cancelled_at,
+             :updated_at,
+             :created_at
+           ]}
+
   schema "user_subscriptions" do
     belongs_to :user, User
 
@@ -10,6 +19,6 @@ defmodule Flirtual.User.Subscription do
     field :stripe_id, :string
     field :cancelled_at, :naive_datetime
 
-    timestamps()
+    timestamps(inserted_at: :created_at)
   end
 end

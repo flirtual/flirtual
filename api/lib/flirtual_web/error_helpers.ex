@@ -1,6 +1,10 @@
 defmodule FlirtualWeb.ErrorHelpers do
 
-  def transform_changeset_errors(changeset) do
+  def new_error(message, details \\ %{}) do
+    %{ errors: Map.merge(details, %{ message: message })}
+  end
+
+  def transform_changeset_errors(%Ecto.Changeset{} = changeset) do
     Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
   end
 

@@ -2,15 +2,31 @@ defmodule Flirtual.User do
   use Flirtual.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder,
+           only: [
+             :id,
+             :email,
+             :username,
+             :language,
+             :tags,
+             :connections,
+             :subscription,
+             :profile,
+             :updated_at,
+             :created_at
+           ]}
+
   schema "users" do
     field :email, :string
     field :username, :string
     field :password, :string, virtual: true, redact: true
     field :password_hash, :string, redact: true
     field :talkjs_signature, :string
-    field :language, :string
+    field :language, :string, default: "en"
 
-    field :tags, {:array, Ecto.Enum}, values: [:admin, :moderator, :beta_tester, :debugger, :verified]
+    field :tags, {:array, Ecto.Enum},
+      values: [:admin, :moderator, :beta_tester, :debugger, :verified],
+      default: []
 
     field :born_at, :naive_datetime
     field :email_confirmed_at, :naive_datetime
@@ -19,13 +35,22 @@ defmodule Flirtual.User do
     field :disabled_at, :naive_datetime
     field :incognito_at, :naive_datetime
 
-    has_many :connections, Flirtual.User.Connections
+    has_many :connections, Flirtual.User.Connection
+    has_many :sessions, Flirtual.User.Session
 
     has_one :preferences, Flirtual.User.Preferences
     has_one :subscription, Flirtual.User.Subscription
     has_one :profile, Flirtual.User.Profile
 
-    timestamps()
+    timestamps(inserted_at: :created_at)
+  end
+
+  def default_assoc do
+    [
+      :connections,
+      :subscription,
+      profile: Flirtual.User.Profile.default_assoc()
+    ]
   end
 
   @doc """
@@ -47,12 +72,21 @@ defmodule Flirtual.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:username, :email, :password])
+    |> validate_username()
     |> validate_email()
     |> validate_password(opts)
   end
 
-  defp validate_email(changeset) do
+  defp validate_username(changeset) do
+    changeset
+    |> validate_required([:username])
+    |> validate_length(:username, max: 160)
+    |> unsafe_validate_unique(:username, Flirtual.Repo)
+    |> unique_constraint(:username)
+  end
+
+  def validate_email(changeset) do
     changeset
     |> validate_required([:email])
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
@@ -61,7 +95,7 @@ defmodule Flirtual.User do
     |> unique_constraint(:email)
   end
 
-  defp validate_password(changeset, opts) do
+  def validate_password(changeset, opts) do
     changeset
     |> validate_required([:password])
     |> validate_length(:password, min: 8, max: 72)

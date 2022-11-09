@@ -34,14 +34,20 @@ defmodule FlirtualWeb.Router do
 
     scope "/v1/" do
       scope "/auth" do
-        # pipe_through [:fetch_session, :fetch_current_user]
-
         scope "/session" do
-          # pipe_through :require_authenticated_user
-          get "/", SessionController, :get
-          post "/", UserRegistrationController, :create
-          delete "/", SessionController, :delete
+          post "/", SessionController, :create
+
+          scope "/" do
+            # pipe_through :require_authenticated_user
+
+            get "/", SessionController, :get
+            delete "/", SessionController, :delete
+          end
         end
+      end
+
+      scope "/users" do
+        post "/", UsersController, :create
       end
 
       scope "/internal" do
