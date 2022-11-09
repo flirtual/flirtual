@@ -4,30 +4,30 @@
     "dev": "next dev"
   },
   "dependencies": {
-    "@heroicons/react": "^2.0.12",
-    "@next/font": "^13.0.1",
+    "@heroicons/react": "^2.0.13",
+    "@next/font": "^13.0.2",
     "@tailwindcss/forms": "^0.5.3",
     "@uploadcare/blocks": "^0.14.1",
-    "fast-fuzzy": "^1.11.2",
-    "next": "^13.0.1",
+    "fast-fuzzy": "^1.12.0",
+    "next": "^13.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^1.7.0"
+    "tailwind-merge": "^1.8.0"
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^1.4.2",
-    "@next/eslint-plugin-next": "^13.0.1",
-    "@types/node": "^18.11.8",
+    "@next/eslint-plugin-next": "^13.0.2",
+    "@types/node": "^18.11.9",
     "@types/phoenix": "^1.5.4",
     "@types/phoenix_live_view": "^0.15.1",
-    "@types/react": "^18.0.24",
+    "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "autoprefixer": "^10.4.13",
     "concurrently": "^7.5.0",
-    "esbuild": "^0.15.12",
-    "eslint": "^8.26.0",
+    "esbuild": "^0.15.13",
+    "eslint": "^8.27.0",
     "postcss": "^8.4.18",
-    "tailwindcss": "^3.2.1",
+    "tailwindcss": "^3.2.2",
     "typescript": "^4.8.4"
   }
 }
