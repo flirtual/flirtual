@@ -1,13 +1,18 @@
 defmodule Flirtual.Users do
   import Ecto.Query
-  import Ecto
+  import Ecto.Changeset
 
-  alias Flirtual.{Repo, User}
+  alias Flirtual.{Repo, User, Sessions}
   alias Flirtual.User.{Session}
+
+  def get(id)
+      when is_binary(id) do
+    User |> where([user], user.id == ^id) |> preload(^User.default_assoc()) |> Repo.one()
+  end
 
   def get_by_email(email)
       when is_binary(email) do
-    Repo.get_by(User, email: email)
+    User |> where([user], user.email == ^email) |> preload(^User.default_assoc()) |> Repo.one()
   end
 
   def get_by_email_and_password(email, password)
@@ -19,45 +24,58 @@ defmodule Flirtual.Users do
   def get_by_session_token(token)
       when is_binary(token) do
     (Session
-     |> where([session], session.hashed_token == ^Session.hash_token(Session.decode_token(token)))
+     |> Sessions.query_by_token(token)
      |> preload(user: ^User.default_assoc())
      |> Repo.one!()).user
-
-    # Repo.one(
-    #   from(
-    #     session in from(Session,
-    #       where: [hashed_token: ^Session.hash_token(Session.decode_token(token))]
-    #     ),
-    #     join: user in assoc(session, :user),
-    #     select: user,
-    #     preload: []
-    #   )
-    # )
-  end
-
-  def create_session(%User{} = user) do
-    Session.create(user) |> Repo.insert!()
   end
 
   def register_user(attrs) do
-    changeset = %User{} |> User.registration_changeset(attrs)
+    changeset =
+      {%{},
+       %{
+         username: :string,
+         email: :string,
+         password: :string,
+         service_agreement: :boolean,
+         notifications: :boolean
+       }}
+      |> cast(attrs, [:username, :email, :password, :service_agreement, :notifications])
+      |> validate_required([:username, :email, :password, :service_agreement, :notifications])
+      |> validate_acceptance(:service_agreement)
 
-    with {:ok, user} <- Repo.insert(changeset) do
-      {:ok, preferences} = Ecto.build_assoc(user, :preferences) |> Repo.insert()
-      {:ok, _} = Ecto.build_assoc(preferences, :email_notifications) |> Repo.insert()
-      {:ok, _} = Ecto.build_assoc(preferences, :privacy) |> Repo.insert()
 
-      {:ok, profile} = Ecto.build_assoc(user, :profile) |> Repo.insert()
-      {:ok, _} = Ecto.build_assoc(profile, :preferences) |> Repo.insert()
+    case changeset.valid? do
+      false ->
+        {:error, changeset}
 
-      {:ok,
-       user
-       |> Repo.preload([
-         :connections,
-         :subscription,
-         preferences: [:email_notifications, :privacy],
-         profile: [:preferences, :custom_weights, :images]
-       ])}
+      true ->
+        source = changeset.changes;
+        changeset =
+          %User{}
+          |> cast(changeset.changes, [:username, :email, :password])
+          |> User.validate_unique_username()
+          |> User.validate_unique_email()
+          |> User.validate_password()
+
+        IO.inspect(changeset)
+
+        with {:ok, user} <- Repo.insert(changeset) do
+          {:ok, preferences} = Ecto.build_assoc(user, :preferences) |> Repo.insert()
+          {:ok, _} = Ecto.build_assoc(preferences, :email_notifications, %{ newsletter: source[:notifications] }) |> Repo.insert()
+          {:ok, _} = Ecto.build_assoc(preferences, :privacy) |> Repo.insert()
+
+          {:ok, profile} = Ecto.build_assoc(user, :profile) |> Repo.insert()
+          {:ok, _} = Ecto.build_assoc(profile, :preferences) |> Repo.insert()
+
+          {:ok,
+           user
+           |> Repo.preload([
+             :connections,
+             :subscription,
+             preferences: [:email_notifications, :privacy],
+             profile: [:preferences, :custom_weights, :images]
+           ])}
+        end
     end
   end
 end

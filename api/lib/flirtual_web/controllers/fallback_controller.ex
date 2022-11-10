@@ -5,13 +5,22 @@ defmodule FlirtualWeb.FallbackController do
 
   def call(%Plug.Conn{} = conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
-    |> put_status(:unprocessable_entity)
-    |> json(
-      new_error("Unprocessable entity", %{
-        fields: transform_changeset_errors(changeset)
-      })
+    |> put_error(
+      :unprocessable_entity,
+      "Unprocessable entity",
+      %{
+        properties: transform_changeset_errors(changeset)
+      }
     )
     |> halt()
+  end
+
+  def call(%Plug.Conn{} = conn, {:error, {status, message}}) do
+    conn |> put_error(status, message) |> halt()
+  end
+
+  def call(%Plug.Conn{} = conn, {:error, {status, message, details}}) do
+    conn |> put_error(status, message, details) |> halt()
   end
 
   def call(%Plug.Conn{} = conn, params) do
@@ -19,8 +28,7 @@ defmodule FlirtualWeb.FallbackController do
     IO.inspect(params)
 
     conn
-    |> put_status(:internal_server_error)
-    |> json(new_error("Internal server error"))
+    |> put_error(:internal_server_error, "Internal server error")
     |> halt()
   end
 end

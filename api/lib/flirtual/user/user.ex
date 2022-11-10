@@ -8,6 +8,7 @@ defmodule Flirtual.User do
              :email,
              :username,
              :language,
+             :born_at,
              :tags,
              :connections,
              :subscription,
@@ -78,10 +79,15 @@ defmodule Flirtual.User do
     |> validate_password(opts)
   end
 
-  defp validate_username(changeset) do
+  def validate_username(changeset) do
     changeset
     |> validate_required([:username])
     |> validate_length(:username, max: 160)
+  end
+
+  def validate_unique_username(changeset) do
+    changeset
+    |> validate_username()
     |> unsafe_validate_unique(:username, Flirtual.Repo)
     |> unique_constraint(:username)
   end
@@ -91,11 +97,16 @@ defmodule Flirtual.User do
     |> validate_required([:email])
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
     |> validate_length(:email, max: 160)
+  end
+
+  def validate_unique_email(changeset) do
+    changeset
+    |> validate_email()
     |> unsafe_validate_unique(:email, Flirtual.Repo)
     |> unique_constraint(:email)
   end
 
-  def validate_password(changeset, opts) do
+  def validate_password(changeset, opts \\ []) do
     changeset
     |> validate_required([:password])
     |> validate_length(:password, min: 8, max: 72)
@@ -128,7 +139,7 @@ defmodule Flirtual.User do
   def email_changeset(user, attrs) do
     user
     |> cast(attrs, [:email])
-    |> validate_email()
+    |> validate_unique_email()
     |> case do
       %{changes: %{email: _}} = changeset -> changeset
       %{} = changeset -> add_error(changeset, :email, "did not change")

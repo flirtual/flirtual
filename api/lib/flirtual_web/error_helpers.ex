@@ -1,7 +1,12 @@
 defmodule FlirtualWeb.ErrorHelpers do
+  def put_error(%Plug.Conn{} = conn, status, message, details \\ %{}) do
+    conn
+    |> Plug.Conn.put_status(status)
+    |> Phoenix.Controller.json(new_error(message, details))
+  end
 
   def new_error(message, details \\ %{}) do
-    %{ errors: Map.merge(details, %{ message: message })}
+    %{ error: Map.merge(details, %{ message: message })}
   end
 
   def transform_changeset_errors(%Ecto.Changeset{} = changeset) do

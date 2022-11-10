@@ -6,7 +6,9 @@ defmodule FlirtualWeb.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_flirtual_key",
+    domain: "localhost",
+    same_site: "Lax",
+    key: "session",
     signing_salt: "mGFTg14t"
   ]
 
@@ -25,6 +27,8 @@ defmodule FlirtualWeb.Endpoint do
     param_key: "request_logger",
     cookie_key: "request_logger"
 
+
+  plug CORSPlug, origin: ["http://localhost:3000"]
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]

@@ -53,6 +53,6 @@ defmodule Flirtual.User.Session do
   end
 
   def get_by_token (token) do
-    Repo.get_by(Session, hashed_token: hash_token(decode_token(token)))
+    Repo.get_by(Flirtual.User.Session, hashed_token: hash_token(decode_token(token)))
   end
 end

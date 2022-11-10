@@ -5,25 +5,28 @@ defmodule FlirtualWeb.SessionController do
   import Phoenix.Controller
   import Ecto.Changeset
 
+  import FlirtualWeb.ErrorHelpers
+
+  alias Flirtual.Sessions
   alias Flirtual.Users
+  alias Flirtual.User.Session
   alias Flirtual.User
 
   action_fallback FlirtualWeb.FallbackController
 
   def get(conn, _params) do
-    conn = conn |> fetch_session() |> fetch_current_user()
-    conn |> put_status(:created) |> json(conn.assigns[:current_user])
+    conn |> json(conn.assigns[:session])
   end
 
   def create(%Plug.Conn{} = conn, params) do
     changeset =
-      cast(
-        {%{},
-         %{
-           email: :string,
-           password: :string,
-           remember_me: :boolean
-         }},
+      {%{},
+       %{
+         email: :string,
+         password: :string,
+         remember_me: :boolean
+       }}
+      |> cast(
         params,
         [
           :email,
@@ -36,94 +39,71 @@ defmodule FlirtualWeb.SessionController do
     if not changeset.valid? do
       {:error, changeset}
     else
-      if user = Users.get_by_email_and_password(
-        get_field(changeset, :email),
-        get_field(changeset, :password)
-      ) do
-        conn |> log_in_user(user, get_field(changeset, :remember_me))
+      if user =
+           Users.get_by_email_and_password(
+             get_field(changeset, :email),
+             get_field(changeset, :password)
+           ) do
+        {session, conn} = log_in_user(conn, user, get_field(changeset, :remember_me))
+        conn |> put_status(:created) |> json(session)
       else
-        {:error, "Invalid credentials"}
+        {:error, {:unauthorized, "Invalid credentials"}}
       end
     end
   end
 
-  def delete(%Plug.Conn{} = conn, _params) do
-    conn
-  end
-
-  @max_age 60 * 60 * 24 * 60
-  @remember_me_cookie "remember_me"
-  @remember_me_options [sign: true, max_age: @max_age, same_site: "Lax"]
-
   def log_in_user(%Plug.Conn{} = conn, %User{} = user, remember_me) do
-    session = Users.create_session(user)
-    IO.inspect(session.token)
+    session = Sessions.create(user)
 
-    conn
-    |> fetch_session()
-    |> renew_session()
-    |> put_session(:token, session.token)
-    |> maybe_write_remember_me_cookie(session.token, remember_me)
-    |> json(session)
-    |> halt()
+    conn =
+      conn
+      |> fetch_session()
+      |> renew_session()
+      |> put_session(:token, session.token)
+      |> maybe_write_remember_me_cookie(session.token, remember_me)
+
+    {session, conn}
   end
+
+  @remember_me_cookie "remember_me"
+  @max_age 60 * 60 * 24 * 60
 
   defp maybe_write_remember_me_cookie(conn, token, true) do
-    put_resp_cookie(conn, @remember_me_cookie, token, @remember_me_options)
+    put_resp_cookie(conn, @remember_me_cookie, token,
+      domain: "localhost",
+      sign: true,
+      max_age: @max_age,
+      same_site: "Lax"
+    )
   end
 
   defp maybe_write_remember_me_cookie(conn, _token, _params) do
     conn
   end
 
-  # This function renews the session ID and erases the whole
-  # session to avoid fixation attacks. If there is any data
-  # in the session you may want to preserve after log in/log out,
-  # you must explicitly fetch the session data before clearing
-  # and then immediately set it after clearing, for example:
-  #
-  #     defp renew_session(conn) do
-  #       preferred_locale = get_session(conn, :preferred_locale)
-  #
-  #       conn
-  #       |> configure_session(renew: true)
-  #       |> clear_session()
-  #       |> put_session(:preferred_locale, preferred_locale)
-  #     end
-  #
+  def delete(%Plug.Conn{} = conn, _params) do
+    conn |> log_out_user() |> resp(:no_content, "") |> halt()
+  end
+
+  def log_out_user(conn) do
+    token = get_session(conn, :token)
+    token && Sessions.delete(token)
+
+    conn
+    |> renew_session()
+    |> delete_resp_cookie(@remember_me_cookie)
+  end
+
   defp renew_session(conn) do
     conn
     |> configure_session(renew: true)
     |> clear_session()
   end
 
-  @doc """
-  Logs the user out.
-
-  It clears all session data for safety. See renew_session.
-  """
-  def log_out_user(conn) do
-    user_token = get_session(conn, :user_token)
-    user_token && Accounts.delete_session_token(user_token)
-
-    if live_socket_id = get_session(conn, :live_socket_id) do
-      FlirtualWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
-    end
-
-    conn
-    |> renew_session()
-    |> delete_resp_cookie(@remember_me_cookie)
-    |> redirect(to: "/")
-  end
-
-  @doc """
-  Authenticates the user by looking into the session
-  and remember me token.
-  """
-  def fetch_current_user(conn) do
+  def fetch_current_session(conn, _) do
     {token, conn} = ensure_session_token(conn)
-    user = token && Users.get_by_session_token(token)
-    assign(conn, :current_user, user)
+    session = token && Session.get_by_token(token)
+    assign(conn, :session, session)
   end
 
   defp ensure_session_token(conn) do
@@ -140,34 +120,11 @@ defmodule FlirtualWeb.SessionController do
     end
   end
 
-  @doc """
-  Used for routes that require the user to not be authenticated.
-  """
-  def redirect_if_user_is_authenticated(conn, _opts) do
-    if conn.assigns[:current_user] do
-      conn
-      |> redirect(to: signed_in_path(conn))
-      |> halt()
-    else
-      conn
-    end
-  end
-
   def require_authenticated_user(conn, _opts) do
-    if conn.assigns[:current_user] do
+    if conn.assigns[:session] do
       conn
     else
-      conn
-      |> resp(:unauthorized, "")
-      |> halt()
+      conn |> put_error(:unauthorized, "Missing credentials") |> halt()
     end
   end
-
-  defp maybe_store_return_to(%{method: "GET"} = conn) do
-    put_session(conn, :user_return_to, current_path(conn))
-  end
-
-  defp maybe_store_return_to(conn), do: conn
-
-  defp signed_in_path(_conn), do: "/"
 end

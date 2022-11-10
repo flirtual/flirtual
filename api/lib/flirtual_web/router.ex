@@ -1,7 +1,11 @@
 defmodule FlirtualWeb.Router do
   use FlirtualWeb, :router
 
-  import FlirtualWeb.UserAuth
+  import Phoenix.Router
+  import Plug.Conn
+
+  import FlirtualWeb.SessionController
+
 
   @internal_api_key "***REMOVED***"
 
@@ -12,12 +16,14 @@ defmodule FlirtualWeb.Router do
     plug :put_root_layout, {FlirtualWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :fetch_current_user
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_current_session
   end
+
 
   def require_internal_authorization(conn, _opts) do
     if List.first(Plug.Conn.get_req_header(conn, "api-key")) === @internal_api_key do
@@ -38,16 +44,27 @@ defmodule FlirtualWeb.Router do
           post "/", SessionController, :create
 
           scope "/" do
-            # pipe_through :require_authenticated_user
+            pipe_through :require_authenticated_user
 
             get "/", SessionController, :get
             delete "/", SessionController, :delete
           end
         end
+        scope "/user" do
+          pipe_through :require_authenticated_user
+
+          get "/", UsersController, :get_current_user
+        end
       end
 
       scope "/users" do
         post "/", UsersController, :create
+
+        scope "/:user_id" do
+          pipe_through :require_authenticated_user
+
+          get "/", UsersController, :get
+        end
       end
 
       scope "/internal" do
