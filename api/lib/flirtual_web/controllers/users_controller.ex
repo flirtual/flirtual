@@ -1,12 +1,14 @@
 defmodule FlirtualWeb.UsersController do
   use FlirtualWeb, :controller
 
+  alias FlirtualWeb.SessionController
   alias Flirtual.Users
 
   action_fallback FlirtualWeb.FallbackController
 
   def create(conn, params) do
     with {:ok, user} <- Users.register_user(params) do
+      {_, conn} = conn |> SessionController.log_in_user(user)
       conn |> put_status(:created) |> json(user)
     end
   end

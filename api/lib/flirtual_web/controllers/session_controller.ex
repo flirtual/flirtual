@@ -52,7 +52,7 @@ defmodule FlirtualWeb.SessionController do
     end
   end
 
-  def log_in_user(%Plug.Conn{} = conn, %User{} = user, remember_me) do
+  def log_in_user(%Plug.Conn{} = conn, %User{} = user, remember_me \\ false) do
     session = Sessions.create(user)
 
     conn =
