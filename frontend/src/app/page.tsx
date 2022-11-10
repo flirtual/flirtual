@@ -12,7 +12,7 @@ import { SectionTestimonial } from "./section-testimonial";
 import { SnapSection } from "./snap-section";
 import { LandingButton } from "./landing-button";
 
-export const RootIndexPage: React.FC = () => {
+export default function RootIndexPage() {
 	return (
 		<div className="h-screen snap-y snap-mandatory md:snap-none overflow-x-hidden scroll-smooth bg-black text-white">
 			<SectionCallToAction />
@@ -95,6 +95,4 @@ export const RootIndexPage: React.FC = () => {
 			</SnapSection>
 		</div>
 	);
-};
-
-export default RootIndexPage;
+}
