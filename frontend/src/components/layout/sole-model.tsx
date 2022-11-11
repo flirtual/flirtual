@@ -13,7 +13,7 @@ export const SoleModelLayout: React.FC<React.ComponentProps<"div">> = ({ childre
 		)}
 	>
 		<Header />
-		<div className="flex grow items-center justify-center py-16 px-4 sm:py-32 md:px-32">
+		<div className="flex flex-col grow items-center justify-center p-4 sm:py-32 md:px-32">
 			{children}
 		</div>
 		<Footer />

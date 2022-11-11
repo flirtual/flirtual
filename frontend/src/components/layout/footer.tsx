@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
 	const openFreshworks = useCallback(() => window.FreshworksWidget("open"), []);
 
 	return (
-		<footer className="font-nunito bg-brand-gradient flex w-full justify-center px-8 py-16 text-white md:px-16">
+		<footer className="font-nunito bg-brand-gradient hidden md:flex w-full justify-center px-8 py-16 text-white md:px-16">
 			<div className="flex w-full max-w-screen-lg flex-col gap-4 p-4 md:gap-8">
 				<div className="flex gap-4 md:mx-auto md:justify-center">
 					<FooterListIconLink Icon={EnvelopeIcon} onClick={openFreshworks} />
