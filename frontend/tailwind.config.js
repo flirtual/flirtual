@@ -42,6 +42,10 @@ module.exports = {
 				"scroll-x-screen": {
 					from: { transform: "translateX(0)" },
 					to: { transform: "translateX(-100%)" }
+				},
+				"fade-in": {
+					"0%": { opacity: "0%" },
+					"100%": { opacity: "100%" }
 				}
 			}
 		}

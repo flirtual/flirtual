@@ -1,12 +1,11 @@
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { twMerge } from "tailwind-merge";
-import { ReactCountryFlag } from "react-country-flag";
 
 import { IconComponent } from "~/components/icons";
-import { GenderMale } from "~/components/icons/gender-male";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { useServerAuthenticate } from "~/server-utilities";
+import { getCountry } from "~/utilities";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 const Pill: React.FC<React.ComponentProps<"div"> & { Icon?: IconComponent; active?: boolean }> = ({
@@ -62,6 +61,15 @@ const ProfileVerificationBadge: React.FC = () => (
 		<CheckBadgeIcon className="absolute fill-brand-pink w-full h-full" />
 	</div>
 );
+const CountryPill: React.FC<{ code: string }> = ({ code }) => (
+	<Pill>
+		<img
+			className="h-8 rounded-l-lg -ml-4 shrink-0"
+			src={`https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/flags/4x3/${code}.svg`}
+		/>
+		<span>{getCountry(code).name}</span>
+	</Pill>
+);
 
 export default async function ProfilePage() {
 	// const user = await useServerAuthenticate();
@@ -92,9 +100,8 @@ export default async function ProfilePage() {
 							</div>
 						</div>
 						<div className="font-montserrat flex gap-2 items-center flex-wrap">
-							<Pill Icon={GenderMale}>Male</Pill>
-							<Pill>Bisexual</Pill>
-							<Pill>Canada</Pill>
+							<Pill>Man</Pill>
+							<CountryPill code="jp" />
 						</div>
 						<ActivityIndicator lastActiveAt={new Date()} />
 					</div>

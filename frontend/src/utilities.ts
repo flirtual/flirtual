@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { camelCase, snakeCase } from "change-case";
+import { countries } from "countries-list";
 
 export function clamp(value: number, min: number, max: number): number {
 	return value < min ? min : value > max ? max : value;
@@ -35,4 +36,8 @@ export function toCamelObject<T>(object: any): T {
 
 export function toSnakeObject<T>(object: any): T {
 	return transformObject(object, (key, value) => [snakeCase(key), toSnakeObject(value)]);
+}
+
+export function getCountry(code: string) {
+	return countries[code.toUpperCase() as keyof typeof countries];
 }
