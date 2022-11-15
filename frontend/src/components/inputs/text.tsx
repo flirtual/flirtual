@@ -1,3 +1,5 @@
+"use client";
+
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import React, { useRef } from "react";
 import { twMerge } from "tailwind-merge";
@@ -6,16 +8,19 @@ import { omit } from "~/utilities";
 
 import { IconComponent } from "../icons";
 
-export type TextProps = React.ComponentProps<"input"> & { Icon?: IconComponent };
+export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
+	Icon?: IconComponent;
+	onChange?: React.Dispatch<string>;
+};
 
-export const Text: React.FC<TextProps> = (props) => {
+export const InputText: React.FC<InputTextProps> = (props) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const Icon = props.Icon ?? props.type === "date" ? CalendarDaysIcon : undefined;
 
 	return (
 		<div
-			className="bg-brand-grey shadow-brand-1 focus-within:ring-brand-coral overflow-hidden flex items-center focus-within:ring-offset-2 rounded-xl focus-within:ring-2"
+			className="bg-brand-grey shadow-brand-1 border-red-500 focus-within:ring-brand-coral overflow-hidden flex items-center focus-within:ring-offset-2 rounded-xl focus-within:ring-2"
 			onClick={() => inputRef.current?.focus()}
 		>
 			{Icon && (
@@ -32,6 +37,10 @@ export const Text: React.FC<TextProps> = (props) => {
 					Icon && "pl-2",
 					props.className
 				)}
+				onChange={(event) => {
+					if (!props?.onChange) return;
+					props.onChange(event.target.value);
+				}}
 			/>
 		</div>
 	);

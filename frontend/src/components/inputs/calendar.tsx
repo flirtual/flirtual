@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
 import {
 	ChevronDoubleLeftIcon,
 	ChevronDoubleRightIcon,
@@ -10,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 
 import { IconComponent } from "~/components/icons";
 
-import { OptionWindow, OptionEvent, SelectOption } from "./select";
+import { InputOptionWindow, InputOptionEvent, InputSelectOption } from "./select";
 
 const MonthNames = Object.freeze(
 	new Array(12).fill(undefined).map((_, monthIdx) => {
@@ -56,13 +58,13 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 	</button>
 );
 
-export interface LabelSelectProps {
-	options: Array<SelectOption>;
-	onOptionAction: React.EventHandler<OptionEvent<React.SyntheticEvent<HTMLButtonElement>>>;
+interface LabelSelectProps {
+	options: Array<InputSelectOption>;
+	onOptionAction: React.EventHandler<InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>>>;
 	children: React.ReactNode;
 }
 
-export const LabelSelect: React.FC<LabelSelectProps> = (props) => {
+const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 	const [visible, setVisible] = useState(false);
 
 	return (
@@ -78,13 +80,13 @@ export const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 			}}
 		>
 			<button
-				className="font-montserrat text-xl px-3 flex gap-2 items-center focus:outline-none"
+				className="font-montserrat font-semibold text-xl px-3 flex gap-2 items-center focus:outline-none"
 				type="button"
 			>
 				<span className="">{props.children}</span>
 				<ChevronDownIcon className="w-4 h-4" strokeWidth={3} />
 			</button>
-			<OptionWindow
+			<InputOptionWindow
 				className={twMerge("absolute w-fit mt-4", visible ? "flex" : "hidden")}
 				options={props.options}
 				onOptionClick={props.onOptionAction}
@@ -94,12 +96,12 @@ export const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 	);
 };
 
-export type CalendarProps = Omit<React.ComponentProps<"div">, "onChange"> & {
+export type InputCalendarProps = Omit<React.ComponentProps<"div">, "onChange"> & {
 	value: Date;
 	onChange: React.Dispatch<Date>;
 };
 
-export const Calendar: React.FC<CalendarProps> = (props) => {
+export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	const { value, onChange, ...elementProps } = props;
 	const [displayDate, setDisplayDate] = useState(value);
 
@@ -135,7 +137,7 @@ export const Calendar: React.FC<CalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"shadow-brand-1 font-nunito focus-within:ring-brand-coral select-none focus-within:ring-2 focus-within:ring-offset-2 rounded-3xl p-4 bg-white md:w-96",
+				"shadow-brand-1 font-nunito focus-within:ring-brand-coral select-none focus-within:ring-2 focus-within:ring-offset-2 rounded-3xl p-4 bg-white",
 				elementProps.className
 			)}
 		>

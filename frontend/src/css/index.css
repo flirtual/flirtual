@@ -2,7 +2,10 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-
 *::-webkit-scrollbar {
   @apply bg-transparent w-0
+}
+
+*[data-nextjs-scroll-focus-boundary] {
+  display: contents;
 }
