@@ -1,8 +1,10 @@
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
+import { CheckBadgeIcon, ForwardIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { IconComponent } from "~/components/icons";
+import { HeartGradient } from "~/components/icons/heart-gradient";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { useServerAuthenticate } from "~/server-utilities";
 import { getCountry } from "~/utilities";
@@ -76,7 +78,7 @@ export default async function ProfilePage() {
 
 	return (
 		<SoleModelLayout>
-			<div className="max-w-lg border-4 flex flex-col shadow-brand-1 rounded-3xl border-brand-coral bg-brand-white overflow-hidden">
+			<div className="relative sm:max-w-lg w-full sm:border-4 flex flex-col sm:shadow-brand-1 sm:rounded-3xl border-brand-coral bg-brand-cream text-brand-black sm:bg-brand-white overflow-hidden">
 				<ProfileImageDisplay
 					images={[
 						"https://media.flirtu.al/9c65817f-d0c3-4143-9a50-0461329c27ff/",
@@ -91,7 +93,7 @@ export default async function ProfilePage() {
 						"https://media.flirtu.al/a7864e51-0034-4b38-9406-5a73b9922a89/"
 					]}
 				>
-					<div className="w-full justify-center flex flex-col gap-2 p-6 absolute text-brand-white bottom-0">
+					<div className="w-full justify-center flex flex-col gap-2 p-8 absolute text-brand-white bottom-0">
 						<div className="font-montserrat flex gap-4 items-center">
 							<span className="text-4xl font-bold leading-none">Aries</span>
 							<div className="flex gap-2 items-center">
@@ -101,30 +103,40 @@ export default async function ProfilePage() {
 						</div>
 						<div className="font-montserrat flex gap-2 items-center flex-wrap">
 							<Pill>Man</Pill>
-							<CountryPill code="jp" />
+							<CountryPill code="ca" />
 						</div>
 						<ActivityIndicator lastActiveAt={new Date()} />
 					</div>
 				</ProfileImageDisplay>
-				<div className="flex-gap p-6 grow h-full flex flex-col gap-6">
+				<div className="flex-gap p-8 grow h-full flex flex-col gap-6">
 					<span className="text-xl font-nunito whitespace-pre-wrap">
-						{`hi~
+						{`Hi, if you like a hyperactive and extremely affectionate clingy person, you came to the right profile. You can call me Kaiyo [Kai-yo], I'm a bundle of energy who loves to nerd out on technology. I also have a strong interest in Japanese culture along with content creation with my wonderful group of friends.
 
-im munchkin, im 18 looking for cuddle buddies or friends to hang out with <3
+Some of my current hyperfixations right now is playing VRChat ofc and Overwatch. If you love overwatch hmu. I am a nerdy mercy main.
 
-sometimes i go mute due to anxiety but im pretty chill overall :)
+If you wanna interact with me more, I would love to chat more through my discord. I check Flirtual daily so if I think we are going to be good I'll homie back or like back! I will say right now I do not like drama and will block you if you bring negativity to my direct messages.
 
-i get shy so please message me first
-
-i tend to get annoying sometimes so if i do just tell me :)
-
-im mostly on vrchat but i also play roblox and Minecraft. if we do end up matching it might take me a bit to fully open up to you so please be patient. im a sub/bottom if you're into that. add my discord if we match the messaging on here is weird!`}
+Thank you for reading`}
 					</span>
 					<div className="flex flex-wrap gap-2">
 						<Pill active>Open to serious dating</Pill>
 						<Pill active>Practical</Pill>
 						<Pill>Free-spirited</Pill>
 						<Pill>Friendly</Pill>
+					</div>
+				</div>
+				<div className="h-32 w-full">
+					<div className="fixed bottom-16 h-32 w-full px-8 py-4 pointer-events-none justify-center flex items-center">
+						<div className="text-brand-white pointer-events-auto flex rounded-xl shadow-brand-1 h-fit overflow-hidden">
+							<button className="flex gap-3 items-center px-8 py-4 bg-brand-gradient" type="button">
+								<HeartGradient className="w-8" gradient={false} />
+								<span className="text-lg font-montserrat font-extrabold">Like</span>
+							</button>
+							<button className="flex gap-3 items-center px-8 py-4 bg-brand-black" type="button">
+								<XMarkIcon className="w-8" strokeWidth={3} />
+								<span className="text-lg font-montserrat font-extrabold">Pass</span>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>

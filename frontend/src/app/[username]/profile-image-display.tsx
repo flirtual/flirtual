@@ -41,7 +41,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 					<button className="h-full grow" type="button" onClick={() => set(-1)} />
 					<button className="h-full grow" type="button" onClick={() => set(1)} />
 				</div>
-				<div className="flex absolute w-full top-0 p-6">
+				<div className="flex absolute w-full top-0 px-8 py-6">
 					<div className="flex items-center gap-2 grow">
 						{images.map((_, imageIdx) => (
 							<button

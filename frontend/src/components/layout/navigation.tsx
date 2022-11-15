@@ -4,7 +4,9 @@ import {
 	ArrowLeftOnRectangleIcon,
 	HeartIcon,
 	HomeIcon,
-	EnvelopeIcon
+	EnvelopeIcon,
+	EnvelopeOpenIcon,
+	ChatBubbleLeftRightIcon
 } from "@heroicons/react/24/solid";
 import React from "react";
 import Link, { LinkProps } from "next/link";
@@ -68,19 +70,35 @@ const ProfileImageDropdown: React.FC<{ user: User }> = ({ user }) => {
 
 const MessagesIcon: React.FC = () => (
 	<div className="relative">
-		<EnvelopeIcon className="w-16 text-white" />
-		<div className="ring-4 ring-white absolute bottom-0 right-0 rounded-full bg-brand-gradient w-6 h-6 flex items-center justify-center text-white">
-			<span>4</span>
+		<ChatBubbleLeftRightIcon className="w-10 text-white" strokeWidth={1.5} />
+		<div className="ring-[3px] ring-white absolute top-0 -right-2 rounded-full bg-brand-gradient w-6 h-6 flex items-center justify-center">
+			<span className="text-brand-white text-sm font-nunito font-semibold leading-none">4</span>
 		</div>
 	</div>
 );
 
-export const Header: React.FC = () => {
+export const Navigation: React.FC = () => {
 	const { data: user } = useCurrentUser();
 
+	const avatarUrl =
+		"https://media.flirtu.al/b8a05ec5-7aea-4e33-bb2b-46301eaddd9a/-/scale_crop/64x64/smart_faces_points/-/format/auto/-/quality/smart/-/resize/x65/";
+
 	return (
-		<header className="bg-brand-gradient shadow-brand-1 font-nunito items-center gap-6 flex justify-center w-full px-8 py-4 md:px-16">
-			{user && <ProfileImageDropdown user={user} />}
+		<nav className="h-16 sm:pt-0 w-full">
+			<div className="h-16 fixed bottom-0 sm:static z-10 bg-brand-gradient text-brand-white shadow-brand-1 font-nunito justify-between items-center gap-6 flex  w-full px-8 py-4 md:px-16">
+				<HomeIcon className="w-8" />
+				<PeaceGradient className="w-8" gradient={false} />
+
+				<HeartGradient className="w-8" gradient={false} />
+				<MessagesIcon />
+				<img
+					className="rounded-full h-8 w-8 shrink-0"
+					src={
+						"https://media.flirtu.al/b8a05ec5-7aea-4e33-bb2b-46301eaddd9a/-/scale_crop/64x64/smart_faces_points/-/format/auto/-/quality/smart/-/resize/x65/"
+					}
+				/>
+			</div>
+			{/* {user && <ProfileImageDropdown user={user} />}
 			<div className="flex gap-2 px-4 py-0 bg-white rounded-full">
 				{user ? (
 					<>
@@ -94,7 +112,7 @@ export const Header: React.FC = () => {
 					</>
 				)}
 			</div>
-			{user && <MessagesIcon />}
-		</header>
+			{user && <MessagesIcon />} */}
+		</nav>
 	);
 };
