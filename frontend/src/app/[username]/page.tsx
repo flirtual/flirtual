@@ -107,8 +107,18 @@ export default async function ProfilePage() {
 					</div>
 				</ProfileImageDisplay>
 				<div className="flex-gap p-6 grow h-full flex flex-col gap-6">
-					<span className="text-xl font-nunito">
-						Canadian software engineer, I work for Flirtual ;)
+					<span className="text-xl font-nunito whitespace-pre-wrap">
+						{`hi~
+
+im munchkin, im 18 looking for cuddle buddies or friends to hang out with <3
+
+sometimes i go mute due to anxiety but im pretty chill overall :)
+
+i get shy so please message me first
+
+i tend to get annoying sometimes so if i do just tell me :)
+
+im mostly on vrchat but i also play roblox and Minecraft. if we do end up matching it might take me a bit to fully open up to you so please be patient. im a sub/bottom if you're into that. add my discord if we match the messaging on here is weird!`}
 					</span>
 					<div className="flex flex-wrap gap-2">
 						<Pill active>Open to serious dating</Pill>

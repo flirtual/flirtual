@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { clamp } from "~/utilities";
-
 const ProfileImage: React.FC<React.ComponentProps<"img">> = (props) => (
 	<img {...props} className={twMerge("object-cover aspect-square", props.className)} />
 );

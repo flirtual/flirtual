@@ -50,12 +50,12 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 				className="w-full"
 				type="date"
 				value={inputValue}
-				onChange={(event) => {
-					const value = fromDateString(event.target.value);
-					setInputValue(event.target.value);
+				onChange={(value) => {
+					const date = fromDateString(value);
+					setInputValue(value);
 
-					if (Number.isNaN(value.getTime())) return;
-					props.onChange(value);
+					if (Number.isNaN(date.getTime())) return;
+					props.onChange(date);
 				}}
 				onKeyDown={(event) => {
 					const { currentTarget } = event;
