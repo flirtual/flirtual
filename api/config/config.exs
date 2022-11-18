@@ -24,6 +24,9 @@ config :flirtual, Flirtual.Elasticsearch,
   api: Elasticsearch.API.HTTP,
   json_library: Jason
 
+config :bodyguard,
+  default_error: {:unauthorized, "Unauthorized"}
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

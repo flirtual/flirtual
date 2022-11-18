@@ -51,8 +51,4 @@ defmodule Flirtual.User.Session do
   def compare_token(token, hashed_token) do
     hash_token(decode_token(token)) === hashed_token
   end
-
-  def get_by_token (token) do
-    Repo.get_by(Flirtual.User.Session, hashed_token: hash_token(decode_token(token)))
-  end
 end

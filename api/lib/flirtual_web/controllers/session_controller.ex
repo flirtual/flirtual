@@ -102,8 +102,16 @@ defmodule FlirtualWeb.SessionController do
 
   def fetch_current_session(conn, _) do
     {token, conn} = ensure_session_token(conn)
-    session = token && Session.get_by_token(token)
+    session = token && Sessions.get_by_token(token)
     assign(conn, :session, session)
+  end
+
+  def fetch_current_user(conn) do
+    if not Map.has_key?(conn.assigns[:session], :user) do
+      conn |> assign(:user, Users.get(conn.assigns[:session].user_id))
+    else
+      conn
+    end
   end
 
   defp ensure_session_token(conn) do

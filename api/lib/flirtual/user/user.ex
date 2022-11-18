@@ -1,5 +1,7 @@
 defmodule Flirtual.User do
   use Flirtual.Schema
+  use Flirtual.PolicyTarget, policy: Flirtual.User.Policy
+
   import Ecto.Changeset
 
   @derive {Jason.Encoder,
@@ -12,6 +14,7 @@ defmodule Flirtual.User do
              :tags,
              :connections,
              :subscription,
+             :preferences,
              :profile,
              :updated_at,
              :created_at
@@ -50,6 +53,7 @@ defmodule Flirtual.User do
     [
       :connections,
       :subscription,
+      preferences: Flirtual.User.Preferences.default_assoc(),
       profile: Flirtual.User.Profile.default_assoc()
     ]
   end

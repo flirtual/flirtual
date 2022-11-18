@@ -64,6 +64,11 @@ defmodule FlirtualWeb.Router do
           pipe_through :require_authenticated_user
 
           get "/", UsersController, :get
+          post "/", UsersController, :update
+
+          scope "/profile" do
+            post "/", ProfileController, :update
+          end
         end
       end
 

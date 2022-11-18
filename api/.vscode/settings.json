@@ -3,5 +3,5 @@
 		"Blinkloader",
 		"Flirtual"
 	],
-	"editor.formatOnSave": false
+	"editor.formatOnSave": true
 }

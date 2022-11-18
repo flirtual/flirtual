@@ -35,6 +35,7 @@ defmodule Flirtual.MixProject do
     [
       {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.6.6"},
+      {:bodyguard, "~> 2.4"},
       {:phoenix_ecto, "~> 4.4"},
       {:plug_redirect, "~> 1.0"},
       {:cors_plug, "~> 3.0"},
@@ -53,6 +54,7 @@ defmodule Flirtual.MixProject do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
+      {:poison, "~> 5.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"}
     ]

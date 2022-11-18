@@ -1,5 +1,8 @@
 defmodule Flirtual.User.Profile do
   use Flirtual.Schema
+  use Flirtual.PolicyTarget, policy: Flirtual.User.Profile.Policy
+
+  import Ecto.Changeset
 
   alias Flirtual.User
   alias Flirtual.User.Profile.{Images, Preferences, CustomWeights, Likes}
@@ -72,6 +75,10 @@ defmodule Flirtual.User.Profile do
            only: [
              :display_name,
              :biography,
+             :country,
+             :openness,
+             :conscientiousness,
+             :agreeableness,
              :gender,
              :sexuality,
              :games,
@@ -89,6 +96,10 @@ defmodule Flirtual.User.Profile do
 
     field :display_name, :string
     field :biography, :string
+    field :country, :string
+    field :openness, :integer, default: 0
+    field :conscientiousness, :integer, default: 0
+    field :agreeableness, :integer, default: 0
     field :gender, {:array, Ecto.Enum}, values: @genders
     field :sexuality, {:array, Ecto.Enum}, values: @sexualities
     field :games, {:array, :string}
@@ -111,5 +122,25 @@ defmodule Flirtual.User.Profile do
       :custom_weights,
       :images
     ]
+  end
+
+  def update_changeset(%User.Profile{} = profile, attrs) do
+    profile
+    |> cast(attrs, [
+      :display_name,
+      :biography,
+      :gender,
+      :sexuality,
+      :games,
+      :languages,
+      :platforms,
+      :interests,
+    ])
+    |> validate_display_name()
+  end
+
+  def validate_display_name(%Ecto.Changeset{} = changeset) do
+    changeset
+    |> validate_length(:display_name, min: 3, max: 32)
   end
 end

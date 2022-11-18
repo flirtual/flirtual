@@ -17,4 +17,6 @@ defmodule Flirtual.User.Preferences.Privacy do
     field :country, Ecto.Enum, values: @privacy_enum_values, default: :everyone
     field :kinks, Ecto.Enum, values: @privacy_enum_values, default: :everyone
   end
+
+  def get_possible_values(), do: @privacy_enum_values
 end

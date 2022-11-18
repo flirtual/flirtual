@@ -29,6 +29,10 @@ defmodule Flirtual.Users do
      |> Repo.one!()).user
   end
 
+  def update_user(attrs) do
+
+  end
+
   def register_user(attrs) do
     changeset =
       {%{},
@@ -56,8 +60,6 @@ defmodule Flirtual.Users do
           |> User.validate_unique_username()
           |> User.validate_unique_email()
           |> User.validate_password()
-
-        IO.inspect(changeset)
 
         with {:ok, user} <- Repo.insert(changeset) do
           {:ok, preferences} = Ecto.build_assoc(user, :preferences) |> Repo.insert()
