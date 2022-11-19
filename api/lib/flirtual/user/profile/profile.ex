@@ -1,6 +1,6 @@
 defmodule Flirtual.User.Profile do
   use Flirtual.Schema
-  use Flirtual.PolicyTarget, policy: Flirtual.User.Profile.Policy
+  use Flirtual.Target, policy: Flirtual.User.Profile.Policy
 
   import Ecto.Changeset
 
@@ -134,7 +134,7 @@ defmodule Flirtual.User.Profile do
       :games,
       :languages,
       :platforms,
-      :interests,
+      :interests
     ])
     |> validate_display_name()
   end

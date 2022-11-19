@@ -54,10 +54,12 @@ defmodule Flirtual.User.Policy do
       ),
       do: user.preferences
 
+  def transform(:preferences, _, _), do: []
+
   def transform(key, conn, %User{} = user) do
     if key in [:profile] do
-      value = Map.get(user, :profile) |> Map.replace(:user, user)
-      Flirtual.Policies.transform(value.__struct__, conn, value)
+      value = Map.get(user, key) |> Map.replace(:user, user)
+      conn |> Flirtual.Policy.transform(value)
     else
       Map.get(user, key, nil)
     end

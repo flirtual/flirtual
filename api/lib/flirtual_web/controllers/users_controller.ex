@@ -2,7 +2,7 @@ defmodule FlirtualWeb.UsersController do
   use FlirtualWeb, :controller
 
   alias FlirtualWeb.SessionController
-  alias Flirtual.{User,Users,Policies}
+  alias Flirtual.{Users, Policy}
 
   action_fallback FlirtualWeb.FallbackController
 
@@ -12,16 +12,14 @@ defmodule FlirtualWeb.UsersController do
       conn |> put_status(:created) |> json(user)
     end
   end
+
   def get(conn, %{"user_id" => id}) do
     user = Users.get(id)
 
-    case is_nil(user) do
-      true -> {:error, {:not_found, "User not found", %{user_id: id}}}
-      false ->
-        with :ok <- Policies.can(User, :read, conn.assigns.session, user) do
-          conn |> json(Policies.transform(User, conn, user))
-        end
-
+    if is_nil(user) or Policy.cannot?(conn, :read, user) do
+      {:error, {:not_found, "User not found", %{user_id: id}}}
+    else
+      conn |> json(Policy.transform(conn, user))
     end
   end
 

@@ -18,7 +18,7 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(:country, _, %Profile{
         user: %User{
           preferences: %User.Preferences{
-            privacy: %User.Preferences.Privacy{connections: :everyone}
+            privacy: %User.Preferences.Privacy{country: :everyone}
           }
         },
         country: country
