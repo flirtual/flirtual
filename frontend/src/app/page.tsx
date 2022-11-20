@@ -1,8 +1,6 @@
+import { Googleplay, Apple, Microsoft, Meta } from "@icons-pack/react-simple-icons";
+
 import { MobileButton } from "~/components/mobile-button";
-import { GooglePlayIcon } from "~/components/icons/google-play";
-import { AppleIcon } from "~/components/icons/apple";
-import { MicrosoftIcon } from "~/components/icons/microsoft";
-import { MetaIcon } from "~/components/icons/meta";
 import { Footer } from "~/components/layout/footer";
 
 import { SectionCallToAction } from "./section-call-to-action";
@@ -14,7 +12,7 @@ import { LandingButton } from "./landing-button";
 
 export default function RootIndexPage() {
 	return (
-		<div className="h-screen snap-y snap-mandatory md:snap-none overflow-x-hidden scroll-smooth bg-black text-white">
+		<div className="h-screen snap-y snap-mandatory overflow-x-hidden scroll-smooth bg-black text-white md:snap-none">
 			<SectionCallToAction />
 			<SectionAvatarProfiles
 				values={[
@@ -62,10 +60,10 @@ export default function RootIndexPage() {
 					"b8b087b9-3ab3-4a05-b01a-166b502789f5"
 				]}
 			/>
-			<SnapSection className="bg-brand-gradient flex flex-col">
-				<div className="grow flex h-full items-center justify-center p-16 pb-0 md:pb-16">
+			<SnapSection className="flex flex-col bg-brand-gradient">
+				<div className="flex h-full grow items-center justify-center p-16 pb-0 md:pb-16">
 					<div className="flex flex-col items-center gap-8 md:gap-16">
-						<h1 className="font-montserrat font-extrabold text-4xl sm:text-7xl md:text-8xl">
+						<h1 className="font-montserrat text-4xl font-extrabold sm:text-7xl md:text-8xl">
 							Get Flirtual
 						</h1>
 						<LandingButton href="/register" kind="secondary-cta">
@@ -74,18 +72,18 @@ export default function RootIndexPage() {
 						<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
 							<MobileButton
 								href="https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
-								Icon={GooglePlayIcon}
+								Icon={Googleplay}
 								label="Play Store"
 							/>
-							<MobileButton href="/ios" Icon={AppleIcon} label="iPhone/iPad" />
+							<MobileButton href="/ios" Icon={Apple} label="iPhone/iPad" />
 							<MobileButton
 								href="https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3?cid=storebadge&ocid=badge&rtc=1"
-								Icon={MicrosoftIcon}
+								Icon={Microsoft}
 								label="Windows"
 							/>
 							<MobileButton
 								href="https://sidequestvr.com/app/9195"
-								Icon={MetaIcon}
+								Icon={Meta}
 								label="Side Quest"
 							/>
 						</div>

@@ -1,5 +1,7 @@
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
+import { capitalize } from "~/utilities";
+
 export interface FormInputMessagesProps {
 	messages?: Array<string>;
 }
@@ -10,9 +12,9 @@ export const FormInputMessages: React.FC<FormInputMessagesProps> = ({ messages }
 	return (
 		<div className="flex flex-col gap-2">
 			{messages.map((message, messageIdx) => (
-				<div className="font-nunito flex gap-2 text-red-600 items-center" key={messageIdx}>
-					<ExclamationCircleIcon className="w-6 h-6" />
-					<span className="text-lg">{`${message[0].toUpperCase()}${message.slice(1)}`}</span>
+				<div className="flex items-center gap-2 font-nunito text-red-600" key={messageIdx}>
+					<ExclamationCircleIcon className="h-6 w-6" />
+					<span className="text-lg">{capitalize(message)}</span>
 				</div>
 			))}
 		</div>

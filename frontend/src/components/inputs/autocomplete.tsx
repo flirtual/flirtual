@@ -60,24 +60,24 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 				event.preventDefault();
 			}}
 		>
-			<div className="bg-brand-grey shadow-brand-1 group-focus-within:ring-brand-coral flex group-focus-within:ring-offset-2 rounded-xl group-focus-within:ring-2 p-2">
-				<div className="flex gap-1.5 flex-wrap items-center">
+			<div className="flex rounded-xl bg-brand-grey p-2 shadow-brand-1 group-focus-within:ring-2 group-focus-within:ring-brand-coral group-focus-within:ring-offset-2">
+				<div className="flex flex-wrap items-center gap-1.5">
 					{values.map((value) => (
 						<button
-							className="bg-brand-gradient shadow-brand-1 focus:ring-brand-coral px-3 py-2 rounded-xl h-fit focus:outline-none focus:ring-2 focus:ring-offset-2"
+							className="h-fit rounded-xl bg-brand-gradient px-3 py-2 shadow-brand-1 focus:outline-none focus:ring-2 focus:ring-brand-coral focus:ring-offset-2"
 							key={value}
 							type="button"
 							onClick={() => {
 								props.onChange.call(null, (values) => values.filter((v) => v !== value));
 							}}
 						>
-							<span className="font-nunito text-lg text-white pointer-events-none select-none">
+							<span className="pointer-events-none select-none font-nunito text-lg text-white">
 								{options.find((option) => option.key === value)?.label}
 							</span>
 						</button>
 					))}
 					<input
-						className="text-xl grow border-none bg-transparent focus:ring-transparent"
+						className="grow border-none bg-transparent text-xl focus:ring-transparent"
 						placeholder={placeholder}
 						ref={inputRef}
 						type="text"
@@ -101,7 +101,7 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 				</div>
 			</div>
 			<InputOptionWindow
-				className="hidden group-focus-within:flex absolute mt-4"
+				className="absolute mt-4 hidden group-focus-within:flex"
 				options={suggestions}
 				ref={optionWindowRef}
 				onOptionClick={({ option }) => {

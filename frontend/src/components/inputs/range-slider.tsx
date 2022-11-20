@@ -10,7 +10,7 @@ const RangeInput: React.FC<Omit<React.ComponentProps<"input">, "type">> = (props
 		{...props}
 		type="range"
 		className={twMerge(
-			"focus:range-thumb:ring-brand-coral range-thumb:border-none focus:range-thumb:ring-2 focus:range-thumb:ring-offset-2 range-thumb:bg-brand-gradient range-thumb:pointer-events-auto range-thumb:w-6 range-thumb:h-6 range-thumb:shadow-brand-1 range-thumb:rounded-full absolute w-full bg-transparent appearance-none pointer-events-none focus:outline-none",
+			"pointer-events-none absolute w-full appearance-none bg-transparent focus:outline-none range-thumb:pointer-events-auto range-thumb:h-6 range-thumb:w-6 range-thumb:rounded-full range-thumb:border-none range-thumb:bg-brand-gradient range-thumb:shadow-brand-1 focus:range-thumb:ring-2 focus:range-thumb:ring-brand-coral focus:range-thumb:ring-offset-2",
 			props.className
 		)}
 	/>
@@ -52,10 +52,10 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 	);
 
 	return (
-		<div className="relative flex items-center h-6 shrink-0">
-			<div className="bg-brand-black shadow-brand-1 absolute w-full h-2 rounded-full" />
+		<div className="relative flex h-6 shrink-0 items-center">
+			<div className="absolute h-2 w-full rounded-full bg-brand-black shadow-brand-1" />
 			<div
-				className="bg-brand-gradient absolute h-2 rounded-full"
+				className="absolute h-2 rounded-full bg-brand-gradient"
 				style={{
 					marginLeft: `${((min - limit.min) / limit.diff) * 100}%`,
 					width: `${((max - min) / limit.diff) * 100}%`

@@ -41,3 +41,7 @@ export function toSnakeObject<T>(object: any): T {
 export function getCountry(code: string) {
 	return countries[code.toUpperCase() as keyof typeof countries];
 }
+
+export function capitalize(value: string): string {
+	return `${value[0].toUpperCase()}${value.slice(1)}`;
+}

@@ -26,7 +26,7 @@ export const SectionCarousel: React.FC<SectionCarouselProps> = ({ values }) => {
 	return (
 		<SnapSection className="relative" id="carousel">
 			<div className="absolute z-10 flex w-full justify-center px-8 py-16 md:px-16">
-				<span className="font-montserrat text-center text-2xl font-semibold [text-shadow:0_0_16px_#000] md:text-4xl">
+				<span className="text-center font-montserrat text-2xl font-semibold [text-shadow:0_0_16px_#000] md:text-4xl">
 					Safe, magical dates <br />
 					with people all over the world
 				</span>

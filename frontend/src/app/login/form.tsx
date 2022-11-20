@@ -16,7 +16,7 @@ export const LoginForm: React.FC = () => {
 	const { data: user, mutate } = useCurrentUser();
 
 	useEffect(() => {
-		if (user) void router.push(`/${user.username}`);
+		if (user) void router.push(`/${user.id}`);
 	}, [router, user]);
 
 	const { fields, formErrors, formProps } = useInputForm({
@@ -72,11 +72,11 @@ export const LoginForm: React.FC = () => {
 				)}
 			</FormField>
 			<div className="flex flex-col gap-4">
-				<button className="bg-brand-gradient shadow-brand-1 p-4 rounded-xl" type="submit">
-					<span className="font-montserrat font-extrabold text-white text-xl">Login</span>
+				<button className="rounded-xl bg-brand-gradient p-4 shadow-brand-1" type="submit">
+					<span className="font-montserrat text-xl font-extrabold text-white">Login</span>
 				</button>
 				<FormInputMessages messages={formErrors} />
-				<div className="font-nunito flex flex-col text-lg">
+				<div className="flex flex-col font-nunito text-lg">
 					<FormAlternativeActionLink href="/register">
 						Don&apos;t have an account yet? Sign up!
 					</FormAlternativeActionLink>

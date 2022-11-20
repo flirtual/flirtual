@@ -5,16 +5,16 @@ import { twMerge } from "tailwind-merge";
 type SwitchInputProps = React.ComponentProps<"input"> & { label: string };
 
 const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
-	<div className="flex relative items-center justify-center h-10 w-14">
+	<div className="relative flex h-10 w-14 items-center justify-center">
 		<input
 			{...props}
 			type="radio"
 			className={twMerge(
-				"peer checked:bg-brand-gradient absolute h-full w-full bg-transparent focus:shadow-none focus:ring-transparent focus:ring-offset-0 focus:outline-none rounded-none border-none",
+				"peer absolute h-full w-full rounded-none border-none bg-transparent checked:bg-brand-gradient focus:shadow-none focus:outline-none focus:ring-transparent focus:ring-offset-0",
 				props.className
 			)}
 		/>
-		<label className={twMerge("absolute pointer-events-none", props.checked && "text-white")}>
+		<label className={twMerge("pointer-events-none absolute", props.checked && "text-white")}>
 			{label}
 		</label>
 	</div>
@@ -30,7 +30,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const { value, name } = props;
 
 	return (
-		<div className="bg-brand-grey shadow-brand-1 grow-0 w-fit shrink-0 focus-within:ring-brand-coral rounded-xl flex overflow-hidden focus-within:ring-2 focus-within:ring-offset-2">
+		<div className="flex w-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-brand-grey shadow-brand-1 focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2">
 			<SwitchInput
 				checked={value}
 				label="Yes"

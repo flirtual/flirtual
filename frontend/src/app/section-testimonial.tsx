@@ -10,22 +10,22 @@ export interface SectionTestimonialProps {
 export const SectionTestimonial: React.FC<SectionTestimonialProps> = ({ images, brands }) => {
 	return (
 		<SnapSection
-			className="h-screen bg-brand-gradient grid grid-rows-[max-content,1fr,max-content]"
+			className="grid h-screen grid-rows-[max-content,1fr,max-content] bg-brand-gradient"
 			id="testimonial"
 		>
 			<div className="flex items-center justify-center p-8 md:p-16">
-				<span className="font-montserrat font-extrabold text-3xl md:text-5xl">
+				<span className="font-montserrat text-3xl font-extrabold md:text-5xl">
 					Thousands of matches (and memories) made.
 				</span>
 			</div>
 			<div className="flex overflow-x-hidden">
 				<div className="grid min-w-max grid-cols-2 overflow-y-hidden">
-					<div className="animate-scroll-x-screen flex">
+					<div className="flex animate-scroll-x-screen">
 						{images.map((src) => (
 							<UCImage className="h-full object-cover" key={src} src={src} />
 						))}
 					</div>
-					<div className="animate-scroll-x-screen flex">
+					<div className="flex animate-scroll-x-screen">
 						{images.map((src) => (
 							<UCImage className="h-full object-cover" key={src} src={src} />
 						))}

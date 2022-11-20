@@ -8,7 +8,7 @@ import { LoginForm } from "./form";
 
 export default async function LoginPage() {
 	const user = await useServerAuthenticate({ optional: true });
-	if (user) redirect(`/${user.username}`);
+	if (user) redirect(`/${user.id}`);
 
 	return (
 		<SoleModelLayout>

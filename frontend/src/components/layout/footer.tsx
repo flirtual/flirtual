@@ -2,11 +2,10 @@
 
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import React, { useCallback } from "react";
+import { twMerge } from "tailwind-merge";
+import { Twitter, Discord } from "@icons-pack/react-simple-icons";
 
 import { IconComponent } from "../icons";
-import { DiscordIcon } from "../icons/discord";
-import { TwitterIcon } from "../icons/twitter";
-import { FlirtualLogo } from "../logo";
 
 type LinkOrButtonProps<T> = T &
 	(Pick<React.ComponentProps<"a">, "href"> | Pick<React.ComponentProps<"button">, "onClick">);
@@ -16,11 +15,11 @@ type FooterListIconLinkProps = LinkOrButtonProps<{ Icon: IconComponent }>;
 const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({ Icon, ...props }) =>
 	"href" in props ? (
 		<a className="cursor-pointer hover:brightness-90" {...props}>
-			<Icon className="w-8" />
+			<Icon className="w-6 sm:w-8" />
 		</a>
 	) : (
 		<button className="cursor-pointer hover:brightness-90" type="button" {...props}>
-			<Icon className="w-8" />
+			<Icon className="w-6 sm:w-8" />
 		</button>
 	);
 
@@ -29,7 +28,7 @@ type FooterListLinkProps = LinkOrButtonProps<{
 }>;
 
 const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
-	<li className="cursor-pointer text-lg hover:underline md:text-xl">
+	<li className="cursor-pointer hover:underline sm:text-lg md:text-xl">
 		{"href" in props ? (
 			<a {...props}>{props.label}</a>
 		) : (
@@ -40,16 +39,25 @@ const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
 	</li>
 );
 
-export const Footer: React.FC = () => {
+export type FooterProps = React.ComponentProps<"footer"> & { desktopOnly?: boolean };
+
+export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 	const openFreshworks = useCallback(() => window.FreshworksWidget("open"), []);
 
 	return (
-		<footer className="flex font-nunito bg-brand-gradient w-full justify-center px-8 sm:py-16 text-white md:px-16">
-			<div className="hidden sm:flex w-full max-w-screen-lg flex-col gap-4 p-4 md:gap-8">
+		<footer
+			{...props}
+			className={twMerge(
+				"w-full justify-center bg-brand-gradient px-8 py-12 font-nunito text-white sm:p-16",
+				desktopOnly ? "hidden sm:flex" : "flex",
+				props.className
+			)}
+		>
+			<div className="flex w-full max-w-screen-lg flex-col gap-4 md:gap-8">
 				<div className="flex gap-4 md:mx-auto md:justify-center">
 					<FooterListIconLink Icon={EnvelopeIcon} onClick={openFreshworks} />
-					<FooterListIconLink href="/discord" Icon={DiscordIcon} />
-					<FooterListIconLink href="https://twitter.com/getflirtual" Icon={TwitterIcon} />
+					<FooterListIconLink href="/discord" Icon={Discord} />
+					<FooterListIconLink href="https://twitter.com/getflirtual" Icon={Twitter} />
 				</div>
 				<ul className="flex max-w-screen-sm flex-wrap gap-x-4 gap-y-1 md:mx-auto md:justify-center">
 					<FooterListLink href="/events" label="Events" />

@@ -10,7 +10,7 @@ const Onboarding2Page: React.FC = () => {
 	const [sexualities, setSexualities] = useState<Array<string>>([]);
 
 	return (
-		<ModelCard className="lg:w-2/4 shrink-0" title="Info & tags">
+		<ModelCard className="shrink-0 lg:w-2/4" title="Info & tags">
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-2">
 					<InputLabel className="flex-col sm:flex-row" hint="(only your age will be visible)">
@@ -56,10 +56,10 @@ const Onboarding2Page: React.FC = () => {
 					/>
 				</div>
 				<button
-					className="bg-brand-gradient shadow-brand-1 focus:ring-brand-coral p-4 rounded-xl focus:ring-2  focus:ring-offset-2 focus:outline-none"
+					className="rounded-xl bg-brand-gradient p-4 shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-brand-coral focus:ring-offset-2"
 					type="button"
 				>
-					<span className="font-montserrat text-white text-xl font-bold">Continue</span>
+					<span className="font-montserrat text-xl font-bold text-white">Continue</span>
 				</button>
 			</div>
 		</ModelCard>

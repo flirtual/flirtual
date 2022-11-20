@@ -18,7 +18,7 @@ export const InputLabel: React.FC<InputLabelProps> = (props) => {
 		<label
 			{...elementProps}
 			className={twMerge(
-				"flex font-nunito select-none gap-x-1 items-baseline",
+				"flex select-none items-baseline gap-x-1 font-nunito",
 				inline && "flex-col",
 				props.className
 			)}

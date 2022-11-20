@@ -50,7 +50,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 		{...props}
 		type="button"
 		className={twMerge(
-			"bg-brand-gradient shadow-brand-1 focus:ring-brand-coral p-1 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full w-7 h-7 flex items-center justify-center text-white",
+			"flex h-7 w-7 items-center justify-center rounded-full bg-brand-gradient p-1 text-white shadow-brand-1 focus:outline-none focus:ring-2 focus:ring-brand-coral focus:ring-offset-2",
 			props.className
 		)}
 	>
@@ -69,7 +69,7 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 
 	return (
 		<div
-			className="focus-within:ring-brand-coral w-full relative focus-within:ring-2 focus-within:ring-offset-2 rounded-xl"
+			className="relative w-full rounded-xl focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2"
 			tabIndex={-1}
 			onBlur={({ currentTarget, relatedTarget }) => {
 				if (currentTarget.contains(relatedTarget)) return;
@@ -80,14 +80,14 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 			}}
 		>
 			<button
-				className="font-montserrat font-semibold text-xl px-3 flex gap-2 items-center focus:outline-none"
+				className="flex items-center gap-2 px-3 font-montserrat text-xl font-semibold focus:outline-none"
 				type="button"
 			>
 				<span className="">{props.children}</span>
-				<ChevronDownIcon className="w-4 h-4" strokeWidth={3} />
+				<ChevronDownIcon className="h-4 w-4" strokeWidth={3} />
 			</button>
 			<InputOptionWindow
-				className={twMerge("absolute w-fit mt-4", visible ? "flex" : "hidden")}
+				className={twMerge("absolute mt-4 w-fit", visible ? "flex" : "hidden")}
 				options={props.options}
 				onOptionClick={props.onOptionAction}
 				onOptionFocus={props.onOptionAction}
@@ -137,17 +137,17 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"shadow-brand-1 font-nunito focus-within:ring-brand-coral select-none focus-within:ring-2 focus-within:ring-offset-2 rounded-3xl p-4 bg-white",
+				"select-none rounded-3xl bg-white p-4 font-nunito shadow-brand-1 focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2",
 				elementProps.className
 			)}
 		>
 			<div className="w-full">
-				<div className="flex items-center justify-between mb-4">
+				<div className="mb-4 flex items-center justify-between">
 					<div className="flex gap-2">
 						<CalendarButton Icon={ChevronDoubleLeftIcon} onClick={() => progressYear(-1)} />
 						<CalendarButton Icon={ChevronLeftIcon} onClick={() => progressMonth(-1)} />
 					</div>
-					<div className="flex gap-2 w-full mx-4 justify-center">
+					<div className="mx-4 flex w-full justify-center gap-2">
 						<LabelSelect
 							options={MonthNames.map((label, key) => ({ key: key.toString(), label }))}
 							onOptionAction={({ option }) => {
@@ -178,7 +178,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 						<thead>
 							<tr>
 								{["S", "M", "T", "W", "T", "F", "S"].map((name, idx) => (
-									<th className="w-10 h-10 select-none font-extrabold" key={idx}>
+									<th className="h-10 w-10 select-none font-extrabold" key={idx}>
 										{name}
 									</th>
 								))}
@@ -208,7 +208,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 													<button
 														type="button"
 														className={twMerge(
-															"focus:ring-brand-coral hover:bg-brand-grey w-10 h-10 text-center focus:ring-2 focus:ring-offset-2 rounded-xl focus:outline-none",
+															"h-10 w-10 rounded-xl text-center hover:bg-brand-grey focus:outline-none focus:ring-2 focus:ring-brand-coral focus:ring-offset-2",
 															!currentMonth && "text-gray-500",
 															dateEqual(props.value, date) && "bg-brand-gradient text-white"
 														)}

@@ -95,7 +95,7 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 				}}
 			/>
 			<InputCalendar
-				className="hidden group-focus-within:flex absolute z-10 mt-4"
+				className="absolute z-10 mt-4 hidden group-focus-within:flex"
 				value={props.value}
 				onChange={(value) => {
 					setInputValue(toDateString(value));

@@ -11,54 +11,81 @@ import {
 	InputRangeSliderValue,
 	InputSwitch
 } from "~/components/inputs";
+import { useInputForm } from "~/hooks/use-input-form";
+import { FormField } from "~/components/forms/field";
+import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 
 const Onboarding1Page: React.FC = () => {
-	const [ageRange, setAgeRange] = useState<InputRangeSliderValue>([18, 100]);
-	const [serious, setSerious] = useState(false);
+	const { fields, formProps } = useInputForm<{
+		genders: Array<string>;
+		ageRange: InputRangeSliderValue;
+		serious: boolean;
+	}>({
+		fields: {
+			genders: [],
+			ageRange: [18, 100],
+			serious: false
+		},
+		onSubmit: async (values) => {}
+	});
 
 	return (
 		<ModelCard title="Matchmaking">
-			<div className="flex flex-col gap-8">
-				<div className="flex flex-col gap-2">
-					<InputLabel>I want to meet...</InputLabel>
-					<div className="flex items-center gap-4">
-						<InputCheckbox />
-						<InputLabel inline>Men</InputLabel>
-					</div>
-					<div className="flex items-center gap-4">
-						<InputCheckbox />
-						<InputLabel inline>Women</InputLabel>
-					</div>
-					<div className="flex items-center gap-4">
-						<InputCheckbox />
-						<InputLabel inline>Other</InputLabel>
-					</div>
-				</div>
-				<div className="flex flex-col gap-2">
-					<InputLabel
-						hint={
-							ageRange[0] === 18 && ageRange[1] === 100
-								? "any age"
-								: `${ageRange[0]} to ${ageRange[1]}`
-						}
-					>
-						Age range
-					</InputLabel>
-					<InputRangeSlider max={100} min={18} value={ageRange} onChange={setAgeRange} />
-				</div>
-				<div className="flex gap-4 sm:items-center flex-col-reverse sm:flex-row">
-					<InputSwitch name="serious" value={serious} onChange={setSerious} />
-					<InputLabel inline>Are you open to serious dating?</InputLabel>
-				</div>
+			<form {...formProps} className="flex flex-col gap-8">
+				<FormField field={fields.genders}>
+					{(field) => (
+						<>
+							<InputLabel {...field.labelProps}>I want to meet...</InputLabel>
+							<InputCheckboxList
+								{...field.props}
+								items={[
+									{ key: "men", label: "Men" },
+									{ key: "women", label: "Women" },
+									{ key: "other", label: "Other" }
+								]}
+							/>
+						</>
+					)}
+				</FormField>
+				<FormField field={fields.ageRange}>
+					{(field) => {
+						const [min, max] = field.props.value;
+
+						return (
+							<>
+								<InputLabel
+									{...field.labelProps}
+									hint={min === 18 && max === 100 ? "any age" : `${min} to ${max}`}
+								>
+									Age range
+								</InputLabel>
+								<InputRangeSlider {...field.props} max={100} min={18} />
+							</>
+						);
+					}}
+				</FormField>
+				<FormField
+					className="flex-col-reverse gap-4 sm:flex-row sm:items-center"
+					field={fields.serious}
+				>
+					{(field) => (
+						<>
+							<InputSwitch {...field.props} />
+							<InputLabel {...field.labelProps} inline>
+								Are you open to serious dating?
+							</InputLabel>
+						</>
+					)}
+				</FormField>
 				<div className="flex flex-col gap-4">
-					<Link
-						className="bg-brand-gradient shadow-brand-1 focus:ring-brand-coral p-4 rounded-xl focus:ring-2 text-center  focus:ring-offset-2 focus:outline-none"
-						href="/onboarding/2"
+					<button
+						className="rounded-xl bg-brand-gradient p-4 text-center shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-brand-coral focus:ring-offset-2"
+						type="submit"
 					>
-						<span className="font-montserrat text-white font-bold text-xl">Continue</span>
-					</Link>
+						<span className="font-montserrat text-xl font-bold text-white">Continue</span>
+					</button>
 				</div>
-			</div>
+			</form>
 		</ModelCard>
 	);
 };

@@ -5,7 +5,7 @@ export const SnapSection = forwardRef<HTMLElement, React.ComponentProps<"section
 	(props, ref) => (
 		<section
 			{...props}
-			className={twMerge("w-full min-h-screen snap-always snap-start", props.className)}
+			className={twMerge("min-h-screen w-full snap-start snap-always", props.className)}
 			ref={ref}
 		>
 			{props.children}

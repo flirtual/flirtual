@@ -11,7 +11,7 @@ export const LandingButton: React.FC<LandingButtonProps> = (props) => (
 	<Link
 		{...props}
 		className={twMerge(
-			"font-montserrat font-extrabold shadow-brand-1 cursor-pointer rounded-xl text-center",
+			"cursor-pointer rounded-xl text-center font-montserrat font-extrabold shadow-brand-1",
 			{
 				primary: "bg-brand-gradient p-4 w-48 text-2xl text-white",
 				secondary: "text-brand-pink w-48 p-4 text-2xl bg-white",

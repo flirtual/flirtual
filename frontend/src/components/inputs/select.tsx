@@ -45,7 +45,7 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 				ref={ref}
 				tabIndex={-1}
 				className={twMerge(
-					"bg-brand-white shadow-brand-1 focus-within:ring-brand-coral focus:outline-none focus-within:ring-2 focus-within:ring-offset-2 w-full rounded-xl max-h-52 overflow-y-scroll overflow-x-hidden",
+					"max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-brand-white shadow-brand-1 focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2 focus:outline-none",
 					elementProps.className
 				)}
 				onFocusCapture={(event) => {
@@ -71,16 +71,16 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 					}
 				}}
 			>
-				<div className="flex flex-col w-full" ref={optionsRef}>
+				<div className="flex w-full flex-col" ref={optionsRef}>
 					{options.map((option) => (
 						<button
-							className="hover:bg-brand-grey focus:bg-brand-gradient focus:text-white focus:outline-none px-4 py-2 text-left"
+							className="px-4 py-2 text-left hover:bg-brand-grey focus:bg-brand-gradient focus:text-white focus:outline-none"
 							key={option.key}
 							type="button"
 							onClick={(event) => onOptionClick?.(Object.assign(event, { option }))}
 							onFocus={(event) => onOptionFocus?.(Object.assign(event, { option }))}
 						>
-							<span className="font-nunito text-lg select-none">{option.label}</span>
+							<span className="select-none font-nunito text-lg">{option.label}</span>
 						</button>
 					))}
 				</div>

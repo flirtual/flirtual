@@ -94,11 +94,11 @@ export const RegisterForm: React.FC = () => {
 				)}
 			</FormField>
 			<div className="flex flex-col gap-4">
-				<button className="bg-brand-gradient shadow-brand-1 w-full p-4 rounded-xl" type="submit">
-					<span className="font-montserrat text-white text-xl">Create my account</span>
+				<button className="w-full rounded-xl bg-brand-gradient p-4 shadow-brand-1" type="submit">
+					<span className="font-montserrat text-xl text-white">Create my account</span>
 				</button>
 				<FormInputMessages messages={formErrors} />
-				<div className="font-nunito flex flex-col text-lg">
+				<div className="flex flex-col font-nunito text-lg">
 					<FormAlternativeActionLink href="/login">
 						Already have an account? Login!
 					</FormAlternativeActionLink>

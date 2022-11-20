@@ -10,7 +10,7 @@ import { SnapSection } from "./snap-section";
 
 export const SectionCallToAction: React.FC = () => (
 	<SnapSection
-		className="font-montserrat relative flex flex-col items-center justify-center"
+		className="relative flex flex-col items-center justify-center font-montserrat"
 		id="call-to-action"
 	>
 		<div className="z-10 flex flex-col items-center px-8 py-16 md:px-16">
