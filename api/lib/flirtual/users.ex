@@ -26,11 +26,10 @@ defmodule Flirtual.Users do
     (Session
      |> Sessions.query_by_token(token)
      |> preload(user: ^User.default_assoc())
-     |> Repo.one!()).user
+     |> Repo.one()).user
   end
 
   def update_user(attrs) do
-
   end
 
   def register_user(attrs) do
@@ -47,13 +46,13 @@ defmodule Flirtual.Users do
       |> validate_required([:username, :email, :password, :service_agreement, :notifications])
       |> validate_acceptance(:service_agreement)
 
-
     case changeset.valid? do
       false ->
         {:error, changeset}
 
       true ->
-        source = changeset.changes;
+        source = changeset.changes
+
         changeset =
           %User{}
           |> cast(changeset.changes, [:username, :email, :password])
@@ -63,7 +62,13 @@ defmodule Flirtual.Users do
 
         with {:ok, user} <- Repo.insert(changeset) do
           {:ok, preferences} = Ecto.build_assoc(user, :preferences) |> Repo.insert()
-          {:ok, _} = Ecto.build_assoc(preferences, :email_notifications, %{ newsletter: source[:notifications] }) |> Repo.insert()
+
+          {:ok, _} =
+            Ecto.build_assoc(preferences, :email_notifications, %{
+              newsletter: source[:notifications]
+            })
+            |> Repo.insert()
+
           {:ok, _} = Ecto.build_assoc(preferences, :privacy) |> Repo.insert()
 
           {:ok, profile} = Ecto.build_assoc(user, :profile) |> Repo.insert()

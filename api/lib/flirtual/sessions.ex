@@ -12,10 +12,10 @@ defmodule Flirtual.Sessions do
     Session |> query_by_token(token) |> Repo.delete_all()
   end
 
-  def get_by_token (token) do
+  def get_by_token(token) do
     Session
     |> query_by_token(token)
-    |> Repo.one!()
+    |> Repo.one()
   end
 
   def query_by_token(query, token) do
