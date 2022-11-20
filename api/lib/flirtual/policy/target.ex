@@ -1,4 +1,4 @@
-defmodule Flirtual.Target do
+defmodule Flirtual.Policy.Target do
   defmacro __using__(opts) do
     quote bind_quoted: [opts: opts] do
       if policy = Keyword.get(opts, :policy) do

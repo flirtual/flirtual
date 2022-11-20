@@ -1,6 +1,6 @@
 defmodule Flirtual.User do
   use Flirtual.Schema
-  use Flirtual.Target, policy: Flirtual.User.Policy
+  use Flirtual.Policy.Target, policy: Flirtual.User.Policy
 
   import Ecto.Changeset
 
