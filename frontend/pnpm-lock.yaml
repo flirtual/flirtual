@@ -15,7 +15,7 @@ specifiers:
   '@uploadcare/blocks': ^0.14.1
   autoprefixer: ^10.4.13
   change-case: ^4.1.2
-  concurrently: ^7.5.0
+  concurrently: ^7.6.0
   countries-list: ^2.6.1
   esbuild: ^0.15.14
   eslint: ^8.28.0
@@ -59,7 +59,7 @@ devDependencies:
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.9
   autoprefixer: 10.4.13_postcss@8.4.19
-  concurrently: 7.5.0
+  concurrently: 7.6.0
   esbuild: 0.15.14
   eslint: 8.28.0
   postcss: 8.4.19
@@ -815,8 +815,8 @@ packages:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: true
 
-  /concurrently/7.5.0:
-    resolution: {integrity: sha512-5E3mwiS+i2JYBzr5BpXkFxOnleZTMsG+WnE/dCG4/P+oiVXrbmrBwJ2ozn4SxwB2EZDrKR568X+puVohxz3/Mg==}
+  /concurrently/7.6.0:
+    resolution: {integrity: sha512-BKtRgvcJGeZ4XttiDiNcFiRlxoAeZOseqUvyYRUp/Vtd+9p1ULmeoSqGsDA+2ivdeDFpqrJvGvmI+StKfKl5hw==}
     engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
     hasBin: true
     dependencies:
@@ -2448,10 +2448,10 @@ packages:
       postcss: ^8.2.14
     dependencies:
       postcss: 8.4.19
-      postcss-selector-parser: 6.0.10
+      postcss-selector-parser: 6.0.11
 
-  /postcss-selector-parser/6.0.10:
-    resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
+  /postcss-selector-parser/6.0.11:
+    resolution: {integrity: sha512-zbARubNdogI9j7WY4nQJBiNqQf3sLS3wCP4WfOidu+p28LofJqDH1tcXypGrcmMHhDk2t9wGhCsYe/+szLTy1g==}
     engines: {node: '>=4'}
     dependencies:
       cssesc: 3.0.0
@@ -2836,7 +2836,7 @@ packages:
       postcss-js: 4.0.0_postcss@8.4.19
       postcss-load-config: 3.1.4_postcss@8.4.19
       postcss-nested: 6.0.0_postcss@8.4.19
-      postcss-selector-parser: 6.0.10
+      postcss-selector-parser: 6.0.11
       postcss-value-parser: 4.2.0
       quick-lru: 5.1.1
       resolve: 1.22.1
