@@ -1,9 +1,12 @@
 "use client";
 
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
-import React, { useCallback } from "react";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 import { Twitter, Discord } from "@icons-pack/react-simple-icons";
+
+import { useFreshworks } from "~/hooks/use-freshworks";
+import { discordUrl, twitterUrl } from "~/const";
 
 import { IconComponent } from "../icons";
 
@@ -42,7 +45,7 @@ const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
 export type FooterProps = React.ComponentProps<"footer"> & { desktopOnly?: boolean };
 
 export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
-	const openFreshworks = useCallback(() => window.FreshworksWidget("open"), []);
+	const { openFreshworks } = useFreshworks();
 
 	return (
 		<footer
@@ -56,8 +59,8 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 			<div className="flex w-full max-w-screen-lg flex-col gap-4 md:gap-8">
 				<div className="flex gap-4 md:mx-auto md:justify-center">
 					<FooterListIconLink Icon={EnvelopeIcon} onClick={openFreshworks} />
-					<FooterListIconLink href="/discord" Icon={Discord} />
-					<FooterListIconLink href="https://twitter.com/getflirtual" Icon={Twitter} />
+					<FooterListIconLink href={discordUrl} Icon={Discord} />
+					<FooterListIconLink href={twitterUrl} Icon={Twitter} />
 				</div>
 				<ul className="flex max-w-screen-sm flex-wrap gap-x-4 gap-y-1 md:mx-auto md:justify-center">
 					<FooterListLink href="/events" label="Events" />

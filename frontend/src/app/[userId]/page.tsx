@@ -1,14 +1,15 @@
 import { SoleModelLayout } from "~/components/layout/sole-model";
-import { useServerAuthenticate } from "~/server-utilities";
+import { SsrUserProvider } from "~/components/ssr-user-provider";
 
 import { Profile } from "./profile";
 
 export default async function ProfilePage() {
-	await useServerAuthenticate();
-
 	return (
-		<SoleModelLayout footer={{ desktopOnly: true }}>
-			<Profile />
-		</SoleModelLayout>
+		// @ts-expect-error: server component
+		<SsrUserProvider>
+			<SoleModelLayout footer={{ desktopOnly: true }}>
+				<Profile />
+			</SoleModelLayout>
+		</SsrUserProvider>
 	);
 }

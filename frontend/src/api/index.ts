@@ -3,6 +3,16 @@ import { toCamelObject, toSnakeObject } from "~/utilities";
 
 export const baseUrl = process.env["NEXT_PUBLIC_API_URL"] as string;
 
+export function newUrl(pathname: string, query: Record<string, string> = {}): URL {
+	const searchParams = new URLSearchParams(query);
+	searchParams.sort();
+
+	return new URL(
+		`${pathname}${Object.keys(query).length > 0 ? `?${searchParams.toString()}` : ""}`,
+		baseUrl
+	);
+}
+
 export type FetchOptions = Omit<RequestInit, "method" | "body"> & {
 	query?: Record<string, string>;
 	body?: any;
@@ -30,10 +40,7 @@ export async function fetch<T = unknown>(
 	pathname: string,
 	options: FetchOptions = {}
 ): Promise<T | Response> {
-	const query = new URLSearchParams(options.query);
-	query.sort();
-
-	const url = new URL(`${pathname}?${query.toString()}`, baseUrl).toString();
+	const url = newUrl(pathname, options.query);
 	const body = options.raw
 		? options.body
 		: JSON.stringify(typeof options.body === "object" ? toSnakeObject(options.body) : options.body);

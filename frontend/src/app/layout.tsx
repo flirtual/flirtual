@@ -1,13 +1,21 @@
 import { Montserrat, Nunito } from "@next/font/google";
 import { twMerge } from "tailwind-merge";
 
-import { ClientScripts } from "./client-scripts";
 import "~/css/index.css";
+
+import { api } from "~/api";
+import { useServerAuthenticate } from "~/server-utilities";
+import { getAvatarUrl } from "~/components/user-avatar";
+import { twitterUrl } from "~/const";
+
+import { ClientScripts } from "./client-scripts";
 
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
-const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
+async function RootLayout({ children }: React.PropsWithChildren) {
+	const user = await useServerAuthenticate({ optional: true });
+
 	return (
 		<html lang="en">
 			<head>
@@ -31,7 +39,7 @@ const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
 					content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
 					name="viewport"
 				/>
-				<meta content="@getflirtual" name="twitter:site" />
+				<meta content={`@${twitterUrl.split("twitter.com/")[1]}`} name="twitter:site" />
 				<meta content="website" property="og:type" />
 				<meta content="Flirtual" property="og:title" />
 				<meta
@@ -42,11 +50,17 @@ const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
 				<meta content="512" property="og:image:width" />
 				<meta content="512" property="og:image:width" />
 				<meta content="summary" name="twitter:card" />
+				{user && (
+					<>
+						<link as="image" href={getAvatarUrl(user)} rel="preload" />
+						<link as="fetch" href={api.newUrl("auth/user").href} rel="preload" />
+					</>
+				)}
 				<ClientScripts />
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>{children}</body>
 		</html>
 	);
-};
+}
 
 export default RootLayout;

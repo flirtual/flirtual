@@ -1,7 +1,13 @@
+import { createContext, useContext } from "react";
 import useSWR from "swr";
 
 import { api } from "~/api";
+import { User } from "~/api/user";
+
+export const UserContext = createContext<User | null>(null);
 
 export function useCurrentUser() {
-	return useSWR("user", api.auth.user);
+	return useSWR("user", api.auth.user, {
+		fallbackData: useContext(UserContext)
+	});
 }

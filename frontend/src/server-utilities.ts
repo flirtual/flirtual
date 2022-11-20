@@ -25,7 +25,10 @@ export async function useServerAuthenticate(
 ): Promise<User>;
 export async function useServerAuthenticate(
 	options?: ServerAuthenticateOptions & { optional: true }
-): Promise<User>;
+): Promise<User | null>;
+export async function useServerAuthenticate(
+	options: ServerAuthenticateOptions
+): Promise<User | null>;
 export async function useServerAuthenticate(
 	options: ServerAuthenticateOptions = {}
 ): Promise<User | null> {

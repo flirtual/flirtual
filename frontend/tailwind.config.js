@@ -36,7 +36,8 @@ module.exports = {
 					"0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)"
 			},
 			animation: {
-				"scroll-x-screen": "scroll-x-screen 30s linear infinite"
+				"scroll-x-screen": "scroll-x-screen 30s linear infinite",
+				"bounce-x": "bounceX 1s infinite"
 			},
 			keyframes: {
 				"scroll-x-screen": {
@@ -46,6 +47,16 @@ module.exports = {
 				"fade-in": {
 					"0%": { opacity: "0%" },
 					"100%": { opacity: "100%" }
+				},
+				bounceX: {
+					"0%, 100%": {
+						transform: "translateX(-25%)",
+						animationTimingFunction: "cubic-bezier(0.8,0,1,1)"
+					},
+					"50%": {
+						transform: "none",
+						animationTimingFunction: "cubic-bezier(0,0,0.2,1)"
+					}
 				}
 			}
 		}
