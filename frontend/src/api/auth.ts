@@ -1,10 +1,11 @@
 import { User } from "./user";
+import { DatedModel } from "./common";
 
 import { fetch, FetchOptions } from ".";
 
-export interface Session {
+export type Session = DatedModel & {
 	userId: string;
-}
+};
 
 export interface LoginOptions {
 	email: string;

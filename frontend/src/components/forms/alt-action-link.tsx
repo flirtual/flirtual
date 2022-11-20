@@ -7,7 +7,10 @@ export const FormAlternativeActionLink: React.FC<
 > = ({ children, ...props }) => (
 	<Link
 		{...props}
-		className={twMerge("flex items-center gap-2 font-nunito text-lg", props.className)}
+		className={twMerge(
+			"flex items-center gap-2 font-nunito text-lg focus:outline-none",
+			props.className
+		)}
 	>
 		<ArrowLongRightIcon className="inline w-6 shrink-0" />
 		{children}

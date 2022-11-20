@@ -63,16 +63,20 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		) as UseInputForm<T>["fields"],
 		formErrors,
 		formProps: {
-			onSubmit: (event) => {
+			onSubmit: async (event) => {
 				event.preventDefault();
 
-				setInputErrors({});
-				setFormErrors([]);
-
-				options.onSubmit(values, event).catch((reason) => {
-					if ("properties" in reason) return setInputErrors(reason.properties);
-					setFormErrors([reason.message]);
-				});
+				await options
+					.onSubmit(values, event)
+					.then(() => {
+						setInputErrors({});
+						setFormErrors([]);
+						return;
+					})
+					.catch((reason) => {
+						if ("properties" in reason) return setInputErrors(reason.properties);
+						setFormErrors([reason.message]);
+					});
 			}
 		}
 	};

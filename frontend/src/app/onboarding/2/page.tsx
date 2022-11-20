@@ -1,68 +1,16 @@
-"use client";
-
-import React, { useState } from "react";
-
-import { InputAutocomplete, InputCheckbox, InputDateSelect, InputLabel } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
+import { SsrUserProvider } from "~/components/ssr-user-provider";
+
+import { Onboarding2Form } from "./form";
 
 const Onboarding2Page: React.FC = () => {
-	const [birthday, setBirthday] = useState(new Date());
-	const [sexualities, setSexualities] = useState<Array<string>>([]);
-
 	return (
-		<ModelCard className="shrink-0 lg:w-2/4" title="Info & tags">
-			<div className="flex flex-col gap-8">
-				<div className="flex flex-col gap-2">
-					<InputLabel className="flex-col sm:flex-row" hint="(only your age will be visible)">
-						Date of birth
-					</InputLabel>
-					<InputDateSelect value={birthday} onChange={setBirthday} />
-				</div>
-				<div className="flex flex-col gap-2">
-					<InputLabel>Gender</InputLabel>
-					<div className="flex items-center gap-4">
-						<InputCheckbox />
-						<InputLabel inline>Man</InputLabel>
-					</div>
-					<div className="flex items-center gap-4">
-						<InputCheckbox />
-						<InputLabel inline>Woman</InputLabel>
-					</div>
-					<div className="flex items-center gap-4">
-						<InputCheckbox />
-						<InputLabel inline>Other</InputLabel>
-					</div>
-				</div>
-				<div className="flex flex-col gap-2">
-					<InputLabel>Sexuality</InputLabel>
-					<InputAutocomplete
-						placeholder="Select your sexualities..."
-						values={sexualities}
-						options={[
-							"Straight",
-							"Lesbian",
-							"Gay",
-							"Bisexual",
-							"Pansexual",
-							"Asexual",
-							"Demisexual",
-							"Heteroflexible",
-							"Homoflexible",
-							"Queer",
-							"Questioning",
-							"Experimenting in VR"
-						].map((label) => ({ label, key: label.toLowerCase().replace(" ", "_") }))}
-						onChange={setSexualities}
-					/>
-				</div>
-				<button
-					className="rounded-xl bg-brand-gradient p-4 shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-brand-coral focus:ring-offset-2"
-					type="button"
-				>
-					<span className="font-montserrat text-xl font-bold text-white">Continue</span>
-				</button>
-			</div>
-		</ModelCard>
+		// @ts-expect-error: Server Component
+		<SsrUserProvider>
+			<ModelCard className="shrink-0 lg:w-1/2" title="Info & tags">
+				<Onboarding2Form />
+			</ModelCard>
+		</SsrUserProvider>
 	);
 };
 

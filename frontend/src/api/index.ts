@@ -73,5 +73,6 @@ export async function fetch<T = unknown>(
 }
 
 export * as auth from "./auth";
+export * as profile from "./profile";
 export * as user from "./user";
 export * as api from "./";

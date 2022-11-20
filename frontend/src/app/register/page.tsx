@@ -12,7 +12,7 @@ export default async function RegisterPage() {
 
 	return (
 		<SoleModelLayout>
-			<ModelCard title="Register">
+			<ModelCard className="sm:w-full sm:max-w-lg" title="Register">
 				<RegisterForm />
 			</ModelCard>
 		</SoleModelLayout>

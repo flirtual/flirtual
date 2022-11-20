@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { api } from "~/api";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormField } from "~/components/forms/field";
@@ -8,6 +10,8 @@ import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/componen
 import { useInputForm } from "~/hooks/use-input-form";
 
 export const RegisterForm: React.FC = () => {
+	const router = useRouter();
+
 	const { fields, formErrors, formProps } = useInputForm({
 		fields: {
 			username: "",
@@ -17,8 +21,8 @@ export const RegisterForm: React.FC = () => {
 			notifications: true
 		},
 		onSubmit: async (values) => {
-			const user = await api.user.create(values);
-			console.log(user);
+			await api.user.create(values);
+			router.push("/onboarding/1");
 		}
 	});
 

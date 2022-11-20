@@ -1,14 +1,38 @@
 "use client";
 
-import { HomeIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, ChatBubbleLeftRightIcon, HeartIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useCurrentUser } from "~/hooks/use-current-user";
 
-import { HeartGradient } from "../icons/heart-gradient";
 import { PeaceGradient } from "../icons/peace-gradient";
 import { UserAvatar } from "../user-avatar";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const NavigationIconButton: React.FC<React.ComponentProps<"a"> & { href: string; ref?: any }> = ({
+	children,
+	...props
+}) => {
+	const pathname = usePathname();
+
+	return (
+		<Link
+			{...props}
+			className={twMerge(
+				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none",
+				pathname === props.href
+					? "bg-brand-white text-brand-black shadow-brand-1"
+					: "hocus:bg-brand-white hocus:text-brand-black hocus:shadow-brand-1",
+				props.className
+			)}
+		>
+			{children}
+		</Link>
+	);
+};
 
 export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) => {
 	const { data: user } = useCurrentUser();
@@ -18,20 +42,30 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 		<div
 			{...props}
 			className={twMerge(
-				"flex h-full w-full max-w-lg items-center justify-between gap-6 px-8 py-4 font-nunito text-brand-white md:px-16",
+				"flex h-full w-full max-w-lg items-center justify-between gap-4 px-8 py-2 font-nunito text-brand-white md:px-16",
 				props.className
 			)}
 		>
-			<HomeIcon className="h-8 w-8 shrink-0" />
-			<PeaceGradient className="w-8 shrink-0" gradient={false} />
-			<HeartGradient className="w-8 shrink-0" gradient={false} />
-			<div className="relative">
-				<ChatBubbleLeftRightIcon className="w-9 text-white" strokeWidth={1.5} />
-				<div className="absolute top-0 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-brand-gradient ring-[2.5px] ring-white">
-					<span className="font-nunito text-sm font-semibold leading-none text-brand-white">4</span>
+			<NavigationIconButton href="/">
+				<HomeIcon className="h-8 w-8" />
+			</NavigationIconButton>
+			<NavigationIconButton href="/homies">
+				<PeaceGradient className="w-8" gradient={false} />
+			</NavigationIconButton>
+			<NavigationIconButton href="/">
+				<HeartIcon className="h-8 w-8" />
+			</NavigationIconButton>
+			<NavigationIconButton href="/messages">
+				<div className="relative">
+					<ChatBubbleLeftRightIcon className="w-8" strokeWidth={1.5} />
+					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
+						<span className="font-mono text-sm font-semibold leading-none text-brand-white">4</span>
+					</div>
 				</div>
-			</div>
-			<UserAvatar className="h-8 w-8" user={user} />
+			</NavigationIconButton>
+			<NavigationIconButton href={`/${user.id}`}>
+				<UserAvatar className="h-8 w-8 transition-transform group-hocus:scale-125" user={user} />
+			</NavigationIconButton>
 		</div>
 	);
 };

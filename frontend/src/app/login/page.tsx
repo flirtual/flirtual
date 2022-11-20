@@ -12,7 +12,7 @@ export default async function LoginPage() {
 
 	return (
 		<SoleModelLayout>
-			<ModelCard title="Login">
+			<ModelCard className="sm:w-full sm:max-w-lg" title="Login">
 				<LoginForm />
 			</ModelCard>
 		</SoleModelLayout>

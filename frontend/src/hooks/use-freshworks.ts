@@ -9,11 +9,9 @@ export function useFreshworks() {
 	const { data: user } = useCurrentUser();
 
 	useEffect(() => {
-		if (!user) return;
-
 		window.FreshworksWidget("identify", "ticketForm", {
-			name: user.profile.displayName || user.username,
-			email: user.email
+			name: user?.profile.displayName || user?.username || "",
+			email: user?.email || ""
 		});
 	}, [user]);
 

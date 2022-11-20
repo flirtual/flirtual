@@ -12,13 +12,13 @@ export interface InputAutocompleteOption {
 
 export interface InputAutocompleteProps {
 	options: Array<InputAutocompleteOption>;
-	values: Array<string>;
+	value: Array<string>;
 	placeholder?: string;
-	onChange: React.Dispatch<React.SetStateAction<Array<string>>>;
+	onChange: React.Dispatch<Array<string>>;
 }
 
 export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
-	const { values, options } = props;
+	const { value: values = [], options } = props;
 
 	const placeholder = values.length ? "" : props.placeholder;
 
@@ -68,7 +68,7 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 							key={value}
 							type="button"
 							onClick={() => {
-								props.onChange.call(null, (values) => values.filter((v) => v !== value));
+								props.onChange(values.filter((v) => v !== value));
 							}}
 						>
 							<span className="pointer-events-none select-none font-nunito text-lg text-white">
@@ -92,10 +92,8 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 							if (key !== "Backspace" || currentTarget.value.length !== 0) return;
 							event.preventDefault();
 
-							props.onChange.call(null, (values) => {
-								const lastValue = values.at(-1);
-								return values.filter((value) => value !== lastValue);
-							});
+							const lastValue = values.at(-1);
+							props.onChange(values.filter((value) => value !== lastValue));
 						}}
 					/>
 				</div>
@@ -105,7 +103,7 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 				options={suggestions}
 				ref={optionWindowRef}
 				onOptionClick={({ option }) => {
-					props.onChange.call(null, (values) => [...values, option.key]);
+					props.onChange([...values, option.key]);
 
 					inputRef.current?.focus();
 					setInputValue("");
