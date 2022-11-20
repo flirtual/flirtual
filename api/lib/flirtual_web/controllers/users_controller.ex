@@ -23,8 +23,12 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def update(conn, %{"user_id" => id}) do
-    conn
+  def update(conn, %{"user_id" => id} = params) do
+    user = Users.get(id)
+
+    with {:ok, user} <- Users.update(user, params) do
+      conn |> json(user)
+    end
   end
 
   def get_current_user(conn, _) do

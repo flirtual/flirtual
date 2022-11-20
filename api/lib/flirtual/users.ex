@@ -29,7 +29,10 @@ defmodule Flirtual.Users do
      |> Repo.one()).user
   end
 
-  def update_user(attrs) do
+  def update(%User{} = user, attrs) do
+    user
+    |> User.update_changeset(attrs)
+    |> Repo.update()
   end
 
   def register_user(attrs) do

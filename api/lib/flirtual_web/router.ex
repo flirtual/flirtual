@@ -6,7 +6,6 @@ defmodule FlirtualWeb.Router do
 
   import FlirtualWeb.SessionController
 
-
   @internal_api_key "***REMOVED***"
 
   pipeline :browser do
@@ -23,7 +22,6 @@ defmodule FlirtualWeb.Router do
     plug :fetch_session
     plug :fetch_current_session
   end
-
 
   def require_internal_authorization(conn, _opts) do
     if List.first(Plug.Conn.get_req_header(conn, "api-key")) === @internal_api_key do
@@ -50,6 +48,7 @@ defmodule FlirtualWeb.Router do
             delete "/", SessionController, :delete
           end
         end
+
         scope "/user" do
           pipe_through :require_authenticated_user
 
@@ -68,6 +67,10 @@ defmodule FlirtualWeb.Router do
 
           scope "/profile" do
             post "/", ProfileController, :update
+
+            scope "/preferences" do
+              post "/", ProfileController, :update_preferences
+            end
           end
         end
       end

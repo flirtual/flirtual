@@ -58,6 +58,14 @@ defmodule Flirtual.User do
     ]
   end
 
+  def update_changeset(user, attrs) do
+    user
+    |> cast(attrs, [
+      :language,
+      :born_at
+    ])
+  end
+
   @doc """
   A user changeset for registration.
 

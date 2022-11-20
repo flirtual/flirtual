@@ -113,7 +113,7 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(
         :preferences,
         %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{id: user_id, preferences: preferences}
+        %Profile{user_id: user_id, preferences: preferences}
       ),
       do: preferences
 

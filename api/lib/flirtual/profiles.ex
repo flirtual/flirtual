@@ -2,7 +2,6 @@ defmodule Flirtual.Profiles do
   import Ecto.Query
   import Ecto.Changeset
 
-
   alias Flirtual.{Repo, User, Sessions}
   alias Flirtual.User.{Profile}
 
@@ -20,9 +19,15 @@ defmodule Flirtual.Profiles do
     |> Repo.one()
   end
 
-  def update(%Profile{} =profile, attrs) do
+  def update(%Profile{} = profile, attrs) do
     profile
     |> Profile.update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_preferences(%Profile.Preferences{} = preferences, attrs) do
+    preferences
+    |> Profile.Preferences.update_changeset(attrs)
     |> Repo.update()
   end
 
@@ -33,5 +38,4 @@ defmodule Flirtual.Profiles do
   def query_by_user_id(query, user_id) do
     query |> where([profile], profile.user_id == ^user_id)
   end
-
 end
