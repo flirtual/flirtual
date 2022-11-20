@@ -14,8 +14,8 @@ export const LandingButton: React.FC<LandingButtonProps> = (props) => (
 			"cursor-pointer rounded-xl text-center font-montserrat font-extrabold shadow-brand-1",
 			{
 				primary: "bg-brand-gradient p-4 w-48 text-2xl text-white",
-				secondary: "text-brand-pink w-48 p-4 text-2xl bg-white",
-				"secondary-cta": "text-brand-pink w-64 p-4 text-3xl bg-white"
+				secondary: "text-pink w-48 p-4 text-2xl bg-white",
+				"secondary-cta": "text-pink w-64 p-4 text-3xl bg-white"
 			}[props.kind]
 		)}
 	>

@@ -98,10 +98,10 @@ export const Onboarding1Form: React.FC = () => {
 			</FormField>
 			<div className="flex flex-col gap-4">
 				<button
-					className="rounded-xl bg-brand-gradient p-4 text-center shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-brand-coral focus:ring-offset-2"
+					className="rounded-xl bg-brand-gradient p-4 text-center shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-coral focus:ring-offset-2"
 					type="submit"
 				>
-					<span className="font-montserrat text-xl font-semibold text-white">Continue</span>
+					<span className="font-montserrat text-xl font-semibold text-white-10">Continue</span>
 				</button>
 			</div>
 			<FormInputMessages messages={formErrors} />

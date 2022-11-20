@@ -20,11 +20,11 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 
 	return (
 		<div
-			className="flex items-center overflow-hidden rounded-xl border-red-500 bg-brand-grey shadow-brand-1 focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2"
+			className="flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 dark:bg-black-60 dark:text-white-20 focus-within:dark:ring-offset-black-50"
 			onClick={() => inputRef.current?.focus()}
 		>
 			{Icon && (
-				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white">
+				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">
 					<Icon className="h-7 w-7" />
 				</div>
 			)}

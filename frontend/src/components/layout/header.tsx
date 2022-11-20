@@ -15,7 +15,10 @@ import { InlineButton } from "../inline-button";
 import { NavigationInner } from "./navigation";
 
 const NavigationalMessage: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => (
-	<div {...props} className={twMerge("flex w-full justify-center bg-brand-black", props.className)}>
+	<div
+		{...props}
+		className={twMerge("flex w-full justify-center bg-black-70 text-white-20", props.className)}
+	>
 		<div className="relative flex w-full max-w-screen-lg items-center justify-center px-8 py-4">
 			<div className="relative flex gap-4 font-montserrat leading-none sm:text-lg">
 				<ArrowLongRightIcon className="w-6 animate-bounce-x" />
@@ -42,7 +45,7 @@ const PopoverModel: React.FC<React.ComponentProps<"div">> = ({ children, ...prop
 			props.className
 		)}
 	>
-		<div className="flex w-max flex-col gap-4 rounded-xl bg-brand-white py-4 px-6 text-base font-medium text-brand-black shadow-brand-1">
+		<div className="flex w-max flex-col gap-4 rounded-xl bg-white-20 py-4 px-6 text-base font-medium text-black-80 shadow-brand-1">
 			{children}
 		</div>
 	</div>
@@ -52,7 +55,7 @@ export const Header: React.FC = () => {
 	const { openFreshworks } = useFreshworks();
 
 	return (
-		<header className="flex w-full flex-col bg-brand-gradient text-brand-white shadow-brand-1">
+		<header className="flex w-full flex-col bg-brand-gradient text-white-20 shadow-brand-1">
 			<NavigationalMessage className="hidden sm:flex">
 				Download the{" "}
 				<InlineLink
@@ -115,7 +118,7 @@ export const Header: React.FC = () => {
 								</PopoverModel>
 							</Popover>
 						</nav>
-						<Link className="rounded-xl bg-brand-black px-6 py-3 shadow-brand-1" href="/download">
+						<Link className="rounded-xl bg-black-70 px-6 py-3 shadow-brand-1" href="/download">
 							<span className="font-semibold">Download</span>
 						</Link>
 					</div>

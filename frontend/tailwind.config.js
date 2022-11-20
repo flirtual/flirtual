@@ -7,24 +7,34 @@ let plugin = require("tailwindcss/plugin");
 const colors = {
 	coral: "#FF8975",
 	pink: "#E9658B",
-	white: "#FFFAFA",
-	black: "#131516",
-	grey: "#E4E4E4",
-	cream: "#FFFAF0"
+	cream: "#FFFAF0",
+	white: {
+		10: "white",
+		20: "#F5F5F5",
+		30: "#EBEBEB",
+		40: "#E0E0E0",
+		50: "#D6D6D6"
+	},
+	black: {
+		90: "black",
+		80: "#111111",
+		70: "#1e1e1e",
+		60: "#3c3c3c",
+		50: "#4d4d4d"
+	}
 };
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
+	darkMode: "class",
 	theme: {
 		extend: {
 			fontFamily: {
 				nunito: "var(--font-nunito)",
 				montserrat: "var(--font-montserrat)"
 			},
-			colors: {
-				brand: colors
-			},
+			colors: colors,
 			backgroundImage: {
 				"brand-gradient": `linear-gradient(to right, ${colors.coral}, ${colors.pink})`
 			},

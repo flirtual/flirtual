@@ -3,14 +3,13 @@
 import { api } from "~/api";
 import { FormField } from "~/components/forms/field";
 import { FormInputMessages } from "~/components/forms/input-messages";
-import { InputAutocomplete, InputCheckbox, InputDateSelect, InputLabel } from "~/components/inputs";
+import { InputAutocomplete, InputDateSelect, InputLabel } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { useInputForm } from "~/hooks/use-input-form";
 
 export const Onboarding2Form: React.FC = () => {
 	const { data: user } = useCurrentUser();
-	console.log(user);
 
 	const { fields, formProps, formErrors } = useInputForm<{
 		bornAt: Date;
@@ -26,8 +25,10 @@ export const Onboarding2Form: React.FC = () => {
 			const { sexuality, gender } = values;
 			if (!user) return;
 
-			await api.user.update(user.id, { bornAt: values.bornAt.toISOString() });
-			await api.profile.update(user.id, { sexuality, gender });
+			await Promise.all([
+				api.user.update(user.id, { bornAt: values.bornAt.toISOString() }),
+				api.profile.update(user.id, { sexuality, gender })
+			]);
 		}
 	});
 
@@ -88,10 +89,10 @@ export const Onboarding2Form: React.FC = () => {
 				)}
 			</FormField>
 			<button
-				className="rounded-xl bg-brand-gradient p-4 shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-brand-coral focus:ring-offset-2"
+				className="rounded-xl bg-brand-gradient p-4 shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-coral focus:ring-offset-2"
 				type="submit"
 			>
-				<span className="font-montserrat text-xl font-bold text-white">Continue</span>
+				<span className="font-montserrat text-xl font-bold text-white-10">Continue</span>
 			</button>
 			<FormInputMessages messages={formErrors} />
 		</form>

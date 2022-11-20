@@ -50,7 +50,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 		{...props}
 		type="button"
 		className={twMerge(
-			"flex h-7 w-7 items-center justify-center rounded-full bg-brand-gradient p-1 text-white shadow-brand-1 focus:outline-none focus:ring-2 focus:ring-brand-coral focus:ring-offset-2",
+			"flex h-7 w-7 items-center justify-center rounded-full bg-brand-gradient p-1 text-white-20 shadow-brand-1 focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2",
 			props.className
 		)}
 	>
@@ -69,7 +69,7 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 
 	return (
 		<div
-			className="relative w-full rounded-xl focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2"
+			className="relative rounded-xl focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2"
 			tabIndex={-1}
 			onBlur={({ currentTarget, relatedTarget }) => {
 				if (currentTarget.contains(relatedTarget)) return;
@@ -83,7 +83,7 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				className="flex items-center gap-2 px-3 font-montserrat text-xl font-semibold focus:outline-none"
 				type="button"
 			>
-				<span className="">{props.children}</span>
+				<span className="w-12">{props.children}</span>
 				<ChevronDownIcon className="h-4 w-4" strokeWidth={3} />
 			</button>
 			<InputOptionWindow
@@ -137,7 +137,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"select-none rounded-3xl bg-white p-4 font-nunito shadow-brand-1 focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2",
+				"select-none rounded-3xl bg-white-20 p-4 font-nunito text-black-70 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2",
 				elementProps.className
 			)}
 		>
@@ -174,7 +174,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 				</div>
 
 				<div className="-mx-2">
-					<table className="w-full text-black">
+					<table className="w-full text-black-70">
 						<thead>
 							<tr>
 								{["S", "M", "T", "W", "T", "F", "S"].map((name, idx) => (
@@ -208,9 +208,9 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 													<button
 														type="button"
 														className={twMerge(
-															"h-10 w-10 rounded-xl text-center hover:bg-brand-grey focus:outline-none focus:ring-2 focus:ring-brand-coral focus:ring-offset-2",
-															!currentMonth && "text-gray-500",
-															dateEqual(props.value, date) && "bg-brand-gradient text-white"
+															"h-10 w-10 rounded-xl text-center hover:bg-white-40 focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2",
+															!currentMonth && "text-black-50",
+															dateEqual(props.value, date) && "text-white bg-brand-gradient"
 														)}
 														onClick={() => onChange(date)}
 													>

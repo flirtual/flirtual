@@ -73,7 +73,7 @@ export const LoginForm: React.FC = () => {
 			</FormField>
 			<div className="flex flex-col gap-4">
 				<button className="rounded-xl bg-brand-gradient p-4 shadow-brand-1" type="submit">
-					<span className="font-montserrat text-xl font-extrabold text-white">Login</span>
+					<span className="font-montserrat text-xl font-extrabold text-white-10">Login</span>
 				</button>
 				<FormInputMessages messages={formErrors} />
 				<div className="flex flex-col font-nunito text-lg">

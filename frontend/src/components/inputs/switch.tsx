@@ -14,7 +14,12 @@ const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
 				props.className
 			)}
 		/>
-		<label className={twMerge("pointer-events-none absolute", props.checked && "text-white")}>
+		<label
+			className={twMerge(
+				"pointer-events-none absolute",
+				props.checked ? "text-white-20" : "text-black-80 dark:text-white-20"
+			)}
+		>
 			{label}
 		</label>
 	</div>
@@ -30,7 +35,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const { value, name } = props;
 
 	return (
-		<div className="flex w-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-brand-grey shadow-brand-1 focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2">
+		<div className="flex w-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus-within:ring-offset-white-20 dark:bg-black-60 focus-within:dark:ring-offset-black-50">
 			<SwitchInput
 				checked={value}
 				label="Yes"

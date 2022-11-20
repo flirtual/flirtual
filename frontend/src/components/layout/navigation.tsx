@@ -24,8 +24,8 @@ const NavigationIconButton: React.FC<React.ComponentProps<"a"> & { href: string;
 			className={twMerge(
 				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none",
 				pathname === props.href
-					? "bg-brand-white text-brand-black shadow-brand-1"
-					: "hocus:bg-brand-white hocus:text-brand-black hocus:shadow-brand-1",
+					? "bg-white-20 text-black-70 shadow-brand-1"
+					: "hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1",
 				props.className
 			)}
 		>
@@ -42,7 +42,7 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 		<div
 			{...props}
 			className={twMerge(
-				"flex h-full w-full max-w-lg items-center justify-between gap-4 px-8 py-2 font-nunito text-brand-white md:px-16",
+				"flex h-full w-full max-w-lg items-center justify-between gap-4 px-8 py-2 font-nunito text-white-20 md:px-16",
 				props.className
 			)}
 		>
@@ -58,8 +58,8 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 			<NavigationIconButton href="/messages">
 				<div className="relative">
 					<ChatBubbleLeftRightIcon className="w-8" strokeWidth={1.5} />
-					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
-						<span className="font-mono text-sm font-semibold leading-none text-brand-white">4</span>
+					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
+						<span className="font-mono text-sm font-semibold leading-none text-white-20">4</span>
 					</div>
 				</div>
 			</NavigationIconButton>

@@ -13,7 +13,7 @@ export const SoleModelLayout: React.FC<React.ComponentProps<"div"> & { footer?: 
 	<div
 		{...props}
 		className={twMerge(
-			"flex min-h-screen grow flex-col items-center overflow-x-hidden bg-brand-cream text-black sm:flex-col",
+			"dark:text-brand-white flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream text-black-80 dark:bg-black-80 sm:flex-col",
 			props.className
 		)}
 	>

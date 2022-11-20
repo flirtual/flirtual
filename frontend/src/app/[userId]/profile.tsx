@@ -20,7 +20,9 @@ const Pill: React.FC<React.ComponentProps<"div"> & { Icon?: IconComponent; activ
 		{...props}
 		className={twMerge(
 			"flex h-8 items-center gap-2 rounded-xl py-1 px-4 font-montserrat font-semibold shadow-brand-1",
-			active ? "bg-brand-gradient text-brand-white" : "bg-neutral-200 text-brand-black",
+			active
+				? "bg-brand-gradient text-white-10"
+				: "bg-white-30 text-black-70 dark:bg-black-70 dark:text-white-20 sm:dark:bg-black-60",
 			props.className
 		)}
 	>
@@ -40,7 +42,7 @@ const ActivityIndicator: React.FC<{ lastActiveAt: Date }> = ({ lastActiveAt }) =
 			? timeSince < ONE_DAY_IN_MILLISECONDS
 				? "bg-green-500"
 				: "bg-yellow-500"
-			: "bg-brand-black";
+			: "bg-black-70";
 	const text =
 		timeSince < TWO_WEEKS_IN_MILLISECONDS
 			? timeSince < ONE_DAY_IN_MILLISECONDS
@@ -62,8 +64,8 @@ const ActivityIndicator: React.FC<{ lastActiveAt: Date }> = ({ lastActiveAt }) =
 
 const ProfileVerificationBadge: React.FC = () => (
 	<div className="relative h-6 w-6">
-		<div className="absolute top-1/4 left-1/4 h-3 w-3 bg-white" />
-		<CheckBadgeIcon className="absolute h-full w-full fill-brand-pink" />
+		<div className="absolute top-1/4 left-1/4 h-3 w-3 bg-white-20" />
+		<CheckBadgeIcon className="absolute h-full w-full fill-pink" />
 	</div>
 );
 const CountryPill: React.FC<{ code: string }> = ({ code }) => (
@@ -81,11 +83,11 @@ export const Profile: React.FC = () => {
 	if (!user) return null;
 
 	return (
-		<div className="flex w-full flex-col overflow-hidden border-brand-coral bg-brand-cream text-brand-black sm:max-w-lg sm:rounded-3xl sm:border-4 sm:bg-brand-white sm:shadow-brand-1">
+		<div className="flex w-full flex-col overflow-hidden border-coral bg-cream text-black-70 dark:bg-black-80 dark:text-white-20 sm:max-w-lg sm:rounded-3xl sm:border-4 sm:bg-white-20 sm:shadow-brand-1 sm:dark:bg-black-70">
 			<ProfileImageDisplay
 				images={user.profile.images.map((image) => `https://media.flirtu.al/${image.externalId}/`)}
 			>
-				<div className="absolute bottom-0 flex w-full flex-col justify-center gap-2 p-8 text-brand-white">
+				<div className="absolute bottom-0 flex w-full flex-col justify-center gap-2 p-8 text-white-10">
 					<div className="flex items-baseline gap-4 font-montserrat">
 						<span className="text-4xl font-bold leading-none">
 							{user.profile.displayName ?? user.username}
@@ -127,12 +129,12 @@ export const Profile: React.FC = () => {
 			</div>
 			<div className="h-32 w-full sm:h-0">
 				<div className="pointer-events-none fixed left-0 bottom-16 flex h-32 w-full items-center justify-center p-8">
-					<div className="pointer-events-auto flex h-fit overflow-hidden rounded-xl text-brand-white shadow-brand-1">
+					<div className="pointer-events-auto flex h-fit overflow-hidden rounded-xl text-white-10 shadow-brand-1">
 						<button className="flex items-center gap-3 bg-brand-gradient px-8 py-4" type="button">
 							<HeartGradient className="w-8" gradient={false} />
 							<span className="font-montserrat text-lg font-extrabold">Like</span>
 						</button>
-						<button className="flex items-center gap-3 bg-brand-black px-8 py-4" type="button">
+						<button className="flex items-center gap-3 bg-black-50 px-8 py-4" type="button">
 							<XMarkIcon className="w-8" strokeWidth={3} />
 							<span className="font-montserrat text-lg font-extrabold">Pass</span>
 						</button>

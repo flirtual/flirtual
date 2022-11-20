@@ -10,7 +10,7 @@ const RangeInput: React.FC<Omit<React.ComponentProps<"input">, "type">> = (props
 		{...props}
 		type="range"
 		className={twMerge(
-			"pointer-events-none absolute w-full appearance-none bg-transparent focus:outline-none range-thumb:pointer-events-auto range-thumb:h-6 range-thumb:w-6 range-thumb:rounded-full range-thumb:border-none range-thumb:bg-brand-gradient range-thumb:shadow-brand-1 focus:range-thumb:ring-2 focus:range-thumb:ring-brand-coral focus:range-thumb:ring-offset-2",
+			"pointer-events-none absolute w-full appearance-none bg-transparent focus:outline-none range-thumb:pointer-events-auto range-thumb:h-6 range-thumb:w-6 range-thumb:rounded-full range-thumb:border-none range-thumb:bg-brand-gradient range-thumb:shadow-brand-1 focus:range-thumb:ring-2 focus:range-thumb:ring-coral focus:range-thumb:ring-offset-2 focus:range-thumb:ring-offset-white-20 focus:range-thumb:dark:ring-offset-black-50",
 			props.className
 		)}
 	/>
@@ -53,7 +53,7 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 
 	return (
 		<div className="relative flex h-6 shrink-0 items-center">
-			<div className="absolute h-2 w-full rounded-full bg-brand-black shadow-brand-1" />
+			<div className="absolute h-2 w-full rounded-full bg-black-50 shadow-brand-1 dark:bg-black-60" />
 			<div
 				className="absolute h-2 rounded-full bg-brand-gradient"
 				style={{

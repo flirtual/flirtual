@@ -99,7 +99,7 @@ export const RegisterForm: React.FC = () => {
 			</FormField>
 			<div className="flex flex-col gap-4">
 				<button className="w-full rounded-xl bg-brand-gradient p-4 shadow-brand-1" type="submit">
-					<span className="font-montserrat text-xl text-white">Create my account</span>
+					<span className="font-montserrat text-xl text-white-10">Create my account</span>
 				</button>
 				<FormInputMessages messages={formErrors} />
 				<div className="flex flex-col font-nunito text-lg">

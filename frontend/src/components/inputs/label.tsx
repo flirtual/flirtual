@@ -8,7 +8,9 @@ export type InputLabelProps = React.ComponentProps<"label"> & {
 };
 
 export const InputLabelHint: React.FC<React.ComponentProps<"span">> = (props) => {
-	return <span {...props} className={twMerge("text-gray-700", props.className)} />;
+	return (
+		<span {...props} className={twMerge("text-black-50 dark:text-white-50", props.className)} />
+	);
 };
 
 export const InputLabel: React.FC<InputLabelProps> = (props) => {

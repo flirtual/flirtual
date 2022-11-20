@@ -26,7 +26,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 
 	return (
 		<div className="relative shrink-0 overflow-hidden">
-			<div className="relative flex aspect-square shrink-0 bg-brand-black">
+			<div className="relative flex aspect-square shrink-0 bg-black-70">
 				{images.map((image, imageIdx) => (
 					<ProfileImage
 						key={imageIdx}
@@ -49,14 +49,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 								type="button"
 								className={twMerge(
 									"h-1.5 grow rounded-full",
-									imageOffset === imageIdx ? "bg-brand-white/50" : "bg-brand-black/50"
+									imageOffset === imageIdx ? "bg-white-10/50" : "bg-black-70/50"
 								)}
 								onClick={() => set(0, imageIdx)}
 							/>
 						))}
 					</div>
 				</div>
-				<div className="pointer-events-none absolute bottom-0 h-full w-full bg-gradient-to-b from-transparent via-black/20 to-black/60">
+				<div className="pointer-events-none absolute bottom-0 h-full w-full bg-gradient-to-b from-transparent via-black-90/20 to-black-90/60">
 					{children}
 				</div>
 			</div>

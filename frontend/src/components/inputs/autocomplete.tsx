@@ -60,18 +60,18 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 				event.preventDefault();
 			}}
 		>
-			<div className="flex rounded-xl bg-brand-grey p-2 shadow-brand-1 group-focus-within:ring-2 group-focus-within:ring-brand-coral group-focus-within:ring-offset-2">
+			<div className="flex rounded-xl bg-white-40 p-2 text-black-70 shadow-brand-1 group-focus-within:ring-2 group-focus-within:ring-coral group-focus-within:ring-offset-2 dark:bg-black-60 dark:text-white-20 group-focus-within:dark:ring-offset-black-50">
 				<div className="flex flex-wrap items-center gap-1.5">
 					{values.map((value) => (
 						<button
-							className="h-fit rounded-xl bg-brand-gradient px-3 py-2 shadow-brand-1 focus:outline-none focus:ring-2 focus:ring-brand-coral focus:ring-offset-2"
+							className="h-fit rounded-xl bg-brand-gradient px-3 py-2 shadow-brand-1 focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2"
 							key={value}
 							type="button"
 							onClick={() => {
 								props.onChange(values.filter((v) => v !== value));
 							}}
 						>
-							<span className="pointer-events-none select-none font-nunito text-lg text-white">
+							<span className="pointer-events-none select-none font-nunito text-lg text-white-20">
 								{options.find((option) => option.key === value)?.label}
 							</span>
 						</button>

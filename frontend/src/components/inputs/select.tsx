@@ -45,7 +45,7 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 				ref={ref}
 				tabIndex={-1}
 				className={twMerge(
-					"max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-brand-white shadow-brand-1 focus-within:ring-2 focus-within:ring-brand-coral focus-within:ring-offset-2 focus:outline-none",
+					"max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus:outline-none dark:bg-black-70 focus-within:dark:ring-offset-black-50",
 					elementProps.className
 				)}
 				onFocusCapture={(event) => {
@@ -74,7 +74,7 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 				<div className="flex w-full flex-col" ref={optionsRef}>
 					{options.map((option) => (
 						<button
-							className="px-4 py-2 text-left hover:bg-brand-grey focus:bg-brand-gradient focus:text-white focus:outline-none"
+							className="px-4 py-2 text-left text-black-70 hover:bg-white-40 focus:bg-brand-gradient focus:text-white-20 focus:outline-none dark:text-white-20 hover:dark:bg-black-80/50 focus:dark:text-black-60"
 							key={option.key}
 							type="button"
 							onClick={(event) => onOptionClick?.(Object.assign(event, { option }))}
