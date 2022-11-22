@@ -129,6 +129,7 @@ defmodule Flirtual.User.Profile do
     |> cast(attrs, [
       :display_name,
       :biography,
+      :country,
       :gender,
       :sexuality,
       :games,
@@ -136,11 +137,45 @@ defmodule Flirtual.User.Profile do
       :platforms,
       :interests
     ])
-    |> validate_display_name()
+    |> validate(:display_name)
+    |> validate(:biography)
+    |> validate(:gender)
+    |> validate(:sexuality)
+    |> validate(:games)
+    |> validate(:languages)
+    |> validate(:platforms)
+    |> validate(:interests)
   end
 
-  def validate_display_name(%Ecto.Changeset{} = changeset) do
-    changeset
-    |> validate_length(:display_name, min: 3, max: 32)
+  def validate(%Ecto.Changeset{} = changeset, :display_name = key) do
+    changeset |> validate_length(key, min: 3, max: 32)
+  end
+
+  def validate(%Ecto.Changeset{} = changeset, :biography = key) do
+    changeset |> validate_length(key, min: 16)
+  end
+
+  def validate(%Ecto.Changeset{} = changeset, :gender = key) do
+    changeset |> validate_length(key, min: 1)
+  end
+
+  def validate(%Ecto.Changeset{} = changeset, :sexuality = key) do
+    changeset |> validate_length(key, min: 1, max: 3)
+  end
+
+  def validate(%Ecto.Changeset{} = changeset, :games = key) do
+    changeset |> validate_length(key, min: 1, max: 5)
+  end
+
+  def validate(%Ecto.Changeset{} = changeset, :languages = key) do
+    changeset |> validate_length(key, min: 1, max: 3)
+  end
+
+  def validate(%Ecto.Changeset{} = changeset, :platforms = key) do
+    changeset |> validate_length(key, min: 1, max: 8)
+  end
+
+  def validate(%Ecto.Changeset{} = changeset, :interests = key) do
+    changeset |> validate_length(key, min: 2, max: 7)
   end
 end
