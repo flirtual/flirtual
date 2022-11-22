@@ -1,29 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import { useLocalStorage } from "./use-local-storage";
 
 export type Theme = "light" | "dark";
 
-function getDefaultTheme(): Theme {
-	if (typeof localStorage === "undefined") return "light";
-
-	const query = window.matchMedia("(prefers-color-scheme: dark)");
-	return (localStorage.getItem("theme") as Theme) || query.matches ? "dark" : "light";
-}
-
 export function useTheme() {
-	const [theme, setTheme] = useState<Theme>(getDefaultTheme());
-
-	useEffect(() => {
-		const query = window.matchMedia("(prefers-color-scheme: dark)");
-
-		function onThemeChange(event: MediaQueryListEvent) {
-			const theme = event.matches ? "dark" : "light";
-			localStorage.setItem("theme", theme);
-			setTheme(theme);
-		}
-
-		query.addEventListener("change", onThemeChange);
-		return () => query.removeEventListener("change", onThemeChange);
-	}, []);
+	const [theme, setTheme] = useLocalStorage<Theme>(
+		"theme",
+		(typeof window !== "undefined" &&
+			window.matchMedia("(prefers-color-scheme: dark)").matches &&
+			"dark") ||
+			"light"
+	);
 
 	useEffect(() => {
 		if (theme === "dark") return document.documentElement.classList.add("dark");

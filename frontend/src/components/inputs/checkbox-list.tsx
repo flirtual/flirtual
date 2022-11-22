@@ -1,12 +1,20 @@
 import React, { useId } from "react";
 
+import { entries } from "~/utilities";
+
 import { InputCheckbox } from "./checkbox";
 import { InputLabel } from "./label";
 
-interface InputCheckboxListProps<T extends string> {
-	items: Array<{ key: T; label: React.ReactNode }>;
-	value: Array<T>;
-	onChange: React.Dispatch<Array<T>>;
+export interface CheckboxListItem<K extends string> {
+	label: React.ReactNode;
+	conflicts?: Array<K>;
+}
+
+export type CheckboxListValue<K extends string> = Array<K>;
+interface InputCheckboxListProps<K extends string> {
+	items: { [K1 in K]: CheckboxListItem<K> };
+	value: CheckboxListValue<K>;
+	onChange: React.Dispatch<CheckboxListValue<K>>;
 }
 
 export function InputCheckboxList<T extends string>(props: InputCheckboxListProps<T>) {
@@ -15,18 +23,18 @@ export function InputCheckboxList<T extends string>(props: InputCheckboxListProp
 
 	return (
 		<div className="flex flex-col gap-2">
-			{items.map((item) => {
-				const itemId = id + item.key;
+			{entries(items).map(([key, item]) => {
+				const itemId = id + key;
 
 				return (
-					<div className="flex items-center gap-4" key={item.key}>
+					<div className="flex items-center gap-4" key={key}>
 						<InputCheckbox
 							id={itemId}
-							value={value.includes(item.key)}
+							value={value.includes(key)}
 							onChange={(itemValue) => {
 								itemValue
-									? onChange([item.key, ...value])
-									: onChange(value.filter((key) => key !== item.key));
+									? onChange([key, ...value].filter((key) => !item.conflicts?.includes(key)))
+									: onChange(value.filter((key) => key !== key));
 							}}
 						/>
 						<InputLabel inline htmlFor={itemId}>

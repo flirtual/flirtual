@@ -1,3 +1,5 @@
+import { LanguageCode } from "~/countries";
+
 import { DatedModel, UuidModel } from "./common";
 import { Profile } from "./profile";
 
@@ -9,13 +11,37 @@ export type User = UuidModel &
 	DatedModel & {
 		email: string;
 		username: string;
+		language: LanguageCode | null;
 		bornAt: string | null;
+		preferences: Preferences;
 		profile: Profile;
 		subscription: null;
 		tags: Array<UserTags>;
 		updatedAt: string;
 		createdAt: string;
 	};
+
+export const PrivacyPreferenceOptions = ["everyone", "matches", "me"] as const;
+export type PrivacyPreferenceOption = typeof PrivacyPreferenceOptions[number];
+
+export interface PrivacyPreferences {
+	analytics: boolean;
+	personality: PrivacyPreferenceOption;
+	connections: PrivacyPreferenceOption;
+	sexuality: PrivacyPreferenceOption;
+	country: PrivacyPreferenceOption;
+	kinks: PrivacyPreferenceOption;
+}
+
+export interface Preferences {
+	emailNotifications: {
+		matches: boolean;
+		messages: boolean;
+		likes: boolean;
+		newsletter: boolean;
+	};
+	privacy: PrivacyPreferences;
+}
 
 export interface CreateUserOptions {
 	username: string;

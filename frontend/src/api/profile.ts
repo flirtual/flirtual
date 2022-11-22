@@ -1,11 +1,15 @@
+import { CountryCode, LanguageCode } from "~/countries";
+
 import { DatedModel, UpdatedAtModel } from "./common";
 
 import { fetch, FetchOptions } from ".";
 
+export type ProfilePreferenceGender = "men" | "women" | "other";
+
 export type ProfilePreferences = UpdatedAtModel & {
 	agemin: number | null;
 	agemax: number | null;
-	gender: Array<string>;
+	gender: Array<ProfilePreferenceGender>;
 	kinks: Array<string>;
 };
 
@@ -14,17 +18,19 @@ export type ProfileImage = DatedModel & {
 	scanned: boolean;
 };
 
+export type ProfileGender = "man" | "woman" | "other";
+
 export type Profile = UpdatedAtModel & {
 	displayName: string | null;
 	biography: string | null;
-	country: string | null;
+	country: CountryCode | null;
 	openness: number;
 	conscientiousness: number;
 	agreeableness: number;
-	gender: Array<string>;
+	gender: Array<ProfileGender>;
 	sexuality: Array<string>;
 	games: Array<string>;
-	languages: Array<string>;
+	languages: Array<LanguageCode>;
 	platforms: Array<string>;
 	interests: Array<string>;
 	preferences: ProfilePreferences;

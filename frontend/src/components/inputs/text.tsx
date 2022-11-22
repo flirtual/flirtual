@@ -33,8 +33,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 				ref={inputRef}
 				type={props.type === "date" ? "text" : props.type || "text"}
 				className={twMerge(
-					"w-full border-none bg-transparent px-4 py-2 font-nunito text-xl focus:outline-none focus:ring-0",
-					Icon && "pl-2",
+					"w-full border-none bg-transparent px-4 py-2 font-nunito focus:outline-none focus:ring-0",
 					props.className
 				)}
 				onChange={(event) => {

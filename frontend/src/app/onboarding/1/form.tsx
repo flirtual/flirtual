@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
+import { ProfilePreferenceGender } from "~/api/profile";
 import { FormField } from "~/components/forms/field";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import {
@@ -23,7 +24,7 @@ export const Onboarding1Form: React.FC = () => {
 	const absMaxAge = 100;
 
 	const { fields, formProps, formErrors } = useInputForm<{
-		gender: Array<string>;
+		gender: Array<ProfilePreferenceGender>;
 		ageRange: InputRangeSliderValue;
 		serious: boolean;
 	}>({
@@ -57,11 +58,11 @@ export const Onboarding1Form: React.FC = () => {
 						<InputLabel {...field.labelProps}>I want to meet...</InputLabel>
 						<InputCheckboxList
 							{...field.props}
-							items={[
-								{ key: "men", label: "Men" },
-								{ key: "women", label: "Women" },
-								{ key: "other", label: "Other" }
-							]}
+							items={{
+								men: { label: "Men" },
+								women: { label: "Women" },
+								other: { label: "Other" }
+							}}
 						/>
 					</>
 				)}

@@ -12,7 +12,7 @@ import { LandingButton } from "./landing-button";
 
 export default function RootIndexPage() {
 	return (
-		<div className="h-screen snap-y snap-mandatory overflow-x-hidden scroll-smooth bg-black text-white md:snap-none">
+		<div className="h-screen snap-y snap-mandatory overflow-x-hidden scroll-smooth bg-black-80 text-white-20 md:snap-none">
 			<SectionCallToAction />
 			<SectionAvatarProfiles
 				values={[

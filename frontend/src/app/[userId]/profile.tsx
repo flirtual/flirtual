@@ -6,8 +6,9 @@ import { twMerge } from "tailwind-merge";
 
 import { IconComponent } from "~/components/icons";
 import { HeartGradient } from "~/components/icons/heart-gradient";
+import { CountryCode, getCountry, getCountryImageUrl } from "~/countries";
 import { useUser } from "~/hooks/use-user";
-import { capitalize, getCountry } from "~/utilities";
+import { capitalize } from "~/utilities";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 
@@ -68,15 +69,18 @@ const ProfileVerificationBadge: React.FC = () => (
 		<CheckBadgeIcon className="absolute h-full w-full fill-pink" />
 	</div>
 );
-const CountryPill: React.FC<{ code: string }> = ({ code }) => (
-	<Pill>
-		<img
-			className="-ml-4 h-8 shrink-0 rounded-l-lg"
-			src={`https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/flags/4x3/${code}.svg`}
-		/>
-		<span>{getCountry(code).name}</span>
-	</Pill>
-);
+
+const CountryPill: React.FC<{ code: CountryCode }> = ({ code }) => {
+	const country = getCountry(code);
+	const flagUrl = getCountryImageUrl(code);
+
+	return (
+		<Pill>
+			<img className="-ml-4 h-8 shrink-0 rounded-l-lg" src={flagUrl} />
+			<span>{country.name}</span>
+		</Pill>
+	);
+};
 
 export const Profile: React.FC = () => {
 	const { data: user } = useUser("4320fccc-e9f2-4ff4-98e6-2d39d68e1fa0");

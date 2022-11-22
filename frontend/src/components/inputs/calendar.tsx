@@ -210,7 +210,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 														className={twMerge(
 															"h-10 w-10 rounded-xl text-center hover:bg-white-40 focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2",
 															!currentMonth && "text-black-50",
-															dateEqual(props.value, date) && "text-white bg-brand-gradient"
+															dateEqual(props.value, date) && "bg-brand-gradient text-white-20"
 														)}
 														onClick={() => onChange(date)}
 													>
