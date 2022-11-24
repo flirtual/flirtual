@@ -23,6 +23,10 @@ defmodule FlirtualWeb.FallbackController do
     conn |> put_error(status, message, details) |> halt()
   end
 
+  def call(conn, :not_found) do
+    conn |> put_error(:not_found, "Not found") |> halt()
+  end
+
   def call(%Plug.Conn{} = conn, params) do
     IO.warn("Internal server error")
     IO.inspect(params)

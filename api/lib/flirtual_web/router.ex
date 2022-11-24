@@ -89,6 +89,8 @@ defmodule FlirtualWeb.Router do
         end
       end
     end
+
+    match :*, "*any", FallbackController, :not_found
   end
 
   if Mix.env() == :dev do
