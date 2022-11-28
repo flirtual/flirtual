@@ -3,12 +3,16 @@ import { SsrUserProvider } from "~/components/ssr-user-provider";
 
 import { Profile } from "./profile";
 
-export default async function ProfilePage() {
+export interface ProfilePageProps {
+	params: { userId: string };
+}
+
+export default async function ProfilePage({ params }: ProfilePageProps) {
 	return (
 		// @ts-expect-error: server component
 		<SsrUserProvider>
 			<SoleModelLayout footer={{ desktopOnly: true }}>
-				<Profile />
+				<Profile userId={params.userId} />
 			</SoleModelLayout>
 		</SsrUserProvider>
 	);

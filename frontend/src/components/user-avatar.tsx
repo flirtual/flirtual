@@ -1,7 +1,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { User } from "~/api/user";
+import { User } from "~/api/user/user";
 
 export function getAvatarUrl(user: User): string {
 	return `https://media.flirtu.al/${

@@ -73,6 +73,7 @@ module.exports = {
 	},
 	plugins: [
 		require("@tailwindcss/forms"),
+		require("@tailwindcss/typography"),
 		require("tailwindcss-hocus"),
 		plugin(({ addVariant }) => {
 			addVariant("range-track", [

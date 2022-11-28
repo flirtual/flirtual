@@ -2,6 +2,7 @@
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
+import { useSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 import { IconComponent } from "~/components/icons";
@@ -82,8 +83,8 @@ const CountryPill: React.FC<{ code: CountryCode }> = ({ code }) => {
 	);
 };
 
-export const Profile: React.FC = () => {
-	const { data: user } = useUser("4320fccc-e9f2-4ff4-98e6-2d39d68e1fa0");
+export const Profile: React.FC<{ userId: string }> = ({ userId }) => {
+	const { data: user } = useUser(userId);
 	if (!user) return null;
 
 	return (

@@ -7,13 +7,14 @@ import { api } from "~/api";
 import { useServerAuthenticate } from "~/server-utilities";
 import { getAvatarUrl } from "~/components/user-avatar";
 import { twitterUrl } from "~/const";
+import { SsrUserProvider } from "~/components/ssr-user-provider";
 
 import { ClientScripts } from "./client-scripts";
 
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
-async function RootLayout({ children }: React.PropsWithChildren) {
+export default async function RootLayout({ children }: React.PropsWithChildren) {
 	const user = await useServerAuthenticate({ optional: true });
 
 	return (
@@ -58,9 +59,10 @@ async function RootLayout({ children }: React.PropsWithChildren) {
 				)}
 				<ClientScripts />
 			</head>
-			<body className={twMerge(montserrat.variable, nunito.variable)}>{children}</body>
+			<body className={twMerge(montserrat.variable, nunito.variable)}>
+				{/* @ts-expect-error: Server Component */}
+				<SsrUserProvider optional>{children}</SsrUserProvider>
+			</body>
 		</html>
 	);
 }
-
-export default RootLayout;

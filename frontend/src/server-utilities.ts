@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { api } from "./api";
-import { User } from "./api/user";
+import { User } from "./api/user/user";
 
 export function thruServerCookies() {
 	return {

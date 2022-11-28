@@ -11,6 +11,7 @@ import { discordUrl, instagramUrl, twitterUrl } from "~/const";
 import { InlineLink } from "../inline-link";
 import { FlirtualLogo } from "../logo";
 import { InlineButton } from "../inline-button";
+import { Popover, PopoverModel } from "../popover";
 
 import { NavigationInner } from "./navigation";
 
@@ -25,28 +26,6 @@ const NavigationalMessage: React.FC<React.ComponentProps<"div">> = ({ children, 
 				<span>{children}</span>
 			</div>
 			<XMarkIcon className="absolute right-8 w-6" strokeWidth={2} />
-		</div>
-	</div>
-);
-
-const Popover: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => {
-	return (
-		<div {...props} className={twMerge("group relative", props.className)}>
-			{children}
-		</div>
-	);
-};
-
-const PopoverModel: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => (
-	<div
-		{...props}
-		className={twMerge(
-			"pointer-events-none absolute -left-6 z-50 flex pt-2 opacity-0 transition-opacity group-hocus-within:pointer-events-auto group-hocus-within:opacity-100",
-			props.className
-		)}
-	>
-		<div className="flex w-max flex-col gap-4 rounded-xl bg-white-20 py-4 px-6 text-base font-medium text-black-80 shadow-brand-1">
-			{children}
 		</div>
 	</div>
 );

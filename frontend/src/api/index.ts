@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { apiUrl } from "~/const";
 import { toCamelObject, toSnakeObject } from "~/utilities";
-
-export const baseUrl = process.env["NEXT_PUBLIC_API_URL"] as string;
 
 export function newUrl(pathname: string, query: Record<string, string> = {}): URL {
 	const searchParams = new URLSearchParams(query);
@@ -9,7 +8,7 @@ export function newUrl(pathname: string, query: Record<string, string> = {}): UR
 
 	return new URL(
 		`${pathname}${Object.keys(query).length > 0 ? `?${searchParams.toString()}` : ""}`,
-		baseUrl
+		apiUrl
 	);
 }
 
@@ -73,6 +72,6 @@ export async function fetch<T = unknown>(
 }
 
 export * as auth from "./auth";
-export * as profile from "./profile";
 export * as user from "./user";
+export * as file from "./file";
 export * as api from "./";

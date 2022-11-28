@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
+import { siteOrigin } from "~/const";
+
 function isExternalLink(href: string) {
-	if (typeof window === "undefined") return true;
-	return new URL(href, window.location.origin).origin !== window.location.origin;
+	return new URL(href, siteOrigin).origin !== siteOrigin;
 }
 
 type InlineLinkProps = Omit<Parameters<typeof Link>[0], "href"> & { href: string };

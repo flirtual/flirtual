@@ -79,6 +79,8 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 					{options.map((option) => (
 						<button
 							className="px-4 py-2 text-left text-black-70 hover:bg-white-40 focus:bg-brand-gradient focus:text-white-20 focus:outline-none dark:text-white-20 hover:dark:bg-black-80/50 focus:dark:text-white-20"
+							data-key={option.key}
+							data-name={option.label}
 							key={option.key}
 							type="button"
 							onClick={(event) => onOptionClick?.(Object.assign(event, { option }))}
@@ -106,7 +108,29 @@ export function InputSelect<K extends string = string>(props: InputSelectProps<K
 	const label = props.options.find((option) => option.key === props.value)?.label;
 
 	return (
-		<div className="group relative">
+		<div
+			className="group relative"
+			onKeyDown={({ code, currentTarget }) => {
+				if (!code.startsWith("Key")) return;
+				const key = code.slice(3).toLowerCase();
+				const elements = currentTarget.querySelectorAll("*[data-key]");
+
+				for (let i = 0; i < elements.length; i++) {
+					const element = elements[i];
+					if (
+						!(element instanceof HTMLElement) ||
+						!element.dataset.name?.toLowerCase().startsWith(key)
+					)
+						continue;
+
+					return element.scrollIntoView({
+						block: "nearest",
+						inline: "start",
+						behavior: "smooth"
+					});
+				}
+			}}
+		>
 			<button
 				className="flex w-full items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus:outline-none dark:bg-black-60 dark:text-white-20 focus-within:dark:ring-offset-black-50"
 				type="button"
@@ -114,7 +138,7 @@ export function InputSelect<K extends string = string>(props: InputSelectProps<K
 				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">
 					<ChevronUpDownIcon className="h-7 w-7" />
 				</div>
-				<span className={twMerge("px-4 py-2", label ? "" : "text-black-50")}>
+				<span className={twMerge("px-4 py-2", label ? "" : "text-black-50 dark:text-white-50")}>
 					{label || placeholder}
 				</span>
 			</button>

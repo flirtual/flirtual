@@ -1,8 +1,7 @@
 import { CountryCode, LanguageCode } from "~/countries";
 
-import { DatedModel, UpdatedAtModel } from "./common";
-
-import { fetch, FetchOptions } from ".";
+import { DatedModel, UpdatedAtModel } from "../../common";
+import { fetch, FetchOptions } from "../..";
 
 export type ProfilePreferenceGender = "men" | "women" | "other";
 
