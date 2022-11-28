@@ -9,7 +9,6 @@ defmodule FlirtualWeb.SessionController do
 
   alias Flirtual.Sessions
   alias Flirtual.Users
-  alias Flirtual.User.Session
   alias Flirtual.User
 
   action_fallback FlirtualWeb.FallbackController

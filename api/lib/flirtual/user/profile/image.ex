@@ -1,9 +1,9 @@
-defmodule Flirtual.User.Profile.Images do
+defmodule Flirtual.User.Profile.Image do
   use Flirtual.Schema
 
   alias Flirtual.User.Profile
 
-  @derive {Jason.Encoder, only: [:external_id, :scanned, :updated_at, :created_at]}
+  @derive {Jason.Encoder, only: [:id, :external_id, :scanned, :updated_at, :created_at]}
 
   schema "user_profile_images" do
     belongs_to :profile, Profile

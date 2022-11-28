@@ -11,6 +11,7 @@ defmodule Flirtual.User do
              :username,
              :language,
              :born_at,
+             :email_confirmed_at,
              :tags,
              :connections,
              :subscription,

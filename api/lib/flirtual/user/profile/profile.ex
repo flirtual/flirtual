@@ -5,7 +5,7 @@ defmodule Flirtual.User.Profile do
   import Ecto.Changeset
 
   alias Flirtual.User
-  alias Flirtual.User.Profile.{Images, Preferences, CustomWeights, Likes}
+  alias Flirtual.User.Profile.{Image, Preferences, CustomWeights, Likes}
 
   @genders [
     :woman,
@@ -110,7 +110,7 @@ defmodule Flirtual.User.Profile do
     has_one :preferences, Preferences
     has_one :custom_weights, CustomWeights
 
-    has_many :images, Images
+    has_many :images, Image
     many_to_many :likes, User, join_through: Likes
 
     timestamps(inserted_at: false)

@@ -3,7 +3,7 @@ defmodule Flirtual.Users do
   import Ecto.Changeset
 
   alias Flirtual.{Repo, User, Sessions}
-  alias Flirtual.User.{Session}
+  alias Flirtual.User.{Session, Preferences}
 
   def get(id)
       when is_binary(id) do
@@ -29,9 +29,23 @@ defmodule Flirtual.Users do
      |> Repo.one()).user
   end
 
+  def get_preferences_by_user_id(user_id)
+      when is_binary(user_id) do
+    Preferences
+    |> where([preferences], preferences.user_id == ^user_id)
+    |> preload(^Preferences.default_assoc())
+    |> Repo.one()
+  end
+
   def update(%User{} = user, attrs) do
     user
     |> User.update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_privacy_preferences(%Preferences.Privacy{} = preferences, attrs) do
+    preferences
+    |> Preferences.Privacy.update_changeset(attrs)
     |> Repo.update()
   end
 

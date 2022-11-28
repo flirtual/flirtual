@@ -31,6 +31,14 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def update_privacy_preferences(conn, %{"user_id" => user_id} = params) do
+    preferences = Users.get_preferences_by_user_id(user_id)
+
+    with {:ok, privacy} <- Users.update_privacy_preferences(preferences.privacy, params) do
+      conn |> json(privacy)
+    end
+  end
+
   def get_current_user(conn, _) do
     conn |> get(%{"user_id" => conn.assigns[:session].user_id})
   end

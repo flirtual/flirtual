@@ -65,8 +65,16 @@ defmodule FlirtualWeb.Router do
           get "/", UsersController, :get
           post "/", UsersController, :update
 
+          scope "/preferences" do
+            post "/privacy", UsersController, :update_privacy_preferences
+          end
+
           scope "/profile" do
             post "/", ProfileController, :update
+
+            scope "/images" do
+              post "/", ProfileController, :create_images
+            end
 
             scope "/preferences" do
               post "/", ProfileController, :update_preferences
@@ -90,7 +98,7 @@ defmodule FlirtualWeb.Router do
       end
     end
 
-    match :*, "*any", FallbackController, :not_found
+    match :*, "/*any", FallbackController, :not_found
   end
 
   if Mix.env() == :dev do

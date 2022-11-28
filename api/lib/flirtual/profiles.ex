@@ -1,9 +1,10 @@
 defmodule Flirtual.Profiles do
   import Ecto.Query
-  import Ecto.Changeset
 
-  alias Flirtual.{Repo, User, Sessions}
+  alias Ecto.UUID
+  alias Flirtual.{Repo}
   alias Flirtual.User.{Profile}
+  alias Flirtual.User.Profile.{Image}
 
   def get(id) when is_binary(id) do
     Profile
@@ -29,6 +30,31 @@ defmodule Flirtual.Profiles do
     preferences
     |> Profile.Preferences.update_changeset(attrs)
     |> Repo.update()
+  end
+
+  def create_images(%Profile{} = profile, imageIds) do
+    placeholders = %{
+      now: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+      profile_id: profile.id
+    }
+
+    {count, images} = Repo.insert_all(
+      Image,
+      imageIds
+      |> Enum.map(
+        &%{
+          id: UUID.generate(),
+          profile_id: {:placeholder, :profile_id},
+          external_id: &1,
+          updated_at: {:placeholder, :now},
+          created_at: {:placeholder, :now}
+        }
+      ),
+      placeholders: placeholders,
+      returning: true
+    )
+
+    {:ok, images}
   end
 
   def query_by_id(query, id) do

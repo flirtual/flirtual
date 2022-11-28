@@ -4,8 +4,7 @@ defmodule FlirtualWeb.ProfileController do
   import Plug.Conn
   import Phoenix.Controller
 
-  alias FlirtualWeb.SessionController
-  alias Flirtual.{Users, Profiles}
+  alias Flirtual.{Profiles}
 
   action_fallback FlirtualWeb.FallbackController
 
@@ -24,4 +23,13 @@ defmodule FlirtualWeb.ProfileController do
       conn |> json(preferences)
     end
   end
+
+  def create_images(conn, %{"user_id" => user_id, "image_ids" => image_ids}) do
+    profile = Profiles.get_by_user_id(user_id)
+
+    with {:ok, images} <- Profiles.create_images(profile, image_ids) do
+      conn |> json(images)
+    end
+  end
+
 end
