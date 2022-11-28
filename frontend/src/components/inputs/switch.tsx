@@ -25,8 +25,10 @@ const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
 	</div>
 );
 
+export type SwitchValue = null | boolean;
+
 export interface InputSwitchProps {
-	value: boolean;
+	value: SwitchValue;
 	name: string;
 	onChange: React.Dispatch<boolean>;
 }
@@ -35,16 +37,16 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const { value, name } = props;
 
 	return (
-		<div className="flex w-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus-within:ring-offset-white-20 dark:bg-black-60 focus-within:dark:ring-offset-black-50">
+		<div className="flex h-fit w-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus-within:ring-offset-white-20 dark:bg-black-60 focus-within:dark:ring-offset-black-50">
 			<SwitchInput
-				checked={value}
+				checked={value === null ? false : value}
 				label="Yes"
 				name={name}
 				value="yes"
 				onChange={() => props.onChange(true)}
 			/>
 			<SwitchInput
-				checked={!value}
+				checked={value === null ? false : !value}
 				label="No"
 				name={name}
 				value="no"

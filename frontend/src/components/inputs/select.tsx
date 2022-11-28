@@ -123,11 +123,10 @@ export function InputSelect<K extends string = string>(props: InputSelectProps<K
 					)
 						continue;
 
-					return element.scrollIntoView({
-						block: "nearest",
-						inline: "start",
-						behavior: "smooth"
-					});
+					element.focus({});
+					props.onChange(element.dataset.key as K);
+
+					return;
 				}
 			}}
 		>

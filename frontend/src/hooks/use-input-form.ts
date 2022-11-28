@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useId, useMemo, useState } from "react";
+import React, { createContext, useContext, useId, useMemo, useRef, useState } from "react";
 
 import { FormFieldFC, FormField } from "~/components/forms/field";
 import { entries } from "~/utilities";
@@ -33,6 +33,7 @@ export type FieldErrors<T> = { [K in keyof T]?: Array<string> };
 
 export interface InputFormField<T, K extends keyof T> {
 	props: InputProps<K, T[K]>;
+	changed: boolean;
 	labelProps: { htmlFor: string };
 	errors: Array<string>;
 }
@@ -62,7 +63,9 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 	const { onSubmit } = options;
 	const formId = useId();
 
-	const [values, setValues] = useState(options.fields);
+	const { current: initialFields } = useRef(options.fields);
+
+	const [values, setValues] = useState(initialFields);
 	const [errors, setErrors] = useState<Array<string>>([]);
 	const [fieldErrors, setFieldErrors] = useState<FieldErrors<T>>({});
 
@@ -105,13 +108,14 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 						key,
 						{
 							props,
+							changed: value !== initialFields[key],
 							labelProps: { htmlFor: id },
 							errors: fieldErrors[key] ?? []
 						}
 					];
 				})
 			) as UseInputForm<T>["fields"],
-		[formId, fieldErrors, submitting, values]
+		[formId, fieldErrors, submitting, initialFields, values]
 	);
 
 	const form = {

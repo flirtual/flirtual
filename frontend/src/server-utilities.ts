@@ -33,7 +33,7 @@ export async function useServerAuthenticate(
 	options: ServerAuthenticateOptions = {}
 ): Promise<User | null> {
 	const { optional = false, to = "/login" } = options;
-	const user = await api.auth.user(thruServerCookies()).catch(() => null);
+	const user = await api.auth.user({ ...thruServerCookies(), cache: "no-store" }).catch(() => null);
 
 	if (!user && !optional) return redirect(to);
 	return user;

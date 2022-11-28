@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 export type ModelCardProps = React.ComponentProps<"div"> & { title: React.ReactNode };
 
 export const ModelCard: React.FC<ModelCardProps> = ({ children, title, ...props }) => (
-	<div {...props} className={twMerge("w-full sm:w-fit", props.className)}>
+	<div {...props} className={twMerge("w-full shrink-0 sm:w-full sm:max-w-lg", props.className)}>
 		<div className="w-full bg-brand-gradient py-8 text-center font-extrabold text-white-10 shadow-brand-1 sm:w-fit sm:rounded-t-[4rem] sm:px-16 sm:pb-4 sm:text-right">
 			<span className="font-montserrat text-3xl md:text-4xl">{title}</span>
 		</div>

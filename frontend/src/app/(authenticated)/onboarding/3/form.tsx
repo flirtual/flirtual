@@ -219,12 +219,10 @@ export const Onboarding3Form: React.FC = () => {
 						})
 					]);
 
-					const fileIds = await api.file.upload(
-						values.images.map((image) => image.file),
-						{ store: true }
-					);
-
-					console.log(fileIds);
+					const files = values.images.map((image) => image.file);
+					await api.user.profile.images.upload(user.id, files, {
+						uploadOptions: { store: true }
+					});
 				}}
 			>
 				{({ submitting, FormField }) => (

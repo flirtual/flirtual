@@ -14,6 +14,7 @@ export type User = UuidModel &
 		username: string;
 		language: LanguageCode | null;
 		bornAt: string | null;
+		emailConfirmedAt: string | null;
 		preferences: Preferences;
 		profile: Profile;
 		subscription: null;

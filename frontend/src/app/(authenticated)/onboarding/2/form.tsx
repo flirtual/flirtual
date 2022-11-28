@@ -28,21 +28,19 @@ export const Onboarding2Form: React.FC = () => {
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				bornAt: user?.bornAt ? new Date(user.bornAt) : new Date(),
-				gender: user?.profile.gender ?? [],
-				sexuality: user?.profile.sexuality ?? [],
-				sexualityPrivacy: user?.preferences.privacy.sexuality ?? "everyone",
-				country: (user?.profile.country ?? "") as CountryCode | "",
-				countryPrivacy: user?.preferences.privacy.country ?? "everyone",
-				languages: user?.profile.languages ?? [],
-				platforms: user?.profile.platforms ?? [],
+				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
+				gender: user.profile.gender ?? [],
+				sexuality: user.profile.sexuality ?? [],
+				sexualityPrivacy: user.preferences.privacy.sexuality ?? "everyone",
+				country: (user.profile.country ?? "") as CountryCode | "",
+				countryPrivacy: user.preferences.privacy.country ?? "everyone",
+				languages: user.profile.languages ?? [],
+				platforms: user.profile.platforms ?? [],
 				new: false,
-				games: user?.profile.games ?? [],
-				interests: user?.profile.interests ?? []
+				games: user.profile.games ?? [],
+				interests: user.profile.interests ?? []
 			}}
 			onSubmit={async (values) => {
-				if (!user) return;
-
 				await Promise.all([
 					api.user.update(user.id, { bornAt: values.bornAt.toISOString() }),
 					api.user.preferences.updatePrivacy(user.id, {
