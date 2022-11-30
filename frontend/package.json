@@ -24,13 +24,14 @@
     "slate-history": "^0.86.0",
     "slate-react": "^0.86.0",
     "swr": "^1.3.0",
-    "tailwind-merge": "^1.8.0",
-    "tailwindcss-hocus": "^0.0.4"
+    "tailwind-merge": "^1.8.0"
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^1.4.2",
     "@next/eslint-plugin-next": "^13.0.5",
     "@tailwindcss/typography": "^0.5.8",
+    "@tailwindcss/forms": "^0.5.3",
+    "tailwindcss-hocus": "^0.0.4",
     "@types/byte-size": "^8.1.0",
     "@types/is-hotkey": "^0.1.7",
     "@types/node": "^18.11.9",
