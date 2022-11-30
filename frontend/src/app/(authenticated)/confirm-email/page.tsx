@@ -41,8 +41,7 @@ export default function ConfirmEmailPage({ params }: ConfirmEmailPageProps) {
 					email: user.email
 				}}
 				onSubmit={async ({ email }) => {
-					await api.user.updateEmail(user.id, email);
-					await mutateUser()
+					await mutateUser(api.user.updateEmail(user.id, email));
 				}}
 			>
 				{({ FormField, fields }) => (
