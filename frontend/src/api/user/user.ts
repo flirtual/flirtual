@@ -42,3 +42,11 @@ export async function get(userId: string, options: FetchOptions = {}) {
 export async function update(userId: string, body: unknown, options: FetchOptions = {}) {
 	await fetch("post", `users/${userId}`, { ...options, body });
 }
+
+export async function updateEmail(userId: string, email: string, options: FetchOptions = {}) {
+	await fetch("post", `users/${userId}/email`, { ...options, body: { email } });
+}
+
+export async function confirmEmail(userId: string, token: string, options: FetchOptions = {}) {
+	await fetch("post", `users/${userId}/email/confirm`, { ...options, body: { token } });
+}

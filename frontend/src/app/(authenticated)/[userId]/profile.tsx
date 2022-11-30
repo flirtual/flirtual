@@ -2,7 +2,6 @@
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import { useSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 import { IconComponent } from "~/components/icons";
