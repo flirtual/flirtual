@@ -3,7 +3,6 @@
 export * from "./autocomplete";
 export * from "./checkbox";
 export * from "./date-select";
-export * from "./editor.tsx_";
 export * from "./file";
 export * from "./label";
 export * from "./range-slider";
