@@ -13,6 +13,7 @@ import { getEmptyImage, HTML5Backend } from "react-dnd-html5-backend";
 import { twMerge } from "tailwind-merge";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { Discord } from "@icons-pack/react-simple-icons";
+import { useRouter } from "next/navigation";
 
 import { InputFile, InputLabel, InputLabelHint, InputSelect, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
@@ -199,6 +200,8 @@ const AccountConnectionButton: React.FC<AccountConnectionButtonProps> = (props) 
 
 export const Onboarding3Form: React.FC = () => {
 	const { data: user } = useCurrentUser();
+	const router = useRouter();
+
 	if (!user) return null;
 
 	return (
@@ -219,10 +222,14 @@ export const Onboarding3Form: React.FC = () => {
 						})
 					]);
 
-					const files = values.images.map((image) => image.file);
-					await api.user.profile.images.upload(user.id, files, {
-						uploadOptions: { store: true }
-					});
+					if (values.images.length) {
+						const files = values.images.map((image) => image.file);
+						await api.user.profile.images.upload(user.id, files, {
+							uploadOptions: { store: true }
+						});
+					}
+
+					router.push("/onboarding/4");
 				}}
 			>
 				{({ submitting, FormField }) => (

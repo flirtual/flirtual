@@ -1,10 +1,16 @@
 "use client";
 
-import { InputLabel, InputSelect, InputSwitch, SwitchValue } from "~/components/inputs";
+import useSWR from "swr";
+import { useRouter } from "next/navigation";
+
+import { InputLabel, InputSelect, InputSwitch } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { Form } from "~/components/forms";
-import { PrivacyPreferenceOption, PrivacyPreferenceOptions } from "~/api/user/preferences";
+import { PrivacyPreferenceOptions } from "~/api/user/preferences";
 import { privacyOptionLabel } from "~/const";
+import { api } from "~/api";
+import { entries } from "~/utilities";
+import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 
 const questions = [
 	"I plan my life out",
@@ -16,26 +22,34 @@ const questions = [
 	"I love helping people",
 	"I dislike it when things change",
 	"I find many things beautiful"
-] as const;
+];
 
 export const Onboarding4Form: React.FC = () => {
 	const { data: user } = useCurrentUser();
-	if (!user) return null;
+	const router = useRouter();
+
+	const { data: personality } = useSWR("personality", () => {
+		if (!user) return null;
+		return api.user.profile.getPersonality(user.id);
+	});
+
+	if (!user || !personality) return null;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
-			fields={
-				{
-					...Object.fromEntries(questions.map((_, idx) => [`question${idx}`, null])),
-					personalityPrivacy: user.preferences.privacy.personality ?? "everyone"
-				} as {
-					[K: `question${number}`]: SwitchValue;
-					personalityPrivacy: PrivacyPreferenceOption;
-				}
-			}
-			onSubmit={async (values) => {
-				console.log(values);
+			fields={{
+				...personality,
+				personalityPrivacy: user.preferences.privacy.personality ?? "everyone"
+			}}
+			onSubmit={async ({ personalityPrivacy, ...personalityAnswers }) => {
+				await Promise.all([
+					api.user.preferences.updatePrivacy(user.id, { personality: personalityPrivacy }),
+					api.user.profile.updatePersonality(user.id, personalityAnswers)
+				]);
+
+				if (user.emailConfirmedAt) return router.push(api.user.profile.url(user));
+				router.push("/confirm-email");
 			}}
 		>
 			{({ submitting, FormField }) => (
@@ -46,12 +60,12 @@ export const Onboarding4Form: React.FC = () => {
 					>
 						This helps us match you with compatible people, based on the Big 5 Personality Test.
 					</InputLabel>
-					{questions.map((questionText, questionIdx) => (
-						<FormField key={questionIdx} name={`question${questionIdx}`}>
+					{entries(personality).map(([name], questionIdx) => (
+						<FormField key={questionIdx} name={name}>
 							{(field) => (
 								<div className="flex justify-between gap-4">
 									<InputLabel {...field.labelProps} inline>
-										{questionText}
+										{questions[questionIdx]}
 									</InputLabel>
 									<InputSwitch {...field.props} />
 								</div>
