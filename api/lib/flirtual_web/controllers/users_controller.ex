@@ -1,8 +1,14 @@
 defmodule FlirtualWeb.UsersController do
   use FlirtualWeb, :controller
 
+  import Plug.Conn
+  import Phoenix.Controller
+
+  import Flirtual.Utilities
+
   alias FlirtualWeb.SessionController
-  alias Flirtual.{Users, Policy}
+  alias Flirtual.{User, Users, Policy}
+  alias User.Connection
 
   action_fallback FlirtualWeb.FallbackController
 
@@ -11,6 +17,33 @@ defmodule FlirtualWeb.UsersController do
       {_, conn} = conn |> SessionController.log_in_user(user)
       conn |> put_status(:created) |> json(user)
     end
+  end
+
+  def start_connection(conn, %{"connection_type" => connection_type}) do
+    connection_type = to_atom(connection_type)
+
+    url = User.Connection.get_authorize_url(connection_type)
+    conn |> redirect(external: url)
+  end
+
+  def create_connection(conn, %{"connection_type" => connection_type} = params) do
+    user_id = conn.assigns[:session].user_id
+    connection_type = to_atom(connection_type)
+
+    with {:ok, connection} <- Users.create_connection(user_id, connection_type, params) do
+      conn |> json(connection)
+    end
+  end
+
+  def list_connections(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    connections =
+      Users.list_connections_by_user_id(user_id)
+      |> Enum.map(&%Connection{&1 | user: user})
+      |> Enum.filter(&Policy.can?(conn, :read, &1))
+
+    conn |> json(connections)
   end
 
   def get(conn, %{"user_id" => id}) do
@@ -36,6 +69,22 @@ defmodule FlirtualWeb.UsersController do
 
     with {:ok, privacy} <- Users.update_privacy_preferences(preferences.privacy, params) do
       conn |> json(privacy)
+    end
+  end
+
+  def update_email(conn, %{"user_id" => user_id} = params) do
+    user = Users.get(user_id)
+
+    with {:ok, user} <- Users.update_email(user, params) do
+      conn |> json(user)
+    end
+  end
+
+  def confirm_email(conn, %{"user_id" => user_id} = params) do
+    user = Users.get(user_id)
+
+    with {:ok, user} <- Users.confirm_email(user, params) do
+      conn |> json(user)
     end
   end
 

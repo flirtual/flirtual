@@ -4,22 +4,24 @@ defmodule Flirtual.User do
 
   import Ecto.Changeset
 
-  @derive {Jason.Encoder,
-           only: [
-             :id,
-             :email,
-             :username,
-             :language,
-             :born_at,
-             :email_confirmed_at,
-             :tags,
-             :connections,
-             :subscription,
-             :preferences,
-             :profile,
-             :updated_at,
-             :created_at
-           ]}
+  @derive [
+    {Jason.Encoder,
+     only: [
+       :id,
+       :email,
+       :username,
+       :language,
+       :born_at,
+       :email_confirmed_at,
+       :deactivated_at,
+       :tags,
+       :subscription,
+       :preferences,
+       :profile,
+       :updated_at,
+       :created_at
+     ]},
+  ]
 
   schema "users" do
     field :email, :string
@@ -35,6 +37,7 @@ defmodule Flirtual.User do
 
     field :born_at, :naive_datetime
     field :email_confirmed_at, :naive_datetime
+    field :deactivated_at, :naive_datetime
     field :banned_at, :naive_datetime
     field :shadowbanned_at, :naive_datetime
     field :disabled_at, :naive_datetime
@@ -52,7 +55,6 @@ defmodule Flirtual.User do
 
   def default_assoc do
     [
-      :connections,
       :subscription,
       preferences: Flirtual.User.Preferences.default_assoc(),
       profile: Flirtual.User.Profile.default_assoc()
@@ -149,7 +151,7 @@ defmodule Flirtual.User do
 
   It requires the email to change otherwise an error is added.
   """
-  def email_changeset(user, attrs) do
+  def update_email_changeset(user, attrs) do
     user
     |> cast(attrs, [:email])
     |> validate_unique_email()
@@ -179,14 +181,6 @@ defmodule Flirtual.User do
   end
 
   @doc """
-  Confirms the account by setting `confirmed_at`.
-  """
-  def confirm_email_changeset(user) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-    change(user, email_confirmed_at: now)
-  end
-
-  @doc """
   Verifies the password.
 
   If there is no user or the user doesn't have a password, we call
@@ -211,5 +205,11 @@ defmodule Flirtual.User do
     else
       add_error(changeset, :current_password, "is not valid")
     end
+  end
+end
+
+defimpl Swoosh.Email.Recipient, for: Flirtual.User do
+  def format(%Flirtual.User{} = user) do
+    {user.profile[:display_name] || user.username, user.email}
   end
 end

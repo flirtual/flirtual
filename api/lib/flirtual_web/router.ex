@@ -54,6 +54,13 @@ defmodule FlirtualWeb.Router do
 
           get "/", UsersController, :get_current_user
         end
+
+        scope "/connect/:connection_type" do
+          pipe_through :require_authenticated_user
+
+          get "/authorize", UsersController, :start_connection
+          get "/", UsersController, :create_connection
+        end
       end
 
       scope "/users" do
@@ -65,12 +72,23 @@ defmodule FlirtualWeb.Router do
           get "/", UsersController, :get
           post "/", UsersController, :update
 
+
+          post "/email", UsersController, :update_email
+          post "/email/confirm", UsersController, :confirm_email
+
+          get "/connections", UsersController, :list_connections
+
           scope "/preferences" do
             post "/privacy", UsersController, :update_privacy_preferences
           end
 
           scope "/profile" do
             post "/", ProfileController, :update
+
+            scope "personality" do
+              get "/", ProfileController, :get_personality
+              post "/", ProfileController, :update_personality
+            end
 
             scope "/images" do
               post "/", ProfileController, :create_images
@@ -97,8 +115,6 @@ defmodule FlirtualWeb.Router do
         end
       end
     end
-
-    match :*, "/*any", FallbackController, :not_found
   end
 
   if Mix.env() == :dev do
@@ -111,4 +127,6 @@ defmodule FlirtualWeb.Router do
       live_dashboard "/dashboard", metrics: FlirtualWeb.Telemetry
     end
   end
+
+  match :*, "/*any", FlirtualWeb.FallbackController, :not_found
 end

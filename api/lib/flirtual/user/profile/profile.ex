@@ -63,9 +63,27 @@ defmodule Flirtual.User.Profile do
     [:experimentalist, :experimentalist]
   ]
 
+  @personality_questions [
+    :question0,
+    :question1,
+    :question2,
+    :question3,
+    :question4,
+    :question5,
+    :question6,
+    :question7,
+    :question8
+  ]
+
+  def get_personality_questions() do
+    @personality_questions
+  end
+
   def get_kink_pairs() do
     @kink_pairs
   end
+
+
 
   def get_kink_list() do
     @kink_pairs |> List.flatten() |> Enum.uniq()
@@ -100,6 +118,7 @@ defmodule Flirtual.User.Profile do
     field :openness, :integer, default: 0
     field :conscientiousness, :integer, default: 0
     field :agreeableness, :integer, default: 0
+    Enum.map(@personality_questions, &(field(&1, :boolean)))
     field :gender, {:array, Ecto.Enum}, values: @genders
     field :sexuality, {:array, Ecto.Enum}, values: @sexualities
     field :games, {:array, :string}

@@ -4,7 +4,8 @@ defmodule FlirtualWeb.ProfileController do
   import Plug.Conn
   import Phoenix.Controller
 
-  alias Flirtual.{Profiles}
+  alias Flirtual.{Policy,Profiles}
+  alias Flirtual.User.{Profile}
 
   action_fallback FlirtualWeb.FallbackController
 
@@ -13,6 +14,25 @@ defmodule FlirtualWeb.ProfileController do
 
     with {:ok, profile} <- Profiles.update(profile, params) do
       conn |> json(profile)
+    end
+  end
+
+  def get_personality(conn, %{"user_id" => user_id}) do
+    personality = Profiles.get_personality_by_user_id(user_id)
+    stub_profile = %Profile{ user_id: user_id }
+
+    if is_nil(personality) or Policy.cannot?(conn, :read, stub_profile) do
+      {:error, {:not_found, "User not found", Map.take(stub_profile, [:user_id])}}
+    else
+      conn |> json(personality)
+    end
+  end
+
+  def update_personality(conn, %{"user_id" => user_id} = params) do
+    profile = Profiles.get_by_user_id(user_id)
+
+    with {:ok, personality} <- Profiles.update_personality(profile, params) do
+      conn |> json(personality)
     end
   end
 

@@ -8,6 +8,11 @@
 import Config
 
 config :flirtual,
+  discord_client_id: "***REMOVED***",
+  discord_client_secret: "***REMOVED***",
+  discord_token: "***REMOVED***"
+
+config :flirtual,
   ecto_repos: [Flirtual.Repo]
 
 # Configures the endpoint
