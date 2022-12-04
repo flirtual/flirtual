@@ -12,13 +12,15 @@ export interface PrivacyPreferences {
 	kinks: PrivacyPreferenceOption;
 }
 
+export interface NotificationPreferences {
+	matches: boolean;
+	messages: boolean;
+	likes: boolean;
+	newsletter: boolean;
+}
+
 export interface Preferences {
-	emailNotifications: {
-		matches: boolean;
-		messages: boolean;
-		likes: boolean;
-		newsletter: boolean;
-	};
+	emailNotifications: NotificationPreferences;
 	privacy: PrivacyPreferences;
 }
 
@@ -29,5 +31,21 @@ export async function updatePrivacy(
 	body: UpdatePrivacyPreferencesOptions,
 	options: FetchOptions = {}
 ) {
-	await fetch("post", `users/${userId}/preferences/privacy`, { ...options, body });
+	return fetch<PrivacyPreferences>("post", `users/${userId}/preferences/privacy`, {
+		...options,
+		body
+	});
+}
+
+export type UpdateNotificationsPreferencesOptions = Partial<PrivacyPreferences>;
+
+export async function updateNotifications(
+	userId: string,
+	body: UpdateNotificationsPreferencesOptions,
+	options: FetchOptions = {}
+) {
+	return fetch<PrivacyPreferences>("post", `users/${userId}/preferences/notifications`, {
+		...options,
+		body
+	});
 }

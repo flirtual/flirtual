@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
 import { Button } from "~/components/button";
@@ -8,6 +8,7 @@ import { Form } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { urls } from "~/pageUrls";
 
 export interface ConfirmEmailPageProps {
 	params: { to?: string };
@@ -15,9 +16,14 @@ export interface ConfirmEmailPageProps {
 
 export default function ConfirmEmailPage({ params }: ConfirmEmailPageProps) {
 	const { data: user, mutate: mutateUser } = useCurrentUser({ refreshInterval: 5000 });
+	const router = useRouter();
+
 	if (!user) return null;
 
-	if (user.emailConfirmedAt) redirect(params.to ?? `/${user.id}`);
+	if (user.emailConfirmedAt) {
+		router.push(params.to ?? urls.user(user.username));
+		return null;
+	}
 
 	return (
 		<ModelCard title="Confirm email">

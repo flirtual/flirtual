@@ -61,11 +61,11 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 				event.preventDefault();
 			}}
 		>
-			<div className="flex rounded-xl bg-white-40 px-2 py-1 text-black-70 shadow-brand-1 group-focus-within:ring-2 group-focus-within:ring-coral group-focus-within:ring-offset-2 dark:bg-black-60 dark:text-white-20 dark:ring-offset-black-50">
+			<div className="focusable-within flex rounded-xl bg-white-40 px-2 py-1 text-black-70 shadow-brand-1 dark:bg-black-60 dark:text-white-20">
 				<div className="flex flex-wrap items-center gap-1.5">
 					{values.map((value) => (
 						<button
-							className="h-fit rounded-xl bg-brand-gradient px-3 py-1 shadow-brand-1 focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 dark:ring-offset-black-50"
+							className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 shadow-brand-1"
 							key={value}
 							type="button"
 							onClick={() => {

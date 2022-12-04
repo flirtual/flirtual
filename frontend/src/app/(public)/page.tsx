@@ -2,6 +2,7 @@ import { Googleplay, Apple, Microsoft, Meta } from "@icons-pack/react-simple-ico
 
 import { MobileButton } from "~/components/mobile-button";
 import { Footer } from "~/components/layout/footer";
+import { urls } from "~/pageUrls";
 
 import { SectionCallToAction } from "./section-call-to-action";
 import { SectionCarousel } from "./section-carousel";
@@ -66,7 +67,7 @@ export default function RootIndexPage() {
 						<h1 className="font-montserrat text-4xl font-extrabold sm:text-7xl md:text-8xl">
 							Get Flirtual
 						</h1>
-						<LandingButton href="/register" kind="secondary-cta">
+						<LandingButton href={urls.register()} kind="secondary-cta">
 							Sign up
 						</LandingButton>
 						<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">

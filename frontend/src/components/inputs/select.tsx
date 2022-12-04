@@ -49,7 +49,7 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 				ref={ref}
 				tabIndex={-1}
 				className={twMerge(
-					"max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus:outline-none dark:bg-black-70 focus-within:dark:ring-offset-black-50",
+					"focusable-within max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70",
 					elementProps.className
 				)}
 				onFocusCapture={(event) => {
@@ -131,7 +131,7 @@ export function InputSelect<K extends string = string>(props: InputSelectProps<K
 			}}
 		>
 			<button
-				className="flex w-full items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus:outline-none dark:bg-black-60 dark:text-white-20 focus-within:dark:ring-offset-black-50"
+				className="focusable-within flex w-full items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20"
 				type="button"
 			>
 				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">

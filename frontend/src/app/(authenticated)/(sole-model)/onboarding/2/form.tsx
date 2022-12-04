@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
-import { PrivacyPreferenceOptions } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
+import { FormPrivacySelect } from "~/components/forms/form-privacy-select";
 import {
 	InputAutocomplete,
 	InputDateSelect,
@@ -13,9 +13,9 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { privacyOptionLabel } from "~/const";
 import { CountryCode, getCountries, getLanguages, LanguageCode } from "~/countries";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { urls } from "~/pageUrls";
 import { pick } from "~/utilities";
 
 export const Onboarding2Form: React.FC = () => {
@@ -60,7 +60,7 @@ export const Onboarding2Form: React.FC = () => {
 					})
 				]);
 
-				router.push("/onboarding/3");
+				router.push(urls.onboarding(3));
 			}}
 		>
 			{({ FormField }) => (
@@ -134,13 +134,7 @@ export const Onboarding2Form: React.FC = () => {
 								<InputLabel inline hint="Who can see your sexuality?">
 									Sexuality privacy
 								</InputLabel>
-								<InputSelect
-									{...field.props}
-									options={PrivacyPreferenceOptions.map((option) => ({
-										key: option,
-										label: privacyOptionLabel[option]
-									}))}
-								/>
+								<FormPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -169,13 +163,7 @@ export const Onboarding2Form: React.FC = () => {
 								<InputLabel inline hint="Who can see your country?">
 									Country privacy
 								</InputLabel>
-								<InputSelect
-									{...field.props}
-									options={PrivacyPreferenceOptions.map((option) => ({
-										key: option,
-										label: privacyOptionLabel[option]
-									}))}
-								/>
+								<FormPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>

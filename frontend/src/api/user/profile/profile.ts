@@ -1,8 +1,7 @@
 import { CountryCode, LanguageCode } from "~/countries";
 
-import { DatedModel, UpdatedAtModel } from "../../common";
+import { DatedModel, UpdatedAtModel, UuidModel } from "../../common";
 import { fetch, FetchOptions } from "../..";
-import { User } from "../user";
 
 export type ProfilePreferenceGender = "men" | "women" | "other";
 
@@ -13,12 +12,39 @@ export type ProfilePreferences = UpdatedAtModel & {
 	kinks: Array<string>;
 };
 
-export type ProfileImage = DatedModel & {
-	externalId: string;
-	scanned: boolean;
-};
+export type ProfileImage = UuidModel &
+	DatedModel & {
+		externalId: string;
+		scanned: boolean;
+	};
 
 export type ProfileGender = "man" | "woman" | "other";
+
+export interface ProfileCustomWeights {
+	country: number;
+	monopoly: number;
+	games: number;
+	defaultInterests: number;
+	customInterests: number;
+	personality: number;
+	serious: number;
+	domsub: number;
+	kinks: number;
+	likes: number;
+}
+
+export const DefaultProfileCustomWeights = Object.freeze<ProfileCustomWeights>({
+	country: 1,
+	customInterests: 1,
+	defaultInterests: 1,
+	domsub: 1,
+	games: 1,
+	kinks: 1,
+	likes: 1,
+	monopoly: 1,
+	personality: 1,
+	serious: 1
+});
 
 export type Profile = UpdatedAtModel & {
 	displayName: string | null;
@@ -34,13 +60,9 @@ export type Profile = UpdatedAtModel & {
 	platforms: Array<string>;
 	interests: Array<string>;
 	preferences: ProfilePreferences;
-	custom_weights: null;
+	customWeights: ProfileCustomWeights | null;
 	images: Array<ProfileImage>;
 };
-
-export function url(user: User) {
-	return `/${user.id}`;
-}
 
 type ProfileUpdate = Partial<
 	Pick<
@@ -89,4 +111,14 @@ export async function updatePersonality(
 
 export async function updatePreferences(userId: string, body: unknown, options: FetchOptions = {}) {
 	await fetch("post", `users/${userId}/profile/preferences`, { ...options, body });
+}
+
+export type UpdateCustomWeightOptions = Partial<ProfileCustomWeights>;
+
+export async function updateCustomWeights(
+	userId: string,
+	body: UpdateCustomWeightOptions,
+	options: FetchOptions = {}
+) {
+	await fetch("post", `users/${userId}/profile/custom-weights`, { ...options, body });
 }

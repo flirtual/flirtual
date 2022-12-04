@@ -7,6 +7,7 @@ import { InputLabel } from "./label";
 
 export interface CheckboxListItem<K extends string> {
 	label: React.ReactNode;
+	labelHint?: React.ReactNode;
 	conflicts?: Array<K>;
 }
 
@@ -34,10 +35,10 @@ export function InputCheckboxList<T extends string>(props: InputCheckboxListProp
 							onChange={(itemValue) => {
 								itemValue
 									? onChange([key, ...value].filter((key) => !item.conflicts?.includes(key)))
-									: onChange(value.filter((key) => key !== key));
+									: onChange(value.filter((otherKey) => otherKey !== key));
 							}}
 						/>
-						<InputLabel inline htmlFor={itemId}>
+						<InputLabel inline hint={item.labelHint} htmlFor={itemId}>
 							{item.label}
 						</InputLabel>
 					</div>

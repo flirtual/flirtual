@@ -6,11 +6,10 @@ export type InputFileValue = Array<File>;
 
 export type InputFileProps = Omit<React.ComponentProps<"input">, "onChange" | "value" | "type"> & {
 	onChange?: React.Dispatch<InputFileValue>;
-	value: InputFileValue;
 };
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
-	({ value, onChange, ...props }, ref) => (
+	({ onChange, ...props }, ref) => (
 		<input
 			{...props}
 			ref={ref}

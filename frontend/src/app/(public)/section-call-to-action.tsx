@@ -4,6 +4,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 import { FlirtualLogo } from "~/components/logo";
 import { UCImage } from "~/components/uc-image";
+import { urls } from "~/pageUrls";
 
 import { LandingButton } from "./landing-button";
 import { SnapSection } from "./snap-section";
@@ -17,10 +18,10 @@ export const SectionCallToAction: React.FC = () => (
 			<FlirtualLogo />
 			<h1 className="text-3xl font-bold sm:text-4xl md:text-6xl">The VR Dating App</h1>
 			<div className="mt-8 flex flex-col gap-4 gap-y-8 md:flex-row">
-				<LandingButton href="/register" kind="primary">
+				<LandingButton href={urls.register()} kind="primary">
 					Sign up
 				</LandingButton>
-				<LandingButton href="/login" kind="secondary">
+				<LandingButton href={urls.login()} kind="secondary">
 					Login
 				</LandingButton>
 			</div>

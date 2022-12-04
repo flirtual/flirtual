@@ -9,14 +9,15 @@ import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { urls } from "~/pageUrls";
 
-export const LoginForm: React.FC = () => {
+export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 	const router = useRouter();
 	const { data: user, mutate } = useCurrentUser();
 
 	useEffect(() => {
-		if (user) void router.push(`/${user.id}`);
-	}, [router, user]);
+		if (user) void router.push(to ?? urls.user(user.username));
+	}, [to, router, user]);
 
 	return (
 		<Form

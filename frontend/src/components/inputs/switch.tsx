@@ -31,26 +31,28 @@ export interface InputSwitchProps {
 	value: SwitchValue;
 	name: string;
 	onChange: React.Dispatch<boolean>;
+	invert?: boolean;
 }
 
 export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
-	const { value, name } = props;
+	const { name, invert = false } = props;
+	const value = invert && props.value !== null ? !props.value : props.value;
 
 	return (
-		<div className="flex h-fit w-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus-within:ring-offset-white-20 dark:bg-black-60 focus-within:dark:ring-offset-black-50">
+		<div className="focusable-within flex h-fit w-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 dark:bg-black-60">
 			<SwitchInput
 				checked={value === null ? false : value}
 				label="Yes"
 				name={name}
 				value="yes"
-				onChange={() => props.onChange(true)}
+				onChange={() => props.onChange(invert ? false : true)}
 			/>
 			<SwitchInput
 				checked={value === null ? false : !value}
 				label="No"
 				name={name}
 				value="no"
-				onChange={() => props.onChange(false)}
+				onChange={() => props.onChange(invert ? true : false)}
 			/>
 		</div>
 	);

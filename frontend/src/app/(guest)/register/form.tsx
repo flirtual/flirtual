@@ -7,6 +7,7 @@ import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
+import { urls } from "~/pageUrls";
 
 export const RegisterForm: React.FC = () => {
 	const router = useRouter();
@@ -24,7 +25,7 @@ export const RegisterForm: React.FC = () => {
 			}}
 			onSubmit={async (values) => {
 				await api.user.create(values);
-				router.push("/onboarding/1");
+				router.push(urls.onboarding(1));
 			}}
 		>
 			{({ errors, FormField }) => (

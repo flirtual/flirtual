@@ -1,20 +1,10 @@
 "use client";
 
 import React, { useCallback, useMemo } from "react";
-import { twMerge } from "tailwind-merge";
 
 import { clamp } from "~/utilities";
 
-const RangeInput: React.FC<Omit<React.ComponentProps<"input">, "type">> = (props) => (
-	<input
-		{...props}
-		type="range"
-		className={twMerge(
-			"pointer-events-none absolute w-full appearance-none bg-transparent focus:outline-none range-thumb:pointer-events-auto range-thumb:h-6 range-thumb:w-6 range-thumb:rounded-full range-thumb:border-none range-thumb:bg-brand-gradient range-thumb:shadow-brand-1 focus:range-thumb:ring-2 focus:range-thumb:ring-coral focus:range-thumb:ring-offset-2 focus:range-thumb:ring-offset-white-20 focus:range-thumb:dark:ring-offset-black-50",
-			props.className
-		)}
-	/>
-);
+import { SliderInputInner } from "./slider";
 
 export type InputRangeSliderValue = [min: number, max: number];
 
@@ -23,10 +13,12 @@ export interface InputRangeSliderProps {
 	max?: number;
 	step?: number;
 	value: InputRangeSliderValue;
+	disabled?: boolean;
 	onChange: React.Dispatch<InputRangeSliderValue>;
 }
 
 export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
+	const { disabled = false } = props;
 	const step = props.step ?? 1;
 
 	const limit = useMemo(() => {
@@ -61,7 +53,8 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 					width: `${((max - min) / limit.diff) * 100}%`
 				}}
 			/>
-			<RangeInput
+			<SliderInputInner
+				disabled={disabled}
 				max={limit.max}
 				min={limit.min}
 				step={step}
@@ -70,7 +63,8 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 					onChange([currentTarget.valueAsNumber, props.value[1]]);
 				}}
 			/>
-			<RangeInput
+			<SliderInputInner
+				disabled={disabled}
 				max={limit.max}
 				min={limit.min}
 				step={step}

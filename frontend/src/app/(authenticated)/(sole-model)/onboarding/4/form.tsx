@@ -10,7 +10,7 @@ import { PrivacyPreferenceOptions } from "~/api/user/preferences";
 import { privacyOptionLabel } from "~/const";
 import { api } from "~/api";
 import { entries } from "~/utilities";
-import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
+import { urls } from "~/pageUrls";
 
 const questions = [
 	"I plan my life out",
@@ -48,8 +48,7 @@ export const Onboarding4Form: React.FC = () => {
 					api.user.profile.updatePersonality(user.id, personalityAnswers)
 				]);
 
-				if (user.emailConfirmedAt) return router.push(api.user.profile.url(user));
-				router.push("/confirm-email");
+				router.push(user.emailConfirmedAt ? urls.user(user.username) : urls.confirmEmail());
 			}}
 		>
 			{({ submitting, FormField }) => (

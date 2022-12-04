@@ -13,6 +13,7 @@ import {
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { urls } from "~/pageUrls";
 
 export const Onboarding1Form: React.FC = () => {
 	const { data: user } = useCurrentUser();
@@ -44,7 +45,7 @@ export const Onboarding1Form: React.FC = () => {
 					gender: values.gender
 				});
 
-				router.push("/onboarding/2");
+				router.push(urls.onboarding(2));
 			}}
 		>
 			{({ FormField }) => (

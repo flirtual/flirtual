@@ -50,7 +50,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 		{...props}
 		type="button"
 		className={twMerge(
-			"flex h-7 w-7 items-center justify-center rounded-full bg-brand-gradient p-1 text-white-20 shadow-brand-1 focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2",
+			"focusable flex h-7 w-7 items-center justify-center rounded-full bg-brand-gradient p-1 text-white-20 shadow-brand-1",
 			props.className
 		)}
 	>
@@ -69,7 +69,7 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 
 	return (
 		<div
-			className="relative rounded-xl focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2"
+			className="focusable-within relative rounded-xl"
 			tabIndex={-1}
 			onBlur={({ currentTarget, relatedTarget }) => {
 				if (currentTarget.contains(relatedTarget)) return;
@@ -137,7 +137,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"select-none rounded-3xl bg-white-20 p-4 font-nunito text-black-70 shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2",
+				"focusable-within select-none rounded-3xl bg-white-20 p-4 font-nunito text-black-70 shadow-brand-1 dark:bg-black-60 dark:text-white-20",
 				elementProps.className
 			)}
 		>
@@ -174,7 +174,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 				</div>
 
 				<div className="-mx-2">
-					<table className="w-full text-black-70">
+					<table className="w-full text-black-70 dark:text-white-30">
 						<thead>
 							<tr>
 								{["S", "M", "T", "W", "T", "F", "S"].map((name, idx) => (
@@ -208,8 +208,8 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 													<button
 														type="button"
 														className={twMerge(
-															"h-10 w-10 rounded-xl text-center hover:bg-white-40 focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2",
-															!currentMonth && "text-black-50",
+															"focusable h-10 w-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
+															!currentMonth && "text-black-50 dark:text-white-50",
 															dateEqual(props.value, date) && "bg-brand-gradient text-white-20"
 														)}
 														onClick={() => onChange(date)}

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { api } from "./api";
 import { User } from "./api/user/user";
+import { urls } from "./pageUrls";
 
 export function thruServerCookies() {
 	return {
@@ -32,7 +33,7 @@ export async function useServerAuthenticate(
 export async function useServerAuthenticate(
 	options: ServerAuthenticateOptions = {}
 ): Promise<User | null> {
-	const { optional = false, to = "/login" } = options;
+	const { optional = false, to = urls.login() } = options;
 	const user = await api.auth.user({ ...thruServerCookies(), cache: "no-store" }).catch(() => null);
 
 	if (!user && !optional) return redirect(to);
