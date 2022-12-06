@@ -1,7 +1,5 @@
 "use client";
 
-import { PhotoIcon } from "@heroicons/react/24/solid";
-
 import { api } from "~/api";
 import { ArrangeableImageSet } from "~/components/arrangeable-image-set";
 import { Form } from "~/components/forms";
@@ -12,8 +10,15 @@ import { useCurrentUser } from "~/hooks/use-current-user";
 import { urls } from "~/pageUrls";
 import { pick } from "~/utilities";
 
+interface Image {
+	id: string | null;
+	fileId: string | null;
+	file: File | null;
+	src: string;
+}
+
 export const BiographyForm: React.FC = () => {
-	const { data: user } = useCurrentUser();
+	const { data: user, mutate: mutateUser } = useCurrentUser();
 	if (!user) return null;
 
 	const { profile } = user;
@@ -25,15 +30,38 @@ export const BiographyForm: React.FC = () => {
 				displayName: profile.displayName || user.username || "",
 				images: profile.images.map((image) => ({
 					id: image.id,
+					fileId: image.externalId,
+					file: null,
 					src: `https://media.flirtu.al/${image.externalId}/`
-				})) as Array<{ src: string } & ({ file: File } | { id: string })>,
+				})) as Array<Image>,
 				biography: user.profile.biography || ""
 			}}
-			onSubmit={async (values) => {
-				await api.user.profile.update(user.id, pick(values, ["displayName", "biography"]));
+			onSubmit={async (values, { reset }) => {
+				const imageIds = values.images
+					.map((image) => image.id)
+					.filter((id) => !!id) as Array<string>;
+
+				const [profile, images] = await Promise.all([
+					await api.user.profile.update(user.id, pick(values, ["displayName", "biography"])),
+					await api.user.profile.images.update(user.id, imageIds)
+				]);
+
+				await mutateUser((user) =>
+					user
+						? {
+								...user,
+								profile: {
+									...profile,
+									images
+								}
+						  }
+						: null
+				);
+
+				reset(values);
 			}}
 		>
-			{({ FormField }) => (
+			{({ FormField, setSubmitting }) => (
 				<>
 					<FormField name="displayName">
 						{(field) => (
@@ -62,7 +90,7 @@ export const BiographyForm: React.FC = () => {
 									inputId={field.props.id}
 									value={field.props.value.map((image) => ({
 										src: image.src,
-										uploading: "file" in image
+										uploading: !!image.file
 									}))}
 									onChange={(value) =>
 										field.props.onChange(
@@ -76,22 +104,31 @@ export const BiographyForm: React.FC = () => {
 									accept="image/*"
 									className="hidden"
 									id={field.props.id}
-									value={[]}
 									onChange={async (files) => {
 										field.props.onChange([
 											...field.props.value,
-											...files.map((file) => ({ file, src: URL.createObjectURL(file) }))
+											...files.map((file) => ({
+												id: null,
+												fileId: null,
+												file,
+												src: URL.createObjectURL(file)
+											}))
 										]);
 
-										const fileIds = await api.file.upload(files);
+										setSubmitting(true);
+										const newImages = await api.user.profile.images.upload(user.id, files);
 
 										field.props.onChange([
 											...field.props.value.filter((image) => "id" in image),
-											...fileIds.map((fileId) => ({
-												id: fileId,
-												src: `https://media.flirtu.al/${fileId}/`
+											...newImages.map((image) => ({
+												id: image.id,
+												fileId: image.externalId,
+												file: null,
+												src: `https://media.flirtu.al/${image.externalId}/`
 											}))
 										]);
+
+										setSubmitting(false);
 									}}
 								/>
 							</>

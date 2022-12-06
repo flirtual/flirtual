@@ -3,8 +3,8 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 
 import { api } from "~/api";
-import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
 import { FormPrivacySelect } from "~/components/forms/form-privacy-select";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
@@ -25,7 +25,7 @@ export const PrivacyForm: React.FC = () => {
 				reset(privacy);
 			}}
 		>
-			{({ FormField, buttonProps }) => (
+			{({ FormField }) => (
 				<>
 					<FormField name="personality">
 						{(field) => (
@@ -87,7 +87,7 @@ export const PrivacyForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<Button {...buttonProps}>Update</Button>
+					<FormButton>Update</FormButton>
 				</>
 			)}
 		</Form>

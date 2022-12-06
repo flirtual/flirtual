@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
 import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
 import { FormPrivacySelect } from "~/components/forms/form-privacy-select";
 import {
 	InputAutocomplete,
@@ -19,7 +20,7 @@ import { urls } from "~/pageUrls";
 import { pick } from "~/utilities";
 
 export const Onboarding2Form: React.FC = () => {
-	const { data: user } = useCurrentUser();
+	const { data: user, mutate: mutateUser } = useCurrentUser();
 	const router = useRouter();
 
 	if (!user) return null;
@@ -41,12 +42,8 @@ export const Onboarding2Form: React.FC = () => {
 				interests: user.profile.interests ?? []
 			}}
 			onSubmit={async (values) => {
-				await Promise.all([
+				const [newUser, newProfile, newPrivacyPreferences] = await Promise.all([
 					api.user.update(user.id, { bornAt: values.bornAt.toISOString() }),
-					api.user.preferences.updatePrivacy(user.id, {
-						sexuality: values.sexualityPrivacy,
-						country: values.countryPrivacy
-					}),
 					api.user.profile.update(user.id, {
 						...pick(values, [
 							"gender",
@@ -57,8 +54,24 @@ export const Onboarding2Form: React.FC = () => {
 							"interests"
 						]),
 						country: values.country || undefined
+					}),
+					api.user.preferences.updatePrivacy(user.id, {
+						sexuality: values.sexualityPrivacy,
+						country: values.countryPrivacy
 					})
 				]);
+
+				await mutateUser(
+					{
+						...newUser,
+						profile: newProfile,
+						preferences: {
+							...newUser.preferences,
+							privacy: newPrivacyPreferences
+						}
+					},
+					{ revalidate: false }
+				);
 
 				router.push(urls.onboarding(3));
 			}}
@@ -466,12 +479,7 @@ export const Onboarding2Form: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<button
-						className="rounded-xl bg-brand-gradient p-4 shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-coral focus:ring-offset-2"
-						type="submit"
-					>
-						<span className="font-montserrat text-xl font-semibold text-white-10">Continue</span>
-					</button>
+					<FormButton />
 				</>
 			)}
 		</Form>

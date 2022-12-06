@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { api } from "~/api";
 import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { useCurrentUser } from "~/hooks/use-current-user";
@@ -43,14 +44,17 @@ export default function ConfirmEmailPage({ params }: ConfirmEmailPageProps) {
 			</Form>
 			<Form
 				className="mt-8"
+				requireChange={["email", "emailConfirmation", "currentPassword"]}
 				fields={{
-					email: user.email
+					email: user.email,
+					emailConfirmation: "",
+					currentPassword: ""
 				}}
-				onSubmit={async ({ email }) => {
-					await mutateUser(api.user.updateEmail(user.id, email));
+				onSubmit={async (values) => {
+					await mutateUser(api.user.updateEmail(user.id, values));
 				}}
 			>
-				{({ FormField, fields }) => (
+				{({ FormField }) => (
 					<div className="flex flex-col gap-4">
 						<div>
 							<h1 className="font-montserrat text-xl font-semibold">Wrong email address?</h1>
@@ -62,14 +66,28 @@ export default function ConfirmEmailPage({ params }: ConfirmEmailPageProps) {
 						<FormField name="email">
 							{(field) => (
 								<>
-									<InputLabel {...field.labelProps}>Email address</InputLabel>
-									<InputText {...field.props} type="email" />
+									<InputLabel {...field.labelProps}>New email address</InputLabel>
+									<InputText {...field.props} autoComplete="email" type="email" />
 								</>
 							)}
 						</FormField>
-						<Button disabled={!fields.email.changed} type="submit">
-							Update email
-						</Button>
+						<FormField name="emailConfirmation">
+							{(field) => (
+								<>
+									<InputLabel {...field.labelProps}>Confirm email address</InputLabel>
+									<InputText {...field.props} autoComplete="off" type="email" />
+								</>
+							)}
+						</FormField>
+						<FormField name="currentPassword">
+							{(field) => (
+								<>
+									<InputLabel {...field.labelProps}>Confirm current password</InputLabel>
+									<InputText {...field.props} autoComplete="current-password" type="password" />
+								</>
+							)}
+						</FormField>
+						<FormButton>Update email</FormButton>
 					</div>
 				)}
 			</Form>

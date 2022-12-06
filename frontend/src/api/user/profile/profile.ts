@@ -1,7 +1,9 @@
 import { CountryCode, LanguageCode } from "~/countries";
 
-import { DatedModel, UpdatedAtModel, UuidModel } from "../../common";
+import { UpdatedAtModel } from "../../common";
 import { fetch, FetchOptions } from "../..";
+
+import { ProfileImage } from "./images";
 
 export type ProfilePreferenceGender = "men" | "women" | "other";
 
@@ -11,12 +13,6 @@ export type ProfilePreferences = UpdatedAtModel & {
 	gender: Array<ProfilePreferenceGender>;
 	kinks: Array<string>;
 };
-
-export type ProfileImage = UuidModel &
-	DatedModel & {
-		externalId: string;
-		scanned: boolean;
-	};
 
 export type ProfileGender = "man" | "woman" | "other";
 
@@ -80,7 +76,7 @@ type ProfileUpdate = Partial<
 >;
 
 export async function update(userId: string, body: ProfileUpdate, options: FetchOptions = {}) {
-	await fetch("post", `users/${userId}/profile`, { ...options, body });
+	return fetch<Profile>("post", `users/${userId}/profile`, { ...options, body });
 }
 
 export interface ProfilePersonality {
@@ -106,11 +102,14 @@ export async function updatePersonality(
 	body: PersonalityUpdate,
 	options: FetchOptions = {}
 ) {
-	await fetch("post", `users/${userId}/profile/personality`, { ...options, body });
+	return fetch<Profile>("post", `users/${userId}/profile/personality`, { ...options, body });
 }
 
 export async function updatePreferences(userId: string, body: unknown, options: FetchOptions = {}) {
-	await fetch("post", `users/${userId}/profile/preferences`, { ...options, body });
+	return fetch<ProfilePreferences>("post", `users/${userId}/profile/preferences`, {
+		...options,
+		body
+	});
 }
 
 export type UpdateCustomWeightOptions = Partial<ProfileCustomWeights>;
@@ -120,5 +119,5 @@ export async function updateCustomWeights(
 	body: UpdateCustomWeightOptions,
 	options: FetchOptions = {}
 ) {
-	await fetch("post", `users/${userId}/profile/custom-weights`, { ...options, body });
+	return fetch<Profile>("post", `users/${userId}/profile/custom-weights`, { ...options, body });
 }

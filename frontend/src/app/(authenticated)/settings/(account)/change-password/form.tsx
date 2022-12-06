@@ -1,8 +1,8 @@
 "use client";
 
 import { api } from "~/api";
-import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
 
@@ -23,7 +23,7 @@ export const ChangePasswordForm: React.FC = () => {
 				await mutateUser(api.user.updatePassword(user.id, values));
 			}}
 		>
-			{({ FormField, buttonProps }) => (
+			{({ FormField }) => (
 				<>
 					<FormField name="currentPassword">
 						{(field) => (
@@ -49,7 +49,7 @@ export const ChangePasswordForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<Button {...buttonProps}>Update</Button>
+					<FormButton>Update</FormButton>
 				</>
 			)}
 		</Form>

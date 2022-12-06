@@ -48,6 +48,7 @@ export interface UseInputForm<T extends FormFieldsDefault> {
 	changes: Array<keyof T>;
 	FormField: FormFieldFC<T>;
 	setFieldErrors: React.Dispatch<React.SetStateAction<FieldErrors<T>>>;
+	setSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	reset: (newValues: T | null) => void;
 }
 
@@ -157,6 +158,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		changes,
 		FormField,
 		setFieldErrors,
+		setSubmitting,
 		reset
 	};
 

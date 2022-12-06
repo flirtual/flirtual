@@ -2,12 +2,12 @@
 
 import { ModelCard } from "~/components/model-card";
 import { api } from "~/api";
-import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { urls } from "~/pageUrls";
+import { FormButton } from "~/components/forms/button";
 
 export default function SettingsAccountDeactivatePage() {
 	const { data: user, mutate: mutateUser } = useCurrentUser();
@@ -31,7 +31,7 @@ export default function SettingsAccountDeactivatePage() {
 					);
 				}}
 			>
-				{({ FormField, buttonProps }) => (
+				{({ FormField }) => (
 					<>
 						{deactivated ? (
 							<>
@@ -60,7 +60,7 @@ export default function SettingsAccountDeactivatePage() {
 							</>
 						)}
 						<div className="flex flex-col gap-4">
-							<Button {...buttonProps}>{deactivated ? "Reactivate" : "Deactivate"}</Button>
+							<FormButton>{deactivated ? "Reactivate" : "Deactivate"}</FormButton>
 							<FormAlternativeActionLink href={urls.settings.deleteAccount()}>
 								Delete your account instead?
 							</FormAlternativeActionLink>

@@ -1,8 +1,8 @@
 "use client";
 
 import { api } from "~/api";
-import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
 import { InputLabel } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { useCurrentUser } from "~/hooks/use-current-user";
@@ -26,7 +26,7 @@ export const NotificationsForm: React.FC = () => {
 				);
 			}}
 		>
-			{({ FormField, buttonProps }) => (
+			{({ FormField }) => (
 				<>
 					<FormField name="email">
 						{(field) => (
@@ -74,7 +74,7 @@ export const NotificationsForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<Button {...buttonProps}>Update</Button>
+					<FormButton>Update</FormButton>
 				</>
 			)}
 		</Form>

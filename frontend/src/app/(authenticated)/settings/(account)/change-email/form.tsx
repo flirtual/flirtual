@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
-import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { urls } from "~/pageUrls";
@@ -29,7 +29,7 @@ export const ChangeEmailForm: React.FC = () => {
 				router.push(urls.confirmEmail({ to: urls.settings.default() }));
 			}}
 		>
-			{({ FormField, buttonProps }) => (
+			{({ FormField }) => (
 				<>
 					<FormField name="email">
 						{(field) => (
@@ -55,7 +55,7 @@ export const ChangeEmailForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<Button {...buttonProps}>Update</Button>
+					<FormButton>Update</FormButton>
 				</>
 			)}
 		</Form>

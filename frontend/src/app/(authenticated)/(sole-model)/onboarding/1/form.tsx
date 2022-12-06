@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { api } from "~/api";
 import { ProfilePreferenceGender } from "~/api/user/profile";
 import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
 import {
 	InputLabel,
 	InputRangeSlider,
@@ -92,14 +93,7 @@ export const Onboarding1Form: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<div className="flex flex-col gap-4">
-						<button
-							className="rounded-xl bg-brand-gradient p-4 text-center shadow-brand-1 focus:outline-none focus:ring-2  focus:ring-coral focus:ring-offset-2"
-							type="submit"
-						>
-							<span className="font-montserrat text-xl font-semibold text-white-10">Continue</span>
-						</button>
-					</div>
+					<FormButton />
 				</>
 			)}
 		</Form>

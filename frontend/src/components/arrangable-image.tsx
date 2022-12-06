@@ -81,7 +81,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 			<div className="group relative aspect-square max-h-full w-full shrink-0" ref={dragDropRef}>
 				{dragging && (
 					<div
-						className="pointer-events-none absolute top-0 left-0 z-50 w-24 rounded-md shadow-brand-1"
+						className="pointer-events-none absolute top-0 left-0 z-50 w-full rounded-md shadow-brand-1"
 						style={{ transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }}
 					>
 						<ArrangeableImagePreview src={src} />
@@ -94,7 +94,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 				{uploading ? (
 					<div
 						className={twMerge(
-							"absolute top-0 right-0 flex h-full w-full items-center justify-center bg-black-90/50 p-2"
+							"absolute top-0 right-0 flex h-full w-full items-center justify-center rounded-md bg-black-90/50 p-2 backdrop-blur"
 						)}
 					>
 						<TailCircleIcon className="h-10 w-10" />

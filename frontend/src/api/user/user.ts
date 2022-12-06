@@ -42,7 +42,7 @@ export async function get(userId: string, options: FetchOptions = {}) {
 }
 
 export async function update(userId: string, body: unknown, options: FetchOptions = {}) {
-	await fetch("post", `users/${userId}`, { ...options, body });
+	return fetch<User>("post", `users/${userId}`, { ...options, body });
 }
 
 export interface UpdateEmailOptions {
