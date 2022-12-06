@@ -31,7 +31,10 @@ defmodule Flirtual.Profiles do
 
   def update_personality(%Profile{} = profile, attrs) do
     profile
-    |> cast(attrs, [:openness, :conscientiousness, :agreeableness] ++ Profile.get_personality_questions())
+    |> cast(
+      attrs,
+      [:openness, :conscientiousness, :agreeableness] ++ Profile.get_personality_questions()
+    )
     |> compute_personality_changeset()
     |> Repo.update()
   end
@@ -52,19 +55,21 @@ defmodule Flirtual.Profiles do
 
   defp compute_personality_changeset(changeset, key, trait, action) do
     answer = get_field(changeset, key)
+
     if(answer !== nil) do
       trait_value = get_field(changeset, trait)
 
-      new_trait_value = if(answer) do
-        # if they answered yes, apply the increase to the relevant trait.
-        if(action === :add, do: trait_value + 1, else: trait_value - 1)
-      else
-        # if the answered no, apply the inverse.
-        if(action === :sub, do: trait_value + 1, else: trait_value - 1)
-      end
+      new_trait_value =
+        if(answer) do
+          # if they answered yes, apply the increase to the relevant trait.
+          if(action === :add, do: trait_value + 1, else: trait_value - 1)
+        else
+          # if the answered no, apply the inverse.
+          if(action === :sub, do: trait_value + 1, else: trait_value - 1)
+        end
 
       changeset
-      |> put_change(trait,new_trait_value)
+      |> put_change(trait, new_trait_value)
     else
       changeset
     end
@@ -82,30 +87,55 @@ defmodule Flirtual.Profiles do
     |> Repo.update()
   end
 
-
-  def create_images(%Profile{} = profile, imageIds) do
+  def create_images(%Profile{} = profile, file_ids) do
     placeholders = %{
       now: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
       profile_id: profile.id
     }
 
-    {_, images} = Repo.insert_all(
-      Image,
-      imageIds
-      |> Enum.map(
-        &%{
-          id: UUID.generate(),
-          profile_id: {:placeholder, :profile_id},
-          external_id: &1,
-          updated_at: {:placeholder, :now},
-          created_at: {:placeholder, :now}
-        }
-      ),
-      placeholders: placeholders,
-      returning: true
-    )
+    image_count = Kernel.length(profile.images) || 0
+
+    {_, images} =
+      Repo.insert_all(
+        Image,
+        file_ids
+        |> Enum.with_index()
+        |> Enum.map(fn {file_id, file_idx} ->
+          %{
+            id: UUID.generate(),
+            profile_id: {:placeholder, :profile_id},
+            external_id: file_id,
+            order: image_count + file_idx,
+            updated_at: {:placeholder, :now},
+            created_at: {:placeholder, :now}
+          }
+        end),
+        placeholders: placeholders,
+        returning: true
+      )
 
     {:ok, images}
+  end
+
+  def update_images(%Profile{} = profile, image_ids) do
+    changesets =
+      profile.images
+      |> Enum.map(fn image ->
+        new_order = Enum.find_index(image_ids, &(&1 === image.id))
+        change(image, order: new_order)
+      end)
+
+      Repo.transaction(fn repo ->
+        changesets |> Enum.map(fn changeset ->
+          if (get_field(changeset, :order) !== nil) do
+            changeset |> repo.update!()
+          else
+            changeset |> repo.delete!()
+          end
+        end)
+      end)
+
+    {:ok, Enum.map(changesets, &apply_changes/1)}
   end
 
   def query_by_id(query, id) do

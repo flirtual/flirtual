@@ -3,6 +3,7 @@ defmodule Flirtual.User.Profile do
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Policy
 
   import Ecto.Changeset
+  import Ecto.Query
 
   alias Flirtual.User
   alias Flirtual.User.Profile.{Image, Preferences, CustomWeights, Likes}
@@ -83,8 +84,6 @@ defmodule Flirtual.User.Profile do
     @kink_pairs
   end
 
-
-
   def get_kink_list() do
     @kink_pairs |> List.flatten() |> Enum.uniq()
   end
@@ -118,7 +117,7 @@ defmodule Flirtual.User.Profile do
     field :openness, :integer, default: 0
     field :conscientiousness, :integer, default: 0
     field :agreeableness, :integer, default: 0
-    Enum.map(@personality_questions, &(field(&1, :boolean)))
+    Enum.map(@personality_questions, &field(&1, :boolean))
     field :gender, {:array, Ecto.Enum}, values: @genders
     field :sexuality, {:array, Ecto.Enum}, values: @sexualities
     field :games, {:array, :string}
@@ -139,7 +138,7 @@ defmodule Flirtual.User.Profile do
     [
       :preferences,
       :custom_weights,
-      :images
+      images: from(image in Image, order_by: image.order)
     ]
   end
 

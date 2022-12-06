@@ -44,10 +44,18 @@ defmodule FlirtualWeb.ProfileController do
     end
   end
 
-  def create_images(conn, %{"user_id" => user_id, "image_ids" => image_ids}) do
+  def create_images(conn, %{"user_id" => user_id, "file_ids" => file_ids}) do
     profile = Profiles.get_by_user_id(user_id)
 
-    with {:ok, images} <- Profiles.create_images(profile, image_ids) do
+    with {:ok, images} <- Profiles.create_images(profile, file_ids) do
+      conn |> json(images)
+    end
+  end
+
+  def update_images(conn, %{"user_id" => user_id, "image_ids" => image_ids}) do
+    profile = Profiles.get_by_user_id(user_id)
+
+    with {:ok, images} <- Profiles.update_images(profile, image_ids) do
       conn |> json(images)
     end
   end

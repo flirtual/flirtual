@@ -2,6 +2,8 @@ defmodule Flirtual.User.Connection do
   use Flirtual.Schema
   use Flirtual.Policy.Target, policy: Flirtual.User.Connection.Policy
 
+  import Ecto.Changeset
+
   alias Flirtual.User
   alias User.Connection
 
@@ -29,6 +31,13 @@ defmodule Flirtual.User.Connection do
     timestamps(inserted_at: :created_at)
   end
 
+  def update_changeset(connection) do
+    connection
+    |> cast(%{}, [])
+    |> unsafe_validate_unique([:user_id, :type], Flirtual.Repo)
+    |> unique_constraint([:user_id, :type])
+  end
+
   def get_authorize_url(:discord) do
     "https://discord.com/api/oauth2/authorize?" <>
       URI.encode_query(%{
@@ -41,28 +50,36 @@ defmodule Flirtual.User.Connection do
 
   def get_authorize_url(_), do: nil
 
+  def build_connection(
+        %Connection{external_id: external_id, type: :discord} = connection,
+        external_profile
+      ) do
+    %{
+      "username" => username,
+      "discriminator" => discriminator,
+      "avatar" => avatar_id
+    } = external_profile
+
+    %Connection{
+      connection
+      | name: username <> "#" <> discriminator,
+        avatar_url:
+          "https://cdn.discordapp.com/avatars/" <> external_id <> "/" <> avatar_id <> ".png",
+        url: "https://discordapp.com/users/" <> external_id <> "/"
+    }
+  end
+
   def get_profile(%Connection{type: :discord, external_id: external_id} = connection) do
     case HTTPoison.get("https://discord.com/api/users/" <> external_id, %{
            authorization: "Bot " <> Application.fetch_env!(:flirtual, :discord_token)
          }) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        %{
-          "username" => username,
-          "discriminator" => discriminator,
-          "avatar" => avatar_id
-        } = Poison.decode!(body)
+        build_connection(connection, Poison.decode!(body))
 
-         %Connection{
-           connection
-           | name: username <> "#" <> discriminator,
-             avatar_url:
-               "https://cdn.discordapp.com/avatars/" <> external_id <> "/" <> avatar_id <> ".png",
-             url: "https://discordapp.com/users/" <> external_id <> "/"
-         }
-
-      {_, _} -> connection
+      {_, _} ->
+        connection
     end
   end
 
-  def get_profile(_, _), do: {:error, nil}
+  def get_profile(connection), do: connection
 end

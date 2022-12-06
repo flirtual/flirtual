@@ -65,7 +65,9 @@ defmodule Flirtual.Users do
     |> Repo.update()
   end
 
-  def create_connection(user_id, :discord = connection_type, %{"code" => code}) do
+  def assign_connection(user_id, :discord = connection_type, %{"code" => code}) do
+    connection = get_connection(user_id, connection_type)
+
     body =
       URI.encode_query(%{
         client_id: Application.fetch_env!(:flirtual, :discord_client_id),
@@ -88,32 +90,43 @@ defmodule Flirtual.Users do
                authorization: token_type <> " " <> access_token
              }) do
           {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-            %{"id" => external_id} = Poison.decode!(body)
+            external_profile = Poison.decode!(body)
 
-            %Connection{user_id: user_id, external_id: external_id, type: connection_type}
-            |> cast(%{}, [])
-            |> Repo.insert_or_update()
+            {:ok, connection} =
+              %Connection{
+                (connection || %Connection{user_id: user_id})
+                | external_id: external_profile["id"],
+                  type: connection_type
+              }
+              |> Connection.update_changeset()
+              |> Repo.insert_or_update()
+
+            {:ok, Connection.build_connection(connection, external_profile)}
+
           {_, _} ->
             {:error, {:bad_request, "Couldn't get user information"}}
         end
-
-        {:ok, Poison.decode!(body)}
 
       {_, _} ->
         {:error, {:bad_request, "Connection failed"}}
     end
   end
 
-  def create_connection(_, _, _) do
+  def assign_connection(_, _, _) do
     {:error, {:not_found, "Unknown connection type"}}
   end
-
 
   def list_connections_by_user_id(user_id) do
     Connection
     |> where(user_id: ^user_id)
     |> Repo.all()
     |> Enum.map(&Connection.get_profile(&1))
+  end
+
+  def get_connection(user_id, type) do
+    Connection
+    |> where(user_id: ^user_id, type: ^type)
+    |> Repo.one()
   end
 
   def register_user(attrs) do

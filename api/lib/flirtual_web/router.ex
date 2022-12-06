@@ -59,7 +59,7 @@ defmodule FlirtualWeb.Router do
           pipe_through :require_authenticated_user
 
           get "/authorize", UsersController, :start_connection
-          get "/", UsersController, :create_connection
+          get "/", UsersController, :assign_connection
         end
       end
 
@@ -85,13 +85,14 @@ defmodule FlirtualWeb.Router do
           scope "/profile" do
             post "/", ProfileController, :update
 
-            scope "personality" do
+            scope "/personality" do
               get "/", ProfileController, :get_personality
               post "/", ProfileController, :update_personality
             end
 
             scope "/images" do
-              post "/", ProfileController, :create_images
+              post "/", ProfileController, :update_images
+              put "/", ProfileController, :create_images
             end
 
             scope "/preferences" do
