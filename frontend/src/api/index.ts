@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { apiUrl } from "~/const";
+import { urls } from "~/urls";
 import { toCamelObject, toSnakeObject } from "~/utilities";
 
 export function newUrl(pathname: string, query: Record<string, string> = {}): URL {
@@ -8,7 +8,7 @@ export function newUrl(pathname: string, query: Record<string, string> = {}): UR
 
 	return new URL(
 		`${pathname}${Object.keys(query).length > 0 ? `?${searchParams.toString()}` : ""}`,
-		apiUrl
+		urls.api()
 	);
 }
 

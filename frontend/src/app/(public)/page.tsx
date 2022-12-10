@@ -2,7 +2,8 @@ import { Googleplay, Apple, Microsoft, Meta } from "@icons-pack/react-simple-ico
 
 import { MobileButton } from "~/components/mobile-button";
 import { Footer } from "~/components/layout/footer";
-import { urls } from "~/pageUrls";
+
+import { urls } from "../../urls";
 
 import { SectionCallToAction } from "./section-call-to-action";
 import { SectionCarousel } from "./section-carousel";
@@ -71,22 +72,10 @@ export default function RootIndexPage() {
 							Sign up
 						</LandingButton>
 						<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
-							<MobileButton
-								href="https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
-								Icon={Googleplay}
-								label="Play Store"
-							/>
+							<MobileButton href={urls.apps.android()} Icon={Googleplay} label="Play Store" />
 							<MobileButton href="/ios" Icon={Apple} label="iPhone/iPad" />
-							<MobileButton
-								href="https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3?cid=storebadge&ocid=badge&rtc=1"
-								Icon={Microsoft}
-								label="Windows"
-							/>
-							<MobileButton
-								href="https://sidequestvr.com/app/9195"
-								Icon={Meta}
-								label="Side Quest"
-							/>
+							<MobileButton href={urls.apps.windows()} Icon={Microsoft} label="Windows" />
+							<MobileButton href={urls.apps.sideQuest()} Icon={Meta} label="Side Quest" />
 						</div>
 					</div>
 				</div>

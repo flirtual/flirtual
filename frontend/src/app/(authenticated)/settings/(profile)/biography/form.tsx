@@ -5,9 +5,10 @@ import { ArrangeableImageSet } from "~/components/arrangeable-image-set";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
-import { InputFile, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
+import { InputEditor, InputFile, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { urls } from "~/pageUrls";
+import { html } from "~/html";
+import { urls } from "~/urls";
 import { pick } from "~/utilities";
 
 interface Image {
@@ -32,7 +33,7 @@ export const BiographyForm: React.FC = () => {
 					id: image.id,
 					fileId: image.externalId,
 					file: null,
-					src: `https://media.flirtu.al/${image.externalId}/`
+					src: urls.media(image.externalId)
 				})) as Array<Image>,
 				biography: user.profile.biography || ""
 			}}
@@ -124,7 +125,7 @@ export const BiographyForm: React.FC = () => {
 												id: image.id,
 												fileId: image.externalId,
 												file: null,
-												src: `https://media.flirtu.al/${image.externalId}/`
+												src: urls.media(image.externalId)
 											}))
 										]);
 
@@ -138,7 +139,14 @@ export const BiographyForm: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel {...field.labelProps}>Biography</InputLabel>
-								<InputText {...field.props} />
+								<InputEditor {...field.props} />
+								<span
+									className="prose whitespace-pre-wrap font-nunito text-xl"
+									dangerouslySetInnerHTML={{
+										__html: html(field.props.value)
+									}}
+								/>
+								<span className="whitespace-pre-wrap font-nunito text-xl">{field.props.value}</span>
 							</>
 						)}
 					</FormField>

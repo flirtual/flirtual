@@ -1,12 +1,13 @@
 "use client";
 
-import { HomeIcon, ChatBubbleLeftRightIcon, HeartIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleLeftRightIcon, HeartIcon, Cog8ToothIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { urls } from "~/urls";
 
 import { PeaceGradient } from "../icons/peace-gradient";
 import { UserAvatar } from "../user-avatar";
@@ -46,9 +47,6 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 				props.className
 			)}
 		>
-			<NavigationIconButton href="/">
-				<HomeIcon className="h-8 w-8" />
-			</NavigationIconButton>
 			<NavigationIconButton href="/homies">
 				<PeaceGradient className="w-8" gradient={false} />
 			</NavigationIconButton>
@@ -63,7 +61,10 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 					</div>
 				</div>
 			</NavigationIconButton>
-			<NavigationIconButton href={`/${user.id}`}>
+			<NavigationIconButton href="/settings">
+				<Cog8ToothIcon className="h-8 w-8" />
+			</NavigationIconButton>
+			<NavigationIconButton href={urls.user(user.username)}>
 				<UserAvatar className="h-8 w-8 transition-transform group-hocus:scale-125" user={user} />
 			</NavigationIconButton>
 		</div>

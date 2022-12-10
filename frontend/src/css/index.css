@@ -9,14 +9,7 @@
 * {
   scrollbar-width: none;
 }
+
 *[data-nextjs-scroll-focus-boundary] {
   display: contents;
-}
-
-.focusable {
-  @apply focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 focus:dark:ring-offset-black-50
-}
-
-.focusable-within {
-  @apply focus:outline-none focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus-within:dark:ring-offset-black-50
 }

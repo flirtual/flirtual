@@ -32,7 +32,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 	const children = typeof props.children === "function" ? props.children(form) : props.children;
 
 	return (
-		<form {...form.props} {...omit(props, ["onSubmit", "formErrorMessages"])}>
+		<form {...form.props} {...omit(props, ["fields", "onSubmit", "formErrorMessages"])}>
 			<FormContext.Provider value={form}>
 				{children}
 				{props.formErrorMessages && <FormInputMessages messages={form.errors} />}

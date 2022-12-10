@@ -9,7 +9,7 @@ import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { urls } from "~/pageUrls";
+import { urls } from "~/urls";
 
 export interface ConfirmEmailPageProps {
 	params: { to?: string };

@@ -16,7 +16,7 @@ import {
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { CountryCode, getCountries, getLanguages, LanguageCode } from "~/countries";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { urls } from "~/pageUrls";
+import { urls } from "~/urls";
 import { pick } from "~/utilities";
 
 export const Onboarding2Form: React.FC = () => {

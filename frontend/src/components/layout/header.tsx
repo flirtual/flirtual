@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 import { Instagram, Twitter, Discord } from "@icons-pack/react-simple-icons";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
-import { discordUrl, instagramUrl, twitterUrl } from "~/const";
+import { urls } from "~/urls";
 
 import { InlineLink } from "../inline-link";
 import { FlirtualLogo } from "../logo";
@@ -57,15 +57,15 @@ export const Header: React.FC = () => {
 								<PopoverModel>
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Available on</span>
-										<InlineLink className="flex items-center gap-2" href={twitterUrl}>
+										<InlineLink className="flex items-center gap-2" href={urls.socials.twitter()}>
 											<Twitter className="w-5" />
 											<span>Twitter</span>
 										</InlineLink>
-										<InlineLink className="flex items-center gap-2" href={instagramUrl}>
+										<InlineLink className="flex items-center gap-2" href={urls.socials.instagram()}>
 											<Instagram className="w-5" />
 											<span>Instagram</span>
 										</InlineLink>
-										<InlineLink className="flex items-center gap-2" href={discordUrl}>
+										<InlineLink className="flex items-center gap-2" href={urls.socials.discord()}>
 											<Discord className="w-5" />
 											<span>Discord</span>
 										</InlineLink>

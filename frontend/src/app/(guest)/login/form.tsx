@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 import { api } from "~/api";
-import { Form } from "~/components/forms";
+import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { urls } from "~/pageUrls";
+import { urls } from "~/urls";
 
 export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 	const router = useRouter();
@@ -73,15 +73,13 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 						)}
 					</FormField>
 					<div className="flex flex-col gap-4">
-						<button className="rounded-xl bg-brand-gradient p-4 shadow-brand-1" type="submit">
-							<span className="font-montserrat text-xl font-extrabold text-white-10">Login</span>
-						</button>
+						<FormButton>Login</FormButton>
 						<FormInputMessages messages={errors} />
 						<div className="flex flex-col font-nunito text-lg">
-							<FormAlternativeActionLink href="/register">
+							<FormAlternativeActionLink href={urls.register()}>
 								Don&apos;t have an account yet? Sign up!
 							</FormAlternativeActionLink>
-							<FormAlternativeActionLink href="/forgot">
+							<FormAlternativeActionLink href={urls.forgotPassword()}>
 								Forgot your password?
 							</FormAlternativeActionLink>
 						</div>

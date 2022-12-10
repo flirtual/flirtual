@@ -72,6 +72,44 @@ module.exports = {
 						animationTimingFunction: "cubic-bezier(0,0,0.2,1)"
 					}
 				}
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						"--tw-prose-body": colors.black[80],
+						"--tw-prose-headings": colors.black[80],
+						"--tw-prose-lead": colors.black[80],
+						"--tw-prose-links": colors.black[80],
+						"--tw-prose-bold": colors.black[80],
+						"--tw-prose-counters": colors.black[40],
+						"--tw-prose-bullets": colors.black[40],
+						"--tw-prose-hr": colors.black[80],
+						"--tw-prose-quotes": colors.black[80],
+						"--tw-prose-quote-borders": colors.black[40],
+						"--tw-prose-captions": colors.black[80],
+						"--tw-prose-code": colors.black[80],
+						"--tw-prose-pre-code": colors.black[80],
+						"--tw-prose-pre-bg": colors.black[80],
+						"--tw-prose-th-borders": colors.black[80],
+						"--tw-prose-td-borders": colors.black[80]
+						/* "--tw-prose-invert-body": colors.stone[300],
+						"--tw-prose-invert-headings": colors.white,
+						"--tw-prose-invert-lead": colors.stone[400],
+						"--tw-prose-invert-links": colors.white,
+						"--tw-prose-invert-bold": colors.white,
+						"--tw-prose-invert-counters": colors.stone[400],
+						"--tw-prose-invert-bullets": colors.stone[600],
+						"--tw-prose-invert-hr": colors.stone[700],
+						"--tw-prose-invert-quotes": colors.stone[100],
+						"--tw-prose-invert-quote-borders": colors.stone[700],
+						"--tw-prose-invert-captions": colors.stone[400],
+						"--tw-prose-invert-code": colors.white,
+						"--tw-prose-invert-pre-code": colors.stone[300],
+						"--tw-prose-invert-pre-bg": "rgb(0 0 0 / 50%)",
+						"--tw-prose-invert-th-borders": colors.stone[600],
+						"--tw-prose-invert-td-borders": colors.stone[700] */
+					}
+				}
 			}
 		}
 	},
@@ -79,13 +117,25 @@ module.exports = {
 		require("@tailwindcss/forms"),
 		require("@tailwindcss/typography"),
 		require("tailwindcss-hocus"),
-		plugin(({ addVariant }) => {
+		plugin(({ addVariant, addComponents }) => {
 			addVariant("range-track", [
 				"&::-webkit-slider-runnable-track",
 				"&::-moz-range-track",
 				"&::-ms-track"
 			]);
+
 			addVariant("range-thumb", ["&::-webkit-slider-thumb", "&::-moz-range-thumb", "&::-ms-thumb"]);
+
+			addComponents({
+				".focusable": {
+					"@apply focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 focus:dark:ring-offset-black-50":
+						{}
+				},
+				".focusable-within": {
+					"@apply focus:outline-none focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus-within:dark:ring-offset-black-50":
+						{}
+				}
+			});
 		})
 	]
 };

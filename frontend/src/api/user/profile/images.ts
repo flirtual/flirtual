@@ -1,7 +1,7 @@
 import { DatedModel, UuidModel } from "~/api/common";
 
 import { fetch, FetchOptions } from "../..";
-import { FileUploadOptions, upload as uploadFiles } from "../../file";
+import { upload as uploadFiles } from "../../file";
 
 export type ProfileImage = UuidModel &
 	DatedModel & {
@@ -11,13 +11,9 @@ export type ProfileImage = UuidModel &
 
 export type ProfileImageList = Array<ProfileImage>;
 
-export async function upload(
-	userId: string,
-	files: Array<File>,
-	options: FetchOptions & { uploadOptions?: FileUploadOptions } = {}
-) {
-	const fileIds = await uploadFiles(files, options.uploadOptions);
-	return create(userId, fileIds);
+export async function upload(userId: string, files: Array<File>, options: FetchOptions = {}) {
+	const fileIds = await uploadFiles(files, { store: true });
+	return create(userId, fileIds, options);
 }
 
 export async function create(userId: string, fileIds: Array<string>, options: FetchOptions = {}) {

@@ -54,6 +54,7 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 				}}
 			/>
 			<SliderInputInner
+				className="pointer-events-none"
 				disabled={disabled}
 				max={limit.max}
 				min={limit.min}
@@ -64,6 +65,7 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 				}}
 			/>
 			<SliderInputInner
+				className="pointer-events-none"
 				disabled={disabled}
 				max={limit.max}
 				min={limit.min}

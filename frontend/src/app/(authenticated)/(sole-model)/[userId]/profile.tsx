@@ -9,6 +9,8 @@ import { HeartGradient } from "~/components/icons/heart-gradient";
 import { CountryCode, getCountry, getCountryImageUrl } from "~/countries";
 import { useUser } from "~/hooks/use-user";
 import { capitalize } from "~/utilities";
+import { html } from "~/html";
+import { urls } from "~/urls";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 
@@ -89,7 +91,7 @@ export const Profile: React.FC<{ userId: string }> = ({ userId }) => {
 	return (
 		<div className="flex w-full flex-col overflow-hidden border-coral bg-cream text-black-70 dark:bg-black-80 dark:text-white-20 sm:max-w-lg sm:rounded-3xl sm:border-4 sm:bg-white-20 sm:shadow-brand-1 sm:dark:bg-black-70">
 			<ProfileImageDisplay
-				images={user.profile.images.map((image) => `https://media.flirtu.al/${image.externalId}/`)}
+				images={user.profile.images.map((image) => urls.media(image.externalId))}
 			>
 				<div className="absolute bottom-0 flex w-full flex-col justify-center gap-2 p-8 text-white-10">
 					<div className="flex items-baseline gap-4 font-montserrat">
@@ -115,9 +117,14 @@ export const Profile: React.FC<{ userId: string }> = ({ userId }) => {
 				</div>
 			</ProfileImageDisplay>
 			<div className="flex-gap flex h-full grow flex-col gap-6 p-8 pb-0 sm:pb-8">
-				<span className="whitespace-pre-wrap font-nunito text-xl">
-					{user.profile.biography || "No biography available yet, consider adding one."}
-				</span>
+				<span
+					className="whitespace-pre-wrap font-nunito text-xl"
+					dangerouslySetInnerHTML={{
+						__html: html(
+							user.profile.biography || "No biography available yet, consider adding one."
+						)
+					}}
+				/>
 				<div className="flex flex-wrap gap-2">
 					<Pill active>Open to serious dating</Pill>
 					<Pill active>{user.profile.openness > 0 ? "Open-minded" : "Practical"}</Pill>

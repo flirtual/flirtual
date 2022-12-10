@@ -5,9 +5,8 @@ import "~/css/index.css";
 
 import { api } from "~/api";
 import { useServerAuthenticate } from "~/server-utilities";
-import { getAvatarUrl } from "~/components/user-avatar";
-import { twitterUrl } from "~/const";
 import { SsrUserProvider } from "~/components/ssr-user-provider";
+import { urls } from "~/urls";
 
 import { ClientScripts } from "./client-scripts";
 
@@ -40,7 +39,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 					content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
 					name="viewport"
 				/>
-				<meta content={`@${twitterUrl.split("twitter.com/")[1]}`} name="twitter:site" />
+				<meta content={`@${urls.socials.twitter().split("twitter.com/")[1]}`} name="twitter:site" />
 				<meta content="website" property="og:type" />
 				<meta content="Flirtual" property="og:title" />
 				<meta
@@ -53,7 +52,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 				<meta content="summary" name="twitter:card" />
 				{user && (
 					<>
-						<link as="image" href={getAvatarUrl(user)} rel="preload" />
+						<link as="image" href={urls.userAvatar(user)} rel="preload" />
 						<link as="fetch" href={api.newUrl("auth/user").href} rel="preload" />
 					</>
 				)}

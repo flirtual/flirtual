@@ -7,7 +7,7 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { urls } from "~/pageUrls";
+import { urls } from "~/urls";
 
 export const ChangeEmailForm: React.FC = () => {
 	const { data: user, mutate: mutateUser } = useCurrentUser();

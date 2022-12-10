@@ -7,7 +7,7 @@ import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
-import { urls } from "~/pageUrls";
+import { urls } from "~/urls";
 
 export const RegisterForm: React.FC = () => {
 	const router = useRouter();
@@ -108,7 +108,7 @@ export const RegisterForm: React.FC = () => {
 						</button>
 						<FormInputMessages messages={errors} />
 						<div className="flex flex-col font-nunito text-lg">
-							<FormAlternativeActionLink href="/login">
+							<FormAlternativeActionLink href={urls.login()}>
 								Already have an account? Login!
 							</FormAlternativeActionLink>
 						</div>

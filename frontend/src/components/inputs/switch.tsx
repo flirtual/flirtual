@@ -16,7 +16,7 @@ const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
 		/>
 		<label
 			className={twMerge(
-				"pointer-events-none absolute",
+				"pointer-events-none absolute select-none",
 				props.checked ? "text-white-20" : "text-black-80 dark:text-white-20"
 			)}
 		>

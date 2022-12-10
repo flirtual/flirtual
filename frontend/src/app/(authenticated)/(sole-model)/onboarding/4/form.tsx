@@ -10,8 +10,8 @@ import { PrivacyPreferenceOptions } from "~/api/user/preferences";
 import { privacyOptionLabel } from "~/const";
 import { api } from "~/api";
 import { entries } from "~/utilities";
-import { urls } from "~/pageUrls";
 import { FormButton } from "~/components/forms/button";
+import { urls } from "~/urls";
 
 const questions = [
 	"I plan my life out",

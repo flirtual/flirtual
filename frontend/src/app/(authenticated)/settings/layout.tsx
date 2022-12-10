@@ -9,15 +9,13 @@ import { Navigation } from "~/components/layout/navigation";
 
 import { SettingsNavigation } from "./navigation";
 
-export default function SettingsLayout({ children, ...props }: React.ComponentProps<"div">) {
+export default function SettingsLayout({ children }: React.ComponentProps<"div">) {
 	const segment = useSelectedLayoutSegment();
 
 	return (
 		<div
-			{...props}
 			className={twMerge(
-				"flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col",
-				props.className
+				"flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col"
 			)}
 		>
 			<Header />

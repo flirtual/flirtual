@@ -4,7 +4,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
-import { ArrangeableImage, ArrangeableImageProps } from "./arrangable-image";
+import { ArrangeableImage, ArrangeableImageProps } from "./arrangeable-image";
 
 export type ArrangeableImageSetValue = Array<
 	Omit<ArrangeableImageProps, "idx" | "moveImage" | "onDelete">

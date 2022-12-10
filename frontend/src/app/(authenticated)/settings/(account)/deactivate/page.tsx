@@ -6,8 +6,8 @@ import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { urls } from "~/pageUrls";
 import { FormButton } from "~/components/forms/button";
+import { urls } from "~/urls";
 
 export default function SettingsAccountDeactivatePage() {
 	const { data: user, mutate: mutateUser } = useCurrentUser();

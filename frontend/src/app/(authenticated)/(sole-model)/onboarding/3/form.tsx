@@ -13,9 +13,9 @@ import { api } from "~/api";
 import { pick } from "~/utilities";
 import { PrivacyPreferenceOptions } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
-import { urls } from "~/pageUrls";
 import { ArrangeableImageSet } from "~/components/arrangeable-image-set";
 import { FormButton } from "~/components/forms/button";
+import { urls } from "~/urls";
 
 import { ConnectionButton } from "./connection-button";
 
@@ -44,9 +44,7 @@ export const Onboarding3Form: React.FC = () => {
 
 				if (values.images.length) {
 					const files = values.images.map((image) => image.file);
-					await api.user.profile.images.upload(user.id, files, {
-						uploadOptions: { store: true }
-					});
+					await api.user.profile.images.upload(user.id, files);
 				}
 
 				router.push(urls.onboarding(4));

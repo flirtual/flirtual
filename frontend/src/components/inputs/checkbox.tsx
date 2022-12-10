@@ -16,7 +16,7 @@ export const InputCheckbox: React.FC<InputCheckboxProps> = (props) => {
 				checked={value}
 				type="checkbox"
 				className={twMerge(
-					"focusable peer h-full w-full items-center justify-center rounded-xl border-4 border-black-50 bg-white-30 text-2xl text-white-20 shadow-brand-1 checked:bg-brand-gradient dark:bg-black-60",
+					"peer focusable h-full w-full items-center justify-center rounded-xl border-4 border-black-50 bg-white-30 text-2xl text-white-20 shadow-brand-1 checked:bg-brand-gradient dark:bg-black-60",
 					props.className
 				)}
 				onChange={(event) => {

@@ -14,7 +14,7 @@ import {
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { urls } from "~/pageUrls";
+import { urls } from "~/urls";
 
 export const Onboarding1Form: React.FC = () => {
 	const { data: user } = useCurrentUser();

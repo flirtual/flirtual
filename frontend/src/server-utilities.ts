@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { api } from "./api";
 import { User } from "./api/user/user";
-import { urls } from "./pageUrls";
+import { urls } from "./urls";
 
 export function thruServerCookies() {
 	return {
