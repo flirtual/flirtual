@@ -2,6 +2,8 @@ import { ModelCard } from "~/components/model-card";
 
 import { Onboarding1Form } from "./form";
 
+export const config = { runtime: "experimental-edge" };
+
 export default function Onboarding1Page() {
 	return (
 		<ModelCard title="Matchmaking">

@@ -1,5 +1,7 @@
 import { Profile } from "./profile";
 
+export const config = { runtime: "experimental-edge" };
+
 export interface ProfilePageProps {
 	params: { userId: string };
 }

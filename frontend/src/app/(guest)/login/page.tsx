@@ -2,6 +2,8 @@ import { ModelCard } from "~/components/model-card";
 
 import { LoginForm } from "./form";
 
+export const config = { runtime: "experimental-edge" };
+
 export interface LoginPageProps {
 	params: {
 		to?: string;

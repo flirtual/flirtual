@@ -11,6 +11,8 @@ import { ModelCard } from "~/components/model-card";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { urls } from "~/urls";
 
+export const config = { runtime: "experimental-edge" };
+
 export interface ConfirmEmailPageProps {
 	params: { to?: string };
 }
