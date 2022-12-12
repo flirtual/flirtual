@@ -5,6 +5,9 @@ import { LoginPageProps } from "./app/(guest)/login/page";
 export const siteOrigin = process.env.NEXT_PUBLIC_ORIGIN as string;
 if (!siteOrigin) throw new ReferenceError("Site origin not defined");
 
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
+if (!apiUrl) throw new ReferenceError("Site origin not defined");
+
 export function toAbsoluteUrl(href: string) {
 	return new URL(href, siteOrigin);
 }
@@ -35,6 +38,7 @@ export const urls = {
 		return urls.media(avatarId);
 	},
 
+	// pages
 	register: pageUrl("/register"),
 	login: pageUrl<LoginPageProps>("/login"),
 	forgotPassword: pageUrl("/forgot-password"),
