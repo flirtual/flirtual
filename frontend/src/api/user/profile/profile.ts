@@ -1,4 +1,5 @@
 import { CountryCode, LanguageCode } from "~/countries";
+import { AttributeCollection } from "~/api/attributes";
 
 import { UpdatedAtModel } from "../../common";
 import { fetch, FetchOptions } from "../..";
@@ -50,11 +51,11 @@ export type Profile = UpdatedAtModel & {
 	conscientiousness: number;
 	agreeableness: number;
 	gender: Array<ProfileGender>;
-	sexuality: Array<string>;
-	games: Array<string>;
+	sexuality: AttributeCollection;
+	games: AttributeCollection;
 	languages: Array<LanguageCode>;
-	platforms: Array<string>;
-	interests: Array<string>;
+	platforms: AttributeCollection;
+	interests: AttributeCollection;
 	preferences: ProfilePreferences;
 	customWeights: ProfileCustomWeights | null;
 	images: Array<ProfileImage>;

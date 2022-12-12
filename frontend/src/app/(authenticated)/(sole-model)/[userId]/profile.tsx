@@ -131,10 +131,10 @@ export const Profile: React.FC<{ userId: string }> = ({ userId }) => {
 					<Pill>{user.profile.conscientiousness > 0 ? "Reliable" : "Free-spirited"}</Pill>
 					<Pill>{user.profile.agreeableness > 0 ? "Friendly" : "Straightforward"}</Pill>
 					{user.profile.games.map((game) => (
-						<Pill key={game}>{capitalize(game)}</Pill>
+						<Pill key={game.id}>{game.name}</Pill>
 					))}
 					{user.profile.interests.map((interest) => (
-						<Pill key={interest}>{capitalize(interest)}</Pill>
+						<Pill key={interest.id}>{interest.name}</Pill>
 					))}
 				</div>
 			</div>
