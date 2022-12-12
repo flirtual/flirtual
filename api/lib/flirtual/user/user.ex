@@ -4,25 +4,6 @@ defmodule Flirtual.User do
 
   import Ecto.Changeset
 
-  @derive [
-    {Jason.Encoder,
-     only: [
-       :id,
-       :email,
-       :username,
-       :language,
-       :born_at,
-       :email_confirmed_at,
-       :deactivated_at,
-       :tags,
-       :subscription,
-       :preferences,
-       :profile,
-       :updated_at,
-       :created_at
-     ]},
-  ]
-
   schema "users" do
     field :email, :string
     field :username, :string
@@ -211,5 +192,29 @@ end
 defimpl Swoosh.Email.Recipient, for: Flirtual.User do
   def format(%Flirtual.User{} = user) do
     {user.profile[:display_name] || user.username, user.email}
+  end
+end
+
+defimpl Jason.Encoder, for: Flirtual.User do
+  def encode(value, opts) do
+    Jason.Encode.map(
+      Map.take(value, [
+        :id,
+        :email,
+        :username,
+        :language,
+        :born_at,
+        :email_confirmed_at,
+        :deactivated_at,
+        :tags,
+        :subscription,
+        :preferences,
+        :profile,
+        :updated_at,
+        :created_at
+      ])
+      |> Map.filter(fn {_, value} -> value !== nil end),
+      opts
+    )
   end
 end

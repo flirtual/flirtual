@@ -102,6 +102,12 @@ defmodule FlirtualWeb.Router do
         end
       end
 
+      scope "/attributes" do
+        scope "/:attribute_type" do
+          get "/", AttributeController, :list
+        end
+      end
+
       scope "/internal" do
         pipe_through :require_internal_authorization
 

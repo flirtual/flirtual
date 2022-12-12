@@ -11,7 +11,7 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(
         :country,
         %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{id: user_id, country: country}
+        %Profile{user_id: user_id, country: country}
       ),
       do: country
 
@@ -33,7 +33,7 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(
         :openness,
         %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{id: user_id, openness: openness}
+        %Profile{user_id: user_id, openness: openness}
       ),
       do: openness
 
@@ -53,7 +53,7 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(
         :conscientiousness,
         %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{id: user_id, conscientiousness: conscientiousness}
+        %Profile{user_id: user_id, conscientiousness: conscientiousness}
       ),
       do: conscientiousness
 
@@ -73,7 +73,7 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(
         :agreeableness,
         %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{id: user_id, agreeableness: agreeableness}
+        %Profile{user_id: user_id, agreeableness: agreeableness}
       ),
       do: agreeableness
 
@@ -93,7 +93,7 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(
         :sexuality,
         %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{id: user_id, sexuality: sexuality}
+        %Profile{user_id: user_id, sexuality: sexuality}
       ),
       do: sexuality
 
@@ -123,7 +123,7 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(
         :custom_weights,
         %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{id: user_id, custom_weights: custom_weights}
+        %Profile{user_id: user_id, custom_weights: custom_weights}
       ),
       do: custom_weights
 

@@ -2,10 +2,11 @@ defmodule Flirtual.User.Profile do
   use Flirtual.Schema
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Policy
 
+  import Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.User
+  alias Flirtual.{Attribute, User}
   alias Flirtual.User.Profile.{Image, Preferences, CustomWeights, Likes}
 
   @genders [
@@ -88,26 +89,6 @@ defmodule Flirtual.User.Profile do
     @kink_pairs |> List.flatten() |> Enum.uniq()
   end
 
-  @derive {Jason.Encoder,
-           only: [
-             :display_name,
-             :biography,
-             :country,
-             :openness,
-             :conscientiousness,
-             :agreeableness,
-             :gender,
-             :sexuality,
-             :games,
-             :languages,
-             :platforms,
-             :interests,
-             :preferences,
-             :custom_weights,
-             :images,
-             :updated_at
-           ]}
-
   schema "user_profiles" do
     belongs_to :user, User
 
@@ -119,14 +100,30 @@ defmodule Flirtual.User.Profile do
     field :agreeableness, :integer, default: 0
     Enum.map(@personality_questions, &field(&1, :boolean))
     field :gender, {:array, Ecto.Enum}, values: @genders
-    field :sexuality, {:array, Ecto.Enum}, values: @sexualities
-    field :games, {:array, :string}
     field :languages, {:array, :string}
-    field :platforms, {:array, :string}
-    field :interests, {:array, :string}
 
     has_one :preferences, Preferences
     has_one :custom_weights, CustomWeights
+
+    many_to_many :sexuality, Attribute,
+      join_through: "user_profile_attributes",
+      where: [type: "sexuality"],
+      on_replace: :delete
+
+    many_to_many :platforms, Attribute,
+      join_through: "user_profile_attributes",
+      where: [type: "platform"],
+      on_replace: :delete
+
+    many_to_many :interests, Attribute,
+      join_through: "user_profile_attributes",
+      where: [type: "interest"],
+      on_replace: :delete
+
+    many_to_many :games, Attribute,
+      join_through: "user_profile_attributes",
+      where: [type: "game"],
+      on_replace: :delete
 
     has_many :images, Image
     many_to_many :likes, User, join_through: Likes
@@ -138,31 +135,43 @@ defmodule Flirtual.User.Profile do
     [
       :preferences,
       :custom_weights,
+      :sexuality,
+      :platforms,
+      :interests,
+      :games,
       images: from(image in Image, order_by: image.order)
     ]
   end
 
   def update_changeset(%User.Profile{} = profile, attrs) do
+    sexuality_ids = attrs["sexuality"] || profile.sexuality
+    sexualities = Attribute.by_ids(sexuality_ids)
+
+    game_ids = attrs["games"] || profile.games
+    games = Attribute.by_ids(game_ids)
+
+    platform_ids = attrs["platforms"] || profile.platforms
+    platforms = Attribute.by_ids(platform_ids)
+
+    interest_ids = attrs["interests"] || profile.interests
+    interests = Attribute.by_ids(interest_ids)
+
     profile
     |> cast(attrs, [
       :display_name,
       :biography,
       :country,
       :gender,
-      :sexuality,
-      :games,
-      :languages,
-      :platforms,
-      :interests
+      :languages
     ])
+    |> put_assoc(:sexuality, sexualities)
+    |> put_assoc(:games, games)
+    |> put_assoc(:platforms, platforms)
+    |> put_assoc(:interests, interests)
     |> validate(:display_name)
     |> validate(:biography)
     |> validate(:gender)
-    |> validate(:sexuality)
-    |> validate(:games)
     |> validate(:languages)
-    |> validate(:platforms)
-    |> validate(:interests)
   end
 
   def validate(%Ecto.Changeset{} = changeset, :display_name = key) do
@@ -195,5 +204,32 @@ defmodule Flirtual.User.Profile do
 
   def validate(%Ecto.Changeset{} = changeset, :interests = key) do
     changeset |> validate_length(key, min: 2, max: 7)
+  end
+end
+
+defimpl Jason.Encoder, for: Flirtual.User.Profile do
+  def encode(value, opts) do
+    Jason.Encode.map(
+      Map.take(value, [
+        :display_name,
+        :biography,
+        :country,
+        :openness,
+        :conscientiousness,
+        :agreeableness,
+        :gender,
+        :sexuality,
+        :games,
+        :languages,
+        :platforms,
+        :interests,
+        :preferences,
+        :custom_weights,
+        :images,
+        :updated_at
+      ])
+      |> Map.filter(fn {_, value} -> value !== nil end),
+      opts
+    )
   end
 end

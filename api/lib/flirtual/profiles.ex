@@ -93,7 +93,7 @@ defmodule Flirtual.Profiles do
       profile_id: profile.id
     }
 
-    image_count = Kernel.length(profile.images) || 0
+    image_count = Kernel.length(profile.images)
 
     {_, images} =
       Repo.insert_all(
@@ -125,15 +125,16 @@ defmodule Flirtual.Profiles do
         change(image, order: new_order)
       end)
 
-      Repo.transaction(fn repo ->
-        changesets |> Enum.map(fn changeset ->
-          if (get_field(changeset, :order) !== nil) do
-            changeset |> repo.update!()
-          else
-            changeset |> repo.delete!()
-          end
-        end)
+    Repo.transaction(fn repo ->
+      changesets
+      |> Enum.map(fn changeset ->
+        if get_field(changeset, :order) !== nil do
+          changeset |> repo.update!()
+        else
+          changeset |> repo.delete!()
+        end
       end)
+    end)
 
     {:ok, Enum.map(changesets, &apply_changes/1)}
   end

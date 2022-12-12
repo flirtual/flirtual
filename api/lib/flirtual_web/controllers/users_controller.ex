@@ -30,7 +30,7 @@ defmodule FlirtualWeb.UsersController do
     user_id = conn.assigns[:session].user_id
     connection_type = to_atom(connection_type)
 
-    with {:ok, connection} <- Users.create_connection(user_id, connection_type, params) do
+    with {:ok, connection} <- Users.assign_connection(user_id, connection_type, params) do
       conn |> json(connection)
     end
   end
