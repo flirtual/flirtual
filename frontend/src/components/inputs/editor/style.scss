@@ -2,13 +2,18 @@
   @apply flex flex-col overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20;
 
   .ql-toolbar {
-    @apply shrink-0 flex px-4 py-3 gap-4 bg-brand-gradient text-white-20;
+    @apply shrink-0 flex p-2 gap-4 bg-brand-gradient text-white-20;
 
     .ql-formats {
       @apply flex gap-1;
 
-      button {
-        @apply p-1 rounded-lg focusable;
+      & > button, & > span {
+        @apply p-1 rounded-lg focusable h-7 w-7 aspect-square shrink-0 flex items-center justify-center;
+
+        &.ql-header::before {
+          @apply leading-none h-4 inline-block font-medium;
+          content: "H";
+        }
 
         &.ql-active {
           @apply bg-white-20 text-black-80;
@@ -33,37 +38,42 @@
       }
 
       .ql-picker {
-        @apply p-1 relative rounded-lg focusable;
+        @apply relative;
 
         &.ql-expanded {
           @apply bg-white-20 text-black-80;
         }
 
         .ql-picker-options {
-          @apply hidden -ml-2 w-max absolute p-2 mt-2 z-40 rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70;
+          @apply w-max absolute top-7 left-0 p-2 mt-2 z-40 rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70;
+          
+          &[aria-hidden="true"] {
+            display: none !important;
+          }
         }
 
         &.ql-color-picker {
           .ql-picker-options {
-            @apply grid-cols-6 gap-1;
-
-            &[aria-hidden="false"] {
-              @apply grid;
-            }
+            @apply grid grid-flow-col grid-rows-6 gap-1;
 
             .ql-picker-item {
               @apply w-4 h-4 shrink-0 rounded-sm;
+
+              &:not([data-value]) {
+                @apply bg-transparent flex items-center justify-center;
+
+                &::before {
+                  content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0idy02IGgtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNiAxOEwxOCA2TTYgNmwxMiAxMiIgLz4KPC9zdmc+Cg==);
+                  @apply flex shrink-0 w-4 h-4 aspect-square;
+                }
+              }
             }
           }
         }
 
         &.ql-icon-picker {
           .ql-picker-options {
-            @apply flex-col md:flex-row text-white-20;
-
-            &[aria-hidden="false"] {
-              @apply flex;
-            }
+            @apply flex flex-col md:flex-row text-white-20;
 
             .ql-picker-item {
               @apply text-black-90;

@@ -76,6 +76,13 @@ module.exports = {
 			typography: {
 				DEFAULT: {
 					css: {
+						p: {
+							marginTop: 0,
+							marginBottom: 0
+						},
+						h3: {
+							marginTop: 0
+						},
 						"--tw-prose-body": colors.black[80],
 						"--tw-prose-headings": colors.black[80],
 						"--tw-prose-lead": colors.black[80],
