@@ -7,6 +7,7 @@ defmodule FlirtualWeb.SessionController do
 
   import FlirtualWeb.ErrorHelpers
 
+  alias Flirtual.Repo
   alias Flirtual.Sessions
   alias Flirtual.Users
   alias Flirtual.User
@@ -101,7 +102,7 @@ defmodule FlirtualWeb.SessionController do
 
   def fetch_current_session(conn, _) do
     {token, conn} = ensure_session_token(conn)
-    session = token && Sessions.get_by_token(token)
+    session = token && Sessions.get_by_token(token) |> Repo.preload(user: User.default_assoc())
     assign(conn, :session, session)
   end
 

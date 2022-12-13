@@ -1,9 +1,8 @@
 defmodule Flirtual.User.Profile.Image do
   use Flirtual.Schema
+  use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Image.Policy
 
   alias Flirtual.User.Profile
-
-  @derive {Jason.Encoder, only: [:id, :external_id, :scanned, :order, :updated_at, :created_at]}
 
   schema "user_profile_images" do
     belongs_to :profile, Profile
@@ -13,5 +12,15 @@ defmodule Flirtual.User.Profile.Image do
     field :order, :integer
 
     timestamps(inserted_at: :created_at)
+  end
+end
+
+defimpl Jason.Encoder, for: Flirtual.User.Profile.Image do
+  def encode(value, opts) do
+    Jason.Encode.map(
+      Map.take(value, [:id, :external_id, :scanned, :updated_at, :created_at])
+      |> Map.filter(fn {_, value} -> value !== nil end),
+      opts
+    )
   end
 end

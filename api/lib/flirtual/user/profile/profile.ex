@@ -36,20 +36,6 @@ defmodule Flirtual.User.Profile do
     :two_spirit,
     :other
   ]
-  @sexualities [
-    :straight,
-    :lesbian,
-    :gay,
-    :bisexual,
-    :pansexual,
-    :asexual,
-    :demisexual,
-    :heteroflexible,
-    :homoflexible,
-    :queer,
-    :questioning,
-    :experimenting_in_vr
-  ]
 
   @kink_pairs [
     [:brat_tamer, :brat],
@@ -99,13 +85,18 @@ defmodule Flirtual.User.Profile do
     field :conscientiousness, :integer, default: 0
     field :agreeableness, :integer, default: 0
     Enum.map(@personality_questions, &field(&1, :boolean))
-    field :gender, {:array, Ecto.Enum}, values: @genders
+    field :new, :boolean
     field :languages, {:array, :string}
 
     has_one :preferences, Preferences
     has_one :custom_weights, CustomWeights
 
-    many_to_many :sexuality, Attribute,
+    many_to_many :gender, Attribute,
+      join_through: "user_profile_attributes",
+      where: [type: "gender"],
+      on_replace: :delete
+
+      many_to_many :sexuality, Attribute,
       join_through: "user_profile_attributes",
       where: [type: "sexuality"],
       on_replace: :delete
@@ -133,37 +124,42 @@ defmodule Flirtual.User.Profile do
 
   def default_assoc do
     [
-      :preferences,
       :custom_weights,
+      :gender,
       :sexuality,
       :platforms,
       :interests,
       :games,
+      preferences: Flirtual.User.Profile.Preferences.default_assoc(),
       images: from(image in Image, order_by: image.order)
     ]
   end
 
   def update_changeset(%User.Profile{} = profile, attrs) do
-    sexuality_ids = attrs["sexuality"] || profile.sexuality
-    sexualities = Attribute.by_ids(sexuality_ids)
+    sexuality_ids = attrs["sexuality"] || Enum.map(profile.sexuality, &(&1.id))
+    sexualities = Attribute.by_ids(sexuality_ids, "sexuality")
 
-    game_ids = attrs["games"] || profile.games
-    games = Attribute.by_ids(game_ids)
+    gender_ids = attrs["gender"] || Enum.map(profile.gender, &(&1.id))
+    genders = Attribute.by_ids(gender_ids, "gender")
 
-    platform_ids = attrs["platforms"] || profile.platforms
-    platforms = Attribute.by_ids(platform_ids)
+    game_ids = attrs["games"] || Enum.map(profile.games, &(&1.id))
+    games = Attribute.by_ids(game_ids, "game")
 
-    interest_ids = attrs["interests"] || profile.interests
-    interests = Attribute.by_ids(interest_ids)
+    platform_ids = attrs["platforms"] || Enum.map(profile.platforms, &(&1.id))
+    platforms = Attribute.by_ids(platform_ids, "platform")
+
+    interest_ids = attrs["interests"] || Enum.map(profile.interests, &(&1.id))
+    interests = Attribute.by_ids(interest_ids, "interest")
 
     profile
     |> cast(attrs, [
       :display_name,
       :biography,
+      :new,
       :country,
-      :gender,
       :languages
     ])
+    |> put_assoc(:gender, genders)
     |> put_assoc(:sexuality, sexualities)
     |> put_assoc(:games, games)
     |> put_assoc(:platforms, platforms)
@@ -213,6 +209,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       Map.take(value, [
         :display_name,
         :biography,
+        :new,
         :country,
         :openness,
         :conscientiousness,

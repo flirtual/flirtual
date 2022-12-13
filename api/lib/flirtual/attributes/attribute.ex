@@ -5,13 +5,10 @@ defmodule Flirtual.Attribute do
 
   alias Flirtual.{Attribute, Repo}
 
-  @derive [
-    {Jason.Encoder, only: [:id, :name]}
-  ]
-
   schema "attributes" do
     field :type, :string
     field :name, :string
+    field :metadata, :map
 
     timestamps(inserted_at: false)
   end
@@ -20,6 +17,13 @@ defmodule Flirtual.Attribute do
     Attribute
     |> where(id: ^attribute_id)
     |> Repo.one()
+  end
+
+  def by_ids(attribute_ids, attribute_type) do
+    Attribute
+    |> where([attribute], attribute.id in ^attribute_ids)
+    |> where([attribute], attribute.type == ^attribute_type)
+    |> Repo.all()
   end
 
   def by_ids(attribute_ids) do
@@ -32,5 +36,15 @@ defmodule Flirtual.Attribute do
     Attribute
     |> where(type: ^attribute_type)
     |> Repo.all()
+  end
+end
+
+defimpl Jason.Encoder, for: Flirtual.Attribute do
+  def encode(value, opts) do
+    Jason.Encode.map(
+      Map.take(value, [:id, :name, :metadata])
+      |> Map.filter(fn {_, value} -> value !== nil end),
+      opts
+    )
   end
 end

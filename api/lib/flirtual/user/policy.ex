@@ -1,5 +1,5 @@
 defmodule Flirtual.User.Policy do
-  use Flirtual.Policy, children: [:profile]
+  use Flirtual.Policy, reference_key: :user
 
   alias Flirtual.User
 
@@ -54,14 +54,48 @@ defmodule Flirtual.User.Policy do
       ),
       do: user.preferences
 
-  def transform(:preferences, _, _), do: []
+  def transform(:preferences, _, _), do: nil
 
-  def transform(key, conn, %User{} = user) do
-    if key in [:profile] do
-      value = Map.get(user, key) |> Map.replace(:user, user)
-      conn |> Flirtual.Policy.transform(value)
-    else
-      Map.get(user, key, nil)
-    end
+  def transform(
+        :born_at,
+        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
+        %User{id: user_id} = user
+      ),
+      do: user.born_at
+
+  # by default, truncate born at to year,
+  # to hide user's exact birthday.
+  def transform(:born_at, _, %User{} = user) do
+    now = Date.utc_today()
+
+    NaiveDateTime.new!(user.born_at.year, now.month, now.day, 0, 0, 0, 0)
+    |> NaiveDateTime.truncate(:second)
   end
+
+  def transform(
+        :deactivated_at,
+        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
+        %User{id: user_id} = user
+      ),
+      do: user.deactivated_at
+
+  def transform(:deactivated_at, _, _), do: nil
+
+  def transform(
+        :updated_at,
+        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
+        %User{id: user_id} = user
+      ),
+      do: user.updated_at
+
+  def transform(:updated_at, _, _), do: nil
+
+  def transform(
+        :created_at,
+        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
+        %User{id: user_id} = user
+      ),
+      do: user.created_at
+
+  def transform(:created_at, _, _), do: nil
 end

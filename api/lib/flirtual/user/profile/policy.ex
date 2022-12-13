@@ -1,5 +1,5 @@
 defmodule Flirtual.User.Profile.Policy do
-  use Flirtual.Policy
+  use Flirtual.Policy, reference_key: :profile
 
   alias Flirtual.User
   alias Flirtual.User.Profile
