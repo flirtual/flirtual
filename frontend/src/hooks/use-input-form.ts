@@ -69,14 +69,16 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 	const formId = useId();
 
 	const [initialValues, setInitialValues] = useState(options.fields);
-
 	const [values, setValues] = useState(initialValues);
 
 	const [errors, setErrors] = useState<Array<string>>([]);
 	const [fieldErrors, setFieldErrors] = useState<FieldErrors<T>>({});
 	const [submitting, setSubmitting] = useState(false);
 
-	useEffect(() => setInitialValues(options.fields), [options.fields]);
+	useEffect(() => {
+		setValues(options.fields);
+		setInitialValues(options.fields);
+	}, [options.fields]);
 
 	const props: UseInputForm<T>["props"] = {
 		onSubmit: async (event) => {

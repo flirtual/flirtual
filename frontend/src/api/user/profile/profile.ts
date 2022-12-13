@@ -44,37 +44,32 @@ export const DefaultProfileCustomWeights = Object.freeze<ProfileCustomWeights>({
 });
 
 export type Profile = UpdatedAtModel & {
-	displayName: string | null;
-	biography: string | null;
-	country: CountryCode | null;
+	displayName?: string;
+	biography?: string;
+	new?: boolean;
+	country?: CountryCode;
 	openness: number;
 	conscientiousness: number;
 	agreeableness: number;
-	gender: Array<ProfileGender>;
+	gender: AttributeCollection;
 	sexuality: AttributeCollection;
 	games: AttributeCollection;
 	languages: Array<LanguageCode>;
 	platforms: AttributeCollection;
 	interests: AttributeCollection;
 	preferences: ProfilePreferences;
-	customWeights: ProfileCustomWeights | null;
+	customWeights?: ProfileCustomWeights;
 	images: Array<ProfileImage>;
 };
 
 type ProfileUpdate = Partial<
-	Pick<
-		Profile,
-		| "displayName"
-		| "biography"
-		| "country"
-		| "gender"
-		| "sexuality"
-		| "games"
-		| "sexuality"
-		| "platforms"
-		| "interests"
-	>
->;
+	Pick<Profile, "displayName" | "biography" | "new" | "country" | "languages">
+> & {
+	gender?: Array<string>;
+	sexuality?: Array<string>;
+	games?: Array<string>;
+	interests?: Array<string>;
+};
 
 export async function update(userId: string, body: ProfileUpdate, options: FetchOptions = {}) {
 	return fetch<Profile>("post", `users/${userId}/profile`, { ...options, body });
@@ -91,6 +86,24 @@ export interface ProfilePersonality {
 	question7: boolean | null;
 	question8: boolean | null;
 }
+
+export const personalityQuestionLabels = [
+	"I plan my life out",
+	"Rules are important to follow",
+	"I daydream a lot",
+	"The truth is more important than people's feelings",
+	"I often do spontaneous things",
+	"Deep down most people are good people",
+	"I love helping people",
+	"I dislike it when things change",
+	"I find many things beautiful"
+];
+
+export const DefaultProfilePersonality = Object.freeze<ProfilePersonality>(
+	Object.fromEntries(
+		personalityQuestionLabels.map((_, questionIdx) => [`question${questionIdx}`, null])
+	) as unknown as ProfilePersonality
+);
 
 export async function getPersonality(userId: string, options: FetchOptions = {}) {
 	return fetch<ProfilePersonality>("get", `users/${userId}/profile/personality`, { ...options });

@@ -1,6 +1,7 @@
 "use client";
 
 import { api } from "~/api";
+import { GenderAttributeMetadata } from "~/api/attributes";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -14,11 +15,11 @@ import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { CountryCode, getCountries, getLanguages, LanguageCode } from "~/countries";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { pick } from "~/utilities";
 
 export const TagsForm: React.FC = () => {
 	const { data: user, mutate: mutateUser } = useCurrentUser();
 	const { data: games = [] } = useAttributeList("game");
+	const { data: genders = [] } = useAttributeList<GenderAttributeMetadata>("gender");
 	const { data: interests = [] } = useAttributeList("interest");
 	const { data: platforms = [] } = useAttributeList("platform");
 	const { data: sexualities = [] } = useAttributeList("sexuality");
@@ -30,28 +31,23 @@ export const TagsForm: React.FC = () => {
 			className="flex flex-col gap-8"
 			fields={{
 				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
-				gender: user.profile.gender ?? [],
-				sexuality: user.profile.sexuality ?? [],
+				gender: user.profile.gender.map((gender) => gender.id) ?? [],
+				sexuality: user.profile.sexuality.map((sexuality) => sexuality.id) ?? [],
 				country: (user.profile.country ?? "") as CountryCode | "",
 				languages: user.profile.languages ?? [],
-				platforms: user.profile.platforms ?? [],
-				new: false,
-				games: user.profile.games ?? [],
-				interests: user.profile.interests ?? []
+				platforms: user.profile.platforms.map((platform) => platform.id) ?? [],
+				new: user.profile.new ?? false,
+				games: user.profile.games.map((game) => game.id) ?? [],
+				interests: user.profile.interests.map((interest) => interest.id) ?? []
 			}}
 			onSubmit={async (values) => {
+				const { bornAt, country, ...profileValues } = values;
+
 				const [newUser, newProfile] = await Promise.all([
-					api.user.update(user.id, { bornAt: values.bornAt.toISOString() }),
+					api.user.update(user.id, { bornAt: bornAt.toISOString() }),
 					api.user.profile.update(user.id, {
-						...pick(values, [
-							"gender",
-							"sexuality",
-							"games",
-							"languages",
-							"platforms",
-							"interests"
-						]),
-						country: values.country || undefined
+						...profileValues,
+						country: country || undefined
 					})
 				]);
 
@@ -81,27 +77,47 @@ export const TagsForm: React.FC = () => {
 						)}
 					</FormField>
 					<FormField name="gender">
-						{(field) => (
-							<>
-								<InputLabel {...field.labelProps}>Gender</InputLabel>
-								<InputCheckboxList
-									{...field.props}
-									items={{
-										man: {
-											label: "Man",
-											conflicts: ["woman"]
-										},
-										woman: {
-											label: "Woman",
-											conflicts: ["man"]
-										},
-										other: {
-											label: "Other"
-										}
-									}}
-								/>
-							</>
-						)}
+						{(field) => {
+							const simpleGenders = genders
+								.filter((gender) => gender.metadata?.simple)
+								.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
+							const simpleGenderIds = simpleGenders.map((gender) => gender.id);
+
+							const fallbackGender = genders.find((gender) => gender.metadata?.fallback);
+
+							return (
+								<>
+									<InputLabel {...field.labelProps}>Gender</InputLabel>
+									<InputCheckboxList
+										{...field.props}
+										items={Object.fromEntries(
+											simpleGenders.map((gender) => [
+												gender.id,
+												{
+													label: gender.name,
+													conflicts:
+														gender.metadata && Array.isArray(gender.metadata.conflicts)
+															? gender.metadata.conflicts
+															: []
+												}
+											])
+										)}
+									/>
+									{field.props.value.includes(fallbackGender?.id ?? "") && (
+										<InputAutocomplete
+											{...field.props}
+											limit={6}
+											placeholder="Select your genders..."
+											options={genders.map((gender) => ({
+												key: gender.id,
+												label: gender.name,
+												hidden: simpleGenderIds.includes(gender.id)
+											}))}
+										/>
+									)}
+								</>
+							);
+						}}
 					</FormField>
 					<FormField name="sexuality">
 						{(field) => (

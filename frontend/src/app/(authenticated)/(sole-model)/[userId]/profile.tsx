@@ -11,6 +11,8 @@ import { useUser } from "~/hooks/use-user";
 import { capitalize } from "~/utilities";
 import { html } from "~/html";
 import { urls } from "~/urls";
+import { User } from "~/api/user";
+import { useCurrentUser } from "~/hooks/use-current-user";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 
@@ -22,7 +24,7 @@ const Pill: React.FC<React.ComponentProps<"div"> & { Icon?: IconComponent; activ
 	<div
 		{...props}
 		className={twMerge(
-			"flex h-8 items-center gap-2 rounded-xl py-1 px-4 font-montserrat font-semibold shadow-brand-1",
+			"flex h-8 select-none items-center gap-2 rounded-xl py-1 px-4 font-montserrat font-semibold shadow-brand-1",
 			active
 				? "bg-brand-gradient text-white-10"
 				: "bg-white-30 text-black-70 dark:bg-black-70 dark:text-white-20 sm:dark:bg-black-60",
@@ -60,7 +62,7 @@ const ActivityIndicator: React.FC<{ lastActiveAt: Date }> = ({ lastActiveAt }) =
 			<div className={twMerge("h-4 w-4 rounded-full", color)}>
 				<div className={twMerge("h-4 w-4 animate-ping rounded-full", color)} />
 			</div>
-			<span className="font-montserrat font-semibold">{text}</span>
+			<span className="select-none font-montserrat font-semibold">{text}</span>
 		</div>
 	);
 };
@@ -81,6 +83,46 @@ const CountryPill: React.FC<{ code: CountryCode }> = ({ code }) => {
 			<img className="-ml-4 h-8 shrink-0 rounded-l-lg" src={flagUrl} />
 			<span>{country.name}</span>
 		</Pill>
+	);
+};
+
+function getPersonalityLabels(user: User) {
+	return [
+		user.profile.openness > 0 ? "Open-minded" : "Practical",
+		user.profile.conscientiousness > 0 ? "Reliable" : "Free-spirited",
+		user.profile.agreeableness > 0 ? "Friendly" : "Straightforward"
+	];
+}
+
+const PillCollection: React.FC<{ user: User }> = (props) => {
+	const { data: currentUser } = useCurrentUser();
+	const { user } = props;
+
+	if (!currentUser) return null;
+
+	const myPersonalityLabels = getPersonalityLabels(currentUser);
+	const personalityLabels = getPersonalityLabels(user);
+
+	return (
+		<div className="flex flex-wrap gap-2">
+			<Pill>Open to serious dating</Pill>
+			{personalityLabels.map((personalityLabel) => (
+				<Pill active={myPersonalityLabels.includes(personalityLabel)} key={personalityLabel}>
+					{personalityLabel}
+				</Pill>
+			))}
+			{user.profile.games.map((game) => (
+				<Pill
+					active={currentUser.profile.games.some((attribute) => attribute.id === game.id)}
+					key={game.id}
+				>
+					{game.name}
+				</Pill>
+			))}
+			{user.profile.interests.map((interest) => (
+				<Pill key={interest.id}>{interest.name}</Pill>
+			))}
+		</div>
 	);
 };
 
@@ -125,18 +167,7 @@ export const Profile: React.FC<{ userId: string }> = ({ userId }) => {
 						)
 					}}
 				/>
-				<div className="flex flex-wrap gap-2">
-					<Pill active>Open to serious dating</Pill>
-					<Pill active>{user.profile.openness > 0 ? "Open-minded" : "Practical"}</Pill>
-					<Pill>{user.profile.conscientiousness > 0 ? "Reliable" : "Free-spirited"}</Pill>
-					<Pill>{user.profile.agreeableness > 0 ? "Friendly" : "Straightforward"}</Pill>
-					{user.profile.games.map((game) => (
-						<Pill key={game.id}>{game.name}</Pill>
-					))}
-					{user.profile.interests.map((interest) => (
-						<Pill key={interest.id}>{interest.name}</Pill>
-					))}
-				</div>
+				<PillCollection user={user} />
 			</div>
 			<div className="h-32 w-full sm:h-0">
 				<div className="pointer-events-none fixed left-0 bottom-16 flex h-32 w-full items-center justify-center p-8">

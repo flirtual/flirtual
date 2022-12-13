@@ -77,7 +77,7 @@ export const Header: React.FC = () => {
 								<PopoverModel>
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Service</span>
-										<InlineLink href="https://status.flirtu.al/">Network Status</InlineLink>
+										<InlineLink href={urls.resources.networkStatus()}>Network Status</InlineLink>
 										<InlineButton onClick={openFreshworks}>Contact us</InlineButton>
 									</div>
 								</PopoverModel>
@@ -87,12 +87,12 @@ export const Header: React.FC = () => {
 								<PopoverModel>
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Documents</span>
-										<InlineLink href="/terms">Terms of Service</InlineLink>
-										<InlineLink href="/privacy">Privacy Policy</InlineLink>
+										<InlineLink href={urls.resources.termsOfService()}>Terms of Service</InlineLink>
+										<InlineLink href={urls.resources.privacyPolicy()}>Privacy Policy</InlineLink>
 									</div>
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Company</span>
-										<InlineLink href="https://studiopaprika.io/">Studio Paprika</InlineLink>
+										<InlineLink href={urls.resources.company()}>Studio Paprika</InlineLink>
 									</div>
 								</PopoverModel>
 							</Popover>

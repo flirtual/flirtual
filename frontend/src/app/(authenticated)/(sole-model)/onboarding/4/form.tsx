@@ -1,6 +1,5 @@
 "use client";
 
-import useSWR from "swr";
 import { useRouter } from "next/navigation";
 
 import { InputLabel, InputSelect, InputSwitch } from "~/components/inputs";
@@ -12,27 +11,14 @@ import { api } from "~/api";
 import { entries } from "~/utilities";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
-
-const questions = [
-	"I plan my life out",
-	"Rules are important to follow",
-	"I daydream a lot",
-	"The truth is more important than people's feelings",
-	"I often do spontaneous things",
-	"Deep down most people are good people",
-	"I love helping people",
-	"I dislike it when things change",
-	"I find many things beautiful"
-];
+import { personalityQuestionLabels } from "~/api/user/profile";
+import { useCurrentPersonality } from "~/hooks/use-current-personality";
 
 export const Onboarding4Form: React.FC = () => {
 	const { data: user, mutate: mutateUser } = useCurrentUser();
 	const router = useRouter();
 
-	const { data: personality } = useSWR("personality", () => {
-		if (!user) return null;
-		return api.user.profile.getPersonality(user.id);
-	});
+	const personality = useCurrentPersonality();
 
 	if (!user || !personality) return null;
 
@@ -78,7 +64,7 @@ export const Onboarding4Form: React.FC = () => {
 							{(field) => (
 								<div className="flex justify-between gap-4">
 									<InputLabel {...field.labelProps} inline>
-										{questions[questionIdx]}
+										{personalityQuestionLabels[questionIdx]}
 									</InputLabel>
 									<InputSwitch {...field.props} />
 								</div>

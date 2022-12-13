@@ -57,11 +57,13 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 				<div className="relative">
 					<ChatBubbleLeftRightIcon className="w-8" strokeWidth={1.5} />
 					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
-						<span className="font-mono text-sm font-semibold leading-none text-white-20">4</span>
+						<span className="select-none font-mono text-sm font-semibold leading-none text-white-20">
+							4
+						</span>
 					</div>
 				</div>
 			</NavigationIconButton>
-			<NavigationIconButton href="/settings">
+			<NavigationIconButton href={urls.settings.default()}>
 				<Cog8ToothIcon className="h-8 w-8" />
 			</NavigationIconButton>
 			<NavigationIconButton href={urls.user(user.username)}>

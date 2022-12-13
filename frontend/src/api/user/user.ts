@@ -13,13 +13,13 @@ export type User = UuidModel &
 	DatedModel & {
 		email: string;
 		username: string;
-		language: LanguageCode | null;
-		bornAt: string | null;
-		emailConfirmedAt: string | null;
-		deactivatedAt: string | null;
+		language?: LanguageCode;
+		bornAt?: string;
+		emailConfirmedAt?: string;
+		deactivatedAt?: string;
 		preferences: Preferences;
 		profile: Profile;
-		subscription: Subscription | null;
+		subscription?: Subscription;
 		tags: Array<UserTags>;
 		updatedAt: string;
 		createdAt: string;

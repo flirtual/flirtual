@@ -56,7 +56,7 @@ export const urls = {
 		biography: pageUrl("/settings/biography"),
 		tags: pageUrl("/settings/tags"),
 		personality: pageUrl("/settings/personality"),
-		nsfw: pageUrl("/settings/privacy"),
+		nsfw: pageUrl("/settings/nsfw"),
 
 		// account
 		privacy: pageUrl("/settings/privacy"),
