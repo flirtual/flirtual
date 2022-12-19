@@ -3,7 +3,7 @@
 import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
-import { DefaultProfileCustomWeights, ProfilePreferenceGender } from "~/api/user/profile";
+import { CustomWeightList, DefaultProfileCustomWeights } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -17,26 +17,19 @@ import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputSlider } from "~/components/inputs/slider";
 import { PremiumBadge } from "~/components/premium-badge";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { capitalize, entries } from "~/utilities";
-
-const CustomWeightLabels: { [K in keyof typeof DefaultProfileCustomWeights]: React.ReactNode } = {
-	country: "Same country",
-	games: "Social VR games in common",
-	defaultInterests: "Standard interests in common",
-	customInterests: "Custom interests in common",
-	personality: "Personality similarity",
-	serious: "Open to serious dating",
-	monopoly: "NSFW match",
-	domsub: "Dom/sub/switch match",
-	kinks: "Kink matches",
-	likes: "People who have liked you"
-};
+import { useGenderList } from "~/hooks/use-gender-list";
+import { capitalize } from "~/utilities";
 
 export const MatchmakingForm: React.FC = () => {
 	const { data: user } = useCurrentUser();
-	if (!user) return null;
 
-	const { preferences } = user.profile;
+	const genders = useGenderList()
+		.filter((gender) => gender.metadata?.simple)
+		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
+
+	if (!user || !user.preferences) return null;
+	const { preferences: profilePreferences } = user.profile;
+
 	const customWeights = user.profile.customWeights ?? DefaultProfileCustomWeights;
 
 	const absMinAge = 18;
@@ -46,12 +39,12 @@ export const MatchmakingForm: React.FC = () => {
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				gender: (preferences.gender ?? []) as Array<ProfilePreferenceGender>,
+				gender: profilePreferences.gender.map((attribute) => attribute.id),
 				ageRange: [
-					preferences.agemin ?? absMinAge,
-					preferences.agemax ?? absMaxAge
+					profilePreferences.agemin ?? absMinAge,
+					profilePreferences.agemax ?? absMaxAge
 				] as InputRangeSliderValue,
-				serious: false,
+				serious: profilePreferences.serious ?? false,
 				weightCountry: customWeights.country,
 				weightCustomInterests: customWeights.customInterests,
 				weightDefaultInterests: customWeights.defaultInterests,
@@ -71,6 +64,7 @@ export const MatchmakingForm: React.FC = () => {
 					api.user.profile.updatePreferences(user.id, {
 						agemin: agemin === absMinAge ? null : agemin,
 						agemax: agemax === absMaxAge ? null : agemax,
+						serious: values.serious,
 						gender: values.gender
 					}),
 					api.user.profile.updateCustomWeights(user.id, {
@@ -96,11 +90,14 @@ export const MatchmakingForm: React.FC = () => {
 								<InputLabel {...field.labelProps}>I want to meet...</InputLabel>
 								<InputCheckboxList
 									{...field.props}
-									items={{
-										men: { label: "Men" },
-										women: { label: "Women" },
-										other: { label: "Other" }
-									}}
+									items={Object.fromEntries(
+										genders.map((gender) => [
+											gender.id,
+											{
+												label: gender.metadata?.plural ?? gender.name
+											}
+										])
+									)}
 								/>
 							</>
 						)}
@@ -143,36 +140,57 @@ export const MatchmakingForm: React.FC = () => {
 							in their matchmaking algorithm.
 						</span>
 					</div>
-					{entries(CustomWeightLabels).map(([key, label]) => (
-						<FormField key={key} name={`weight${capitalize(key)}`}>
-							{(field) => (
-								<>
-									<InputLabel
-										{...field.labelProps}
-										hint={
-											<InputLabelHint
-												className={twMerge(
-													"ml-auto",
-													field.props.value === 0 ? "!text-red-500" : ""
-												)}
-											>
-												{field.props.value}x
-											</InputLabelHint>
-										}
-									>
-										{label}
-									</InputLabel>
-									<InputSlider
-										{...field.props}
-										disabled={key === "country" ? false : !user.subscription}
-										max={3}
-										min={0}
-										step={0.25}
-									/>
-								</>
-							)}
-						</FormField>
-					))}
+					{CustomWeightList.map((key) => {
+						if (
+							(["monopoly", "domsub", "kinks"].includes(key) && !user.preferences?.nsfw) ||
+							(key === "serious" && !profilePreferences.serious)
+						)
+							return null;
+
+						return (
+							<FormField key={key} name={`weight${capitalize(key)}`}>
+								{(field) => (
+									<>
+										<InputLabel
+											{...field.labelProps}
+											hint={
+												<InputLabelHint
+													className={twMerge(
+														"ml-auto",
+														field.props.value === 0 ? "!text-red-500" : ""
+													)}
+												>
+													{field.props.value}x
+												</InputLabelHint>
+											}
+										>
+											{
+												{
+													country: "Same country",
+													games: "Social VR games in common",
+													defaultInterests: "Standard interests in common",
+													customInterests: "Custom interests in common",
+													personality: "Personality similarity",
+													serious: "Open to serious dating",
+													monopoly: "NSFW match",
+													domsub: "Dom/sub/switch match",
+													kinks: "Kink matches",
+													likes: "People who have liked you"
+												}[key]
+											}
+										</InputLabel>
+										<InputSlider
+											{...field.props}
+											disabled={key === "country" ? false : !user.subscription}
+											max={2}
+											min={0}
+											step={0.25}
+										/>
+									</>
+								)}
+							</FormField>
+						);
+					})}
 					<FormButton>Update</FormButton>
 				</>
 			)}

@@ -1,60 +1,37 @@
-import { CountryCode, LanguageCode } from "~/countries";
 import { AttributeCollection } from "~/api/attributes";
+import { GenderAttributeCollection } from "~/hooks/use-gender-list";
+import { KinkAttributeCollection } from "~/hooks/use-kink-list";
 
 import { UpdatedAtModel } from "../../common";
 import { fetch, FetchOptions } from "../..";
 
 import { ProfileImage } from "./images";
-
-export type ProfilePreferenceGender = "men" | "women" | "other";
+import { ProfileCustomWeights } from "./custom-weights";
 
 export type ProfilePreferences = UpdatedAtModel & {
-	agemin: number | null;
-	agemax: number | null;
-	gender: Array<ProfilePreferenceGender>;
-	kinks: Array<string>;
+	agemin?: number | null;
+	agemax?: number | null;
+	serious: boolean;
+	gender: GenderAttributeCollection;
 };
 
-export type ProfileGender = "man" | "woman" | "other";
+export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;
+export type ProfileDomsub = typeof ProfileDomsubList[number];
 
-export interface ProfileCustomWeights {
-	country: number;
-	monopoly: number;
-	games: number;
-	defaultInterests: number;
-	customInterests: number;
-	personality: number;
-	serious: number;
-	domsub: number;
-	kinks: number;
-	likes: number;
-}
-
-export const DefaultProfileCustomWeights = Object.freeze<ProfileCustomWeights>({
-	country: 1,
-	customInterests: 1,
-	defaultInterests: 1,
-	domsub: 1,
-	games: 1,
-	kinks: 1,
-	likes: 1,
-	monopoly: 1,
-	personality: 1,
-	serious: 1
-});
-
-export type Profile = UpdatedAtModel & {
+export type Profile = Partial<UpdatedAtModel> & {
 	displayName?: string;
 	biography?: string;
 	new?: boolean;
-	country?: CountryCode;
-	openness: number;
-	conscientiousness: number;
-	agreeableness: number;
-	gender: AttributeCollection;
-	sexuality: AttributeCollection;
+	domsub?: ProfileDomsub;
+	country?: string;
+	openness?: number;
+	conscientiousness?: number;
+	agreeableness?: number;
+	gender: GenderAttributeCollection;
+	sexuality?: AttributeCollection;
+	kinks?: KinkAttributeCollection;
 	games: AttributeCollection;
-	languages: Array<LanguageCode>;
+	languages: Array<string>;
 	platforms: AttributeCollection;
 	interests: AttributeCollection;
 	preferences: ProfilePreferences;
@@ -63,9 +40,10 @@ export type Profile = UpdatedAtModel & {
 };
 
 type ProfileUpdate = Partial<
-	Pick<Profile, "displayName" | "biography" | "new" | "country" | "languages">
+	Pick<Profile, "displayName" | "biography" | "new" | "domsub" | "country" | "languages">
 > & {
 	gender?: Array<string>;
+	kinks?: Array<string>;
 	sexuality?: Array<string>;
 	games?: Array<string>;
 	interests?: Array<string>;
@@ -109,29 +87,27 @@ export async function getPersonality(userId: string, options: FetchOptions = {})
 	return fetch<ProfilePersonality>("get", `users/${userId}/profile/personality`, { ...options });
 }
 
-export type PersonalityUpdate = ProfilePersonality;
+export type UpdateProfilePersonality = ProfilePersonality;
 
 export async function updatePersonality(
 	userId: string,
-	body: PersonalityUpdate,
+	body: UpdateProfilePersonality,
 	options: FetchOptions = {}
 ) {
 	return fetch<Profile>("post", `users/${userId}/profile/personality`, { ...options, body });
 }
 
-export async function updatePreferences(userId: string, body: unknown, options: FetchOptions = {}) {
+export type UpdateProfilePreferences = Partial<
+	Pick<ProfilePreferences, "agemin" | "agemax" | "serious"> & { gender: Array<string> }
+>;
+
+export async function updatePreferences(
+	userId: string,
+	body: UpdateProfilePreferences,
+	options: FetchOptions = {}
+) {
 	return fetch<ProfilePreferences>("post", `users/${userId}/profile/preferences`, {
 		...options,
 		body
 	});
-}
-
-export type UpdateCustomWeightOptions = Partial<ProfileCustomWeights>;
-
-export async function updateCustomWeights(
-	userId: string,
-	body: UpdateCustomWeightOptions,
-	options: FetchOptions = {}
-) {
-	return fetch<Profile>("post", `users/${userId}/profile/custom-weights`, { ...options, body });
 }

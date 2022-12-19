@@ -1,6 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { camelCase, snakeCase } from "change-case";
 
+export type Expand<T> = T extends
+	| string
+	| number
+	| boolean
+	| symbol
+	| bigint
+	| null
+	| undefined
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	| Function
+	? T
+	: { [P in keyof T]: T[P] };
+
 export function clamp(value: number, min: number, max: number): number {
 	return value < min ? min : value > max ? max : value;
 }

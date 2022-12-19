@@ -1,6 +1,7 @@
 "use client";
 
 import Script from "next/script";
+import { useEffect } from "react";
 
 declare global {
 	interface Window {
@@ -13,7 +14,7 @@ declare global {
 }
 
 export const ClientScripts: React.FC = () => {
-	if (typeof document !== "undefined") {
+	useEffect(() => {
 		/* eslint-disable */
 		// @ts-expect-error
 		!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
@@ -21,7 +22,7 @@ export const ClientScripts: React.FC = () => {
 
 		window.fwSettings = { widget_id: 73000002566 };
 		window.FreshworksWidget("hide", "launcher");
-	}
+	}, []);
 
 	return (
 		<>

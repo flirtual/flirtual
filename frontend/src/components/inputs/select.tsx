@@ -95,7 +95,7 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 	}
 );
 
-export interface InputSelectProps<T extends string> {
+export interface InputSelectProps<T extends string = string> {
 	value: T;
 	onChange: React.Dispatch<T>;
 	placeholder?: string;

@@ -3,16 +3,16 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
+import { useMemo } from "react";
 
 import { IconComponent } from "~/components/icons";
 import { HeartGradient } from "~/components/icons/heart-gradient";
-import { CountryCode, getCountry, getCountryImageUrl } from "~/countries";
 import { useUser } from "~/hooks/use-user";
-import { capitalize } from "~/utilities";
-import { html } from "~/html";
 import { urls } from "~/urls";
 import { User } from "~/api/user";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { Html } from "~/components/html";
+import { useCountryList } from "~/hooks/use-country-list";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 
@@ -74,13 +74,19 @@ const ProfileVerificationBadge: React.FC = () => (
 	</div>
 );
 
-const CountryPill: React.FC<{ code: CountryCode }> = ({ code }) => {
-	const country = getCountry(code);
-	const flagUrl = getCountryImageUrl(code);
+const CountryPill: React.FC<{ code: string }> = ({ code }) => {
+	const countries = useCountryList();
+
+	const country = useMemo(
+		() => countries.find((country) => country.id === code),
+		[countries, code]
+	);
+
+	if (!country) return null;
 
 	return (
 		<Pill>
-			<img className="-ml-4 h-8 shrink-0 rounded-l-lg" src={flagUrl} />
+			<img className="-ml-4 h-8 shrink-0 rounded-l-lg" src={country.metadata.flagUrl} />
 			<span>{country.name}</span>
 		</Pill>
 	);
@@ -126,8 +132,8 @@ const PillCollection: React.FC<{ user: User }> = (props) => {
 	);
 };
 
-export const Profile: React.FC<{ userId: string }> = ({ userId }) => {
-	const { data: user } = useUser(userId);
+export const Profile: React.FC<{ username: string }> = ({ username }) => {
+	const { data: user } = useUser({ username });
 	if (!user) return null;
 
 	return (
@@ -150,23 +156,23 @@ export const Profile: React.FC<{ userId: string }> = ({ userId }) => {
 						)}
 					</div>
 					<div className="flex flex-wrap items-center gap-2 font-montserrat">
-						{user.profile.gender.map((gender) => (
-							<Pill key={gender}>{capitalize(gender)}</Pill>
-						))}
+						{user.profile.gender
+							// don't display "Other" as a gender.
+							.filter((gender) => !gender.metadata?.fallback)
+							// some genders have a sort order, prioritize them.
+							.sort((a, b) => ((a.metadata?.order ?? 0) < (b.metadata?.order ?? 0) ? 1 : -1))
+							.map((gender) => (
+								<Pill key={gender.id}>{gender.name}</Pill>
+							))}
 						{user.profile.country && <CountryPill code={user.profile.country} />}
 					</div>
 					<ActivityIndicator lastActiveAt={new Date()} />
 				</div>
 			</ProfileImageDisplay>
 			<div className="flex-gap flex h-full grow flex-col gap-6 p-8 pb-0 sm:pb-8">
-				<span
-					className="whitespace-pre-wrap font-nunito text-xl"
-					dangerouslySetInnerHTML={{
-						__html: html(
-							user.profile.biography || "No biography available yet, consider adding one."
-						)
-					}}
-				/>
+				<Html className="text-xl">
+					{user.profile.biography || "No biography available yet, consider adding one."}
+				</Html>
 				<PillCollection user={user} />
 			</div>
 			<div className="h-32 w-full sm:h-0">

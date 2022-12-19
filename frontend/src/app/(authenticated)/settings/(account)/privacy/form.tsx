@@ -5,14 +5,14 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import { FormPrivacySelect } from "~/components/forms/form-privacy-select";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
+import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useCurrentUser } from "~/hooks/use-current-user";
 
 export const PrivacyForm: React.FC = () => {
 	const { data: user } = useCurrentUser();
-	if (!user) return null;
+	if (!user || !user.preferences) return null;
 
 	return (
 		<Form
@@ -33,7 +33,7 @@ export const PrivacyForm: React.FC = () => {
 								<InputLabel inline hint="Who can see your personality traits?">
 									Personality privacy
 								</InputLabel>
-								<FormPrivacySelect {...field.props} />
+								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -43,7 +43,7 @@ export const PrivacyForm: React.FC = () => {
 								<InputLabel inline hint="Who can see your sexuality?">
 									Sexuality privacy
 								</InputLabel>
-								<FormPrivacySelect {...field.props} />
+								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -53,7 +53,7 @@ export const PrivacyForm: React.FC = () => {
 								<InputLabel inline hint="Who can see your country?">
 									Country privacy
 								</InputLabel>
-								<FormPrivacySelect {...field.props} />
+								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -63,7 +63,7 @@ export const PrivacyForm: React.FC = () => {
 								<InputLabel inline hint="Who can see your nsfw tags?">
 									Kink privacy
 								</InputLabel>
-								<FormPrivacySelect {...field.props} />
+								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>

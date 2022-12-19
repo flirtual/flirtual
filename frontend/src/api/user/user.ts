@@ -1,4 +1,4 @@
-import { LanguageCode } from "~/countries";
+import { Expand } from "~/utilities";
 
 import { DatedModel, UuidModel } from "../common";
 import { fetch, FetchOptions } from "..";
@@ -9,21 +9,21 @@ import { Subscription } from "./subscription";
 
 export type UserTags = "admin" | "moderator" | "beta_tester" | "debugger" | "verified";
 
-export type User = UuidModel &
-	DatedModel & {
-		email: string;
-		username: string;
-		language?: LanguageCode;
-		bornAt?: string;
-		emailConfirmedAt?: string;
-		deactivatedAt?: string;
-		preferences: Preferences;
-		profile: Profile;
-		subscription?: Subscription;
-		tags: Array<UserTags>;
-		updatedAt: string;
-		createdAt: string;
-	};
+export type User = Expand<
+	UuidModel &
+		Partial<DatedModel> & {
+			email: string;
+			username: string;
+			language?: string;
+			bornAt?: string;
+			emailConfirmedAt?: string;
+			deactivatedAt?: string;
+			preferences?: Preferences;
+			profile: Profile;
+			subscription?: Subscription;
+			tags: Array<UserTags>;
+		}
+>;
 
 export interface CreateUserOptions {
 	username: string;
@@ -39,6 +39,10 @@ export async function create(body: CreateUserOptions, options: FetchOptions = {}
 
 export async function get(userId: string, options: FetchOptions = {}) {
 	return fetch<User>("get", `users/${userId}`, options);
+}
+
+export async function getByUsername(username: string, options: FetchOptions = {}) {
+	return fetch<User>("get", `users/${username}/username`, options);
 }
 
 export async function update(userId: string, body: unknown, options: FetchOptions = {}) {

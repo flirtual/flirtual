@@ -7,8 +7,8 @@ import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputEditor, InputFile, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { html } from "~/html";
 import { urls } from "~/urls";
-import { pick } from "~/utilities";
 
 interface Image {
 	id: string | null;
@@ -36,13 +36,13 @@ export const BiographyForm: React.FC = () => {
 				})) as Array<Image>,
 				biography: user.profile.biography || ""
 			}}
-			onSubmit={async (values, { reset }) => {
+			onSubmit={async ({ displayName, biography, ...values }) => {
 				const imageIds = values.images
 					.map((image) => image.id)
 					.filter((id) => !!id) as Array<string>;
 
 				const [profile, images] = await Promise.all([
-					await api.user.profile.update(user.id, pick(values, ["displayName", "biography"])),
+					await api.user.profile.update(user.id, { displayName, biography: html(biography) }),
 					await api.user.profile.images.update(user.id, imageIds)
 				]);
 
@@ -57,8 +57,6 @@ export const BiographyForm: React.FC = () => {
 						  }
 						: null
 				);
-
-				reset(values);
 			}}
 		>
 			{({ FormField, setSubmitting }) => (

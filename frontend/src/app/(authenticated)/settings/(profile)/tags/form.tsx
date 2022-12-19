@@ -1,28 +1,22 @@
 "use client";
 
 import { api } from "~/api";
-import { GenderAttributeMetadata } from "~/api/attributes";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import {
-	InputAutocomplete,
-	InputDateSelect,
-	InputLabel,
-	InputSelect,
-	InputSwitch
-} from "~/components/inputs";
+import { InputAutocomplete, InputDateSelect, InputLabel, InputSwitch } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { CountryCode, getCountries, getLanguages, LanguageCode } from "~/countries";
+import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { useGenderList } from "~/hooks/use-gender-list";
 
 export const TagsForm: React.FC = () => {
 	const { data: user, mutate: mutateUser } = useCurrentUser();
 	const { data: games = [] } = useAttributeList("game");
-	const { data: genders = [] } = useAttributeList<GenderAttributeMetadata>("gender");
 	const { data: interests = [] } = useAttributeList("interest");
 	const { data: platforms = [] } = useAttributeList("platform");
 	const { data: sexualities = [] } = useAttributeList("sexuality");
+	const genders = useGenderList();
 
 	if (!user) return null;
 
@@ -32,8 +26,8 @@ export const TagsForm: React.FC = () => {
 			fields={{
 				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
 				gender: user.profile.gender.map((gender) => gender.id) ?? [],
-				sexuality: user.profile.sexuality.map((sexuality) => sexuality.id) ?? [],
-				country: (user.profile.country ?? "") as CountryCode | "",
+				sexuality: user.profile.sexuality?.map((sexuality) => sexuality.id) ?? [],
+				country: user.profile.country ?? "",
 				languages: user.profile.languages ?? [],
 				platforms: user.profile.platforms.map((platform) => platform.id) ?? [],
 				new: user.profile.new ?? false,
@@ -41,14 +35,11 @@ export const TagsForm: React.FC = () => {
 				interests: user.profile.interests.map((interest) => interest.id) ?? []
 			}}
 			onSubmit={async (values) => {
-				const { bornAt, country, ...profileValues } = values;
+				const { bornAt, ...profileValues } = values;
 
 				const [newUser, newProfile] = await Promise.all([
 					api.user.update(user.id, { bornAt: bornAt.toISOString() }),
-					api.user.profile.update(user.id, {
-						...profileValues,
-						country: country || undefined
-					})
+					api.user.profile.update(user.id, profileValues)
 				]);
 
 				await mutateUser(
@@ -139,18 +130,7 @@ export const TagsForm: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Country</InputLabel>
-								<InputSelect
-									{...field.props}
-									options={getCountries()
-										.map(({ code, name }) => ({
-											key: code as CountryCode,
-											label: name
-										}))
-										.sort((a, b) => {
-											if (a.label > b.label) return 1;
-											return -1;
-										})}
-								/>
+								<InputCountrySelect {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -158,19 +138,7 @@ export const TagsForm: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Language</InputLabel>
-								<InputAutocomplete
-									{...field.props}
-									limit={3}
-									options={getLanguages()
-										.map(({ code, name }) => ({
-											key: code as LanguageCode,
-											label: name
-										}))
-										.sort((a, b) => {
-											if (a.label > b.label) return 1;
-											return -1;
-										})}
-								/>
+								<InputLanguageAutocomplete {...field.props} />
 							</>
 						)}
 					</FormField>

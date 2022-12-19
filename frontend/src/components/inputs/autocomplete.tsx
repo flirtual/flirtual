@@ -5,13 +5,13 @@ import { search as fuzzySearch } from "fast-fuzzy";
 
 import { InputOptionWindow } from "./select";
 
-export interface InputAutocompleteOption<K extends string> {
+export interface InputAutocompleteOption<K extends string = string> {
 	key: K;
 	label: string;
 	hidden?: boolean;
 }
 
-export interface InputAutocompleteProps<K extends string> {
+export interface InputAutocompleteProps<K extends string = string> {
 	options: Array<InputAutocompleteOption<K>>;
 	value: Array<K>;
 	placeholder?: string;
