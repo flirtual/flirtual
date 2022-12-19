@@ -4,6 +4,11 @@ defmodule Flirtual.User.Policy do
   alias Flirtual.User
 
   def authorize(:read, _, _), do: true
+  def authorize(:update, %Plug.Conn{assigns: %{session: %{user_id: user_id}}}, %User{
+    id: user_id,
+  }),
+  do: true
+
   def authorize(_, _, _), do: false
 
   def transform(:email, %Plug.Conn{assigns: %{session: %{user_id: user_id}}}, %User{

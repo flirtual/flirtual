@@ -45,7 +45,7 @@ defmodule Flirtual.User.Profile.Policy do
         },
         openness: openness
       }),
-      do: openness
+      do: if(openness > 0, do: 1, else: -1)
 
   def transform(:openness, _, _), do: nil
 

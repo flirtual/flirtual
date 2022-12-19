@@ -6,36 +6,10 @@ defmodule Flirtual.User.Profile do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.Countries
+  alias Flirtual.Languages
   alias Flirtual.{Attribute, User}
   alias Flirtual.User.Profile.{Image, Preferences, CustomWeights, Likes}
-
-  @genders [
-    :woman,
-    :man,
-    :she_her,
-    :he_him,
-    :they_them,
-    :agender,
-    :androgynous,
-    :bigender,
-    :cis_woman,
-    :cis_man,
-    :genderfluid,
-    :genderqueer,
-    :gender_nonconforming,
-    :hijra,
-    :intersex,
-    :non_binary,
-    :pangender,
-    :transgender,
-    :transsexual,
-    :trans_woman,
-    :trans_man,
-    :transfeminine,
-    :transmasculine,
-    :two_spirit,
-    :other
-  ]
 
   @kink_pairs [
     [:brat_tamer, :brat],
@@ -96,9 +70,14 @@ defmodule Flirtual.User.Profile do
       where: [type: "gender"],
       on_replace: :delete
 
-      many_to_many :sexuality, Attribute,
+    many_to_many :sexuality, Attribute,
       join_through: "user_profile_attributes",
       where: [type: "sexuality"],
+      on_replace: :delete
+
+    many_to_many :kinks, Attribute,
+      join_through: "user_profile_attributes",
+      where: [type: "kink"],
       on_replace: :delete
 
     many_to_many :platforms, Attribute,
@@ -127,6 +106,7 @@ defmodule Flirtual.User.Profile do
       :custom_weights,
       :gender,
       :sexuality,
+      :kinks,
       :platforms,
       :interests,
       :games,
@@ -138,6 +118,9 @@ defmodule Flirtual.User.Profile do
   def update_changeset(%User.Profile{} = profile, attrs) do
     sexuality_ids = attrs["sexuality"] || Enum.map(profile.sexuality, &(&1.id))
     sexualities = Attribute.by_ids(sexuality_ids, "sexuality")
+
+    kink_ids = attrs["kinks"] || Enum.map(profile.kinks, &(&1.id))
+    kinks = Attribute.by_ids(kink_ids, "kink")
 
     gender_ids = attrs["gender"] || Enum.map(profile.gender, &(&1.id))
     genders = Attribute.by_ids(gender_ids, "gender")
@@ -160,46 +143,22 @@ defmodule Flirtual.User.Profile do
       :languages
     ])
     |> put_assoc(:gender, genders)
+    |> validate_length(:gender, min: 1, max: 4)
     |> put_assoc(:sexuality, sexualities)
+    |> validate_length(:sexuality, min: 1, max: 3)
+    |> put_assoc(:kinks, kinks)
+    |> validate_length(:kinks, min: 0, max: 8)
     |> put_assoc(:games, games)
+    |> validate_length(:games, min: 1, max: 5)
     |> put_assoc(:platforms, platforms)
+    |> validate_length(:platforms, min: 1, max: 8)
     |> put_assoc(:interests, interests)
-    |> validate(:display_name)
-    |> validate(:biography)
-    |> validate(:gender)
-    |> validate(:languages)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset, :display_name = key) do
-    changeset |> validate_length(key, min: 3, max: 32)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset, :biography = key) do
-    changeset |> validate_length(key, min: 16)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset, :gender = key) do
-    changeset |> validate_length(key, min: 1)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset, :sexuality = key) do
-    changeset |> validate_length(key, min: 1, max: 3)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset, :games = key) do
-    changeset |> validate_length(key, min: 1, max: 5)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset, :languages = key) do
-    changeset |> validate_length(key, min: 1, max: 3)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset, :platforms = key) do
-    changeset |> validate_length(key, min: 1, max: 8)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset, :interests = key) do
-    changeset |> validate_length(key, min: 2, max: 7)
+    |> validate_length(:interests, min: 2, max: 7)
+    |> validate_length(:display_name, min: 3, max: 32)
+    |> validate_length(:biography, min: 16)
+    |> validate_length(:languages, min: 1, max: 3)
+    |> validate_subset(:languages, Languages.list(:iso_639_1), message: "has an unrecognized language")
+    |> validate_inclusion(:country, Countries.list(:iso_3166_1), message: "is an unrecognized country")
   end
 end
 
@@ -216,6 +175,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
         :agreeableness,
         :gender,
         :sexuality,
+        :kinks,
         :games,
         :languages,
         :platforms,

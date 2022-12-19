@@ -6,20 +6,15 @@ defmodule Flirtual.User.Profile.Image.Policy do
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.Image
 
-  defguard is_within_list(value, [head | tail] = list)
-           when head == value or is_within_list(value, tail)
-
   def authorize(:read, _, _), do: true
   def authorize(_, _, _), do: false
 
   def transform(
         :scanned,
-        %Plug.Conn{assigns: %{session: %Session{user: %User{tags: tags}}}},
-        %Image{scanned: scanned}
-      )
-      when is_within_list(:admin, tags) do
-    IO.inspect(tags)
-    scanned
+        %Plug.Conn{assigns: %{session: %Session{user: user}}},
+        %Image{} = image
+      ) do
+    if (:admin in user.tags), do: image.scanned, else: nil
   end
 
   def transform(:scanned, _, _), do: nil

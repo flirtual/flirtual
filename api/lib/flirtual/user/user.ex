@@ -4,6 +4,8 @@ defmodule Flirtual.User do
 
   import Ecto.Changeset
 
+  alias Flirtual.Languages
+
   schema "users" do
     field :email, :string
     field :username, :string
@@ -48,6 +50,15 @@ defmodule Flirtual.User do
       :language,
       :born_at
     ])
+    |> validate_inclusion(:language, Languages.list(:iso_639_1), message: "is an unrecognized language")
+    |> validate_change(:born_at, fn (_, born_at) ->
+      now = Date.utc_today()
+      if (Date.compare(born_at, Date.new!(now.year - 18, now.month, now.day)) === :gt) do
+        %{born_at: "must be at least 18 years old"}
+      else
+        %{}
+      end
+    end)
   end
 
   @doc """

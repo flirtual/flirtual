@@ -56,11 +56,25 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def update(conn, %{"user_id" => id} = params) do
-    user = Users.get(id)
+  def get(conn, %{"username" => username}) do
+    user = Users.get_by_username(username)
 
-    with {:ok, user} <- Users.update(user, params) do
-      conn |> json(user)
+    if is_nil(user) or Policy.cannot?(conn, :read, user) do
+      {:error, {:not_found, "User not found", %{username: username}}}
+    else
+      conn |> json(Policy.transform(conn, user))
+    end
+  end
+
+  def update(conn, %{"user_id" => user_id} = params) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
+      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- Users.update(user, params) do
+        conn |> json(user)
+      end
     end
   end
 

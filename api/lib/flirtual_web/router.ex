@@ -66,12 +66,17 @@ defmodule FlirtualWeb.Router do
       scope "/users" do
         post "/", UsersController, :create
 
+        scope "/:username/username" do
+          pipe_through :require_authenticated_user
+
+          get "/", UsersController, :get
+        end
+
         scope "/:user_id" do
           pipe_through :require_authenticated_user
 
           get "/", UsersController, :get
           post "/", UsersController, :update
-
 
           post "/email", UsersController, :update_email
           post "/email/confirm", UsersController, :confirm_email
