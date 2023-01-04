@@ -18,7 +18,7 @@ export interface InputCheckboxListProps<K extends string> {
 }
 
 export function InputCheckboxList<T extends string>(props: InputCheckboxListProps<T>) {
-	const { value, items, onChange } = props;
+	const { value, items = [], onChange } = props;
 	const id = useId();
 
 	return (

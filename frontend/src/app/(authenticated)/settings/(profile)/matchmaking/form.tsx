@@ -90,14 +90,10 @@ export const MatchmakingForm: React.FC = () => {
 								<InputLabel {...field.labelProps}>I want to meet...</InputLabel>
 								<InputCheckboxList
 									{...field.props}
-									items={Object.fromEntries(
-										genders.map((gender) => [
-											gender.id,
-											{
-												label: gender.metadata?.plural ?? gender.name
-											}
-										])
-									)}
+									items={genders.map((gender) => ({
+										key: gender.id,
+										label: gender.metadata?.plural ?? gender.name
+									}))}
 								/>
 							</>
 						)}

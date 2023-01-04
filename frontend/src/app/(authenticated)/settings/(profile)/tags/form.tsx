@@ -81,18 +81,14 @@ export const TagsForm: React.FC = () => {
 									<InputLabel {...field.labelProps}>Gender</InputLabel>
 									<InputCheckboxList
 										{...field.props}
-										items={Object.fromEntries(
-											simpleGenders.map((gender) => [
-												gender.id,
-												{
-													label: gender.name,
-													conflicts:
-														gender.metadata && Array.isArray(gender.metadata.conflicts)
-															? gender.metadata.conflicts
-															: []
-												}
-											])
-										)}
+										items={simpleGenders.map((gender) => ({
+											key: gender.id,
+											label: gender.name,
+											conflicts:
+												gender.metadata && Array.isArray(gender.metadata.conflicts)
+													? gender.metadata.conflicts
+													: []
+										}))}
 									/>
 									{field.props.value.includes(fallbackGender?.id ?? "") && (
 										<InputAutocomplete
