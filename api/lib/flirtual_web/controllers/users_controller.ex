@@ -70,7 +70,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+      {:error, {:forbidden, "Cannot update this user", %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.update(user, params) do
         conn |> json(user)
@@ -79,26 +79,39 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def update_privacy_preferences(conn, %{"user_id" => user_id} = params) do
-    preferences = Users.get_preferences_by_user_id(user_id)
+    user = Users.get(user_id)
+    preferences = %User.Preferences{user.preferences | user: user}
 
-    with {:ok, privacy} <- Users.update_privacy_preferences(preferences.privacy, params) do
-      conn |> json(privacy)
+    if is_nil(user) or Policy.cannot?(conn, :update, preferences) do
+      {:error, {:forbidden, "Cannot update this user's preferences", %{user_id: user_id}}}
+    else
+      with {:ok, privacy} <- Users.update_privacy_preferences(preferences.privacy, params) do
+        conn |> json(privacy)
+      end
     end
   end
 
   def update_email(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
 
-    with {:ok, user} <- Users.update_email(user, params) do
-      conn |> json(user)
+    if is_nil(user) or Policy.cannot?(conn, :update_email, user) do
+      {:error, {:forbidden, "Cannot update this user's email address", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- Users.update_email(user, params) do
+        conn |> json(user)
+      end
     end
   end
 
   def confirm_email(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
 
-    with {:ok, user} <- Users.confirm_email(user, params) do
-      conn |> json(user)
+    if is_nil(user) or Policy.cannot?(conn, :update_email, user) do
+      {:error, {:forbidden, "Cannot confirm this user's email address", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- Users.confirm_email(user, params) do
+        conn |> json(user)
+      end
     end
   end
 

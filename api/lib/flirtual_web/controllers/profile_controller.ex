@@ -4,22 +4,27 @@ defmodule FlirtualWeb.ProfileController do
   import Plug.Conn
   import Phoenix.Controller
 
-  alias Flirtual.{Policy,Profiles}
+  alias Flirtual.{Policy, Users, Profiles}
   alias Flirtual.User.{Profile}
 
   action_fallback FlirtualWeb.FallbackController
 
   def update(conn, %{"user_id" => user_id} = params) do
-    profile = Profiles.get_by_user_id(user_id)
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
 
-    with {:ok, profile} <- Profiles.update(profile, params) do
-      conn |> json(profile)
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, "Cannot update this user's profile", %{user_id: user_id}}}
+    else
+      with {:ok, profile} <- Profiles.update(profile, params) do
+        conn |> json(profile)
+      end
     end
   end
 
   def get_personality(conn, %{"user_id" => user_id}) do
     personality = Profiles.get_personality_by_user_id(user_id)
-    stub_profile = %Profile{ user_id: user_id }
+    stub_profile = %Profile{user_id: user_id}
 
     if is_nil(personality) or Policy.cannot?(conn, :read, stub_profile) do
       {:error, {:not_found, "User not found", Map.take(stub_profile, [:user_id])}}
@@ -29,35 +34,54 @@ defmodule FlirtualWeb.ProfileController do
   end
 
   def update_personality(conn, %{"user_id" => user_id} = params) do
-    profile = Profiles.get_by_user_id(user_id)
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
 
-    with {:ok, personality} <- Profiles.update_personality(profile, params) do
-      conn |> json(personality)
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, "Cannot update this profile's personality", %{user_id: user_id}}}
+    else
+      with {:ok, personality} <- Profiles.update_personality(profile, params) do
+        conn |> json(personality)
+      end
     end
   end
 
   def update_preferences(conn, %{"user_id" => user_id} = params) do
-    profile = Profiles.get_by_user_id(user_id)
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
 
-    with {:ok, preferences} <- Profiles.update_preferences(profile.preferences, params) do
-      conn |> json(preferences)
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, "Cannot update this profile's preferences", %{user_id: user_id}}}
+    else
+      with {:ok, preferences} <- Profiles.update_preferences(profile.preferences, params) do
+        conn |> json(preferences)
+      end
     end
   end
 
   def create_images(conn, %{"user_id" => user_id, "file_ids" => file_ids}) do
-    profile = Profiles.get_by_user_id(user_id)
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
 
-    with {:ok, images} <- Profiles.create_images(profile, file_ids) do
-      conn |> json(images)
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, "Cannot add images to this profile", %{user_id: user_id}}}
+    else
+      with {:ok, images} <- Profiles.create_images(profile, file_ids) do
+        conn |> json(images)
+      end
     end
   end
 
   def update_images(conn, %{"user_id" => user_id, "image_ids" => image_ids}) do
-    profile = Profiles.get_by_user_id(user_id)
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
 
-    with {:ok, images} <- Profiles.update_images(profile, image_ids) do
-      conn |> json(images)
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, "Cannot update this profile's images", %{user_id: user_id}}}
+    else
+      with {:ok, images} <- Profiles.update_images(profile, image_ids) do
+        conn |> json(images)
+      end
     end
   end
-
 end

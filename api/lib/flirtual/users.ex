@@ -58,7 +58,7 @@ defmodule Flirtual.Users do
            |> User.update_email_changeset(attrs)
            |> change(email_confirmed_at: nil)
            |> Repo.update() do
-      {:ok, token, _} = Flirtual.Jwt.sign_email_confirmation(user)
+      {:ok, token, _} = Jwt.sign_email_confirmation(user)
       {:ok, _} = deliver_email_confirmation_instructions(user, token)
       {:ok, user}
     end

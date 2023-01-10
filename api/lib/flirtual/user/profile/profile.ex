@@ -11,20 +11,6 @@ defmodule Flirtual.User.Profile do
   alias Flirtual.{Attribute, User}
   alias Flirtual.User.Profile.{Image, Preferences, CustomWeights, Likes}
 
-  @kink_pairs [
-    [:brat_tamer, :brat],
-    [:owner, :pet],
-    [:daddy_mommy, :boy_girl],
-    [:master_mistress, :slave],
-    [:rigger, :rope_bunny],
-    [:sadist, :masochist],
-    [:exhibitionist, :voyeur],
-    [:hunter, :prey],
-    [:degrader, :degradee],
-    [:ageplayer, :ageplayer],
-    [:experimentalist, :experimentalist]
-  ]
-
   @personality_questions [
     :question0,
     :question1,
@@ -39,14 +25,6 @@ defmodule Flirtual.User.Profile do
 
   def get_personality_questions() do
     @personality_questions
-  end
-
-  def get_kink_pairs() do
-    @kink_pairs
-  end
-
-  def get_kink_list() do
-    @kink_pairs |> List.flatten() |> Enum.uniq()
   end
 
   schema "user_profiles" do
@@ -116,22 +94,22 @@ defmodule Flirtual.User.Profile do
   end
 
   def update_changeset(%User.Profile{} = profile, attrs) do
-    sexuality_ids = attrs["sexuality"] || Enum.map(profile.sexuality, &(&1.id))
+    sexuality_ids = attrs["sexuality"] || Enum.map(profile.sexuality, & &1.id)
     sexualities = Attribute.by_ids(sexuality_ids, "sexuality")
 
-    kink_ids = attrs["kinks"] || Enum.map(profile.kinks, &(&1.id))
+    kink_ids = attrs["kinks"] || Enum.map(profile.kinks, & &1.id)
     kinks = Attribute.by_ids(kink_ids, "kink")
 
-    gender_ids = attrs["gender"] || Enum.map(profile.gender, &(&1.id))
+    gender_ids = attrs["gender"] || Enum.map(profile.gender, & &1.id)
     genders = Attribute.by_ids(gender_ids, "gender")
 
-    game_ids = attrs["games"] || Enum.map(profile.games, &(&1.id))
+    game_ids = attrs["games"] || Enum.map(profile.games, & &1.id)
     games = Attribute.by_ids(game_ids, "game")
 
-    platform_ids = attrs["platforms"] || Enum.map(profile.platforms, &(&1.id))
+    platform_ids = attrs["platforms"] || Enum.map(profile.platforms, & &1.id)
     platforms = Attribute.by_ids(platform_ids, "platform")
 
-    interest_ids = attrs["interests"] || Enum.map(profile.interests, &(&1.id))
+    interest_ids = attrs["interests"] || Enum.map(profile.interests, & &1.id)
     interests = Attribute.by_ids(interest_ids, "interest")
 
     profile
@@ -157,8 +135,12 @@ defmodule Flirtual.User.Profile do
     |> validate_length(:display_name, min: 3, max: 32)
     |> validate_length(:biography, min: 16)
     |> validate_length(:languages, min: 1, max: 3)
-    |> validate_subset(:languages, Languages.list(:iso_639_1), message: "has an unrecognized language")
-    |> validate_inclusion(:country, Countries.list(:iso_3166_1), message: "is an unrecognized country")
+    |> validate_subset(:languages, Languages.list(:iso_639_1),
+      message: "has an unrecognized language"
+    )
+    |> validate_inclusion(:country, Countries.list(:iso_3166_1),
+      message: "is an unrecognized country"
+    )
   end
 end
 
