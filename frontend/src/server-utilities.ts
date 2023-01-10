@@ -18,6 +18,7 @@ export function thruServerCookies() {
 
 export interface ServerAuthenticateOptions {
 	optional?: boolean;
+	emailConfirmedOptional?: boolean;
 	to?: string;
 }
 
@@ -33,9 +34,14 @@ export async function useServerAuthenticate(
 export async function useServerAuthenticate(
 	options: ServerAuthenticateOptions = {}
 ): Promise<User | null> {
-	const { optional = false, to = urls.login() } = options;
+	const { optional = false, emailConfirmedOptional = false, to = urls.login() } = options;
 	const user = await api.auth.user({ ...thruServerCookies(), cache: "no-store" }).catch(() => null);
 
 	if (!user && !optional) return redirect(to);
+
+	// if the user's email is not confirmed, and we don't allow email to be optionally verified.
+	if (!user?.emailConfirmedAt && !(optional || emailConfirmedOptional))
+		return redirect(urls.confirmEmail());
+
 	return user;
 }

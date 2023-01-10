@@ -16,11 +16,11 @@ export function isInternalHref(href: string) {
 	return toAbsoluteUrl(href).origin === siteOrigin;
 }
 
-export function pageUrl<T extends { params: { [K: string]: string } } = never>(
+export function pageUrl<T extends { searchParams: { [K: string]: string } } = never>(
 	pathname: string,
-	defaults: T["params"] = {}
+	defaults: T["searchParams"] = {}
 ) {
-	return (query?: NonNullable<T["params"]>) => {
+	return (query?: NonNullable<T["searchParams"]>) => {
 		const object = query ?? defaults;
 		const searchParams = new URLSearchParams(object);
 		searchParams.sort();
