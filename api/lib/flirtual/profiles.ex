@@ -87,6 +87,12 @@ defmodule Flirtual.Profiles do
     |> Repo.update()
   end
 
+  def update_custom_weights(%Profile.CustomWeights{} = custom_weights, attrs) do
+    custom_weights
+    |> Profile.CustomWeights.update_changeset(attrs)
+    |> Repo.insert_or_update()
+  end
+
   def create_images(%Profile{} = profile, file_ids) do
     placeholders = %{
       now: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),

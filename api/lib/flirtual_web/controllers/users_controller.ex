@@ -15,7 +15,7 @@ defmodule FlirtualWeb.UsersController do
   def create(conn, params) do
     with {:ok, user} <- Users.register_user(params) do
       {_, conn} = conn |> SessionController.log_in_user(user)
-      conn |> put_status(:created) |> json(user)
+      conn |> put_status(:created) |> json(Policy.transform(conn, user))
     end
   end
 
@@ -27,11 +27,15 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def create_connection(conn, %{"connection_type" => connection_type} = params) do
-    user_id = conn.assigns[:session].user_id
+    user = conn.assigns[:session].user
     connection_type = to_atom(connection_type)
 
-    with {:ok, connection} <- Users.assign_connection(user_id, connection_type, params) do
-      conn |> json(connection)
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
+      {:error, {:forbidden, "Cannot update this user's connections", %{user_id: user.id, connection_type: connection_type}}}
+    else
+      with {:ok, connection} <- Users.assign_connection(user.id, connection_type, params) do
+        conn |> json(connection)
+      end
     end
   end
 
@@ -73,7 +77,7 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:forbidden, "Cannot update this user", %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.update(user, params) do
-        conn |> json(user)
+        conn |> json(Policy.transform(conn, user))
       end
     end
   end
@@ -82,7 +86,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
     preferences = %User.Preferences{user.preferences | user: user}
 
-    if is_nil(user) or Policy.cannot?(conn, :update, preferences) do
+    if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
       {:error, {:forbidden, "Cannot update this user's preferences", %{user_id: user_id}}}
     else
       with {:ok, privacy} <- Users.update_privacy_preferences(preferences.privacy, params) do
@@ -94,11 +98,11 @@ defmodule FlirtualWeb.UsersController do
   def update_email(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
 
-    if is_nil(user) or Policy.cannot?(conn, :update_email, user) do
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
       {:error, {:forbidden, "Cannot update this user's email address", %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.update_email(user, params) do
-        conn |> json(user)
+        conn |> json(Policy.transform(conn, user))
       end
     end
   end
@@ -106,16 +110,16 @@ defmodule FlirtualWeb.UsersController do
   def confirm_email(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
 
-    if is_nil(user) or Policy.cannot?(conn, :update_email, user) do
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
       {:error, {:forbidden, "Cannot confirm this user's email address", %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.confirm_email(user, params) do
-        conn |> json(user)
+        conn |> json(Policy.transform(conn, user))
       end
     end
   end
 
   def get_current_user(conn, _) do
-    conn |> get(%{"user_id" => conn.assigns[:session].user_id})
+    conn |> json(Policy.transform(conn, conn.assigns[:session].user))
   end
 end

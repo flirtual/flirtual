@@ -6,7 +6,6 @@ defmodule Flirtual.User.Profile.Preferences do
   alias Flirtual.User.Profile
   alias Flirtual.Attribute
 
-
   schema "user_profile_preferences" do
     belongs_to :profile, Profile
 

@@ -1,7 +1,6 @@
 defmodule Flirtual.User.Session do
   use Flirtual.Schema
 
-  alias Flirtual.Repo
   alias Flirtual.User
 
   @derive {Jason.Encoder,

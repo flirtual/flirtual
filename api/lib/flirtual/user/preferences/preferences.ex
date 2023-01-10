@@ -1,6 +1,8 @@
 defmodule Flirtual.User.Preferences do
   use Flirtual.Schema
 
+  use Flirtual.Policy.Target, policy: Flirtual.User.Preferences.Policy
+
   alias Flirtual.User
   alias Flirtual.User.Preferences.{EmailNotifications, Privacy}
 

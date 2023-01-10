@@ -100,9 +100,8 @@ defmodule FlirtualWeb.Router do
               put "/", ProfileController, :create_images
             end
 
-            scope "/preferences" do
-              post "/", ProfileController, :update_preferences
-            end
+            post "/preferences", ProfileController, :update_preferences
+            post "/custom-weights", ProfileController, :update_custom_weights
           end
         end
       end

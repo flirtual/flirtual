@@ -1,6 +1,7 @@
 defmodule Flirtual.User.Profile.CustomWeights do
   use Flirtual.Schema
 
+  import Ecto.Changeset
   alias Flirtual.User.Profile
 
   @derive {Jason.Encoder,
@@ -30,5 +31,21 @@ defmodule Flirtual.User.Profile.CustomWeights do
     field :domsub, :integer, default: 1
     field :kinks, :integer, default: 1
     field :likes, :integer, default: 1
+  end
+
+  def update_changeset(%Profile.CustomWeights{} = custom_weights, attrs) do
+    custom_weights
+    |> cast(attrs, [
+      :country,
+      :monopoly,
+      :games,
+      :default_interests,
+      :custom_interests,
+      :personality,
+      :serious,
+      :domsub,
+      :kinks,
+      :likes
+    ])
   end
 end

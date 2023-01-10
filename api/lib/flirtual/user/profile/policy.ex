@@ -4,128 +4,249 @@ defmodule Flirtual.User.Profile.Policy do
   alias Flirtual.User
   alias Flirtual.User.Profile
 
+  # Any user can read any other user's profile.
   def authorize(:read, _, _), do: true
+
+  # The currently logged in user can update their own profile.
+  def authorize(
+        :update,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %Profile{
+          user_id: user_id
+        }
+      ),
+      do: true
+
+  # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
-  ## country
+  # The current session can view their own country.
   def transform(
         :country,
-        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{user_id: user_id, country: country}
-      ),
-      do: country
-
-  def transform(:country, _, %Profile{
-        user: %User{
-          preferences: %User.Preferences{
-            privacy: %User.Preferences.Privacy{country: :everyone}
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
           }
         },
-        country: country
-      }),
-      do: country
+        %Profile{
+          user_id: user_id
+        } = profile
+      ),
+      do: profile.country
 
+  # Any user can view this profile's country if their
+  # country privacy setting is set to everyone.
+  def transform(
+        :country,
+        _,
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                country: :everyone
+              }
+            }
+          }
+        } = profile
+      ),
+      do: profile.country
+
+  # Otherwise, by default, nobody can view this profile's country.
   def transform(:country, _, _), do: nil
 
-  # personality (openness, conscientiousness, agreeableness)
-
-  ## openness
+  # The current session can view their own personality openness trait.
   def transform(
         :openness,
-        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{user_id: user_id, openness: openness}
-      ),
-      do: openness
-
-  def transform(:openness, _, %Profile{
-        user: %User{
-          preferences: %User.Preferences{
-            privacy: %User.Preferences.Privacy{personality: :everyone}
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
           }
         },
-        openness: openness
-      }),
-      do: if(openness > 0, do: 1, else: -1)
+        %Profile{
+          user_id: user_id
+        } = profile
+      ),
+      do: profile.openness
 
+  # Any user can view this profile's personality openness trait
+  # if their personality privacy setting is set to everyone.
+  def transform(
+        :openness,
+        _,
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                personality: :everyone
+              }
+            }
+          }
+        } = profile
+      ) do
+    # Fuzz openness to prevent inferring original personality question answers.
+    if(profile.openness > 0, do: 1, else: -1)
+  end
+
+  # Otherwise, by default, nobody can view this profile's personality openness trait.
   def transform(:openness, _, _), do: nil
 
-  ## conscientiousness
+  # The current session can view their own personality conscientiousness trait.
   def transform(
         :conscientiousness,
-        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{user_id: user_id, conscientiousness: conscientiousness}
-      ),
-      do: conscientiousness
-
-  def transform(:conscientiousness, _, %Profile{
-        user: %User{
-          preferences: %User.Preferences{
-            privacy: %User.Preferences.Privacy{personality: :everyone}
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
           }
         },
-        conscientiousness: conscientiousness
-      }),
-      do: conscientiousness
+        %Profile{
+          user_id: user_id
+        } = profile
+      ),
+      do: profile.conscientiousness
 
+  # Any user can view this profile's personality conscientiousness trait
+  # if their personality privacy setting is set to everyone.
+  def transform(
+        :conscientiousness,
+        _,
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                personality: :everyone
+              }
+            }
+          }
+        } = profile
+      ) do
+    # Fuzz conscientiousness to prevent inferring original personality question answers.
+    if(profile.conscientiousness > 0, do: 1, else: -1)
+  end
+
+  # Otherwise, by default, nobody can view this profile's personality conscientiousness trait.
   def transform(:conscientiousness, _, _), do: nil
 
-  ## agreeableness
+  # The current session can view their own personality agreeableness trait.
   def transform(
         :agreeableness,
-        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{user_id: user_id, agreeableness: agreeableness}
-      ),
-      do: agreeableness
-
-  def transform(:agreeableness, _, %Profile{
-        user: %User{
-          preferences: %User.Preferences{
-            privacy: %User.Preferences.Privacy{personality: :everyone}
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
           }
         },
-        agreeableness: agreeableness
-      }),
-      do: agreeableness
+        %Profile{
+          user_id: user_id
+        } = profile
+      ),
+      do: profile.agreeableness
 
+  # Any user can view this profile's personality agreeableness trait
+  # if their personality privacy setting is set to everyone.
+  def transform(
+        :agreeableness,
+        _,
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                personality: :everyone
+              }
+            }
+          }
+        } = profile
+      ) do
+    # Fuzz agreeableness to prevent inferring original personality question answers.
+    if(profile.agreeableness > 0, do: 1, else: -1)
+  end
+
+  # Otherwise, by default, nobody can view this profile's personality agreeableness trait.
   def transform(:agreeableness, _, _), do: nil
 
-  ## sexuality
+  # The current session can view their own sexuality.
   def transform(
         :sexuality,
-        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{user_id: user_id, sexuality: sexuality}
-      ),
-      do: sexuality
-
-  def transform(:sexuality, _, %Profile{
-        user: %User{
-          preferences: %User.Preferences{
-            privacy: %User.Preferences.Privacy{sexuality: :everyone}
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
           }
         },
-        sexuality: sexuality
-      }),
-      do: sexuality
+        %Profile{
+          user_id: user_id
+        } = profile
+      ),
+      do: profile.sexuality
 
+  # Any user can view this profile's sexuality
+  # if their sexuality privacy setting is set to everyone.
+  def transform(
+        :sexuality,
+        _,
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                sexuality: :everyone
+              }
+            }
+          }
+        } = profile
+      ),
+      do: profile.sexuality
+
+  # Otherwise, by default, nobody can view this profile's sexualities.
   def transform(:sexuality, _, _), do: []
 
-  ## preferences
+  # The current session can view their own profile's preferences.
   def transform(
         :preferences,
-        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{user_id: user_id, preferences: preferences}
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %Profile{
+          user_id: user_id
+        } = profile
       ),
-      do: preferences
+      do: profile.preferences
 
+  # Otherwise, by default, nobody can view this profile's preferences.
   def transform(:preferences, _, _), do: nil
 
-  ## custom_weights
+  # The current session can view their own profile's custom weights.
   def transform(
         :custom_weights,
-        %Plug.Conn{assigns: %{session: %{user_id: user_id}}},
-        %Profile{user_id: user_id, custom_weights: custom_weights}
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %Profile{
+          user_id: user_id
+        } = profile
       ),
-      do: custom_weights
+      do: profile.custom_weights
 
+  # Otherwise, by default, nobody can view this profile's custom weights.
   def transform(:custom_weights, _, _), do: nil
 end
