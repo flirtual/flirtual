@@ -66,7 +66,7 @@ if config_env() == :prod do
   # See `mix help release` for more information.
 end
 
-if config_env() == :prod or config_env() == :dev do
+if config_env() == :prod do
   # Configuring the mailer
   config :flirtual, Flirtual.Mailer,
     adapter: Swoosh.Adapters.SMTP,

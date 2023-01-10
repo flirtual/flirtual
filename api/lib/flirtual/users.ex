@@ -2,7 +2,8 @@ defmodule Flirtual.Users do
   import Ecto.Query
   import Ecto.Changeset
 
-  alias Flirtual.{Repo, User, Sessions}
+  alias Flirtual.Jwt
+  alias Flirtual.{Repo, Mailer, User, Sessions}
   alias Flirtual.User.{Session, Preferences, Connection}
 
   def get(id)
@@ -52,19 +53,40 @@ defmodule Flirtual.Users do
   end
 
   def update_email(%User{} = user, attrs) do
-    user
-    |> User.update_email_changeset(attrs)
-    |> change(email_confirmed_at: nil)
-    |> Repo.update()
+    with {:ok, user} <-
+           user
+           |> User.update_email_changeset(attrs)
+           |> change(email_confirmed_at: nil)
+           |> Repo.update() do
+      {:ok, token, _} = Flirtual.Jwt.sign_email_confirmation(user)
+      {:ok, _} = deliver_email_confirmation_instructions(user, token)
+      {:ok, user}
+    end
+  end
+
+  defp confirm_email_changeset(user, attrs) do
+    {%{},
+     %{
+      token: :string
+     }}
+    |> cast(attrs, [:token])
+    |> validate_change(:token, fn _, token ->
+      case Jwt.validate_email_confirmation(user, token) do
+        {:error, _} -> %{token: "invalid email confirmation token"}
+        {:ok, _} -> %{}
+      end
+    end)
   end
 
   def confirm_email(%User{} = user, attrs) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
-    user
-    |> cast(attrs, [:token])
-    |> change(email_confirmed_at: now)
-    |> Repo.update()
+    with {:ok, _} <- confirm_email_changeset(user, attrs) |> apply_action(nil) do
+      user
+      |> cast(attrs, [])
+      |> change(email_confirmed_at: now)
+      |> Repo.update()
+    end
   end
 
   def update_privacy_preferences(%Preferences.Privacy{} = preferences, attrs) do
@@ -189,5 +211,43 @@ defmodule Flirtual.Users do
            ])}
         end
     end
+  end
+
+  defp deliver_email_confirmation_instructions(user, token) do
+    action_url =
+      Application.fetch_env!(:flirtual, :frontend_origin) <> "/confirm-email?token=" <> token
+
+    Mailer.send(
+      user,
+      "Confirm your email address",
+      """
+      Please confirm your email address:
+      #{action_url}
+      """,
+      """
+      <p>Please click here to confirm your email:</p>
+
+      <p><a href="#{action_url}" class="btn">Confirm</a></p>
+
+      <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "EmailMessage",
+        "description": "Confirm your email",
+        "potentialAction": {
+          "@type": "ViewAction",
+          "url": "$confirm",
+          "name": "Confirm"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Flirtual",
+          "url": "https://flirtu.al/"
+        }
+      }
+      </script>
+      """,
+      action_url
+    )
   end
 end

@@ -10,10 +10,13 @@ import Config
 config :flirtual,
   discord_client_id: "***REMOVED***",
   discord_client_secret: "***REMOVED***",
-  discord_token: "***REMOVED***"
+  discord_token: "***REMOVED***",
+  frontend_origin: "http://localhost:3000"
 
 config :flirtual,
   ecto_repos: [Flirtual.Repo]
+
+config :joken, default_signer: "***REMOVED***"
 
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,

@@ -202,7 +202,7 @@ end
 
 defimpl Swoosh.Email.Recipient, for: Flirtual.User do
   def format(%Flirtual.User{} = user) do
-    {user.profile[:display_name] || user.username, user.email}
+    {user.profile.display_name || user.username, user.email}
   end
 end
 
