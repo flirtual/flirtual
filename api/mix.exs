@@ -56,6 +56,7 @@ defmodule Flirtual.MixProject do
       {:gettext, "~> 0.18"},
       {:poison, "~> 5.0"},
       {:jason, "~> 1.2"},
+      {:joken, "~> 2.5"},
       {:plug_cowboy, "~> 2.5"}
     ]
   end
