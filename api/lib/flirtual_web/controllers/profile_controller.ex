@@ -81,7 +81,7 @@ defmodule FlirtualWeb.ProfileController do
       {:error, {:forbidden, "Cannot add images to this profile", %{user_id: user_id}}}
     else
       with {:ok, images} <- Profiles.create_images(profile, file_ids) do
-        conn |> json(images)
+        conn |> json(Policy.transform(conn, images))
       end
     end
   end
@@ -94,7 +94,7 @@ defmodule FlirtualWeb.ProfileController do
       {:error, {:forbidden, "Cannot update this profile's images", %{user_id: user_id}}}
     else
       with {:ok, images} <- Profiles.update_images(profile, image_ids) do
-        conn |> json(images)
+        conn |> json(Policy.transform(conn, images))
       end
     end
   end

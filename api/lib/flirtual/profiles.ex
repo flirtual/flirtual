@@ -120,7 +120,7 @@ defmodule Flirtual.Profiles do
         returning: true
       )
 
-    {:ok, images}
+    {:ok, Enum.map(images, &(%Image{&1 | profile: profile}))}
   end
 
   def update_images(%Profile{} = profile, image_ids) do
