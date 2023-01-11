@@ -10,19 +10,26 @@ import { keys, omit } from "~/utilities";
 
 export const NotificationsForm: React.FC = () => {
 	const { data: user } = useCurrentUser();
-	if (!user) return null;
+	if (!user || !user.preferences) return null;
+
+	const { preferences } = user;
+	const notificationKeys = keys(user.preferences.emailNotifications);
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				email: keys(user.preferences.emailNotifications),
-				mobile: keys(omit(user.preferences.emailNotifications, ["newsletter"]))
+				email: notificationKeys.filter((key) => preferences.emailNotifications[key]),
+				mobile: keys(omit(preferences.emailNotifications, ["newsletter"])) // todo: fix this.
 			}}
 			onSubmit={async (values) => {
+				if (!user.preferences) return;
+
 				await api.user.preferences.updateNotifications(
 					user.id,
-					Object.fromEntries(values.email.map((key) => [key, true]))
+					Object.fromEntries(
+						keys(preferences.emailNotifications).map((key) => [key, values.email.includes(key)])
+					)
 				);
 			}}
 		>
@@ -34,21 +41,12 @@ export const NotificationsForm: React.FC = () => {
 								<InputLabel className="text-2xl font-semibold">Email notifications</InputLabel>
 								<InputCheckboxList
 									{...field.props}
-									items={{
-										matches: {
-											label: "Match notifications"
-										},
-										messages: {
-											label: "Message notifications"
-										},
-										likes: {
-											label: "Weekly profile like reminders"
-										},
-										newsletter: {
-											label: "Product updates",
-											labelHint: "we won't spam you!"
-										}
-									}}
+									items={[
+										{ key: "matches", label: "Match notifications" },
+										{ key: "messages", label: "Message notifications" },
+										{ key: "likes", label: "Weekly profile like reminders" },
+										{ key: "newsletter", label: "Product updates", labelHint: "we won't spam you!" }
+									]}
 								/>
 							</>
 						)}
@@ -59,17 +57,11 @@ export const NotificationsForm: React.FC = () => {
 								<InputLabel className="text-2xl font-semibold">Mobile notifications</InputLabel>
 								<InputCheckboxList
 									{...field.props}
-									items={{
-										matches: {
-											label: "Match notifications"
-										},
-										messages: {
-											label: "Message notifications"
-										},
-										likes: {
-											label: "Weekly profile like reminders"
-										}
-									}}
+									items={[
+										{ key: "matches", label: "Match notifications" },
+										{ key: "messages", label: "Message notifications" },
+										{ key: "likes", label: "Weekly profile like reminders" }
+									]}
 								/>
 							</>
 						)}

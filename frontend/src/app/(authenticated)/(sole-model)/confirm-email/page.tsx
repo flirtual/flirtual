@@ -91,7 +91,7 @@ export default function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps
 						fields={{}}
 						requireChange={false}
 						onSubmit={async () => {
-							console.log("a");
+							await api.user.resendConfirmEmail(user.id);
 						}}
 					>
 						<span className="text-xl">

@@ -84,6 +84,12 @@ export async function confirmEmail(userId: string, token: string, options: Fetch
 	});
 }
 
+export async function resendConfirmEmail(userId: string, options: FetchOptions = {}) {
+	return fetch("post", `users/${userId}/email/confirm/resend`, {
+		...options
+	});
+}
+
 export interface DeactivateOptions {
 	currentPassword: string;
 }

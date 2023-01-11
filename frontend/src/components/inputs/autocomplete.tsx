@@ -88,6 +88,7 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 						);
 					})}
 					<input
+						autoComplete="off"
 						className="grow border-none bg-transparent placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50"
 						placeholder={placeholder}
 						ref={inputRef}

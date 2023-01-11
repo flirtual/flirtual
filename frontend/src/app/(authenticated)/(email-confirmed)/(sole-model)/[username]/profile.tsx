@@ -92,11 +92,13 @@ const CountryPill: React.FC<{ code: string }> = ({ code }) => {
 	);
 };
 
-function getPersonalityLabels(user: User) {
+function getPersonalityLabels({ profile: { openness, conscientiousness, agreeableness } }: User) {
+	if (!openness || !conscientiousness || !agreeableness) return [];
+
 	return [
-		user.profile.openness > 0 ? "Open-minded" : "Practical",
-		user.profile.conscientiousness > 0 ? "Reliable" : "Free-spirited",
-		user.profile.agreeableness > 0 ? "Friendly" : "Straightforward"
+		openness > 0 ? "Open-minded" : "Practical",
+		conscientiousness > 0 ? "Reliable" : "Free-spirited",
+		agreeableness > 0 ? "Friendly" : "Straightforward"
 	];
 }
 
@@ -111,7 +113,7 @@ const PillCollection: React.FC<{ user: User }> = (props) => {
 
 	return (
 		<div className="flex flex-wrap gap-2">
-			<Pill>Open to serious dating</Pill>
+			{user.profile.serious && <Pill>Open to serious dating</Pill>}
 			{personalityLabels.map((personalityLabel) => (
 				<Pill active={myPersonalityLabels.includes(personalityLabel)} key={personalityLabel}>
 					{personalityLabel}

@@ -11,17 +11,17 @@ import { ProfileCustomWeights } from "./custom-weights";
 export type ProfilePreferences = UpdatedAtModel & {
 	agemin?: number | null;
 	agemax?: number | null;
-	serious: boolean;
 	gender: GenderAttributeCollection;
 };
 
 export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;
-export type ProfileDomsub = typeof ProfileDomsubList[number];
+export type ProfileDomsub = (typeof ProfileDomsubList)[number];
 
 export type Profile = Partial<UpdatedAtModel> & {
 	displayName?: string;
 	biography?: string;
 	new?: boolean;
+	serious?: boolean;
 	domsub?: ProfileDomsub;
 	country?: string;
 	openness?: number;
@@ -40,7 +40,10 @@ export type Profile = Partial<UpdatedAtModel> & {
 };
 
 type ProfileUpdate = Partial<
-	Pick<Profile, "displayName" | "biography" | "new" | "domsub" | "country" | "languages">
+	Pick<
+		Profile,
+		"displayName" | "biography" | "new" | "domsub" | "country" | "languages" | "serious"
+	>
 > & {
 	gender?: Array<string>;
 	kinks?: Array<string>;
@@ -98,7 +101,7 @@ export async function updatePersonality(
 }
 
 export type UpdateProfilePreferences = Partial<
-	Pick<ProfilePreferences, "agemin" | "agemax" | "serious"> & { gender: Array<string> }
+	Pick<ProfilePreferences, "agemin" | "agemax"> & { gender: Array<string> }
 >;
 
 export async function updatePreferences(

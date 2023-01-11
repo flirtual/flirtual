@@ -44,7 +44,7 @@ export const MatchmakingForm: React.FC = () => {
 					profilePreferences.agemin ?? absMinAge,
 					profilePreferences.agemax ?? absMaxAge
 				] as InputRangeSliderValue,
-				serious: profilePreferences.serious ?? false,
+				serious: user.profile.serious ?? false,
 				weightCountry: customWeights.country,
 				weightCustomInterests: customWeights.customInterests,
 				weightDefaultInterests: customWeights.defaultInterests,
@@ -61,10 +61,10 @@ export const MatchmakingForm: React.FC = () => {
 
 				const [agemin, agemax] = values.ageRange;
 				await Promise.all([
+					api.user.profile.update(user.id, { serious: values.serious }),
 					api.user.profile.updatePreferences(user.id, {
 						agemin: agemin === absMinAge ? null : agemin,
 						agemax: agemax === absMaxAge ? null : agemax,
-						serious: values.serious,
 						gender: values.gender
 					}),
 					api.user.profile.updateCustomWeights(user.id, {
@@ -82,7 +82,7 @@ export const MatchmakingForm: React.FC = () => {
 				]);
 			}}
 		>
-			{({ FormField }) => (
+			{({ FormField, fields }) => (
 				<>
 					<FormField name="gender">
 						{(field) => (
@@ -139,7 +139,7 @@ export const MatchmakingForm: React.FC = () => {
 					{CustomWeightList.map((key) => {
 						if (
 							(["monopoly", "domsub", "kinks"].includes(key) && !user.preferences?.nsfw) ||
-							(key === "serious" && !profilePreferences.serious)
+							(key === "serious" && !fields.serious.props.value)
 						)
 							return null;
 

@@ -47,13 +47,13 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 				props.className
 			)}
 		>
-			<NavigationIconButton href="/homies">
+			<NavigationIconButton href={urls.browseHomies()}>
 				<PeaceGradient className="w-8" gradient={false} />
 			</NavigationIconButton>
-			<NavigationIconButton href="/">
+			<NavigationIconButton href={urls.browse()}>
 				<HeartIcon className="h-8 w-8" />
 			</NavigationIconButton>
-			<NavigationIconButton href="/messages">
+			<NavigationIconButton href={urls.messages()}>
 				<div className="relative">
 					<ChatBubbleLeftRightIcon className="w-8" strokeWidth={1.5} />
 					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
