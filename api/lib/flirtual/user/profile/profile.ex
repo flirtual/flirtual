@@ -37,6 +37,7 @@ defmodule Flirtual.User.Profile do
     field :conscientiousness, :integer, default: 0
     field :agreeableness, :integer, default: 0
     Enum.map(@personality_questions, &field(&1, :boolean))
+    field :serious, :boolean
     field :new, :boolean
     field :languages, {:array, :string}
 
@@ -116,6 +117,7 @@ defmodule Flirtual.User.Profile do
     |> cast(attrs, [
       :display_name,
       :biography,
+      :serious,
       :new,
       :country,
       :languages
@@ -152,6 +154,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
         :biography,
         :new,
         :country,
+        :serious,
         :openness,
         :conscientiousness,
         :agreeableness,

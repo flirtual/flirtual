@@ -52,14 +52,31 @@ defmodule Flirtual.Users do
     |> Repo.update()
   end
 
+  def update_password(%User{} = user, attrs) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> User.update_password_changeset(attrs)
+             |> Repo.update() do
+        {_, _} = Sessions.delete_all_by_user_id(user.id)
+        user
+      end
+    end)
+  end
+
+  def send_email_confirmation(user) do
+    {:ok, token, _} = Jwt.sign_email_confirmation(user)
+    {:ok, _} = deliver_email_confirmation_instructions(user, token)
+    {:ok, token}
+  end
+
   def update_email(%User{} = user, attrs) do
     with {:ok, user} <-
            user
            |> User.update_email_changeset(attrs)
            |> change(email_confirmed_at: nil)
            |> Repo.update() do
-      {:ok, token, _} = Jwt.sign_email_confirmation(user)
-      {:ok, _} = deliver_email_confirmation_instructions(user, token)
+      {:ok, _} = send_email_confirmation(user)
       {:ok, user}
     end
   end
@@ -67,7 +84,7 @@ defmodule Flirtual.Users do
   defp confirm_email_changeset(user, attrs) do
     {%{},
      %{
-      token: :string
+       token: :string
      }}
     |> cast(attrs, [:token])
     |> validate_change(:token, fn _, token ->
@@ -92,6 +109,26 @@ defmodule Flirtual.Users do
   def update_privacy_preferences(%Preferences.Privacy{} = preferences, attrs) do
     preferences
     |> Preferences.Privacy.update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_notifications(%Preferences.EmailNotifications{} = notifications, attrs) do
+    notifications
+    |> Preferences.EmailNotifications.update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def deactivate(%User{} = user) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+    user
+    |> change(%{deactivated_at: now})
+    |> Repo.update()
+  end
+
+  def reactivate(%User{} = user) do
+    user
+    |> change(%{deactivated_at: nil})
     |> Repo.update()
   end
 
@@ -159,58 +196,63 @@ defmodule Flirtual.Users do
     |> Repo.one()
   end
 
+  def register_user_changeset(attrs) do
+    {%{},
+     %{
+       username: :string,
+       email: :string,
+       password: :string,
+       service_agreement: :boolean,
+       notifications: :boolean
+     }}
+    |> cast(attrs, [:username, :email, :password, :service_agreement, :notifications])
+    |> validate_required([:username, :email, :password, :service_agreement, :notifications])
+    |> validate_acceptance(:service_agreement)
+  end
+
   def register_user(attrs) do
-    changeset =
-      {%{},
-       %{
-         username: :string,
-         email: :string,
-         password: :string,
-         service_agreement: :boolean,
-         notifications: :boolean
-       }}
-      |> cast(attrs, [:username, :email, :password, :service_agreement, :notifications])
-      |> validate_required([:username, :email, :password, :service_agreement, :notifications])
-      |> validate_acceptance(:service_agreement)
+    Repo.transaction(fn ->
+      changeset = register_user_changeset(attrs)
 
-    case changeset.valid? do
-      false ->
-        {:error, changeset}
+      case changeset.valid? do
+        false ->
+          {:error, changeset}
 
-      true ->
-        source = changeset.changes
+        true ->
+          source = changeset.changes
 
-        changeset =
-          %User{}
-          |> cast(changeset.changes, [:username, :email, :password])
-          |> User.validate_unique_username()
-          |> User.validate_unique_email()
-          |> User.validate_password()
+          changeset =
+            %User{}
+            |> cast(changeset.changes, [:username, :email, :password])
+            |> User.validate_unique_username()
+            |> User.validate_unique_email()
+            |> User.validate_password()
 
-        with {:ok, user} <- Repo.insert(changeset) do
-          {:ok, preferences} = Ecto.build_assoc(user, :preferences) |> Repo.insert()
+          with {:ok, user} <- Repo.insert(changeset) do
+            {:ok, preferences} = Ecto.build_assoc(user, :preferences) |> Repo.insert()
 
-          {:ok, _} =
-            Ecto.build_assoc(preferences, :email_notifications, %{
-              newsletter: source[:notifications]
-            })
-            |> Repo.insert()
+            {:ok, _} =
+              Ecto.build_assoc(preferences, :email_notifications, %{
+                newsletter: source[:notifications]
+              })
+              |> Repo.insert()
 
-          {:ok, _} = Ecto.build_assoc(preferences, :privacy) |> Repo.insert()
+            {:ok, _} = Ecto.build_assoc(preferences, :privacy) |> Repo.insert()
 
-          {:ok, profile} = Ecto.build_assoc(user, :profile) |> Repo.insert()
-          {:ok, _} = Ecto.build_assoc(profile, :preferences) |> Repo.insert()
+            {:ok, profile} = Ecto.build_assoc(user, :profile) |> Repo.insert()
+            {:ok, _} = Ecto.build_assoc(profile, :preferences) |> Repo.insert()
 
-          {:ok,
-           user
-           |> Repo.preload([
-             :connections,
-             :subscription,
-             preferences: [:email_notifications, :privacy],
-             profile: [:preferences, :custom_weights, :images]
-           ])}
-        end
-    end
+            {:ok,
+             user
+             |> Repo.preload([
+               :connections,
+               :subscription,
+               preferences: [:email_notifications, :privacy],
+               profile: [:preferences, :custom_weights, :images]
+             ])}
+          end
+      end
+    end)
   end
 
   defp deliver_email_confirmation_instructions(user, token) do

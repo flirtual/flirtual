@@ -12,10 +12,19 @@ defmodule Flirtual.Sessions do
     Session |> query_by_token(token) |> Repo.delete_all()
   end
 
+  def delete_all_by_user_id(user_id) when is_binary(user_id) do
+    Session |> query_by_user_id(user_id) |> Repo.delete_all()
+  end
+
   def get_by_token(token) do
     Session
     |> query_by_token(token)
     |> Repo.one()
+  end
+
+  def query_by_user_id(query, user_id) do
+    query
+    |> where([session], session.user_id == ^user_id)
   end
 
   def query_by_token(query, token) do

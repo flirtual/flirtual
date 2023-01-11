@@ -31,7 +31,12 @@ defmodule FlirtualWeb.UsersController do
     connection_type = to_atom(connection_type)
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot update this user's connections", %{user_id: user.id, connection_type: connection_type}}}
+      {:error,
+       {:forbidden, "Cannot update this user's connections",
+        %{
+          user_id: user.id,
+          connection_type: connection_type
+        }}}
     else
       with {:ok, connection} <- Users.assign_connection(user.id, connection_type, params) do
         conn |> json(connection)
@@ -95,6 +100,32 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def update_notifications(conn, %{"user_id" => user_id} = params) do
+    user = Users.get(user_id)
+    preferences = %User.Preferences{user.preferences | user: user}
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
+      {:error, {:forbidden, "Cannot update this user's notifications", %{user_id: user_id}}}
+    else
+      with {:ok, email_notifications} <-
+             Users.update_notifications(preferences.email_notifications, params) do
+        conn |> json(email_notifications)
+      end
+    end
+  end
+
+  def update_password(conn, %{"user_id" => user_id} = params) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
+      {:error, {:forbidden, "Cannot update this user's password", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- Users.update_password(user, params) do
+        conn |> SessionController.log_out_user() |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
   def update_email(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
 
@@ -114,6 +145,44 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:forbidden, "Cannot confirm this user's email address", %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.confirm_email(user, params) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def resend_confirm_email(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
+      {:error,
+       {:forbidden, "Cannot send a confirmation to this user's email address",
+        %{user_id: user_id}}}
+    else
+      with {:ok, _} <- Users.send_email_confirmation(user) do
+        conn |> put_status(:accepted) |> json(%{})
+      end
+    end
+  end
+
+  def deactivate(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
+      {:error, {:forbidden, "Cannot deactivate this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- Users.deactivate(user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def reactivate(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
+      {:error, {:forbidden, "Cannot reactivate this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- Users.reactivate(user) do
         conn |> json(Policy.transform(conn, user))
       end
     end

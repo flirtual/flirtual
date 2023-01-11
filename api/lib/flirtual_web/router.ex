@@ -4,6 +4,7 @@ defmodule FlirtualWeb.Router do
   import Phoenix.Router
   import Plug.Conn
 
+  import FlirtualWeb.ErrorHelpers
   import FlirtualWeb.SessionController
 
   @internal_api_key "***REMOVED***"
@@ -33,6 +34,32 @@ defmodule FlirtualWeb.Router do
     end
   end
 
+  def require_authenticated_user(conn, _opts) do
+    if conn.assigns[:session] do
+      conn
+    else
+      conn |> put_error(:unauthorized, "Missing credentials") |> halt()
+    end
+  end
+
+  def require_valid_user(conn, _opts) do
+    user = conn.assigns[:session].user
+
+    if user.email_confirmed_at === nil do
+      conn
+      |> put_error(:forbidden, "Email verification required")
+      |> halt()
+    else
+      if user.deactivated_at !== nil do
+        conn
+        |> put_error(:forbidden, "User account deactivated")
+        |> halt()
+      else
+        conn
+      end
+    end
+  end
+
   scope "/", FlirtualWeb do
     pipe_through :api
 
@@ -56,7 +83,7 @@ defmodule FlirtualWeb.Router do
         end
 
         scope "/connect/:connection_type" do
-          pipe_through :require_authenticated_user
+          pipe_through([:require_authenticated_user, :require_valid_user])
 
           get "/authorize", UsersController, :start_connection
           get "/", UsersController, :assign_connection
@@ -67,7 +94,7 @@ defmodule FlirtualWeb.Router do
         post "/", UsersController, :create
 
         scope "/:username/username" do
-          pipe_through :require_authenticated_user
+          pipe_through([:require_authenticated_user, :require_valid_user])
 
           get "/", UsersController, :get
         end
@@ -75,33 +102,51 @@ defmodule FlirtualWeb.Router do
         scope "/:user_id" do
           pipe_through :require_authenticated_user
 
-          get "/", UsersController, :get
-          post "/", UsersController, :update
+          post "/deactivate", UsersController, :deactivate
+          delete "/deactivate", UsersController, :reactivate
 
-          post "/email", UsersController, :update_email
-          post "/email/confirm", UsersController, :confirm_email
+          scope "/email" do
+            post "/", UsersController, :update_email
 
-          get "/connections", UsersController, :list_connections
-
-          scope "/preferences" do
-            post "/privacy", UsersController, :update_privacy_preferences
+            scope "/confirm" do
+              post "/", UsersController, :confirm_email
+              post "/resend", UsersController, :resend_confirm_email
+            end
           end
 
-          scope "/profile" do
-            post "/", ProfileController, :update
+          scope "/" do
+            pipe_through :require_valid_user
 
-            scope "/personality" do
-              get "/", ProfileController, :get_personality
-              post "/", ProfileController, :update_personality
+            get "/", UsersController, :get
+            post "/", UsersController, :update
+
+            post "/password", UsersController, :update_password
+
+
+
+            get "/connections", UsersController, :list_connections
+
+            scope "/preferences" do
+              post "/privacy", UsersController, :update_privacy_preferences
+              post "/notifications", UsersController, :update_notifications
             end
 
-            scope "/images" do
-              post "/", ProfileController, :update_images
-              put "/", ProfileController, :create_images
-            end
+            scope "/profile" do
+              post "/", ProfileController, :update
 
-            post "/preferences", ProfileController, :update_preferences
-            post "/custom-weights", ProfileController, :update_custom_weights
+              scope "/personality" do
+                get "/", ProfileController, :get_personality
+                post "/", ProfileController, :update_personality
+              end
+
+              scope "/images" do
+                post "/", ProfileController, :update_images
+                put "/", ProfileController, :create_images
+              end
+
+              post "/preferences", ProfileController, :update_preferences
+              post "/custom-weights", ProfileController, :update_custom_weights
+            end
           end
         end
       end

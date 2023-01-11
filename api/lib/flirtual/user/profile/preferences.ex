@@ -11,7 +11,6 @@ defmodule Flirtual.User.Profile.Preferences do
 
     field :agemin, :integer
     field :agemax, :integer
-    field :serious, :boolean
 
     many_to_many :gender, Attribute,
       join_through: "user_profile_preference_attributes",

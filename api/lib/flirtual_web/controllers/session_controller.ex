@@ -5,8 +5,6 @@ defmodule FlirtualWeb.SessionController do
   import Phoenix.Controller
   import Ecto.Changeset
 
-  import FlirtualWeb.ErrorHelpers
-
   alias Flirtual.Repo
   alias Flirtual.Sessions
   alias Flirtual.Users
@@ -102,16 +100,15 @@ defmodule FlirtualWeb.SessionController do
 
   def fetch_current_session(conn, _) do
     {token, conn} = ensure_session_token(conn)
-    session = token && Sessions.get_by_token(token) |> Repo.preload(user: User.default_assoc())
-    assign(conn, :session, session)
-  end
 
-  def fetch_current_user(conn) do
-    if not Map.has_key?(conn.assigns[:session], :user) do
-      conn |> assign(:user, Users.get(conn.assigns[:session].user_id))
-    else
-      conn
-    end
+    session =
+      token &&
+        Sessions.get_by_token(token)
+        |> Repo.preload(user: User.default_assoc())
+
+    conn
+    |> assign(:session, session)
+    |> assign(:user, session.user)
   end
 
   defp ensure_session_token(conn) do
@@ -125,14 +122,6 @@ defmodule FlirtualWeb.SessionController do
       else
         {nil, conn}
       end
-    end
-  end
-
-  def require_authenticated_user(conn, _opts) do
-    if conn.assigns[:session] do
-      conn
-    else
-      conn |> put_error(:unauthorized, "Missing credentials") |> halt()
     end
   end
 end
