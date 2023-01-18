@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
-import { ProfilePreferenceGender } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -14,13 +13,19 @@ import {
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { useGenderList } from "~/hooks/use-gender-list";
 import { urls } from "~/urls";
 
 export const Onboarding1Form: React.FC = () => {
 	const { data: user } = useCurrentUser();
 	const router = useRouter();
 
-	if (!user) return null;
+	const genders = useGenderList()
+		.filter((gender) => gender.metadata?.simple)
+		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
+
+	if (!user || !user.preferences) return null;
+	const { preferences: profilePreferences } = user.profile;
 
 	const absMinAge = 18;
 	const absMaxAge = 100;
@@ -29,7 +34,7 @@ export const Onboarding1Form: React.FC = () => {
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				gender: (user?.profile.preferences.gender ?? []) as Array<ProfilePreferenceGender>,
+				gender: profilePreferences.gender.map((attribute) => attribute.id),
 				ageRange: [
 					user?.profile.preferences.agemin ?? absMinAge,
 					user?.profile.preferences.agemax ?? absMaxAge
@@ -57,11 +62,10 @@ export const Onboarding1Form: React.FC = () => {
 								<InputLabel {...field.labelProps}>I want to meet...</InputLabel>
 								<InputCheckboxList
 									{...field.props}
-									items={{
-										men: { label: "Men" },
-										women: { label: "Women" },
-										other: { label: "Other" }
-									}}
+									items={genders.map((gender) => ({
+										key: gender.id,
+										label: gender.metadata?.plural ?? gender.name
+									}))}
 								/>
 							</>
 						)}

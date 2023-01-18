@@ -2,17 +2,16 @@
 
 import { useRouter } from "next/navigation";
 
-import { InputLabel, InputSelect, InputSwitch } from "~/components/inputs";
+import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { Form } from "~/components/forms";
-import { PrivacyPreferenceOptions } from "~/api/user/preferences";
-import { privacyOptionLabel } from "~/const";
 import { api } from "~/api";
 import { entries } from "~/utilities";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
 import { personalityQuestionLabels } from "~/api/user/profile";
 import { useCurrentPersonality } from "~/hooks/use-current-personality";
+import { InputPrivacySelect } from "~/components/inputs/specialized";
 
 export const Onboarding4Form: React.FC = () => {
 	const { data: user, mutate: mutateUser } = useCurrentUser();
@@ -27,7 +26,7 @@ export const Onboarding4Form: React.FC = () => {
 			className="flex flex-col gap-8"
 			fields={{
 				...personality,
-				personalityPrivacy: user.preferences.privacy.personality ?? "everyone"
+				personalityPrivacy: user.preferences?.privacy.personality ?? "everyone"
 			}}
 			onSubmit={async ({ personalityPrivacy, ...personalityAnswers }) => {
 				const [newPrivacyPreferences, newProfile] = await Promise.all([
@@ -40,7 +39,8 @@ export const Onboarding4Form: React.FC = () => {
 						? {
 								...user,
 								preferences: {
-									...user.preferences,
+									// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+									...user.preferences!,
 									privacy: newPrivacyPreferences
 								},
 								profile: newProfile
@@ -77,13 +77,7 @@ export const Onboarding4Form: React.FC = () => {
 								<InputLabel inline hint="Who can see your personality traits?">
 									Personality privacy
 								</InputLabel>
-								<InputSelect
-									{...field.props}
-									options={PrivacyPreferenceOptions.map((option) => ({
-										key: option,
-										label: privacyOptionLabel[option]
-									}))}
-								/>
+								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>

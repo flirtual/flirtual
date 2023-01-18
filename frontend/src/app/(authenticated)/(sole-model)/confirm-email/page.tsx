@@ -16,12 +16,6 @@ import { ModelCard } from "~/components/model-card";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { urls } from "~/urls";
 
-export const config = { runtime: "experimental-edge" };
-
-export interface ConfirmEmailPageProps {
-	searchParams: { to?: string; token?: string };
-}
-
 const ConfirmEmailMessage: React.FC<{ token: string }> = ({ token }) => {
 	const { data: user, mutate: mutateUser } = useCurrentUser({ refreshInterval: 5000 });
 	const [confirmSuccess, setConfirmSuccess] = useState<boolean | null>(null);
@@ -69,6 +63,10 @@ const ConfirmEmailMessage: React.FC<{ token: string }> = ({ token }) => {
 	);
 };
 
+export interface ConfirmEmailPageProps {
+	searchParams?: { to?: string; token?: string };
+}
+
 export default function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps) {
 	const { data: user, mutate: mutateUser } = useCurrentUser({ refreshInterval: 5000 });
 	const router = useRouter();
@@ -76,13 +74,13 @@ export default function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps
 	if (!user) return null;
 
 	if (user.emailConfirmedAt) {
-		router.push(searchParams.to ?? urls.user(user.username));
+		router.push(searchParams?.to ?? urls.user(user.username));
 		return null;
 	}
 
 	return (
 		<ModelCard title="Confirm email">
-			{searchParams.token ? (
+			{searchParams?.token ? (
 				<ConfirmEmailMessage token={searchParams.token} />
 			) : (
 				<>

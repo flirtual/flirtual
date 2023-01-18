@@ -12,8 +12,6 @@ import { SectionTestimonial } from "./section-testimonial";
 import { SnapSection } from "./snap-section";
 import { LandingButton } from "./landing-button";
 
-export const config = { runtime: "experimental-edge" };
-
 export default function RootIndexPage() {
 	return (
 		<div className="h-screen snap-y snap-mandatory overflow-x-hidden scroll-smooth bg-black-80 text-white-20 md:snap-none">

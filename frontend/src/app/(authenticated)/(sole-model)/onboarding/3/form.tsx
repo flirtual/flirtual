@@ -6,16 +6,15 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import { Discord } from "@icons-pack/react-simple-icons";
 import { useRouter } from "next/navigation";
 
-import { InputFile, InputLabel, InputLabelHint, InputSelect, InputText } from "~/components/inputs";
+import { InputFile, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
-import { privacyOptionLabel } from "~/const";
 import { api } from "~/api";
 import { pick } from "~/utilities";
-import { PrivacyPreferenceOptions } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
 import { ArrangeableImageSet } from "~/components/arrangeable-image-set";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
+import { InputPrivacySelect } from "~/components/inputs/specialized";
 
 import { ConnectionButton } from "./connection-button";
 
@@ -32,7 +31,7 @@ export const Onboarding3Form: React.FC = () => {
 				displayName: user.profile.displayName || user.username || "",
 				images: [] as Array<{ file: File; src: string }>,
 				biography: user.profile.biography || "",
-				connectionsPrivacy: user.preferences.privacy.connections ?? "matches"
+				connectionsPrivacy: user.preferences?.privacy.connections ?? "matches"
 			}}
 			onSubmit={async (values) => {
 				await Promise.all([
@@ -145,13 +144,7 @@ export const Onboarding3Form: React.FC = () => {
 								<InputLabel inline hint="Who can see your connected accounts?">
 									Connected account privacy
 								</InputLabel>
-								<InputSelect
-									{...field.props}
-									options={PrivacyPreferenceOptions.map((option) => ({
-										key: option,
-										label: privacyOptionLabel[option]
-									}))}
-								/>
+								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>

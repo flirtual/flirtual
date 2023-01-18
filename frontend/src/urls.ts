@@ -16,12 +16,14 @@ export function isInternalHref(href: string) {
 	return toAbsoluteUrl(href).origin === siteOrigin;
 }
 
-export function pageUrl<T extends { searchParams: { [K: string]: string } } = never>(
+export function pageUrl<T extends { searchParams?: { [K: string]: string } } = never>(
 	pathname: string,
 	defaults: T["searchParams"] = {}
 ) {
 	return (query?: NonNullable<T["searchParams"]>) => {
 		const object = query ?? defaults;
+		if (!object) return pathname;
+
 		const searchParams = new URLSearchParams(object);
 		searchParams.sort();
 

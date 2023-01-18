@@ -5,41 +5,43 @@ import { useRouter } from "next/navigation";
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import { FormPrivacySelect } from "~/components/forms/form-privacy-select";
-import {
-	InputAutocomplete,
-	InputDateSelect,
-	InputLabel,
-	InputSelect,
-	InputSwitch
-} from "~/components/inputs";
+import { InputAutocomplete, InputDateSelect, InputLabel, InputSwitch } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { CountryCode, getCountries, getLanguages, LanguageCode } from "~/countries";
+import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useCurrentUser } from "~/hooks/use-current-user";
+import { useGenderList } from "~/hooks/use-gender-list";
+import { InputPrivacySelect } from "~/components/inputs/specialized/privacy-select";
 import { urls } from "~/urls";
 import { pick } from "~/utilities";
+import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
 
 export const Onboarding2Form: React.FC = () => {
 	const { data: user, mutate: mutateUser } = useCurrentUser();
 	const router = useRouter();
 
-	if (!user) return null;
+	const { data: games = [] } = useAttributeList("game");
+	const { data: interests = [] } = useAttributeList("interest");
+	const { data: platforms = [] } = useAttributeList("platform");
+	const { data: sexualities = [] } = useAttributeList("sexuality");
+	const genders = useGenderList();
+
+	if (!user || !user.preferences) return null;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
 				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
-				gender: user.profile.gender ?? [],
-				sexuality: user.profile.sexuality ?? [],
+				gender: user.profile.gender.map((gender) => gender.id) ?? [],
+				sexuality: user.profile.sexuality?.map((sexuality) => sexuality.id) ?? [],
 				sexualityPrivacy: user.preferences.privacy.sexuality ?? "everyone",
-				country: (user.profile.country ?? "") as CountryCode | "",
+				country: user.profile.country ?? "",
 				countryPrivacy: user.preferences.privacy.country ?? "everyone",
 				languages: user.profile.languages ?? [],
-				platforms: user.profile.platforms ?? [],
+				platforms: user.profile.platforms.map((platform) => platform.id) ?? [],
 				new: false,
-				games: user.profile.games ?? [],
-				interests: user.profile.interests ?? []
+				games: user.profile.games.map((game) => game.id) ?? [],
+				interests: user.profile.interests.map((interest) => interest.id) ?? []
 			}}
 			onSubmit={async (values) => {
 				const [newUser, newProfile, newPrivacyPreferences] = await Promise.all([
@@ -66,7 +68,8 @@ export const Onboarding2Form: React.FC = () => {
 						...newUser,
 						profile: newProfile,
 						preferences: {
-							...newUser.preferences,
+							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+							...newUser.preferences!,
 							privacy: newPrivacyPreferences
 						}
 					},
@@ -93,27 +96,43 @@ export const Onboarding2Form: React.FC = () => {
 						)}
 					</FormField>
 					<FormField name="gender">
-						{(field) => (
-							<>
-								<InputLabel {...field.labelProps}>Gender</InputLabel>
-								<InputCheckboxList
-									{...field.props}
-									items={{
-										man: {
-											label: "Man",
-											conflicts: ["woman"]
-										},
-										woman: {
-											label: "Woman",
-											conflicts: ["man"]
-										},
-										other: {
-											label: "Other"
-										}
-									}}
-								/>
-							</>
-						)}
+						{(field) => {
+							const simpleGenders = genders
+								.filter((gender) => gender.metadata?.simple)
+								.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
+							const simpleGenderIds = simpleGenders.map((gender) => gender.id);
+
+							const fallbackGender = genders.find((gender) => gender.metadata?.fallback);
+
+							return (
+								<>
+									<InputLabel {...field.labelProps}>Gender</InputLabel>
+									<InputCheckboxList
+										{...field.props}
+										items={simpleGenders.map((gender) => ({
+											key: gender.id,
+											label: gender.name,
+											conflicts:
+												gender.metadata && Array.isArray(gender.metadata.conflicts)
+													? gender.metadata.conflicts
+													: []
+										}))}
+									/>
+									{field.props.value.includes(fallbackGender?.id ?? "") && (
+										<InputAutocomplete
+											{...field.props}
+											limit={6}
+											placeholder="Select your genders..."
+											options={genders.map((gender) => ({
+												key: gender.id,
+												label: gender.name,
+												hidden: simpleGenderIds.includes(gender.id)
+											}))}
+										/>
+									)}
+								</>
+							);
+						}}
 					</FormField>
 					<FormField name="sexuality">
 						{(field) => (
@@ -123,20 +142,10 @@ export const Onboarding2Form: React.FC = () => {
 									{...field.props}
 									limit={3}
 									placeholder="Select your sexualities..."
-									options={[
-										"Straight",
-										"Lesbian",
-										"Gay",
-										"Bisexual",
-										"Pansexual",
-										"Asexual",
-										"Demisexual",
-										"Heteroflexible",
-										"Homoflexible",
-										"Queer",
-										"Questioning",
-										"Experimenting in VR"
-									].map((label) => ({ label, key: label.toLowerCase().replace(" ", "_") }))}
+									options={sexualities.map((sexuality) => ({
+										key: sexuality.id,
+										label: sexuality.name
+									}))}
 								/>
 							</>
 						)}
@@ -147,7 +156,7 @@ export const Onboarding2Form: React.FC = () => {
 								<InputLabel inline hint="Who can see your sexuality?">
 									Sexuality privacy
 								</InputLabel>
-								<FormPrivacySelect {...field.props} />
+								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -155,18 +164,7 @@ export const Onboarding2Form: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Country</InputLabel>
-								<InputSelect
-									{...field.props}
-									options={getCountries()
-										.map(({ code, name }) => ({
-											key: code as CountryCode,
-											label: name
-										}))
-										.sort((a, b) => {
-											if (a.label > b.label) return 1;
-											return -1;
-										})}
-								/>
+								<InputCountrySelect {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -176,7 +174,7 @@ export const Onboarding2Form: React.FC = () => {
 								<InputLabel inline hint="Who can see your country?">
 									Country privacy
 								</InputLabel>
-								<FormPrivacySelect {...field.props} />
+								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -184,19 +182,7 @@ export const Onboarding2Form: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Language</InputLabel>
-								<InputAutocomplete
-									{...field.props}
-									limit={3}
-									options={getLanguages()
-										.map(({ code, name }) => ({
-											key: code as LanguageCode,
-											label: name
-										}))
-										.sort((a, b) => {
-											if (a.label > b.label) return 1;
-											return -1;
-										})}
-								/>
+								<InputLanguageAutocomplete {...field.props} />
 							</>
 						)}
 					</FormField>
@@ -208,22 +194,10 @@ export const Onboarding2Form: React.FC = () => {
 									{...field.props}
 									limit={8}
 									placeholder="Select the platforms you use..."
-									options={[
-										"Meta Quest",
-										"Oculus Link",
-										"Oculus Rift",
-										"SteamVR",
-										"Windows Mixed Reality",
-										"Pico",
-										"PlayStation VR",
-										"Mobile VR",
-										"Other VR",
-										"Desktop",
-										"Full-bodytracking",
-										"Haptic suit",
-										"Eye/facial tracking",
-										"Locomotion Treadmill"
-									].map((label) => ({ label, key: label.toLowerCase().replace(" ", "_") }))}
+									options={platforms.map((platform) => ({
+										key: platform.id,
+										label: platform.name
+									}))}
 								/>
 							</>
 						)}
@@ -235,162 +209,8 @@ export const Onboarding2Form: React.FC = () => {
 								<InputAutocomplete
 									{...field.props}
 									limit={5}
+									options={games.map((game) => ({ key: game.id, label: game.name }))}
 									placeholder="Select your favorite games..."
-									options={[
-										"A Township Tale",
-										"After the Fall",
-										"Alcove",
-										"AltspaceVR",
-										"Alvo",
-										"Anyland",
-										"Arizona Sunshine",
-										"Assetto Corsa",
-										"Automobilista 2",
-										"BRINK Traveler",
-										"BattleGroupVR",
-										"Battlezone Gold Edition",
-										"Beat Saber",
-										"Bigscreen",
-										"Blaston",
-										"Brass Tactics",
-										"Cards & Tankards",
-										"Carrier Command 2",
-										"Catan VR",
-										"Chess Club",
-										"ChilloutVR",
-										"Clash of Chefs VR",
-										"Climbey",
-										"Contractors",
-										"Cook-Out",
-										"Creed: Rise to Glory",
-										"DCS World",
-										"DEVOUR",
-										"Dance Central",
-										"Dash Dash World",
-										"Dead and Buried 2",
-										"Death Horizon: Reloaded",
-										"Death Lap",
-										"Demeo",
-										"DiRT Rally",
-										"DiRT Rally 2.0",
-										"Drop Dead: Dual Strike Edition",
-										"Drunkn Bar Fight",
-										"Eagle Flight",
-										"Echo VR",
-										"Electronauts - VR Music",
-										"Eleven Table Tennis",
-										"Elite Dangerous",
-										"Elven Assassin",
-										"Epic Roller Coasters",
-										"FOREWARNED",
-										"Farpoint",
-										"Firewall Zero Hour",
-										"First Person Tennis",
-										"FitXR",
-										"ForeVR Bowl",
-										"ForeVR Darts",
-										"From Other Suns",
-										"GOLF+",
-										"Golf 5 eClub",
-										"Gorilla Tag",
-										"Gun Raiders",
-										"Half + Half",
-										"Helios",
-										"Holofit",
-										"Horizon Venues",
-										"Horizon Worlds",
-										"Hyper Dash",
-										"IL-2 Sturmovik: Battle of Stalingrad",
-										"Immersed",
-										"Inside the Backrooms",
-										"IronWolf VR",
-										"Ironlights",
-										"Killing Floor: Incursion",
-										"Kingspray Graffiti VR",
-										"Landfall",
-										"Larcenauts",
-										"Lavender",
-										"Legendary Tales",
-										"Minecraft VR",
-										"Mini Motor Racing X",
-										"Mozilla Hubs",
-										"Multiverse",
-										"Museum of Other Realities",
-										"Nature Treks: Together",
-										"Neos VR",
-										"Neverboard",
-										"Nock",
-										"Onward",
-										"OrbusVR: Reborn",
-										"PAYDAY 2",
-										"POPULATION: ONE",
-										"PULSAR: Lost Colony",
-										"Path of the Warrior",
-										"Pavlov VR",
-										"Phasmophobia",
-										"PokerStars VR",
-										"Poker VR",
-										"Premium Bowling",
-										"Project CARS 2",
-										"Puppet Fever",
-										"RIGS Mechanized Combat League",
-										"RUSH",
-										"Raccoon Lagoon",
-										"Racket: Nx",
-										"Racket Fury",
-										"Ragnarock",
-										"Real VR Fishing",
-										"Rec Room",
-										"Rock Life: The Rock Simulator",
-										"SCP: Labrat",
-										"SOLARIS OFFWORLD COMBAT",
-										"STAND OUT: VR Battle Royale",
-										"STAR WARS: Squadrons",
-										"STRIDE",
-										"Sairento VR: Untethered",
-										"SculptrVR",
-										"Skyworld: Kingdom Brawl",
-										"Smash Drums",
-										"Spaceteam VR",
-										"Spatial",
-										"Sports Scramble",
-										"Star Trek: Bridge Crew",
-										"Statik",
-										"Stormland VR",
-										"Swarm",
-										"Synth Riders",
-										"TOTALLY BASEBALL",
-										"Tabletop Simulator",
-										"Tetris Effect: Connected",
-										"The Forest",
-										"The Under Presents",
-										"The Unspoken",
-										"Tribe XR",
-										"Trickster VR: Co-op Dungeon Crawler",
-										"Ultrawings 2",
-										"VAIL VR",
-										"VRChat",
-										"VR Regatta",
-										"VZfit",
-										"Villa: Metaverse Terraforming Platform",
-										"Void Racer: Extreme",
-										"Vox Machinae",
-										"Walkabout Mini Golf",
-										"Wander",
-										"Wands",
-										"Warhammer 40,000: Battle Sister",
-										"Warplanes: Battles over Pacific",
-										"Warplanes: WW1 Fighters",
-										"Wave",
-										"Werewolves Within",
-										"WipEout Omega Collection",
-										"Zenith: The Last City",
-										"Zero Caliber: Reloaded",
-										"Zero Caliber VR",
-										"iRacing",
-										"rFactor",
-										"vTime"
-									].map((label) => ({ label, key: label.toLowerCase().replace(" ", "_") }))}
 								/>
 							</>
 						)}
@@ -411,70 +231,10 @@ export const Onboarding2Form: React.FC = () => {
 									{...field.props}
 									limit={7}
 									placeholder="Select your personal interests..."
-									options={[
-										"Board games",
-										"Bookworm",
-										"Cars",
-										"Clubbing",
-										"Comics",
-										"Concerts",
-										"Content creator",
-										"Cooking",
-										"Dancing",
-										"Driving sims",
-										"Exploring worlds",
-										"FPS",
-										"Fantasy",
-										"Fitness",
-										"Flight sims",
-										"Gamer",
-										"History",
-										"Horror",
-										"Indie games",
-										"JRPGs",
-										"Karaoke",
-										"MOBAs",
-										"Manga",
-										"Military",
-										"Movies",
-										"Mute",
-										"Mystery",
-										"Nature",
-										"Philosophy",
-										"Photography",
-										"Psychology",
-										"Puzzles",
-										"RPGs",
-										"Rhythm games",
-										"Sci-fi",
-										"Social games",
-										"Spiritual",
-										"Sports",
-										"Sports games",
-										"Strategy games",
-										"TV",
-										"Technology",
-										"Travel",
-										"VTuber",
-										"eSports",
-										"Anime",
-										"Art",
-										"Avatar creator",
-										"Film/Video",
-										"LGBTQ+",
-										"Language learning",
-										"MMOs",
-										"Music",
-										"Roleplaying",
-										"Software dev",
-										"Streaming",
-										"Student",
-										"World creator",
-										"Writing",
-										"Deaf",
-										"Furry",
-										"Sign language"
-									].map((label) => ({ label, key: label.toLowerCase().replace(" ", "_") }))}
+									options={interests.map((interest) => ({
+										key: interest.id,
+										label: interest.name
+									}))}
 								/>
 							</>
 						)}
