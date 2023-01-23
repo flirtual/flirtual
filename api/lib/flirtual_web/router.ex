@@ -122,8 +122,6 @@ defmodule FlirtualWeb.Router do
 
             post "/password", UsersController, :update_password
 
-
-
             get "/connections", UsersController, :list_connections
 
             scope "/preferences" do
