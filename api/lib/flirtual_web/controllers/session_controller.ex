@@ -108,7 +108,7 @@ defmodule FlirtualWeb.SessionController do
 
     conn
     |> assign(:session, session)
-    |> assign(:user, session.user)
+    |> assign(:user, if(session !== nil, do: session.user, else: nil))
   end
 
   defp ensure_session_token(conn) do
