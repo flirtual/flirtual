@@ -17,21 +17,35 @@ defmodule Flirtual.User.Profile.Preferences do
       where: [type: "gender"],
       on_replace: :delete
 
+    many_to_many :kinks, Attribute,
+      join_through: "user_profile_preference_attributes",
+      where: [type: "kink"],
+      on_replace: :delete
+
     timestamps(inserted_at: false)
   end
 
   def default_assoc do
     [
       :gender,
+      :kinks
     ]
   end
 
   def update_changeset(%Profile.Preferences{} = preferences, attrs) do
+    gender_ids = attrs["gender"] || Enum.map(preferences.gender, & &1.id)
+    genders = Attribute.by_ids(gender_ids, "gender")
+
+    kink_ids = attrs["kinks"] || Enum.map(preferences.kinks, & &1.id)
+    kinks = Attribute.by_ids(kink_ids, "kink")
+
     preferences
     |> cast(attrs, [
       :agemin,
       :agemax,
     ])
+    |> put_assoc(:gender, genders)
+    |> put_assoc(:kinks, kinks)
   end
 end
 
@@ -42,7 +56,8 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile.Preferences do
       Map.take(value, [
         :agemin,
         :agemax,
-        :gender
+        :gender,
+        :kinks
       ])
       |> Map.filter(fn {_, value} -> value !== nil end),
       opts

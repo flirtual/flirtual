@@ -30,7 +30,16 @@ config :flirtual, Flirtual.Elasticsearch,
     {"authorization", "ApiKey ***REMOVED***"}
   ],
   api: Elasticsearch.API.HTTP,
-  json_library: Jason
+  json_library: Jason,
+  indexes: %{
+    users_new: %{
+      settings: "priv/elasticsearch/users.json",
+      store: Flirtual.ElasticsearchStore,
+      sources: [Flirtual.User],
+      bulk_page_size: 5000,
+      bulk_wait_interval: 15_000
+    }
+  }
 
 config :bodyguard,
   default_error: {:unauthorized, "Unauthorized"}

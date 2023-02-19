@@ -1,16 +1,14 @@
 defmodule Flirtual.User.Profile.Likes do
   use Flirtual.Schema
 
-  alias Flirtual.User
-
   @derive {Jason.Encoder, only: [:type, :target, :created_at]}
 
   schema "user_profile_likes" do
-    belongs_to :user, User
-    belongs_to :target, User
+    belongs_to :profile, Flirtual.User.Profile
+    belongs_to :target, Flirtual.User.Profile
 
     field :type, Ecto.Enum, values: [:like, :homie]
 
-    timestamps(updated_at: false, inserted_at: :created_at)
+    timestamps(inserted_at: :created_at)
   end
 end

@@ -9,7 +9,8 @@ defmodule Flirtual.User.Profile do
   alias Flirtual.Countries
   alias Flirtual.Languages
   alias Flirtual.{Attribute, User}
-  alias Flirtual.User.Profile.{Image, Preferences, CustomWeights, Likes}
+  alias Flirtual.User.Profile
+  alias Flirtual.User.Profile.{Image, Preferences, CustomWeights}
 
   @personality_questions [
     :question0,
@@ -27,11 +28,21 @@ defmodule Flirtual.User.Profile do
     @personality_questions
   end
 
+  def get_domsub_opposite(domsub) do
+    case domsub do
+      :dominant -> :submissive
+      :submissive -> :dominant
+      :switch -> :switch
+    end
+  end
+
   schema "user_profiles" do
     belongs_to :user, User
 
     field :display_name, :string
     field :biography, :string
+    field :domsub, Ecto.Enum, values: [:dominant, :submissive, :switch]
+    field :monopoly, Ecto.Enum, values: [:monogamous, :polygamous]
     field :country, :string
     field :openness, :integer, default: 0
     field :conscientiousness, :integer, default: 0
@@ -75,7 +86,9 @@ defmodule Flirtual.User.Profile do
       on_replace: :delete
 
     has_many :images, Image
-    many_to_many :likes, User, join_through: Likes
+    many_to_many :blocked, Profile, join_through: Profile.Blocks
+    many_to_many :liked, Profile, join_through: Profile.Likes
+    many_to_many :passed, Profile, join_through: Profile.Passes
 
     timestamps(inserted_at: false)
   end
@@ -120,6 +133,8 @@ defmodule Flirtual.User.Profile do
       :serious,
       :new,
       :country,
+      :domsub,
+      :monopoly,
       :languages
     ])
     |> put_assoc(:gender, genders)
@@ -153,6 +168,8 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
         :display_name,
         :biography,
         :new,
+        :domsub,
+        :monopoly,
         :country,
         :serious,
         :openness,

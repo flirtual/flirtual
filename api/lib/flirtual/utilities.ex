@@ -7,11 +7,9 @@ defmodule Flirtual.Utilities do
 
   def to_atom(value) do
     try do
-      IO.inspect(value)
       String.to_existing_atom(value)
     rescue
       ArgumentError -> nil
     end
   end
-
 end

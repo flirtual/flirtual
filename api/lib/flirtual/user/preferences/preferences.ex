@@ -1,9 +1,11 @@
 defmodule Flirtual.User.Preferences do
   use Flirtual.Schema
-
   use Flirtual.Policy.Target, policy: Flirtual.User.Preferences.Policy
 
+  import Ecto.Changeset
+
   alias Flirtual.User
+  alias Flirtual.User.Preferences
   alias Flirtual.User.Preferences.{EmailNotifications, Privacy}
 
   @derive {Jason.Encoder, only: [:nsfw, :email_notifications, :privacy]}
@@ -22,6 +24,13 @@ defmodule Flirtual.User.Preferences do
       :email_notifications,
       :privacy
     ]
+  end
+
+  def update_changeset(%Preferences{} = preferences, attrs) do
+    preferences
+    |> cast(attrs, [
+      :nsfw,
+    ])
   end
 end
 

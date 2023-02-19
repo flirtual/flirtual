@@ -5,6 +5,9 @@ defmodule Flirtual.Attribute do
 
   alias Flirtual.{Attribute, Repo}
 
+  alias Flirtual.Languages
+  alias Flirtual.Countries
+
   schema "attributes" do
     field :type, :string
     field :name, :string
@@ -30,6 +33,31 @@ defmodule Flirtual.Attribute do
     Attribute
     |> where([attribute], attribute.id in ^attribute_ids)
     |> Repo.all()
+  end
+
+  def by_type("country") do
+    Countries.list()
+    |> Enum.map(
+      &%Attribute{
+        id: &1[:iso_3166_1],
+        name: &1[:name],
+        metadata: %{
+          "flag_url" =>
+            "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/flags/4x3/" <>
+              &1[:iso_3166_1] <> ".svg"
+        }
+      }
+    )
+  end
+
+  def by_type("language") do
+    Languages.list()
+    |> Enum.map(
+      &%Attribute{
+        id: &1[:iso_639_1],
+        name: &1[:name]
+      }
+    )
   end
 
   def by_type(attribute_type) do

@@ -1,4 +1,5 @@
 defmodule FlirtualWeb.Router do
+  alias FlirtualWeb.MatchmakingController
   use FlirtualWeb, :router
 
   import Phoenix.Router
@@ -90,6 +91,11 @@ defmodule FlirtualWeb.Router do
         end
       end
 
+      scope "/prospects" do
+        pipe_through([:require_authenticated_user, :require_valid_user])
+
+      end
+
       scope "/users" do
         post "/", UsersController, :create
 
@@ -125,8 +131,9 @@ defmodule FlirtualWeb.Router do
             get "/connections", UsersController, :list_connections
 
             scope "/preferences" do
+              post "/", UsersController, :update_preferences
               post "/privacy", UsersController, :update_privacy_preferences
-              post "/notifications", UsersController, :update_notifications
+              post "/notifications", UsersController, :update_notifications_preferences
             end
 
             scope "/profile" do

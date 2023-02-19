@@ -62,6 +62,77 @@ defmodule Flirtual.User.Profile.Policy do
   # Otherwise, by default, nobody can view this profile's country.
   def transform(:country, _, _), do: nil
 
+  def transform(
+        :domsub,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{
+                preferences: %User.Preferences{
+                  nsfw: true
+                }
+              }
+            }
+          }
+        },
+        %Profile{} = profile
+      ),
+      do: profile.domsub
+
+  def transform(:domsub, _, _), do: nil
+
+  def transform(
+        :kinks,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{
+                preferences: %User.Preferences{
+                  nsfw: false
+                }
+              }
+            }
+          }
+        },
+        _
+      ),
+      do: nil
+
+  def transform(
+        :kinks,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %Profile{
+          user_id: user_id
+        } = profile
+      ),
+      do: profile.kinks
+
+  # Any user can view this profile's kinks if their
+  # kinks privacy setting is set to everyone.
+  def transform(
+        :kinks,
+        _,
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                kinks: :everyone
+              }
+            }
+          }
+        } = profile
+      ),
+      do: profile.kinks
+
+  # Otherwise, by default, nobody can view this profile's kinks.
+  def transform(:kinks, _, _), do: nil
+
   # The current session can view their own personality openness trait.
   def transform(
         :openness,

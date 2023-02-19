@@ -106,14 +106,23 @@ defmodule Flirtual.Users do
     end
   end
 
-  def update_privacy_preferences(%Preferences.Privacy{} = preferences, attrs) do
+  def update_preferences(%Preferences{} = preferences, attrs) do
     preferences
+    |> Preferences.update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_privacy_preferences(%Preferences.Privacy{} = privacy_preferences, attrs) do
+    privacy_preferences
     |> Preferences.Privacy.update_changeset(attrs)
     |> Repo.update()
   end
 
-  def update_notifications(%Preferences.EmailNotifications{} = notifications, attrs) do
-    notifications
+  def update_notification_preferences(
+        %Preferences.EmailNotifications{} = notification_preferences,
+        attrs
+      ) do
+    notification_preferences
     |> Preferences.EmailNotifications.update_changeset(attrs)
     |> Repo.update()
   end

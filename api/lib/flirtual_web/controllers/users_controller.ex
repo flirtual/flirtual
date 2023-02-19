@@ -100,7 +100,20 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def update_notifications(conn, %{"user_id" => user_id} = params) do
+  def update_preferences(conn, %{"user_id" => user_id} = params) do
+    user = Users.get(user_id)
+    preferences = %User.Preferences{user.preferences | user: user}
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
+      {:error, {:forbidden, "Cannot update this user's preferences", %{user_id: user_id}}}
+    else
+      with {:ok, privacy} <- Users.update_preferences(preferences, params) do
+        conn |> json(privacy)
+      end
+    end
+  end
+
+  def update_notifications_preferences(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
     preferences = %User.Preferences{user.preferences | user: user}
 
@@ -108,7 +121,7 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:forbidden, "Cannot update this user's notifications", %{user_id: user_id}}}
     else
       with {:ok, email_notifications} <-
-             Users.update_notifications(preferences.email_notifications, params) do
+             Users.update_notification_preferences(preferences.email_notifications, params) do
         conn |> json(email_notifications)
       end
     end
