@@ -21,6 +21,7 @@ export function isInternalHref(href: string) {
 	return toAbsoluteUrl(href).origin === siteOrigin;
 }
 
+
 export function pageUrl<T extends { searchParams?: { [K: string]: string } } = never>(
 	pathname: string,
 	defaults: T["searchParams"] = {}
