@@ -278,14 +278,8 @@ defmodule Flirtual.Users do
             {:ok, profile} = Ecto.build_assoc(user, :profile) |> Repo.insert()
             {:ok, _} = Ecto.build_assoc(profile, :preferences) |> Repo.insert()
 
-            {:ok,
-             user
-             |> Repo.preload([
-               :connections,
-               :subscription,
-               preferences: [:email_notifications, :privacy],
-               profile: [:preferences, :custom_weights, :images]
-             ])}
+            user
+             |> Repo.preload(User.default_assoc())
           end
       end
     end)

@@ -14,6 +14,7 @@ defmodule FlirtualWeb.UsersController do
 
   def create(conn, params) do
     with {:ok, user} <- Users.register_user(params) do
+      IO.inspect(user)
       {_, conn} = conn |> SessionController.log_in_user(user)
       conn |> put_status(:created) |> json(Policy.transform(conn, user))
     end

@@ -139,11 +139,15 @@ defmodule Flirtual.User.Policy do
 
   # By default, truncate born at to year, to hide user's exact birthday.
   def transform(:born_at, _, %User{} = user) do
-    now = Date.utc_today()
+    if user.born_at do
+      now = Date.utc_today()
 
-    # Note: this doesn't work at all, and I was high when I wrote this.
-    NaiveDateTime.new!(user.born_at.year, now.month, now.day, 0, 0, 0, 0)
-    |> NaiveDateTime.truncate(:second)
+      # Note: this doesn't work at all, and I was high when I wrote this.
+      NaiveDateTime.new!(user.born_at.year, now.month, now.day, 0, 0, 0, 0)
+      |> NaiveDateTime.truncate(:second)
+    else
+      nil
+    end
   end
 
   # The currently logged user can see when their own account was deactivated.
