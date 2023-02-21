@@ -20,7 +20,7 @@ export const NsfwForm: React.FC = () => {
 			className="flex flex-col gap-8"
 			fields={{
 				nsfw: user.preferences?.nsfw ?? false,
-				domsub: user.profile.domsub ?? "dominant",
+				domsub: user.profile.domsub,
 				kinks: user.profile.kinks?.map((attribute) => attribute.id) ?? [],
 				kinksPrivacy: user.preferences?.privacy.kinks ?? "everyone"
 			}}
@@ -81,7 +81,7 @@ export const NsfwForm: React.FC = () => {
 							<FormField name="kinks">
 								{(field) => (
 									<>
-										<InputLabel {...field.labelProps}>Kink?</InputLabel>
+										<InputLabel {...field.labelProps}>Kinks</InputLabel>
 										<InputAutocomplete
 											{...field.props}
 											options={kinks.map((attribute) => ({

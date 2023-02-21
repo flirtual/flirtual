@@ -12,10 +12,14 @@ export type ProfilePreferences = UpdatedAtModel & {
 	agemin?: number | null;
 	agemax?: number | null;
 	gender: GenderAttributeCollection;
+	kinks: KinkAttributeCollection;
 };
 
 export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;
 export type ProfileDomsub = (typeof ProfileDomsubList)[number];
+
+export const ProfileMonopolyList = ["monogamous", "polygamous"] as const;
+export type ProfileMonopoly = (typeof ProfileMonopolyList)[number];
 
 export type Profile = Partial<UpdatedAtModel> & {
 	displayName?: string;
@@ -23,6 +27,7 @@ export type Profile = Partial<UpdatedAtModel> & {
 	new?: boolean;
 	serious?: boolean;
 	domsub?: ProfileDomsub;
+	monopoly?: ProfileDomsub;
 	country?: string;
 	openness?: number;
 	conscientiousness?: number;

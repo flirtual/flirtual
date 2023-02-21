@@ -12,6 +12,7 @@ export function useAttributeList<T = unknown>(
 		([, name]) => api.attributes.list(name) as Promise<AttributeCollection<T>>,
 		{
 			fallbackData: [],
+			revalidateOnFocus: false,
 			...options
 		}
 	);

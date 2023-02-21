@@ -8,6 +8,11 @@ if (!siteOrigin) throw new ReferenceError("Site origin not defined");
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
 if (!apiUrl) throw new ReferenceError("API url not defined");
 
+export function ensureRelativeUrl(pathname: string) {
+	if (!isInternalHref(pathname)) throw new Error(`Must be relative url: ${pathname}`);
+	return pathname;
+}
+
 export function toAbsoluteUrl(href: string) {
 	return new URL(href, siteOrigin);
 }
@@ -33,7 +38,8 @@ export function pageUrl<T extends { searchParams?: { [K: string]: string } } = n
 
 export const urls = {
 	// internal
-	api: pageUrl(process.env.NEXT_PUBLIC_API_URL as string),
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	api: () => (window as any).apiUrl || pageUrl(process.env.NEXT_PUBLIC_API_URL as string)(),
 	media: (id: string) => `https://media.flirtu.al/${id}/`,
 	userAvatar: (user: User) => {
 		const avatarId = user.profile.images[0]?.externalId ?? "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4";
