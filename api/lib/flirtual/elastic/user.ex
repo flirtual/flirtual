@@ -1,7 +1,6 @@
 defmodule Flirtual.Elastic.User do
   import Ecto.Query
 
-  alias Flirtual.Users
   alias Ecto.Changeset
   alias Flirtual.Elastic
   alias Flirtual.Elastic.DirtyUsersQueue
@@ -38,12 +37,12 @@ defmodule Flirtual.Elastic.User do
       ]
   end
 
-  def handle_dirty() do
+  def update_pending(limit \\ 100) do
     Repo.transaction(fn ->
       from(item in DirtyUsersQueue,
-        limit: 100,
+        limit: ^limit,
         join: user in assoc(item, :user),
-        preload: [user: ^User.default_assoc()],
+        preload: [user: ^User.default_assoc()]
       )
       |> Repo.all()
       |> Enum.map(&{:update, &1.user.id, Elasticsearch.Document.encode(&1.user)})

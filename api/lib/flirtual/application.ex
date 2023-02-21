@@ -17,9 +17,10 @@ defmodule Flirtual.Application do
       {Phoenix.PubSub, name: Flirtual.PubSub},
       # Start the Endpoint (http/https)
       FlirtualWeb.Endpoint,
-      {Finch, name: Swoosh.Finch}
+      {Finch, name: Swoosh.Finch},
       # Start a worker by calling: Flirtual.Worker.start_link(arg)
       # {Flirtual.Worker, arg}
+      Flirtual.Elastic.UserQueueWorker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
