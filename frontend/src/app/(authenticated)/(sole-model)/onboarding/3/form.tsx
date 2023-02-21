@@ -6,7 +6,7 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import { Discord } from "@icons-pack/react-simple-icons";
 import { useRouter } from "next/navigation";
 
-import { InputFile, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
+import { InputEditor, InputFile, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { api } from "~/api";
 import { pick } from "~/utilities";
@@ -122,7 +122,7 @@ export const Onboarding3Form: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel {...field.labelProps}>Biography</InputLabel>
-								<InputText {...field.props} />
+								<InputEditor {...field.props} />
 							</>
 						)}
 					</FormField>
