@@ -83,7 +83,7 @@ defmodule FlirtualWeb.Router do
         end
 
         scope "/connect/:connection_type" do
-          pipe_through([:require_authenticated_user, :require_valid_user])
+          pipe_through([:require_authenticated_user])
 
           get "/authorize", UsersController, :start_connection
           get "/", UsersController, :assign_connection
@@ -121,38 +121,34 @@ defmodule FlirtualWeb.Router do
             end
           end
 
-          scope "/" do
-            pipe_through :require_valid_user
+          get "/", UsersController, :get
+          post "/", UsersController, :update
 
-            get "/", UsersController, :get
-            post "/", UsersController, :update
+          post "/password", UsersController, :update_password
 
-            post "/password", UsersController, :update_password
+          get "/connections", UsersController, :list_connections
 
-            get "/connections", UsersController, :list_connections
+          scope "/preferences" do
+            post "/", UsersController, :update_preferences
+            post "/privacy", UsersController, :update_privacy_preferences
+            post "/notifications", UsersController, :update_notifications_preferences
+          end
 
-            scope "/preferences" do
-              post "/", UsersController, :update_preferences
-              post "/privacy", UsersController, :update_privacy_preferences
-              post "/notifications", UsersController, :update_notifications_preferences
+          scope "/profile" do
+            post "/", ProfileController, :update
+
+            scope "/personality" do
+              get "/", ProfileController, :get_personality
+              post "/", ProfileController, :update_personality
             end
 
-            scope "/profile" do
-              post "/", ProfileController, :update
-
-              scope "/personality" do
-                get "/", ProfileController, :get_personality
-                post "/", ProfileController, :update_personality
-              end
-
-              scope "/images" do
-                post "/", ProfileController, :update_images
-                put "/", ProfileController, :create_images
-              end
-
-              post "/preferences", ProfileController, :update_preferences
-              post "/custom-weights", ProfileController, :update_custom_weights
+            scope "/images" do
+              post "/", ProfileController, :update_images
+              put "/", ProfileController, :create_images
             end
+
+            post "/preferences", ProfileController, :update_preferences
+            post "/custom-weights", ProfileController, :update_custom_weights
           end
         end
       end
