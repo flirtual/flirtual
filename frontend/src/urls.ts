@@ -21,7 +21,6 @@ export function isInternalHref(href: string) {
 	return toAbsoluteUrl(href).origin === siteOrigin;
 }
 
-
 export function pageUrl<T extends { searchParams?: { [K: string]: string } } = never>(
 	pathname: string,
 	defaults: T["searchParams"] = {}
@@ -39,8 +38,7 @@ export function pageUrl<T extends { searchParams?: { [K: string]: string } } = n
 
 export const urls = {
 	// internal
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	api: () => (window as any).apiUrl || pageUrl(process.env.NEXT_PUBLIC_API_URL as string)(),
+	api: pageUrl(process.env.NEXT_PUBLIC_API_URL as string),
 	media: (id: string) => `https://media.flirtu.al/${id}/`,
 	userAvatar: (user: User) => {
 		const avatarId = user.profile.images[0]?.externalId ?? "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4";
