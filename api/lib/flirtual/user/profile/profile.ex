@@ -163,7 +163,7 @@ defmodule Flirtual.User.Profile do
     |> put_assoc(:interests, interests)
     |> validate_length(:interests, min: 2, max: 7)
     |> validate_length(:display_name, min: 3, max: 32)
-    |> validate_length(:biography, min: 16)
+    |> validate_length(:biography, min: 48)
     |> validate_length(:languages, min: 1, max: 3)
     |> validate_subset(:languages, Languages.list(:iso_639_1),
       message: "has an unrecognized language"
@@ -171,6 +171,47 @@ defmodule Flirtual.User.Profile do
     |> validate_inclusion(:country, Countries.list(:iso_3166_1),
       message: "is an unrecognized country"
     )
+  end
+
+  def update_personality_changeset(%Profile{} = profile, attrs) do
+    profile
+    |> cast(
+      attrs,
+      [:openness, :conscientiousness, :agreeableness] ++
+        Profile.get_personality_questions()
+    )
+    |> change(%{openness: 0, conscientiousness: 0, agreeableness: 0})
+    |> compute_personality_changeset(:question0, :openness, :add)
+    |> compute_personality_changeset(:question1, :openness, :add)
+    |> compute_personality_changeset(:question2, :openness, :sub)
+    |> compute_personality_changeset(:question3, :conscientiousness, :add)
+    |> compute_personality_changeset(:question4, :conscientiousness, :add)
+    |> compute_personality_changeset(:question5, :conscientiousness, :sub)
+    |> compute_personality_changeset(:question6, :agreeableness, :add)
+    |> compute_personality_changeset(:question7, :agreeableness, :add)
+    |> compute_personality_changeset(:question8, :agreeableness, :sub)
+  end
+
+  defp compute_personality_changeset(changeset, key, trait, action) do
+    answer = get_field(changeset, key)
+
+    if(answer !== nil) do
+      trait_value = get_field(changeset, trait)
+
+      new_trait_value =
+        if(answer) do
+          # if they answered yes, apply the increase to the relevant trait.
+          if(action === :add, do: trait_value + 1, else: trait_value - 1)
+        else
+          # if the answered no, apply the inverse.
+          if(action === :sub, do: trait_value + 1, else: trait_value - 1)
+        end
+
+      changeset
+      |> put_change(trait, new_trait_value)
+    else
+      changeset
+    end
   end
 end
 

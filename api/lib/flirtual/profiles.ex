@@ -33,63 +33,25 @@ defmodule Flirtual.Profiles do
     Repo.transaction(fn ->
       with {:ok, profile} <-
              profile
-             |> cast(
-               attrs,
-               [:openness, :conscientiousness, :agreeableness] ++
-                 Profile.get_personality_questions()
-             )
-             |> compute_personality_changeset()
-             |> Repo.update() do
-        Elastic.User.mark_dirty(profile.user_id)
+             |> Profile.update_personality_changeset(attrs)
+             |> Repo.update(),
+           {:ok, _} <- Elastic.User.mark_dirty(profile.user_id) do
         profile
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
 
-  defp compute_personality_changeset(changeset) do
-    changeset
-    |> change(%{openness: 0, conscientiousness: 0, agreeableness: 0})
-    |> compute_personality_changeset(:question0, :openness, :add)
-    |> compute_personality_changeset(:question1, :openness, :add)
-    |> compute_personality_changeset(:question2, :openness, :sub)
-    |> compute_personality_changeset(:question3, :conscientiousness, :add)
-    |> compute_personality_changeset(:question4, :conscientiousness, :add)
-    |> compute_personality_changeset(:question5, :conscientiousness, :sub)
-    |> compute_personality_changeset(:question6, :agreeableness, :add)
-    |> compute_personality_changeset(:question7, :agreeableness, :add)
-    |> compute_personality_changeset(:question8, :agreeableness, :sub)
-  end
-
-  defp compute_personality_changeset(changeset, key, trait, action) do
-    answer = get_field(changeset, key)
-
-    if(answer !== nil) do
-      trait_value = get_field(changeset, trait)
-
-      new_trait_value =
-        if(answer) do
-          # if they answered yes, apply the increase to the relevant trait.
-          if(action === :add, do: trait_value + 1, else: trait_value - 1)
-        else
-          # if the answered no, apply the inverse.
-          if(action === :sub, do: trait_value + 1, else: trait_value - 1)
-        end
-
-      changeset
-      |> put_change(trait, new_trait_value)
-    else
-      changeset
-    end
-  end
-
   def update(%Profile{} = profile, attrs) do
     Repo.transaction(fn ->
-      with {:ok, profile} <-
-             profile
-             |> Profile.update_changeset(attrs)
-             |> Repo.update() do
-        Elastic.User.mark_dirty(profile.user_id)
+      with {:ok, profile} <- Repo.update(Profile.update_changeset(profile, attrs)),
+           {:ok, _} <- Elastic.User.mark_dirty(profile.user_id) do
         profile
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
@@ -99,11 +61,14 @@ defmodule Flirtual.Profiles do
       with {:ok, preferences} <-
              preferences
              |> Profile.Preferences.update_changeset(attrs)
-             |> Repo.update() do
-        %{ profile: user_id } = Repo.preload(preferences, profile: from(profile in Profile, select: profile.user_id))
-        Elastic.User.mark_dirty(user_id)
-
+             |> Repo.update(),
+           {:ok, _} <-
+             Repo.preload(preferences, profile: from(profile in Profile, select: profile.user_id))
+             |> then(&Elastic.User.mark_dirty(&1.profile)) do
         preferences
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
@@ -115,33 +80,35 @@ defmodule Flirtual.Profiles do
   end
 
   def create_images(%Profile{} = profile, file_ids) do
-    placeholders = %{
-      now: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
-      profile_id: profile.id
-    }
+    Repo.transaction(fn ->
+      placeholders = %{
+        now: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+        profile_id: profile.id
+      }
 
-    image_count = Kernel.length(profile.images)
+      image_count = Kernel.length(profile.images)
 
-    {_, images} =
-      Repo.insert_all(
-        Image,
-        file_ids
-        |> Enum.with_index()
-        |> Enum.map(fn {file_id, file_idx} ->
-          %{
-            id: UUID.generate(),
-            profile_id: {:placeholder, :profile_id},
-            external_id: file_id,
-            order: image_count + file_idx,
-            updated_at: {:placeholder, :now},
-            created_at: {:placeholder, :now}
-          }
-        end),
-        placeholders: placeholders,
-        returning: true
-      )
+      {_, images} =
+        Repo.insert_all(
+          Image,
+          file_ids
+          |> Enum.with_index()
+          |> Enum.map(fn {file_id, file_idx} ->
+            %{
+              id: UUID.generate(),
+              profile_id: {:placeholder, :profile_id},
+              external_id: file_id,
+              order: image_count + file_idx,
+              updated_at: {:placeholder, :now},
+              created_at: {:placeholder, :now}
+            }
+          end),
+          placeholders: placeholders,
+          returning: true
+        )
 
-    {:ok, Enum.map(images, &%Image{&1 | profile: profile})}
+      Enum.map(images, &%Image{&1 | profile: profile})
+    end)
   end
 
   def update_images(%Profile{} = profile, image_ids) do

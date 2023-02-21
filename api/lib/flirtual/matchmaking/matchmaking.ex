@@ -313,7 +313,7 @@ defmodule Flirtual.Matchmaking do
 
   def filter(:age, %User{} = user) do
     %{profile: %{preferences: preferences}} = user
-    user_age = get_years_since(user.born_at)
+    user_age = if user.born_at, do: get_years_since(user.born_at), else: nil
 
     dob_lte = if preferences.agemin, do: get_years_ago(preferences.agemin), else: nil
     dob_gte = if preferences.agemax, do: get_years_ago(preferences.agemax), else: nil
@@ -331,20 +331,25 @@ defmodule Flirtual.Matchmaking do
         },
         else: []
       ),
-      %{
-        "range" => %{
-          "agemin" => %{
-            "lte" => user_age
+      if(user_age,
+        do: [
+          %{
+            "range" => %{
+              "agemin" => %{
+                "lte" => user_age
+              }
+            }
+          },
+          %{
+            "range" => %{
+              "agemax" => %{
+                "gte" => user_age
+              }
+            }
           }
-        }
-      },
-      %{
-        "range" => %{
-          "agemax" => %{
-            "gte" => user_age
-          }
-        }
-      }
+        ],
+        else: []
+      )
     ]
   end
 

@@ -51,22 +51,38 @@ defmodule Flirtual.Elastic do
   end
 
   def bulk_changes(index, changes, limit \\ 100) do
+    IO.inspect(changes)
+
     changes
     |> Enum.chunk_every(limit)
     |> Enum.each(fn changes ->
       changes
       |> bulk_changes_body()
-      |> then(
-        &Elasticsearch.post!(
-          Flirtual.Elastic,
-          "/" <> index <> "/_bulk",
-          &1
-        )
-      )
+      |> then(fn body ->
+        resp =
+          Elasticsearch.post!(
+            Flirtual.Elastic,
+            "/" <> index <> "/_bulk",
+            body
+          )
+
+        if resp["errors"] do
+          resp["items"]
+          |> Enum.find(fn item ->
+            inner_item = Map.keys(item) |> List.first()
+            !!inner_item["error"]
+          end)
+          |> then(&{:error, Elasticsearch.Exception.exception(&1)})
+        end
+
+        IO.inspect(resp)
+      end)
     end)
   end
 
-  def get_user(id) do
-    Elasticsearch.get!(Flirtual.Elastic, "/users/_doc/#{id}")["_source"]
+  def get_document(index, id) do
+    with {:ok, document} <- Elasticsearch.get(Flirtual.Elastic, "/" <> index <> "/_doc/#{id}") do
+      {:ok, document["_source"]}
+    end
   end
 end

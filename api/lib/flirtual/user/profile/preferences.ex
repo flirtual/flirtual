@@ -45,6 +45,7 @@ defmodule Flirtual.User.Profile.Preferences do
       :agemax,
     ])
     |> put_assoc(:gender, genders)
+    |> validate_length(:gender, min: 1, max: 3)
     |> put_assoc(:kinks, kinks)
   end
 end

@@ -54,6 +54,9 @@ defmodule Flirtual.Users do
              |> Repo.update() do
         Elastic.User.mark_dirty(user.id)
         user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end

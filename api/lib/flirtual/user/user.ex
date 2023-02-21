@@ -46,7 +46,35 @@ defmodule Flirtual.User do
   end
 
   def visible?(%User{} = user) do
-    true
+    case visible(user) do
+      {:ok, _} -> true
+      {:error, _} -> false
+    end
+  end
+
+  def visible(%User{} = user) do
+    %{profile: profile} = user
+
+    [
+      {not is_nil(user.banned_at), "account suspended", false},
+      {not is_nil(user.deactivated_at), "account deactivated", false},
+      {not is_nil(user.disabled_at), "account disabled", false},
+      {not is_nil(user.incognito_at), "account hidden", false},
+      {not is_nil(user.shadowbanned_at), "account shadow banned", true},
+      {is_nil(user.email_confirmed_at), "email not verified", false},
+      {is_nil(user.born_at), "birthday not available", false},
+      {String.length(profile.biography) <= 48, "biography too short", false},
+      {length(profile.images) <= 1, "missing profile pictures", false}
+    ]
+    |> Enum.map_reduce(true, fn {condition, message, silent}, acc ->
+      if(condition,
+        do: {{message, silent}, false},
+        else: {nil, if(acc, do: true, else: false)}
+      )
+    end) |> then(fn ({errors, visible}) ->
+      errors = errors |> Enum.filter(&(not is_nil(&1)))
+      if(visible, do: {:ok, user}, else: {:error, errors})
+    end)
   end
 
   def update_changeset(user, attrs) do
@@ -58,6 +86,7 @@ defmodule Flirtual.User do
     |> validate_inclusion(:language, Languages.list(:iso_639_1),
       message: "is an unrecognized language"
     )
+    |> validate_required(:born_at)
     |> validate_change(:born_at, fn _, born_at ->
       now = Date.utc_today()
 

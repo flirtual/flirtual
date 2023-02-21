@@ -45,11 +45,36 @@ defmodule Flirtual.Elastic.User do
         preload: [user: ^User.default_assoc()]
       )
       |> Repo.all()
-      |> Enum.map(&{:update, &1.user.id, Elasticsearch.Document.encode(&1.user)})
-      |> then(fn (changes) ->
-        user_ids = Enum.map(changes, fn ({_, user_id, _}) -> user_id end)
-        Elastic.bulk_changes("users", changes)
-        clear_dirty_marks(user_ids)
+      |> Enum.map(fn item ->
+        document_id = item.user.id
+        type =
+          if(User.visible?(item.user),
+            do:
+              case Elastic.get_document("users", document_id) do
+                {:ok, _} -> :update
+                _ -> :create
+              end,
+            else: :delete
+          )
+
+        {
+          type,
+          document_id,
+          Elasticsearch.Document.encode(item.user)
+        }
+      end)
+      |> then(fn changes ->
+        total_changes = length(changes)
+        IO.inspect(total_changes)
+
+        if total_changes != 0 do
+          Elastic.bulk_changes("users", changes)
+
+          user_ids = Enum.map(changes, fn {_, user_id, _} -> user_id end)
+          clear_dirty_marks(user_ids)
+        end
+
+        total_changes
       end)
     end)
   end
@@ -60,13 +85,15 @@ defmodule Flirtual.Elastic.User do
     |> Repo.one()
     |> then(&if(is_nil(&1), do: %DirtyUsersQueue{}, else: &1))
     |> Changeset.change(%{user_id: user_id})
-    |> Repo.insert_or_update!()
+    |> Repo.insert_or_update()
   end
 
   def clear_dirty_marks(user_ids) do
-    DirtyUsersQueue |> query_by_user_ids(user_ids) |> Repo.delete_all()
+    if(length(user_ids) != 0,
+      do: DirtyUsersQueue |> query_by_user_ids(user_ids) |> Repo.delete_all(),
+      else: {0, nil}
+    )
   end
-
 
   def update(%User{} = user) do
     Elasticsearch.put_document(Flirtual.Elastic, user, "users")
