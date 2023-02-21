@@ -1,4 +1,4 @@
-defmodule Flirtual.ElasticsearchStore do
+defmodule Flirtual.ElasticStore do
   @behaviour Elasticsearch.Store
 
   alias Flirtual.Repo

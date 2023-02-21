@@ -24,7 +24,7 @@ config :flirtual, FlirtualWeb.Endpoint,
   pubsub_server: Flirtual.PubSub,
   live_view: [signing_salt: "***REMOVED***"]
 
-config :flirtual, Flirtual.Elasticsearch,
+config :flirtual, Flirtual.Elastic,
   url: "https://***REMOVED***",
   default_headers: [
     {"authorization", "ApiKey ***REMOVED***"}
@@ -34,7 +34,7 @@ config :flirtual, Flirtual.Elasticsearch,
   indexes: %{
     users_new: %{
       settings: "priv/elasticsearch/users.json",
-      store: Flirtual.ElasticsearchStore,
+      store: Flirtual.ElasticStore,
       sources: [Flirtual.User],
       bulk_page_size: 5000,
       bulk_wait_interval: 15_000

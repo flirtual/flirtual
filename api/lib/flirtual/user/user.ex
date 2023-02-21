@@ -5,6 +5,7 @@ defmodule Flirtual.User do
   import Ecto.Changeset
 
   alias Flirtual.Languages
+  alias Flirtual.User
 
   schema "users" do
     field :email, :string
@@ -18,7 +19,7 @@ defmodule Flirtual.User do
       values: [:admin, :moderator, :beta_tester, :debugger, :verified],
       default: []
 
-    field :born_at, :naive_datetime
+    field :born_at, :date
     field :email_confirmed_at, :naive_datetime
     field :deactivated_at, :naive_datetime
     field :banned_at, :naive_datetime
@@ -42,6 +43,10 @@ defmodule Flirtual.User do
       preferences: Flirtual.User.Preferences.default_assoc(),
       profile: Flirtual.User.Profile.default_assoc()
     ]
+  end
+
+  def visible?(%User{} = user) do
+    true
   end
 
   def update_changeset(user, attrs) do

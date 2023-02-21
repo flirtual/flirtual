@@ -50,7 +50,7 @@ defmodule Flirtual.User.Connection do
 
   def get_authorize_url(_), do: nil
 
-  def build_connection(
+  def assign_connection(
         %Connection{external_id: external_id, type: :discord} = connection,
         external_profile
       ) do
@@ -74,7 +74,7 @@ defmodule Flirtual.User.Connection do
            authorization: "Bot " <> Application.fetch_env!(:flirtual, :discord_token)
          }) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        build_connection(connection, Poison.decode!(body))
+        assign_connection(connection, Poison.decode!(body))
 
       {_, _} ->
         connection

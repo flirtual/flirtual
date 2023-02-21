@@ -1,129 +1,33 @@
 defmodule Flirtual.Matchmaking do
-  def get_user_interests_query(user) do
-    List.flatten([
-      # Which default-weighted interests do $a and $b have in common?
-      Enum.map(
-        user["default_interests"],
-        &%{
-          "term" => %{
-            "default_interests" => %{
-              "value" => &1,
-              "boost" => 3 * user["weight_default_interests"]
-            }
-          }
-        }
-      ),
-      # Which strong-weighted interests do $a and $b have in common?
-      Enum.map(
-        user["strong_interests"],
-        &%{
-          "term" => %{
-            "strong_interests" => %{
-              "value" => &1,
-              "boost" => 5 * user["weight_default_interests"]
-            }
-          }
-        }
-      ),
-      # Which stronger-weighted interests do $a and $b have in common?
-      Enum.map(
-        user["stronger_interests"],
-        &%{
-          "term" => %{
-            "stronger_interests" => %{
-              "value" => &1,
-              "boost" => 15 * user["weight_default_interests"]
-            }
-          }
-        }
-      ),
-      # Which custom-input interests do $a and $b have in common?
-      Enum.map(
-        user["custom_interests"],
-        &%{
-          "term" => %{
-            "custom_interests" => %{
-              "value" => &1,
-              "boost" => 5 * user["weight_custom_interests"]
-            }
-          }
-        }
+  import Flirtual.Utilities
+
+  alias Flirtual.User.Profile
+  alias Flirtual.Repo
+  alias Flirtual.Elastic
+  alias Flirtual.User
+
+  def compute_prospects(%User{} = user) do
+    query = generate_query(user)
+
+    Elasticsearch.post!(Flirtual.Elastic, "/users/_search", query)["hits"]["hits"]
+    |> Enum.map(& &1["_id"])
+  end
+
+  def generate_query(%User{} = user) do
+    user =
+      user
+      |> Repo.preload(Elastic.User.assoc())
+      |> then(
+        &Map.put(
+          &1,
+          :profile,
+          &1.profile |> Map.put(:custom_weights, &1.profile.custom_weights || %{})
+        )
       )
-    ])
-  end
 
-  def get_user_kinks_query(user) do
-    List.flatten([
-      Enum.map(
-        user["kinks_lf"],
-        &%{
-          "term" => %{
-            "kinks" => %{
-              "value" => &1,
-              "boost" => 3 * user["weight_kinks"]
-            }
-          }
-        }
-      ),
-      Enum.map(
-        user["kinks"],
-        &%{
-          "term" => %{
-            "kinks_lf" => %{
-              "value" => &1,
-              "boost" => 3 * user["weight_kinks"]
-            }
-          }
-        }
-      )
-    ])
-  end
+    profile = user.profile
 
-  def get_user_personality_query(user) do
-    List.flatten([
-      %{
-        "function_score" => %{
-          "linear" => %{
-            "openness" => %{
-              "origin" => user["openness"],
-              "scale" => 3
-            }
-          },
-          "boost" => 1.5 * user["weight_personality"]
-        }
-      },
-      %{
-        "function_score" => %{
-          "linear" => %{
-            "conscientiousness" => %{
-              "origin" => user["conscientiousness"],
-              "scale" => 3
-            }
-          },
-          "boost" => 1.5 * user["weight_personality"]
-        }
-      },
-      %{
-        "function_score" => %{
-          "linear" => %{
-            "agreeableness" => %{
-              "origin" => user["agreeableness"],
-              "scale" => 3
-            }
-          },
-          "boost" => 1.5 * user["weight_personality"]
-        }
-      }
-    ])
-  end
-
-  def compute_potential_matches(id) do
-    user = Flirtual.Elasticsearch.get_user(id)
-
-    {:ok, dob, 0} = DateTime.from_iso8601(user["dob"])
-    user_age = Flirtual.Utilities.get_years_since(dob)
-
-    query = %{
+    %{
       # "explain" => true,
       "size" => 15,
       "query" => %{
@@ -134,169 +38,324 @@ defmodule Flirtual.Matchmaking do
               "ids" => %{
                 "values" =>
                   List.flatten([
-                    user["id"],
-                    user["likes"],
-                    user["passes"],
-                    user["blocked"]
+                    user.id,
+                    profile.liked,
+                    profile.passed,
+                    profile.blocked
                   ])
               }
             }
           ],
-          "filter" => [
-            # $b must be looking for one or more of $a’s genders, and vice versa
-            %{"terms" => %{"gender_lf" => user["gender"]}},
-            %{"terms" => %{"gender" => user["gender_lf"]}},
-            %{
-              "range" => %{
-                "dob" => %{
-                  "lte" => "now-#{user["agemin"]}y",
-                  "gte" => "now-#{user["agemax"]}y"
-                }
-              }
-            },
-            %{
-              "range" => %{
-                "agemin" => %{
-                  "lte" => user_age
-                }
-              }
-            },
-            %{
-              "range" => %{
-                "agemax" => %{
-                  "gte" => user_age
-                }
-              }
-            }
-          ],
+          "filter" => filters([:age, :gender], user),
           "should" =>
-            List.flatten([
-              %{
-                "term" => %{
-                  "likes" => %{
-                    "value" => user["id"],
-                    "boost" => 20 * user["weight_likes"]
-                  }
-                }
-              },
-              get_user_interests_query(user),
-              # Which VR games do $a and $b both play?
-              Enum.map(
-                user["games"],
-                &%{
-                  "term" => %{
-                    "games" => %{
-                      "value" => &1,
-                      "boost" => 3 * user["weight_games"]
-                    }
-                  }
-                }
-              ),
-              # Are $a and $b from the same country?
-              user["country"] &&
-                %{
-                  "term" => %{
-                    "country" => %{
-                      "value" => user["country"],
-                      "boost" => 3 * user["weight_country"]
-                    }
-                  }
-                },
-              # Are $a and $b both monogamous, or both non-monogamous?
-              user["monopoly"] &&
-                %{
-                  "term" => %{
-                    "monopoly" => %{
-                      "value" => user["monopoly"],
-                      "boost" => 5 * user["weight_monopoly"]
-                    }
-                  }
-                },
-              # Are $a and $b both looking for a serious relationship?
-              user["serious"] &&
-                %{
-                  "term" => %{
-                    "serious" => %{
-                      "value" => user["serious"],
-                      "boost" => 5 * user["weight_serious"]
-                    }
-                  }
-                },
-              user["nsfw"] &&
-                %{
-                  "term" => %{
-                    "nsfw" => %{
-                      "value" => user["nsfw"],
-                      "boost" => 5
-                    }
-                  }
-                },
-              get_user_kinks_query(user),
-              get_user_personality_query(user)
-            ])
-            |> Enum.filter(&(!is_nil(&1) && !is_boolean(&1)))
+            queries(
+              [
+                :likes,
+                :interests,
+                :games,
+                :country,
+                :monopoly,
+                :serious,
+                :domsub,
+                :nsfw,
+                :kinks,
+                :personality
+              ],
+              user
+            )
         }
       }
     }
-
-    IO.inspect(query)
-
-    Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_search", query)["hits"]["hits"]
-    |> Enum.map(& &1["_id"])
   end
 
-  def like_user(id, target_id) do
-    update_user(
-      id,
-      %{
-        "id" => id,
-        "target_id" => target_id
-      },
-      """
-        ctx._source.likes.add(params.target_id)
-      """
-    )
+  def queries(names, %User{} = user) do
+    names |> Enum.map(&query(&1, user)) |> List.flatten()
   end
 
-  def pass_user(id, target_id) do
-    update_user(
-      id,
-      %{
-        "id" => id,
-        "target_id" => target_id
-      },
-      """
-        ctx._source.passes.add(params.target_id)
-      """
-    )
-  end
+  def query(:likes, %User{} = user) do
+    %{profile: %{custom_weights: custom_weights}} = user
 
-  def block_user(id, target_id) do
-    update_user(
-      id,
-      %{
-        "id" => id,
-        "target_id" => target_id
-      },
-      """
-        ctx._source.blocked.add(params.target_id)
-      """
-    )
-  end
-
-  def patch_user(id, contents) do
-    Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_update/#{id}", %{
-      "doc" => contents
-    })
-  end
-
-  def update_user(id, params, source) do
-    Elasticsearch.post!(Flirtual.Elasticsearch, "/users/_update/#{id}", %{
-      "script" => %{
-        "source" => source,
-        "lang" => "painless",
-        "params" => params
+    %{
+      "term" => %{
+        "liked" => %{
+          "value" => user.id,
+          "boost" => 20 * (Map.get(custom_weights, :likes) || 1)
+        }
       }
-    })
+    }
+  end
+
+  def query(:interests, %User{} = user) do
+    %{profile: %{interests: interests, custom_weights: custom_weights}} = user
+    grouped_interests = Profile.group_interests_by_strength(interests)
+
+    List.flatten([
+      # Which default-weighted interests do $a and $b have in common?
+      Enum.map(
+        grouped_interests[0] || [],
+        &%{
+          "term" => %{
+            "default_interests" => %{
+              "value" => &1.id,
+              "boost" => 3 * (Map.get(custom_weights, :default_interests) || 1)
+            }
+          }
+        }
+      ),
+      # Which strong-weighted interests do $a and $b have in common?
+      Enum.map(
+        grouped_interests[1] || [],
+        &%{
+          "term" => %{
+            "strong_interests" => %{
+              "value" => &1.id,
+              "boost" => 5 * (Map.get(custom_weights, :default_interests) || 1)
+            }
+          }
+        }
+      ),
+      # Which stronger-weighted interests do $a and $b have in common?
+      Enum.map(
+        grouped_interests[2] || [],
+        &%{
+          "term" => %{
+            "stronger_interests" => %{
+              "value" => &1.id,
+              "boost" => 15 * (Map.get(custom_weights, :default_interests) || 1)
+            }
+          }
+        }
+      ),
+      # Which custom-input interests do $a and $b have in common?
+      Enum.map(
+        [],
+        &%{
+          "term" => %{
+            "custom_interests" => %{
+              "value" => &1.id,
+              "boost" => 5 * (Map.get(custom_weights, :custom_interests) || 1)
+            }
+          }
+        }
+      )
+    ])
+  end
+
+  def query(:games, %User{} = user) do
+    %{profile: %{games: games, custom_weights: custom_weights}} = user
+
+    # Which VR games do $a and $b both play?
+    Enum.map(
+      games,
+      &%{
+        "term" => %{
+          "games" => %{
+            "value" => &1.id,
+            "boost" => 3 * (Map.get(custom_weights, :games) || 1)
+          }
+        }
+      }
+    )
+  end
+
+  def query(:country, %User{} = user) do
+    %{profile: %{country: country, custom_weights: custom_weights}} = user
+
+    # Are $a and $b from the same country?
+    if(country,
+      do: %{
+        "term" => %{
+          "country" => %{
+            "value" => country,
+            "boost" => 3 * (Map.get(custom_weights, :country) || 1)
+          }
+        }
+      },
+      else: []
+    )
+  end
+
+  def query(:monopoly, %User{} = user) do
+    %{profile: %{monopoly: monopoly, custom_weights: custom_weights}} = user
+
+    # Are $a and $b both monogamous, or both non-monogamous?
+    if(monopoly,
+      do: %{
+        "term" => %{
+          "monopoly" => %{
+            "value" => monopoly,
+            "boost" => 5 * (Map.get(custom_weights, :monopoly) || 1)
+          }
+        }
+      },
+      else: []
+    )
+  end
+
+  def query(:serious, %User{} = user) do
+    %{profile: %{serious: serious, custom_weights: custom_weights}} = user
+
+    # Are $a and $b both looking for a serious relationship?
+    if(serious,
+      do: %{
+        "term" => %{
+          "serious" => %{
+            "value" => serious,
+            "boost" => 5 * (Map.get(custom_weights, :serious) || 1)
+          }
+        }
+      },
+      else: []
+    )
+  end
+
+  def query(:domsub, %User{} = user) do
+    %{profile: %{domsub: domsub, custom_weights: custom_weights}} = user
+
+    if(user.preferences.nsfw && domsub,
+      do: %{
+        "terms" => %{
+          "domsub" => User.Profile.get_domsub_match(domsub),
+          "boost" => 5 * (Map.get(custom_weights, :domsub) || 1)
+        }
+      },
+      else: []
+    )
+  end
+
+  def query(:nsfw, %User{} = user) do
+    %{
+      "term" => %{
+        "nsfw" => %{
+          "value" => user.preferences.nsfw,
+          "boost" => 5
+        }
+      }
+    }
+  end
+
+  def query(:kinks, %User{} = user) do
+    %{profile: %{preferences: preferences, custom_weights: custom_weights} = profile} = user
+
+    if(user.preferences.nsfw,
+      do:
+        List.flatten([
+          Enum.map(
+            preferences.kinks,
+            &%{
+              "term" => %{
+                "kinks" => %{
+                  "value" => &1.id,
+                  "boost" => 3 * (Map.get(custom_weights, :kinks) || 1)
+                }
+              }
+            }
+          ),
+          Enum.map(
+            profile.kinks,
+            &%{
+              "term" => %{
+                "kinks_lf" => %{
+                  "value" => &1.id,
+                  "boost" => 3 * (Map.get(custom_weights, :kinks) || 1)
+                }
+              }
+            }
+          )
+        ]),
+      else: []
+    )
+  end
+
+  def query(:personality, %User{} = user) do
+    %{profile: %{custom_weights: custom_weights} = profile} = user
+
+    [
+      %{
+        "function_score" => %{
+          "linear" => %{
+            "openness" => %{
+              "origin" => profile.openness,
+              "scale" => 3
+            }
+          },
+          "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+        }
+      },
+      %{
+        "function_score" => %{
+          "linear" => %{
+            "conscientiousness" => %{
+              "origin" => profile.conscientiousness,
+              "scale" => 3
+            }
+          },
+          "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+        }
+      },
+      %{
+        "function_score" => %{
+          "linear" => %{
+            "agreeableness" => %{
+              "origin" => profile.agreeableness,
+              "scale" => 3
+            }
+          },
+          "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+        }
+      }
+    ]
+  end
+
+  def filters(names, %User{} = user) do
+    names |> Enum.map(&filter(&1, user)) |> List.flatten()
+  end
+
+  def filter(:age, %User{} = user) do
+    %{profile: %{preferences: preferences}} = user
+    user_age = get_years_since(user.born_at)
+
+    dob_lte = if preferences.agemin, do: get_years_ago(preferences.agemin), else: nil
+    dob_gte = if preferences.agemax, do: get_years_ago(preferences.agemax), else: nil
+
+    [
+      if(!!dob_lte or !!dob_gte,
+        do: %{
+          "range" => %{
+            "dob" =>
+              Map.merge(
+                if(dob_lte, do: %{"lte" => dob_lte}, else: %{}),
+                if(dob_gte, do: %{"gte" => dob_gte}, else: %{})
+              )
+          }
+        },
+        else: []
+      ),
+      %{
+        "range" => %{
+          "agemin" => %{
+            "lte" => user_age
+          }
+        }
+      },
+      %{
+        "range" => %{
+          "agemax" => %{
+            "gte" => user_age
+          }
+        }
+      }
+    ]
+  end
+
+  def filter(:gender, %User{} = user) do
+    %{profile: %{gender: gender, preferences: preferences}} = user
+
+    [
+      # $b must be looking for one or more of $a’s genders.
+      %{"terms" => %{"gender_lf" => gender |> Enum.map(& &1.id)}},
+      # $a must be looking for one or more of $b’s genders.
+      %{"terms" => %{"gender" => preferences.gender |> Enum.map(& &1.id)}}
+    ]
   end
 end

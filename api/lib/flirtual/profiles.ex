@@ -3,7 +3,7 @@ defmodule Flirtual.Profiles do
   import Ecto.Changeset
 
   alias Ecto.UUID
-  alias Flirtual.{Repo}
+  alias Flirtual.{Repo, Elastic}
   alias Flirtual.User.{Profile}
   alias Flirtual.User.Profile.{Image}
 
@@ -30,13 +30,20 @@ defmodule Flirtual.Profiles do
   end
 
   def update_personality(%Profile{} = profile, attrs) do
-    profile
-    |> cast(
-      attrs,
-      [:openness, :conscientiousness, :agreeableness] ++ Profile.get_personality_questions()
-    )
-    |> compute_personality_changeset()
-    |> Repo.update()
+    Repo.transaction(fn ->
+      with {:ok, profile} <-
+             profile
+             |> cast(
+               attrs,
+               [:openness, :conscientiousness, :agreeableness] ++
+                 Profile.get_personality_questions()
+             )
+             |> compute_personality_changeset()
+             |> Repo.update() do
+        Elastic.User.mark_dirty(profile.user_id)
+        profile
+      end
+    end)
   end
 
   defp compute_personality_changeset(changeset) do
@@ -76,15 +83,29 @@ defmodule Flirtual.Profiles do
   end
 
   def update(%Profile{} = profile, attrs) do
-    profile
-    |> Profile.update_changeset(attrs)
-    |> Repo.update()
+    Repo.transaction(fn ->
+      with {:ok, profile} <-
+             profile
+             |> Profile.update_changeset(attrs)
+             |> Repo.update() do
+        Elastic.User.mark_dirty(profile.user_id)
+        profile
+      end
+    end)
   end
 
   def update_preferences(%Profile.Preferences{} = preferences, attrs) do
-    preferences
-    |> Profile.Preferences.update_changeset(attrs)
-    |> Repo.update()
+    Repo.transaction(fn ->
+      with {:ok, preferences} <-
+             preferences
+             |> Profile.Preferences.update_changeset(attrs)
+             |> Repo.update() do
+        %{ profile: user_id } = Repo.preload(preferences, profile: from(profile in Profile, select: profile.user_id))
+        Elastic.User.mark_dirty(user_id)
+
+        preferences
+      end
+    end)
   end
 
   def update_custom_weights(%Profile.CustomWeights{} = custom_weights, attrs) do
@@ -120,7 +141,7 @@ defmodule Flirtual.Profiles do
         returning: true
       )
 
-    {:ok, Enum.map(images, &(%Image{&1 | profile: profile}))}
+    {:ok, Enum.map(images, &%Image{&1 | profile: profile})}
   end
 
   def update_images(%Profile{} = profile, image_ids) do

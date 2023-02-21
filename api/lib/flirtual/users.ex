@@ -3,7 +3,7 @@ defmodule Flirtual.Users do
   import Ecto.Changeset
 
   alias Flirtual.Jwt
-  alias Flirtual.{Repo, Mailer, User, Sessions}
+  alias Flirtual.{Repo, Mailer, User, Sessions, Elastic}
   alias Flirtual.User.{Session, Preferences, Connection}
 
   def get(id)
@@ -47,9 +47,15 @@ defmodule Flirtual.Users do
   end
 
   def update(%User{} = user, attrs) do
-    user
-    |> User.update_changeset(attrs)
-    |> Repo.update()
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> User.update_changeset(attrs)
+             |> Repo.update() do
+        Elastic.User.mark_dirty(user.id)
+        user
+      end
+    end)
   end
 
   def update_password(%User{} = user, attrs) do
@@ -107,9 +113,15 @@ defmodule Flirtual.Users do
   end
 
   def update_preferences(%Preferences{} = preferences, attrs) do
-    preferences
-    |> Preferences.update_changeset(attrs)
-    |> Repo.update()
+    Repo.transaction(fn ->
+      with {:ok, preferences} <-
+             preferences
+             |> Preferences.update_changeset(attrs)
+             |> Repo.update() do
+        Elastic.User.mark_dirty(preferences.user_id)
+        preferences
+      end
+    end)
   end
 
   def update_privacy_preferences(%Preferences.Privacy{} = privacy_preferences, attrs) do
@@ -130,15 +142,27 @@ defmodule Flirtual.Users do
   def deactivate(%User{} = user) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
-    user
-    |> change(%{deactivated_at: now})
-    |> Repo.update()
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{deactivated_at: now})
+             |> Repo.update() do
+        Elastic.User.mark_dirty(user.id)
+        user
+      end
+    end)
   end
 
   def reactivate(%User{} = user) do
-    user
-    |> change(%{deactivated_at: nil})
-    |> Repo.update()
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{deactivated_at: nil})
+             |> Repo.update() do
+        Elastic.User.mark_dirty(user.id)
+        user
+      end
+    end)
   end
 
   def assign_connection(user_id, :discord = connection_type, %{"code" => code}) do
@@ -177,7 +201,7 @@ defmodule Flirtual.Users do
               |> Connection.update_changeset()
               |> Repo.insert_or_update()
 
-            {:ok, Connection.build_connection(connection, external_profile)}
+            {:ok, Connection.assign_connection(connection, external_profile)}
 
           {_, _} ->
             {:error, {:bad_request, "Couldn't get user information"}}

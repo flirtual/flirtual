@@ -36,6 +36,19 @@ defmodule Flirtual.User.Profile do
     end
   end
 
+  def get_domsub_match(domsub) do
+    case domsub do
+      :switch -> [:switch]
+      _ -> [get_domsub_opposite(domsub), :switch]
+    end
+  end
+
+  def group_interests_by_strength(interests) do
+    interests
+    |> Enum.map(&if(!&1.metadata, do: %{&1 | metadata: %{"strength" => 0}}, else: &1))
+    |> Enum.group_by(& &1.metadata["strength"])
+  end
+
   schema "user_profiles" do
     belongs_to :user, User
 

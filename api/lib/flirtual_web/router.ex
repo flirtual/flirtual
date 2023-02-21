@@ -1,5 +1,4 @@
 defmodule FlirtualWeb.Router do
-  alias FlirtualWeb.MatchmakingController
   use FlirtualWeb, :router
 
   import Phoenix.Router
@@ -94,6 +93,8 @@ defmodule FlirtualWeb.Router do
       scope "/prospects" do
         pipe_through([:require_authenticated_user, :require_valid_user])
 
+        get "/", MatchmakingController, :list_prospects
+        get "/inspect", MatchmakingController, :inspect_query
       end
 
       scope "/users" do
@@ -159,20 +160,6 @@ defmodule FlirtualWeb.Router do
       scope "/attributes" do
         scope "/:attribute_type" do
           get "/", AttributeController, :list
-        end
-      end
-
-      scope "/internal" do
-        pipe_through :require_internal_authorization
-
-        post "/seed", MatchmakingController, :seed
-
-        scope "/user/:id" do
-          post "/", MatchmakingController, :update
-          get "/matches", MatchmakingController, :compute
-          post "/like/:target_id", MatchmakingController, :like
-          post "/pass/:target_id", MatchmakingController, :pass
-          post "/block/:target_id", MatchmakingController, :block
         end
       end
     end

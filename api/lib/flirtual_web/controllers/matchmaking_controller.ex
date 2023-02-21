@@ -1,28 +1,11 @@
 defmodule FlirtualWeb.MatchmakingController do
   use FlirtualWeb, :controller
 
-  def seed(conn, _) do
-    Flirtual.Elasticsearch.dev_seed()
-    conn |> json(:ok)
+  def list_prospects(conn, _) do
+    conn |> json(Flirtual.Matchmaking.compute_prospects(conn.assigns[:session].user))
   end
 
-  def compute(conn, %{"id" => id}) do
-    conn |> json(Flirtual.Matchmaking.compute_potential_matches(id))
-  end
-
-  def update(conn, %{"id" => id}) do
-    conn |> json(Flirtual.Matchmaking.patch_user(id, conn.body_params))
-  end
-
-  def like(conn, %{"id" => id, "target_id" => target_id}) do
-    conn |> json(Flirtual.Matchmaking.like_user(id, target_id))
-  end
-
-  def pass(conn, %{"id" => id, "target_id" => target_id}) do
-    conn |> json(Flirtual.Matchmaking.pass_user(id, target_id))
-  end
-
-  def block(conn, %{"id" => id, "target_id" => target_id}) do
-    conn |> json(Flirtual.Matchmaking.block_user(id, target_id))
+  def inspect_query(conn, _) do
+    conn |> json(Flirtual.Matchmaking.generate_query(conn.assigns[:session].user))
   end
 end
