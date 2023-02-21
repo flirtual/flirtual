@@ -5,10 +5,15 @@ import { AttributeCollection } from "~/api/attributes";
 
 export function useAttributeList<T = unknown>(
 	name: string,
-	options: Omit<SWRConfiguration<AttributeCollection<T>>, "fetcher"> = {}
+	options: Omit<SWRConfiguration<AttributeCollection<T>>, "fetcher" | "fallbackData"> = {}
 ) {
-	return useSWR(["attribute", name], ([, name]) => api.attributes.list(name), {
-		fallbackData: [],
-		...options
-	});
+	return useSWR(
+		["attribute", name],
+		([, name]) => api.attributes.list(name) as Promise<AttributeCollection<T>>,
+		{
+			fallbackData: [],
+			revalidateOnFocus: false,
+			...options
+		}
+	);
 }

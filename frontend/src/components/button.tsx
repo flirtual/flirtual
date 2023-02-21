@@ -9,7 +9,7 @@ export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
 			// eslint-disable-next-line react/button-has-type
 			type={props.type ?? "button"}
 			className={twMerge(
-				"focusable rounded-xl bg-brand-gradient p-4 text-center font-montserrat text-xl font-semibold text-white-10 shadow-brand-1 disabled:bg-black-60 disabled:bg-none",
+				"focusable rounded-xl bg-brand-gradient p-4 text-center font-montserrat text-xl font-semibold text-white-10 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-90",
 				props.className
 			)}
 		>

@@ -73,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 				<ul className="flex max-w-screen-sm flex-wrap gap-x-4 gap-y-1 md:mx-auto md:justify-center">
 					<FooterListLink href="/events" label="Events" />
 					<FooterListLink label="Support" onClick={openFreshworks} />
-					<FooterListLink href="https://status.flirtu.al/" label="Status" />
+					<FooterListLink href={urls.resources.networkStatus()} label="Status" />
 					<FooterListLink href="/press" label="Press" />
 					<FooterListLink href="/branding" label="Branding" />
 					<FooterListLink href="/developers" label="Developers" />

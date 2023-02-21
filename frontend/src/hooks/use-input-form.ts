@@ -75,10 +75,10 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 	const [fieldErrors, setFieldErrors] = useState<FieldErrors<T>>({});
 	const [submitting, setSubmitting] = useState(false);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		setValues(options.fields);
 		setInitialValues(options.fields);
-	}, [options.fields]);
+	}, [options.fields]); */
 
 	const props: UseInputForm<T>["props"] = {
 		onSubmit: async (event) => {

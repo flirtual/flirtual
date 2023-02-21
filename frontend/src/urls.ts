@@ -6,7 +6,12 @@ export const siteOrigin = process.env.NEXT_PUBLIC_ORIGIN as string;
 if (!siteOrigin) throw new ReferenceError("Site origin not defined");
 
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
-if (!apiUrl) throw new ReferenceError("Site origin not defined");
+if (!apiUrl) throw new ReferenceError("API url not defined");
+
+export function ensureRelativeUrl(pathname: string) {
+	if (!isInternalHref(pathname)) throw new Error(`Must be relative url: ${pathname}`);
+	return pathname;
+}
 
 export function toAbsoluteUrl(href: string) {
 	return new URL(href, siteOrigin);

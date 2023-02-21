@@ -3,6 +3,8 @@
 import Script from "next/script";
 import { useEffect } from "react";
 
+import { uploadcarePublicKey } from "~/const";
+
 declare global {
 	interface Window {
 		Blinkloader: {
@@ -30,7 +32,7 @@ export const ClientScripts: React.FC = () => {
 				src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"
 				onReady={() => {
 					window.Blinkloader.optimize({
-						pubkey: "130267e8346d9a7e9bea",
+						pubkey: uploadcarePublicKey,
 						cdnBase: "https://media.flirtu.al",
 						lazyload: false,
 						smartCompression: true,

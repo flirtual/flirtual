@@ -1,13 +1,11 @@
 import React from "react";
 
-import { entries } from "~/utilities";
-
 import { CheckboxListItem, InputCheckboxList } from "./checkbox-list";
 
 export type RadioListItem<T extends string> = Omit<CheckboxListItem<T>, "conflicts">;
 
 export interface InputRadioListProps<T extends string> {
-	value: T;
+	value?: T;
 	onChange: React.Dispatch<T>;
 	items: Array<RadioListItem<T>>;
 }
@@ -24,7 +22,7 @@ export function InputRadioList<T extends string>(props: InputRadioListProps<T>) 
 	return (
 		<InputCheckboxList
 			{...props}
-			value={[props.value]}
+			value={props.value ? [props.value] : []}
 			items={props.items.map((item) => {
 				// every item conflicts with every other item, except itself.
 				const conflicts = props.items.map(({ key }) => key).filter((key) => item.key !== key);
