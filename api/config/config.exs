@@ -11,7 +11,7 @@ config :flirtual,
   discord_client_id: "***REMOVED***",
   discord_client_secret: "***REMOVED***",
   discord_token: "***REMOVED***",
-  frontend_origin: "http://localhost:3000"
+  frontend_origin: "http://127.0.0.1:3000"
 
 config :flirtual,
   ecto_repos: [Flirtual.Repo]
@@ -20,7 +20,7 @@ config :joken, default_signer: "***REMOVED***"
 
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "127.0.0.1"],
   pubsub_server: Flirtual.PubSub,
   live_view: [signing_salt: "***REMOVED***"]
 

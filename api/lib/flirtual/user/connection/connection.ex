@@ -42,7 +42,7 @@ defmodule Flirtual.User.Connection do
     "https://discord.com/api/oauth2/authorize?" <>
       URI.encode_query(%{
         client_id: Application.fetch_env!(:flirtual, :discord_client_id),
-        redirect_uri: "http://localhost:4000/v1/auth/connect/discord",
+        redirect_uri: "http://127.0.0.1:4000/v1/auth/connect/discord",
         response_type: "code",
         scope: "identify"
       })

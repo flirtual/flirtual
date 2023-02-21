@@ -177,7 +177,7 @@ defmodule Flirtual.Users do
         client_secret: Application.fetch_env!(:flirtual, :discord_client_secret),
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "http://localhost:4000/v1/auth/connect/discord"
+        redirect_uri: "http://127.0.0.1:4000/v1/auth/connect/discord"
       })
 
     headers = %{"content-type" => "application/x-www-form-urlencoded"}
