@@ -3,13 +3,11 @@
 import { EnvelopeIcon, MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { twMerge } from "tailwind-merge";
-import { Twitter, Discord } from "@icons-pack/react-simple-icons";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { useTheme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
-
-import { IconComponent } from "../icons";
+import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
 
 type LinkOrButtonProps<T> = T &
 	(Pick<React.ComponentProps<"a">, "href"> | Pick<React.ComponentProps<"button">, "onClick">);
@@ -62,8 +60,8 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 				<div className="flex items-center gap-8 md:mx-auto md:justify-center">
 					<div className="flex gap-4">
 						<FooterListIconLink Icon={EnvelopeIcon} onClick={openFreshworks} />
-						<FooterListIconLink href={urls.socials.discord()} Icon={Discord} />
-						<FooterListIconLink href={urls.socials.twitter()} Icon={Twitter} />
+						<FooterListIconLink href={urls.socials.discord()} Icon={DiscordIcon} />
+						<FooterListIconLink href={urls.socials.twitter()} Icon={TwitterIcon} />
 					</div>
 					<FooterListIconLink
 						Icon={theme === "dark" ? SunIcon : MoonIcon}

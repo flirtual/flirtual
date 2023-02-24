@@ -3,7 +3,6 @@
 import { ArrowLongRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
-import { Instagram, Twitter, Discord } from "@icons-pack/react-simple-icons";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
@@ -14,6 +13,8 @@ import { InlineButton } from "../inline-button";
 import { Popover, PopoverModel } from "../popover";
 
 import { NavigationInner } from "./navigation";
+import { DiscordIcon, TwitterIcon } from "../icons";
+import { InstagramIcon } from "../icons/brand/instagram";
 
 const NavigationalMessage: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => (
 	<div
@@ -58,15 +59,15 @@ export const Header: React.FC = () => {
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Available on</span>
 										<InlineLink className="flex items-center gap-2" href={urls.socials.twitter()}>
-											<Twitter className="w-5" />
+											<TwitterIcon className="w-5" />
 											<span>Twitter</span>
 										</InlineLink>
 										<InlineLink className="flex items-center gap-2" href={urls.socials.instagram()}>
-											<Instagram className="w-5" />
+											<InstagramIcon className="w-5" />
 											<span>Instagram</span>
 										</InlineLink>
 										<InlineLink className="flex items-center gap-2" href={urls.socials.discord()}>
-											<Discord className="w-5" />
+											<DiscordIcon className="w-5" />
 											<span>Discord</span>
 										</InlineLink>
 									</div>

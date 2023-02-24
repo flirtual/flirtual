@@ -3,7 +3,6 @@ lockfileVersion: 5.4
 specifiers:
   '@ariesclark/eslint-config': ^1.4.2
   '@heroicons/react': ^2.0.16
-  '@icons-pack/react-simple-icons': 6.2.0
   '@next/eslint-plugin-next': ^13.2.1
   '@tailwindcss/forms': ^0.5.3
   '@tailwindcss/typography': ^0.5.9
@@ -44,7 +43,6 @@ specifiers:
 
 dependencies:
   '@heroicons/react': 2.0.16_react@18.2.0
-  '@icons-pack/react-simple-icons': 6.2.0_react@18.2.0
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
   byte-size: 8.1.0
   change-case: 4.1.2
@@ -163,14 +161,6 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
-
-  /@icons-pack/react-simple-icons/6.2.0_react@18.2.0:
-    resolution: {integrity: sha512-YZzB5oHRvOslOIiug97dLqfhv7U0+78JOa8w5Aqxq2Ulr2bVBrqtFV+hMKXhcZjlPdFzpUrFfAJ9AHLe4FdYqQ==}
-    peerDependencies:
-      react: ^16.13 || ^17 || ^18
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@next/env/13.2.0:
     resolution: {integrity: sha512-yv9oaRVa+AxFa27uQOVecS931NrE+GcQSqcL2HaRxL8NunStLtPiyNm/VixvdzfiWLabMz4dXvbXfwCNaECzcw==}
