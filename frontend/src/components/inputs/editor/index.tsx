@@ -1,14 +1,24 @@
-// eslint-disable-next-line import/named
-import ReactQuill, { Quill } from "react-quill";
+"use client";
+
+import dynamic from "next/dynamic";
 
 import { editorColors } from "~/html";
 
 import "./style.scss";
 
-// use inline styles instead of quill's classnames,
-// which aren't available in other pages.
-const AlignStyle = Quill.import("attributors/style/align");
-Quill.register(AlignStyle);
+// Quill throws an error on the server if imported directly,
+// so we lazily import it, which only renders when needed on client.
+const ReactQuill = dynamic(async () => {
+	const ReactQuill = (await import("react-quill")).default;
+	const { Quill } = ReactQuill;
+
+	// Use inline styles instead of Quill's classnames,
+	// which are not available in other pages.
+	const AlignStyle = Quill.import("attributors/style/align");
+	Quill.register(AlignStyle);
+
+	return ReactQuill;
+});
 
 export interface InputEditorProps {
 	value: string;
