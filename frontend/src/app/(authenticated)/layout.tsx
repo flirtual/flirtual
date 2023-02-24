@@ -1,8 +1,12 @@
-import { SsrUserProvider } from "~/components/ssr-user-provider";
+import { AuthProvider } from "~/components/auth-provider";
+
+export const dynamic = "force-dynamic";
 
 export default function AuthenticatedLayout({ children }: React.PropsWithChildren) {
 	return (
 		// @ts-expect-error: Server Component
-		<SsrUserProvider emailConfirmedOptional>{children}</SsrUserProvider>
+		<AuthProvider emailConfirmedOptional visibleOptional>
+			{children}
+		</AuthProvider>
 	);
 }

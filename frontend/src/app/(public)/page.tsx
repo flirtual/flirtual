@@ -1,7 +1,6 @@
-import { Googleplay, Apple, Microsoft, Meta } from "@icons-pack/react-simple-icons";
-
 import { MobileButton } from "~/components/mobile-button";
 import { Footer } from "~/components/layout/footer";
+import { AppleIcon, GooglePlayIcon, MetaIcon, MicrosoftIcon } from "~/components/icons";
 
 import { urls } from "../../urls";
 
@@ -72,10 +71,10 @@ export default function RootIndexPage() {
 							Sign up
 						</LandingButton>
 						<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
-							<MobileButton href={urls.apps.android()} Icon={Googleplay} label="Play Store" />
-							<MobileButton href="/ios" Icon={Apple} label="iPhone/iPad" />
-							<MobileButton href={urls.apps.windows()} Icon={Microsoft} label="Windows" />
-							<MobileButton href={urls.apps.sideQuest()} Icon={Meta} label="Side Quest" />
+							<MobileButton href={urls.apps.android()} Icon={GooglePlayIcon} label="Play Store" />
+							<MobileButton href="/ios" Icon={AppleIcon} label="iPhone/iPad" />
+							<MobileButton href={urls.apps.windows()} Icon={MicrosoftIcon} label="Windows" />
+							<MobileButton href={urls.apps.sideQuest()} Icon={MetaIcon} label="Side Quest" />
 						</div>
 					</div>
 				</div>

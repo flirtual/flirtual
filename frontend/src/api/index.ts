@@ -12,6 +12,24 @@ export function newUrl(pathname: string, query: Record<string, string> = {}): UR
 	);
 }
 
+export class ResponseError extends Error {
+	public statusCode: number;
+	public constructor(private response: Response, public body: any) {
+		const message = body?.error.message || response.statusText;
+		super(message);
+
+		this.statusCode = this.response.status;
+	}
+}
+
+export class ResponseUnprocessableEntityError extends ResponseError {
+	public properties: Record<string, Array<string>>;
+	public constructor(response: Response, body: any) {
+		super(response, body);
+		this.properties = body?.error?.properties ?? {};
+	}
+}
+
 export type FetchOptions = Omit<RequestInit, "method" | "body"> & {
 	query?: Record<string, string>;
 	body?: any;
@@ -59,11 +77,10 @@ export async function fetch<T = unknown>(
 	const responseBody = toCamelObject<any>(await response.json());
 
 	if (!response.ok || "error" in responseBody) {
-		const error = Object.assign(
-			new Error("Request error"),
-			responseBody?.error || { message: "Unknown error" }
-		);
-		error.stack = error.stack.split("\n").slice(2).join("\n");
+		const error = new (
+			responseBody?.error.properties ? ResponseUnprocessableEntityError : ResponseError
+		)(response, responseBody);
+		error.stack = error.stack?.split("\n").slice(2).join("\n");
 
 		throw error;
 	}
@@ -76,3 +93,11 @@ export * as auth from "./auth";
 export * as user from "./user";
 export * as file from "./file";
 export * as api from "./";
+
+declare global {
+	// eslint-disable-next-line no-var
+	var api: unknown;
+}
+
+import * as api from "./";
+globalThis.api = api;

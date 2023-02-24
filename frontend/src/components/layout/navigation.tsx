@@ -12,19 +12,19 @@ import { urls } from "~/urls";
 import { PeaceGradient } from "../icons/peace-gradient";
 import { UserAvatar } from "../user-avatar";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const NavigationIconButton: React.FC<React.ComponentProps<"a"> & { href: string; ref?: any }> = ({
-	children,
-	...props
-}) => {
+const NavigationIconButton: React.FC<
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	React.ComponentProps<"a"> & { href: string; active?: (pathname: string) => boolean; ref?: any }
+> = ({ children, active: isActive, ...props }) => {
 	const pathname = usePathname();
+	const active = isActive?.(pathname) || pathname === props.href;
 
 	return (
 		<Link
 			{...props}
 			className={twMerge(
 				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none",
-				pathname === props.href
+				active
 					? "bg-white-20 text-black-70 shadow-brand-1"
 					: "hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1",
 				props.className
@@ -63,7 +63,10 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 					</div>
 				</div>
 			</NavigationIconButton>
-			<NavigationIconButton href={urls.settings.default()}>
+			<NavigationIconButton
+				active={(pathname) => pathname.startsWith(urls.settings.default())}
+				href={urls.settings.default()}
+			>
 				<Cog8ToothIcon className="h-8 w-8" />
 			</NavigationIconButton>
 			<NavigationIconButton href={urls.user(user.username)}>

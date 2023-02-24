@@ -33,6 +33,14 @@ export interface CreateUserOptions {
 	serviceAgreement: boolean;
 }
 
+export interface UserVisibility {
+	visible: boolean;
+	reasons: Array<{
+		reason: string;
+		to?: string;
+	}>;
+}
+
 export async function create(body: CreateUserOptions, options: FetchOptions = {}) {
 	return fetch<User>("post", "users", { ...options, body });
 }
@@ -43,6 +51,10 @@ export async function get(userId: string, options: FetchOptions = {}) {
 
 export async function getByUsername(username: string, options: FetchOptions = {}) {
 	return fetch<User>("get", `users/${username}/username`, options);
+}
+
+export async function visible(userId: string, options: FetchOptions = {}) {
+	return fetch<UserVisibility>("get", `users/${userId}/visible`, options);
 }
 
 export async function update(userId: string, body: unknown, options: FetchOptions = {}) {

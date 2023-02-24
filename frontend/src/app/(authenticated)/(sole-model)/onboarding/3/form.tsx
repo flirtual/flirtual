@@ -3,7 +3,6 @@
 import byteSize from "byte-size";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { LinkIcon } from "@heroicons/react/24/outline";
-import { Discord } from "@icons-pack/react-simple-icons";
 import { useRouter } from "next/navigation";
 
 import { InputEditor, InputFile, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
@@ -15,6 +14,7 @@ import { ArrangeableImageSet } from "~/components/arrangeable-image-set";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
+import { DiscordIcon } from "~/components/icons";
 
 import { ConnectionButton } from "./connection-button";
 
@@ -129,7 +129,7 @@ export const Onboarding3Form: React.FC = () => {
 					<div className="flex flex-col gap-2">
 						<InputLabel>Connect accounts</InputLabel>
 						<div className="flex flex-col gap-4">
-							<ConnectionButton Icon={Discord} iconClassName="bg-[#5865F2]">
+							<ConnectionButton Icon={DiscordIcon} iconClassName="bg-[#5865F2]">
 								Discord
 							</ConnectionButton>
 							<ConnectionButton Icon={LinkIcon} iconClassName="bg-black-70">

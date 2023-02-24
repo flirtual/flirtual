@@ -1,11 +1,11 @@
+import { AuthProvider } from "~/components/auth-provider";
 import { SoleModelLayout } from "~/components/layout/sole-model";
-import { SsrUserProvider } from "~/components/ssr-user-provider";
 
-export default function AuthenticatedLayout({ children }: React.PropsWithChildren) {
+export default function AuthenticatedSoleModelLayout({ children }: React.PropsWithChildren) {
 	return (
 		// @ts-expect-error: Server Component
-		<SsrUserProvider emailConfirmedOptional>
+		<AuthProvider emailConfirmedOptional visibleOptional>
 			<SoleModelLayout footer={{ desktopOnly: true }}>{children}</SoleModelLayout>
-		</SsrUserProvider>
+		</AuthProvider>
 	);
 }

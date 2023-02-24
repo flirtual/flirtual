@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useId, useMemo, useState } from "react";
 
+import { ResponseUnprocessableEntityError } from "~/api";
 import { FormFieldFC, FormField } from "~/components/forms/field";
 import { entries } from "~/utilities";
 
@@ -89,11 +90,13 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 				.then(() => {
 					setFieldErrors({});
 					setErrors([]);
+
+					setInitialValues(values);
 					return;
 				})
 				.catch((reason) => {
-					if ("properties" in reason) return setFieldErrors(reason.properties);
-					setErrors([reason.message]);
+					if (!(reason instanceof ResponseUnprocessableEntityError)) setErrors([reason.message]);
+					return setFieldErrors(reason.properties);
 				});
 
 			setSubmitting(false);

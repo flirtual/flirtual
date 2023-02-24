@@ -1,11 +1,7 @@
 import { SoleModelLayout } from "~/components/layout/sole-model";
-import { SsrUserProvider } from "~/components/ssr-user-provider";
 
-export default function AuthenticatedLayout({ children }: React.PropsWithChildren) {
-	return (
-		// @ts-expect-error: Server Component
-		<SsrUserProvider emailConfirmedOptional>
-			<SoleModelLayout footer={{ desktopOnly: true }}>{children}</SoleModelLayout>
-		</SsrUserProvider>
-	);
+export default function AuthenticatedEmailConfirmedSoleModelLayout({
+	children
+}: React.PropsWithChildren) {
+	return <SoleModelLayout footer={{ desktopOnly: true }}>{children}</SoleModelLayout>;
 }
