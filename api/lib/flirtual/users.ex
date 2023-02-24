@@ -2,6 +2,7 @@ defmodule Flirtual.Users do
   import Ecto.Query
   import Ecto.Changeset
 
+  alias Ecto.Changeset
   alias Flirtual.Jwt
   alias Flirtual.{Repo, Mailer, User, Sessions, Elastic}
   alias Flirtual.User.{Session, Preferences, Connection}
@@ -69,6 +70,9 @@ defmodule Flirtual.Users do
              |> Repo.update() do
         {_, _} = Sessions.delete_all_by_user_id(user.id)
         user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
@@ -120,9 +124,12 @@ defmodule Flirtual.Users do
       with {:ok, preferences} <-
              preferences
              |> Preferences.update_changeset(attrs)
-             |> Repo.update() do
-        Elastic.User.mark_dirty(preferences.user_id)
+             |> Repo.update(),
+           {:ok, _} <- Elastic.User.mark_dirty(preferences.user_id) do
         preferences
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
@@ -149,9 +156,12 @@ defmodule Flirtual.Users do
       with {:ok, user} <-
              user
              |> change(%{deactivated_at: now})
-             |> Repo.update() do
-        Elastic.User.mark_dirty(user.id)
+             |> Repo.update(),
+           {:ok, _} <- Elastic.User.mark_dirty(user.id) do
         user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
@@ -161,9 +171,12 @@ defmodule Flirtual.Users do
       with {:ok, user} <-
              user
              |> change(%{deactivated_at: nil})
-             |> Repo.update() do
-        Elastic.User.mark_dirty(user.id)
+             |> Repo.update(),
+           {:ok, _} <- Elastic.User.mark_dirty(user.id) do
         user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
@@ -232,7 +245,7 @@ defmodule Flirtual.Users do
     |> Repo.one()
   end
 
-  def register_user_changeset(attrs) do
+  def create_user_changeset(attrs) do
     {%{},
      %{
        username: :string,
@@ -242,45 +255,50 @@ defmodule Flirtual.Users do
        notifications: :boolean
      }}
     |> cast(attrs, [:username, :email, :password, :service_agreement, :notifications])
-    |> validate_required([:username, :email, :password, :service_agreement, :notifications])
+    |> validate_required([
+      :username,
+      :email,
+      :password,
+      :service_agreement,
+      :notifications
+    ])
     |> validate_acceptance(:service_agreement)
   end
 
   def register_user(attrs) do
     Repo.transaction(fn ->
-      changeset = register_user_changeset(attrs)
-
-      case changeset.valid? do
-        false ->
-          {:error, changeset}
-
-        true ->
-          source = changeset.changes
-
-          changeset =
-            %User{}
-            |> cast(changeset.changes, [:username, :email, :password])
-            |> User.validate_unique_username()
-            |> User.validate_unique_email()
-            |> User.validate_password()
-
-          with {:ok, user} <- Repo.insert(changeset) do
-            {:ok, preferences} = Ecto.build_assoc(user, :preferences) |> Repo.insert()
-
-            {:ok, _} =
-              Ecto.build_assoc(preferences, :email_notifications, %{
-                newsletter: source[:notifications]
-              })
-              |> Repo.insert()
-
-            {:ok, _} = Ecto.build_assoc(preferences, :privacy) |> Repo.insert()
-
-            {:ok, profile} = Ecto.build_assoc(user, :profile) |> Repo.insert()
-            {:ok, _} = Ecto.build_assoc(profile, :preferences) |> Repo.insert()
-
-            user
-             |> Repo.preload(User.default_assoc())
-          end
+      with {:ok, attrs} <-
+             create_user_changeset(attrs)
+             |> apply_action(:update),
+           {:ok, user} <-
+             %User{}
+             |> cast(attrs, [:username, :email, :password])
+             |> User.validate_unique_username()
+             |> User.validate_unique_email()
+             |> User.validate_password()
+             |> Repo.insert(),
+           {:ok, preferences} <-
+             Ecto.build_assoc(user, :preferences)
+             |> Repo.insert(),
+           {:ok, _} <-
+             Ecto.build_assoc(preferences, :email_notifications, %{
+               newsletter: attrs[:notifications]
+             })
+             |> Repo.insert(),
+           {:ok, _} <-
+             Ecto.build_assoc(preferences, :privacy)
+             |> Repo.insert(),
+           {:ok, profile} <-
+             Ecto.build_assoc(user, :profile)
+             |> Repo.insert(),
+           {:ok, _} <-
+             Ecto.build_assoc(profile, :preferences)
+             |> Repo.insert() do
+        user
+        |> Repo.preload(User.default_assoc())
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
