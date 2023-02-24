@@ -53,25 +53,54 @@ defmodule Flirtual.User do
   end
 
   def visible(%User{} = user) do
+
     %{profile: profile} = user
 
     [
-      {not is_nil(user.banned_at), "account suspended", false},
-      {not is_nil(user.deactivated_at), "account deactivated", false},
-      {not is_nil(user.disabled_at), "account disabled", false},
-      {not is_nil(user.incognito_at), "account hidden", false},
-      {not is_nil(user.shadowbanned_at), "account shadow banned", true},
-      {is_nil(user.email_confirmed_at), "email not verified", false},
-      {is_nil(user.born_at), "birthday not available", false},
-      {String.length(profile.biography) <= 48, "biography too short", false},
-      {length(profile.images) <= 1, "missing profile pictures", false}
+      {
+        not is_nil(user.banned_at),
+        %{reason: "account suspended"}
+      },
+      {
+        not is_nil(user.deactivated_at),
+        %{reason: "account deactivated", to: "/settings/deactivate"}
+      },
+      {
+        not is_nil(user.disabled_at),
+        %{reason: "account disabled"}
+      },
+      {
+        not is_nil(user.incognito_at),
+        %{reason: "account hidden"}
+      },
+      {
+        not is_nil(user.shadowbanned_at),
+        %{reason: "account shadow banned", silent: true}
+      },
+      {
+        is_nil(user.email_confirmed_at),
+        %{reason: "email not verified", to: "/confirm-email"}
+      },
+      {
+        is_nil(user.born_at),
+        %{reason: "birthday not available", to: "/onboarding/2"}
+      },
+      {
+        is_nil(profile.biography) or String.length(profile.biography) <= 48,
+        %{reason: "biography too short", to: "/onboarding/3"}
+      },
+      {
+        length(profile.images) == 0,
+        %{reason: "missing profile pictures", to: "/onboarding/3"}
+      }
     ]
-    |> Enum.map_reduce(true, fn {condition, message, silent}, acc ->
+    |> Enum.map_reduce(true, fn {condition, value}, acc ->
       if(condition,
-        do: {{message, silent}, false},
+        do: {value, false},
         else: {nil, if(acc, do: true, else: false)}
       )
-    end) |> then(fn ({errors, visible}) ->
+    end)
+    |> then(fn {errors, visible} ->
       errors = errors |> Enum.filter(&(not is_nil(&1)))
       if(visible, do: {:ok, user}, else: {:error, errors})
     end)
@@ -126,7 +155,7 @@ defmodule Flirtual.User do
   def validate_username(changeset) do
     changeset
     |> validate_required([:username])
-    |> validate_length(:username, max: 160)
+    |> validate_length(:username, min: 3, max: 32)
   end
 
   def validate_unique_username(changeset) do

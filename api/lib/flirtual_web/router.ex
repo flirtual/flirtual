@@ -124,6 +124,9 @@ defmodule FlirtualWeb.Router do
           get "/", UsersController, :get
           post "/", UsersController, :update
 
+          get "/visible", UsersController, :visible
+
+
           post "/password", UsersController, :update_password
 
           get "/connections", UsersController, :list_connections

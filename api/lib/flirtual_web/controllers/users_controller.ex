@@ -76,6 +76,22 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def visible(conn, %{"user_id" => id}) do
+    user = Users.get(id)
+
+    if is_nil(user) or Policy.cannot?(conn, :read, user) do
+      {:error, {:not_found, "User not found", %{user_id: id}}}
+    else
+      conn
+      |> json(
+        case User.visible(user) do
+          {:error, errors} -> %{visible: length(errors) === 0, reasons: errors |> Enum.filter(& !&1[:silent])}
+          {:ok, _} -> %{visible: true, reasons: []}
+        end
+      )
+    end
+  end
+
   def update(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
 
