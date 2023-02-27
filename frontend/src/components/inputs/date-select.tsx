@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { DrawerOrPopover } from "../drawer-or-popover";
 
@@ -16,8 +16,13 @@ function toDateString(value: Date): string {
 }
 
 function fromDateString(value: string): globalThis.Date {
-	const [year, month, day] = value.split("/");
-	return new Date(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day));
+	const values = value.split("/");
+
+	const day = Number.parseInt(values[0]),
+		month = Number.parseInt(values[1]) - 1,
+		year = Number.parseInt(values[2]);
+
+	return new Date(year, month, day);
 }
 
 export type InputDateSelectProps = Pick<InputCalendarProps, "value" | "onChange">;
@@ -25,6 +30,8 @@ export type InputDateSelectProps = Pick<InputCalendarProps, "value" | "onChange"
 export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	const [inputValue, setInputValue] = useState(toDateString(props.value));
 	const [drawerVisible, setDrawerVisible] = useState(false);
+
+	useEffect(() => setDrawerVisible(true), [inputValue]);
 
 	const progressDate = useCallback(
 		(type: number, direction: -1 | 1) => {
