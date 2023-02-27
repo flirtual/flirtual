@@ -14,6 +14,7 @@ export const RegisterForm: React.FC = () => {
 
 	return (
 		<Form
+			withCaptcha
 			className="flex flex-col gap-8"
 			formErrorMessages={false}
 			fields={{
@@ -23,8 +24,8 @@ export const RegisterForm: React.FC = () => {
 				serviceAgreement: false,
 				notifications: true
 			}}
-			onSubmit={async (values) => {
-				await api.user.create(values);
+			onSubmit={async (values, { captcha }) => {
+				await api.user.create({ ...values, captcha });
 				router.push(urls.onboarding(1));
 			}}
 		>

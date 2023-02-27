@@ -4,6 +4,7 @@
     "dev": "next dev -H 127.0.0.1"
   },
   "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^1.4.4",
     "@heroicons/react": "^2.0.16",
     "@tailwindcss/forms": "^0.5.3",
     "byte-size": "^8.1.0",
@@ -11,6 +12,7 @@
     "countries-list": "^2.6.1",
     "csstype": "^3.1.1",
     "fast-fuzzy": "^1.12.0",
+    "framer-motion": "^10.0.0",
     "is-hotkey": "^0.2.0",
     "jotai": "^2.0.2",
     "next": "13.2.0",
@@ -21,6 +23,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-portal": "^4.2.2",
     "react-quill": "^2.0.0",
     "sanitize-html": "^2.10.0",
     "sass": "^1.58.3",
@@ -30,6 +33,7 @@
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^1.4.2",
+    "@hcaptcha/types": "^1.0.3",
     "@next/eslint-plugin-next": "^13.2.1",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
@@ -39,6 +43,7 @@
     "@types/quill": "^2.0.10",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/react-portal": "^4.0.4",
     "@types/sanitize-html": "^2.8.0",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.34.0",

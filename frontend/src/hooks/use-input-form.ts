@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useId, useMemo, useState } from "react";
+import React, { createContext, RefObject, useContext, useId, useMemo, useState } from "react";
 
 import { ResponseUnprocessableEntityError } from "~/api";
 import { FormFieldFC, FormField } from "~/components/forms/field";
+import { FormCaptcha, FormCaptchaRef } from "~/components/forms/captcha";
 import { entries } from "~/utilities";
 
 export interface FormFieldsDefault {
@@ -16,6 +17,8 @@ export type InputFormSubmitFunction<T extends FormFieldsDefault> = (
 
 export interface InputFormOptions<T extends FormFieldsDefault> {
 	requireChange?: boolean | Array<keyof T>;
+	withCaptcha?: boolean;
+	captchaRef: RefObject<FormCaptchaRef>;
 	onSubmit: InputFormSubmitFunction<T>;
 	fields: T;
 }
@@ -42,6 +45,7 @@ export interface InputFormField<T, K extends keyof T> {
 
 export interface UseInputForm<T extends FormFieldsDefault> {
 	fields: { [K in keyof T]: InputFormField<T, K> };
+	captcha: string;
 	errors: Array<string>;
 	props: React.ComponentProps<"form">;
 	buttonProps: React.ComponentProps<"button">;
@@ -66,11 +70,13 @@ export function useFormContext<T extends FormFieldsDefault>() {
 export function useInputForm<T extends { [s: string]: unknown }>(
 	options: InputFormOptions<T>
 ): UseInputForm<T> {
-	const { onSubmit, requireChange = true } = options;
+	const { onSubmit, requireChange = true, withCaptcha = false, captchaRef } = options;
 	const formId = useId();
 
 	const [initialValues, setInitialValues] = useState(options.fields);
 	const [values, setValues] = useState(initialValues);
+
+	const [captcha, setCaptcha] = useState<string>("");
 
 	const [errors, setErrors] = useState<Array<string>>([]);
 	const [fieldErrors, setFieldErrors] = useState<FieldErrors<T>>({});
@@ -86,7 +92,13 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 			event.preventDefault();
 			setSubmitting(true);
 
-			await onSubmit(values, form, event)
+			const captcha =
+				withCaptcha && captchaRef.current
+					? (await captchaRef.current.execute({ async: true })).response
+					: "";
+
+			setCaptcha(captcha);
+			await onSubmit(values, { ...form, captcha }, event)
 				.then(() => {
 					setFieldErrors({});
 					setErrors([]);
@@ -95,10 +107,15 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					return;
 				})
 				.catch((reason) => {
-					if (!(reason instanceof ResponseUnprocessableEntityError)) setErrors([reason.message]);
-					return setFieldErrors(reason.properties);
+					if (reason instanceof ResponseUnprocessableEntityError) {
+						setFieldErrors(reason.properties);
+						return setErrors([]);
+					}
+
+					setErrors([reason.message]);
 				});
 
+			if (withCaptcha) captchaRef.current?.resetCaptcha();
 			setSubmitting(false);
 		}
 	};
@@ -156,12 +173,14 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const form = {
 		fields,
+		captcha,
 		errors,
 		props,
 		buttonProps,
 		submitting,
 		changes,
 		FormField,
+		FormCaptcha,
 		setFieldErrors,
 		setSubmitting,
 		reset

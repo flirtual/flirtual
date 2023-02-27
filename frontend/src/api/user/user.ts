@@ -31,6 +31,7 @@ export interface CreateUserOptions {
 	password: string;
 	notifications: boolean;
 	serviceAgreement: boolean;
+	captcha: string;
 }
 
 export interface UserVisibility {

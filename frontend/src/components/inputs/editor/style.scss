@@ -89,7 +89,7 @@
     @apply relative;
 
     .ql-editor {
-      @apply h-64 overflow-y-auto bg-white-40 text-black-80 p-4 font-nunito outline-none text-base;
+      @apply h-64 overflow-y-auto bg-white-40 text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-none text-base;
 
       tab-size: 4;
       -moz-tab-size: 4;

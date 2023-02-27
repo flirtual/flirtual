@@ -38,9 +38,7 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 					<FormField name="email">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps} hint="(or email)">
-									Username
-								</InputLabel>
+								<InputLabel {...labelProps}>Email address</InputLabel>
 								<InputText {...props} type="email" />
 							</>
 						)}

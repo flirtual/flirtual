@@ -137,7 +137,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"focusable-within select-none rounded-3xl bg-white-20 p-4 font-nunito text-black-70 shadow-brand-1 dark:bg-black-60 dark:text-white-20",
+				"focusable-within h-fit select-none rounded-3xl bg-white-20 p-4 font-nunito text-black-70 dark:bg-black-60 dark:text-white-20",
 				elementProps.className
 			)}
 		>
@@ -174,7 +174,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 				</div>
 
 				<div className="-mx-2">
-					<table className="w-full text-black-70 dark:text-white-30">
+					<table className="w-full text-black-70 dark:text-white-10">
 						<thead>
 							<tr>
 								{["S", "M", "T", "W", "T", "F", "S"].map((name, idx) => (
@@ -209,7 +209,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 														type="button"
 														className={twMerge(
 															"focusable h-10 w-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
-															!currentMonth && "text-black-50 dark:text-white-50",
+															!currentMonth && "text-black-50 dark:text-black-10",
 															dateEqual(props.value, date) && "bg-brand-gradient text-white-20"
 														)}
 														onClick={() => onChange(date)}
