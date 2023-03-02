@@ -2,6 +2,8 @@ defmodule Flirtual.User.Profile do
   use Flirtual.Schema
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Policy
 
+  import Flirtual.Utilities
+
   import Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
@@ -27,6 +29,9 @@ defmodule Flirtual.User.Profile do
   def get_personality_questions() do
     @personality_questions
   end
+
+  @domsub_values [:dominant, :submissive, :switch]
+  @monopoly_values [:monogamous, :polygamous]
 
   def get_domsub_opposite(domsub) do
     case domsub do
@@ -54,8 +59,8 @@ defmodule Flirtual.User.Profile do
 
     field :display_name, :string
     field :biography, :string
-    field :domsub, Ecto.Enum, values: [:dominant, :submissive, :switch]
-    field :monopoly, Ecto.Enum, values: [:monogamous, :polygamous]
+    field :domsub, Ecto.Enum, values: @domsub_values
+    field :monopoly, Ecto.Enum, values: @monopoly_values
     field :country, :string
     field :openness, :integer, default: 0
     field :conscientiousness, :integer, default: 0
@@ -64,6 +69,7 @@ defmodule Flirtual.User.Profile do
     field :serious, :boolean
     field :new, :boolean
     field :languages, {:array, :string}
+    field :custom_interests, {:array, :string}
 
     has_one :preferences, Preferences
     has_one :custom_weights, CustomWeights
@@ -100,8 +106,7 @@ defmodule Flirtual.User.Profile do
 
     has_many :images, Image
     many_to_many :blocked, Profile, join_through: Profile.Blocks
-    many_to_many :liked, Profile, join_through: Profile.Likes
-    many_to_many :passed, Profile, join_through: Profile.Passes
+    many_to_many :liked_and_passed, Profile, join_through: Profile.LikesAndPasses
 
     timestamps(inserted_at: false)
   end
@@ -115,66 +120,83 @@ defmodule Flirtual.User.Profile do
       :platforms,
       :interests,
       :games,
-      preferences: Flirtual.User.Profile.Preferences.default_assoc(),
+      preferences: Preferences.default_assoc(),
       images: from(image in Image, order_by: image.order)
     ]
   end
 
-  def update_changeset(%User.Profile{} = profile, attrs) do
-    sexuality_ids = attrs["sexuality"] || Enum.map(profile.sexuality, & &1.id)
-    sexualities = Attribute.by_ids(sexuality_ids, "sexuality")
+  def changeset(%Profile{} = profile, attrs) do
+    attributes =
+      Attribute.by_ids(
+        [
+          attrs["sexuality"] || Enum.map(profile.sexuality, & &1.id),
+          attrs["kinks"] || Enum.map(profile.kinks, & &1.id),
+          attrs["gender"] || Enum.map(profile.gender, & &1.id),
+          attrs["games"] || Enum.map(profile.games, & &1.id),
+          attrs["platforms"] || Enum.map(profile.platforms, & &1.id),
+          attrs["interests"] || Enum.map(profile.interests, & &1.id)
+        ],
+        :type
+      )
 
-    kink_ids = attrs["kinks"] || Enum.map(profile.kinks, & &1.id)
-    kinks = Attribute.by_ids(kink_ids, "kink")
-
-    gender_ids = attrs["gender"] || Enum.map(profile.gender, & &1.id)
-    genders = Attribute.by_ids(gender_ids, "gender")
-
-    game_ids = attrs["games"] || Enum.map(profile.games, & &1.id)
-    games = Attribute.by_ids(game_ids, "game")
-
-    platform_ids = attrs["platforms"] || Enum.map(profile.platforms, & &1.id)
-    platforms = Attribute.by_ids(platform_ids, "platform")
-
-    interest_ids = attrs["interests"] || Enum.map(profile.interests, & &1.id)
-    interests = Attribute.by_ids(interest_ids, "interest")
-
-    profile
-    |> cast(attrs, [
-      :display_name,
-      :biography,
-      :serious,
-      :new,
-      :country,
-      :domsub,
-      :monopoly,
-      :languages
-    ])
-    |> put_assoc(:gender, genders)
-    |> validate_length(:gender, min: 1, max: 4)
-    |> put_assoc(:sexuality, sexualities)
-    |> validate_length(:sexuality, min: 1, max: 3)
-    |> put_assoc(:kinks, kinks)
-    |> validate_length(:kinks, min: 0, max: 8)
-    |> put_assoc(:games, games)
-    |> validate_length(:games, min: 1, max: 5)
-    |> put_assoc(:platforms, platforms)
-    |> validate_length(:platforms, min: 1, max: 8)
-    |> put_assoc(:interests, interests)
-    |> validate_length(:interests, min: 2, max: 7)
-    |> validate_length(:display_name, min: 3, max: 32)
-    |> validate_length(:biography, min: 48)
-    |> validate_length(:languages, min: 1, max: 3)
-    |> validate_subset(:languages, Languages.list(:iso_639_1),
-      message: "has an unrecognized language"
+    cast(profile, %{}, [])
+    |> append_changeset(
+      cast_arbitrary(
+        %{
+          display_name: :string,
+          biography: :string,
+          serious: :boolean,
+          new: :boolean,
+          country: :string,
+          domsub: :string,
+          monopoly: :string,
+          languages: {:array, :string},
+          custom_interests: {:array, :string},
+          gender: {:array, :string},
+          sexuality: {:array, :string},
+          kinks: {:array, :string},
+          platforms: {:array, :string},
+          interests: {:array, :string},
+          games: {:array, :string}
+        },
+        attrs
+      )
+      |> validate_length(:display_name, min: 3, max: 32)
+      |> validate_length(:biography, min: 48)
+      |> validate_length(:languages, min: 1, max: 3)
+      |> validate_subset(:languages, Languages.list(:iso_639_1),
+        message: "has an unrecognized language"
+      )
+      |> validate_inclusion(:country, Countries.list(:iso_3166_1),
+        message: "is an unrecognized country"
+      )
+      |> validate_subset(:domsub, @domsub_values)
+      |> validate_subset(:monopoly, @monopoly_values)
+      |> validate_length(:gender, min: 1, max: 4)
+      |> validate_length(:sexuality, min: 1, max: 3)
+      |> validate_length(:kinks, min: 1, max: 8)
+      |> validate_length(:games, min: 1, max: 5)
+      |> validate_length(:platforms, min: 1, max: 8)
+      |> validate_length(:interests, min: 2, max: 7),
+      &map_exclude_keys(&1, [
+        :gender,
+        :sexuality,
+        :kinks,
+        :games,
+        :platforms,
+        :interests
+      ])
     )
-    |> validate_inclusion(:country, Countries.list(:iso_3166_1),
-      message: "is an unrecognized country"
-    )
+    |> put_assoc(:gender, attributes["gender"] || [])
+    |> put_assoc(:sexuality, attributes["sexuality"] || [])
+    |> put_assoc(:kinks, attributes["kink"] || [])
+    |> put_assoc(:games, attributes["game"] || [])
+    |> put_assoc(:platforms, attributes["platform"] || [])
+    |> put_assoc(:interests, attributes["interest"] || [])
   end
 
-  def update_personality_changeset(%Profile{} = profile, attrs) do
-    profile
+  def update_personality_changeset(changeset, attrs) do
+    changeset
     |> cast(
       attrs,
       [:openness, :conscientiousness, :agreeableness] ++
@@ -234,6 +256,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
         :kinks,
         :games,
         :languages,
+        :custom_interests,
         :platforms,
         :interests,
         :preferences,

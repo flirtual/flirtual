@@ -185,7 +185,8 @@ defmodule Flirtual.Languages do
     %{iso_639_1: "yi", name: "Yiddish"},
     %{iso_639_1: "yo", name: "Yoruba"},
     %{iso_639_1: "za", name: "Zhuang, Chuang"},
-    %{iso_639_1: "zu", name: "Zulu"}
+    %{iso_639_1: "zu", name: "Zulu"},
+    %{iso_639_1: "sgn", name: "Sign language"}
   ]
 
   @language_codes Enum.map(@languages, & &1[:iso_639_1])

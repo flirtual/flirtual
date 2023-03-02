@@ -1,6 +1,7 @@
 defmodule Flirtual.User.Profile.Preferences do
   use Flirtual.Schema
 
+  import Flirtual.Utilities
   import Ecto.Changeset
 
   alias Flirtual.User.Profile
@@ -32,24 +33,36 @@ defmodule Flirtual.User.Profile.Preferences do
     ]
   end
 
-  def update_changeset(%Profile.Preferences{} = preferences, attrs) do
-    gender_ids = attrs["gender"] || Enum.map(preferences.gender, & &1.id)
-    genders = Attribute.by_ids(gender_ids, "gender")
+  def changeset(%Profile.Preferences{} = preferences, attrs) do
+    attributes =
+      Attribute.by_ids(
+        [
+          attrs["gender"] || Enum.map(preferences.gender, & &1.id),
+          attrs["kinks"] || Enum.map(preferences.kinks, & &1.id)
+        ],
+        :type
+      )
 
-    kink_ids = attrs["kinks"] || Enum.map(preferences.kinks, & &1.id)
-    kinks = Attribute.by_ids(kink_ids, "kink")
-
-    preferences
-    |> cast(attrs, [
-      :agemin,
-      :agemax,
-    ])
-    |> put_assoc(:gender, genders)
-    |> validate_length(:gender, min: 1, max: 3)
-    |> put_assoc(:kinks, kinks)
+    cast(preferences, attrs, [])
+    |> append_changeset(
+      cast_arbitrary(
+        %{
+          agemin: :integer,
+          agemax: :integer,
+          gender: {:array, :string},
+          kinks: {:array, :string},
+        },
+        attrs
+      )
+      |> validate_number(:agemin, greater_than_or_equal_to: 18, less_than_or_equal_to: 128)
+      |> validate_number(:agemax, greater_than_or_equal_to: 18, less_than_or_equal_to: 128)
+      |> validate_length(:gender, min: 1, max: 3),
+      &map_exclude_keys(&1, [:gender, :kinks])
+    )
+    |> put_assoc(:gender, attributes["gender"] || [])
+    |> put_assoc(:kinks, attributes["kinks"] || [])
   end
 end
-
 
 defimpl Jason.Encoder, for: Flirtual.User.Profile.Preferences do
   def encode(value, opts) do

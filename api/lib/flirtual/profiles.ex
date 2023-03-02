@@ -2,6 +2,8 @@ defmodule Flirtual.Profiles do
   import Ecto.Query
   import Ecto.Changeset
 
+  import Flirtual.Utilities
+
   alias Ecto.UUID
   alias Flirtual.{Repo, Elastic}
   alias Flirtual.User.{Profile}
@@ -46,7 +48,7 @@ defmodule Flirtual.Profiles do
 
   def update(%Profile{} = profile, attrs) do
     Repo.transaction(fn ->
-      with {:ok, profile} <- Repo.update(Profile.update_changeset(profile, attrs)),
+      with {:ok, profile} <- Profile.changeset(profile, attrs) |> Repo.update(),
            {:ok, _} <- Elastic.User.mark_dirty(profile.user_id) do
         profile
       else
@@ -60,7 +62,7 @@ defmodule Flirtual.Profiles do
     Repo.transaction(fn ->
       with {:ok, preferences} <-
              preferences
-             |> Profile.Preferences.update_changeset(attrs)
+             |> Profile.Preferences.changeset(attrs)
              |> Repo.update(),
            {:ok, _} <-
              Repo.preload(preferences, profile: from(profile in Profile, select: profile.user_id))
@@ -75,7 +77,7 @@ defmodule Flirtual.Profiles do
 
   def update_custom_weights(%Profile.CustomWeights{} = custom_weights, attrs) do
     custom_weights
-    |> Profile.CustomWeights.update_changeset(attrs)
+    |> Profile.CustomWeights.changeset(attrs)
     |> Repo.insert_or_update()
   end
 
@@ -112,25 +114,41 @@ defmodule Flirtual.Profiles do
   end
 
   def update_images(%Profile{} = profile, image_ids) do
-    changesets =
-      profile.images
-      |> Enum.map(fn image ->
-        new_order = Enum.find_index(image_ids, &(&1 === image.id))
-        change(image, order: new_order)
-      end)
-
     Repo.transaction(fn repo ->
-      changesets
-      |> Enum.map(fn changeset ->
-        if get_field(changeset, :order) !== nil do
-          changeset |> repo.update!()
-        else
-          changeset |> repo.delete!()
-        end
-      end)
-    end)
+      with {:ok, _} <-
+             cast_arbitrary(
+               %{
+                 image_ids: {:array, :string}
+               },
+               %{image_ids: image_ids}
+             )
+             |> validate_length(:image_ids, min: 1, max: 16)
+             |> apply_action(:update),
+           images <-
+             Enum.map(profile.images, fn image ->
+               new_order = Enum.find_index(image_ids, &(&1 === image.id))
 
-    {:ok, Enum.map(changesets, &apply_changes/1)}
+               change(image, order: new_order)
+               |> then(fn changeset ->
+                 with {:ok, image} <-
+                        if(get_field(changeset, :order) !== nil,
+                          do: changeset |> repo.update(),
+                          else: changeset |> repo.delete()
+                        ) do
+                   image
+                 else
+                   {:error, reason} -> Repo.rollback(reason)
+                   reason -> Repo.rollback(reason)
+                 end
+               end)
+             end)
+             |> Enum.filter(&(&1.order !== nil)) do
+        images
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   def query_by_id(query, id) do

@@ -22,11 +22,8 @@ defmodule Flirtual.Attribute do
     |> Repo.one()
   end
 
-  def by_ids(attribute_ids, attribute_type) do
-    Attribute
-    |> where([attribute], attribute.id in ^attribute_ids)
-    |> where([attribute], attribute.type == ^attribute_type)
-    |> Repo.all()
+  def by_ids(attribute_ids, :type) do
+    attribute_ids |> List.flatten() |> by_ids() |> Enum.group_by(& &1.type)
   end
 
   def by_ids(attribute_ids) do

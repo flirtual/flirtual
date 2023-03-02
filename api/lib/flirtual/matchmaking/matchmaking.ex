@@ -1,5 +1,7 @@
 defmodule Flirtual.Matchmaking do
   import Flirtual.Utilities
+  import Ecto.Changeset
+  import Ecto.Query
 
   alias Flirtual.User.Profile
   alias Flirtual.Repo
@@ -9,8 +11,31 @@ defmodule Flirtual.Matchmaking do
   def compute_prospects(%User{} = user) do
     query = generate_query(user)
 
-    Elasticsearch.post!(Flirtual.Elastic, "/users/_search", query)["hits"]["hits"]
-    |> Enum.map(& &1["_id"])
+    with {:ok, resp} <- Elastic.User.search(query) do
+      resp["hits"]["hits"] |> Enum.map(& &1["_id"])
+    end
+  end
+
+  def respond_profile(%User{} = source_user, %User{} = target_user, type) do
+    Repo.transaction(fn repo ->
+      with {:ok, _} <-
+             %Profile.LikesAndPasses{}
+             |> change(%{
+               profile_id: source_user.profile.id,
+               target_id: target_user.profile.id,
+               type: type,
+               kind: :love
+             })
+             |> unsafe_validate_unique([:profile_id, :target_id, :kind], repo,
+               error_key: :user_id,
+               message: "profile already responded"
+             )
+             |> Repo.insert() do
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   def generate_query(%User{} = user) do
@@ -39,8 +64,7 @@ defmodule Flirtual.Matchmaking do
                 "values" =>
                   List.flatten([
                     user.id,
-                    profile.liked,
-                    profile.passed,
+                    profile.liked_and_passed,
                     profile.blocked
                   ])
               }
@@ -224,14 +248,17 @@ defmodule Flirtual.Matchmaking do
   end
 
   def query(:nsfw, %User{} = user) do
-    %{
-      "term" => %{
-        "nsfw" => %{
-          "value" => user.preferences.nsfw,
-          "boost" => 5
+    if(user.preferences.nsfw,
+      do: %{
+        "term" => %{
+          "nsfw" => %{
+            "value" => user.preferences.nsfw,
+            "boost" => 5
+          }
         }
-      }
-    }
+      },
+      else: []
+    )
   end
 
   def query(:kinks, %User{} = user) do
@@ -358,9 +385,17 @@ defmodule Flirtual.Matchmaking do
 
     [
       # $b must be looking for one or more of $a’s genders.
-      %{"terms" => %{"gender_lf" => gender |> Enum.map(& &1.id)}},
+      %{
+        "terms" => %{
+          "gender_lf" => gender |> Enum.filter(& &1.metadata["simple"]) |> Enum.map(& &1.id)
+        }
+      },
       # $a must be looking for one or more of $b’s genders.
-      %{"terms" => %{"gender" => preferences.gender |> Enum.map(& &1.id)}}
+      %{
+        "terms" => %{
+          "gender" => preferences.gender |> Enum.map(& &1.id)
+        }
+      }
     ]
   end
 end

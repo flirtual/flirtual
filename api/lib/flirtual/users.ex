@@ -2,7 +2,6 @@ defmodule Flirtual.Users do
   import Ecto.Query
   import Ecto.Changeset
 
-  alias Ecto.Changeset
   alias Flirtual.Jwt
   alias Flirtual.{Repo, Mailer, User, Sessions, Elastic}
   alias Flirtual.User.{Session, Preferences, Connection}
@@ -18,6 +17,13 @@ defmodule Flirtual.Users do
     |> where([user], user.username == ^username)
     |> preload(^User.default_assoc())
     |> Repo.one()
+  end
+
+  def by_ids(user_ids) do
+    User
+    |> where([user], user.id in ^user_ids)
+    |> preload(^User.default_assoc())
+    |> Repo.all()
   end
 
   def get_by_email(email)
@@ -293,7 +299,8 @@ defmodule Flirtual.Users do
              |> Repo.insert(),
            {:ok, _} <-
              Ecto.build_assoc(profile, :preferences)
-             |> Repo.insert() do
+             |> Repo.insert(),
+           {:ok, _} <- send_email_confirmation(user) do
         user
         |> Repo.preload(User.default_assoc())
       else

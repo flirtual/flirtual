@@ -95,10 +95,14 @@ defmodule FlirtualWeb.Router do
 
         get "/", MatchmakingController, :list_prospects
         get "/inspect", MatchmakingController, :inspect_query
+
+        post "/respond", MatchmakingController, :respond
       end
 
       scope "/users" do
         post "/", UsersController, :create
+
+        post "/bulk", UsersController, :bulk
 
         scope "/:username/username" do
           pipe_through([:require_authenticated_user, :require_valid_user])
@@ -108,6 +112,11 @@ defmodule FlirtualWeb.Router do
 
         scope "/:user_id" do
           pipe_through :require_authenticated_user
+
+          get "/", UsersController, :get
+          post "/", UsersController, :update
+
+          get "/visible", UsersController, :visible
 
           post "/deactivate", UsersController, :deactivate
           delete "/deactivate", UsersController, :reactivate
@@ -120,12 +129,6 @@ defmodule FlirtualWeb.Router do
               post "/resend", UsersController, :resend_confirm_email
             end
           end
-
-          get "/", UsersController, :get
-          post "/", UsersController, :update
-
-          get "/visible", UsersController, :visible
-
 
           post "/password", UsersController, :update_password
 

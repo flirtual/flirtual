@@ -24,7 +24,6 @@ defmodule Flirtual.User do
     field :deactivated_at, :naive_datetime
     field :banned_at, :naive_datetime
     field :shadowbanned_at, :naive_datetime
-    field :disabled_at, :naive_datetime
     field :incognito_at, :naive_datetime
 
     has_many :connections, Flirtual.User.Connection
@@ -53,7 +52,6 @@ defmodule Flirtual.User do
   end
 
   def visible(%User{} = user) do
-
     %{profile: profile} = user
 
     [
@@ -66,10 +64,6 @@ defmodule Flirtual.User do
         %{reason: "account deactivated", to: "/settings/deactivate"}
       },
       {
-        not is_nil(user.disabled_at),
-        %{reason: "account disabled"}
-      },
-      {
         not is_nil(user.incognito_at),
         %{reason: "account hidden"}
       },
@@ -77,22 +71,55 @@ defmodule Flirtual.User do
         not is_nil(user.shadowbanned_at),
         %{reason: "account shadow banned", silent: true}
       },
+      # onboarding validations
+      ## onboarding/1
       {
-        is_nil(user.email_confirmed_at),
-        %{reason: "email not verified", to: "/confirm-email"}
+        length(profile.preferences.gender) == 0,
+        %{reason: "missing gender preferences", to: "/onboarding/1"}
       },
+      ## onboarding/2
       {
         is_nil(user.born_at),
-        %{reason: "birthday not available", to: "/onboarding/2"}
+        %{reason: "missing birthday", to: "/onboarding/2"}
       },
       {
+        length(profile.gender) == 0,
+        %{reason: "missing profile genders", to: "/onboarding/2"}
+      },
+      {
+        length(profile.sexuality) == 0,
+        %{reason: "missing profile sexuality", to: "/onboarding/2"}
+      },
+      {
+        is_nil(profile.country),
+        %{reason: "missing profile country", to: "/onboarding/2"}
+      },
+      {
+        length(profile.languages) == 0,
+        %{reason: "missing profile languages", to: "/onboarding/2"}
+      },
+      {
+        length(profile.platforms) == 0,
+        %{reason: "missing profile platforms", to: "/onboarding/2"}
+      },
+      {
+        length(profile.interests) == 0,
+        %{reason: "missing profile interests", to: "/onboarding/2"}
+      },
+      ## onboarding/3
+      {
         is_nil(profile.biography) or String.length(profile.biography) <= 48,
-        %{reason: "biography too short", to: "/onboarding/3"}
+        %{reason: "profile biography too short", to: "/onboarding/3"}
       },
       {
         length(profile.images) == 0,
         %{reason: "missing profile pictures", to: "/onboarding/3"}
-      }
+      },
+      # email verification
+      {
+        is_nil(user.email_confirmed_at),
+        %{reason: "email not verified", to: "/confirm-email"}
+      },
     ]
     |> Enum.map_reduce(true, fn {condition, value}, acc ->
       if(condition,

@@ -1,35 +1,18 @@
 defmodule Flirtual.Elastic do
   use Elasticsearch.Cluster, otp_app: :flirtual
 
-  def dev_seed do
+  def search(index, query) do
+    Elasticsearch.post(Flirtual.Elastic, "/" <> index <> "/_search", query)
+  end
+
+  def recreate_index() do
     Elasticsearch.delete(Flirtual.Elastic, "/users")
 
-    IO.inspect(
-      Elasticsearch.Index.create_from_file(
-        Flirtual.Elastic,
-        "users",
-        "priv/elasticsearch/users.json"
-      )
+    Elasticsearch.Index.create_from_file(
+      Flirtual.Elastic,
+      "users",
+      "priv/elasticsearch/users.json"
     )
-
-    users =
-      File.read!("priv/elasticsearch/out.json")
-      |> Jason.decode!()
-      |> Enum.chunk_every(500)
-
-    for chunk <- users do
-      body =
-        (Enum.map(chunk, &[%{"create" => %{"_id" => &1["id"]}}, &1])
-         |> List.flatten()
-         |> Enum.map(&Jason.encode!(&1))
-         |> Enum.join("\n")) <> "\n"
-
-      Elasticsearch.post!(
-        Flirtual.Elastic,
-        "/users/_bulk",
-        body
-      )
-    end
   end
 
   def bulk_changes_body(changes) do
@@ -74,8 +57,6 @@ defmodule Flirtual.Elastic do
           end)
           |> then(&{:error, Elasticsearch.Exception.exception(&1)})
         end
-
-        IO.inspect(resp)
       end)
     end)
   end

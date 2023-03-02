@@ -12,18 +12,11 @@ defmodule Flirtual.Elastic.User do
     User.default_assoc() ++
       [
         profile: [
-          liked:
+          liked_and_passed:
             from(profile in Profile,
-              join: like in Profile.Likes,
+              join: like in Profile.LikesAndPasses,
               join: target_profile in Profile,
               on: [id: like.target_id],
-              select: target_profile.user_id
-            ),
-          passed:
-            from(profile in Profile,
-              join: pass in Profile.Passes,
-              join: target_profile in Profile,
-              on: [id: pass.target_id],
               select: target_profile.user_id
             ),
           blocked:
@@ -47,6 +40,8 @@ defmodule Flirtual.Elastic.User do
       |> Repo.all()
       |> Enum.map(fn item ->
         document_id = item.user.id
+        document = Elasticsearch.Document.encode(item.user)
+
         type =
           if(User.visible?(item.user),
             do:
@@ -57,10 +52,12 @@ defmodule Flirtual.Elastic.User do
             else: :delete
           )
 
+        document = if(type !== :delete, do: document, else: nil)
+
         {
           type,
           document_id,
-          Elasticsearch.Document.encode(item.user)
+          document
         }
       end)
       |> then(fn changes ->
@@ -100,9 +97,7 @@ defmodule Flirtual.Elastic.User do
   end
 
   def search(query) do
-    with {:ok, resp} <- Elasticsearch.post(Flirtual.Elastic, "/users/_search", query) do
-      resp["hits"]["hits"]
-    end
+    Elastic.search("users", query)
   end
 
   def query_by_user_id(query, user_id) do
@@ -131,12 +126,12 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
         %{
           id: user.id,
           dob: user.born_at,
-          agemin: profile.preferences.agemin,
-          agemax: profile.preferences.agemax,
+          agemin: profile.preferences.agemin || 18,
+          agemax: profile.preferences.agemax || 128,
           openness: profile.openness,
           conscientiousness: profile.conscientiousness,
           agreeableness: profile.agreeableness,
-          gender: profile.gender |> Enum.map(& &1.id),
+          gender: profile.gender |> Enum.filter(& &1.metadata["simple"]) |> Enum.map(& &1.id),
           gender_lf: profile.preferences.gender |> Enum.map(& &1.id),
           custom_interests: [],
           default_interests:
@@ -156,8 +151,7 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           monopoly: profile.monopoly,
           serious: profile.serious,
           nsfw: user.preferences.nsfw,
-          liked: profile.liked,
-          passed: profile.passed,
+          liked: profile.liked_and_passed |> Enum.filter(&(&1.type === :like)),
           blocked: profile.blocked
         },
         if(user.preferences.nsfw,

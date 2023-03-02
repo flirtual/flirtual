@@ -76,6 +76,19 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def bulk(conn, %{"_json" => user_ids}) do
+    conn
+    |> json(
+      Users.by_ids(user_ids)
+      |> Enum.map(
+        &if(not is_nil(&1) and Policy.can?(conn, :read, &1),
+          do: Policy.transform(conn, &1),
+          else: nil
+        )
+      ) |> Enum.sort()
+    )
+  end
+
   def visible(conn, %{"user_id" => id}) do
     user = Users.get(id)
 
@@ -85,8 +98,11 @@ defmodule FlirtualWeb.UsersController do
       conn
       |> json(
         case User.visible(user) do
-          {:error, errors} -> %{visible: length(errors) === 0, reasons: errors |> Enum.filter(& !&1[:silent])}
-          {:ok, _} -> %{visible: true, reasons: []}
+          {:error, errors} ->
+            %{visible: length(errors) === 0, reasons: errors |> Enum.filter(&(!&1[:silent]))}
+
+          {:ok, _} ->
+            %{visible: true, reasons: []}
         end
       )
     end
