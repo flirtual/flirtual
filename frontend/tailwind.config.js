@@ -11,6 +11,7 @@ const colors = {
 	white: {
 		10: "white",
 		20: "#F5F5F5",
+		25: "#F0F0F0",
 		30: "#EBEBEB",
 		40: "#E0E0E0",
 		50: "#D6D6D6"

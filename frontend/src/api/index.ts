@@ -92,6 +92,7 @@ export * as attributes from "./attributes";
 export * as auth from "./auth";
 export * as user from "./user";
 export * as file from "./file";
+export * as prospects from "./prospects";
 export * as api from "./";
 
 declare global {

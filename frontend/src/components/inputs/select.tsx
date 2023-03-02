@@ -1,20 +1,24 @@
 "use client";
 
 import { ChevronUpDownIcon } from "@heroicons/react/24/solid";
-import React, { useCallback, useRef, forwardRef } from "react";
+import React, { useCallback, useRef, forwardRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-export interface InputSelectOption<K extends string = string> {
+export interface InputSelectOption<K extends React.Key = React.Key> {
 	key: K;
 	label: string;
+	active?: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type InputOptionEvent<T extends React.SyntheticEvent<any>, K extends string = string> = T & {
+export type InputOptionEvent<
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	T extends React.SyntheticEvent<any>,
+	K extends React.Key = React.Key
+> = T & {
 	option: InputSelectOption<K>;
 };
 
-export type InputOptionWindowProps<K extends string = string> = Omit<
+export type InputOptionWindowProps<K extends React.Key = React.Key> = Omit<
 	React.ComponentProps<"div">,
 	"onChange"
 > & {
@@ -23,33 +27,43 @@ export type InputOptionWindowProps<K extends string = string> = Omit<
 	onOptionFocus?: React.EventHandler<InputOptionEvent<React.FocusEvent<HTMLButtonElement>, K>>;
 };
 
+function getFirstActiveElement(root: HTMLElement): HTMLElement {
+	return (
+		([...root.children] as Array<HTMLElement>).find(
+			(element) => element.dataset.active === "true"
+		) || (root.firstChild as HTMLElement)
+	);
+}
+
 export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowProps>(
 	(props, ref) => {
 		const { options, onOptionClick, onOptionFocus, ...elementProps } = props;
 		const optionsRef = useRef<HTMLDivElement>(null);
 
-		const focusOption = useCallback((direction: -1 | 1 | 0) => {
+		const focusOption = useCallback((target: -1 | 1 | 0) => {
 			const { current: root } = optionsRef;
 			if (!root) return;
 
-			if (!root.contains(document.activeElement) || !document.activeElement || direction === 0) {
-				if (root.firstChild instanceof HTMLElement) root.firstChild.focus();
+			const firstActiveElement = getFirstActiveElement(root);
+			if (!root.contains(document.activeElement) || !document.activeElement || target === 0) {
+				if (root.firstChild instanceof HTMLElement) firstActiveElement.focus();
 				return;
 			}
 
 			const sibling =
-				document.activeElement[direction === -1 ? "previousSibling" : "nextSibling"] ??
-				root[direction === -1 ? "lastChild" : "firstChild"];
+				document.activeElement[target === -1 ? "previousSibling" : "nextSibling"] ??
+				root[target === -1 ? "lastChild" : "firstChild"];
 			if (sibling instanceof HTMLElement) sibling.focus();
 		}, []);
 
+		// useEffect(() => focusOption(0), [focusOption]);
+
 		return (
 			<div
-				{...elementProps}
 				ref={ref}
 				tabIndex={-1}
 				className={twMerge(
-					"focusable-within max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70",
+					"focusable-within flex max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70",
 					elementProps.className
 				)}
 				onFocusCapture={(event) => {
@@ -78,11 +92,14 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 				<div className="flex w-full flex-col" ref={optionsRef}>
 					{options.map((option) => (
 						<button
-							className="px-4 py-2 text-left text-black-70 hover:bg-white-40 focus:bg-brand-gradient focus:text-white-20 focus:outline-none dark:text-white-20 hover:dark:bg-black-80/50 focus:dark:text-white-20"
+							data-active={option.active}
 							data-key={option.key}
-							data-name={option.label}
 							key={option.key}
 							type="button"
+							className={twMerge(
+								"px-4 py-2 text-left text-black-70 hover:bg-white-40 focus:text-white-20 focus:outline-none dark:text-white-20 hover:dark:bg-black-80/50 focus:dark:text-white-20",
+								option.active && "bg-brand-gradient"
+							)}
 							onClick={(event) => onOptionClick?.(Object.assign(event, { option }))}
 							onFocus={(event) => onOptionFocus?.(Object.assign(event, { option }))}
 						>
@@ -104,12 +121,19 @@ export interface InputSelectProps<T extends string = string> {
 
 export function InputSelect<K extends string = string>(props: InputSelectProps<K>) {
 	const { placeholder = "Select an option" } = props;
+	const [overlayVisible, setOverlayVisible] = useState(false);
 
-	const label = props.options.find((option) => option.key === props.value)?.label;
+	const activeOption = props.options.find((option) => option.key === props.value);
+	const options = props.options.map((option) => ({ ...option, active: option === activeOption }));
 
 	return (
 		<div
 			className="group relative"
+			onFocus={() => setOverlayVisible(true)}
+			onBlur={({ currentTarget, relatedTarget }) => {
+				if (currentTarget.contains(relatedTarget)) return;
+				setOverlayVisible(false);
+			}}
 			onKeyDown={({ code, currentTarget }) => {
 				if (!code.startsWith("Key")) return;
 				const key = code.slice(3).toLowerCase();
@@ -137,18 +161,26 @@ export function InputSelect<K extends string = string>(props: InputSelectProps<K
 				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">
 					<ChevronUpDownIcon className="h-7 w-7" />
 				</div>
-				<span className={twMerge("px-4 py-2", label ? "" : "text-black-50 dark:text-white-50")}>
-					{label || placeholder}
+				<span
+					className={twMerge(
+						"px-4 py-2",
+						!activeOption?.label && "text-black-50 dark:text-white-50"
+					)}
+				>
+					{activeOption?.label || placeholder}
 				</span>
 			</button>
-			<InputOptionWindow
-				className="absolute z-10 mt-4 hidden group-focus-within:flex"
-				options={props.options}
-				onOptionClick={({ option, currentTarget }) => {
-					props.onChange(option.key as K);
-					currentTarget.blur();
-				}}
-			/>
+			{overlayVisible && (
+				<InputOptionWindow
+					className="absolute z-10 mt-4 flex"
+					options={options}
+					onOptionClick={({ option, currentTarget }) => {
+						console.log(option);
+						props.onChange(option.key as K);
+						currentTarget.blur();
+					}}
+				/>
+			)}
 		</div>
 	);
 }

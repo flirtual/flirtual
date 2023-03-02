@@ -2,6 +2,7 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
 import { api, ResponseError } from "./api";
 import { User } from "./api/user/user";
@@ -24,27 +25,25 @@ export interface ServerAuthenticateOptions {
 	visibleOptional?: boolean;
 }
 
-export async function useServerAuthenticate(
+async function _useServerAuthenticate(
 	options?: ServerAuthenticateOptions & { optional?: false }
 ): Promise<User>;
-export async function useServerAuthenticate(
+async function _useServerAuthenticate(
 	options?: ServerAuthenticateOptions & { optional: true }
 ): Promise<User | null>;
-export async function useServerAuthenticate(
-	options: ServerAuthenticateOptions
-): Promise<User | null>;
-export async function useServerAuthenticate(
+async function _useServerAuthenticate(options: ServerAuthenticateOptions): Promise<User | null>;
+async function _useServerAuthenticate(
 	options: ServerAuthenticateOptions = {}
 ): Promise<User | null> {
 	const { optional = false, emailConfirmedOptional = false, visibleOptional = false } = options;
 
-	const user = await api.auth
-		.user({ ...thruServerCookies(), cache: "no-cache" })
-		.catch((reason) => {
-			if (!(reason instanceof ResponseError)) throw reason;
-			if (reason.statusCode === 401) return null;
-			throw reason;
-		});
+	console.log("a");
+
+	const user = await api.auth.user(thruServerCookies()).catch((reason) => {
+		if (!(reason instanceof ResponseError)) throw reason;
+		if (reason.statusCode === 401) return null;
+		throw reason;
+	});
 
 	if (!user && !optional) redirect(urls.login());
 
@@ -66,3 +65,5 @@ export async function useServerAuthenticate(
 
 	return user;
 }
+
+export const useServerAuthenticate = cache(_useServerAuthenticate);

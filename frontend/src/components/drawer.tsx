@@ -33,8 +33,8 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
 						initial={{ y: "100%" }}
 						ref={overlayRef}
 						transition={{ damping: 25 }}
-						onDragEnd={(_, info) => {
-							if (info.offset.y > 300) onVisibilityChange(false);
+						onDragEnd={(_, { offset }) => {
+							if (offset.y > 300) onVisibilityChange(false);
 						}}
 					>
 						<div className="relative flex w-full flex-col justify-center gap-y-3 rounded-t-3xl bg-white-30 px-3 py-4 dark:bg-black-70">

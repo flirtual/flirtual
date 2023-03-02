@@ -33,8 +33,8 @@ export type Profile = Partial<UpdatedAtModel> & {
 	conscientiousness?: number;
 	agreeableness?: number;
 	gender: GenderAttributeCollection;
-	sexuality?: AttributeCollection;
-	kinks?: KinkAttributeCollection;
+	sexuality: AttributeCollection;
+	kinks: KinkAttributeCollection;
 	games: AttributeCollection;
 	languages: Array<string>;
 	platforms: AttributeCollection;

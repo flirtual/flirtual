@@ -7,6 +7,7 @@
     "@hcaptcha/react-hcaptcha": "^1.4.4",
     "@heroicons/react": "^2.0.16",
     "@tailwindcss/forms": "^0.5.3",
+    "@total-typescript/ts-reset": "^0.3.7",
     "byte-size": "^8.1.0",
     "change-case": "^4.1.2",
     "countries-list": "^2.6.1",
@@ -29,7 +30,8 @@
     "sass": "^1.58.3",
     "server-only": "^0.0.1",
     "swr": "^2.0.3",
-    "tailwind-merge": "^1.10.0"
+    "tailwind-merge": "^1.10.0",
+    "talkjs": "^0.15.6"
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^1.4.2",

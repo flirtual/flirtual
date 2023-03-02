@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const ProfileImage: React.FC<React.ComponentProps<"img">> = (props) => (
@@ -15,13 +15,14 @@ export interface ProfileImageDisplayProps {
 export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images, children }) => {
 	const [imageOffset, setImageOffset] = useState(0);
 
-	const set = (direction: -1 | 0 | 1, imageIdx?: number) => {
-		setImageOffset((imageOffset) => {
-			if (imageIdx !== undefined) return imageIdx;
+	const firstImage = images[0];
+	useEffect(() => setImageOffset(0), [firstImage]);
 
-			const newImageOffset = imageOffset + direction;
-			return (newImageOffset < 0 ? images.length - 1 : newImageOffset) % images.length;
-		});
+	const set = (direction: -1 | 0 | 1, imageIdx?: number) => {
+		if (imageIdx !== undefined) return setImageOffset(imageIdx);
+
+		const newImageOffset = imageOffset + direction;
+		setImageOffset((newImageOffset < 0 ? images.length - 1 : newImageOffset) % images.length);
 	};
 
 	return (
@@ -29,7 +30,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 			<div className="relative flex aspect-square shrink-0 bg-black-70">
 				{images.map((image, imageIdx) => (
 					<ProfileImage
-						key={imageIdx}
+						key={image}
 						src={image}
 						className={twMerge(
 							"transition-opacity duration-500",
@@ -41,7 +42,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 					<button className="h-full grow" type="button" onClick={() => set(-1)} />
 					<button className="h-full grow" type="button" onClick={() => set(1)} />
 				</div>
-				<div className="absolute top-0 flex w-full px-8 py-6">
+				<div className="pointer-events-auto absolute top-0 flex w-full px-8 py-6">
 					<div className="flex grow items-center gap-2">
 						{images.map((_, imageIdx) => (
 							<button

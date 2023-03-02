@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { DrawerOrPopover } from "../drawer-or-popover";
 
@@ -10,7 +10,7 @@ import { InputText } from "./text";
 function toDateString(value: Date): string {
 	const day = String(value.getDate()).padStart(2, "0"),
 		month = String(value.getMonth() + 1).padStart(2, "0"),
-		year = String(value.getFullYear());
+		year = String(value.getFullYear()).padStart(4, "0");
 
 	return `${day}/${month}/${year}`;
 }
@@ -25,13 +25,11 @@ function fromDateString(value: string): globalThis.Date {
 	return new Date(year, month, day);
 }
 
-export type InputDateSelectProps = Pick<InputCalendarProps, "value" | "onChange">;
+export type InputDateSelectProps = Pick<InputCalendarProps, "value" | "onChange" | "min" | "max">;
 
 export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	const [inputValue, setInputValue] = useState(toDateString(props.value));
 	const [drawerVisible, setDrawerVisible] = useState(false);
-
-	useEffect(() => setDrawerVisible(true), [inputValue]);
 
 	const progressDate = useCallback(
 		(type: number, direction: -1 | 1) => {
@@ -52,6 +50,7 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 			<div className="flex h-full w-full justify-center">
 				<InputCalendar
 					className="w-fit sm:shadow-brand-1"
+					{...props}
 					value={props.value}
 					onChange={(value) => {
 						setInputValue(toDateString(value));
@@ -75,6 +74,8 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 					props.onChange(now);
 				}}
 				onChange={(value) => {
+					setDrawerVisible(true);
+
 					const date = fromDateString(value);
 					setInputValue(value);
 

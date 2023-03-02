@@ -50,6 +50,10 @@ export async function get(userId: string, options: FetchOptions = {}) {
 	return fetch<User>("get", `users/${userId}`, options);
 }
 
+export async function bulk(userIds: Array<string>, options: FetchOptions = {}) {
+	return fetch<Array<User>>("post", "users/bulk", { ...options, body: userIds });
+}
+
 export async function getByUsername(username: string, options: FetchOptions = {}) {
 	return fetch<User>("get", `users/${username}/username`, options);
 }
@@ -60,6 +64,12 @@ export async function visible(userId: string, options: FetchOptions = {}) {
 
 export async function update(userId: string, body: unknown, options: FetchOptions = {}) {
 	return fetch<User>("post", `users/${userId}`, { ...options, body });
+}
+
+export type UserResponseType = "like" | "pass";
+
+export async function respond(type: UserResponseType, userId: string, options: FetchOptions = {}) {
+	return fetch<User>("post", `prospects/respond`, { ...options, body: { type, userId } });
 }
 
 export interface UpdateEmailOptions {

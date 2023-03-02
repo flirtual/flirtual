@@ -1,15 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function useMediaQuery(query: string) {
-	const queryList = useMemo(() => matchMedia(query), [query]);
-	const [matches, setMatches] = useState(queryList.matches);
+	const [matches, setMatches] = useState(false);
 
 	useEffect(() => {
+		const queryList = matchMedia(query);
+		setMatches(queryList.matches);
+
 		const onChange = (event: MediaQueryListEvent) => setMatches(event.matches);
 
 		queryList.addEventListener("change", onChange);
 		return () => queryList.removeEventListener("change", onChange);
-	}, [queryList]);
+	}, [query]);
 
 	return matches;
 }

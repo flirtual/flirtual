@@ -30,6 +30,7 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
+	const [overlayVisible, setOverlayVisible] = useState(false);
 
 	const optionWindowRef = useRef<HTMLDivElement>(null);
 
@@ -51,8 +52,10 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 		<div
 			className="group relative"
 			onClick={() => inputRef.current?.focus()}
+			onFocus={() => setOverlayVisible(true)}
 			onBlur={({ currentTarget, relatedTarget }) => {
 				if (currentTarget.contains(relatedTarget)) return;
+				setOverlayVisible(false);
 				setInputValue("");
 			}}
 			onKeyDown={(event) => {
@@ -117,18 +120,20 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 					/>
 				</div>
 			</div>
-			<InputOptionWindow
-				className="absolute z-10 mt-4 hidden group-focus-within:flex"
-				options={suggestions}
-				ref={optionWindowRef}
-				onOptionClick={({ option }) => {
-					if (values.length === limit) return;
-					props.onChange([...values, option.key as K]);
+			{overlayVisible && (
+				<InputOptionWindow
+					className="absolute z-10 mt-4"
+					options={suggestions}
+					ref={optionWindowRef}
+					onOptionClick={({ option }) => {
+						if (values.length === limit) return;
+						props.onChange([...values, option.key as K]);
 
-					inputRef.current?.focus();
-					setInputValue("");
-				}}
-			/>
+						inputRef.current?.focus();
+						setInputValue("");
+					}}
+				/>
+			)}
 		</div>
 	);
 }

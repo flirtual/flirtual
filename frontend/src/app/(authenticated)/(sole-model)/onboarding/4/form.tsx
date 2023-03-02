@@ -24,6 +24,7 @@ export const Onboarding4Form: React.FC = () => {
 	return (
 		<Form
 			className="flex flex-col gap-8"
+			requireChange={false}
 			fields={{
 				...personality,
 				personalityPrivacy: user.preferences?.privacy.personality ?? "everyone"

@@ -8,6 +8,7 @@ specifiers:
   '@next/eslint-plugin-next': ^13.2.1
   '@tailwindcss/forms': ^0.5.3
   '@tailwindcss/typography': ^0.5.9
+  '@total-typescript/ts-reset': ^0.3.7
   '@types/byte-size': ^8.1.0
   '@types/is-hotkey': ^0.1.7
   '@types/node': ^18.14.1
@@ -44,12 +45,14 @@ specifiers:
   tailwind-merge: ^1.10.0
   tailwindcss: ^3.2.7
   tailwindcss-hocus: ^0.0.7
+  talkjs: ^0.15.6
   typescript: ^4.9.5
 
 dependencies:
   '@hcaptcha/react-hcaptcha': 1.4.4_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 2.0.16_react@18.2.0
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
+  '@total-typescript/ts-reset': 0.3.7
   byte-size: 8.1.0
   change-case: 4.1.2
   countries-list: 2.6.1
@@ -73,6 +76,7 @@ dependencies:
   server-only: 0.0.1
   swr: 2.0.3_react@18.2.0
   tailwind-merge: 1.10.0
+  talkjs: 0.15.6
 
 devDependencies:
   '@ariesclark/eslint-config': 1.4.2_qj2huljz5l7dtkmyq2u37z36t4
@@ -399,6 +403,10 @@ packages:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.2.7_postcss@8.4.21
     dev: true
+
+  /@total-typescript/ts-reset/0.3.7:
+    resolution: {integrity: sha512-yXt2BRRVCJVvzWaxac5n0nCXzIrQEBE/MeYlNQ8/Iq7UeelNmm/AdnUAu18ilSS893mbEQ4u6whPt/HvOPc4rw==}
+    dev: false
 
   /@types/byte-size/8.1.0:
     resolution: {integrity: sha512-LCIlZh8vyx+I2fgRycE1D34c33QDppYY6quBYYoaOpQ1nGhJ/avSP2VlrAefVotjJxgSk6WkKo0rTcCJwGG7vA==}
@@ -2862,6 +2870,10 @@ packages:
       resolve: 1.22.1
     transitivePeerDependencies:
       - ts-node
+
+  /talkjs/0.15.6:
+    resolution: {integrity: sha512-XJ7wNMOQh7i1v5JrK34Jp4MOzr6bk42zqrY+4/UWF6yo/osDgtXm1QHjGhFnlr5+g90qiuC8I2uk0CBgLfYJTw==}
+    dev: false
 
   /tapable/2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}

@@ -91,7 +91,7 @@ export const Onboarding2Form: React.FC = () => {
 								>
 									Date of birth
 								</InputLabel>
-								<InputDateSelect {...field.props} />
+								<InputDateSelect {...field.props} max="now" />
 							</>
 						)}
 					</FormField>

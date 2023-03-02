@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
 	ChevronDoubleLeftIcon,
 	ChevronDoubleRightIcon,
@@ -18,10 +18,6 @@ const MonthNames = Object.freeze(
 	new Array(12).fill(undefined).map((_, monthIdx) => {
 		return new Date(2022, monthIdx, 1).toLocaleDateString(undefined, { month: "long" });
 	})
-);
-
-const Years = Object.freeze(
-	new Array(150).fill(undefined).map((_, idx) => new Date().getFullYear() - idx)
 );
 
 export function getMonthLength(date: Date): number {
@@ -86,44 +82,113 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				<span className="w-12">{props.children}</span>
 				<ChevronDownIcon className="h-4 w-4" strokeWidth={3} />
 			</button>
-			<InputOptionWindow
-				className={twMerge("absolute mt-4 w-fit", visible ? "flex" : "hidden")}
-				options={props.options}
-				onOptionClick={props.onOptionAction}
-				onOptionFocus={props.onOptionAction}
-			/>
+			{visible && (
+				<InputOptionWindow
+					className="absolute mt-4 flex w-fit"
+					options={props.options}
+					onOptionClick={props.onOptionAction}
+					onOptionFocus={props.onOptionAction}
+				/>
+			)}
 		</div>
 	);
 };
 
+const yearInMilliseconds = 3.154e10;
+
+export type MinmaxDate = "now" | Date;
+
 export type InputCalendarProps = Omit<React.ComponentProps<"div">, "onChange"> & {
 	value: Date;
+	offset?: number;
+	min?: MinmaxDate;
+	max?: MinmaxDate;
 	onChange: React.Dispatch<Date>;
 };
 
 export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
-	const { value, onChange, ...elementProps } = props;
+	const { value, offset = 128, min: minDate, max: maxDate, onChange, ...elementProps } = props;
 	const [displayDate, setDisplayDate] = useState(value);
 
-	useEffect(() => setDisplayDate(value), [value]);
+	const min = useMemo(
+		() =>
+			(minDate === "now" ? new Date() : minDate) ||
+			new Date(Date.now() - offset * yearInMilliseconds),
+		[minDate, offset]
+	);
 
-	const progressMonth = useCallback((direction: -1 | 1) => {
-		setDisplayDate((displayDate) => {
-			const newDisplayDate = new Date(displayDate);
+	const max = useMemo(
+		() =>
+			(maxDate === "now" ? new Date() : maxDate) ||
+			new Date(Date.now() + offset * yearInMilliseconds),
+		[maxDate, offset]
+	);
 
-			newDisplayDate.setMonth(displayDate.getMonth() + direction);
-			return newDisplayDate;
-		});
-	}, []);
+	const compare = useCallback(
+		(value: Date) => {
+			if (value.getTime() < min.getTime()) return -1;
+			if (value.getTime() > max.getTime()) return 1;
+			return 0;
+		},
+		[min, max]
+	);
 
-	const progressYear = useCallback((direction: -1 | 1) => {
-		setDisplayDate((displayDate) => {
-			const newDisplayDate = new Date(displayDate);
+	const clamp = useCallback(
+		(value: Date) => {
+			const overflow = compare(value);
+			return overflow === 0 ? value : overflow === 1 ? max : min;
+		},
+		[min, max, compare]
+	);
 
-			newDisplayDate.setFullYear(displayDate.getFullYear() + direction);
-			return newDisplayDate;
-		});
-	}, []);
+	const years = useMemo(() => {
+		const currentYear = new Date().getFullYear();
+
+		const minYear = min.getFullYear();
+		const maxYear = max.getFullYear();
+
+		return new Array(offset * 2)
+			.fill(undefined)
+			.map((_, idx) => {
+				const year = currentYear + (idx - offset);
+
+				if (year < minYear || year > maxYear) return null;
+				return year;
+			})
+			.filter(Boolean)
+			.reverse();
+	}, [offset, min, max]);
+
+	const doChange = useCallback<typeof onChange>(
+		(value) => onChange(clamp(value)),
+		[onChange, clamp]
+	);
+
+	useEffect(() => setDisplayDate(clamp(value)), [value, clamp]);
+
+	const progressMonth = useCallback(
+		(direction: -1 | 1) => {
+			setDisplayDate((displayDate) => {
+				const newDisplayDate = new Date(displayDate);
+
+				newDisplayDate.setMonth(displayDate.getMonth() + direction);
+				return clamp(newDisplayDate);
+			});
+		},
+		[clamp]
+	);
+
+	const progressYear = useCallback(
+		(direction: -1 | 1) => {
+			setDisplayDate((displayDate) => {
+				const newDisplayDate = new Date(displayDate);
+				newDisplayDate.setFullYear(displayDate.getFullYear() + direction);
+
+				return clamp(newDisplayDate);
+			});
+		},
+		[clamp]
+	);
 
 	const dayOffset = getMonthDayOffset(displayDate);
 	const monthLength = getMonthLength(displayDate);
@@ -149,19 +214,25 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 					</div>
 					<div className="mx-4 flex w-full justify-center gap-2">
 						<LabelSelect
-							options={MonthNames.map((label, key) => ({ key: key.toString(), label }))}
+							options={MonthNames.map((label, monthIdx) => ({
+								key: monthIdx,
+								label,
+								active: monthIdx === value.getMonth()
+							}))}
 							onOptionAction={({ option }) => {
-								const monthIdx = Number.parseInt(option.key);
-								onChange(new Date(value.getFullYear(), monthIdx, value.getDate()));
+								doChange(new Date(value.getFullYear(), option.key as number, value.getDate()));
 							}}
 						>
 							{displayDate.toLocaleDateString("en-CA", { month: "short" })}
 						</LabelSelect>
 						<LabelSelect
-							options={Years.map((label) => ({ key: label.toString(), label: label.toString() }))}
+							options={years.map((year) => ({
+								key: year,
+								label: year.toString(),
+								active: value.getFullYear() === year
+							}))}
 							onOptionAction={({ option }) => {
-								const yearIdx = Number.parseInt(option.key);
-								onChange(new Date(yearIdx, value.getMonth(), value.getDate()));
+								doChange(new Date(option.key as number, value.getMonth(), value.getDate()));
 							}}
 						>
 							{displayDate.toLocaleDateString("en-CA", { year: "numeric" })}
@@ -191,28 +262,37 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 										{new Array(7).fill(undefined).map((_, dayIdx) => {
 											const previousMonth = weekIdx === 0 && dayIdx < dayOffset;
 
-											const nth = dayIdx + (7 * weekIdx - dayOffset) + 1;
-											const date = new Date(displayDate.getFullYear(), displayDate.getMonth(), nth);
+											const nthDay = dayIdx + (7 * weekIdx - dayOffset) + 1;
+											const date = new Date(
+												displayDate.getFullYear(),
+												displayDate.getMonth(),
+												nthDay
+											);
 
-											const nextMonth = nth > monthLength;
+											const nextMonth = nthDay > monthLength;
 											const currentMonth = !previousMonth && !nextMonth;
 
 											const day = previousMonth
 												? lastMonthLength - (dayOffset - dayIdx) + 1
 												: nextMonth
-												? nth % monthLength
-												: nth;
+												? nthDay % monthLength
+												: nthDay;
+
+											const disabled = !(compare(date) === 0);
+											const active = dateEqual(props.value, date);
 
 											return (
 												<td className="p-1" key={dayIdx}>
 													<button
 														type="button"
 														className={twMerge(
-															"focusable h-10 w-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
-															!currentMonth && "text-black-50 dark:text-black-10",
-															dateEqual(props.value, date) && "bg-brand-gradient text-white-20"
+															"h-10 w-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
+															disabled ? "" : "focusable bg-white-25 dark:bg-black-50",
+															active
+																? "bg-brand-gradient text-white-20"
+																: (!currentMonth || disabled) && "text-black-50 dark:text-black-10"
 														)}
-														onClick={() => onChange(date)}
+														onClick={() => doChange(date)}
 													>
 														{day.toLocaleString("en-US", {
 															minimumIntegerDigits: 2,
