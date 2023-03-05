@@ -3,6 +3,7 @@ defmodule Flirtual.User do
   use Flirtual.Policy.Target, policy: Flirtual.User.Policy
 
   import Ecto.Changeset
+  import Flirtual.Utilities
 
   alias Flirtual.Languages
   alias Flirtual.User
@@ -10,10 +11,12 @@ defmodule Flirtual.User do
   schema "users" do
     field :email, :string
     field :username, :string
-    field :password, :string, virtual: true, redact: true
     field :password_hash, :string, redact: true
-    field :talkjs_signature, :string
+    field :talkjs_signature, :string, redact: true
     field :language, :string, default: "en"
+
+    field :password, :string, virtual: true, redact: true
+    field :visible, :boolean, virtual: true, default: false
 
     field :tags, {:array, Ecto.Enum},
       values: [:admin, :moderator, :beta_tester, :debugger, :verified],
@@ -54,6 +57,7 @@ defmodule Flirtual.User do
   def visible(%User{} = user) do
     %{profile: profile} = user
 
+
     [
       {
         not is_nil(user.banned_at),
@@ -74,7 +78,7 @@ defmodule Flirtual.User do
       # onboarding validations
       ## onboarding/1
       {
-        length(profile.preferences.gender) == 0,
+        length(filter_by(profile.preferences.attributes, :type, "gender")) == 0,
         %{reason: "missing gender preferences", to: "/onboarding/1"}
       },
       ## onboarding/2
@@ -83,11 +87,11 @@ defmodule Flirtual.User do
         %{reason: "missing birthday", to: "/onboarding/2"}
       },
       {
-        length(profile.gender) == 0,
+        length(filter_by(profile.attributes, :type, "gender")) === 0,
         %{reason: "missing profile genders", to: "/onboarding/2"}
       },
       {
-        length(profile.sexuality) == 0,
+        length(filter_by(profile.attributes, :type, "sexuality")) === 0,
         %{reason: "missing profile sexuality", to: "/onboarding/2"}
       },
       {
@@ -95,15 +99,15 @@ defmodule Flirtual.User do
         %{reason: "missing profile country", to: "/onboarding/2"}
       },
       {
-        length(profile.languages) == 0,
+        length(profile.languages) === 0,
         %{reason: "missing profile languages", to: "/onboarding/2"}
       },
       {
-        length(profile.platforms) == 0,
+        length(filter_by(profile.attributes, :type, "platform")) === 0,
         %{reason: "missing profile platforms", to: "/onboarding/2"}
       },
       {
-        length(profile.interests) == 0,
+        length(filter_by(profile.attributes, :type, "interest")) === 0,
         %{reason: "missing profile interests", to: "/onboarding/2"}
       },
       ## onboarding/3
@@ -311,6 +315,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
         :email_confirmed_at,
         :deactivated_at,
         :tags,
+        :visible,
         :subscription,
         :preferences,
         :profile,

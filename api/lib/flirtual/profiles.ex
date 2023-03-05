@@ -2,7 +2,7 @@ defmodule Flirtual.Profiles do
   import Ecto.Query
   import Ecto.Changeset
 
-  import Flirtual.Utilities
+  import Flirtual.Utilities.Changeset
 
   alias Ecto.UUID
   alias Flirtual.{Repo, Elastic}
@@ -122,6 +122,7 @@ defmodule Flirtual.Profiles do
                },
                %{image_ids: image_ids}
              )
+             |> validate_uuids(:image_ids)
              |> validate_length(:image_ids, min: 1, max: 16)
              |> apply_action(:update),
            images <-
@@ -152,10 +153,10 @@ defmodule Flirtual.Profiles do
   end
 
   def query_by_id(query, id) do
-    query |> where([profile], profile.id == ^id)
+    query |> where(id: ^id)
   end
 
   def query_by_user_id(query, user_id) do
-    query |> where([profile], profile.user_id == ^user_id)
+    query |> where(user_id: ^user_id)
   end
 end

@@ -4,16 +4,17 @@ defmodule FlirtualWeb.SessionController do
   import Plug.Conn
   import Phoenix.Controller
   import Ecto.Changeset
+  import Flirtual.Utilities.Changeset
 
-  alias Flirtual.Repo
+  alias Flirtual.{Repo, Policy}
   alias Flirtual.Sessions
   alias Flirtual.Users
   alias Flirtual.User
 
   action_fallback FlirtualWeb.FallbackController
 
-  def get(conn, _params) do
-    conn |> json(conn.assigns[:session])
+  def get(conn, _) do
+    conn |> then(&json(&1, Policy.transform(&1, &1.assigns[:session])))
   end
 
   def create(%Plug.Conn{} = conn, params) do
@@ -46,6 +47,68 @@ defmodule FlirtualWeb.SessionController do
         conn |> put_status(:created) |> json(session)
       else
         {:error, {:unauthorized, "Invalid credentials"}}
+      end
+    end
+  end
+
+  def sudo(conn, %{"user_id" => user_id}) do
+    user =
+      if(conn.assigns[:session].user.id === user_id,
+        do: conn.assigns[:session].user,
+        else: Users.get(user_id)
+      )
+
+    if is_nil(user) or Policy.cannot?(conn, :sudo, user) do
+      {:error, {:forbidden, "Missing permissions", %{user_id: user_id}}}
+    else
+      with {:ok, session} <-
+             conn.assigns[:session]
+             |> then(
+               &cast(
+                 &1,
+                 %{
+                   sudoer_id: &1.sudoer_id || &1.user_id,
+                   user_id: user_id
+                 },
+                 [:sudoer_id, :user_id]
+               )
+             )
+             |> validate_uuid(:sudoer_id)
+             |> validate_uuid(:user_id)
+             |> then(
+               &if(get_field(&1, :user_id) === get_field(&1, :sudoer_id)) do
+                 add_error(&1, :user_id, "cannot sudo yourself")
+               else
+                 &1
+               end
+             )
+             |> Repo.update() do
+        conn
+        |> assign(:session, session)
+        |> json(Policy.transform(conn, session))
+      end
+    end
+  end
+
+  def revoke_sudo(conn, _) do
+    if is_nil(conn.assigns[:session].sudoer_id) do
+      {:error, {:bad_request, "Bad request"}}
+    else
+      with {:ok, session} <-
+             conn.assigns[:session]
+             |> then(
+               &change(
+                 &1,
+                 %{
+                   sudoer_id: nil,
+                   user_id: &1.sudoer_id
+                 }
+               )
+             )
+             |> Repo.update() do
+        conn
+        |> assign(:session, session)
+        |> json(Policy.transform(conn, session))
       end
     end
   end

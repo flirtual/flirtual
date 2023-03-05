@@ -11,6 +11,8 @@ config :flirtual,
   discord_client_id: "***REMOVED***",
   discord_client_secret: "***REMOVED***",
   discord_token: "***REMOVED***",
+  talkjs_app_id: "GZddugeg",
+  talkjs_access_token: "***REMOVED***",
   frontend_origin: "http://127.0.0.1:3000"
 
 config :flirtual,

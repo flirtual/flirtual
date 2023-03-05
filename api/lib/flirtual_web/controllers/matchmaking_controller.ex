@@ -8,6 +8,7 @@ defmodule FlirtualWeb.MatchmakingController do
   import Flirtual.Matchmaking
 
   def list_prospects(conn, _) do
+    IO.inspect(conn.assigns[:session])
     conn |> json(compute_prospects(conn.assigns[:session].user))
   end
 
@@ -15,7 +16,7 @@ defmodule FlirtualWeb.MatchmakingController do
     conn |> json(generate_query(conn.assigns[:session].user))
   end
 
-  def respond(conn, %{"user_id" => user_id, "type" => type}) when type in ["like", "pass"] do
+  def respond(conn, %{"user_id" => user_id, "type" => type}) do
     source_user = conn.assigns[:session].user
     target_user = Users.get(user_id)
 
@@ -26,9 +27,5 @@ defmodule FlirtualWeb.MatchmakingController do
         conn |> json(%{})
       end
     end
-  end
-
-  def respond(_, %{"user_id" => _, "type" => _}) do
-    {:error, {:bad_request, "Unknown response type"}}
   end
 end

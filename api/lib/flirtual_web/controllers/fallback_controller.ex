@@ -6,8 +6,8 @@ defmodule FlirtualWeb.FallbackController do
   def call(%Plug.Conn{} = conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_error(
-      :unprocessable_entity,
-      "Unprocessable entity",
+      :bad_request,
+      "Bad Request",
       %{
         properties: transform_changeset_errors(changeset)
       }

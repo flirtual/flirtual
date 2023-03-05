@@ -23,6 +23,16 @@ defmodule Flirtual.User.Policy do
       ),
       do: true
 
+  def authorize(:sudo, %Plug.Conn{
+    assigns: %{
+      session: %{
+        user: %User{
+          tags: tags
+        }
+      }
+    }
+  }, _), do: :admin in tags
+
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
@@ -63,6 +73,8 @@ defmodule Flirtual.User.Policy do
 
   # Otherwise, by default, nobody can view this user's language.
   def transform(:language, _, _), do: nil
+
+  def transform(:visible, _, user), do: User.visible?(user)
 
   # The currently logged in user can view their own tags.
   def transform(

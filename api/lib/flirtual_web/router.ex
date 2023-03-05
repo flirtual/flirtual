@@ -76,6 +76,11 @@ defmodule FlirtualWeb.Router do
           end
         end
 
+        scope "/sudo" do
+          post "/", SessionController, :sudo
+          delete "/", SessionController, :revoke_sudo
+        end
+
         scope "/user" do
           pipe_through :require_authenticated_user
 
@@ -87,6 +92,24 @@ defmodule FlirtualWeb.Router do
 
           get "/authorize", UsersController, :start_connection
           get "/", UsersController, :assign_connection
+        end
+      end
+
+      scope "/reports" do
+        pipe_through([:require_authenticated_user, :require_valid_user])
+
+        get "/", ReportController, :list
+        post "/", ReportController, :create
+      end
+
+      scope "/conversations" do
+        pipe_through([:require_authenticated_user, :require_valid_user])
+
+        get "/", ConversationController, :list
+
+        scope "/:user_id" do
+          get "/", ConversationController, :list_messages
+          post "/", ConversationController, :create
         end
       end
 

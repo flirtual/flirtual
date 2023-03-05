@@ -11,6 +11,8 @@ defmodule Flirtual.User.Profile.Image do
     field :scanned, :boolean, default: false
     field :order, :integer
 
+    field :url, :string, virtual: true
+
     timestamps(inserted_at: :created_at)
   end
 end
@@ -18,7 +20,7 @@ end
 defimpl Jason.Encoder, for: Flirtual.User.Profile.Image do
   def encode(value, opts) do
     Jason.Encode.map(
-      Map.take(value, [:id, :external_id, :scanned, :updated_at, :created_at])
+      Map.take(value, [:id, :url, :scanned, :updated_at, :created_at])
       |> Map.filter(fn {_, value} -> value !== nil end),
       opts
     )

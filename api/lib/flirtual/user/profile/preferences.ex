@@ -2,7 +2,9 @@ defmodule Flirtual.User.Profile.Preferences do
   use Flirtual.Schema
 
   import Flirtual.Utilities
+  import Flirtual.Utilities.Changeset
   import Ecto.Changeset
+  import Ecto.Query
 
   alias Flirtual.User.Profile
   alias Flirtual.Attribute
@@ -13,14 +15,8 @@ defmodule Flirtual.User.Profile.Preferences do
     field :agemin, :integer
     field :agemax, :integer
 
-    many_to_many :gender, Attribute,
+    many_to_many :attributes, Attribute,
       join_through: "user_profile_preference_attributes",
-      where: [type: "gender"],
-      on_replace: :delete
-
-    many_to_many :kinks, Attribute,
-      join_through: "user_profile_preference_attributes",
-      where: [type: "kink"],
       on_replace: :delete
 
     timestamps(inserted_at: false)
@@ -28,8 +24,11 @@ defmodule Flirtual.User.Profile.Preferences do
 
   def default_assoc do
     [
-      :gender,
-      :kinks
+      attributes:
+        from(attribute in Attribute,
+          select: %{id: attribute.id, type: attribute.type},
+          order_by: [attribute.type, attribute.id]
+        )
     ]
   end
 
@@ -50,7 +49,7 @@ defmodule Flirtual.User.Profile.Preferences do
           agemin: :integer,
           agemax: :integer,
           gender: {:array, :string},
-          kinks: {:array, :string},
+          kinks: {:array, :string}
         },
         attrs
       )
@@ -70,8 +69,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile.Preferences do
       Map.take(value, [
         :agemin,
         :agemax,
-        :gender,
-        :kinks
+        :attributes,
       ])
       |> Map.filter(fn {_, value} -> value !== nil end),
       opts

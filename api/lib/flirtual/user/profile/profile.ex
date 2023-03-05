@@ -3,6 +3,7 @@ defmodule Flirtual.User.Profile do
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Policy
 
   import Flirtual.Utilities
+  import Flirtual.Utilities.Changeset
 
   import Ecto.Schema
   import Ecto.Changeset
@@ -74,34 +75,8 @@ defmodule Flirtual.User.Profile do
     has_one :preferences, Preferences
     has_one :custom_weights, CustomWeights
 
-    many_to_many :gender, Attribute,
+    many_to_many :attributes, Attribute,
       join_through: "user_profile_attributes",
-      where: [type: "gender"],
-      on_replace: :delete
-
-    many_to_many :sexuality, Attribute,
-      join_through: "user_profile_attributes",
-      where: [type: "sexuality"],
-      on_replace: :delete
-
-    many_to_many :kinks, Attribute,
-      join_through: "user_profile_attributes",
-      where: [type: "kink"],
-      on_replace: :delete
-
-    many_to_many :platforms, Attribute,
-      join_through: "user_profile_attributes",
-      where: [type: "platform"],
-      on_replace: :delete
-
-    many_to_many :interests, Attribute,
-      join_through: "user_profile_attributes",
-      where: [type: "interest"],
-      on_replace: :delete
-
-    many_to_many :games, Attribute,
-      join_through: "user_profile_attributes",
-      where: [type: "game"],
       on_replace: :delete
 
     has_many :images, Image
@@ -114,12 +89,11 @@ defmodule Flirtual.User.Profile do
   def default_assoc do
     [
       :custom_weights,
-      :gender,
-      :sexuality,
-      :kinks,
-      :platforms,
-      :interests,
-      :games,
+      attributes:
+        from(attribute in Attribute,
+          select: %{id: attribute.id, type: attribute.type},
+          order_by: [attribute.type, attribute.id]
+        ),
       preferences: Preferences.default_assoc(),
       images: from(image in Image, order_by: image.order)
     ]
@@ -127,17 +101,14 @@ defmodule Flirtual.User.Profile do
 
   def changeset(%Profile{} = profile, attrs) do
     attributes =
-      Attribute.by_ids(
-        [
-          attrs["sexuality"] || Enum.map(profile.sexuality, & &1.id),
-          attrs["kinks"] || Enum.map(profile.kinks, & &1.id),
-          attrs["gender"] || Enum.map(profile.gender, & &1.id),
-          attrs["games"] || Enum.map(profile.games, & &1.id),
-          attrs["platforms"] || Enum.map(profile.platforms, & &1.id),
-          attrs["interests"] || Enum.map(profile.interests, & &1.id)
-        ],
-        :type
-      )
+      Attribute.by_ids([
+        attrs["sexuality"],
+        attrs["kinks"],
+        attrs["gender"] || Enum.map(profile.gender, & &1.id),
+        attrs["games"] || Enum.map(profile.games, & &1.id),
+        attrs["platforms"] || Enum.map(profile.platforms, & &1.id),
+        attrs["interests"] || Enum.map(profile.interests, & &1.id)
+      ])
 
     cast(profile, %{}, [])
     |> append_changeset(
@@ -251,14 +222,9 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
         :openness,
         :conscientiousness,
         :agreeableness,
-        :gender,
-        :sexuality,
-        :kinks,
-        :games,
+        :attributes,
         :languages,
         :custom_interests,
-        :platforms,
-        :interests,
         :preferences,
         :custom_weights,
         :images,

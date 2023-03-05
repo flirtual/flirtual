@@ -5,7 +5,7 @@ defmodule Flirtual.Sessions do
   alias Flirtual.User.{Session}
 
   def create(%User{} = user) do
-    Session.create(user) |> Repo.insert!()
+    Session.create(user) |> Repo.insert!() |> Repo.preload(Session.default_assoc())
   end
 
   def delete(token) when is_binary(token) do
@@ -19,6 +19,7 @@ defmodule Flirtual.Sessions do
   def get_by_token(token) do
     Session
     |> query_by_token(token)
+    |> preload(^Session.default_assoc())
     |> Repo.one()
   end
 

@@ -63,6 +63,15 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(:country, _, _), do: nil
 
   def transform(
+    :attributes,
+    _,
+    %Profile{} = profile
+  ) do
+    profile.attributes
+  end
+
+
+  def transform(
         :domsub,
         %Plug.Conn{
           assigns: %{

@@ -4,31 +4,7 @@ defmodule Flirtual.Elastic.User do
   alias Ecto.Changeset
   alias Flirtual.Elastic
   alias Flirtual.Elastic.DirtyUsersQueue
-  alias Flirtual.Repo
-  alias Flirtual.User
-  alias Flirtual.User.Profile
-
-  def assoc() do
-    User.default_assoc() ++
-      [
-        profile: [
-          liked_and_passed:
-            from(profile in Profile,
-              join: like in Profile.LikesAndPasses,
-              join: target_profile in Profile,
-              on: [id: like.target_id],
-              select: target_profile.user_id
-            ),
-          blocked:
-            from(profile in Profile,
-              join: block in Profile.Blocks,
-              join: target_profile in Profile,
-              on: [id: block.target_id],
-              select: target_profile.user_id
-            )
-        ]
-      ]
-  end
+  alias Flirtual.{Repo, User}
 
   def update_pending(limit \\ 100) do
     Repo.transaction(fn ->
@@ -110,15 +86,12 @@ defmodule Flirtual.Elastic.User do
 end
 
 defimpl Elasticsearch.Document, for: Flirtual.User do
-  alias Flirtual.Elastic
   alias Flirtual.User
-  alias Flirtual.Repo
 
   def id(%User{} = user), do: user.id
   def routing(_), do: false
 
   def encode(%User{} = user) do
-    user = user |> Repo.preload(Elastic.User.assoc())
     profile = user.profile
 
     document =

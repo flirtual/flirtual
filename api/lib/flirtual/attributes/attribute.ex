@@ -1,6 +1,8 @@
 defmodule Flirtual.Attribute do
   use Flirtual.Schema
 
+  import Flirtual.Utilities.Changeset
+  import Ecto.Changeset
   import Ecto.Query
 
   alias Flirtual.{Attribute, Repo}
@@ -20,6 +22,18 @@ defmodule Flirtual.Attribute do
     Attribute
     |> where(id: ^attribute_id)
     |> Repo.one()
+  end
+
+  def by_id_explicit(attribute_id, type) do
+    Attribute
+    |> where(id: ^attribute_id, type: ^type)
+    |> Repo.one()
+  end
+
+  def exists_id_explicit?(attribute_id, type) do
+    Attribute
+    |> where(id: ^attribute_id, type: ^type)
+    |> Repo.exists?()
   end
 
   def by_ids(attribute_ids, :type) do
@@ -62,12 +76,24 @@ defmodule Flirtual.Attribute do
     |> where(type: ^attribute_type)
     |> Repo.all()
   end
+
+  def validate_attribute(changeset, field, attribute_type) do
+    changeset
+    |> validate_uuid(field)
+    |> validate_change(field, fn field, value ->
+      if not Attribute.exists_id_explicit?(value, attribute_type) do
+        [{field, "does not exist"}]
+      else
+        []
+      end
+    end)
+  end
 end
 
 defimpl Jason.Encoder, for: Flirtual.Attribute do
   def encode(value, opts) do
     Jason.Encode.map(
-      Map.take(value, [:id, :name, :metadata])
+      Map.take(value, [:id, :type, :name, :metadata])
       |> Map.filter(fn {_, value} -> value !== nil end),
       opts
     )

@@ -1,22 +1,23 @@
 defmodule Flirtual.User.Session do
   use Flirtual.Schema
+  use Flirtual.Policy.Target, policy: Flirtual.User.Session.Policy
 
   alias Flirtual.User
 
-  @derive {Jason.Encoder,
-           only: [
-             :user_id,
-             :updated_at,
-             :created_at
-           ]}
-
   schema "sessions" do
     belongs_to :user, User
+    belongs_to :sudoer, User
 
     field :token, :string, virtual: true, redact: true
     field :hashed_token, :string, redact: true
 
     timestamps(inserted_at: :created_at)
+  end
+
+  def default_assoc do
+    [
+      user: User.default_assoc(),
+    ]
   end
 
   @hash_algorithm :sha256
@@ -49,5 +50,41 @@ defmodule Flirtual.User.Session do
 
   def compare_token(token, hashed_token) do
     hash_token(decode_token(token)) === hashed_token
+  end
+end
+
+defmodule Flirtual.User.Session.Policy do
+  use Flirtual.Policy
+
+  alias Flirtual.User.Session
+
+  def authorize(:read, %Plug.Conn{
+    assigns: %{
+      session: %Session{
+        id: id
+      }
+    }
+  }, %Session{
+    id: id
+  }) do
+    true
+  end
+
+  def authorize(_, _, _), do: false
+end
+
+
+defimpl Jason.Encoder, for: Flirtual.User.Session do
+  def encode(value, opts) do
+    Jason.Encode.map(
+      Map.take(value, [
+        :user,
+        :sudoer_id,
+        :updated_at,
+        :created_at
+      ])
+      |> Map.filter(fn {_, value} -> value !== nil end),
+      opts
+    )
   end
 end

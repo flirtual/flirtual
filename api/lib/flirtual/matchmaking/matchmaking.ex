@@ -3,10 +3,9 @@ defmodule Flirtual.Matchmaking do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile
-  alias Flirtual.Repo
-  alias Flirtual.Elastic
-  alias Flirtual.User
+  alias Flirtual.{Repo, Elastic, User, Attribute}
 
   def compute_prospects(%User{} = user) do
     query = generate_query(user)
@@ -20,12 +19,15 @@ defmodule Flirtual.Matchmaking do
     Repo.transaction(fn repo ->
       with {:ok, _} <-
              %Profile.LikesAndPasses{}
-             |> change(%{
-               profile_id: source_user.profile.id,
-               target_id: target_user.profile.id,
-               type: type,
-               kind: :love
-             })
+             |> cast(
+               %{
+                 profile_id: source_user.profile.id,
+                 target_id: target_user.profile.id,
+                 type: type,
+                 kind: :love
+               },
+               [:profile_id, :target_id, :type, :kind]
+             )
              |> unsafe_validate_unique([:profile_id, :target_id, :kind], repo,
                error_key: :user_id,
                message: "profile already responded"
@@ -41,16 +43,29 @@ defmodule Flirtual.Matchmaking do
   def generate_query(%User{} = user) do
     user =
       user
-      |> Repo.preload(Elastic.User.assoc())
       |> then(
         &Map.put(
           &1,
           :profile,
-          &1.profile |> Map.put(:custom_weights, &1.profile.custom_weights || %{})
+          &1.profile
+          |> Repo.preload([attributes: from(Attribute)], force: true)
+          |> Map.put(:custom_weights, &1.profile.custom_weights || %{})
         )
       )
 
     profile = user.profile
+
+    likes_and_passes =
+      from(
+        a in LikesAndPasses,
+        where: [profile_id: ^profile.id],
+        join: b in Profile,
+        on: [id: a.target_id],
+        select: b.user_id
+      )
+      |> Repo.all()
+
+    IO.inspect(likes_and_passes)
 
     %{
       # "explain" => true,
@@ -64,8 +79,8 @@ defmodule Flirtual.Matchmaking do
                 "values" =>
                   List.flatten([
                     user.id,
-                    profile.liked_and_passed,
-                    profile.blocked
+                    likes_and_passes,
+                    []
                   ])
               }
             }
@@ -110,8 +125,12 @@ defmodule Flirtual.Matchmaking do
   end
 
   def query(:interests, %User{} = user) do
-    %{profile: %{interests: interests, custom_weights: custom_weights}} = user
-    grouped_interests = Profile.group_interests_by_strength(interests)
+    %{profile: %{attributes: attributes, custom_weights: custom_weights}} = user
+
+    grouped_interests =
+      attributes
+      |> filter_by(:type, "interest")
+      |> Profile.group_interests_by_strength()
 
     List.flatten([
       # Which default-weighted interests do $a and $b have in common?
@@ -166,7 +185,8 @@ defmodule Flirtual.Matchmaking do
   end
 
   def query(:games, %User{} = user) do
-    %{profile: %{games: games, custom_weights: custom_weights}} = user
+    %{profile: %{attributes: attributes, custom_weights: custom_weights}} = user
+    games = attributes |> filter_by(:type, "game")
 
     # Which VR games do $a and $b both play?
     Enum.map(
@@ -268,7 +288,7 @@ defmodule Flirtual.Matchmaking do
       do:
         List.flatten([
           Enum.map(
-            preferences.kinks,
+            filter_by(preferences.attributes, :type, "kink"),
             &%{
               "term" => %{
                 "kinks" => %{
@@ -279,7 +299,7 @@ defmodule Flirtual.Matchmaking do
             }
           ),
           Enum.map(
-            profile.kinks,
+            filter_by(profile.attributes, :type, "kink"),
             &%{
               "term" => %{
                 "kinks_lf" => %{
@@ -381,19 +401,26 @@ defmodule Flirtual.Matchmaking do
   end
 
   def filter(:gender, %User{} = user) do
-    %{profile: %{gender: gender, preferences: preferences}} = user
+    %{profile: %{attributes: attributes, preferences: preferences}} = user
 
     [
       # $b must be looking for one or more of $a’s genders.
       %{
         "terms" => %{
-          "gender_lf" => gender |> Enum.filter(& &1.metadata["simple"]) |> Enum.map(& &1.id)
+          "gender_lf" =>
+            attributes
+            |> filter_by(:type, "gender")
+            |> Enum.filter(& &1.metadata["simple"])
+            |> Enum.map(& &1.id)
         }
       },
       # $a must be looking for one or more of $b’s genders.
       %{
         "terms" => %{
-          "gender" => preferences.gender |> Enum.map(& &1.id)
+          "gender" =>
+            preferences.attributes
+            |> filter_by(:type, "gender")
+            |> Enum.map(& &1.id)
         }
       }
     ]
