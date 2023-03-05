@@ -16,34 +16,33 @@ import {
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputSlider } from "~/components/inputs/slider";
 import { PremiumBadge } from "~/components/premium-badge";
-import { useCurrentUser } from "~/hooks/use-current-user";
-import { useGenderList } from "~/hooks/use-gender-list";
-import { capitalize } from "~/utilities";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useSession } from "~/hooks/use-session";
+import { capitalize, excludeBy, filterBy } from "~/utilities";
+
+const absMinAge = 18;
+const absMaxAge = 100;
 
 export const MatchmakingForm: React.FC = () => {
-	const { data: user } = useCurrentUser();
+	const [session] = useSession();
 
-	const genders = useGenderList()
+	const genders = useAttributeList("gender")
 		.filter((gender) => gender.metadata?.simple)
 		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
 
-	if (!user || !user.preferences) return null;
-	const { preferences: profilePreferences } = user.profile;
-
-	const customWeights = user.profile.customWeights ?? DefaultProfileCustomWeights;
-
-	const absMinAge = 18;
-	const absMaxAge = 100;
+	if (!session) return null;
+	const { user } = session;
+	const { preferences, customWeights = DefaultProfileCustomWeights } = user.profile;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				gender: profilePreferences.gender.map((attribute) => attribute.id),
-				ageRange: [
-					profilePreferences.agemin ?? absMinAge,
-					profilePreferences.agemax ?? absMaxAge
-				] as InputRangeSliderValue,
+				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
+				age: [
+					preferences?.agemin ?? absMinAge,
+					preferences?.agemax ?? absMaxAge
+				] satisfies InputRangeSliderValue,
 				serious: user.profile.serious ?? false,
 				weightCountry: customWeights.country,
 				weightCustomInterests: customWeights.customInterests,
@@ -57,27 +56,37 @@ export const MatchmakingForm: React.FC = () => {
 				weightSerious: customWeights.serious
 			}}
 			onSubmit={async (values) => {
-				if (!user) return;
+				const [agemin, agemax] = values.age;
 
-				const [agemin, agemax] = values.ageRange;
 				await Promise.all([
-					api.user.profile.update(user.id, { serious: values.serious }),
+					api.user.profile.update(user.id, {
+						body: {
+							serious: values.serious
+						}
+					}),
 					api.user.profile.updatePreferences(user.id, {
-						agemin: agemin === absMinAge ? null : agemin,
-						agemax: agemax === absMaxAge ? null : agemax,
-						gender: values.gender
+						body: {
+							agemin: agemin === absMinAge ? null : agemin,
+							agemax: agemax === absMaxAge ? null : agemax,
+							attributes: [
+								...excludeBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
+								...values.gender
+							]
+						}
 					}),
 					api.user.profile.updateCustomWeights(user.id, {
-						country: values.weightCountry,
-						customInterests: values.weightCustomInterests,
-						defaultInterests: values.weightCustomInterests,
-						domsub: values.weightDomsub,
-						games: values.weightGames,
-						kinks: values.weightKinks,
-						likes: values.weightLikes,
-						monopoly: values.weightMonopoly,
-						personality: values.weightPersonality,
-						serious: values.weightSerious
+						body: {
+							country: values.weightCountry,
+							customInterests: values.weightCustomInterests,
+							defaultInterests: values.weightCustomInterests,
+							domsub: values.weightDomsub,
+							games: values.weightGames,
+							kinks: values.weightKinks,
+							likes: values.weightLikes,
+							monopoly: values.weightMonopoly,
+							personality: values.weightPersonality,
+							serious: values.weightSerious
+						}
 					})
 				]);
 			}}
@@ -98,7 +107,7 @@ export const MatchmakingForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="ageRange">
+					<FormField name="age">
 						{(field) => {
 							const [min, max] = field.props.value;
 

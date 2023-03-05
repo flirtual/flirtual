@@ -1,15 +1,13 @@
 import { Dispatch } from "react";
 
 import { api } from "~/api";
-import { useCurrentUser } from "~/hooks/use-current-user";
-import { urls } from "~/urls";
+import { useSessionUser } from "~/hooks/use-session";
 
 import { ArrangeableImageSet } from "../arrangeable-image-set";
 import { InputFile } from "../inputs";
 
 export interface ImageSetValue {
 	id: string | null;
-	fileId: string | null;
 	file: File | null;
 	src: string;
 }
@@ -22,8 +20,7 @@ export interface InputImageSetProps {
 
 export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 	const { value, id, onChange } = props;
-
-	const { data: user } = useCurrentUser();
+	const user = useSessionUser();
 
 	return (
 		<>
@@ -52,21 +49,19 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 						...value,
 						...files.map((file) => ({
 							id: null,
-							fileId: null,
 							file,
 							src: URL.createObjectURL(file)
 						}))
 					]);
 
-					const newImages = await api.user.profile.images.upload(user.id, files);
+					const newImages = await api.user.profile.images.upload(user.id, { body: files });
 
 					onChange([
 						...value.filter((image) => "id" in image),
 						...newImages.map((image) => ({
 							id: image.id,
-							fileId: image.externalId,
 							file: null,
-							src: urls.media(image.externalId)
+							src: image.url
 						}))
 					]);
 				}}

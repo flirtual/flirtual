@@ -1,18 +1,15 @@
-import { AttributeCollection } from "~/api/attributes";
-import { GenderAttributeCollection } from "~/hooks/use-gender-list";
-import { KinkAttributeCollection } from "~/hooks/use-kink-list";
+import { PartialAttributeCollection } from "~/api/attributes";
 
 import { UpdatedAtModel } from "../../common";
-import { fetch, FetchOptions } from "../..";
+import { fetch, NarrowFetchOptions } from "../..";
 
 import { ProfileImage } from "./images";
 import { ProfileCustomWeights } from "./custom-weights";
 
 export type ProfilePreferences = UpdatedAtModel & {
-	agemin?: number | null;
-	agemax?: number | null;
-	gender: GenderAttributeCollection;
-	kinks: KinkAttributeCollection;
+	agemin?: number;
+	agemax?: number;
+	attributes: PartialAttributeCollection;
 };
 
 export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;
@@ -32,33 +29,27 @@ export type Profile = Partial<UpdatedAtModel> & {
 	openness?: number;
 	conscientiousness?: number;
 	agreeableness?: number;
-	gender: GenderAttributeCollection;
-	sexuality: AttributeCollection;
-	kinks: KinkAttributeCollection;
-	games: AttributeCollection;
 	languages: Array<string>;
-	platforms: AttributeCollection;
-	interests: AttributeCollection;
-	preferences: ProfilePreferences;
+	attributes: PartialAttributeCollection;
+	preferences?: ProfilePreferences;
 	customWeights?: ProfileCustomWeights;
 	images: Array<ProfileImage>;
 };
 
-type ProfileUpdate = Partial<
-	Pick<
-		Profile,
-		"displayName" | "biography" | "new" | "domsub" | "country" | "languages" | "serious"
+export async function update(
+	userId: string,
+	options: NarrowFetchOptions<
+		Partial<
+			Pick<
+				Profile,
+				"displayName" | "biography" | "new" | "domsub" | "country" | "languages" | "serious"
+			>
+		> & {
+			attributes?: Array<string>;
+		}
 	>
-> & {
-	gender?: Array<string>;
-	kinks?: Array<string>;
-	sexuality?: Array<string>;
-	games?: Array<string>;
-	interests?: Array<string>;
-};
-
-export async function update(userId: string, body: ProfileUpdate, options: FetchOptions = {}) {
-	return fetch<Profile>("post", `users/${userId}/profile`, { ...options, body });
+) {
+	return fetch<Profile>("post", `users/${userId}/profile`, options);
 }
 
 export interface ProfilePersonality {
@@ -91,31 +82,27 @@ export const DefaultProfilePersonality = Object.freeze<ProfilePersonality>(
 	) as unknown as ProfilePersonality
 );
 
-export async function getPersonality(userId: string, options: FetchOptions = {}) {
-	return fetch<ProfilePersonality>("get", `users/${userId}/profile/personality`, { ...options });
+export async function getPersonality(
+	userId: string,
+	options: NarrowFetchOptions = {}
+): Promise<ProfilePersonality> {
+	return fetch("get", `users/${userId}/profile/personality`, options);
 }
-
-export type UpdateProfilePersonality = ProfilePersonality;
 
 export async function updatePersonality(
 	userId: string,
-	body: UpdateProfilePersonality,
-	options: FetchOptions = {}
+	options: NarrowFetchOptions<ProfilePersonality>
 ) {
-	return fetch<Profile>("post", `users/${userId}/profile/personality`, { ...options, body });
+	return fetch<Profile>("post", `users/${userId}/profile/personality`, options);
 }
-
-export type UpdateProfilePreferences = Partial<
-	Pick<ProfilePreferences, "agemin" | "agemax"> & { gender: Array<string> }
->;
 
 export async function updatePreferences(
 	userId: string,
-	body: UpdateProfilePreferences,
-	options: FetchOptions = {}
+	options: NarrowFetchOptions<{
+		agemin?: number | null;
+		agemax?: number | null;
+		attributes?: Array<string>;
+	}>
 ) {
-	return fetch<ProfilePreferences>("post", `users/${userId}/profile/preferences`, {
-		...options,
-		body
-	});
+	return fetch<ProfilePreferences>("post", `users/${userId}/profile/preferences`, options);
 }

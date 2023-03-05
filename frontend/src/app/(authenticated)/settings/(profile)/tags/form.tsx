@@ -7,45 +7,70 @@ import { InputAutocomplete, InputDateSelect, InputLabel, InputSwitch } from "~/c
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useAttributeList } from "~/hooks/use-attribute-list";
-import { useCurrentUser } from "~/hooks/use-current-user";
-import { useGenderList } from "~/hooks/use-gender-list";
+import { useSession } from "~/hooks/use-session";
+import { entries, excludeBy, filterBy, fromEntries, pick } from "~/utilities";
+
+const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
 
 export const TagsForm: React.FC = () => {
-	const { data: user, mutate: mutateUser } = useCurrentUser();
-	const { data: games = [] } = useAttributeList("game");
-	const { data: interests = [] } = useAttributeList("interest");
-	const { data: platforms = [] } = useAttributeList("platform");
-	const { data: sexualities = [] } = useAttributeList("sexuality");
-	const genders = useGenderList();
+	const [session, mutateSession] = useSession();
 
-	if (!user) return null;
+	const games = useAttributeList("game");
+	const interests = useAttributeList("interest");
+	const platforms = useAttributeList("platform");
+	const sexualities = useAttributeList("sexuality");
+	const genders = useAttributeList("gender");
+
+	if (!session) return null;
+	const { user } = session;
+	const { profile } = user;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
 				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
-				gender: user.profile.gender.map((gender) => gender.id) ?? [],
-				sexuality: user.profile.sexuality?.map((sexuality) => sexuality.id) ?? [],
-				country: user.profile.country ?? "",
-				languages: user.profile.languages ?? [],
-				platforms: user.profile.platforms.map((platform) => platform.id) ?? [],
-				new: user.profile.new ?? false,
-				games: user.profile.games.map((game) => game.id) ?? [],
-				interests: user.profile.interests.map((interest) => interest.id) ?? []
+				new: profile.new ?? false,
+				country: profile.country ?? "",
+				languages: profile.languages ?? [],
+				...(fromEntries(
+					AttributeKeys.map((type) => {
+						return [
+							type,
+							filterBy(profile.attributes, "type", type).map(({ id }) => id) ?? []
+						] as const;
+					})
+				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
 			}}
-			onSubmit={async (values) => {
-				const { bornAt, ...profileValues } = values;
-
+			onSubmit={async ({ bornAt, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
-					api.user.update(user.id, { bornAt: bornAt.toISOString() }),
-					api.user.profile.update(user.id, profileValues)
+					api.user.update(user.id, {
+						body: {
+							bornAt: bornAt.toISOString()
+						}
+					}),
+					api.user.profile.update(user.id, {
+						body: {
+							country: values.country,
+							languages: values.languages,
+							new: values.new,
+							attributes: [
+								excludeBy(profile.attributes ?? [], "type", AttributeKeys).map(({ id }) => id),
+								entries(pick(values, AttributeKeys)).map(([, ids]) => ids)
+							].flat(2)
+						}
+					})
 				]);
 
-				await mutateUser(
+				await mutateSession(
 					{
-						...newUser,
-						profile: newProfile
+						...session,
+						user: {
+							...newUser,
+							profile: {
+								...newProfile
+							}
+						}
 					},
 					{ revalidate: false }
 				);
@@ -138,7 +163,7 @@ export const TagsForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="platforms">
+					<FormField name="platform">
 						{(field) => (
 							<>
 								<InputLabel>VR setup</InputLabel>
@@ -154,7 +179,7 @@ export const TagsForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="games">
+					<FormField name="game">
 						{(field) => (
 							<>
 								<InputLabel>Favorite social VR games</InputLabel>
@@ -175,7 +200,7 @@ export const TagsForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="interests">
+					<FormField name="interest">
 						{(field) => (
 							<>
 								<InputLabel>Personal interests</InputLabel>

@@ -1,5 +1,3 @@
-"use client";
-
 import { ModelCard } from "~/components/model-card";
 
 import { PrivacyForm } from "./form";

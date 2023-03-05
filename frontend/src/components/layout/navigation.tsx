@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSessionUser } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { PeaceGradient } from "../icons/peace-gradient";
@@ -36,7 +36,7 @@ const NavigationIconButton: React.FC<
 };
 
 export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) => {
-	const { data: user } = useCurrentUser();
+	const user = useSessionUser();
 	if (!user) return null;
 
 	return (
@@ -53,7 +53,7 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 			<NavigationIconButton href={urls.browse()}>
 				<HeartIcon className="h-8 w-8" />
 			</NavigationIconButton>
-			<NavigationIconButton href={urls.messages()}>
+			<NavigationIconButton href={urls.conversations.list()}>
 				<div className="relative">
 					<ChatBubbleLeftRightIcon className="w-8" strokeWidth={1.5} />
 					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
@@ -77,7 +77,7 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 };
 
 export const Navigation: React.FC = () => {
-	const { data: user } = useCurrentUser();
+	const user = useSessionUser();
 	if (!user) return null;
 
 	return (

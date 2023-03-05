@@ -1,7 +1,7 @@
-import { fetch, FetchOptions } from "..";
+import { fetch, NarrowFetchOptions } from "..";
 
 export const PrivacyPreferenceOptions = ["everyone", "matches", "me"] as const;
-export type PrivacyPreferenceOption = typeof PrivacyPreferenceOptions[number];
+export type PrivacyPreferenceOption = (typeof PrivacyPreferenceOptions)[number];
 
 export interface PrivacyPreferences {
 	analytics: boolean;
@@ -25,37 +25,23 @@ export interface Preferences {
 	privacy: PrivacyPreferences;
 }
 
-export type UpdatePreferences = Partial<Pick<Preferences, "nsfw">>;
-
-export async function update(userId: string, body: UpdatePreferences, options: FetchOptions = {}) {
-	return fetch<Preferences>("post", `users/${userId}/preferences`, {
-		...options,
-		body
-	});
+export async function update(
+	userId: string,
+	options: NarrowFetchOptions<Partial<Pick<Preferences, "nsfw">>>
+) {
+	return fetch<Preferences>("post", `users/${userId}/preferences`, options);
 }
-
-export type UpdatePrivacyPreferences = Partial<PrivacyPreferences>;
 
 export async function updatePrivacy(
 	userId: string,
-	body: UpdatePrivacyPreferences,
-	options: FetchOptions = {}
+	options: NarrowFetchOptions<Partial<PrivacyPreferences>>
 ) {
-	return fetch<PrivacyPreferences>("post", `users/${userId}/preferences/privacy`, {
-		...options,
-		body
-	});
+	return fetch<PrivacyPreferences>("post", `users/${userId}/preferences/privacy`, options);
 }
-
-export type UpdateNotificationsPreferences = Partial<PrivacyPreferences>;
 
 export async function updateNotifications(
 	userId: string,
-	body: UpdateNotificationsPreferences,
-	options: FetchOptions = {}
+	options: NarrowFetchOptions<Partial<PrivacyPreferences>>
 ) {
-	return fetch<PrivacyPreferences>("post", `users/${userId}/preferences/notifications`, {
-		...options,
-		body
-	});
+	return fetch<PrivacyPreferences>("post", `users/${userId}/preferences/notifications`, options);
 }

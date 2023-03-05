@@ -1,7 +1,9 @@
 "use client";
 
 import { User } from "~/api/user";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useSession } from "~/hooks/use-session";
+import { filterBy, findBy } from "~/utilities";
 
 import { Pill } from "./pill";
 
@@ -16,46 +18,63 @@ function getPersonalityLabels({ profile: { openness, conscientiousness, agreeabl
 }
 
 export const PillCollection: React.FC<{ user: User }> = (props) => {
-	const { data: self } = useCurrentUser();
+	const [session] = useSession();
 	const { user } = props;
 
-	if (!self) return null;
+	const sexualities = useAttributeList("sexuality");
 
-	const myPersonalityLabels = getPersonalityLabels(self);
+	if (!session) return null;
+
+	const sessionPersonalityLabels = getPersonalityLabels(session.user);
 	const personalityLabels = getPersonalityLabels(user);
 
 	return (
 		<div className="flex flex-wrap gap-2">
 			{user.profile.serious && <Pill>Open to serious dating</Pill>}
 			{personalityLabels.map((personalityLabel) => (
-				<Pill active={myPersonalityLabels.includes(personalityLabel)} key={personalityLabel}>
+				<Pill active={sessionPersonalityLabels.includes(personalityLabel)} key={personalityLabel}>
 					{personalityLabel}
 				</Pill>
 			))}
-			{user.profile.sexuality.map((sexuality) => (
-				<Pill
-					active={self.profile.sexuality.some((attribute) => attribute.id === sexuality.id)}
-					key={sexuality.id}
-				>
-					{sexuality.name}
-				</Pill>
-			))}
-			{user.profile.games.map((game) => (
-				<Pill
-					active={self.profile.games.some((attribute) => attribute.id === game.id)}
-					key={game.id}
-				>
-					{game.name}
-				</Pill>
-			))}
-			{user.profile.interests.map((interest) => (
-				<Pill
-					active={self.profile.interests.some((attribute) => attribute.id === interest.id)}
-					key={interest.id}
-				>
-					{interest.name}
-				</Pill>
-			))}
+			{filterBy(user.profile.attributes, "type", "sexuality").map(({ id }) => {
+				const attribute = findBy(sexualities, "id", id);
+				if (!attribute) return null;
+
+				return (
+					<Pill
+						active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
+						key={attribute.id}
+					>
+						{attribute.name}
+					</Pill>
+				);
+			})}
+			{filterBy(user.profile.attributes, "type", "game").map(({ id }) => {
+				const attribute = findBy(sexualities, "id", id);
+				if (!attribute) return null;
+
+				return (
+					<Pill
+						active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
+						key={attribute.id}
+					>
+						{attribute.name}
+					</Pill>
+				);
+			})}
+			{filterBy(user.profile.attributes, "type", "interest").map(({ id }) => {
+				const attribute = findBy(sexualities, "id", id);
+				if (!attribute) return null;
+
+				return (
+					<Pill
+						active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
+						key={attribute.id}
+					>
+						{attribute.name}
+					</Pill>
+				);
+			})}
 		</div>
 	);
 };

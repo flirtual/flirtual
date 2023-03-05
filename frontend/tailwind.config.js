@@ -85,7 +85,8 @@ module.exports = {
 							marginBottom: 0
 						},
 						h3: {
-							marginTop: 0
+							marginTop: 0,
+							fontSize: "1.3rem"
 						},
 						"--tw-prose-body": colors.black[80],
 						"--tw-prose-headings": colors.black[80],
@@ -102,23 +103,23 @@ module.exports = {
 						"--tw-prose-pre-code": colors.black[80],
 						"--tw-prose-pre-bg": colors.black[80],
 						"--tw-prose-th-borders": colors.black[80],
-						"--tw-prose-td-borders": colors.black[80]
-						/* "--tw-prose-invert-body": colors.stone[300],
-						"--tw-prose-invert-headings": colors.white,
-						"--tw-prose-invert-lead": colors.stone[400],
-						"--tw-prose-invert-links": colors.white,
-						"--tw-prose-invert-bold": colors.white,
-						"--tw-prose-invert-counters": colors.stone[400],
-						"--tw-prose-invert-bullets": colors.stone[600],
-						"--tw-prose-invert-hr": colors.stone[700],
-						"--tw-prose-invert-quotes": colors.stone[100],
-						"--tw-prose-invert-quote-borders": colors.stone[700],
-						"--tw-prose-invert-captions": colors.stone[400],
-						"--tw-prose-invert-code": colors.white,
-						"--tw-prose-invert-pre-code": colors.stone[300],
-						"--tw-prose-invert-pre-bg": "rgb(0 0 0 / 50%)",
-						"--tw-prose-invert-th-borders": colors.stone[600],
-						"--tw-prose-invert-td-borders": colors.stone[700] */
+						"--tw-prose-td-borders": colors.black[80],
+						"--tw-prose-invert-body": colors.white[20],
+						"--tw-prose-invert-headings": colors.white[20],
+						"--tw-prose-invert-lead": colors.white[20],
+						"--tw-prose-invert-links": colors.white[20],
+						"--tw-prose-invert-bold": colors.white[20],
+						"--tw-prose-invert-counters": colors.white[20],
+						"--tw-prose-invert-bullets": colors.white[20],
+						"--tw-prose-invert-hr": colors.white[20],
+						"--tw-prose-invert-quotes": colors.white[20],
+						"--tw-prose-invert-quote-borders": colors.white[20],
+						"--tw-prose-invert-captions": colors.white[20],
+						"--tw-prose-invert-code": colors.white[20],
+						"--tw-prose-invert-pre-code": colors.white[20],
+						"--tw-prose-invert-pre-bg": colors.white[20],
+						"--tw-prose-invert-th-borders": colors.white[20],
+						"--tw-prose-invert-td-borders": colors.white[20]
 					}
 				}
 			}

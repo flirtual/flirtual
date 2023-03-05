@@ -1,19 +1,24 @@
+import { useDebugValue } from "react";
 import useSWR, { SWRConfiguration } from "swr";
 
 import { api } from "~/api";
-import { AttributeCollection } from "~/api/attributes";
+import { AttributeCollection, AttributeMetadata } from "~/api/attributes";
 
-export function useAttributeList<T = unknown>(
-	name: string,
+export function useAttributeList<T extends keyof AttributeMetadata>(
+	name: T,
 	options: Omit<SWRConfiguration<AttributeCollection<T>>, "fetcher" | "fallbackData"> = {}
 ) {
-	return useSWR(
+	useDebugValue(name);
+
+	const { data: attributes = [] } = useSWR(
 		["attribute", name],
-		([, name]) => api.attributes.list(name) as Promise<AttributeCollection<T>>,
+		([, name]) => api.attributes.list<T>(name),
 		{
 			fallbackData: [],
 			revalidateOnFocus: false,
 			...options
 		}
 	);
+
+	return attributes;
 }

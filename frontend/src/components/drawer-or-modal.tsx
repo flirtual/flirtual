@@ -1,26 +1,22 @@
 "use client";
 
-import { Children, Dispatch, useRef } from "react";
+import { Children, Dispatch } from "react";
 
-import { useClickOutside } from "~/hooks/use-click-outside";
 import { ScreenBreakpoint, useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 
 import { Drawer } from "./drawer";
+import { Modal } from "./modal";
 
-export interface DrawerOrPopoverProps {
+export interface DrawerOrModalProps {
 	children: React.ReactNode;
 	breakpoint?: ScreenBreakpoint;
 	visible: boolean;
 	onVisibilityChange: Dispatch<boolean>;
 }
 
-export const DrawerOrPopover: React.FC<DrawerOrPopoverProps> = (props) => {
+export const DrawerOrModal: React.FC<DrawerOrModalProps> = (props) => {
 	const { breakpoint = "sm", children, visible, onVisibilityChange } = props;
-
 	const [overlayNode, contentNode] = Children.toArray(children);
-
-	const overlayParentRef = useRef<HTMLDivElement>(null);
-	useClickOutside(overlayParentRef, () => onVisibilityChange(false));
 
 	if (!useScreenBreakpoint(breakpoint)) {
 		return (
@@ -36,11 +32,9 @@ export const DrawerOrPopover: React.FC<DrawerOrPopoverProps> = (props) => {
 	return (
 		<div className="relative">
 			{contentNode}
-			{visible && (
-				<div className="absolute z-10 mt-4" ref={overlayParentRef}>
-					{overlayNode}
-				</div>
-			)}
+			<Modal visible={visible} onVisibilityChange={onVisibilityChange}>
+				{overlayNode}
+			</Modal>
 		</div>
 	);
 };

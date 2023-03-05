@@ -13,8 +13,7 @@ import {
 export const InputLanguageAutocomplete: React.FC<Omit<InputAutocompleteProps, "options">> = (
 	props
 ) => {
-	const { data: languages = [] } = useAttributeList("language");
-
+	const languages = useAttributeList("language");
 	const options = useMemo<Array<InputAutocompleteOption>>(
 		() =>
 			languages

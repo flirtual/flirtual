@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { urls } from "~/urls";
-import { toCamelObject, toSnakeObject } from "~/utilities";
+import { Expand, toCamelObject, toSnakeObject } from "~/utilities";
 
 export function newUrl(pathname: string, query: Record<string, string> = {}): URL {
 	const searchParams = new URLSearchParams(query);
@@ -22,7 +22,7 @@ export class ResponseError extends Error {
 	}
 }
 
-export class ResponseUnprocessableEntityError extends ResponseError {
+export class ResponseChangesetError extends ResponseError {
 	public properties: Record<string, Array<string>>;
 	public constructor(response: Response, body: any) {
 		super(response, body);
@@ -30,35 +30,44 @@ export class ResponseUnprocessableEntityError extends ResponseError {
 	}
 }
 
-export type FetchOptions = Omit<RequestInit, "method" | "body"> & {
-	query?: Record<string, string>;
-	body?: any;
-	raw?: boolean;
-};
+export type FetchOptions = Expand<
+	Omit<RequestInit, "method" | "body"> & {
+		query?: Record<string, string>;
+		body?: unknown;
+		raw?: boolean;
+	}
+>;
+
+export type NarrowFetchOptions<Body = undefined, Query = undefined> = Expand<
+	FetchOptions &
+		(Body extends undefined ? { body?: undefined } : { body: Expand<Body> }) &
+		(Query extends undefined ? { query?: undefined } : { query: Expand<Query> })
+>;
+
 export type FetchMethod = "get" | "post" | "delete" | "patch" | "put";
 
-export async function fetch<T = unknown>(
+export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 	method: FetchMethod,
 	pathname: string,
-	options?: FetchOptions & { raw?: false }
+	options?: O & { raw?: false }
 ): Promise<T>;
 export async function fetch(
 	method: FetchMethod,
 	pathname: string,
 	options: FetchOptions & { raw: true }
 ): Promise<Response>;
-export async function fetch<T = unknown>(
+export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 	method: FetchMethod,
 	pathname: string,
-	options?: FetchOptions
+	options?: O
 ): Promise<T>;
-export async function fetch<T = unknown>(
+export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 	method: FetchMethod,
 	pathname: string,
-	options: FetchOptions = {}
+	options: O
 ): Promise<T | Response> {
-	const url = newUrl(pathname, options.query);
-	const body = options.raw
+	const url = newUrl(pathname, toSnakeObject(options.query));
+	const body: any = options.raw
 		? options.body
 		: JSON.stringify(typeof options.body === "object" ? toSnakeObject(options.body) : options.body);
 
@@ -77,9 +86,10 @@ export async function fetch<T = unknown>(
 	const responseBody = toCamelObject<any>(await response.json());
 
 	if (!response.ok || "error" in responseBody) {
-		const error = new (
-			responseBody?.error.properties ? ResponseUnprocessableEntityError : ResponseError
-		)(response, responseBody);
+		const error = new (responseBody?.error.properties ? ResponseChangesetError : ResponseError)(
+			response,
+			responseBody
+		);
 		error.stack = error.stack?.split("\n").slice(2).join("\n");
 
 		throw error;
@@ -92,7 +102,8 @@ export * as attributes from "./attributes";
 export * as auth from "./auth";
 export * as user from "./user";
 export * as file from "./file";
-export * as prospects from "./prospects";
+export * as matchmaking from "./matchmaking";
+export * as report from "./report";
 export * as api from "./";
 
 declare global {

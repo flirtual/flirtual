@@ -1,30 +1,39 @@
 import { User } from "./user/user";
 import { DatedModel } from "./common";
 
-import { fetch, FetchOptions } from ".";
+import { fetch, NarrowFetchOptions } from ".";
 
 export type Session = DatedModel & {
-	userId: string;
+	sudoerId?: string;
+	user: User;
 };
 
-export interface LoginOptions {
-	email: string;
-	password: string;
-	rememberMe: boolean;
+export async function login(
+	options: NarrowFetchOptions<{
+		email: string;
+		password: string;
+		rememberMe: boolean;
+	}>
+) {
+	return fetch<Session>("post", "auth/session", options);
 }
 
-export async function login(body: LoginOptions, options: FetchOptions = {}) {
-	return fetch<Session>("post", "auth/session", { ...options, body });
+export async function logout(options: NarrowFetchOptions = {}) {
+	return fetch("delete", "auth/session", { ...options, raw: true });
 }
 
-export async function logout(options: FetchOptions = {}) {
-	await fetch("delete", "auth/session", { ...options, raw: true });
+export async function sudo(options: NarrowFetchOptions<{ userId: string }>) {
+	return fetch<Session>("post", "auth/sudo", options);
 }
 
-export async function session(options: FetchOptions = {}) {
-	await fetch<Session>("get", "auth/session", options);
+export async function revokeSudo(options: NarrowFetchOptions = {}) {
+	return fetch<Session>("delete", "auth/sudo", options);
 }
 
-export async function user(options: FetchOptions = {}) {
+export async function session(options: NarrowFetchOptions = {}) {
+	return fetch<Session>("get", "auth/session", options);
+}
+
+export async function user(options: NarrowFetchOptions = {}) {
 	return fetch<User>("get", "auth/user", options);
 }

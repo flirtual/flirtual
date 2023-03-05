@@ -215,24 +215,26 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 					<div className="mx-4 flex w-full justify-center gap-2">
 						<LabelSelect
 							options={MonthNames.map((label, monthIdx) => ({
-								key: monthIdx,
+								key: monthIdx.toString(),
 								label,
 								active: monthIdx === value.getMonth()
 							}))}
 							onOptionAction={({ option }) => {
-								doChange(new Date(value.getFullYear(), option.key as number, value.getDate()));
+								doChange(
+									new Date(value.getFullYear(), Number.parseInt(option.key), value.getDate())
+								);
 							}}
 						>
 							{displayDate.toLocaleDateString("en-CA", { month: "short" })}
 						</LabelSelect>
 						<LabelSelect
 							options={years.map((year) => ({
-								key: year,
+								key: year.toString(),
 								label: year.toString(),
 								active: value.getFullYear() === year
 							}))}
 							onOptionAction={({ option }) => {
-								doChange(new Date(option.key as number, value.getMonth(), value.getDate()));
+								doChange(new Date(Number.parseInt(option.key), value.getMonth(), value.getDate()));
 							}}
 						>
 							{displayDate.toLocaleDateString("en-CA", { year: "numeric" })}

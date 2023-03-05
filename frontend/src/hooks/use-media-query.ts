@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useDebugValue, useEffect, useState } from "react";
 
 export function useMediaQuery(query: string) {
 	const [matches, setMatches] = useState(false);
+
+	useDebugValue(query);
 
 	useEffect(() => {
 		const queryList = matchMedia(query);

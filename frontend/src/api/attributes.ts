@@ -1,18 +1,54 @@
 import { UuidModel } from "./common";
 
-import { fetch, FetchOptions } from ".";
+import { fetch, NarrowFetchOptions } from ".";
+
+export type KinkAttributeKind = "dominant" | "submissive" | null;
+
+export interface AttributeMetadata {
+	gender:
+		| {
+				order?: number;
+				simple?: boolean;
+				fallback?: boolean;
+				plural?: string;
+				conflicts?: Array<string>;
+		  }
+		| undefined;
+	sexuality: undefined;
+	language: undefined;
+	game: undefined;
+	interest: undefined;
+	platform: undefined;
+	country: {
+		flagUrl: string;
+	};
+	kink: {
+		kind: KinkAttributeKind;
+		pair: string;
+	};
+	"report-reason": {
+		order: number;
+		fallback?: boolean;
+	};
+}
 
 export type Attribute<T = unknown> = UuidModel & {
-	type: string;
+	type: keyof AttributeMetadata;
 	name: string;
 	metadata: T;
 };
 
-export type AttributeCollection<T = unknown> = Array<Attribute<T>>;
+export type PartialAttribute = Pick<Attribute<unknown>, "id" | "type">;
 
-export async function list<T = unknown>(
-	name: string,
-	options: FetchOptions = {}
+export type AttributeCollection<T extends string> = Array<
+	Attribute<T extends keyof AttributeMetadata ? AttributeMetadata[T] : unknown>
+>;
+
+export type PartialAttributeCollection = Array<PartialAttribute>;
+
+export async function list<T extends string>(
+	name: T,
+	options: NarrowFetchOptions = {}
 ): Promise<AttributeCollection<T>> {
 	return fetch<AttributeCollection<T>>("get", `attributes/${name}`, options);
 }

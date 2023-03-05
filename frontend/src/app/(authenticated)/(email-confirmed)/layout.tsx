@@ -1,8 +1,8 @@
-import { AuthProvider } from "~/components/auth-provider";
+import { SessionProvider } from "~/components/session-provider";
 
 export default function AuthenticatedEmailConfirmedLayout({ children }: React.PropsWithChildren) {
 	return (
 		// @ts-expect-error: Server Component
-		<AuthProvider>{children}</AuthProvider>
+		<SessionProvider>{children}</SessionProvider>
 	);
 }

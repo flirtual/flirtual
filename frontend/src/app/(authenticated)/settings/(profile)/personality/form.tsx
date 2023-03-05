@@ -5,30 +5,30 @@ import { personalityQuestionLabels } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
-import { useCurrentPersonality } from "~/hooks/use-current-personality";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSession } from "~/hooks/use-session";
+import { useSessionPersonality } from "~/hooks/use-session-personality";
 import { entries } from "~/utilities";
 
 export const PersonalityForm: React.FC = () => {
-	const { data: user, mutate: mutateUser } = useCurrentUser();
+	const [session, mutateSession] = useSession();
+	const personality = useSessionPersonality();
 
-	const personality = useCurrentPersonality();
-
-	if (!user || !personality) return null;
+	if (!session || !personality) return null;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={personality}
-			onSubmit={async (personalityAnswers) => {
-				await mutateUser(async (user) =>
-					user
-						? {
-								...user,
-								profile: await api.user.profile.updatePersonality(user.id, personalityAnswers)
-						  }
-						: null
-				);
+			onSubmit={async (body) => {
+				const newProfile = await api.user.profile.updatePersonality(session.user.id, { body });
+
+				await mutateSession({
+					...session,
+					user: {
+						...session.user,
+						profile: newProfile
+					}
+				});
 			}}
 		>
 			{({ FormField }) => (

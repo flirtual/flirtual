@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch } from "fast-fuzzy";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { InputOptionWindow } from "./select";
 
@@ -120,20 +121,29 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 					/>
 				</div>
 			</div>
-			{overlayVisible && (
-				<InputOptionWindow
-					className="absolute z-10 mt-4"
-					options={suggestions}
-					ref={optionWindowRef}
-					onOptionClick={({ option }) => {
-						if (values.length === limit) return;
-						props.onChange([...values, option.key as K]);
+			<AnimatePresence>
+				{overlayVisible && (
+					<motion.div
+						animate={{ height: "max-content" }}
+						className="absolute z-10 mt-4 flex w-full"
+						exit={{ height: 0 }}
+						initial={{ height: 0 }}
+						transition={{ damping: 25 }}
+					>
+						<InputOptionWindow
+							options={suggestions}
+							ref={optionWindowRef}
+							onOptionClick={({ option }) => {
+								if (values.length === limit) return;
+								props.onChange([...values, option.key as K]);
 
-						inputRef.current?.focus();
-						setInputValue("");
-					}}
-				/>
-			)}
+								inputRef.current?.focus();
+								setInputValue("");
+							}}
+						/>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</div>
 	);
 }

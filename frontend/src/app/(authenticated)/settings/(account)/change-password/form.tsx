@@ -4,11 +4,11 @@ import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSession } from "~/hooks/use-session";
 
 export const ChangePasswordForm: React.FC = () => {
-	const { data: user, mutate: mutateUser } = useCurrentUser();
-	if (!user) return null;
+	const [session, mutateSession] = useSession();
+	if (!session) return null;
 
 	return (
 		<Form
@@ -19,8 +19,11 @@ export const ChangePasswordForm: React.FC = () => {
 				passwordConfirmation: "",
 				currentPassword: ""
 			}}
-			onSubmit={async (values) => {
-				await mutateUser(api.user.updatePassword(user.id, values));
+			onSubmit={async (body) => {
+				await mutateSession({
+					...session,
+					user: await api.user.updatePassword(session.user.id, { body })
+				});
 			}}
 		>
 			{({ FormField }) => (

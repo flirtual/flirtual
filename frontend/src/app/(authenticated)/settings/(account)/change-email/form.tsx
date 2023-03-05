@@ -6,14 +6,15 @@ import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const ChangeEmailForm: React.FC = () => {
-	const { data: user, mutate: mutateUser } = useCurrentUser();
+	const [session, mutateSession] = useSession();
 	const router = useRouter();
 
-	if (!user) return null;
+	if (!session) return null;
+	const { user } = session;
 
 	return (
 		<Form
@@ -24,8 +25,8 @@ export const ChangeEmailForm: React.FC = () => {
 				emailConfirmation: "",
 				currentPassword: ""
 			}}
-			onSubmit={async (values) => {
-				await mutateUser(api.user.updateEmail(user.id, values));
+			onSubmit={async (body) => {
+				await mutateSession({ ...session, user: await api.user.updateEmail(user.id, { body }) });
 				router.push(urls.confirmEmail({ to: urls.settings.default() }));
 			}}
 		>

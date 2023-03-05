@@ -1,9 +1,9 @@
 import React, { createContext, RefObject, useContext, useId, useMemo, useState } from "react";
 
-import { ResponseUnprocessableEntityError } from "~/api";
 import { FormFieldFC, FormField } from "~/components/forms/field";
-import { FormCaptcha, FormCaptchaRef } from "~/components/forms/captcha";
+import { FormCaptchaRef } from "~/components/forms/captcha";
 import { entries } from "~/utilities";
+import { ResponseChangesetError } from "~/api";
 
 export interface FormFieldsDefault {
 	[s: string]: unknown;
@@ -107,7 +107,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					return;
 				})
 				.catch((reason) => {
-					if (reason instanceof ResponseUnprocessableEntityError) {
+					if (reason instanceof ResponseChangesetError) {
 						setFieldErrors(reason.properties);
 						return setErrors([]);
 					}
@@ -180,7 +180,6 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		submitting,
 		changes,
 		FormField,
-		FormCaptcha,
 		setFieldErrors,
 		setSubmitting,
 		reset

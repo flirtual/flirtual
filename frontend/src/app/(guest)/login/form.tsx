@@ -1,23 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { api } from "~/api";
 import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
+	const [, mutateSession] = useSession();
 	const router = useRouter();
-	const { data: user, mutate } = useCurrentUser();
-
-	useEffect(() => {
-		if (user) void router.push(to ?? urls.user(user.username));
-	}, [to, router, user]);
 
 	return (
 		<Form
@@ -28,9 +24,12 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 				password: "",
 				rememberMe: false
 			}}
-			onSubmit={async (values) => {
-				await api.auth.login(values);
-				await mutate();
+			onSubmit={async (body) => {
+				const session = await api.auth.login({ body });
+				await mutateSession(session);
+
+				if (to) return router.push(to);
+				router.refresh();
 			}}
 		>
 			{({ errors, FormField }) => (

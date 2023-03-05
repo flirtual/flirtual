@@ -1,12 +1,12 @@
 import { useCallback, useEffect } from "react";
 
-import { useCurrentUser } from "./use-current-user";
+import { useSessionUser } from "./use-session";
 
 export function useFreshworks() {
 	const openFreshworks = useCallback(() => window.FreshworksWidget("open"), []);
 	const hideFreshworks = useCallback(() => window.FreshworksWidget("hide"), []);
 
-	const { data: user } = useCurrentUser();
+	const user = useSessionUser();
 
 	useEffect(() => {
 		window.FreshworksWidget("identify", "ticketForm", {

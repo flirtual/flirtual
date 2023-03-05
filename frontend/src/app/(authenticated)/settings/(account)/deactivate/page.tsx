@@ -5,15 +5,15 @@ import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useCurrentUser } from "~/hooks/use-current-user";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
+import { useSession } from "~/hooks/use-session";
 
 export default function SettingsAccountDeactivatePage() {
-	const { data: user, mutate: mutateUser } = useCurrentUser();
-	if (!user) return null;
+	const [session, mutateSession] = useSession();
+	if (!session) return null;
 
-	const deactivated = !!user.deactivatedAt;
+	const deactivated = !!session.user.deactivatedAt;
 
 	return (
 		<ModelCard title={deactivated ? "Reactivate" : "Deactivate"}>
@@ -23,12 +23,13 @@ export default function SettingsAccountDeactivatePage() {
 				fields={{
 					currentPassword: ""
 				}}
-				onSubmit={async (values) => {
-					await mutateUser(
-						deactivated
-							? await api.user.reactivate(user.id)
-							: await api.user.deactivate(user.id, values)
-					);
+				onSubmit={async (body) => {
+					await mutateSession({
+						...session,
+						user: deactivated
+							? await api.user.reactivate(session.user.id)
+							: await api.user.deactivate(session.user.id, { body })
+					});
 				}}
 			>
 				{({ FormField }) => (

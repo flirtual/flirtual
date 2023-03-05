@@ -1,5 +1,3 @@
-"use client";
-
 import dynamic from "next/dynamic";
 
 import { editorColors } from "~/html";
@@ -28,7 +26,7 @@ export interface InputEditorProps {
 export const InputEditor: React.FC<InputEditorProps> = ({ value, onChange }) => {
 	return (
 		<ReactQuill
-			className="prose"
+			className="prose dark:prose-invert"
 			value={value}
 			formats={[
 				"header",

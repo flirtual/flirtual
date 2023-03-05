@@ -12,44 +12,55 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { useCurrentUser } from "~/hooks/use-current-user";
-import { useGenderList } from "~/hooks/use-gender-list";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useSessionUser } from "~/hooks/use-session";
 import { urls } from "~/urls";
+import { excludeBy, filterBy } from "~/utilities";
+
+const absMinAge = 18;
+const absMaxAge = 100;
 
 export const Onboarding1Form: React.FC = () => {
-	const { data: user } = useCurrentUser();
+	const user = useSessionUser();
 	const router = useRouter();
 
-	const genders = useGenderList()
+	const genders = useAttributeList("gender")
 		.filter((gender) => gender.metadata?.simple)
 		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
 
-	if (!user || !user.preferences) return null;
-	const { preferences: profilePreferences } = user.profile;
-
-	const absMinAge = 18;
-	const absMaxAge = 100;
+	if (!user) return null;
+	const { preferences } = user.profile;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				gender: profilePreferences.gender.map((attribute) => attribute.id),
-				ageRange: [
-					user?.profile.preferences.agemin ?? absMinAge,
-					user?.profile.preferences.agemax ?? absMaxAge
-				] as InputRangeSliderValue,
-				serious: false
+				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
+				age: [
+					preferences?.agemin ?? absMinAge,
+					preferences?.agemax ?? absMaxAge
+				] satisfies InputRangeSliderValue,
+				serious: user.profile.serious ?? false
 			}}
 			onSubmit={async (values) => {
-				if (!user) return;
-
-				const [agemin, agemax] = values.ageRange;
-				await api.user.profile.updatePreferences(user.id, {
-					agemin: agemin === absMinAge ? null : agemin,
-					agemax: agemax === absMaxAge ? null : agemax,
-					gender: values.gender
-				});
+				const [agemin, agemax] = values.age;
+				await Promise.all([
+					api.user.profile.update(user.id, {
+						body: {
+							serious: values.serious
+						}
+					}),
+					api.user.profile.updatePreferences(user.id, {
+						body: {
+							agemin: agemin === absMinAge ? null : agemin,
+							agemax: agemax === absMaxAge ? null : agemax,
+							attributes: [
+								...excludeBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
+								...values.gender
+							]
+						}
+					})
+				]);
 
 				router.push(urls.onboarding(2));
 			}}
@@ -70,7 +81,7 @@ export const Onboarding1Form: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="ageRange">
+					<FormField name="age">
 						{(field) => {
 							const [min, max] = field.props.value;
 

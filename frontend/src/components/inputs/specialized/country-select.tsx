@@ -2,12 +2,12 @@
 
 import { useMemo } from "react";
 
-import { useCountryList } from "~/hooks/use-country-list";
+import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { InputSelect, InputSelectOption, InputSelectProps } from "../select";
 
 export const InputCountrySelect: React.FC<Omit<InputSelectProps, "options">> = (props) => {
-	const countries = useCountryList();
+	const countries = useAttributeList("country");
 
 	const options = useMemo<Array<InputSelectOption>>(
 		() =>

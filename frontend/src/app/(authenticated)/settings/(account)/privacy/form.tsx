@@ -8,20 +8,18 @@ import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSessionUser } from "~/hooks/use-session";
 
 export const PrivacyForm: React.FC = () => {
-	const { data: user } = useCurrentUser();
+	const user = useSessionUser();
 	if (!user || !user.preferences) return null;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
-			fields={{
-				...user.preferences.privacy
-			}}
-			onSubmit={async (values, { reset }) => {
-				const privacy = await api.user.preferences.updatePrivacy(user.id, values);
+			fields={{ ...user.preferences.privacy }}
+			onSubmit={async (body, { reset }) => {
+				const privacy = await api.user.preferences.updatePrivacy(user.id, { body });
 				reset(privacy);
 			}}
 		>

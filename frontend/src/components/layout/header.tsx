@@ -11,10 +11,10 @@ import { InlineLink } from "../inline-link";
 import { FlirtualLogo } from "../logo";
 import { InlineButton } from "../inline-button";
 import { Popover, PopoverModel } from "../popover";
-
-import { NavigationInner } from "./navigation";
 import { DiscordIcon, TwitterIcon } from "../icons";
 import { InstagramIcon } from "../icons/brand/instagram";
+
+import { NavigationInner } from "./navigation";
 
 const NavigationalMessage: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => (
 	<div

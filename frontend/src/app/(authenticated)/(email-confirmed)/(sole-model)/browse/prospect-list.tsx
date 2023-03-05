@@ -3,7 +3,8 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useCallback, useState } from "react";
 
 import { api } from "~/api";
-import { User, UserResponseType } from "~/api/user";
+import { ProspectRespondType } from "~/api/matchmaking";
+import { User } from "~/api/user";
 import { HeartGradient } from "~/components/icons/heart-gradient";
 import { Profile } from "~/components/profile/profile";
 
@@ -16,11 +17,19 @@ export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
 	const prospect = prospects[prospectIdx];
 
 	const respond = useCallback(
-		async (type: UserResponseType) => {
-			await api.user.respond(type, prospect.id);
+		async (type: ProspectRespondType) => {
+			if (!prospect.id) return;
+
+			await api.matchmaking.respondProspect({
+				body: {
+					type,
+					userId: prospect.id
+				}
+			});
+
 			setProspectIdx(prospectIdx + 1);
 		},
-		[prospectIdx, prospect.id]
+		[prospectIdx, prospect?.id]
 	);
 
 	if (!prospect) return null;
@@ -28,7 +37,7 @@ export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
 	return (
 		<>
 			<Profile user={prospect} />
-			<div className="h-32 w-full sm:h-0">
+			<div className="h-32 w-full dark:bg-black-70 sm:h-0">
 				<div className="pointer-events-none fixed left-0 bottom-16 flex h-32 w-full items-center justify-center p-8">
 					<div className="pointer-events-auto flex h-fit overflow-hidden rounded-xl text-white-10 shadow-brand-1">
 						<button

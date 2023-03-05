@@ -6,14 +6,16 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputAutocomplete, InputLabel, InputRadioList, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
-import { useCurrentUser } from "~/hooks/use-current-user";
-import { useKinkList } from "~/hooks/use-kink-list";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useSession } from "~/hooks/use-session";
+import { excludeBy, filterBy } from "~/utilities";
 
 export const NsfwForm: React.FC = () => {
-	const { data: user, mutate: mutateUser } = useCurrentUser();
-	const kinks = useKinkList();
+	const [session, mutateSession] = useSession();
+	const kinks = useAttributeList("kink");
 
-	if (!user) return null;
+	if (!session) return null;
+	const { user } = session;
 
 	return (
 		<Form
@@ -21,25 +23,32 @@ export const NsfwForm: React.FC = () => {
 			fields={{
 				nsfw: user.preferences?.nsfw ?? false,
 				domsub: user.profile.domsub,
-				kinks: user.profile.kinks?.map((attribute) => attribute.id) ?? [],
+				kinks: filterBy(user.profile.attributes, "type", "kink").map(({ id }) => id) ?? [],
 				kinksPrivacy: user.preferences?.privacy.kinks ?? "everyone"
 			}}
 			onSubmit={async ({ domsub, kinks, kinksPrivacy, nsfw }) => {
 				const [newProfile, , newPreferences] = await Promise.all([
-					api.user.profile.update(user.id, { domsub, kinks }),
-					api.user.preferences.updatePrivacy(user.id, { kinks: kinksPrivacy }),
-					api.user.preferences.update(user.id, { nsfw })
+					api.user.profile.update(user.id, {
+						body: {
+							domsub,
+							attributes: [
+								...excludeBy(user.profile.attributes, "type", "kink").map(({ id }) => id),
+								...kinks
+							]
+						}
+					}),
+					api.user.preferences.updatePrivacy(user.id, { body: { kinks: kinksPrivacy } }),
+					api.user.preferences.update(user.id, { body: { nsfw } })
 				]);
 
-				await mutateUser((user) =>
-					user
-						? {
-								...user,
-								profile: newProfile,
-								preferences: newPreferences
-						  }
-						: null
-				);
+				await mutateSession({
+					...session,
+					user: {
+						...session.user,
+						profile: newProfile,
+						preferences: newPreferences
+					}
+				});
 			}}
 		>
 			{({ FormField, fields }) => (

@@ -40,10 +40,8 @@ export const urls = {
 	// internal
 	api: pageUrl(process.env.NEXT_PUBLIC_API_URL as string),
 	media: (id: string) => `https://media.flirtu.al/${id}/`,
-	userAvatar: (user: User) => {
-		const avatarId = user.profile.images[0]?.externalId ?? "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4";
-		return urls.media(avatarId);
-	},
+	userAvatar: (user: User) =>
+		user.profile.images[0]?.url ?? urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
 
 	// pages
 	register: pageUrl("/register"),
@@ -52,8 +50,11 @@ export const urls = {
 	logout: pageUrl("/logout"),
 	user: (username: string) => `/${username}`,
 	browse: pageUrl("/browse"),
-	browseHomies: pageUrl("/browse/homies"),
-	messages: pageUrl("/messages"),
+	browseHomies: pageUrl("/browse?type=friend"),
+	conversations: {
+		list: pageUrl("/conversations"),
+		with: (userId: string) => `/conversations/${userId}`
+	},
 	onboarding: (onboardingIdx: 1 | 2 | 3 | 4) => `/onboarding/${onboardingIdx}`,
 	premium: pageUrl("/premium"),
 	confirmEmail: pageUrl<ConfirmEmailPageProps>("/confirm-email"),

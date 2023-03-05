@@ -80,54 +80,57 @@ const colorHexRegex = new RegExp(editorColors.join("|"), "i");
 const colorRgbRegex = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
 
 export function html(value: string) {
-	return sanitizeHtml(value, {
-		allowedTags,
-		allowedAttributes: {
-			"*": ["style"]
-		},
-		allowedStyles: {
-			"*": {
-				color: [colorHexRegex],
-				"background-color": [colorHexRegex],
-				"text-align": [/\w+/]
-			}
-		},
-		allowedSchemes: ["http", "https"],
-		transformTags: {
-			"*": (tagName: string, attribs: Attributes) => {
-				let style = fromStyleProperties(attribs.style ?? "");
-
-				const alignMatch = attribs.class?.match(/ql-align-(\w+)/);
-				if (alignMatch) {
-					attribs.class = attribs.class.replace(alignMatch[0], "");
-					style = { ...style, "text-align": alignMatch[1] as Property.TextAlign };
-				}
-
-				(["color", "background-color"] as const).forEach((key) => {
-					const match = style[key]?.match(colorRgbRegex);
-					if (match) {
-						style = {
-							...style,
-							[key]: rgb.toHex(
-								Number.parseInt(match[1]),
-								Number.parseInt(match[2]),
-								Number.parseInt(match[3])
-							)
-						};
-					}
-				});
-
-				attribs.style = toStyleProperties(style);
-
-				return {
-					tagName,
-					attribs
-				};
+	return sanitizeHtml(
+		value /* .replaceAll(/<p>(((\s)|(<br>))+)<\/p>|<h\d>(((\s)|(<br>))+)<\/h\d>/gi, "") */,
+		{
+			allowedTags,
+			allowedAttributes: {
+				"*": ["style"]
 			},
-			a: (tagName, attribs) => {
-				if (isInternalHref(attribs.href)) return { tagName, attribs };
-				return { tagName, attribs: { ...attribs, target: "_blank", rel: "noopener" } };
+			allowedStyles: {
+				"*": {
+					color: [colorHexRegex],
+					"background-color": [colorHexRegex],
+					"text-align": [/\w+/]
+				}
+			},
+			allowedSchemes: ["http", "https"],
+			transformTags: {
+				"*": (tagName: string, attribs: Attributes) => {
+					let style = fromStyleProperties(attribs.style ?? "");
+
+					const alignMatch = attribs.class?.match(/ql-align-(\w+)/);
+					if (alignMatch) {
+						attribs.class = attribs.class.replace(alignMatch[0], "");
+						style = { ...style, "text-align": alignMatch[1] as Property.TextAlign };
+					}
+
+					(["color", "background-color"] as const).forEach((key) => {
+						const match = style[key]?.match(colorRgbRegex);
+						if (match) {
+							style = {
+								...style,
+								[key]: rgb.toHex(
+									Number.parseInt(match[1]),
+									Number.parseInt(match[2]),
+									Number.parseInt(match[3])
+								)
+							};
+						}
+					});
+
+					attribs.style = toStyleProperties(style);
+
+					return {
+						tagName,
+						attribs
+					};
+				},
+				a: (tagName, attribs) => {
+					if (isInternalHref(attribs.href)) return { tagName, attribs };
+					return { tagName, attribs: { ...attribs, target: "_blank", rel: "noopener" } };
+				}
 			}
 		}
-	});
+	);
 }

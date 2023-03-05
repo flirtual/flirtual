@@ -13,23 +13,23 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 const ConfirmEmailMessage: React.FC<{ token: string }> = ({ token }) => {
-	const { data: user, mutate: mutateUser } = useCurrentUser({ refreshInterval: 5000 });
+	const [session, mutateSession] = useSession({ refreshInterval: 5000 });
 	const [confirmSuccess, setConfirmSuccess] = useState<boolean | null>(null);
 
 	useEffect(() => {
-		if (user?.id && token) {
+		if (session?.user && token) {
 			void api.user
-				.confirmEmail(user.id, token)
+				.confirmEmail(session?.user.id, { body: { token } })
 				.then(() => setConfirmSuccess(true))
 				.catch(() => setConfirmSuccess(false));
 		}
-	}, [user?.id, token, mutateUser]);
+	}, [session?.user, token, mutateSession]);
 
-	if (!user) return null;
+	if (!session) return null;
 
 	const Icon =
 		confirmSuccess === null
@@ -44,18 +44,20 @@ const ConfirmEmailMessage: React.FC<{ token: string }> = ({ token }) => {
 			<span className="text-xl">
 				{confirmSuccess === null ? (
 					<>
-						Confirming your email address, <span className="font-semibold">{user.email}</span>
+						Confirming your email address,{" "}
+						<span className="font-semibold">{session.user.email}</span>
 						...
 					</>
 				) : confirmSuccess ? (
 					<>
 						Thank you for confirming your email address,{" "}
-						<span className="font-semibold">{user.email}</span>, you may now close this window.
+						<span className="font-semibold">{session.user.email}</span>, you may now close this
+						window.
 					</>
 				) : (
 					<>
 						We couldn&apos;t confirm your email address,{" "}
-						<span className="font-semibold">{user.email}</span>, please try again later!
+						<span className="font-semibold">{session.user.email}</span>, please try again later!
 					</>
 				)}
 			</span>
@@ -68,13 +70,14 @@ export interface ConfirmEmailPageProps {
 }
 
 export default function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps) {
-	const { data: user, mutate: mutateUser } = useCurrentUser({ refreshInterval: 5000 });
+	const [session, mutateSession] = useSession({ refreshInterval: 5000 });
 	const router = useRouter();
 
-	if (!user) return null;
+	if (!session) return null;
+	const { user } = session;
 
 	if (user.emailConfirmedAt) {
-		router.push(searchParams?.to ?? urls.user(user.username));
+		router.push(searchParams?.to ?? urls.browse());
 		return null;
 	}
 
@@ -107,8 +110,11 @@ export default function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps
 							emailConfirmation: "",
 							currentPassword: ""
 						}}
-						onSubmit={async (values) => {
-							await mutateUser(api.user.updateEmail(user.id, values));
+						onSubmit={async (body) => {
+							await mutateSession({
+								...session,
+								user: await api.user.updateEmail(user.id, { body })
+							});
 						}}
 					>
 						{({ FormField }) => (

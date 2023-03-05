@@ -3,23 +3,24 @@
 import { useRouter } from "next/navigation";
 
 import { InputLabel, InputSwitch } from "~/components/inputs";
-import { useCurrentUser } from "~/hooks/use-current-user";
 import { Form } from "~/components/forms";
 import { api } from "~/api";
 import { entries } from "~/utilities";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
 import { personalityQuestionLabels } from "~/api/user/profile";
-import { useCurrentPersonality } from "~/hooks/use-current-personality";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
+import { useSessionPersonality } from "~/hooks/use-session-personality";
+import { useSession } from "~/hooks/use-session";
 
 export const Onboarding4Form: React.FC = () => {
-	const { data: user, mutate: mutateUser } = useCurrentUser();
 	const router = useRouter();
 
-	const personality = useCurrentPersonality();
+	const [session] = useSession();
+	const personality = useSessionPersonality();
 
-	if (!user || !personality) return null;
+	if (!session || !personality) return null;
+	const { user } = session;
 
 	return (
 		<Form
@@ -30,24 +31,14 @@ export const Onboarding4Form: React.FC = () => {
 				personalityPrivacy: user.preferences?.privacy.personality ?? "everyone"
 			}}
 			onSubmit={async ({ personalityPrivacy, ...personalityAnswers }) => {
-				const [newPrivacyPreferences, newProfile] = await Promise.all([
-					api.user.preferences.updatePrivacy(user.id, { personality: personalityPrivacy }),
-					api.user.profile.updatePersonality(user.id, personalityAnswers)
+				await Promise.all([
+					api.user.preferences.updatePrivacy(user.id, {
+						body: { personality: personalityPrivacy }
+					}),
+					api.user.profile.updatePersonality(user.id, {
+						body: personalityAnswers
+					})
 				]);
-
-				await mutateUser((user) =>
-					user
-						? {
-								...user,
-								preferences: {
-									// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-									...user.preferences!,
-									privacy: newPrivacyPreferences
-								},
-								profile: newProfile
-						  }
-						: null
-				);
 
 				router.push(user.emailConfirmedAt ? urls.user(user.username) : urls.confirmEmail());
 			}}

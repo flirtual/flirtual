@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useDebugValue, useEffect, useState } from "react";
 
 export function useLocalStorage<T extends string>(key: string, initial: T): [T, React.Dispatch<T>] {
 	const [value, setValue] = useState(initial);
+
+	useDebugValue(key);
 
 	useEffect(() => {
 		const localValue = localStorage.getItem(key) as T | undefined;

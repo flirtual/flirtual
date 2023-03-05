@@ -1,10 +1,11 @@
 "use client";
 
 import { ChevronUpDownIcon } from "@heroicons/react/24/solid";
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useCallback, useRef, forwardRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-export interface InputSelectOption<K extends React.Key = React.Key> {
+export interface InputSelectOption<K extends string = string> {
 	key: K;
 	label: string;
 	active?: boolean;
@@ -13,12 +14,12 @@ export interface InputSelectOption<K extends React.Key = React.Key> {
 export type InputOptionEvent<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends React.SyntheticEvent<any>,
-	K extends React.Key = React.Key
+	K extends string = string
 > = T & {
 	option: InputSelectOption<K>;
 };
 
-export type InputOptionWindowProps<K extends React.Key = React.Key> = Omit<
+export type InputOptionWindowProps<K extends string = string> = Omit<
 	React.ComponentProps<"div">,
 	"onChange"
 > & {
@@ -170,17 +171,25 @@ export function InputSelect<K extends string = string>(props: InputSelectProps<K
 					{activeOption?.label || placeholder}
 				</span>
 			</button>
-			{overlayVisible && (
-				<InputOptionWindow
-					className="absolute z-10 mt-4 flex"
-					options={options}
-					onOptionClick={({ option, currentTarget }) => {
-						console.log(option);
-						props.onChange(option.key as K);
-						currentTarget.blur();
-					}}
-				/>
-			)}
+			<AnimatePresence>
+				{overlayVisible && (
+					<motion.div
+						animate={{ height: "max-content" }}
+						className="absolute z-10 mt-4 flex w-full"
+						exit={{ height: 0 }}
+						initial={{ height: 0 }}
+						transition={{ damping: 25 }}
+					>
+						<InputOptionWindow
+							options={options}
+							onOptionClick={({ option, currentTarget }) => {
+								props.onChange(option.key as K);
+								currentTarget.blur();
+							}}
+						/>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</div>
 	);
 }

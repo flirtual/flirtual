@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import { api } from "~/api";
 import { useServerAuthenticate } from "~/server-utilities";
 import { urls } from "~/urls";
-import { AuthProvider } from "~/components/auth-provider";
+import { SessionProvider } from "~/components/session-provider";
 
 import { ClientScripts } from "./client-scripts";
 
@@ -66,14 +66,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: React.PropsWithChildren) {
-	const user = await useServerAuthenticate({ optional: true });
+	const session = await useServerAuthenticate({ optional: true });
 
 	return (
 		<html lang="en">
 			<head>
-				{user && (
+				{session && (
 					<>
-						<link as="image" href={urls.userAvatar(user)} rel="preload" />
+						<link as="image" href={urls.userAvatar(session.user)} rel="preload" />
 						<link as="fetch" href={api.newUrl("auth/user").href} rel="preload" />
 					</>
 				)}
@@ -81,7 +81,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>
 				{/* @ts-expect-error: Server Component */}
-				<AuthProvider optional>{children}</AuthProvider>
+				<SessionProvider optional>{children}</SessionProvider>
 			</body>
 		</html>
 	);

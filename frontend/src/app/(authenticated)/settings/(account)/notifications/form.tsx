@@ -5,32 +5,30 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { useCurrentUser } from "~/hooks/use-current-user";
+import { useSessionUser } from "~/hooks/use-session";
 import { keys, omit } from "~/utilities";
 
 export const NotificationsForm: React.FC = () => {
-	const { data: user } = useCurrentUser();
-	if (!user || !user.preferences) return null;
+	const user = useSessionUser();
 
+	if (!user || !user.preferences) return null;
 	const { preferences } = user;
-	const notificationKeys = keys(user.preferences.emailNotifications);
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				email: notificationKeys.filter((key) => preferences.emailNotifications[key]),
+				email: keys(preferences.emailNotifications).filter(
+					(key) => preferences.emailNotifications[key]
+				),
 				mobile: keys(omit(preferences.emailNotifications, ["newsletter"])) // todo: fix this.
 			}}
 			onSubmit={async (values) => {
-				if (!user.preferences) return;
-
-				await api.user.preferences.updateNotifications(
-					user.id,
-					Object.fromEntries(
+				await api.user.preferences.updateNotifications(user.id, {
+					body: Object.fromEntries(
 						keys(preferences.emailNotifications).map((key) => [key, values.email.includes(key)])
 					)
-				);
+				});
 			}}
 		>
 			{({ FormField }) => (

@@ -2,18 +2,15 @@
 
 import { useMemo } from "react";
 
-import { useCountryList } from "~/hooks/use-country-list";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { findBy } from "~/utilities";
 
 import { Pill } from "./pill";
 
 export const CountryPill: React.FC<{ code: string }> = ({ code }) => {
-	const countries = useCountryList();
+	const countries = useAttributeList("country");
 
-	const country = useMemo(
-		() => countries.find((country) => country.id === code),
-		[countries, code]
-	);
-
+	const country = useMemo(() => findBy(countries, "id", code), [countries, code]);
 	if (!country) return null;
 
 	return (
