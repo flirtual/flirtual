@@ -1,6 +1,8 @@
 defmodule Flirtual.User.Profile.Policy do
   use Flirtual.Policy, reference_key: :profile
 
+  import Flirtual.Utilities
+
   alias Flirtual.User
   alias Flirtual.User.Profile
 
@@ -63,13 +65,37 @@ defmodule Flirtual.User.Profile.Policy do
   def transform(:country, _, _), do: nil
 
   def transform(
-    :attributes,
-    _,
-    %Profile{} = profile
-  ) do
+        :attributes,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{} = me
+            }
+          }
+        },
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{} = preferences
+          }
+        } = profile
+      ) do
     profile.attributes
+    |> then(&if(not me.preferences.nsfw, do: exclude_by(&1, :type, "kink"), else: &1))
+    |> then(
+      &if(me.id !== profile.user_id,
+        do:
+          Enum.filter(&1, fn attribute ->
+            case(attribute.type) do
+              "kink" -> preferences.privacy.kinks === :everyone
+              "sexuality" -> preferences.privacy.sexuality === :everyone
+              _ -> true
+            end
+          end),
+        else: &1
+      )
+    )
+    |> Enum.map(&%{id: &1.id, type: &1.type})
   end
-
 
   def transform(
         :domsub,
@@ -89,58 +115,6 @@ defmodule Flirtual.User.Profile.Policy do
       do: profile.domsub
 
   def transform(:domsub, _, _), do: nil
-
-  def transform(
-        :kinks,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user: %User{
-                preferences: %User.Preferences{
-                  nsfw: false
-                }
-              }
-            }
-          }
-        },
-        _
-      ),
-      do: nil
-
-  def transform(
-        :kinks,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %Profile{
-          user_id: user_id
-        } = profile
-      ),
-      do: profile.kinks
-
-  # Any user can view this profile's kinks if their
-  # kinks privacy setting is set to everyone.
-  def transform(
-        :kinks,
-        _,
-        %Profile{
-          user: %User{
-            preferences: %User.Preferences{
-              privacy: %User.Preferences.Privacy{
-                kinks: :everyone
-              }
-            }
-          }
-        } = profile
-      ),
-      do: profile.kinks
-
-  # Otherwise, by default, nobody can view this profile's kinks.
-  def transform(:kinks, _, _), do: nil
 
   # The current session can view their own personality openness trait.
   def transform(
@@ -255,42 +229,6 @@ defmodule Flirtual.User.Profile.Policy do
 
   # Otherwise, by default, nobody can view this profile's personality agreeableness trait.
   def transform(:agreeableness, _, _), do: nil
-
-  # The current session can view their own sexuality.
-  def transform(
-        :sexuality,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %Profile{
-          user_id: user_id
-        } = profile
-      ),
-      do: profile.sexuality
-
-  # Any user can view this profile's sexuality
-  # if their sexuality privacy setting is set to everyone.
-  def transform(
-        :sexuality,
-        _,
-        %Profile{
-          user: %User{
-            preferences: %User.Preferences{
-              privacy: %User.Preferences.Privacy{
-                sexuality: :everyone
-              }
-            }
-          }
-        } = profile
-      ),
-      do: profile.sexuality
-
-  # Otherwise, by default, nobody can view this profile's sexualities.
-  def transform(:sexuality, _, _), do: []
 
   # The current session can view their own profile's preferences.
   def transform(

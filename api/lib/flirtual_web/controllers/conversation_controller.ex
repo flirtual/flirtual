@@ -8,10 +8,15 @@ defmodule FlirtualWeb.ConversationController do
   action_fallback FlirtualWeb.FallbackController
 
   def list(conn, _) do
-    conn |> json(Talkjs.list_conversations())
+    conn |> json(Talkjs.list_conversations(conn.assigns[:session].user.id))
+  end
+
+  def list_unread(conn, _) do
+    conn |> json(Talkjs.list_conversations(conn.assigns[:session].user.id, [unreadsOnly: true]))
   end
 
   def list_messages(conn, %{"user_id" => user_id}) do
-    conn |> json(Talkjs.list_messages(user_id))
+    conversation_id = Talkjs.new_conversation_id(conn.assigns[:session].user.id, user_id)
+    conn |> json(Talkjs.list_messages(conversation_id))
   end
 end

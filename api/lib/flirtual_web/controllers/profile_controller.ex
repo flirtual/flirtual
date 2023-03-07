@@ -3,6 +3,7 @@ defmodule FlirtualWeb.ProfileController do
 
   import Plug.Conn
   import Phoenix.Controller
+  import FlirtualWeb.Utilities
 
   alias Flirtual.{Policy, Users, Profiles}
   alias Flirtual.User.{Profile}
@@ -16,7 +17,10 @@ defmodule FlirtualWeb.ProfileController do
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, "Cannot update this user's profile", %{user_id: user_id}}}
     else
-      with {:ok, profile} <- Profiles.update(profile, params) do
+      with {:ok, profile} <-
+             Profiles.update(profile, params,
+               required_attributes: split_to_atom_list(params["required_attributes"])
+             ) do
         conn |> json(Policy.transform(conn, profile))
       end
     end
@@ -53,7 +57,10 @@ defmodule FlirtualWeb.ProfileController do
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, "Cannot update this profile's preferences", %{user_id: user_id}}}
     else
-      with {:ok, preferences} <- Profiles.update_preferences(profile.preferences, params) do
+      with {:ok, preferences} <-
+             Profiles.update_preferences(profile.preferences, params,
+               required_attributes: split_to_atom_list(params["required_attributes"])
+             ) do
         conn |> json(preferences)
       end
     end
@@ -66,7 +73,9 @@ defmodule FlirtualWeb.ProfileController do
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, "Cannot update this profile's custom weights", %{user_id: user_id}}}
     else
-      custom_weights = profile.custom_weights || %Profile.CustomWeights{profile_id: profile.id, profile: profile}
+      custom_weights =
+        profile.custom_weights || %Profile.CustomWeights{profile_id: profile.id, profile: profile}
+
       with {:ok, preferences} <- Profiles.update_custom_weights(custom_weights, params) do
         conn |> json(preferences)
       end

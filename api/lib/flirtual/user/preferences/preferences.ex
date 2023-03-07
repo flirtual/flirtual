@@ -14,6 +14,7 @@ defmodule Flirtual.User.Preferences do
     belongs_to :user, User
 
     field :nsfw, :boolean
+    field :theme, Ecto.Enum, values: [:light, :dark, :system], default: :system
 
     has_one :email_notifications, EmailNotifications
     has_one :privacy, Privacy
@@ -30,6 +31,7 @@ defmodule Flirtual.User.Preferences do
     preferences
     |> cast(attrs, [
       :nsfw,
+      :theme
     ])
   end
 end
@@ -37,7 +39,7 @@ end
 defimpl Jason.Encoder, for: Flirtual.User.Preferences do
   def encode(value, opts) do
     Jason.Encode.map(
-      Map.take(value, [:nsfw, :email_notifications, :privacy])
+      Map.take(value, [:nsfw, :theme, :email_notifications, :privacy])
       |> Map.filter(fn {_, value} -> value !== nil end),
       opts
     )

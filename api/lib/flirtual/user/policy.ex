@@ -74,6 +74,25 @@ defmodule Flirtual.User.Policy do
   # Otherwise, by default, nobody can view this user's language.
   def transform(:language, _, _), do: nil
 
+   # The currently logged in user can view their own talkjs signature.
+   def transform(
+    :talkjs_signature,
+    %Plug.Conn{
+      assigns: %{
+        session: %{
+          user_id: user_id
+        }
+      }
+    },
+    %User{
+      id: user_id
+    } = user
+  ),
+  do: user.talkjs_signature
+
+# Otherwise, by default, nobody can view this user's talkjs signature.
+def transform(:talkjs_signature, _, _), do: nil
+
   def transform(:visible, _, user), do: User.visible?(user)
 
   # The currently logged in user can view their own tags.

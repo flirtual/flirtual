@@ -2,8 +2,7 @@ defmodule Flirtual.User.Profile do
   use Flirtual.Schema
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Policy
 
-  import Flirtual.Utilities
-  import Flirtual.Utilities.Changeset
+  import Flirtual.Attribute, only: [validate_attribute_list: 5]
 
   import Ecto.Schema
   import Ecto.Changeset
@@ -89,81 +88,54 @@ defmodule Flirtual.User.Profile do
   def default_assoc do
     [
       :custom_weights,
-      attributes:
-        from(attribute in Attribute,
-          select: %{id: attribute.id, type: attribute.type},
-          order_by: [attribute.type, attribute.id]
-        ),
+      attributes: from(attribute in Attribute, order_by: [attribute.type, attribute.id]),
       preferences: Preferences.default_assoc(),
       images: from(image in Image, order_by: image.order)
     ]
   end
 
-  def changeset(%Profile{} = profile, attrs) do
-    attributes =
-      Attribute.by_ids([
-        attrs["sexuality"],
-        attrs["kinks"],
-        attrs["gender"] || Enum.map(profile.gender, & &1.id),
-        attrs["games"] || Enum.map(profile.games, & &1.id),
-        attrs["platforms"] || Enum.map(profile.platforms, & &1.id),
-        attrs["interests"] || Enum.map(profile.interests, & &1.id)
-      ])
-
-    cast(profile, %{}, [])
-    |> append_changeset(
-      cast_arbitrary(
-        %{
-          display_name: :string,
-          biography: :string,
-          serious: :boolean,
-          new: :boolean,
-          country: :string,
-          domsub: :string,
-          monopoly: :string,
-          languages: {:array, :string},
-          custom_interests: {:array, :string},
-          gender: {:array, :string},
-          sexuality: {:array, :string},
-          kinks: {:array, :string},
-          platforms: {:array, :string},
-          interests: {:array, :string},
-          games: {:array, :string}
-        },
-        attrs
-      )
-      |> validate_length(:display_name, min: 3, max: 32)
-      |> validate_length(:biography, min: 48)
-      |> validate_length(:languages, min: 1, max: 3)
-      |> validate_subset(:languages, Languages.list(:iso_639_1),
-        message: "has an unrecognized language"
-      )
-      |> validate_inclusion(:country, Countries.list(:iso_3166_1),
-        message: "is an unrecognized country"
-      )
-      |> validate_subset(:domsub, @domsub_values)
-      |> validate_subset(:monopoly, @monopoly_values)
-      |> validate_length(:gender, min: 1, max: 4)
-      |> validate_length(:sexuality, min: 1, max: 3)
-      |> validate_length(:kinks, min: 1, max: 8)
-      |> validate_length(:games, min: 1, max: 5)
-      |> validate_length(:platforms, min: 1, max: 8)
-      |> validate_length(:interests, min: 2, max: 7),
-      &map_exclude_keys(&1, [
+  def changeset(%Profile{} = profile, attrs, options \\ []) do
+    cast(profile, attrs, [
+      :display_name,
+      :biography,
+      :serious,
+      :new,
+      :country,
+      :domsub,
+      :monopoly,
+      :languages,
+      :custom_interests
+    ])
+    |> validate_length(:display_name, min: 3, max: 32)
+    |> validate_length(:biography, min: 48)
+    |> validate_length(:languages, min: 1, max: 3)
+    |> validate_subset(:languages, Languages.list(:iso_639_1),
+      message: "has an unrecognized language"
+    )
+    |> validate_inclusion(:country, Countries.list(:iso_3166_1),
+      message: "is an unrecognized country"
+    )
+    |> validate_subset(:domsub, @domsub_values)
+    |> validate_subset(:monopoly, @monopoly_values)
+    |> validate_attribute_list(
+      attrs["attributes"],
+      [
         :gender,
         :sexuality,
-        :kinks,
-        :games,
-        :platforms,
-        :interests
-      ])
+        :kink,
+        :game,
+        :platform,
+        :interest
+      ],
+      &(&1
+        |> validate_length(:gender, min: 1, max: 4)
+        |> validate_length(:sexuality, min: 1, max: 3)
+        |> validate_length(:kink, min: 1, max: 8)
+        |> validate_length(:game, min: 1, max: 5)
+        |> validate_length(:platform, min: 1, max: 8)
+        |> validate_length(:interest, min: 2, max: 7)),
+      required: Keyword.get(options, :required_attributes, [])
     )
-    |> put_assoc(:gender, attributes["gender"] || [])
-    |> put_assoc(:sexuality, attributes["sexuality"] || [])
-    |> put_assoc(:kinks, attributes["kink"] || [])
-    |> put_assoc(:games, attributes["game"] || [])
-    |> put_assoc(:platforms, attributes["platform"] || [])
-    |> put_assoc(:interests, attributes["interest"] || [])
   end
 
   def update_personality_changeset(changeset, attrs) do

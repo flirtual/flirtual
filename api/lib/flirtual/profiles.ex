@@ -3,7 +3,9 @@ defmodule Flirtual.Profiles do
   import Ecto.Changeset
 
   import Flirtual.Utilities.Changeset
+  import Flirtual.Utilities
 
+  alias Flirtual.Attribute
   alias Ecto.UUID
   alias Flirtual.{Repo, Elastic}
   alias Flirtual.User.{Profile}
@@ -46,9 +48,11 @@ defmodule Flirtual.Profiles do
     end)
   end
 
-  def update(%Profile{} = profile, attrs) do
+  def update(%Profile{} = profile, attrs, options \\ []) do
     Repo.transaction(fn ->
-      with {:ok, profile} <- Profile.changeset(profile, attrs) |> Repo.update(),
+      with {:ok, profile} <-
+             Profile.changeset(profile, attrs, options)
+             |> Repo.update(),
            {:ok, _} <- Elastic.User.mark_dirty(profile.user_id) do
         profile
       else
@@ -58,11 +62,11 @@ defmodule Flirtual.Profiles do
     end)
   end
 
-  def update_preferences(%Profile.Preferences{} = preferences, attrs) do
+  def update_preferences(%Profile.Preferences{} = preferences, attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, preferences} <-
              preferences
-             |> Profile.Preferences.changeset(attrs)
+             |> Profile.Preferences.changeset(attrs, options)
              |> Repo.update(),
            {:ok, _} <-
              Repo.preload(preferences, profile: from(profile in Profile, select: profile.user_id))

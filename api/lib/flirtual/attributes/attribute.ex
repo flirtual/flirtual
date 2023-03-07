@@ -36,14 +36,24 @@ defmodule Flirtual.Attribute do
     |> Repo.exists?()
   end
 
-  def by_ids(attribute_ids, :type) do
-    attribute_ids |> List.flatten() |> by_ids() |> Enum.group_by(& &1.type)
+  def by_ids(attribute_ids, type) do
+    if length(attribute_ids) === 0 do
+      []
+    else
+      Attribute
+      |> where([attribute], attribute.id in ^attribute_ids and attribute.type == ^type)
+      |> Repo.all()
+    end
   end
 
   def by_ids(attribute_ids) do
-    Attribute
-    |> where([attribute], attribute.id in ^attribute_ids)
-    |> Repo.all()
+    if length(attribute_ids) === 0 do
+      []
+    else
+      Attribute
+      |> where([attribute], attribute.id in ^attribute_ids)
+      |> Repo.all()
+    end
   end
 
   def by_type("country") do
@@ -77,16 +87,53 @@ defmodule Flirtual.Attribute do
     |> Repo.all()
   end
 
-  def validate_attribute(changeset, field, attribute_type) do
+  def validate_attribute(changeset, field, attribute_type, options \\ []) do
     changeset
     |> validate_uuid(field)
     |> validate_change(field, fn field, value ->
-      if not Attribute.exists_id_explicit?(value, attribute_type) do
-        [{field, "does not exist"}]
+      if not exists_id_explicit?(value, attribute_type) do
+        [{Keyword.get(options, :field, field), "does not exist"}]
       else
         []
       end
     end)
+  end
+
+  def validate_attribute_list(changeset, ids, types, changeset_fn \\ & &1, options \\ []) do
+    cast_arbitrary(
+      types
+      |> Enum.map(&{&1, {:array, :map}})
+      |> Map.new(fn {k, v} -> {k, v} end)
+      |> Map.put(:_, {:array, :string}),
+      %{_: ids}
+    )
+    |> validate_uuids(:_)
+    |> then(fn changeset ->
+      if not changeset.valid? do
+        changeset
+      else
+        cast(
+          changeset,
+          get_field(changeset, :_, [])
+          |> Attribute.by_ids()
+          |> Enum.group_by(& &1.type),
+          types
+        )
+        |> delete_change(:_)
+        |> validate_required(Keyword.get(options, :required, []))
+        |> changeset_fn.()
+      end
+    end)
+    |> then(
+      &(append_changeset_errors(changeset, &1)
+        |> put_assoc(
+          Keyword.get(options, :field, :attributes),
+          Enum.map(types, fn type ->
+            get_field(&1, type, [])
+          end)
+          |> List.flatten()
+        ))
+    )
   end
 end
 

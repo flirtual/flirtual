@@ -13,13 +13,25 @@ defmodule Flirtual.Utilities do
   def get_years_since(%NaiveDateTime{} = date),
     do: get_years_since(NaiveDateTime.to_date(date))
 
-    def map_exclude_keys(map, keys) do
-      Map.filter(map, &(elem(&1, 0) not in keys))
-    end
+  def map_exclude_keys(map, keys) do
+    Map.filter(map, &(elem(&1, 0) not in keys))
+  end
 
-    def filter_by(list, key, value) do
-      Enum.filter(list, &(&1[key] === value))
-    end
+  def filter_by(list, key, values) when is_list(values) do
+    Enum.filter(list, &(&1[key] in values))
+  end
+
+  def filter_by(list, key, value) do
+    Enum.filter(list, &(&1[key] === value))
+  end
+
+  def exclude_by(list, key, values) when is_list(values) do
+    Enum.filter(list, &(&1[key] not in values))
+  end
+
+  def exclude_by(list, key, value) do
+    Enum.filter(list, &(&1[key] !== value))
+  end
 
   def to_atom(value) do
     try do

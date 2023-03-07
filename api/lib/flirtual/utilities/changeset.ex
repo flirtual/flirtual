@@ -19,7 +19,7 @@ defmodule Flirtual.Utilities.Changeset do
           {:ok, _} -> false
         end
       end)) do
-        {[field, "contains an invalid uuid"]}
+        [{field, "contains an invalid uuid"}]
       else
         []
       end

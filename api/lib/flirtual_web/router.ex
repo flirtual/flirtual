@@ -106,6 +106,7 @@ defmodule FlirtualWeb.Router do
         pipe_through([:require_authenticated_user, :require_valid_user])
 
         get "/", ConversationController, :list
+        get "/unread", ConversationController, :list_unread
 
         scope "/:user_id" do
           get "/", ConversationController, :list_messages
