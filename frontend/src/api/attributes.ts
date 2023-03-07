@@ -32,6 +32,8 @@ export interface AttributeMetadata {
 	};
 }
 
+export type AttributeType = keyof AttributeMetadata;
+
 export type Attribute<T = unknown> = UuidModel & {
 	type: keyof AttributeMetadata;
 	name: string;
@@ -41,7 +43,7 @@ export type Attribute<T = unknown> = UuidModel & {
 export type PartialAttribute = Pick<Attribute<unknown>, "id" | "type">;
 
 export type AttributeCollection<T extends string> = Array<
-	Attribute<T extends keyof AttributeMetadata ? AttributeMetadata[T] : unknown>
+	Attribute<T extends AttributeType ? AttributeMetadata[T] : unknown>
 >;
 
 export type PartialAttributeCollection = Array<PartialAttribute>;

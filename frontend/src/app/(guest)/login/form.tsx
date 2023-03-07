@@ -73,10 +73,10 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 						<FormButton>Login</FormButton>
 						<FormInputMessages messages={errors} />
 						<div className="flex flex-col font-nunito text-lg">
-							<FormAlternativeActionLink href={urls.register()}>
+							<FormAlternativeActionLink href={urls.register}>
 								Don&apos;t have an account yet? Sign up!
 							</FormAlternativeActionLink>
-							<FormAlternativeActionLink href={urls.forgotPassword()}>
+							<FormAlternativeActionLink href={urls.forgotPassword}>
 								Forgot your password?
 							</FormAlternativeActionLink>
 						</div>

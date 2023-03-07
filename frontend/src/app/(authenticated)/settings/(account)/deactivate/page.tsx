@@ -62,7 +62,7 @@ export default function SettingsAccountDeactivatePage() {
 						)}
 						<div className="flex flex-col gap-4">
 							<FormButton>{deactivated ? "Reactivate" : "Deactivate"}</FormButton>
-							<FormAlternativeActionLink href={urls.settings.deleteAccount()}>
+							<FormAlternativeActionLink href={urls.settings.deleteAccount}>
 								Delete your account instead?
 							</FormAlternativeActionLink>
 						</div>

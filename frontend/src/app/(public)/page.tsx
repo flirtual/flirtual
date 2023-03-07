@@ -67,14 +67,14 @@ export default function RootIndexPage() {
 						<h1 className="font-montserrat text-4xl font-extrabold sm:text-7xl md:text-8xl">
 							Get Flirtual
 						</h1>
-						<LandingButton href={urls.register()} kind="secondary-cta">
+						<LandingButton href={urls.register} kind="secondary-cta">
 							Sign up
 						</LandingButton>
 						<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
-							<MobileButton href={urls.apps.android()} Icon={GooglePlayIcon} label="Play Store" />
+							<MobileButton href={urls.apps.android} Icon={GooglePlayIcon} label="Play Store" />
 							<MobileButton href="/ios" Icon={AppleIcon} label="iPhone/iPad" />
-							<MobileButton href={urls.apps.windows()} Icon={MicrosoftIcon} label="Windows" />
-							<MobileButton href={urls.apps.sideQuest()} Icon={MetaIcon} label="Side Quest" />
+							<MobileButton href={urls.apps.windows} Icon={MicrosoftIcon} label="Windows" />
+							<MobileButton href={urls.apps.sideQuest} Icon={MetaIcon} label="Side Quest" />
 						</div>
 					</div>
 				</div>

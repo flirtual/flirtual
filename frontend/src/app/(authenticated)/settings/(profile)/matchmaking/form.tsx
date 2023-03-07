@@ -65,6 +65,10 @@ export const MatchmakingForm: React.FC = () => {
 						}
 					}),
 					api.user.profile.updatePreferences(user.id, {
+						query: {
+							required: ["agemin", "agemax"],
+							requiredAttributes: ["gender"]
+						},
 						body: {
 							agemin: agemin === absMinAge ? null : agemin,
 							agemax: agemax === absMaxAge ? null : agemax,

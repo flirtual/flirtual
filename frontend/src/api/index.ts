@@ -8,7 +8,7 @@ export function newUrl(pathname: string, query: Record<string, string> = {}): UR
 
 	return new URL(
 		`${pathname}${Object.keys(query).length > 0 ? `?${searchParams.toString()}` : ""}`,
-		urls.api()
+		urls.api
 	);
 }
 
@@ -32,14 +32,14 @@ export class ResponseChangesetError extends ResponseError {
 
 export type FetchOptions = Expand<
 	Omit<RequestInit, "method" | "body"> & {
-		query?: Record<string, string>;
+		query?: unknown;
 		body?: unknown;
 		raw?: boolean;
 	}
 >;
 
 export type NarrowFetchOptions<Body = undefined, Query = undefined> = Expand<
-	FetchOptions &
+	Omit<FetchOptions, "body" | "query"> &
 		(Body extends undefined ? { body?: undefined } : { body: Expand<Body> }) &
 		(Query extends undefined ? { query?: undefined } : { query: Expand<Query> })
 >;

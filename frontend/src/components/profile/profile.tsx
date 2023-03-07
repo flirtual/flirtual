@@ -53,7 +53,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 								.map(
 									(gender) =>
 										gender && (
-											<Pill href={myProfile ? urls.settings.tags() : undefined} key={gender.id}>
+											<Pill href={myProfile ? urls.settings.tags : undefined} key={gender.id}>
 												{gender.name}
 											</Pill>
 										)
@@ -70,7 +70,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 						<span className="text-xl dark:text-white-20">
 							No biography available yet, consider{" "}
 							<InlineLink
-								href={myProfile ? urls.settings.biography() : urls.conversations.with(user.id)}
+								href={myProfile ? urls.settings.biography : urls.conversations.with(user.id)}
 							>
 								{myProfile ? "adding one" : "asking them to add one"}
 							</InlineLink>

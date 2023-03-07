@@ -1,3 +1,3 @@
 export default async function SettingsPage() {
-	return <div className="hidden md:flex" />;
+	return null;
 }

@@ -50,6 +50,9 @@ export const TagsForm: React.FC = () => {
 						}
 					}),
 					api.user.profile.update(user.id, {
+						query: {
+							requiredAttributes: AttributeKeys
+						},
 						body: {
 							country: values.country,
 							languages: values.languages,
@@ -62,18 +65,15 @@ export const TagsForm: React.FC = () => {
 					})
 				]);
 
-				await mutateSession(
-					{
-						...session,
-						user: {
-							...newUser,
-							profile: {
-								...newProfile
-							}
+				await mutateSession({
+					...session,
+					user: {
+						...newUser,
+						profile: {
+							...newProfile
 						}
-					},
-					{ revalidate: false }
-				);
+					}
+				});
 			}}
 		>
 			{({ FormField }) => (

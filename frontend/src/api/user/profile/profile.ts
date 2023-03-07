@@ -1,4 +1,4 @@
-import { PartialAttributeCollection } from "~/api/attributes";
+import { AttributeType, PartialAttributeCollection } from "~/api/attributes";
 
 import { UpdatedAtModel } from "../../common";
 import { fetch, NarrowFetchOptions } from "../..";
@@ -46,7 +46,11 @@ export async function update(
 			>
 		> & {
 			attributes?: Array<string>;
-		}
+		},
+		| {
+				requiredAttributes?: Array<AttributeType>;
+		  }
+		| undefined
 	>
 ) {
 	return fetch<Profile>("post", `users/${userId}/profile`, options);
@@ -98,11 +102,18 @@ export async function updatePersonality(
 
 export async function updatePreferences(
 	userId: string,
-	options: NarrowFetchOptions<{
-		agemin?: number | null;
-		agemax?: number | null;
-		attributes?: Array<string>;
-	}>
+	options: NarrowFetchOptions<
+		{
+			agemin?: number | null;
+			agemax?: number | null;
+			attributes?: Array<string>;
+		},
+		| {
+				required?: Array<"agemin" | "agemax">;
+				requiredAttributes?: Array<AttributeType>;
+		  }
+		| undefined
+	>
 ) {
 	return fetch<ProfilePreferences>("post", `users/${userId}/profile/preferences`, options);
 }

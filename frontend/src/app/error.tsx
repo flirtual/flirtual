@@ -23,11 +23,11 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 				</div>
 				<div className="flex flex-col">
 					<div>
-						<InlineLink href={urls.socials.discord()}>Discord</InlineLink>
+						<InlineLink href={urls.socials.discord}>Discord</InlineLink>
 						{" • "}
-						<InlineLink href={urls.socials.twitter()}>Twitter</InlineLink>
+						<InlineLink href={urls.socials.twitter}>Twitter</InlineLink>
 						{" • "}
-						<InlineLink href={urls.resources.networkStatus()}>Network Status</InlineLink>
+						<InlineLink href={urls.resources.networkStatus}>Network Status</InlineLink>
 					</div>
 					<footer>&copy; 2022 Studio Paprika</footer>
 				</div>

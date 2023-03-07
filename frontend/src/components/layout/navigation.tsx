@@ -7,6 +7,7 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useSessionUser } from "~/hooks/use-session";
+import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { urls } from "~/urls";
 
 import { PeaceGradient } from "../icons/peace-gradient";
@@ -17,7 +18,7 @@ const NavigationIconButton: React.FC<
 	React.ComponentProps<"a"> & { href: string; active?: (pathname: string) => boolean; ref?: any }
 > = ({ children, active: isActive, ...props }) => {
 	const pathname = usePathname();
-	const active = isActive?.(pathname) || pathname === props.href;
+	const active = isActive?.(pathname) || pathname.startsWith(props.href);
 
 	return (
 		<Link
@@ -35,6 +36,25 @@ const NavigationIconButton: React.FC<
 	);
 };
 
+const ConversationListButton: React.FC = () => {
+	const conversations = useUnreadConversations();
+
+	return (
+		<NavigationIconButton href={urls.conversations.list}>
+			<div className="relative">
+				<ChatBubbleLeftRightIcon className="w-8" strokeWidth={1.5} />
+				{!!conversations.length && (
+					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
+						<span className="select-none font-mono text-sm font-semibold leading-none text-white-20">
+							{conversations.length}
+						</span>
+					</div>
+				)}
+			</div>
+		</NavigationIconButton>
+	);
+};
+
 export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) => {
 	const user = useSessionUser();
 	if (!user) return null;
@@ -47,25 +67,16 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 				props.className
 			)}
 		>
-			<NavigationIconButton href={urls.browseHomies()}>
+			<NavigationIconButton className="pointer-events-none" href="#">
 				<PeaceGradient className="w-8" gradient={false} />
 			</NavigationIconButton>
 			<NavigationIconButton href={urls.browse()}>
 				<HeartIcon className="h-8 w-8" />
 			</NavigationIconButton>
-			<NavigationIconButton href={urls.conversations.list()}>
-				<div className="relative">
-					<ChatBubbleLeftRightIcon className="w-8" strokeWidth={1.5} />
-					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
-						<span className="select-none font-mono text-sm font-semibold leading-none text-white-20">
-							4
-						</span>
-					</div>
-				</div>
-			</NavigationIconButton>
+			<ConversationListButton />
 			<NavigationIconButton
-				active={(pathname) => pathname.startsWith(urls.settings.default())}
-				href={urls.settings.default()}
+				active={(pathname) => pathname.startsWith(urls.settings.list())}
+				href={urls.settings.list()}
 			>
 				<Cog8ToothIcon className="h-8 w-8" />
 			</NavigationIconButton>
@@ -77,9 +88,6 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 };
 
 export const Navigation: React.FC = () => {
-	const user = useSessionUser();
-	if (!user) return null;
-
 	return (
 		<nav className="flex h-16 w-full sm:hidden sm:pt-0">
 			<div className="fixed bottom-0 z-40 flex h-16 w-full items-center justify-center bg-brand-gradient shadow-brand-1">

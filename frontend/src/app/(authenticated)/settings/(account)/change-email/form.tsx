@@ -27,7 +27,7 @@ export const ChangeEmailForm: React.FC = () => {
 			}}
 			onSubmit={async (body) => {
 				await mutateSession({ ...session, user: await api.user.updateEmail(user.id, { body }) });
-				router.push(urls.confirmEmail({ to: urls.settings.default() }));
+				router.push(urls.confirmEmail({ to: urls.settings.list() }));
 			}}
 		>
 			{({ FormField }) => (

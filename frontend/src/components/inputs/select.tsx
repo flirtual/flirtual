@@ -98,8 +98,10 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 							key={option.key}
 							type="button"
 							className={twMerge(
-								"px-4 py-2 text-left text-black-70 hover:bg-white-40 focus:text-white-20 focus:outline-none dark:text-white-20 hover:dark:bg-black-80/50 focus:dark:text-white-20",
-								option.active && "bg-brand-gradient"
+								"px-4 py-2 text-left ",
+								option.active
+									? "bg-brand-gradient text-white-20"
+									: "text-black-70 hover:bg-white-40 focus:text-white-20 focus:outline-none dark:text-white-20 hover:dark:bg-black-80/50 focus:dark:text-white-20"
 							)}
 							onClick={(event) => onOptionClick?.(Object.assign(event, { option }))}
 							onFocus={(event) => onOptionFocus?.(Object.assign(event, { option }))}

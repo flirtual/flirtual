@@ -1,20 +1,17 @@
-"use client";
-
 import { ArrowLongRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
 
 import { InlineLink } from "../inline-link";
 import { FlirtualLogo } from "../logo";
-import { InlineButton } from "../inline-button";
 import { Popover, PopoverModel } from "../popover";
 import { DiscordIcon, TwitterIcon } from "../icons";
 import { InstagramIcon } from "../icons/brand/instagram";
 
 import { NavigationInner } from "./navigation";
+import { HeaderSupportButton } from "./support-button";
 
 const NavigationalMessage: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => (
 	<div
@@ -32,8 +29,6 @@ const NavigationalMessage: React.FC<React.ComponentProps<"div">> = ({ children, 
 );
 
 export const Header: React.FC = () => {
-	const { openFreshworks } = useFreshworks();
-
 	return (
 		<header className="flex w-full flex-col bg-brand-gradient text-white-20 shadow-brand-1">
 			<NavigationalMessage className="hidden sm:flex">
@@ -58,15 +53,15 @@ export const Header: React.FC = () => {
 								<PopoverModel>
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Available on</span>
-										<InlineLink className="flex items-center gap-2" href={urls.socials.twitter()}>
+										<InlineLink className="flex items-center gap-2" href={urls.socials.twitter}>
 											<TwitterIcon className="w-5" />
 											<span>Twitter</span>
 										</InlineLink>
-										<InlineLink className="flex items-center gap-2" href={urls.socials.instagram()}>
+										<InlineLink className="flex items-center gap-2" href={urls.socials.instagram}>
 											<InstagramIcon className="w-5" />
 											<span>Instagram</span>
 										</InlineLink>
-										<InlineLink className="flex items-center gap-2" href={urls.socials.discord()}>
+										<InlineLink className="flex items-center gap-2" href={urls.socials.discord}>
 											<DiscordIcon className="w-5" />
 											<span>Discord</span>
 										</InlineLink>
@@ -78,8 +73,8 @@ export const Header: React.FC = () => {
 								<PopoverModel>
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Service</span>
-										<InlineLink href={urls.resources.networkStatus()}>Network Status</InlineLink>
-										<InlineButton onClick={openFreshworks}>Contact us</InlineButton>
+										<InlineLink href={urls.resources.networkStatus}>Network Status</InlineLink>
+										<HeaderSupportButton />
 									</div>
 								</PopoverModel>
 							</Popover>
@@ -88,12 +83,12 @@ export const Header: React.FC = () => {
 								<PopoverModel>
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Documents</span>
-										<InlineLink href={urls.resources.termsOfService()}>Terms of Service</InlineLink>
-										<InlineLink href={urls.resources.privacyPolicy()}>Privacy Policy</InlineLink>
+										<InlineLink href={urls.resources.termsOfService}>Terms of Service</InlineLink>
+										<InlineLink href={urls.resources.privacyPolicy}>Privacy Policy</InlineLink>
 									</div>
 									<div className="flex flex-col">
 										<span className="mb-2 text-sm font-bold uppercase">Company</span>
-										<InlineLink href={urls.resources.company()}>Studio Paprika</InlineLink>
+										<InlineLink href={urls.resources.company}>Studio Paprika</InlineLink>
 									</div>
 								</PopoverModel>
 							</Popover>

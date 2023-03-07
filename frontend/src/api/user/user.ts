@@ -12,6 +12,7 @@ export type User = UuidModel &
 		email: string;
 		username: string;
 		language?: string;
+		talkjsSignature?: string;
 		visible: boolean;
 		bornAt?: string;
 		emailConfirmedAt?: string;

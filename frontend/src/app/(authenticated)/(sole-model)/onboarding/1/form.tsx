@@ -34,6 +34,7 @@ export const Onboarding1Form: React.FC = () => {
 	return (
 		<Form
 			className="flex flex-col gap-8"
+			requireChange={false}
 			fields={{
 				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
 				age: [
@@ -51,6 +52,10 @@ export const Onboarding1Form: React.FC = () => {
 						}
 					}),
 					api.user.profile.updatePreferences(user.id, {
+						query: {
+							required: ["agemin", "agemax"],
+							requiredAttributes: ["gender"]
+						},
 						body: {
 							agemin: agemin === absMinAge ? null : agemin,
 							agemax: agemax === absMaxAge ? null : agemax,

@@ -20,6 +20,7 @@ export const Onboarding3Form: React.FC = () => {
 	return (
 		<Form
 			className="flex flex-col gap-8"
+			requireChange={false}
 			fields={{
 				displayName: user.profile.displayName || user.username || "",
 				images: user.profile.images.map((image) => ({

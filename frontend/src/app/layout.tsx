@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		themeColor: "#e9658b",
 		viewport: "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1",
 		twitter: {
-			site: `@${urls.socials.twitter().split("twitter.com/")[1]}`,
+			site: `@${urls.socials.twitter.split("twitter.com/")[1]}`,
 			card: "summary"
 		},
 		openGraph: {
@@ -67,9 +67,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: React.PropsWithChildren) {
 	const session = await useServerAuthenticate({ optional: true });
+	const theme = session?.user.preferences?.theme ?? "system";
 
 	return (
-		<html lang="en">
+		<html className={theme} lang="en">
 			<head>
 				{session && (
 					<>

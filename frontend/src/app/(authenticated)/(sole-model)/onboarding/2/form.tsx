@@ -34,6 +34,7 @@ export const Onboarding2Form: React.FC = () => {
 	return (
 		<Form
 			className="flex flex-col gap-8"
+			requireChange={false}
 			fields={{
 				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
 				country: user.profile.country ?? "",
@@ -58,6 +59,9 @@ export const Onboarding2Form: React.FC = () => {
 						}
 					}),
 					api.user.profile.update(user.id, {
+						query: {
+							requiredAttributes: AttributeKeys
+						},
 						body: {
 							country: values.country,
 							languages: values.languages,
@@ -76,23 +80,20 @@ export const Onboarding2Form: React.FC = () => {
 					})
 				]);
 
-				await mutateSession(
-					{
-						...session,
-						user: {
-							...newUser,
-							preferences: {
-								// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-								...newUser.preferences!,
-								privacy: privacyPreferences
-							},
-							profile: {
-								...newProfile
-							}
+				await mutateSession({
+					...session,
+					user: {
+						...newUser,
+						preferences: {
+							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+							...newUser.preferences!,
+							privacy: privacyPreferences
+						},
+						profile: {
+							...newProfile
 						}
-					},
-					{ revalidate: false }
-				);
+					}
+				});
 
 				router.push(urls.onboarding(3));
 			}}

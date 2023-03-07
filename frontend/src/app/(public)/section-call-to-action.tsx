@@ -18,7 +18,7 @@ export const SectionCallToAction: React.FC = () => (
 			<FlirtualLogo />
 			<h1 className="text-3xl font-bold sm:text-4xl md:text-6xl">The VR Dating App</h1>
 			<div className="mt-8 flex flex-col gap-4 gap-y-8 md:flex-row">
-				<LandingButton href={urls.register()} kind="primary">
+				<LandingButton href={urls.register} kind="primary">
 					Sign up
 				</LandingButton>
 				<LandingButton href={urls.login()} kind="secondary">

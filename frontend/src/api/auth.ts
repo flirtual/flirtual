@@ -1,5 +1,5 @@
-import { User } from "./user/user";
 import { DatedModel } from "./common";
+import { User } from "./user";
 
 import { fetch, NarrowFetchOptions } from ".";
 

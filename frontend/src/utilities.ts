@@ -14,6 +14,12 @@ export type Expand<T> = T extends
 	? T
 	: { [P in keyof T]: T[P] };
 
+export type NotOptional<T, K extends keyof T> = Expand<
+	Omit<T, K> & {
+		[P in K]-?: T[P];
+	}
+>;
+
 export function clamp(value: number, min: number, max: number): number {
 	return value < min ? min : value > max ? max : value;
 }

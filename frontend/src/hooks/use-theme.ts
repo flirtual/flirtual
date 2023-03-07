@@ -1,18 +1,44 @@
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useDebugValue } from "react";
 
-import { useLocalStorage } from "./use-local-storage";
+import { api } from "~/api";
+import { PreferenceTheme } from "~/api/user/preferences";
+
 import { useMediaQuery } from "./use-media-query";
-
-export type Theme = "light" | "dark";
+import { useSession } from "./use-session";
 
 export function useTheme() {
-	const mediaDark = useMediaQuery("(prefers-color-scheme: dark)");
-	const [theme, setTheme] = useLocalStorage<Theme>("theme", mediaDark ? "dark" : "light");
+	const [session, mutateSession] = useSession();
+	const router = useRouter();
 
-	useEffect(() => {
-		if (theme === "dark") return document.documentElement.classList.add("dark");
-		document.documentElement.classList.remove("dark");
-	}, [theme]);
+	const sessionTheme = session?.user.preferences?.theme ?? "system";
+	const browserPrefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+	const theme = sessionTheme === "system" ? (browserPrefersDark ? "dark" : "light") : sessionTheme;
 
-	return { theme, setTheme };
+	useDebugValue(theme);
+
+	const setTheme = useCallback(
+		async (theme: PreferenceTheme) => {
+			if (!session) return;
+
+			const preferences = await api.user.preferences.update(session.user.id, {
+				body: {
+					theme
+				}
+			});
+
+			await mutateSession({
+				...session,
+				user: {
+					...session.user,
+					preferences
+				}
+			});
+
+			router.refresh();
+		},
+		[session, router, mutateSession]
+	);
+
+	return [sessionTheme, setTheme, theme] as const;
 }

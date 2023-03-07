@@ -12,7 +12,10 @@ export const FormInputMessages: React.FC<FormInputMessagesProps> = ({ messages }
 	return (
 		<div className="flex flex-col gap-2">
 			{messages.map((message, messageIdx) => (
-				<div className="flex items-center gap-2 font-nunito text-red-600" key={messageIdx}>
+				<div
+					className="flex items-center gap-2 font-nunito text-red-600 dark:text-red-400"
+					key={messageIdx}
+				>
 					<ExclamationCircleIcon className="h-6 w-6" />
 					<span className="text-lg">{capitalize(message)}</span>
 				</div>

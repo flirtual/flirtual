@@ -2,7 +2,7 @@ import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-import { ensureRelativeUrl } from "~/urls";
+import { ensureRelativeUrl, urls } from "~/urls";
 
 export interface NavigationHeaderProps {
 	navigationInner: string | null;
@@ -12,7 +12,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({ navigationIn
 	const query = useSearchParams();
 
 	const Icon = navigationInner ? ChevronLeftIcon : XMarkIcon;
-	const returnTo = ensureRelativeUrl(query.get("return") ?? "/settings");
+	const returnTo = ensureRelativeUrl(query.get("return") ?? urls.browse());
 
 	return (
 		<div className="flex w-full items-center justify-center bg-black-70 p-4 text-white-20 md:bg-brand-gradient">

@@ -1,16 +1,26 @@
 "use client";
 
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { Navigation } from "~/components/layout/navigation";
+import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+import { urls } from "~/urls";
 
 import { SettingsNavigation } from "./navigation";
 
 export default function SettingsLayout({ children }: React.ComponentProps<"div">) {
 	const segment = useSelectedLayoutSegment();
+	const router = useRouter();
+
+	const isDesktop = useScreenBreakpoint("md");
+
+	useEffect(() => {
+		if (isDesktop && !segment) router.push(urls.settings.matchmaking);
+	}, [isDesktop, segment, router]);
 
 	return (
 		<div
@@ -21,14 +31,11 @@ export default function SettingsLayout({ children }: React.ComponentProps<"div">
 			<Header />
 			<div className={twMerge("flex w-full grow", segment ? "flex-col md:flex-row" : "")}>
 				<SettingsNavigation navigationInner={segment} />
-				<div
-					className={twMerge(
-						"h-full w-full flex-col items-center justify-center sm:py-32 md:px-8",
-						segment ? "flex" : "hidden md:flex"
-					)}
-				>
-					{children}
-				</div>
+				{segment && (
+					<div className="flex h-full w-full flex-col items-center justify-center sm:py-32 md:px-8">
+						{children}
+					</div>
+				)}
 			</div>
 			<Footer desktopOnly />
 			<Navigation />
