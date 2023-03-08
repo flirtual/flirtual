@@ -298,7 +298,10 @@ defmodule Flirtual.User do
 end
 
 defimpl Swoosh.Email.Recipient, for: Flirtual.User do
+  alias Flirtual.Repo
+
   def format(%Flirtual.User{} = user) do
+    user = Repo.preload(user, Flirtual.User.default_assoc())
     {user.profile.display_name || user.username, user.email}
   end
 end

@@ -9,7 +9,7 @@ defmodule Flirtual.Elastic.UserQueueWorker do
 
   def handle_info(:update_pending, state) do
     schedule()
-    {:ok, _} = Elastic.User.update_pending()
+    #{:ok, _} = Elastic.User.update_pending()
     {:noreply, state}
   end
 

@@ -80,7 +80,7 @@ defmodule Flirtual.User.Profile.Policy do
         } = profile
       ) do
     profile.attributes
-    |> then(&if(not me.preferences.nsfw, do: exclude_by(&1, :type, "kink"), else: &1))
+    |> then(&if(!me.preferences.nsfw, do: exclude_by(&1, :type, "kink"), else: &1))
     |> then(
       &if(me.id !== profile.user_id,
         do:
