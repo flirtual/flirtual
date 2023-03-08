@@ -14,7 +14,7 @@ config :flirtual,
   talkjs_app_id: "GZddugeg",
   talkjs_access_token: "***REMOVED***",
   frontend_origin: "http://127.0.0.1:3000",
-  elasticsearch_access_token: "***REMOVED***",
+  elasticsearch_access_token: "***REMOVED***"
 
 config :flirtual,
   ecto_repos: [Flirtual.Repo]
