@@ -13,8 +13,7 @@ config :flirtual,
   discord_token: "***REMOVED***",
   talkjs_app_id: "GZddugeg",
   talkjs_access_token: "***REMOVED***",
-  frontend_origin: "http://127.0.0.1:3000",
-  elasticsearch_access_token: "***REMOVED***"
+  frontend_origin: "http://127.0.0.1:3000"
 
 config :flirtual,
   ecto_repos: [Flirtual.Repo]
@@ -30,7 +29,7 @@ config :flirtual, FlirtualWeb.Endpoint,
 config :flirtual, Flirtual.Elastic,
   url: "https://***REMOVED***",
   default_headers: [
-    {"authorization", "ApiKey " <> Application.fetch_env!(:flirtual, :elasticsearch_access_token)}
+    {"authorization", "ApiKey ***REMOVED***"}
   ],
   api: Elasticsearch.API.HTTP,
   json_library: Jason,
