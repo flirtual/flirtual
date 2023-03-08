@@ -28,7 +28,7 @@ defmodule FlirtualWeb.Endpoint do
     cookie_key: "request_logger"
 
 
-  plug CORSPlug, origin: ["http://127.0.0.1:3000"]
+  plug CORSPlug, origin: ["http://127.0.0.1:3000", "https://next.flirtu.al"]
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
