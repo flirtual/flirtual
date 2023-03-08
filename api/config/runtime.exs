@@ -28,6 +28,20 @@ if config_env() == :prod do
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 
+  config :flirtual,
+    discord_client_id: System.get_env("DISCORD_CLIENT_ID"),
+    discord_client_secret: System.get_env("DISCORD_CLIENT_SECRET"),
+    discord_token: System.get_env("DISCORD_TOKEN"),
+    talkjs_app_id: System.get_env("TALKJS_APP_ID"),
+    talkjs_access_token: System.get_env("TALKJS_ACCESS_TOKEN"),
+    frontend_origin: System.get_env("FRONTEND_ORIGIN"),
+
+    config :flirtual, Flirtual.Elastic,
+    url: "https://***REMOVED***",
+    default_headers: [
+      {"authorization", "ApiKey " <> System.get_env("ELASTICSEARCH_ACCESS_TOKEN")}
+    ],
+
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want

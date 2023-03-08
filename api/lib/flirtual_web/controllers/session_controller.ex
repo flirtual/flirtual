@@ -131,7 +131,6 @@ defmodule FlirtualWeb.SessionController do
 
   defp maybe_write_remember_me_cookie(conn, token, true) do
     put_resp_cookie(conn, @remember_me_cookie, token,
-      domain: "localhost",
       sign: true,
       max_age: @max_age,
       same_site: "Lax"
