@@ -34,13 +34,13 @@ if config_env() == :prod do
     discord_token: System.get_env("DISCORD_TOKEN"),
     talkjs_app_id: System.get_env("TALKJS_APP_ID"),
     talkjs_access_token: System.get_env("TALKJS_ACCESS_TOKEN"),
-    frontend_origin: System.get_env("FRONTEND_ORIGIN"),
+    frontend_origin: System.get_env("FRONTEND_ORIGIN")
 
-    config :flirtual, Flirtual.Elastic,
+  config :flirtual, Flirtual.Elastic,
     url: "https://***REMOVED***",
     default_headers: [
       {"authorization", "ApiKey " <> System.get_env("ELASTICSEARCH_ACCESS_TOKEN")}
-    ],
+    ]
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
