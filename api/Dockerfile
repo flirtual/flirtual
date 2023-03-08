@@ -10,10 +10,10 @@
 #   - https://hub.docker.com/r/hexpm/elixir/tags - for the build image
 #   - https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye-20210902-slim - for the release image
 #   - https://pkgs.org/ - resource for finding needed packages
-#   - Ex: hexpm/elixir:1.13.2-erlang-24.3.2-debian-bullseye-20210902-slim
+#   - Ex: hexpm/elixir:1.13.4-erlang-25.0-debian-bullseye-20210902-slim
 #
-ARG ELIXIR_VERSION=1.13.2
-ARG OTP_VERSION=24.3.2
+ARG ELIXIR_VERSION=1.13.4
+ARG OTP_VERSION=25.0
 ARG DEBIAN_VERSION=bullseye-20210902-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
@@ -50,11 +50,6 @@ COPY priv priv
 
 COPY lib lib
 
-COPY assets assets
-
-# compile assets
-RUN mix assets.deploy
-
 # Compile the release
 RUN mix compile
 
@@ -90,3 +85,6 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/flirtual ./
 USER nobody
 
 CMD ["/app/bin/server"]
+# Appended by flyctl
+ENV ECTO_IPV6 true
+ENV ERL_AFLAGS "-proto_dist inet6_tcp"
