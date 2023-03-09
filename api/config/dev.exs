@@ -4,6 +4,7 @@ frontend_origin = URI.parse("http://127.0.0.1:3000")
 origin = URI.parse("http://127.0.0.1:4000")
 
 config :flirtual,
+  root_origin: frontend_origin,
   frontend_origin: frontend_origin,
   origin: origin
 

@@ -14,6 +14,7 @@ defmodule FlirtualWeb.Endpoint do
 
   plug CORSPlug,
     origin: MapSet.new([
+      Application.compile_env!(:flirtual, :root_origin) |> URI.to_string(),
       Application.compile_env!(:flirtual, :frontend_origin) |> URI.to_string(),
       Application.compile_env!(:flirtual, :origin) |> URI.to_string(),
     ]) |> MapSet.to_list()
@@ -31,7 +32,7 @@ defmodule FlirtualWeb.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    domain: Application.compile_env!(:flirtual, :frontend_origin).host,
+    domain: Application.compile_env!(:flirtual, :root_origin).host,
     same_site: "Lax",
     key: "session",
     signing_salt: "mGFTg14t"
