@@ -108,21 +108,3 @@ defmodule FlirtualWeb do
     apply(__MODULE__, which, [])
   end
 end
-
-defimpl Inspect, for: Plug.Conn do
-  import Inspect.Algebra
-
-  def inspect(conn, opts) do
-    document =
-      Map.take(conn, [
-        :method,
-        :req_headers,
-        :query_string,
-        :request_path,
-        :assigns
-      ])
-      |> Map.to_list()
-
-    concat(["#Plug.Conn<", to_doc(document, opts), ">"])
-  end
-end
