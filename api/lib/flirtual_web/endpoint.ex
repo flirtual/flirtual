@@ -32,7 +32,7 @@ defmodule FlirtualWeb.Endpoint do
     store: :cookie,
     same_site: "Lax",
     key: "session",
-    signing_salt: {FlirtualWeb.Endpoint, :session_signing_salt}
+    signing_salt: "mGFTg14t"
 
   plug FlirtualWeb.Router
 end
