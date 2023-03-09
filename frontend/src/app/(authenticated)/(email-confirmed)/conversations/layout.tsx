@@ -36,6 +36,8 @@ export default function ConversationsLayout() {
 							className="h-[calc(100vh_-_8rem)] w-full md:h-screen"
 							options={{
 								showFeedHeader: false,
+								showMobileBackButton: false,
+								theme: "next-mobile",
 								feedFilter: {
 									custom: {
 										banned: "!exists"
@@ -46,12 +48,17 @@ export default function ConversationsLayout() {
 					)}
 				</div>
 				{userId && (
-					<div className="flex h-full w-full flex-col items-center justify-center md:py-32 md:px-8">
+					<div className="flex h-full w-full flex-col items-center justify-center md:pt-8 md:pl-8">
 						<ConversationChatbox
-							className="h-[calc(100vh_-_8rem)] w-full md:h-[32rem]"
+							className="h-[calc(100vh_-_8rem)] w-full overflow-hidden md:h-[32rem] md:rounded-xl"
 							userId={userId}
 							options={{
-								theme: isDesktop ? undefined : "mobile"
+								theme: "next-mobile",
+								presence: {
+									custom: {
+										foo: "bar"
+									}
+								}
 							}}
 						/>
 					</div>

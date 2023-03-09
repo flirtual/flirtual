@@ -10,7 +10,6 @@ import { useSessionUser } from "~/hooks/use-session";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { urls } from "~/urls";
 
-import { PeaceGradient } from "../icons/peace-gradient";
 import { UserAvatar } from "../user-avatar";
 
 const NavigationIconButton: React.FC<
@@ -63,13 +62,10 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 		<div
 			{...props}
 			className={twMerge(
-				"flex h-full w-full max-w-lg items-center justify-between gap-4 px-8 py-2 font-nunito text-white-20 md:px-16",
+				"flex h-full w-full max-w-lg items-center justify-between gap-4 py-2 px-16 font-nunito text-white-20",
 				props.className
 			)}
 		>
-			<NavigationIconButton className="pointer-events-none" href="#">
-				<PeaceGradient className="w-8" gradient={false} />
-			</NavigationIconButton>
 			<NavigationIconButton href={urls.browse()}>
 				<HeartIcon className="h-8 w-8" />
 			</NavigationIconButton>

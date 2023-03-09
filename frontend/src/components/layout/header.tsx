@@ -1,6 +1,4 @@
-import { ArrowLongRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
 
 import { urls } from "~/urls";
 
@@ -12,26 +10,12 @@ import { InstagramIcon } from "../icons/brand/instagram";
 
 import { NavigationInner } from "./navigation";
 import { HeaderSupportButton } from "./support-button";
-
-const NavigationalMessage: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => (
-	<div
-		{...props}
-		className={twMerge("flex w-full justify-center bg-black-70 text-white-20", props.className)}
-	>
-		<div className="relative flex w-full max-w-screen-lg items-center justify-center px-8 py-4">
-			<div className="relative flex gap-4 font-montserrat leading-none sm:text-lg">
-				<ArrowLongRightIcon className="w-6 animate-bounce-x" />
-				<span>{children}</span>
-			</div>
-			<XMarkIcon className="absolute right-8 w-6" strokeWidth={2} />
-		</div>
-	</div>
-);
+import { HeaderMessage } from "./header-message";
 
 export const Header: React.FC = () => {
 	return (
 		<header className="flex w-full flex-col bg-brand-gradient text-white-20 shadow-brand-1">
-			<NavigationalMessage className="hidden sm:flex">
+			<HeaderMessage className="hidden sm:flex">
 				Download the{" "}
 				<InlineLink
 					className="font-semibold before:absolute before:left-0 before:top-0 before:h-full before:w-full"
@@ -41,7 +25,7 @@ export const Header: React.FC = () => {
 					mobile app
 				</InlineLink>{" "}
 				for a better experience!
-			</NavigationalMessage>
+			</HeaderMessage>
 			<div className="top-0 z-10 hidden w-full flex-col  items-center justify-center bg-brand-gradient shadow-brand-1 sm:flex">
 				<div className="flex w-full max-w-screen-lg items-center justify-between gap-8 px-8 py-4">
 					<FlirtualLogo className="h-16 shrink-0" />
