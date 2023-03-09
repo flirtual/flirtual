@@ -1,0 +1,121 @@
+"use client";
+
+import { api } from "~/api";
+import { ProfileDomsubList } from "~/api/user/profile";
+import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
+import { InputAutocomplete, InputLabel, InputRadioList, InputSwitch } from "~/components/inputs";
+import { InputPrivacySelect } from "~/components/inputs/specialized";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useSession } from "~/hooks/use-session";
+import { excludeBy, filterBy } from "~/utilities";
+
+export const NsfwForm: React.FC = () => {
+	const [session, mutateSession] = useSession();
+	const kinks = useAttributeList("kink");
+
+	if (!session) return null;
+	const { user } = session;
+
+	return (
+		<Form
+			className="flex flex-col gap-8"
+			fields={{
+				nsfw: user.preferences?.nsfw ?? false,
+				domsub: user.profile.domsub,
+				kinks: filterBy(user.profile.attributes, "type", "kink").map(({ id }) => id) ?? [],
+				kinksPrivacy: user.preferences?.privacy.kinks ?? "everyone"
+			}}
+			onSubmit={async ({ domsub, kinks, kinksPrivacy, nsfw }) => {
+				const [newProfile, , newPreferences] = await Promise.all([
+					api.user.profile.update(user.id, {
+						body: {
+							domsub,
+							attributes: [
+								...excludeBy(user.profile.attributes, "type", "kink").map(({ id }) => id),
+								...kinks
+							]
+						}
+					}),
+					api.user.preferences.updatePrivacy(user.id, { body: { kinks: kinksPrivacy } }),
+					api.user.preferences.update(user.id, { body: { nsfw } })
+				]);
+
+				await mutateSession({
+					...session,
+					user: {
+						...session.user,
+						profile: newProfile,
+						preferences: newPreferences
+					}
+				});
+			}}
+		>
+			{({ FormField, fields }) => (
+				<>
+					<FormField name="nsfw">
+						{(field) => (
+							<>
+								<InputLabel
+									{...field.labelProps}
+									inline
+									hint="Choose whether to display NSFW tags on other users' profiles."
+								>
+									Show NSFW tags on profiles?
+								</InputLabel>
+								<InputSwitch {...field.props} />
+							</>
+						)}
+					</FormField>
+					{fields.nsfw.props.value && (
+						<>
+							<FormField name="domsub">
+								{(field) => (
+									<>
+										<InputLabel {...field.labelProps}>What is your preference?</InputLabel>
+										<InputRadioList
+											{...field.props}
+											items={ProfileDomsubList.map((value) => ({
+												key: value,
+												label: {
+													dominant: "Dominant",
+													submissive: "Submissive",
+													switch: "Switch"
+												}[value]
+											}))}
+										/>
+									</>
+								)}
+							</FormField>
+							<FormField name="kinks">
+								{(field) => (
+									<>
+										<InputLabel {...field.labelProps}>Kinks</InputLabel>
+										<InputAutocomplete
+											{...field.props}
+											options={kinks.map((attribute) => ({
+												key: attribute.id,
+												label: attribute.name
+											}))}
+										/>
+									</>
+								)}
+							</FormField>
+							<FormField name="kinksPrivacy">
+								{(field) => (
+									<>
+										<InputLabel inline hint="Who can see your nsfw tags?">
+											Kink privacy
+										</InputLabel>
+										<InputPrivacySelect {...field.props} />
+									</>
+								)}
+							</FormField>
+						</>
+					)}
+					<FormButton>Update</FormButton>
+				</>
+			)}
+		</Form>
+	);
+};

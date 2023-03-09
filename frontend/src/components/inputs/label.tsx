@@ -8,7 +8,12 @@ export type InputLabelProps = React.ComponentProps<"label"> & {
 };
 
 export const InputLabelHint: React.FC<React.ComponentProps<"span">> = (props) => {
-	return <span {...props} className={twMerge("text-gray-700", props.className)} />;
+	return (
+		<span
+			{...props}
+			className={twMerge("text-base text-black-50 dark:text-white-50", props.className)}
+		/>
+	);
 };
 
 export const InputLabel: React.FC<InputLabelProps> = (props) => {
@@ -18,12 +23,12 @@ export const InputLabel: React.FC<InputLabelProps> = (props) => {
 		<label
 			{...elementProps}
 			className={twMerge(
-				"flex font-nunito select-none gap-x-1 items-baseline",
+				"flex select-none items-baseline gap-x-1 font-nunito text-xl",
 				inline && "flex-col",
 				props.className
 			)}
 		>
-			<span className="text-xl">{children}</span>
+			{children}
 			{typeof hint === "string" ? <InputLabelHint>{hint}</InputLabelHint> : hint}
 		</label>
 	);

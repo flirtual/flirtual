@@ -1,20 +1,10 @@
 "use client";
 
 import React, { useCallback, useMemo } from "react";
-import { twMerge } from "tailwind-merge";
 
 import { clamp } from "~/utilities";
 
-const RangeInput: React.FC<Omit<React.ComponentProps<"input">, "type">> = (props) => (
-	<input
-		{...props}
-		type="range"
-		className={twMerge(
-			"focus:range-thumb:ring-brand-coral range-thumb:border-none focus:range-thumb:ring-2 focus:range-thumb:ring-offset-2 range-thumb:bg-brand-gradient range-thumb:pointer-events-auto range-thumb:w-6 range-thumb:h-6 range-thumb:shadow-brand-1 range-thumb:rounded-full absolute w-full bg-transparent appearance-none pointer-events-none focus:outline-none",
-			props.className
-		)}
-	/>
-);
+import { SliderInputInner } from "./slider";
 
 export type InputRangeSliderValue = [min: number, max: number];
 
@@ -23,10 +13,12 @@ export interface InputRangeSliderProps {
 	max?: number;
 	step?: number;
 	value: InputRangeSliderValue;
+	disabled?: boolean;
 	onChange: React.Dispatch<InputRangeSliderValue>;
 }
 
 export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
+	const { disabled = false } = props;
 	const step = props.step ?? 1;
 
 	const limit = useMemo(() => {
@@ -52,16 +44,18 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 	);
 
 	return (
-		<div className="relative flex items-center h-6 shrink-0">
-			<div className="bg-brand-black shadow-brand-1 absolute w-full h-2 rounded-full" />
+		<div className="relative flex h-6 shrink-0 items-center">
+			<div className="absolute h-2 w-full rounded-full bg-black-50 shadow-brand-1 dark:bg-black-60" />
 			<div
-				className="bg-brand-gradient absolute h-2 rounded-full"
+				className="absolute h-2 rounded-full bg-brand-gradient"
 				style={{
 					marginLeft: `${((min - limit.min) / limit.diff) * 100}%`,
 					width: `${((max - min) / limit.diff) * 100}%`
 				}}
 			/>
-			<RangeInput
+			<SliderInputInner
+				className="pointer-events-none"
+				disabled={disabled}
 				max={limit.max}
 				min={limit.min}
 				step={step}
@@ -70,7 +64,9 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 					onChange([currentTarget.valueAsNumber, props.value[1]]);
 				}}
 			/>
-			<RangeInput
+			<SliderInputInner
+				className="pointer-events-none"
+				disabled={disabled}
 				max={limit.max}
 				min={limit.min}
 				step={step}

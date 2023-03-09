@@ -10,13 +10,13 @@ export type InputCheckboxProps = Omit<
 export const InputCheckbox: React.FC<InputCheckboxProps> = (props) => {
 	const { value, onChange, ...elementProps } = props;
 	return (
-		<div className="relative w-8 h-8 flex shrink-0 justify-center items-center">
+		<div className="relative flex h-8 w-8 shrink-0 items-center justify-center">
 			<input
 				{...elementProps}
 				checked={value}
 				type="checkbox"
 				className={twMerge(
-					"peer focus:ring-brand-coral checked:bg-brand-gradient shadow-brand-1 border-brand-black w-full  h-full focus:ring-2 focus:ring-offset-2 rounded-xl text-white border-4 items-center justify-center text-2xl",
+					"peer focusable h-full w-full items-center justify-center rounded-xl border-4 border-black-50 bg-white-30 text-2xl text-white-20 shadow-brand-1 checked:bg-brand-gradient dark:bg-black-60",
 					props.className
 				)}
 				onChange={(event) => {
@@ -25,7 +25,7 @@ export const InputCheckbox: React.FC<InputCheckboxProps> = (props) => {
 				}}
 			/>
 			<CheckIcon
-				className="text-brand-white w-6 h-6 absolute peer-checked:block hidden pointer-events-none"
+				className="pointer-events-none absolute hidden h-6 w-6 text-white-20 peer-checked:block"
 				strokeWidth={3}
 			/>
 		</div>

@@ -20,12 +20,12 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 
 	return (
 		<div
-			className="bg-brand-grey shadow-brand-1 border-red-500 focus-within:ring-brand-coral overflow-hidden flex items-center focus-within:ring-offset-2 rounded-xl focus-within:ring-2"
+			className="focusable-within flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20"
 			onClick={() => inputRef.current?.focus()}
 		>
 			{Icon && (
-				<div className="bg-brand-gradient flex items-center justify-center p-2 text-white">
-					<Icon className="w-7 h-7" />
+				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">
+					<Icon className="h-7 w-7" />
 				</div>
 			)}
 			<input
@@ -33,8 +33,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 				ref={inputRef}
 				type={props.type === "date" ? "text" : props.type || "text"}
 				className={twMerge(
-					"font-nunito w-full bg-transparent border-none text-xl focus:outline-none focus:ring-0 px-4 py-2",
-					Icon && "pl-2",
+					"w-full border-none bg-transparent px-4 py-2 font-nunito placeholder:text-black-20 focus:outline-none focus:ring-0 dark:placeholder:text-white-50",
 					props.className
 				)}
 				onChange={(event) => {

@@ -1,15 +1,31 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-export type ModelCardProps = React.ComponentProps<"div"> & { title: React.ReactNode };
+export type ModelCardProps = React.ComponentProps<"div"> & {
+	title: React.ReactNode;
+	titleProps?: React.ComponentProps<"div">;
+};
 
-export const ModelCard: React.FC<ModelCardProps> = ({ children, title, ...props }) => (
-	<div {...props} className={twMerge("w-full sm:w-fit", props.className)}>
-		<div className="bg-brand-gradient font-extrabold w-full sm:w-fit text-center sm:text-right shadow-brand-1 rounded-t-[4rem] sm:px-16 pt-8 pb-4 text-white">
-			<span className="font-montserrat text-3xl md:text-4xl">{title}</span>
+export const ModelCard: React.FC<ModelCardProps> = ({
+	children,
+	title,
+	titleProps = {},
+	...props
+}) => (
+	<div {...props} className={twMerge("w-full shrink-0 sm:w-full sm:max-w-lg", props.className)}>
+		<div
+			{...titleProps}
+			className={twMerge(
+				"w-full bg-brand-gradient py-8 text-center font-montserrat text-3xl font-extrabold text-white-10 shadow-brand-1 sm:w-fit sm:rounded-t-[4rem] sm:px-16 sm:pb-4 sm:text-right md:text-4xl",
+				titleProps.className
+			)}
+		>
+			{title}
 		</div>
-		<div className="sm:shadow-brand-1 border-brand-coral flex w-full flex-col rounded-3xl rounded-t-none sm:rounded-tr-3xl border-4 bg-white px-8 py-10 sm:px-16">
-			{children}
+		<div className="bg-brand-gradient sm:rounded-3xl sm:rounded-tl-none sm:p-1 sm:shadow-brand-1">
+			<div className="flex w-full flex-col bg-white-20 px-8 py-10 dark:bg-black-70 dark:text-white-20 sm:rounded-3xl sm:rounded-tl-none sm:px-16">
+				{children}
+			</div>
 		</div>
 	</div>
 );

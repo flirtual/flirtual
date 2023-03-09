@@ -2,28 +2,36 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch } from "fast-fuzzy";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { InputOptionWindow } from "./select";
 
-export interface InputAutocompleteOption {
-	key: string;
+export interface InputAutocompleteOption<K extends string = string> {
+	key: K;
 	label: string;
+	hidden?: boolean;
 }
 
-export interface InputAutocompleteProps {
-	options: Array<InputAutocompleteOption>;
-	values: Array<string>;
+export interface InputAutocompleteProps<K extends string = string> {
+	options: Array<InputAutocompleteOption<K>>;
+	value: Array<K>;
 	placeholder?: string;
-	onChange: React.Dispatch<React.SetStateAction<Array<string>>>;
+	limit?: number;
+	onChange: React.Dispatch<Array<K>>;
 }
 
-export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
-	const { values, options } = props;
+export function InputAutocomplete<K extends string>(props: InputAutocompleteProps<K>) {
+	const { value: values = [], limit = Infinity, options } = props;
+	const visibleValues = values.filter((value) => {
+		const option = options.find((option) => option.key === value);
+		return option && !option.hidden;
+	});
 
-	const placeholder = values.length ? "" : props.placeholder;
+	const placeholder = visibleValues.length ? "" : props.placeholder;
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
+	const [overlayVisible, setOverlayVisible] = useState(false);
 
 	const optionWindowRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +43,7 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 	);
 
 	const suggestions = useMemo(() => {
-		const excludedOptions = options.filter((option) => !values.includes(option.key));
+		const excludedOptions = options.filter(({ key, hidden }) => !values.includes(key) && !hidden);
 		if (inputValue.trim().length === 0) return excludedOptions;
 
 		return fuzzySearch(inputValue, excludedOptions, { keySelector: (option) => option.label });
@@ -45,8 +53,10 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 		<div
 			className="group relative"
 			onClick={() => inputRef.current?.focus()}
+			onFocus={() => setOverlayVisible(true)}
 			onBlur={({ currentTarget, relatedTarget }) => {
 				if (currentTarget.contains(relatedTarget)) return;
+				setOverlayVisible(false);
 				setInputValue("");
 			}}
 			onKeyDown={(event) => {
@@ -60,24 +70,30 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 				event.preventDefault();
 			}}
 		>
-			<div className="bg-brand-grey shadow-brand-1 group-focus-within:ring-brand-coral flex group-focus-within:ring-offset-2 rounded-xl group-focus-within:ring-2 p-2">
-				<div className="flex gap-1.5 flex-wrap items-center">
-					{values.map((value) => (
-						<button
-							className="bg-brand-gradient shadow-brand-1 focus:ring-brand-coral px-3 py-2 rounded-xl h-fit focus:outline-none focus:ring-2 focus:ring-offset-2"
-							key={value}
-							type="button"
-							onClick={() => {
-								props.onChange.call(null, (values) => values.filter((v) => v !== value));
-							}}
-						>
-							<span className="font-nunito text-lg text-white pointer-events-none select-none">
-								{options.find((option) => option.key === value)?.label}
-							</span>
-						</button>
-					))}
+			<div className="focusable-within flex rounded-xl bg-white-40 px-2 py-1 text-black-70 shadow-brand-1 dark:bg-black-60 dark:text-white-20">
+				<div className="flex flex-wrap items-center gap-1.5">
+					{visibleValues.map((value) => {
+						const option = options.find((option) => option.key === value);
+						if (!option || option.hidden) return null;
+
+						return (
+							<button
+								className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 shadow-brand-1"
+								key={value}
+								type="button"
+								onClick={() => {
+									props.onChange(values.filter((v) => v !== value));
+								}}
+							>
+								<span className="pointer-events-none select-none font-nunito text-lg text-white-20">
+									{option.label}
+								</span>
+							</button>
+						);
+					})}
 					<input
-						className="text-xl grow border-none bg-transparent focus:ring-transparent"
+						autoComplete="off"
+						className="grow border-none bg-transparent placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50"
 						placeholder={placeholder}
 						ref={inputRef}
 						type="text"
@@ -89,28 +105,45 @@ export const InputAutocomplete: React.FC<InputAutocompleteProps> = (props) => {
 						onKeyDown={(event) => {
 							const { key, currentTarget } = event;
 
+							if (key === "Enter" && suggestions.length === 1) {
+								props.onChange([...values, suggestions[0].key]);
+								setInputValue("");
+
+								return;
+							}
+
 							if (key !== "Backspace" || currentTarget.value.length !== 0) return;
 							event.preventDefault();
 
-							props.onChange.call(null, (values) => {
-								const lastValue = values.at(-1);
-								return values.filter((value) => value !== lastValue);
-							});
+							const lastValue = values.at(-1);
+							props.onChange(values.filter((value) => value !== lastValue));
 						}}
 					/>
 				</div>
 			</div>
-			<InputOptionWindow
-				className="hidden group-focus-within:flex absolute mt-4"
-				options={suggestions}
-				ref={optionWindowRef}
-				onOptionClick={({ option }) => {
-					props.onChange.call(null, (values) => [...values, option.key]);
+			<AnimatePresence>
+				{overlayVisible && (
+					<motion.div
+						animate={{ height: "max-content" }}
+						className="absolute z-10 mt-4 flex w-full"
+						exit={{ height: 0 }}
+						initial={{ height: 0 }}
+						transition={{ damping: 25 }}
+					>
+						<InputOptionWindow
+							options={suggestions}
+							ref={optionWindowRef}
+							onOptionClick={({ option }) => {
+								if (values.length === limit) return;
+								props.onChange([...values, option.key as K]);
 
-					inputRef.current?.focus();
-					setInputValue("");
-				}}
-			/>
+								inputRef.current?.focus();
+								setInputValue("");
+							}}
+						/>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</div>
 	);
-};
+}

@@ -1,6 +1,9 @@
 "use client";
 
 import Script from "next/script";
+import { useEffect } from "react";
+
+import { uploadcarePublicKey } from "~/const";
 
 declare global {
 	interface Window {
@@ -13,7 +16,7 @@ declare global {
 }
 
 export const ClientScripts: React.FC = () => {
-	if (typeof document !== "undefined") {
+	useEffect(() => {
 		/* eslint-disable */
 		// @ts-expect-error
 		!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
@@ -21,7 +24,7 @@ export const ClientScripts: React.FC = () => {
 
 		window.fwSettings = { widget_id: 73000002566 };
 		window.FreshworksWidget("hide", "launcher");
-	}
+	}, []);
 
 	return (
 		<>
@@ -29,7 +32,7 @@ export const ClientScripts: React.FC = () => {
 				src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"
 				onReady={() => {
 					window.Blinkloader.optimize({
-						pubkey: "130267e8346d9a7e9bea",
+						pubkey: uploadcarePublicKey,
 						cdnBase: "https://media.flirtu.al",
 						lazyload: false,
 						smartCompression: true,

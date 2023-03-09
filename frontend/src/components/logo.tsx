@@ -1,7 +1,7 @@
-import React from "react";
+import { IconComponent } from "./icons";
 
-export const FlirtualLogo: React.FC = () => (
-	<svg role="img" viewBox="0 0 1040.4 300" xmlns="http://www.w3.org/2000/svg">
+export const FlirtualLogo: IconComponent = (props) => (
+	<svg {...props} role="img" viewBox="0 0 1040.4 300" xmlns="http://www.w3.org/2000/svg">
 		<defs>
 			<linearGradient id="a">
 				<stop offset="0" stopColor="#fc9caa" />

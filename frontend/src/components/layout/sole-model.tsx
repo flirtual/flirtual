@@ -1,41 +1,27 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { Footer } from "./footer";
+import { Footer, FooterProps } from "./footer";
+import { Header } from "./header";
 import { Navigation } from "./navigation";
 
-export const SoleModelLayout: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => (
+export const SoleModelLayout: React.FC<React.ComponentProps<"div"> & { footer?: FooterProps }> = ({
+	children,
+	footer = {},
+	...props
+}) => (
 	<div
 		{...props}
 		className={twMerge(
-			"bg-brand-cream flex min-h-screen grow flex-col-reverse sm:flex-col overflow-x-hidden text-black",
+			"dark:text-brand-white flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 sm:flex-col",
 			props.className
 		)}
 	>
+		<Header />
+		<div className="flex w-full max-w-screen-lg grow flex-col items-center sm:justify-center sm:py-32 md:px-8">
+			{children}
+		</div>
+		<Footer {...footer} />
 		<Navigation />
-		<div className="flex flex-col grow items-center justify-center md:p-32">{children}</div>
-		{/* <div className="flex sm:hidden h-16">
-			<div className="flex py-3 gap-4 fixed h-16 top-0 w-full bg-brand-gradient text-brand-white font-nunito p-8">
-				<img
-					className="rounded-full aspect-square h-full"
-					src={
-						"https://media.flirtu.al/b8a05ec5-7aea-4e33-bb2b-46301eaddd9a/-/scale_crop/64x64/smart_faces_points/-/format/auto/-/quality/smart/-/resize/x65/"
-					}
-				/>
-				<img
-					className="rounded-full aspect-square h-full"
-					src={
-						"https://media.flirtu.al/b8a05ec5-7aea-4e33-bb2b-46301eaddd9a/-/scale_crop/64x64/smart_faces_points/-/format/auto/-/quality/smart/-/resize/x65/"
-					}
-				/>
-				<img
-					className="rounded-full aspect-square h-full"
-					src={
-						"https://media.flirtu.al/b8a05ec5-7aea-4e33-bb2b-46301eaddd9a/-/scale_crop/64x64/smart_faces_points/-/format/auto/-/quality/smart/-/resize/x65/"
-					}
-				/>
-			</div>
-		</div> */}
-		<Footer />
 	</div>
 );

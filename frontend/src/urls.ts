@@ -1,0 +1,101 @@
+import { User } from "./api/user";
+import { ConfirmEmailPageProps } from "./app/(authenticated)/(sole-model)/confirm-email/page";
+import { entries, fromEntries } from "./utilities";
+
+export const siteOrigin = process.env.NEXT_PUBLIC_ORIGIN as string;
+if (!siteOrigin) throw new ReferenceError("Site origin not defined");
+
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
+if (!apiUrl) throw new ReferenceError("API url not defined");
+
+export function ensureRelativeUrl(pathname: string) {
+	if (!isInternalHref(pathname)) throw new Error(`Must be relative url: ${pathname}`);
+	return pathname;
+}
+
+export function toAbsoluteUrl(href: string) {
+	return new URL(href, siteOrigin);
+}
+
+function url(pathname: string, query: Record<string, string | number | undefined> = {}) {
+	const searchParams = new URLSearchParams(
+		fromEntries(
+			entries(query)
+				.map(([k, v]) => (v ? [k, String(v)] : null))
+				.filter(Boolean)
+		)
+	);
+
+	searchParams.sort();
+	const queryString = Object.keys(searchParams).length ? `?${searchParams.toString()}` : "";
+
+	return `${pathname}${queryString}`;
+}
+
+export function isInternalHref(href: string) {
+	return toAbsoluteUrl(href).origin === siteOrigin;
+}
+
+export const urls = {
+	// internal
+	api: process.env.NEXT_PUBLIC_API_URL as string,
+	media: (id: string) => `https://media.flirtu.al/${id}/`,
+	userAvatar: (user: User) =>
+		user.profile.images[0]?.url ?? urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
+
+	// pages
+	register: "/register",
+	login: (to?: string) => url("/login", { to }),
+	forgotPassword: "/forgot-password",
+	logout: "/logout",
+	user: (username: string) => `/${username}`,
+	browse: (type?: "friend") => url("/browse", { type }),
+	conversations: {
+		list: "/conversations",
+		with: (userId: string) => `/conversations/${userId}`
+	},
+	onboarding: (onboardingIdx: 1 | 2 | 3 | 4) => `/onboarding/${onboardingIdx}`,
+	premium: "/premium",
+	confirmEmail: (query: ConfirmEmailPageProps["searchParams"] = {}) => url("/confirm-email", query),
+
+	settings: {
+		list: (returnTo?: string) => url("/settings", { return: returnTo }),
+
+		// profile
+		matchmaking: "/settings/matchmaking",
+		biography: "/settings/biography",
+		tags: "/settings/tags",
+		personality: "/settings/personality",
+		nsfw: "/settings/nsfw",
+
+		// account
+		appearance: "/settings/appearance",
+		privacy: "/settings/privacy",
+		notifications: "/settings/notifications",
+		changeEmail: "/settings/change-email",
+		changePassword: "/settings/change-password",
+		deactivateAccount: "/settings/deactivate",
+		deleteAccount: "/settings/delete"
+	},
+
+	resources: {
+		networkStatus: "https://status.flirtu.al",
+		about: "/about",
+		communityGuidelines: "/community-guidelines",
+		termsOfService: "/terms-of-service",
+		privacyPolicy: "/privacy-policy",
+		company: "https://studiopaprika.io/"
+	},
+
+	socials: {
+		twitter: "https://twitter.com/getflirtual",
+		instagram: "https://instagram.com/flirtual",
+		discord: "https://discord.com/invite/flirtual"
+	},
+
+	apps: {
+		android: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
+		windows: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
+		sideQuest: "https://sidequestvr.com/app/9195"
+	}
+};

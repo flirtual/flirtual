@@ -6,6 +6,10 @@
   @apply bg-transparent w-0
 }
 
+* {
+  scrollbar-width: none;
+}
+
 *[data-nextjs-scroll-focus-boundary] {
   display: contents;
 }
