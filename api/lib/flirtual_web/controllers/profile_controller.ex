@@ -82,7 +82,7 @@ defmodule FlirtualWeb.ProfileController do
     end
   end
 
-  def create_images(conn, %{"user_id" => user_id, "file_ids" => file_ids}) do
+  def create_images(conn, %{"user_id" => user_id, "_json" => file_ids}) do
     user = Users.get(user_id)
     profile = %Profile{user.profile | user: user}
 
@@ -95,7 +95,7 @@ defmodule FlirtualWeb.ProfileController do
     end
   end
 
-  def update_images(conn, %{"user_id" => user_id, "image_ids" => image_ids}) do
+  def update_images(conn, %{"user_id" => user_id, "_json" => image_ids}) do
     user = Users.get(user_id)
     profile = %Profile{user.profile | user: user}
 
