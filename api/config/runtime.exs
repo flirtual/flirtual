@@ -18,7 +18,7 @@ config :flirtual,
   frontend_origin: System.fetch_env!("TALKJS_APP_ID"),
   discord_client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
   discord_client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),
-  discord_access_token: System.fetch_env!("DISCORD_CLIENT_ACCESS_TOKEN")
+  discord_access_token: System.fetch_env!("DISCORD_ACCESS_TOKEN")
 
 config :flirtual, Flirtual.Talkjs,
   app_id: System.fetch_env!("TALKJS_APP_ID"),
