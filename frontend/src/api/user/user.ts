@@ -106,12 +106,12 @@ export async function updatePassword(
 	return fetch<User>("post", `users/${userId}/password`, options);
 }
 
-export async function confirmEmail(userId: string, options: NarrowFetchOptions<{ token: string }>) {
-	return fetch<User>("post", `users/${userId}/email/confirm`, options);
+export async function confirmEmail(options: NarrowFetchOptions<{ token: string }>) {
+	return fetch<User>("post", `auth/email/confirm`, options);
 }
 
 export async function resendConfirmEmail(userId: string, options: NarrowFetchOptions = {}) {
-	return fetch("post", `users/${userId}/email/confirm/resend`, options);
+	return fetch("delete", `auth/email/confirm`, options);
 }
 
 export async function deactivate(

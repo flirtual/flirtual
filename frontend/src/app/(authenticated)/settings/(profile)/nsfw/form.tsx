@@ -93,6 +93,7 @@ export const NsfwForm: React.FC = () => {
 										<InputLabel {...field.labelProps}>Kinks</InputLabel>
 										<InputAutocomplete
 											{...field.props}
+											limit={8}
 											options={kinks.map((attribute) => ({
 												key: attribute.id,
 												label: attribute.name

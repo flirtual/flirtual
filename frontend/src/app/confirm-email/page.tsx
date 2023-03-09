@@ -1,162 +1,34 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import {
-	CheckCircleIcon,
-	ExclamationCircleIcon,
-	QuestionMarkCircleIcon
-} from "@heroicons/react/24/solid";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-
-import { api } from "~/api";
-import { Form } from "~/components/forms";
-import { FormButton } from "~/components/forms/button";
-import { InputLabel, InputText } from "~/components/inputs";
+import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
-import { useSession } from "~/hooks/use-session";
+import { useServerAuthenticate } from "~/server-utilities";
 import { urls } from "~/urls";
 
-const ConfirmEmailMessage: React.FC<{ token: string }> = ({ token }) => {
-	const [session, mutateSession] = useSession({ refreshInterval: 5000 });
-	const [confirmSuccess, setConfirmSuccess] = useState<boolean | null>(null);
-
-	useEffect(() => {
-		if (session?.user && token) {
-			void api.user
-				.confirmEmail(session?.user.id, { body: { token } })
-				.then(() => setConfirmSuccess(true))
-				.catch(() => setConfirmSuccess(false));
-		}
-	}, [session?.user, token, mutateSession]);
-
-	if (!session) return null;
-
-	const Icon =
-		confirmSuccess === null
-			? QuestionMarkCircleIcon
-			: confirmSuccess
-			? CheckCircleIcon
-			: ExclamationCircleIcon;
-
-	return (
-		<div className="flex gap-4">
-			<Icon className="h-8 w-8 shrink-0" />
-			<span className="text-xl">
-				{confirmSuccess === null ? (
-					<>
-						Confirming your email address,{" "}
-						<span className="font-semibold">{session.user.email}</span>
-						...
-					</>
-				) : confirmSuccess ? (
-					<>
-						Thank you for confirming your email address,{" "}
-						<span className="font-semibold">{session.user.email}</span>, you may now close this
-						window.
-					</>
-				) : (
-					<>
-						We couldn&apos;t confirm your email address,{" "}
-						<span className="font-semibold">{session.user.email}</span>, please try again later!
-					</>
-				)}
-			</span>
-		</div>
-	);
-};
+import { ConfirmTokenForm } from "./confirm-token-form";
+import { UserForms } from "./user-forms";
 
 export interface ConfirmEmailPageProps {
 	searchParams?: { to?: string; token?: string };
 }
 
-export default function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps) {
-	const [session, mutateSession] = useSession({ refreshInterval: 5000 });
-	const router = useRouter();
+export default async function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps) {
+	const session = await useServerAuthenticate({ optional: true, emailConfirmedOptional: true });
 
-	useEffect(() => {
-		if (session?.user.emailConfirmedAt) {
-			router.push(searchParams?.to ?? urls.browse());
-		}
-	}, [session, router, searchParams?.to]);
+	if (session?.user.emailConfirmedAt && !searchParams?.token)
+		redirect(searchParams?.to ?? urls.browse());
 
-	if (!session || session.user.emailConfirmedAt) return null;
-	const { user } = session;
+	if (!session?.user && !searchParams?.token) redirect(urls.login(searchParams?.to));
 
 	return (
-		<ModelCard title="Confirm email">
-			{searchParams?.token ? (
-				<ConfirmEmailMessage token={searchParams.token} />
-			) : (
-				<>
-					<Form
-						className="flex flex-col gap-4"
-						fields={{}}
-						requireChange={false}
-						onSubmit={async () => {
-							await api.user.resendConfirmEmail(user.id);
-						}}
-					>
-						<span className="text-xl">
-							Please check your email address, <span className="font-semibold">{user.email}</span>,
-							for a confirmation link to activate your account. If you don&apos;t see it in your
-							inbox, please check your spam folder!
-						</span>
-						<FormButton>Resend confirmation email</FormButton>
-					</Form>
-					<Form
-						className="mt-8"
-						requireChange={["email", "emailConfirmation", "currentPassword"]}
-						fields={{
-							email: user.email,
-							emailConfirmation: "",
-							currentPassword: ""
-						}}
-						onSubmit={async (body) => {
-							await mutateSession({
-								...session,
-								user: await api.user.updateEmail(user.id, { body })
-							});
-						}}
-					>
-						{({ FormField }) => (
-							<div className="flex flex-col gap-4">
-								<div>
-									<h1 className="font-montserrat text-xl font-semibold">Wrong email address?</h1>
-									<h2 className="text-lg">
-										If you provided the wrong address, or if you&apos;d like to try a different
-										email, you can enter a new address below:
-									</h2>
-								</div>
-								<FormField name="email">
-									{(field) => (
-										<>
-											<InputLabel {...field.labelProps}>New email address</InputLabel>
-											<InputText {...field.props} autoComplete="email" type="email" />
-										</>
-									)}
-								</FormField>
-								<FormField name="emailConfirmation">
-									{(field) => (
-										<>
-											<InputLabel {...field.labelProps}>Confirm email address</InputLabel>
-											<InputText {...field.props} autoComplete="off" type="email" />
-										</>
-									)}
-								</FormField>
-								<FormField name="currentPassword">
-									{(field) => (
-										<>
-											<InputLabel {...field.labelProps}>Confirm current password</InputLabel>
-											<InputText {...field.props} autoComplete="current-password" type="password" />
-										</>
-									)}
-								</FormField>
-								<FormButton>Update email</FormButton>
-							</div>
-						)}
-					</Form>
-				</>
-			)}
-		</ModelCard>
+		<SoleModelLayout footer={{ desktopOnly: true }}>
+			<ModelCard title="Confirm email">
+				{searchParams?.token ? (
+					<ConfirmTokenForm token={searchParams.token} />
+				) : (
+					<UserForms user={session?.user} />
+				)}
+			</ModelCard>
+		</SoleModelLayout>
 	);
 }

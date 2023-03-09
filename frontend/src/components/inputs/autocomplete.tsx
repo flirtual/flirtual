@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch } from "fast-fuzzy";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -22,10 +22,15 @@ export interface InputAutocompleteProps<K extends string = string> {
 
 export function InputAutocomplete<K extends string>(props: InputAutocompleteProps<K>) {
 	const { value: values = [], limit = Infinity, options } = props;
-	const visibleValues = values.filter((value) => {
-		const option = options.find((option) => option.key === value);
-		return option && !option.hidden;
-	});
+
+	const visibleValues = useMemo(
+		() =>
+			values.filter((value) => {
+				const option = options.find((option) => option.key === value);
+				return option && !option.hidden;
+			}),
+		[options, values]
+	);
 
 	const placeholder = visibleValues.length ? "" : props.placeholder;
 
@@ -48,6 +53,11 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 
 		return fuzzySearch(inputValue, excludedOptions, { keySelector: (option) => option.label });
 	}, [inputValue, options, values]);
+
+	useEffect(() => {
+		if (values.length <= limit) return;
+		props.onChange.call(null, values.slice(0, limit));
+	}, [limit, props.onChange, values]);
 
 	return (
 		<div
