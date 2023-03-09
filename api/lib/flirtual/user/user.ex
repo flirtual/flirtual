@@ -143,16 +143,16 @@ defmodule Flirtual.User do
     end)
   end
 
-  def update_changeset(user, attrs) do
+  def changeset(user, attrs, options \\ []) do
     user
     |> cast(attrs, [
       :language,
       :born_at
     ])
+    |> validate_required(Keyword.get(options, :required, []))
     |> validate_inclusion(:language, Languages.list(:iso_639_1),
       message: "is an unrecognized language"
     )
-    |> validate_required(:born_at)
     |> validate_change(:born_at, fn _, born_at ->
       now = Date.utc_today()
 

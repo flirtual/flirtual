@@ -37,6 +37,7 @@ defmodule Flirtual.User.Profile.Preferences do
       :agemin,
       :agemax
     ])
+    |> validate_required(Keyword.get(options, :required, []))
     |> validate_number(:agemin, greater_than_or_equal_to: 18, less_than_or_equal_to: 128)
     |> validate_number(:agemax, greater_than_or_equal_to: 18, less_than_or_equal_to: 128)
     |> validate_attribute_list(

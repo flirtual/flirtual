@@ -100,12 +100,15 @@ defmodule Flirtual.Attribute do
   end
 
   def validate_attribute_list(changeset, ids, types, changeset_fn \\ & &1, options \\ []) do
+    required_attributes = Keyword.get(options, :required, [])
+    field_name = Keyword.get(options, :field, :attributes)
+
     cast_arbitrary(
       types
       |> Enum.map(&{&1, {:array, :map}})
       |> Map.new(fn {k, v} -> {k, v} end)
       |> Map.put(:_, {:array, :string}),
-      %{_: ids}
+      %{_: if(is_nil(ids), do: get_field(changeset, field_name) |> Enum.map(& &1.id), else: ids)}
     )
     |> validate_uuids(:_)
     |> then(fn changeset ->
@@ -120,14 +123,14 @@ defmodule Flirtual.Attribute do
           types
         )
         |> delete_change(:_)
-        |> validate_required(Keyword.get(options, :required, []))
+        |> validate_required(required_attributes)
         |> changeset_fn.()
       end
     end)
     |> then(
       &(append_changeset_errors(changeset, &1)
         |> put_assoc(
-          Keyword.get(options, :field, :attributes),
+          field_name,
           Enum.map(types, fn type ->
             get_field(&1, type, [])
           end)

@@ -54,11 +54,11 @@ defmodule Flirtual.Users do
     |> Repo.one()
   end
 
-  def update(%User{} = user, attrs) do
+  def update(%User{} = user, attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
-             |> User.update_changeset(attrs)
+             |> User.changeset(attrs, options)
              |> Repo.update() do
         Elastic.User.mark_dirty(user.id)
         user

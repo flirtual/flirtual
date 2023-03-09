@@ -4,6 +4,7 @@ defmodule FlirtualWeb.UsersController do
   import Plug.Conn
   import Phoenix.Controller
 
+  import FlirtualWeb.Utilities
   import Flirtual.Utilities
 
   alias FlirtualWeb.SessionController
@@ -133,7 +134,8 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
       {:error, {:forbidden, "Cannot update this user", %{user_id: user_id}}}
     else
-      with {:ok, user} <- Users.update(user, params) do
+      with {:ok, user} <-
+             Users.update(user, params, required: split_to_atom_list(params["required"])) do
         conn |> json(Policy.transform(conn, user))
       end
     end

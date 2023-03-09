@@ -19,6 +19,7 @@ defmodule FlirtualWeb.ProfileController do
     else
       with {:ok, profile} <-
              Profiles.update(profile, params,
+               required: split_to_atom_list(params["required"]),
                required_attributes: split_to_atom_list(params["required_attributes"])
              ) do
         conn |> json(Policy.transform(conn, profile))
@@ -59,6 +60,7 @@ defmodule FlirtualWeb.ProfileController do
     else
       with {:ok, preferences} <-
              Profiles.update_preferences(profile.preferences, params,
+               required: split_to_atom_list(params["required"]),
                required_attributes: split_to_atom_list(params["required_attributes"])
              ) do
         conn |> json(preferences)

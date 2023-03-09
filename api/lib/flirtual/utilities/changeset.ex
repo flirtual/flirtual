@@ -35,7 +35,7 @@ defmodule Flirtual.Utilities.Changeset do
     %{
       changeset_a
       | errors: changeset_b.errors ++ changeset_a.errors,
-        valid?: changeset_b.valid?
+        valid?: changeset_b.valid? and changeset_a.valid?
     }
   end
 
