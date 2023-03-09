@@ -86,8 +86,11 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				<InputOptionWindow
 					className="absolute mt-4 flex w-fit"
 					options={props.options}
-					onOptionClick={props.onOptionAction}
 					onOptionFocus={props.onOptionAction}
+					onOptionClick={(event) => {
+						props.onOptionAction(event);
+						setVisible(false);
+					}}
 				/>
 			)}
 		</div>
@@ -104,10 +107,19 @@ export type InputCalendarProps = Omit<React.ComponentProps<"div">, "onChange"> &
 	min?: MinmaxDate;
 	max?: MinmaxDate;
 	onChange: React.Dispatch<Date>;
+	onDateClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
-	const { value, offset = 128, min: minDate, max: maxDate, onChange, ...elementProps } = props;
+	const {
+		value,
+		offset = 128,
+		min: minDate,
+		max: maxDate,
+		onChange,
+		onDateClick,
+		...elementProps
+	} = props;
 	const [displayDate, setDisplayDate] = useState(value);
 
 	const min = useMemo(
@@ -292,9 +304,12 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 															disabled ? "" : "focusable bg-white-25 dark:bg-black-50",
 															active
 																? "bg-brand-gradient text-white-20"
-																: (!currentMonth || disabled) && "text-black-50 dark:text-black-10"
+																: (!currentMonth || disabled) && "text-black-30 dark:text-black-10"
 														)}
-														onClick={() => doChange(date)}
+														onClick={(event) => {
+															doChange(date);
+															onDateClick?.(event);
+														}}
 													>
 														{day.toLocaleString("en-US", {
 															minimumIntegerDigits: 2,

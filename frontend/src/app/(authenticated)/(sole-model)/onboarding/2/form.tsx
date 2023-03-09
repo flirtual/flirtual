@@ -54,12 +54,16 @@ export const Onboarding2Form: React.FC = () => {
 			onSubmit={async ({ bornAt, ...values }) => {
 				const [newUser, newProfile, privacyPreferences] = await Promise.all([
 					api.user.update(user.id, {
+						query: {
+							required: ["bornAt"]
+						},
 						body: {
 							bornAt: bornAt.toISOString()
 						}
 					}),
 					api.user.profile.update(user.id, {
 						query: {
+							required: ["country", "languages", "new"],
 							requiredAttributes: AttributeKeys
 						},
 						body: {

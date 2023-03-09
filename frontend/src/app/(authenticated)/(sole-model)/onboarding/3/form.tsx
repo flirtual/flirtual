@@ -34,8 +34,11 @@ export const Onboarding3Form: React.FC = () => {
 			onSubmit={async (values) => {
 				await Promise.all([
 					api.user.profile.update(user.id, {
+						query: {
+							required: ["biography", "displayName"]
+						},
 						body: {
-							biography: values.biography || " ",
+							biography: values.biography,
 							displayName: values.displayName
 						}
 					}),

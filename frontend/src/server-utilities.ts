@@ -40,7 +40,6 @@ export async function useServerAuthenticate(
 	const { optional = false, emailConfirmedOptional = false, visibleOptional = false } = options;
 
 	const session = await api.auth.session(thruServerCookies()).catch((reason) => {
-		console.log(reason);
 		if (!(reason instanceof ResponseError)) throw reason;
 		if (reason.statusCode === 401) return null;
 		throw reason;

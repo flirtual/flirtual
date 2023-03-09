@@ -47,13 +47,15 @@ export const Onboarding1Form: React.FC = () => {
 				const [agemin, agemax] = values.age;
 				await Promise.all([
 					api.user.profile.update(user.id, {
+						query: {
+							required: ["serious"]
+						},
 						body: {
 							serious: values.serious
 						}
 					}),
 					api.user.profile.updatePreferences(user.id, {
 						query: {
-							required: ["agemin", "agemax"],
 							requiredAttributes: ["gender"]
 						},
 						body: {
