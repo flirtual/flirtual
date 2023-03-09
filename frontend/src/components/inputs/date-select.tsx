@@ -55,7 +55,8 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 					onChange={(value) => {
 						setInputValue(toDateString(value));
 						props.onChange(value);
-
+					}}
+					onDateClick={() => {
 						setDrawerVisible(false);
 					}}
 				/>
