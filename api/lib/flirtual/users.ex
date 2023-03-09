@@ -2,6 +2,8 @@ defmodule Flirtual.Users do
   import Ecto.Query
   import Ecto.Changeset
 
+  import Flirtual.Utilities.Changeset
+
   alias Flirtual.Talkjs
   alias Flirtual.Jwt
   alias Flirtual.{Repo, Mailer, User, Sessions, Elastic}
@@ -98,31 +100,6 @@ defmodule Flirtual.Users do
            |> Repo.update() do
       {:ok, _} = send_email_confirmation(user)
       {:ok, user}
-    end
-  end
-
-  defp confirm_email_changeset(user, attrs) do
-    {%{},
-     %{
-       token: :string
-     }}
-    |> cast(attrs, [:token])
-    |> validate_change(:token, fn _, token ->
-      case Jwt.validate_email_confirmation(user, token) do
-        {:error, _} -> %{token: "invalid email confirmation token"}
-        {:ok, _} -> %{}
-      end
-    end)
-  end
-
-  def confirm_email(%User{} = user, attrs) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-
-    with {:ok, _} <- confirm_email_changeset(user, attrs) |> apply_action(nil) do
-      user
-      |> cast(attrs, [])
-      |> change(email_confirmed_at: now)
-      |> Repo.update()
     end
   end
 

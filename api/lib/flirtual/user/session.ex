@@ -16,7 +16,7 @@ defmodule Flirtual.User.Session do
 
   def default_assoc do
     [
-      user: User.default_assoc(),
+      user: User.default_assoc()
     ]
   end
 
@@ -58,21 +58,24 @@ defmodule Flirtual.User.Session.Policy do
 
   alias Flirtual.User.Session
 
-  def authorize(:read, %Plug.Conn{
-    assigns: %{
-      session: %Session{
-        id: id
-      }
-    }
-  }, %Session{
-    id: id
-  }) do
+  def authorize(
+        :read,
+        %Plug.Conn{
+          assigns: %{
+            session: %Session{
+              id: id
+            }
+          }
+        },
+        %Session{
+          id: id
+        }
+      ) do
     true
   end
 
   def authorize(_, _, _), do: false
 end
-
 
 defimpl Jason.Encoder, for: Flirtual.User.Session do
   def encode(value, opts) do
@@ -86,5 +89,14 @@ defimpl Jason.Encoder, for: Flirtual.User.Session do
       |> Map.filter(fn {_, value} -> value !== nil end),
       opts
     )
+  end
+end
+
+defimpl Inspect, for: Flirtual.User.Session do
+  import Inspect.Algebra
+
+  def inspect(conn, opts) do
+    document = Map.take(conn, [:id, :user, :sudoer_id]) |> Map.to_list()
+    concat(["#Session<", to_doc(document, opts), ">"])
   end
 end

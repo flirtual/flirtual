@@ -30,7 +30,7 @@ defmodule Flirtual.Talkjs do
     raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
-    Logger.critical("TalkJS #{method} #{url} #{inspect(body)}")
+    Logger.debug("#{method} #{url}\n#{inspect(body)}")
 
     HTTPoison.request(method, url, raw_body, [
       {"authorization", "Bearer " <> config(:access_token)},

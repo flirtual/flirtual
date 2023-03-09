@@ -3,12 +3,15 @@ defmodule FlirtualWeb.UsersController do
 
   import Plug.Conn
   import Phoenix.Controller
+  import Ecto.Query
+  import Ecto.Changeset
 
   import FlirtualWeb.Utilities
   import Flirtual.Utilities
 
+  alias Flirtual.Repo
   alias FlirtualWeb.SessionController
-  alias Flirtual.{User, Users, Policy}
+  alias Flirtual.{User, Users, Policy, Jwt}
   alias User.Connection
 
   action_fallback FlirtualWeb.FallbackController
@@ -228,37 +231,32 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def confirm_email(conn, %{"user_id" => user_id} = params) do
-    user =
-      if(conn.assigns[:session].user.id === user_id,
-        do: conn.assigns[:session].user,
-        else: Users.get(user_id)
-      )
+  def confirm_email(conn, params) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
-    if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot confirm this user's email address", %{user_id: user_id}}}
-    else
-      with {:ok, user} <- Users.confirm_email(user, params) do
-        conn |> json(Policy.transform(conn, user))
-      end
+    case Jwt.validate_email_confirmation(params["token"]) do
+      {:error, _} ->
+        {:error, {:bad_request, "Invalid confirmation token"}}
+
+      {:ok, claims} ->
+        case User |> where(id: ^claims["sub"], email: ^claims["email"]) |> Repo.one() do
+          nil ->
+            {:error, {:bad_request, "Stale confirmation token"}}
+
+          user ->
+            with {:ok, _} <-
+                   user
+                   |> change(email_confirmed_at: now)
+                   |> Repo.update() do
+              conn |> json(%{})
+            end
+        end
     end
   end
 
-  def resend_confirm_email(conn, %{"user_id" => user_id}) do
-    user =
-      if(conn.assigns[:session].user.id === user_id,
-        do: conn.assigns[:session].user,
-        else: Users.get(user_id)
-      )
-
-    if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error,
-       {:forbidden, "Cannot send a confirmation to this user's email address",
-        %{user_id: user_id}}}
-    else
-      with {:ok, _} <- Users.send_email_confirmation(user) do
-        conn |> put_status(:accepted) |> json(%{})
-      end
+  def resend_confirm_email(conn, params) do
+    with {:ok, _} <- Users.send_email_confirmation(conn.assigns[:session].user) do
+      conn |> put_status(:accepted) |> json(%{})
     end
   end
 

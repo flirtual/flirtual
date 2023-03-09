@@ -34,11 +34,12 @@ config :bodyguard,
   default_error: {:unauthorized, "Unauthorized"}
 
 config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
+  format: "level=$level $metadata\n$message\n\n",
   metadata: [:request_id]
 
-# Use Jason for JSON parsing in Phoenix
-config :phoenix, :json_library, Jason
+config :phoenix,
+  # Use Jason for JSON parsing in Phoenix
+  json_library: Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

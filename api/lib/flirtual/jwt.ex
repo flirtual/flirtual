@@ -21,10 +21,7 @@ defmodule Flirtual.Jwt do
     generate_and_sign(claims)
   end
 
-  def validate_email_confirmation(user, token) do
-    config("confirm-email")
-    |> add_claim("sub", nil, &(&1 === user.id))
-    |> add_claim("email", nil, &(&1 === user.email))
-    |> Joken.verify_and_validate(token)
+  def validate_email_confirmation(token) do
+    config("confirm-email") |> Joken.verify_and_validate(token)
   end
 end

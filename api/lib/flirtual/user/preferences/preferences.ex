@@ -8,8 +8,6 @@ defmodule Flirtual.User.Preferences do
   alias Flirtual.User.Preferences
   alias Flirtual.User.Preferences.{EmailNotifications, Privacy}
 
-  @derive {Jason.Encoder, only: [:nsfw, :email_notifications, :privacy]}
-
   schema "user_preferences" do
     belongs_to :user, User
 

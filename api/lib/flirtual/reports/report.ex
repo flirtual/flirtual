@@ -10,16 +10,19 @@ defmodule Flirtual.Report do
 
   alias Flirtual.{User, Attribute, Report, Repo}
 
-  @derive {Jason.Encoder,
-           only: [
-             :id,
-             :reason_id,
-             :message,
-             :user_id,
-             :target_id,
-             :updated_at,
-             :created_at
-           ]}
+  @derive [
+    {Jason.Encoder,
+     only: [
+       :id,
+       :reason_id,
+       :message,
+       :user_id,
+       :target_id,
+       :updated_at,
+       :created_at
+     ]},
+    {Inspect, only: [:id, :user_id, :target_id, :reason_id]}
+  ]
 
   schema "reports" do
     field :message, :string

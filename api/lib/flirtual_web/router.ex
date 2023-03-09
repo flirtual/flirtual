@@ -18,8 +18,6 @@ defmodule FlirtualWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug :fetch_session
-    plug :fetch_current_session
   end
 
   def require_authenticated_user(conn, _opts) do
@@ -51,126 +49,139 @@ defmodule FlirtualWeb.Router do
   scope "/", FlirtualWeb do
     pipe_through :api
 
-    scope "/v1/" do
-      scope "/auth" do
-        scope "/session" do
-          post "/", SessionController, :create
+    scope "/" do
+      pipe_through [:fetch_session, :fetch_current_session]
 
-          scope "/" do
+      scope "/v1/" do
+        scope "/auth" do
+          scope "/session" do
+            post "/", SessionController, :create
+
+            scope "/" do
+              pipe_through :require_authenticated_user
+
+              get "/", SessionController, :get
+              delete "/", SessionController, :delete
+            end
+          end
+
+          scope "/email/confirm" do
+            post "/", UsersController, :confirm_email
+
+            scope "/" do
+              pipe_through :require_authenticated_user
+
+              delete "/", UsersController, :resend_confirm_email
+            end
+          end
+
+          scope "/sudo" do
             pipe_through :require_authenticated_user
 
-            get "/", SessionController, :get
-            delete "/", SessionController, :delete
+            post "/", SessionController, :sudo
+            delete "/", SessionController, :revoke_sudo
+          end
+
+          scope "/user" do
+            pipe_through :require_authenticated_user
+
+            get "/", UsersController, :get_current_user
+          end
+
+          scope "/connect/:connection_type" do
+            pipe_through([:require_authenticated_user])
+
+            get "/authorize", UsersController, :start_connection
+            get "/", UsersController, :assign_connection
           end
         end
 
-        scope "/sudo" do
-          post "/", SessionController, :sudo
-          delete "/", SessionController, :revoke_sudo
-        end
-
-        scope "/user" do
-          pipe_through :require_authenticated_user
-
-          get "/", UsersController, :get_current_user
-        end
-
-        scope "/connect/:connection_type" do
-          pipe_through([:require_authenticated_user])
-
-          get "/authorize", UsersController, :start_connection
-          get "/", UsersController, :assign_connection
-        end
-      end
-
-      scope "/reports" do
-        pipe_through([:require_authenticated_user, :require_valid_user])
-
-        get "/", ReportController, :list
-        post "/", ReportController, :create
-      end
-
-      scope "/conversations" do
-        pipe_through([:require_authenticated_user, :require_valid_user])
-
-        get "/", ConversationController, :list
-        get "/unread", ConversationController, :list_unread
-
-        scope "/:user_id" do
-          get "/", ConversationController, :list_messages
-          post "/", ConversationController, :create
-        end
-      end
-
-      scope "/prospects" do
-        pipe_through([:require_authenticated_user, :require_valid_user])
-
-        get "/", MatchmakingController, :list_prospects
-        get "/inspect", MatchmakingController, :inspect_query
-
-        post "/respond", MatchmakingController, :respond
-      end
-
-      scope "/users" do
-        post "/", UsersController, :create
-
-        post "/bulk", UsersController, :bulk
-
-        scope "/:username/username" do
+        scope "/reports" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
-          get "/", UsersController, :get
+          get "/", ReportController, :list
+          post "/", ReportController, :create
         end
 
-        scope "/:user_id" do
-          pipe_through :require_authenticated_user
+        scope "/conversations" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
 
-          get "/", UsersController, :get
-          post "/", UsersController, :update
+          get "/", ConversationController, :list
+          get "/unread", ConversationController, :list_unread
 
-          get "/visible", UsersController, :visible
+          scope "/:user_id" do
+            get "/", ConversationController, :list_messages
+            post "/", ConversationController, :create
+          end
+        end
 
-          post "/deactivate", UsersController, :deactivate
-          delete "/deactivate", UsersController, :reactivate
+        scope "/prospects" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
 
-          scope "/email" do
-            post "/", UsersController, :update_email
+          get "/", MatchmakingController, :list_prospects
+          get "/inspect", MatchmakingController, :inspect_query
 
-            scope "/confirm" do
-              post "/", UsersController, :confirm_email
-              post "/resend", UsersController, :resend_confirm_email
-            end
+          post "/respond", MatchmakingController, :respond
+        end
+
+        scope "/users" do
+          post "/", UsersController, :create
+
+          post "/bulk", UsersController, :bulk
+
+          scope "/:username/username" do
+            pipe_through([:require_authenticated_user, :require_valid_user])
+
+            get "/", UsersController, :get
           end
 
-          post "/password", UsersController, :update_password
+          scope "/:user_id" do
+            pipe_through :require_authenticated_user
 
-          get "/connections", UsersController, :list_connections
+            get "/", UsersController, :get
+            post "/", UsersController, :update
 
-          scope "/preferences" do
-            post "/", UsersController, :update_preferences
-            post "/privacy", UsersController, :update_privacy_preferences
-            post "/notifications", UsersController, :update_notifications_preferences
-          end
+            get "/visible", UsersController, :visible
 
-          scope "/profile" do
-            post "/", ProfileController, :update
+            post "/deactivate", UsersController, :deactivate
+            delete "/deactivate", UsersController, :reactivate
 
-            scope "/personality" do
-              get "/", ProfileController, :get_personality
-              post "/", ProfileController, :update_personality
+            scope "/email" do
+              post "/", UsersController, :update_email
             end
 
-            scope "/images" do
-              post "/", ProfileController, :update_images
-              put "/", ProfileController, :create_images
+            post "/password", UsersController, :update_password
+
+            get "/connections", UsersController, :list_connections
+
+            scope "/preferences" do
+              post "/", UsersController, :update_preferences
+              post "/privacy", UsersController, :update_privacy_preferences
+              post "/notifications", UsersController, :update_notifications_preferences
             end
 
-            post "/preferences", ProfileController, :update_preferences
-            post "/custom-weights", ProfileController, :update_custom_weights
+            scope "/profile" do
+              post "/", ProfileController, :update
+
+              scope "/personality" do
+                get "/", ProfileController, :get_personality
+                post "/", ProfileController, :update_personality
+              end
+
+              scope "/images" do
+                post "/", ProfileController, :update_images
+                put "/", ProfileController, :create_images
+              end
+
+              post "/preferences", ProfileController, :update_preferences
+              post "/custom-weights", ProfileController, :update_custom_weights
+            end
           end
         end
       end
+    end
 
+    scope "/v1" do
       scope "/attributes" do
         scope "/:attribute_type" do
           get "/", AttributeController, :list

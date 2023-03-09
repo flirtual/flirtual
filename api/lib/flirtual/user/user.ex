@@ -336,3 +336,23 @@ defimpl Jason.Encoder, for: Flirtual.User do
     )
   end
 end
+
+defimpl Inspect, for: Flirtual.User do
+  import Inspect.Algebra
+
+  def inspect(conn, opts) do
+    document =
+      Map.take(conn, [
+        :id,
+        :email,
+        :username,
+        :profile,
+        :created_at,
+        :tags,
+        :subscription
+      ])
+      |> Map.to_list()
+
+    concat(["#User<", to_doc(document, opts), ">"])
+  end
+end

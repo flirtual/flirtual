@@ -1,5 +1,6 @@
 defmodule FlirtualWeb.SessionController do
   use FlirtualWeb, :controller
+  require Logger
 
   import Plug.Conn
   import Phoenix.Controller
@@ -14,6 +15,7 @@ defmodule FlirtualWeb.SessionController do
   action_fallback FlirtualWeb.FallbackController
 
   def get(conn, _) do
+    Logger.debug(%{session: conn.assigns[:session]})
     conn |> then(&json(&1, Policy.transform(&1, &1.assigns[:session])))
   end
 

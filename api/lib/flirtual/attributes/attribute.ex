@@ -10,6 +10,8 @@ defmodule Flirtual.Attribute do
   alias Flirtual.Languages
   alias Flirtual.Countries
 
+  @derive {Inspect, only: [:id, :type, :metadata]}
+
   schema "attributes" do
     field :type, :string
     field :name, :string
