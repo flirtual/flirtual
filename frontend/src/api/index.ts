@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { urls } from "~/urls";
-import { Expand, toCamelObject, toSnakeObject } from "~/utilities";
+import { entries, Expand, fromEntries, toCamelObject, toSnakeObject } from "~/utilities";
 
-export function newUrl(pathname: string, query: Record<string, string> = {}): URL {
-	const searchParams = new URLSearchParams(query);
+export function newUrl(pathname: string, query: Record<string, string | undefined> = {}): URL {
+	const searchParams = new URLSearchParams(fromEntries(entries(query).filter(([, v]) => Boolean(v))) as Record<string, string>);
 	searchParams.sort();
 
 	return new URL(

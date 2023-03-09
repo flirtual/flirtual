@@ -1,3 +1,5 @@
+import { snakeCase } from "change-case";
+
 import { AttributeType, PartialAttributeCollection } from "~/api/attributes";
 
 import { UpdatedAtModel } from "../../common";
@@ -36,24 +38,37 @@ export type Profile = Partial<UpdatedAtModel> & {
 	images: Array<ProfileImage>;
 };
 
+export type UpdateProfileBody = Partial<
+	Pick<
+		Profile,
+		"displayName" | "biography" | "new" | "domsub" | "country" | "languages" | "serious"
+	>
+> & {
+	attributes?: Array<string>;
+};
+
 export async function update(
 	userId: string,
 	options: NarrowFetchOptions<
-		Partial<
-			Pick<
-				Profile,
-				"displayName" | "biography" | "new" | "domsub" | "country" | "languages" | "serious"
-			>
-		> & {
-			attributes?: Array<string>;
-		},
+		UpdateProfileBody,
 		| {
+				required?: Array<keyof UpdateProfileBody>;
 				requiredAttributes?: Array<AttributeType>;
 		  }
 		| undefined
 	>
 ) {
-	return fetch<Profile>("post", `users/${userId}/profile`, options);
+	return fetch<Profile>("post", `users/${userId}/profile`, {
+		...options,
+		query: {
+			required: Array.isArray(options.query?.required)
+				? options.query?.required.map((key) => snakeCase(key))
+				: undefined,
+			requiredAttributes: Array.isArray(options.query?.requiredAttributes)
+				? options.query?.requiredAttributes.map((key) => snakeCase(key))
+				: undefined
+		}
+	});
 }
 
 export interface ProfilePersonality {
@@ -115,5 +130,15 @@ export async function updatePreferences(
 		| undefined
 	>
 ) {
-	return fetch<ProfilePreferences>("post", `users/${userId}/profile/preferences`, options);
+	return fetch<ProfilePreferences>("post", `users/${userId}/profile/preferences`, {
+		...options,
+		query: {
+			required: Array.isArray(options.query?.required)
+				? options.query?.required.map((key) => snakeCase(key))
+				: undefined,
+			requiredAttributes: Array.isArray(options.query?.requiredAttributes)
+				? options.query?.requiredAttributes.map((key) => snakeCase(key))
+				: undefined
+		}
+	});
 }

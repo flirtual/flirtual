@@ -1,3 +1,5 @@
+import { snakeCase } from "change-case";
+
 import { DatedModel, UuidModel } from "../common";
 import { fetch, NarrowFetchOptions } from "..";
 
@@ -60,11 +62,26 @@ export async function visible(userId: string, options: NarrowFetchOptions = {}) 
 	return fetch<UserVisibility>("get", `users/${userId}/visible`, options);
 }
 
+export type UpdateUserBody = Partial<Pick<User, "bornAt" | "language">>;
+
 export async function update(
 	userId: string,
-	options: NarrowFetchOptions<Partial<Pick<User, "bornAt">>>
+	options: NarrowFetchOptions<
+		UpdateUserBody,
+		| {
+				required?: Array<keyof UpdateUserBody>;
+		  }
+		| undefined
+	>
 ) {
-	return fetch<User>("post", `users/${userId}`, options);
+	return fetch<User>("post", `users/${userId}`, {
+		...options,
+		query: {
+			required: Array.isArray(options.query?.required)
+				? options.query?.required.map((key) => snakeCase(key))
+				: undefined
+		}
+	});
 }
 
 export async function updateEmail(
