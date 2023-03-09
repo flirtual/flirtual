@@ -47,6 +47,13 @@ defmodule Flirtual.User do
     ]
   end
 
+  def avatar_url(%User{} = user) do
+    external_id =
+      Enum.at(user.profile.images, 0)[:external_id] || "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
+
+    "https://flirtu.al/" <> external_id <> "/"
+  end
+
   def visible?(%User{} = user) do
     case visible(user) do
       {:ok, _} -> true
@@ -56,7 +63,6 @@ defmodule Flirtual.User do
 
   def visible(%User{} = user) do
     %{profile: profile} = user
-
 
     [
       {
@@ -123,7 +129,7 @@ defmodule Flirtual.User do
       {
         is_nil(user.email_confirmed_at),
         %{reason: "email not verified", to: "/confirm-email"}
-      },
+      }
     ]
     |> Enum.map_reduce(true, fn {condition, value}, acc ->
       if(condition,
@@ -298,10 +304,9 @@ defmodule Flirtual.User do
 end
 
 defimpl Swoosh.Email.Recipient, for: Flirtual.User do
-  alias Flirtual.Repo
+  alias Flirtual.{User, Repo}
 
-  def format(%Flirtual.User{} = user) do
-    user = Repo.preload(user, Flirtual.User.default_assoc())
+  def format(%User{} = user) do
     {user.profile.display_name || user.username, user.email}
   end
 end

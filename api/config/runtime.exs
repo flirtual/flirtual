@@ -13,7 +13,6 @@ if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
 end
 
 config :flirtual,
-  frontend_origin: System.fetch_env!("FRONTEND_ORIGIN"),
   discord_client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
   discord_client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),
   discord_access_token: System.fetch_env!("DISCORD_ACCESS_TOKEN")

@@ -1,10 +1,11 @@
 import Config
 
+frontend_origin = URI.parse("http://127.0.0.1:3000")
 origin = URI.parse("http://127.0.0.1:4000")
 
 config :flirtual,
-  origin: origin,
-  root_origin: origin
+  frontend_origin: frontend_origin,
+  origin: origin
 
 # Configure your database
 config :flirtual, Flirtual.Repo,

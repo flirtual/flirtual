@@ -1,11 +1,11 @@
 import Config
 
-root_origin = URI.parse("https://flirtu.al")
+frontend_origin = URI.parse("https://flirtu.al")
 origin = URI.parse("https://api.flirtu.al")
 
 config :flirtual,
-  origin: origin,
-  root_origin: root_origin
+  frontend_origin: frontend_origin,
+  origin: origin
 
 config :flirtual, FlirtualWeb.Endpoint,
   url: [

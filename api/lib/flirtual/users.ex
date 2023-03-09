@@ -2,6 +2,7 @@ defmodule Flirtual.Users do
   import Ecto.Query
   import Ecto.Changeset
 
+  alias Flirtual.Talkjs
   alias Flirtual.Jwt
   alias Flirtual.{Repo, Mailer, User, Sessions, Elastic}
   alias Flirtual.User.{Session, Preferences, Connection}
@@ -271,7 +272,7 @@ defmodule Flirtual.Users do
     |> validate_acceptance(:service_agreement)
   end
 
-  def register_user(attrs) do
+  def create(attrs) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
              create_user_changeset(attrs)
@@ -283,6 +284,9 @@ defmodule Flirtual.Users do
              |> User.validate_unique_email()
              |> User.validate_password()
              |> Repo.insert(),
+           {:ok, user} <-
+             change(user, %{talkjs_signature: Talkjs.new_user_signature(user.id)})
+             |> Repo.update(),
            {:ok, preferences} <-
              Ecto.build_assoc(user, :preferences)
              |> Repo.insert(),
@@ -299,10 +303,16 @@ defmodule Flirtual.Users do
              |> Repo.insert(),
            {:ok, _} <-
              Ecto.build_assoc(profile, :preferences)
-             |> Repo.insert(),
-           {:ok, _} <- send_email_confirmation(user) do
-        user
-        |> Repo.preload(User.default_assoc())
+             |> Repo.insert() do
+        user = user |> Repo.preload(User.default_assoc())
+
+        with {:ok, _} <- Talkjs.update_user(user),
+             {:ok, _} <- send_email_confirmation(user) do
+          user
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
@@ -312,7 +322,8 @@ defmodule Flirtual.Users do
 
   defp deliver_email_confirmation_instructions(user, token) do
     action_url =
-      Application.fetch_env!(:flirtual, :frontend_origin) <> "/confirm-email?token=" <> token
+      URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin)) <>
+        "/confirm-email?token=" <> token
 
     Mailer.send(
       user,

@@ -13,9 +13,10 @@ defmodule FlirtualWeb.Endpoint do
     cookie_key: "request_logger"
 
   plug CORSPlug,
-    origin: [
-      "https://next.flirtu.al"
-    ]
+    origin: MapSet.new([
+      Application.compile_env!(:flirtual, :frontend_origin) |> URI.to_string(),
+      Application.compile_env!(:flirtual, :origin) |> URI.to_string(),
+    ]) |> MapSet.to_list()
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
@@ -30,7 +31,7 @@ defmodule FlirtualWeb.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    domain: Application.compile_env!(:flirtual, :root_origin).host,
+    domain: Application.compile_env!(:flirtual, :frontend_origin).host,
     same_site: "Lax",
     key: "session",
     signing_salt: "mGFTg14t"

@@ -1,4 +1,8 @@
 defmodule Flirtual.Talkjs do
+  require Logger
+
+  alias Flirtual.{User, Repo}
+
   defp config(key) do
     Application.get_env(:flirtual, Flirtual.Talkjs)[key]
   end
@@ -17,13 +21,40 @@ defmodule Flirtual.Talkjs do
     |> String.slice(0, 20)
   end
 
+  def new_user_signature(user_id) do
+    :crypto.mac(:hmac, :sha256, config(:access_token), user_id)
+    |> Base.encode16(case: :lower)
+  end
+
   def fetch(method, pathname, body \\ nil, options \\ []) do
-    body = if(is_nil(body), do: "", else: Poison.encode!(body))
+    raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
-    HTTPoison.request(method, url, body, [
-      {:authorization, "Bearer " <> config(:access_token)}
+    Logger.critical("TalkJS #{method} #{url} #{inspect(body)}")
+
+    HTTPoison.request(method, url, raw_body, [
+      {"authorization", "Bearer " <> config(:access_token)},
+      {"content-type", "application/json"}
     ])
+  end
+
+  def update_user(%User{} = user) do
+    update_user(user.id, %{
+      name: user.profile.display_name || user.username,
+      email: if(user.preferences.email_notifications.messages, do: [user.email], else: []),
+      photoUrl: User.avatar_url(user),
+      role: "user"
+    })
+  end
+
+  def update_user(user_id, params) do
+    case fetch(:put, "users/" <> user_id, params) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+
+      _ ->
+        :error
+    end
   end
 
   def list_conversations() do
@@ -34,7 +65,7 @@ defmodule Flirtual.Talkjs do
   end
 
   def list_conversations(user_id, options \\ []) do
-    case fetch(:get, "users/" <> user_id <> "/conversations", nil, [query: options]) do
+    case fetch(:get, "users/" <> user_id <> "/conversations", nil, query: options) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Poison.decode!(body)["data"]
     end
