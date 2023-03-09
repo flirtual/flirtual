@@ -6,7 +6,7 @@
 
 # The directory Mix downloads your dependencies sources to.
 /deps/
-
+.env.local
 # Where 3rd-party dependencies like ExDoc output generated docs.
 /doc/
 
@@ -31,4 +31,3 @@ flirtual-*.tar
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
 /assets/node_modules/
-
