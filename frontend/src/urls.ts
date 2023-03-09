@@ -1,5 +1,5 @@
 import { User } from "./api/user";
-import { ConfirmEmailPageProps } from "./app/(authenticated)/(sole-model)/confirm-email/page";
+import { ConfirmEmailPageProps } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
 
 export const siteOrigin = process.env.NEXT_PUBLIC_ORIGIN as string;

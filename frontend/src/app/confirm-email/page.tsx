@@ -73,13 +73,14 @@ export default function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps
 	const [session, mutateSession] = useSession({ refreshInterval: 5000 });
 	const router = useRouter();
 
-	if (!session) return null;
-	const { user } = session;
+	useEffect(() => {
+		if (session?.user.emailConfirmedAt) {
+			router.push(searchParams?.to ?? urls.browse());
+		}
+	}, [session, router, searchParams?.to]);
 
-	if (user.emailConfirmedAt) {
-		router.push(searchParams?.to ?? urls.browse());
-		return null;
-	}
+	if (!session || session.user.emailConfirmedAt) return null;
+	const { user } = session;
 
 	return (
 		<ModelCard title="Confirm email">

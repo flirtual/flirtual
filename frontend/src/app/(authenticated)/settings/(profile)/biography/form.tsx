@@ -33,6 +33,9 @@ export const BiographyForm: React.FC = () => {
 			onSubmit={async ({ displayName, biography, ...values }) => {
 				const [profile, images] = await Promise.all([
 					await api.user.profile.update(user.id, {
+						query: {
+							required: ["displayName", "biography"]
+						},
 						body: {
 							displayName,
 							biography: html(biography)

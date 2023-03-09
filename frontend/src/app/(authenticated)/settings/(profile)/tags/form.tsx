@@ -51,6 +51,7 @@ export const TagsForm: React.FC = () => {
 					}),
 					api.user.profile.update(user.id, {
 						query: {
+							required: ["country", "languages", "new"],
 							requiredAttributes: AttributeKeys
 						},
 						body: {
