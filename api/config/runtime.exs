@@ -58,14 +58,6 @@ if config_env() == :prod do
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 
-  config :flirtual,
-    discord_client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
-    discord_client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),
-    discord_token: System.fetch_env!("DISCORD_TOKEN"),
-    talkjs_app_id: System.fetch_env!("TALKJS_APP_ID"),
-    talkjs_access_token: System.fetch_env!("TALKJS_ACCESS_TOKEN"),
-    frontend_origin: System.fetch_env!("FRONTEND_ORIGIN")
-
   config :flirtual, Flirtual.Elastic,
     url: System.fetch_env!("ELASTICSEARCH_URL"),
     default_headers: [
