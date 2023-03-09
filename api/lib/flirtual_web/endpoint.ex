@@ -30,6 +30,7 @@ defmodule FlirtualWeb.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
+    domain: Application.compile_env!(:flirtual, :root_origin).host,
     same_site: "Lax",
     key: "session",
     signing_salt: "mGFTg14t"

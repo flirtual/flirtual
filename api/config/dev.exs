@@ -1,5 +1,11 @@
 import Config
 
+origin = URI.parse("http://127.0.0.1:4000")
+
+config :flirtual,
+  origin: origin,
+  root_origin: origin
+
 # Configure your database
 config :flirtual, Flirtual.Repo,
   username: "postgres",
@@ -24,6 +30,10 @@ config :swoosh, :api_client, false
 # For development, we disable any cache and enable
 # debugging and code reloading.
 config :flirtual, FlirtualWeb.Endpoint,
+  url: [
+    host: origin.host,
+    port: origin.port
+  ],
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [

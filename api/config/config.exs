@@ -12,7 +12,10 @@ config :flirtual,
 
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
-  pubsub_server: Flirtual.PubSub
+  pubsub_server: Flirtual.PubSub,
+  http: [
+    port: 4000
+  ]
 
 config :flirtual, Flirtual.Elastic,
   api: Elasticsearch.API.HTTP,
@@ -29,7 +32,6 @@ config :flirtual, Flirtual.Elastic,
 
 config :bodyguard,
   default_error: {:unauthorized, "Unauthorized"}
-
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

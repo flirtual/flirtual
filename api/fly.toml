@@ -8,17 +8,12 @@ processes = []
 [deploy]
   release_command = "/app/bin/migrate"
 
-[env]
-  ROOT_HOSTNAME = "flirtu.al"
-  HOSTNAME = "api.flirtu.al"
-  PORT = "8080"
-
 [experimental]
   auto_rollback = true
 
 [[services]]
   http_checks = []
-  internal_port = 8080
+  internal_port = 4000
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
