@@ -8,29 +8,13 @@
 import Config
 
 config :flirtual,
-  discord_client_id: "***REMOVED***",
-  discord_client_secret: "***REMOVED***",
-  discord_token: "***REMOVED***",
-  talkjs_app_id: "GZddugeg",
-  talkjs_access_token: "***REMOVED***",
-  frontend_origin: "http://127.0.0.1:3000"
-
-config :flirtual,
   ecto_repos: [Flirtual.Repo]
-
-config :joken, default_signer: "***REMOVED***"
 
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
-  url: [host: "127.0.0.1"],
-  pubsub_server: Flirtual.PubSub,
-  live_view: [signing_salt: "***REMOVED***"]
+  pubsub_server: Flirtual.PubSub
 
 config :flirtual, Flirtual.Elastic,
-  url: "https://***REMOVED***",
-  default_headers: [
-    {"authorization", "ApiKey ***REMOVED***"}
-  ],
   api: Elasticsearch.API.HTTP,
   json_library: Jason,
   indexes: %{
@@ -46,19 +30,7 @@ config :flirtual, Flirtual.Elastic,
 config :bodyguard,
   default_error: {:unauthorized, "Unauthorized"}
 
-# Configures the mailer
-#
-# By default it uses the "Local" adapter which stores the emails
-# locally. You can see the emails in your browser, at "/dev/mailbox".
-#
-# For production it's recommended to configure a different adapter
-# at the `config/runtime.exs`.
-config :flirtual, Flirtual.Mailer, adapter: Swoosh.Adapters.Local
 
-# Swoosh API client is needed for adapters other than SMTP.
-config :swoosh, :api_client, false
-
-# Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

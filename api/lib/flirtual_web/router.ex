@@ -7,8 +7,6 @@ defmodule FlirtualWeb.Router do
   import FlirtualWeb.ErrorHelpers
   import FlirtualWeb.SessionController
 
-  @internal_api_key "***REMOVED***"
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -22,16 +20,6 @@ defmodule FlirtualWeb.Router do
     plug :accepts, ["json"]
     plug :fetch_session
     plug :fetch_current_session
-  end
-
-  def require_internal_authorization(conn, _opts) do
-    if List.first(Plug.Conn.get_req_header(conn, "api-key")) === @internal_api_key do
-      conn
-    else
-      conn
-      |> resp(:forbidden, "")
-      |> halt()
-    end
   end
 
   def require_authenticated_user(conn, _opts) do
@@ -192,13 +180,10 @@ defmodule FlirtualWeb.Router do
   end
 
   if Mix.env() == :dev do
-    import Phoenix.LiveDashboard.Router
-
     scope "/dev" do
       pipe_through :browser
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
-      live_dashboard "/dashboard", metrics: FlirtualWeb.Telemetry
     end
   end
 

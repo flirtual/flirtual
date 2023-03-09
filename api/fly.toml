@@ -9,7 +9,8 @@ processes = []
   release_command = "/app/bin/migrate"
 
 [env]
-  PHX_HOST = "flirtual.fly.dev"
+  ROOT_HOSTNAME = "flirtu.al"
+  HOSTNAME = "api.flirtu.al"
   PORT = "8080"
 
 [experimental]

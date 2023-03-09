@@ -12,6 +12,36 @@ if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
   config :flirtual, FlirtualWeb.Endpoint, server: true
 end
 
+config :flirtual,
+  hostname: System.fetch_env!("HOSTNAME"),
+  root_hostname: System.get_env("ROOT_HOSTNAME", System.fetch_env!("HOSTNAME")),
+  frontend_origin: System.fetch_env!("TALKJS_APP_ID"),
+  discord_client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
+  discord_client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),
+  discord_access_token: System.fetch_env!("DISCORD_CLIENT_ACCESS_TOKEN")
+
+config :flirtual, Flirtual.Talkjs,
+  app_id: System.fetch_env!("TALKJS_APP_ID"),
+  access_token: System.fetch_env!("TALKJS_ACCESS_TOKEN")
+
+config :joken, default_signer: System.fetch_env!("JOKAN_SECRET")
+
+config :flirtual, Flirtual.Elastic,
+  url: System.fetch_env!("ELASTICSEARCH_URL"),
+  default_headers: [
+    {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
+  ]
+
+config :flirtual, FlirtualWeb.Endpoint,
+  url: [
+    host: System.fetch_env!("HOSTNAME"),
+  ],
+  http: [
+    port: String.to_integer(System.fetch_env!("PORT"))
+  ],
+  secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
+  session_signing_salt: System.fetch_env!("SESSION_SIGNING_SALT")
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
@@ -29,64 +59,35 @@ if config_env() == :prod do
     socket_options: maybe_ipv6
 
   config :flirtual,
-    discord_client_id: System.get_env("DISCORD_CLIENT_ID"),
-    discord_client_secret: System.get_env("DISCORD_CLIENT_SECRET"),
-    discord_token: System.get_env("DISCORD_TOKEN"),
-    talkjs_app_id: System.get_env("TALKJS_APP_ID"),
-    talkjs_access_token: System.get_env("TALKJS_ACCESS_TOKEN"),
-    frontend_origin: System.get_env("FRONTEND_ORIGIN")
+    discord_client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
+    discord_client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),
+    discord_token: System.fetch_env!("DISCORD_TOKEN"),
+    talkjs_app_id: System.fetch_env!("TALKJS_APP_ID"),
+    talkjs_access_token: System.fetch_env!("TALKJS_ACCESS_TOKEN"),
+    frontend_origin: System.fetch_env!("FRONTEND_ORIGIN")
 
   config :flirtual, Flirtual.Elastic,
-    url: "https://***REMOVED***",
+    url: System.fetch_env!("ELASTICSEARCH_URL"),
     default_headers: [
-      {"authorization", "ApiKey " <> System.get_env("ELASTICSEARCH_ACCESS_TOKEN")}
+      {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
     ]
 
-  # The secret key base is used to sign/encrypt cookies and other secrets.
-  # A default value is used in config/dev.exs and config/test.exs but you
-  # want to use a different value for prod and you most likely don't want
-  # to check this value into version control, so we use an environment
-  # variable instead.
-  secret_key_base =
-    System.get_env("SECRET_KEY_BASE") ||
-      raise """
-      environment variable SECRET_KEY_BASE is missing.
-      You can generate one by calling: mix phx.gen.secret
-      """
-
-  host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "4000")
-
   config :flirtual, FlirtualWeb.Endpoint,
-    url: [host: host, port: 443],
+    url: [port: 443],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port
-    ],
-    secret_key_base: secret_key_base
+    ]
 
-  # ## Using releases
-  #
-  # If you are doing OTP releases, you need to instruct Phoenix
-  # to start each relevant endpoint:
-  #
-  #     config :flirtual, FlirtualWeb.Endpoint, server: true
-  #
-  # Then you can assemble a release by calling `mix release`.
-  # See `mix help release` for more information.
-end
-
-if config_env() == :prod do
   # Configuring the mailer
   config :flirtual, Flirtual.Mailer,
     adapter: Swoosh.Adapters.SMTP,
-    relay: System.get_env("SMTP_RELAY"),
-    username: System.get_env("SMTP_USERNAME"),
-    password: System.get_env("SMTP_PASSWORD"),
+    relay: System.fetch_env!("SMTP_RELAY"),
+    username: System.fetch_env!("SMTP_USERNAME"),
+    password: System.fetch_env!("SMTP_PASSWORD"),
     tls: :always,
     port: 587
 

@@ -1,11 +1,10 @@
 defmodule Flirtual.Talkjs do
-  @app_id Application.fetch_env!(:flirtual, :talkjs_app_id)
-  @access_token Application.fetch_env!(:flirtual, :talkjs_access_token)
-
-  @base_url "https://api.talkjs.com/v1/" <> @app_id
+  defp config(key) do
+    Application.get_env(:flirtual, Flirtual.Talkjs)[key]
+  end
 
   def new_url(pathname, query) do
-    URI.parse(@base_url <> "/" <> pathname)
+    URI.parse("https://api.talkjs.com/v1/" <> config(:app_id) <> "/" <> pathname)
     |> then(&if(is_nil(query), do: &1, else: Map.put(&1, :query, URI.encode_query(query))))
     |> URI.to_string()
   end
@@ -22,10 +21,8 @@ defmodule Flirtual.Talkjs do
     body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
-    IO.inspect(url)
-
     HTTPoison.request(method, url, body, [
-      {:authorization, "Bearer " <> @access_token}
+      {:authorization, "Bearer " <> config(:access_token)}
     ])
   end
 
