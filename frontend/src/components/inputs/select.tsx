@@ -2,7 +2,7 @@
 
 import { ChevronUpDownIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useCallback, useRef, forwardRef, useState } from "react";
+import React, { useCallback, useRef, forwardRef, useState, KeyboardEvent, Dispatch } from "react";
 import { twMerge } from "tailwind-merge";
 
 export interface InputSelectOption<K extends string = string> {
@@ -34,6 +34,21 @@ function getFirstActiveElement(root: HTMLElement): HTMLElement {
 			(element) => element.dataset.active === "true"
 		) || (root.firstChild as HTMLElement)
 	);
+}
+
+function focusElementByKeydown({ code, currentTarget }: KeyboardEvent<HTMLDivElement>) {
+	if (!code.startsWith("Key")) return;
+	const key = code.slice(3).toLowerCase();
+	const elements = currentTarget.querySelectorAll("*[data-key]");
+
+	for (let i = 0; i < elements.length; i++) {
+		const element = elements[i];
+		if (!(element instanceof HTMLElement) || !element.dataset.name?.toLowerCase().startsWith(key))
+			continue;
+
+		element.focus({});
+		return element;
+	}
 }
 
 export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowProps>(
@@ -75,6 +90,7 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 				}}
 				onKeyDown={(event) => {
 					props.onKeyDown?.(event);
+					focusElementByKeydown(event);
 
 					switch (event.key) {
 						case "ArrowUp": {
@@ -95,13 +111,14 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 						<button
 							data-active={option.active}
 							data-key={option.key}
+							data-name={option.label}
 							key={option.key}
 							type="button"
 							className={twMerge(
-								"px-4 py-2 text-left ",
+								"px-4 py-2 text-left hocus:outline-none",
 								option.active
 									? "bg-brand-gradient text-white-20"
-									: "text-black-70 hover:bg-white-40 focus:text-white-20 focus:outline-none dark:text-white-20 hover:dark:bg-black-80/50 focus:dark:text-white-20"
+									: "text-black-70 focus:outline-none hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20"
 							)}
 							onClick={(event) => onOptionClick?.(Object.assign(event, { option }))}
 							onFocus={(event) => onOptionFocus?.(Object.assign(event, { option }))}
@@ -137,24 +154,9 @@ export function InputSelect<K extends string = string>(props: InputSelectProps<K
 				if (currentTarget.contains(relatedTarget)) return;
 				setOverlayVisible(false);
 			}}
-			onKeyDown={({ code, currentTarget }) => {
-				if (!code.startsWith("Key")) return;
-				const key = code.slice(3).toLowerCase();
-				const elements = currentTarget.querySelectorAll("*[data-key]");
-
-				for (let i = 0; i < elements.length; i++) {
-					const element = elements[i];
-					if (
-						!(element instanceof HTMLElement) ||
-						!element.dataset.name?.toLowerCase().startsWith(key)
-					)
-						continue;
-
-					element.focus({});
-					props.onChange(element.dataset.key as K);
-
-					return;
-				}
+			onKeyDown={(event) => {
+				const element = focusElementByKeydown(event);
+				if (element) props.onChange(element.dataset.key as K);
 			}}
 		>
 			<button

@@ -144,7 +144,7 @@ export const Onboarding2Form: React.FC = () => {
 									{field.props.value.includes(fallbackGender?.id ?? "") && (
 										<InputAutocomplete
 											{...field.props}
-											limit={6}
+											limit={4}
 											placeholder="Select your genders..."
 											options={genders.map((gender) => ({
 												key: gender.id,
@@ -205,7 +205,7 @@ export const Onboarding2Form: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Language</InputLabel>
-								<InputLanguageAutocomplete {...field.props} />
+								<InputLanguageAutocomplete limit={3} {...field.props} />
 							</>
 						)}
 					</FormField>
