@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
-import { Navigation } from "~/components/layout/navigation";
+import { MobileBarNavigation } from "~/components/layout/navigation/mobile-bar";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { urls } from "~/urls";
 
@@ -19,7 +19,7 @@ export default function SettingsLayout({ children }: React.ComponentProps<"div">
 	const isDesktop = useScreenBreakpoint("md");
 
 	useEffect(() => {
-		if (isDesktop && !segment) router.push(urls.settings.matchmaking);
+		if (isDesktop && !segment) router.push(urls.settings.matchmaking());
 	}, [isDesktop, segment, router]);
 
 	return (
@@ -38,7 +38,7 @@ export default function SettingsLayout({ children }: React.ComponentProps<"div">
 				)}
 			</div>
 			<Footer desktopOnly />
-			<Navigation />
+			<MobileBarNavigation />
 		</div>
 	);
 }

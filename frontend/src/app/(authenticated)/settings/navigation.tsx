@@ -22,7 +22,7 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigati
 			<NavigationHeader {...{ navigationInner }} />
 			<nav className={twMerge("flex-col gap-8 py-8", navigationInner ? "hidden md:flex" : "flex")}>
 				<NavigationCategory name="Profile">
-					<NavigationLink href={urls.settings.matchmaking}>Matchmaking</NavigationLink>
+					<NavigationLink href={urls.settings.matchmaking()}>Matchmaking</NavigationLink>
 					<NavigationLink href={urls.settings.biography}>Biography & pictures</NavigationLink>
 					<NavigationLink href={urls.settings.tags}>Information & tags</NavigationLink>
 					<NavigationLink href={urls.settings.personality}>Personality</NavigationLink>

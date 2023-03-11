@@ -12,7 +12,9 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({ navigationIn
 	const query = useSearchParams();
 
 	const Icon = navigationInner ? ChevronLeftIcon : XMarkIcon;
-	const returnTo = ensureRelativeUrl(query.get("return") ?? urls.browse());
+	const returnTo = ensureRelativeUrl(
+		query.get("return") ?? (navigationInner ? urls.settings.list() : urls.browse())
+	);
 
 	return (
 		<div className="flex w-full items-center justify-center bg-black-70 p-4 text-white-20 md:bg-brand-gradient">

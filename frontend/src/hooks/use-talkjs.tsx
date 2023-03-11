@@ -69,7 +69,9 @@ export const ConversationInbox: React.FC<
 		if (!session || !element) return;
 		const inbox = session.createInbox(options);
 
-		void inbox.mount(element);
+		// hack: fixes not rendering on desktop on client router change 😭
+		setTimeout(() => void inbox.mount(element), 1);
+
 		return () => inbox.destroy();
 	}, [session, element, options]);
 
@@ -98,7 +100,9 @@ export const ConversationChatbox: React.FC<
 		const chatbox = session.createChatbox(options);
 		chatbox.select(conversation);
 
-		void chatbox.mount(element);
+		// hack: fixes not rendering on desktop on client router change 😭
+		setTimeout(() => void chatbox.mount(element), 1);
+
 		return () => chatbox.destroy();
 	}, [session, element, conversation, options]);
 

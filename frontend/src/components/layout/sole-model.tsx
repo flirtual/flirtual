@@ -3,13 +3,14 @@ import { twMerge } from "tailwind-merge";
 
 import { Footer, FooterProps } from "./footer";
 import { Header } from "./header";
-import { Navigation } from "./navigation";
+import { MobileBarNavigation } from "./navigation/mobile-bar";
 
-export const SoleModelLayout: React.FC<React.ComponentProps<"div"> & { footer?: FooterProps }> = ({
-	children,
-	footer = {},
-	...props
-}) => (
+export const SoleModelLayout: React.FC<
+	React.ComponentProps<"div"> & {
+		footer?: FooterProps;
+		mobileNavigation?: false;
+	}
+> = ({ children, footer = {}, mobileNavigation, ...props }) => (
 	<div
 		{...props}
 		className={twMerge(
@@ -22,6 +23,6 @@ export const SoleModelLayout: React.FC<React.ComponentProps<"div"> & { footer?: 
 			{children}
 		</div>
 		<Footer {...footer} />
-		<Navigation />
+		{mobileNavigation !== false && <MobileBarNavigation />}
 	</div>
 );

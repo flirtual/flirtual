@@ -1,3 +1,5 @@
+import { Url } from "next/dist/shared/lib/router/router";
+
 import { User } from "./api/user";
 import { ConfirmEmailPageProps } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
@@ -27,13 +29,13 @@ function url(pathname: string, query: Record<string, string | number | undefined
 	);
 
 	searchParams.sort();
-	const queryString = Object.keys(searchParams).length ? `?${searchParams.toString()}` : "";
+	const queryString = [...searchParams.keys()].length ? `?${searchParams.toString()}` : "";
 
 	return `${pathname}${queryString}`;
 }
 
-export function isInternalHref(href: string) {
-	return toAbsoluteUrl(href).origin === siteOrigin;
+export function isInternalHref(href: Url) {
+	return toAbsoluteUrl(href.toString()).origin === siteOrigin;
 }
 
 export const urls = {
@@ -48,7 +50,10 @@ export const urls = {
 	login: (to?: string) => url("/login", { to }),
 	forgotPassword: "/forgot-password",
 	logout: "/logout",
-	user: (username: string) => `/${username}`,
+	user: {
+		me: "/me",
+		profile: (username: string) => `/${username}`
+	},
 	browse: (type?: "friend") => url("/browse", { type }),
 	conversations: {
 		list: "/conversations",
@@ -62,7 +67,7 @@ export const urls = {
 		list: (returnTo?: string) => url("/settings", { return: returnTo }),
 
 		// profile
-		matchmaking: "/settings/matchmaking",
+		matchmaking: (returnTo?: string) => url("/settings/matchmaking", { return: returnTo }),
 		biography: "/settings/biography",
 		tags: "/settings/tags",
 		personality: "/settings/personality",

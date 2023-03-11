@@ -9,6 +9,8 @@ import { HeartGradient } from "~/components/icons/heart-gradient";
 import { PeaceGradient } from "~/components/icons/peace-gradient";
 import { Profile } from "~/components/profile/profile";
 
+import { OutOfProspects } from "./out-of-prospects";
+
 export interface ProspectListProps {
 	prospects: Array<User>;
 }
@@ -73,12 +75,12 @@ export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
 	const [prospectIdx, setProspectIdx] = useState(0);
 	const prospect = prospects[prospectIdx];
 
-	if (!prospect) return null;
-
-	return (
+	return prospect ? (
 		<>
 			<Profile user={prospect} />
 			<ProspectActionBar setProspectIdx={setProspectIdx} userId={prospect.id} />
 		</>
+	) : (
+		<OutOfProspects />
 	);
 };
