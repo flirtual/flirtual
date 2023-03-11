@@ -17,6 +17,7 @@ export type User = UuidModel &
 		talkjsSignature?: string;
 		visible: boolean;
 		bornAt?: string;
+		activeAt?: string;
 		emailConfirmedAt?: string;
 		deactivatedAt?: string;
 		preferences?: Preferences;

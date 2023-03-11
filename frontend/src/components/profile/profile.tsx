@@ -60,7 +60,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 								)}
 							{user.profile.country && <CountryPill code={user.profile.country} />}
 						</div>
-						<ActivityIndicator lastActiveAt={new Date()} />
+						{user.activeAt && <ActivityIndicator lastActiveAt={new Date(user.activeAt)} />}
 					</div>
 				</ProfileImageDisplay>
 				<div className="flex-gap flex h-full grow flex-col gap-6 break-words p-8">
