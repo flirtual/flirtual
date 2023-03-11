@@ -19,6 +19,6 @@ defmodule Flirtual.UserQueueWorker do
   end
 
   def schedule() do
-    Process.send_after(self(), :process, 30000)
+    Process.send_after(self(), :process, 10000)
   end
 end

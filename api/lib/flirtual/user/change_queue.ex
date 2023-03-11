@@ -15,6 +15,8 @@ defmodule Flirtual.User.ChangeQueue do
     timestamps(inserted_at: :created_at)
   end
 
+  def add(%User{} = user), do: add(user.id)
+
   def add(user_id) when is_binary(user_id) do
     Repo.transaction(fn ->
       item =
@@ -58,7 +60,7 @@ defmodule Flirtual.User.ChangeQueue do
     end
   end
 
-  def fetch(limit \\ 100) do
+  def fetch(limit) do
     from(item in ChangeQueue,
       limit: ^limit,
       order_by: [asc: :created_at],
@@ -68,7 +70,7 @@ defmodule Flirtual.User.ChangeQueue do
     |> Repo.all()
   end
 
-  def next(limit \\ 100) do
+  def next(limit \\ 10) do
     Repo.transaction(fn ->
       items = fetch(limit)
 
