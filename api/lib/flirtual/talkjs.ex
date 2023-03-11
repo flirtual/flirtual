@@ -1,7 +1,7 @@
 defmodule Flirtual.Talkjs do
   require Logger
 
-  alias Flirtual.{User, Repo}
+  alias Flirtual.{User}
 
   defp config(key) do
     Application.get_env(:flirtual, Flirtual.Talkjs)[key]
@@ -30,7 +30,7 @@ defmodule Flirtual.Talkjs do
     raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
-    Logger.debug("#{method} #{url}\n#{inspect(body)}")
+    Logger.debug("Talkjs(#{method} #{url}):\n#{inspect(body, pretty: true)}")
 
     HTTPoison.request(method, url, raw_body, [
       {"authorization", "Bearer " <> config(:access_token)},

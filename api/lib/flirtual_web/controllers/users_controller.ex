@@ -127,6 +127,24 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def inspect(conn, %{"user_id" => user_id, "type" => "elasticsearch"}) do
+    user =
+      if(conn.assigns[:session].user.id === user_id,
+        do: conn.assigns[:session].user,
+        else: Users.get(user_id)
+      )
+
+      if is_nil(user) or Policy.cannot?(conn, :read, user) do
+        {:error, {:not_found, "User not found", %{user_id: user_id}}}
+      else
+        conn |> json(Elasticsearch.Document.encode(user))
+      end
+  end
+
+  def inspect(conn, _) do
+    {:error, {:bad_request, "Unknown inspect type"}}
+  end
+
   def update(conn, %{"user_id" => user_id} = params) do
     user =
       if(conn.assigns[:session].user.id === user_id,

@@ -3,24 +3,23 @@ defmodule Flirtual.Profiles do
   import Ecto.Changeset
 
   import Flirtual.Utilities.Changeset
-  import Flirtual.Utilities
 
-  alias Flirtual.Attribute
+  alias Flirtual.User.ChangeQueue
   alias Ecto.UUID
-  alias Flirtual.{Repo, Elastic}
+  alias Flirtual.{Repo}
   alias Flirtual.User.{Profile}
   alias Flirtual.User.Profile.{Image}
 
   def get(id) when is_binary(id) do
     Profile
-    |> query_by_id(id)
+    |> where(id: ^id)
     |> preload(^Profile.default_assoc())
     |> Repo.one()
   end
 
   def get_by_user_id(user_id) when is_binary(user_id) do
     Profile
-    |> query_by_user_id(user_id)
+    |> where(user_id: ^user_id)
     |> preload(^Profile.default_assoc())
     |> Repo.one()
   end
@@ -28,7 +27,7 @@ defmodule Flirtual.Profiles do
   def get_personality_by_user_id(user_id)
       when is_binary(user_id) do
     Profile
-    |> query_by_user_id(user_id)
+    |> where(user_id: ^user_id)
     |> select([profile], map(profile, ^Profile.get_personality_questions()))
     |> Repo.one()
   end
@@ -39,7 +38,7 @@ defmodule Flirtual.Profiles do
              profile
              |> Profile.update_personality_changeset(attrs)
              |> Repo.update(),
-           {:ok, _} <- Elastic.User.mark_dirty(profile.user_id) do
+           {:ok, _} <- ChangeQueue.add(profile.user_id) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -53,7 +52,7 @@ defmodule Flirtual.Profiles do
       with {:ok, profile} <-
              Profile.changeset(profile, attrs, options)
              |> Repo.update(),
-           {:ok, _} <- Elastic.User.mark_dirty(profile.user_id) do
+           {:ok, _} <- ChangeQueue.add(profile.user_id) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -70,7 +69,7 @@ defmodule Flirtual.Profiles do
              |> Repo.update(),
            {:ok, _} <-
              Repo.preload(preferences, profile: from(profile in Profile, select: profile.user_id))
-             |> then(&Elastic.User.mark_dirty(&1.profile)) do
+             |> then(&ChangeQueue.add(&1.profile)) do
         preferences
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -147,20 +146,13 @@ defmodule Flirtual.Profiles do
                  end
                end)
              end)
-             |> Enum.filter(&(&1.order !== nil)) do
+             |> Enum.filter(&(&1.order !== nil)),
+           {:ok, _} <- ChangeQueue.add(profile.user_id) do
         images
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
       end
     end)
-  end
-
-  def query_by_id(query, id) do
-    query |> where(id: ^id)
-  end
-
-  def query_by_user_id(query, user_id) do
-    query |> where(user_id: ^user_id)
   end
 end

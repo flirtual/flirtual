@@ -51,7 +51,7 @@ defmodule Flirtual.User do
     external_id =
       Enum.at(user.profile.images, 0)[:external_id] || "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
 
-    "https://flirtu.al/" <> external_id <> "/"
+    "https://media.flirtu.al/" <> external_id <> "/"
   end
 
   def visible?(%User{} = user) do
@@ -302,6 +302,62 @@ defmodule Flirtual.User do
     end
   end
 end
+
+defimpl Elasticsearch.Document, for: Flirtual.User do
+  alias Flirtual.User
+
+  import Flirtual.Utilities
+
+  def id(%User{} = user), do: user.id
+  def routing(_), do: false
+
+  def encode(%User{} = user) do
+    profile = user.profile
+
+    document =
+      Map.merge(
+        %{
+          id: user.id,
+          dob: user.born_at,
+          agemin: profile.preferences.agemin || 18,
+          agemax: profile.preferences.agemax || 128,
+          openness: profile.openness,
+          conscientiousness: profile.conscientiousness,
+          agreeableness: profile.agreeableness,
+          custom_interests: [],
+          attributes:
+            if(user.preferences.nsfw,
+              do: profile.attributes,
+              else: exclude_by(profile.attributes, :type, "kink")
+            )
+            |> Enum.map(& &1.id),
+          attributes_lf:
+            if(user.preferences.nsfw,
+              do:
+                (profile.preferences.attributes |> Enum.map(& &1.id)) ++
+                  (filter_by(profile.attributes, :type, "kink")
+                   |> Enum.map(& &1.metadata["pair"])),
+              else: exclude_by(profile.preferences.attributes, :type, "kink") |> Enum.map(& &1.id)
+            ),
+          country: profile.country,
+          monopoly: profile.monopoly,
+          serious: profile.serious,
+          nsfw: user.preferences.nsfw
+          # liked: profile.liked_and_passed |> Enum.filter(&(&1.type === :like)),
+          # blocked: profile.blocked
+        },
+        if(user.preferences.nsfw,
+          do: %{
+            domsub: user.profile.domsub
+          },
+          else: %{}
+        )
+      )
+
+    document
+  end
+end
+
 
 defimpl Swoosh.Email.Recipient, for: Flirtual.User do
   alias Flirtual.{User, Repo}

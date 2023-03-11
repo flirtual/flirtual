@@ -133,6 +133,7 @@ defmodule FlirtualWeb.Router do
             post "/", UsersController, :update
 
             get "/visible", UsersController, :visible
+            get "/inspect", UsersController, :inspect
 
             post "/deactivate", UsersController, :deactivate
             delete "/deactivate", UsersController, :reactivate

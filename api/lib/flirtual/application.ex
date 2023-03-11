@@ -10,7 +10,7 @@ defmodule Flirtual.Application do
     children = [
       # Start the Ecto repository
       Flirtual.Repo,
-      Flirtual.Elastic,
+      Flirtual.Elasticsearch,
       # Start the Telemetry supervisor
       FlirtualWeb.Telemetry,
       # Start the PubSub system
@@ -20,7 +20,7 @@ defmodule Flirtual.Application do
       {Finch, name: Swoosh.Finch},
       # Start a worker by calling: Flirtual.Worker.start_link(arg)
       # {Flirtual.Worker, arg}
-      Flirtual.Elastic.UserQueueWorker
+      Flirtual.UserQueueWorker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

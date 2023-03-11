@@ -116,8 +116,6 @@ defmodule Flirtual.User.Profile do
     |> validate_inclusion(:country, Countries.list(:iso_3166_1),
       message: "is an unrecognized country"
     )
-    |> validate_subset(:domsub, @domsub_values)
-    |> validate_subset(:monopoly, @monopoly_values)
     |> validate_attribute_list(
       attrs["attributes"],
       [

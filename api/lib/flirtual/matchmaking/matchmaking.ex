@@ -3,14 +3,15 @@ defmodule Flirtual.Matchmaking do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.Elasticsearch
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile
-  alias Flirtual.{Repo, Elastic, User, Attribute}
+  alias Flirtual.{Repo, User, Attribute}
 
   def compute_prospects(%User{} = user) do
     query = generate_query(user)
 
-    with {:ok, resp} <- Elastic.User.search(query) do
+    with {:ok, resp} <- Elasticsearch.search("users", query) do
       resp["hits"]["hits"] |> Enum.map(& &1["_id"])
     end
   end
@@ -96,7 +97,6 @@ defmodule Flirtual.Matchmaking do
                 :monopoly,
                 :serious,
                 :domsub,
-                :nsfw,
                 :kinks,
                 :personality
               ],
@@ -138,7 +138,7 @@ defmodule Flirtual.Matchmaking do
         grouped_interests[0] || [],
         &%{
           "term" => %{
-            "default_interests" => %{
+            "attributes" => %{
               "value" => &1.id,
               "boost" => 3 * (Map.get(custom_weights, :default_interests) || 1)
             }
@@ -150,7 +150,7 @@ defmodule Flirtual.Matchmaking do
         grouped_interests[1] || [],
         &%{
           "term" => %{
-            "strong_interests" => %{
+            "attributes" => %{
               "value" => &1.id,
               "boost" => 5 * (Map.get(custom_weights, :default_interests) || 1)
             }
@@ -162,7 +162,7 @@ defmodule Flirtual.Matchmaking do
         grouped_interests[2] || [],
         &%{
           "term" => %{
-            "stronger_interests" => %{
+            "attributes" => %{
               "value" => &1.id,
               "boost" => 15 * (Map.get(custom_weights, :default_interests) || 1)
             }
@@ -174,7 +174,7 @@ defmodule Flirtual.Matchmaking do
         [],
         &%{
           "term" => %{
-            "custom_interests" => %{
+            "attributes" => %{
               "value" => &1.id,
               "boost" => 5 * (Map.get(custom_weights, :custom_interests) || 1)
             }
@@ -193,7 +193,7 @@ defmodule Flirtual.Matchmaking do
       games,
       &%{
         "term" => %{
-          "games" => %{
+          "attributes" => %{
             "value" => &1.id,
             "boost" => 3 * (Map.get(custom_weights, :games) || 1)
           }
@@ -267,20 +267,7 @@ defmodule Flirtual.Matchmaking do
     )
   end
 
-  def query(:nsfw, %User{} = user) do
-    if(user.preferences.nsfw,
-      do: %{
-        "term" => %{
-          "nsfw" => %{
-            "value" => user.preferences.nsfw,
-            "boost" => 5
-          }
-        }
-      },
-      else: []
-    )
-  end
-
+  # todo: check this later, pretty sure it's wrong.
   def query(:kinks, %User{} = user) do
     %{profile: %{preferences: preferences, custom_weights: custom_weights} = profile} = user
 
@@ -291,7 +278,7 @@ defmodule Flirtual.Matchmaking do
             filter_by(preferences.attributes, :type, "kink"),
             &%{
               "term" => %{
-                "kinks" => %{
+                "attributes" => %{
                   "value" => &1.id,
                   "boost" => 3 * (Map.get(custom_weights, :kinks) || 1)
                 }
@@ -302,7 +289,7 @@ defmodule Flirtual.Matchmaking do
             filter_by(profile.attributes, :type, "kink"),
             &%{
               "term" => %{
-                "kinks_lf" => %{
+                "attributes_lf" => %{
                   "value" => &1.id,
                   "boost" => 3 * (Map.get(custom_weights, :kinks) || 1)
                 }

@@ -1,15 +1,15 @@
-defmodule Flirtual.Elastic.UserQueueWorker do
+defmodule Flirtual.UserQueueWorker do
   use GenServer
 
-  alias Flirtual.Elastic
+  alias Flirtual.User
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, [])
   end
 
-  def handle_info(:update_pending, state) do
+  def handle_info(:process, state) do
     schedule()
-    #{:ok, _} = Elastic.User.update_pending()
+    {:ok, _} = User.ChangeQueue.next()
     {:noreply, state}
   end
 
@@ -19,6 +19,6 @@ defmodule Flirtual.Elastic.UserQueueWorker do
   end
 
   def schedule() do
-    Process.send_after(self(), :update_pending, 30000)
+    Process.send_after(self(), :process, 30000)
   end
 end

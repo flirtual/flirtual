@@ -17,13 +17,13 @@ config :flirtual, FlirtualWeb.Endpoint,
     port: 4000
   ]
 
-config :flirtual, Flirtual.Elastic,
+config :flirtual, Flirtual.Elasticsearch,
   api: Elasticsearch.API.HTTP,
   json_library: Jason,
   indexes: %{
     users_new: %{
       settings: "priv/elasticsearch/users.json",
-      store: Flirtual.ElasticStore,
+      store: Flirtual.Elasticsearch.Store,
       sources: [Flirtual.User],
       bulk_page_size: 5000,
       bulk_wait_interval: 15_000

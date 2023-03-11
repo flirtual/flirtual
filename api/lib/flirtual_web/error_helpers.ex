@@ -20,6 +20,20 @@ defmodule FlirtualWeb.ErrorHelpers do
     %{ error: Map.merge(details, %{ message: message })}
   end
 
+  def format_stack(stack) do
+    Enum.map(stack, fn {module, function, arity, extra} ->
+      String.replace(to_string(module), "Elixir.", "") <>
+        "." <>
+        to_string(function) <>
+        "/" <>
+        to_string(arity) <>
+        "\n  at " <>
+        to_string(Keyword.get(extra, :file, "unknown")) <>
+        ":" <> to_string(Keyword.get(extra, :line, "1"))
+    end)
+    |> Enum.join("\n")
+  end
+
   def transform_changeset_errors(%Ecto.Changeset{} = changeset) do
     Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
   end

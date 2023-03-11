@@ -2,11 +2,10 @@ defmodule Flirtual.Users do
   import Ecto.Query
   import Ecto.Changeset
 
-  import Flirtual.Utilities.Changeset
-
+  alias Flirtual.User.ChangeQueue
   alias Flirtual.Talkjs
   alias Flirtual.Jwt
-  alias Flirtual.{Repo, Mailer, User, Sessions, Elastic}
+  alias Flirtual.{Repo, Mailer, User, Sessions}
   alias Flirtual.User.{Session, Preferences, Connection}
 
   def get(id)
@@ -61,8 +60,8 @@ defmodule Flirtual.Users do
       with {:ok, user} <-
              user
              |> User.changeset(attrs, options)
-             |> Repo.update() do
-        Elastic.User.mark_dirty(user.id)
+             |> Repo.update(),
+           {:ok, _} <- ChangeQueue.add(user.id) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -93,14 +92,20 @@ defmodule Flirtual.Users do
   end
 
   def update_email(%User{} = user, attrs) do
-    with {:ok, user} <-
-           user
-           |> User.update_email_changeset(attrs)
-           |> change(email_confirmed_at: nil)
-           |> Repo.update() do
-      {:ok, _} = send_email_confirmation(user)
-      {:ok, user}
-    end
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> User.update_email_changeset(attrs)
+             |> change(email_confirmed_at: nil)
+             |> Repo.update(),
+           {:ok, _} <- ChangeQueue.add(user.id),
+           {:ok, _} <- send_email_confirmation(user) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   def update_preferences(%Preferences{} = preferences, attrs) do
@@ -109,7 +114,7 @@ defmodule Flirtual.Users do
              preferences
              |> Preferences.update_changeset(attrs)
              |> Repo.update(),
-           {:ok, _} <- Elastic.User.mark_dirty(preferences.user_id) do
+           {:ok, _} <- ChangeQueue.add(preferences.user_id) do
         preferences
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -141,7 +146,7 @@ defmodule Flirtual.Users do
              user
              |> change(%{deactivated_at: now})
              |> Repo.update(),
-           {:ok, _} <- Elastic.User.mark_dirty(user.id) do
+           {:ok, _} <- ChangeQueue.add(user.id) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -156,7 +161,7 @@ defmodule Flirtual.Users do
              user
              |> change(%{deactivated_at: nil})
              |> Repo.update(),
-           {:ok, _} <- Elastic.User.mark_dirty(user.id) do
+           {:ok, _} <- ChangeQueue.add(user.id) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -280,16 +285,11 @@ defmodule Flirtual.Users do
              |> Repo.insert(),
            {:ok, _} <-
              Ecto.build_assoc(profile, :preferences)
-             |> Repo.insert() do
-        user = user |> Repo.preload(User.default_assoc())
-
-        with {:ok, _} <- Talkjs.update_user(user),
-             {:ok, _} <- send_email_confirmation(user) do
-          user
-        else
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
-        end
+             |> Repo.insert(),
+           user <- Repo.preload(user, User.default_assoc()),
+           {:ok, _} <- Talkjs.update_user(user),
+           {:ok, _} <- send_email_confirmation(user) do
+        user
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
