@@ -394,7 +394,7 @@ defmodule Flirtual.Matchmaking do
       # $b must be looking for one or more of $a’s genders.
       %{
         "terms" => %{
-          "gender_lf" =>
+          "attributes_lf" =>
             attributes
             |> filter_by(:type, "gender")
             |> Enum.filter(& &1.metadata["simple"])
@@ -404,7 +404,7 @@ defmodule Flirtual.Matchmaking do
       # $a must be looking for one or more of $b’s genders.
       %{
         "terms" => %{
-          "gender" =>
+          "attributes" =>
             preferences.attributes
             |> filter_by(:type, "gender")
             |> Enum.map(& &1.id)

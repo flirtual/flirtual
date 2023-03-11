@@ -8,7 +8,7 @@ defmodule Flirtual.Elasticsearch do
   end
 
   def recreate_index() do
-    Elasticsearch.delete(Flirtual.Elastic, "/users")
+    Elasticsearch.delete(Flirtual.Elasticsearch, "/users")
 
     Elasticsearch.Index.create_from_file(
       Flirtual.Elasticsearch,
