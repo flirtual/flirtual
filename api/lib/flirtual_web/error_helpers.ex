@@ -25,8 +25,10 @@ defmodule FlirtualWeb.ErrorHelpers do
       String.replace(to_string(module), "Elixir.", "") <>
         "." <>
         to_string(function) <>
-        "/" <>
-        to_string(arity) <>
+        if(is_list(arity),
+          do: ("(" <> Enum.join(Enum.map(arity, &inspect(&1)), ", ") <> ")"),
+          else: "/" <> to_string(arity)
+        ) <>
         "\n  at " <>
         to_string(Keyword.get(extra, :file, "unknown")) <>
         ":" <> to_string(Keyword.get(extra, :line, "1"))

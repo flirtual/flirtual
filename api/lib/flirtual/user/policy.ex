@@ -23,15 +23,20 @@ defmodule Flirtual.User.Policy do
       ),
       do: true
 
-  def authorize(:sudo, %Plug.Conn{
-    assigns: %{
-      session: %{
-        user: %User{
-          tags: tags
-        }
-      }
-    }
-  }, _), do: :admin in tags
+  def authorize(
+        :sudo,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{
+                tags: tags
+              }
+            }
+          }
+        },
+        _
+      ),
+      do: :admin in tags
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
@@ -74,24 +79,38 @@ defmodule Flirtual.User.Policy do
   # Otherwise, by default, nobody can view this user's language.
   def transform(:language, _, _), do: nil
 
-   # The currently logged in user can view their own talkjs signature.
-   def transform(
-    :talkjs_signature,
-    %Plug.Conn{
-      assigns: %{
-        session: %{
-          user_id: user_id
-        }
-      }
-    },
-    %User{
-      id: user_id
-    } = user
-  ),
-  do: user.talkjs_signature
+  # The currently logged in user can view their own talkjs signature.
+  def transform(
+        :talkjs_signature,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %User{
+          id: user_id
+        } = user
+      ),
+      do: user.talkjs_signature
 
-# Otherwise, by default, nobody can view this user's talkjs signature.
-def transform(:talkjs_signature, _, _), do: nil
+  # Otherwise, by default, nobody can view this user's talkjs signature.
+  def transform(:talkjs_signature, _, _), do: nil
+
+  def transform(
+        :active_at,
+        _,
+        %User{} = user
+      ) do
+    if is_nil(user.active_at) do
+      nil
+    else
+      Date.new!(user.active_at.year, user.active_at.month, user.active_at.day + 9)
+    end
+  end
+
+  def transform(:active_at, _, _), do: nil
 
   def transform(:visible, _, user), do: User.visible?(user)
 

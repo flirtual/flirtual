@@ -164,17 +164,42 @@ defmodule FlirtualWeb.SessionController do
     |> clear_session()
   end
 
+  @hour_in_seconds 3600
+
   def fetch_current_session(conn, _) do
     {token, conn} = ensure_session_token(conn)
 
-    session =
-      token &&
+    if is_nil(token) do
+      conn
+      |> assign(:session, nil)
+      |> assign(:user, nil)
+    else
+      session =
         Sessions.get_by_token(token)
         |> Repo.preload(user: User.default_assoc())
 
-    conn
-    |> assign(:session, session)
-    |> assign(:user, if(session !== nil, do: session.user, else: nil))
+      now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+      session =
+        Map.put(
+          session,
+          :user,
+          if NaiveDateTime.compare(
+               now,
+               NaiveDateTime.add(session.user.active_at || now, @hour_in_seconds)
+             ) === :lt do
+            session.user
+          else
+            session.user
+            |> change(%{active_at: now})
+            |> Repo.update!()
+          end
+        )
+
+      conn
+      |> assign(:session, session)
+      |> assign(:user, session.user)
+    end
   end
 
   defp ensure_session_token(conn) do

@@ -28,6 +28,7 @@ defmodule Flirtual.User do
     field :banned_at, :naive_datetime
     field :shadowbanned_at, :naive_datetime
     field :incognito_at, :naive_datetime
+    field :active_at, :naive_datetime
 
     has_many :connections, Flirtual.User.Connection
     has_many :sessions, Flirtual.User.Session
@@ -319,6 +320,7 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
         %{
           id: user.id,
           dob: user.born_at,
+          active_at: user.active_at,
           agemin: profile.preferences.agemin || 18,
           agemax: profile.preferences.agemax || 128,
           openness: profile.openness,
@@ -379,6 +381,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
         :talkjs_signature,
         :email_confirmed_at,
         :deactivated_at,
+        :active_at,
         :tags,
         :visible,
         :subscription,
