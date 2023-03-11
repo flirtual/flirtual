@@ -16,6 +16,7 @@ defmodule FlirtualWeb.SessionController do
 
   def get(conn, _) do
     Logger.debug(%{session: conn.assigns[:session]})
+
     conn |> then(&json(&1, Policy.transform(&1, &1.assigns[:session])))
   end
 

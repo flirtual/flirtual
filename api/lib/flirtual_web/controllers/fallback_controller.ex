@@ -1,5 +1,6 @@
 defmodule FlirtualWeb.FallbackController do
   use Phoenix.Controller
+  require Logger
 
   import FlirtualWeb.ErrorHelpers
 
@@ -15,6 +16,10 @@ defmodule FlirtualWeb.FallbackController do
     |> halt()
   end
 
+  def call(%Plug.Conn{} = conn, {:error, {status}}) do
+    conn |> put_error(status) |> halt()
+  end
+
   def call(%Plug.Conn{} = conn, {:error, {status, message}}) do
     conn |> put_error(status, message) |> halt()
   end
@@ -24,15 +29,15 @@ defmodule FlirtualWeb.FallbackController do
   end
 
   def call(conn, :not_found) do
-    conn |> put_error(:not_found, "Not found") |> halt()
+    conn |> put_error(:not_found) |> halt()
   end
 
   def call(%Plug.Conn{} = conn, params) do
-    IO.warn("Internal server error")
-    IO.inspect(params)
+    Logger.critical("Unhandled request error")
+    Logger.critical([conn: conn, params: params])
 
     conn
-    |> put_error(:internal_server_error, "Internal server error")
+    |> put_error(:internal_server_error)
     |> halt()
   end
 end

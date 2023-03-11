@@ -7,15 +7,6 @@ defmodule FlirtualWeb.Router do
   import FlirtualWeb.ErrorHelpers
   import FlirtualWeb.SessionController
 
-  pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {FlirtualWeb.LayoutView, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -191,6 +182,13 @@ defmodule FlirtualWeb.Router do
   end
 
   if Mix.env() == :dev do
+    pipeline :browser do
+      plug :accepts, ["html"]
+      plug :fetch_session
+      plug :protect_from_forgery
+      plug :put_secure_browser_headers
+    end
+
     scope "/dev" do
       pipe_through :browser
 

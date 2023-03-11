@@ -8,10 +8,6 @@ defmodule FlirtualWeb.Endpoint do
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :flirtual
   end
 
-  plug Phoenix.LiveDashboard.RequestLogger,
-    param_key: "request_logger",
-    cookie_key: "request_logger"
-
   plug CORSPlug,
     origin: MapSet.new([
       Application.compile_env!(:flirtual, :root_origin) |> URI.to_string(),
@@ -19,7 +15,7 @@ defmodule FlirtualWeb.Endpoint do
       Application.compile_env!(:flirtual, :origin) |> URI.to_string(),
     ]) |> MapSet.to_list()
 
-  plug Plug.RequestId
+  plug Plug.RequestId, http_header: "fly-request-id"
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
   plug Plug.Parsers,

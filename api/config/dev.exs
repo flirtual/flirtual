@@ -46,7 +46,6 @@ config :flirtual, FlirtualWeb.Endpoint,
   ],
   check_origin: false,
   code_reloader: true,
-  debug_errors: true,
   watchers: []
 
 config :phoenix,

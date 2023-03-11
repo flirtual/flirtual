@@ -254,7 +254,7 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def resend_confirm_email(conn, params) do
+  def resend_confirm_email(conn, _) do
     with {:ok, _} <- Users.send_email_confirmation(conn.assigns[:session].user) do
       conn |> put_status(:accepted) |> json(%{})
     end

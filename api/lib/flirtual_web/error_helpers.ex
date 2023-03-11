@@ -1,8 +1,19 @@
 defmodule FlirtualWeb.ErrorHelpers do
-  def put_error(%Plug.Conn{} = conn, status, message, details \\ %{}) do
+  import Phoenix.Controller
+  import Plug.Conn
+
+  def put_error(%Plug.Conn{} = conn, status) do
     conn
-    |> Plug.Conn.put_status(status)
-    |> Phoenix.Controller.json(new_error(message, details))
+    |> put_status(status)
+    |> json(new_error(Plug.Conn.Status.code(status) |> Plug.Conn.Status.reason_phrase()))
+  end
+
+  def put_error(%Plug.Conn{} = conn, status, message \\ nil, details \\ %{}) do
+    message = message || Plug.Conn.Status.code(status) |> Plug.Conn.Status.reason_phrase()
+
+    conn
+    |> put_status(status)
+    |> json(new_error(message, details))
   end
 
   def new_error(message, details \\ %{}) do
