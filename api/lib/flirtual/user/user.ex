@@ -50,7 +50,9 @@ defmodule Flirtual.User do
 
   def avatar_url(%User{} = user) do
     external_id =
-      Enum.at(user.profile.images, 0)[:external_id] || "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
+      user.profile.images
+      |> Enum.at(0)[:external_id] ||
+        "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
 
     "https://media.flirtu.al/" <> external_id <> "/"
   end
@@ -360,9 +362,8 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
   end
 end
 
-
 defimpl Swoosh.Email.Recipient, for: Flirtual.User do
-  alias Flirtual.{User, Repo}
+  alias Flirtual.User
 
   def format(%User{} = user) do
     {user.profile.display_name || user.username, user.email}

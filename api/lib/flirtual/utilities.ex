@@ -1,5 +1,4 @@
 defmodule Flirtual.Utilities do
-  @year_in_milliseconds 3.154e+10
   @year_in_days 365
 
   def get_years_ago(years) do

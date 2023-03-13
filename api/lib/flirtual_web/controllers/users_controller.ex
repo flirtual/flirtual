@@ -141,7 +141,7 @@ defmodule FlirtualWeb.UsersController do
       end
   end
 
-  def inspect(conn, _) do
+  def inspect(_, _) do
     {:error, {:bad_request, "Unknown inspect type"}}
   end
 
