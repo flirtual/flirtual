@@ -1,11 +1,14 @@
 defmodule Flirtual.Users do
   import Ecto.Query
   import Ecto.Changeset
+  import Flirtual.Utilities.Changeset
+
+  import Flirtual.HCaptcha, only: [validate_captcha: 1]
 
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Talkjs
   alias Flirtual.Jwt
-  alias Flirtual.{Repo, Mailer, User, Sessions}
+  alias Flirtual.{Repo, Mailer, User}
   alias Flirtual.User.{Session, Preferences, Connection}
 
   def get(id)
@@ -39,14 +42,6 @@ defmodule Flirtual.Users do
     if User.valid_password?(user, password), do: user
   end
 
-  def get_by_session_token(token)
-      when is_binary(token) do
-    (Session
-     |> Sessions.query_by_token(token)
-     |> preload(user: ^User.default_assoc())
-     |> Repo.one()).user
-  end
-
   def get_preferences_by_user_id(user_id)
       when is_binary(user_id) do
     Preferences
@@ -76,7 +71,7 @@ defmodule Flirtual.Users do
              user
              |> User.update_password_changeset(attrs)
              |> Repo.update() do
-        {_, _} = Sessions.delete_all_by_user_id(user.id)
+        {_, _} = Session.delete(user_id: user.id)
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -170,6 +165,10 @@ defmodule Flirtual.Users do
     end)
   end
 
+  def delete(%User{} = user) do
+    user |> Repo.delete()
+  end
+
   def assign_connection(user_id, :discord = connection_type, %{"code" => code}) do
     connection = get_connection(user_id, connection_type)
 
@@ -234,30 +233,29 @@ defmodule Flirtual.Users do
     |> Repo.one()
   end
 
-  def create_user_changeset(attrs) do
-    {%{},
-     %{
-       username: :string,
-       email: :string,
-       password: :string,
-       service_agreement: :boolean,
-       notifications: :boolean
-     }}
-    |> cast(attrs, [:username, :email, :password, :service_agreement, :notifications])
-    |> validate_required([
-      :username,
-      :email,
-      :password,
-      :service_agreement,
-      :notifications
-    ])
-    |> validate_acceptance(:service_agreement)
-  end
-
   def create(attrs) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
-             create_user_changeset(attrs)
+             cast_arbitrary(
+               %{
+                 username: :string,
+                 email: :string,
+                 password: :string,
+                 service_agreement: :boolean,
+                 notifications: :boolean,
+                 captcha: :string
+               },
+               attrs
+             )
+             |> validate_required([
+               :username,
+               :email,
+               :password,
+               :service_agreement,
+               :notifications
+             ])
+             |> validate_acceptance(:service_agreement)
+             |> validate_captcha()
              |> apply_action(:update),
            {:ok, user} <-
              %User{}

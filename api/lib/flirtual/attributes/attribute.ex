@@ -94,7 +94,12 @@ defmodule Flirtual.Attribute do
     |> validate_uuid(field)
     |> validate_change(field, fn field, value ->
       if not exists_id_explicit?(value, attribute_type) do
-        [{Keyword.get(options, :field, field), "does not exist"}]
+        [
+          {
+            Keyword.get(options, :field, field),
+            Keyword.get(options, :message, "does not exist")
+          }
+        ]
       else
         []
       end

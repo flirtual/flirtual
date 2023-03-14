@@ -50,8 +50,7 @@ defmodule Flirtual.User do
 
   def avatar_url(%User{} = user) do
     external_id =
-      user.profile.images
-      |> Enum.at(0)[:external_id] ||
+      Enum.at(user.profile.images, 0)[:external_id] ||
         "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
 
     "https://media.flirtu.al/" <> external_id <> "/"
@@ -297,11 +296,13 @@ defmodule Flirtual.User do
   @doc """
   Validates the current password otherwise adds an error to the changeset.
   """
-  def validate_current_password(changeset, password) do
-    if valid_password?(changeset.data, password) do
+  def validate_current_password(changeset, user, options \\ []) do
+    field = Keyword.get(options, :field, :current_password)
+
+    if valid_password?(user, get_field(changeset, field)) do
       changeset
     else
-      add_error(changeset, :current_password, "is not valid")
+      add_error(changeset, field, "is not valid")
     end
   end
 end

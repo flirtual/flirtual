@@ -106,7 +106,7 @@ defmodule Flirtual.User.Policy do
     if is_nil(user.active_at) do
       nil
     else
-      Date.new!(user.active_at.year, user.active_at.month, user.active_at.day + 9)
+      Date.new!(user.active_at.year, user.active_at.month, user.active_at.day)
     end
   end
 

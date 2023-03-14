@@ -21,6 +21,10 @@ config :flirtual, Flirtual.Talkjs,
   app_id: System.fetch_env!("TALKJS_APP_ID"),
   access_token: System.fetch_env!("TALKJS_ACCESS_TOKEN")
 
+config :flirtual, Flirtual.HCaptcha,
+  app_id: System.fetch_env!("HCAPTCHA_APP_ID"),
+  access_token: System.fetch_env!("HCAPTCHA_ACCESS_TOKEN")
+
 config :joken, default_signer: System.fetch_env!("JOKAN_SECRET")
 
 config :flirtual, Flirtual.Elasticsearch,
@@ -29,15 +33,14 @@ config :flirtual, Flirtual.Elasticsearch,
     {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
   ]
 
-config :flirtual, FlirtualWeb.Endpoint,
-  secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
+config :flirtual, FlirtualWeb.Endpoint, secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
 
 if config_env() == :prod do
   config :flirtual, Flirtual.Repo,
     # ssl: true,
     url: System.fetch_env!("DATABASE_URL"),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
+    socket_options: if(System.get_env("ECTO_IPV6"), do: [:inet6], else: [])
 
   config :flirtual, Flirtual.Elastic,
     url: System.fetch_env!("ELASTICSEARCH_URL"),

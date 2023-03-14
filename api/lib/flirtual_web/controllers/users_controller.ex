@@ -1,5 +1,6 @@
 defmodule FlirtualWeb.UsersController do
   use FlirtualWeb, :controller
+  require Logger
 
   import Plug.Conn
   import Phoenix.Controller
@@ -7,7 +8,11 @@ defmodule FlirtualWeb.UsersController do
   import Ecto.Changeset
 
   import FlirtualWeb.Utilities
+  import Flirtual.Utilities.Changeset
   import Flirtual.Utilities
+  import Flirtual.Attribute, only: [validate_attribute: 3]
+  import Flirtual.HCaptcha, only: [validate_captcha: 1]
+  import Flirtual.User, only: [validate_current_password: 2]
 
   alias Flirtual.Repo
   alias FlirtualWeb.SessionController
@@ -17,8 +22,8 @@ defmodule FlirtualWeb.UsersController do
   action_fallback FlirtualWeb.FallbackController
 
   def create(conn, params) do
-    with {:ok, user} <- Users.create(params) do
-      {_, conn} = conn |> SessionController.log_in_user(user)
+    with {:ok, user} <- Users.create(params),
+         {_, conn} = SessionController.create(conn, user) do
       conn |> put_status(:created) |> json(Policy.transform(conn, user))
     end
   end
@@ -134,11 +139,11 @@ defmodule FlirtualWeb.UsersController do
         else: Users.get(user_id)
       )
 
-      if is_nil(user) or Policy.cannot?(conn, :read, user) do
-        {:error, {:not_found, "User not found", %{user_id: user_id}}}
-      else
-        conn |> json(Elasticsearch.Document.encode(user))
-      end
+    if is_nil(user) or Policy.cannot?(conn, :read, user) do
+      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+    else
+      conn |> json(Elasticsearch.Document.encode(user))
+    end
   end
 
   def inspect(_, _) do
@@ -307,6 +312,35 @@ defmodule FlirtualWeb.UsersController do
       with {:ok, user} <- Users.reactivate(user) do
         conn |> json(Policy.transform(conn, user))
       end
+    end
+  end
+
+  def delete(conn, params) do
+    user = conn.assigns[:session].user
+
+    with {:ok, params} <-
+           cast_arbitrary(
+             %{
+               reason_id: :string,
+               comment: :string,
+               current_password: :string,
+               captcha: :string
+             },
+             params
+           )
+           |> validate_required([:reason_id, :current_password])
+           |> validate_attribute(:reason_id, "delete-reason")
+           |> validate_length(:comment, max: 2048)
+           |> validate_captcha()
+           |> validate_current_password(user)
+           |> apply_action(:read),
+         {:ok, _} <- Users.delete(user) do
+      Logger.warn(
+        "Account deleted: #{user.id} for #{params.reason_id}" <>
+          if(params[:comment], do: " with the comment\n#{params[:comment]}", else: "")
+      )
+
+      conn |> resp(:no_content, "") |> halt()
     end
   end
 

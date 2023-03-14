@@ -7,8 +7,8 @@ defmodule FlirtualWeb.SessionController do
   import Ecto.Changeset
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{Repo, Policy}
-  alias Flirtual.Sessions
+  alias Flirtual.User.Session
+  alias Flirtual.Policy
   alias Flirtual.Users
   alias Flirtual.User
 
@@ -16,25 +16,20 @@ defmodule FlirtualWeb.SessionController do
 
   def get(conn, _) do
     Logger.debug(%{session: conn.assigns[:session]})
+    Logger.debug(%{user: conn.assigns[:session].user})
 
     conn |> then(&json(&1, Policy.transform(&1, &1.assigns[:session])))
   end
 
-  def create(%Plug.Conn{} = conn, params) do
+  def login(%Plug.Conn{} = conn, params) do
     changeset =
-      {%{},
-       %{
-         email: :string,
-         password: :string,
-         remember_me: :boolean
-       }}
-      |> cast(
-        params,
-        [
-          :email,
-          :password,
-          :remember_me
-        ]
+      cast_arbitrary(
+        %{
+          email: :string,
+          password: :string,
+          remember_me: :boolean
+        },
+        params
       )
       |> validate_required([:email, :password])
 
@@ -46,7 +41,7 @@ defmodule FlirtualWeb.SessionController do
              get_field(changeset, :email),
              get_field(changeset, :password)
            ) do
-        {session, conn} = log_in_user(conn, user, get_field(changeset, :remember_me))
+        {session, conn} = create(conn, user, get_field(changeset, :remember_me))
         conn |> put_status(:created) |> json(session)
       else
         {:error, {:unauthorized, "Invalid credentials"}}
@@ -55,9 +50,11 @@ defmodule FlirtualWeb.SessionController do
   end
 
   def sudo(conn, %{"user_id" => user_id}) do
+    session = conn.assigns[:session]
+
     user =
-      if(conn.assigns[:session].user.id === user_id,
-        do: conn.assigns[:session].user,
+      if(session.user.id === user_id,
+        do: session.user,
         else: Users.get(user_id)
       )
 
@@ -65,27 +62,7 @@ defmodule FlirtualWeb.SessionController do
       {:error, {:forbidden, "Missing permissions", %{user_id: user_id}}}
     else
       with {:ok, session} <-
-             conn.assigns[:session]
-             |> then(
-               &cast(
-                 &1,
-                 %{
-                   sudoer_id: &1.sudoer_id || &1.user_id,
-                   user_id: user_id
-                 },
-                 [:sudoer_id, :user_id]
-               )
-             )
-             |> validate_uuid(:sudoer_id)
-             |> validate_uuid(:user_id)
-             |> then(
-               &if(get_field(&1, :user_id) === get_field(&1, :sudoer_id)) do
-                 add_error(&1, :user_id, "cannot sudo yourself")
-               else
-                 &1
-               end
-             )
-             |> Repo.update() do
+             session |> Session.sudo(user) do
         conn
         |> assign(:session, session)
         |> json(Policy.transform(conn, session))
@@ -94,21 +71,13 @@ defmodule FlirtualWeb.SessionController do
   end
 
   def revoke_sudo(conn, _) do
-    if is_nil(conn.assigns[:session].sudoer_id) do
+    session = conn.assigns[:session]
+
+    if is_nil(session.sudoer_id) do
       {:error, {:bad_request, "Bad request"}}
     else
       with {:ok, session} <-
-             conn.assigns[:session]
-             |> then(
-               &change(
-                 &1,
-                 %{
-                   sudoer_id: nil,
-                   user_id: &1.sudoer_id
-                 }
-               )
-             )
-             |> Repo.update() do
+             session |> Session.sudo(nil) do
         conn
         |> assign(:session, session)
         |> json(Policy.transform(conn, session))
@@ -116,8 +85,8 @@ defmodule FlirtualWeb.SessionController do
     end
   end
 
-  def log_in_user(%Plug.Conn{} = conn, %User{} = user, remember_me \\ false) do
-    session = Sessions.create(user)
+  def create(%Plug.Conn{} = conn, %User{} = user, remember_me \\ false) do
+    session = Session.create(user)
 
     conn =
       conn
@@ -146,12 +115,12 @@ defmodule FlirtualWeb.SessionController do
   end
 
   def delete(%Plug.Conn{} = conn, _params) do
-    conn |> log_out_user() |> resp(:no_content, "") |> halt()
+    conn |> logout() |> resp(:no_content, "") |> halt()
   end
 
-  def log_out_user(conn) do
+  def logout(conn) do
     token = get_session(conn, :token)
-    token && Sessions.delete(token)
+    token && Session.delete(token: token)
 
     conn
     |> renew_session()
@@ -164,41 +133,21 @@ defmodule FlirtualWeb.SessionController do
     |> clear_session()
   end
 
-  @hour_in_seconds 3600
-
   def fetch_current_session(conn, _) do
-    {token, conn} = ensure_session_token(conn)
-
-    if is_nil(token) do
-      conn
-      |> assign(:session, nil)
-      |> assign(:user, nil)
-    else
-      session =
-        Sessions.get_by_token(token)
-        |> Repo.preload(user: User.default_assoc())
-
-      now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-
-      session =
-        Map.put(
-          session,
-          :user,
-          if NaiveDateTime.compare(
-               now,
-               NaiveDateTime.add(session.user.active_at || now, @hour_in_seconds)
-             ) === :lt do
-            session.user
-          else
-            session.user
-            |> change(%{active_at: now})
-            |> Repo.update!()
-          end
-        )
-
+    with {token, conn} <- ensure_session_token(conn),
+         false <- is_nil(token),
+         session <-
+           Session.get(token: token)
+           |> Session.maybe_update_active_at(),
+         false <- is_nil(session) do
       conn
       |> assign(:session, session)
       |> assign(:user, session.user)
+    else
+      _ ->
+        conn
+        |> assign(:session, nil)
+        |> assign(:user, nil)
     end
   end
 
