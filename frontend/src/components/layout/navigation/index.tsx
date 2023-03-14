@@ -4,6 +4,7 @@ import { Cog8ToothIcon, HeartIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
 
 import { UserAvatar } from "~/components/user-avatar";
+import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSessionUser } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -11,6 +12,8 @@ import { ConversationListButton, NavigationIconButton } from "./icon-button";
 
 export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) => {
 	const user = useSessionUser();
+	const isDesktop = useScreenBreakpoint("md");
+
 	if (!user) return null;
 
 	return (
@@ -25,7 +28,7 @@ export const NavigationInner: React.FC<React.ComponentProps<"div">> = (props) =>
 				<HeartIcon className="h-8 w-8" />
 			</NavigationIconButton>
 			<ConversationListButton />
-			<NavigationIconButton href={urls.settings.list()}>
+			<NavigationIconButton href={isDesktop ? urls.settings.matchmaking() : urls.settings.list()}>
 				<Cog8ToothIcon className="h-8 w-8" />
 			</NavigationIconButton>
 			<NavigationIconButton href={urls.user.me}>

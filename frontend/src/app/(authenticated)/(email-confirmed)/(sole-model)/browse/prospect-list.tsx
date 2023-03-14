@@ -77,7 +77,7 @@ export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
 
 	return prospect ? (
 		<>
-			<Profile user={prospect} />
+			<Profile key={prospect.id} user={prospect} />
 			<ProspectActionBar setProspectIdx={setProspectIdx} userId={prospect.id} />
 		</>
 	) : (

@@ -127,3 +127,15 @@ export async function deactivate(
 export async function reactivate(userId: string, options: NarrowFetchOptions = {}) {
 	return fetch<User>("delete", `users/${userId}/deactivate`, options);
 }
+
+export { _delete as delete };
+async function _delete(
+	options: NarrowFetchOptions<{
+		reasonId: string;
+		comment: string;
+		currentPassword: string;
+		captcha: string;
+	}>
+) {
+	return fetch<User>("delete", `auth/user`, options);
+}

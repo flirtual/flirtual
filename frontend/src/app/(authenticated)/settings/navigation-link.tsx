@@ -15,13 +15,13 @@ export type NavigationLinkProps = {
 
 export const NavigationLink: React.FC<NavigationLinkProps> = ({ children, ...props }) => {
 	const pathname = usePathname();
-
 	const Icon =
-		!isInternalHref("href" in props ? props.href : "/") || "onClick" in props
+		props.Icon ||
+		(!isInternalHref("href" in props ? props.href : "/") || "onClick" in props
 			? ArrowTopRightOnSquareIcon
 			: props.href.startsWith("/settings")
 			? ChevronRightIcon
-			: LinkIcon;
+			: LinkIcon);
 
 	return "href" in props ? (
 		<Link

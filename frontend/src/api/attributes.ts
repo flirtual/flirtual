@@ -30,6 +30,10 @@ export interface AttributeMetadata {
 		order: number;
 		fallback?: boolean;
 	};
+	"delete-reason": {
+		order: number;
+		fallback?: boolean;
+	};
 }
 
 export type AttributeType = keyof AttributeMetadata;
