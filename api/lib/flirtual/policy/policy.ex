@@ -34,7 +34,9 @@ defmodule Flirtual.Policy do
 
       target =
         if reference_key,
-          do: Map.put(target, reference_key, reference_value) |> Map.put(:__reference_key__, reference_key),
+          do:
+            Map.put(target, reference_key, reference_value)
+            |> Map.put(:__reference_key__, reference_key),
           else: target
 
       target = apply(policy, :transform, [conn, target])

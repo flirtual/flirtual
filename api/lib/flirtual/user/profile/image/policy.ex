@@ -16,7 +16,8 @@ defmodule Flirtual.User.Profile.Image.Policy do
         :url,
         _,
         %Image{} = image
-      ), do: "https://media.flirtu.al/" <> image.external_id <> "/"
+      ),
+      do: "https://media.flirtu.al/" <> image.external_id <> "/"
 
   def transform(
         :scanned,

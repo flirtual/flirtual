@@ -22,7 +22,7 @@ defmodule Flirtual.User.Preferences.EmailNotifications do
       :matches,
       :messages,
       :likes,
-      :newsletter,
+      :newsletter
     ])
   end
 end

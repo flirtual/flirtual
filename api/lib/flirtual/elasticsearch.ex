@@ -37,6 +37,7 @@ defmodule Flirtual.Elasticsearch do
 
   def bulk(index, changes, limit \\ 100)
   def bulk(_, [], _), do: :ok
+
   def bulk(index, changes, limit) do
     Logger.warn("elasticsearch(#{index}/bulk):\n#{inspect(changes, pretty: true)}")
 
@@ -54,9 +55,13 @@ defmodule Flirtual.Elasticsearch do
           )
 
         if resp["errors"] do
-          exception = Elasticsearch.Exception.exception(response: Enum.find_value(resp["items"], fn item ->
-            Map.values(item) |> Enum.find(&(not is_nil(&1["error"])))
-          end))
+          exception =
+            Elasticsearch.Exception.exception(
+              response:
+                Enum.find_value(resp["items"], fn item ->
+                  Map.values(item) |> Enum.find(&(not is_nil(&1["error"])))
+                end)
+            )
 
           Logger.error("elasticsearch(#{index}/bulk)\n#{inspect(exception, pretty: true)}")
           {:error, exception}
@@ -65,7 +70,7 @@ defmodule Flirtual.Elasticsearch do
         end
       end)
     end)
-    |> Enum.reduce(:ok, fn (item, _) ->
+    |> Enum.reduce(:ok, fn item, _ ->
       case item do
         {:error, _} -> item
         :ok -> :ok
@@ -75,7 +80,9 @@ defmodule Flirtual.Elasticsearch do
 
   def get(index, id) do
     Logger.debug("elasticsearch(#{index}/get): #{id}")
-    with {:ok, document} <- Elasticsearch.get(Flirtual.Elasticsearch, "/" <> index <> "/_doc/#{id}") do
+
+    with {:ok, document} <-
+           Elasticsearch.get(Flirtual.Elasticsearch, "/" <> index <> "/_doc/#{id}") do
       {:ok, document["_source"]}
     end
   end

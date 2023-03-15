@@ -17,7 +17,7 @@ defmodule FlirtualWeb.ErrorHelpers do
   end
 
   def new_error(message, details \\ %{}) do
-    %{ error: Map.merge(details, %{ message: message })}
+    %{error: Map.merge(details, %{message: message})}
   end
 
   def format_stack(stack) do
@@ -26,7 +26,7 @@ defmodule FlirtualWeb.ErrorHelpers do
         "." <>
         to_string(function) <>
         if(is_list(arity),
-          do: ("(" <> Enum.join(Enum.map(arity, &inspect(&1)), ", ") <> ")"),
+          do: "(" <> Enum.join(Enum.map(arity, &inspect(&1)), ", ") <> ")",
           else: "/" <> to_string(arity)
         ) <>
         "\n  at " <>

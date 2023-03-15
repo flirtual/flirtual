@@ -140,44 +140,44 @@ defmodule Flirtual.Mailer do
                             </tbody>
                           </table>
                           #{if action_url !== nil,
-                            do: """
-                              <table data-section-wrapper="1" width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-                                <tbody>
-                                  <tr data-section="1">
-                                    <td width="100%" valign="top" height="100%" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                      <!--[if (gte mso 9)|(IE)]>
-                                      <table align="center" border="0" cellspacing="0" cellpadding="0" width="660">
-                                        <tr>
-                                          <td align="center" valign="top" width="660">
-                                            <![endif]-->
-                                            <table style="max-width: 660px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#f0f0f0" align="center">
-                                              <tbody>
-                                                <tr>
-                                                  <td style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;color: #212121;text-transform: uppercase;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" data-slot-container="1" class="ui-sortable" align="center">
-                                                    <div data-slot="text">
-                                                      <p style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif; font-size:12px; line-height:18px; color:#212121; text-transform: uppercase; padding:0 1rem; margin:0;">
-                                                        <span style="font-size:9px;">
-                                                          If the link above doesn't work, try copying this URL into your browser:
-                                                          <br/>
-                                                          <a href="#{action_url}" style="text-transform: none;word-break: break-all">#{action_url}</a>
-                                                        </span>
-                                                      </p>
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                              </tbody>
-                                            </table>
-                                            <!--[if (gte mso 9)|(IE)]>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                      <![endif]-->
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              """,
-                              else: ""}
+      do: """
+      <table data-section-wrapper="1" width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+        <tbody>
+          <tr data-section="1">
+            <td width="100%" valign="top" height="100%" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+              <!--[if (gte mso 9)|(IE)]>
+              <table align="center" border="0" cellspacing="0" cellpadding="0" width="660">
+                <tr>
+                  <td align="center" valign="top" width="660">
+                    <![endif]-->
+                    <table style="max-width: 660px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#f0f0f0" align="center">
+                      <tbody>
+                        <tr>
+                          <td style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;color: #212121;text-transform: uppercase;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" data-slot-container="1" class="ui-sortable" align="center">
+                            <div data-slot="text">
+                              <p style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif; font-size:12px; line-height:18px; color:#212121; text-transform: uppercase; padding:0 1rem; margin:0;">
+                                <span style="font-size:9px;">
+                                  If the link above doesn't work, try copying this URL into your browser:
+                                  <br/>
+                                  <a href="#{action_url}" style="text-transform: none;word-break: break-all">#{action_url}</a>
+                                </span>
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+                  </td>
+                </tr>
+              </table>
+              <![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      """,
+      else: ""}
                           <table data-section-wrapper="1" width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
                             <tbody>
                               <tr data-section="1">

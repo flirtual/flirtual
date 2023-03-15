@@ -7,14 +7,14 @@ defmodule Flirtual.User.Connection.Policy do
   # Any user can view the other user's connection if
   # their connections privacy setting is set to everyone.
   def authorize(:read, _, %Connection{
-    user: %User{
-      preferences: %User.Preferences{
-        privacy: %User.Preferences.Privacy{
-          connections: :everyone
+        user: %User{
+          preferences: %User.Preferences{
+            privacy: %User.Preferences.Privacy{
+              connections: :everyone
+            }
+          }
         }
-      }
-    }
-  }) do
+      }) do
     true
   end
 

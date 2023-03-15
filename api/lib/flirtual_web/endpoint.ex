@@ -9,11 +9,13 @@ defmodule FlirtualWeb.Endpoint do
   end
 
   plug CORSPlug,
-    origin: MapSet.new([
-      Application.compile_env!(:flirtual, :root_origin) |> URI.to_string(),
-      Application.compile_env!(:flirtual, :frontend_origin) |> URI.to_string(),
-      Application.compile_env!(:flirtual, :origin) |> URI.to_string(),
-    ]) |> MapSet.to_list()
+    origin:
+      MapSet.new([
+        Application.compile_env!(:flirtual, :root_origin) |> URI.to_string(),
+        Application.compile_env!(:flirtual, :frontend_origin) |> URI.to_string(),
+        Application.compile_env!(:flirtual, :origin) |> URI.to_string()
+      ])
+      |> MapSet.to_list()
 
   plug Plug.RequestId, http_header: "fly-request-id"
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]

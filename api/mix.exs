@@ -43,6 +43,7 @@ defmodule Flirtual.MixProject do
       {:elasticsearch, "~> 1.0.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:pre_commit, "~> 0.3.4", only: :dev},
       {:swoosh, "~> 1.3"},
       {:phoenix_swoosh, "~> 1.0"},
       {:gen_smtp, "~> 1.2"},

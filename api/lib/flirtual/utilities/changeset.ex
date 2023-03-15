@@ -3,7 +3,7 @@ defmodule Flirtual.Utilities.Changeset do
   import Ecto.Changeset
 
   def validate_uuid(changeset, field) do
-    validate_change(changeset, field, fn (field, value) ->
+    validate_change(changeset, field, fn field, value ->
       case UUID.dump(value) do
         :error -> [{field, "is not a valid uuid"}]
         {:ok, _} -> []
@@ -12,18 +12,17 @@ defmodule Flirtual.Utilities.Changeset do
   end
 
   def validate_uuids(changeset, field) do
-    validate_change(changeset, field, fn (field, values) ->
-      if (Enum.any?(values, fn (value) ->
-        case UUID.dump(value) do
-          :error -> true
-          {:ok, _} -> false
-        end
-      end)) do
+    validate_change(changeset, field, fn field, values ->
+      if Enum.any?(values, fn value ->
+           case UUID.dump(value) do
+             :error -> true
+             {:ok, _} -> false
+           end
+         end) do
         [{field, "contains an invalid uuid"}]
       else
         []
       end
-
     end)
   end
 

@@ -63,9 +63,9 @@ defmodule Flirtual.Talkjs do
 
   def update_conversation(conversation_id, participant_ids, subject) do
     case fetch(:put, "conversations/" <> conversation_id, %{
-      participants: participant_ids,
-      subject: subject
-    }) do
+           participants: participant_ids,
+           subject: subject
+         }) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
     end

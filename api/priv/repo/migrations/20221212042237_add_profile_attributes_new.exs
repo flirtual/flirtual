@@ -3,6 +3,7 @@ defmodule Flirtual.Repo.Migrations.AddProfileAttributesNew do
 
   def change do
     drop table(:user_profile_attributes)
+
     create table(:user_profile_attributes, primary_key: false) do
       add :profile_id, references(:user_profiles, type: :uuid), null: false
       add :attribute_id, references(:attributes, type: :uuid), null: false

@@ -12,7 +12,7 @@ defmodule FlirtualWeb.ConversationController do
   end
 
   def list_unread(conn, _) do
-    conn |> json(Talkjs.list_conversations(conn.assigns[:session].user.id, [unreadsOnly: true]))
+    conn |> json(Talkjs.list_conversations(conn.assigns[:session].user.id, unreadsOnly: true))
   end
 
   def list_messages(conn, %{"user_id" => user_id}) do
