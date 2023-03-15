@@ -89,6 +89,10 @@ defmodule Flirtual.User.Session do
     Session |> where(user_id: ^user_id) |> delete_all()
   end
 
+  def delete(token: token) when is_binary(token) do
+    Session |> query_token(token) |> delete_all()
+  end
+
   def one(query) do
     query
     |> preload(^Session.default_assoc())

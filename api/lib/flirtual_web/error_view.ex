@@ -4,7 +4,7 @@ defmodule FlirtualWeb.ErrorView do
 
   import FlirtualWeb.ErrorHelpers
 
-  def render(_, %{conn: conn, status: status}) do
+  def render(_, %{conn: _, status: status}) do
     new_error(Plug.Conn.Status.code(status) |> Plug.Conn.Status.reason_phrase())
   end
 end

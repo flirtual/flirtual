@@ -3,6 +3,7 @@ defmodule Flirtual.Matchmaking do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.Talkjs
   alias Flirtual.Elasticsearch
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile
@@ -16,9 +17,24 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
+  def create_match_conversation(user_a, user_b) do
+    conversation_id = Talkjs.new_conversation_id(user_a, user_b)
+
+    with {:ok, conversation} <-
+           Talkjs.update_conversation(conversation_id, [user_a.id, user_b.id], "❤️"),
+         {:ok, _} <-
+           Talkjs.create_messages(conversation_id, [
+             %{text: "It's a match!", type: "SystemMessage"}
+           ]) do
+      {:ok, conversation}
+    else
+      _ -> {:error, nil}
+    end
+  end
+
   def respond_profile(%User{} = source_user, %User{} = target_user, type) do
     Repo.transaction(fn repo ->
-      with {:ok, _} <-
+      with {:ok, item} <-
              %Profile.LikesAndPasses{}
              |> cast(
                %{
@@ -29,11 +45,34 @@ defmodule Flirtual.Matchmaking do
                },
                [:profile_id, :target_id, :type, :kind]
              )
+             |> then(
+               &if(get_field(&1, :profile_id) === get_field(&1, :target_id)) do
+                 add_error(&1, :user_id, "cannot respond to yourself")
+               else
+                 &1
+               end
+             )
              |> unsafe_validate_unique([:profile_id, :target_id, :kind], repo,
                error_key: :user_id,
                message: "profile already responded"
              )
-             |> Repo.insert() do
+             |> Repo.insert(),
+           opposite_item <-
+             from(Profile.LikesAndPasses,
+               where: [
+                 profile_id: ^item.target_id,
+                 target_id: ^item.profile_id
+               ]
+             )
+             |> Repo.one(),
+           {:ok, _} <-
+             if(is_nil(opposite_item),
+               do: {:ok, nil},
+               else: create_match_conversation(source_user, target_user)
+             ) do
+        %{
+          match: not is_nil(opposite_item)
+        }
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
@@ -65,8 +104,6 @@ defmodule Flirtual.Matchmaking do
         select: b.user_id
       )
       |> Repo.all()
-
-    IO.inspect(likes_and_passes)
 
     %{
       # "explain" => true,

@@ -52,7 +52,7 @@ defmodule FlirtualWeb.Router do
               pipe_through :require_authenticated_user
 
               get "/", SessionController, :get
-              delete "/", SessionController, :logout
+              delete "/", SessionController, :delete
             end
           end
 
@@ -114,6 +114,7 @@ defmodule FlirtualWeb.Router do
           get "/inspect", MatchmakingController, :inspect_query
 
           post "/respond", MatchmakingController, :respond
+          delete "/respond", MatchmakingController, :reverse_respond
         end
 
         scope "/users" do

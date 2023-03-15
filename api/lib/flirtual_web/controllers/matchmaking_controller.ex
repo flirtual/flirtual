@@ -8,7 +8,6 @@ defmodule FlirtualWeb.MatchmakingController do
   import Flirtual.Matchmaking
 
   def list_prospects(conn, _) do
-    IO.inspect(conn.assigns[:session])
     conn |> json(compute_prospects(conn.assigns[:session].user))
   end
 
@@ -23,9 +22,13 @@ defmodule FlirtualWeb.MatchmakingController do
     if is_nil(target_user) or Policy.cannot?(conn, :read, target_user) do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
-      with {:ok, _} <- respond_profile(source_user, target_user, to_atom(type)) do
-        conn |> json(%{})
+      with {:ok, result} <- respond_profile(source_user, target_user, to_atom(type)) do
+        conn |> json(result)
       end
     end
+  end
+
+  def reverse_respond(_, %{"user_id" => _, "type" => _}) do
+    {:error, {:not_implemented}}
   end
 end

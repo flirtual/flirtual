@@ -13,7 +13,11 @@ defmodule Flirtual.Talkjs do
     |> URI.to_string()
   end
 
-  def new_conversation_id(user_id, target_user_id) do
+  def new_conversation_id(%User{} = user_a, %User{} = user_b),
+    do: new_conversation_id(user_a.id, user_b.id)
+
+  def new_conversation_id(user_id, target_user_id)
+      when is_binary(user_id) and is_binary(target_user_id) do
     Enum.sort([user_id, target_user_id])
     |> Poison.encode!()
     |> then(&:crypto.hash(:sha, &1))
@@ -30,7 +34,7 @@ defmodule Flirtual.Talkjs do
     raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
-    Logger.debug("Talkjs(#{method} #{url}):\n#{inspect(body, pretty: true)}")
+    Logger.warn("talkjs(#{method} #{url}):\n#{inspect(body, pretty: true)}")
 
     HTTPoison.request(method, url, raw_body, [
       {"authorization", "Bearer " <> config(:access_token)},
@@ -54,6 +58,23 @@ defmodule Flirtual.Talkjs do
 
       _ ->
         :error
+    end
+  end
+
+  def update_conversation(conversation_id, participant_ids, subject) do
+    case fetch(:put, "conversations/" <> conversation_id, %{
+      participants: participant_ids,
+      subject: subject
+    }) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+    end
+  end
+
+  def create_messages(conversation_id, messages) do
+    case fetch(:post, "conversations/" <> conversation_id <> "/messages", messages) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
     end
   end
 

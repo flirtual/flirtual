@@ -45,8 +45,6 @@ defmodule Flirtual.HCaptcha do
           []
 
         %{"success" => false, "error-codes" => error_codes} ->
-          IO
-
           if length(error_codes) === 0 do
             [{field, "is invalid"}]
           else

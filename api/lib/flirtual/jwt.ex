@@ -1,10 +1,11 @@
 defmodule Flirtual.Jwt do
   use Joken.Config
 
+  import Ecto.Changeset
   import Joken.Config
 
-  defp config(audience, expire_in \\ 3600) do
-    default_claims(default_exp: expire_in, iss: "flirtual", aud: "flirtual/" <> audience)
+  def config(audience, expire_in \\ 3600) do
+    default_claims(default_exp: expire_in, iss: "flirtual", aud: audience)
   end
 
   defp generate_claims(config, claims \\ %{}) do
@@ -13,7 +14,7 @@ defmodule Flirtual.Jwt do
 
   def sign_email_confirmation(user) do
     {:ok, claims} =
-      generate_claims(config("confirm-email"), %{
+      generate_claims(config("confirm_email"), %{
         "sub" => user.id,
         "email" => user.email
       })
@@ -21,7 +22,18 @@ defmodule Flirtual.Jwt do
     generate_and_sign(claims)
   end
 
-  def validate_email_confirmation(token) do
-    config("confirm-email") |> Joken.verify_and_validate(token)
+  def validate_jwt(changeset, field, token_config, validate_claims) do
+    changeset = changeset |> validate_required(field)
+
+    with {:ok, claims} <- Joken.verify_and_validate(token_config, get_field(changeset, field)),
+         {:ok, value} <- validate_claims.(claims) do
+      if is_nil(value) do
+        changeset
+      else
+        change(changeset, Map.put(%{}, field, value))
+      end
+    else
+      _ -> add_error(changeset, field, "is invalid")
+    end
   end
 end

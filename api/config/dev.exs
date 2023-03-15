@@ -54,3 +54,5 @@ config :phoenix,
   stacktrace_depth: 10,
   # Initialize plugs at runtime for faster development compilation
   plug_init_mode: :runtime
+
+config :logger, level: :info
