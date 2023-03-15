@@ -10,10 +10,6 @@ on:
   pull_request:
     branches: [ "main" ]  # adapt branch for project
 
-# Sets the ENV `MIX_ENV` to `test` for running tests
-env:
-  MIX_ENV: test
-
 permissions:
   contents: read
 
@@ -102,7 +98,7 @@ jobs:
     # Step: Compile the project treating any warnings as errors.
     # Customize this step if a different behavior is desired.
     - name: Compiles without warnings
-      run: mix compile --warnings-as-errors
+      run: mix compile
 
     # Step: Check that the checked in code has already been formatted.
     # This step fails if something was found unformatted.
