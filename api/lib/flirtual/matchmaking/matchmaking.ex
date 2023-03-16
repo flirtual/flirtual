@@ -7,7 +7,7 @@ defmodule Flirtual.Matchmaking do
   alias Flirtual.Elasticsearch
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile
-  alias Flirtual.{Repo, User, Attribute}
+  alias Flirtual.{Repo, User, Attribute, Mailer}
 
   def compute_prospects(%User{} = user) do
     query = generate_query(user)
@@ -17,14 +17,55 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
+  def deliver_match_email(user, target_user) do
+    action_url =
+      URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin)) <>
+        "/" <> target_user.username
+
+    target_display_name = target_user.profile.display_name || target_user.username
+
+    Mailer.send(
+      user,
+      "It's a match!",
+      """
+      #{target_display_name} liked you back—they want to meet you too!
+
+      Check out their profile:
+      #{action_url}
+      """,
+      """
+      <p>#{target_display_name} liked you back&mdash;they want to meet you too!</p>
+
+      <p><a href="#{action_url}" class="btn">Check out their profile</a></p>
+
+      <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "EmailMessage",
+        "description": "Check out their profile",
+        "potentialAction": {
+          "@type": "ViewAction",
+          "url": "#{action_url}",
+          "name": "Profile"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Flirtual",
+          "url": "https://flirtu.al/"
+        }
+      }
+      </script>
+      """,
+      action_url
+    )
+  end
+
   def create_match_conversation(user_a, user_b) do
     conversation_id = Talkjs.new_conversation_id(user_a, user_b)
 
     with {:ok, conversation} <-
-           Talkjs.update_conversation(conversation_id, [user_a.id, user_b.id], "❤️"),
-         {:ok, _} <-
-           Talkjs.create_messages(conversation_id, [
-             %{text: "It's a match!", type: "SystemMessage"}
+           Talkjs.update_conversation(conversation_id, [user_a.id, user_b.id], "❤️", [
+             "It's a match!"
            ]) do
       {:ok, conversation}
     else
@@ -68,7 +109,11 @@ defmodule Flirtual.Matchmaking do
            {:ok, _} <-
              if(is_nil(opposite_item),
                do: {:ok, nil},
-               else: create_match_conversation(source_user, target_user)
+               else:
+                 with {:ok, _} <- create_match_conversation(source_user, target_user),
+                      {:ok, _} <- deliver_match_email(target_user, source_user) do
+                   {:ok, nil}
+                 end
              ) do
         %{
           match: not is_nil(opposite_item)

@@ -9,7 +9,7 @@ defmodule Flirtual.Mailer do
   @unsubscribe_url "https://#{@domain}/settings/notifications"
 
   @company "Studio Paprika"
-  @company_address "530 Divisadero Street | San Francsico, CA | 94117 | USA"
+  @company_address "530 Divisadero Street | San Francisco, CA | 94117 | USA"
 
   defp format_text_body(body_text) do
     """
