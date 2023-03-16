@@ -148,7 +148,7 @@ defmodule Flirtual.User.Profile.Policy do
         } = profile
       ) do
     # Fuzz openness to prevent inferring original personality question answers.
-    if(profile.openness > 0, do: 1, else: -1)
+    if(profile.openness === 0, do: nil, else: if(profile.openness > 0, do: 1, else: -1))
   end
 
   # Otherwise, by default, nobody can view this profile's personality openness trait.
@@ -186,7 +186,10 @@ defmodule Flirtual.User.Profile.Policy do
         } = profile
       ) do
     # Fuzz conscientiousness to prevent inferring original personality question answers.
-    if(profile.conscientiousness > 0, do: 1, else: -1)
+    if(profile.conscientiousness === 0,
+      do: nil,
+      else: if(profile.conscientiousness > 0, do: 1, else: -1)
+    )
   end
 
   # Otherwise, by default, nobody can view this profile's personality conscientiousness trait.
@@ -224,7 +227,7 @@ defmodule Flirtual.User.Profile.Policy do
         } = profile
       ) do
     # Fuzz agreeableness to prevent inferring original personality question answers.
-    if(profile.agreeableness > 0, do: 1, else: -1)
+    if(profile.agreeableness === 0, do: nil, else: if(profile.agreeableness > 0, do: 1, else: -1))
   end
 
   # Otherwise, by default, nobody can view this profile's personality agreeableness trait.
