@@ -38,8 +38,8 @@ defmodule Flirtual.Matchmaking do
              %Profile.LikesAndPasses{}
              |> cast(
                %{
-                 profile_id: source_user.profile.id,
-                 target_id: target_user.profile.id,
+                 profile_id: source_user.id,
+                 target_id: target_user.id,
                  type: type,
                  kind: :love
                },
