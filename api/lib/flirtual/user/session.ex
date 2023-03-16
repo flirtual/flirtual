@@ -6,6 +6,7 @@ defmodule Flirtual.User.Session do
   import Ecto.Changeset
   import Flirtual.Utilities.Changeset
 
+  alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
   alias Flirtual.User
   alias Flirtual.User.Session
@@ -115,18 +116,26 @@ defmodule Flirtual.User.Session do
 
   def maybe_update_active_at(session) do
     now = NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
-    last_active_at = session.user.active_at || now
+    last_active_at = session.user.active_at
 
-    if(NaiveDateTime.compare(now, NaiveDateTime.add(last_active_at, @hour_in_seconds)) === :lt) do
-      session
+    if(
+      not is_nil(last_active_at) and
+        NaiveDateTime.compare(now, NaiveDateTime.add(last_active_at, @hour_in_seconds)) === :lt
+    ) do
+      {:ok, session}
     else
-      Map.put(
-        session,
-        :user,
-        session.user
-        |> change(%{active_at: now})
-        |> Repo.update!()
-      )
+      Repo.transaction(fn ->
+        with {:ok, user} <-
+               session.user
+               |> change(%{active_at: now})
+               |> Repo.update(),
+             {:ok, _} <- ChangeQueue.add(user.id) do
+          Map.put(session, :user, user)
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      end)
     end
   end
 

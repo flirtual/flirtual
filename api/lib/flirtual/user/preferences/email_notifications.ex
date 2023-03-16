@@ -1,5 +1,5 @@
 defmodule Flirtual.User.Preferences.EmailNotifications do
-  use Flirtual.Schema
+  use Flirtual.Schema, primary_key: false
 
   import Ecto.Changeset
 
@@ -7,8 +7,10 @@ defmodule Flirtual.User.Preferences.EmailNotifications do
 
   @derive {Jason.Encoder, only: [:matches, :messages, :likes, :newsletter]}
 
-  schema "user_preference_email_notifications" do
-    belongs_to :preferences, Preferences
+  schema "preferences_email_notifications" do
+    belongs_to :preferences, Preferences,
+      primary_key: true,
+      references: :user_id
 
     field :matches, :boolean, default: true
     field :messages, :boolean, default: true

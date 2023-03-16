@@ -1,5 +1,5 @@
 defmodule Flirtual.User.Preferences.Privacy do
-  use Flirtual.Schema
+  use Flirtual.Schema, primary_key: false
   import Ecto.Changeset
 
   alias Flirtual.User.Preferences
@@ -8,8 +8,10 @@ defmodule Flirtual.User.Preferences.Privacy do
   @derive {Jason.Encoder,
            only: [:analytics, :personality, :connections, :sexuality, :country, :kinks]}
 
-  schema "user_preference_privacy" do
-    belongs_to :preferences, Preferences
+  schema "preferences_privacy" do
+    belongs_to :preferences, Preferences,
+      primary_key: true,
+      references: :user_id
 
     field :analytics, :boolean, default: true
     field :personality, Ecto.Enum, values: @privacy_enum_values, default: :everyone

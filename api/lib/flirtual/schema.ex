@@ -1,10 +1,16 @@
 defmodule Flirtual.Schema do
-  defmacro __using__(_) do
-    quote do
+  defmacro __using__(options \\ []) do
+    quote bind_quoted: [options: options] do
       use Ecto.Schema
       @behaviour Access
 
-      @primary_key {:id, :binary_id, autogenerate: true}
+      primary_key = Keyword.get(options, :primary_key, :id)
+
+      @primary_key if(primary_key === false,
+                     do: false,
+                     else: {primary_key, :binary_id, autogenerate: true}
+                   )
+
       @foreign_key_type :binary_id
 
       def fetch(term, key) do

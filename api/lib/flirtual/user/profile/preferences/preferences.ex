@@ -1,5 +1,5 @@
 defmodule Flirtual.User.Profile.Preferences do
-  use Flirtual.Schema
+  use Flirtual.Schema, primary_key: false
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Preferences.Policy
 
   import Flirtual.Attribute, only: [validate_attribute_list: 5]
@@ -10,17 +10,16 @@ defmodule Flirtual.User.Profile.Preferences do
   alias Flirtual.User.Profile
   alias Flirtual.Attribute
 
-  schema "user_profile_preferences" do
-    belongs_to :profile, Profile
+  schema "profile_preferences" do
+    belongs_to :profile, Profile, primary_key: true, references: :user_id
 
     field :agemin, :integer
     field :agemax, :integer
 
     many_to_many :attributes, Attribute,
-      join_through: "user_profile_preference_attributes",
+      join_through: "profile_preference_attributes",
+      join_keys: [preferences_id: :profile_id, attribute_id: :id],
       on_replace: :delete
-
-    timestamps(inserted_at: false)
   end
 
   def default_assoc do

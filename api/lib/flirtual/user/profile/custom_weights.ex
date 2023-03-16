@@ -1,5 +1,5 @@
 defmodule Flirtual.User.Profile.CustomWeights do
-  use Flirtual.Schema
+  use Flirtual.Schema, primary_key: false
 
   import Ecto.Changeset
   alias Flirtual.User.Profile
@@ -18,8 +18,8 @@ defmodule Flirtual.User.Profile.CustomWeights do
              :likes
            ]}
 
-  schema "user_profile_custom_weights" do
-    belongs_to :profile, Profile
+  schema "profile_custom_weights" do
+    belongs_to :profile, Profile, primary_key: true, references: :user_id
 
     field :country, :float, default: 1.0
     field :monopoly, :float, default: 1.0

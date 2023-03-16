@@ -18,7 +18,7 @@ defmodule Flirtual.User.Connection do
              :created_at
            ]}
 
-  schema "user_connections" do
+  schema "connections" do
     belongs_to :user, User
 
     field :type, Ecto.Enum, values: [:discord, :vrchat]

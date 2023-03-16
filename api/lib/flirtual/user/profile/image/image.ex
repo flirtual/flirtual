@@ -4,8 +4,8 @@ defmodule Flirtual.User.Profile.Image do
 
   alias Flirtual.User.Profile
 
-  schema "user_profile_images" do
-    belongs_to :profile, Profile
+  schema "profile_images" do
+    belongs_to :profile, Profile, references: :user_id
 
     field :external_id, :string
     field :scanned, :boolean, default: false

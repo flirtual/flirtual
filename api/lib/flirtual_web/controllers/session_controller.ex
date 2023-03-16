@@ -136,7 +136,7 @@ defmodule FlirtualWeb.SessionController do
   def fetch_current_session(conn, _) do
     with {token, conn} <- ensure_session_token(conn),
          false <- is_nil(token),
-         session <-
+         {:ok, session} <-
            Session.get(token: token)
            |> Session.maybe_update_active_at(),
          false <- is_nil(session) do

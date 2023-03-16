@@ -98,10 +98,8 @@ defmodule Flirtual.Matchmaking do
     likes_and_passes =
       from(
         a in LikesAndPasses,
-        where: [profile_id: ^profile.id],
-        join: b in Profile,
-        on: [id: a.target_id],
-        select: b.user_id
+        where: [profile_id: ^profile.user_id],
+        select: a.target_id
       )
       |> Repo.all()
 

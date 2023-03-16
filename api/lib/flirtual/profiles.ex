@@ -10,20 +10,6 @@ defmodule Flirtual.Profiles do
   alias Flirtual.User.{Profile}
   alias Flirtual.User.Profile.{Image}
 
-  def get(id) when is_binary(id) do
-    Profile
-    |> where(id: ^id)
-    |> preload(^Profile.default_assoc())
-    |> Repo.one()
-  end
-
-  def get_by_user_id(user_id) when is_binary(user_id) do
-    Profile
-    |> where(user_id: ^user_id)
-    |> preload(^Profile.default_assoc())
-    |> Repo.one()
-  end
-
   def get_personality_by_user_id(user_id)
       when is_binary(user_id) do
     Profile
@@ -67,9 +53,7 @@ defmodule Flirtual.Profiles do
              preferences
              |> Profile.Preferences.changeset(attrs, options)
              |> Repo.update(),
-           {:ok, _} <-
-             Repo.preload(preferences, profile: from(profile in Profile, select: profile.user_id))
-             |> then(&ChangeQueue.add(&1.profile)) do
+           {:ok, _} <- ChangeQueue.add(preferences.profile_id) do
         preferences
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -88,7 +72,7 @@ defmodule Flirtual.Profiles do
     Repo.transaction(fn ->
       placeholders = %{
         now: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
-        profile_id: profile.id
+        profile_id: profile.user_id
       }
 
       image_count = Kernel.length(profile.images)

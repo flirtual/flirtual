@@ -100,16 +100,23 @@ defmodule Flirtual.Elasticsearch do
   end
 
   def get(_, []), do: []
+
   def get(index, ids) when is_list(ids) do
     index_name = get_index_name(index)
     log(:info, [index_name, "get"], ids)
 
     case Elasticsearch.post(Flirtual.Elasticsearch, "/" <> index_name <> "/_mget", %{ids: ids}) do
-      {:ok, response} -> response["docs"] |> Enum.map(&case &1 do
-        %{"_source" => document} -> document
-        _ -> nil
-      end)
-      {:error, _} -> nil
+      {:ok, response} ->
+        response["docs"]
+        |> Enum.map(
+          &case &1 do
+            %{"_source" => document} -> document
+            _ -> nil
+          end
+        )
+
+      {:error, _} ->
+        nil
     end
   end
 

@@ -12,7 +12,7 @@ defmodule Flirtual.User.Subscription do
              :created_at
            ]}
 
-  schema "user_subscriptions" do
+  schema "subscriptions" do
     belongs_to :user, User
 
     field :type, Ecto.Enum, values: [:premium, :supporter, :lifetime_premium]

@@ -1,5 +1,5 @@
 defmodule Flirtual.User.Profile do
-  use Flirtual.Schema
+  use Flirtual.Schema, primary_key: false
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Policy
 
   import Flirtual.Attribute, only: [validate_attribute_list: 5]
@@ -54,33 +54,40 @@ defmodule Flirtual.User.Profile do
     |> Enum.group_by(& &1.metadata["strength"])
   end
 
-  schema "user_profiles" do
-    belongs_to :user, User
+  schema "profiles" do
+    belongs_to :user, User, primary_key: true
 
     field :display_name, :string
     field :biography, :string
     field :domsub, Ecto.Enum, values: @domsub_values
     field :monopoly, Ecto.Enum, values: @monopoly_values
     field :country, :string
-    field :openness, :integer, default: 0
-    field :conscientiousness, :integer, default: 0
-    field :agreeableness, :integer, default: 0
+    field :openness, :integer
+    field :conscientiousness, :integer
+    field :agreeableness, :integer
     Enum.map(@personality_questions, &field(&1, :boolean))
     field :serious, :boolean
     field :new, :boolean
     field :languages, {:array, :string}
     field :custom_interests, {:array, :string}
 
-    has_one :preferences, Preferences
-    has_one :custom_weights, CustomWeights
+    has_one :preferences, Preferences, references: :user_id, foreign_key: :profile_id
+    has_one :custom_weights, CustomWeights, references: :user_id, foreign_key: :profile_id
 
     many_to_many :attributes, Attribute,
-      join_through: "user_profile_attributes",
+      join_through: "profile_attributes",
+      join_keys: [profile_id: :user_id, attribute_id: :id],
       on_replace: :delete
 
-    has_many :images, Image
-    many_to_many :blocked, Profile, join_through: Profile.Blocks
-    many_to_many :liked_and_passed, Profile, join_through: Profile.LikesAndPasses
+    has_many :images, Image, references: :user_id, foreign_key: :profile_id
+
+    many_to_many :blocked, Profile,
+      join_through: Profile.Blocks,
+      join_keys: [profile_id: :user_id, target_id: :user_id]
+
+    many_to_many :liked_and_passed, Profile,
+      join_through: Profile.LikesAndPasses,
+      join_keys: [profile_id: :user_id, target_id: :user_id]
 
     timestamps(inserted_at: false)
   end

@@ -1,5 +1,6 @@
 defmodule Flirtual.User.ChangeQueue do
-  use Flirtual.Schema
+  use Flirtual.Schema, primary_key: false
+  use Flirtual.Logger, :changequeue
 
   import Ecto.Changeset
   import Ecto.Query
@@ -10,9 +11,9 @@ defmodule Flirtual.User.ChangeQueue do
   alias Flirtual.User
   alias Flirtual.User.ChangeQueue
 
-  schema "dirty_users_queue" do
-    belongs_to :user, User
-    timestamps(inserted_at: :created_at)
+  schema "user_change_queue" do
+    belongs_to :user, User, primary_key: true
+    timestamps(inserted_at: :created_at, updated_at: false)
   end
 
   def add(%User{} = user), do: add(user.id)
@@ -109,29 +110,26 @@ defmodule Flirtual.User.ChangeQueue do
   end
 
   defp process_items(items, :elasticsearch) do
+    documents = Elasticsearch.get(:users, Enum.map(items, & &1.user_id))
+
     Elasticsearch.bulk(
       "users",
       Enum.map(items, fn item ->
-        document_id = item.user.id
+        document_id = item.user_id
+
         document = Elasticsearch.encode(item.user)
+        document_exists? = not is_nil(Enum.find(documents, &(&1["id"] === document_id)))
 
         type =
-          if(User.visible?(item.user),
-            do:
-              if Elasticsearch.exists?("users", document_id) do
-                :update
-              else
-                :create
-              end,
-            else: :delete
+          if(not User.visible?(item.user),
+            do: :delete,
+            else: if(document_exists?, do: :update, else: :create)
           )
-
-        document = if(type !== :delete, do: document, else: nil)
 
         {
           type,
           document_id,
-          document
+          if(type !== :delete, do: document, else: nil)
         }
       end)
     )
