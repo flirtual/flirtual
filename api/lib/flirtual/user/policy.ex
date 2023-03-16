@@ -1,4 +1,6 @@
 defmodule Flirtual.User.Policy do
+  import Flirtual.Utilities
+
   use Flirtual.Policy, reference_key: :user
 
   alias Flirtual.Policy
@@ -188,12 +190,13 @@ defmodule Flirtual.User.Policy do
       do: user.born_at
 
   # By default, truncate born at to year, to hide user's exact birthday.
+  @day_in_seconds 86400
   def transform(:born_at, _, %User{} = user) do
     if user.born_at do
       now = Date.utc_today()
 
-      # Note: this doesn't work at all, and I was high when I wrote this.
-      NaiveDateTime.new!(user.born_at.year, now.month, now.day, 0, 0, 0, 0)
+      NaiveDateTime.new!(now.year - get_years_since(user.born_at), now.month, now.day, 0, 0, 0, 0)
+      |> NaiveDateTime.add(-@day_in_seconds)
       |> NaiveDateTime.truncate(:second)
     else
       nil
