@@ -1,18 +1,28 @@
 defmodule Flirtual.Elasticsearch do
   use Elasticsearch.Cluster, otp_app: :flirtual
-  require Logger
+  use Flirtual.Logger, :elasticsearch
 
-  def search(index, query) do
-    Logger.warn("elasticsearch(#{index}/search):\n#{inspect(query, pretty: true)}")
-    Elasticsearch.post(Flirtual.Elasticsearch, "/" <> index <> "/_search", query)
+  defp get_index_name(index) do
+    index_prefix = Application.get_env(:flirtual, Flirtual.Elasticsearch)[:index_prefix]
+    if(index_prefix, do: index_prefix <> "_" <> to_string(index), else: to_string(index))
   end
 
-  def recreate_index() do
-    Elasticsearch.delete(Flirtual.Elasticsearch, "/users")
+  def search(index, query) do
+    index_name = get_index_name(index)
+    log(:debug, [index_name, "search"], query)
+
+    Elasticsearch.post(Flirtual.Elasticsearch, "/" <> index_name <> "/_search", query)
+  end
+
+  def delete_index(index) do
+    index_name = get_index_name(index)
+    log(:warn, [index_name, "delete-index"], nil)
+
+    Elasticsearch.delete(Flirtual.Elasticsearch, "/" <> index_name)
 
     Elasticsearch.Index.create_from_file(
       Flirtual.Elasticsearch,
-      "users",
+      index_name,
       "priv/elasticsearch/users.json"
     )
   end
@@ -31,7 +41,7 @@ defmodule Flirtual.Elasticsearch do
        |> Enum.filter(&(not is_nil(&1)))
      end)
      |> List.flatten()
-     |> Enum.map(&Jason.encode!(&1))
+     |> Enum.map(&Poison.encode!(&1))
      |> Enum.join("\n")) <> "\n"
   end
 
@@ -39,7 +49,8 @@ defmodule Flirtual.Elasticsearch do
   def bulk(_, [], _), do: :ok
 
   def bulk(index, changes, limit) do
-    Logger.warn("elasticsearch(#{index}/bulk):\n#{inspect(changes, pretty: true)}")
+    index_name = get_index_name(index)
+    log(:info, [index_name, "bulk"], changes)
 
     changes
     |> Enum.chunk_every(limit)
@@ -50,7 +61,7 @@ defmodule Flirtual.Elasticsearch do
         resp =
           Elasticsearch.post!(
             Flirtual.Elasticsearch,
-            "/" <> index <> "/_bulk",
+            "/" <> index_name <> "/_bulk",
             body
           )
 
@@ -63,7 +74,7 @@ defmodule Flirtual.Elasticsearch do
                 end)
             )
 
-          Logger.error("elasticsearch(#{index}/bulk)\n#{inspect(exception, pretty: true)}")
+          log(:error, [index_name, "bulk"], exception)
           {:error, exception}
         else
           :ok
@@ -78,20 +89,32 @@ defmodule Flirtual.Elasticsearch do
     end)
   end
 
-  def get(index, id) do
-    Logger.debug("elasticsearch(#{index}/get): #{id}")
+  def get(index, id) when is_binary(id) do
+    index_name = get_index_name(index)
+    log(:info, [index_name, "get"], id)
 
-    with {:ok, document} <-
-           Elasticsearch.get(Flirtual.Elasticsearch, "/" <> index <> "/_doc/#{id}") do
-      {:ok, document["_source"]}
+    case Elasticsearch.get(Flirtual.Elasticsearch, "/" <> index_name <> "/_doc/#{id}") do
+      {:ok, document} -> document["_source"]
+      {:error, _} -> nil
+    end
+  end
+
+  def get(_, []), do: []
+  def get(index, ids) when is_list(ids) do
+    index_name = get_index_name(index)
+    log(:info, [index_name, "get"], ids)
+
+    case Elasticsearch.post(Flirtual.Elasticsearch, "/" <> index_name <> "/_mget", %{ids: ids}) do
+      {:ok, response} -> response["docs"] |> Enum.map(&case &1 do
+        %{"_source" => document} -> document
+        _ -> nil
+      end)
+      {:error, _} -> nil
     end
   end
 
   def exists?(index, id) do
-    case get(index, id) do
-      {:ok, _} -> true
-      _ -> false
-    end
+    not is_nil(get(index, id))
   end
 
   def encode(item), do: Elasticsearch.Document.encode(item)

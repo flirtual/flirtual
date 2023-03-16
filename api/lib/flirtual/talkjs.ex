@@ -1,5 +1,5 @@
 defmodule Flirtual.Talkjs do
-  require Logger
+  use Flirtual.Logger, :talkjs
 
   alias Flirtual.{User}
 
@@ -34,7 +34,7 @@ defmodule Flirtual.Talkjs do
     raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
-    Logger.warn("talkjs(#{method} #{url}):\n#{inspect(body, pretty: true)}")
+    log(:info, [method, url], body)
 
     HTTPoison.request(method, url, raw_body, [
       {"authorization", "Bearer " <> config(:access_token)},
