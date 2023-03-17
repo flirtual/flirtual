@@ -24,7 +24,12 @@ export function useSession(options: UseSessionOptions = {}) {
 		[mutate, router]
 	);
 
-	return [session, update] as const;
+	const logout = useCallback(async () => {
+		await api.auth.logout().catch(() => null);
+		await update(null);
+	}, [update]);
+
+	return [session, update, logout] as const;
 }
 
 export function useSessionUser(options: UseSessionOptions = {}): User | null {

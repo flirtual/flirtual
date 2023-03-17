@@ -40,6 +40,7 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({ children, ...pro
 		<button
 			className="flex justify-between gap-4 py-2 px-6 text-black-80 focus:outline-none hocus:bg-brand-gradient hocus:text-white-20 hocus:shadow-brand-1 dark:text-white-20 md:hocus:bg-white-30 md:hocus:bg-none md:hocus:text-black-80 dark:md:hocus:bg-white-20"
 			type="button"
+			onClick={props.onClick}
 		>
 			{children}
 			<Icon className="w-6" />
