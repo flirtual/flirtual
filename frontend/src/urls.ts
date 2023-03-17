@@ -50,7 +50,6 @@ export const urls = {
 	register: "/register",
 	login: (to?: string) => url("/login", { to }),
 	forgotPassword: "/forgot-password",
-	logout: "/logout",
 	user: {
 		me: "/me",
 		profile: (username: string) => `/${username}`
