@@ -4,12 +4,14 @@ import { twMerge } from "tailwind-merge";
 export type ModelCardProps = React.ComponentProps<"div"> & {
 	title: React.ReactNode;
 	titleProps?: React.ComponentProps<"div">;
+	containerProps?: React.ComponentProps<"div">;
 };
 
 export const ModelCard: React.FC<ModelCardProps> = ({
 	children,
 	title,
 	titleProps = {},
+	containerProps = {},
 	...props
 }) => (
 	<div {...props} className={twMerge("w-full shrink-0 sm:w-full sm:max-w-lg", props.className)}>
@@ -23,7 +25,13 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			{title}
 		</div>
 		<div className="bg-brand-gradient sm:rounded-3xl sm:rounded-tl-none sm:p-1 sm:shadow-brand-1">
-			<div className="flex w-full flex-col bg-white-20 px-8 py-10 dark:bg-black-70 dark:text-white-20 sm:rounded-3xl sm:rounded-tl-none sm:px-16">
+			<div
+				{...containerProps}
+				className={twMerge(
+					"flex w-full flex-col overflow-hidden bg-white-20 px-8 py-10 dark:bg-black-70 dark:text-white-20 sm:rounded-3xl sm:rounded-tl-none sm:px-16",
+					containerProps.className
+				)}
+			>
 				{children}
 			</div>
 		</div>
