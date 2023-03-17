@@ -46,6 +46,7 @@ export const urls = {
 		user.profile.images[0]?.url ?? urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
 
 	// pages
+	default: "/",
 	register: "/register",
 	login: (to?: string) => url("/login", { to }),
 	forgotPassword: "/forgot-password",
@@ -93,7 +94,8 @@ export const urls = {
 		communityGuidelines: "/guidelines",
 		termsOfService: "/terms",
 		privacyPolicy: "/privacy",
-		company: "https://studiopaprika.io/"
+		company: "https://studiopaprika.io/",
+		contact: "https://hello.flirtu.al/"
 	},
 
 	socials: {
