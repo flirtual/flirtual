@@ -14,6 +14,7 @@ export const HeaderMessage: React.FC<React.PropsWithChildren<{ className?: strin
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [dismissMobile, setDismissMobile] = useLocalStorage("dismissMobile", false);
 
+	// todo: fix header dismissal
 	return (
 		<AnimatePresence>
 			{!dismissMobile && (
