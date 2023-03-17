@@ -1,12 +1,24 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 import { api } from "~/api";
-import { thruServerCookies } from "~/server-utilities";
 import { urls } from "~/urls";
+import { useSession } from "~/hooks/use-session";
 
-export default async function LogoutPage() {
-	await api.auth.logout(thruServerCookies()).catch(() => null);
-	redirect(urls.login());
+export default function LogoutPage() {
+	const [, mutateSession] = useSession();
+	const router = useRouter();
+
+	useEffect(() => {
+		void (async () => {
+			await api.auth.logout().catch(() => null);
+			await mutateSession();
+
+			router.push(urls.login());
+		});
+	});
 
 	return null;
 }

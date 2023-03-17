@@ -22,6 +22,8 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 	const { user } = props;
 
 	const sexualities = useAttributeList("sexuality");
+	const games = useAttributeList("game");
+	const interests = useAttributeList("interest");
 
 	if (!session) return null;
 
@@ -50,7 +52,7 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 				);
 			})}
 			{filterBy(user.profile.attributes, "type", "game").map(({ id }) => {
-				const attribute = findBy(sexualities, "id", id);
+				const attribute = findBy(games, "id", id);
 				if (!attribute) return null;
 
 				return (
@@ -63,7 +65,7 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 				);
 			})}
 			{filterBy(user.profile.attributes, "type", "interest").map(({ id }) => {
-				const attribute = findBy(sexualities, "id", id);
+				const attribute = findBy(interests, "id", id);
 				if (!attribute) return null;
 
 				return (
