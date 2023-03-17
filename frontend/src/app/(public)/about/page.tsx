@@ -45,7 +45,7 @@ export default function AboutPage() {
 		<SoleModelLayout>
 			<ModelCard
 				className="w-full sm:max-w-2xl"
-				containerProps={{ className: "!p-0 " }}
+				containerProps={{ className: "!p-0 overflow-hidden" }}
 				title="About us"
 			>
 				<img src="https://flirtu.al/img/team.jpg" />
