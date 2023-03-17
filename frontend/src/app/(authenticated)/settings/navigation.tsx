@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -22,7 +23,7 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigati
 			<NavigationHeader {...{ navigationInner }} />
 			<nav className={twMerge("flex-col gap-8 py-8", navigationInner ? "hidden md:flex" : "flex")}>
 				<NavigationCategory name="Profile">
-					<NavigationLink href={urls.settings.matchmaking}>Matchmaking</NavigationLink>
+					<NavigationLink href={urls.settings.matchmaking()}>Matchmaking</NavigationLink>
 					<NavigationLink href={urls.settings.biography}>Biography & pictures</NavigationLink>
 					<NavigationLink href={urls.settings.tags}>Information & tags</NavigationLink>
 					<NavigationLink href={urls.settings.personality}>Personality</NavigationLink>
@@ -35,6 +36,9 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigati
 					<NavigationLink href={urls.settings.changeEmail}>Change email</NavigationLink>
 					<NavigationLink href={urls.settings.changePassword}>Change password</NavigationLink>
 					<NavigationLink href={urls.settings.deactivateAccount}>Deactivate account</NavigationLink>
+					<NavigationLink href={urls.logout} Icon={ArrowRightOnRectangleIcon}>
+						Logout
+					</NavigationLink>
 				</NavigationCategory>
 				<NavigationCategory name="Resources">
 					<NavigationLink onClick={openFreshworks}>Support</NavigationLink>

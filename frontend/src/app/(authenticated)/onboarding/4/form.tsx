@@ -40,7 +40,7 @@ export const Onboarding4Form: React.FC = () => {
 					})
 				]);
 
-				router.push(user.emailConfirmedAt ? urls.user(user.username) : urls.confirmEmail());
+				router.push(user.emailConfirmedAt ? urls.browse() : urls.confirmEmail());
 			}}
 		>
 			{({ FormField }) => (

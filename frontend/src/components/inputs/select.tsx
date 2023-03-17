@@ -2,7 +2,7 @@
 
 import { ChevronUpDownIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useCallback, useRef, forwardRef, useState, KeyboardEvent, Dispatch } from "react";
+import React, { useCallback, useRef, forwardRef, useState, KeyboardEvent, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 
 export interface InputSelectOption<K extends string = string> {
@@ -73,6 +73,19 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 		}, []);
 
 		// useEffect(() => focusOption(0), [focusOption]);
+
+		useEffect(() => {
+			const { current: root } = optionsRef;
+			if (!root) return;
+
+			const activeElement = root.querySelector("*[data-active=true]");
+			if (!activeElement || !(activeElement instanceof HTMLElement)) return;
+
+			activeElement.focus({});
+
+			// todo: this scrolls the entire page, not the container.
+			// activeElement.scrollIntoView({ block: "start" });
+		}, []);
 
 		return (
 			<div

@@ -6,11 +6,19 @@ export async function listProspects(options: NarrowFetchOptions = {}): Promise<A
 
 export type ProspectRespondType = "like" | "pass";
 
+export type RespondProspectBody = {
+	type: ProspectRespondType;
+	userId: string;
+}
+
 export async function respondProspect(
-	options: NarrowFetchOptions<{
-		type: ProspectRespondType;
-		userId: string;
-	}>
+	options: NarrowFetchOptions<RespondProspectBody>
 ) {
 	return fetch("post", `prospects/respond`, options);
+}
+
+export async function reverseRespondProspect(
+	options: NarrowFetchOptions<RespondProspectBody>
+) {
+	return fetch("delete", `prospects/respond`, options);
 }

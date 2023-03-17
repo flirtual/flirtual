@@ -9,6 +9,7 @@ import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useSessionUser } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
 export const PrivacyForm: React.FC = () => {
 	const user = useSessionUser();
@@ -72,7 +73,7 @@ export const PrivacyForm: React.FC = () => {
 									inline
 									hint={
 										<InputLabelHint>
-											<InlineLink className="flex w-fit items-center gap-2" href="/privacy-policy">
+											<InlineLink className="flex w-fit items-center gap-2" href={urls.resources.privacyPolicy}>
 												<QuestionMarkCircleIcon className="w-4 shrink-0" />
 												<span>Learn more</span>
 											</InlineLink>

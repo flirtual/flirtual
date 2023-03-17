@@ -58,21 +58,21 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 					</div>
 				</div>
 				<ul className="flex max-w-screen-sm flex-wrap gap-x-4 gap-y-1 md:mx-auto md:justify-center">
-					<FooterListLink href="/events" label="Events" />
+					<FooterListLink href={urls.resources.events} label="Events" />
 					<FooterSupportLink />
 					<FooterListLink href={urls.resources.networkStatus} label="Status" />
-					<FooterListLink href="/press" label="Press" />
-					<FooterListLink href="/branding" label="Branding" />
-					<FooterListLink href="/developers" label="Developers" />
-					<FooterListLink href="/about" label="About us" />
-					<FooterListLink href="/terms" label="Terms of Service" />
-					<FooterListLink href="/privacy" label="Privacy Policy" />
+					<FooterListLink href={urls.resources.press} label="Press" />
+					<FooterListLink href={urls.resources.branding} label="Branding" />
+					<FooterListLink href={urls.resources.developers} label="Developers" />
+					<FooterListLink href={urls.resources.about} label="About us" />
+					<FooterListLink href={urls.resources.termsOfService} label="Terms of Service" />
+					<FooterListLink href={urls.resources.privacyPolicy} label="Privacy Policy" />
 				</ul>
 				<div className="flex justify-between md:text-lg">
 					<span className="hidden sm:inline">Made with ♥︎ in VR</span>
 					<span>
 						© {new Date().getFullYear()}{" "}
-						<a className="hover:underline" href="https://studiopaprika.io/">
+						<a className="hover:underline" href={urls.resources.company}>
 							Studio Paprika
 						</a>
 					</span>

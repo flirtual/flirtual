@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
 					<FlirtualLogo className="h-16 shrink-0" />
 					<div className="flex items-center gap-8 font-montserrat text-lg font-semibold">
 						<nav className="flex gap-4">
-							<InlineLink href="/about">About us</InlineLink>
+							<InlineLink href={urls.resources.about}>About us</InlineLink>
 							<Popover className="hidden lg:block">
 								<button type="button">Community</button>
 								<PopoverModel>

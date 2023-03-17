@@ -6,7 +6,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
-import { Navigation } from "~/components/layout/navigation";
+import { MobileBarNavigation } from "~/components/layout/navigation/mobile-bar";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { ConversationChatbox, ConversationInbox } from "~/hooks/use-talkjs";
 import { urls } from "~/urls";
@@ -53,19 +53,14 @@ export default function ConversationsLayout() {
 							className="h-[calc(100vh_-_8rem)] w-full overflow-hidden md:h-[32rem] md:rounded-xl"
 							userId={userId}
 							options={{
-								theme: "next-mobile",
-								presence: {
-									custom: {
-										foo: "bar"
-									}
-								}
+								theme: "next-mobile"
 							}}
 						/>
 					</div>
 				)}
 			</div>
 			<Footer desktopOnly />
-			<Navigation />
+			<MobileBarNavigation />
 		</div>
 	);
 }

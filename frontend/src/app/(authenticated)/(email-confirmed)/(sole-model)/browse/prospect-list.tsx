@@ -3,11 +3,13 @@ import { ArrowUturnLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 import { api } from "~/api";
-import { ProspectRespondType } from "~/api/matchmaking";
+import { ProspectRespondType, RespondProspectBody } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { HeartGradient } from "~/components/icons/heart-gradient";
 import { PeaceGradient } from "~/components/icons/peace-gradient";
 import { Profile } from "~/components/profile/profile";
+
+import { OutOfProspects } from "./out-of-prospects";
 
 export interface ProspectListProps {
 	prospects: Array<User>;
@@ -17,18 +19,38 @@ const ProspectActionBar: React.FC<{
 	userId: string;
 	setProspectIdx: Dispatch<SetStateAction<number>>;
 }> = ({ userId, setProspectIdx }) => {
+	const [respondHistory, setRespondHistory] = useState<Array<RespondProspectBody>>([])
+
 	const respond = useCallback(
 		async (type: ProspectRespondType) => {
-			await api.matchmaking.respondProspect({
-				body: {
-					type,
-					userId
-				}
-			});
+			const body = {
+				type,
+				userId
+			};
 
+			await api.matchmaking.respondProspect({ body });
+
+			setRespondHistory((respondHistory) => [...respondHistory, body])
 			setProspectIdx((prospectIdx) => prospectIdx + 1);
 		},
 		[userId, setProspectIdx]
+	);
+
+	const respondReverse = useCallback(
+		async () => {
+			setRespondHistory((respondHistory) => {
+				const lastRespond = respondHistory.pop()
+				if (!lastRespond) return [];
+
+				void api.matchmaking.reverseRespondProspect({
+					body: lastRespond
+				});
+
+				setProspectIdx((prospectIdx) => prospectIdx - 1);
+				return respondHistory;
+			})
+		},
+		[setProspectIdx]
 	);
 
 	return (
@@ -36,8 +58,10 @@ const ProspectActionBar: React.FC<{
 			<div className="pointer-events-none fixed left-0 bottom-0  flex  w-full items-center justify-center bg-gradient-to-b from-transparent to-black-90/50 p-8">
 				<div className="pointer-events-auto flex h-32 items-center gap-3 overflow-hidden rounded-xl pb-16 text-white-10">
 					<button
-						className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1"
+						className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:brightness-50 disabled:cursor-not-allowed"
 						type="button"
+						onClick={respondReverse}
+						disabled={respondHistory.length === 0}
 					>
 						<ArrowUturnLeftIcon className="w-5" strokeWidth={3} />
 					</button>
@@ -73,12 +97,12 @@ export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
 	const [prospectIdx, setProspectIdx] = useState(0);
 	const prospect = prospects[prospectIdx];
 
-	if (!prospect) return null;
-
-	return (
+	return prospect ? (
 		<>
-			<Profile user={prospect} />
+			<Profile key={prospect.id} user={prospect} />
 			<ProspectActionBar setProspectIdx={setProspectIdx} userId={prospect.id} />
 		</>
+	) : (
+		<OutOfProspects />
 	);
 };
