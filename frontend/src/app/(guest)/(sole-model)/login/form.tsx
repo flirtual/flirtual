@@ -8,11 +8,9 @@ import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
-	const [, mutateSession] = useSession();
 	const router = useRouter();
 
 	return (
@@ -25,10 +23,10 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 				rememberMe: false
 			}}
 			onSubmit={async (body) => {
-				const session = await api.auth.login({ body });
-				await mutateSession(session);
+				await api.auth.login({ body });
 
-				if (to) return router.push(to);
+				router.push(to ?? urls.browse());
+				router.refresh();
 			}}
 		>
 			{({ errors, FormField }) => (

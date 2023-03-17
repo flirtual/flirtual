@@ -49,7 +49,9 @@ export async function useServerAuthenticate(
 
 	if (session) {
 		if (!session.user.visible) {
-			const { visible, reasons } = await api.user.visible(session.user.id, thruServerCookies()).catch(() => ({visible: false, reasons: []}));
+			const { visible, reasons } = await api.user
+				.visible(session.user.id, thruServerCookies())
+				.catch(() => ({ visible: false, reasons: [] }));
 
 			if (!visible) {
 				const reason = reasons[0];
