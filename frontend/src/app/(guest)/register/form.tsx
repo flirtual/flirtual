@@ -65,11 +65,11 @@ export const RegisterForm: React.FC = () => {
 									hint={
 										<InputLabelHint className="max-w-[34ch]">
 											I agree to the{" "}
-											<a className="underline" href="/terms">
+											<a className="underline" href={urls.resources.termsOfService}>
 												Terms of Service
 											</a>{" "}
 											&{" "}
-											<a className="underline" href="/privacy">
+											<a className="underline" href={urls.resources.privacyPolicy}>
 												Privacy Policy
 											</a>{" "}
 											and I&apos;m at least 18 years of age.

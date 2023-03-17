@@ -84,11 +84,15 @@ export const urls = {
 	},
 
 	resources: {
+		events: "/events",
 		networkStatus: "https://status.flirtu.al",
+		press: "/press",
+		branding: "/branding",
+		developers: "https://github.com/flirtual",
 		about: "/about",
-		communityGuidelines: "/community-guidelines",
-		termsOfService: "/terms-of-service",
-		privacyPolicy: "/privacy-policy",
+		communityGuidelines: "/guidelines",
+		termsOfService: "/terms",
+		privacyPolicy: "/privacy",
 		company: "https://studiopaprika.io/"
 	},
 
