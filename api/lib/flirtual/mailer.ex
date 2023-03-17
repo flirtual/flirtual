@@ -3,7 +3,7 @@ defmodule Flirtual.Mailer do
 
   import Swoosh.Email
 
-  @domain "flirtual.al"
+  @domain "flirtu.al"
   @twitter_url "https://twitter.com/getflirtual"
   @discord_url "https://#{@domain}/discord"
   @unsubscribe_url "https://#{@domain}/settings/notifications"
