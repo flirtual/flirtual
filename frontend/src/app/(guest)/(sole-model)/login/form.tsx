@@ -29,7 +29,6 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 				await mutateSession(session);
 
 				if (to) return router.push(to);
-				router.refresh();
 			}}
 		>
 			{({ errors, FormField }) => (
