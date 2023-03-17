@@ -29,7 +29,7 @@ config :joken, default_signer: System.fetch_env!("JOKAN_SECRET")
 
 config :flirtual, Flirtual.Elasticsearch,
   url: System.fetch_env!("ELASTICSEARCH_URL"),
-  index_prefix: System.get_env("ELASTICSEARCH_INDEX_PREFIX", ""),
+  index_prefix: System.get_env("ELASTICSEARCH_INDEX_PREFIX"),
   default_headers: [
     {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
   ]
