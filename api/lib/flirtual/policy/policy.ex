@@ -11,7 +11,10 @@ defmodule Flirtual.Policy do
     Bodyguard.permit(Keyword.get(opts, :policy) || target.__struct__, action, conn, target)
   end
 
-  def can?(conn, action, target, opts \\ []) do
+  def can?(conn, action, target, opts \\ [])
+  def can?(_, _, nil, _), do: false
+
+  def can?(conn, action, target, opts) do
     Bodyguard.permit?(Keyword.get(opts, :policy) || target.__struct__, action, conn, target)
   end
 

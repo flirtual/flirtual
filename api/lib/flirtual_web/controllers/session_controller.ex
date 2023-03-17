@@ -42,7 +42,10 @@ defmodule FlirtualWeb.SessionController do
              get_field(changeset, :password)
            ) do
         {session, conn} = create(conn, user, get_field(changeset, :remember_me))
-        conn |> put_status(:created) |> json(session)
+
+        conn
+        |> put_status(:created)
+        |> json(Policy.transform(conn, session))
       else
         {:error, {:unauthorized, "Invalid credentials"}}
       end
@@ -64,7 +67,6 @@ defmodule FlirtualWeb.SessionController do
       with {:ok, session} <-
              session |> Session.sudo(user) do
         conn
-        |> assign(:session, session)
         |> json(Policy.transform(conn, session))
       end
     end
@@ -92,6 +94,7 @@ defmodule FlirtualWeb.SessionController do
       conn
       |> fetch_session()
       |> renew_session()
+      |> assign(:session, session)
       |> put_session(:token, session.token)
       |> maybe_write_remember_me_cookie(session.token, remember_me)
 
