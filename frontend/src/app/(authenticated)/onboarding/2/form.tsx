@@ -64,7 +64,7 @@ export const Onboarding2Form: React.FC = () => {
 					api.user.profile.update(user.id, {
 						query: {
 							required: ["country", "languages", "new"],
-							requiredAttributes: AttributeKeys
+							requiredAttributes: AttributeKeys.filter((key) => key !== "sexuality")
 						},
 						body: {
 							country: values.country,
