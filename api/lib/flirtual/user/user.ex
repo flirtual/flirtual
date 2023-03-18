@@ -99,10 +99,6 @@ defmodule Flirtual.User do
         %{reason: "missing profile genders", to: "/onboarding/2"}
       },
       {
-        length(filter_by(profile.attributes, :type, "sexuality")) === 0,
-        %{reason: "missing profile sexuality", to: "/onboarding/2"}
-      },
-      {
         is_nil(profile.country),
         %{reason: "missing profile country", to: "/onboarding/2"}
       },
