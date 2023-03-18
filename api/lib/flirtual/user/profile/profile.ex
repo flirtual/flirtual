@@ -135,7 +135,7 @@ defmodule Flirtual.User.Profile do
       ],
       &(&1
         |> validate_length(:gender, min: 1, max: 4)
-        |> validate_length(:sexuality, min: 1, max: 3)
+        |> validate_length(:sexuality, max: 3)
         |> validate_length(:kink, min: 1, max: 8)
         |> validate_length(:game, min: 1, max: 5)
         |> validate_length(:platform, min: 1, max: 8)

@@ -22,7 +22,7 @@ defmodule Flirtual.User do
       values: [:admin, :moderator, :beta_tester, :debugger, :verified],
       default: []
 
-    field :born_at, :date
+    field :born_at, :naive_datetime
     field :email_confirmed_at, :naive_datetime
     field :deactivated_at, :naive_datetime
     field :banned_at, :naive_datetime
@@ -97,10 +97,6 @@ defmodule Flirtual.User do
       {
         length(filter_by(profile.attributes, :type, "gender")) === 0,
         %{reason: "missing profile genders", to: "/onboarding/2"}
-      },
-      {
-        length(filter_by(profile.attributes, :type, "sexuality")) === 0,
-        %{reason: "missing profile sexuality", to: "/onboarding/2"}
       },
       {
         is_nil(profile.country),
