@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { isInternalHref } from "~/urls";
 
 const buttonClassName =
-	"focusable rounded-xl bg-brand-gradient p-4 text-center font-montserrat text-xl font-semibold text-white-10 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-90";
+	"focusable rounded-xl bg-brand-gradient py-4 px-8 text-center font-montserrat text-xl font-semibold text-white-10 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-90";
 
 export type ButtonProps = React.ComponentProps<"button">;
 
