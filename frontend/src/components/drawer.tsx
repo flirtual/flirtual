@@ -5,7 +5,7 @@ import { Portal } from "react-portal";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 
-import flirtualMark from "../../public/images/brand/flirtual-mark.svg";
+import flirtualMark from "../../public/images/brand/mark/default.svg";
 
 export interface DrawerProps {
 	visible: boolean;
