@@ -22,7 +22,7 @@ defmodule Flirtual.User do
       values: [:admin, :moderator, :beta_tester, :debugger, :verified],
       default: []
 
-    field :born_at, :date
+    field :born_at, :naive_datetime
     field :email_confirmed_at, :naive_datetime
     field :deactivated_at, :naive_datetime
     field :banned_at, :naive_datetime
