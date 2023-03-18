@@ -35,7 +35,9 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 							{user.bornAt && (
 								<div className="flex h-fit gap-2">
 									<span className="text-3xl leading-none">
-										{new Date().getFullYear() - new Date(user.bornAt).getFullYear()}
+										{Math.floor(
+											(Date.now() - new Date(user.bornAt).getTime()) / (365 * 24 * 60 * 60 * 1000)
+										)}
 									</span>
 									{user.tags.includes("verified") && <ProfileVerificationBadge />}
 								</div>
