@@ -115,7 +115,7 @@ defmodule Flirtual.User.Profile do
     ])
     |> validate_required(Keyword.get(options, :required, []))
     |> validate_length(:display_name, min: 3, max: 32)
-    |> validate_length(:biography, min: 48, max: 1024)
+    |> validate_length(:biography, min: 48, max: 4096)
     |> validate_length(:languages, min: 1, max: 3)
     |> validate_subset(:languages, Languages.list(:iso_639_1),
       message: "has an unrecognized language"

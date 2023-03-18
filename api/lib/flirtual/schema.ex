@@ -6,10 +6,10 @@ defmodule Flirtual.Schema do
 
       primary_key = Keyword.get(options, :primary_key, :id)
 
-      @primary_key if(primary_key === false,
-                     do: false,
-                     else: {primary_key, :binary_id, autogenerate: true}
-                   )
+      @primary_key (with primary_key when not is_boolean(primary_key) <-
+                                        Keyword.get(options, :primary_key, :id) do
+                                   {primary_key, :binary_id, autogenerate: true}
+                                 end)
 
       @foreign_key_type :binary_id
 
