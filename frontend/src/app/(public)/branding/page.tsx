@@ -1,12 +1,23 @@
-import { StaticImageData } from "next/image";
-import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
-import { urls } from "~/urls";
 import { ButtonLink } from "~/components/button";
+
+const Color: React.FC<{ name: string; value: string; invert?: boolean }> = ({
+	name,
+	value,
+	invert
+}) => (
+	<div
+		className={twMerge("grow rounded-lg border p-4", invert && "text-black-80")}
+		style={{ background: value }}
+	>
+		<span className="text-lg font-semibold">{name}</span>
+		<pre className="[white-space:break-spaces]">{value}</pre>
+	</div>
+);
 
 export interface ImageListItemProps {
 	name: string;
@@ -52,20 +63,6 @@ export interface ImageListProps {
 	items: Array<ImageListItemProps>;
 	className?: string;
 }
-
-const Color: React.FC<{ name: string; value: string; invert?: boolean }> = ({
-	name,
-	value,
-	invert
-}) => (
-	<div
-		className={twMerge("grow rounded-lg border p-4", invert && "text-black-80")}
-		style={{ background: value }}
-	>
-		<span className="text-lg font-semibold">{name}</span>
-		<pre>{value}</pre>
-	</div>
-);
 
 async function ImageList({ className, items }: ImageListProps) {
 	return (
