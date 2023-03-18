@@ -36,10 +36,14 @@ defmodule Flirtual.Talkjs do
 
     log(:info, [method, url], body)
 
-    HTTPoison.request(method, url, raw_body, [
-      {"authorization", "Bearer " <> config(:access_token)},
-      {"content-type", "application/json"}
-    ])
+    result =
+      HTTPoison.request(method, url, raw_body, [
+        {"authorization", "Bearer " <> config(:access_token)},
+        {"content-type", "application/json"}
+      ])
+
+    log(:info, [method, url], result)
+    result
   end
 
   def update_user(%User{} = user) do
