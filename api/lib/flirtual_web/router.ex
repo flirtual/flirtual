@@ -111,6 +111,8 @@ defmodule FlirtualWeb.Router do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
           get "/", MatchmakingController, :list_prospects
+          delete "/", MatchmakingController, :reset_prospects
+
           get "/inspect", MatchmakingController, :inspect_query
 
           post "/respond", MatchmakingController, :respond

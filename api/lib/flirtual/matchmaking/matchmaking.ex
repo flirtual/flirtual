@@ -17,6 +17,10 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
+  def reset_prospects(%User{} = user) do
+    LikesAndPasses.delete_all(profile_id: user.id)
+  end
+
   def deliver_match_email(user, target_user) do
     action_url =
       URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin)) <>

@@ -11,6 +11,12 @@ defmodule FlirtualWeb.MatchmakingController do
     conn |> json(compute_prospects(conn.assigns[:session].user))
   end
 
+  def reset_prospects(conn, _) do
+    with {:ok, _} <- reset_prospects(conn.assigns[:session].user) do
+      conn |> json(%{})
+    end
+  end
+
   def inspect_query(conn, _) do
     conn |> json(generate_query(conn.assigns[:session].user))
   end
