@@ -68,8 +68,13 @@ defmodule Flirtual.Matchmaking do
     conversation_id = Talkjs.new_conversation_id(user_a, user_b)
 
     with {:ok, conversation} <-
-           Talkjs.update_conversation(conversation_id, [user_a.id, user_b.id], "❤️", [
-             "It's a match!"
+           Talkjs.update_conversation(conversation_id, [user_a.id, user_b.id], "❤️"),
+         {:ok, _} <-
+           Talkjs.create_messages(conversation_id, [
+             %{
+               text: "It's a match",
+               type: "SystemMessage"
+             }
            ]) do
       {:ok, conversation}
     else

@@ -198,12 +198,3 @@ defimpl Jason.Encoder, for: Flirtual.User.Session do
     )
   end
 end
-
-defimpl Inspect, for: Flirtual.User.Session do
-  import Inspect.Algebra
-
-  def inspect(conn, opts) do
-    document = Map.take(conn, [:id, :user, :sudoer_id]) |> Map.to_list()
-    concat(["#Session<", to_doc(document, opts), ">"])
-  end
-end

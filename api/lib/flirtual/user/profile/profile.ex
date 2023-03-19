@@ -213,12 +213,3 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
     )
   end
 end
-
-defimpl Inspect, for: Flirtual.User.Profile do
-  import Inspect.Algebra
-
-  def inspect(conn, opts) do
-    document = Map.take(conn, [:display_name]) |> Map.to_list()
-    concat(["#Profile<", to_doc(document, opts), ">"])
-  end
-end
