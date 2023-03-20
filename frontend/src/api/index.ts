@@ -4,4 +4,4 @@ export * from "./exports";
 import * as api from "./exports";
 
 // @ts-expect-error: expose "api" for repl usage.
-window.api = api;
+globalThis.api = api;
