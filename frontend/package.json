@@ -2,7 +2,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev -H 127.0.0.1",
-    "start": "next start -H 127.0.0.1"
+    "start": "next start -H 127.0.0.1",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.4.4",
@@ -39,6 +40,8 @@
     "@types/sanitize-html": "^2.9.0",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.36.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.0",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7",
     "tailwindcss-hocus": "^0.0.7",
