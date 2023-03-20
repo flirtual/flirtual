@@ -41,6 +41,7 @@ defmodule Flirtual.MixProject do
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:elasticsearch, "~> 1.0.0"},
+      {:stripity_stripe, "~> 2.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:pre_commit, "~> 0.3.4", only: :dev},

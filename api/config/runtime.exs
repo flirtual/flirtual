@@ -34,6 +34,10 @@ config :flirtual, Flirtual.Elasticsearch,
     {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
   ]
 
+config :stripity_stripe,
+  api_key: System.fetch_env!("STRIPE_ACCESS_TOKEN"),
+  json_library: Poison
+
 config :flirtual, FlirtualWeb.Endpoint, secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
 
 if config_env() == :prod do
