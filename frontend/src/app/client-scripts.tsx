@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { useEffect } from "react";
 
+import { PreferenceThemes } from "~/api/user/preferences";
 import { uploadcarePublicKey } from "~/const";
 import { useTheme } from "~/hooks/use-theme";
 
@@ -31,7 +32,8 @@ export const ClientScripts: React.FC = () => {
 
 	useEffect(() => {
 		if (sessionTheme !== "system") return;
-		document.documentElement.classList.replace(sessionTheme, theme);
+		document.documentElement.classList.remove(...PreferenceThemes);
+		document.documentElement.classList.add(theme);
 	}, [theme, sessionTheme]);
 
 	return (
