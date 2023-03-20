@@ -3,7 +3,7 @@ import { snakeCase } from "change-case";
 import { AttributeType, PartialAttributeCollection } from "~/api/attributes";
 
 import { UpdatedAtModel } from "../../common";
-import { fetch, NarrowFetchOptions } from "../..";
+import { fetch, NarrowFetchOptions } from "../../exports";
 
 import { ProfileImage } from "./images";
 import { ProfileCustomWeights } from "./custom-weights";

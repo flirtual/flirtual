@@ -73,7 +73,10 @@ export const PrivacyForm: React.FC = () => {
 									inline
 									hint={
 										<InputLabelHint>
-											<InlineLink className="flex w-fit items-center gap-2" href={urls.resources.privacyPolicy}>
+											<InlineLink
+												className="flex w-fit items-center gap-2"
+												href={urls.resources.privacyPolicy}
+											>
 												<QuestionMarkCircleIcon className="w-4 shrink-0" />
 												<span>Learn more</span>
 											</InlineLink>

@@ -1,4 +1,4 @@
-import { fetch, NarrowFetchOptions } from "../..";
+import { fetch, NarrowFetchOptions } from "../../exports";
 
 import { Profile } from "./profile";
 

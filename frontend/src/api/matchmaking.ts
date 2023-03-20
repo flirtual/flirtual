@@ -1,4 +1,4 @@
-import { fetch, NarrowFetchOptions } from ".";
+import { fetch, NarrowFetchOptions } from "./exports";
 
 export async function listProspects(options: NarrowFetchOptions = {}): Promise<Array<string>> {
 	return fetch<Array<string>>("get", "prospects", options);

@@ -1,7 +1,7 @@
 import { snakeCase } from "change-case";
 
 import { DatedModel, UuidModel } from "../common";
-import { fetch, NarrowFetchOptions } from "..";
+import { fetch, NarrowFetchOptions } from "../exports";
 
 import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";

@@ -1,7 +1,6 @@
 import { DatedModel } from "./common";
 import { User } from "./user";
-
-import { fetch, NarrowFetchOptions } from ".";
+import { fetch, NarrowFetchOptions } from "./exports";
 
 export type Session = DatedModel & {
 	sudoerId?: string;
