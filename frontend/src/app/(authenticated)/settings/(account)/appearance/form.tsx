@@ -8,7 +8,7 @@ import { capitalize } from "~/utilities";
 
 export const AppearanceForm: React.FC = () => {
 	const [session] = useSession();
-	const [theme, mutateTheme] = useTheme();
+	const { setTheme, sessionTheme } = useTheme();
 
 	if (!session) return null;
 
@@ -18,8 +18,8 @@ export const AppearanceForm: React.FC = () => {
 				<InputLabel>Theme</InputLabel>
 				<InputSelect
 					options={PreferenceThemes.map((theme) => ({ key: theme, label: capitalize(theme) }))}
-					value={theme}
-					onChange={mutateTheme}
+					value={sessionTheme}
+					onChange={setTheme}
 				/>
 			</div>
 		</div>

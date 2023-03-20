@@ -1,5 +1,5 @@
 {
   "**/*.{js,ts,jsx,tsx}": [
-    "eslint --fix"
+    "pnpm eslint --config .eslintrc.js --fix"
   ]
 }

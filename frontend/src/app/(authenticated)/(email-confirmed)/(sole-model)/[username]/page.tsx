@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { api } from "~/api";
 import { Profile } from "~/components/profile/profile";
@@ -13,7 +13,9 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 	const user =
 		params.username === "me"
 			? await api.auth.user(thruServerCookies()).catch(() => redirect(urls.login()))
-			: await api.user.getByUsername(params.username, thruServerCookies()).catch(() => notFound());
+			: await api.user
+					.getByUsername(params.username, thruServerCookies())
+					.catch(() => redirect(urls.default));
 
 	return <Profile user={user} />;
 }

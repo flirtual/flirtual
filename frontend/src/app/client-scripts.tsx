@@ -4,6 +4,7 @@ import Script from "next/script";
 import { useEffect } from "react";
 
 import { uploadcarePublicKey } from "~/const";
+import { useTheme } from "~/hooks/use-theme";
 
 declare global {
 	interface Window {
@@ -16,6 +17,8 @@ declare global {
 }
 
 export const ClientScripts: React.FC = () => {
+	const { theme, sessionTheme } = useTheme();
+
 	useEffect(() => {
 		/* eslint-disable */
 		// @ts-expect-error
@@ -25,6 +28,11 @@ export const ClientScripts: React.FC = () => {
 		window.fwSettings = { widget_id: 73000002566 };
 		window.FreshworksWidget("hide", "launcher");
 	}, []);
+
+	useEffect(() => {
+		if (sessionTheme !== "system") return;
+		document.documentElement.classList.replace(sessionTheme, theme);
+	}, [theme, sessionTheme]);
 
 	return (
 		<>

@@ -67,6 +67,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: React.PropsWithChildren) {
 	const session = await useServerAuthenticate({ optional: true });
+
 	const theme = session?.user.preferences?.theme ?? "system";
 
 	return (
