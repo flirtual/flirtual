@@ -76,7 +76,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 				{session && (
 					<>
 						<link as="image" href={urls.userAvatar(session.user)} rel="preload" />
-						<link as="fetch" href={api.newUrl("auth/user").href} rel="preload" />
+						<link as="fetch" href={api.newUrl("auth/session").href} rel="preload" />
 					</>
 				)}
 				<ClientScripts />

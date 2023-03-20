@@ -7,6 +7,16 @@ import { PreferenceTheme } from "~/api/user/preferences";
 import { useMediaQuery } from "./use-media-query";
 import { useSession } from "./use-session";
 
+export function resolveTheme(
+	theme: PreferenceTheme = "system"
+): Exclude<PreferenceTheme, "system"> {
+	return theme === "system"
+		? matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light"
+		: theme;
+}
+
 export function useTheme() {
 	const [session, mutateSession] = useSession();
 	const router = useRouter();

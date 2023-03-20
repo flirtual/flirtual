@@ -9,8 +9,9 @@ export const SoleModelLayout: React.FC<
 	React.ComponentProps<"div"> & {
 		footer?: FooterProps;
 		mobileNavigation?: false;
+		containerProps?: React.ComponentProps<"div">;
 	}
-> = ({ children, footer = {}, mobileNavigation, ...props }) => (
+> = ({ children, footer = {}, containerProps = {}, mobileNavigation, ...props }) => (
 	<div
 		{...props}
 		className={twMerge(
@@ -19,7 +20,13 @@ export const SoleModelLayout: React.FC<
 		)}
 	>
 		<Header />
-		<div className="flex w-full max-w-screen-lg grow flex-col items-center sm:justify-center sm:py-32 md:px-8">
+		<div
+			{...containerProps}
+			className={twMerge(
+				"flex w-full max-w-screen-lg grow flex-col items-center sm:justify-center sm:py-32 md:px-8",
+				containerProps.className
+			)}
+		>
 			{children}
 		</div>
 		<Footer {...footer} />

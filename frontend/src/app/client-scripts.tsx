@@ -1,11 +1,11 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect } from "react";
+import { useEffect, useInsertionEffect } from "react";
 
 import { PreferenceThemes } from "~/api/user/preferences";
 import { uploadcarePublicKey } from "~/const";
-import { useTheme } from "~/hooks/use-theme";
+import { resolveTheme, useTheme } from "~/hooks/use-theme";
 
 declare global {
 	interface Window {
@@ -18,7 +18,7 @@ declare global {
 }
 
 export const ClientScripts: React.FC = () => {
-	const { theme, sessionTheme } = useTheme();
+	const { sessionTheme } = useTheme();
 
 	useEffect(() => {
 		/* eslint-disable */
@@ -30,11 +30,10 @@ export const ClientScripts: React.FC = () => {
 		window.FreshworksWidget("hide", "launcher");
 	}, []);
 
-	useEffect(() => {
-		if (sessionTheme !== "system") return;
+	useInsertionEffect(() => {
 		document.documentElement.classList.remove(...PreferenceThemes);
-		document.documentElement.classList.add(theme);
-	}, [theme, sessionTheme]);
+		document.documentElement.classList.add(resolveTheme(sessionTheme));
+	}, [sessionTheme]);
 
 	return (
 		<>
