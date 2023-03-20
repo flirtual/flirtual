@@ -6,6 +6,7 @@ import { api } from "~/api";
 import { useServerAuthenticate } from "~/server-utilities";
 import { urls } from "~/urls";
 import { SessionProvider } from "~/components/session-provider";
+import { resolveTheme } from "~/theme";
 
 import { ClientScripts } from "./client-scripts";
 
@@ -71,8 +72,20 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 	const theme = session?.user.preferences?.theme ?? "system";
 
 	return (
-		<html className={theme} lang="en">
+		<html suppressHydrationWarning lang="en">
 			<head>
+				{theme === "system" && (
+					<script
+						dangerouslySetInnerHTML={{
+							__html: `
+								${resolveTheme.toString()}
+
+								document.documentElement.classList.remove("system");
+								document.documentElement.classList.add(resolveTheme());
+							`.trim()
+						}}
+					/>
+				)}
 				{session && (
 					<>
 						<link as="image" href={urls.userAvatar(session.user)} rel="preload" />

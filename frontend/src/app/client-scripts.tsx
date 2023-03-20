@@ -5,7 +5,8 @@ import { useEffect, useInsertionEffect } from "react";
 
 import { PreferenceThemes } from "~/api/user/preferences";
 import { uploadcarePublicKey } from "~/const";
-import { resolveTheme, useTheme } from "~/hooks/use-theme";
+import { useTheme } from "~/hooks/use-theme";
+import { resolveTheme } from "~/theme";
 
 declare global {
 	interface Window {
@@ -37,8 +38,10 @@ export const ClientScripts: React.FC = () => {
 
 	return (
 		<>
+			{/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
 			<Script
 				src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"
+				strategy="beforeInteractive"
 				onReady={() => {
 					window.Blinkloader.optimize({
 						pubkey: uploadcarePublicKey,
@@ -52,7 +55,7 @@ export const ClientScripts: React.FC = () => {
 					});
 				}}
 			/>
-			<Script src="https://widget.freshworks.com/widgets/73000002566.js" />
+			<Script src="https://widget.freshworks.com/widgets/73000002566.js" strategy="lazyOnload" />
 		</>
 	);
 };
