@@ -65,7 +65,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 						{user.activeAt && <ActivityIndicator lastActiveAt={new Date(user.activeAt)} />}
 					</div>
 				</ProfileImageDisplay>
-				<div className="flex-gap flex h-full grow flex-col gap-6 break-words p-8">
+				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{user.profile.biography ? (
 						<Html className="text-xl">{user.profile.biography}</Html>
 					) : (

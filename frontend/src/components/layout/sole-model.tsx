@@ -14,7 +14,7 @@ export const SoleModelLayout: React.FC<
 	<div
 		{...props}
 		className={twMerge(
-			"dark:text-brand-white flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 sm:flex-col",
+			"flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col",
 			props.className
 		)}
 	>

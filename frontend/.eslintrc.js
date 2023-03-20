@@ -4,13 +4,12 @@ process.env["ESLINT_PROJECT_ROOT"] = __dirname;
 module.exports = {
 	root: true,
 	extends: [
-		"plugin:@next/next/recommended",
 		"@ariesclark/eslint-config",
-		"@ariesclark/eslint-config/atoms/react",
-		"@ariesclark/eslint-config/atoms/tailwindcss"
+		"@ariesclark/eslint-config/next",
+		"@ariesclark/eslint-config/tailwindcss"
 	],
 	rules: {
-		"react/display-name": "off",
-		"@next/next/no-img-element": "off"
+		"@next/next/no-img-element": "off",
+		"@next/next/no-html-link-for-pages": "off"
 	}
 };

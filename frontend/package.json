@@ -12,7 +12,7 @@
     "change-case": "^4.1.2",
     "csstype": "^3.1.1",
     "fast-fuzzy": "^1.12.0",
-    "framer-motion": "^10.3.1",
+    "framer-motion": "^10.6.0",
     "next": "13.2.4",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
@@ -28,9 +28,8 @@
     "talkjs": "^0.15.6"
   },
   "devDependencies": {
-    "@ariesclark/eslint-config": "^1.4.2",
+    "@ariesclark/eslint-config": "^1.5.0",
     "@hcaptcha/types": "^1.0.3",
-    "@next/eslint-plugin-next": "^13.2.4",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^18.15.3",
@@ -43,6 +42,6 @@
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7",
     "tailwindcss-hocus": "^0.0.7",
-    "typescript": "^4.9.5"
+    "typescript": "^5.0.2"
   }
 }

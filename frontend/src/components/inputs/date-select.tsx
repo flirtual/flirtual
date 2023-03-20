@@ -62,7 +62,7 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 				/>
 			</div>
 			<InputText
-				className="sm w-full"
+				className="w-full"
 				type="date"
 				value={inputValue}
 				onClick={() => setDrawerVisible(true)}
