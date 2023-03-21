@@ -40,6 +40,14 @@ defmodule FlirtualWeb.Router do
   scope "/", FlirtualWeb do
     pipe_through :api
 
+    scope "/v1" do
+      scope "/attributes" do
+        scope "/:attribute_type" do
+          get "/", AttributeController, :list
+        end
+      end
+    end
+
     scope "/" do
       pipe_through [:fetch_session, :fetch_current_session]
 
@@ -86,6 +94,18 @@ defmodule FlirtualWeb.Router do
             get "/authorize", UsersController, :start_connection
             get "/", UsersController, :assign_connection
           end
+        end
+
+        scope "/plans" do
+          pipe_through :require_authenticated_user
+
+          get "/", SubscriptionController, :list_plans
+        end
+
+        scope "/subscriptions" do
+          pipe_through :require_authenticated_user
+
+          get "/checkout", SubscriptionController, :checkout
         end
 
         scope "/reports" do
@@ -173,14 +193,6 @@ defmodule FlirtualWeb.Router do
               post "/custom-weights", ProfileController, :update_custom_weights
             end
           end
-        end
-      end
-    end
-
-    scope "/v1" do
-      scope "/attributes" do
-        scope "/:attribute_type" do
-          get "/", AttributeController, :list
         end
       end
     end

@@ -15,27 +15,22 @@ defmodule Flirtual.Logger do
     quote do
       require Logger
 
-      defmacrop log(level, list, details \\ nil) do
+      defmacrop log(level, list, details \\ nil) when is_list(list) do
         logger_name = to_string(unquote(name))
         inspect_options = unquote(@inspect_options)
 
         quote do
+          list = unquote(list)
+          details = unquote(details)
+
           Logger.unquote(level)(
             unquote(logger_name) <>
-              case unquote(list) do
-                [] -> ""
-                list -> "(" <> Enum.join(list, "/") <> ")"
-              end <>
-              case unquote(details) do
-                nil ->
-                  ""
-
-                details ->
-                  if(is_binary(details),
-                    do: ": ",
-                    else: ":\n"
-                  ) <> inspect(details, unquote(inspect_options))
-              end
+              if(length(list) === 0, do: "", else: "(" <> Enum.join(list, "/") <> ")") <>
+              if(is_binary(details),
+                do: ": ",
+                else: ":\n"
+              ) <>
+              inspect(details, unquote(inspect_options))
           )
         end
       end

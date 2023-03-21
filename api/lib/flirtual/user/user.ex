@@ -3,8 +3,10 @@ defmodule Flirtual.User do
   use Flirtual.Policy.Target, policy: Flirtual.User.Policy
 
   import Ecto.Changeset
+  import Ecto.Query
   import Flirtual.Utilities
 
+  alias Flirtual.Repo
   alias Flirtual.Languages
   alias Flirtual.User
 
@@ -13,6 +15,7 @@ defmodule Flirtual.User do
     field :username, :string
     field :password_hash, :string, redact: true
     field :talkjs_signature, :string, redact: true
+    field :stripe_id, :string
     field :language, :string, default: "en"
 
     field :password, :string, virtual: true, redact: true
@@ -34,7 +37,7 @@ defmodule Flirtual.User do
     has_many :sessions, Flirtual.User.Session
 
     has_one :preferences, Flirtual.User.Preferences
-    has_one :subscription, Flirtual.User.Subscription
+    has_one :subscription, Flirtual.Subscription
     has_one :profile, Flirtual.User.Profile
 
     timestamps(inserted_at: :created_at)
@@ -42,7 +45,7 @@ defmodule Flirtual.User do
 
   def default_assoc do
     [
-      :subscription,
+      subscription: Flirtual.User.Subscription.default_assoc(),
       preferences: Flirtual.User.Preferences.default_assoc(),
       profile: Flirtual.User.Profile.default_assoc()
     ]
@@ -160,6 +163,10 @@ defmodule Flirtual.User do
         %{}
       end
     end)
+  end
+
+  def get(stripe_id: stripe_id) when is_binary(stripe_id) do
+    User |> where(stripe_id: ^stripe_id) |> preload(^default_assoc()) |> Repo.one()
   end
 
   @doc """
