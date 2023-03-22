@@ -19,6 +19,7 @@ export type User = UuidModel &
 		bornAt?: string;
 		activeAt?: string;
 		emailConfirmedAt?: string;
+		shadowbannedAt?: string;
 		deactivatedAt?: string;
 		preferences?: Preferences;
 		profile: Profile;

@@ -1,6 +1,6 @@
 import { Expand } from "~/utilities";
-import { Attribute } from "./attributes";
 
+import { Attribute } from "./attributes";
 import { DatedModel, UuidModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
 
@@ -21,7 +21,7 @@ export async function list(
 }
 
 export async function create(
-	options: NarrowFetchOptions<Pick<Report, "targetId"> & { reportId: string }>
+	options: NarrowFetchOptions<Pick<Report, "targetId"> & { reasonId: string }>
 ): Promise<Report> {
 	return fetch<Report>("post", "reports", options);
 }
