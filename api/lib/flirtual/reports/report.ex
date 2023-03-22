@@ -14,14 +14,14 @@ defmodule Flirtual.Report do
     {Jason.Encoder,
      only: [
        :id,
-       :reason_id,
+       :reason,
        :message,
        :user_id,
        :target_id,
        :updated_at,
        :created_at
      ]},
-    {Inspect, only: [:id, :user_id, :target_id, :reason_id]}
+    {Inspect, only: [:id, :user_id, :target_id, :reason]}
   ]
 
   schema "reports" do
@@ -32,6 +32,10 @@ defmodule Flirtual.Report do
     belongs_to :reason, Attribute
 
     timestamps(inserted_at: :created_at)
+  end
+
+  def default_assoc() do
+    [:reason]
   end
 
   def changeset(%Report{} = report, attrs) do
@@ -57,7 +61,7 @@ defmodule Flirtual.Report do
   end
 
   def create(attrs) do
-    %Report{} |> changeset(attrs) |> Repo.insert()
+    %Report{} |> changeset(attrs) |> Repo.insert() |> Repo.preload(default_assoc())
   end
 
   def validate_query(changeset, field, query) do
@@ -94,7 +98,7 @@ defmodule Flirtual.Report do
              user_id: &where(User, id: ^&1)
            )
            |> apply_action(:read) do
-      {:ok, []}
+      {:ok, Report |> preload(^default_assoc()) |> Repo.all()}
     end
   end
 end
