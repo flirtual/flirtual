@@ -106,6 +106,7 @@ defmodule FlirtualWeb.Router do
           pipe_through :require_authenticated_user
 
           get "/checkout", SubscriptionController, :checkout
+          get "/manage", SubscriptionController, :manage
         end
 
         scope "/reports" do

@@ -45,7 +45,7 @@ defmodule Flirtual.User do
 
   def default_assoc do
     [
-      subscription: Flirtual.User.Subscription.default_assoc(),
+      subscription: Flirtual.Subscription.default_assoc(),
       preferences: Flirtual.User.Preferences.default_assoc(),
       profile: Flirtual.User.Profile.default_assoc()
     ]

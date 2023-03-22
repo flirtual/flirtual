@@ -14,12 +14,20 @@ defmodule FlirtualWeb.SubscriptionController do
     conn |> json(Policy.transform(conn, Plan.list()))
   end
 
-  def checkout(conn, %{"plan" => plan_id}) do
+  def checkout(conn, %{"plan_id" => plan_id}) do
     with %Plan{} = plan <- Plan.get(plan_id),
-         {:ok, checkout_session} <- Stripe.checkout(conn.assigns[:session].user, plan) do
-      conn |> json(%{url: checkout_session.url})
+         {:ok, session} <- Stripe.checkout(conn.assigns[:session].user, plan) do
+      conn |> redirect(external: session.url)
     else
       nil -> {:error, {:not_found, "Plan not found"}}
+      value -> value
+    end
+  end
+
+  def manage(conn, _) do
+    with {:ok, session} <- Stripe.manage(conn.assigns[:session].user) do
+      conn |> redirect(external: session.url)
+    else
       value -> value
     end
   end

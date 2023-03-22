@@ -266,7 +266,7 @@ defmodule Flirtual.Stripe do
         |> URI.to_string(),
       cancel_url:
         Application.fetch_env!(:flirtual, :frontend_origin)
-        |> URI.merge("/premium")
+        |> URI.merge("/subscription")
         |> URI.to_string(),
       mode: "subscription",
       line_items: [
@@ -290,6 +290,23 @@ defmodule Flirtual.Stripe do
     })
   end
 
+  def manage(%User{stripe_id: nil} = user) do
+    with {:ok, customer} <- update_customer(user) do
+      Map.put(user, :stripe_id, customer.id)
+      |> manage()
+    end
+  end
+
+  def manage(%User{stripe_id: stripe_id}) do
+    Stripe.BillingPortal.Session.create(%{
+      customer: stripe_id,
+      return_url:
+        Application.fetch_env!(:flirtual, :frontend_origin)
+        |> URI.merge("/subscription")
+        |> URI.to_string()
+    })
+  end
+
   defp transform_user(%User{} = user) do
     %{
       email: user.email,
@@ -297,6 +314,7 @@ defmodule Flirtual.Stripe do
     }
   end
 
+  # User isn't an existing Stripe Customer, create one.
   def update_customer(%User{stripe_id: nil} = user) do
     with {:ok, customer} <- Stripe.Customer.create(transform_user(user)),
          {:ok, _} <- change(user, %{stripe_id: customer.id}) |> Repo.update() do
@@ -304,6 +322,7 @@ defmodule Flirtual.Stripe do
     end
   end
 
+  # User is an existing Stripe Customer, update their customer details.
   def update_customer(%User{stripe_id: stripe_id} = user) when is_binary(stripe_id) do
     Stripe.Customer.update(stripe_id, transform_user(user))
   end
