@@ -1,5 +1,6 @@
 "use client";
 import { ArrowUturnLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 import { api } from "~/api";
@@ -92,6 +93,7 @@ const ProspectActionBar: React.FC<{
 };
 
 export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
+	const router = useRouter();
 	const [session] = useSession();
 
 	const [prospectIdx, setProspectIdx] = useState(0);
@@ -109,7 +111,13 @@ export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
 			)}
 			{session?.user.tags.includes("debugger") && (
 				<div className="py-8">
-					<button type="button" onClick={() => api.matchmaking.resetProspect()}>
+					<button
+						type="button"
+						onClick={async () => {
+							await api.matchmaking.resetProspect();
+							router.refresh();
+						}}
+					>
 						Reset queue
 					</button>
 				</div>

@@ -60,7 +60,7 @@ export const urls = {
 		with: (userId: string) => `/conversations/${userId}`
 	},
 	onboarding: (onboardingIdx: 1 | 2 | 3 | 4) => `/onboarding/${onboardingIdx}`,
-	premium: "/premium",
+	subscription: "/subscription",
 	confirmEmail: (query: ConfirmEmailPageProps["searchParams"] = {}) => url("/confirm-email", query),
 
 	settings: {

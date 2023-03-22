@@ -2,10 +2,10 @@ import { snakeCase } from "change-case";
 
 import { DatedModel, UuidModel } from "../common";
 import { fetch, NarrowFetchOptions } from "../exports";
+import { Subscription } from "../subscription";
 
 import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";
-import { Subscription } from "./subscription";
 
 export type UserTags = "admin" | "moderator" | "beta_tester" | "debugger" | "verified";
 

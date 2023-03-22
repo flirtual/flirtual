@@ -4,7 +4,11 @@ import { entries, Expand, fromEntries, toCamelObject, toSnakeObject } from "~/ut
 
 export function newUrl(pathname: string, query: Record<string, string | undefined> = {}): URL {
 	const searchParams = new URLSearchParams(
-		fromEntries(entries(query).filter(([, v]) => Boolean(v))) as Record<string, string>
+		fromEntries(
+			entries(toSnakeObject(query) as Record<string, string | undefined>).filter(([, v]) =>
+				Boolean(v)
+			)
+		) as Record<string, string>
 	);
 	searchParams.sort();
 
@@ -68,7 +72,7 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 	pathname: string,
 	options: O
 ): Promise<T | Response> {
-	const url = newUrl(pathname, toSnakeObject(options.query));
+	const url = newUrl(pathname, options.query as Record<string, string | undefined>);
 	const body: any = options.raw
 		? options.body
 		: JSON.stringify(typeof options.body === "object" ? toSnakeObject(options.body) : options.body);
@@ -106,3 +110,4 @@ export * as user from "./user";
 export * as file from "./file";
 export * as matchmaking from "./matchmaking";
 export * as report from "./report";
+export * as subscription from "./subscription";

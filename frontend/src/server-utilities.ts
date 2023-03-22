@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { api, ResponseError } from "./api";
 import { urls } from "./urls";
 import { Session } from "./api/auth";
+import { UserTags } from "./api/user";
 
 export function thruServerCookies() {
 	return {
@@ -23,6 +24,7 @@ export interface ServerAuthenticateOptions {
 	optional?: boolean;
 	emailConfirmedOptional?: boolean;
 	visibleOptional?: boolean;
+	tags?: Array<UserTags>;
 }
 
 export async function useServerAuthenticate(
@@ -37,7 +39,12 @@ export async function useServerAuthenticate(
 export async function useServerAuthenticate(
 	options: ServerAuthenticateOptions = {}
 ): Promise<Session | null> {
-	const { optional = false, emailConfirmedOptional = false, visibleOptional = false } = options;
+	const {
+		optional = false,
+		emailConfirmedOptional = false,
+		visibleOptional = false,
+		tags = []
+	} = options;
 
 	const session = await api.auth.session(thruServerCookies()).catch((reason) => {
 		if (!(reason instanceof ResponseError)) throw reason;
@@ -48,6 +55,10 @@ export async function useServerAuthenticate(
 	if (!session && !optional) redirect(urls.login());
 
 	if (session) {
+		if (!tags.every((tag) => session.user.tags.includes(tag))) {
+			redirect(urls.default);
+		}
+
 		if (!session.user.visible) {
 			const { visible, reasons } = await api.user
 				.visible(session.user.id, thruServerCookies())

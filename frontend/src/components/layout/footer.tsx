@@ -31,7 +31,7 @@ export const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
 		{"href" in props ? (
 			<a {...props}>{props.label}</a>
 		) : (
-			<button {...props} type="button">
+			<button {...props} className="hover:underline" type="button">
 				{props.label}
 			</button>
 		)}
@@ -58,7 +58,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 						<FooterListIconLink href={urls.socials.twitter} Icon={TwitterIcon} />
 					</div>
 				</div>
-				<div className="flex flex-col max-w-screen-sm md:mx-auto">
+				<div className="flex max-w-screen-sm flex-col md:mx-auto">
 					<ul className="flex flex-wrap gap-x-4 md:justify-center">
 						<FooterListLink href={urls.resources.events} label="Events" />
 						<FooterSupportLink />
