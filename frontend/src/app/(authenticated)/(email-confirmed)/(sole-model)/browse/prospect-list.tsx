@@ -1,5 +1,6 @@
 "use client";
 import { ArrowUturnLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 import { api } from "~/api";
@@ -8,6 +9,7 @@ import { User } from "~/api/user";
 import { HeartGradient } from "~/components/icons/heart-gradient";
 import { PeaceGradient } from "~/components/icons/peace-gradient";
 import { Profile } from "~/components/profile/profile";
+import { useSession } from "~/hooks/use-session";
 
 import { OutOfProspects } from "./out-of-prospects";
 
@@ -19,7 +21,7 @@ const ProspectActionBar: React.FC<{
 	userId: string;
 	setProspectIdx: Dispatch<SetStateAction<number>>;
 }> = ({ userId, setProspectIdx }) => {
-	const [respondHistory, setRespondHistory] = useState<Array<RespondProspectBody>>([])
+	const [respondHistory, setRespondHistory] = useState<Array<RespondProspectBody>>([]);
 
 	const respond = useCallback(
 		async (type: ProspectRespondType) => {
@@ -30,38 +32,35 @@ const ProspectActionBar: React.FC<{
 
 			await api.matchmaking.respondProspect({ body });
 
-			setRespondHistory((respondHistory) => [...respondHistory, body])
+			setRespondHistory((respondHistory) => [...respondHistory, body]);
 			setProspectIdx((prospectIdx) => prospectIdx + 1);
 		},
 		[userId, setProspectIdx]
 	);
 
-	const respondReverse = useCallback(
-		async () => {
-			setRespondHistory((respondHistory) => {
-				const lastRespond = respondHistory.pop()
-				if (!lastRespond) return [];
+	const respondReverse = useCallback(async () => {
+		setRespondHistory((respondHistory) => {
+			const lastRespond = respondHistory.pop();
+			if (!lastRespond) return [];
 
-				void api.matchmaking.reverseRespondProspect({
-					body: lastRespond
-				});
+			void api.matchmaking.reverseRespondProspect({
+				body: lastRespond
+			});
 
-				setProspectIdx((prospectIdx) => prospectIdx - 1);
-				return respondHistory;
-			})
-		},
-		[setProspectIdx]
-	);
+			setProspectIdx((prospectIdx) => prospectIdx - 1);
+			return respondHistory;
+		});
+	}, [setProspectIdx]);
 
 	return (
 		<div className="h-32 w-full dark:bg-black-70 sm:h-0">
 			<div className="pointer-events-none fixed left-0 bottom-0  flex  w-full items-center justify-center bg-gradient-to-b from-transparent to-black-90/50 p-8">
 				<div className="pointer-events-auto flex h-32 items-center gap-3 overflow-hidden rounded-xl pb-16 text-white-10">
 					<button
-						className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:brightness-50 disabled:cursor-not-allowed"
+						className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-50"
+						disabled={respondHistory.length === 0}
 						type="button"
 						onClick={respondReverse}
-						disabled={respondHistory.length === 0}
 					>
 						<ArrowUturnLeftIcon className="w-5" strokeWidth={3} />
 					</button>
@@ -94,15 +93,35 @@ const ProspectActionBar: React.FC<{
 };
 
 export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
+	const router = useRouter();
+	const [session] = useSession();
+
 	const [prospectIdx, setProspectIdx] = useState(0);
 	const prospect = prospects[prospectIdx];
 
-	return prospect ? (
+	return (
 		<>
-			<Profile key={prospect.id} user={prospect} />
-			<ProspectActionBar setProspectIdx={setProspectIdx} userId={prospect.id} />
+			{prospect ? (
+				<>
+					<Profile key={prospect.id} user={prospect} />
+					<ProspectActionBar setProspectIdx={setProspectIdx} userId={prospect.id} />
+				</>
+			) : (
+				<OutOfProspects />
+			)}
+			{session?.user.tags.includes("debugger") && (
+				<div className="py-8">
+					<button
+						type="button"
+						onClick={async () => {
+							await api.matchmaking.resetProspect();
+							router.refresh();
+						}}
+					>
+						Reset queue
+					</button>
+				</div>
+			)}
 		</>
-	) : (
-		<OutOfProspects />
 	);
 };

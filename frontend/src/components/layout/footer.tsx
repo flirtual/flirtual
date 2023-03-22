@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { urls } from "~/urls";
 import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
 
-import { FooterSupportLink } from "./support-button";
+import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 
 type LinkOrButtonProps<T> = T &
 	(Pick<React.ComponentProps<"a">, "href"> | Pick<React.ComponentProps<"button">, "onClick">);
@@ -31,7 +31,7 @@ export const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
 		{"href" in props ? (
 			<a {...props}>{props.label}</a>
 		) : (
-			<button {...props} type="button">
+			<button {...props} className="hover:underline" type="button">
 				{props.label}
 			</button>
 		)}
@@ -53,21 +53,28 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 			<div className="flex w-full max-w-screen-lg flex-col gap-4 md:gap-8">
 				<div className="flex items-center gap-8 md:mx-auto md:justify-center">
 					<div className="flex gap-4">
+						<FooterIconSupportLink />
 						<FooterListIconLink href={urls.socials.discord} Icon={DiscordIcon} />
 						<FooterListIconLink href={urls.socials.twitter} Icon={TwitterIcon} />
 					</div>
 				</div>
-				<ul className="flex max-w-screen-sm flex-wrap gap-x-4 gap-y-1 md:mx-auto md:justify-center">
-					<FooterListLink href={urls.resources.events} label="Events" />
-					<FooterSupportLink />
-					<FooterListLink href={urls.resources.networkStatus} label="Status" />
-					<FooterListLink href={urls.resources.press} label="Press" />
-					<FooterListLink href={urls.resources.branding} label="Branding" />
-					<FooterListLink href={urls.resources.developers} label="Developers" />
-					<FooterListLink href={urls.resources.about} label="About us" />
-					<FooterListLink href={urls.resources.termsOfService} label="Terms of Service" />
-					<FooterListLink href={urls.resources.privacyPolicy} label="Privacy Policy" />
-				</ul>
+				<div className="flex max-w-screen-sm flex-col md:mx-auto">
+					<ul className="flex flex-wrap gap-x-4 md:justify-center">
+						<FooterListLink href={urls.resources.events} label="Events" />
+						<FooterSupportLink />
+						<FooterListLink href={urls.resources.networkStatus} label="Status" />
+					</ul>
+					<ul className="flex flex-wrap gap-x-4 md:justify-center">
+						<FooterListLink href={urls.resources.press} label="Press" />
+						<FooterListLink href={urls.resources.branding} label="Branding" />
+						<FooterListLink href={urls.resources.developers} label="Developers" />
+					</ul>
+					<ul className="flex flex-wrap gap-x-4 md:justify-center">
+						<FooterListLink href={urls.resources.about} label="About us" />
+						<FooterListLink href={urls.resources.termsOfService} label="Terms of Service" />
+						<FooterListLink href={urls.resources.privacyPolicy} label="Privacy Policy" />
+					</ul>
+				</div>
 				<div className="flex justify-between md:text-lg">
 					<span className="hidden sm:inline">Made with ♥︎ in VR</span>
 					<span>

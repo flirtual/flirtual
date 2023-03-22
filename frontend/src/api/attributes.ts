@@ -1,6 +1,5 @@
 import { UuidModel } from "./common";
-
-import { fetch, NarrowFetchOptions } from ".";
+import { fetch, NarrowFetchOptions } from "./exports";
 
 export type KinkAttributeKind = "dominant" | "submissive" | null;
 

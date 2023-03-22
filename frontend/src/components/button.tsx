@@ -3,32 +3,67 @@ import { twMerge } from "tailwind-merge";
 
 import { isInternalHref } from "~/urls";
 
-const buttonClassName =
-	"focusable rounded-xl bg-brand-gradient py-4 px-8 text-center font-montserrat text-xl font-semibold text-white-10 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-90";
+const defaultClassName = twMerge(
+	"focusable select-none rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
+);
 
-export type ButtonProps = React.ComponentProps<"button">;
+const sizes = {
+	sm: "px-6 py-2",
+	base: "py-4 px-8 text-xl"
+} as const;
 
-export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
+export type ButtonSize = keyof typeof sizes | false;
+
+const kinds = {
+	primary: "bg-brand-gradient text-white-20 shadow-brand-1",
+	secondary: "bg-white-50 text-black-80 shadow-brand-1",
+	tertiary: ""
+};
+
+export type ButtonKind = keyof typeof kinds | false;
+
+export interface ButtonProps {
+	size?: ButtonSize;
+	kind?: ButtonKind;
+	disabled?: boolean;
+}
+export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (props) => {
+	const { size = "base", kind = "primary", disabled, ...elementProps } = props;
+
 	return (
 		<button
-			{...props}
-			className={twMerge(buttonClassName, props.className)}
+			{...elementProps}
+			aria-disabled={disabled}
+			disabled={disabled}
 			// eslint-disable-next-line react/button-has-type
-			type={props.type ?? "button"}
-		>
-			{children}
-		</button>
+			type={elementProps.type ?? "button"}
+			className={twMerge(
+				defaultClassName,
+				size && sizes[size],
+				kind && kinds[kind],
+				elementProps.className
+			)}
+		/>
 	);
 };
 
-export type ButtonLinkProps = Parameters<typeof Link>[0];
+export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (props) => {
+	const { size = "base", kind = "primary", disabled, ...elementProps } = props;
 
-export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
 	return (
 		<Link
-			{...props}
-			className={twMerge(buttonClassName, props.className)}
+			{...elementProps}
+			aria-disabled={disabled}
 			target={props.target ?? isInternalHref(props.href) ? "_self" : "_blank"}
+			className={twMerge(
+				defaultClassName,
+				size && sizes[size],
+				kind && kinds[kind],
+				elementProps.className
+			)}
+			onClick={(event) => {
+				if (disabled) event.preventDefault();
+			}}
 		/>
 	);
 };

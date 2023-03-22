@@ -1,6 +1,6 @@
 import { DatedModel, UuidModel } from "~/api/common";
 
-import { fetch, NarrowFetchOptions } from "../..";
+import { fetch, NarrowFetchOptions } from "../../exports";
 import { upload as uploadFiles } from "../../file";
 
 export type ProfileImage = UuidModel &

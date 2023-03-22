@@ -12,14 +12,14 @@ function toDateString(value: Date): string {
 		month = String(value.getMonth() + 1).padStart(2, "0"),
 		year = String(value.getFullYear()).padStart(4, "0");
 
-	return `${day}/${month}/${year}`;
+	return `${month}/${day}/${year}`;
 }
 
 function fromDateString(value: string): globalThis.Date {
 	const values = value.split("/");
 
-	const day = Number.parseInt(values[0]),
-		month = Number.parseInt(values[1]) - 1,
+	const month = Number.parseInt(values[0]) - 1,
+		day = Number.parseInt(values[1]),
 		year = Number.parseInt(values[2]);
 
 	return new Date(year, month, day);
@@ -62,7 +62,7 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 				/>
 			</div>
 			<InputText
-				className="sm w-full"
+				className="w-full"
 				type="date"
 				value={inputValue}
 				onClick={() => setDrawerVisible(true)}

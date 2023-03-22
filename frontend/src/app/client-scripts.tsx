@@ -1,9 +1,12 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect } from "react";
+import { useEffect, useInsertionEffect } from "react";
 
+import { PreferenceThemes } from "~/api/user/preferences";
 import { uploadcarePublicKey } from "~/const";
+import { useTheme } from "~/hooks/use-theme";
+import { resolveTheme } from "~/theme";
 
 declare global {
 	interface Window {
@@ -16,6 +19,8 @@ declare global {
 }
 
 export const ClientScripts: React.FC = () => {
+	const { sessionTheme } = useTheme();
+
 	useEffect(() => {
 		/* eslint-disable */
 		// @ts-expect-error
@@ -26,10 +31,17 @@ export const ClientScripts: React.FC = () => {
 		window.FreshworksWidget("hide", "launcher");
 	}, []);
 
+	useInsertionEffect(() => {
+		document.documentElement.classList.remove(...PreferenceThemes);
+		document.documentElement.classList.add(resolveTheme(sessionTheme));
+	}, [sessionTheme]);
+
 	return (
 		<>
+			{/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
 			<Script
 				src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"
+				strategy="beforeInteractive"
 				onReady={() => {
 					window.Blinkloader.optimize({
 						pubkey: uploadcarePublicKey,
@@ -43,7 +55,7 @@ export const ClientScripts: React.FC = () => {
 					});
 				}}
 			/>
-			<Script src="https://widget.freshworks.com/widgets/73000002566.js" />
+			<Script src="https://widget.freshworks.com/widgets/73000002566.js" strategy="lazyOnload" />
 		</>
 	);
 };

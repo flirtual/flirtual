@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useCallback, useDebugValue } from "react";
+import { useCallback, useDebugValue, useMemo } from "react";
 
 import { api } from "~/api";
 import { PreferenceTheme } from "~/api/user/preferences";
@@ -12,8 +12,8 @@ export function useTheme() {
 	const router = useRouter();
 
 	const sessionTheme = session?.user.preferences?.theme ?? "system";
-	const browserPrefersDark = useMediaQuery("(prefers-color-scheme: dark)");
-	const theme = sessionTheme === "system" ? (browserPrefersDark ? "dark" : "light") : sessionTheme;
+	const browserTheme = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
+	const theme = sessionTheme === "system" ? browserTheme : sessionTheme;
 
 	useDebugValue(theme);
 
@@ -40,5 +40,13 @@ export function useTheme() {
 		[session, router, mutateSession]
 	);
 
-	return [sessionTheme, setTheme, theme] as const;
+	return useMemo(
+		() => ({
+			theme,
+			sessionTheme,
+			browserTheme,
+			setTheme
+		}),
+		[theme, sessionTheme, browserTheme, setTheme]
+	);
 }
