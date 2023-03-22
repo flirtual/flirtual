@@ -2,6 +2,9 @@ defmodule Flirtual.Report do
   use Flirtual.Schema
   use Flirtual.Policy.Target, policy: Flirtual.Report.Policy
 
+  require Flirtual.Utilities
+  import Flirtual.Utilities
+
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
   import Ecto.Changeset
@@ -9,6 +12,7 @@ defmodule Flirtual.Report do
   import Flirtual.Utilities.Changeset
 
   alias Flirtual.{User, Attribute, Report, Repo}
+  alias Flirtual.User.ChangeQueue
 
   @derive [
     {Jason.Encoder,
@@ -61,7 +65,33 @@ defmodule Flirtual.Report do
   end
 
   def create(attrs) do
-    %Report{} |> changeset(attrs) |> Repo.insert() |> Repo.preload(default_assoc())
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+    Repo.transaction(fn ->
+      with {:ok, report} <- %Report{} |> changeset(attrs) |> Repo.insert(),
+           %User{} = target_user <- User.get(report.target_id),
+           existing_unique_reports <-
+             list(target_id: target_user.id)
+             |> Enum.map(& &1.user_id)
+             |> MapSet.new()
+             |> MapSet.to_list(),
+           {:ok, _} <-
+             if(length(existing_unique_reports) < 2,
+               do: {:ok, nil},
+               else:
+                 target_user
+                 |> change(%{
+                   shadowbanned_at: now
+                 })
+                 |> Repo.update()
+             ),
+           {:ok, _} <- ChangeQueue.add(target_user.id) do
+        report |> Repo.preload(default_assoc())
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   def validate_query(changeset, field, query) do
@@ -78,6 +108,10 @@ defmodule Flirtual.Report do
     Enum.reduce(queries, changeset, fn {field, query}, changeset ->
       validate_query(changeset, field, query)
     end)
+  end
+
+  def list(target_id: target_id) when is_uuid(target_id) do
+    Report |> where(target_id: ^target_id) |> Repo.all()
   end
 
   def list(attrs) do

@@ -203,6 +203,25 @@ defmodule Flirtual.User.Policy do
     end
   end
 
+  def transform(
+        :shadowbanned_at,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %User{} = user
+      ) do
+    if :moderator not in session.user.tags do
+      nil
+    else
+      user.shadowbanned_at
+    end
+  end
+
+  # Otherwise, by default, nobody can view when this user was deactivated.
+  def transform(:shadowbanned_at, _, _), do: nil
+
   # The currently logged user can see when their own account was deactivated.
   def transform(
         :deactivated_at,

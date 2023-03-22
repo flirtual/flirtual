@@ -2,9 +2,13 @@ defmodule Flirtual.User.ChangeQueue do
   use Flirtual.Schema, primary_key: false
   use Flirtual.Logger, :changequeue
 
+  require Flirtual.Utilities
+  import Flirtual.Utilities
+
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Ecto.Changeset
   alias Flirtual.Talkjs
   alias Flirtual.Elasticsearch
   alias Flirtual.Repo
@@ -16,31 +20,24 @@ defmodule Flirtual.User.ChangeQueue do
     timestamps(inserted_at: :created_at, updated_at: false)
   end
 
+  def get(user_id) when is_uuid(user_id) do
+    ChangeQueue |> where(user_id: ^user_id) |> Repo.one()
+  end
+
+  def get(_), do: nil
+
   def add(%User{} = user), do: add(user.id)
 
   def add(user_id) when is_binary(user_id) do
     log(:info, ["add"], user_id)
 
-    Repo.transaction(fn ->
-      item =
-        ChangeQueue
-        |> where(user_id: ^user_id)
-        |> Repo.one()
-
-      if not is_nil(item) do
-        item
-      else
-        with {:ok, item} <-
-               %ChangeQueue{}
-               |> change(%{user_id: user_id})
-               |> Repo.insert_or_update() do
-          item
-        else
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
-        end
-      end
-    end)
+    case get(user_id) do
+      nil -> %ChangeQueue{}
+      item -> item
+    end
+    |> change(%{user_id: user_id})
+    |> unique_constraint(:user_id, name: :user_change_queue_pkey)
+    |> Repo.insert_or_update(on_conflict: :nothing)
   end
 
   def remove(user_id) when is_binary(user_id) do

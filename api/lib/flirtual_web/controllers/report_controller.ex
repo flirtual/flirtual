@@ -10,7 +10,7 @@ defmodule FlirtualWeb.ReportController do
 
   def list(conn, params) do
     with {:ok, reports} <- Report.list(params) do
-      conn |> json(reports |> Enum.filter(&Policy.can(conn, :read, &1)))
+      conn |> json(reports |> Enum.filter(&Policy.can?(conn, :read, &1)))
     end
   end
 

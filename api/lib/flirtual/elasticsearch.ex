@@ -50,7 +50,7 @@ defmodule Flirtual.Elasticsearch do
 
   def bulk(index, changes, limit) do
     index_name = get_index_name(index)
-    log(:info, [index_name, "bulk"], changes)
+    log(:debug, [index_name, "bulk"], changes)
 
     changes
     |> Enum.chunk_every(limit)
@@ -91,7 +91,7 @@ defmodule Flirtual.Elasticsearch do
 
   def get(index, id) when is_binary(id) do
     index_name = get_index_name(index)
-    log(:info, [index_name, "get"], id)
+    log(:debug, [index_name, "get"], id)
 
     case Elasticsearch.get(Flirtual.Elasticsearch, "/" <> index_name <> "/_doc/#{id}") do
       {:ok, document} -> document["_source"]
@@ -103,7 +103,7 @@ defmodule Flirtual.Elasticsearch do
 
   def get(index, ids) when is_list(ids) do
     index_name = get_index_name(index)
-    log(:info, [index_name, "get"], ids)
+    log(:debug, [index_name, "get"], ids)
 
     case Elasticsearch.post(Flirtual.Elasticsearch, "/" <> index_name <> "/_mget", %{ids: ids}) do
       {:ok, response} ->

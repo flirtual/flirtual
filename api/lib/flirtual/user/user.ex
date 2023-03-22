@@ -2,6 +2,9 @@ defmodule Flirtual.User do
   use Flirtual.Schema
   use Flirtual.Policy.Target, policy: Flirtual.User.Policy
 
+  require Flirtual.Utilities
+  import Flirtual.Utilities
+
   import Ecto.Changeset
   import Ecto.Query
   import Flirtual.Utilities
@@ -133,7 +136,7 @@ defmodule Flirtual.User do
       }
     ]
     |> Enum.map_reduce(true, fn {condition, value}, acc ->
-      if(condition,
+      if(condition and not Map.get(value, :silent, false),
         do: {value, false},
         else: {nil, if(acc, do: true, else: false)}
       )
@@ -163,6 +166,10 @@ defmodule Flirtual.User do
         %{}
       end
     end)
+  end
+
+  def get(id) when is_uuid(id) do
+    User |> where(id: ^id) |> preload(^default_assoc()) |> Repo.one()
   end
 
   def get(stripe_id: stripe_id) when is_binary(stripe_id) do
@@ -384,6 +391,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
         :language,
         :born_at,
         :talkjs_signature,
+        :shadowbanned_at,
         :email_confirmed_at,
         :deactivated_at,
         :active_at,
