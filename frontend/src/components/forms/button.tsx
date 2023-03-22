@@ -1,8 +1,8 @@
 import { useFormContext } from "~/hooks/use-input-form";
 
-import { Button, ButtonProps } from "../button";
+import { Button } from "../button";
 
-export const FormButton: React.FC<ButtonProps> = (props) => {
+export const FormButton: React.FC<Parameters<typeof Button>[0]> = (props) => {
 	const { buttonProps } = useFormContext();
 
 	return (
