@@ -27,6 +27,10 @@ export type User = UuidModel &
 		tags: Array<UserTags>;
 	};
 
+export function displayName(user: User) {
+	return user.profile.displayName || user.username;
+}
+
 export async function create(
 	options: NarrowFetchOptions<{
 		username: string;

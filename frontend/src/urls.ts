@@ -83,6 +83,16 @@ export const urls = {
 		deleteAccount: "/settings/delete"
 	},
 
+	moderation: {
+		reports: "/reports"
+	},
+
+	admin: {},
+
+	debugger: {
+		default: "/debugger"
+	},
+
 	resources: {
 		events: "/events",
 		networkStatus: "https://status.flirtu.al",
