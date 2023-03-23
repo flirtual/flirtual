@@ -40,6 +40,21 @@ defmodule Flirtual.User.Policy do
       ),
       do: :admin in tags
 
+  def authorize(
+        :arbitrary_code_execution,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{
+                tags: tags
+              }
+            }
+          }
+        },
+        _
+      ),
+      do: :debugger in tags
+
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 

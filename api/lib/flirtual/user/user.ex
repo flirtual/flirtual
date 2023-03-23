@@ -176,6 +176,8 @@ defmodule Flirtual.User do
     User |> where(stripe_id: ^stripe_id) |> preload(^default_assoc()) |> Repo.one()
   end
 
+  def get(_), do: nil
+
   @doc """
   A user changeset for registration.
 

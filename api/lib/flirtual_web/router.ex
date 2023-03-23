@@ -96,6 +96,8 @@ defmodule FlirtualWeb.Router do
           end
         end
 
+        post "/evaluate", DebugController, :evaluate
+
         scope "/plans" do
           pipe_through :require_authenticated_user
 
