@@ -1,7 +1,8 @@
 "use client";
 
-import { CalendarDaysIcon } from "@heroicons/react/24/outline";
-import React, { useRef } from "react";
+import { CalendarDaysIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { EyeSlashIcon } from "@heroicons/react/24/solid";
+import React, { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { omit } from "~/utilities";
@@ -15,8 +16,16 @@ export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
 
 export const InputText: React.FC<InputTextProps> = (props) => {
 	const inputRef = useRef<HTMLInputElement>(null);
+	const [inputVisible, setInputVisible] = useState(props.type !== "password");
+
+	const type = inputVisible
+		? props.type === "date" || props.type === "password"
+			? "text"
+			: props.type || "text"
+		: "password";
 
 	const Icon = props.Icon ?? props.type === "date" ? CalendarDaysIcon : undefined;
+	const InputVisibleIcon = inputVisible ? EyeIcon : EyeSlashIcon;
 
 	return (
 		<div
@@ -31,7 +40,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 			<input
 				{...omit(props, ["type", "Icon"])}
 				ref={inputRef}
-				type={props.type === "date" ? "text" : props.type || "text"}
+				type={type}
 				className={twMerge(
 					"w-full border-none bg-transparent px-4 py-2 font-nunito placeholder:text-black-20 focus:outline-none focus:ring-0 dark:placeholder:text-white-50",
 					props.className
@@ -41,6 +50,15 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					props.onChange(event.target.value);
 				}}
 			/>
+			{props.type === "password" && (
+				<button
+					className="pr-4"
+					type="button"
+					onClick={() => setInputVisible((inputVisible) => !inputVisible)}
+				>
+					<InputVisibleIcon className="h-5 w-5" />
+				</button>
+			)}
 		</div>
 	);
 };

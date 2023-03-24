@@ -9,13 +9,17 @@ export type Report = Expand<
 		DatedModel & {
 			reason: Attribute<"report-reason">;
 			message: string;
+			reviewedAt?: string;
 			userId: string;
 			targetId: string;
 		}
 >;
 
 export async function list(
-	options: NarrowFetchOptions<undefined, Partial<Pick<Report, "userId" | "targetId">>>
+	options: NarrowFetchOptions<
+		undefined,
+		Partial<Pick<Report, "userId" | "targetId"> & { reviewed: boolean }>
+	>
 ): Promise<Array<Report>> {
 	return fetch<Array<Report>>("get", "reports", options);
 }
@@ -24,4 +28,14 @@ export async function create(
 	options: NarrowFetchOptions<Pick<Report, "targetId"> & { reasonId: string }>
 ): Promise<Report> {
 	return fetch<Report>("post", "reports", options);
+}
+
+export async function clear(reportId: string, options: NarrowFetchOptions = {}): Promise<Report> {
+	return fetch<Report>("delete", `reports/${reportId}`, options);
+}
+
+export async function clearAll(
+	options: NarrowFetchOptions<undefined, { userId: string }>
+): Promise<Report> {
+	return fetch<Report>("delete", `reports`, options);
 }

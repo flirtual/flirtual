@@ -27,6 +27,10 @@ export type User = UuidModel &
 		tags: Array<UserTags>;
 	};
 
+export function displayName(user: User) {
+	return user.profile.displayName || user.username;
+}
+
 export async function create(
 	options: NarrowFetchOptions<{
 		username: string;
@@ -127,6 +131,20 @@ export async function deactivate(
 
 export async function reactivate(userId: string, options: NarrowFetchOptions = {}) {
 	return fetch<User>("delete", `users/${userId}/deactivate`, options);
+}
+
+export async function suspend(
+	userId: string,
+	options: NarrowFetchOptions<{
+		reasonId: string;
+		message: string;
+	}>
+) {
+	return fetch<User>("post", `users/${userId}/suspend`, options);
+}
+
+export async function unsuspend(userId: string, options: NarrowFetchOptions = {}) {
+	return fetch<User>("delete", `users/${userId}/suspend`, options);
 }
 
 export { _delete as delete };

@@ -29,6 +29,11 @@ export interface AttributeMetadata {
 		order: number;
 		fallback?: boolean;
 	};
+	"ban-reason": {
+		order: number;
+		details: string;
+		fallback?: boolean;
+	};
 	"delete-reason": {
 		order: number;
 		fallback?: boolean;

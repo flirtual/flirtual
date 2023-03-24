@@ -11,3 +11,4 @@ export * from "./range-slider";
 export * from "./select";
 export * from "./switch";
 export * from "./text";
+export * from "./textarea";

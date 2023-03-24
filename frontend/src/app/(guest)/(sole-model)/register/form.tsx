@@ -35,7 +35,7 @@ export const RegisterForm: React.FC = () => {
 						{({ props, labelProps }) => (
 							<>
 								<InputLabel {...labelProps}>Username</InputLabel>
-								<InputText {...props} />
+								<InputText {...props} autoComplete="username" />
 							</>
 						)}
 					</FormField>
@@ -43,7 +43,7 @@ export const RegisterForm: React.FC = () => {
 						{({ props, labelProps }) => (
 							<>
 								<InputLabel {...labelProps}>Email Address</InputLabel>
-								<InputText {...props} type="email" />
+								<InputText {...props} autoComplete="email" type="email" />
 							</>
 						)}
 					</FormField>
@@ -51,7 +51,7 @@ export const RegisterForm: React.FC = () => {
 						{({ props, labelProps }) => (
 							<>
 								<InputLabel {...labelProps}>Password</InputLabel>
-								<InputText {...props} type="password" />
+								<InputText {...props} autoComplete="new-password" type="password" />
 							</>
 						)}
 					</FormField>
