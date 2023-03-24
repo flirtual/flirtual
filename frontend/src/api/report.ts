@@ -15,12 +15,12 @@ export type Report = Expand<
 		}
 >;
 
-export async function list(
-	options: NarrowFetchOptions<
-		undefined,
-		Partial<Pick<Report, "userId" | "targetId"> & { reviewed: boolean }>
-	>
-): Promise<Array<Report>> {
+export type ListOptions = NarrowFetchOptions<
+	undefined,
+	Partial<Pick<Report, "userId" | "targetId"> & { reviewed: boolean }>
+>;
+
+export async function list(options: ListOptions): Promise<Array<Report>> {
 	return fetch<Array<Report>>("get", "reports", options);
 }
 
@@ -35,7 +35,7 @@ export async function clear(reportId: string, options: NarrowFetchOptions = {}):
 }
 
 export async function clearAll(
-	options: NarrowFetchOptions<undefined, { userId: string }>
+	options: NarrowFetchOptions<undefined, { targetId: string }>
 ): Promise<Report> {
 	return fetch<Report>("delete", `reports`, options);
 }
