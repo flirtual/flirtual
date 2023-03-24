@@ -8,10 +8,17 @@ defmodule Flirtual.User do
   import Ecto.Changeset
   import Ecto.Query
   import Flirtual.Utilities
+  import Flirtual.Utilities.Changeset
 
+  alias Flirtual.Discord
+  alias Flirtual.Attribute
+  alias Flirtual.User.ChangeQueue
+  alias Flirtual.Mailer
+  alias Flirtual.Report
   alias Flirtual.Repo
   alias Flirtual.Languages
   alias Flirtual.User
+  alias Flirtual.User.Session
 
   schema "users" do
     field :email, :string
@@ -177,6 +184,49 @@ defmodule Flirtual.User do
   end
 
   def get(_), do: nil
+
+  def suspend(
+        %User{} = user,
+        %Attribute{type: "ban-reason"} = reason,
+        message,
+        %User{} = moderator
+      ) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    message = message || reason.metadata["details"]
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{banned_at: now})
+             |> Repo.update(),
+           {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(),
+           {:ok, _} <- ChangeQueue.add(user.id),
+           {_, _} <- Session.delete(user_id: user.id),
+           User.Email.deliver(user, :suspended, message),
+           {:ok, _} <-
+             Discord.deliver_webhook(:suspended, user, moderator, message) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def unsuspend(%User{} = user) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{banned_at: nil, shadowbanned_at: nil})
+             |> Repo.update(),
+           {:ok, _} <- ChangeQueue.add(user.id) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
 
   @doc """
   A user changeset for registration.

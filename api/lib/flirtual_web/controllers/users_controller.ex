@@ -15,6 +15,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.User, only: [validate_current_password: 2]
   import Flirtual.Jwt, only: [validate_jwt: 4]
 
+  alias Flirtual.Attribute
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
   alias FlirtualWeb.SessionController
@@ -290,7 +291,7 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def resend_confirm_email(conn, _) do
-    with {:ok, _} <- Users.send_email_confirmation(conn.assigns[:session].user) do
+    with {:ok, _} <- Users.deliver_email_confirmation(conn.assigns[:session].user) do
       conn |> put_status(:accepted) |> json(%{})
     end
   end
@@ -322,6 +323,42 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:forbidden, "Cannot reactivate this user", %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.reactivate(user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def suspend(conn, %{"user_id" => user_id} = params) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :suspend, user) do
+      {:error, {:forbidden, "Cannot suspend this user", %{user_id: user_id}}}
+    else
+      with {:ok, attrs} <-
+             cast_arbitrary(
+               %{
+                 message: :string,
+                 reason_id: :string
+               },
+               params
+             )
+             |> validate_required([:message, :reason_id])
+             |> validate_attribute(:reason_id, "ban-reason")
+             |> apply_action(:update),
+           reason <- Attribute.by_id_explicit(attrs.reason_id, "ban-reason"),
+           {:ok, user} <- User.suspend(user, reason, attrs.message, conn.assigns[:session].user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def unsuspend(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :suspend, user) do
+      {:error, {:forbidden, "Cannot unsuspend this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- User.unsuspend(user) do
         conn |> json(Policy.transform(conn, user))
       end
     end

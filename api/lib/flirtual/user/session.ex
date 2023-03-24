@@ -163,6 +163,7 @@ end
 defmodule Flirtual.User.Session.Policy do
   use Flirtual.Policy
 
+  alias Flirtual.User
   alias Flirtual.User.Session
 
   def authorize(
@@ -170,7 +171,10 @@ defmodule Flirtual.User.Session.Policy do
         %Plug.Conn{
           assigns: %{
             session: %Session{
-              id: id
+              id: id,
+              user: %User{
+                banned_at: nil
+              }
             }
           }
         },

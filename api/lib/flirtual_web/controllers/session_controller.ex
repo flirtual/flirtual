@@ -15,40 +15,38 @@ defmodule FlirtualWeb.SessionController do
   action_fallback FlirtualWeb.FallbackController
 
   def get(conn, _) do
-    Logger.debug(%{session: conn.assigns[:session]})
-    Logger.debug(%{user: conn.assigns[:session].user})
-
-    conn |> then(&json(&1, Policy.transform(&1, &1.assigns[:session])))
+    with :ok <- Policy.can(conn, :read, conn.assigns[:session]) do
+      conn |> json(Policy.transform(conn, conn.assigns[:session]))
+    end
   end
 
   def login(%Plug.Conn{} = conn, params) do
-    changeset =
-      cast_arbitrary(
-        %{
-          email: :string,
-          password: :string,
-          remember_me: :boolean
-        },
-        params
-      )
-      |> validate_required([:email, :password])
-
-    if not changeset.valid? do
-      {:error, changeset}
-    else
-      if user =
+    with {:ok, attrs} <-
+           cast_arbitrary(
+             %{
+               email: :string,
+               password: :string,
+               remember_me: :boolean
+             },
+             params
+           )
+           |> validate_required([:email, :password])
+           |> apply_action(:update),
+         %User{banned_at: nil} = user <-
            Users.get_by_email_and_password(
-             get_field(changeset, :email),
-             get_field(changeset, :password)
-           ) do
-        {session, conn} = create(conn, user, get_field(changeset, :remember_me))
+             attrs[:email],
+             attrs[:password]
+           ),
+         {session, conn} = create(conn, user, attrs[:remember_me]) do
+      conn
+      |> put_status(:created)
+      |> json(Policy.transform(conn, session))
+    else
+      %User{} ->
+        {:error, {:unauthorized, "Your account has been banned, check your email for details"}}
 
-        conn
-        |> put_status(:created)
-        |> json(Policy.transform(conn, session))
-      else
+      _ ->
         {:error, {:unauthorized, "Invalid credentials"}}
-      end
     end
   end
 

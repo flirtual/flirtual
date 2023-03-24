@@ -116,6 +116,11 @@ defmodule FlirtualWeb.Router do
 
           get "/", ReportController, :list
           post "/", ReportController, :create
+          delete "/", ReportController, :delete
+
+          scope "/:report_id" do
+            delete "/", ReportController, :delete
+          end
         end
 
         scope "/conversations" do
@@ -164,6 +169,9 @@ defmodule FlirtualWeb.Router do
 
             post "/deactivate", UsersController, :deactivate
             delete "/deactivate", UsersController, :reactivate
+
+            post "/suspend", UsersController, :suspend
+            post "/unsuspend", UsersController, :unsuspend
 
             scope "/email" do
               post "/", UsersController, :update_email

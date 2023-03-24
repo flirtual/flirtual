@@ -14,26 +14,14 @@ defmodule Flirtual.Report do
   alias Flirtual.{User, Attribute, Report, Repo}
   alias Flirtual.User.ChangeQueue
 
-  @derive [
-    {Jason.Encoder,
-     only: [
-       :id,
-       :reason,
-       :message,
-       :user_id,
-       :target_id,
-       :updated_at,
-       :created_at
-     ]},
-    {Inspect, only: [:id, :user_id, :target_id, :reason]}
-  ]
-
   schema "reports" do
     field :message, :string
 
     belongs_to :user, User
     belongs_to :target, User
     belongs_to :reason, Attribute
+
+    field :reviewed_at, :naive_datetime
 
     timestamps(inserted_at: :created_at)
   end
@@ -110,17 +98,51 @@ defmodule Flirtual.Report do
     end)
   end
 
+  def get(report_id) when is_uuid(report_id) do
+    Report |> where(id: ^report_id) |> Repo.one()
+  end
+
+  def clear(%Report{} = report) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+    with {:ok, report} <- change(report, %{reviewed_at: now}) |> Repo.update() do
+      {:ok, Repo.preload(report, default_assoc())}
+    end
+  end
+
+  def clear_all(reports) do
+    Repo.transaction(fn ->
+      with {:ok, count} <-
+             reports
+             |> Enum.map(&clear(&1))
+             |> then(
+               &Enum.reduce(&1, {:ok, 0}, fn item, _ ->
+                 case item do
+                   {:error, _} -> item
+                   {:ok, _} -> {:ok, length(&1)}
+                 end
+               end)
+             ) do
+        count
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def list(target_id: target_id) when is_uuid(target_id) do
     Report |> where(target_id: ^target_id) |> Repo.all()
   end
 
   def list(attrs) do
-    with {:ok, _} <-
+    with {:ok, attrs} <-
            cast_arbitrary(
              %{
                reason_id: :string,
                target_id: :string,
-               user_id: :string
+               user_id: :string,
+               reviewed: :boolean
              },
              attrs
            )
@@ -132,7 +154,31 @@ defmodule Flirtual.Report do
              user_id: &where(User, id: ^&1)
            )
            |> apply_action(:read) do
-      {:ok, Report |> preload(^default_assoc()) |> Repo.all()}
+      include_reviewed = attrs[:reviewed] || false
+
+      Report
+      |> where([report], ^include_reviewed or is_nil(report.reviewed_at))
+      |> preload(^default_assoc())
+      |> Repo.all()
     end
+  end
+end
+
+defimpl Jason.Encoder, for: Flirtual.Report do
+  def encode(value, opts) do
+    Jason.Encode.map(
+      Map.take(value, [
+        :id,
+        :reason,
+        :message,
+        :reviewed_at,
+        :user_id,
+        :target_id,
+        :updated_at,
+        :created_at
+      ])
+      |> Map.filter(fn {_, value} -> value !== nil end),
+      opts
+    )
   end
 end

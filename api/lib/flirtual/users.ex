@@ -80,9 +80,9 @@ defmodule Flirtual.Users do
     end)
   end
 
-  def send_email_confirmation(user) do
+  def deliver_email_confirmation(user) do
     {:ok, token, _} = Jwt.sign_email_confirmation(user)
-    {:ok, _} = deliver_email_confirmation_instructions(user, token)
+    {:ok, _} = User.Email.deliver(user, :confirm_email, token)
     {:ok, token}
   end
 
@@ -94,7 +94,7 @@ defmodule Flirtual.Users do
              |> change(email_confirmed_at: nil)
              |> Repo.update(),
            {:ok, _} <- ChangeQueue.add(user.id),
-           {:ok, _} <- send_email_confirmation(user) do
+           {:ok, _} <- deliver_email_confirmation(user) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -286,51 +286,12 @@ defmodule Flirtual.Users do
              |> Repo.insert(),
            user <- Repo.preload(user, User.default_assoc()),
            {:ok, _} <- Talkjs.update_user(user),
-           {:ok, _} <- send_email_confirmation(user) do
+           {:ok, _} <- deliver_email_confirmation(user) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
       end
     end)
-  end
-
-  defp deliver_email_confirmation_instructions(user, token) do
-    action_url =
-      URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin)) <>
-        "/confirm-email?token=" <> token
-
-    Mailer.send(
-      user,
-      "Confirm your email address",
-      """
-      Please confirm your email address:
-      #{action_url}
-      """,
-      """
-      <p>Please click here to confirm your email:</p>
-
-      <p><a href="#{action_url}" class="btn">Confirm</a></p>
-
-      <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "EmailMessage",
-        "description": "Confirm your email",
-        "potentialAction": {
-          "@type": "ViewAction",
-          "url": "$confirm",
-          "name": "Confirm"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "Flirtual",
-          "url": "https://flirtu.al/"
-        }
-      }
-      </script>
-      """,
-      action_url
-    )
   end
 end

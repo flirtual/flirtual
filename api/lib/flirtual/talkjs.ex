@@ -42,6 +42,19 @@ defmodule Flirtual.Talkjs do
     ])
   end
 
+  def update_user(%User{banned_at: banned_at} = user) when not is_nil(banned_at) do
+    list_conversations(user.id)
+    |> Enum.map(&update_conversation(&1["id"], %{banned: "true"}))
+    |> then(
+      &Enum.reduce(&1, {:ok, length(&1)}, fn item, _ ->
+        case item do
+          {:error, _} -> item
+          {:ok, _} -> {:ok, length(&1)}
+        end
+      end)
+    )
+  end
+
   def update_user(%User{} = user) do
     update_user(user.id, %{
       name: user.profile.display_name || user.username,
@@ -61,12 +74,8 @@ defmodule Flirtual.Talkjs do
     end
   end
 
-  def update_conversation(conversation_id, participant_ids, subject, welcome_messages \\ []) do
-    case fetch(:put, "conversations/" <> conversation_id, %{
-           participants: participant_ids,
-           subject: subject,
-           welcomeMessages: welcome_messages
-         }) do
+  def update_conversation(conversation_id, data) do
+    case fetch(:put, "conversations/" <> conversation_id, data) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
     end

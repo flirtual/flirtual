@@ -385,7 +385,7 @@ defmodule Flirtual.Stripe do
         } = event
       )
       when type in ["customer.subscription.created", "customer.subscription.updated"] do
-    log(:debug, [event.type, event.id], event)
+    log(:info, [event.type, event.id], event)
 
     with %User{} = user <- User.get(stripe_id: customer_stripe_id),
          %Plan{} = plan <-

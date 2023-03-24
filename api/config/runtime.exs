@@ -12,10 +12,11 @@ if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
   config :flirtual, FlirtualWeb.Endpoint, server: true
 end
 
-config :flirtual,
-  discord_client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
-  discord_client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),
-  discord_access_token: System.fetch_env!("DISCORD_ACCESS_TOKEN")
+config :flirtual, Flirtual.Discord,
+  client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
+  client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),
+  access_token: System.fetch_env!("DISCORD_ACCESS_TOKEN"),
+  webhook_moderation: System.fetch_env!("DISCORD_WEBHOOK_MODERATION")
 
 config :flirtual, Flirtual.Talkjs,
   app_id: System.fetch_env!("TALKJS_APP_ID"),
