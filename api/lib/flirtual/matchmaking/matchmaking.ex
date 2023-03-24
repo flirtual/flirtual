@@ -22,23 +22,19 @@ defmodule Flirtual.Matchmaking do
   end
 
   def deliver_match_email(user, target_user) do
-    action_url =
-      URI.to_string(Application.fetch_env!(:flirtual, :frontend_origin)) <>
-        "/" <> target_user.username
-
-    target_display_name = target_user.profile.display_name || target_user.username
+    action_url = User.url(target_user)
 
     Mailer.send(
       user,
       "It's a match!",
       """
-      #{target_display_name} liked you back—they want to meet you too!
+      #{User.display_name(target_user)} liked you back—they want to meet you too!
 
       Check out their profile:
       #{action_url}
       """,
       """
-      <p>#{target_display_name} liked you back&mdash;they want to meet you too!</p>
+      <p>#{User.display_name(target_user)} liked you back&mdash;they want to meet you too!</p>
 
       <p><a href="#{action_url}" class="btn">Check out their profile</a></p>
 
@@ -68,7 +64,13 @@ defmodule Flirtual.Matchmaking do
     conversation_id = Talkjs.new_conversation_id(user_a, user_b)
 
     with {:ok, conversation} <-
-           Talkjs.update_conversation(conversation_id, [user_a.id, user_b.id], "❤️"),
+           Talkjs.update_conversation(
+             conversation_id,
+             %{
+               participants: [user_a.id, user_b.id],
+               subject: "❤️"
+             }
+           ),
          {:ok, _} <-
            Talkjs.create_messages(conversation_id, [
              %{

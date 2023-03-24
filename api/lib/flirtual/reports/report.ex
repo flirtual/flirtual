@@ -11,6 +11,7 @@ defmodule Flirtual.Report do
   import Ecto.Query
   import Flirtual.Utilities.Changeset
 
+  alias Flirtual.Discord
   alias Flirtual.{User, Attribute, Report, Repo}
   alias Flirtual.User.ChangeQueue
 
@@ -57,24 +58,28 @@ defmodule Flirtual.Report do
 
     Repo.transaction(fn ->
       with {:ok, report} <- %Report{} |> changeset(attrs) |> Repo.insert(),
-           %User{} = target_user <- User.get(report.target_id),
+           report <- Repo.preload(report, default_assoc()),
+           %User{} = reporter <- User.get(report.user_id),
+           %User{} = reported <- User.get(report.target_id),
            existing_unique_reports <-
-             list(target_id: target_user.id)
+             list(target_id: reported.id)
              |> Enum.map(& &1.user_id)
              |> MapSet.new()
              |> MapSet.to_list(),
-           {:ok, _} <-
+           {:ok, reported} <-
              if(length(existing_unique_reports) < 2,
-               do: {:ok, nil},
+               do: {:ok, reported},
                else:
-                 target_user
+                 reported
                  |> change(%{
                    shadowbanned_at: now
                  })
                  |> Repo.update()
              ),
-           {:ok, _} <- ChangeQueue.add(target_user.id) do
-        report |> Repo.preload(default_assoc())
+           {:ok, _} <- ChangeQueue.add(reported.id),
+           {:ok, _} <-
+             Discord.deliver_webhook(:report, %Report{report | user: reporter, target: reported}) do
+        report
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)

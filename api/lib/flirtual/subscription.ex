@@ -31,6 +31,9 @@ defmodule Flirtual.Subscription do
     ]
   end
 
+  def active?(%Subscription{cancelled_at: nil}), do: true
+  def active?(_), do: false
+
   def apply(user, plan, stripe_id \\ nil)
 
   # Create subscription, since user doesn't have an existing one.
@@ -131,6 +134,6 @@ defmodule Flirtual.Subscription.Policy do
   def authorize(:read, _, _), do: false
   def authorize(_, _, _), do: false
 
-  def transform(:active, _, %Subscription{cancelled_at: nil}), do: true
-  def transform(:active, _, %Subscription{}), do: false
+  def transform(:active, _, %Subscription{} = subscription),
+    do: Subscription.active?(subscription)
 end

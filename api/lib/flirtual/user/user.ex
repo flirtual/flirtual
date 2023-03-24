@@ -8,17 +8,18 @@ defmodule Flirtual.User do
   import Ecto.Changeset
   import Ecto.Query
   import Flirtual.Utilities
-  import Flirtual.Utilities.Changeset
 
+  alias Flirtual.Subscription
   alias Flirtual.Discord
   alias Flirtual.Attribute
   alias Flirtual.User.ChangeQueue
-  alias Flirtual.Mailer
   alias Flirtual.Report
   alias Flirtual.Repo
   alias Flirtual.Languages
   alias Flirtual.User
   alias Flirtual.User.Session
+
+  @tags [:admin, :moderator, :beta_tester, :debugger, :verified]
 
   schema "users" do
     field :email, :string
@@ -32,7 +33,7 @@ defmodule Flirtual.User do
     field :visible, :boolean, virtual: true, default: false
 
     field :tags, {:array, Ecto.Enum},
-      values: [:admin, :moderator, :beta_tester, :debugger, :verified],
+      values: @tags,
       default: []
 
     field :born_at, :naive_datetime
@@ -47,7 +48,7 @@ defmodule Flirtual.User do
     has_many :sessions, Flirtual.User.Session
 
     has_one :preferences, Flirtual.User.Preferences
-    has_one :subscription, Flirtual.Subscription
+    has_one :subscription, Subscription
     has_one :profile, Flirtual.User.Profile
 
     timestamps(inserted_at: :created_at)
@@ -62,11 +63,21 @@ defmodule Flirtual.User do
   end
 
   def avatar_url(%User{} = user) do
-    external_id =
+    media_id =
       Enum.at(user.profile.images, 0)[:external_id] ||
         "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
 
-    "https://media.flirtu.al/" <> external_id <> "/"
+    URI.new!("https://media.flirtu.al/")
+    |> URI.merge(media_id <> "/")
+  end
+
+  def url(%User{} = user) do
+    Application.fetch_env!(:flirtual, :frontend_origin)
+    |> URI.merge("/#{user.username}")
+  end
+
+  def display_name(%User{} = user) do
+    user.profile[:display_name] || user.username
   end
 
   def visible?(%User{} = user) do
@@ -204,7 +215,12 @@ defmodule Flirtual.User do
            {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message),
            {:ok, _} <-
-             Discord.deliver_webhook(:suspended, user, moderator, message) do
+             Discord.deliver_webhook(:banned,
+               user: user,
+               moderator: moderator,
+               reason: reason,
+               message: message
+             ) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -429,7 +445,7 @@ defimpl Swoosh.Email.Recipient, for: Flirtual.User do
   alias Flirtual.User
 
   def format(%User{} = user) do
-    {user.profile.display_name || user.username, user.email}
+    {User.display_name(user), user.email}
   end
 end
 

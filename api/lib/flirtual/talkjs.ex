@@ -57,7 +57,7 @@ defmodule Flirtual.Talkjs do
 
   def update_user(%User{} = user) do
     update_user(user.id, %{
-      name: user.profile.display_name || user.username,
+      name: User.display_name(user),
       email: if(user.preferences.email_notifications.messages, do: [user.email], else: []),
       photoUrl: User.avatar_url(user),
       role: "user"
