@@ -133,6 +133,20 @@ export async function reactivate(userId: string, options: NarrowFetchOptions = {
 	return fetch<User>("delete", `users/${userId}/deactivate`, options);
 }
 
+export async function suspend(
+	userId: string,
+	options: NarrowFetchOptions<{
+		reasonId: string;
+		message: string;
+	}>
+) {
+	return fetch<User>("post", `users/${userId}/suspend`, options);
+}
+
+export async function unsuspend(userId: string, options: NarrowFetchOptions = {}) {
+	return fetch<User>("delete", `users/${userId}/suspend`, options);
+}
+
 export { _delete as delete };
 async function _delete(
 	options: NarrowFetchOptions<{

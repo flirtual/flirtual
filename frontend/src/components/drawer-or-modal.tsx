@@ -30,11 +30,11 @@ export const DrawerOrModal: React.FC<DrawerOrModalProps> = (props) => {
 	}
 
 	return (
-		<div className="relative">
+		<>
 			{contentNode}
 			<Modal visible={visible} onVisibilityChange={onVisibilityChange}>
 				{overlayNode}
 			</Modal>
-		</div>
+		</>
 	);
 };
