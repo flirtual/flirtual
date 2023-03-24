@@ -2,10 +2,12 @@
   @apply flex flex-col overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20;
 
   .ql-toolbar {
-    @apply shrink-0 flex p-2 gap-4 bg-brand-gradient text-white-20;
+    @apply shrink-0 flex p-2 gap-2 bg-brand-gradient text-white-20 overflow-x-auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
     .ql-formats {
-      @apply flex gap-1;
+      @apply flex gap-0.5;
 
       & > button, & > span {
         @apply p-1 rounded-lg focusable h-7 w-7 aspect-square shrink-0 flex items-center justify-center;
@@ -35,6 +37,10 @@
             @apply stroke-1
           }
         }
+      }
+
+      .ql-bold .ql-stroke {
+        stroke-width: 2;
       }
 
       .ql-picker {
@@ -73,15 +79,18 @@
 
         &.ql-icon-picker {
           .ql-picker-options {
-            @apply flex flex-col md:flex-row text-white-20;
+            @apply flex flex-col gap-3 text-white-20;
 
             .ql-picker-item {
-              @apply text-black-90;
+              @apply text-black-90 dark:text-white-10;
             }
           }
         }
-
       }
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 

@@ -38,21 +38,20 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigati
 					<NavigationLink href={urls.settings.changeEmail}>Change email</NavigationLink>
 					<NavigationLink href={urls.settings.changePassword}>Change password</NavigationLink>
 					<NavigationLink href={urls.settings.deactivateAccount}>Deactivate account</NavigationLink>
-					<NavigationLink Icon={ArrowRightOnRectangleIcon} onClick={() => logout()}>
-						Logout
-					</NavigationLink>
 				</NavigationCategory>
-				<NavigationCategory name="Resources">
-					<NavigationLink onClick={openFreshworks}>Support</NavigationLink>
-					<NavigationLink href={urls.resources.networkStatus}>Network Status</NavigationLink>
-					<NavigationLink href={urls.resources.about}>About</NavigationLink>
-					<NavigationLink href={urls.resources.communityGuidelines}>
-						Community Guidelines
-					</NavigationLink>
-					<NavigationLink href={urls.resources.termsOfService}>Terms of Service</NavigationLink>
-					<NavigationLink href={urls.resources.privacyPolicy}>Privacy Policy</NavigationLink>
-					<NavigationLink href={urls.resources.company}>Studio Paprika</NavigationLink>
-				</NavigationCategory>
+				<div className="sm:hidden">
+					<NavigationCategory name="Resources">
+						<NavigationLink onClick={openFreshworks}>Support</NavigationLink>
+						<NavigationLink href={urls.resources.networkStatus}>Network Status</NavigationLink>
+						<NavigationLink href={urls.resources.about}>About</NavigationLink>
+						<NavigationLink href={urls.resources.communityGuidelines}>
+							Community Guidelines
+						</NavigationLink>
+						<NavigationLink href={urls.resources.termsOfService}>Terms of Service</NavigationLink>
+						<NavigationLink href={urls.resources.privacyPolicy}>Privacy Policy</NavigationLink>
+						<NavigationLink href={urls.resources.company}>Studio Paprika</NavigationLink>
+					</NavigationCategory>
+				</div>
 			</nav>
 		</div>
 	);

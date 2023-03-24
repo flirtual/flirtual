@@ -33,11 +33,6 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 	return (
 		<div className="flex flex-wrap gap-2">
 			{user.profile.serious && <Pill>Open to serious dating</Pill>}
-			{personalityLabels.map((personalityLabel) => (
-				<Pill active={sessionPersonalityLabels.includes(personalityLabel)} key={personalityLabel}>
-					{personalityLabel}
-				</Pill>
-			))}
 			{filterBy(user.profile.attributes, "type", "sexuality").map(({ id }) => {
 				const attribute = findBy(sexualities, "id", id);
 				if (!attribute) return null;
@@ -51,8 +46,13 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 					</Pill>
 				);
 			})}
-			{filterBy(user.profile.attributes, "type", "game").map(({ id }) => {
-				const attribute = findBy(games, "id", id);
+			{personalityLabels.map((personalityLabel) => (
+				<Pill active={sessionPersonalityLabels.includes(personalityLabel)} key={personalityLabel}>
+					{personalityLabel}
+				</Pill>
+			))}
+			{filterBy(user.profile.attributes, "type", "interest").map(({ id }) => {
+				const attribute = findBy(interests, "id", id);
 				if (!attribute) return null;
 
 				return (
@@ -64,8 +64,8 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 					</Pill>
 				);
 			})}
-			{filterBy(user.profile.attributes, "type", "interest").map(({ id }) => {
-				const attribute = findBy(interests, "id", id);
+			{filterBy(user.profile.attributes, "type", "game").map(({ id }) => {
+				const attribute = findBy(games, "id", id);
 				if (!attribute) return null;
 
 				return (

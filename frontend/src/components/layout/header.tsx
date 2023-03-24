@@ -33,7 +33,7 @@ export const Header: React.FC = () => {
 					<div className="flex items-center gap-8 font-montserrat text-lg font-semibold">
 						<nav className="flex gap-4">
 							<InlineLink highlight={false} href={urls.resources.about}>
-								About us
+								About Us
 							</InlineLink>
 							<Popover className="hidden lg:block">
 								<button type="button">Community</button>

@@ -7,29 +7,25 @@ import { urls } from "~/urls";
 
 export const OutOfProspects: React.FC = () => {
 	return (
-		<ModelCard title="Out of matches">
+		<ModelCard title="Come back tomorrow!">
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-4">
+					<p>You are out of profiles for today :(</p>
 					<p>
-						To see more people, try expanding your{" "}
-						<InlineLink className="underline" href={urls.settings.matchmaking(urls.browse())}>
-							matchmaking filters
-						</InlineLink>
-						.
+						You can <InlineLink href={urls.subscription}>upgrade to Premium</InlineLink> to{" "}
+						<em>browse unlimited profiles</em> and <em>see who&apos;s already liked you</em>.
 					</p>
 					<p>
-						Or check back later. Each week hundreds of new Flirtual profiles are created. Invite
-						your friends to try Flirtual!
-					</p>
-					<p>
-						You can also continue in Homie Mode, where you can meet new friends (without matchmaking
-						filters).
+						You can also continue in <InlineLink href="/homies">Homie Mode</InlineLink>, where you
+						can meet new friends (without matchmaking filters).
 					</p>
 				</div>
 				<div className="flex gap-8">
-					<ButtonLink className="flex gap-4 px-8" href={urls.settings.matchmaking()}>
-						<Cog8ToothIcon className="h-8 w-8" />
-						<span>Configure</span>
+					<ButtonLink className="flex gap-4 px-8" href="/homies">
+						Homie Mode
+					</ButtonLink>
+					<ButtonLink className="flex gap-4 px-8" href={urls.subscription}>
+						Premium
 					</ButtonLink>
 				</div>
 			</div>

@@ -51,17 +51,8 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 						{({ props, labelProps }) => (
 							<div className="flex items-center gap-4">
 								<InputCheckbox {...props} />
-								<InputLabel
-									{...labelProps}
-									inline
-									hint={
-										<InputLabelHint className="max-w-[34ch]">
-											Keep your account logged in for 30 days, not recommended on public or shared
-											devices.
-										</InputLabelHint>
-									}
-								>
-									Remember me
+								<InputLabel {...labelProps} inline>
+									Stay logged in
 								</InputLabel>
 							</div>
 						)}

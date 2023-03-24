@@ -85,11 +85,11 @@ export default function SettingsAccountDeactivatePage() {
 								Are you sure you want to delete your account?{" "}
 								<span className="font-semibold">This action is irreversible</span>.
 							</span>
-							<FormAlternativeActionLink href={urls.settings.deactivateAccount}>
-								Deactivate your account instead?
-							</FormAlternativeActionLink>
 						</div>
-						<FormButton>Confirm</FormButton>
+						<FormButton>Delete account</FormButton>
+						<FormAlternativeActionLink href={urls.settings.deactivateAccount}>
+							Temporarily deactivate your account instead?
+						</FormAlternativeActionLink>
 					</>
 				)}
 			</Form>

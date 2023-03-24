@@ -42,7 +42,7 @@ export const RegisterForm: React.FC = () => {
 					<FormField name="email">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>Email Address</InputLabel>
+								<InputLabel {...labelProps}>Email address</InputLabel>
 								<InputText {...props} autoComplete="email" type="email" />
 							</>
 						)}
@@ -64,7 +64,7 @@ export const RegisterForm: React.FC = () => {
 									inline
 									hint={
 										<InputLabelHint className="max-w-[34ch]">
-											I agree to the{" "}
+											to the{" "}
 											<a className="underline" href={urls.resources.termsOfService}>
 												Terms of Service
 											</a>{" "}
@@ -72,11 +72,11 @@ export const RegisterForm: React.FC = () => {
 											<a className="underline" href={urls.resources.privacyPolicy}>
 												Privacy Policy
 											</a>{" "}
-											and I&apos;m at least 18 years of age.
+											and I&apos;m at least 18 years of age
 										</InputLabelHint>
 									}
 								>
-									Service Agreement
+									I agree
 								</InputLabel>
 							</div>
 						)}
@@ -90,12 +90,11 @@ export const RegisterForm: React.FC = () => {
 									inline
 									hint={
 										<InputLabelHint className="max-w-[34ch]">
-											Get updated about new features, changes, and offers. (
-											<i>we promise not to spam you</i>)
+											with new features, changes, and offers (we won&apos;t spam you)
 										</InputLabelHint>
 									}
 								>
-									Notifications
+									Get Flirtual updates
 								</InputLabel>
 							</div>
 						)}
@@ -105,12 +104,12 @@ export const RegisterForm: React.FC = () => {
 							className="w-full rounded-xl bg-brand-gradient p-4 shadow-brand-1"
 							type="submit"
 						>
-							<span className="font-montserrat text-xl text-white-10">Create my account</span>
+							<span className="font-montserrat text-xl text-white-10">Create account</span>
 						</button>
 						<FormInputMessages messages={errors} />
 						<div className="flex flex-col font-nunito text-lg">
 							<FormAlternativeActionLink href={urls.login()}>
-								Already have an account? Login!
+								Already have an account? Log in!
 							</FormAlternativeActionLink>
 						</div>
 					</div>

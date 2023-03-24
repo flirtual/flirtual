@@ -117,7 +117,7 @@ export const Onboarding3Form: React.FC = () => {
 							</>
 						)}
 					</FormField> */}
-					<FormButton />
+					<FormButton>Next page</FormButton>
 				</>
 			)}
 		</Form>

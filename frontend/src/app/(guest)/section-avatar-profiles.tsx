@@ -23,7 +23,7 @@ export const SectionAvatarProfiles: React.FC<{ values: Array<string> }> = ({ val
 			<div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-center justify-center gap-8">
 				<div className="flex flex-col items-center justify-center gap-8 text-center">
 					<h1 className="mt-8 font-montserrat text-5xl font-extrabold md:text-7xl">
-						Avatar profiles
+						Your avatar, your choice
 					</h1>
 					<span className="h-[8ch] max-w-4xl font-nunito text-2xl font-normal leading-snug sm:text-3xl md:h-[5ch] md:text-5xl">
 						{activeValue}

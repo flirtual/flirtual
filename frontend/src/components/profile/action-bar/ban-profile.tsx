@@ -69,7 +69,7 @@ export const BanProfile: React.FC<{ user: User }> = ({ user }) => {
 								</>
 							)}
 						</FormField>
-						<FormButton>Ban</FormButton>
+						<FormButton>Yonk</FormButton>
 					</>
 				)}
 			</Form>

@@ -15,7 +15,7 @@ export const SectionTestimonial: React.FC<SectionTestimonialProps> = ({ images, 
 		>
 			<div className="flex items-center justify-center p-8 md:p-16">
 				<span className="font-montserrat text-3xl font-extrabold md:text-5xl">
-					Thousands of matches (and memories) made.
+					Match with 45,000+ users from all over the world!
 				</span>
 			</div>
 			<div className="flex overflow-x-hidden">
