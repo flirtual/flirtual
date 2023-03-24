@@ -72,7 +72,6 @@ export const NsfwForm: React.FC = () => {
 							<FormField name="domsub">
 								{(field) => (
 									<>
-										<InputLabel {...field.labelProps}>What is your preference?</InputLabel>
 										<InputRadioList
 											{...field.props}
 											items={ProfileDomsubList.map((value) => ({
@@ -105,7 +104,7 @@ export const NsfwForm: React.FC = () => {
 							<FormField name="kinksPrivacy">
 								{(field) => (
 									<>
-										<InputLabel inline hint="Who can see your nsfw tags?">
+										<InputLabel inline hint="Who can see your NSFW tags?">
 											Kink privacy
 										</InputLabel>
 										<InputPrivacySelect {...field.props} />

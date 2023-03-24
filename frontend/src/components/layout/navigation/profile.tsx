@@ -1,4 +1,9 @@
-import { BoltIcon, BugAntIcon, CommandLineIcon, LinkIcon } from "@heroicons/react/24/solid";
+import {
+	ShieldExclamationIcon,
+	BugAntIcon,
+	CommandLineIcon,
+	LinkIcon
+} from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -77,11 +82,11 @@ export const ProfileNavigation: React.FC = () => {
 							</div>
 						</Link>
 						<div className="flex flex-col-reverse gap-2 p-2 sm:flex-col sm:pl-12">
-							<ProfileNavigationItem href={urls.subscription}>Subscription</ProfileNavigationItem>
+							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.settings.list()}>Settings</ProfileNavigationItem>
 							{user.tags.includes("moderator") && (
 								<>
-									<ProfileNavigationItemDivider Icon={BoltIcon} />
+									<ProfileNavigationItemDivider Icon={ShieldExclamationIcon} />
 									<ProfileNavigationItem href={urls.moderation.reports}>
 										Reports
 									</ProfileNavigationItem>

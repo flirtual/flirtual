@@ -73,7 +73,7 @@ export const Onboarding4Form: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormButton />
+					<FormButton>Next page</FormButton>
 				</>
 			)}
 		</Form>

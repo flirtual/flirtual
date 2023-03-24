@@ -49,7 +49,8 @@ export const InputEditor: React.FC<InputEditorProps> = ({ value, onChange }) => 
 			]}
 			modules={{
 				toolbar: [
-					["bold", "italic", "underline", { header: 3 }],
+					[{ header: 3 }],
+					["bold", "italic", "underline"],
 					[{ color: editorColors }, { background: editorColors }],
 					[{ list: "ordered" }, { list: "bullet" }],
 					["blockquote"],

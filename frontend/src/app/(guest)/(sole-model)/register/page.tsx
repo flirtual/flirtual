@@ -4,7 +4,7 @@ import { RegisterForm } from "./form";
 
 export default function RegisterPage() {
 	return (
-		<ModelCard title="Register">
+		<ModelCard title="Create account">
 			<RegisterForm />
 		</ModelCard>
 	);

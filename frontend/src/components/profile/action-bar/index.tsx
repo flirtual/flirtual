@@ -71,7 +71,7 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 							title="Clear reports"
 							type="button"
 							onClick={async () => {
-								await api.report.clearAll({ query: { userId: user.id } });
+								await api.report.clearAll({ query: { targetId: user.id } });
 							}}
 						>
 							<ShieldCheckIcon className="h-6 w-6" />

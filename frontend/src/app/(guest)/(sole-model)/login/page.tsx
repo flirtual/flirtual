@@ -10,7 +10,7 @@ export interface LoginPageProps {
 
 export default function LoginPage(props: LoginPageProps) {
 	return (
-		<ModelCard className="sm:w-full sm:max-w-lg" title="Login">
+		<ModelCard className="sm:w-full sm:max-w-lg" title="Log in">
 			<LoginForm to={props.searchParams?.to} />
 		</ModelCard>
 	);

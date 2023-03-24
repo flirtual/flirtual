@@ -63,7 +63,7 @@ export const Onboarding2Form: React.FC = () => {
 					}),
 					api.user.profile.update(user.id, {
 						query: {
-							required: ["country", "languages", "new"],
+							required: ["languages", "new"],
 							requiredAttributes: AttributeKeys.filter((key) => key !== "sexuality")
 						},
 						body: {
@@ -160,7 +160,7 @@ export const Onboarding2Form: React.FC = () => {
 					<FormField name="sexuality">
 						{(field) => (
 							<>
-								<InputLabel>Sexuality</InputLabel>
+								<InputLabel hint="(optional)">Sexuality</InputLabel>
 								<InputAutocomplete
 									{...field.props}
 									limit={3}
@@ -186,7 +186,7 @@ export const Onboarding2Form: React.FC = () => {
 					<FormField name="country">
 						{(field) => (
 							<>
-								<InputLabel>Country</InputLabel>
+								<InputLabel hint="(optional)">Location</InputLabel>
 								<InputCountrySelect {...field.props} />
 							</>
 						)}
@@ -228,7 +228,7 @@ export const Onboarding2Form: React.FC = () => {
 					<FormField name="game">
 						{(field) => (
 							<>
-								<InputLabel>Favorite social VR games</InputLabel>
+								<InputLabel hint="(up to 5)">Fav social VR games</InputLabel>
 								<InputAutocomplete
 									{...field.props}
 									limit={5}
@@ -249,20 +249,25 @@ export const Onboarding2Form: React.FC = () => {
 					<FormField name="interest">
 						{(field) => (
 							<>
-								<InputLabel>Personal interests</InputLabel>
+								<InputLabel hint="(up to 7)">Personal interest tags</InputLabel>
 								<InputAutocomplete
 									{...field.props}
 									limit={7}
 									placeholder="Select your personal interests..."
-									options={interests.map((interest) => ({
-										key: interest.id,
-										label: interest.name
-									}))}
+									options={interests
+										.map((interest) => ({
+											key: interest.id,
+											label: interest.name
+										}))
+										.sort((a, b) => {
+											if (a.label > b.label) return 1;
+											return -1;
+										})}
 								/>
 							</>
 						)}
 					</FormField>
-					<FormButton />
+					<FormButton>Next page</FormButton>
 				</>
 			)}
 		</Form>

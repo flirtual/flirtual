@@ -17,16 +17,16 @@ export default function RootIndexPage() {
 			<SectionCallToAction />
 			<SectionAvatarProfiles
 				values={[
-					"When you can choose how you look, it's personality that makes the difference.",
-					"VR lets you be more real.",
-					"Vibe check in VR before sending IRL pics or video calling."
+					"VR is a personality-first way of meeting new people.",
+					"Avatars can help you express yourself, witohut feeling self-conscious.",
+					"After a date or two, go on a video call or meet in real life!"
 				]}
 			/>
 			<SectionCarousel
 				values={[
 					["b9326c15-c996-488f-8d68-d7ea4cb8649b", "Feed some ducks"],
-					["738f3d22-6f38-4059-9dd3-7fdd672acccd", "Swim with sharks"],
-					["be840a83-86f9-4ba2-87ae-3cd93f73f099", "Chill in a cafe"],
+					["738f3d22-6f38-4059-9dd3-7fdd672acccd", "Swim... with sharks"],
+					["be840a83-86f9-4ba2-87ae-3cd93f73f099", "Chill in a cozy cafe"],
 					["107737a5-d694-43db-a082-0d71bdfc4105", "Observe a black hole"],
 					["30023b24-f08a-43d4-918a-aa8940cefb24", "Touch grass"],
 					["09402677-a01e-4f6b-9171-f8c533ec774f", "Paint together"],
@@ -71,10 +71,10 @@ export default function RootIndexPage() {
 							Sign up
 						</LandingButton>
 						<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
-							<MobileButton href={urls.apps.android} Icon={GooglePlayIcon} label="Play Store" />
+							<MobileButton href={urls.apps.android} Icon={GooglePlayIcon} label="Google Play" />
 							<MobileButton href="/ios" Icon={AppleIcon} label="iPhone/iPad" />
 							<MobileButton href={urls.apps.windows} Icon={MicrosoftIcon} label="Windows" />
-							<MobileButton href={urls.apps.sideQuest} Icon={MetaIcon} label="Side Quest" />
+							<MobileButton href={urls.apps.sideQuest} Icon={MetaIcon} label="SideQuest" />
 						</div>
 					</div>
 				</div>

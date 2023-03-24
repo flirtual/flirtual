@@ -16,7 +16,7 @@ export default function SettingsAccountDeactivatePage() {
 	const deactivated = !!session.user.deactivatedAt;
 
 	return (
-		<ModelCard title={deactivated ? "Reactivate" : "Deactivate"}>
+		<ModelCard title={deactivated ? "Reactivate account" : "Deactivate account"}>
 			<Form
 				className="flex flex-col gap-8"
 				requireChange={!deactivated}
@@ -36,20 +36,14 @@ export default function SettingsAccountDeactivatePage() {
 					<>
 						{deactivated ? (
 							<>
-								<span>
-									Your profile, photos, matches, and likes will be visible and you will be added
-									back into the matchmaking pool.
-								</span>
-								<span>Maybe you&apos;ll find the right person this time? 💀</span>
+								<span>This will make your profile visible to other users again.</span>
 							</>
 						) : (
 							<>
 								<span>
-									If you temporarily deactivate your account, your profile, photos, matches and
-									likes will be hidden, and you will be removed from matchmaking until you come back
-									here and reactivate your account.
+									This will temporarily remove you from matchmaking and hide your profile from other
+									users until you come back here and reactivate your account.
 								</span>
-								<span>Keep in mind that you can only deactivate your account once a week.</span>
 								<FormField name="currentPassword">
 									{(field) => (
 										<>
@@ -61,9 +55,9 @@ export default function SettingsAccountDeactivatePage() {
 							</>
 						)}
 						<div className="flex flex-col gap-4">
-							<FormButton>{deactivated ? "Reactivate" : "Deactivate"}</FormButton>
+							<FormButton>{deactivated ? "Reactivate account" : "Deactivate account"}</FormButton>
 							<FormAlternativeActionLink href={urls.settings.deleteAccount}>
-								Delete your account instead?
+								Permanently delete your account instead?
 							</FormAlternativeActionLink>
 						</div>
 					</>

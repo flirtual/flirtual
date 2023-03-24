@@ -18,7 +18,7 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 			className="flex flex-col gap-8"
 			formErrorMessages={false}
 			fields={{
-				email: "",
+				login: "",
 				password: "",
 				rememberMe: false
 			}}
@@ -31,11 +31,11 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 		>
 			{({ errors, FormField }) => (
 				<>
-					<FormField name="email">
+					<FormField name="login">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>Email address</InputLabel>
-								<InputText {...props} autoComplete="email" type="email" />
+								<InputLabel {...labelProps}>Username (or email)</InputLabel>
+								<InputText {...props} autoComplete="username" type="text" />
 							</>
 						)}
 					</FormField>
@@ -51,23 +51,14 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 						{({ props, labelProps }) => (
 							<div className="flex items-center gap-4">
 								<InputCheckbox {...props} />
-								<InputLabel
-									{...labelProps}
-									inline
-									hint={
-										<InputLabelHint className="max-w-[34ch]">
-											Keep your account logged in for 30 days, not recommended on public or shared
-											devices.
-										</InputLabelHint>
-									}
-								>
-									Remember me
+								<InputLabel {...labelProps} inline>
+									Stay logged in
 								</InputLabel>
 							</div>
 						)}
 					</FormField>
 					<div className="flex flex-col gap-4">
-						<FormButton>Login</FormButton>
+						<FormButton>Log in</FormButton>
 						<FormInputMessages messages={errors} />
 						<div className="flex flex-col font-nunito text-lg">
 							<FormAlternativeActionLink href={urls.register}>

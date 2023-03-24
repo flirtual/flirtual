@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 						<FooterListLink href={urls.resources.developers} label="Developers" />
 					</ul>
 					<ul className="flex flex-wrap gap-x-4 md:justify-center">
-						<FooterListLink href={urls.resources.about} label="About us" />
+						<FooterListLink href={urls.resources.about} label="About Us" />
 						<FooterListLink href={urls.resources.termsOfService} label="Terms of Service" />
 						<FooterListLink href={urls.resources.privacyPolicy} label="Privacy Policy" />
 					</ul>

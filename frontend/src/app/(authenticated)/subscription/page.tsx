@@ -102,7 +102,7 @@ export default function SubscriptionPage() {
 			<ModelCard
 				className="sm:max-w-3xl"
 				containerProps={{ className: "gap-8" }}
-				title="Subscription"
+				title="Flirtual Premium"
 			>
 				{searchParams.has("success") && (
 					<div className="flex gap-4 overflow-hidden rounded-xl bg-brand-gradient px-1">
@@ -163,17 +163,16 @@ export default function SubscriptionPage() {
 					</div>
 				)}
 				<div className="flex flex-col gap-4">
-					<h1 className="text-2xl font-semibold">Premium</h1>
 					<ul className="list-inside list-disc">
 						{[
-							"See who likes you.",
+							"See who likes you before you match.",
 							"Browse unlimited profiles.",
-							"A shiny (optional) badge on your profile.",
 							<span key="">
-								Control your{" "}
-								<InlineLink href={urls.settings.matchmaking()}>matchmaking algorithm</InlineLink>.
-							</span>,
-							"Experimental features as they are developed."
+								<InlineLink href={urls.settings.matchmaking()}>
+									Control your matchmaking priorities
+								</InlineLink>
+								.
+							</span>
 						].map((item, itemIdx) => (
 							<li key={itemIdx}>{item}</li>
 						))}
