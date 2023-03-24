@@ -123,10 +123,6 @@ defmodule Flirtual.User do
         %{reason: "missing profile genders", to: "/onboarding/2"}
       },
       {
-        is_nil(profile.country),
-        %{reason: "missing profile country", to: "/onboarding/2"}
-      },
-      {
         length(profile.languages) === 0,
         %{reason: "missing profile languages", to: "/onboarding/2"}
       },
