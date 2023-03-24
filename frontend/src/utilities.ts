@@ -148,3 +148,17 @@ export function findBy<T, K extends keyof T>(array: Array<T>, key: K, value: T[K
 export function someBy<T, K extends keyof T>(array: Array<T>, key: K, value: T[K]): boolean {
 	return array.some((arrayValue) => arrayValue[key] === value);
 }
+
+export type GroupBy<T extends ReadonlyArray<unknown>, K extends PropertyKey> = { [_ in K]: T };
+
+export function groupBy<T extends ReadonlyArray<object>, K extends PropertyKey>(
+	array: T,
+	fn: (value: T[number]) => K
+): GroupBy<T, K> {
+	return array.reduce((prev: any, curr) => {
+		const key = fn(curr);
+		const group = prev[key] || [];
+		group.push(curr);
+		return { ...prev, [key]: group };
+	}, {}) as GroupBy<T, K>;
+}
