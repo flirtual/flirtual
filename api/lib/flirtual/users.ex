@@ -36,9 +36,9 @@ defmodule Flirtual.Users do
     User |> where([user], user.email == ^email) |> preload(^User.default_assoc()) |> Repo.one()
   end
 
-  def get_by_email_and_password(email, password)
+  def get_by_login_and_password(login, password)
       when is_binary(password) do
-    user = get_by_email(email)
+    user = get_by_username(login) || get_by_email(login)
     if User.valid_password?(user, password), do: user
   end
 

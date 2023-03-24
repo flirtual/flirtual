@@ -24,17 +24,17 @@ defmodule FlirtualWeb.SessionController do
     with {:ok, attrs} <-
            cast_arbitrary(
              %{
-               email: :string,
+               login: :string,
                password: :string,
                remember_me: :boolean
              },
              params
            )
-           |> validate_required([:email, :password])
+           |> validate_required([:login, :password])
            |> apply_action(:update),
          %User{banned_at: nil} = user <-
-           Users.get_by_email_and_password(
-             attrs[:email],
+           Users.get_by_login_and_password(
+             attrs[:login],
              attrs[:password]
            ),
          {session, conn} = create(conn, user, attrs[:remember_me]) do
@@ -43,7 +43,7 @@ defmodule FlirtualWeb.SessionController do
       |> json(Policy.transform(conn, session))
     else
       %User{} ->
-        {:error, {:unauthorized, "Your account has been banned, check your email for details"}}
+        {:error, {:unauthorized, "Your account has been banned; check your email for details"}}
 
       _ ->
         {:error, {:unauthorized, "Invalid credentials"}}
