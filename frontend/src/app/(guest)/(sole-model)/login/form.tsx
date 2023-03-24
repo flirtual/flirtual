@@ -18,7 +18,7 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 			className="flex flex-col gap-8"
 			formErrorMessages={false}
 			fields={{
-				email: "",
+				login: "",
 				password: "",
 				rememberMe: false
 			}}
@@ -31,11 +31,11 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 		>
 			{({ errors, FormField }) => (
 				<>
-					<FormField name="email">
+					<FormField name="login">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>Email address</InputLabel>
-								<InputText {...props} autoComplete="email" type="email" />
+								<InputLabel {...labelProps}>Username (or email)</InputLabel>
+								<InputText {...props} autoComplete="username" type="text" />
 							</>
 						)}
 					</FormField>
@@ -67,7 +67,7 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 						)}
 					</FormField>
 					<div className="flex flex-col gap-4">
-						<FormButton>Login</FormButton>
+						<FormButton>Log in</FormButton>
 						<FormInputMessages messages={errors} />
 						<div className="flex flex-col font-nunito text-lg">
 							<FormAlternativeActionLink href={urls.register}>

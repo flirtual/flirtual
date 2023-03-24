@@ -9,7 +9,7 @@ export type Session = DatedModel & {
 
 export async function login(
 	options: NarrowFetchOptions<{
-		email: string;
+		login: string;
 		password: string;
 		rememberMe: boolean;
 	}>
