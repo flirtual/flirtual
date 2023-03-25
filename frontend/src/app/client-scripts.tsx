@@ -41,7 +41,6 @@ export const ClientScripts: React.FC = () => {
 			{/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
 			<Script
 				src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"
-				strategy="beforeInteractive"
 				onReady={() => {
 					window.Blinkloader.optimize({
 						pubkey: uploadcarePublicKey,
