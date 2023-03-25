@@ -63,6 +63,7 @@ defmodule Flirtual.Attribute do
     |> Enum.map(
       &%Attribute{
         id: &1[:iso_3166_1],
+        type: "country",
         name: &1[:name],
         metadata: %{
           "flag_url" =>
@@ -78,6 +79,7 @@ defmodule Flirtual.Attribute do
     |> Enum.map(
       &%Attribute{
         id: &1[:iso_639_1],
+        type: "language",
         name: &1[:name]
       }
     )
