@@ -55,9 +55,9 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 );
 
 interface LabelSelectProps {
-	options: Array<InputSelectOption>;
+	options: Array<InputSelectOption<string>>;
 	onOptionAction: React.EventHandler<
-		InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string | null>
+		InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string>
 	>;
 	children: React.ReactNode;
 }
@@ -88,10 +88,16 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				<InputOptionWindow
 					className="absolute mt-4 flex w-fit"
 					options={props.options}
-					onOptionFocus={props.onOptionAction}
 					onOptionClick={(event) => {
-						props.onOptionAction(event);
+						props.onOptionAction(
+							event as InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string>
+						);
 						setVisible(false);
+					}}
+					onOptionFocus={(event) => {
+						props.onOptionAction(
+							event as InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string>
+						);
 					}}
 				/>
 			)}
