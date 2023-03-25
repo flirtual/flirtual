@@ -28,7 +28,7 @@ export const SectionCallToAction: React.FC = () => (
 		</div>
 		<BackgroundVideo />
 		<button
-			className="absolute bottom-0 mb-16"
+			className="absolute bottom-0 z-10 mb-16"
 			type="button"
 			onClick={() => {
 				document.querySelector("#avatar-profiles")?.scrollIntoView();
