@@ -29,7 +29,7 @@ export const SectionAvatarProfiles: React.FC<{ values: Array<string> }> = ({ val
 						{activeValue}
 					</span>
 				</div>
-				<img className="lg:h-[60vh]" src="/images/profile-showcase.png" />
+				<img className="scale-125 lg:h-[60vh] lg:scale-100" src="/images/profile-showcase.png" />
 			</div>
 		</SnapSection>
 	);
