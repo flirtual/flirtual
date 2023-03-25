@@ -16,7 +16,7 @@ export const SectionCallToAction: React.FC = () => (
 	>
 		<div className="z-10 flex flex-col items-center px-8 py-16 md:px-16">
 			<FlirtualLogo />
-			<h1 className="text-3xl font-bold sm:text-4xl md:text-6xl">The first VR dating app</h1>
+			<h1 className="text-2xl font-bold sm:text-4xl md:text-6xl">The first VR dating app</h1>
 			<div className="mt-8 flex flex-col gap-4 gap-y-8 md:flex-row">
 				<LandingButton href={urls.register} kind="primary">
 					Sign up
@@ -34,7 +34,7 @@ export const SectionCallToAction: React.FC = () => (
 				document.querySelector("#avatar-profiles")?.scrollIntoView();
 			}}
 		>
-			<ChevronDownIcon className="w-12 animate-bounce" />
+			<ChevronDownIcon className="h-12 w-12 animate-bounce" />
 		</button>
 	</SnapSection>
 );
