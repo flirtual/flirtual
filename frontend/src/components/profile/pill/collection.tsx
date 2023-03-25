@@ -89,7 +89,7 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 				</div>
 				<PillAttributeList
 					attributes={attributes.sexuality}
-					href={urls.settings.tags}
+					href={urls.settings.tags("sexuality")}
 					user={user}
 				/>
 				{personalityLabels.length !== 0 && (
@@ -104,8 +104,16 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 						))}
 					</div>
 				)}
-				<PillAttributeList attributes={attributes.interest} href={urls.settings.tags} user={user} />
-				<PillAttributeList attributes={attributes.game} href={urls.settings.tags} user={user} />
+				<PillAttributeList
+					attributes={attributes.interest}
+					href={urls.settings.tags("interest")}
+					user={user}
+				/>
+				<PillAttributeList
+					attributes={attributes.game}
+					href={urls.settings.tags("game")}
+					user={user}
+				/>
 				{user.profile.domsub && (
 					<div className="flex w-full flex-wrap gap-2">
 						<Pill href={urls.settings.matchmaking()}>{capitalize(user.profile.domsub)}</Pill>
@@ -121,12 +129,12 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 						<PillAttributeList attributes={attributes.kink} href={urls.settings.nsfw} user={user} />
 						<PillAttributeList
 							attributes={attributes.language}
-							href={urls.settings.tags}
+							href={urls.settings.tags("language")}
 							user={user}
 						/>
 						<PillAttributeList
 							attributes={attributes.platform}
-							href={urls.settings.tags}
+							href={urls.settings.tags("platform")}
 							user={user}
 						/>
 					</>

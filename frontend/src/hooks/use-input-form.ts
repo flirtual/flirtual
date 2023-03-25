@@ -18,6 +18,7 @@ export type InputFormSubmitFunction<T extends FormFieldsDefault> = (
 export interface InputFormOptions<T extends FormFieldsDefault> {
 	requireChange?: boolean | Array<keyof T>;
 	withCaptcha?: boolean;
+	withGlobalId?: boolean;
 	captchaRef: RefObject<FormCaptchaRef>;
 	onSubmit: InputFormSubmitFunction<T>;
 	fields: T;
@@ -70,8 +71,16 @@ export function useFormContext<T extends FormFieldsDefault>() {
 export function useInputForm<T extends { [s: string]: unknown }>(
 	options: InputFormOptions<T>
 ): UseInputForm<T> {
-	const { onSubmit, requireChange = true, withCaptcha = false, captchaRef } = options;
-	const formId = useId();
+	const {
+		onSubmit,
+		requireChange = true,
+		withCaptcha = false,
+		withGlobalId = false,
+		captchaRef
+	} = options;
+
+	const reactId = useId();
+	const formId = withGlobalId ? "" : reactId;
 
 	const [initialValues, setInitialValues] = useState(options.fields);
 	const [values, setValues] = useState(initialValues);
@@ -124,7 +133,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		() =>
 			Object.fromEntries(
 				entries(values).map(([key, value]) => {
-					const id = `${formId}-${String(key)}`;
+					const id = `${formId}${String(key)}`;
 					const props: InputProps<unknown, unknown> = {
 						id,
 						name: key,

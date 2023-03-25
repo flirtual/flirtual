@@ -27,6 +27,7 @@ export const TagsForm: React.FC = () => {
 
 	return (
 		<Form
+			withGlobalId
 			className="flex flex-col gap-8"
 			fields={{
 				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),

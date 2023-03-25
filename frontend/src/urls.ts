@@ -69,7 +69,7 @@ export const urls = {
 		// profile
 		matchmaking: (returnTo?: string) => url("/settings/matchmaking", { return: returnTo }),
 		biography: "/settings/biography",
-		tags: "/settings/tags",
+		tags: (fragment?: string) => `/settings/tags${fragment ? `?af=${fragment}` : ""}`,
 		personality: "/settings/personality",
 		nsfw: "/settings/nsfw",
 

@@ -24,7 +24,7 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigati
 				<NavigationCategory name="Profile">
 					<NavigationLink href={urls.settings.matchmaking()}>Matchmaking</NavigationLink>
 					<NavigationLink href={urls.settings.biography}>Biography & pictures</NavigationLink>
-					<NavigationLink href={urls.settings.tags}>Information & tags</NavigationLink>
+					<NavigationLink href={urls.settings.tags()}>Information & tags</NavigationLink>
 					<NavigationLink href={urls.settings.personality}>Personality</NavigationLink>
 					<NavigationLink href={urls.settings.nsfw}>NSFW</NavigationLink>
 				</NavigationCategory>
