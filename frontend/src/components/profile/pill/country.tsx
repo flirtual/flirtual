@@ -14,7 +14,7 @@ export const CountryPill: React.FC<{ code: string }> = ({ code }) => {
 	if (!country) return null;
 
 	return (
-		<Pill>
+		<Pill hocusable={false}>
 			<img className="-ml-4 h-8 shrink-0 rounded-l-lg" src={country.metadata.flagUrl} />
 			<span>{country.name}</span>
 		</Pill>

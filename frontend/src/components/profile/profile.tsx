@@ -1,7 +1,7 @@
 "use client";
 
 import { urls } from "~/urls";
-import { User } from "~/api/user";
+import { displayName, User } from "~/api/user";
 import { Html } from "~/components/html";
 import { useSession } from "~/hooks/use-session";
 import { filterBy, findBy } from "~/utilities";
@@ -28,12 +28,12 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 			<div className="flex w-full flex-col overflow-hidden bg-cream text-black-70 dark:bg-black-80 dark:text-white-20 sm:rounded-3xl sm:bg-white-20 sm:dark:bg-black-70">
 				<ProfileImageDisplay images={user.profile.images}>
 					<div className="absolute bottom-0 flex w-full flex-col justify-center gap-2 p-8 text-white-10">
-						<div className="flex items-baseline gap-4 font-montserrat">
+						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
 							<span className="text-4xl font-bold leading-none [word-break:break-all]">
-								{user.profile.displayName ?? user.username}
+								{displayName(user)}
 							</span>
 							{user.bornAt && (
-								<div className="flex h-fit gap-2">
+								<div className="flex h-fit items-center gap-2">
 									<span className="text-3xl leading-none">
 										{Math.floor(
 											(Date.now() - new Date(user.bornAt).getTime()) / (365 * 24 * 60 * 60 * 1000)
@@ -55,7 +55,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 								.map(
 									(gender) =>
 										gender && (
-											<Pill href={myProfile ? urls.settings.tags : undefined} key={gender.id}>
+											<Pill hocusable={false} key={gender.id}>
 												{gender.name}
 											</Pill>
 										)
