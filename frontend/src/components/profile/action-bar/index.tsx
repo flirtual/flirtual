@@ -37,17 +37,19 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 				)}
 				{session.user.tags.includes("admin") && (
 					<>
-						<Tooltip value="Sudo">
-							<button
-								type="button"
-								onClick={async () => {
-									const session = await api.auth.sudo({ body: { userId: user.id } });
-									await mutateSession(session);
-								}}
-							>
-								<ArrowRightOnRectangleIcon className="h-6 w-6" />
-							</button>
-						</Tooltip>
+						{user.id !== session.user.id && (
+							<Tooltip value="Sudo">
+								<button
+									type="button"
+									onClick={async () => {
+										const session = await api.auth.sudo({ body: { userId: user.id } });
+										await mutateSession(session);
+									}}
+								>
+									<ArrowRightOnRectangleIcon className="h-6 w-6" />
+								</button>
+							</Tooltip>
+						)}
 					</>
 				)}
 				{session.sudoerId && (
