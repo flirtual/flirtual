@@ -31,7 +31,7 @@ export const TagsForm: React.FC = () => {
 			fields={{
 				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
 				new: profile.new ?? false,
-				country: profile.country ?? "",
+				country: profile.country ?? null,
 				languages: profile.languages ?? [],
 				...(fromEntries(
 					AttributeKeys.map((type) => {

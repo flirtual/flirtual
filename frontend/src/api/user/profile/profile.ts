@@ -27,7 +27,7 @@ export type Profile = Partial<UpdatedAtModel> & {
 	serious?: boolean;
 	domsub?: ProfileDomsub;
 	monopoly?: ProfileDomsub;
-	country?: string;
+	country?: string | null;
 	openness?: number;
 	conscientiousness?: number;
 	agreeableness?: number;

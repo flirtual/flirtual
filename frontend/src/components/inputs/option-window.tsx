@@ -1,0 +1,189 @@
+import {
+	ComponentProps,
+	EventHandler,
+	FC,
+	FocusEvent,
+	forwardRef,
+	KeyboardEvent,
+	MouseEvent,
+	SyntheticEvent,
+	useCallback,
+	useEffect,
+	useRef
+} from "react";
+import { twMerge } from "tailwind-merge";
+
+export interface InputSelectOption<K extends string | null = string> {
+	key: K;
+	label: string;
+	active?: boolean;
+}
+
+export type InputOptionEvent<
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	T extends SyntheticEvent<any>,
+	K extends string | null = string
+> = T & {
+	option: InputSelectOption<K>;
+};
+
+export interface OptionItemProps<K extends string | null = string> {
+	option: InputSelectOption<K | null>;
+	elementProps: {
+		"data-key": K | null;
+		"data-name": string;
+		"data-active": boolean;
+		onClick: EventHandler<MouseEvent<HTMLButtonElement>>;
+		onFocus: EventHandler<FocusEvent<HTMLButtonElement>>;
+	};
+}
+
+export type InputOptionWindowProps<K extends string | null = string> = Omit<
+	ComponentProps<"div">,
+	"onChange"
+> & {
+	options: Array<InputSelectOption<K | null>>;
+	OptionItem?: FC<OptionItemProps<K | null>>;
+	onOptionClick?: EventHandler<InputOptionEvent<MouseEvent<HTMLButtonElement>, K>>;
+	onOptionFocus?: EventHandler<InputOptionEvent<FocusEvent<HTMLButtonElement>, K>>;
+};
+
+function getFirstActiveElement(root: HTMLElement): HTMLElement {
+	return (
+		([...root.children] as Array<HTMLElement>).find(
+			(element) => element.dataset.active === "true"
+		) || (root.firstChild as HTMLElement)
+	);
+}
+
+export function focusElementByKeydown({ code, currentTarget }: KeyboardEvent<HTMLDivElement>) {
+	if (!code.startsWith("Key")) return;
+	const key = code.slice(3).toLowerCase();
+	const elements = currentTarget.querySelectorAll("*[data-key]");
+
+	for (let i = 0; i < elements.length; i++) {
+		const element = elements[i];
+		if (!(element instanceof HTMLElement) || !element.dataset.name?.toLowerCase().startsWith(key))
+			continue;
+
+		element.focus({});
+		return element;
+	}
+}
+
+export const DefaultOptionItem: FC<OptionItemProps> = (props) => {
+	const { option, elementProps } = props;
+
+	return (
+		<button
+			{...elementProps}
+			type="button"
+			className={twMerge(
+				"px-4 py-2 text-left hocus:outline-none",
+				option.active
+					? "bg-brand-gradient text-white-20"
+					: "text-black-70 focus:outline-none hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20"
+			)}
+		>
+			<span className="select-none font-nunito text-lg">{option.label}</span>
+		</button>
+	);
+};
+
+export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowProps<string | null>>(
+	(props, ref) => {
+		const {
+			options,
+			onOptionClick,
+			onOptionFocus,
+			OptionItem = DefaultOptionItem,
+			...elementProps
+		} = props;
+		const optionsRef = useRef<HTMLDivElement>(null);
+
+		const focusOption = useCallback((target: -1 | 1 | 0) => {
+			const { current: root } = optionsRef;
+			if (!root) return;
+
+			const firstActiveElement = getFirstActiveElement(root);
+			if (!root.contains(document.activeElement) || !document.activeElement || target === 0) {
+				if (root.firstChild instanceof HTMLElement) firstActiveElement.focus();
+				return;
+			}
+
+			const sibling =
+				document.activeElement[target === -1 ? "previousSibling" : "nextSibling"] ??
+				root[target === -1 ? "lastChild" : "firstChild"];
+			if (sibling instanceof HTMLElement) sibling.focus();
+		}, []);
+
+		// useEffect(() => focusOption(0), [focusOption]);
+
+		useEffect(() => {
+			const { current: root } = optionsRef;
+			if (!root) return;
+
+			const activeElement = root.querySelector("*[data-active=true]");
+			if (!activeElement || !(activeElement instanceof HTMLElement)) return;
+
+			activeElement.focus({});
+
+			// todo: this scrolls the entire page, not the container.
+			// activeElement.scrollIntoView({ block: "start" });
+		}, []);
+
+		return (
+			<div
+				ref={ref}
+				tabIndex={-1}
+				className={twMerge(
+					"focusable-within flex max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70",
+					elementProps.className
+				)}
+				onFocusCapture={(event) => {
+					props.onFocusCapture?.(event);
+
+					if (event.currentTarget !== event.target) return;
+					focusOption(0);
+				}}
+				onKeyDown={(event) => {
+					props.onKeyDown?.(event);
+					focusElementByKeydown(event);
+
+					switch (event.key) {
+						case "ArrowUp": {
+							event.preventDefault();
+							focusOption(-1);
+							return;
+						}
+						case "ArrowDown": {
+							event.preventDefault();
+							focusOption(1);
+							return;
+						}
+					}
+				}}
+			>
+				<div className="flex w-full flex-col" ref={optionsRef}>
+					{options.map((option) => {
+						if (!option.key) return null;
+
+						return (
+							<OptionItem
+								key={option.key}
+								option={option}
+								elementProps={{
+									"data-active": option.active ?? false,
+									"data-key": option.key,
+									"data-name": option.label,
+									onClick: (event) => onOptionClick?.(Object.assign(event, { option })),
+									onFocus: (event) => onOptionFocus?.(Object.assign(event, { option }))
+								}}
+							/>
+						);
+					})}
+				</div>
+			</div>
+		);
+	}
+);

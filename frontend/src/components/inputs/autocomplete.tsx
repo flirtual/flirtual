@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch } from "fast-fuzzy";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { InputOptionWindow } from "./select";
+import { InputOptionWindow } from "./option-window";
 
 export interface InputAutocompleteOption<K extends string = string> {
 	key: K;
