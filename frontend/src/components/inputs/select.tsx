@@ -2,26 +2,27 @@
 
 import { ChevronUpDownIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dispatch, useState } from "react";
+import { Dispatch, FC, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
 	focusElementByKeydown,
 	InputOptionWindow,
 	InputOptionWindowProps,
-	InputSelectOption
+	InputSelectOption,
+	OptionItemProps
 } from "./option-window";
 
-export interface InputSelectProps<T extends string | null> {
-	value: T | null;
-	onChange: Dispatch<T | null>;
-	placeholder?: string;
+export interface InputSelectProps<T> {
 	optional?: boolean;
+	placeholder?: string;
+	value: T;
+	onChange: Dispatch<T>;
 	options: Array<InputSelectOption<T>>;
-	OptionListItem?: InputOptionWindowProps<T | null>["OptionItem"];
+	OptionListItem?: InputOptionWindowProps<T>["OptionItem"];
 }
 
-export function InputSelect<K extends string | null>(props: InputSelectProps<K>) {
+export function InputSelect<K>(props: InputSelectProps<K>) {
 	const { placeholder = "Select an option", optional = false, OptionListItem } = props;
 	const [overlayVisible, setOverlayVisible] = useState(false);
 
@@ -58,6 +59,7 @@ export function InputSelect<K extends string | null>(props: InputSelectProps<K>)
 						{activeOption?.label || placeholder}
 					</span>
 					{optional && props.value !== null && (
+						// @ts-expect-error: don't want to rewrite this.
 						<button type="button" onClick={() => props.onChange(null)}>
 							<XMarkIcon className="h-5 w-5" />
 						</button>
@@ -74,7 +76,7 @@ export function InputSelect<K extends string | null>(props: InputSelectProps<K>)
 						transition={{ damping: 25 }}
 					>
 						<InputOptionWindow
-							OptionItem={OptionListItem as InputOptionWindowProps<string | null>["OptionItem"]}
+							OptionItem={OptionListItem as FC<OptionItemProps<unknown>>}
 							options={options}
 							onOptionClick={({ option, currentTarget }) => {
 								props.onChange(option.key as K);

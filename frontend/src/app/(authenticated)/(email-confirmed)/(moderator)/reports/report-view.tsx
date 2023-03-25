@@ -22,6 +22,7 @@ import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { ListOptions, Report } from "~/api/report";
 import { BanProfile } from "~/components/profile/action-bar/ban-profile";
+import { Tooltip } from "~/components/tooltip";
 
 type CompleteReport = Report & { user: User; target: User };
 
@@ -68,17 +69,18 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 						<Link href={urls.user.profile(reported.username)}>
 							<ArrowTopRightOnSquareIcon className="h-6 w-6" />
 						</Link>
-						<button
-							className="h-fit"
-							title="Clear reports"
-							type="button"
-							onClick={async () => {
-								await api.report.clearAll({ query: { targetId: reported.id } });
-								await mutate();
-							}}
-						>
-							<ShieldCheckIcon className="h-6 w-6" />
-						</button>
+						<Tooltip value="Clear reports">
+							<button
+								className="h-fit"
+								type="button"
+								onClick={async () => {
+									await api.report.clearAll({ query: { targetId: reported.id } });
+									await mutate();
+								}}
+							>
+								<ShieldCheckIcon className="h-6 w-6" />
+							</button>
+						</Tooltip>
 						<BanProfile user={reported} />
 					</div>
 				</div>
@@ -124,17 +126,18 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 									<div className="flex items-center justify-between gap-4">
 										<span className="text-lg font-semibold">{report.reason.name}</span>
 										{!report.reviewedAt && (
-											<button
-												className="h-fit"
-												title="Clear single report"
-												type="button"
-												onClick={async () => {
-													await api.report.clear(report.id);
-													await mutate();
-												}}
-											>
-												<CheckIcon className="h-5 w-5" />
-											</button>
+											<Tooltip value="Clear single report">
+												<button
+													className="h-fit"
+													type="button"
+													onClick={async () => {
+														await api.report.clear(report.id);
+														await mutate();
+													}}
+												>
+													<CheckIcon className="h-5 w-5" />
+												</button>
+											</Tooltip>
 										)}
 									</div>
 								</div>

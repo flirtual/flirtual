@@ -13,7 +13,7 @@ import {
 } from "react";
 import { twMerge } from "tailwind-merge";
 
-export interface InputSelectOption<K extends string | null = string> {
+export interface InputSelectOption<K> {
 	key: K;
 	label: string;
 	active?: boolean;
@@ -22,15 +22,15 @@ export interface InputSelectOption<K extends string | null = string> {
 export type InputOptionEvent<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends SyntheticEvent<any>,
-	K extends string | null = string
+	K
 > = T & {
 	option: InputSelectOption<K>;
 };
 
-export interface OptionItemProps<K extends string | null = string> {
-	option: InputSelectOption<K | null>;
+export interface OptionItemProps<K> {
+	option: InputSelectOption<K>;
 	elementProps: {
-		"data-key": K | null;
+		"data-key": K;
 		"data-name": string;
 		"data-active": boolean;
 		onClick: EventHandler<MouseEvent<HTMLButtonElement>>;
@@ -38,12 +38,9 @@ export interface OptionItemProps<K extends string | null = string> {
 	};
 }
 
-export type InputOptionWindowProps<K extends string | null = string> = Omit<
-	ComponentProps<"div">,
-	"onChange"
-> & {
-	options: Array<InputSelectOption<K | null>>;
-	OptionItem?: FC<OptionItemProps<K | null>>;
+export type InputOptionWindowProps<K> = Omit<ComponentProps<"div">, "onChange"> & {
+	options: Array<InputSelectOption<K>>;
+	OptionItem?: FC<OptionItemProps<K>>;
 	onOptionClick?: EventHandler<InputOptionEvent<MouseEvent<HTMLButtonElement>, K>>;
 	onOptionFocus?: EventHandler<InputOptionEvent<FocusEvent<HTMLButtonElement>, K>>;
 };
@@ -71,7 +68,7 @@ export function focusElementByKeydown({ code, currentTarget }: KeyboardEvent<HTM
 	}
 }
 
-export const DefaultOptionItem: FC<OptionItemProps> = (props) => {
+export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	const { option, elementProps } = props;
 
 	return (
@@ -90,7 +87,8 @@ export const DefaultOptionItem: FC<OptionItemProps> = (props) => {
 	);
 };
 
-export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowProps<string | null>>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowProps<unknown>>(
 	(props, ref) => {
 		const {
 			options,
@@ -170,7 +168,8 @@ export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowPro
 
 						return (
 							<OptionItem
-								key={option.key}
+								// eslint-disable-next-line @typescript-eslint/no-explicit-any
+								key={option.key as any}
 								option={option}
 								elementProps={{
 									"data-active": option.active ?? false,

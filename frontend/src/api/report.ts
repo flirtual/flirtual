@@ -25,7 +25,7 @@ export async function list(options: ListOptions): Promise<Array<Report>> {
 }
 
 export async function create(
-	options: NarrowFetchOptions<Pick<Report, "targetId"> & { reasonId: string }>
+	options: NarrowFetchOptions<Pick<Report, "targetId"> & { reasonId: string; message: string }>
 ): Promise<Report> {
 	return fetch<Report>("post", "reports", options);
 }

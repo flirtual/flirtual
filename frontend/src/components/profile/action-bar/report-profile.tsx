@@ -8,6 +8,7 @@ import { useAttributeList } from "~/hooks/use-attribute-list";
 import { DrawerOrModal } from "~/components/drawer-or-modal";
 import { Form, FormButton } from "~/components/forms";
 import { InputSelect, InputLabel, InputTextArea } from "~/components/inputs";
+import { Tooltip } from "~/components/tooltip";
 
 export const ReportProfile: React.FC<{ user: User }> = ({ user }) => {
 	const [reportVisible, setReportVisible] = useState(false);
@@ -19,11 +20,12 @@ export const ReportProfile: React.FC<{ user: User }> = ({ user }) => {
 				className="flex flex-col gap-8 rounded-3xl p-5 dark:text-white-20 sm:w-96"
 				fields={{
 					targetId: user.id,
-					reasonId: reportReasons[0]?.id,
+					reasonId: reportReasons[0]?.id || null,
 					message: ""
 				}}
-				onSubmit={async (body) => {
-					await api.report.create({ body });
+				onSubmit={async ({ reasonId, targetId, message }) => {
+					if (!reasonId) return;
+					await api.report.create({ body: { reasonId, targetId, message } });
 					setReportVisible(false);
 				}}
 			>
@@ -71,14 +73,11 @@ export const ReportProfile: React.FC<{ user: User }> = ({ user }) => {
 					</>
 				)}
 			</Form>
-			<button
-				className="h-6 w-6"
-				title="Report profile"
-				type="button"
-				onClick={() => setReportVisible(true)}
-			>
-				<FlagIcon className="h-full w-full" />
-			</button>
+			<Tooltip value="Report profile">
+				<button className="h-6 w-6" type="button" onClick={() => setReportVisible(true)}>
+					<FlagIcon className="h-full w-full" />
+				</button>
+			</Tooltip>
 		</DrawerOrModal>
 	);
 };

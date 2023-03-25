@@ -1,11 +1,9 @@
 "use client";
 
-import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
-import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -18,7 +16,6 @@ export interface SettingsNavigationProps {
 
 export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigationInner }) => {
 	const { openFreshworks } = useFreshworks();
-	const [, , logout] = useSession();
 
 	return (
 		<div className="flex w-full shrink-0 grow-0 flex-col shadow-brand-1 md:w-80 md:bg-white-20 md:text-white-20 dark:md:bg-black-70">

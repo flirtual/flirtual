@@ -9,6 +9,7 @@ import {
 import { User } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
+import { Tooltip } from "~/components/tooltip";
 
 import { BanProfile } from "./ban-profile";
 import { ReportProfile } from "./report-profile";
@@ -22,69 +23,70 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 			<div className="flex gap-4">
 				{session.user.tags.includes("debugger") && (
 					<>
-						<button
-							title="Copy user id"
-							type="button"
-							onClick={() => navigator.clipboard.writeText(user.id)}
-						>
-							<ClipboardDocumentIcon className="h-6 w-6" />
-						</button>
-						<button
-							title="Copy username"
-							type="button"
-							onClick={() => navigator.clipboard.writeText(user.username)}
-						>
-							<ClipboardDocumentIcon className="h-6 w-6" />
-						</button>
+						<Tooltip value="Copy user id">
+							<button type="button" onClick={() => navigator.clipboard.writeText(user.id)}>
+								<ClipboardDocumentIcon className="h-6 w-6" />
+							</button>
+						</Tooltip>
+						<Tooltip value="Copy username">
+							<button type="button" onClick={() => navigator.clipboard.writeText(user.username)}>
+								<ClipboardDocumentIcon className="h-6 w-6" />
+							</button>
+						</Tooltip>
 					</>
 				)}
 				{session.user.tags.includes("admin") && (
 					<>
-						<button
-							title="Sudo"
-							type="button"
-							onClick={async () => {
-								const session = await api.auth.sudo({ body: { userId: user.id } });
-								await mutateSession(session);
-							}}
-						>
-							<ArrowRightOnRectangleIcon className="h-6 w-6" />
-						</button>
+						<Tooltip value="Sudo">
+							<button
+								type="button"
+								onClick={async () => {
+									const session = await api.auth.sudo({ body: { userId: user.id } });
+									await mutateSession(session);
+								}}
+							>
+								<ArrowRightOnRectangleIcon className="h-6 w-6" />
+							</button>
+						</Tooltip>
 					</>
 				)}
 				{session.sudoerId && (
-					<button
-						title="Revoke sudo"
-						type="button"
-						onClick={async () => {
-							const session = await api.auth.revokeSudo();
-							await mutateSession(session);
-						}}
-					>
-						<ArrowLeftOnRectangleIcon className="h-6 w-6" />
-					</button>
+					<Tooltip value="Revoke Sudo">
+						<button
+							type="button"
+							onClick={async () => {
+								const session = await api.auth.revokeSudo();
+								await mutateSession(session);
+							}}
+						>
+							<ArrowLeftOnRectangleIcon className="h-6 w-6" />
+						</button>
+					</Tooltip>
 				)}
 				{session.user.tags.includes("moderator") && (
 					<>
 						<BanProfile user={user} />
-						<button
-							title="Clear reports"
-							type="button"
-							onClick={async () => {
-								await api.report.clearAll({ query: { targetId: user.id } });
-							}}
-						>
-							<ShieldCheckIcon className="h-6 w-6" />
-						</button>
+						<Tooltip fragmentClassName="h-6 w-6" value="Clear reports">
+							<button
+								type="button"
+								onClick={async () => {
+									await api.report.clearAll({ query: { targetId: user.id } });
+								}}
+							>
+								<ShieldCheckIcon className="h-6 w-6" />
+							</button>
+						</Tooltip>
 					</>
 				)}
 			</div>
 			<div className="flex gap-4">
 				{session.user.id !== user.id && (
 					<>
-						<button className="h-6 w-6" title="Block user" type="button">
-							<NoSymbolIcon className="h-full w-full" />
-						</button>
+						<Tooltip value="Block profile">
+							<button className="h-6 w-6" type="button">
+								<NoSymbolIcon className="h-full w-full" />
+							</button>
+						</Tooltip>
 						<ReportProfile user={user} />
 					</>
 				)}
