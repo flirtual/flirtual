@@ -21,62 +21,79 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 	const [session] = useSession();
 	const { user } = props;
 
-	const sexualities = useAttributeList("sexuality");
-	const games = useAttributeList("game");
-	const interests = useAttributeList("interest");
+	const allSexualities = useAttributeList("sexuality");
+	const allGames = useAttributeList("game");
+	const allInterests = useAttributeList("interest");
 
 	if (!session) return null;
 
 	const sessionPersonalityLabels = getPersonalityLabels(session.user);
 	const personalityLabels = getPersonalityLabels(user);
 
+	const sexualities = filterBy(user.profile.attributes, "type", "sexuality");
+
 	return (
-		<div className="flex flex-wrap gap-2">
+		<div className="flex flex-wrap gap-4">
 			{user.profile.serious && <Pill>Open to serious dating</Pill>}
-			{filterBy(user.profile.attributes, "type", "sexuality").map(({ id }) => {
-				const attribute = findBy(sexualities, "id", id);
-				if (!attribute) return null;
+			{sexualities.length !== 0 && (
+				<div className="flex w-full flex-wrap gap-2">
+					{sexualities.map(({ id }) => {
+						const attribute = findBy(allSexualities, "id", id);
+						if (!attribute) return null;
 
-				return (
-					<Pill
-						active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
-						key={attribute.id}
-					>
-						{attribute.name}
-					</Pill>
-				);
-			})}
-			{personalityLabels.map((personalityLabel) => (
-				<Pill active={sessionPersonalityLabels.includes(personalityLabel)} key={personalityLabel}>
-					{personalityLabel}
-				</Pill>
-			))}
-			{filterBy(user.profile.attributes, "type", "interest").map(({ id }) => {
-				const attribute = findBy(interests, "id", id);
-				if (!attribute) return null;
+						return (
+							<Pill
+								active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
+								key={attribute.id}
+							>
+								{attribute.name}
+							</Pill>
+						);
+					})}
+				</div>
+			)}
+			{personalityLabels.length !== 0 && (
+				<div className="flex w-full flex-wrap gap-2">
+					{personalityLabels.map((personalityLabel) => (
+						<Pill
+							active={sessionPersonalityLabels.includes(personalityLabel)}
+							key={personalityLabel}
+						>
+							{personalityLabel}
+						</Pill>
+					))}
+				</div>
+			)}
+			<div className="flex w-full flex-wrap gap-2">
+				{filterBy(user.profile.attributes, "type", "interest").map(({ id }) => {
+					const attribute = findBy(allInterests, "id", id);
+					if (!attribute) return null;
 
-				return (
-					<Pill
-						active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
-						key={attribute.id}
-					>
-						{attribute.name}
-					</Pill>
-				);
-			})}
-			{filterBy(user.profile.attributes, "type", "game").map(({ id }) => {
-				const attribute = findBy(games, "id", id);
-				if (!attribute) return null;
+					return (
+						<Pill
+							active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
+							key={attribute.id}
+						>
+							{attribute.name}
+						</Pill>
+					);
+				})}
+			</div>
+			<div className="flex w-full flex-wrap gap-2">
+				{filterBy(user.profile.attributes, "type", "game").map(({ id }) => {
+					const attribute = findBy(allGames, "id", id);
+					if (!attribute) return null;
 
-				return (
-					<Pill
-						active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
-						key={attribute.id}
-					>
-						{attribute.name}
-					</Pill>
-				);
-			})}
+					return (
+						<Pill
+							active={!!findBy(session.user.profile.attributes, "id", attribute.id)}
+							key={attribute.id}
+						>
+							{attribute.name}
+						</Pill>
+					);
+				})}
+			</div>
 		</div>
 	);
 };
