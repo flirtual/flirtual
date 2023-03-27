@@ -96,8 +96,10 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 					<div className="flex w-full flex-wrap gap-2">
 						{personalityLabels.map((personalityLabel) => (
 							<Pill
-								active={sessionPersonalityLabels.includes(personalityLabel)}
 								key={personalityLabel}
+								active={
+									session.user.id !== user.id && sessionPersonalityLabels.includes(personalityLabel)
+								}
 							>
 								{personalityLabel}
 							</Pill>
