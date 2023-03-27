@@ -1,6 +1,11 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "@heroicons/react/24/solid";
+import {
+	ChevronLeftIcon,
+	ChevronRightIcon,
+	MagnifyingGlassIcon,
+	TrashIcon
+} from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import ms from "ms";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -12,6 +17,7 @@ import { urls } from "~/urls";
 
 import { ModalOuter } from "../modal";
 import { Tooltip } from "../tooltip";
+import { InlineLink } from "../inline-link";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
@@ -48,11 +54,18 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 				)} ago`}</span>
 				, and was {image.scanned ? "" : <span className="font-bold">not scanned</span>}.
 			</span>
-			<Tooltip value="Delete image">
-				<button type="button">
-					<TrashIcon className="h-5 w-5" />
-				</button>
-			</Tooltip>
+			<div className="flex gap-4">
+				<Tooltip value="Search image">
+					<InlineLink href={urls.moderation.imageSearch(image.url)}>
+						<MagnifyingGlassIcon className="h-5 w-5" fill="white" />
+					</InlineLink>
+				</Tooltip>
+				<Tooltip value="Delete image">
+					<button type="button">
+						<TrashIcon className="h-5 w-5" />
+					</button>
+				</Tooltip>
+			</div>
 		</div>
 	);
 };

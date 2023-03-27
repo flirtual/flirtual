@@ -84,7 +84,8 @@ export const urls = {
 	},
 
 	moderation: {
-		reports: "/reports"
+		reports: "/reports",
+		imageSearch: (imageLink: string) => `https://lens.google.com/uploadbyurl?url=${imageLink}`
 	},
 
 	admin: {},
