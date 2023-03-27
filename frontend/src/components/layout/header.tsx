@@ -5,7 +5,6 @@ import { urls } from "~/urls";
 import { InlineLink } from "../inline-link";
 import { Popover, PopoverModel } from "../popover";
 import { DiscordIcon, TwitterIcon } from "../icons";
-import { InstagramIcon } from "../icons/brand/instagram";
 
 import { HeaderLogo } from "./header-logo";
 import { NavigationInner } from "./navigation";
@@ -47,14 +46,6 @@ export const Header: React.FC = () => {
 										>
 											<TwitterIcon className="w-5" />
 											<span>Twitter</span>
-										</InlineLink>
-										<InlineLink
-											className="flex items-center gap-2"
-											highlight={false}
-											href={urls.socials.instagram}
-										>
-											<InstagramIcon className="w-5" />
-											<span>Instagram</span>
 										</InlineLink>
 										<InlineLink
 											className="flex items-center gap-2"

@@ -23,8 +23,8 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigati
 			<nav className={twMerge("flex-col gap-8 py-8", navigationInner ? "hidden md:flex" : "flex")}>
 				<NavigationCategory name="Profile">
 					<NavigationLink href={urls.settings.matchmaking()}>Matchmaking</NavigationLink>
-					<NavigationLink href={urls.settings.biography}>Biography & pictures</NavigationLink>
-					<NavigationLink href={urls.settings.tags()}>Information & tags</NavigationLink>
+					<NavigationLink href={urls.settings.bio}>Bio & pics</NavigationLink>
+					<NavigationLink href={urls.settings.tags()}>Info & tags</NavigationLink>
 					<NavigationLink href={urls.settings.personality}>Personality</NavigationLink>
 					<NavigationLink href={urls.settings.nsfw}>NSFW</NavigationLink>
 				</NavigationCategory>
@@ -37,16 +37,32 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigati
 					<NavigationLink href={urls.settings.deactivateAccount}>Deactivate account</NavigationLink>
 				</NavigationCategory>
 				<div className="sm:hidden">
-					<NavigationCategory name="Resources">
+					<NavigationCategory name="Social">
+						<NavigationLink href={urls.resources.events}>Events</NavigationLink>
+						<NavigationLink href={urls.socials.discord}>Discord server</NavigationLink>
+						<NavigationLink href={urls.socials.vrchat}>VRChat group</NavigationLink>
+						<NavigationLink href={urls.socials.twitter}>Twitter</NavigationLink>
+					</NavigationCategory>
+				</div>
+				<div className="sm:hidden">
+					<NavigationCategory name="Help">
 						<NavigationLink onClick={openFreshworks}>Support</NavigationLink>
 						<NavigationLink href={urls.resources.networkStatus}>Network Status</NavigationLink>
-						<NavigationLink href={urls.resources.about}>About</NavigationLink>
-						<NavigationLink href={urls.resources.communityGuidelines}>
-							Community Guidelines
-						</NavigationLink>
+					</NavigationCategory>
+				</div>
+				<div className="sm:hidden">
+					<NavigationCategory name="Info">
+						<NavigationLink href={urls.resources.about}>About Us</NavigationLink>
+						<NavigationLink href={urls.resources.press}>Press</NavigationLink>
+						<NavigationLink href={urls.resources.branding}>Branding</NavigationLink>
+						<NavigationLink href={urls.resources.developers}>Developers</NavigationLink>
+					</NavigationCategory>
+				</div>
+				<div className="sm:hidden">
+					<NavigationCategory name="Legal">
 						<NavigationLink href={urls.resources.termsOfService}>Terms of Service</NavigationLink>
 						<NavigationLink href={urls.resources.privacyPolicy}>Privacy Policy</NavigationLink>
-						<NavigationLink href={urls.resources.company}>Studio Paprika</NavigationLink>
+						<NavigationLink href={urls.resources.company}>&copy; Studio Paprika</NavigationLink>
 					</NavigationCategory>
 				</div>
 			</nav>

@@ -118,7 +118,7 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 				/>
 				{user.profile.domsub && (
 					<div className="flex w-full flex-wrap gap-2">
-						<Pill href={urls.settings.matchmaking()}>{capitalize(user.profile.domsub)}</Pill>
+						<Pill href={urls.settings.nsfw}>{capitalize(user.profile.domsub)}</Pill>
 					</div>
 				)}
 				{expanded ? (

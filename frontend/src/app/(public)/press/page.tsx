@@ -12,7 +12,7 @@ export default async function PressPage() {
 				title="Press"
 			>
 				<div className="flex flex-col gap-4">
-					<span className="text-2xl font-semibold">Presskit</span>
+					<span className="text-2xl font-semibold">Press kit</span>
 					<ButtonLink download className="w-fit" href="/presskit.zip">
 						Download
 					</ButtonLink>

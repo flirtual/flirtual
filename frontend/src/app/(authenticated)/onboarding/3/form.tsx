@@ -90,7 +90,7 @@ export const Onboarding3Form: React.FC = () => {
 					<FormField name="biography">
 						{(field) => (
 							<>
-								<InputLabel {...field.labelProps}>Biography</InputLabel>
+								<InputLabel {...field.labelProps}>Bio</InputLabel>
 								<InputEditor {...field.props} />
 							</>
 						)}

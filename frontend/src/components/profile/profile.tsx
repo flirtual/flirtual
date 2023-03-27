@@ -55,7 +55,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 								.map(
 									(gender) =>
 										gender && (
-											<Pill hocusable={false} key={gender.id}>
+											<Pill hocusable={false} key={gender.id} small={true}>
 												{gender.name}
 											</Pill>
 										)
@@ -68,17 +68,11 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{user.profile.biography ? (
 						<Html className="text-xl">{user.profile.biography}</Html>
-					) : (
-						<span className="text-xl dark:text-white-20">
-							No biography available yet, consider{" "}
-							<InlineLink
-								href={myProfile ? urls.settings.biography : urls.conversations.with(user.id)}
-							>
-								{myProfile ? "adding one" : "asking them to add one"}
-							</InlineLink>
-							.
+					) : myProfile ? (
+						<span className="text-xl italic dark:text-white-20">
+							Don&apos;t forget to <InlineLink href={urls.settings.bio}>add a bio</InlineLink>!
 						</span>
-					)}
+					) : null}
 					<PillCollection user={user} />
 				</div>
 				<ProfileActionBar user={user} />

@@ -68,7 +68,7 @@ export const urls = {
 
 		// profile
 		matchmaking: (returnTo?: string) => url("/settings/matchmaking", { return: returnTo }),
-		biography: "/settings/biography",
+		bio: "/settings/bio",
 		tags: (fragment?: string) => `/settings/tags${fragment ? `?af=${fragment}` : ""}`,
 		personality: "/settings/personality",
 		nsfw: "/settings/nsfw",
@@ -109,9 +109,9 @@ export const urls = {
 	},
 
 	socials: {
-		twitter: "https://twitter.com/getflirtual",
-		instagram: "https://instagram.com/flirtual",
-		discord: "https://discord.com/invite/flirtual"
+		discord: "https://discord.com/invite/flirtual",
+		vrchat: "https://vrc.group/FLIRT.4525",
+		twitter: "https://twitter.com/getflirtual"
 	},
 
 	apps: {
