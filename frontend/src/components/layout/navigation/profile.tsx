@@ -7,6 +7,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
 import { IconComponent } from "~/components/icons";
@@ -17,16 +18,19 @@ import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
-	{ href: string } | { onClick: (event: React.MouseEvent<HTMLButtonElement>) => void }
+	{ className?: string } & (
+		| { href: string }
+		| { onClick: (event: React.MouseEvent<HTMLButtonElement>) => void }
+	)
 >;
 
 const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
-	const className = "w-full font-montserrat font-semibold text-left";
+	const className = twMerge("w-full text-left font-montserrat font-semibold", props.className);
 
 	return "href" in props ? (
-		<Link className={className} {...props} />
+		<Link {...props} className={className} />
 	) : (
-		<button className={className} type="button" {...props} />
+		<button {...props} className={className} type="button" />
 	);
 };
 
@@ -84,6 +88,9 @@ export const ProfileNavigation: React.FC = () => {
 						<div className="flex flex-col-reverse gap-2 p-2 sm:flex-col sm:pl-12">
 							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.settings.list()}>Settings</ProfileNavigationItem>
+							<ProfileNavigationItem className="sm:hidden" href={urls.resources.download}>
+								Get app
+							</ProfileNavigationItem>
 							{user.tags.includes("moderator") && (
 								<>
 									<ProfileNavigationItemDivider Icon={ShieldExclamationIcon} />

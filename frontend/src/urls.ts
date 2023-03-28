@@ -95,6 +95,7 @@ export const urls = {
 	},
 
 	resources: {
+		download: "/download",
 		events: "/events",
 		networkStatus: "https://status.flirtu.al",
 		press: "/press",
