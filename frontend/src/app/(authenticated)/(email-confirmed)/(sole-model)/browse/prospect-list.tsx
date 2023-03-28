@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 import { api } from "~/api";
-import { ProspectRespondType, RespondProspectBody } from "~/api/matchmaking";
+import { ProspectRespondType, ProspectKind, RespondProspectBody } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { HeartGradient } from "~/components/icons/heart-gradient";
 import { PeaceGradient } from "~/components/icons/peace-gradient";
@@ -15,18 +15,21 @@ import { OutOfProspects } from "./out-of-prospects";
 
 export interface ProspectListProps {
 	prospects: Array<User>;
+	kind: ProspectKind;
 }
 
 const ProspectActionBar: React.FC<{
 	userId: string;
+	kind: ProspectKind;
 	setProspectIdx: Dispatch<SetStateAction<number>>;
-}> = ({ userId, setProspectIdx }) => {
+}> = ({ userId, kind, setProspectIdx }) => {
 	const [respondHistory, setRespondHistory] = useState<Array<RespondProspectBody>>([]);
 
 	const respond = useCallback(
 		async (type: ProspectRespondType) => {
 			const body = {
 				type,
+				kind,
 				userId
 			};
 
@@ -92,7 +95,7 @@ const ProspectActionBar: React.FC<{
 	);
 };
 
-export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
+export const ProspectList: React.FC<ProspectListProps> = ({ kind, prospects }) => {
 	const router = useRouter();
 	const [session] = useSession();
 
@@ -104,7 +107,7 @@ export const ProspectList: React.FC<ProspectListProps> = ({ prospects }) => {
 			{prospect ? (
 				<>
 					<Profile key={prospect.id} user={prospect} />
-					<ProspectActionBar setProspectIdx={setProspectIdx} userId={prospect.id} />
+					<ProspectActionBar kind={kind} setProspectIdx={setProspectIdx} userId={prospect.id} />
 				</>
 			) : (
 				<OutOfProspects />

@@ -1,10 +1,30 @@
+import { redirect } from "next/navigation";
+
 import { api } from "~/api";
 import { thruServerCookies } from "~/server-utilities";
+import { ProspectKind } from "~/api/matchmaking";
+import { urls } from "~/urls";
 
 import { ProspectList } from "./prospect-list";
 
-export default async function BrowsePage() {
-	const prospectIds = await api.matchmaking.listProspects(thruServerCookies());
+interface BrowsePageProps {
+	searchParams: { kind?: string };
+}
+
+export default async function BrowsePage({ searchParams }: BrowsePageProps) {
+	if (searchParams.kind && !ProspectKind.includes(searchParams.kind)) {
+		return redirect(urls.browse());
+	}
+
+	const kind = (searchParams.kind ?? "love") as ProspectKind;
+
+	const prospectIds = await api.matchmaking.listProspects({
+		...thruServerCookies(),
+		query: {
+			kind
+		}
+	});
+
 	const prospects = (
 		await api.user.bulk({
 			...thruServerCookies(),
@@ -15,5 +35,5 @@ export default async function BrowsePage() {
 		(a, b) => prospectIds.indexOf(a.id) - prospectIds.indexOf(b.id)
 	);
 
-	return <ProspectList prospects={prospects} />;
+	return <ProspectList kind={kind} prospects={prospects} />;
 }
