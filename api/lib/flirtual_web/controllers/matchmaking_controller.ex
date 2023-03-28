@@ -7,8 +7,8 @@ defmodule FlirtualWeb.MatchmakingController do
   alias Flirtual.{Users, Policy}
   import Flirtual.Matchmaking
 
-  def list_prospects(conn, _) do
-    conn |> json(compute_prospects(conn.assigns[:session].user))
+  def list_prospects(conn, %{"kind" => kind}) do
+    conn |> json(compute_prospects(conn.assigns[:session].user, to_atom(kind, :love)))
   end
 
   def reset_prospects(conn, _) do
@@ -17,18 +17,19 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
-  def inspect_query(conn, _) do
-    conn |> json(generate_query(conn.assigns[:session].user))
+  def inspect_query(conn, %{"kind" => kind}) do
+    conn |> json(generate_query(conn.assigns[:session].user, to_atom(kind, :love)))
   end
 
-  def respond(conn, %{"user_id" => user_id, "type" => type}) do
+  def respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind}) do
     source_user = conn.assigns[:session].user
     target_user = Users.get(user_id)
 
     if is_nil(target_user) or Policy.cannot?(conn, :read, target_user) do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
-      with {:ok, result} <- respond_profile(source_user, target_user, to_atom(type)) do
+      with {:ok, result} <-
+             respond_profile(source_user, target_user, to_atom(type, :like), to_atom(type, :love)) do
         conn |> json(result)
       end
     end

@@ -26,6 +26,14 @@ defmodule Flirtual.Utilities.Changeset do
     end)
   end
 
+  def validate_not_equal(changeset, field_a, field_b, opts \\ []) do
+    if get_field(changeset, field_a) === get_field(changeset, field_b) do
+      add_error(changeset, field_a, Keyword.get(opts, :message, "is invalid"))
+    else
+      changeset
+    end
+  end
+
   def cast_arbitrary(data, attrs) do
     cast({%{}, data}, attrs, Map.keys(data))
   end

@@ -1,5 +1,6 @@
 defmodule Flirtual.Matchmaking do
   import Flirtual.Utilities
+  import Flirtual.Utilities.Changeset
   import Ecto.Changeset
   import Ecto.Query
 
@@ -7,10 +8,11 @@ defmodule Flirtual.Matchmaking do
   alias Flirtual.Elasticsearch
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile
+  Flirtual.Utilities.Changeset
   alias Flirtual.{Repo, User, Attribute, Mailer}
 
-  def compute_prospects(%User{} = user) do
-    query = generate_query(user)
+  def compute_prospects(%User{} = user, kind) do
+    query = generate_query(user, kind)
 
     with {:ok, resp} <- Elasticsearch.search("users", query) do
       resp["hits"]["hits"] |> Enum.map(& &1["_id"])
@@ -84,16 +86,29 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
-  def respond_profile(%User{} = source_user, %User{} = target_user, type) do
+  @almost_day_in_seconds 72000
+
+  def respond_profile(%User{} = user, %User{} = target_user, type, kind) do
+    timeframe = NaiveDateTime.utc_now() |> NaiveDateTime.add(-@almost_day_in_seconds)
+
     Repo.transaction(fn repo ->
-      with {:ok, item} <-
-             %Profile.LikesAndPasses{}
+      with existing_items <-
+             LikesAndPasses
+             |> where(
+               profile_id: ^user.id,
+               kind: ^kind
+             )
+             |> where([item], item.created_at >= ^timeframe)
+             |> Repo.all(),
+           IO.inspect(existing_items),
+           {:ok, item} <-
+             %LikesAndPasses{}
              |> cast(
                %{
-                 profile_id: source_user.id,
+                 profile_id: user.id,
                  target_id: target_user.id,
                  type: type,
-                 kind: :love
+                 kind: kind
                },
                [:profile_id, :target_id, :type, :kind]
              )
@@ -110,7 +125,7 @@ defmodule Flirtual.Matchmaking do
              )
              |> Repo.insert(),
            opposite_item <-
-             from(Profile.LikesAndPasses,
+             from(LikesAndPasses,
                where: [
                  profile_id: ^item.target_id,
                  target_id: ^item.profile_id
@@ -121,8 +136,8 @@ defmodule Flirtual.Matchmaking do
              if(is_nil(opposite_item),
                do: {:ok, nil},
                else:
-                 with {:ok, _} <- create_match_conversation(source_user, target_user),
-                      {:ok, _} <- deliver_match_email(target_user, source_user) do
+                 with {:ok, _} <- create_match_conversation(user, target_user),
+                      {:ok, _} <- deliver_match_email(target_user, user) do
                    {:ok, nil}
                  end
              ) do
@@ -136,7 +151,7 @@ defmodule Flirtual.Matchmaking do
     end)
   end
 
-  def generate_query(%User{} = user) do
+  def generate_query(%User{} = user, kind) do
     user =
       user
       |> then(
@@ -154,7 +169,7 @@ defmodule Flirtual.Matchmaking do
     likes_and_passes =
       from(
         a in LikesAndPasses,
-        where: [profile_id: ^profile.user_id],
+        where: [profile_id: ^profile.user_id, kind: ^kind],
         select: a.target_id
       )
       |> Repo.all()
@@ -177,29 +192,119 @@ defmodule Flirtual.Matchmaking do
               }
             }
           ],
-          "filter" => filters([:age, :gender], user),
-          "should" =>
-            queries(
-              [
-                :likes,
-                :interests,
-                :games,
-                :country,
-                :monopoly,
-                :serious,
-                :domsub,
-                :kinks,
-                :personality
-              ],
-              user
-            )
+          "filter" => filters(user, kind),
+          "should" => queries(user, kind)
         }
       }
     }
   end
 
-  def queries(names, %User{} = user) do
-    names |> Enum.map(&query(&1, user)) |> List.flatten()
+  def filters(%User{} = user, :love) do
+    Enum.map([:age, :gender], &filter(&1, user)) |> List.flatten()
+  end
+
+  def filters(_, :friend) do
+    []
+  end
+
+  def filter(:age, %User{} = user) do
+    %{profile: %{preferences: preferences}} = user
+    user_age = if user.born_at, do: get_years_since(user.born_at), else: nil
+
+    dob_lte = if preferences.agemin, do: get_years_ago(preferences.agemin), else: nil
+    dob_gte = if preferences.agemax, do: get_years_ago(preferences.agemax), else: nil
+
+    [
+      if(!!dob_lte or !!dob_gte,
+        do: %{
+          "range" => %{
+            "dob" =>
+              Map.merge(
+                if(dob_lte, do: %{"lte" => dob_lte}, else: %{}),
+                if(dob_gte, do: %{"gte" => dob_gte}, else: %{})
+              )
+          }
+        },
+        else: []
+      ),
+      if(user_age,
+        do: [
+          %{
+            "range" => %{
+              "agemin" => %{
+                "lte" => user_age
+              }
+            }
+          },
+          %{
+            "range" => %{
+              "agemax" => %{
+                "gte" => user_age
+              }
+            }
+          }
+        ],
+        else: []
+      )
+    ]
+  end
+
+  def filter(:gender, %User{} = user) do
+    %{profile: %{attributes: attributes, preferences: preferences}} = user
+
+    [
+      # $b must be looking for one or more of $a’s genders.
+      %{
+        "terms" => %{
+          "attributes_lf" =>
+            attributes
+            |> filter_by(:type, "gender")
+            |> Enum.filter(& &1.metadata["simple"])
+            |> Enum.map(& &1.id)
+        }
+      },
+      # $a must be looking for one or more of $b’s genders.
+      %{
+        "terms" => %{
+          "attributes" =>
+            preferences.attributes
+            |> filter_by(:type, "gender")
+            |> Enum.map(& &1.id)
+        }
+      }
+    ]
+  end
+
+  def queries(%User{} = user, :love) do
+    Enum.map(
+      [
+        :likes,
+        :interests,
+        :games,
+        :country,
+        :monopoly,
+        :serious,
+        :domsub,
+        :kinks,
+        :personality
+      ],
+      &query(&1, user)
+    )
+    |> List.flatten()
+  end
+
+  def queries(%User{} = user, :friend) do
+    Enum.map(
+      [
+        :likes,
+        :interests,
+        :games,
+        :country,
+        :personality
+      ],
+      &query(&1, user)
+    )
+    |> List.flatten()
   end
 
   def query(:likes, %User{} = user) do
@@ -427,78 +532,6 @@ defmodule Flirtual.Matchmaking do
             }
           },
           "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
-        }
-      }
-    ]
-  end
-
-  def filters(names, %User{} = user) do
-    names |> Enum.map(&filter(&1, user)) |> List.flatten()
-  end
-
-  def filter(:age, %User{} = user) do
-    %{profile: %{preferences: preferences}} = user
-    user_age = if user.born_at, do: get_years_since(user.born_at), else: nil
-
-    dob_lte = if preferences.agemin, do: get_years_ago(preferences.agemin), else: nil
-    dob_gte = if preferences.agemax, do: get_years_ago(preferences.agemax), else: nil
-
-    [
-      if(!!dob_lte or !!dob_gte,
-        do: %{
-          "range" => %{
-            "dob" =>
-              Map.merge(
-                if(dob_lte, do: %{"lte" => dob_lte}, else: %{}),
-                if(dob_gte, do: %{"gte" => dob_gte}, else: %{})
-              )
-          }
-        },
-        else: []
-      ),
-      if(user_age,
-        do: [
-          %{
-            "range" => %{
-              "agemin" => %{
-                "lte" => user_age
-              }
-            }
-          },
-          %{
-            "range" => %{
-              "agemax" => %{
-                "gte" => user_age
-              }
-            }
-          }
-        ],
-        else: []
-      )
-    ]
-  end
-
-  def filter(:gender, %User{} = user) do
-    %{profile: %{attributes: attributes, preferences: preferences}} = user
-
-    [
-      # $b must be looking for one or more of $a’s genders.
-      %{
-        "terms" => %{
-          "attributes_lf" =>
-            attributes
-            |> filter_by(:type, "gender")
-            |> Enum.filter(& &1.metadata["simple"])
-            |> Enum.map(& &1.id)
-        }
-      },
-      # $a must be looking for one or more of $b’s genders.
-      %{
-        "terms" => %{
-          "attributes" =>
-            preferences.attributes
-            |> filter_by(:type, "gender")
-            |> Enum.map(& &1.id)
         }
       }
     ]

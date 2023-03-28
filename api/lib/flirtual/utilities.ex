@@ -40,11 +40,11 @@ defmodule Flirtual.Utilities do
     end
   end
 
-  def to_atom(value) do
+  def to_atom(value, default \\ nil) do
     try do
       String.to_existing_atom(value)
     rescue
-      ArgumentError -> nil
+      ArgumentError -> default
     end
   end
 end
