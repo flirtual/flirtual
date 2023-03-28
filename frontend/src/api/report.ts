@@ -34,8 +34,6 @@ export async function clear(reportId: string, options: NarrowFetchOptions = {}):
 	return fetch<Report>("delete", `reports/${reportId}`, options);
 }
 
-export async function clearAll(
-	options: NarrowFetchOptions<undefined, { targetId: string }>
-): Promise<Report> {
-	return fetch<Report>("delete", `reports`, options);
+export async function clearAll(options: NarrowFetchOptions<undefined, { targetId: string }>) {
+	return fetch<{ count: number }>("delete", `reports`, options);
 }

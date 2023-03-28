@@ -1,23 +1,19 @@
 "use client";
 
-import {
-	ChevronLeftIcon,
-	ChevronRightIcon,
-	MagnifyingGlassIcon,
-	TrashIcon
-} from "@heroicons/react/24/solid";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import ms from "ms";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import Link from "next/link";
 
 import { ProfileImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
+import { useToast } from "~/hooks/use-toast";
 
 import { ModalOuter } from "../modal";
 import { Tooltip } from "../tooltip";
-import { InlineLink } from "../inline-link";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
@@ -43,6 +39,8 @@ const SingleImage: React.FC<SingleImageProps> = ({ className, image }) => {
 };
 
 const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
+	const toasts = useToast();
+
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4">
 			<span>
@@ -54,14 +52,22 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 				)} ago`}</span>
 				, and was {image.scanned ? "" : <span className="font-bold">not scanned</span>}.
 			</span>
-			<div className="flex gap-4">
+			<div className="flex gap-4 text-white-20">
 				<Tooltip value="Search image">
-					<InlineLink href={urls.moderation.imageSearch(image.url)}>
-						<MagnifyingGlassIcon className="h-5 w-5" fill="white" />
-					</InlineLink>
+					<Link href={urls.moderation.imageSearch(image.url)}>
+						<MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
+					</Link>
 				</Tooltip>
 				<Tooltip value="Delete image">
-					<button type="button">
+					<button
+						type="button"
+						onClick={async () => {
+							toasts.add({
+								type: "success",
+								label: "Successfully deleted image!"
+							});
+						}}
+					>
 						<TrashIcon className="h-5 w-5" />
 					</button>
 				</Tooltip>

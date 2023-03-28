@@ -18,6 +18,7 @@ import { InputSlider } from "~/components/inputs/slider";
 import { PremiumBadge } from "~/components/premium-badge";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 import { capitalize, excludeBy, filterBy } from "~/utilities";
 
 const absMinAge = 18;
@@ -25,6 +26,7 @@ const absMaxAge = 100;
 
 export const MatchmakingForm: React.FC = () => {
 	const [session] = useSession();
+	const toasts = useToast();
 
 	const genders = useAttributeList("gender")
 		.filter((gender) => gender.metadata?.simple)
@@ -95,6 +97,8 @@ export const MatchmakingForm: React.FC = () => {
 						}
 					})
 				]);
+
+				toasts.add({ type: "success", label: "Successfully updated matchmaking settings!" });
 			}}
 		>
 			{({ FormField, fields }) => (

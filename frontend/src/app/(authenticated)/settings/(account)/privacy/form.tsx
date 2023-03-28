@@ -9,10 +9,13 @@ import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useSessionUser } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 export const PrivacyForm: React.FC = () => {
 	const user = useSessionUser();
+	const toasts = useToast();
+
 	if (!user || !user.preferences) return null;
 
 	return (
@@ -22,6 +25,8 @@ export const PrivacyForm: React.FC = () => {
 			onSubmit={async (body, { reset }) => {
 				const privacy = await api.user.preferences.updatePrivacy(user.id, { body });
 				reset(privacy);
+
+				toasts.add({ type: "success", label: "Saved privacy preferences!" });
 			}}
 		>
 			{({ FormField }) => (

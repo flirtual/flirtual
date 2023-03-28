@@ -7,10 +7,13 @@ import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { useSessionPersonality } from "~/hooks/use-session-personality";
+import { useToast } from "~/hooks/use-toast";
 import { entries } from "~/utilities";
 
 export const PersonalityForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
+	const toasts = useToast();
+
 	const personality = useSessionPersonality();
 
 	if (!session || !personality) return null;
@@ -21,6 +24,7 @@ export const PersonalityForm: React.FC = () => {
 			fields={personality}
 			onSubmit={async (body) => {
 				const newProfile = await api.user.profile.updatePersonality(session.user.id, { body });
+				toasts.add({ type: "success", label: "Successfully updated personality settings!" });
 
 				await mutateSession({
 					...session,

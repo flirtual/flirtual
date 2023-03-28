@@ -6,13 +6,13 @@ import useSWR, { KeyedMutator } from "swr";
 import { twMerge } from "tailwind-merge";
 import {
 	ArrowTopRightOnSquareIcon,
-	CheckIcon,
 	MinusSmallIcon,
 	PlusIcon,
 	ShieldCheckIcon
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import ms from "ms";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
@@ -23,6 +23,7 @@ import { urls } from "~/urls";
 import { ListOptions, Report } from "~/api/report";
 import { BanProfile } from "~/components/profile/action-bar/ban-profile";
 import { Tooltip } from "~/components/tooltip";
+import { useToast } from "~/hooks/use-toast";
 
 type CompleteReport = Report & { user: User; target: User };
 
@@ -46,6 +47,7 @@ interface ProfileReportViewProps {
 const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports }) => {
 	const [collapsed, setCollapsed] = useState(reports.length >= 2);
 	const { mutate } = useContext(ReportListContext);
+	const toasts = useToast();
 
 	const CollapseIcon = collapsed ? PlusIcon : MinusSmallIcon;
 
@@ -66,15 +68,26 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 						</span>
 					</button>
 					<div className="flex gap-4">
-						<Link href={urls.user.profile(reported.username)}>
-							<ArrowTopRightOnSquareIcon className="h-6 w-6" />
-						</Link>
+						<Tooltip value="View profile">
+							<Link href={urls.user.profile(reported.username)}>
+								<ArrowTopRightOnSquareIcon className="h-6 w-6" />
+							</Link>
+						</Tooltip>
 						<Tooltip value="Clear reports">
 							<button
 								className="h-fit"
 								type="button"
 								onClick={async () => {
-									await api.report.clearAll({ query: { targetId: reported.id } });
+									await api.report
+										.clearAll({ query: { targetId: reported.id } })
+										.then(({ count }) =>
+											toasts.add({
+												type: "success",
+												label: `Successfully cleared ${count} report${count !== 1 ? "s" : ""}`,
+												children: <span className="text-sm">User: {reported.id}</span>
+											})
+										);
+
 									await mutate();
 								}}
 							>
@@ -85,7 +98,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 					</div>
 				</div>
 				<div className="flex items-baseline justify-between gap-4 pl-10 sm:justify-start">
-					<span className="">
+					<span className="text-black-50 dark:text-white-50">
 						{activeReports.length} active
 						{reports.length - activeReports.length
 							? `, ${reports.length - activeReports.length} cleared`
@@ -113,17 +126,21 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 							<div
 								key={report.id}
 								className={twMerge(
-									"flex flex-col gap-2 rounded-xl bg-black-80 p-4",
+									"flex flex-col gap-2 rounded-xl bg-white-30 p-4 dark:bg-black-80",
 									report.reviewedAt && "brightness-75"
 								)}
 							>
 								<div className="flex flex-col">
-									<span suppressHydrationWarning className="text-xs text-white-50">{`${
-										report.createdAt
-									} (${ms(Date.now() - new Date(`${report.createdAt}Z`).getTime(), {
-										long: true
-									})} ago)`}</span>
-									<div className="flex items-center justify-between gap-4">
+									<span
+										suppressHydrationWarning
+										className="text-xs text-black-50 dark:text-white-50"
+									>{`${report.createdAt} (${ms(
+										Date.now() - new Date(`${report.createdAt}Z`).getTime(),
+										{
+											long: true
+										}
+									)} ago)`}</span>
+									<div className="flex items-center justify-between gap-4 pr-3">
 										<span className="text-lg font-semibold">{report.reason.name}</span>
 										{!report.reviewedAt && (
 											<Tooltip value="Clear single report">
@@ -132,10 +149,16 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 													type="button"
 													onClick={async () => {
 														await api.report.clear(report.id);
+
+														toasts.add({
+															type: "success",
+															label: "Cleared report successfully!"
+														});
+
 														await mutate();
 													}}
 												>
-													<CheckIcon className="h-5 w-5" />
+													<CheckIcon className="h-5 w-5" strokeWidth={2} />
 												</button>
 											</Tooltip>
 										)}

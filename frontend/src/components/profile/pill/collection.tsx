@@ -69,6 +69,8 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 
 	if (!session) return null;
 
+	const editable = session.user.id === user.id;
+
 	const sessionPersonalityLabels = getPersonalityLabels(session.user);
 	const personalityLabels = getPersonalityLabels(user);
 
@@ -84,18 +86,21 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 			<div className="flex flex-wrap gap-4">
 				<div className="flex w-full">
 					{user.profile.serious && (
-						<Pill href={urls.settings.matchmaking()}>Open to serious dating</Pill>
+						<Pill href={editable ? urls.settings.matchmaking() : undefined}>
+							Open to serious dating
+						</Pill>
 					)}
 				</div>
 				<PillAttributeList
 					attributes={attributes.sexuality}
-					href={urls.settings.tags("sexuality")}
+					href={editable ? urls.settings.tags("sexuality") : undefined}
 					user={user}
 				/>
 				{personalityLabels.length !== 0 && (
 					<div className="flex w-full flex-wrap gap-2">
 						{personalityLabels.map((personalityLabel) => (
 							<Pill
+								href={editable ? urls.settings.personality : undefined}
 								key={personalityLabel}
 								active={
 									session.user.id !== user.id && sessionPersonalityLabels.includes(personalityLabel)
@@ -108,35 +113,43 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 				)}
 				<PillAttributeList
 					attributes={attributes.interest}
-					href={urls.settings.tags("interest")}
+					href={editable ? urls.settings.tags("interest") : undefined}
 					user={user}
 				/>
 				<PillAttributeList
 					attributes={attributes.game}
-					href={urls.settings.tags("game")}
+					href={editable ? urls.settings.tags("game") : undefined}
 					user={user}
 				/>
 				{user.profile.domsub && (
 					<div className="flex w-full flex-wrap gap-2">
-						<Pill href={urls.settings.nsfw}>{capitalize(user.profile.domsub)}</Pill>
+						<Pill href={editable ? urls.settings.nsfw : undefined}>
+							{capitalize(user.profile.domsub)}
+						</Pill>
 					</div>
 				)}
 				{expanded ? (
 					<>
 						{user.profile.monopoly && (
 							<div className="flex w-full flex-wrap gap-2">
-								<Pill href={urls.settings.matchmaking()}>{capitalize(user.profile.monopoly)}</Pill>
+								<Pill href={editable ? urls.settings.matchmaking() : undefined}>
+									{capitalize(user.profile.monopoly)}
+								</Pill>
 							</div>
 						)}
-						<PillAttributeList attributes={attributes.kink} href={urls.settings.nsfw} user={user} />
+						<PillAttributeList
+							attributes={attributes.kink}
+							href={editable ? urls.settings.nsfw : undefined}
+							user={user}
+						/>
 						<PillAttributeList
 							attributes={attributes.language}
-							href={urls.settings.tags("language")}
+							href={editable ? urls.settings.tags("language") : undefined}
 							user={user}
 						/>
 						<PillAttributeList
 							attributes={attributes.platform}
-							href={urls.settings.tags("platform")}
+							href={editable ? urls.settings.tags("platform") : undefined}
 							user={user}
 						/>
 					</>

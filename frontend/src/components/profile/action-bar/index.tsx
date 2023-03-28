@@ -10,12 +10,15 @@ import { User } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
 import { Tooltip } from "~/components/tooltip";
+import { useToast } from "~/hooks/use-toast";
 
 import { BanProfile } from "./ban-profile";
 import { ReportProfile } from "./report-profile";
 
 export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 	const [session, mutateSession] = useSession();
+	const toasts = useToast();
+
 	if (!session) return null;
 
 	return (
@@ -65,14 +68,23 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 						</button>
 					</Tooltip>
 				)}
-				{session.user.tags.includes("moderator") && (
+				{session.user.id !== user.id && session.user.tags.includes("moderator") && (
 					<>
 						<BanProfile user={user} />
 						<Tooltip fragmentClassName="h-6 w-6" value="Clear reports">
 							<button
 								type="button"
 								onClick={async () => {
-									await api.report.clearAll({ query: { targetId: user.id } });
+									await api.report
+										.clearAll({ query: { targetId: user.id } })
+										.then(({ count }) =>
+											toasts.add({
+												type: "success",
+												label: `Successfully cleared ${count} report${count !== 1 ? "s" : ""}`,
+												children: <span className="text-sm">User: {user.id}</span>
+											})
+										)
+										.catch(toasts.addError);
 								}}
 							>
 								<ShieldCheckIcon className="h-6 w-6" />

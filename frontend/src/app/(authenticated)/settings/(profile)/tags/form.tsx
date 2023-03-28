@@ -8,12 +8,14 @@ import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 import { entries, excludeBy, filterBy, fromEntries, pick } from "~/utilities";
 
 const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
 
 export const TagsForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
+	const toasts = useToast();
 
 	const games = useAttributeList("game");
 	const interests = useAttributeList("interest");
@@ -66,6 +68,8 @@ export const TagsForm: React.FC = () => {
 						}
 					})
 				]);
+
+				toasts.add({ type: "success", label: "Successfully updated profile tags!" });
 
 				await mutateSession({
 					...session,
