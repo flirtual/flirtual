@@ -106,7 +106,8 @@ export const urls = {
 		termsOfService: "/terms",
 		privacyPolicy: "/privacy",
 		company: "https://studiopaprika.io/",
-		contact: "https://hello.flirtu.al/"
+		contact: "https://hello.flirtu.al/",
+		mentalHealth: "/mentalhealth"
 	},
 
 	socials: {
