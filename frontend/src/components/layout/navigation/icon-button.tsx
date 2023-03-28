@@ -2,7 +2,7 @@
 
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 import { useUnreadConversations } from "~/hooks/use-talkjs";
@@ -13,7 +13,8 @@ export const NavigationIconButton: React.FC<
 	React.ComponentProps<"a"> & { href: string; ref?: any }
 > = ({ children, ...props }) => {
 	const pathname = usePathname();
-	const active = pathname.startsWith(props.href);
+	const searchParams = useSearchParams();
+	const active = pathname.startsWith(props.href) && searchParams.get("kind") == "love";
 
 	return (
 		<Link
