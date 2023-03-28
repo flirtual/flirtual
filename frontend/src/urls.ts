@@ -1,5 +1,7 @@
 import { Url } from "next/dist/shared/lib/router/router";
 
+import { ProspectKind } from "~/api/matchmaking";
+
 import { User } from "./api/user";
 import { ConfirmEmailPageProps } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
@@ -54,7 +56,7 @@ export const urls = {
 		me: "/me",
 		profile: (username: string) => `/${username}`
 	},
-	browse: (type?: "friend") => url("/browse", { type }),
+	browse: (kind?: ProspectKind) => url("/browse", { kind }),
 	conversations: {
 		list: "/conversations",
 		with: (userId: string) => `/conversations/${userId}`
