@@ -13,3 +13,18 @@
 *[data-nextjs-scroll-focus-boundary] {
   display: contents;
 }
+
+html {
+  --gradient-l: #ff8975;
+  --gradient-r: #e9658b;
+}
+
+html.dark {
+  --gradient-l: #b24592;
+  --gradient-r: #e9658b;
+}
+
+html.friend-mode {
+  --gradient-l: #82bf72;
+  --gradient-r: #4d8888;
+}

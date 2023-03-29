@@ -6,6 +6,7 @@ let plugin = require("tailwindcss/plugin");
 const colors = {
 	coral: "#FF8975",
 	pink: "#E9658B",
+	purple: "#b24592",
 	cream: "#FFFAF0",
 	white: {
 		10: "white",
@@ -40,7 +41,7 @@ module.exports = {
 			},
 			colors: colors,
 			backgroundImage: {
-				"brand-gradient": `linear-gradient(to right, ${colors.coral}, ${colors.pink})`
+				"brand-gradient": `linear-gradient(to right, var(--gradient-l), var(--gradient-r))`
 			},
 			borderRadius: {
 				half: "50%"
