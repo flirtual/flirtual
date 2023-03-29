@@ -36,9 +36,8 @@ defmodule Flirtual.User.Profile.Image.Policy do
   # Otherwise, by default, nobody can see if this image was scanned or not.
   def transform(:scanned, _, _), do: nil
 
-  # The current session can view when their own images were updated.
   def transform(
-        :updated_at,
+        property,
         %Plug.Conn{
           assigns: %{
             session: %{
@@ -53,32 +52,24 @@ defmodule Flirtual.User.Profile.Image.Policy do
             }
           }
         } = image
-      ),
-      do: image.updated_at
+      )
+      when property in [:created_at, :updated_at],
+      do: image[property]
 
-  # Otherwise, by default, nobody can view when this image was updated.
+  def transform(
+        property,
+        %Plug.Conn{
+          assigns: %{
+            session: %Session{
+              user: user
+            }
+          }
+        },
+        %Image{} = image
+      )
+      when property in [:created_at, :updated_at],
+      do: if(:moderator in user.tags, do: image[property], else: nil)
+
   def transform(:updated_at, _, _), do: nil
-
-  # The current session can view when their own images were created.
-  def transform(
-        :created_at,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %Image{
-          profile: %Profile{
-            user: %User{
-              id: user_id
-            }
-          }
-        } = image
-      ),
-      do: image.created_at
-
-  # Otherwise, by default, nobody can view when this image was created.
   def transform(:created_at, _, _), do: nil
 end
