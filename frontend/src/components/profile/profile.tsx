@@ -1,13 +1,15 @@
 "use client";
 
-import { urls } from "~/urls";
+import { toAbsoluteUrl, urls } from "~/urls";
 import { displayName, User } from "~/api/user";
 import { Html } from "~/components/html";
 import { useSession } from "~/hooks/use-session";
 import { filterBy, findBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useToast } from "~/hooks/use-toast";
 
 import { InlineLink } from "../inline-link";
+import { Button, ButtonLink } from "../button";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfileVerificationBadge } from "./verification-badge";
@@ -18,6 +20,8 @@ import { CountryPill } from "./pill/country";
 import { ProfileActionBar } from "./action-bar";
 
 export const Profile: React.FC<{ user: User }> = ({ user }) => {
+	const toasts = useToast();
+
 	const [session] = useSession();
 	const myProfile = session?.user.id === user.id;
 
@@ -66,6 +70,24 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 					</div>
 				</ProfileImageDisplay>
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
+					{myProfile && (
+						<div className="flex gap-4">
+							<ButtonLink href={urls.settings.matchmaking()} size="sm">
+								Edit profile
+							</ButtonLink>
+							<Button
+								size="sm"
+								onClick={async () => {
+									const link = toAbsoluteUrl(urls.user.profile(user.username)).toString();
+									await navigator.clipboard.writeText(link);
+									toasts.add({ type: "success", label: "Copied link!" });
+									await navigator.share({ text: "Check out my Flirtual profile!", url: link });
+								}}
+							>
+								Share profile
+							</Button>
+						</div>
+					)}
 					{user.profile.biography ? (
 						<Html className="text-xl">{user.profile.biography}</Html>
 					) : myProfile ? (
