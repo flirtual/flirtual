@@ -16,6 +16,7 @@ specifiers:
   '@types/react-dom': ^18.0.11
   '@types/react-portal': ^4.0.4
   '@types/sanitize-html': ^2.9.0
+  '@widgetbot/react-embed': ^1.7.0
   ansi-to-html: ^0.7.2
   autoprefixer: ^10.4.14
   change-case: ^4.1.2
@@ -52,6 +53,7 @@ dependencies:
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
   '@tanstack/react-virtual': 3.0.0-alpha.0_react@18.2.0
   '@total-typescript/ts-reset': 0.4.2
+  '@widgetbot/react-embed': 1.7.0_react@18.2.0
   ansi-to-html: 0.7.2
   change-case: 4.1.2
   csstype: 3.1.1
@@ -631,6 +633,21 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
+  /@widgetbot/embed-api/1.2.8:
+    resolution: {integrity: sha512-2fMnUGCZDDsqVBWzkv0f6E9NgiHVcTusLCH8V0Ar3cAOXRVB0QDYuQPHojxpe5z7xazYa2iqEI+WXrq/zWMbQg==}
+    dependencies:
+      post-robot: 8.0.31
+    dev: false
+
+  /@widgetbot/react-embed/1.7.0_react@18.2.0:
+    resolution: {integrity: sha512-usVCBLKQsVFQYm3pzSR5gRp6dq4sU0r79lIO/KLtaDrGe4/Rik5iNsQcUKl1q48I6Kru/pLTgQT3vMGpG5HSOw==}
+    peerDependencies:
+      react: '>= 15'
+    dependencies:
+      '@widgetbot/embed-api': 1.2.8
+      react: 18.2.0
+    dev: false
+
   /acorn-jsx/5.3.2_acorn@8.8.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -1004,6 +1021,18 @@ packages:
       no-case: 3.0.4
       tslib: 2.5.0
       upper-case: 2.0.2
+    dev: false
+
+  /cross-domain-safe-weakmap/1.0.29:
+    resolution: {integrity: sha512-VLoUgf2SXnf3+na8NfeUFV59TRZkIJqCIATaMdbhccgtnTlSnHXkyTRwokngEGYdQXx8JbHT9GDYitgR2sdjuA==}
+    dependencies:
+      cross-domain-utils: 2.0.38
+    dev: false
+
+  /cross-domain-utils/2.0.38:
+    resolution: {integrity: sha512-zZfi3+2EIR9l4chrEiXI2xFleyacsJf8YMLR1eJ0Veb5FTMXeJ3DpxDjZkto2FhL/g717WSELqbptNSo85UJDw==}
+    dependencies:
+      zalgo-promise: 1.0.48
     dev: false
 
   /cross-spawn/7.0.3:
@@ -2716,6 +2745,14 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
 
+  /post-robot/8.0.31:
+    resolution: {integrity: sha512-nUhtKgtmcgyuPm4RnIhUB3gsDYJBHOgFry3TvOxhIHpgfwYY/T69d4oB90tw4YUllFZUUwqLEv1Wgyg6eOoJ7A==}
+    dependencies:
+      cross-domain-safe-weakmap: 1.0.29
+      cross-domain-utils: 2.0.38
+      zalgo-promise: 1.0.48
+    dev: false
+
   /postcss-import/14.1.0_postcss@8.4.21:
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
     engines: {node: '>=10.0.0'}
@@ -3574,3 +3611,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zalgo-promise/1.0.48:
+    resolution: {integrity: sha512-LLHANmdm53+MucY9aOFIggzYtUdkSBFxUsy4glTTQYNyK6B3uCPWTbfiGvSrEvLojw0mSzyFJ1/RRLv+QMNdzQ==}
+    dev: false
