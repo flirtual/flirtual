@@ -99,6 +99,7 @@ export const urls = {
 	resources: {
 		download: "/download",
 		events: "/events",
+		invite: "/invite",
 		networkStatus: "https://status.flirtu.al",
 		press: "/press",
 		branding: "/branding",
