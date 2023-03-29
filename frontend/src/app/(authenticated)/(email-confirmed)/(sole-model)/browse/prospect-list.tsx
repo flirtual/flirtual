@@ -28,7 +28,7 @@ const ProspectActionBar: React.FC<{
 	const [respondHistory, setRespondHistory] = useState<Array<RespondProspectBody>>([]);
 
 	useEffect(() => {
-		document.documentElement.classList.add("friend-mode");
+		if (kind === "friend") document.documentElement.classList.add("friend-mode");
 		return () => document.documentElement.classList.remove("friend-mode");
 	}, [kind]);
 
