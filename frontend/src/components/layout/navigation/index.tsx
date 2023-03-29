@@ -82,7 +82,7 @@ const ConversationListButton: FC = () => {
 
 const ModeSwitch: FC = () => {
 	return (
-		<div className="flex gap-4 rounded-full bg-white-10 py-2 px-6 dark:bg-black-70">
+		<div className="flex gap-4 rounded-full bg-white-10 p-2 dark:bg-black-70">
 			<SwitchButton href={urls.browse()} Icon={HeartIcon} />
 			<SwitchButton href={urls.browse("friend")} Icon={PeaceIcon} />
 		</div>
@@ -97,7 +97,7 @@ export const NavigationInner: FC<ComponentProps<"div">> = (props) => {
 		<div
 			{...props}
 			className={twMerge(
-				"flex h-full w-full max-w-md items-center justify-between gap-4 px-8 font-nunito text-white-20",
+				"flex h-full w-full max-w-md items-center justify-between gap-4 px-8 font-nunito text-white-20 sm:w-auto",
 				props.className
 			)}
 		>
