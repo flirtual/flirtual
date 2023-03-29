@@ -21,6 +21,10 @@ export function toAbsoluteUrl(href: string) {
 	return new URL(href, siteOrigin);
 }
 
+export function urlEqual(a: URL, b: URL) {
+	return a.origin === b.origin && a.pathname === b.pathname && a.search === b.search;
+}
+
 function url(pathname: string, query: Record<string, string | number | undefined> = {}) {
 	const searchParams = new URLSearchParams(
 		fromEntries(

@@ -1,6 +1,6 @@
 import { IconComponentProps } from ".";
 
-export const HeartGradient: React.FC<IconComponentProps & { gradient?: boolean }> = ({
+export const HeartIcon: React.FC<IconComponentProps & { gradient?: boolean }> = ({
 	gradient = true,
 	...props
 }) => (

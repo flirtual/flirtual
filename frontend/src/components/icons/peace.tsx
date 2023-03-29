@@ -1,6 +1,6 @@
 import { IconComponentProps } from ".";
 
-export const PeaceGradient: React.FC<IconComponentProps & { gradient?: boolean }> = ({
+export const PeaceIcon: React.FC<IconComponentProps & { gradient?: boolean }> = ({
 	gradient = true,
 	...props
 }) => (
