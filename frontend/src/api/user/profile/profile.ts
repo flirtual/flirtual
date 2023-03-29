@@ -17,7 +17,11 @@ export type ProfilePreferences = UpdatedAtModel & {
 export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;
 export type ProfileDomsub = (typeof ProfileDomsubList)[number];
 
-export const ProfileMonopolyList = ["monogamous", "polygamous"] as const;
+export const ProfileMonopolyList = ["monogamous", "nonmonogamous"] as const;
+export const ProfileMonopolyLabel = {
+	monogamous: "Monogamous",
+	nonmonogamous: "Non-monogamous"
+} as const;
 export type ProfileMonopoly = (typeof ProfileMonopolyList)[number];
 
 export type Profile = Partial<UpdatedAtModel> & {
@@ -26,7 +30,7 @@ export type Profile = Partial<UpdatedAtModel> & {
 	new?: boolean;
 	serious?: boolean;
 	domsub?: ProfileDomsub;
-	monopoly?: ProfileDomsub;
+	monopoly?: ProfileMonopoly;
 	country?: string | null;
 	openness?: number;
 	conscientiousness?: number;
@@ -41,7 +45,14 @@ export type Profile = Partial<UpdatedAtModel> & {
 export type UpdateProfileBody = Partial<
 	Pick<
 		Profile,
-		"displayName" | "biography" | "new" | "domsub" | "country" | "languages" | "serious"
+		| "displayName"
+		| "biography"
+		| "new"
+		| "domsub"
+		| "country"
+		| "languages"
+		| "serious"
+		| "monopoly"
 	>
 > & {
 	attributes?: Array<string>;

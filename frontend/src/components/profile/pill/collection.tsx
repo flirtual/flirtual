@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { Attribute } from "~/api/attributes";
 import { User } from "~/api/user";
+import { ProfileMonopolyLabel } from "~/api/user/profile";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
@@ -133,7 +134,7 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 						{user.profile.monopoly && (
 							<div className="flex w-full flex-wrap gap-2">
 								<Pill href={editable ? urls.settings.matchmaking() : undefined}>
-									{capitalize(user.profile.monopoly)}
+									{ProfileMonopolyLabel[user.profile.monopoly]}
 								</Pill>
 							</div>
 						)}

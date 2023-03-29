@@ -1,9 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
-import { CustomWeightList, DefaultProfileCustomWeights } from "~/api/user/profile";
+import {
+	CustomWeightList,
+	DefaultProfileCustomWeights,
+	ProfileMonopolyLabel,
+	ProfileMonopolyList
+} from "~/api/user/profile";
+import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -11,6 +18,7 @@ import {
 	InputLabelHint,
 	InputRangeSlider,
 	InputRangeSliderValue,
+	InputSelect,
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
@@ -27,6 +35,8 @@ const absMaxAge = 100;
 export const MatchmakingForm: React.FC = () => {
 	const [session] = useSession();
 	const toasts = useToast();
+
+	const [expanded, setExpanded] = useState(false);
 
 	const genders = useAttributeList("gender")
 		.filter((gender) => gender.metadata?.simple)
@@ -46,6 +56,7 @@ export const MatchmakingForm: React.FC = () => {
 					preferences?.agemax ?? absMaxAge
 				] satisfies InputRangeSliderValue,
 				serious: user.profile.serious ?? false,
+				monopoly: user.profile.monopoly,
 				weightCountry: customWeights.country,
 				weightCustomInterests: customWeights.customInterests,
 				weightDefaultInterests: customWeights.defaultInterests,
@@ -144,6 +155,29 @@ export const MatchmakingForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
+					<Button
+						className="w-32"
+						kind="secondary"
+						size="sm"
+						onClick={() => setExpanded((expanded) => !expanded)}
+					>
+						{expanded ? "Less ▲" : "More ▼"}
+					</Button>
+					{expanded && (
+						<FormField name="monopoly">
+							{(field) => (
+								<InputSelect
+									{...field.props}
+									optional
+									placeholder="Relationship type"
+									options={ProfileMonopolyList.map((item) => ({
+										key: item,
+										label: ProfileMonopolyLabel[item]
+									}))}
+								/>
+							)}
+						</FormField>
+					)}
 					<div className="flex flex-col gap-4">
 						<InputLabel className="flex items-center gap-2 text-2xl font-semibold">
 							<span>Matchmaking priorities</span>
