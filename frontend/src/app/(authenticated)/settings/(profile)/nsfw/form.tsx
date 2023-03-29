@@ -77,6 +77,7 @@ export const NsfwForm: React.FC = () => {
 							<FormField name="domsub">
 								{(field) => (
 									<>
+										<InputLabel {...field.labelProps}>I am...</InputLabel>
 										<InputRadioList
 											{...field.props}
 											items={ProfileDomsubList.map((value) => ({
