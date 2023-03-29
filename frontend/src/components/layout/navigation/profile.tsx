@@ -14,6 +14,7 @@ import { IconComponent } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -50,6 +51,7 @@ export const ProfileNavigation: React.FC = () => {
 
 	useClickOutside(elementRef, () => setVisible(false), visible);
 	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
+	const isDesktop = useScreenBreakpoint("md");
 
 	if (!session) return null;
 	const { user } = session;
@@ -84,7 +86,11 @@ export const ProfileNavigation: React.FC = () => {
 						</Link>
 						<div className="flex flex-col-reverse gap-2 p-2 pl-12 sm:flex-col">
 							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
-							<ProfileNavigationItem href={urls.settings.list()}>Settings</ProfileNavigationItem>
+							<ProfileNavigationItem
+								href={isDesktop ? urls.settings.matchmaking() : urls.settings.list()}
+							>
+								Settings
+							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.resources.download}>Get app</ProfileNavigationItem>
 							{user.tags.includes("moderator") && (
 								<>
