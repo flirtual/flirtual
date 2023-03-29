@@ -11,7 +11,7 @@ export const HeartIcon: React.FC<IconComponentProps & { gradient?: boolean }> = 
 	return (
 		<svg
 			enableBackground="new 0 0 512.001 512.001"
-			fill={gradient ? `url(${id})` : "currentColor"}
+			fill={gradient ? `url(#${id})` : "currentColor"}
 			version="1.1"
 			viewBox="0 0 512 512"
 			xmlns="http://www.w3.org/2000/svg"
