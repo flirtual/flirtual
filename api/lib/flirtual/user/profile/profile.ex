@@ -31,7 +31,7 @@ defmodule Flirtual.User.Profile do
   end
 
   @domsub_values [:dominant, :submissive, :switch]
-  @monopoly_values [:monogamous, :polygamous]
+  @monopoly_values [:monogamous, :nonmonogamous]
 
   def get_domsub_opposite(domsub) do
     case domsub do
