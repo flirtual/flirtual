@@ -28,7 +28,7 @@ export const Pill: React.FC<PillProps> = (props) => {
 				href={href!}
 				className={twMerge(
 					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl py-1 px-4 font-montserrat font-medium shadow-brand-1",
-					hocusable && (active || hocused)
+					hocusable && (active || (hocused && href))
 						? "bg-brand-gradient text-white-10"
 						: "bg-white-30 text-black-70 dark:bg-black-70 dark:text-white-20 sm:dark:bg-black-60",
 					small && "opacity-80"
@@ -40,14 +40,14 @@ export const Pill: React.FC<PillProps> = (props) => {
 			>
 				{Icon && <Icon className="h-4" />}
 				<motion.div
-					animate={hocused ? { marginRight: "1.5rem" } : { marginRight: 0 }}
+					animate={href && hocused ? { marginRight: "1.5rem" } : { marginRight: 0 }}
 					className="flex items-center gap-2"
 					initial={{ marginRight: 0 }}
 					transition={{ type: "spring" }}
 				>
 					{props.children}
 				</motion.div>
-				{hocused && (
+				{href && hocused && (
 					<motion.div
 						animate={{ opacity: 1 }}
 						className="absolute right-0 pr-4"
