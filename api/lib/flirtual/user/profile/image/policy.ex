@@ -70,6 +70,5 @@ defmodule Flirtual.User.Profile.Image.Policy do
       when property in [:created_at, :updated_at],
       do: if(:moderator in user.tags, do: image[property], else: nil)
 
-  def transform(:updated_at, _, _), do: nil
-  def transform(:created_at, _, _), do: nil
+  def transform(property, _, _) when property in [:created_at, :updated_at], do: nil
 end

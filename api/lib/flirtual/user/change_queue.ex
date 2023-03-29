@@ -8,7 +8,6 @@ defmodule Flirtual.User.ChangeQueue do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Ecto.Changeset
   alias Flirtual.Talkjs
   alias Flirtual.Elasticsearch
   alias Flirtual.Repo

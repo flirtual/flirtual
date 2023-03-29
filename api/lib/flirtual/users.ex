@@ -8,7 +8,7 @@ defmodule Flirtual.Users do
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Talkjs
   alias Flirtual.Jwt
-  alias Flirtual.{Repo, Mailer, User}
+  alias Flirtual.{Repo, User}
   alias Flirtual.User.{Session, Preferences, Connection}
 
   def get(id)
