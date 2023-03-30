@@ -1,4 +1,8 @@
-import { ShieldExclamationIcon, BugAntIcon, CommandLineIcon } from "@heroicons/react/24/solid";
+import {
+	ShieldExclamationIcon,
+	PresentationChartLineIcon,
+	CommandLineIcon
+} from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -107,7 +111,7 @@ export const ProfileNavigation: React.FC = () => {
 							)}
 							{user.tags.includes("admin") && (
 								<>
-									<ProfileNavigationItemDivider Icon={CommandLineIcon} />
+									<ProfileNavigationItemDivider Icon={PresentationChartLineIcon} />
 									<ProfileNavigationItem href={urls.moderation.reports}>
 										Statistics
 									</ProfileNavigationItem>
@@ -125,7 +129,7 @@ export const ProfileNavigation: React.FC = () => {
 							)}
 							{user.tags.includes("debugger") && (
 								<>
-									<ProfileNavigationItemDivider Icon={BugAntIcon} />
+									<ProfileNavigationItemDivider Icon={CommandLineIcon} />
 									<ProfileNavigationItem href={urls.debugger.default}>
 										Console
 									</ProfileNavigationItem>
