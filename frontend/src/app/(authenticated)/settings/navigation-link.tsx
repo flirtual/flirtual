@@ -15,13 +15,13 @@ export type NavigationLinkProps = {
 
 export const NavigationLink: React.FC<NavigationLinkProps> = ({ children, ...props }) => {
 	const pathname = usePathname();
-	const Icon =
-		props.Icon ||
-		(!isInternalHref("href" in props ? props.href : "/") || "onClick" in props
+	const Icon = props.Icon;
+	const NavIcon =
+		!isInternalHref("href" in props ? props.href : "/") || "onClick" in props
 			? ArrowTopRightOnSquareIcon
 			: props.href.startsWith("/settings")
 			? ChevronRightIcon
-			: LinkIcon);
+			: LinkIcon;
 
 	return "href" in props ? (
 		<Link
@@ -33,8 +33,11 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({ children, ...pro
 					: "text-black-80 hocus:bg-brand-gradient hocus:text-white-20 dark:text-white-20 md:hocus:bg-white-30 md:hocus:bg-none md:hocus:text-black-80 dark:md:hocus:bg-white-20"
 			)}
 		>
-			{children}
-			<Icon className="w-6" />
+			<div className="flex gap-2">
+				{Icon && <Icon className="w-6" />}
+				{children}
+			</div>
+			<NavIcon className="w-6" />
 		</Link>
 	) : (
 		<button
@@ -42,8 +45,9 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({ children, ...pro
 			type="button"
 			onClick={props.onClick}
 		>
+			{Icon && <Icon className="w-3" />}
 			{children}
-			<Icon className="w-6" />
+			<NavIcon className="w-6" />
 		</button>
 	);
 };
