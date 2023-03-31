@@ -6,8 +6,36 @@ defmodule Flirtual.User.Profile.Image.Policy do
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.Image
 
-  # Any user can view any images.
   def authorize(:read, _, _), do: true
+  def authorize(:view, _, _), do: true
+
+  def authorize(
+        :delete,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %Image{
+          profile_id: user_id
+        }
+      ),
+      do: true
+
+  def authorize(
+        :delete,
+        %Plug.Conn{
+          assigns: %{
+            session: %Session{
+              user: user
+            }
+          }
+        },
+        _
+      ),
+      do: :moderator in user.tags
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
@@ -17,7 +45,7 @@ defmodule Flirtual.User.Profile.Image.Policy do
         _,
         %Image{} = image
       ),
-      do: "https://media.flirtu.al/" <> image.external_id <> "/"
+      do: Image.url(image)
 
   def transform(
         :scanned,
@@ -46,11 +74,7 @@ defmodule Flirtual.User.Profile.Image.Policy do
           }
         },
         %Image{
-          profile: %Profile{
-            user: %User{
-              id: user_id
-            }
-          }
+          profile_id: user_id
         } = image
       )
       when property in [:created_at, :updated_at],

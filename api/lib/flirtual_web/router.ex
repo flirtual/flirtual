@@ -104,6 +104,17 @@ defmodule FlirtualWeb.Router do
           get "/", SubscriptionController, :list_plans
         end
 
+        scope "/images" do
+          pipe_through :require_authenticated_user
+
+          scope "/:image_id" do
+            get "/", ImageController, :get
+            get "/view", ImageController, :view
+
+            delete "/", ImageController, :delete
+          end
+        end
+
         scope "/subscriptions" do
           pipe_through :require_authenticated_user
 

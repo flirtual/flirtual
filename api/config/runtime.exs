@@ -28,13 +28,6 @@ config :flirtual, Flirtual.HCaptcha,
 
 config :joken, default_signer: System.fetch_env!("JOKAN_SECRET")
 
-config :flirtual, Flirtual.Elasticsearch,
-  url: System.fetch_env!("ELASTICSEARCH_URL"),
-  index_prefix: System.get_env("ELASTICSEARCH_INDEX_PREFIX"),
-  default_headers: [
-    {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
-  ]
-
 config :stripity_stripe,
   api_key: System.fetch_env!("STRIPE_ACCESS_TOKEN"),
   signing_secret: System.fetch_env!("STRIPE_SIGNING_SECRET"),
@@ -48,6 +41,12 @@ if config_env() == :prod do
     url: System.fetch_env!("DATABASE_URL"),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: if(System.get_env("ECTO_IPV6"), do: [:inet6], else: [])
+
+  config :flirtual, Flirtual.Elasticsearch,
+    url: System.fetch_env!("ELASTICSEARCH_URL"),
+    default_headers: [
+      {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
+    ]
 
   config :flirtual, Flirtual.Elastic,
     url: System.fetch_env!("ELASTICSEARCH_URL"),

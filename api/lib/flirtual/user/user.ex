@@ -9,6 +9,7 @@ defmodule Flirtual.User do
   import Ecto.Query
   import Flirtual.Utilities
 
+  alias Flirtual.User.Profile.Image
   alias Flirtual.Subscription
   alias Flirtual.Discord
   alias Flirtual.Attribute
@@ -63,12 +64,7 @@ defmodule Flirtual.User do
   end
 
   def avatar_url(%User{} = user) do
-    media_id =
-      Enum.at(user.profile.images, 0)[:external_id] ||
-        "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
-
-    URI.new!("https://media.flirtu.al/")
-    |> URI.merge(media_id <> "/")
+    Image.url(Enum.at(user.profile.images, 0))
   end
 
   def url(%User{} = user) do
