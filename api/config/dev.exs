@@ -17,6 +17,8 @@ config :flirtual, Flirtual.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :flirtual, Flirtual.Elasticsearch, url: "http://localhost:9200"
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
