@@ -18,7 +18,7 @@ export default function RootIndexPage() {
 			<SectionAvatarProfiles
 				values={[
 					"VR is a personality-first way of meeting new people.",
-					"Avatars can help you express yourself, witohut feeling self-conscious.",
+					"Avatars can help you express yourself, without feeling self-conscious.",
 					"After a date or two, go on a video call or meet in real life!"
 				]}
 			/>
@@ -35,13 +35,15 @@ export default function RootIndexPage() {
 			/>
 			<SectionTestimonial
 				brands={[
-					"29a2f1bc-0b3e-469a-aa11-0de69b75b629",
+					"dc248f6f-aee6-4318-b473-6fe2d6db07ee",
+					"d34ee25e-31e6-47a7-952f-51820f1e1ce1",
 					"257a7f46-a6c1-4bee-9a3e-5dbdfe9d2a66",
 					"18e4a7ad-625a-42f6-b581-d14386ced012",
+					"29a2f1bc-0b3e-469a-aa11-0de69b75b629",
 					"db2eb424-e837-4d64-85e0-e49409ae33a6",
 					"54ffe640-1c54-4d8f-a754-4c7b7ca82456",
 					"b779aa38-8592-48cd-8f9b-88228c5abc21",
-					"1a03f086-7a3a-41f6-a7cf-035a83c10fa4",
+					"7845a7d0-0461-41dd-934c-cb8439e90dc7",
 					"fd92ab0f-d264-4a69-813f-bea13def2c46"
 				]}
 				images={[

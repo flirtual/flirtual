@@ -4,7 +4,7 @@ import { BiographyForm } from "./form";
 
 export default function SettingsProfileBiographyPage() {
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Biography & pictures">
+		<ModelCard className="sm:max-w-2xl" title="Bio & pics">
 			<BiographyForm />
 		</ModelCard>
 	);

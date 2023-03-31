@@ -7,6 +7,7 @@ import { useServerAuthenticate } from "~/server-utilities";
 import { urls } from "~/urls";
 import { SessionProvider } from "~/components/session-provider";
 import { resolveTheme } from "~/theme";
+import { ToastProvider } from "~/hooks/use-toast";
 
 import { ClientScripts } from "./client-scripts";
 
@@ -68,11 +69,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: React.PropsWithChildren) {
 	const session = await useServerAuthenticate({ optional: true });
-
 	const theme = session?.user.preferences?.theme ?? "system";
 
 	return (
-		<html suppressHydrationWarning lang="en">
+		<html suppressHydrationWarning className={theme} lang="en">
 			<head>
 				{theme === "system" && (
 					<script
@@ -96,7 +96,9 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>
 				{/* @ts-expect-error: Server Component */}
-				<SessionProvider optional>{children}</SessionProvider>
+				<SessionProvider optional>
+					<ToastProvider>{children}</ToastProvider>
+				</SessionProvider>
 			</body>
 		</html>
 	);

@@ -1,40 +1,52 @@
 import {
 	ShieldExclamationIcon,
-	BugAntIcon,
-	CommandLineIcon,
-	LinkIcon
+	PresentationChartLineIcon,
+	CommandLineIcon
 } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
 import { IconComponent } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
-	{ href: string } | { onClick: (event: React.MouseEvent<HTMLButtonElement>) => void }
+	{ className?: string } & (
+		| { href: string }
+		| { onClick: (event: React.MouseEvent<HTMLButtonElement>) => void }
+	)
+>;
+
+type ProfileNavigationItemDividerProps = React.PropsWithChildren<
+	{ className?: string } & { Icon?: IconComponent }
 >;
 
 const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
-	const className = "w-full font-montserrat font-semibold text-left";
+	const className = twMerge(
+		"w-full text-left font-montserrat font-semibold hover:text-pink",
+		props.className
+	);
 
 	return "href" in props ? (
-		<Link className={className} {...props} />
+		<Link {...props} className={className} />
 	) : (
-		<button className={className} type="button" {...props} />
+		<button {...props} className={className} type="button" />
 	);
 };
 
-const ProfileNavigationItemDivider: React.FC<{ Icon?: IconComponent }> = ({ Icon }) => {
+const ProfileNavigationItemDivider: React.FC<ProfileNavigationItemDividerProps> = (props) => {
+	const className = twMerge("relative flex items-center gap-4", props.className);
 	return (
-		<div className="relative flex items-center gap-4">
+		<div className={className}>
+			{props.Icon && <props.Icon className="absolute -left-10 h-5 w-5 shrink-0" />}
 			<hr className="w-full border-t-2 border-white-40" />
-			{Icon && <Icon className="h-5 w-5 shrink-0 sm:absolute sm:-left-10" />}
 		</div>
 	);
 };
@@ -46,44 +58,46 @@ export const ProfileNavigation: React.FC = () => {
 
 	useClickOutside(elementRef, () => setVisible(false), visible);
 	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
+	const isDesktop = useScreenBreakpoint("md");
 
 	if (!session) return null;
 	const { user } = session;
 
 	return (
-		<div className="relative aspect-square w-12 shrink-0">
+		<div className="relative aspect-square shrink-0">
 			<button
-				className="group rounded-full bg-transparent p-2 transition-all hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
+				className="group rounded-full bg-transparent p-1 transition-all hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				type="button"
 				onClick={() => setVisible(true)}
 			>
-				<UserAvatar className="h-8 w-8 transition-transform group-hocus:scale-125" user={user} />
+				<UserAvatar className="h-10 w-10 transition-transform" user={user} />
 			</button>
 			<AnimatePresence>
 				{visible && (
 					<motion.div
 						animate={{ opacity: 1 }}
-						className="absolute -right-2 -bottom-2 flex w-64 flex-col-reverse overflow-hidden rounded-3xl rounded-b-none bg-white-10 p-4 text-black-80 shadow-brand-1 sm:bottom-inherit sm:-top-2 sm:-left-2 sm:flex-col sm:rounded-3xl"
+						className="absolute -bottom-1 -left-2 z-10 flex w-44 flex-col-reverse overflow-hidden rounded-3xl rounded-b-none bg-white-10 p-4 text-black-80 shadow-brand-1 sm:bottom-inherit sm:-top-2 sm:flex-col sm:rounded-3xl"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementRef}
 					>
-						<Link
-							className="group flex shrink-0 items-center justify-between gap-2 sm:justify-start"
-							href={urls.user.me}
-						>
-							<span className="ml-2 font-montserrat font-semibold sm:order-1">Profile</span>
+						<Link className="group flex shrink-0 items-center gap-2" href={urls.user.me}>
 							<div className="relative flex w-fit shrink-0 items-center justify-center">
 								<UserAvatar
 									className="h-8 w-8 scale-125 transition-transform group-hocus:brightness-90"
 									user={user}
 								/>
-								<LinkIcon className="absolute h-5 w-5 scale-0 text-white-10 transition-transform group-hocus:scale-100" />
 							</div>
+							<span className="ml-2 font-montserrat font-semibold hover:text-pink">Profile</span>
 						</Link>
-						<div className="flex flex-col-reverse gap-2 p-2 sm:flex-col sm:pl-12">
+						<div className="flex flex-col-reverse gap-2 p-2 pl-12 pb-1 sm:flex-col sm:pb-2 sm:pt-1">
 							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
-							<ProfileNavigationItem href={urls.settings.list()}>Settings</ProfileNavigationItem>
+							<ProfileNavigationItem
+								href={isDesktop ? urls.settings.matchmaking() : urls.settings.list()}
+							>
+								Settings
+							</ProfileNavigationItem>
+							<ProfileNavigationItem href={urls.resources.download}>Get app</ProfileNavigationItem>
 							{user.tags.includes("moderator") && (
 								<>
 									<ProfileNavigationItemDivider Icon={ShieldExclamationIcon} />
@@ -97,10 +111,7 @@ export const ProfileNavigation: React.FC = () => {
 							)}
 							{user.tags.includes("admin") && (
 								<>
-									<ProfileNavigationItemDivider Icon={CommandLineIcon} />
-									<ProfileNavigationItem href={urls.moderation.reports}>
-										Admin Lookup
-									</ProfileNavigationItem>
+									<ProfileNavigationItemDivider Icon={PresentationChartLineIcon} />
 									<ProfileNavigationItem href={urls.moderation.reports}>
 										Statistics
 									</ProfileNavigationItem>
@@ -118,14 +129,14 @@ export const ProfileNavigation: React.FC = () => {
 							)}
 							{user.tags.includes("debugger") && (
 								<>
-									<ProfileNavigationItemDivider Icon={BugAntIcon} />
+									<ProfileNavigationItemDivider Icon={CommandLineIcon} />
 									<ProfileNavigationItem href={urls.debugger.default}>
 										Console
 									</ProfileNavigationItem>
 								</>
 							)}
-							<ProfileNavigationItemDivider />
-							<ProfileNavigationItem onClick={() => api.auth.logout()}>
+							<ProfileNavigationItemDivider className="hidden sm:block" />
+							<ProfileNavigationItem className="hidden sm:block" onClick={() => api.auth.logout()}>
 								Logout
 							</ProfileNavigationItem>
 						</div>

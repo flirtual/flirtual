@@ -1,12 +1,11 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useInsertionEffect } from "react";
+import { useEffect } from "react";
 
 import { PreferenceThemes } from "~/api/user/preferences";
 import { uploadcarePublicKey } from "~/const";
 import { useTheme } from "~/hooks/use-theme";
-import { resolveTheme } from "~/theme";
 
 declare global {
 	interface Window {
@@ -19,7 +18,7 @@ declare global {
 }
 
 export const ClientScripts: React.FC = () => {
-	const { sessionTheme } = useTheme();
+	const { theme } = useTheme();
 
 	useEffect(() => {
 		/* eslint-disable */
@@ -31,17 +30,16 @@ export const ClientScripts: React.FC = () => {
 		window.FreshworksWidget("hide", "launcher");
 	}, []);
 
-	useInsertionEffect(() => {
+	useEffect(() => {
 		document.documentElement.classList.remove(...PreferenceThemes);
-		document.documentElement.classList.add(resolveTheme(sessionTheme));
-	}, [sessionTheme]);
+		document.documentElement.classList.add(theme);
+	}, [theme]);
 
 	return (
 		<>
 			{/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
 			<Script
 				src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"
-				strategy="beforeInteractive"
 				onReady={() => {
 					window.Blinkloader.optimize({
 						pubkey: uploadcarePublicKey,

@@ -16,6 +16,7 @@ export function useAttributeList<T extends keyof AttributeMetadata>(
 		{
 			fallbackData: [],
 			revalidateOnFocus: false,
+			keepPreviousData: true,
 			...options
 		}
 	);

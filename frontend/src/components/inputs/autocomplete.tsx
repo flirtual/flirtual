@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch } from "fast-fuzzy";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { InputOptionWindow } from "./select";
+import { InputOptionWindow } from "./option-window";
 
 export interface InputAutocompleteOption<K extends string = string> {
 	key: K;
@@ -17,11 +17,12 @@ export interface InputAutocompleteProps<K extends string = string> {
 	value: Array<K>;
 	placeholder?: string;
 	limit?: number;
+	id?: string;
 	onChange: React.Dispatch<Array<K>>;
 }
 
 export function InputAutocomplete<K extends string>(props: InputAutocompleteProps<K>) {
-	const { value: values = [], limit = Infinity, options } = props;
+	const { value: values = [], limit = Infinity, onChange, options, ...elementProps } = props;
 
 	const visibleValues = useMemo(
 		() =>
@@ -56,11 +57,12 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 
 	useEffect(() => {
 		if (values.length <= limit) return;
-		props.onChange.call(null, values.slice(0, limit));
-	}, [limit, props.onChange, values]);
+		onChange.call(null, values.slice(0, limit));
+	}, [limit, onChange, values]);
 
 	return (
 		<div
+			{...elementProps}
 			className="group relative"
 			onClick={() => inputRef.current?.focus()}
 			onFocus={() => setOverlayVisible(true)}

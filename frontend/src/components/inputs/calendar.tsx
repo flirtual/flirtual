@@ -12,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 
 import { IconComponent } from "~/components/icons";
 
-import { InputOptionWindow, InputOptionEvent, InputSelectOption } from "./select";
+import { InputOptionEvent, InputOptionWindow, InputSelectOption } from "./option-window";
 
 const MonthNames = Object.freeze(
 	new Array(12).fill(undefined).map((_, monthIdx) => {
@@ -55,8 +55,10 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 );
 
 interface LabelSelectProps {
-	options: Array<InputSelectOption>;
-	onOptionAction: React.EventHandler<InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>>>;
+	options: Array<InputSelectOption<string>>;
+	onOptionAction: React.EventHandler<
+		InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string>
+	>;
 	children: React.ReactNode;
 }
 
@@ -86,10 +88,16 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				<InputOptionWindow
 					className="absolute mt-4 flex w-fit"
 					options={props.options}
-					onOptionFocus={props.onOptionAction}
 					onOptionClick={(event) => {
-						props.onOptionAction(event);
+						props.onOptionAction(
+							event as InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string>
+						);
 						setVisible(false);
+					}}
+					onOptionFocus={(event) => {
+						props.onOptionAction(
+							event as InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string>
+						);
 					}}
 				/>
 			)}
@@ -232,6 +240,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								active: monthIdx === value.getMonth()
 							}))}
 							onOptionAction={({ option }) => {
+								if (!option.key) return;
 								doChange(
 									new Date(value.getFullYear(), Number.parseInt(option.key), value.getDate())
 								);
@@ -246,6 +255,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								active: value.getFullYear() === year
 							}))}
 							onOptionAction={({ option }) => {
+								if (!option.key) return;
 								doChange(new Date(Number.parseInt(option.key), value.getMonth(), value.getDate()));
 							}}
 						>

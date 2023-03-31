@@ -37,7 +37,7 @@ export const Onboarding2Form: React.FC = () => {
 			requireChange={false}
 			fields={{
 				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
-				country: user.profile.country ?? "",
+				country: user.profile.country ?? null,
 				new: profile.new ?? false,
 				sexualityPrivacy: user.preferences?.privacy.sexuality ?? "everyone",
 				countryPrivacy: user.preferences?.privacy.country ?? "everyone",

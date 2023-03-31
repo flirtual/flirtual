@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { ShieldExclamationIcon, FlagIcon } from "@heroicons/react/24/solid";
 
-import { User } from "~/api/user";
+import { displayName, User } from "~/api/user";
 import { api } from "~/api";
 import { sortBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { DrawerOrModal } from "~/components/drawer-or-modal";
 import { Form, FormButton } from "~/components/forms";
 import { InputSelect, InputLabel, InputTextArea } from "~/components/inputs";
+import { Tooltip } from "~/components/tooltip";
+import { useToast } from "~/hooks/use-toast";
 
 export const ReportProfile: React.FC<{ user: User }> = ({ user }) => {
+	const toasts = useToast();
+
 	const [reportVisible, setReportVisible] = useState(false);
 	const reportReasons = useAttributeList("report-reason");
 
@@ -19,11 +23,14 @@ export const ReportProfile: React.FC<{ user: User }> = ({ user }) => {
 				className="flex flex-col gap-8 rounded-3xl p-5 dark:text-white-20 sm:w-96"
 				fields={{
 					targetId: user.id,
-					reasonId: reportReasons[0]?.id,
+					reasonId: reportReasons[0]?.id || null,
 					message: ""
 				}}
-				onSubmit={async (body) => {
-					await api.report.create({ body });
+				onSubmit={async ({ reasonId, targetId, message }) => {
+					if (!reasonId) return;
+					await api.report.create({ body: { reasonId, targetId, message } });
+
+					toasts.add({ type: "success", label: "Thank you for your report!" });
 					setReportVisible(false);
 				}}
 			>
@@ -33,13 +40,10 @@ export const ReportProfile: React.FC<{ user: User }> = ({ user }) => {
 							{() => (
 								<>
 									<ShieldExclamationIcon className="h-6 w-6" />
-									<span className="text-xl">
-										Report profile: {user.profile.displayName ?? user.username}
-									</span>
+									<span className="text-xl">Report profile: {displayName(user)}</span>
 								</>
 							)}
 						</FormField>
-
 						<FormField name="reasonId">
 							{(field) => (
 								<>
@@ -71,14 +75,11 @@ export const ReportProfile: React.FC<{ user: User }> = ({ user }) => {
 					</>
 				)}
 			</Form>
-			<button
-				className="h-6 w-6"
-				title="Report profile"
-				type="button"
-				onClick={() => setReportVisible(true)}
-			>
-				<FlagIcon className="h-full w-full" />
-			</button>
+			<Tooltip value="Report profile">
+				<button className="h-6 w-6" type="button" onClick={() => setReportVisible(true)}>
+					<FlagIcon className="h-full w-full" />
+				</button>
+			</Tooltip>
 		</DrawerOrModal>
 	);
 };

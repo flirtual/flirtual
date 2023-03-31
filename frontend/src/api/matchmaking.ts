@@ -1,6 +1,11 @@
 import { fetch, NarrowFetchOptions } from "./exports";
 
-export async function listProspects(options: NarrowFetchOptions = {}): Promise<Array<string>> {
+export const ProspectKind = ["love", "friend"] as const;
+export type ProspectKind = (typeof ProspectKind)[number];
+
+export async function listProspects(
+	options: NarrowFetchOptions<undefined, { kind: ProspectKind }>
+): Promise<Array<string>> {
 	return fetch<Array<string>>("get", "prospects", options);
 }
 
@@ -8,6 +13,8 @@ export type ProspectRespondType = "like" | "pass";
 
 export interface RespondProspectBody {
 	type: ProspectRespondType;
+	kind: ProspectKind;
+	mode?: ProspectKind;
 	userId: string;
 }
 

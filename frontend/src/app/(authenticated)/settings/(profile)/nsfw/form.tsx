@@ -8,10 +8,13 @@ import { InputAutocomplete, InputLabel, InputRadioList, InputSwitch } from "~/co
 import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 import { excludeBy, filterBy } from "~/utilities";
 
 export const NsfwForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
+	const toasts = useToast();
+
 	const kinks = useAttributeList("kink");
 
 	if (!session) return null;
@@ -40,6 +43,8 @@ export const NsfwForm: React.FC = () => {
 					api.user.preferences.updatePrivacy(user.id, { body: { kinks: kinksPrivacy } }),
 					api.user.preferences.update(user.id, { body: { nsfw } })
 				]);
+
+				toasts.add({ type: "success", label: "Successfully updated NSFW settings!" });
 
 				await mutateSession({
 					...session,
@@ -72,6 +77,7 @@ export const NsfwForm: React.FC = () => {
 							<FormField name="domsub">
 								{(field) => (
 									<>
+										<InputLabel {...field.labelProps}>I am...</InputLabel>
 										<InputRadioList
 											{...field.props}
 											items={ProfileDomsubList.map((value) => ({

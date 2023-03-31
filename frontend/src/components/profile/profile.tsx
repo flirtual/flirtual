@@ -1,13 +1,15 @@
 "use client";
 
-import { urls } from "~/urls";
-import { User } from "~/api/user";
+import { toAbsoluteUrl, urls } from "~/urls";
+import { displayName, User } from "~/api/user";
 import { Html } from "~/components/html";
 import { useSession } from "~/hooks/use-session";
 import { filterBy, findBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useToast } from "~/hooks/use-toast";
 
 import { InlineLink } from "../inline-link";
+import { Button, ButtonLink } from "../button";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfileVerificationBadge } from "./verification-badge";
@@ -18,6 +20,8 @@ import { CountryPill } from "./pill/country";
 import { ProfileActionBar } from "./action-bar";
 
 export const Profile: React.FC<{ user: User }> = ({ user }) => {
+	const toasts = useToast();
+
 	const [session] = useSession();
 	const myProfile = session?.user.id === user.id;
 
@@ -28,12 +32,12 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 			<div className="flex w-full flex-col overflow-hidden bg-cream text-black-70 dark:bg-black-80 dark:text-white-20 sm:rounded-3xl sm:bg-white-20 sm:dark:bg-black-70">
 				<ProfileImageDisplay images={user.profile.images}>
 					<div className="absolute bottom-0 flex w-full flex-col justify-center gap-2 p-8 text-white-10">
-						<div className="flex items-baseline gap-4 font-montserrat">
+						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
 							<span className="text-4xl font-bold leading-none [word-break:break-all]">
-								{user.profile.displayName ?? user.username}
+								{displayName(user)}
 							</span>
 							{user.bornAt && (
-								<div className="flex h-fit gap-2">
+								<div className="flex h-fit items-center gap-2">
 									<span className="text-3xl leading-none">
 										{Math.floor(
 											(Date.now() - new Date(user.bornAt).getTime()) / (365 * 24 * 60 * 60 * 1000)
@@ -55,7 +59,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 								.map(
 									(gender) =>
 										gender && (
-											<Pill href={myProfile ? urls.settings.tags : undefined} key={gender.id}>
+											<Pill hocusable={false} key={gender.id} small={true}>
 												{gender.name}
 											</Pill>
 										)
@@ -66,19 +70,31 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 					</div>
 				</ProfileImageDisplay>
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
+					{myProfile && (
+						<div className="flex gap-4">
+							<ButtonLink href={urls.settings.matchmaking()} size="sm">
+								Edit profile
+							</ButtonLink>
+							<Button
+								size="sm"
+								onClick={async () => {
+									const link = toAbsoluteUrl(urls.user.profile(user.username)).toString();
+									await navigator.clipboard.writeText(link);
+									toasts.add({ type: "success", label: "Copied link!" });
+									await navigator.share({ text: "Check out my Flirtual profile!", url: link });
+								}}
+							>
+								Share profile
+							</Button>
+						</div>
+					)}
 					{user.profile.biography ? (
 						<Html className="text-xl">{user.profile.biography}</Html>
-					) : (
-						<span className="text-xl dark:text-white-20">
-							No biography available yet, consider{" "}
-							<InlineLink
-								href={myProfile ? urls.settings.biography : urls.conversations.with(user.id)}
-							>
-								{myProfile ? "adding one" : "asking them to add one"}
-							</InlineLink>
-							.
+					) : myProfile ? (
+						<span className="text-xl italic dark:text-white-20">
+							Don&apos;t forget to <InlineLink href={urls.settings.bio}>add a bio</InlineLink>!
 						</span>
-					)}
+					) : null}
 					<PillCollection user={user} />
 				</div>
 				<ProfileActionBar user={user} />

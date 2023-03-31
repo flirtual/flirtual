@@ -25,7 +25,7 @@ export async function list(options: ListOptions): Promise<Array<Report>> {
 }
 
 export async function create(
-	options: NarrowFetchOptions<Pick<Report, "targetId"> & { reasonId: string }>
+	options: NarrowFetchOptions<Pick<Report, "targetId"> & { reasonId: string; message: string }>
 ): Promise<Report> {
 	return fetch<Report>("post", "reports", options);
 }
@@ -34,8 +34,6 @@ export async function clear(reportId: string, options: NarrowFetchOptions = {}):
 	return fetch<Report>("delete", `reports/${reportId}`, options);
 }
 
-export async function clearAll(
-	options: NarrowFetchOptions<undefined, { targetId: string }>
-): Promise<Report> {
-	return fetch<Report>("delete", `reports`, options);
+export async function clearAll(options: NarrowFetchOptions<undefined, { targetId: string }>) {
+	return fetch<{ count: number }>("delete", `reports`, options);
 }

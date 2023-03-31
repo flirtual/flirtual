@@ -7,11 +7,13 @@ import { ImageSetValue, InputImageSet } from "~/components/forms/input-image-set
 import { InlineLink } from "~/components/inline-link";
 import { InputEditor, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
 import { urls } from "~/urls";
 
 export const BiographyForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
+	const toasts = useToast();
 
 	if (!session) return null;
 
@@ -45,6 +47,8 @@ export const BiographyForm: React.FC = () => {
 						body: values.images.map((image) => image.id).filter(Boolean)
 					})
 				]);
+
+				toasts.add({ type: "success", label: "Successfully updated biography!" });
 
 				await mutateSession({
 					...session,
@@ -90,7 +94,7 @@ export const BiographyForm: React.FC = () => {
 					<FormField name="biography">
 						{(field) => (
 							<>
-								<InputLabel {...field.labelProps}>Biography</InputLabel>
+								<InputLabel {...field.labelProps}>Bio</InputLabel>
 								<InputEditor {...field.props} />
 							</>
 						)}

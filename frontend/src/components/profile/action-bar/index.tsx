@@ -9,12 +9,16 @@ import {
 import { User } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
+import { Tooltip } from "~/components/tooltip";
+import { useToast } from "~/hooks/use-toast";
 
 import { BanProfile } from "./ban-profile";
 import { ReportProfile } from "./report-profile";
 
 export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 	const [session, mutateSession] = useSession();
+	const toasts = useToast();
+
 	if (!session) return null;
 
 	return (
@@ -22,69 +26,81 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 			<div className="flex gap-4">
 				{session.user.tags.includes("debugger") && (
 					<>
-						<button
-							title="Copy user id"
-							type="button"
-							onClick={() => navigator.clipboard.writeText(user.id)}
-						>
-							<ClipboardDocumentIcon className="h-6 w-6" />
-						</button>
-						<button
-							title="Copy username"
-							type="button"
-							onClick={() => navigator.clipboard.writeText(user.username)}
-						>
-							<ClipboardDocumentIcon className="h-6 w-6" />
-						</button>
+						<Tooltip value="Copy user id">
+							<button type="button" onClick={() => navigator.clipboard.writeText(user.id)}>
+								<ClipboardDocumentIcon className="h-6 w-6" />
+							</button>
+						</Tooltip>
+						<Tooltip value="Copy username">
+							<button type="button" onClick={() => navigator.clipboard.writeText(user.username)}>
+								<ClipboardDocumentIcon className="h-6 w-6" />
+							</button>
+						</Tooltip>
 					</>
 				)}
 				{session.user.tags.includes("admin") && (
 					<>
-						<button
-							title="Sudo"
-							type="button"
-							onClick={async () => {
-								const session = await api.auth.sudo({ body: { userId: user.id } });
-								await mutateSession(session);
-							}}
-						>
-							<ArrowRightOnRectangleIcon className="h-6 w-6" />
-						</button>
+						{user.id !== session.user.id && (
+							<Tooltip value="Sudo">
+								<button
+									type="button"
+									onClick={async () => {
+										const session = await api.auth.sudo({ body: { userId: user.id } });
+										await mutateSession(session);
+									}}
+								>
+									<ArrowRightOnRectangleIcon className="h-6 w-6" />
+								</button>
+							</Tooltip>
+						)}
 					</>
 				)}
 				{session.sudoerId && (
-					<button
-						title="Revoke sudo"
-						type="button"
-						onClick={async () => {
-							const session = await api.auth.revokeSudo();
-							await mutateSession(session);
-						}}
-					>
-						<ArrowLeftOnRectangleIcon className="h-6 w-6" />
-					</button>
-				)}
-				{session.user.tags.includes("moderator") && (
-					<>
-						<BanProfile user={user} />
+					<Tooltip value="Revoke Sudo">
 						<button
-							title="Clear reports"
 							type="button"
 							onClick={async () => {
-								await api.report.clearAll({ query: { targetId: user.id } });
+								const session = await api.auth.revokeSudo();
+								await mutateSession(session);
 							}}
 						>
-							<ShieldCheckIcon className="h-6 w-6" />
+							<ArrowLeftOnRectangleIcon className="h-6 w-6" />
 						</button>
+					</Tooltip>
+				)}
+				{session.user.id !== user.id && session.user.tags.includes("moderator") && (
+					<>
+						<BanProfile user={user} />
+						<Tooltip fragmentClassName="h-6 w-6" value="Clear reports">
+							<button
+								type="button"
+								onClick={async () => {
+									await api.report
+										.clearAll({ query: { targetId: user.id } })
+										.then(({ count }) =>
+											toasts.add({
+												type: "success",
+												label: `Successfully cleared ${count} report${count !== 1 ? "s" : ""}`,
+												children: <span className="text-sm">User: {user.id}</span>
+											})
+										)
+										.catch(toasts.addError);
+								}}
+							>
+								<ShieldCheckIcon className="h-6 w-6" />
+							</button>
+						</Tooltip>
 					</>
 				)}
 			</div>
 			<div className="flex gap-4">
 				{session.user.id !== user.id && (
 					<>
-						<button className="h-6 w-6" title="Block user" type="button">
-							<NoSymbolIcon className="h-full w-full" />
-						</button>
+						<Tooltip value="Block profile">
+							<button className="h-6 w-6" type="button">
+								<NoSymbolIcon className="h-full w-full" />
+							</button>
+						</Tooltip>
 						<ReportProfile user={user} />
 					</>
 				)}

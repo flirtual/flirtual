@@ -4,6 +4,7 @@ import { Dispatch, PropsWithChildren } from "react";
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
 import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useToast } from "~/hooks/use-toast";
 import { sortBy } from "~/utilities";
 
 import { DrawerOrModal } from "../drawer-or-modal";
@@ -22,6 +23,7 @@ export const BanProfileModal: React.FC<BanProfileModalProps> = ({
 	visible,
 	onVisibilityChange
 }) => {
+	const toasts = useToast();
 	const reasons = sortBy(useAttributeList("ban-reason"), ({ metadata }) => metadata.order);
 
 	return (
@@ -36,6 +38,13 @@ export const BanProfileModal: React.FC<BanProfileModalProps> = ({
 				}}
 				onSubmit={async ({ targetId, ...body }) => {
 					await api.user.suspend(targetId, { body });
+
+					toasts.add({
+						type: "success",
+						label: `Successfully banned profile!`,
+						children: <span className="text-sm">User: {user.id}</span>
+					});
+
 					onVisibilityChange(false);
 				}}
 			>

@@ -7,7 +7,7 @@ import { api } from "~/api";
 import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
-import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
+import { InputCheckbox, InputLabel, InputText } from "~/components/inputs";
 import { urls } from "~/urls";
 
 export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {

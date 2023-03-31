@@ -1,5 +1,7 @@
 import { Url } from "next/dist/shared/lib/router/router";
 
+import { ProspectKind } from "~/api/matchmaking";
+
 import { User } from "./api/user";
 import { ConfirmEmailPageProps } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
@@ -17,6 +19,10 @@ export function ensureRelativeUrl(pathname: string) {
 
 export function toAbsoluteUrl(href: string) {
 	return new URL(href, siteOrigin);
+}
+
+export function urlEqual(a: URL, b: URL) {
+	return a.origin === b.origin && a.pathname === b.pathname && a.search === b.search;
 }
 
 function url(pathname: string, query: Record<string, string | number | undefined> = {}) {
@@ -54,7 +60,7 @@ export const urls = {
 		me: "/me",
 		profile: (username: string) => `/${username}`
 	},
-	browse: (type?: "friend") => url("/browse", { type }),
+	browse: (kind?: ProspectKind) => url("/browse", { kind }),
 	conversations: {
 		list: "/conversations",
 		with: (userId: string) => `/conversations/${userId}`
@@ -68,8 +74,8 @@ export const urls = {
 
 		// profile
 		matchmaking: (returnTo?: string) => url("/settings/matchmaking", { return: returnTo }),
-		biography: "/settings/biography",
-		tags: "/settings/tags",
+		bio: "/settings/bio",
+		tags: (fragment?: string) => `/settings/tags${fragment ? `?af=${fragment}` : ""}`,
 		personality: "/settings/personality",
 		nsfw: "/settings/nsfw",
 
@@ -84,7 +90,8 @@ export const urls = {
 	},
 
 	moderation: {
-		reports: "/reports"
+		reports: "/reports",
+		imageSearch: (imageLink: string) => `https://lens.google.com/uploadbyurl?url=${imageLink}`
 	},
 
 	admin: {},
@@ -94,7 +101,9 @@ export const urls = {
 	},
 
 	resources: {
+		download: "/download",
 		events: "/events",
+		invite: "/invite",
 		networkStatus: "https://status.flirtu.al",
 		press: "/press",
 		branding: "/branding",
@@ -104,13 +113,14 @@ export const urls = {
 		termsOfService: "/terms",
 		privacyPolicy: "/privacy",
 		company: "https://studiopaprika.io/",
-		contact: "https://hello.flirtu.al/"
+		contact: "https://hello.flirtu.al/",
+		mentalHealth: "/mentalhealth"
 	},
 
 	socials: {
-		twitter: "https://twitter.com/getflirtual",
-		instagram: "https://instagram.com/flirtual",
-		discord: "https://discord.com/invite/flirtual"
+		discord: "https://discord.com/invite/flirtual",
+		vrchat: "https://vrc.group/FLIRT.4525",
+		twitter: "https://twitter.com/getflirtual"
 	},
 
 	apps: {

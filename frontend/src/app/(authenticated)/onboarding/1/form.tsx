@@ -1,14 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { api } from "~/api";
+import { ProfileMonopolyLabel, ProfileMonopolyList } from "~/api/user/profile";
+import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
 	InputLabel,
 	InputRangeSlider,
 	InputRangeSliderValue,
+	InputSelect,
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
@@ -23,6 +27,8 @@ const absMaxAge = 100;
 export const Onboarding1Form: React.FC = () => {
 	const user = useSessionUser();
 	const router = useRouter();
+
+	const [expanded, setExpanded] = useState(false);
 
 	const genders = useAttributeList("gender")
 		.filter((gender) => gender.metadata?.simple)
@@ -41,7 +47,8 @@ export const Onboarding1Form: React.FC = () => {
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
 				] satisfies InputRangeSliderValue,
-				serious: user.profile.serious ?? false
+				serious: user.profile.serious ?? false,
+				monopoly: user.profile.monopoly
 			}}
 			onSubmit={async (values) => {
 				const [agemin, agemax] = values.age;
@@ -51,7 +58,8 @@ export const Onboarding1Form: React.FC = () => {
 							required: ["serious"]
 						},
 						body: {
-							serious: values.serious
+							serious: values.serious,
+							monopoly: values.monopoly
 						}
 					}),
 					api.user.profile.updatePreferences(user.id, {
@@ -115,6 +123,29 @@ export const Onboarding1Form: React.FC = () => {
 							</>
 						)}
 					</FormField>
+					<Button
+						className="w-32"
+						kind="secondary"
+						size="sm"
+						onClick={() => setExpanded((expanded) => !expanded)}
+					>
+						{expanded ? "Less ▲" : "More ▼"}
+					</Button>
+					{expanded && (
+						<FormField name="monopoly">
+							{(field) => (
+								<InputSelect
+									{...field.props}
+									optional
+									placeholder="Relationship type"
+									options={ProfileMonopolyList.map((item) => ({
+										key: item,
+										label: ProfileMonopolyLabel[item]
+									}))}
+								/>
+							)}
+						</FormField>
+					)}
 					<FormButton>Next page</FormButton>
 				</>
 			)}

@@ -40,7 +40,14 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 	return (
 		<form
 			{...form.props}
-			{...omit(props, ["fields", "onSubmit", "formErrorMessages", "requireChange", "withCaptcha"])}
+			{...omit(props, [
+				"fields",
+				"onSubmit",
+				"formErrorMessages",
+				"requireChange",
+				"withCaptcha",
+				"withGlobalId"
+			])}
 		>
 			<FormContext.Provider value={form}>
 				{children}

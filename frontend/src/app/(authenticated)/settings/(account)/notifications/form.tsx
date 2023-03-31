@@ -6,10 +6,12 @@ import { FormButton } from "~/components/forms/button";
 import { InputLabel } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { useSessionUser } from "~/hooks/use-session";
-import { keys, omit } from "~/utilities";
+import { useToast } from "~/hooks/use-toast";
+import { fromEntries, keys, omit } from "~/utilities";
 
 export const NotificationsForm: React.FC = () => {
 	const user = useSessionUser();
+	const toasts = useToast();
 
 	if (!user || !user.preferences) return null;
 	const { preferences } = user;
@@ -25,10 +27,12 @@ export const NotificationsForm: React.FC = () => {
 			}}
 			onSubmit={async (values) => {
 				await api.user.preferences.updateNotifications(user.id, {
-					body: Object.fromEntries(
+					body: fromEntries(
 						keys(preferences.emailNotifications).map((key) => [key, values.email.includes(key)])
 					)
 				});
+
+				toasts.add({ type: "success", label: "Saved notification preferences!" });
 			}}
 		>
 			{({ FormField }) => (

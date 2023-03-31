@@ -1,5 +1,3 @@
-import { Cog8ToothIcon } from "@heroicons/react/24/solid";
-
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
@@ -7,7 +5,7 @@ import { urls } from "~/urls";
 
 export const OutOfProspects: React.FC = () => {
 	return (
-		<ModelCard title="Come back tomorrow!">
+		<ModelCard title="Come back tomorrow!" titleProps={{ className: "md:text-3xl" }}>
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-4">
 					<p>You are out of profiles for today :(</p>
@@ -20,11 +18,11 @@ export const OutOfProspects: React.FC = () => {
 						can meet new friends (without matchmaking filters).
 					</p>
 				</div>
-				<div className="flex gap-8">
-					<ButtonLink className="flex gap-4 px-8" href="/homies">
+				<div className="flex gap-4">
+					<ButtonLink href={urls.browse("friend")} size="sm">
 						Homie Mode
 					</ButtonLink>
-					<ButtonLink className="flex gap-4 px-8" href={urls.subscription}>
+					<ButtonLink href={urls.subscription} size="sm">
 						Premium
 					</ButtonLink>
 				</div>
