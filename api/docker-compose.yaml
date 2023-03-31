@@ -12,6 +12,8 @@ services:
     image: elasticsearch:8.6.2
     restart: always
     environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      mem_limit: 1024m
       xpack.security.enabled: false
       discovery.type: single-node
     volumes:
