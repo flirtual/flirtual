@@ -110,6 +110,7 @@ export * as conversations from "./conversations";
 export * as debug from "./debug";
 export * as user from "./user";
 export * as file from "./file";
+export * as images from "./images";
 export * as matchmaking from "./matchmaking";
 export * as report from "./report";
 export * as subscription from "./subscription";

@@ -81,14 +81,15 @@ export const ProfileNavigation: React.FC = () => {
 						initial={{ opacity: 0 }}
 						ref={elementRef}
 					>
-						<Link className="group flex shrink-0 items-center gap-2" href={urls.user.me}>
-							<div className="relative flex w-fit shrink-0 items-center justify-center">
-								<UserAvatar
-									className="h-8 w-8 scale-125 transition-transform group-hocus:brightness-90"
-									user={user}
-								/>
-							</div>
-							<span className="ml-2 font-montserrat font-semibold hover:text-pink">Profile</span>
+						<Link
+							className="group flex shrink-0 items-center gap-2 hover:text-pink"
+							href={urls.user.me}
+						>
+							<UserAvatar
+								className="h-8 w-8 scale-125 transition-transform group-hocus:brightness-90"
+								user={user}
+							/>
+							<span className="ml-2 font-montserrat font-semibold">Profile</span>
 						</Link>
 						<div className="flex flex-col-reverse gap-2 p-2 pl-12 pb-1 sm:flex-col sm:pb-2 sm:pt-1">
 							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
