@@ -14,6 +14,7 @@ export type ProspectRespondType = "like" | "pass";
 export interface RespondProspectBody {
 	type: ProspectRespondType;
 	kind: ProspectKind;
+	mode?: ProspectKind;
 	userId: string;
 }
 
