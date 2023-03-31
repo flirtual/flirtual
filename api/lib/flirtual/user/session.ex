@@ -17,6 +17,7 @@ defmodule Flirtual.User.Session do
 
     field :token, :string, virtual: true, redact: true
     field :hashed_token, :string, redact: true
+    field :expire_at, :naive_datetime
 
     timestamps(inserted_at: :created_at)
   end
@@ -25,6 +26,23 @@ defmodule Flirtual.User.Session do
     [
       user: User.default_assoc()
     ]
+  end
+
+  @forty_five_days_in_seconds 3_888_000
+  @year_in_seconds 31_556_952
+
+  def max_age(), do: @forty_five_days_in_seconds
+  def max_age(:absolute), do: @year_in_seconds
+
+  def new_expire_at() do
+    NaiveDateTime.utc_now()
+    |> NaiveDateTime.add(max_age(), :second)
+    |> NaiveDateTime.truncate(:second)
+  end
+
+  def expired?(%Session{expire_at: expire_at, created_at: created_at}) do
+    now = NaiveDateTime.utc_now()
+    expire_at > now and created_at < NaiveDateTime.add(now, max_age(:absolute), :second)
   end
 
   @hash_algorithm :sha256
@@ -36,7 +54,8 @@ defmodule Flirtual.User.Session do
     %Session{
       hashed_token: hash_token(raw_token),
       token: encode_token(raw_token),
-      user_id: user.id
+      user_id: user.id,
+      expire_at: new_expire_at()
     }
     |> Repo.insert!()
     |> Repo.preload(Session.default_assoc())
@@ -79,11 +98,17 @@ defmodule Flirtual.User.Session do
   end
 
   def get(token: token) when is_binary(token) do
-    Session |> query_token(token) |> one()
-  end
+    now = NaiveDateTime.utc_now()
+    absolute_expire_at = NaiveDateTime.add(now, max_age(:absolute), :second)
 
-  def get(user_id: user_id) when is_binary(user_id) do
-    Session |> where(user_id: ^user_id) |> delete_all()
+    Session
+    |> query_token(token)
+    |> where(
+      [session],
+      session.expire_at > ^now and session.created_at < ^absolute_expire_at
+    )
+    |> preload(^Session.default_assoc())
+    |> Repo.one()
   end
 
   def delete(user_id: user_id) when is_binary(user_id) do
@@ -92,12 +117,6 @@ defmodule Flirtual.User.Session do
 
   def delete(token: token) when is_binary(token) do
     Session |> query_token(token) |> delete_all()
-  end
-
-  def one(query) do
-    query
-    |> preload(^Session.default_assoc())
-    |> Repo.one()
   end
 
   def delete_all(query) do
@@ -112,9 +131,9 @@ defmodule Flirtual.User.Session do
 
   @hour_in_seconds 3600
 
-  def maybe_update_active_at(nil), do: nil
+  def maybe_update_activity(nil), do: nil
 
-  def maybe_update_active_at(session) do
+  def maybe_update_activity(session) do
     now = NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
     last_active_at = session.user.active_at
 
@@ -128,6 +147,10 @@ defmodule Flirtual.User.Session do
         with {:ok, user} <-
                session.user
                |> change(%{active_at: now})
+               |> Repo.update(),
+             {:ok, session} <-
+               session
+               |> change(%{expire_at: new_expire_at()})
                |> Repo.update(),
              {:ok, _} <- ChangeQueue.add(user.id) do
           Map.put(session, :user, user)

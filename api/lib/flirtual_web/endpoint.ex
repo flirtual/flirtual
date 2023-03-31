@@ -1,6 +1,8 @@
 defmodule FlirtualWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :flirtual
 
+  alias Flirtual.User.Session
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
@@ -37,6 +39,7 @@ defmodule FlirtualWeb.Endpoint do
     store: :cookie,
     domain: Application.compile_env!(:flirtual, :root_origin).host,
     same_site: "Lax",
+    max_age: Session.max_age(),
     key: "session",
     signing_salt: "mGFTg14t"
 

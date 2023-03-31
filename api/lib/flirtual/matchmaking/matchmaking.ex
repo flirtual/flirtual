@@ -30,9 +30,6 @@ defmodule Flirtual.Matchmaking do
     |> DateTime.truncate(:second)
   end
 
-  def next_reset_changeset(%User{} = user, kind) do
-  end
-
   def compute_prospects(%User{} = user, kind, opts \\ []) do
     profile = user.profile
 
