@@ -5,6 +5,7 @@ defmodule Flirtual.User.Policy do
 
   alias Flirtual.Policy
   alias Flirtual.User
+  alias Flirtual.User.Session
 
   def authorize(
         _,
@@ -22,13 +23,21 @@ defmodule Flirtual.User.Policy do
       when not is_nil(banned_at),
       do: false
 
-  # Any user can read any other users.
   def authorize(
         :read,
-        _,
-        _
-      ),
-      do: true
+        %Plug.Conn{
+          assigns: %{
+            session: %Session{} = session
+          }
+        },
+        %User{} = user
+      ) do
+    if User.visible?(user) do
+      true
+    else
+      :moderator in session.user.tags
+    end
+  end
 
   # The currently logged in user can update their own user.
   def authorize(

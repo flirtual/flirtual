@@ -8,12 +8,16 @@ defmodule FlirtualWeb.MatchmakingController do
   import Flirtual.Matchmaking
 
   def list_prospects(conn, %{"kind" => kind}) do
-    conn |> json(compute_prospects(conn.assigns[:session].user, to_atom(kind, :love)))
+    with {:ok, prospect_ids} <-
+           compute_prospects(conn.assigns[:session].user, to_atom(kind, :love)) do
+      IO.inspect(prospect_ids)
+      conn |> json(prospect_ids)
+    end
   end
 
   def reset_prospects(conn, _) do
-    with {:ok, _} <- reset_prospects(conn.assigns[:session].user) do
-      conn |> json(%{})
+    with {:ok, count} <- reset_prospects(conn.assigns[:session].user) do
+      conn |> json(%{count: count})
     end
   end
 
@@ -21,18 +25,28 @@ defmodule FlirtualWeb.MatchmakingController do
     conn |> json(generate_query(conn.assigns[:session].user, to_atom(kind, :love)))
   end
 
-  def respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind}) do
-    source_user = conn.assigns[:session].user
-    target_user = Users.get(user_id)
+  def respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => mode}) do
+    user = conn.assigns[:session].user
+    target = Users.get(user_id)
 
-    if is_nil(target_user) or Policy.cannot?(conn, :read, target_user) do
+    if is_nil(target) or Policy.cannot?(conn, :read, target) do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
       with {:ok, result} <-
-             respond_profile(source_user, target_user, to_atom(type, :like), to_atom(type, :love)) do
+             respond_profile(
+               user: user,
+               target: target,
+               type: to_atom(type, :like),
+               kind: to_atom(kind, :love),
+               mode: to_atom(mode, :love)
+             ) do
         conn |> json(result)
       end
     end
+  end
+
+  def respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind}) do
+    respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => kind})
   end
 
   def reverse_respond(_, %{"user_id" => _, "type" => _}) do

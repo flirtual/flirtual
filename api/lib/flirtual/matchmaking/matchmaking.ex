@@ -1,26 +1,104 @@
 defmodule Flirtual.Matchmaking do
   import Flirtual.Utilities
-  import Flirtual.Utilities.Changeset
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.Subscription
   alias Flirtual.Talkjs
   alias Flirtual.Elasticsearch
+  alias Flirtual.User.Profile.Prospect
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile
   Flirtual.Utilities.Changeset
   alias Flirtual.{Repo, User, Attribute, Mailer}
 
-  def compute_prospects(%User{} = user, kind) do
-    query = generate_query(user, kind)
-
-    with {:ok, resp} <- Elasticsearch.search("users", query) do
-      resp["hits"]["hits"] |> Enum.map(& &1["_id"])
+  def get_reset_fields(kind) do
+    case kind do
+      :love -> %{at: :reset_love_at, count: :reset_love_count}
+      :friend -> %{at: :reset_friend_at, count: :reset_friend_count}
     end
   end
 
+  def next_reset_at() do
+    now = DateTime.utc_now()
+    today_9am = DateTime.new!(Date.utc_today(), Time.new!(9, 0, 0, 0))
+
+    case DateTime.compare(now, today_9am) do
+      :lt -> today_9am
+      _ -> DateTime.add(today_9am, 24 * 60 * 60)
+    end
+    |> DateTime.truncate(:second)
+  end
+
+  def next_reset_changeset(%User{} = user, kind) do
+  end
+
+  def compute_prospects(%User{} = user, kind, opts \\ []) do
+    profile = user.profile
+
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+    reset_fields = get_reset_fields(kind)
+
+    reset_at = user.profile[reset_fields.at]
+    reset_count = user.profile[reset_fields.count]
+
+    Repo.transaction(fn ->
+      prospect_ids =
+        from(
+          a in Prospect,
+          where: [profile_id: ^profile.user_id, kind: ^kind],
+          select: a.target_id
+        )
+        |> Repo.all()
+
+      query = generate_query(user, kind)
+
+      if Keyword.get(opts, :force, false) or reset_at === nil or
+           Subscription.active?(user.subscription) or
+           NaiveDateTime.compare(DateTime.to_naive(reset_at), now) == :lt do
+        with {:ok, resp} <- Elasticsearch.search("users", query),
+             user_ids = Enum.map(resp["hits"]["hits"], & &1["_id"]),
+             {:ok, _} <- Prospect.delete_all(profile_id: profile.user_id, kind: kind),
+             {:ok, _} <-
+               Prospect.insert_all(
+                 user_ids
+                 |> Enum.map(
+                   &%{
+                     profile_id: profile.user_id,
+                     target_id: &1,
+                     kind: kind
+                   }
+                 )
+               ),
+             {:ok, _} <-
+               change(
+                 user.profile,
+                 Map.put(%{}, reset_fields.at, next_reset_at())
+                 |> Map.put(reset_fields.count, 0)
+               )
+               |> Repo.update() do
+          user_ids
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      else
+        if reset_count >= 15 do
+          []
+        else
+          prospect_ids
+        end
+      end
+    end)
+  end
+
   def reset_prospects(%User{} = user) do
-    LikesAndPasses.delete_all(profile_id: user.id)
+    with {:ok, count} <- LikesAndPasses.delete_all(profile_id: user.id),
+         {:ok, _} <- compute_prospects(user, :love, force: true),
+         {:ok, _} <- compute_prospects(user, :friend, force: true) do
+      {:ok, count}
+    end
   end
 
   def deliver_match_email(user, target_user) do
@@ -86,27 +164,26 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
-  @almost_day_in_seconds 72000
+  def respond_profile(opts \\ []) do
+    user = Keyword.fetch!(opts, :user)
+    target = Keyword.fetch!(opts, :target)
 
-  def respond_profile(%User{} = user, %User{} = target_user, type, kind) do
-    timeframe = NaiveDateTime.utc_now() |> NaiveDateTime.add(-@almost_day_in_seconds)
+    type = Keyword.fetch!(opts, :type)
+    kind = Keyword.get(opts, :kind, :love)
+    mode = Keyword.get(opts, :mode, :love)
+
+    reset_count_field = get_reset_fields(mode).count
+    reset_count = user.profile[reset_count_field]
 
     Repo.transaction(fn repo ->
-      with existing_items <-
-             LikesAndPasses
-             |> where(
-               profile_id: ^user.id,
-               kind: ^kind
-             )
-             |> where([item], item.created_at >= ^timeframe)
-             |> Repo.all(),
-           IO.inspect(existing_items),
+      with {:ok, _} <-
+             Prospect.delete(profile_id: user.id, target_id: target.id),
            {:ok, item} <-
              %LikesAndPasses{}
              |> cast(
                %{
                  profile_id: user.id,
-                 target_id: target_user.id,
+                 target_id: target.id,
                  type: type,
                  kind: kind
                },
@@ -124,6 +201,10 @@ defmodule Flirtual.Matchmaking do
                message: "profile already responded"
              )
              |> Repo.insert(),
+           {:ok, _} <-
+             user.profile
+             |> change(Map.put(%{}, reset_count_field, reset_count + 1))
+             |> Repo.update(),
            opposite_item <-
              from(LikesAndPasses,
                where: [
@@ -136,8 +217,8 @@ defmodule Flirtual.Matchmaking do
              if(is_nil(opposite_item),
                do: {:ok, nil},
                else:
-                 with {:ok, _} <- create_match_conversation(user, target_user),
-                      {:ok, _} <- deliver_match_email(target_user, user) do
+                 with {:ok, _} <- create_match_conversation(user, target),
+                      {:ok, _} <- deliver_match_email(target, user) do
                    {:ok, nil}
                  end
              ) do
@@ -169,14 +250,17 @@ defmodule Flirtual.Matchmaking do
     likes_and_passes =
       from(
         a in LikesAndPasses,
-        where: [profile_id: ^profile.user_id, kind: ^kind],
+        where: [profile_id: ^profile.user_id, type: :like],
+        or_where: [profile_id: ^profile.user_id, type: :pass, kind: :love],
+        or_where: [profile_id: ^profile.user_id, type: :pass, kind: ^kind],
+        distinct: :target_id,
         select: a.target_id
       )
       |> Repo.all()
 
     %{
       # "explain" => true,
-      "size" => 15,
+      "size" => 30,
       "query" => %{
         "bool" => %{
           "must_not" => [

@@ -70,6 +70,10 @@ defmodule Flirtual.User.Profile do
     field :new, :boolean
     field :languages, {:array, :string}
     field :custom_interests, {:array, :string}
+    field :reset_love_at, :utc_datetime
+    field :reset_love_count, :integer
+    field :reset_friend_at, :utc_datetime
+    field :reset_friend_count, :integer
 
     has_one :preferences, Preferences, references: :user_id, foreign_key: :profile_id
     has_one :custom_weights, CustomWeights, references: :user_id, foreign_key: :profile_id
@@ -87,6 +91,10 @@ defmodule Flirtual.User.Profile do
 
     many_to_many :liked_and_passed, Profile,
       join_through: Profile.LikesAndPasses,
+      join_keys: [profile_id: :user_id, target_id: :user_id]
+
+    many_to_many :prospects, Profile,
+      join_through: Profile.Prospects,
       join_keys: [profile_id: :user_id, target_id: :user_id]
 
     timestamps(inserted_at: false)
