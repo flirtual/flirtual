@@ -5,10 +5,8 @@ specifiers:
   '@hcaptcha/react-hcaptcha': ^1.6.0
   '@hcaptcha/types': ^1.0.3
   '@heroicons/react': ^2.0.17
-  '@ngneat/falso': ^6.4.0
   '@tailwindcss/forms': ^0.5.3
   '@tailwindcss/typography': ^0.5.9
-  '@tanstack/react-virtual': 3.0.0-alpha.0
   '@total-typescript/ts-reset': ^0.4.2
   '@types/ms': ^0.7.31
   '@types/node': ^18.15.11
@@ -35,7 +33,6 @@ specifiers:
   react-dom: ^18.2.0
   react-portal: ^4.2.2
   react-quill: ^2.0.0
-  react-virtual: link:@types/@tanstack/react-virtual
   sanitize-html: ^2.10.0
   sass: ^1.60.0
   server-only: ^0.0.1
@@ -49,9 +46,7 @@ specifiers:
 dependencies:
   '@hcaptcha/react-hcaptcha': 1.6.0_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 2.0.17_react@18.2.0
-  '@ngneat/falso': 6.4.0
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.3.1
-  '@tanstack/react-virtual': 3.0.0-alpha.0_react@18.2.0
   '@total-typescript/ts-reset': 0.4.2
   '@widgetbot/react-embed': 1.7.0_react@18.2.0
   ansi-to-html: 0.7.2
@@ -89,7 +84,6 @@ devDependencies:
   husky: 8.0.3
   lint-staged: 13.2.0
   postcss: 8.4.21
-  react-virtual: link:@types/@tanstack/react-virtual
   tailwindcss: 3.3.1_postcss@8.4.21
   tailwindcss-hocus: 0.0.7_tailwindcss@3.3.1
   typescript: 5.0.3
@@ -348,13 +342,6 @@ packages:
     dev: false
     optional: true
 
-  /@ngneat/falso/6.4.0:
-    resolution: {integrity: sha512-f6r036h2fX/AoHw1eV2t8+qWQwrbSrozs3zXMhhwoO7SJBc+DGMxRWEhFeYIinfwx0uhUH8ggx5+PDLzYESLOA==}
-    dependencies:
-      seedrandom: 3.0.5
-      uuid: 8.3.2
-    dev: false
-
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -385,10 +372,6 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /@reach/observe-rect/1.2.0:
-    resolution: {integrity: sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==}
-    dev: false
-
   /@react-dnd/asap/5.0.2:
     resolution: {integrity: sha512-WLyfoHvxhs0V9U+GTsGilGgf2QsPl6ZZ44fnv0/b8T3nQyvzxidxsg/ZltbWssbsRDlYW8UKSQMTGotuTotZ6A==}
     dev: false
@@ -418,6 +401,7 @@ packages:
     dependencies:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.3.1_postcss@8.4.21
+    dev: false
 
   /@tailwindcss/typography/0.5.9_tailwindcss@3.3.1:
     resolution: {integrity: sha512-t8Sg3DyynFysV9f4JDOVISGsjazNb48AeIYQwcL+Bsq5uf4RYL75C1giZ43KISjeDGBaTN3Kxh7Xj/vRSMJUUg==}
@@ -430,17 +414,6 @@ packages:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.3.1_postcss@8.4.21
     dev: true
-
-  /@tanstack/react-virtual/3.0.0-alpha.0_react@18.2.0:
-    resolution: {integrity: sha512-WpHU/dt34NwZZ8qtiE05TF+nX/b1W6qrWZarO+s8jJFpPVicrTbJKp5Bjt4eSJuk7aYw272oEfsH3ABBRgj+3A==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      '@babel/runtime': 7.21.0
-      '@reach/observe-rect': 1.2.0
-      react: 18.2.0
-    dev: false
 
   /@total-typescript/ts-reset/0.4.2:
     resolution: {integrity: sha512-vqd7ZUDSrXFVT1n8b2kc3LnklncDQFPvR58yUS1kEP23/nHPAO9l1lMjUfnPrXYYk4Hj54rrLKMW5ipwk7k09A==}
@@ -3082,10 +3055,6 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /seedrandom/3.0.5:
-    resolution: {integrity: sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==}
-    dev: false
-
   /semver/6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
     hasBin: true
@@ -3542,11 +3511,6 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  /uuid/8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    hasBin: true
-    dev: false
 
   /which-boxed-primitive/1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
