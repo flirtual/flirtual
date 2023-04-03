@@ -27,7 +27,7 @@ defmodule Flirtual.User.ChangeQueue do
 
   def add(%User{} = user), do: add(user.id)
 
-  def add(user_id) when is_binary(user_id) do
+  def add(user_id) when is_uuid(user_id) do
     log(:info, ["add"], user_id)
 
     case get(user_id) do
@@ -39,7 +39,7 @@ defmodule Flirtual.User.ChangeQueue do
     |> Repo.insert_or_update(on_conflict: :nothing)
   end
 
-  def remove(user_id) when is_binary(user_id) do
+  def remove(user_id) when is_uuid(user_id) do
     log(:info, ["remove"], user_id)
 
     with {_, nil} <-

@@ -181,8 +181,11 @@ defmodule FlirtualWeb.Router do
             post "/deactivate", UsersController, :deactivate
             delete "/deactivate", UsersController, :reactivate
 
+            post "/block", UsersController, :block
+            delete "/block", UsersController, :unblock
+
             post "/suspend", UsersController, :suspend
-            post "/unsuspend", UsersController, :unsuspend
+            delete "/suspend", UsersController, :unsuspend
 
             scope "/email" do
               post "/", UsersController, :update_email

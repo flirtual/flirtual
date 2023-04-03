@@ -11,6 +11,7 @@ defmodule Flirtual.Report do
   import Ecto.Query
   import Flirtual.Utilities.Changeset
 
+  alias Flirtual.User.Profile.Block
   alias Flirtual.Discord
   alias Flirtual.{User, Attribute, Report, Repo}
   alias Flirtual.User.ChangeQueue
@@ -64,8 +65,7 @@ defmodule Flirtual.Report do
            existing_unique_reports <-
              list(target_id: reported.id)
              |> Enum.map(& &1.user_id)
-             |> MapSet.new()
-             |> MapSet.to_list(),
+             |> Enum.uniq(),
            {:ok, reported} <-
              if(length(existing_unique_reports) < 2,
                do: {:ok, reported},
@@ -76,6 +76,7 @@ defmodule Flirtual.Report do
                  })
                  |> Repo.update()
              ),
+           {:ok, _} <- Block.create(user: reporter, target: reported),
            {:ok, _} <- ChangeQueue.add(reported.id),
            {:ok, _} <-
              Discord.deliver_webhook(:report, %Report{report | user: reporter, target: reported}) do

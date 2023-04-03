@@ -419,7 +419,6 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           serious: profile.serious,
           nsfw: user.preferences.nsfw
           # liked: profile.liked_and_passed |> Enum.filter(&(&1.type === :like)),
-          # blocked: profile.blocked
         },
         if(user.preferences.nsfw,
           do: %{

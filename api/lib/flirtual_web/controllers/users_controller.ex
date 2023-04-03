@@ -15,6 +15,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.User, only: [validate_current_password: 2]
   import Flirtual.Jwt, only: [validate_jwt: 4]
 
+  alias Flirtual.User.Profile.Block
   alias Flirtual.Attribute
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
@@ -327,6 +328,61 @@ defmodule FlirtualWeb.UsersController do
       end
     end
   end
+
+  def block(%{assigns: %{session: %{user_id: user_id}}}, %{"user_id" => user_id}),
+    do: {:error, {:bad_request, "Cannot block yourself", %{user_id: user_id}}}
+
+  def block(conn, %{"user_id" => user_id}) do
+    target = Users.get(user_id)
+
+    if is_nil(target) or Policy.cannot?(conn, :read, target) do
+      {:error, {:forbidden, "Cannot block this user", %{user_id: user_id}}}
+    else
+      Repo.transaction(fn ->
+        options = [user: conn.assigns[:session].user, target: target]
+
+        with nil <- Block.get(options),
+             {:ok, item} <- Block.create(options) do
+          conn |> json(item)
+        else
+          %Block{} ->
+            Repo.rollback({:bad_request, "Profile already blocked", %{user_id: user_id}})
+
+          {:error, reason} ->
+            Repo.rollback(reason)
+
+          reason ->
+            Repo.rollback(reason)
+        end
+      end)
+    end
+  end
+
+  def unblock(conn, %{"user_id" => user_id}) do
+    target = Users.get(user_id)
+
+    if is_nil(target) or Policy.cannot?(conn, :read, target) do
+      {:error, {:forbidden, "Cannot unblock this user", %{user_id: user_id}}}
+    else
+      Repo.transaction(fn ->
+        with %Block{} = item <-
+               Block.get(
+                 user: conn.assigns[:session].user,
+                 target: target
+               ),
+             {:ok, item} <- Block.delete(item) do
+          conn |> json(item)
+        else
+          nil -> {:error, {:bad_request, "Profile not blocked", %{user_id: user_id}}}
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      end)
+    end
+  end
+
+  def suspend(%{assigns: %{session: %{user_id: user_id}}}, %{"user_id" => user_id}),
+    do: {:error, {:bad_request, "Cannot suspend yourself", %{user_id: user_id}}}
 
   def suspend(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)

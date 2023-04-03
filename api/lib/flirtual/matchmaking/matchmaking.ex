@@ -3,6 +3,7 @@ defmodule Flirtual.Matchmaking do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.User.Profile.Block
   alias Flirtual.Subscription
   alias Flirtual.Talkjs
   alias Flirtual.Elasticsearch
@@ -244,32 +245,41 @@ defmodule Flirtual.Matchmaking do
 
     profile = user.profile
 
-    likes_and_passes =
-      from(
-        a in LikesAndPasses,
-        where: [profile_id: ^profile.user_id, type: :like],
-        or_where: [profile_id: ^profile.user_id, type: :pass, kind: :love],
-        or_where: [profile_id: ^profile.user_id, type: :pass, kind: ^kind],
-        distinct: :target_id,
-        select: a.target_id
-      )
-      |> Repo.all()
-
     %{
       # "explain" => true,
       "size" => 30,
       "query" => %{
         "bool" => %{
           "must_not" => [
-            # $a and $b must not be the same user and must not be an already liked user.
             %{
               "ids" => %{
                 "values" =>
-                  List.flatten([
+                  [
+                    # Exclude yourself.
                     user.id,
-                    likes_and_passes,
-                    []
-                  ])
+                    # Exclude users you've already liked or passed.
+                    LikesAndPasses
+                    |> where(profile_id: ^profile.user_id, type: :like)
+                    |> or_where(profile_id: ^profile.user_id, type: :pass, kind: :love)
+                    |> or_where(profile_id: ^profile.user_id, type: :pass, kind: ^kind)
+                    |> distinct(true)
+                    |> select([item], item.target_id)
+                    |> Repo.all(),
+                    # Exclude blocked users.
+                    Block
+                    |> where(profile_id: ^profile.user_id)
+                    |> distinct(true)
+                    |> select([item], item.target_id)
+                    |> Repo.all(),
+                    # Exclude users who blocked you.
+                    Block
+                    |> where(target_id: ^profile.user_id)
+                    |> distinct(true)
+                    |> select([item], item.target_id)
+                    |> Repo.all()
+                  ]
+                  |> List.flatten()
+                  |> Enum.uniq()
               }
             }
           ],

@@ -86,7 +86,7 @@ defmodule Flirtual.User.Profile do
     has_many :images, Image, references: :user_id, foreign_key: :profile_id
 
     many_to_many :blocked, Profile,
-      join_through: Profile.Blocks,
+      join_through: Profile.Block,
       join_keys: [profile_id: :user_id, target_id: :user_id]
 
     many_to_many :liked_and_passed, Profile,
