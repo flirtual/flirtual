@@ -33,7 +33,7 @@ defmodule FlirtualWeb.FallbackController do
   end
 
   def call(%Plug.Conn{} = conn, params) do
-    log(:critical, ["unhandled request error"], [conn, params])
+    log(:critical, ["unhandled request error"], params)
 
     conn
     |> put_error(:internal_server_error)
