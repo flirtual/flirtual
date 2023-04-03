@@ -168,22 +168,3 @@ defmodule Flirtual.Report do
     end
   end
 end
-
-defimpl Jason.Encoder, for: Flirtual.Report do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [
-        :id,
-        :reason,
-        :message,
-        :reviewed_at,
-        :user_id,
-        :target_id,
-        :updated_at,
-        :created_at
-      ])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
-  end
-end

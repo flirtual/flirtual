@@ -1,5 +1,6 @@
 defmodule Flirtual.User.Profile.Preferences do
   use Flirtual.Schema, primary_key: false
+
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Preferences.Policy
 
   import Flirtual.Attribute, only: [validate_attribute_list: 5]
@@ -53,15 +54,10 @@ defmodule Flirtual.User.Profile.Preferences do
 end
 
 defimpl Jason.Encoder, for: Flirtual.User.Profile.Preferences do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [
-        :agemin,
-        :agemax,
-        :attributes
-      ])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
-  end
+  use Flirtual.Encoder,
+    only: [
+      :agemin,
+      :agemax,
+      :attributes
+    ]
 end

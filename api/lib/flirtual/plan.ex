@@ -40,20 +40,15 @@ defmodule Flirtual.Plan do
 end
 
 defimpl Jason.Encoder, for: Flirtual.Plan do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [
-        :id,
-        :name,
-        :features,
-        :product_id,
-        :price_id,
-        :created_at
-      ])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
-  end
+  use Flirtual.Encoder,
+    only: [
+      :id,
+      :name,
+      :features,
+      :product_id,
+      :price_id,
+      :created_at
+    ]
 end
 
 defmodule Flirtual.Plan.Policy do
@@ -61,60 +56,33 @@ defmodule Flirtual.Plan.Policy do
 
   alias Flirtual.Plan
 
-  def transform(
-        :product_id,
-        %Plug.Conn{
-          assigns: %{
-            session: session
-          }
-        },
-        %Plan{} = plan
-      ) do
-    if :admin in session.user.tags do
-      plan.product_id
-    else
-      nil
-    end
-  end
-
-  def transform(:product_id, _, _), do: nil
-
-  def transform(
-        :price_id,
-        %Plug.Conn{
-          assigns: %{
-            session: session
-          }
-        },
-        %Plan{} = plan
-      ) do
-    if :admin in session.user.tags do
-      plan.price_id
-    else
-      nil
-    end
-  end
-
-  def transform(:price_id, _, _), do: nil
-
-  def transform(
-        :created_at,
-        %Plug.Conn{
-          assigns: %{
-            session: session
-          }
-        },
-        %Plan{} = plan
-      ) do
-    if :admin in session.user.tags do
-      plan.created_at
-    else
-      nil
-    end
-  end
-
-  def transform(:created_at, _, _), do: nil
-
   def authorize(:read, _, _), do: false
   def authorize(_, _, _), do: false
+
+  @admin_properties [
+    :product_id,
+    :price_id,
+    :created_at
+  ]
+
+  def transform(
+        key,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %Plan{} = plan
+      )
+      when key in @admin_properties do
+    if :admin in session.user.tags do
+      plan[key]
+    else
+      nil
+    end
+  end
+
+  def transform(key, _, _)
+      when key in @admin_properties,
+      do: nil
 end

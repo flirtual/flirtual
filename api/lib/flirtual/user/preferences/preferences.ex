@@ -38,11 +38,11 @@ defmodule Flirtual.User.Preferences do
 end
 
 defimpl Jason.Encoder, for: Flirtual.User.Preferences do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [:nsfw, :theme, :email_notifications, :privacy])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
-  end
+  use Flirtual.Encoder,
+    only: [
+      :nsfw,
+      :theme,
+      :email_notifications,
+      :privacy
+    ]
 end

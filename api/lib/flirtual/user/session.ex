@@ -190,6 +190,16 @@ defmodule Flirtual.User.Session do
   end
 end
 
+defimpl Jason.Encoder, for: Flirtual.User.Session do
+  use Flirtual.Encoder,
+    only: [
+      :user,
+      :sudoer_id,
+      :updated_at,
+      :created_at
+    ]
+end
+
 defmodule Flirtual.User.Session.Policy do
   use Flirtual.Policy
 
@@ -216,19 +226,4 @@ defmodule Flirtual.User.Session.Policy do
   end
 
   def authorize(_, _, _), do: false
-end
-
-defimpl Jason.Encoder, for: Flirtual.User.Session do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [
-        :user,
-        :sudoer_id,
-        :updated_at,
-        :created_at
-      ])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
-  end
 end

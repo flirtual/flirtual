@@ -2,15 +2,19 @@ defmodule Flirtual.User.Profile.Image.Policy do
   use Flirtual.Policy
 
   alias Flirtual.User.Session
-  alias Flirtual.User
-  alias Flirtual.User.Profile
   alias Flirtual.User.Profile.Image
 
   def authorize(:read, _, _), do: true
   def authorize(:view, _, _), do: true
 
+  @own_actions [
+    :create,
+    :update,
+    :delete
+  ]
+
   def authorize(
-        :delete,
+        key,
         %Plug.Conn{
           assigns: %{
             session: %{
@@ -21,11 +25,16 @@ defmodule Flirtual.User.Profile.Image.Policy do
         %Image{
           profile_id: user_id
         }
-      ),
+      )
+      when key in @own_actions,
       do: true
 
+  @moderator_actions [
+    :delete
+  ]
+
   def authorize(
-        :delete,
+        action,
         %Plug.Conn{
           assigns: %{
             session: %Session{
@@ -34,38 +43,23 @@ defmodule Flirtual.User.Profile.Image.Policy do
           }
         },
         _
-      ),
+      )
+      when action in @moderator_actions,
       do: :moderator in user.tags
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
-  def transform(
-        :url,
-        _,
-        %Image{} = image
-      ),
-      do: Image.url(image)
+  def transform(:url, _, %Image{} = image),
+    do: Image.url(image)
+
+  @own_property_keys [
+    :created_at,
+    :updated_at
+  ]
 
   def transform(
-        :scanned,
-        %Plug.Conn{
-          assigns: %{
-            session: %Session{
-              user: user
-            }
-          }
-        },
-        %Image{} = image
-      ) do
-    if :admin in user.tags, do: image.scanned, else: nil
-  end
-
-  # Otherwise, by default, nobody can see if this image was scanned or not.
-  def transform(:scanned, _, _), do: nil
-
-  def transform(
-        property,
+        key,
         %Plug.Conn{
           assigns: %{
             session: %{
@@ -77,11 +71,19 @@ defmodule Flirtual.User.Profile.Image.Policy do
           profile_id: user_id
         } = image
       )
-      when property in [:created_at, :updated_at],
-      do: image[property]
+      when key in @own_property_keys,
+      do: image[key]
+
+  def transform(key, _, _) when key in @own_property_keys, do: nil
+
+  @moderator_property_keys [
+    :scanned,
+    :created_at,
+    :updated_at
+  ]
 
   def transform(
-        property,
+        key,
         %Plug.Conn{
           assigns: %{
             session: %Session{
@@ -91,8 +93,9 @@ defmodule Flirtual.User.Profile.Image.Policy do
         },
         %Image{} = image
       )
-      when property in [:created_at, :updated_at],
-      do: if(:moderator in user.tags, do: image[property], else: nil)
+      when key in @moderator_property_keys do
+    if :moderator in user.tags, do: image[key], else: nil
+  end
 
-  def transform(property, _, _) when property in [:created_at, :updated_at], do: nil
+  def transform(key, _, _) when key in @moderator_property_keys, do: nil
 end

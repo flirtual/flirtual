@@ -1,5 +1,14 @@
 defmodule Flirtual.User.Connection.Policy do
-  use Flirtual.Policy
+  use Flirtual.Policy,
+    only: [
+      :type,
+      :external_id,
+      :name,
+      :avatar_url,
+      :url,
+      :updated_at,
+      :created_at
+    ]
 
   alias Flirtual.User
   alias Flirtual.User.Connection

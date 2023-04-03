@@ -433,38 +433,33 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
   end
 end
 
+defimpl Jason.Encoder, for: Flirtual.User do
+  use Flirtual.Encoder,
+    only: [
+      :id,
+      :email,
+      :username,
+      :language,
+      :born_at,
+      :talkjs_signature,
+      :shadowbanned_at,
+      :email_confirmed_at,
+      :deactivated_at,
+      :active_at,
+      :tags,
+      :visible,
+      :subscription,
+      :preferences,
+      :profile,
+      :updated_at,
+      :created_at
+    ]
+end
+
 defimpl Swoosh.Email.Recipient, for: Flirtual.User do
   alias Flirtual.User
 
   def format(%User{} = user) do
     {User.display_name(user), user.email}
-  end
-end
-
-defimpl Jason.Encoder, for: Flirtual.User do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [
-        :id,
-        :email,
-        :username,
-        :language,
-        :born_at,
-        :talkjs_signature,
-        :shadowbanned_at,
-        :email_confirmed_at,
-        :deactivated_at,
-        :active_at,
-        :tags,
-        :visible,
-        :subscription,
-        :preferences,
-        :profile,
-        :updated_at,
-        :created_at
-      ])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
   end
 end

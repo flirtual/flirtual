@@ -7,10 +7,12 @@ defmodule Flirtual.Policy do
   @callback transform(conn :: any, params :: %{atom => any} | any) :: any
   @callback transform(key :: atom, conn :: any, params :: %{atom => any} | any) :: any
 
+  @spec can(Plug.Conn.t(), atom, any, keyword) :: :ok | {:error, any}
   def can(conn, action, target, opts \\ []) do
     Bodyguard.permit(Keyword.get(opts, :policy) || target.__struct__, action, conn, target)
   end
 
+  @spec can?(Plug.Conn.t(), atom(), any, any) :: boolean
   def can?(conn, action, target, opts \\ [])
   def can?(_, _, nil, _), do: false
 
@@ -18,6 +20,7 @@ defmodule Flirtual.Policy do
     Bodyguard.permit?(Keyword.get(opts, :policy) || target.__struct__, action, conn, target)
   end
 
+  @spec cannot?(Plug.Conn.t(), atom, any, any) :: boolean
   def cannot?(conn, action, target, opts \\ []) do
     not can?(conn, action, target, opts)
   end

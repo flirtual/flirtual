@@ -195,29 +195,24 @@ defmodule Flirtual.User.Profile do
 end
 
 defimpl Jason.Encoder, for: Flirtual.User.Profile do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [
-        :display_name,
-        :biography,
-        :new,
-        :domsub,
-        :monopoly,
-        :country,
-        :serious,
-        :openness,
-        :conscientiousness,
-        :agreeableness,
-        :attributes,
-        :languages,
-        :custom_interests,
-        :preferences,
-        :custom_weights,
-        :images,
-        :updated_at
-      ])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
-  end
+  use Flirtual.Encoder,
+    only: [
+      :display_name,
+      :biography,
+      :new,
+      :domsub,
+      :monopoly,
+      :country,
+      :serious,
+      :openness,
+      :conscientiousness,
+      :agreeableness,
+      :attributes,
+      :languages,
+      :custom_interests,
+      :preferences,
+      :custom_weights,
+      :images,
+      :updated_at
+    ]
 end

@@ -1,7 +1,7 @@
 defmodule Flirtual.User.Policy do
-  import Flirtual.Utilities
-
   use Flirtual.Policy, reference_key: :user
+
+  import Flirtual.Utilities
 
   alias Flirtual.Policy
   alias Flirtual.User
@@ -39,57 +39,69 @@ defmodule Flirtual.User.Policy do
     end
   end
 
-  # The currently logged in user can update their own user.
+  @own_actions [
+    :read,
+    :update
+  ]
+
   def authorize(
-        :update,
+        action,
         %Plug.Conn{
           assigns: %{
             session: %{
-              user: %User{
-                id: user_id,
-                banned_at: nil
-              }
+              user_id: user_id
             }
           }
         },
         %User{
           id: user_id
         }
-      ),
+      )
+      when action in @own_actions,
       do: true
 
-  def authorize(
-        :sudo,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user: %User{
-                tags: tags
-              }
-            }
-          }
-        },
-        _
-      ),
-      do: :admin in tags
+  @moderator_actions [
+    :suspend
+  ]
 
   def authorize(
-        :suspend,
+        action,
         %Plug.Conn{
           assigns: %{
             session: %{
-              user: %User{
-                tags: tags
-              }
+              user: %User{} = user
             }
           }
         },
         _
-      ),
-      do: :moderator in tags
+      )
+      when action in @moderator_actions,
+      do: :moderator in user.tags
+
+  @admin_actions [
+    :sudo
+  ]
 
   def authorize(
-        :arbitrary_code_execution,
+        action,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{} = user
+            }
+          }
+        },
+        _
+      )
+      when action in @admin_actions,
+      do: :admin in user.tags
+
+  @debugger_actions [
+    :arbitrary_code_execution
+  ]
+
+  def authorize(
+        action,
         %Plug.Conn{
           assigns: %{
             session: %{
@@ -100,15 +112,28 @@ defmodule Flirtual.User.Policy do
           }
         },
         _
-      ),
+      )
+      when action in @debugger_actions,
       do: :debugger in tags
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
-  # The currently logged in user can view their own email.
+  @own_property_keys [
+    :email,
+    :language,
+    :talkjs_signature,
+    :active_at,
+    :tags,
+    :connections,
+    :born_at,
+    :deactivated_at,
+    :updated_at,
+    :created_at
+  ]
+
   def transform(
-        :email,
+        key,
         %Plug.Conn{
           assigns: %{
             session: %{
@@ -119,49 +144,26 @@ defmodule Flirtual.User.Policy do
         %User{
           id: user_id
         } = user
-      ),
-      do: user.email
+      )
+      when key in @own_property_keys,
+      do: user[key]
 
-  # Otherwise, by default, nobody can view this user's email.
-  def transform(:email, _, _), do: nil
+  @moderator_property_keys [
+    :shadowbanned_at
+  ]
 
-  # The currently logged in user can view their own language.
   def transform(
-        :language,
+        key,
         %Plug.Conn{
           assigns: %{
-            session: %{
-              user_id: user_id
-            }
+            session: session
           }
         },
-        %User{
-          id: user_id
-        } = user
-      ),
-      do: user.language
-
-  # Otherwise, by default, nobody can view this user's language.
-  def transform(:language, _, _), do: nil
-
-  # The currently logged in user can view their own talkjs signature.
-  def transform(
-        :talkjs_signature,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %User{
-          id: user_id
-        } = user
-      ),
-      do: user.talkjs_signature
-
-  # Otherwise, by default, nobody can view this user's talkjs signature.
-  def transform(:talkjs_signature, _, _), do: nil
+        %User{} = user
+      )
+      when key in @moderator_property_keys do
+    if :moderator in session.user.tags, do: user[key], else: nil
+  end
 
   def transform(
         :active_at,
@@ -173,47 +175,6 @@ defmodule Flirtual.User.Policy do
     |> DateTime.new!(Time.new!(0, 0, 0))
   end
 
-  def transform(:active_at, _, _), do: nil
-
-  def transform(:visible, _, user), do: User.visible?(user)
-
-  # The currently logged in user can view their own tags.
-  def transform(
-        :tags,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %User{
-          id: user_id
-        } = user
-      ),
-      do: user.tags
-
-  # Otherwise, by default, nobody can view this user's tags.
-  def transform(:tags, _, _), do: []
-
-  # The currently logged in user can view their own connections.
-  def transform(
-        :connections,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %User{
-          id: user_id
-        } = user
-      ),
-      do: user.connections
-
-  # Any user can view this user's connections if
-  # their connections privacy setting is set to everyone.
   def transform(
         :connections,
         _,
@@ -227,116 +188,25 @@ defmodule Flirtual.User.Policy do
       ),
       do: user.connections
 
-  # Otherwise, by default, nobody can view this user's connections.
-  def transform(:connections, _, _), do: []
+  @day_in_seconds 86400
+
+  # Truncate born at to year, to hide user's exact birthday.
+  def transform(:born_at, _, %User{born_at: born_at} = user) when not is_nil(born_at) do
+    now = Date.utc_today()
+
+    DateTime.new!(
+      Date.new!(now.year - get_years_since(user.born_at), now.month, now.day),
+      Time.new!(0, 0, 0, 0)
+    )
+    |> DateTime.add(-@day_in_seconds)
+    |> DateTime.truncate(:second)
+  end
+
+  def transform(key, _, _) when key in @own_property_keys, do: nil
+
+  def transform(:visible, _, user), do: User.visible?(user)
 
   def transform(:preferences, conn, user) do
     if(Policy.can?(conn, :read, user.preferences), do: user.preferences, else: nil)
   end
-
-  # The currently logged user can see their own birthday.
-  def transform(
-        :born_at,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %User{
-          id: user_id
-        } = user
-      ),
-      do: user.born_at
-
-  # By default, truncate born at to year, to hide user's exact birthday.
-  @day_in_seconds 86400
-  def transform(:born_at, _, %User{} = user) do
-    if user.born_at do
-      now = Date.utc_today()
-
-      NaiveDateTime.new!(now.year - get_years_since(user.born_at), now.month, now.day, 0, 0, 0, 0)
-      |> NaiveDateTime.add(-@day_in_seconds)
-      |> NaiveDateTime.truncate(:second)
-    else
-      nil
-    end
-  end
-
-  def transform(
-        :shadowbanned_at,
-        %Plug.Conn{
-          assigns: %{
-            session: session
-          }
-        },
-        %User{} = user
-      ) do
-    if :moderator not in session.user.tags do
-      nil
-    else
-      user.shadowbanned_at
-    end
-  end
-
-  # Otherwise, by default, nobody can view when this user was deactivated.
-  def transform(:shadowbanned_at, _, _), do: nil
-
-  # The currently logged user can see when their own account was deactivated.
-  def transform(
-        :deactivated_at,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %User{
-          id: user_id
-        } = user
-      ),
-      do: user.deactivated_at
-
-  # Otherwise, by default, nobody can view when this user was deactivated.
-  def transform(:deactivated_at, _, _), do: nil
-
-  # The currently logged user can see when their own account was updated.
-  def transform(
-        :updated_at,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %User{
-          id: user_id
-        } = user
-      ),
-      do: user.updated_at
-
-  # Otherwise, by default, nobody can view when this user was updated.
-  def transform(:updated_at, _, _), do: nil
-
-  # The currently logged user can see when their own user was created.
-  def transform(
-        :created_at,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %User{
-          id: user_id
-        } = user
-      ),
-      do: user.created_at
-
-  # Otherwise, by default, nobody can view when this user was created.
-  def transform(:created_at, _, _), do: nil
 end

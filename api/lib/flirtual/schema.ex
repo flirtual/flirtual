@@ -1,4 +1,9 @@
 defmodule Flirtual.Schema do
+  @type using_options :: [
+          {:primary_key, false, atom}
+        ]
+
+  @spec __using__(using_options) :: any
   defmacro __using__(options \\ []) do
     quote bind_quoted: [options: options] do
       use Ecto.Schema

@@ -7,17 +7,6 @@ defmodule Flirtual.User.Connection do
   alias Flirtual.User
   alias User.Connection
 
-  @derive {Jason.Encoder,
-           only: [
-             :type,
-             :external_id,
-             :name,
-             :avatar_url,
-             :url,
-             :updated_at,
-             :created_at
-           ]}
-
   schema "connections" do
     belongs_to :user, User
 

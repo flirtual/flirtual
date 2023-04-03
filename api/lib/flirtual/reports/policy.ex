@@ -1,9 +1,19 @@
 defmodule Flirtual.Report.Policy do
-  use Flirtual.Policy
+  use Flirtual.Policy,
+    only: [
+      :id,
+      :reason,
+      :message,
+      :reviewed_at,
+      :user_id,
+      :target_id,
+      :updated_at,
+      :created_at
+    ]
 
   alias Flirtual.Report
 
-  # Users cannot interact with reports against them, inclusive of moderators.
+  # Users cannot interact with reports against them, regardless of any role.
   def authorize(
         _,
         %Plug.Conn{
@@ -46,8 +56,9 @@ defmodule Flirtual.Report.Policy do
           }
         },
         _
-      ) do
-    :moderator in user.tags and type in [:read, :delete]
+      )
+      when type in [:read, :delete] do
+    :moderator in user.tags
   end
 
   # By default, users cannot do anything.

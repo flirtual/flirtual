@@ -44,14 +44,15 @@ defmodule Flirtual.User.Profile.Image do
   def delete(%Image{} = image) do
     Repo.delete(image)
   end
-end
 
-defimpl Jason.Encoder, for: Flirtual.User.Profile.Image do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [:id, :url, :scanned, :updated_at, :created_at])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
+  defimpl Jason.Encoder do
+    use Flirtual.Encoder,
+      only: [
+        :id,
+        :url,
+        :scanned,
+        :updated_at,
+        :created_at
+      ]
   end
 end
