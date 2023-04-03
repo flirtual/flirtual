@@ -5,6 +5,8 @@ import { twMerge } from "tailwind-merge";
 
 import { isInternalHref } from "~/urls";
 
+import { IconComponent } from "./icons";
+
 const defaultClassName = twMerge(
 	"focusable select-none rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
 );
@@ -28,9 +30,10 @@ export interface ButtonProps {
 	size?: ButtonSize;
 	kind?: ButtonKind;
 	disabled?: boolean;
+	Icon?: IconComponent;
 }
 export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (props) => {
-	const { size = "base", kind = "primary", disabled, ...elementProps } = props;
+	const { size = "base", kind = "primary", disabled, Icon, ...elementProps } = props;
 
 	return (
 		<button
@@ -43,14 +46,18 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (p
 				defaultClassName,
 				size && sizes[size],
 				kind && kinds[kind],
+				Icon && "flex items-center justify-center gap-4",
 				elementProps.className
 			)}
-		/>
+		>
+			{Icon && <Icon className="h-6" />}
+			{elementProps.children}
+		</button>
 	);
 };
 
 export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (props) => {
-	const { size = "base", kind = "primary", disabled, ...elementProps } = props;
+	const { size = "base", kind = "primary", disabled, Icon, ...elementProps } = props;
 
 	return (
 		<Link
@@ -61,11 +68,15 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (p
 				defaultClassName,
 				size && sizes[size],
 				kind && kinds[kind],
+				Icon && "flex items-center justify-center gap-4",
 				elementProps.className
 			)}
 			onClick={(event) => {
 				if (disabled) event.preventDefault();
 			}}
-		/>
+		>
+			{Icon && <Icon className="h-6" />}
+			{elementProps.children}
+		</Link>
 	);
 };

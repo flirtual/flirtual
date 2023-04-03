@@ -13,9 +13,10 @@ import { IconComponent } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
-import { urls } from "~/urls";
+import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
 	{ className?: string } & (
@@ -51,10 +52,12 @@ const ProfileNavigationItemDivider: React.FC<ProfileNavigationItemDividerProps> 
 	);
 };
 
-export const ProfileNavigation: React.FC = () => {
+export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	const [session, mutateSession] = useSession();
 	const [visible, setVisible] = useState(false);
 	const elementRef = useRef<HTMLDivElement>(null);
+	const location = useLocation();
+	const active = urlEqual(toAbsoluteUrl(props.href), location);
 
 	useClickOutside(elementRef, () => setVisible(false), visible);
 	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
@@ -66,8 +69,13 @@ export const ProfileNavigation: React.FC = () => {
 	return (
 		<div className="relative aspect-square shrink-0">
 			<button
-				className="group rounded-full bg-transparent p-1 transition-all hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				type="button"
+				className={twMerge(
+					"group rounded-full p-1 transition-all",
+					active
+						? "bg-white-20 shadow-brand-1"
+						: "bg-transparent hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
+				)}
 				onClick={() => setVisible(true)}
 			>
 				<UserAvatar className="h-10 w-10 transition-transform" user={user} />
