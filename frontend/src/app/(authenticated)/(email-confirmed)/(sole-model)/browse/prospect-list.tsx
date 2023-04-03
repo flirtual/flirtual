@@ -29,11 +29,6 @@ const ProspectActionBar: React.FC<{
 	const [respondHistory, setRespondHistory] = useState<Array<RespondProspectBody>>([]);
 	const toasts = useToast();
 
-	useEffect(() => {
-		if (mode === "friend") document.documentElement.classList.add("friend-mode");
-		return () => document.documentElement.classList.remove("friend-mode");
-	}, [mode]);
-
 	const respond = useCallback(
 		async (type: ProspectRespondType, kind: ProspectKind) => {
 			const body = {
@@ -130,6 +125,11 @@ export const ProspectList: React.FC<ProspectListProps> = ({ kind, prospects }) =
 
 	const [prospectIdx, setProspectIdx] = useState(0);
 	const prospect = prospects[prospectIdx];
+
+	useEffect(() => {
+		if (kind === "friend") document.documentElement.classList.add("friend-mode");
+		return () => document.documentElement.classList.remove("friend-mode");
+	}, [kind]);
 
 	return (
 		<>
