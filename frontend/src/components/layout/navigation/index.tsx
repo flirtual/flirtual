@@ -69,7 +69,7 @@ const ConversationListButton: FC = () => {
 			<div className="relative">
 				<ChatBubbleLeftRightIcon className="aspect-square w-8" strokeWidth={1.5} />
 				{conversationCount !== 0 && (
-					<div className="absolute top-0 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
+					<div className="absolute -right-2 top-0 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
 						<span className="select-none font-mono text-sm font-semibold leading-none text-white-20">
 							{conversationCount}
 						</span>
@@ -82,7 +82,7 @@ const ConversationListButton: FC = () => {
 
 const ModeSwitch: FC = () => {
 	return (
-		<div className="flex gap-4 rounded-full bg-white-10 p-2 dark:bg-black-70">
+		<div className="flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70">
 			<SwitchButton href={urls.browse()} Icon={HeartIcon} />
 			<SwitchButton href={urls.browse("friend")} Icon={PeaceIcon} />
 		</div>
@@ -101,7 +101,7 @@ export const NavigationInner: FC<ComponentProps<"div">> = (props) => {
 				props.className
 			)}
 		>
-			<ProfileNavigation />
+			<ProfileNavigation href="/me" />
 			<ModeSwitch />
 			<ConversationListButton />
 		</div>
