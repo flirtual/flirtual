@@ -104,7 +104,7 @@ export const urls = {
 		download: "/download",
 		events: "/events",
 		invite: "/invite",
-		networkStatus: "https://status.flirtu.al",
+		networkStatus: "http://status.flirtu.al",
 		press: "/press",
 		branding: "/branding",
 		developers: "https://github.com/flirtual",
