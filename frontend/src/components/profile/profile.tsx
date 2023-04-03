@@ -97,6 +97,17 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 							</Button>
 						</div>
 					)}
+					{user.profile.new && !myProfile ? (
+						session?.user.profile.new ? (
+							<span className="text-xl italic dark:text-white-20">
+								You&apos;re both new to VR. Explore it together!
+							</span>
+						) : (
+							<span className="text-xl italic dark:text-white-20">
+								{displayName(user)} is new to VR. Why not show them around?
+							</span>
+						)
+					) : null}
 					{user.profile.biography ? (
 						<Html className="text-xl">{user.profile.biography}</Html>
 					) : myProfile ? (
