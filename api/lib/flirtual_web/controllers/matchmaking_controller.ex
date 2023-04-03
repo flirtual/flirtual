@@ -4,6 +4,8 @@ defmodule FlirtualWeb.MatchmakingController do
   action_fallback FlirtualWeb.FallbackController
 
   import Flirtual.Utilities
+  alias Flirtual.Subscription
+  alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.{Users, Policy}
   import Flirtual.Matchmaking
 
@@ -51,5 +53,31 @@ defmodule FlirtualWeb.MatchmakingController do
 
   def reverse_respond(_, %{"user_id" => _, "type" => _}) do
     {:error, {:not_implemented}}
+  end
+
+  def list_matches(conn, %{"unrequited" => _}) do
+    with items <-
+           LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id) do
+      conn
+      |> json(%{
+        count: Enum.group_by(items, & &1.kind) |> Map.map(fn {_, v} -> length(v) end),
+        items:
+          if(Subscription.active?(conn.assigns[:session].user.subscription),
+            do: items,
+            else: []
+          )
+      })
+    end
+  end
+
+  def list_matches(conn, _) do
+    with items <-
+           LikesAndPasses.list_matches(profile_id: conn.assigns[:session].user_id) do
+      conn
+      |> json(%{
+        count: Enum.group_by(items, & &1.kind) |> Map.map(fn {_, v} -> length(v) end),
+        items: items
+      })
+    end
   end
 end

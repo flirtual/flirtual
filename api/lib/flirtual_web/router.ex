@@ -158,6 +158,12 @@ defmodule FlirtualWeb.Router do
           delete "/respond", MatchmakingController, :reverse_respond
         end
 
+        scope "/matches" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+
+          get "/", MatchmakingController, :list_matches
+        end
+
         scope "/users" do
           post "/", UsersController, :create
 
