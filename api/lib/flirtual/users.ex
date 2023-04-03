@@ -134,7 +134,7 @@ defmodule Flirtual.Users do
   end
 
   def deactivate(%User{} = user) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     Repo.transaction(fn ->
       with {:ok, user} <-

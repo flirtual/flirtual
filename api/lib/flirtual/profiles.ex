@@ -71,7 +71,7 @@ defmodule Flirtual.Profiles do
   def create_images(%Profile{} = profile, file_ids) do
     Repo.transaction(fn ->
       placeholders = %{
-        now: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second),
+        now: DateTime.truncate(DateTime.utc_now(), :second),
         profile_id: profile.user_id
       }
 

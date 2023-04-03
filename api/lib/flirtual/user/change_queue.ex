@@ -16,7 +16,7 @@ defmodule Flirtual.User.ChangeQueue do
 
   schema "user_change_queue" do
     belongs_to :user, User, primary_key: true
-    timestamps(inserted_at: :created_at, updated_at: false)
+    timestamps(updated_at: false)
   end
 
   def get(user_id) when is_uuid(user_id) do

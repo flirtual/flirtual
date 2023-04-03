@@ -258,7 +258,7 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def confirm_email(conn, params) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     with {:ok, params} <-
            cast_arbitrary(

@@ -20,7 +20,7 @@ defmodule Flirtual.Plan do
     field :product_id, :string
     field :price_id, :string
 
-    timestamps(inserted_at: :created_at, updated_at: false)
+    timestamps(updated_at: false)
   end
 
   def get(plan_id) when is_uuid(plan_id) do

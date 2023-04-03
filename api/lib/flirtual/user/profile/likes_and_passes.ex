@@ -16,7 +16,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     field :type, Ecto.Enum, values: [:like, :pass]
     field :kind, Ecto.Enum, values: [:love, :friend]
 
-    timestamps(inserted_at: :created_at)
+    timestamps()
   end
 
   def delete_all(profile_id: profile_id) do

@@ -9,6 +9,9 @@ defmodule Flirtual.Utilities do
     (Date.diff(Date.utc_today(), date) / @year_in_days) |> floor
   end
 
+  def get_years_since(%DateTime{} = date),
+    do: get_years_since(DateTime.to_date(date))
+
   def get_years_since(%NaiveDateTime{} = date),
     do: get_years_since(NaiveDateTime.to_date(date))
 

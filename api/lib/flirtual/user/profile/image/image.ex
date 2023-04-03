@@ -18,7 +18,7 @@ defmodule Flirtual.User.Profile.Image do
 
     field :url, :string, virtual: true
 
-    timestamps(inserted_at: :created_at)
+    timestamps()
   end
 
   def not_found() do

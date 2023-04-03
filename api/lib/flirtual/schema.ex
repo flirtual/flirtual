@@ -2,9 +2,8 @@ defmodule Flirtual.Schema do
   defmacro __using__(options \\ []) do
     quote bind_quoted: [options: options] do
       use Ecto.Schema
-      @behaviour Access
 
-      primary_key = Keyword.get(options, :primary_key, :id)
+      @behaviour Access
 
       @primary_key (with primary_key when not is_boolean(primary_key) <-
                            Keyword.get(options, :primary_key, :id) do
@@ -12,6 +11,7 @@ defmodule Flirtual.Schema do
                     end)
 
       @foreign_key_type :binary_id
+      @timestamps_opts [type: :utc_datetime, inserted_at: :created_at]
 
       def fetch(term, key) do
         term

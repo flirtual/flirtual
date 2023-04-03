@@ -168,11 +168,9 @@ defmodule Flirtual.User.Policy do
         _,
         %User{} = user
       ) do
-    if is_nil(user.active_at) do
-      nil
-    else
-      Date.new!(user.active_at.year, user.active_at.month, user.active_at.day)
-    end
+    user.active_at
+    |> DateTime.to_date()
+    |> DateTime.new!(Time.new!(0, 0, 0))
   end
 
   def transform(:active_at, _, _), do: nil

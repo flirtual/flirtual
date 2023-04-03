@@ -15,11 +15,11 @@ defmodule Flirtual.User.Profile.Prospect do
 
     field :kind, Ecto.Enum, values: [:love, :friend]
 
-    timestamps(inserted_at: :created_at)
+    timestamps()
   end
 
   def insert_all(prospects) when is_list(prospects) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     with {count, nil} <-
            Repo.insert_all(

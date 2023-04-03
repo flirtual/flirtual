@@ -28,7 +28,7 @@ defmodule Flirtual.User.Connection do
     field :avatar_url, :string, virtual: true
     field :url, :string, virtual: true
 
-    timestamps(inserted_at: :created_at)
+    timestamps()
   end
 
   def update_changeset(connection) do

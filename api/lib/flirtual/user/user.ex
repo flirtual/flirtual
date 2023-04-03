@@ -37,13 +37,13 @@ defmodule Flirtual.User do
       values: @tags,
       default: []
 
-    field :born_at, :naive_datetime
-    field :email_confirmed_at, :naive_datetime
-    field :deactivated_at, :naive_datetime
-    field :banned_at, :naive_datetime
-    field :shadowbanned_at, :naive_datetime
-    field :incognito_at, :naive_datetime
-    field :active_at, :naive_datetime
+    field :born_at, :utc_datetime
+    field :email_confirmed_at, :utc_datetime
+    field :deactivated_at, :utc_datetime
+    field :banned_at, :utc_datetime
+    field :shadowbanned_at, :utc_datetime
+    field :incognito_at, :utc_datetime
+    field :active_at, :utc_datetime
 
     has_many :connections, Flirtual.User.Connection
     has_many :sessions, Flirtual.User.Session
@@ -52,7 +52,7 @@ defmodule Flirtual.User do
     has_one :subscription, Subscription
     has_one :profile, Flirtual.User.Profile
 
-    timestamps(inserted_at: :created_at)
+    timestamps()
   end
 
   def default_assoc do
@@ -194,7 +194,7 @@ defmodule Flirtual.User do
         message,
         %User{} = moderator
       ) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
     message = message || reason.metadata["details"]
 
     Repo.transaction(fn ->

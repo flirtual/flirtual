@@ -20,9 +20,9 @@ defmodule Flirtual.Subscription do
 
     field :active, :string, virtual: true
     field :stripe_id, :string
-    field :cancelled_at, :naive_datetime
+    field :cancelled_at, :utc_datetime
 
-    timestamps(inserted_at: :created_at)
+    timestamps()
   end
 
   def default_assoc do
@@ -95,7 +95,7 @@ defmodule Flirtual.Subscription do
   end
 
   def cancel(%Subscription{} = subscription) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
     subscription |> change(%{cancelled_at: now}) |> Repo.update()
   end
 

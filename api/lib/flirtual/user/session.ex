@@ -17,9 +17,9 @@ defmodule Flirtual.User.Session do
 
     field :token, :string, virtual: true, redact: true
     field :hashed_token, :string, redact: true
-    field :expire_at, :naive_datetime
+    field :expire_at, :utc_datetime
 
-    timestamps(inserted_at: :created_at)
+    timestamps()
   end
 
   def default_assoc do
@@ -35,14 +35,14 @@ defmodule Flirtual.User.Session do
   def max_age(:absolute), do: @year_in_seconds
 
   def new_expire_at() do
-    NaiveDateTime.utc_now()
-    |> NaiveDateTime.add(max_age(), :second)
-    |> NaiveDateTime.truncate(:second)
+    DateTime.utc_now()
+    |> DateTime.add(max_age(), :second)
+    |> DateTime.truncate(:second)
   end
 
   def expired?(%Session{expire_at: expire_at, created_at: created_at}) do
-    now = NaiveDateTime.utc_now()
-    expire_at > now and created_at < NaiveDateTime.add(now, max_age(:absolute), :second)
+    now = DateTime.utc_now()
+    expire_at > now and created_at < DateTime.add(now, max_age(:absolute), :second)
   end
 
   @hash_algorithm :sha256
@@ -98,15 +98,9 @@ defmodule Flirtual.User.Session do
   end
 
   def get(token: token) when is_binary(token) do
-    now = NaiveDateTime.utc_now()
-    absolute_expire_at = NaiveDateTime.add(now, max_age(:absolute), :second)
-
     Session
-    |> query_token(token)
-    |> where(
-      [session],
-      session.expire_at > ^now and session.created_at < ^absolute_expire_at
-    )
+    |> where_token(token)
+    |> where_not_expired()
     |> preload(^Session.default_assoc())
     |> Repo.one()
   end
@@ -116,7 +110,7 @@ defmodule Flirtual.User.Session do
   end
 
   def delete(token: token) when is_binary(token) do
-    Session |> query_token(token) |> delete_all()
+    Session |> where_token(token) |> delete_all()
   end
 
   def delete_all(query) do
@@ -124,9 +118,20 @@ defmodule Flirtual.User.Session do
     |> Repo.delete_all()
   end
 
-  def query_token(query, encoded_token) do
+  def where_token(query, encoded_token) do
     hashed_token = Session.hash_token(Session.decode_token(encoded_token))
     query |> where(hashed_token: ^hashed_token)
+  end
+
+  def where_not_expired(query) do
+    now = DateTime.utc_now()
+    absolute_expire_at = DateTime.add(now, max_age(:absolute), :second)
+
+    query
+    |> where(
+      [session],
+      session.expire_at > ^now and session.created_at < ^absolute_expire_at
+    )
   end
 
   @hour_in_seconds 3600
@@ -134,12 +139,14 @@ defmodule Flirtual.User.Session do
   def maybe_update_activity(nil), do: nil
 
   def maybe_update_activity(session) do
-    now = NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
+    now = DateTime.truncate(DateTime.utc_now(), :second)
     last_active_at = session.user.active_at
 
+    # If the user was active in the last hour, don't update their last active at.
+    # This is to prevent the user from being updated every time they make a request.
     if(
       not is_nil(last_active_at) and
-        NaiveDateTime.compare(now, NaiveDateTime.add(last_active_at, @hour_in_seconds)) === :lt
+        DateTime.compare(now, DateTime.add(last_active_at, @hour_in_seconds)) === :lt
     ) do
       {:ok, session}
     else

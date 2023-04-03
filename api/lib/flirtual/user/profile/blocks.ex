@@ -7,6 +7,6 @@ defmodule Flirtual.User.Profile.Blocks do
     belongs_to :profile, Flirtual.User.Profile, references: :user_id
     belongs_to :target, Flirtual.User.Profile, references: :user_id
 
-    timestamps(updated_at: false, inserted_at: :created_at)
+    timestamps(updated_at: false)
   end
 end
