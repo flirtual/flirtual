@@ -1,5 +1,7 @@
 "use client";
 
+import { PencilIcon, ShareIcon } from "@heroicons/react/24/solid";
+
 import { toAbsoluteUrl, urls } from "~/urls";
 import { displayName, User } from "~/api/user";
 import { Html } from "~/components/html";
@@ -72,10 +74,17 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && (
 						<div className="flex gap-4">
-							<ButtonLink href={urls.settings.matchmaking()} size="sm">
+							<ButtonLink
+								className="w-1/2"
+								href={urls.settings.matchmaking()}
+								Icon={PencilIcon}
+								size="sm"
+							>
 								Edit profile
 							</ButtonLink>
 							<Button
+								className="w-1/2"
+								Icon={ShareIcon}
 								size="sm"
 								onClick={async () => {
 									const link = toAbsoluteUrl(urls.user.profile(user.username)).toString();
