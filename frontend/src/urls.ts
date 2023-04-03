@@ -65,6 +65,7 @@ export const urls = {
 		list: "/conversations",
 		with: (userId: string) => `/conversations/${userId}`
 	},
+	likes: "/likes",
 	onboarding: (onboardingIdx: 1 | 2 | 3 | 4) => `/onboarding/${onboardingIdx}`,
 	subscription: "/subscription",
 	confirmEmail: (query: ConfirmEmailPageProps["searchParams"] = {}) => url("/confirm-email", query),

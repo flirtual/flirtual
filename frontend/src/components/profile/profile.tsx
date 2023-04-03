@@ -117,7 +117,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 					) : null}
 					<PillCollection user={user} />
 				</div>
-				{!myProfile || (session.user.tags.includes("debugger") && <ProfileActionBar user={user} />)}
+				<ProfileActionBar user={user} />
 			</div>
 		</div>
 	);
