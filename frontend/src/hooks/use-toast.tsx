@@ -62,7 +62,7 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 			exit={{ opacity: 0 }}
 			initial={{ opacity: 0 }}
 			className={twMerge(
-				"pointer-events-auto flex items-center gap-4 rounded-lg px-6 py-4 text-left",
+				"pointer-events-auto flex items-center gap-4 rounded-lg px-6 py-4 text-left shadow-brand-1",
 				{
 					success: "bg-brand-gradient",
 					error: "bg-black-80 border-2 border-red-500",
@@ -142,7 +142,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			)}
 		>
 			{children}
-			<div className="pointer-events-none fixed top-0 right-0 z-[999] flex flex-col-reverse gap-2 p-8 text-white-20">
+			<div className="pointer-events-none fixed right-0 top-0 z-[999] flex flex-col-reverse gap-2 p-8 text-white-20">
 				<AnimatePresence>
 					{toasts.map((toast) => (
 						<ToastItem {...toast} key={toast.id} />
