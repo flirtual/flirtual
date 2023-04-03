@@ -190,7 +190,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 									<XMarkIcon className="h-6 w-6" />
 								</button>
 								<SingleImage className="max-h-[80vh]" image={curImage} />
-								{session?.user.tags.includes("moderator") && <ImageToolbar image={curImage} />}
+								{session?.user.tags?.includes("moderator") && <ImageToolbar image={curImage} />}
 							</div>
 						</ModalOuter>
 					)}

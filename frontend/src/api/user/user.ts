@@ -24,7 +24,7 @@ export type User = UuidModel &
 		preferences?: Preferences;
 		profile: Profile;
 		subscription?: Subscription;
-		tags: Array<UserTags>;
+		tags?: Array<UserTags>;
 	};
 
 export function displayName(user: User) {
@@ -126,6 +126,14 @@ export async function deactivate(userId: string, options: NarrowFetchOptions = {
 
 export async function reactivate(userId: string, options: NarrowFetchOptions = {}) {
 	return fetch<User>("delete", `users/${userId}/deactivate`, options);
+}
+
+export async function block(userId: string, options: NarrowFetchOptions = {}) {
+	return fetch<User>("post", `users/${userId}/block`, options);
+}
+
+export async function unblock(userId: string, options: NarrowFetchOptions = {}) {
+	return fetch<User>("delete", `users/${userId}/block`, options);
 }
 
 export async function suspend(

@@ -43,7 +43,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 											(Date.now() - new Date(user.bornAt).getTime()) / (365 * 24 * 60 * 60 * 1000)
 										)}
 									</span>
-									{user.tags.includes("verified") && <ProfileVerificationBadge />}
+									{user.tags?.includes("verified") && <ProfileVerificationBadge />}
 								</div>
 							)}
 						</div>
