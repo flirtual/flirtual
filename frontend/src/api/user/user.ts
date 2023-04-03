@@ -120,12 +120,7 @@ export async function resendConfirmEmail(userId: string, options: NarrowFetchOpt
 	return fetch("delete", `auth/email/confirm`, options);
 }
 
-export async function deactivate(
-	userId: string,
-	options: NarrowFetchOptions<{
-		currentPassword: string;
-	}>
-) {
+export async function deactivate(userId: string, options: NarrowFetchOptions = {}) {
 	return fetch<User>("post", `users/${userId}/deactivate`, options);
 }
 
