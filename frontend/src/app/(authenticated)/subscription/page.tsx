@@ -58,7 +58,7 @@ const PlanCard: React.FC<Plan & { highlight?: boolean }> = (props) => {
 					className="absolute right-0 top-0 flex aspect-square items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
 					style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)", margin: "-1px -1px 0 0" }}
 				>
-					<div className="origin-center translate-x-3 -translate-y-3 rotate-45">
+					<div className="origin-center -translate-y-3 translate-x-3 rotate-45">
 						<span className="font-semibold">Save {discount}%</span>
 					</div>
 				</div>
@@ -106,7 +106,7 @@ export default function SubscriptionPage() {
 			>
 				{searchParams.has("success") && (
 					<div className="flex gap-4 overflow-hidden rounded-xl bg-brand-gradient px-1">
-						<div className="flex w-full flex-col gap-4 rounded-xl bg-black-80 p-6">
+						<div className="flex w-full flex-col gap-4 rounded-xl bg-white-25 p-6 dark:bg-black-80">
 							<div className="relative">
 								<h1 className="text-xl font-semibold">We&apos;ve received your order.</h1>
 								<Link className="absolute right-0 top-0" href={urls.subscription}>
@@ -133,7 +133,7 @@ export default function SubscriptionPage() {
 								<SparklesIcon className="inline h-5 w-5" />
 								<span>{user.subscription.plan.name}</span>
 							</div>
-							<span className="ml-5 pl-2 text-sm text-white-50">
+							<span className="ml-5 pl-2 text-sm text-black-30 dark:text-white-50">
 								{user.subscription.cancelledAt
 									? `Cancelled on ${formatDate(user.subscription.cancelledAt)}`
 									: `Since ${formatDate(user.subscription.updatedAt)}`}
