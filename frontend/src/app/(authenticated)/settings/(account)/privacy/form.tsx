@@ -61,16 +61,18 @@ export const PrivacyForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="kinks">
-						{(field) => (
-							<>
-								<InputLabel inline hint="Who can see your nsfw tags?">
-									Kink privacy
-								</InputLabel>
-								<InputPrivacySelect {...field.props} />
-							</>
-						)}
-					</FormField>
+					{user.preferences?.nsfw && (
+						<FormField name="kinks">
+							{(field) => (
+								<>
+									<InputLabel inline hint="Who can see your NSFW tags?">
+										NSFW privacy
+									</InputLabel>
+									<InputPrivacySelect {...field.props} />
+								</>
+							)}
+						</FormField>
+					)}
 					<FormField name="analytics">
 						{(field) => (
 							<>

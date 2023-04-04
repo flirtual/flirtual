@@ -111,7 +111,7 @@ export const NsfwForm: React.FC = () => {
 								{(field) => (
 									<>
 										<InputLabel inline hint="Who can see your NSFW tags?">
-											Kink privacy
+											NSFW privacy
 										</InputLabel>
 										<InputPrivacySelect {...field.props} />
 									</>
