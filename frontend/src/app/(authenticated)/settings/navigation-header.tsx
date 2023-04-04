@@ -17,7 +17,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({ navigationIn
 	);
 
 	return (
-		<div className="flex w-full items-center justify-center bg-black-70 p-4 text-white-20 md:bg-brand-gradient">
+		<div className="flex w-full items-center justify-center bg-black-70 p-4 text-white-20 md:rounded-tr-2xl md:bg-brand-gradient">
 			<Link className="absolute left-4 flex shrink-0 md:hidden" href={returnTo}>
 				<Icon className="w-6" />
 			</Link>

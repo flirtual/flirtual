@@ -31,7 +31,7 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigati
 	const { openFreshworks } = useFreshworks();
 
 	return (
-		<div className="flex w-full shrink-0 grow-0 flex-col shadow-brand-1 md:w-80 md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
+		<div className="flex w-full shrink-0 grow-0 flex-col shadow-brand-1 md:mt-32 md:w-80 md:rounded-tr-2xl md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
 			<NavigationHeader {...{ navigationInner }} />
 			<nav className={twMerge("flex-col gap-8 py-8", navigationInner ? "hidden md:flex" : "flex")}>
 				<NavigationCategory name="Profile">
