@@ -10,6 +10,7 @@ import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
 
 import { ClientScripts } from "./client-scripts";
+import { HydrationBlock } from "./hydration-block";
 
 import "~/css/index.css";
 
@@ -95,6 +96,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 				<ClientScripts />
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>
+				<HydrationBlock />
 				{/* @ts-expect-error: Server Component */}
 				<SessionProvider optional>
 					<ToastProvider>{children}</ToastProvider>
