@@ -6,8 +6,7 @@ import { toAbsoluteUrl, urls } from "~/urls";
 import { displayName, User } from "~/api/user";
 import { Html } from "~/components/html";
 import { useSession } from "~/hooks/use-session";
-import { filterBy, findBy } from "~/utilities";
-import { useAttributeList } from "~/hooks/use-attribute-list";
+import { filterBy } from "~/utilities";
 import { useToast } from "~/hooks/use-toast";
 
 import { InlineLink } from "../inline-link";
@@ -15,19 +14,17 @@ import { Button, ButtonLink } from "../button";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfileVerificationBadge } from "./verification-badge";
-import { Pill } from "./pill/pill";
 import { PillCollection } from "./pill/collection";
 import { ActivityIndicator } from "./activity-indicator";
 import { CountryPill } from "./pill/country";
 import { ProfileActionBar } from "./action-bar";
+import { GenderPills } from "./pill/genders";
 
 export const Profile: React.FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
 
 	const [session] = useSession();
 	const myProfile = session?.user.id === user.id;
-
-	const genders = useAttributeList("gender");
 
 	return (
 		<div className="flex w-full bg-brand-gradient sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1">
@@ -50,22 +47,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 							)}
 						</div>
 						<div className="flex flex-wrap items-center gap-2 font-montserrat">
-							{filterBy(user.profile.attributes, "type", "gender")
-								.map(({ id }) => findBy(genders, "id", id))
-								.filter((gender) => !gender?.metadata?.fallback)
-								.sort((a, b) => {
-									if (a?.metadata?.order || b?.metadata?.order)
-										return (a?.metadata?.order ?? 0) < (b?.metadata?.order ?? 0) ? 1 : -1;
-									return 0;
-								})
-								.map(
-									(gender) =>
-										gender && (
-											<Pill hocusable={false} key={gender.id} small={true}>
-												{gender.name}
-											</Pill>
-										)
-								)}
+							<GenderPills attributes={filterBy(user.profile.attributes, "type", "gender")} />
 							{user.profile.country && <CountryPill code={user.profile.country} />}
 						</div>
 						{user.activeAt && <ActivityIndicator lastActiveAt={new Date(user.activeAt)} />}

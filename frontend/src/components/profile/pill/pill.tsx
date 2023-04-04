@@ -1,3 +1,5 @@
+"use client";
+
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -13,6 +15,7 @@ export interface PillProps {
 	children: React.ReactNode;
 	hocusable?: boolean;
 	small?: boolean;
+	className?: string;
 }
 
 export const Pill: React.FC<PillProps> = (props) => {
@@ -27,11 +30,12 @@ export const Pill: React.FC<PillProps> = (props) => {
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				href={href!}
 				className={twMerge(
-					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl py-1 px-4 font-montserrat font-medium shadow-brand-1",
+					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl px-4 py-1 font-montserrat font-medium shadow-brand-1",
 					hocusable && (active || (hocused && href))
 						? "bg-brand-gradient text-white-10"
 						: "bg-white-30 text-black-70 dark:bg-black-70 dark:text-white-20 sm:dark:bg-black-60",
-					small && "opacity-80"
+					small && "opacity-80",
+					props.className
 				)}
 				onBlur={() => setHocused(false)}
 				onFocus={() => hocusable && setHocused(true)}
