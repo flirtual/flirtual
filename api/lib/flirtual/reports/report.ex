@@ -76,7 +76,7 @@ defmodule Flirtual.Report do
                  })
                  |> Repo.update()
              ),
-           {:ok, _} <- Block.create(user: reporter, target: reported),
+           {_, _} <- Block.create(user: reporter, target: reported),
            {:ok, _} <- ChangeQueue.add(reported.id),
            {:ok, _} <-
              Discord.deliver_webhook(:report, %Report{report | user: reporter, target: reported}) do
@@ -168,4 +168,16 @@ defmodule Flirtual.Report do
       |> Repo.all()
     end
   end
+end
+
+defimpl Jason.Encoder, for: Flirtual.Report do
+  use Flirtual.Encoder,
+    only: [
+      :id,
+      :user_id,
+      :target_id,
+      :message,
+      :reviewed_at,
+      :created_at
+    ]
 end
