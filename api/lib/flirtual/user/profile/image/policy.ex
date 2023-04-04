@@ -74,8 +74,6 @@ defmodule Flirtual.User.Profile.Image.Policy do
       when key in @own_property_keys,
       do: image[key]
 
-  def transform(key, _, _) when key in @own_property_keys, do: nil
-
   @moderator_property_keys [
     :scanned,
     :created_at,
@@ -97,5 +95,6 @@ defmodule Flirtual.User.Profile.Image.Policy do
     if :moderator in user.tags, do: image[key], else: nil
   end
 
+  def transform(key, _, _) when key in @own_property_keys, do: nil
   def transform(key, _, _) when key in @moderator_property_keys, do: nil
 end

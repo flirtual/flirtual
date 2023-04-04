@@ -132,7 +132,7 @@ defmodule Flirtual.User.Profile do
       message: "is an unrecognized country"
     )
     |> validate_attribute_list(
-      attrs["attributes"],
+      attrs["attributes"] || attrs[:attributes],
       [
         :gender,
         :sexuality,
@@ -144,7 +144,7 @@ defmodule Flirtual.User.Profile do
       &(&1
         |> validate_length(:gender, min: 1, max: 4)
         |> validate_length(:sexuality, max: 3)
-        |> validate_length(:kink, min: 1, max: 8)
+        |> validate_length(:kink, min: 0, max: 8)
         |> validate_length(:game, min: 1, max: 5)
         |> validate_length(:platform, min: 1, max: 8)
         |> validate_length(:interest, min: 2, max: 7)),

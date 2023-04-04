@@ -92,10 +92,11 @@ defmodule Flirtual.User.Profile.Policy do
       )
       when key in [:openness, :conscientiousness, :agreeableness] do
     # Fuzz to prevent inferring original personality question answers.
-    if(profile[key] === 0, do: nil, else: if(profile[key] > 0, do: 1, else: -1))
+    if(not is_nil(profile[key]) and profile[key] !== 0,
+      do: if(profile[key] > 0, do: 1, else: -1),
+      else: nil
+    )
   end
-
-  def transform(key, _, _) when key in @own_property_keys, do: nil
 
   def transform(
         :attributes,
@@ -148,4 +149,5 @@ defmodule Flirtual.User.Profile.Policy do
       do: profile.domsub
 
   def transform(:domsub, _, _), do: nil
+  def transform(key, _, _) when key in @own_property_keys, do: nil
 end

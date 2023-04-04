@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:alpine
+    command: postgres -N 200
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres

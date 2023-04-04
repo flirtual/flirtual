@@ -203,6 +203,7 @@ defmodule Flirtual.User.Policy do
   end
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
+  def transform(key, _, _) when key in @moderator_property_keys, do: nil
 
   def transform(:visible, _, user), do: User.visible?(user)
 

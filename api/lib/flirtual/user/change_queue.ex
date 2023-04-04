@@ -28,7 +28,7 @@ defmodule Flirtual.User.ChangeQueue do
   def add(%User{} = user), do: add(user.id)
 
   def add(user_id) when is_uuid(user_id) do
-    log(:info, ["add"], user_id)
+    log(:debug, ["add"], user_id)
 
     case get(user_id) do
       nil -> %ChangeQueue{}
@@ -40,7 +40,7 @@ defmodule Flirtual.User.ChangeQueue do
   end
 
   def remove(user_id) when is_uuid(user_id) do
-    log(:info, ["remove"], user_id)
+    log(:debug, ["remove"], user_id)
 
     with {_, nil} <-
            from(ChangeQueue, where: [user_id: ^user_id]) |> Repo.delete_all() do
@@ -53,7 +53,7 @@ defmodule Flirtual.User.ChangeQueue do
   def remove([]), do: :ok
 
   def remove(user_ids) when is_list(user_ids) do
-    log(:info, ["remove"], user_ids)
+    log(:debug, ["remove"], user_ids)
 
     with {_, nil} <-
            from(item in ChangeQueue, where: item.user_id in ^user_ids) |> Repo.delete_all() do

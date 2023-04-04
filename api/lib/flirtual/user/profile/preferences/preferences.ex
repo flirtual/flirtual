@@ -41,10 +41,9 @@ defmodule Flirtual.User.Profile.Preferences do
     |> validate_number(:agemin, greater_than_or_equal_to: 18, less_than_or_equal_to: 128)
     |> validate_number(:agemax, greater_than_or_equal_to: 18, less_than_or_equal_to: 128)
     |> validate_attribute_list(
-      attrs["attributes"],
+      attrs["attributes"] || attrs[:attributes],
       [
-        :gender,
-        :kink
+        :gender
       ],
       &(&1
         |> validate_length(:gender, min: 1, max: 3)),

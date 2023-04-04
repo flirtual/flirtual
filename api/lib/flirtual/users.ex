@@ -233,7 +233,7 @@ defmodule Flirtual.Users do
     |> Repo.one()
   end
 
-  def create(attrs) do
+  def create(attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
              cast_arbitrary(
@@ -255,7 +255,12 @@ defmodule Flirtual.Users do
                :notifications
              ])
              |> validate_acceptance(:service_agreement)
-             |> validate_captcha()
+             |> then(
+               &if(Keyword.fetch!(options, :captcha) != false,
+                 do: &1 |> validate_captcha(),
+                 else: &1
+               )
+             )
              |> apply_action(:update),
            {:ok, user} <-
              %User{}
