@@ -74,12 +74,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && (
 						<div className="flex gap-4">
-							<ButtonLink
-								className="w-1/2"
-								href={urls.settings.matchmaking()}
-								Icon={PencilIcon}
-								size="sm"
-							>
+							<ButtonLink className="w-1/2" href={urls.settings.bio} Icon={PencilIcon} size="sm">
 								Edit profile
 							</ButtonLink>
 							<Button
