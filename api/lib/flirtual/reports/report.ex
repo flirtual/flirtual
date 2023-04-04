@@ -55,7 +55,7 @@ defmodule Flirtual.Report do
   end
 
   def create(attrs) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     Repo.transaction(fn ->
       with {:ok, report} <- %Report{} |> changeset(attrs) |> Repo.insert(),
@@ -176,6 +176,7 @@ defimpl Jason.Encoder, for: Flirtual.Report do
       :id,
       :user_id,
       :target_id,
+      :reason,
       :message,
       :reviewed_at,
       :created_at
