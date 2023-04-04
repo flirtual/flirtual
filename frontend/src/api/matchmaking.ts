@@ -3,13 +3,22 @@ import { fetch, NarrowFetchOptions } from "./exports";
 export const ProspectKind = ["love", "friend"] as const;
 export type ProspectKind = (typeof ProspectKind)[number];
 
+export type ProspectRespondType = "like" | "pass";
+
+export interface LikeAndPassItem {
+	id: string;
+	profileId: string;
+	targetId: string;
+	type: ProspectRespondType;
+	kind: ProspectKind;
+	createdAt: string;
+}
+
 export async function listProspects(
 	options: NarrowFetchOptions<undefined, { kind: ProspectKind }>
 ): Promise<Array<string>> {
 	return fetch<Array<string>>("get", "prospects", options);
 }
-
-export type ProspectRespondType = "like" | "pass";
 
 export interface RespondProspectBody {
 	type: ProspectRespondType;
@@ -28,4 +37,15 @@ export async function reverseRespondProspect(options: NarrowFetchOptions<Respond
 
 export async function resetProspect(options: NarrowFetchOptions = {}) {
 	return fetch("delete", `prospects`, options);
+}
+
+export async function listMatches(
+	options: NarrowFetchOptions<undefined, { unrequited?: boolean }>
+) {
+	return fetch<{
+		count: {
+			[K in ProspectKind]?: number;
+		};
+		items: Array<LikeAndPassItem>;
+	}>("get", `matches`, options);
 }

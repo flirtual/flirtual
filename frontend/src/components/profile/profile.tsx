@@ -1,5 +1,7 @@
 "use client";
 
+import { PencilIcon, ShareIcon } from "@heroicons/react/24/solid";
+
 import { toAbsoluteUrl, urls } from "~/urls";
 import { displayName, User } from "~/api/user";
 import { Html } from "~/components/html";
@@ -43,7 +45,7 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 											(Date.now() - new Date(user.bornAt).getTime()) / (365 * 24 * 60 * 60 * 1000)
 										)}
 									</span>
-									{user.tags.includes("verified") && <ProfileVerificationBadge />}
+									{user.tags?.includes("verified") && <ProfileVerificationBadge />}
 								</div>
 							)}
 						</div>
@@ -72,10 +74,17 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && (
 						<div className="flex gap-4">
-							<ButtonLink href={urls.settings.matchmaking()} size="sm">
+							<ButtonLink
+								className="w-1/2"
+								href={urls.settings.matchmaking()}
+								Icon={PencilIcon}
+								size="sm"
+							>
 								Edit profile
 							</ButtonLink>
 							<Button
+								className="w-1/2"
+								Icon={ShareIcon}
 								size="sm"
 								onClick={async () => {
 									const link = toAbsoluteUrl(urls.user.profile(user.username)).toString();
@@ -88,6 +97,17 @@ export const Profile: React.FC<{ user: User }> = ({ user }) => {
 							</Button>
 						</div>
 					)}
+					{user.profile.new && !myProfile ? (
+						session?.user.profile.new ? (
+							<span className="text-xl italic dark:text-white-20">
+								You&apos;re both new to VR. Explore it together!
+							</span>
+						) : (
+							<span className="text-xl italic dark:text-white-20">
+								{displayName(user)} is new to VR. Why not show them around?
+							</span>
+						)
+					) : null}
 					{user.profile.biography ? (
 						<Html className="text-xl">{user.profile.biography}</Html>
 					) : myProfile ? (

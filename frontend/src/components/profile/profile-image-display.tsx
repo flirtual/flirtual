@@ -6,11 +6,13 @@ import ms from "ms";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { ProfileImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
+import { api } from "~/api";
 
 import { ModalOuter } from "../modal";
 import { Tooltip } from "../tooltip";
@@ -40,12 +42,13 @@ const SingleImage: React.FC<SingleImageProps> = ({ className, image }) => {
 
 const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 	const toasts = useToast();
+	const router = useRouter();
 
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4">
 			<span>
 				<span suppressHydrationWarning>{`Uploaded ${ms(
-					Date.now() - new Date(`${image.createdAt}Z`).getTime(),
+					Date.now() - new Date(image.createdAt).getTime(),
 					{
 						long: true
 					}
@@ -62,10 +65,17 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 					<button
 						type="button"
 						onClick={async () => {
-							toasts.add({
-								type: "success",
-								label: "Successfully deleted image!"
-							});
+							await api.images
+								.delete(image.id)
+								.then(() => {
+									toasts.add({
+										type: "success",
+										label: "Successfully deleted image!"
+									});
+
+									return router.refresh();
+								})
+								.catch(toasts.addError);
 						}}
 					>
 						<TrashIcon className="h-5 w-5" />
@@ -173,14 +183,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 								onClick={(event) => event.stopPropagation()}
 							>
 								<button
-									className="absolute right-0 m-4"
+									className="absolute right-0 m-4 brightness-75 hover:brightness-100"
 									type="button"
 									onClick={() => setExpandedImage(false)}
 								>
 									<XMarkIcon className="h-6 w-6" />
 								</button>
 								<SingleImage className="max-h-[80vh]" image={curImage} />
-								{session?.user.tags.includes("moderator") && <ImageToolbar image={curImage} />}
+								{session?.user.tags?.includes("moderator") && <ImageToolbar image={curImage} />}
 							</div>
 						</ModalOuter>
 					)}

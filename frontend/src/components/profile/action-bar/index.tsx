@@ -5,6 +5,7 @@ import {
 	NoSymbolIcon,
 	ShieldCheckIcon
 } from "@heroicons/react/24/solid";
+import { useRouter } from "next/navigation";
 
 import { User } from "~/api/user";
 import { api } from "~/api";
@@ -17,6 +18,7 @@ import { ReportProfile } from "./report-profile";
 
 export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 	const [session, mutateSession] = useSession();
+	const router = useRouter();
 	const toasts = useToast();
 
 	if (!session) return null;
@@ -24,7 +26,7 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 	return (
 		<div className="flex w-full justify-between gap-3 p-8 dark:bg-black-70">
 			<div className="flex gap-4">
-				{session.user.tags.includes("debugger") && (
+				{session.user.tags?.includes("debugger") && (
 					<>
 						<Tooltip value="Copy user id">
 							<button type="button" onClick={() => navigator.clipboard.writeText(user.id)}>
@@ -38,7 +40,7 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 						</Tooltip>
 					</>
 				)}
-				{session.user.tags.includes("admin") && (
+				{session.user.tags?.includes("admin") && (
 					<>
 						{user.id !== session.user.id && (
 							<Tooltip value="Sudo">
@@ -68,7 +70,7 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 						</button>
 					</Tooltip>
 				)}
-				{session.user.id !== user.id && session.user.tags.includes("moderator") && (
+				{session.user.id !== user.id && session.user.tags?.includes("moderator") && (
 					<>
 						<BanProfile user={user} />
 						<Tooltip fragmentClassName="h-6 w-6" value="Clear reports">
@@ -97,7 +99,23 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 				{session.user.id !== user.id && (
 					<>
 						<Tooltip value="Block profile">
-							<button className="h-6 w-6" type="button">
+							<button
+								className="h-6 w-6"
+								type="button"
+								onClick={async () => {
+									await api.user
+										.block(user.id)
+										.then(() => {
+											toasts.add({
+												type: "success",
+												label: "User blocked successfully"
+											});
+
+											return router.refresh();
+										})
+										.catch(toasts.addError);
+								}}
+							>
 								<NoSymbolIcon className="h-full w-full" />
 							</button>
 						</Tooltip>

@@ -55,7 +55,7 @@ export async function useServerAuthenticate(
 	if (!session && !optional) redirect(urls.login());
 
 	if (session) {
-		if (!tags.every((tag) => session.user.tags.includes(tag))) {
+		if (!tags.every((tag) => session.user.tags?.includes(tag))) {
 			redirect(urls.default);
 		}
 

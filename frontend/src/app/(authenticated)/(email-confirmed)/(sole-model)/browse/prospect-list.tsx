@@ -29,11 +29,6 @@ const ProspectActionBar: React.FC<{
 	const [respondHistory, setRespondHistory] = useState<Array<RespondProspectBody>>([]);
 	const toasts = useToast();
 
-	useEffect(() => {
-		if (mode === "friend") document.documentElement.classList.add("friend-mode");
-		return () => document.documentElement.classList.remove("friend-mode");
-	}, [mode]);
-
 	const respond = useCallback(
 		async (type: ProspectRespondType, kind: ProspectKind) => {
 			const body = {
@@ -70,7 +65,7 @@ const ProspectActionBar: React.FC<{
 
 	return (
 		<div className="h-32 w-full dark:bg-black-70 sm:h-0">
-			<div className="pointer-events-none fixed left-0 bottom-0  flex  w-full items-center justify-center bg-gradient-to-b from-transparent to-black-90/50 p-8">
+			<div className="pointer-events-none fixed bottom-0 left-0  flex  w-full items-center justify-center bg-gradient-to-b from-transparent to-black-90/50 p-8">
 				<div className="pointer-events-auto flex h-32 items-center gap-3 overflow-hidden rounded-xl pb-16 text-white-10">
 					<Tooltip value="Undo previous">
 						<button
@@ -131,6 +126,11 @@ export const ProspectList: React.FC<ProspectListProps> = ({ kind, prospects }) =
 	const [prospectIdx, setProspectIdx] = useState(0);
 	const prospect = prospects[prospectIdx];
 
+	useEffect(() => {
+		if (kind === "friend") document.documentElement.classList.add("friend-mode");
+		return () => document.documentElement.classList.remove("friend-mode");
+	}, [kind]);
+
 	return (
 		<>
 			{prospect ? (
@@ -141,7 +141,7 @@ export const ProspectList: React.FC<ProspectListProps> = ({ kind, prospects }) =
 			) : (
 				<OutOfProspects />
 			)}
-			{session?.user.tags.includes("debugger") && (
+			{session?.user.tags?.includes("debugger") && (
 				<div className="py-8">
 					<button
 						type="button"

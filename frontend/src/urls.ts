@@ -62,9 +62,10 @@ export const urls = {
 	},
 	browse: (kind?: ProspectKind) => url("/browse", { kind }),
 	conversations: {
-		list: "/conversations",
-		with: (userId: string) => `/conversations/${userId}`
+		list: "/matches",
+		with: (userId: string) => `/matches/${userId}`
 	},
+	likes: "/likes",
 	onboarding: (onboardingIdx: 1 | 2 | 3 | 4) => `/onboarding/${onboardingIdx}`,
 	subscription: "/subscription",
 	confirmEmail: (query: ConfirmEmailPageProps["searchParams"] = {}) => url("/confirm-email", query),
@@ -104,7 +105,7 @@ export const urls = {
 		download: "/download",
 		events: "/events",
 		invite: "/invite",
-		networkStatus: "https://status.flirtu.al",
+		networkStatus: "http://status.flirtu.al",
 		press: "/press",
 		branding: "/branding",
 		developers: "https://github.com/flirtual",
