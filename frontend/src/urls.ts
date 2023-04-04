@@ -62,8 +62,8 @@ export const urls = {
 	},
 	browse: (kind?: ProspectKind) => url("/browse", { kind }),
 	conversations: {
-		list: "/conversations",
-		with: (userId: string) => `/conversations/${userId}`
+		list: "/matches",
+		with: (userId: string) => `/matches/${userId}`
 	},
 	likes: "/likes",
 	onboarding: (onboardingIdx: 1 | 2 | 3 | 4) => `/onboarding/${onboardingIdx}`,

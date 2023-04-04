@@ -37,6 +37,14 @@ export default function ConversationsLayout() {
 	return (
 		<div className="flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col">
 			<Header />
+			<ButtonLink
+				className="m-4"
+				href={session.user.subscription?.active ? urls.likes : urls.subscription}
+			>
+				See Who Likes You{" "}
+				{likes.count.love && (likes.count.love > 99 ? "(99+❤️)" : ` (${likes.count.love}❤️)`)}
+				{likes.count.friend && (likes.count.friend > 99 ? "(99+✌️)" : ` (${likes.count.friend}✌️)`)}
+			</ButtonLink>
 			{conversationCount === 0 ? (
 				<div className="flex w-full max-w-screen-lg grow flex-col items-center justify-center md:px-8">
 					<ModelCard
@@ -53,56 +61,45 @@ export default function ConversationsLayout() {
 					</ModelCard>
 				</div>
 			) : (
-				<>
-					<ButtonLink
-						className="m-4"
-						href={session.user.subscription?.active ? urls.likes : urls.subscription}
-					>
-						See Who Likes You{" "}
-						{likes.count.love && (likes.count.love > 99 ? "(99+❤️)" : ` (${likes.count.love}❤️)`)}
-						{likes.count.friend &&
-							(likes.count.friend > 99 ? "(99+✌️)" : ` (${likes.count.friend}✌️)`)}
-					</ButtonLink>
-					<div className="flex w-full max-w-screen-lg grow flex-col md:flex-row md:px-8">
-						<div className="flex h-full w-full shrink-0 grow-0 flex-col shadow-brand-1 md:w-96 md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
-							<div className="flex h-16 w-full items-center justify-center bg-black-70 p-4 text-white-20 md:bg-brand-gradient">
-								<Link
-									className="absolute left-4 flex shrink-0 md:hidden"
-									href={userId ? urls.conversations.list : urls.browse()}
-								>
-									<HeaderIcon className="w-6" />
-								</Link>
-								<span className="font-montserrat text-xl font-semibold">Messages</span>
-							</div>
-							{(isDesktop || !userId) && (
-								<ConversationInbox
-									className="h-[calc(100vh_-_8rem)] w-full md:h-screen"
-									options={{
-										showFeedHeader: false,
-										showMobileBackButton: false,
-										theme: "next-mobile",
-										feedFilter: {
-											custom: {
-												banned: "!exists"
-											}
-										}
-									}}
-								/>
-							)}
+				<div className="flex w-full max-w-screen-lg grow flex-col md:flex-row md:px-8">
+					<div className="flex h-full w-full shrink-0 grow-0 flex-col shadow-brand-1 md:w-96 md:rounded-t-xl md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
+						<div className="flex h-16 w-full items-center justify-center bg-black-70 p-4 text-white-20 md:rounded-t-xl md:bg-brand-gradient">
+							<Link
+								className="absolute left-4 flex shrink-0 md:hidden"
+								href={userId ? urls.conversations.list : urls.browse()}
+							>
+								<HeaderIcon className="w-6" />
+							</Link>
+							<span className="font-montserrat text-xl font-semibold">Messages</span>
 						</div>
-						{userId && (
-							<div className="flex h-full w-full flex-col items-center justify-center md:pl-8 md:pt-8">
-								<ConversationChatbox
-									className="h-[calc(100vh_-_8rem)] w-full overflow-hidden md:h-[32rem] md:rounded-xl"
-									userId={userId}
-									options={{
-										theme: "next-mobile"
-									}}
-								/>
-							</div>
+						{(isDesktop || !userId) && (
+							<ConversationInbox
+								className="h-[calc(100vh_-_8rem)] w-full md:h-screen"
+								options={{
+									showFeedHeader: false,
+									showMobileBackButton: false,
+									theme: "next-mobile",
+									feedFilter: {
+										custom: {
+											banned: "!exists"
+										}
+									}
+								}}
+							/>
 						)}
 					</div>
-				</>
+					{userId && (
+						<div className="flex h-full w-full flex-col items-center justify-center md:pl-8">
+							<ConversationChatbox
+								className="h-[calc(100vh_-_8rem)] w-full overflow-hidden shadow-brand-1 md:h-[32rem] md:rounded-xl"
+								userId={userId}
+								options={{
+									theme: "next-mobile"
+								}}
+							/>
+						</div>
+					)}
+				</div>
 			)}
 			<Footer desktopOnly />
 			<MobileBarNavigation />
