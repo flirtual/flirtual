@@ -15,13 +15,13 @@
 }
 
 html {
-  --gradient-l: #ff8975;
-  --gradient-r: #e9658b;
+  --gradient-l: var(--arc-background-gradient-color0, var(--arc-background-simple-color, #ff8975));
+  --gradient-r: var(--arc-background-gradient-color1, var(--arc-background-simple-color, #e9658b));
 }
 
 html.dark {
-  --gradient-l: #b24592;
-  --gradient-r: #e9658b;
+  --gradient-l: var(--arc-background-gradient-color0, var(--arc-background-simple-color, #b24592));
+  --gradient-r: var(--arc-background-gradient-color1, var(--arc-background-simple-color, #e9658b));
 }
 
 html.friend-mode {
