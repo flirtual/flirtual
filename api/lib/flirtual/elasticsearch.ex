@@ -94,8 +94,12 @@ defmodule Flirtual.Elasticsearch do
     log(:debug, [index_name, "get"], id)
 
     case Elasticsearch.get(Flirtual.Elasticsearch, "/" <> index_name <> "/_doc/#{id}") do
-      {:ok, document} -> document["_source"]
-      {:error, _} -> nil
+      {:ok, document} ->
+        document["_source"]
+
+      {:error, value} ->
+        log(:error, [index_name, "get"], value)
+        nil
     end
   end
 
@@ -115,7 +119,8 @@ defmodule Flirtual.Elasticsearch do
           end
         )
 
-      {:error, _} ->
+      {:error, value} ->
+        log(:error, [index_name, "get"], value)
         nil
     end
   end
