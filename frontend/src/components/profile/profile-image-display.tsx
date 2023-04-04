@@ -48,7 +48,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4">
 			<span>
 				<span suppressHydrationWarning>{`Uploaded ${ms(
-					Date.now() - new Date(`${image.createdAt}Z`).getTime(),
+					Date.now() - new Date(image.createdAt).getTime(),
 					{
 						long: true
 					}

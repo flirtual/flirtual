@@ -23,13 +23,12 @@ export default async function LikesPage() {
 	}));
 
 	return (
-		<SoleModelLayout>
+		<SoleModelLayout footer={{ desktopOnly: true }}>
 			<ModelCard title="Likes">
 				<ButtonLink href={urls.conversations.list}>Matches</ButtonLink>
 				{items.map((like) => (
 					<div key={like.id}>{displayName(like.user)}</div>
 				))}
-				<span>aaaa</span>
 			</ModelCard>
 		</SoleModelLayout>
 	);
