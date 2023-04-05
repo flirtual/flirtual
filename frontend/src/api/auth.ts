@@ -36,3 +36,18 @@ export async function session(options: NarrowFetchOptions = {}) {
 export async function user(options: NarrowFetchOptions = {}) {
 	return fetch<User>("get", "auth/user", options);
 }
+
+export async function resetPassword(options: NarrowFetchOptions<{ email: string }>) {
+	await fetch("delete", "auth/password", options);
+}
+
+export interface ConfirmResetPassword {
+	email: string;
+	password: string;
+	passwordConfirmation: string;
+	token: string;
+}
+
+export async function confirmResetPassword(options: NarrowFetchOptions<ConfirmResetPassword>) {
+	await fetch("post", "auth/password/reset", options);
+}
