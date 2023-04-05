@@ -74,26 +74,22 @@ defmodule Flirtual.User.ChangeQueue do
   end
 
   def next(limit \\ 1000) do
-    Repo.transaction(fn ->
-      items = fetch(limit)
+    items = fetch(limit)
 
-      if length(items) === 0 do
-        0
-      else
-        with :ok <- process_items(items, :elasticsearch),
-             # :ok <- process_items(items, :talkjs),
-             :ok <-
-               items
-               |> Enum.map(& &1.user_id)
-               |> remove() do
-          length(items)
-        else
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
-        end
-      end
-    end)
+    with :ok <- process_items(items, :elasticsearch),
+         :ok <- process_items(items, :talkjs),
+         :ok <-
+           items
+           |> Enum.map(& &1.user_id)
+           |> remove() do
+      {:ok, length(items)}
+    else
+      {:error, reason} -> {:error, reason}
+      reason -> {:error, reason}
+    end
   end
+
+  defp process_items([], _), do: :ok
 
   defp process_items(items, :talkjs) do
     Enum.map(items, &Talkjs.update_user(&1.user))

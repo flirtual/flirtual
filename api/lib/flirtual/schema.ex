@@ -44,3 +44,77 @@ defmodule Flirtual.Schema do
     end
   end
 end
+
+defmodule Flirtual.EmbeddedSchema do
+  defmacro __using__(_) do
+    quote do
+      use Ecto.Schema
+
+      import Ecto.Changeset
+
+      @behaviour Access
+      @before_compile Flirtual.EmbeddedSchema
+
+      @exclude [:id]
+      @optional []
+    end
+  end
+
+  defmacro __before_compile__(_) do
+    quote do
+      def create() do
+        %__MODULE__{}
+      end
+
+      def prepare_changeset(attrs \\ %{}) do
+        keys =
+          __MODULE__.__schema__(:fields)
+          |> Enum.filter(fn k -> k not in @exclude end)
+
+        required_keys =
+          keys
+          |> Enum.filter(fn k -> k not in @optional end)
+
+        create()
+        |> cast(attrs, keys)
+        |> validate_required(required_keys)
+      end
+
+      def apply(attrs, options \\ []) do
+        action = Keyword.get(options, :action, :update)
+        context = Keyword.get(options, :context, %{})
+
+        with {:ok, value} <-
+               prepare_changeset(attrs)
+               |> changeset(attrs, context)
+               |> apply_action(action) do
+          {:ok, value |> Map.from_struct()}
+        end
+      end
+
+      def fetch(term, key) do
+        term
+        |> Map.from_struct()
+        |> Map.fetch(key)
+      end
+
+      def get(term, key, default) do
+        term
+        |> Map.from_struct()
+        |> Map.get(key, default)
+      end
+
+      def get_and_update(data, key, function) do
+        data
+        |> Map.from_struct()
+        |> Map.get_and_update(key, function)
+      end
+
+      def pop(data, key) do
+        data
+        |> Map.from_struct()
+        |> Map.pop(key)
+      end
+    end
+  end
+end

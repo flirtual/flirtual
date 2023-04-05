@@ -23,22 +23,6 @@ defmodule Flirtual.User.Policy do
       when not is_nil(banned_at),
       do: false
 
-  def authorize(
-        :read,
-        %Plug.Conn{
-          assigns: %{
-            session: %Session{} = session
-          }
-        },
-        %User{} = user
-      ) do
-    if User.visible?(user) do
-      true
-    else
-      :moderator in session.user.tags
-    end
-  end
-
   @own_actions [
     :read,
     :update
@@ -77,6 +61,22 @@ defmodule Flirtual.User.Policy do
       )
       when action in @moderator_actions,
       do: :moderator in user.tags
+
+  def authorize(
+        :read,
+        %Plug.Conn{
+          assigns: %{
+            session: %Session{} = session
+          }
+        },
+        %User{} = user
+      ) do
+    if User.visible?(user) do
+      true
+    else
+      :moderator in session.user.tags
+    end
+  end
 
   @admin_actions [
     :sudo

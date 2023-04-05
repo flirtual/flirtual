@@ -12,27 +12,23 @@ defmodule Flirtual.Jwt do
     config |> Joken.generate_claims(claims)
   end
 
-  def sign_email_confirmation(user) do
-    {:ok, claims} =
-      generate_claims(config("confirm_email"), %{
-        "sub" => user.id,
-        "email" => user.email
-      })
-
-    generate_and_sign(claims)
+  def sign(config, claims) do
+    with {:ok, claims} <- generate_claims(config, claims),
+         {:ok, token, _} <- generate_and_sign(claims) do
+      {:ok, token}
+    end
   end
 
   def validate_jwt(changeset, field, token_config, validate_claims) do
-    changeset = changeset |> validate_required(field)
-
-    with {:ok, claims} <- Joken.verify_and_validate(token_config, get_field(changeset, field)),
+    with true <- changeset.valid?,
+         {:ok, claims} <- Joken.verify_and_validate(token_config, get_field(changeset, field)),
          {:ok, value} <- validate_claims.(claims) do
-      if is_nil(value) do
-        changeset
-      else
-        change(changeset, Map.put(%{}, field, value))
+      case value do
+        nil -> changeset
+        {k, v} -> put_change(changeset, k, v)
       end
     else
+      false -> changeset
       _ -> add_error(changeset, field, "is invalid")
     end
   end

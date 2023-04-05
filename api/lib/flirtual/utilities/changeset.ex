@@ -26,9 +26,51 @@ defmodule Flirtual.Utilities.Changeset do
     end)
   end
 
-  def validate_not_equal(changeset, field_a, field_b, opts \\ []) do
-    if get_field(changeset, field_a) === get_field(changeset, field_b) do
-      add_error(changeset, field_a, Keyword.get(opts, :message, "is invalid"))
+  def validate_predicate(changeset, predicate, {_, _} = keys),
+    do: validate_predicate(changeset, predicate, keys, [])
+
+  def validate_predicate(changeset, predicate, {a, b}, options) do
+    default_field = (is_atom(a) and a) || (is_atom(b) and b) || nil
+
+    changeset
+    |> validate_predicate(
+      predicate,
+      Keyword.merge(
+        options,
+        field: Keyword.get(options, :field, default_field),
+        values: {
+          evaluate_predicate_key(changeset, a),
+          evaluate_predicate_key(changeset, b)
+        }
+      )
+    )
+  end
+
+  defp evaluate_predicate_key(changeset, {:value, value}), do: value
+  defp evaluate_predicate_key(changeset, value), do: get_field(changeset, value)
+
+  defp evaluate_predicate(:equal, {a, b}), do: a === b
+  defp evaluate_predicate(:not_equal, {a, b}), do: a !== b
+  defp evaluate_predicate(predicate, {a, b}) when is_function(predicate), do: predicate.(a, b)
+
+  def validate_predicate(changeset, predicate, options \\ []) do
+    values = Keyword.fetch!(options, :values)
+    IO.inspect([predicate, values])
+
+    if not evaluate_predicate(predicate, values) do
+      add_error(
+        changeset,
+        Keyword.fetch!(options, :field),
+        Keyword.get(options, :message, "is invalid")
+      )
+    else
+      changeset
+    end
+  end
+
+  def validate_changed(changeset, field, options \\ []) do
+    if get_field(changeset, field) === get_change(changeset, field) do
+      add_error(changeset, field, Keyword.get(options, :message, "did not change"))
     else
       changeset
     end

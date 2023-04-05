@@ -4,7 +4,6 @@ defmodule FlirtualWeb.UsersController do
 
   import Plug.Conn
   import Phoenix.Controller
-  import Ecto.Query
   import Ecto.Changeset
 
   import FlirtualWeb.Utilities
@@ -13,14 +12,13 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Attribute, only: [validate_attribute: 3]
   import Flirtual.HCaptcha, only: [validate_captcha: 1]
   import Flirtual.User, only: [validate_current_password: 2]
-  import Flirtual.Jwt, only: [validate_jwt: 4]
 
   alias Flirtual.User.Profile.Block
   alias Flirtual.Attribute
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
   alias FlirtualWeb.SessionController
-  alias Flirtual.{User, Users, Policy, Jwt}
+  alias Flirtual.{User, Users, Policy}
   alias User.Connection
 
   action_fallback FlirtualWeb.FallbackController
@@ -242,6 +240,20 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def reset_password(conn, %{"email" => email}) do
+    user = Users.get_by_email(email)
+
+    with {:ok, _} <- Users.reset_password(user) do
+      conn |> json(%{success: true})
+    end
+  end
+
+  def confirm_reset_password(conn, params) do
+    with {:ok, _} <- Users.confirm_reset_password(params) do
+      conn |> json(%{success: true})
+    end
+  end
+
   def update_email(conn, %{"user_id" => user_id} = params) do
     user =
       if(conn.assigns[:session].user.id === user_id,
@@ -259,29 +271,7 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def confirm_email(conn, params) do
-    now = DateTime.utc_now() |> DateTime.truncate(:second)
-
-    with {:ok, params} <-
-           cast_arbitrary(
-             %{
-               token: :string
-             },
-             params
-           )
-           |> validate_required(:token)
-           |> validate_jwt(:token, Jwt.config("confirm_email"), fn claims ->
-             case User
-                  |> where(id: ^claims["sub"], email: ^claims["email"])
-                  |> Repo.one() do
-               nil -> {:error, nil}
-               user -> {:ok, user}
-             end
-           end)
-           |> apply_action(:update),
-         {:ok, user} <-
-           params.token
-           |> change(email_confirmed_at: now)
-           |> Repo.update(),
+    with {:ok, user} <- Users.confirm_update_email(params),
          {:ok, _} <- ChangeQueue.add(user.id) do
       conn
       |> json(%{

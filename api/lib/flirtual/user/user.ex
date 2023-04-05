@@ -8,6 +8,9 @@ defmodule Flirtual.User do
   import Ecto.Changeset
   import Ecto.Query
   import Flirtual.Utilities
+  import Flirtual.Utilities.Changeset
+
+  alias Ecto.Changeset
 
   alias Flirtual.User.Profile.Image
   alias Flirtual.Subscription
@@ -236,31 +239,6 @@ defmodule Flirtual.User do
     end)
   end
 
-  @doc """
-  A user changeset for registration.
-
-  It is important to validate the length of both email and password.
-  Otherwise databases may truncate the email without warnings, which
-  could lead to unpredictable or insecure behaviour. Long passwords may
-  also be very expensive to hash for certain algorithms.
-
-  ## Options
-
-    * `:hash_password` - Hashes the password so it can be stored securely
-      in the database and ensures the password field is cleared to prevent
-      leaks in the logs. If password hashing is not needed and clearing the
-      password field is not desired (like when using this changeset for
-      validations on a LiveView form), this option can be set to `false`.
-      Defaults to `true`.
-  """
-  def registration_changeset(user, attrs, opts \\ []) do
-    user
-    |> cast(attrs, [:username, :email, :password])
-    |> validate_username()
-    |> validate_email()
-    |> validate_password(opts)
-  end
-
   def validate_username(changeset) do
     changeset
     |> validate_required([:username])
@@ -270,7 +248,7 @@ defmodule Flirtual.User do
   def validate_unique_username(changeset) do
     changeset
     |> validate_username()
-    |> unsafe_validate_unique(:username, Flirtual.Repo)
+    |> unsafe_validate_unique(:username, Repo, query: from(User))
     |> unique_constraint(:username)
   end
 
@@ -284,33 +262,37 @@ defmodule Flirtual.User do
   def validate_unique_email(changeset) do
     changeset
     |> validate_email()
-    |> unsafe_validate_unique(:email, Flirtual.Repo)
+    |> unsafe_validate_unique(:email, Repo, query: from(User))
     |> unique_constraint(:email)
   end
 
-  def validate_password(changeset, opts \\ []) do
+  def validate_password(changeset) do
     changeset
     |> validate_required([:password])
-    |> validate_length(:password, min: 8, max: 72)
+    |> validate_length(:password, min: 8, max: 72, count: :bytes)
+
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
-    |> maybe_hash_password(opts)
   end
 
-  defp maybe_hash_password(changeset, opts) do
-    hash_password? = Keyword.get(opts, :password_hash, true)
-    password = get_change(changeset, :password)
+  def validate_password_confirmation(changeset, options \\ []) do
+    message = Keyword.get(options, :message, "Password doesn't match")
+    changeset |> validate_confirmation(:password, message: message)
+  end
 
-    if hash_password? && password && changeset.valid? do
-      changeset
-      # If using Bcrypt, then further validate it is at most 72 bytes long
-      |> validate_length(:password, max: 72, count: :bytes)
-      |> put_change(:password_hash, Bcrypt.hash_pwd_salt(password))
-      |> delete_change(:password)
-    else
-      changeset
-    end
+  def put_password(%Changeset{} = changeset), do: put_password(changeset, :password)
+
+  def put_password(%Changeset{} = changeset, field) when is_atom(field) do
+    password = get_field(changeset, field)
+
+    changeset
+    |> put_password(password)
+    |> delete_change(field)
+  end
+
+  def put_password(value, password) when is_binary(password) do
+    change(value, %{password_hash: Bcrypt.hash_pwd_salt(password)})
   end
 
   @doc """
@@ -322,29 +304,13 @@ defmodule Flirtual.User do
     user
     |> cast(attrs, [:email])
     |> validate_unique_email()
-    |> case do
-      %{changes: %{email: _}} = changeset -> changeset
-      %{} = changeset -> add_error(changeset, :email, "did not change")
-    end
+    |> validate_changed(:email)
+    |> put_change(:email_confirmed_at, nil)
   end
 
-  @doc """
-  A user changeset for changing the password.
-
-  ## Options
-
-    * `:hash_password` - Hashes the password so it can be stored securely
-      in the database and ensures the password field is cleared to prevent
-      leaks in the logs. If password hashing is not needed and clearing the
-      password field is not desired (like when using this changeset for
-      validations on a LiveView form), this option can be set to `false`.
-      Defaults to `true`.
-  """
-  def update_password_changeset(user, attrs, opts \\ []) do
-    user
-    |> cast(attrs, [:password])
-    |> validate_confirmation(:password, message: "does not match password")
-    |> validate_password(opts)
+  def confirm_email_changeset(user) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+    user |> change(email_confirmed_at: now)
   end
 
   @doc """
@@ -353,7 +319,11 @@ defmodule Flirtual.User do
   If there is no user or the user doesn't have a password, we call
   `Bcrypt.no_user_verify/0` to avoid timing attacks.
   """
-  def valid_password?(%Flirtual.User{password_hash: password_hash}, password)
+  def valid_password?(%User{password_hash: password_hash}, password) do
+    valid_password?(password_hash, password)
+  end
+
+  def valid_password?(password_hash, password)
       when is_binary(password_hash) and byte_size(password) > 0 do
     Bcrypt.verify_pass(password, password_hash)
   end
@@ -372,7 +342,7 @@ defmodule Flirtual.User do
     if valid_password?(user, get_field(changeset, field)) do
       changeset
     else
-      add_error(changeset, field, "is not valid")
+      add_error(changeset, field, "Invalid password")
     end
   end
 end

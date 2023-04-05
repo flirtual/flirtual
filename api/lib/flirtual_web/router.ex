@@ -74,6 +74,14 @@ defmodule FlirtualWeb.Router do
             end
           end
 
+          scope "/password" do
+            delete "/", UsersController, :reset_password
+
+            scope "/reset" do
+              post "/", UsersController, :confirm_reset_password
+            end
+          end
+
           scope "/sudo" do
             pipe_through :require_authenticated_user
 
