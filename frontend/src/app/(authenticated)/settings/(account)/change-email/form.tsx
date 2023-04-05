@@ -19,7 +19,6 @@ export const ChangeEmailForm: React.FC = () => {
 	return (
 		<Form
 			className="flex flex-col gap-8"
-			requireChange={["email", "emailConfirmation", "currentPassword"]}
 			fields={{
 				email: user.email,
 				emailConfirmation: "",
