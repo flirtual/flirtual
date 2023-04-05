@@ -317,8 +317,10 @@ defmodule Flirtual.Stripe do
   # User isn't an existing Stripe Customer, create one.
   def update_customer(%User{stripe_id: nil} = user) do
     with {:ok, customer} <- Stripe.Customer.create(transform_user(user)),
-         {:ok, _} <- change(user, %{stripe_id: customer.id}) |> Repo.update() do
-      customer
+         {:ok, _} <-
+           change(user, %{stripe_id: customer.id})
+           |> Repo.update() do
+      {:ok, customer}
     end
   end
 
