@@ -104,14 +104,15 @@ defmodule Flirtual.Matchmaking do
 
     Mailer.send(
       user,
-      "It's a match!",
-      """
+      subject: "It's a match!",
+      action_url: action_url,
+      body_text: """
       #{User.display_name(target_user)} liked you back—they want to meet you too!
 
       Check out their profile:
       #{action_url}
       """,
-      """
+      body_html: """
       <p>#{User.display_name(target_user)} liked you back&mdash;they want to meet you too!</p>
 
       <p><a href="#{action_url}" class="btn">Check out their profile</a></p>
@@ -133,8 +134,7 @@ defmodule Flirtual.Matchmaking do
         }
       }
       </script>
-      """,
-      action_url
+      """
     )
   end
 
