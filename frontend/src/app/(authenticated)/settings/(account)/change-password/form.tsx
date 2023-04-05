@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -7,7 +9,9 @@ import { InputLabel, InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 
 export const ChangePasswordForm: React.FC = () => {
-	const [session, mutateSession] = useSession();
+	const [session] = useSession();
+	const router = useRouter();
+
 	if (!session) return null;
 
 	return (
@@ -20,10 +24,8 @@ export const ChangePasswordForm: React.FC = () => {
 				currentPassword: ""
 			}}
 			onSubmit={async (body) => {
-				await mutateSession({
-					...session,
-					user: await api.user.updatePassword(session.user.id, { body })
-				});
+				await api.user.updatePassword(session.user.id, { body });
+				router.refresh();
 			}}
 		>
 			{({ FormField }) => (

@@ -42,7 +42,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 				ref={inputRef}
 				type={type}
 				className={twMerge(
-					"w-full border-none bg-transparent px-4 py-2 font-nunito placeholder:text-black-20 focus:outline-none focus:ring-0 dark:placeholder:text-white-50",
+					"w-full border-none bg-transparent px-4 py-2 font-nunito placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50",
 					props.className
 				)}
 				onChange={(event) => {
