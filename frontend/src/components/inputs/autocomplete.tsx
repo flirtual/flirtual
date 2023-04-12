@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { search as fuzzySearch } from "fast-fuzzy";
+import { search as fuzzySearch, fuzzy } from "fast-fuzzy";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { InputOptionWindow } from "./option-window";
@@ -18,22 +18,43 @@ export interface InputAutocompleteProps<K extends string = string> {
 	placeholder?: string;
 	limit?: number;
 	id?: string;
+	supportArbitrary?: boolean;
 	onChange: React.Dispatch<Array<K>>;
 }
 
 export function InputAutocomplete<K extends string>(props: InputAutocompleteProps<K>) {
-	const { value: values = [], limit = Infinity, onChange, options, ...elementProps } = props;
+	const {
+		value: values = [],
+		limit = Infinity,
+		supportArbitrary = false,
+		onChange,
+		options,
+		...elementProps
+	} = props;
 
-	const visibleValues = useMemo(
+	const visibleValueOptions = useMemo(
 		() =>
-			values.filter((value) => {
-				const option = options.find((option) => option.key === value);
-				return option && !option.hidden;
-			}),
-		[options, values]
+			options.length === 0
+				? []
+				: values
+						.map((value) => {
+							const option =
+								options.find((option) => option.key === value) ??
+								(supportArbitrary
+									? {
+											key: value,
+											label: value,
+											hidden: false
+									  }
+									: undefined);
+
+							return !option?.hidden && option;
+						})
+						.filter(Boolean),
+		[options, values, supportArbitrary]
 	);
 
-	const placeholder = visibleValues.length ? "" : props.placeholder;
+	const placeholder = visibleValueOptions.length ? "" : props.placeholder;
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
@@ -48,12 +69,18 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 		[]
 	);
 
-	const suggestions = useMemo(() => {
-		const excludedOptions = options.filter(({ key, hidden }) => !values.includes(key) && !hidden);
-		if (inputValue.trim().length === 0) return excludedOptions;
+	const potentialOptions = useMemo(
+		() => options.filter(({ key, hidden }) => !values.includes(key) && !hidden),
+		[options, values]
+	);
 
-		return fuzzySearch(inputValue, excludedOptions, { keySelector: (option) => option.label });
-	}, [inputValue, options, values]);
+	const suggestions = useMemo(
+		() =>
+			fuzzySearch(inputValue, potentialOptions, {
+				keySelector: (option) => option.label
+			}),
+		[inputValue, potentialOptions]
+	);
 
 	useEffect(() => {
 		if (values.length <= limit) return;
@@ -84,17 +111,14 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 		>
 			<div className="focusable-within flex rounded-xl bg-white-40 px-2 py-1 text-black-70 shadow-brand-1 dark:bg-black-60 dark:text-white-20">
 				<div className="flex flex-wrap items-center gap-1.5">
-					{visibleValues.map((value) => {
-						const option = options.find((option) => option.key === value);
-						if (!option || option.hidden) return null;
-
+					{visibleValueOptions.map((option) => {
 						return (
 							<button
 								className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 shadow-brand-1"
-								key={value}
+								key={option.key}
 								type="button"
 								onClick={() => {
-									props.onChange(values.filter((v) => v !== value));
+									props.onChange(values.filter((v) => v !== option.key));
 								}}
 							>
 								<span className="pointer-events-none select-none font-nunito text-lg text-white-20">
@@ -116,15 +140,35 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 						onChange={onInputChange}
 						onKeyDown={(event) => {
 							const { key, currentTarget } = event;
+							const value = currentTarget.value.trim();
 
-							if (key === "Enter" && suggestions.length === 1) {
-								props.onChange([...values, suggestions[0].key]);
-								setInputValue("");
+							if (key === "Enter" && value.length !== 0) {
+								const exactMatchOption = options.find(
+									({ label }) => label.toLowerCase() === value.toLowerCase()
+								);
 
-								return;
+								if (
+									exactMatchOption ||
+									// If there is only one suggestion and it's close enough to the input.
+									(suggestions.length === 1 && fuzzy(value, suggestions[0].key) > 0.7)
+								) {
+									props.onChange([...values, exactMatchOption?.key ?? suggestions[0].key]);
+									setInputValue("");
+
+									event.preventDefault();
+									return;
+								}
+
+								if (supportArbitrary) {
+									props.onChange([...values, value as K]);
+									setInputValue("");
+
+									event.preventDefault();
+									return;
+								}
 							}
 
-							if (key !== "Backspace" || currentTarget.value.length !== 0) return;
+							if (key !== "Backspace" || value.length !== 0) return;
 							event.preventDefault();
 
 							const lastValue = values.at(-1);

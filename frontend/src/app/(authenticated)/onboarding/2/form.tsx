@@ -14,7 +14,7 @@ import { entries, excludeBy, filterBy, fromEntries, pick } from "~/utilities";
 import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 
-const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
+const AttributeKeys = [...(["gender", "sexuality", "platform", "game"] as const)];
 
 export const Onboarding2Form: React.FC = () => {
 	const [session, mutateSession] = useSession();
@@ -41,6 +41,10 @@ export const Onboarding2Form: React.FC = () => {
 				new: profile.new ?? false,
 				sexualityPrivacy: user.preferences?.privacy.sexuality ?? "everyone",
 				countryPrivacy: user.preferences?.privacy.country ?? "everyone",
+				interest: [
+					...filterBy(profile.attributes, "type", "interest").map(({ id }) => id),
+					...profile.customInterests
+				],
 				languages: user.profile.languages ?? [],
 				...(fromEntries(
 					AttributeKeys.map((type) => {
@@ -51,7 +55,11 @@ export const Onboarding2Form: React.FC = () => {
 					})
 				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
 			}}
-			onSubmit={async ({ bornAt, ...values }) => {
+			onSubmit={async ({ bornAt, interest, ...values }) => {
+				const customInterests = interest.filter(
+					(id) => !interests.find((interest) => interest.id === id)
+				);
+
 				const [newUser, newProfile, privacyPreferences] = await Promise.all([
 					api.user.update(user.id, {
 						query: {
@@ -72,7 +80,8 @@ export const Onboarding2Form: React.FC = () => {
 							new: values.new,
 							attributes: [
 								excludeBy(profile.attributes ?? [], "type", AttributeKeys).map(({ id }) => id),
-								entries(pick(values, AttributeKeys)).map(([, ids]) => ids)
+								entries(pick(values, AttributeKeys)).map(([, ids]) => ids),
+								interest.filter((id) => !customInterests.includes(id))
 							].flat(2)
 						}
 					}),
@@ -252,6 +261,7 @@ export const Onboarding2Form: React.FC = () => {
 								<InputLabel hint="(up to 7)">Personal interest tags</InputLabel>
 								<InputAutocomplete
 									{...field.props}
+									supportArbitrary
 									limit={7}
 									placeholder="Select your personal interests..."
 									options={interests

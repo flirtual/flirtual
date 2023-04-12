@@ -37,6 +37,7 @@ export type Profile = Partial<UpdatedAtModel> & {
 	agreeableness?: number;
 	languages: Array<string>;
 	attributes: PartialAttributeCollection;
+	customInterests: Array<string>;
 	preferences?: ProfilePreferences;
 	customWeights?: ProfileCustomWeights;
 	images: Array<ProfileImage>;
@@ -53,6 +54,7 @@ export type UpdateProfileBody = Partial<
 		| "languages"
 		| "serious"
 		| "monopoly"
+		| "customInterests"
 	>
 > & {
 	attributes?: Array<string>;
