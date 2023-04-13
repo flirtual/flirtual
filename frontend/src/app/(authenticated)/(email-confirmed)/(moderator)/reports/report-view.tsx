@@ -25,14 +25,16 @@ import { BanProfile } from "~/components/profile/action-bar/ban-profile";
 import { Tooltip } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 
-type CompleteReport = Report & { user: User; target: User };
+type CompleteReport = Report & { user?: User; target: User };
 
-const ReportListContext = createContext<{
+interface ReportListContext {
 	listOptions: ListOptions;
 	reports: Array<CompleteReport>;
 	setListOptions: Dispatch<SetStateAction<ListOptions>>;
 	mutate: KeyedMutator<Array<CompleteReport>>;
-}>({
+}
+
+const ReportListContext = createContext<ReportListContext>({
 	listOptions: { query: {} },
 	reports: [],
 	setListOptions: () => void 0,
@@ -162,8 +164,14 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 									</div>
 								</div>
 								<div className="flex items-baseline gap-4">
-									<InlineLink href={urls.user.profile(report.user.username)}>
-										{displayName(report.user)}
+									<InlineLink
+										href={
+											report.user
+												? urls.user.profile(report.user.username)
+												: urls.moderation.reports
+										}
+									>
+										{report.user ? displayName(report.user) : "Unknown"}
 									</InlineLink>
 								</div>
 								<p className="whitespace-pre">{report.message}</p>
@@ -189,12 +197,12 @@ export const ReportView: React.FC = () => {
 						...reports.map((report) => report.userId),
 						...reports.map((report) => report.targetId)
 					])
-				]
+				].filter(Boolean)
 			});
 
 			return reports.map((report) => ({
 				...report,
-				user: users.find((user) => user.id === report.userId)!,
+				user: users.find((user) => user.id === report.userId),
 				target: users.find((user) => user.id === report.targetId)!
 			}));
 		}
@@ -205,7 +213,7 @@ export const ReportView: React.FC = () => {
 	return (
 		<ReportListContext.Provider
 			value={useMemo(
-				() => ({ listOptions, reports, setListOptions, mutate }),
+				() => ({ listOptions, reports, setListOptions, mutate } as ReportListContext),
 				[listOptions, setListOptions, reports, mutate]
 			)}
 		>

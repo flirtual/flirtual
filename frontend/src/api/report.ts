@@ -10,7 +10,7 @@ export type Report = Expand<
 			reason: Attribute<"report-reason">;
 			message: string;
 			reviewedAt?: string;
-			userId: string;
+			userId?: string;
 			targetId: string;
 		}
 >;
