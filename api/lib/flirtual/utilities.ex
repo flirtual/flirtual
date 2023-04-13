@@ -1,14 +1,28 @@
 defmodule Flirtual.Utilities do
-  @year_in_days 365
+  def skip_invalid_leap_day(year, month, day) do
+    if not Date.leap_year?(Date.new!(year, 1, 1)) and month == 2 and day == 29 do
+      Date.new!(year, 3, 1)
+    else
+      Date.new!(year, month, day)
+    end
+  end
 
   def get_years_ago(years) do
-    Date.utc_today() |> Date.add(-(years * @year_in_days))
+    today = Date.utc_today()
+    skip_invalid_leap_day(today.year - years, today.month, today.day)
   end
 
   def get_years_since(nil), do: 0
 
   def get_years_since(%Date{} = date) do
-    (Date.diff(Date.utc_today(), date) / @year_in_days) |> floor
+    today = Date.utc_today()
+    date_this_year = skip_invalid_leap_day(today.year, date.month, date.day)
+
+    if Date.compare(today, date_this_year) == :lt do
+      today.year - date.year - 1
+    else
+      today.year - date.year
+    end
   end
 
   def get_years_since(%DateTime{} = date),
