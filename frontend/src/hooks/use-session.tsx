@@ -5,6 +5,7 @@ import useSWR, { SWRConfiguration } from "swr";
 import { api } from "~/api";
 import { Session } from "~/api/auth";
 import { User } from "~/api/user";
+import { urls } from "~/urls";
 
 export type UseSessionOptions = Omit<SWRConfiguration<Session | null>, "fetcher" | "fallbackData">;
 
@@ -26,8 +27,8 @@ export function useSession(options: UseSessionOptions = {}) {
 
 	const logout = useCallback(async () => {
 		await api.auth.logout().catch(() => null);
-		await update(null);
-	}, [update]);
+		router.push(urls.login());
+	}, [router]);
 
 	return [session, update, logout] as const;
 }
