@@ -1,10 +1,14 @@
 defmodule Flirtual.Discord do
   use Flirtual.Logger, :discord
 
+  import Flirtual.Utilities
+
   alias Flirtual.Report
   alias Flirtual.Attribute
   alias Flirtual.Subscription
   alias Flirtual.{User}
+
+  @default_color 15_295_883
 
   defp config(key) do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
@@ -71,7 +75,7 @@ defmodule Flirtual.Discord do
                 ],
                 else: []
               ),
-          color: 15_295_883
+          color: @default_color
         }
       ]
     })
@@ -113,7 +117,69 @@ defmodule Flirtual.Discord do
               }
             ]
             |> Enum.filter(&(!!&1)),
-          color: 15_295_883
+          color: @default_color
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:exit_survey,
+        user: %User{} = user,
+        reason: %Attribute{type: "delete-reason"} = reason,
+        comment: comment
+      ) do
+    webhook(:moderation, %{
+      embeds: [
+        %{
+          title: "New exit survey",
+          fields:
+            [
+              %{
+                name: "Reason",
+                value: reason.name
+              },
+              if user.preferences.privacy.analytics do
+                [
+                  %{
+                    name: "Age",
+                    value: get_years_since(user.born_at),
+                    inline: true
+                  },
+                  %{
+                    name: "Genders",
+                    value:
+                      user.profile.attributes
+                      |> filter_by(:type, "gender")
+                      |> Enum.map(
+                        &if &1.metadata["simple"] do
+                          "**" <> &1.name <> "**"
+                        else
+                          &1.name
+                        end
+                      )
+                      |> Enum.join(", \n"),
+                    inline: true
+                  },
+                  %{
+                    name: "Looking for",
+                    value:
+                      user.profile.preferences.attributes
+                      |> filter_by(:type, "gender")
+                      |> Enum.map(& &1.name)
+                      |> Enum.join(", \n"),
+                    inline: true
+                  }
+                ]
+              else
+                []
+              end,
+              %{
+                name: "Comment",
+                value: comment || "None"
+              }
+            ]
+            |> List.flatten(),
+          color: @default_color
         }
       ]
     })

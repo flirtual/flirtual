@@ -79,6 +79,13 @@ defmodule Flirtual.User do
     user.profile[:display_name] || user.username
   end
 
+  def display_name(%User{id: user_id}, deleted: true) do
+    "Deleted " <>
+      (:crypto.hash(:sha, user_id)
+       |> Base.encode16(case: :lower)
+       |> String.slice(0..8))
+  end
+
   def visible?(%User{} = user) do
     case visible(user) do
       {:ok, _} -> true

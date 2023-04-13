@@ -5,11 +5,15 @@ defmodule Flirtual.Users do
 
   import Flirtual.HCaptcha, only: [validate_captcha: 1]
 
+  alias Flirtual.Elasticsearch
+  alias Flirtual.Discord
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Talkjs
   alias Flirtual.Jwt
+  alias Flirtual.Talkjs
   alias Flirtual.{Repo, User}
   alias Flirtual.User.{Session, Preferences, Connection}
+  alias Flirtual.Stripe
 
   def get(id)
       when is_binary(id) do
@@ -303,8 +307,51 @@ defmodule Flirtual.Users do
     end)
   end
 
-  def delete(%User{} = user) do
-    user |> Repo.delete()
+  defmodule Delete do
+    use Flirtual.EmbeddedSchema
+
+    import Flirtual.Attribute, only: [validate_attribute: 3]
+    import Flirtual.HCaptcha, only: [validate_captcha: 1]
+    import Flirtual.User, only: [validate_current_password: 2]
+
+    embedded_schema do
+      field :reason_id, :string
+      field :reason, :map, virtual: true
+
+      field :comment, :string
+
+      field :current_password, :string
+      field :captcha, :string
+    end
+
+    def changeset(value, _, %{user: user}) do
+      value
+      |> validate_captcha()
+      |> validate_attribute(:reason_id, "delete-reason")
+      |> validate_current_password(user)
+      |> validate_length(:comment, max: 8192)
+    end
+  end
+
+  def delete(%User{} = user, attrs) do
+    Repo.transaction(fn ->
+      with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
+           {:ok, user} <- Repo.delete(user),
+           {:ok, _} <- Elasticsearch.delete(:users, user.id),
+           {:ok, _} <- Talkjs.delete_user(user),
+           {:ok, _} <- Stripe.delete_customer(user),
+           {:ok, _} <-
+             Discord.deliver_webhook(:exit_survey,
+               user: user,
+               reason: attrs.reason,
+               comment: attrs.comment
+             ) do
+        {:ok, user}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   def assign_connection(user_id, :discord = connection_type, %{"code" => code}) do

@@ -10,8 +10,6 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Utilities.Changeset
   import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
-  import Flirtual.HCaptcha, only: [validate_captcha: 1]
-  import Flirtual.User, only: [validate_current_password: 2]
 
   alias Flirtual.User.Profile.Block
   alias Flirtual.Attribute
@@ -410,32 +408,11 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def delete(conn, params) do
+  def delete(conn, attrs) do
     user = conn.assigns[:session].user
 
-    with {:ok, params} <-
-           cast_arbitrary(
-             %{
-               reason_id: :string,
-               comment: :string,
-               current_password: :string,
-               captcha: :string
-             },
-             params
-           )
-           |> validate_required([:reason_id, :current_password])
-           |> validate_attribute(:reason_id, "delete-reason")
-           |> validate_length(:comment, max: 2048)
-           |> validate_captcha()
-           |> validate_current_password(user)
-           |> apply_action(:read),
-         {:ok, _} <- Users.delete(user) do
-      Logger.warn(
-        "Account deleted: #{user.id} for #{params.reason_id}" <>
-          if(params[:comment], do: " with the comment\n#{params[:comment]}", else: "")
-      )
-
-      conn |> resp(:no_content, "") |> halt()
+    with {:ok, _} <- Users.delete(user, attrs) do
+      conn |> json(%{deleted: true})
     end
   end
 

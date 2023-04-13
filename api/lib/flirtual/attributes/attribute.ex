@@ -2,6 +2,7 @@ defmodule Flirtual.Attribute do
   use Flirtual.Schema
 
   import Flirtual.Utilities.Changeset
+  import Flirtual.Utilities
   import Ecto.Changeset
   import Ecto.Query
 
@@ -91,19 +92,33 @@ defmodule Flirtual.Attribute do
     |> Repo.all()
   end
 
-  def validate_attribute(changeset, field, attribute_type, options \\ []) do
+  def validate_attribute(changeset, id_key, attribute_type, options \\ []) do
+    key =
+      Keyword.get(
+        options,
+        :key,
+        id_key
+        |> Atom.to_string()
+        |> String.replace_suffix("_id", "")
+        |> to_atom()
+      )
+
     changeset
-    |> validate_uuid(field)
-    |> validate_change(field, fn field, value ->
-      if not exists_id_explicit?(value, attribute_type) do
-        [
-          {
-            Keyword.get(options, :field, field),
-            Keyword.get(options, :message, "does not exist")
-          }
-        ]
+    |> validate_uuid(id_key)
+    |> then(fn changeset ->
+      if not changeset.valid? do
+        changeset
       else
-        []
+        value = get_field(changeset, id_key)
+        attribute = by_id_explicit(value, attribute_type)
+
+        if is_nil(attribute) do
+          changeset
+          |> add_error(id_key, "does not exist")
+        else
+          changeset
+          |> put_change(key, attribute)
+        end
       end
     end)
   end
@@ -150,11 +165,11 @@ defmodule Flirtual.Attribute do
 end
 
 defimpl Jason.Encoder, for: Flirtual.Attribute do
-  def encode(value, opts) do
-    Jason.Encode.map(
-      Map.take(value, [:id, :type, :name, :metadata])
-      |> Map.filter(fn {_, value} -> value !== nil end),
-      opts
-    )
-  end
+  use Flirtual.Encoder,
+    only: [
+      :id,
+      :type,
+      :name,
+      :metadata
+    ]
 end

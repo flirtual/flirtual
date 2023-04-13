@@ -55,7 +55,7 @@ defmodule Flirtual.Matchmaking do
       if Keyword.get(opts, :force, false) or reset_at === nil or
            Subscription.active?(user.subscription) or
            NaiveDateTime.compare(DateTime.to_naive(reset_at), now) == :lt do
-        with {:ok, resp} <- Elasticsearch.search("users", query),
+        with {:ok, resp} <- Elasticsearch.search(:users, query),
              user_ids = Enum.map(resp["hits"]["hits"], & &1["_id"]),
              {:ok, _} <- Prospect.delete_all(profile_id: profile.user_id, kind: kind),
              {:ok, _} <-

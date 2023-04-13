@@ -2,19 +2,19 @@ defmodule Flirtual.Elasticsearch do
   use Elasticsearch.Cluster, otp_app: :flirtual
   use Flirtual.Logger, :elasticsearch
 
-  defp get_index_name(index) do
+  defp get_index_name(index) when is_atom(index) do
     index_prefix = Application.get_env(:flirtual, Flirtual.Elasticsearch)[:index_prefix]
     if(index_prefix, do: index_prefix <> "_" <> to_string(index), else: to_string(index))
   end
 
-  def search(index, query) do
+  def search(index, query) when is_atom(index) do
     index_name = get_index_name(index)
     log(:debug, [index_name, "search"], query)
 
     Elasticsearch.post(Flirtual.Elasticsearch, "/" <> index_name <> "/_search", query)
   end
 
-  def delete_index(index) do
+  def delete_index(index) when is_atom(index) do
     index_name = get_index_name(index)
     log(:warn, [index_name, "delete-index"], nil)
 
@@ -48,7 +48,8 @@ defmodule Flirtual.Elasticsearch do
   def bulk(index, changes, limit \\ 100)
   def bulk(_, [], _), do: :ok
 
-  def bulk(index, changes, limit) do
+  def bulk(index, changes, limit)
+      when is_atom(index) and is_list(changes) and is_integer(limit) do
     index_name = get_index_name(index)
     log(:debug, [index_name, "bulk"], changes)
 
@@ -89,7 +90,7 @@ defmodule Flirtual.Elasticsearch do
     end)
   end
 
-  def get(index, id) when is_binary(id) do
+  def get(index, id) when is_atom(index) and is_binary(id) do
     index_name = get_index_name(index)
     log(:debug, [index_name, "get"], id)
 
@@ -105,7 +106,7 @@ defmodule Flirtual.Elasticsearch do
 
   def get(_, []), do: []
 
-  def get(index, ids) when is_list(ids) do
+  def get(index, ids) when is_atom(index) and is_list(ids) do
     index_name = get_index_name(index)
     log(:debug, [index_name, "get"], ids)
 
@@ -125,8 +126,12 @@ defmodule Flirtual.Elasticsearch do
     end
   end
 
-  def exists?(index, id) do
+  def exists?(index, id) when is_atom(index) do
     not is_nil(get(index, id))
+  end
+
+  def delete(index, id) when is_atom(index) and is_binary(id) do
+    Elasticsearch.delete(Flirtual.Elasticsearch, "/" <> get_index_name(index) <> "/_doc/#{id}")
   end
 
   def encode(item), do: Elasticsearch.Document.encode(item)

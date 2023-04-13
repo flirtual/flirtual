@@ -105,7 +105,7 @@ defmodule Flirtual.User.ChangeQueue do
     documents = Elasticsearch.get(:users, Enum.map(items, & &1.user_id))
 
     Elasticsearch.bulk(
-      "users",
+      :users,
       Enum.map(items, fn item ->
         document_id = item.user_id
 

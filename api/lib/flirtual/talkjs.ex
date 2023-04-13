@@ -64,6 +64,32 @@ defmodule Flirtual.Talkjs do
     })
   end
 
+  def delete_user(%User{} = user) do
+    with {:ok, talkjs_user} <-
+           update_user(user.id, %{
+             name: User.display_name(user, deleted: true),
+             email: nil,
+             photoUrl: nil,
+             role: nil
+           }),
+         {:ok, _} <- delete_user_conversations(user) do
+      {:ok, talkjs_user}
+    end
+  end
+
+  defp delete_user_conversations(%User{} = user) do
+    list_conversations(user.id)
+    |> Enum.map(&delete_conversation(&1["id"]))
+    |> then(
+      &Enum.reduce(&1, {:ok, length(&1)}, fn item, _ ->
+        case item do
+          {:error, _} -> item
+          {:ok, _} -> {:ok, length(&1)}
+        end
+      end)
+    )
+  end
+
   def update_user(user_id, params) do
     case fetch(:put, "users/" <> user_id, params) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
@@ -76,6 +102,13 @@ defmodule Flirtual.Talkjs do
 
   def update_conversation(conversation_id, data) do
     case fetch(:put, "conversations/" <> conversation_id, data) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+    end
+  end
+
+  def delete_conversation(conversation_id) do
+    case fetch(:delete, "conversations/" <> conversation_id) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
     end

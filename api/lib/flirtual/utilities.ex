@@ -5,6 +5,8 @@ defmodule Flirtual.Utilities do
     Date.utc_today() |> Date.add(-(years * @year_in_days))
   end
 
+  def get_years_since(nil), do: 0
+
   def get_years_since(%Date{} = date) do
     (Date.diff(Date.utc_today(), date) / @year_in_days) |> floor
   end

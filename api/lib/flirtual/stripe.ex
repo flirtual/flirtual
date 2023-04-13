@@ -329,6 +329,13 @@ defmodule Flirtual.Stripe do
     Stripe.Customer.update(stripe_id, transform_user(user))
   end
 
+  # User isn't an existing Stripe Customer, do nothing.
+  def delete_customer(%User{stripe_id: nil}), do: {:ok, nil}
+
+  def delete_customer(%User{stripe_id: stripe_id}) when is_binary(stripe_id) do
+    Stripe.Customer.delete(stripe_id)
+  end
+
   def cancel_subscription(%Subscription{stripe_id: stripe_id}, options \\ []) do
     subscription = Stripe.Subscription.retrieve(stripe_id)
 
