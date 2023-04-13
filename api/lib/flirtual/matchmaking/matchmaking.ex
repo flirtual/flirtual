@@ -600,39 +600,51 @@ defmodule Flirtual.Matchmaking do
     %{profile: %{custom_weights: custom_weights} = profile} = user
 
     [
-      %{
-        "function_score" => %{
-          "linear" => %{
-            "openness" => %{
-              "origin" => profile.openness,
-              "scale" => 3
-            }
-          },
-          "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+      if profile.openness do
+        %{
+          "function_score" => %{
+            "linear" => %{
+              "openness" => %{
+                "origin" => profile.openness,
+                "scale" => 3
+              }
+            },
+            "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+          }
         }
-      },
-      %{
-        "function_score" => %{
-          "linear" => %{
-            "conscientiousness" => %{
-              "origin" => profile.conscientiousness,
-              "scale" => 3
-            }
-          },
-          "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+      else
+        []
+      end,
+      if profile.conscientiousness do
+        %{
+          "function_score" => %{
+            "linear" => %{
+              "conscientiousness" => %{
+                "origin" => profile.conscientiousness,
+                "scale" => 3
+              }
+            },
+            "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+          }
         }
-      },
-      %{
-        "function_score" => %{
-          "linear" => %{
-            "agreeableness" => %{
-              "origin" => profile.agreeableness,
-              "scale" => 3
-            }
-          },
-          "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+      else
+        []
+      end,
+      if profile.agreeableness do
+        %{
+          "function_score" => %{
+            "linear" => %{
+              "agreeableness" => %{
+                "origin" => profile.agreeableness,
+                "scale" => 3
+              }
+            },
+            "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+          }
         }
-      }
+      else
+        []
+      end
     ]
   end
 end

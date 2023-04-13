@@ -159,8 +159,6 @@ defmodule Flirtual.Users do
   defmodule UpdateEmail do
     use Flirtual.EmbeddedSchema
 
-    alias Flirtual.Users
-
     embedded_schema do
       field :email, :string
       field :email_confirmation, :string

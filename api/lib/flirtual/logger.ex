@@ -1,7 +1,7 @@
 defmodule Flirtual.Logger do
   @inspect_options [
     pretty: true,
-    limit: 10,
+    limit: 100,
     syntax_colors: [
       string: :light_green,
       number: :light_yellow,
