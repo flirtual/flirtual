@@ -5,7 +5,9 @@ export interface UuidModel {
 export interface CreatedAtModel {
 	createdAt: string;
 }
+
 export interface UpdatedAtModel {
 	updatedAt: string;
 }
+
 export type DatedModel = CreatedAtModel & UpdatedAtModel;

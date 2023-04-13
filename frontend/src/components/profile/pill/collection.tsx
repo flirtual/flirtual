@@ -69,6 +69,7 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 	];
 
 	if (!session) return null;
+	const sessionAttributeIds = session.user.profile.attributes.map(({ id }) => id);
 
 	const editable = session.user.id === user.id;
 
@@ -112,11 +113,29 @@ export const PillCollection: React.FC<{ user: User }> = (props) => {
 						))}
 					</div>
 				)}
-				<PillAttributeList
-					attributes={attributes.interest}
-					href={editable ? urls.settings.tags("interest") : undefined}
-					user={user}
-				/>
+				<div className="flex w-full flex-wrap gap-2">
+					{(attributes.interest ?? []).map(({ id, name }) => (
+						<Pill
+							active={session.user.id !== user.id && sessionAttributeIds.includes(id)}
+							href={editable ? urls.settings.tags("interest") : undefined}
+							key={id}
+						>
+							{name}
+						</Pill>
+					))}
+					{user.profile.customInterests.map((customInterest) => (
+						<Pill
+							href={editable ? urls.settings.tags("interest") : undefined}
+							key={customInterest}
+							active={
+								session.user.id !== user.id &&
+								session.user.profile.customInterests.includes(customInterest)
+							}
+						>
+							{customInterest}
+						</Pill>
+					))}
+				</div>
 				<PillAttributeList
 					attributes={attributes.game}
 					href={editable ? urls.settings.tags("game") : undefined}

@@ -11,7 +11,7 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { entries, excludeBy, filterBy, fromEntries, pick } from "~/utilities";
 
-const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
+const AttributeKeys = [...(["gender", "sexuality", "platform", "game"] as const)];
 
 export const TagsForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
@@ -36,6 +36,10 @@ export const TagsForm: React.FC = () => {
 				new: profile.new ?? false,
 				country: profile.country ?? null,
 				languages: profile.languages ?? [],
+				interest: [
+					...filterBy(profile.attributes, "type", "interest").map(({ id }) => id),
+					...profile.customInterests
+				],
 				...(fromEntries(
 					AttributeKeys.map((type) => {
 						return [
@@ -45,7 +49,11 @@ export const TagsForm: React.FC = () => {
 					})
 				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
 			}}
-			onSubmit={async ({ bornAt, ...values }) => {
+			onSubmit={async ({ bornAt, interest, ...values }) => {
+				const customInterests = interest.filter(
+					(id) => !interests.find((interest) => interest.id === id)
+				);
+
 				const [newUser, newProfile] = await Promise.all([
 					api.user.update(user.id, {
 						body: {
@@ -61,9 +69,11 @@ export const TagsForm: React.FC = () => {
 							country: values.country,
 							languages: values.languages,
 							new: values.new,
+							customInterests,
 							attributes: [
 								excludeBy(profile.attributes ?? [], "type", AttributeKeys).map(({ id }) => id),
-								entries(pick(values, AttributeKeys)).map(([, ids]) => ids)
+								entries(pick(values, AttributeKeys)).map(([, ids]) => ids),
+								interest.filter((id) => !customInterests.includes(id))
 							].flat(2)
 						}
 					})
@@ -212,6 +222,7 @@ export const TagsForm: React.FC = () => {
 								<InputLabel hint="(up to 7)">Personal interest tags</InputLabel>
 								<InputAutocomplete
 									{...field.props}
+									supportArbitrary
 									limit={7}
 									placeholder="Select your personal interests..."
 									options={interests

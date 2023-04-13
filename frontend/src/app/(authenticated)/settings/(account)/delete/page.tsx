@@ -34,7 +34,7 @@ export default function SettingsAccountDeactivatePage() {
 				}}
 				onSubmit={async (body, { captcha }) => {
 					await api.user.delete({ body: { ...body, captcha } });
-					router.push(urls.login());
+					router.refresh();
 				}}
 			>
 				{({ FormField }) => (

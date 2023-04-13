@@ -55,7 +55,7 @@ export const urls = {
 	default: "/",
 	register: "/register",
 	login: (to?: string) => url("/login", { to }),
-	forgotPassword: "/forgot-password",
+	forgotPassword: "/forgot",
 	user: {
 		me: "/me",
 		profile: (username: string) => `/${username}`
