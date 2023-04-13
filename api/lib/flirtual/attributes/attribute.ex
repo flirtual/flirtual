@@ -28,6 +28,8 @@ defmodule Flirtual.Attribute do
   end
 
   def by_id_explicit(attribute_id, type) do
+    IO.inspect([attribute_id, type])
+
     Attribute
     |> where(id: ^attribute_id, type: ^type)
     |> Repo.one()
@@ -106,10 +108,11 @@ defmodule Flirtual.Attribute do
     changeset
     |> validate_uuid(id_key)
     |> then(fn changeset ->
-      if not changeset.valid? do
+      if not changeset.valid? or not changed?(changeset, id_key) do
         changeset
       else
         value = get_field(changeset, id_key)
+        IO.inspect([value, id_key])
         attribute = by_id_explicit(value, attribute_type)
 
         if is_nil(attribute) do
