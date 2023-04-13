@@ -21,6 +21,12 @@ export const ClientScripts: React.FC = () => {
 	const { theme } = useTheme();
 
 	useEffect(() => {
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", function () {
+				void navigator.serviceWorker.register("/sw.js");
+			});
+		}
+
 		/* eslint-disable */
 		// @ts-expect-error
 		!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
