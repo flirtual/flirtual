@@ -311,7 +311,9 @@ defmodule Flirtual.Matchmaking do
     user_age = if user.born_at, do: get_years_since(user.born_at), else: nil
 
     dob_lte = if preferences.agemin, do: get_years_ago(preferences.agemin), else: nil
-    dob_gte = if preferences.agemax, do: get_years_ago(preferences.agemax), else: nil
+
+    dob_gte =
+      if preferences.agemax, do: Date.add(get_years_ago(preferences.agemax + 1), 1), else: nil
 
     [
       if(!!dob_lte or !!dob_gte,
