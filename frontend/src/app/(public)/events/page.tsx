@@ -8,7 +8,7 @@ import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 
-export default function AboutPage() {
+export default function EventsPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard

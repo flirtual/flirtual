@@ -4,7 +4,7 @@ import { urls } from "~/urls";
 import { MobileButton } from "~/components/mobile-button";
 import { AppleIcon, GooglePlayIcon, MetaIcon, MicrosoftIcon } from "~/components/icons";
 
-export default function AboutPage() {
+export default function DownloadPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard className="w-full sm:max-w-2xl" title="Download app">
