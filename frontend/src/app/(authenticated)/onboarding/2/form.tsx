@@ -214,7 +214,7 @@ export const Onboarding2Form: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Language</InputLabel>
-								<InputLanguageAutocomplete limit={3} {...field.props} />
+								<InputLanguageAutocomplete limit={5} {...field.props} />
 							</>
 						)}
 					</FormField>
