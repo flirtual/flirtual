@@ -441,7 +441,7 @@ defmodule Flirtual.Users do
              ])
              |> validate_acceptance(:service_agreement)
              |> then(
-               &if(Keyword.fetch!(options, :captcha) != false,
+               &if(Keyword.get(options, :captcha) != nil,
                  do: &1 |> validate_captcha(),
                  else: &1
                )
