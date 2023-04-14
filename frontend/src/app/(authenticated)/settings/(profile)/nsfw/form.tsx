@@ -9,7 +9,7 @@ import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { excludeBy, filterBy } from "~/utilities";
+import { filterBy } from "~/utilities";
 
 export const NsfwForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
@@ -33,11 +33,8 @@ export const NsfwForm: React.FC = () => {
 				const [newProfile, , newPreferences] = await Promise.all([
 					api.user.profile.update(user.id, {
 						body: {
-							domsub,
-							attributes: [
-								...excludeBy(user.profile.attributes, "type", "kink").map(({ id }) => id),
-								...kinks
-							]
+							domsub: domsub ?? "none",
+							kinkId: kinks
 						}
 					}),
 					api.user.preferences.updatePrivacy(user.id, { body: { kinks: kinksPrivacy } }),

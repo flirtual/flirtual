@@ -1,5 +1,7 @@
 import "server-only";
 
+// eslint-disable-next-line import/named
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -27,6 +29,52 @@ export interface ServerAuthenticateOptions {
 	tags?: Array<UserTags>;
 }
 
+const _useServerAuthenticate = cache(
+	async (options: ServerAuthenticateOptions = {}): Promise<Session | null> => {
+		console.log(Date.now());
+
+		const {
+			optional = false,
+			emailConfirmedOptional = false,
+			visibleOptional = false,
+			tags = []
+		} = options;
+
+		const session = await api.auth.session(thruServerCookies()).catch((reason) => {
+			if (!(reason instanceof ResponseError)) throw reason;
+			if (reason.statusCode === 401) return null;
+			throw reason;
+		});
+
+		if (!session && !optional) redirect(urls.login());
+
+		if (session) {
+			if (!tags.every((tag) => session.user.tags?.includes(tag))) {
+				redirect(urls.default);
+			}
+
+			if (!session.user.visible) {
+				const { visible, reasons } = await api.user
+					.visible(session.user.id, thruServerCookies())
+					.catch(() => ({ visible: false, reasons: [] }));
+
+				if (!visible) {
+					const reason = reasons[0];
+					if (reason && !(optional || visibleOptional)) {
+						if (reason.to) redirect(reason.to);
+					}
+				}
+			}
+		}
+
+		// if the user's email is not confirmed, and we don't allow email to be optionally verified.
+		if (!session?.user?.emailConfirmedAt && !(optional || emailConfirmedOptional))
+			return redirect(urls.confirmEmail());
+
+		return session;
+	}
+);
+
 export async function useServerAuthenticate(
 	options?: ServerAuthenticateOptions & { optional?: false }
 ): Promise<Session>;
@@ -36,46 +84,9 @@ export async function useServerAuthenticate(
 export async function useServerAuthenticate(
 	options: ServerAuthenticateOptions
 ): Promise<Session | null>;
+
 export async function useServerAuthenticate(
 	options: ServerAuthenticateOptions = {}
 ): Promise<Session | null> {
-	const {
-		optional = false,
-		emailConfirmedOptional = false,
-		visibleOptional = false,
-		tags = []
-	} = options;
-
-	const session = await api.auth.session(thruServerCookies()).catch((reason) => {
-		if (!(reason instanceof ResponseError)) throw reason;
-		if (reason.statusCode === 401) return null;
-		throw reason;
-	});
-
-	if (!session && !optional) redirect(urls.login());
-
-	if (session) {
-		if (!tags.every((tag) => session.user.tags?.includes(tag))) {
-			redirect(urls.default);
-		}
-
-		if (!session.user.visible) {
-			const { visible, reasons } = await api.user
-				.visible(session.user.id, thruServerCookies())
-				.catch(() => ({ visible: false, reasons: [] }));
-
-			if (!visible) {
-				const reason = reasons[0];
-				if (reason && !(optional || visibleOptional)) {
-					if (reason.to) redirect(reason.to);
-				}
-			}
-		}
-	}
-
-	// if the user's email is not confirmed, and we don't allow email to be optionally verified.
-	if (!session?.user?.emailConfirmedAt && !(optional || emailConfirmedOptional))
-		return redirect(urls.confirmEmail());
-
-	return session;
+	return _useServerAuthenticate(options);
 }

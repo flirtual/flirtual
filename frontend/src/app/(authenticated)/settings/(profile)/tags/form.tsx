@@ -9,9 +9,9 @@ import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inpu
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { entries, excludeBy, filterBy, fromEntries, pick } from "~/utilities";
+import { filterBy, fromEntries } from "~/utilities";
 
-const AttributeKeys = [...(["gender", "sexuality", "platform", "game"] as const)];
+const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
 
 export const TagsForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
@@ -36,10 +36,6 @@ export const TagsForm: React.FC = () => {
 				new: profile.new ?? false,
 				country: profile.country ?? null,
 				languages: profile.languages ?? [],
-				interest: [
-					...filterBy(profile.attributes, "type", "interest").map(({ id }) => id),
-					...profile.customInterests
-				],
 				...(fromEntries(
 					AttributeKeys.map((type) => {
 						return [
@@ -47,7 +43,11 @@ export const TagsForm: React.FC = () => {
 							filterBy(profile.attributes, "type", type).map(({ id }) => id) ?? []
 						] as const;
 					})
-				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
+				) as { [K in (typeof AttributeKeys)[number]]: Array<string> }),
+				interest: [
+					...filterBy(profile.attributes, "type", "interest").map(({ id }) => id),
+					...profile.customInterests
+				]
 			}}
 			onSubmit={async ({ bornAt, interest, ...values }) => {
 				const customInterests = interest.filter(
@@ -62,19 +62,20 @@ export const TagsForm: React.FC = () => {
 					}),
 					api.user.profile.update(user.id, {
 						query: {
-							required: ["languages", "new"],
-							requiredAttributes: AttributeKeys.filter((key) => key !== "sexuality")
+							required: ["languages", "new"]
 						},
 						body: {
-							country: values.country,
+							country: values.country ?? "none",
 							languages: values.languages,
 							new: values.new,
 							customInterests,
-							attributes: [
-								excludeBy(profile.attributes ?? [], "type", AttributeKeys).map(({ id }) => id),
-								entries(pick(values, AttributeKeys)).map(([, ids]) => ids),
-								interest.filter((id) => !customInterests.includes(id))
-							].flat(2)
+							...(fromEntries(
+								AttributeKeys.filter((key) => key !== "interest").map((type) => {
+									// @ts-expect-error: don't want to deal with this.
+									return [`${type}Id`, values[type]] as const;
+								})
+							) as { [K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string> }),
+							interestId: interest.filter((id) => !customInterests.includes(id))
 						}
 					})
 				]);

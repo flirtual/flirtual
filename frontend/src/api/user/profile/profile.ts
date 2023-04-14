@@ -31,7 +31,7 @@ export type Profile = Partial<UpdatedAtModel> & {
 	serious?: boolean;
 	domsub?: ProfileDomsub;
 	monopoly?: ProfileMonopoly;
-	country?: string | null;
+	country?: string;
 	openness?: number;
 	conscientiousness?: number;
 	agreeableness?: number;
@@ -43,21 +43,27 @@ export type Profile = Partial<UpdatedAtModel> & {
 	images: Array<ProfileImage>;
 };
 
+export const ProfileAttributes = [
+	"gender",
+	"sexuality",
+	"kink",
+	"game",
+	"platform",
+	"interest"
+] as const;
+
+export type ProfileAttribute = (typeof ProfileAttributes)[number];
+
 export type UpdateProfileBody = Partial<
 	Pick<
 		Profile,
-		| "displayName"
-		| "biography"
-		| "new"
-		| "domsub"
-		| "country"
-		| "languages"
-		| "serious"
-		| "monopoly"
-		| "customInterests"
+		"displayName" | "biography" | "new" | "country" | "languages" | "serious" | "customInterests"
 	>
 > & {
-	attributes?: Array<string>;
+	[K in ProfileAttribute as `${K}Id`]?: Array<string>;
+} & {
+	domsub?: ProfileDomsub | "none";
+	monopoly?: ProfileMonopoly | "none";
 };
 
 export async function update(
@@ -66,7 +72,6 @@ export async function update(
 		UpdateProfileBody,
 		| {
 				required?: Array<keyof UpdateProfileBody>;
-				requiredAttributes?: Array<AttributeType>;
 		  }
 		| undefined
 	>
@@ -76,9 +81,6 @@ export async function update(
 		query: {
 			required: Array.isArray(options.query?.required)
 				? options.query?.required.map((key) => snakeCase(key))
-				: undefined,
-			requiredAttributes: Array.isArray(options.query?.requiredAttributes)
-				? options.query?.requiredAttributes.map((key) => snakeCase(key))
 				: undefined
 		}
 	});

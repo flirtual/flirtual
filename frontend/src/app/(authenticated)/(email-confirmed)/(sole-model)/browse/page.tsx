@@ -12,11 +12,8 @@ interface BrowsePageProps {
 }
 
 export default async function BrowsePage({ searchParams }: BrowsePageProps) {
-	if (searchParams.kind && !ProspectKind.includes(searchParams.kind)) {
-		return redirect(urls.browse());
-	}
-
 	const kind = (searchParams.kind ?? "love") as ProspectKind;
+	if (!ProspectKind.includes(kind)) return redirect(urls.browse());
 
 	const prospectIds = await api.matchmaking.listProspects({
 		...thruServerCookies(),
