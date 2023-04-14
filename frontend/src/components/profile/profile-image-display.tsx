@@ -195,7 +195,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 						</ModalOuter>
 					)}
 				</div>
-				<div className="pointer-events-none absolute bottom-0 h-full w-full bg-gradient-to-b from-transparent via-black-90/20 to-black-90/60">
+				<div className="pointer-events-none absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent via-black-90/20 to-black-90/60">
 					{children}
 				</div>
 			</div>
