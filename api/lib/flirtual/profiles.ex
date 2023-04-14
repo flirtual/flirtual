@@ -33,11 +33,146 @@ defmodule Flirtual.Profiles do
     end)
   end
 
+  defmodule Update do
+    use Flirtual.EmbeddedSchema
+
+    import Flirtual.Utilities
+    import Flirtual.Attribute
+
+    alias Flirtual.User.Profile
+    alias Flirtual.Languages
+    alias Flirtual.Countries
+
+    @attribute_keys [
+      :gender_id,
+      :sexuality_id,
+      :kink_id,
+      :game_id,
+      :platform_id,
+      :interest_id
+    ]
+
+    @attribute_types @attribute_keys
+                     |> Enum.map(fn key ->
+                       key
+                       |> Atom.to_string()
+                       |> String.replace_suffix("_id", "")
+                       |> to_atom()
+                     end)
+
+    @optional [
+                :display_name,
+                :biography,
+                :domsub,
+                :monopoly,
+                :country,
+                :serious,
+                :new,
+                :languages,
+                :custom_interests
+              ] ++ @attribute_keys ++ @attribute_types
+
+    embedded_schema do
+      field :display_name, :string
+      field :biography, :string
+      field :domsub, :string
+      field :monopoly, :string
+      field :country, :string
+      field :serious, :boolean
+      field :new, :boolean
+      field :languages, {:array, :string}
+      field :custom_interests, {:array, :string}
+
+      @attribute_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)
+      @attribute_types |> Enum.map(fn key -> field(key, {:array, :string}, virtual: true) end)
+    end
+
+    def changeset(value, _, %{required: required}) do
+      value
+      |> validate_required(required || [])
+      |> validate_length(:display_name, min: 3, max: 32)
+      |> validate_length(:biography, min: 48, max: 4096)
+      |> validate_length(:languages, min: 1, max: 5)
+      |> validate_subset(:languages, Languages.list(:iso_639_1),
+        message: "has an unrecognized language"
+      )
+      |> validate_inclusion(:country, ["none" | Countries.list(:iso_3166_1)],
+        message: "is an unrecognized country"
+      )
+      |> validate_inclusion(:domsub, ["none" | Ecto.Enum.values(Profile, :domsub)])
+      |> validate_inclusion(:monopoly, ["none" | Ecto.Enum.values(Profile, :monopoly)])
+      |> validate_attributes(:gender_id, "gender")
+      |> validate_length(:gender_id, min: 1, max: 4)
+      |> validate_attributes(:sexuality_id, "sexuality")
+      |> validate_length(:sexuality, max: 3)
+      |> validate_attributes(:kink_id, "kink")
+      |> validate_length(:kink, min: 0, max: 8)
+      |> validate_attributes(:game_id, "game")
+      |> validate_length(:game, min: 1, max: 5)
+      |> validate_attributes(:platform_id, "platform")
+      |> validate_length(:platform, min: 1, max: 8)
+      |> validate_attributes(:interest_id, "interest")
+      |> then(fn changeset ->
+        if not changed?(changeset, :interest_id) or not changed?(changeset, :custom_interests) do
+          changeset
+        else
+          interests =
+            (get_field(changeset, :interest) || []) ++
+              (get_field(changeset, :custom_interests) || [])
+
+          changeset
+          |> put_change(:interest, interests)
+          |> delete_change(:custom_interests)
+        end
+      end)
+      |> validate_length(:interest, min: 1, max: 7)
+    end
+
+    def transform_value(value, default) do
+      if value === "none" do
+        nil
+      else
+        value || default
+      end
+    end
+
+    def transform(profile, attrs) do
+      profile
+      |> change(%{
+        display_name: transform_value(attrs.display_name, profile.display_name),
+        biography: transform_value(attrs.biography, profile.biography),
+        serious: transform_value(attrs.serious, profile.serious),
+        new: transform_value(attrs.new, profile.new),
+        country: transform_value(attrs.country, profile.country),
+        domsub: transform_value(attrs.domsub, profile.domsub),
+        monopoly: transform_value(attrs.monopoly, profile.monopoly),
+        languages: transform_value(attrs.languages, profile.languages),
+        custom_interests:
+          if not is_nil(attrs.interest) do
+            attrs.interest
+            |> Enum.filter(&is_binary(&1))
+          else
+            nil
+          end ||
+            profile.custom_interests,
+        attributes:
+          [
+            @attribute_types
+            |> Enum.map(fn key ->
+              (attrs[key] || profile.attributes |> filter_by(:type, key |> Atom.to_string()))
+              |> Enum.filter(&(not is_binary(&1)))
+            end)
+          ]
+          |> List.flatten()
+      })
+    end
+  end
+
   def update(%Profile{} = profile, attrs, options \\ []) do
     Repo.transaction(fn ->
-      with {:ok, profile} <-
-             Profile.changeset(profile, attrs, options)
-             |> Repo.update(),
+      with {:ok, attrs} <-
+             Update.apply(attrs, context: %{required: Keyword.get(options, :required, [])}),
+           {:ok, profile} <- Update.transform(profile, attrs) |> Repo.update(),
            {:ok, _} <- ChangeQueue.add(profile.user_id) do
         profile
       else

@@ -109,49 +109,6 @@ defmodule Flirtual.User.Profile do
     ]
   end
 
-  def changeset(%Profile{} = profile, attrs, options \\ []) do
-    cast(profile, attrs, [
-      :display_name,
-      :biography,
-      :serious,
-      :new,
-      :country,
-      :domsub,
-      :monopoly,
-      :languages,
-      :custom_interests
-    ])
-    |> validate_required(Keyword.get(options, :required, []))
-    |> validate_length(:display_name, min: 3, max: 32)
-    |> validate_length(:biography, min: 48, max: 4096)
-    |> validate_length(:languages, min: 1, max: 5)
-    |> validate_subset(:languages, Languages.list(:iso_639_1),
-      message: "has an unrecognized language"
-    )
-    |> validate_inclusion(:country, Countries.list(:iso_3166_1),
-      message: "is an unrecognized country"
-    )
-    |> validate_attribute_list(
-      attrs["attributes"] || attrs[:attributes],
-      [
-        :gender,
-        :sexuality,
-        :kink,
-        :game,
-        :platform,
-        :interest
-      ],
-      &(&1
-        |> validate_length(:gender, min: 1, max: 4)
-        |> validate_length(:sexuality, max: 3)
-        |> validate_length(:kink, min: 0, max: 8)
-        |> validate_length(:game, min: 1, max: 5)
-        |> validate_length(:platform, min: 1, max: 8)
-        |> validate_length(:interest, min: 1, max: 7)),
-      required: Keyword.get(options, :required_attributes, [])
-    )
-  end
-
   def update_personality_changeset(changeset, attrs) do
     changeset
     |> cast(

@@ -137,7 +137,8 @@ defmodule Flirtual.User do
         %{reason: "missing profile platforms", to: "/onboarding/2"}
       },
       {
-        length(filter_by(profile.attributes, :type, "interest")) === 0,
+        length(filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests) ===
+          0,
         %{reason: "missing profile interests", to: "/onboarding/2"}
       },
       ## onboarding/3

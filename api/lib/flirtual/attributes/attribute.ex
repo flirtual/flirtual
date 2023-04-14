@@ -112,7 +112,6 @@ defmodule Flirtual.Attribute do
         changeset
       else
         value = get_field(changeset, id_key)
-        IO.inspect([value, id_key])
         attribute = by_id_explicit(value, attribute_type)
 
         if is_nil(attribute) do
@@ -122,6 +121,31 @@ defmodule Flirtual.Attribute do
           changeset
           |> put_change(key, attribute)
         end
+      end
+    end)
+  end
+
+  def validate_attributes(changeset, id_key, type, options \\ []) do
+    key =
+      Keyword.get(
+        options,
+        :key,
+        id_key
+        |> Atom.to_string()
+        |> String.replace_suffix("_id", "")
+        |> to_atom()
+      )
+
+    changeset
+    |> then(fn changeset ->
+      if not changed?(changeset, id_key) do
+        changeset
+      else
+        values = get_field(changeset, id_key)
+        attributes = by_ids(values, type)
+
+        changeset
+        |> put_change(key, attributes)
       end
     end)
   end
