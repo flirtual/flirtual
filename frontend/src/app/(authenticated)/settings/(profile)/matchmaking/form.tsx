@@ -78,7 +78,7 @@ export const MatchmakingForm: React.FC = () => {
 						},
 						body: {
 							serious: values.serious,
-							monopoly: values.monopoly
+							monopoly: values.monopoly ?? "none"
 						}
 					}),
 					api.user.profile.updatePreferences(user.id, {

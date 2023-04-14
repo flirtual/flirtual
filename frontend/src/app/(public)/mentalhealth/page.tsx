@@ -2,7 +2,7 @@ import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 
-export default function AboutPage() {
+export default function MentalHealthPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard className="w-full sm:max-w-2xl" title="Mental health resources">

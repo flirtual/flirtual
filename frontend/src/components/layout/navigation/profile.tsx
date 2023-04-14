@@ -53,7 +53,7 @@ const ProfileNavigationItemDivider: React.FC<ProfileNavigationItemDividerProps> 
 };
 
 export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession, logout] = useSession();
 	const [visible, setVisible] = useState(false);
 	const elementRef = useRef<HTMLDivElement>(null);
 	const location = useLocation();
@@ -145,7 +145,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 								</>
 							)}
 							<ProfileNavigationItemDivider className="hidden sm:block" />
-							<ProfileNavigationItem className="hidden sm:block" onClick={() => api.auth.logout()}>
+							<ProfileNavigationItem className="hidden sm:block" onClick={() => logout()}>
 								Logout
 							</ProfileNavigationItem>
 						</div>

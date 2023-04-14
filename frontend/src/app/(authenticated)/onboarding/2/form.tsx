@@ -10,11 +10,11 @@ import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { InputPrivacySelect } from "~/components/inputs/specialized/privacy-select";
 import { urls } from "~/urls";
-import { entries, excludeBy, filterBy, fromEntries, pick } from "~/utilities";
+import { filterBy, fromEntries } from "~/utilities";
 import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 
-const AttributeKeys = [...(["gender", "sexuality", "platform", "game"] as const)];
+const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
 
 export const Onboarding2Form: React.FC = () => {
 	const [session, mutateSession] = useSession();
@@ -41,10 +41,6 @@ export const Onboarding2Form: React.FC = () => {
 				new: profile.new ?? false,
 				sexualityPrivacy: user.preferences?.privacy.sexuality ?? "everyone",
 				countryPrivacy: user.preferences?.privacy.country ?? "everyone",
-				interest: [
-					...filterBy(profile.attributes, "type", "interest").map(({ id }) => id),
-					...profile.customInterests
-				],
 				languages: user.profile.languages ?? [],
 				...(fromEntries(
 					AttributeKeys.map((type) => {
@@ -53,7 +49,11 @@ export const Onboarding2Form: React.FC = () => {
 							filterBy(profile.attributes, "type", type).map(({ id }) => id) ?? []
 						] as const;
 					})
-				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
+				) as { [K in (typeof AttributeKeys)[number]]: Array<string> }),
+				interest: [
+					...filterBy(profile.attributes, "type", "interest").map(({ id }) => id),
+					...profile.customInterests
+				]
 			}}
 			onSubmit={async ({ bornAt, interest, ...values }) => {
 				const customInterests = interest.filter(
@@ -71,18 +71,20 @@ export const Onboarding2Form: React.FC = () => {
 					}),
 					api.user.profile.update(user.id, {
 						query: {
-							required: ["languages", "new"],
-							requiredAttributes: AttributeKeys.filter((key) => key !== "sexuality")
+							required: ["languages", "new"]
 						},
 						body: {
-							country: values.country,
+							country: values.country ?? "none",
 							languages: values.languages,
 							new: values.new,
-							attributes: [
-								excludeBy(profile.attributes ?? [], "type", AttributeKeys).map(({ id }) => id),
-								entries(pick(values, AttributeKeys)).map(([, ids]) => ids),
-								interest.filter((id) => !customInterests.includes(id))
-							].flat(2)
+							customInterests,
+							...(fromEntries(
+								AttributeKeys.filter((key) => key !== "interest").map((type) => {
+									// @ts-expect-error: don't want to deal with this.
+									return [`${type}Id`, values[type]] as const;
+								})
+							) as { [K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string> }),
+							interestId: interest.filter((id) => !customInterests.includes(id))
 						}
 					}),
 					api.user.preferences.updatePrivacy(user.id, {
@@ -214,7 +216,7 @@ export const Onboarding2Form: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Language</InputLabel>
-								<InputLanguageAutocomplete limit={3} {...field.props} />
+								<InputLanguageAutocomplete limit={5} {...field.props} />
 							</>
 						)}
 					</FormField>
