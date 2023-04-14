@@ -3,14 +3,14 @@ const nextConfig = {
 	experimental: {
 		appDir: true
 	},
-	modularizeImports: {
-		"@heroicons/react/24/outline": {
-			transform: "@heroicons/react/24/outline/{{member}}"
-		},
-		"@heroicons/react/24/solid": {
-			transform: "@heroicons/react/24/solid/{{member}}"
-		}
-	},
+	//	modularizeImports: {
+	//		"@heroicons/react/24/outline": {
+	//			transform: "@heroicons/react/24/outline/{{member}}"
+	//		},
+	//		"@heroicons/react/24/solid": {
+	//			transform: "@heroicons/react/24/solid/{{member}}"
+	//		}
+	//	},
 	async redirects() {
 		return [
 			{
