@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-addEventListener("fetch", (fetchEvent) => {
+/* addEventListener("fetch", (fetchEvent) => {
 	const request = fetchEvent.request;
 	if (request.method !== "GET") {
 		return;
@@ -27,4 +27,4 @@ addEventListener("fetch", (fetchEvent) => {
 			}
 		})()
 	);
-});
+}); */
