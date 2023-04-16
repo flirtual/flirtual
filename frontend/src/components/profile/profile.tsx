@@ -15,6 +15,7 @@ import { ProfileActionBar } from "./action-bar";
 import { GenderPills } from "./pill/genders";
 import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
+import { MatchActions } from "./match-actions";
 
 export async function Profile({ user }: { user: User }) {
 	const session = await withSession();
@@ -51,6 +52,7 @@ export async function Profile({ user }: { user: User }) {
 				</ProfileImageDisplay>
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
+					{user.matched && <MatchActions user={user} />}
 					{user.profile.new && !myProfile ? (
 						session?.user.profile.new ? (
 							<span className="text-xl italic dark:text-white-20">

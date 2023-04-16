@@ -20,7 +20,7 @@ export type ButtonSize = keyof typeof sizes | false;
 
 const kinds = {
 	primary: "bg-brand-gradient text-white-20 shadow-brand-1",
-	secondary: "bg-white-40 text-black-80 shadow-brand-1",
+	secondary: "bg-white-50 text-black-80 shadow-brand-1",
 	tertiary: ""
 };
 
