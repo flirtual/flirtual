@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";
 
 import { api } from "~/api";
-import { withSession } from "~/server-utilities";
+import { withOptionalSession } from "~/server-utilities";
 import { siteOrigin, urls } from "~/urls";
 import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: React.PropsWithChildren) {
-	const session = await withSession(true);
+	const session = await withOptionalSession();
 	const theme = session?.user.preferences?.theme ?? "system";
 
 	return (

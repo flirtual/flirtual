@@ -1,8 +1,8 @@
-import { SessionProvider } from "~/components/session-provider";
+import { withVisibleUser } from "~/server-utilities";
 
-export default function AuthenticatedEmailConfirmedLayout({ children }: React.PropsWithChildren) {
-	return (
-		// @ts-expect-error: Server Component
-		<SessionProvider>{children}</SessionProvider>
-	);
+export default async function AuthenticatedEmailConfirmedLayout({
+	children
+}: React.PropsWithChildren) {
+	await withVisibleUser();
+	return children;
 }

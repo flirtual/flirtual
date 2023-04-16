@@ -1,8 +1,6 @@
-import { SessionProvider } from "~/components/session-provider";
+import { withTaggedUser } from "~/server-utilities";
 
-export default function DebuggerLayout({ children }: React.PropsWithChildren) {
-	return (
-		// @ts-expect-error: Server Component
-		<SessionProvider tags={["debugger"]}>{children}</SessionProvider>
-	);
+export default async function DebuggerLayout({ children }: React.PropsWithChildren) {
+	await withTaggedUser("debugger");
+	return children;
 }

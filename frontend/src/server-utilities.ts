@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 
 import { api, ResponseError } from "./api";
 import { urls } from "./urls";
-import { Session } from "./api/auth";
 import { UserTags } from "./api/user";
 
 export function thruServerCookies() {
@@ -22,71 +21,48 @@ export function thruServerCookies() {
 	};
 }
 
-export interface ServerAuthenticateOptions {
-	optional?: boolean;
-	emailConfirmedOptional?: boolean;
-	visibleOptional?: boolean;
-	tags?: Array<UserTags>;
-}
+export const withOptionalSession = cache(async () => {
+	console.debug("withOptionalSession");
+	return await api.auth.session(thruServerCookies()).catch((reason) => {
+		if (!(reason instanceof ResponseError)) throw reason;
+		if (reason.statusCode === 401) return null;
+		throw reason;
+	});
+});
 
-const _useServerAuthenticate = cache(
-	async (options: ServerAuthenticateOptions = {}): Promise<Session | null> => {
-		console.log(Date.now());
+export const withSession = cache(async (to: string = urls.login()) => {
+	console.debug("withSession", to);
+	const session = await withOptionalSession();
 
-		const {
-			optional = false,
-			emailConfirmedOptional = false,
-			visibleOptional = false,
-			tags = []
-		} = options;
+	if (!session) return redirect(to);
+	return session;
+});
 
-		const session = await api.auth.session(thruServerCookies()).catch((reason) => {
-			if (!(reason instanceof ResponseError)) throw reason;
-			if (reason.statusCode === 401) return null;
-			throw reason;
-		});
+export const withVisibleUser = cache(async () => {
+	console.debug("withVisibleUser");
+	const { user } = await withSession();
 
-		if (!session && !optional) redirect(urls.login());
+	if (!user.visible) {
+		const { visible, reasons } = await api.user
+			.visible(user.id, thruServerCookies())
+			.catch(() => ({ visible: false, reasons: [] }));
 
-		if (session) {
-			if (!tags.every((tag) => session.user.tags?.includes(tag))) {
-				redirect(urls.default);
-			}
-
-			if (!session.user.visible) {
-				const { visible, reasons } = await api.user
-					.visible(session.user.id, thruServerCookies())
-					.catch(() => ({ visible: false, reasons: [] }));
-
-				if (!visible) {
-					const reason = reasons[0];
-					if (reason && !(optional || visibleOptional)) {
-						if (reason.to) redirect(reason.to);
-					}
-				}
-			}
+		if (!visible) {
+			const reason = reasons[0];
+			if (reason && reason.to) return redirect(reason.to);
 		}
-
-		// if the user's email is not confirmed, and we don't allow email to be optionally verified.
-		if (!session?.user?.emailConfirmedAt && !(optional || emailConfirmedOptional))
-			return redirect(urls.confirmEmail());
-
-		return session;
 	}
-);
 
-export async function useServerAuthenticate(
-	options?: ServerAuthenticateOptions & { optional?: false }
-): Promise<Session>;
-export async function useServerAuthenticate(
-	options?: ServerAuthenticateOptions & { optional: true }
-): Promise<Session | null>;
-export async function useServerAuthenticate(
-	options: ServerAuthenticateOptions
-): Promise<Session | null>;
+	return user;
+});
 
-export async function useServerAuthenticate(
-	options: ServerAuthenticateOptions = {}
-): Promise<Session | null> {
-	return _useServerAuthenticate(options);
-}
+export const withTaggedUser = cache(async (...tags: Array<UserTags>) => {
+	console.debug("withTaggedUser", tags);
+	const { user } = await withSession();
+
+	if (!tags.every((tag) => user.tags?.includes(tag))) {
+		redirect(urls.default);
+	}
+
+	return user;
+});

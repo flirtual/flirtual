@@ -1,10 +1,6 @@
-import { SessionProvider } from "~/components/session-provider";
+import { withTaggedUser } from "~/server-utilities";
 
-export const dynamic = "force-dynamic";
-
-export default function ModeratorLayout({ children }: React.PropsWithChildren) {
-	return (
-		// @ts-expect-error: Server Component
-		<SessionProvider tags={["moderator"]}>{children}</SessionProvider>
-	);
+export default async function ModeratorLayout({ children }: React.PropsWithChildren) {
+	await withTaggedUser("moderator");
+	return children;
 }
