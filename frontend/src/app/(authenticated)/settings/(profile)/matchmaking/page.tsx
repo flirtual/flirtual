@@ -1,6 +1,12 @@
+import { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { MatchmakingForm } from "./form";
+
+export const metadata: Metadata = {
+	title: "Matchmaking"
+};
 
 export default function SettingsProfileMatchmakingPage() {
 	return (

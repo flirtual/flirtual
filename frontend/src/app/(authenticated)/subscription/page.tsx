@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { SparklesIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Metadata } from "next";
 
 import { api } from "~/api";
 import { ButtonLink } from "~/components/button";
@@ -13,6 +14,10 @@ import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { useSessionUser } from "~/hooks/use-session";
 import { urls } from "~/urls";
+
+export const metadata: Metadata = {
+	title: "Subscription"
+};
 
 interface Plan {
 	id: string;

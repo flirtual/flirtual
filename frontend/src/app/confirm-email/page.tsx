@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
@@ -7,6 +8,10 @@ import { urls } from "~/urls";
 
 import { ConfirmTokenForm } from "./confirm-token-form";
 import { UserForms } from "./user-forms";
+
+export const metadata: Metadata = {
+	title: "Confirm email"
+};
 
 export interface ConfirmEmailPageProps {
 	searchParams?: { to?: string; token?: string };

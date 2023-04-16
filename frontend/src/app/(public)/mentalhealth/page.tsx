@@ -1,6 +1,12 @@
+import { Metadata } from "next";
+
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
+
+export const metadata: Metadata = {
+	title: "Mental health"
+};
 
 export default function MentalHealthPage() {
 	return (

@@ -1,6 +1,12 @@
+import { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { BiographyForm } from "./form";
+
+export const metadata: Metadata = {
+	title: "Bio & pics"
+};
 
 export default function SettingsProfileBiographyPage() {
 	return (

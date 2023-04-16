@@ -1,7 +1,13 @@
+import { Metadata } from "next";
+
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
+
+export const metadata: Metadata = {
+	title: "iOS"
+};
 
 export default function IOSPage() {
 	return (
