@@ -47,6 +47,12 @@ defmodule Flirtual.User.Profile.Block do
     |> Repo.one()
   end
 
+  def exists?(user: %User{id: user_id}, target: %User{id: target_id}) do
+    Block
+    |> where(profile_id: ^user_id, target_id: ^target_id)
+    |> Repo.exists?()
+  end
+
   def delete(%Block{} = item) do
     Repo.transaction(fn ->
       with {:ok, item} <- Repo.delete(item),

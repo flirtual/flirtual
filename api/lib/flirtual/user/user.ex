@@ -13,6 +13,7 @@ defmodule Flirtual.User do
   alias Ecto.Changeset
 
   alias Flirtual.User.Profile.Image
+  alias Flirtual.User.Profile.Block
   alias Flirtual.Subscription
   alias Flirtual.Discord
   alias Flirtual.Attribute
@@ -34,7 +35,7 @@ defmodule Flirtual.User do
     field :language, :string, default: "en"
 
     field :password, :string, virtual: true, redact: true
-    field :visible, :boolean, virtual: true, default: false
+    field :blocked, :boolean, virtual: true
 
     field :tags, {:array, Ecto.Enum},
       values: @tags,
@@ -166,6 +167,10 @@ defmodule Flirtual.User do
       errors = errors |> Enum.filter(&(not is_nil(&1)))
       if(visible, do: {:ok, user}, else: {:error, errors})
     end)
+  end
+
+  def blocked?(%User{} = user, %User{} = target) do
+    Block.exists?(user: user, target: target)
   end
 
   def changeset(user, attrs, options \\ []) do

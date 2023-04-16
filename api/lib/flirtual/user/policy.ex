@@ -127,9 +127,12 @@ defmodule Flirtual.User.Policy do
     :tags,
     :connections,
     :born_at,
+    :email_confirmed_at,
     :deactivated_at,
     :updated_at,
-    :created_at
+    :created_at,
+    :matched,
+    :blocked
   ]
 
   def transform(
@@ -149,7 +152,8 @@ defmodule Flirtual.User.Policy do
       do: user[key]
 
   @moderator_property_keys [
-    :shadowbanned_at
+    :shadowbanned_at,
+    :email_confirmed_at
   ]
 
   def transform(
@@ -202,10 +206,32 @@ defmodule Flirtual.User.Policy do
     |> DateTime.truncate(:second)
   end
 
+  def transform(:visible, _, user), do: User.visible?(user)
+
+  def transform(
+        :matched,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        user
+      ),
+      do: User.matched?(session.user, user)
+
+  def transform(
+        :blocked,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        user
+      ),
+      do: User.blocked?(session.user, user)
+
   def transform(key, _, _) when key in @own_property_keys, do: nil
   def transform(key, _, _) when key in @moderator_property_keys, do: nil
-
-  def transform(:visible, _, user), do: User.visible?(user)
 
   def transform(:preferences, conn, user) do
     if(Policy.can?(conn, :read, user.preferences), do: user.preferences, else: nil)
