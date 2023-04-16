@@ -32,5 +32,6 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 		(a, b) => prospectIds.indexOf(a.id) - prospectIds.indexOf(b.id)
 	);
 
+	// @ts-expect-error: Server Component
 	return <ProspectList kind={kind} prospects={prospects} />;
 }
