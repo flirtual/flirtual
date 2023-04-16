@@ -10,12 +10,16 @@ defmodule FlirtualWeb.Endpoint do
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :flirtual
   end
 
+  @root_origin Application.compile_env!(:flirtual, :root_origin)
+  @frontend_origin Application.compile_env!(:flirtual, :frontend_origin)
+  @origin Application.compile_env!(:flirtual, :origin)
+
   plug CORSPlug,
     origin:
       MapSet.new([
-        Application.compile_env!(:flirtual, :root_origin) |> URI.to_string(),
-        Application.compile_env!(:flirtual, :frontend_origin) |> URI.to_string(),
-        Application.compile_env!(:flirtual, :origin) |> URI.to_string()
+        @root_origin |> URI.to_string(),
+        @frontend_origin |> URI.to_string(),
+        @origin |> URI.to_string()
       ])
       |> MapSet.to_list()
 
@@ -37,7 +41,7 @@ defmodule FlirtualWeb.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    domain: Application.compile_env!(:flirtual, :root_origin).host,
+    domain: @root_origin.host,
     same_site: "Lax",
     max_age: Session.max_age(),
     key: "session",

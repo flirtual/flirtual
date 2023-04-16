@@ -10,10 +10,14 @@ Get started
 -----------
 
 * Install [Docker](https://docs.docker.com/get-docker/), and the [asdf version manager](https://asdf-vm.com/guide/getting-started.html).
+  * ``asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git``
+  * ``asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git``
   * Use ``asdf install`` to install Elixir and Erlang.
-* Setup the project with `mix setup`.
 * Configure local development secrets.
   * Copy `.env.local.example` into `.env.local`.
   * Fill in all the required secrets. 
+* Setup the project 
+  * `. ./env.local`
+  * `mix setup`.
 * Start development server with `./dev.sh`.
 * Now you can visit [`127.0.0.1:4000`](http://127.0.0.1:4000) from your browser.
