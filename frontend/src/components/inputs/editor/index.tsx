@@ -1,12 +1,16 @@
 import dynamic from "next/dynamic";
+import React from "react";
 
 import { editorColors } from "~/html";
 
 import "./style.scss";
+import { EditorSkeleton } from "./skeleton";
 
 // Quill throws an error on the server if imported directly,
 // so we lazily import it, which only renders when needed on client.
 const ReactQuill = dynamic(async () => {
+	if (typeof window === "undefined") return EditorSkeleton;
+
 	const ReactQuill = (await import("react-quill")).default;
 	const { Quill } = ReactQuill;
 
