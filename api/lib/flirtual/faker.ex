@@ -199,12 +199,12 @@ defmodule Flirtual.Faker do
                languages: random_n_of(1..3, Languages.list(:iso_639_1)),
                attributes:
                  [
-                   random_n_of(1..4, Attribute.by_type("gender") |> Enum.map(& &1.id)),
-                   random_n_of(0..3, Attribute.by_type("sexuality") |> Enum.map(& &1.id)),
-                   random_n_of(0..8, Attribute.by_type("kink") |> Enum.map(& &1.id)),
-                   random_n_of(1..5, Attribute.by_type("game") |> Enum.map(& &1.id)),
-                   random_n_of(1..8, Attribute.by_type("platform") |> Enum.map(& &1.id)),
-                   random_n_of(2..7, Attribute.by_type("interest") |> Enum.map(& &1.id))
+                   random_n_of(1..4, Attribute.list(type: "gender") |> Enum.map(& &1.id)),
+                   random_n_of(0..3, Attribute.list(type: "sexuality") |> Enum.map(& &1.id)),
+                   random_n_of(0..8, Attribute.list(type: "kink") |> Enum.map(& &1.id)),
+                   random_n_of(1..5, Attribute.list(type: "game") |> Enum.map(& &1.id)),
+                   random_n_of(1..8, Attribute.list(type: "platform") |> Enum.map(& &1.id)),
+                   random_n_of(2..7, Attribute.list(type: "interest") |> Enum.map(& &1.id))
                  ]
                  |> List.flatten()
              }),
@@ -234,7 +234,7 @@ defmodule Flirtual.Faker do
                  [
                    random_n_of(
                      1..3,
-                     Attribute.by_type("gender")
+                     Attribute.list(type: "gender")
                      |> Enum.filter(&(&1.metadata["simple"] === true))
                      |> Enum.map(& &1.id)
                    )

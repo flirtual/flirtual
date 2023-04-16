@@ -8,8 +8,16 @@ defmodule FlirtualWeb.AttributeController do
 
   action_fallback FlirtualWeb.FallbackController
 
+  def get(conn, %{"attribute_type" => attribute_type, "attribute_id" => attribute_id} = a) do
+    attributes = Attribute.get(attribute_id, attribute_type)
+
+    conn
+    |> put_resp_header("cache-control", "public, max-age=86400, immutable")
+    |> json(attributes)
+  end
+
   def list(conn, %{"attribute_type" => attribute_type}) do
-    attributes = Attribute.by_type(attribute_type)
+    attributes = Attribute.list(type: attribute_type)
 
     conn
     |> put_resp_header("cache-control", "public, max-age=86400, immutable")

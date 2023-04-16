@@ -44,6 +44,10 @@ defmodule FlirtualWeb.Router do
       scope "/attributes" do
         scope "/:attribute_type" do
           get "/", AttributeController, :list
+
+          scope "/:attribute_id" do
+            get "/", AttributeController, :get
+          end
         end
       end
     end

@@ -75,12 +75,12 @@ defmodule Flirtual.Profiles do
     embedded_schema do
       field :display_name, :string
       field :biography, :string
-      field :domsub, :string
-      field :monopoly, :string
-      field :country, :string
+      field :domsub, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :domsub)]
+      field :monopoly, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :monopoly)]
+      field :country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)]
       field :serious, :boolean
       field :new, :boolean
-      field :languages, {:array, :string}
+      field :languages, {:array, Ecto.Enum}, values: Languages.list(:iso_639_1)
       field :custom_interests, {:array, :string}
 
       @attribute_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)
@@ -93,14 +93,6 @@ defmodule Flirtual.Profiles do
       |> validate_length(:display_name, min: 3, max: 32)
       |> validate_length(:biography, min: 48, max: 4096)
       |> validate_length(:languages, min: 1, max: 5)
-      |> validate_subset(:languages, Languages.list(:iso_639_1),
-        message: "has an unrecognized language"
-      )
-      |> validate_inclusion(:country, ["none" | Countries.list(:iso_3166_1)],
-        message: "is an unrecognized country"
-      )
-      |> validate_inclusion(:domsub, ["none" | Ecto.Enum.values(Profile, :domsub)])
-      |> validate_inclusion(:monopoly, ["none" | Ecto.Enum.values(Profile, :monopoly)])
       |> validate_attributes(:gender_id, "gender")
       |> validate_length(:gender_id, min: 1, max: 4)
       |> validate_attributes(:sexuality_id, "sexuality")
@@ -129,7 +121,7 @@ defmodule Flirtual.Profiles do
     end
 
     def transform_value(value, default) do
-      if value === "none" do
+      if value === :none do
         nil
       else
         value || default

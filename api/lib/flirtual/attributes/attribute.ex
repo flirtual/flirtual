@@ -1,8 +1,10 @@
 defmodule Flirtual.Attribute do
   use Flirtual.Schema
 
-  import Flirtual.Utilities.Changeset
+  require Flirtual.Utilities
   import Flirtual.Utilities
+
+  import Flirtual.Utilities.Changeset
   import Ecto.Changeset
   import Ecto.Query
 
@@ -21,78 +23,88 @@ defmodule Flirtual.Attribute do
     timestamps(inserted_at: false)
   end
 
-  def by_id(attribute_id) do
+  def get(attribute_id) when is_uuid(attribute_id) do
     Attribute
     |> where(id: ^attribute_id)
     |> Repo.one()
   end
 
-  def by_id_explicit(attribute_id, type) do
-    IO.inspect([attribute_id, type])
+  def get(attribute_id) when is_binary(attribute_id) do
+    (list(type: "country") ++ list(type: "language"))
+    |> Enum.find(&(&1.id == attribute_id))
+  end
 
+  def get(_), do: nil
+
+  def get(attribute_id, type) when is_uuid(attribute_id) and is_binary(type) do
     Attribute
     |> where(id: ^attribute_id, type: ^type)
     |> Repo.one()
   end
 
-  def exists_id_explicit?(attribute_id, type) do
+  def get(attribute_id, type) when is_binary(attribute_id) and is_binary(type) do
+    list(type: type)
+    |> Enum.find(&(&1.id == attribute_id))
+  end
+
+  def get(_, _), do: nil
+
+  def list([], _), do: []
+
+  def list(attribute_ids, type) when is_list(attribute_ids) and is_binary(type) do
     Attribute
-    |> where(id: ^attribute_id, type: ^type)
-    |> Repo.exists?()
+    |> where([attribute], attribute.id in ^attribute_ids and attribute.type == ^type)
+    |> Repo.all()
   end
 
-  def by_ids(attribute_ids, type) do
-    if length(attribute_ids) === 0 do
-      []
-    else
-      Attribute
-      |> where([attribute], attribute.id in ^attribute_ids and attribute.type == ^type)
-      |> Repo.all()
-    end
-  end
+  def list([]), do: []
 
-  def by_ids(attribute_ids) do
-    if length(attribute_ids) === 0 do
-      []
-    else
-      Attribute
-      |> where([attribute], attribute.id in ^attribute_ids)
-      |> Repo.all()
-    end
-  end
-
-  def by_type("country") do
+  def list(type: "country") do
     Countries.list()
-    |> Enum.map(
-      &%Attribute{
-        id: &1[:iso_3166_1],
+    |> Enum.map(fn country ->
+      id =
+        country[:iso_3166_1]
+        |> Atom.to_string()
+
+      %Attribute{
+        id: id,
         type: "country",
-        name: &1[:name],
+        name: country[:name],
         metadata: %{
           "flag_url" =>
             "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/flags/4x3/" <>
-              &1[:iso_3166_1] <> ".svg"
+              id <> ".svg"
         }
       }
-    )
+    end)
   end
 
-  def by_type("language") do
+  def list(type: "language") do
     Languages.list()
-    |> Enum.map(
-      &%Attribute{
-        id: &1[:iso_639_1],
+    |> Enum.map(fn language ->
+      %Attribute{
+        id:
+          language[:iso_639_1]
+          |> Atom.to_string(),
         type: "language",
-        name: &1[:name]
+        name: language[:name]
       }
-    )
+    end)
   end
 
-  def by_type(attribute_type) do
+  def list(type: attribute_type) when is_binary(attribute_type) do
     Attribute
     |> where(type: ^attribute_type)
     |> Repo.all()
   end
+
+  def list(attribute_ids) when is_list(attribute_ids) do
+    Attribute
+    |> where([attribute], attribute.id in ^attribute_ids)
+    |> Repo.all()
+  end
+
+  def list(_), do: []
 
   def validate_attribute(changeset, id_key, attribute_type, options \\ []) do
     key =
@@ -111,8 +123,8 @@ defmodule Flirtual.Attribute do
       if not changeset.valid? or not changed?(changeset, id_key) do
         changeset
       else
-        value = get_field(changeset, id_key)
-        attribute = by_id_explicit(value, attribute_type)
+        attribute_id = get_field(changeset, id_key)
+        attribute = get(attribute_id, attribute_type)
 
         if is_nil(attribute) do
           changeset
@@ -141,8 +153,8 @@ defmodule Flirtual.Attribute do
       if not changed?(changeset, id_key) do
         changeset
       else
-        values = get_field(changeset, id_key)
-        attributes = by_ids(values, type)
+        attribute_ids = get_field(changeset, id_key)
+        attributes = list(attribute_ids, type)
 
         changeset
         |> put_change(key, attributes)
@@ -169,7 +181,7 @@ defmodule Flirtual.Attribute do
         cast(
           changeset,
           get_field(changeset, :_, [])
-          |> Attribute.by_ids()
+          |> list()
           |> Enum.group_by(& &1.type),
           types
         )

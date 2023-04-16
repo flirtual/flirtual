@@ -28,7 +28,7 @@ defmodule Flirtual.Seed do
     File.read!("priv/repo/languages.json")
     |> Jason.decode!()
 
-  db_genders = Attribute.by_type("gender")
+  db_genders = Attribute.list(type: "gender")
 
   lf_genders =
     File.read!("priv/repo/lfgenders.json")
@@ -60,7 +60,7 @@ defmodule Flirtual.Seed do
       )
     end)
 
-  db_kinks = Attribute.by_type("kink")
+  db_kinks = Attribute.list(type: "kink")
 
   lf_kinks =
     File.read!("priv/repo/lfkinks.json")
@@ -92,7 +92,7 @@ defmodule Flirtual.Seed do
       )
     end)
 
-  db_games = Attribute.by_type("game")
+  db_games = Attribute.list(type: "game")
 
   games =
     File.read!("priv/repo/games.json")
@@ -109,7 +109,7 @@ defmodule Flirtual.Seed do
       )
     end)
 
-  db_interests = Attribute.by_type("interest")
+  db_interests = Attribute.list(type: "interest")
 
   interests =
     File.read!("priv/repo/interests.json")
@@ -126,7 +126,7 @@ defmodule Flirtual.Seed do
       )
     end)
 
-  db_platforms = Attribute.by_type("platform")
+  db_platforms = Attribute.list(type: "platform")
 
   platforms =
     File.read!("priv/repo/platforms.json")
@@ -143,7 +143,7 @@ defmodule Flirtual.Seed do
       )
     end)
 
-  db_sexualities = Attribute.by_type("sexuality")
+  db_sexualities = Attribute.list(type: "sexuality")
 
   sexualities =
     File.read!("priv/repo/sexualities.json")

@@ -61,14 +61,14 @@ defmodule Flirtual.User.Profile do
     field :biography, :string
     field :domsub, Ecto.Enum, values: @domsub_values
     field :monopoly, Ecto.Enum, values: @monopoly_values
-    field :country, :string
+    field :country, Ecto.Enum, values: Countries.list(:iso_3166_1)
     field :openness, :integer
     field :conscientiousness, :integer
     field :agreeableness, :integer
     Enum.map(@personality_questions, &field(&1, :boolean))
     field :serious, :boolean
     field :new, :boolean
-    field :languages, {:array, :string}
+    field :languages, {:array, Ecto.Enum}, values: Languages.list(:iso_639_1)
     field :custom_interests, {:array, :string}
     field :reset_love_at, :utc_datetime
     field :reset_love_count, :integer

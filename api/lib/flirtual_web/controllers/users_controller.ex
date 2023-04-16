@@ -389,7 +389,7 @@ defmodule FlirtualWeb.UsersController do
              |> validate_required([:message, :reason_id])
              |> validate_attribute(:reason_id, "ban-reason")
              |> apply_action(:update),
-           reason <- Attribute.by_id_explicit(attrs.reason_id, "ban-reason"),
+           reason <- Attribute.list(attrs.reason_id, "ban-reason"),
            {:ok, user} <- User.suspend(user, reason, attrs.message, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
