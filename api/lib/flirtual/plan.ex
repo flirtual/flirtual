@@ -44,7 +44,6 @@ defimpl Jason.Encoder, for: Flirtual.Plan do
     only: [
       :id,
       :name,
-      :features,
       :product_id,
       :price_id,
       :created_at

@@ -3,6 +3,8 @@ defmodule Flirtual.User.Profile.CustomWeights do
 
   import Ecto.Changeset
   alias Flirtual.User.Profile
+  alias Flirtual.User
+  alias Flirtual.Subscription
 
   @derive {Jason.Encoder,
            only: [
@@ -58,16 +60,15 @@ defmodule Flirtual.User.Profile.CustomWeights do
     |> validate(:likes)
   end
 
-  defp validate(changeset, name) do
+  defp validate(changeset, name, options \\ []) do
+    %{user: %User{subscription: subscription}} = changeset.data.profile
+
     changeset
     |> validate_number(name, greater_than_or_equal_to: 0, less_than_or_equal_to: 2)
     |> validate_number_divisible(name, 0.25)
-    # note to self: maybe field level access checks like this
-    # shouldn't be in the changeset since we don't
-    # have access to the full user object.
     |> validate_change(name, fn _, _ ->
-      if name !== :country do
-        [{name, "requires premium to change"}]
+      if name !== :country and not Subscription.active?(subscription) do
+        [{name, "Subscription required"}]
       else
         []
       end
@@ -77,7 +78,7 @@ defmodule Flirtual.User.Profile.CustomWeights do
   defp validate_number_divisible(changeset, name, denominator) do
     validate_change(changeset, name, fn _, value ->
       if Float.ratio(value / denominator) |> elem(1) !== 1 do
-        [{name, "must be divisible by " <> to_string(denominator)}]
+        [{name, "Must be divisible by " <> to_string(denominator)}]
       else
         []
       end

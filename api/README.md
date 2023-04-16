@@ -21,3 +21,8 @@ Get started
   * `mix setup`.
 * Start development server with `./dev.sh`.
 * Now you can visit [`127.0.0.1:4000`](http://127.0.0.1:4000) from your browser.
+
+Stripe/subscription testing 
+-
+* Install the [Stripe CLI](https://stripe.com/docs/stripe-cli#install) and login using ``stripe login``.
+* ``stripe listen --forward-to localhost:4000/v1/stripe``

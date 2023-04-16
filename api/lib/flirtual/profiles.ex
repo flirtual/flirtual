@@ -190,6 +190,8 @@ defmodule Flirtual.Profiles do
   end
 
   def update_custom_weights(%Profile.CustomWeights{} = custom_weights, attrs) do
+    IO.inspect(custom_weights)
+
     custom_weights
     |> Profile.CustomWeights.changeset(attrs)
     |> Repo.insert_or_update()

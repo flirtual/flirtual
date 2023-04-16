@@ -75,7 +75,9 @@ defmodule FlirtualWeb.ProfileController do
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, "Cannot update this profile's custom weights", %{user_id: user_id}}}
     else
-      custom_weights = profile.custom_weights || %Profile.CustomWeights{profile: profile}
+      custom_weights =
+        (profile.custom_weights || %Profile.CustomWeights{})
+        |> Map.put(:profile, profile)
 
       with {:ok, preferences} <- Profiles.update_custom_weights(custom_weights, params) do
         conn |> json(preferences)
