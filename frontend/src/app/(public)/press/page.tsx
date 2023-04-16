@@ -1,7 +1,14 @@
+import { Metadata } from "next";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
-import { InlineLink } from "~/components/inline-link";
 import { ButtonLink } from "~/components/button";
+
+import { PressItem } from "./press-item";
+
+export const metadata: Metadata = {
+	title: "Press"
+};
 
 export default async function PressPage() {
 	return (
@@ -82,15 +89,7 @@ export default async function PressPage() {
 								date: "25 July 2018"
 							}
 						].map((item) => (
-							<div className="flex flex-col text-xl" key={`${item.date}/${item.name}`}>
-								<InlineLink className="font-semibold" href={item.href}>
-									{item.name}
-								</InlineLink>
-								<div className="flex items-baseline gap-2">
-									<span>{item.site}</span>
-									<span className="text-sm">{item.date}</span>
-								</div>
-							</div>
+							<PressItem {...item} key={`${item.date}/${item.name}`} />
 						))}
 					</div>
 				</div>

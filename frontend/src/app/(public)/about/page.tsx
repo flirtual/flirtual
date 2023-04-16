@@ -1,43 +1,14 @@
+import { Metadata } from "next";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 
-interface TeamListProps {
-	children: Array<TeamCategory>;
-}
+import { TeamList } from "./team-list";
 
-export interface TeamCategory {
-	name: string;
-	members: Array<{
-		name: string;
-		role?: string;
-		url: string;
-	}>;
-}
-
-const TeamCategory: React.FC<{ category: TeamCategory }> = ({ category }) => {
-	return (
-		<div className="flex flex-col gap-1">
-			<span className="text-xl font-semibold">{category.name}</span>
-			{category.members.map((member) => (
-				<span key={member.name}>
-					<InlineLink href={member.url}>{member.name}</InlineLink>
-					{member.role && <span> - {member.role}</span>}
-				</span>
-			))}
-		</div>
-	);
-};
-
-const TeamList: React.FC<TeamListProps> = ({ children }) => {
-	return (
-		<div className="flex flex-col gap-4">
-			{children.map((category) => (
-				<TeamCategory category={category} key={category.name} />
-			))}
-		</div>
-	);
+export const metadata: Metadata = {
+	title: "About us"
 };
 
 export default function AboutPage() {

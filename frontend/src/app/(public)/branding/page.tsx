@@ -1,79 +1,16 @@
-import { twMerge } from "tailwind-merge";
+import { Metadata } from "next";
 
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { ButtonLink } from "~/components/button";
 
-const Color: React.FC<{ name: string; value: string; invert?: boolean }> = ({
-	name,
-	value,
-	invert
-}) => (
-	<div
-		className={twMerge("grow rounded-lg border p-4", invert && "text-black-80")}
-		style={{ background: value }}
-	>
-		<span className="text-lg font-semibold">{name}</span>
-		<pre className="[white-space:break-spaces]">{value}</pre>
-	</div>
-);
+import { ColorBlock } from "./color-block";
+import { ImageList } from "./image-list";
 
-export interface ImageListItemProps {
-	name: string;
-	dark?: boolean;
-	kinds: Array<string>;
-}
-
-async function ImageListItem(item: ImageListItemProps) {
-	const defaultKind = item.kinds[0];
-	const data = (await import(`~/../public/images/brand/${item.name}.${defaultKind}`)).default;
-
-	return (
-		<div className="flex flex-col gap-2">
-			<a
-				className="flex h-full items-center justify-center overflow-hidden rounded-lg"
-				download={`flirtual-${item.name}.${defaultKind}`}
-				href={data.src}
-				style={{
-					background: item.dark
-						? "repeating-conic-gradient(#333 0% 25%, #555 0% 50%) 50% / 30px 30px"
-						: "repeating-conic-gradient(#fff 0% 25%, #eee 0% 50%) 50% / 30px 30px"
-				}}
-			>
-				<img className="h-fit w-full" src={data.src} />
-			</a>
-			<div className="flex gap-2">
-				{item.kinds.map((kind) => (
-					<a
-						className="uppercase text-pink hocus:underline hocus:outline-none"
-						download={`flirtual-${item.name}.${kind}`}
-						href={data.src}
-						key={kind}
-					>
-						{kind}
-					</a>
-				))}
-			</div>
-		</div>
-	);
-}
-
-export interface ImageListProps {
-	items: Array<ImageListItemProps>;
-	className?: string;
-}
-
-async function ImageList({ className, items }: ImageListProps) {
-	return (
-		<div className={twMerge("grid grid-cols-1 gap-4 sm:grid-cols-3", className)}>
-			{items.map((item) => {
-				/* @ts-expect-error: Server Component */
-				return <ImageListItem key={item.name} {...item} />;
-			})}
-		</div>
-	);
-}
+export const metadata: Metadata = {
+	title: "Branding"
+};
 
 export default async function BrandingPage() {
 	return (
@@ -144,12 +81,12 @@ export default async function BrandingPage() {
 				<div className="flex flex-col gap-4">
 					<span className="text-2xl font-semibold">Colors</span>
 					<div className="flex flex-wrap gap-2 text-white-20">
-						<Color name="Gradient" value="linear-gradient(to right, #FF8975, #E9658B)" />
-						<Color name="Pink" value="#E9658B" />
-						<Color invert name="White" value="#FFFAFA" />
-						<Color name="Black" value="#131516" />
-						<Color invert name="Grey" value="#E4E4E4" />
-						<Color invert name="Cream" value="#FFFAF0" />
+						<ColorBlock name="Gradient" value="linear-gradient(to right, #FF8975, #E9658B)" />
+						<ColorBlock name="Pink" value="#E9658B" />
+						<ColorBlock invert name="White" value="#FFFAFA" />
+						<ColorBlock name="Black" value="#131516" />
+						<ColorBlock invert name="Grey" value="#E4E4E4" />
+						<ColorBlock invert name="Cream" value="#FFFAF0" />
 					</div>
 				</div>
 				<div className="flex flex-col gap-4">

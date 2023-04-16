@@ -1,7 +1,13 @@
+import { Metadata } from "next";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+
+export const metadata: Metadata = {
+	title: "Terms of Service"
+};
 
 export default function TermsPage() {
 	return (

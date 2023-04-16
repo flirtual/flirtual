@@ -1,8 +1,14 @@
+import { Metadata } from "next";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 import { MobileButton } from "~/components/mobile-button";
 import { AppleIcon, GooglePlayIcon, MetaIcon, MicrosoftIcon } from "~/components/icons";
+
+export const metadata: Metadata = {
+	title: "Download"
+};
 
 export default function DownloadPage() {
 	return (

@@ -1,6 +1,12 @@
+import { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { PersonalityForm } from "./form";
+
+export const metadata: Metadata = {
+	title: "Personality"
+};
 
 export default function SettingsProfilePersonalityPage() {
 	return (

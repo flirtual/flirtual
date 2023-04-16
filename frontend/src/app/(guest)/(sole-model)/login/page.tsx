@@ -1,6 +1,12 @@
+import { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { LoginForm } from "./form";
+
+export const metadata: Metadata = {
+	title: "Login"
+};
 
 export interface LoginPageProps {
 	searchParams?: {

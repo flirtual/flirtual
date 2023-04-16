@@ -1,13 +1,31 @@
-import { ServerAuthenticateOptions, useServerAuthenticate } from "~/server-utilities";
+"use client";
 
-import { SessionProviderClient } from "./session-provider-client";
+import { useEffect } from "react";
+import { SWRConfig } from "swr";
 
-export type SessionProviderProps = React.PropsWithChildren<ServerAuthenticateOptions>;
+import { Session } from "~/api/auth";
+import { useSession } from "~/hooks/use-session";
 
-export async function SessionProvider({ children, ...options }: SessionProviderProps) {
+export type SessionProviderProps = React.PropsWithChildren<{ session: Session | null }>;
+
+export function SessionProvider({ children, session }: SessionProviderProps) {
+	const [, mutateSession] = useSession();
+
+	useEffect(() => {
+		void mutateSession(session, false);
+	}, [session, mutateSession]);
+
 	return (
-		<SessionProviderClient session={await useServerAuthenticate(options)}>
+		<SWRConfig
+			value={(swrConfig) => ({
+				...swrConfig,
+				fallback: {
+					...swrConfig?.fallback,
+					session
+				}
+			})}
+		>
 			{children}
-		</SessionProviderClient>
+		</SWRConfig>
 	);
 }

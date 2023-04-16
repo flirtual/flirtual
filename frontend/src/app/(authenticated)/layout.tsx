@@ -1,13 +1,8 @@
-import { SessionProvider } from "~/components/session-provider";
 import { TalkjsProvider } from "~/hooks/use-talkjs";
+import { withSession } from "~/server-utilities";
 
-export const dynamic = "force-dynamic";
+export default async function AuthenticatedLayout({ children }: React.PropsWithChildren) {
+	await withSession();
 
-export default function AuthenticatedLayout({ children }: React.PropsWithChildren) {
-	return (
-		// @ts-expect-error: Server Component
-		<SessionProvider emailConfirmedOptional visibleOptional>
-			<TalkjsProvider>{children}</TalkjsProvider>
-		</SessionProvider>
-	);
+	return <TalkjsProvider>{children}</TalkjsProvider>;
 }

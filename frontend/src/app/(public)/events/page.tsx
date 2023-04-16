@@ -1,12 +1,16 @@
-"use client";
-
-import WidgetBot from "@widgetbot/react-embed";
+import { Metadata } from "next";
 
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
+
+import { DiscordEmbed } from "./discord-embed";
+
+export const metadata: Metadata = {
+	title: "Events"
+};
 
 export default function EventsPage() {
 	return (
@@ -37,12 +41,7 @@ export default function EventsPage() {
 						For our event schedule and announcements,{" "}
 						<InlineLink href={urls.socials.discord}>join our Discord server</InlineLink>.
 					</p>
-					<WidgetBot
-						channel="862116319700582440"
-						height="600"
-						server="455219574036496404"
-						width="100%"
-					/>
+					<DiscordEmbed />
 				</div>
 				<div className="flex flex-col gap-4">
 					<h1 className="text-2xl font-semibold">VRChat worlds</h1>
