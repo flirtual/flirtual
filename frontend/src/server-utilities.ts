@@ -22,7 +22,6 @@ export function thruServerCookies() {
 }
 
 export const withOptionalSession = cache(async () => {
-	console.debug("withOptionalSession");
 	return await api.auth.session(thruServerCookies()).catch((reason) => {
 		if (!(reason instanceof ResponseError)) throw reason;
 		if (reason.statusCode === 401) return null;
@@ -31,7 +30,6 @@ export const withOptionalSession = cache(async () => {
 });
 
 export const withSession = cache(async (to: string = urls.login()) => {
-	console.debug("withSession", to);
 	const session = await withOptionalSession();
 
 	if (!session) return redirect(to);
@@ -39,7 +37,6 @@ export const withSession = cache(async (to: string = urls.login()) => {
 });
 
 export const withVisibleUser = cache(async () => {
-	console.debug("withVisibleUser");
 	const { user } = await withSession();
 
 	if (!user.visible) {
@@ -57,7 +54,6 @@ export const withVisibleUser = cache(async () => {
 });
 
 export const withTaggedUser = cache(async (...tags: Array<UserTags>) => {
-	console.debug("withTaggedUser", tags);
 	const { user } = await withSession();
 
 	if (!tags.every((tag) => user.tags?.includes(tag))) {
