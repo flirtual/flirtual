@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { api } from "~/api";
 import { Profile } from "~/components/profile/profile";
-import { thruServerCookies } from "~/server-utilities";
+import { thruServerCookies, withSession } from "~/server-utilities";
 import { urls } from "~/urls";
 
 export interface ProfilePageProps {
@@ -10,9 +10,11 @@ export interface ProfilePageProps {
 }
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
+	const session = await withSession();
+
 	const user =
 		params.username === "me"
-			? await api.auth.user(thruServerCookies()).catch(() => redirect(urls.login()))
+			? session.user
 			: await api.user
 					.getByUsername(params.username, thruServerCookies())
 					.catch(() => redirect(urls.default));
