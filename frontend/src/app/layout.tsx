@@ -72,6 +72,15 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 						}}
 					/>
 				)}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+								const url - new URL(location);
+							  if (url.pathname === "/browse" && url.searchParams.get("kind") === "friend")
+									document.documentElement.classList.add("friend-mode");
+							`.trim()
+					}}
+				/>
 				{session && (
 					<>
 						<link as="image" href={urls.userAvatar(session.user)} rel="preload" />

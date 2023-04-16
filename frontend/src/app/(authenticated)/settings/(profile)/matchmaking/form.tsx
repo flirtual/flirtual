@@ -214,24 +214,26 @@ export const MatchmakingForm: React.FC = () => {
 												</InputLabelHint>
 											}
 										>
-											{
+											<span>
 												{
-													country: "Same country",
-													games: "Social VR games in common",
-													defaultInterests: "Standard interests in common",
-													customInterests: "Custom interests in common",
-													personality: "Personality similarity",
-													serious: "Open to serious dating",
-													monopoly: "NSFW match",
-													domsub: "Dom/sub/switch match",
-													kinks: "Kink matches",
-													likes: "People who have liked you"
-												}[key]
-											}
+													{
+														country: "Same country",
+														games: "Social VR games in common",
+														defaultInterests: "Standard interests in common",
+														customInterests: "Custom interests in common",
+														personality: "Personality similarity",
+														serious: "Open to serious dating",
+														monopoly: "NSFW match",
+														domsub: "Dom/sub/switch match",
+														kinks: "Kink matches",
+														likes: "People who have liked you"
+													}[key]
+												}
+											</span>
 										</InputLabel>
 										<InputSlider
 											{...field.props}
-											disabled={key === "country" ? false : !user.subscription}
+											disabled={key === "country" ? false : !user.subscription?.active}
 											max={2}
 											min={0}
 											step={0.25}

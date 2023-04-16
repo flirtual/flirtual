@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { Portal } from "react-portal";
@@ -55,7 +57,7 @@ export const Tooltip: FC<TooltipProps> = ({
 							ref={ref}
 							transition={{ damping: 10, delay: 0.1 }}
 							className={twMerge(
-								"pointer-events-none fixed top-0 left-0 z-50 -mt-4 select-none rounded-lg bg-black-80 px-3 py-1 text-base text-white-20 shadow-brand-1 dark:bg-white-20 dark:text-black-80",
+								"pointer-events-none fixed left-0 top-0 z-50 -mt-4 select-none rounded-lg bg-black-80 px-3 py-1 text-base text-white-20 shadow-brand-1 dark:bg-white-20 dark:text-black-80",
 								elementProps.className
 							)}
 							style={{
