@@ -6,6 +6,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   alias Flirtual.User.Profile.Block
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
+  alias Flirtual.User
   alias Flirtual.User.Profile.LikesAndPasses
 
   @derive {Jason.Encoder,
@@ -28,6 +29,13 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     field :kind, Ecto.Enum, values: [:love, :friend]
 
     timestamps()
+  end
+
+  def match_exists?(user: %User{id: user_id}, target: %User{id: target_id}) do
+    LikesAndPasses
+    |> where(profile_id: ^user_id, target_id: ^target_id)
+    |> where([item], not is_nil(item.opposite_id))
+    |> Repo.exists?()
   end
 
   def list(profile_id: profile_id) do
