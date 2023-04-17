@@ -17,6 +17,9 @@ defmodule Flirtual.Plan do
       values: [:custom_weights],
       default: []
 
+    field :recurring, :boolean, default: true
+    field :purchasable, :boolean, default: true
+
     field :product_id, :string
     field :price_id, :string
 

@@ -15,10 +15,11 @@ defmodule FlirtualWeb.SubscriptionController do
   end
 
   def checkout(conn, %{"plan_id" => plan_id}) do
-    with %Plan{} = plan <- Plan.get(plan_id),
+    with %Plan{purchasable: true} = plan <- Plan.get(plan_id),
          {:ok, session} <- Stripe.checkout(conn.assigns[:session].user, plan) do
       conn |> redirect(external: session.url)
     else
+      %Plan{} -> {:error, {:not_found, "Plan not purchasable"}}
       nil -> {:error, {:not_found, "Plan not found"}}
       value -> value
     end

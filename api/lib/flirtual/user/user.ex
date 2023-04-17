@@ -25,7 +25,7 @@ defmodule Flirtual.User do
   alias Flirtual.User
   alias Flirtual.User.Session
 
-  @tags [:admin, :moderator, :beta_tester, :debugger, :verified]
+  @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp]
 
   schema "users" do
     field :email, :string

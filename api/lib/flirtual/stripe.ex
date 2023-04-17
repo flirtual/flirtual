@@ -249,45 +249,69 @@ defmodule Flirtual.Stripe do
     "ZZ"
   ]
 
-  def checkout(%User{stripe_id: nil} = user, %Plan{} = plan) do
+  def checkout(%User{stripe_id: nil} = user, %Plan{purchasable: true} = plan) do
     with {:ok, customer} <- update_customer(user) do
       Map.put(user, :stripe_id, customer.id)
       |> checkout(plan)
     end
   end
 
-  def checkout(%User{stripe_id: stripe_id} = user, %Plan{} = plan) when is_binary(stripe_id) do
-    Stripe.Session.create(%{
-      customer: stripe_id,
-      client_reference_id: user.id,
-      success_url:
-        Application.fetch_env!(:flirtual, :frontend_origin)
-        |> URI.merge("/subscription?success={CHECKOUT_SESSION_ID}")
-        |> URI.to_string(),
-      cancel_url:
-        Application.fetch_env!(:flirtual, :frontend_origin)
-        |> URI.merge("/subscription")
-        |> URI.to_string(),
-      mode: "subscription",
-      line_items: [
+  def checkout(%User{stripe_id: stripe_id} = user, %Plan{purchasable: true} = plan)
+      when is_binary(stripe_id) do
+    Stripe.Session.create(
+      Map.merge(
         %{
-          price: plan.price_id,
-          quantity: 1
-        }
-      ],
-      allow_promotion_codes: true,
-      automatic_tax: %{
-        enabled: true
-      },
-      shipping_address_collection: %{
-        allowed_countries: @shipping_allowed_countries
-      },
-      customer_update: %{
-        shipping: "auto",
-        address: "auto"
-      }
-      # billing_address_collection: "required"
-    })
+          customer: stripe_id,
+          client_reference_id: user.id,
+          success_url:
+            Application.fetch_env!(:flirtual, :frontend_origin)
+            |> URI.merge("/subscription?success={CHECKOUT_SESSION_ID}")
+            |> URI.to_string(),
+          cancel_url:
+            Application.fetch_env!(:flirtual, :frontend_origin)
+            |> URI.merge("/subscription")
+            |> URI.to_string(),
+          line_items: [
+            %{
+              price: plan.price_id,
+              quantity: 1
+            }
+          ],
+          automatic_tax: %{
+            enabled: true
+          },
+          shipping_address_collection: %{
+            allowed_countries: @shipping_allowed_countries
+          },
+          customer_update: %{
+            shipping: "auto",
+            address: "auto"
+          },
+          payment_intent_data: %{
+            metadata: %{
+              plan_id: plan.id
+            }
+          }
+          # billing_address_collection: "required"
+        },
+        if(plan.recurring,
+          do: %{
+            mode: "subscription",
+            allow_promotion_codes: true
+          },
+          else: %{
+            mode: "payment",
+            discounts:
+              if(:legacy_vrlfp in user.tags,
+                do: [
+                  %{coupon: "vrlfp3"}
+                ],
+                else: []
+              )
+          }
+        )
+      )
+    )
   end
 
   def manage(%User{stripe_id: nil} = user) do
@@ -380,6 +404,31 @@ defmodule Flirtual.Stripe do
              "customer.subscription.deleted"
            ],
       do: :ok
+
+  def handle_event(
+        %Stripe.Event{
+          type: "payment_intent.succeeded",
+          data: %{
+            object: %Stripe.PaymentIntent{
+              id: payment_stripe_id,
+              customer: customer_stripe_id,
+              metadata: %{
+                "plan_id" => plan_id
+              }
+            }
+          }
+        } = event
+      ) do
+    with %User{} = user <- User.get(stripe_id: customer_stripe_id),
+         %Plan{recurring: false} = plan <- Plan.get(plan_id),
+         {:ok, subscription} <- Subscription.apply(user, plan, payment_stripe_id) do
+      log(:info, [event.type, event.id], subscription)
+      :ok
+    else
+      %Plan{} -> :ok
+      value -> event_error(event, value)
+    end
+  end
 
   def handle_event(
         %Stripe.Event{
