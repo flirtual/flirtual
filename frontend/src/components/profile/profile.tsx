@@ -30,12 +30,14 @@ export async function Profile({ user }: { user: User }) {
 				<ProfileImageDisplay images={user.profile.images}>
 					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
-							<span className="text-4xl font-bold leading-none [word-break:break-all]">
+							<span className="text-shadow-brand text-4xl font-bold leading-none [word-break:break-all]">
 								{displayName(user)}
 							</span>
 							{user.bornAt && (
 								<div className="flex h-fit items-center gap-2">
-									<span className="text-3xl leading-none">{yearsAgo(new Date(user.bornAt))}</span>
+									<span className="text-shadow-brand text-3xl leading-none">
+										{yearsAgo(new Date(user.bornAt))}
+									</span>
 									{user.tags?.includes("verified") && <ProfileVerificationBadge />}
 								</div>
 							)}
