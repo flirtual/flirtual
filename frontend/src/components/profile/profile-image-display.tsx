@@ -30,7 +30,7 @@ interface SingleImageProps {
 const SingleImage: React.FC<SingleImageProps> = ({ className, image }) => {
 	return (
 		<img
-			className={twMerge("aspect-square object-cover ", className)}
+			className={twMerge("aspect-square object-cover", className)}
 			src={image.url}
 			onError={({ currentTarget }) => {
 				// If the image fails to load (doesn't exist), use a fallback.

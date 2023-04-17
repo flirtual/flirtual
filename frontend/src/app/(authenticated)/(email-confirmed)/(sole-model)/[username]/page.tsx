@@ -13,7 +13,7 @@ export interface ProfilePageProps {
 	params: { username: string };
 }
 
-const getProfileUser = cache(async (username: string) => {
+export const getProfileUser = cache(async (username: string) => {
 	return username === "me"
 		? (await withSession()).user
 		: await api.user

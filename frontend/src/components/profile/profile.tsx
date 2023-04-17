@@ -3,6 +3,7 @@ import { displayName, User } from "~/api/user";
 import { Html } from "~/components/html";
 import { filterBy } from "~/utilities";
 import { withSession } from "~/server-utilities";
+import { yearsAgo } from "~/date";
 
 import { InlineLink } from "../inline-link";
 
@@ -27,23 +28,19 @@ export async function Profile({ user }: { user: User }) {
 		<div className="flex w-full bg-brand-gradient sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1">
 			<div className="flex w-full flex-col overflow-hidden bg-cream text-black-70 dark:bg-black-80 dark:text-white-20 sm:rounded-3xl sm:bg-white-20 sm:dark:bg-black-70">
 				<ProfileImageDisplay images={user.profile.images}>
-					<div className="absolute bottom-0 flex w-full flex-col justify-center gap-2 p-8 text-white-10">
+					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
 							<span className="text-4xl font-bold leading-none [word-break:break-all]">
 								{displayName(user)}
 							</span>
 							{user.bornAt && (
 								<div className="flex h-fit items-center gap-2">
-									<span className="text-3xl leading-none">
-										{Math.floor(
-											(Date.now() - new Date(user.bornAt).getTime()) / (365 * 24 * 60 * 60 * 1000)
-										)}
-									</span>
+									<span className="text-3xl leading-none">{yearsAgo(new Date(user.bornAt))}</span>
 									{user.tags?.includes("verified") && <ProfileVerificationBadge />}
 								</div>
 							)}
 						</div>
-						<div className="flex flex-wrap items-center gap-2 font-montserrat">
+						<div className="flex flex-wrap items-center gap-2 font-montserrat ">
 							<GenderPills attributes={filterBy(user.profile.attributes, "type", "gender")} />
 							{user.profile.country && <CountryPill code={user.profile.country} />}
 						</div>
