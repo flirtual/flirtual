@@ -37,7 +37,10 @@ export default async function og({ params }: ProfilePageProps) {
 	return new ImageResponse(
 		(
 			<div style={{ fontFamily: "Nunito" }} tw="flex flex-col w-full h-full bg-[#FFFAF0]">
-				<div style={{ backgroundImage: brandGradient, boxShadow }} tw="flex h-3 w-full" />
+				<div
+					style={{ backgroundImage: brandGradient, boxShadow }}
+					tw="absolute bottom-0 left-0 flex h-3 w-full"
+				/>
 				<div tw="flex p-16 w-full h-full relative">
 					<img
 						src="https://flirtu.al/img/brand/flirtual-black.svg"
