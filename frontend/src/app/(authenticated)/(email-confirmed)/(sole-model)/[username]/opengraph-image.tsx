@@ -9,7 +9,8 @@ import { filterBy } from "~/utilities";
 import { yearsAgo } from "~/date";
 import { AttributeCollection } from "~/api/attributes";
 
-import { ProfilePageProps, getProfileUser } from "./page";
+import { ProfilePageProps } from "./page";
+import { getProfileUser } from "./profile-user";
 
 export const alt = "About Acme";
 export const contentType = "image/svg+xml";
