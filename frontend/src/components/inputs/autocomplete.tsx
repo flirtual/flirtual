@@ -76,9 +76,11 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 
 	const suggestions = useMemo(
 		() =>
-			fuzzySearch(inputValue, potentialOptions, {
-				keySelector: (option) => option.label
-			}),
+			inputValue
+				? fuzzySearch(inputValue, potentialOptions, {
+						keySelector: (option) => option.label
+				  })
+				: potentialOptions,
 		[inputValue, potentialOptions]
 	);
 
