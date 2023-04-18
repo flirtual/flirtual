@@ -3,10 +3,11 @@ defmodule Flirtual.Mailer do
 
   import Swoosh.Email
 
-  @domain "flirtu.al"
+  @origin Application.compile_env!(:flirtual, :frontend_origin)
+
   @twitter_url "https://twitter.com/getflirtual"
-  @discord_url "https://#{@domain}/discord"
-  @unsubscribe_url "https://#{@domain}/settings/notifications"
+  @discord_url @origin |> URI.merge("/discord") |> URI.to_string()
+  @unsubscribe_url @origin |> URI.merge("/settings/notifications") |> URI.to_string()
 
   @company "Studio Paprika"
   @company_address "530 Divisadero Street | San Francisco, CA | 94117 | USA"
@@ -64,8 +65,8 @@ defmodule Flirtual.Mailer do
                                                 </tr>
                                                 <tr>
                                                   <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                                    <a href="https://#{@domain}/" style="text-decoration: none;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">
-                                                      &nbsp;<img src="https://flirtu.al/img/logo-new.png" style="padding: 0px;border: medium none;width: 335px;height: 91.249px;line-height: 100%;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" alt="Flirtual" class="fr-fil fr-dib" border="0" width="335" height="91.249">&nbsp;
+                                                    <a href="#{@origin |> URI.to_string()}" style="text-decoration: none;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">
+                                                      &nbsp;<img src="#{@origin |> URI.merge("/images/brand/white.png") |> URI.to_string()}" style="padding: 0px;border: medium none;width: 335px;height: 91.249px;line-height: 100%;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" alt="Flirtual" class="fr-fil fr-dib" border="0" width="335" height="91.249">&nbsp;
                                                     </a>
                                                   </td>
                                                 </tr>
