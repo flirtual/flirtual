@@ -13,10 +13,6 @@ defmodule Flirtual.Plan do
   schema "plans" do
     field :name, :string
 
-    field :features, {:array, Ecto.Enum},
-      values: [:custom_weights],
-      default: []
-
     field :recurring, :boolean, default: true
     field :purchasable, :boolean, default: true
 
