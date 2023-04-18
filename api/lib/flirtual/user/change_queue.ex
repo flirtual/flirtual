@@ -20,6 +20,8 @@ defmodule Flirtual.User.ChangeQueue do
   end
 
   def get(user_id) when is_uuid(user_id) do
+    log(:debug, ["get"], user_id)
+
     ChangeQueue |> where(user_id: ^user_id) |> Repo.one()
   end
 

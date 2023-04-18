@@ -21,6 +21,10 @@ defmodule Flirtual.User.Profile.Block do
   end
 
   def create(user: %User{id: user_id}, target: %User{id: target_id}) do
+    create(user_id: user_id, target_id: target_id)
+  end
+
+  def create(user_id: user_id, target_id: target_id) do
     Repo.transaction(fn repo ->
       with {:ok, item} <-
              %Block{}

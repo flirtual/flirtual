@@ -22,7 +22,7 @@ defmodule Flirtual.Discord do
     do: url("webhooks/" <> config(String.to_existing_atom("webhook_#{name}")))
 
   def webhook(name, body) when is_atom(name) do
-    log(:info, [name], body)
+    log(:debug, [name], body)
 
     HTTPoison.post(
       webhook_url(name),
