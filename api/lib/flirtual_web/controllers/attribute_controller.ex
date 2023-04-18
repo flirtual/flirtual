@@ -8,7 +8,7 @@ defmodule FlirtualWeb.AttributeController do
 
   action_fallback FlirtualWeb.FallbackController
 
-  def get(conn, %{"attribute_type" => attribute_type, "attribute_id" => attribute_id} = a) do
+  def get(conn, %{"attribute_type" => attribute_type, "attribute_id" => attribute_id}) do
     attributes = Attribute.get(attribute_id, attribute_type)
 
     conn

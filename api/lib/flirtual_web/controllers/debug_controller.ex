@@ -67,6 +67,9 @@ defmodule FlirtualWeb.DebugController do
     with :ok <- Policy.can(conn, :read_error_cipher, conn.assigns[:session].user),
          {:ok, reason} <- Crypto.decrypt(:error, cipher) do
       conn |> json(reason |> Map.from_struct())
+    else
+      {:error, :invalid} -> {:error, {400, "Unknown cipher"}}
+      reason -> reason
     end
   end
 end

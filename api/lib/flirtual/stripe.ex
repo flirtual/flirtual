@@ -286,11 +286,6 @@ defmodule Flirtual.Stripe do
           customer_update: %{
             shipping: "auto",
             address: "auto"
-          },
-          payment_intent_data: %{
-            metadata: %{
-              plan_id: plan.id
-            }
           }
           # billing_address_collection: "required"
         },
@@ -301,6 +296,11 @@ defmodule Flirtual.Stripe do
           },
           else: %{
             mode: "payment",
+            payment_intent_data: %{
+              metadata: %{
+                plan_id: plan.id
+              }
+            },
             discounts:
               if(:legacy_vrlfp in user.tags,
                 do: [
