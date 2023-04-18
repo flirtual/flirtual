@@ -1,8 +1,6 @@
-"use client";
-
 import { PartialAttribute } from "~/api/attributes";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 import { findBy } from "~/utilities";
+import { withAttributeList } from "~/api/attributes-server";
 
 import { Pill } from "./pill";
 
@@ -11,8 +9,8 @@ export interface GenderPillsProps {
 	attributes: Array<PartialAttribute>;
 }
 
-export const GenderPills: React.FC<GenderPillsProps> = ({ simple = false, attributes }) => {
-	const genders = useAttributeList("gender");
+export async function GenderPills({ simple = false, attributes }: GenderPillsProps) {
+	const genders = await withAttributeList("gender");
 
 	return (
 		<>
@@ -34,4 +32,4 @@ export const GenderPills: React.FC<GenderPillsProps> = ({ simple = false, attrib
 				)}
 		</>
 	);
-};
+}

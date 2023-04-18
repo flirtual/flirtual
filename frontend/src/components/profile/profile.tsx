@@ -43,7 +43,9 @@ export async function Profile({ user }: { user: User }) {
 							)}
 						</div>
 						<div className="flex flex-wrap items-center gap-2 font-montserrat ">
+							{/* @ts-expect-error: Server Component */}
 							<GenderPills attributes={filterBy(user.profile.attributes, "type", "gender")} />
+							{/* @ts-expect-error: Server Component */}
 							{user.profile.country && <CountryPill code={user.profile.country} />}
 						</div>
 						{user.activeAt && <ActivityIndicator lastActiveAt={new Date(user.activeAt)} />}
@@ -70,6 +72,7 @@ export async function Profile({ user }: { user: User }) {
 							Don&apos;t forget to <InlineLink href={urls.settings.bio}>add a bio</InlineLink>!
 						</span>
 					) : null}
+					{/* @ts-expect-error: Server Component */}
 					<PillCollection user={user} />
 				</div>
 				<ProfileActionBar user={user} />

@@ -47,26 +47,26 @@ export default async function LikesPage() {
 						</div>
 					) : (
 						<div className="flex flex-col gap-4">
-							{items.map((like) => (
-								<Link href={urls.user.profile(like.user.username)} key={like.id}>
+							{items.map(({ id, user, kind }) => (
+								<Link href={urls.user.profile(user.username)} key={id}>
 									<div className="flex items-center gap-4 rounded-xl bg-white-10 p-4 shadow-brand-1 dark:bg-black-80">
-										<UserAvatar className="h-16" user={like.user} />
+										<UserAvatar className="h-16" user={user} />
 										<div className="flex grow flex-col">
-											<h1 className="text-2xl font-semibold">{displayName(like.user)}</h1>
+											<h1 className="text-2xl font-semibold">{displayName(user)}</h1>
 											<div className="flex gap-2">
-												{like.user.bornAt && (
-													<Pill small={true}>{yearsAgo(new Date(like.user.bornAt))}</Pill>
-												)}
+												{user.bornAt && <Pill small={true}>{yearsAgo(new Date(user.bornAt))}</Pill>}
+												{/* @ts-expect-error: Server Component */}
 												<GenderPills
 													simple
-													attributes={filterBy(like.user.profile.attributes, "type", "gender")}
+													attributes={filterBy(user.profile.attributes, "type", "gender")}
 												/>
-												{like.user.profile.country && (
-													<CountryPill code={like.user.profile.country} flagOnly={true} />
+												{user.profile.country && (
+													/* @ts-expect-error: Server Component */
+													<CountryPill code={user.profile.country} flagOnly={true} />
 												)}
 											</div>
 										</div>
-										<p>{like.kind === "love" ? "❤️" : "✌️"}</p>
+										<p>{kind === "love" ? "❤️" : "✌️"}</p>
 									</div>
 								</Link>
 							))}
