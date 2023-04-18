@@ -1,0 +1,45 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+*::-webkit-scrollbar {
+  @apply bg-transparent w-0
+}
+
+* {
+  scrollbar-width: none;
+}
+
+*[data-nextjs-scroll-focus-boundary] {
+  display: contents;
+}
+
+:root {
+  --light-theme-1: #ff8975;
+  --light-theme-2: #e9658b;
+
+  --dark-theme-1: #b24592;
+  --dark-theme-2: #e9658b;
+
+  --friend-theme-1: #82bf72;
+  --friend-theme-2: #4d8888;
+
+  --arc-theme-1: var(--arc-background-gradient-color0, var(--arc-background-simple-color));
+  --arc-theme-2: var(--arc-background-gradient-color1, var(--arc-background-simple-color));
+
+  --brand-theme-1: var(--light-theme-1);
+  --brand-theme-2: var(--light-theme-2);
+
+  &.dark {
+    --brand-theme-1: var(--dark-theme-1);
+    --brand-theme-2: var(--dark-theme-2);
+  }
+
+  --theme-1: var(--arc-theme-1, var(--brand-theme-1));
+  --theme-2: var(--arc-theme-2, var(--brand-theme-2));
+
+  &.friend-mode {
+    --theme-1: var(--friend-theme-1);
+    --theme-2: var(--friend-theme-2);
+  }
+}

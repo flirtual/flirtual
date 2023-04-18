@@ -69,8 +69,26 @@ export const ConversationInbox: React.FC<
 		if (!session || !element) return;
 		const inbox = session.createInbox(options);
 
+		// hack: mount.
+		try {
+			void inbox.mount(element).catch(() => {
+				/* */
+			});
+		} catch (error) {
+			/* */
+		}
+
+		// hack: mount again??
 		// hack: fixes not rendering on desktop on client router change 😭
-		setTimeout(() => void inbox.mount(element), 1);
+		setTimeout(() => {
+			try {
+				void inbox.mount(element).catch(() => {
+					/* */
+				});
+			} catch (error) {
+				/* */
+			}
+		}, 1);
 
 		return () => inbox.destroy();
 	}, [session, element, options]);

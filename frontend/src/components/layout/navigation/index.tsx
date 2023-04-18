@@ -2,17 +2,18 @@
 
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { ComponentProps, FC } from "react";
+import { ComponentProps, FC, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { IconComponentProps } from "~/components/icons";
-import { HeartIcon } from "~/components/icons/heart";
-import { PeaceIcon } from "~/components/icons/peace";
 import { useLocation } from "~/hooks/use-location";
-import { useSessionUser } from "~/hooks/use-session";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 import { clamp } from "~/utilities";
+import { HeartIcon } from "~/components/icons/gradient/heart";
+import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { HomeIcon } from "~/components/icons/gradient/home";
+import { LoginIcon } from "~/components/icons/gradient/login";
 
 import { ProfileNavigation } from "./profile";
 
@@ -39,29 +40,7 @@ const NavigationIconButton: FC<
 	);
 };
 
-const SwitchButton: FC<{
-	href: string;
-	Icon: FC<IconComponentProps & { gradient?: boolean }>;
-}> = ({ Icon, ...props }) => {
-	const location = useLocation();
-	const active = urlEqual(toAbsoluteUrl(props.href), location);
-
-	return (
-		<Link
-			{...props}
-			className={twMerge(
-				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none",
-				active
-					? "bg-brand-gradient text-white-20 shadow-brand-1"
-					: "hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
-			)}
-		>
-			<Icon className="aspect-square h-6 sm:h-8" gradient={!active} />
-		</Link>
-	);
-};
-
-const ConversationListButton: FC = () => {
+export const ConversationListButton: FC = () => {
 	const conversationCount = clamp(useUnreadConversations().length, 0, 99);
 
 	return (
@@ -80,30 +59,54 @@ const ConversationListButton: FC = () => {
 	);
 };
 
-const ModeSwitch: FC = () => {
+export interface SwitchButtonProps {
+	href: string;
+	Icon: FC<IconComponentProps & { gradient?: boolean }>;
+}
+
+export const SwitchButton: FC<SwitchButtonProps> = ({ Icon, ...props }) => {
+	const location = useLocation();
+	const active = urlEqual(toAbsoluteUrl(props.href), location);
+
 	return (
-		<div className="flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70">
-			<SwitchButton href={urls.browse()} Icon={HeartIcon} />
-			<SwitchButton href={urls.browse("friend")} Icon={PeaceIcon} />
-		</div>
+		<Link
+			{...props}
+			className={twMerge(
+				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none",
+				active
+					? "bg-brand-gradient text-white-20 shadow-brand-1"
+					: "hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
+			)}
+		>
+			<Icon className="aspect-square h-6 sm:h-8" gradient={!active} />
+		</Link>
 	);
 };
 
-export const NavigationInner: FC<ComponentProps<"div">> = (props) => {
-	const user = useSessionUser();
-	if (!user) return null;
+const NavigationalSwitch: FC<PropsWithChildren> = ({ children }) => (
+	<div className="flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70">
+		{children}
+	</div>
+);
 
+export const AuthenticatedNavigation: FC = () => {
 	return (
-		<div
-			{...props}
-			className={twMerge(
-				"flex h-full w-full max-w-md items-center justify-between gap-4 px-8 font-nunito text-white-20 sm:w-auto",
-				props.className
-			)}
-		>
-			<ProfileNavigation href="/me" />
-			<ModeSwitch />
+		<>
+			<ProfileNavigation href={urls.user.me} />
+			<NavigationalSwitch>
+				<SwitchButton href={urls.browse()} Icon={HeartIcon} />
+				<SwitchButton href={urls.browse("friend")} Icon={PeaceIcon} />
+			</NavigationalSwitch>
 			<ConversationListButton />
-		</div>
+		</>
+	);
+};
+
+export const GuestNavigation: FC = () => {
+	return (
+		<NavigationalSwitch>
+			<SwitchButton href={urls.default} Icon={HomeIcon} />
+			<SwitchButton href={urls.login()} Icon={LoginIcon} />
+		</NavigationalSwitch>
 	);
 };

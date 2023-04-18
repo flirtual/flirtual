@@ -12,7 +12,7 @@ import { SessionProvider } from "~/components/session-provider";
 import { ClientScripts } from "./client-scripts";
 import { HydrationBlock } from "./hydration-block";
 
-import "~/css/index.css";
+import "~/css/index.scss";
 
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });

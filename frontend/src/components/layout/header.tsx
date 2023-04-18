@@ -1,10 +1,10 @@
-import { NavigationInner } from "./navigation";
+import { NavigationInner } from "./navigation/inner";
 
 export const Header: React.FC = () => {
 	return (
 		<div className="hidden w-full flex-col sm:flex sm:h-20">
 			<header className="fixed z-10 flex w-full flex-col text-white-20">
-				<div className="absolute top-0 h-full w-full flex-col bg-brand-gradient shadow-brand-1 md:mt-[calc(-50vw+80px)] md:ml-[-50vw] md:h-[50vw] md:w-[200vw] md:rounded-half" />
+				<div className="absolute top-0 h-full w-full flex-col bg-brand-gradient shadow-brand-1 md:ml-[-50vw] md:mt-[calc(-50vw+80px)] md:h-[50vw] md:w-[200vw] md:rounded-half" />
 				{/* <HeaderMessage className="hidden sm:flex">
 				Download the{" "}
 				<InlineLink
@@ -18,6 +18,7 @@ export const Header: React.FC = () => {
 				for a better experience!
 			</HeaderMessage> */}
 				<div className="z-10 flex w-full flex-col items-center justify-center py-2">
+					{/* @ts-expect-error: Server Component */}
 					<NavigationInner />
 				</div>
 			</header>

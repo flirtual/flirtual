@@ -1,11 +1,8 @@
 import { useId } from "react";
 
-import { IconComponentProps } from ".";
+import { GradientIconProps } from ".";
 
-export const PeaceIcon: React.FC<IconComponentProps & { gradient?: boolean }> = ({
-	gradient = true,
-	...props
-}) => {
+export const PeaceIcon: React.FC<GradientIconProps> = ({ gradient = true, ...props }) => {
 	const id = useId();
 
 	return (
@@ -29,8 +26,8 @@ export const PeaceIcon: React.FC<IconComponentProps & { gradient?: boolean }> = 
 						y1="97.05"
 						y2="151.36"
 					>
-						<stop offset="0" stopColor="#82bf72" />
-						<stop offset="1" stopColor="#4d8888" />
+						<stop offset="0" style={{ stopColor: "var(--friend-theme-1)" }} />
+						<stop offset="1" style={{ stopColor: "var(--friend-theme-2)" }} />
 					</linearGradient>
 				</defs>
 			)}

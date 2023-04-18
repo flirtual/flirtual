@@ -10,7 +10,7 @@ export const SliderInputInner: React.FC<Omit<React.ComponentProps<"input">, "typ
 		{...props}
 		type="range"
 		className={twMerge(
-			"absolute w-full appearance-none bg-transparent focus:outline-none range-thumb:pointer-events-auto range-thumb:rounded-full range-thumb:border-none  range-thumb:shadow-brand-1 focus:range-thumb:ring-2 focus:range-thumb:ring-coral focus:range-thumb:ring-offset-2 focus:range-thumb:ring-offset-white-20",
+			"absolute w-full appearance-none bg-transparent focus:outline-none range-thumb:pointer-events-auto range-thumb:rounded-full range-thumb:border-none range-thumb:shadow-brand-1 focus:range-thumb:ring-2 focus:range-thumb:ring-theme-1 focus:range-thumb:ring-offset-2 focus:range-thumb:ring-offset-white-20",
 			props.disabled
 				? "range-thumb:h-4 range-thumb:w-4 range-thumb:bg-black-40"
 				: "range-thumb:h-6  range-thumb:w-6 range-thumb:bg-brand-gradient focus:range-thumb:dark:ring-offset-black-50",

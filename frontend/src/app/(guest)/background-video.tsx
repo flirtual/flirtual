@@ -8,7 +8,7 @@ export const BackgroundVideo: React.FC = () => (
 		loop
 		muted
 		playsInline
-		className="absolute top-0 left-0 h-full w-full object-cover brightness-50"
+		className="absolute left-0 top-0 h-full w-full object-cover brightness-50"
 		poster="https://media.flirtu.al/6be390d0-4479-4a98-8c7a-10257ea5585a/-/format/auto/-/quality/smart/-/resize/1920x/"
 	>
 		<source
