@@ -1,20 +1,19 @@
 "use client";
 
+import { FC } from "react";
+
 import { api } from "~/api";
-import { personalityQuestionLabels } from "~/api/user/profile";
+import { ProfilePersonality, personalityQuestionLabels } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
-import { useSessionPersonality } from "~/hooks/use-session-personality";
 import { useToast } from "~/hooks/use-toast";
 import { entries } from "~/utilities";
 
-export const PersonalityForm: React.FC = () => {
+export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({ personality }) => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
-
-	const personality = useSessionPersonality();
 
 	if (!session || !personality) return null;
 

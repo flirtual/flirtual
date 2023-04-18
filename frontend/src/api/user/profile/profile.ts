@@ -86,7 +86,8 @@ export async function update(
 	});
 }
 
-export interface ProfilePersonality {
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export type ProfilePersonality = {
 	question0: boolean | null;
 	question1: boolean | null;
 	question2: boolean | null;
@@ -96,7 +97,7 @@ export interface ProfilePersonality {
 	question6: boolean | null;
 	question7: boolean | null;
 	question8: boolean | null;
-}
+};
 
 export const personalityQuestionLabels = [
 	"I plan my life out",

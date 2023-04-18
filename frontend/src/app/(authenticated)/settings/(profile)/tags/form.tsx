@@ -1,27 +1,33 @@
 "use client";
 
+import { FC } from "react";
+
 import { api } from "~/api";
+import { AttributeCollection } from "~/api/attributes";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputAutocomplete, InputDateSelect, InputLabel, InputSwitch } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy, fromEntries } from "~/utilities";
 
 const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
 
-export const TagsForm: React.FC = () => {
+export interface TagsFormProps {
+	games: AttributeCollection<"game">;
+	interests: AttributeCollection<"interest">;
+	platforms: AttributeCollection<"platform">;
+	sexualities: AttributeCollection<"sexuality">;
+	genders: AttributeCollection<"gender">;
+}
+
+export const TagsForm: FC<TagsFormProps> = (props) => {
+	const { games, genders, interests, platforms, sexualities } = props;
+
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
-
-	const games = useAttributeList("game");
-	const interests = useAttributeList("interest");
-	const platforms = useAttributeList("platform");
-	const sexualities = useAttributeList("sexuality");
-	const genders = useAttributeList("gender");
 
 	if (!session) return null;
 	const { user } = session;
@@ -111,9 +117,7 @@ export const TagsForm: React.FC = () => {
 					</FormField>
 					<FormField name="gender">
 						{(field) => {
-							const simpleGenders = genders
-								.filter((gender) => gender.metadata?.simple)
-								.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
+							const simpleGenders = genders.filter((gender) => gender.metadata?.simple);
 							const simpleGenderIds = simpleGenders.map((gender) => gender.id);
 
 							const fallbackGender = genders.find((gender) => gender.metadata?.fallback);

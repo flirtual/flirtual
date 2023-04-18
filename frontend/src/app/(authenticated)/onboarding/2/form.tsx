@@ -1,31 +1,36 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { FC } from "react";
 
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputAutocomplete, InputDateSelect, InputLabel, InputSwitch } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 import { InputPrivacySelect } from "~/components/inputs/specialized/privacy-select";
 import { urls } from "~/urls";
 import { filterBy, fromEntries } from "~/utilities";
 import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
+import { AttributeCollection } from "~/api/attributes";
 
 const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
 
-export const Onboarding2Form: React.FC = () => {
+export interface Onboarding2Props {
+	games: AttributeCollection<"game">;
+	interests: AttributeCollection<"interest">;
+	platforms: AttributeCollection<"platform">;
+	sexualities: AttributeCollection<"sexuality">;
+	genders: AttributeCollection<"gender">;
+}
+
+export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
+	const { games, genders, interests, platforms, sexualities } = props;
+
 	const [session, mutateSession] = useSession();
 
 	const router = useRouter();
-
-	const games = useAttributeList("game");
-	const interests = useAttributeList("interest");
-	const platforms = useAttributeList("platform");
-	const sexualities = useAttributeList("sexuality");
-	const genders = useAttributeList("gender");
 
 	if (!session) return null;
 	const { user } = session;

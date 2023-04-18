@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { FC, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
+import { AttributeCollection } from "~/api/attributes";
 import {
 	CustomWeightList,
 	DefaultProfileCustomWeights,
@@ -24,7 +25,6 @@ import {
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputSlider } from "~/components/inputs/slider";
 import { PremiumBadge } from "~/components/premium-badge";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { capitalize, excludeBy, filterBy } from "~/utilities";
@@ -32,15 +32,15 @@ import { capitalize, excludeBy, filterBy } from "~/utilities";
 const absMinAge = 18;
 const absMaxAge = 100;
 
-export const MatchmakingForm: React.FC = () => {
+export interface MatchmakingFormProps {
+	genders: AttributeCollection<"gender">;
+}
+
+export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 	const [session] = useSession();
 	const toasts = useToast();
 
 	const [expanded, setExpanded] = useState(false);
-
-	const genders = useAttributeList("gender")
-		.filter((gender) => gender.metadata?.simple)
-		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
 
 	if (!session) return null;
 	const { user } = session;

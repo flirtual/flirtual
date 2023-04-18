@@ -1,21 +1,19 @@
 "use client";
 
 import { api } from "~/api";
+import { AttributeCollection } from "~/api/attributes";
 import { ProfileDomsubList } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputAutocomplete, InputLabel, InputRadioList, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy } from "~/utilities";
 
-export const NsfwForm: React.FC = () => {
+export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({ kinks }) => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
-
-	const kinks = useAttributeList("kink");
 
 	if (!session) return null;
 	const { user } = session;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { FC } from "react";
 
 import { api } from "~/api";
 import { Form } from "~/components/forms";
@@ -8,13 +9,16 @@ import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { InputLabel, InputSelect, InputText } from "~/components/inputs";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 import { sortBy } from "~/utilities";
 import { InputTextArea } from "~/components/inputs/textarea";
+import { AttributeCollection } from "~/api/attributes";
 
-export const DeleteForm: React.FC = () => {
+export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"> }> = ({
+	deleteReasons
+}) => {
 	const router = useRouter();
-	const deleteReasons = useAttributeList("delete-reason");
+
+	console.log(deleteReasons);
 
 	return (
 		<Form
