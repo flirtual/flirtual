@@ -94,7 +94,6 @@ defmodule Flirtual.Users do
   def update_password(%User{} = user, attrs) do
     Repo.transaction(fn ->
       with {:ok, attrs} <- UpdatePassword.apply(attrs, context: %{user: user}),
-           IO.inspect(attrs),
            {:ok, user} <-
              User.update_password(user, attrs.password) do
         user
