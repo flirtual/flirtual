@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FC, useState } from "react";
 
 import { api } from "~/api";
+import { AttributeCollection } from "~/api/attributes";
 import { ProfileMonopolyLabel, ProfileMonopolyList } from "~/api/user/profile";
 import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
@@ -16,7 +17,6 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useSessionUser } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { excludeBy, filterBy } from "~/utilities";
@@ -24,15 +24,15 @@ import { excludeBy, filterBy } from "~/utilities";
 const absMinAge = 18;
 const absMaxAge = 100;
 
-export const Onboarding1Form: React.FC = () => {
+export interface Onboarding1FormProps {
+	genders: AttributeCollection<"gender">;
+}
+
+export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 	const user = useSessionUser();
 	const router = useRouter();
 
 	const [expanded, setExpanded] = useState(false);
-
-	const genders = useAttributeList("gender")
-		.filter((gender) => gender.metadata?.simple)
-		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
 
 	if (!user) return null;
 	const { preferences } = user.profile;

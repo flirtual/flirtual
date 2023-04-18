@@ -5,11 +5,17 @@ import { cache } from "react";
 
 import { thruServerCookies } from "~/server-utilities";
 
-import { AttributeType, get, list } from "./attributes";
+import { AttributeType, get, list, AttributeCollection } from "./attributes";
 
-export const withAttributeList = cache((type: AttributeType) => {
+const _withAttributeList = cache((type: AttributeType) => {
 	return list(type, thruServerCookies());
 });
+
+export async function withAttributeList<T extends AttributeType>(
+	type: T
+): Promise<AttributeCollection<T>> {
+	return _withAttributeList(type) as Promise<AttributeCollection<T>>;
+}
 
 export const withAttribute = cache((type: AttributeType, id: string) => {
 	return get(type, id, thruServerCookies());

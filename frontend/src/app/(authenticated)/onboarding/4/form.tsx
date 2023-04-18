@@ -8,16 +8,14 @@ import { api } from "~/api";
 import { entries } from "~/utilities";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
-import { personalityQuestionLabels } from "~/api/user/profile";
+import { ProfilePersonality, personalityQuestionLabels } from "~/api/user/profile";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
-import { useSessionPersonality } from "~/hooks/use-session-personality";
 import { useSession } from "~/hooks/use-session";
 
-export const Onboarding4Form: React.FC = () => {
+export const Onboarding4Form: React.FC<{ personality: ProfilePersonality }> = ({ personality }) => {
 	const router = useRouter();
 
 	const [session] = useSession();
-	const personality = useSessionPersonality();
 
 	if (!session || !personality) return null;
 	const { user } = session;
