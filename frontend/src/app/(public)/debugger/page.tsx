@@ -10,7 +10,7 @@ import { withOptionalSession } from "~/server-utilities";
 export default async function DebuggerPage() {
 	const session = await withOptionalSession();
 
-	console.log(process.env)
+	console.log(process.env);
 
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const userAgent = headers().get("user-agent")!;
