@@ -57,8 +57,16 @@ export type AttributeCollection<T extends string> = Array<
 export type PartialAttributeCollection = Array<PartialAttribute>;
 
 export async function list<T extends string>(
-	name: T,
+	type: T,
 	options: NarrowFetchOptions = {}
 ): Promise<AttributeCollection<T>> {
-	return fetch<AttributeCollection<T>>("get", `attributes/${name}`, options);
+	return fetch<AttributeCollection<T>>("get", `attributes/${type}`, options);
+}
+
+export async function get<T extends string>(
+	type: T,
+	id: string,
+	options: NarrowFetchOptions = {}
+): Promise<Attribute<T>> {
+	return fetch<Attribute<T>>("get", `attributes/${type}/${id}`, options);
 }

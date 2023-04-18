@@ -98,7 +98,8 @@ export const urls = {
 	admin: {},
 
 	debugger: {
-		default: "/debugger"
+		default: "/debugger",
+		console: "/debugger/console"
 	},
 
 	resources: {
@@ -126,6 +127,7 @@ export const urls = {
 	},
 
 	apps: {
+		ios: "/ios",
 		android: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
 		windows: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
 		sideQuest: "https://sidequestvr.com/app/9195"

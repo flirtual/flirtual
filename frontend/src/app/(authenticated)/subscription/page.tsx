@@ -91,33 +91,35 @@ export default async function SubscriptionPage() {
 							<li key={itemIdx}>{item}</li>
 						))}
 					</ul>
-					<div className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-4">
-						{[
-							{
-								id: "cea4b769-ad78-4b8a-bbcc-da7685ec8eb8",
-								duration: 1,
-								price: 9.99
-							},
-							{
-								id: "8026d1d7-dd88-46c2-866c-55d11447e0da",
-								duration: 3,
-								price: 24.99,
-								originalPrice: 29.97,
-								discount: 17,
-								highlight: true
-							},
-							{
-								id: "d494397e-8485-454c-ae9a-77d74c7b53b3",
-								duration: 6,
-								originalPrice: 59.94,
-								price: 39.99,
-								discount: 33
-							}
-						].map((item) => {
-							// @ts-expect-error: Server Component
-							return <PlanCard {...item} key={item.id} />;
-						})}
-					</div>
+					{subscription?.plan.id !== "ccd77191-c9aa-4b01-859d-e6475a87e82e" && (
+						<div className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-4">
+							{[
+								{
+									id: "cea4b769-ad78-4b8a-bbcc-da7685ec8eb8",
+									duration: 1,
+									price: 9.99
+								},
+								{
+									id: "8026d1d7-dd88-46c2-866c-55d11447e0da",
+									duration: 3,
+									price: 24.99,
+									originalPrice: 29.97,
+									discount: 17,
+									highlight: true
+								},
+								{
+									id: "d494397e-8485-454c-ae9a-77d74c7b53b3",
+									duration: 6,
+									originalPrice: 59.94,
+									price: 39.99,
+									discount: 33
+								}
+							].map((item) => {
+								// @ts-expect-error: Server Component
+								return <PlanCard {...item} key={item.id} />;
+							})}
+						</div>
+					)}
 				</div>
 
 				<p>

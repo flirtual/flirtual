@@ -151,6 +151,10 @@ module.exports = {
 				".focusable-within": {
 					"@apply focus:outline-none focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus-within:dark:ring-offset-black-50":
 						{}
+				},
+				".text-shadow-brand": {
+					"text-shadow":
+						"0 0 8px rgba(0,0,0,0.1), 0 2px 2px rgba(0, 0, 0, 0.14), 0 2px 1px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.2)"
 				}
 			});
 		})

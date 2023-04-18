@@ -139,7 +139,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							{user.tags?.includes("debugger") && (
 								<>
 									<ProfileNavigationItemDivider Icon={CommandLineIcon} />
-									<ProfileNavigationItem href={urls.debugger.default}>
+									<ProfileNavigationItem href={urls.debugger.console}>
 										Console
 									</ProfileNavigationItem>
 								</>

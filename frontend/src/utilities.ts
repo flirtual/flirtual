@@ -162,3 +162,7 @@ export function groupBy<T extends ReadonlyArray<object>, K extends PropertyKey>(
 		return { ...prev, [key]: group };
 	}, {}) as GroupBy<T, K>;
 }
+
+export function isUuid(value: string): boolean {
+	return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
