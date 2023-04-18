@@ -1,20 +1,16 @@
-"use client";
-
-import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useAttributeList } from "~/hooks/use-attribute-list";
-import { findBy } from "~/utilities";
+import { withAttribute } from "~/api/attributes-server";
 
 import { Pill } from "./pill";
 
-export const CountryPill: React.FC<{ code: string; flagOnly?: boolean }> = ({
-	code,
-	flagOnly = false
-}) => {
-	const countries = useAttributeList("country");
+export interface CountryPillProps {
+	code: string;
+	flagOnly?: boolean;
+}
 
-	const country = useMemo(() => findBy(countries, "id", code), [countries, code]);
+export async function CountryPill({ code, flagOnly = false }: CountryPillProps) {
+	const country = await withAttribute("country", code);
 	if (!country) return null;
 
 	return (
@@ -26,4 +22,4 @@ export const CountryPill: React.FC<{ code: string; flagOnly?: boolean }> = ({
 			{!flagOnly && <span>{country.name}</span>}
 		</Pill>
 	);
-};
+}
