@@ -164,7 +164,8 @@ defmodule Flirtual.Profiles do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
              Update.apply(attrs, context: %{required: Keyword.get(options, :required, [])}),
-           {:ok, profile} <- Update.transform(profile, attrs) |> Repo.update(),
+           {:ok, profile} <-
+             Update.transform(profile, attrs |> Map.from_struct()) |> Repo.update(),
            {:ok, _} <- ChangeQueue.add(profile.user_id) do
         profile
       else

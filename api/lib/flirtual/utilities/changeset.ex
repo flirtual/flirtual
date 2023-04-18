@@ -55,7 +55,6 @@ defmodule Flirtual.Utilities.Changeset do
 
   def validate_predicate(changeset, predicate, options \\ []) do
     values = Keyword.fetch!(options, :values)
-    IO.inspect([predicate, values])
 
     if not evaluate_predicate(predicate, values) do
       add_error(

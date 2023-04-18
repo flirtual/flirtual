@@ -315,6 +315,16 @@ defmodule Flirtual.User do
     change(value, %{password_hash: Bcrypt.hash_pwd_salt(password)})
   end
 
+  def update_password(%User{} = user, password) do
+    with {:ok, user} <-
+           user
+           |> put_password(password)
+           |> Repo.update(),
+         {_, _} <- Session.delete(user_id: user.id) do
+      {:ok, user}
+    end
+  end
+
   @doc """
   A user changeset for changing the email.
 

@@ -73,9 +73,9 @@ defmodule Flirtual.Users do
     use Flirtual.EmbeddedSchema
 
     embedded_schema do
-      field :password, :string
-      field :password_confirmation, :string
-      field :current_password, :string
+      field :password, :string, redact: true
+      field :password_confirmation, :string, redact: true
+      field :current_password, :string, redact: true
     end
 
     def changeset(value, _, %{user: user}) do
@@ -94,11 +94,9 @@ defmodule Flirtual.Users do
   def update_password(%User{} = user, attrs) do
     Repo.transaction(fn ->
       with {:ok, attrs} <- UpdatePassword.apply(attrs, context: %{user: user}),
+           IO.inspect(attrs),
            {:ok, user} <-
-             user
-             |> User.put_password(attrs.password)
-             |> Repo.update(),
-           {_, _} <- Session.delete(user_id: user.id) do
+             User.update_password(user, attrs.password) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -128,9 +126,9 @@ defmodule Flirtual.Users do
 
     embedded_schema do
       field :email, :string
-      field :password, :string
-      field :password_confirmation, :string
-      field :token, :string
+      field :password, :string, redact: true
+      field :password_confirmation, :string, redact: true
+      field :token, :string, redact: true
 
       field :user, :map, virtual: true
     end
@@ -151,7 +149,7 @@ defmodule Flirtual.Users do
   def confirm_reset_password(attrs) do
     Repo.transaction(fn ->
       with {:ok, attrs} <- ConfirmResetPassword.apply(attrs),
-           {:ok, user} <- update_password(attrs.user, attrs) do
+           {:ok, user} <- User.update_password(attrs.user, attrs.password) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -166,7 +164,7 @@ defmodule Flirtual.Users do
     embedded_schema do
       field :email, :string
       field :email_confirmation, :string
-      field :current_password, :string
+      field :current_password, :string, redact: true
     end
 
     def changeset(value, _, %{user: user}) do
@@ -196,7 +194,7 @@ defmodule Flirtual.Users do
       with {:ok, attrs} <- UpdateEmail.apply(attrs, context: %{user: user}),
            {:ok, user} <-
              user
-             |> User.update_email_changeset(attrs)
+             |> User.update_email_changeset(attrs |> Map.from_struct())
              |> Repo.update(),
            {:ok, _} <- ChangeQueue.add(user.id),
            {:ok, _} <- deliver_email_confirmation(user) do
@@ -214,7 +212,7 @@ defmodule Flirtual.Users do
     import Flirtual.Jwt, only: [validate_jwt: 4]
 
     embedded_schema do
-      field :token, :string
+      field :token, :string, redact: true
       field :user, :map, virtual: true
     end
 
@@ -320,8 +318,8 @@ defmodule Flirtual.Users do
 
       field :comment, :string
 
-      field :current_password, :string
-      field :captcha, :string
+      field :current_password, :string, redact: true
+      field :captcha, :string, redact: true
     end
 
     def changeset(value, _, %{user: user}) do

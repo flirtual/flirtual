@@ -88,7 +88,7 @@ defmodule Flirtual.EmbeddedSchema do
                prepare_changeset(attrs)
                |> changeset(attrs, context)
                |> apply_action(action) do
-          {:ok, value |> Map.from_struct()}
+          {:ok, value}
         end
       end
 
