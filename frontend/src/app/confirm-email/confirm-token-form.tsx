@@ -9,10 +9,13 @@ import {
 
 import { api } from "~/api/";
 import { Form, FormButton } from "~/components/forms";
+import { useToast } from "~/hooks/use-toast";
 
 export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	const [confirmSuccess, setConfirmSuccess] = useState<boolean | null>(null);
+
 	const router = useRouter();
+	const toasts = useToast();
 
 	if (confirmSuccess === null) {
 		return (
@@ -21,10 +24,18 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 				fields={{}}
 				requireChange={false}
 				onSubmit={async () => {
-					await api.user.confirmEmail({ body: { token } });
-					setConfirmSuccess(true);
+					await api.user
+						.confirmEmail({ body: { token } })
+						.then(() => {
+							toasts.add({
+								type: "success",
+								label: "Email changed successfully"
+							});
 
-					router.refresh();
+							setConfirmSuccess(true);
+							return router.refresh();
+						})
+						.catch(toasts.addError);
 				}}
 			>
 				{() => (
