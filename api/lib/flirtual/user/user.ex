@@ -334,7 +334,6 @@ defmodule Flirtual.User do
     user
     |> cast(attrs, [:email])
     |> validate_unique_email()
-    |> validate_changed(:email)
     |> put_change(:email_confirmed_at, nil)
   end
 
