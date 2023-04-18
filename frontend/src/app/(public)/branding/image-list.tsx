@@ -43,7 +43,7 @@ async function ImageListItem(item: ImageListItemProps) {
 			<div className="flex gap-2">
 				{kinds.map(({ kind, data }) => (
 					<a
-						className="uppercase text-pink hocus:underline hocus:outline-none"
+						className="uppercase text-theme-2 hocus:underline hocus:outline-none"
 						download={getFilename(item.name, kind)}
 						href={data.src}
 						key={kind}

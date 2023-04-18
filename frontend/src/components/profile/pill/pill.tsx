@@ -21,6 +21,7 @@ export interface PillProps {
 export const Pill: React.FC<PillProps> = (props) => {
 	const { Icon, active = false, hocusable = true, small = false, href, ...elementProps } = props;
 	const Element = href ? Link : "div";
+
 	const [hocused, setHocused] = useState(false);
 
 	return (

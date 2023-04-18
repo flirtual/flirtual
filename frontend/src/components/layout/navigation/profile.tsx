@@ -31,7 +31,7 @@ type ProfileNavigationItemDividerProps = React.PropsWithChildren<
 
 const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 	const className = twMerge(
-		"w-full text-left font-montserrat font-semibold hover:text-pink",
+		"w-full text-left font-montserrat font-semibold hover:text-theme-2",
 		props.className
 	);
 
@@ -90,7 +90,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 						ref={elementRef}
 					>
 						<Link
-							className="group flex shrink-0 items-center gap-2 hover:text-pink"
+							className="group flex shrink-0 items-center gap-2 hover:text-theme-2"
 							href={urls.user.me}
 						>
 							<UserAvatar

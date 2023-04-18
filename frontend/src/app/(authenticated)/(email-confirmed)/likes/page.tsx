@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { api } from "~/api";
 import { User, displayName } from "~/api/user";
 import { ButtonLink } from "~/components/button";
@@ -11,6 +13,7 @@ import { urls } from "~/urls";
 import { filterBy } from "~/utilities";
 import { Pill } from "~/components/profile/pill/pill";
 import { LikeAndPassItem } from "~/api/matchmaking";
+import { yearsAgo } from "~/date";
 
 export default async function LikesPage() {
 	const result = await api.matchmaking.listMatches({
@@ -45,18 +48,15 @@ export default async function LikesPage() {
 					) : (
 						<div className="flex flex-col gap-4">
 							{items.map((like) => (
-								<a href={urls.user.profile(like.user.username)} key={like.id}>
-									<div className="flex items-center gap-4 rounded-xl bg-white-10 p-4 shadow-brand-1">
+								<Link href={urls.user.profile(like.user.username)} key={like.id}>
+									<div className="flex items-center gap-4 rounded-xl bg-white-10 p-4 shadow-brand-1 dark:bg-black-80">
 										<UserAvatar className="h-16" user={like.user} />
 										<div className="flex grow flex-col">
 											<h1 className="text-2xl font-semibold">{displayName(like.user)}</h1>
 											<div className="flex gap-2">
-												<Pill small={true}>
-													{Math.floor(
-														(Date.now() - new Date(like.user.bornAt ?? 0).getTime()) /
-															(365 * 24 * 60 * 60 * 1000)
-													)}
-												</Pill>
+												{like.user.bornAt && (
+													<Pill small={true}>{yearsAgo(new Date(like.user.bornAt))}</Pill>
+												)}
 												<GenderPills
 													simple
 													attributes={filterBy(like.user.profile.attributes, "type", "gender")}
@@ -68,7 +68,7 @@ export default async function LikesPage() {
 										</div>
 										<p>{like.kind === "love" ? "❤️" : "✌️"}</p>
 									</div>
-								</a>
+								</Link>
 							))}
 						</div>
 					)}

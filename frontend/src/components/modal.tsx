@@ -56,7 +56,7 @@ export const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
 		<ModalOuter {...props}>
 			<motion.div
 				animate={{ y: 0 }}
-				className="w-fit cursor-default rounded-3xl bg-gradient-to-r from-coral to-pink p-1 shadow-brand-1"
+				className="w-fit cursor-default rounded-3xl bg-brand-gradient p-1 shadow-brand-1"
 				exit={{ y: "100%" }}
 				initial={{ y: "100%" }}
 				transition={{ damping: 25 }}

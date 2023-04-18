@@ -17,7 +17,7 @@ export const InlineLink: React.FC<InlineLinkProps> = ({ href, highlight = true, 
 			target={isInternalHref(href) ? "_self" : "_blank"}
 			className={twMerge(
 				"focus:outline-none hocus:underline",
-				highlight && "text-pink",
+				highlight && "text-theme-2",
 				props.className
 			)}
 		/>

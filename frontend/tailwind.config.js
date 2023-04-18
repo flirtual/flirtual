@@ -26,6 +26,14 @@ const colors = {
 		30: "#707070",
 		20: "#858585",
 		10: "#999999"
+	},
+	theme: {
+		1: "var(--theme-1)",
+		2: "var(--theme-2)",
+		"light-1": "var(--theme-light-1)",
+		"light-2": "var(--theme-light-2)",
+		"dark-1": "var(--theme-dark-1)",
+		"dark-2": "var(--theme-dark-2)"
 	}
 };
 
@@ -41,7 +49,7 @@ module.exports = {
 			},
 			colors: colors,
 			backgroundImage: {
-				"brand-gradient": `linear-gradient(to right, var(--gradient-l), var(--gradient-r))`
+				"brand-gradient": `linear-gradient(to right, var(--theme-1), var(--theme-2))`
 			},
 			borderRadius: {
 				half: "50%"
@@ -145,11 +153,11 @@ module.exports = {
 
 			addComponents({
 				".focusable": {
-					"@apply focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 focus:dark:ring-offset-black-50":
+					"@apply focus:outline-none focus:ring-2 focus:ring-theme-1 focus:ring-offset-2 focus:dark:ring-offset-black-50":
 						{}
 				},
 				".focusable-within": {
-					"@apply focus:outline-none focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus-within:dark:ring-offset-black-50":
+					"@apply focus:outline-none focus-within:ring-2 focus-within:ring-theme-1 focus-within:ring-offset-2 focus-within:dark:ring-offset-black-50":
 						{}
 				},
 				".text-shadow-brand": {

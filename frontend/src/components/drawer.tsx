@@ -26,7 +26,7 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
 				<Portal>
 					<motion.div
 						animate={{ y: 0 }}
-						className="fixed bottom-0 left-0 z-50 w-full rounded-t-3xl bg-gradient-to-r from-coral to-pink pt-1 shadow-brand-1"
+						className="fixed bottom-0 left-0 z-50 w-full rounded-t-3xl bg-brand-gradient pt-1 shadow-brand-1"
 						drag="y"
 						dragConstraints={{ top: 0, bottom: 0 }}
 						exit={{ y: "100%" }}

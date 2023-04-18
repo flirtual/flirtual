@@ -2,17 +2,19 @@
 
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { ComponentProps, FC } from "react";
+import { ComponentProps, FC, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { IconComponentProps } from "~/components/icons";
-import { HeartIcon } from "~/components/icons/heart";
-import { PeaceIcon } from "~/components/icons/peace";
 import { useLocation } from "~/hooks/use-location";
 import { useSessionUser } from "~/hooks/use-session";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 import { clamp } from "~/utilities";
+import { HeartIcon } from "~/components/icons/gradient/heart";
+import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { HomeIcon } from "~/components/icons/gradient/home";
+import { LoginIcon } from "~/components/icons/gradient/login";
 
 import { ProfileNavigation } from "./profile";
 
@@ -80,18 +82,14 @@ const ConversationListButton: FC = () => {
 	);
 };
 
-const ModeSwitch: FC = () => {
-	return (
-		<div className="flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70">
-			<SwitchButton href={urls.browse()} Icon={HeartIcon} />
-			<SwitchButton href={urls.browse("friend")} Icon={PeaceIcon} />
-		</div>
-	);
-};
+const NavigationalSwitch: FC<PropsWithChildren> = ({ children }) => (
+	<div className="flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70">
+		{children}
+	</div>
+);
 
 export const NavigationInner: FC<ComponentProps<"div">> = (props) => {
 	const user = useSessionUser();
-	if (!user) return null;
 
 	return (
 		<div
@@ -101,9 +99,21 @@ export const NavigationInner: FC<ComponentProps<"div">> = (props) => {
 				props.className
 			)}
 		>
-			<ProfileNavigation href="/me" />
-			<ModeSwitch />
-			<ConversationListButton />
+			{user ? (
+				<>
+					<ProfileNavigation href="/me" />
+					<NavigationalSwitch>
+						<SwitchButton href={urls.browse()} Icon={HeartIcon} />
+						<SwitchButton href={urls.browse("friend")} Icon={PeaceIcon} />
+					</NavigationalSwitch>
+					<ConversationListButton />
+				</>
+			) : (
+				<NavigationalSwitch>
+					<SwitchButton href={urls.default} Icon={HomeIcon} />
+					<SwitchButton href={urls.login()} Icon={LoginIcon} />
+				</NavigationalSwitch>
+			)}
 		</div>
 	);
 };

@@ -7,8 +7,8 @@ import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
 import { ProspectKind, ProspectRespondType, RespondProspectBody } from "~/api/matchmaking";
-import { HeartIcon } from "~/components/icons/heart";
-import { PeaceIcon } from "~/components/icons/peace";
+import { HeartIcon } from "~/components/icons/gradient/heart";
+import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 

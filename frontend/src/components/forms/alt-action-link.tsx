@@ -8,7 +8,7 @@ export const FormAlternativeActionLink: React.FC<
 	<Link
 		{...props}
 		className={twMerge(
-			"flex items-center gap-2 font-nunito text-lg text-pink focus:outline-none",
+			"flex items-center gap-2 font-nunito text-lg text-theme-2 focus:outline-none",
 			props.className
 		)}
 	>
