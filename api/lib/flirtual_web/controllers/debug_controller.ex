@@ -3,6 +3,7 @@ defmodule FlirtualWeb.DebugController do
 
   import Plug.Conn
   import Phoenix.Controller
+  alias Flirtual.Crypto
   alias Flirtual.Policy
   import Ecto.Changeset
   import Flirtual.Utilities.Changeset
@@ -59,6 +60,13 @@ defmodule FlirtualWeb.DebugController do
     with :ok <- Policy.can(conn, :arbitrary_code_execution, conn.assigns[:session].user),
          {:ok, attrs} <- input_changeset(conn, attrs) |> apply_action(:execute) do
       conn |> json(attrs)
+    end
+  end
+
+  def error(conn, %{"cipher" => cipher}) do
+    with :ok <- Policy.can(conn, :read_error_cipher, conn.assigns[:session].user),
+         {:ok, reason} <- Crypto.decrypt(:error, cipher) do
+      conn |> json(reason |> Map.from_struct())
     end
   end
 end

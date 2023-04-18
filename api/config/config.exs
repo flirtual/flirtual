@@ -15,6 +15,11 @@ config :flirtual, FlirtualWeb.Endpoint,
   pubsub_server: Flirtual.PubSub,
   http: [
     port: 4000
+  ],
+  render_errors: [
+    view: FlirtualWeb.ErrorView,
+    formats: "json",
+    accepts: ~w(json)
   ]
 
 config :flirtual, Flirtual.Elasticsearch,

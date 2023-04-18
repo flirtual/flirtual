@@ -109,6 +109,7 @@ defmodule FlirtualWeb.Router do
         end
 
         post "/evaluate", DebugController, :evaluate
+        get "/error", DebugController, :error
 
         scope "/plans" do
           pipe_through :require_authenticated_user
@@ -255,6 +256,4 @@ defmodule FlirtualWeb.Router do
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end
-
-  match :*, "/*any", FlirtualWeb.FallbackController, :not_found
 end

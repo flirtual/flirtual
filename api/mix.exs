@@ -43,7 +43,7 @@ defmodule Flirtual.MixProject do
       {:elasticsearch, "~> 1.0.0"},
       {:stripity_stripe, "~> 2.0"},
       {:phoenix_html, "~> 3.0"},
-      {:faker, "~> 0.17", only: :dev},
+      {:faker, "~> 0.17"},
       {:pre_commit, "~> 0.3.4", only: :dev},
       {:recase, "~> 0.5"},
       {:swoosh, "~> 1.3"},
