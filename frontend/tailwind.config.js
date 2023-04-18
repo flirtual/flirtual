@@ -101,6 +101,9 @@ module.exports = {
 							marginTop: 0,
 							fontSize: "1.3rem"
 						},
+						strong: {
+							fontWeight: 700
+						},
 						"--tw-prose-body": colors.black[80],
 						"--tw-prose-headings": colors.black[80],
 						"--tw-prose-lead": colors.black[80],
