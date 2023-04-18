@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import { api } from "~/api";
 import { User, displayName } from "~/api/user";
@@ -8,7 +9,7 @@ import { ModelCard } from "~/components/model-card";
 import { GenderPills } from "~/components/profile/pill/genders";
 import { CountryPill } from "~/components/profile/pill/country";
 import { UserAvatar } from "~/components/user-avatar";
-import { thruServerCookies } from "~/server-utilities";
+import { thruServerCookies, withSession } from "~/server-utilities";
 import { urls } from "~/urls";
 import { filterBy } from "~/utilities";
 import { Pill } from "~/components/profile/pill/pill";
@@ -16,6 +17,10 @@ import { LikeAndPassItem } from "~/api/matchmaking";
 import { yearsAgo } from "~/date";
 
 export default async function LikesPage() {
+	const { user } = await withSession();
+
+	if (!user.subscription?.active) redirect(urls.subscription);
+
 	const result = await api.matchmaking.listMatches({
 		...thruServerCookies(),
 		query: { unrequited: true }
