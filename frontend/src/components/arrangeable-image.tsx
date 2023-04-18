@@ -72,7 +72,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 		<>
 			{fullPreview && (
 				<div
-					className="fixed top-0 left-0 z-40 flex h-full w-full items-center justify-center bg-black-90/60 p-4 backdrop-blur-sm md:p-16"
+					className="fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center bg-black-90/60 p-4 backdrop-blur-sm md:p-16"
 					onClick={() => setFullPreview(false)}
 				>
 					<ArrangeableImagePreview className="h-auto w-full md:w-96" src={src} />
@@ -81,7 +81,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 			<div className="group relative aspect-square max-h-full w-full shrink-0" ref={dragDropRef}>
 				{dragging && (
 					<div
-						className="pointer-events-none absolute top-0 left-0 z-50 w-full rounded-md shadow-brand-1"
+						className="pointer-events-none absolute left-0 top-0 z-50 w-full rounded-md shadow-brand-1"
 						style={{ transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }}
 					>
 						<ArrangeableImagePreview src={src} />
@@ -94,7 +94,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 				{uploading ? (
 					<div
 						className={twMerge(
-							"absolute top-0 right-0 flex h-full w-full items-center justify-center rounded-md bg-black-90/50 p-2 backdrop-blur"
+							"absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-black-90/50 p-2 backdrop-blur"
 						)}
 					>
 						<TailCircleIcon className="h-10 w-10" />
@@ -102,7 +102,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 				) : (
 					<div
 						className={twMerge(
-							"absolute top-0 right-0 p-2",
+							"absolute right-0 top-0 p-2",
 							currentItem ? "opacity-0" : "opacity-100"
 						)}
 					>

@@ -4,6 +4,7 @@ import { InlineLink } from "~/components/inline-link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
 	return (
 		<div className="flex min-h-screen w-full justify-center bg-brand-gradient px-8 py-16 text-white-10 sm:items-center">

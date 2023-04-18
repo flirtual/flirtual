@@ -36,7 +36,7 @@ export const ModalOuter: React.FC<ModalProps & { modalOuterProps?: HTMLMotionPro
 						initial={{ opacity: 0 }}
 						transition={{ damping: 25 }}
 						className={twMerge(
-							"fixed top-0 left-0 z-50 flex h-screen w-screen cursor-pointer items-center justify-center backdrop-blur backdrop-brightness-90",
+							"fixed left-0 top-0 z-50 flex h-screen w-screen cursor-pointer items-center justify-center backdrop-blur backdrop-brightness-90",
 							modalOuterProps?.className
 						)}
 						onClick={() => {
