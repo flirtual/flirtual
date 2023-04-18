@@ -57,7 +57,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 			</span>
 			<div className="flex gap-4 text-white-20">
 				<Tooltip value="Search image">
-					<Link href={urls.moderation.imageSearch(image.url)}>
+					<Link href={urls.moderation.imageSearch(image.url)} target="_blank">
 						<MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
 					</Link>
 				</Tooltip>
