@@ -26,6 +26,7 @@ export function SoleModelLayout({
 				props.className
 			)}
 		>
+			{/* @ts-expect-error: Server Component */}
 			<Header />
 			<div
 				{...containerProps}

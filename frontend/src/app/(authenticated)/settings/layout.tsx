@@ -21,6 +21,7 @@ export default async function SettingsLayout({ children }: React.ComponentProps<
 				"flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col"
 			)}
 		>
+			{/* @ts-expect-error: Server Component */}
 			<Header />
 			<div className="flex w-full grow flex-col md:flex-row">
 				<SettingsNavigation />
