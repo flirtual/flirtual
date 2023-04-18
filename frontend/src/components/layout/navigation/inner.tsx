@@ -1,12 +1,12 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { withSession } from "~/server-utilities";
+import { withOptionalSession } from "~/server-utilities";
 
 import { AuthenticatedNavigation, GuestNavigation } from ".";
 
 export async function NavigationInner(props: ComponentProps<"div">) {
-	const { user } = await withSession();
+	const session = await withOptionalSession();
 
 	return (
 		<div
@@ -16,7 +16,7 @@ export async function NavigationInner(props: ComponentProps<"div">) {
 				props.className
 			)}
 		>
-			{user ? <AuthenticatedNavigation /> : <GuestNavigation />}
+			{session?.user ? <AuthenticatedNavigation /> : <GuestNavigation />}
 		</div>
 	);
 }

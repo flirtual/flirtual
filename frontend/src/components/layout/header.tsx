@@ -1,6 +1,6 @@
 import { NavigationInner } from "./navigation/inner";
 
-export const Header: React.FC = () => {
+export async function Header() {
 	return (
 		<div className="hidden w-full flex-col sm:flex sm:h-20">
 			<header className="fixed z-10 flex w-full flex-col text-white-20">
@@ -24,4 +24,4 @@ export const Header: React.FC = () => {
 			</header>
 		</div>
 	);
-};
+}
