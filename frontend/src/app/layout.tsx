@@ -30,7 +30,9 @@ export const metadata: Metadata = {
 	appleWebApp: {
 		title: "Flirtual"
 	},
-	themeColor: "#e9658b",
+	other: {
+		"msapplication-TileColor": "#e9658b"
+	},
 	twitter: {
 		site: `@${urls.socials.twitter.split("twitter.com/")[1]}`,
 		card: "summary"
@@ -92,6 +94,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 						/>
 					</>
 				)}
+				<link color="#e9658b" href="/safari-pinned-tab.svg" rel="mask-icon" />
 				<ClientScripts />
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>

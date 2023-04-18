@@ -7,6 +7,8 @@ import { urls } from "~/urls";
 
 import { TeamList } from "./team-list";
 
+import TeamImage from "~/public/images/team.jpg";
+
 export const metadata: Metadata = {
 	title: "About us"
 };
@@ -19,7 +21,7 @@ export default function AboutPage() {
 				containerProps={{ className: "!p-0 overflow-hidden" }}
 				title="About us"
 			>
-				<img src="https://flirtu.al/img/team.jpg" />
+				<img src={TeamImage.src} />
 				<div className="flex flex-col gap-8 px-8 py-10 sm:px-16">
 					<div className="flex flex-col gap-4">
 						<h1 className="text-2xl font-semibold">Our Story</h1>
