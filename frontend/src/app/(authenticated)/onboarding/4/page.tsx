@@ -9,7 +9,7 @@ export default async function Onboarding4Page() {
 	const personality = await api.user.profile.getPersonality(session.user.id, thruServerCookies());
 
 	return (
-		<ModelCard title="Personality">
+		<ModelCard className="sm:max-w-2xl" title="Personality">
 			<Onboarding4Form personality={personality} />
 		</ModelCard>
 	);
