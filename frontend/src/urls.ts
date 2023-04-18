@@ -98,7 +98,8 @@ export const urls = {
 	admin: {},
 
 	debugger: {
-		default: "/debugger"
+		default: "/debugger",
+		console: "/debugger/console"
 	},
 
 	resources: {

@@ -40,7 +40,7 @@ const ConsoleView: React.FC<InputOutput & { idx: number }> = ({ input, output, i
 	);
 };
 
-export default function DebuggerPage() {
+export default function DebuggerConsolePage() {
 	const [history, setHistory] = useState<Array<InputOutput>>([]);
 	const [historyIdx, setHistoryIdx] = useState(0);
 

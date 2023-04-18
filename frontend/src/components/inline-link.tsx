@@ -1,21 +1,27 @@
+import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 import { isInternalHref } from "~/urls";
 
 type InlineLinkProps = Omit<Parameters<typeof Link>[0], "href"> & {
-	href: string;
+	href: Url | null;
 	highlight?: boolean;
 };
 
-export const InlineLink: React.FC<InlineLinkProps> = ({ highlight = true, ...props }) => (
-	<Link
-		{...props}
-		target={isInternalHref(props.href) ? "_self" : "_blank"}
-		className={twMerge(
-			"focus:outline-none hocus:underline",
-			highlight && "text-pink",
-			props.className
-		)}
-	/>
-);
+export const InlineLink: React.FC<InlineLinkProps> = ({ href, highlight = true, ...props }) => {
+	return href !== null ? (
+		<Link
+			{...props}
+			href={href.toString()}
+			target={isInternalHref(href) ? "_self" : "_blank"}
+			className={twMerge(
+				"focus:outline-none hocus:underline",
+				highlight && "text-pink",
+				props.className
+			)}
+		/>
+	) : (
+		<span {...props} />
+	);
+};
