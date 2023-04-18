@@ -4,7 +4,7 @@ export interface ConversationPageProps {
 	params: { userId: string };
 }
 
-export default function ConversationPage({ params: { userId } }: ConversationPageProps) {
+export default async function ConversationPage({ params: { userId } }: ConversationPageProps) {
 	return (
 		<div className="flex h-full w-full flex-col items-center justify-center md:pl-8">
 			<ConversationChatbox

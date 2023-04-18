@@ -1,9 +1,19 @@
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-	title: "Settings"
-};
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+import { urls } from "~/urls";
 
 export default async function SettingsPage() {
+	const router = useRouter();
+
+	const isDesktop = useScreenBreakpoint("md");
+
+	useEffect(() => {
+		if (isDesktop) router.push(urls.settings.matchmaking());
+	}, [isDesktop, router]);
+
 	return null;
 }

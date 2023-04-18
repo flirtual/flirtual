@@ -13,8 +13,9 @@ import {
 	SwatchIcon,
 	TagIcon
 } from "@heroicons/react/24/outline";
-import React from "react";
+import { FC } from "react";
 import { twMerge } from "tailwind-merge";
+import { useSelectedLayoutSegment } from "next/navigation";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
@@ -23,17 +24,14 @@ import { NavigationCategory } from "./navigation-category";
 import { NavigationHeader } from "./navigation-header";
 import { NavigationLink } from "./navigation-link";
 
-export interface SettingsNavigationProps {
-	navigationInner: string | null;
-}
-
-export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({ navigationInner }) => {
+export const SettingsNavigation: FC = () => {
+	const layoutSegment = useSelectedLayoutSegment();
 	const { openFreshworks } = useFreshworks();
 
 	return (
 		<div className="flex w-full shrink-0 grow-0 flex-col shadow-brand-1 md:mt-32 md:w-80 md:rounded-tr-2xl md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
-			<NavigationHeader {...{ navigationInner }} />
-			<nav className={twMerge("flex-col gap-8 py-8", navigationInner ? "hidden md:flex" : "flex")}>
+			<NavigationHeader {...{ navigationInner: layoutSegment }} />
+			<nav className={twMerge("flex-col gap-8 py-8", layoutSegment ? "hidden md:flex" : "flex")}>
 				<NavigationCategory name="Profile">
 					<NavigationLink href={urls.settings.matchmaking()} Icon={AdjustmentsHorizontalIcon}>
 						Matchmaking

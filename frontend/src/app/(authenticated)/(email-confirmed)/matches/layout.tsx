@@ -60,6 +60,7 @@ export default async function ConversationsLayout({ children }: { children: Reac
 				</div>
 			)}
 			<Footer desktopOnly />
+			{/* @ts-expect-error: Server Component */}
 			<MobileBarNavigation />
 		</div>
 	);

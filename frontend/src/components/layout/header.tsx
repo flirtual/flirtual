@@ -1,4 +1,4 @@
-import { NavigationInner } from "./navigation";
+import { NavigationInner } from "./navigation/inner";
 
 export const Header: React.FC = () => {
 	return (
@@ -18,6 +18,7 @@ export const Header: React.FC = () => {
 				for a better experience!
 			</HeaderMessage> */}
 				<div className="z-10 flex w-full flex-col items-center justify-center py-2">
+					{/* @ts-expect-error: Server Component */}
 					<NavigationInner />
 				</div>
 			</header>

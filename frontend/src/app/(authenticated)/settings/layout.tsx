@@ -1,27 +1,20 @@
-"use client";
-
-import { useRouter, useSelectedLayoutSegment } from "next/navigation";
-import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
+import { Metadata } from "next";
 
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { MobileBarNavigation } from "~/components/layout/navigation/mobile-bar";
-import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
-import { urls } from "~/urls";
 
 import { SettingsNavigation } from "./navigation";
 
-export default function SettingsLayout({ children }: React.ComponentProps<"div">) {
-	const segment = useSelectedLayoutSegment();
-	const router = useRouter();
+export const metadata: Metadata = {
+	title: {
+		default: "Settings",
+		template: "%s - Flirtual"
+	}
+};
 
-	const isDesktop = useScreenBreakpoint("md");
-
-	useEffect(() => {
-		if (isDesktop && !segment) router.push(urls.settings.matchmaking());
-	}, [isDesktop, segment, router]);
-
+export default async function SettingsLayout({ children }: React.ComponentProps<"div">) {
 	return (
 		<div
 			className={twMerge(
@@ -29,15 +22,14 @@ export default function SettingsLayout({ children }: React.ComponentProps<"div">
 			)}
 		>
 			<Header />
-			<div className={twMerge("flex w-full grow", segment ? "flex-col md:flex-row" : "")}>
-				<SettingsNavigation navigationInner={segment} />
-				{segment && (
-					<div className="flex h-full w-full flex-col items-center justify-center sm:py-32 md:px-8">
-						{children}
-					</div>
-				)}
+			<div className="flex w-full grow flex-col md:flex-row">
+				<SettingsNavigation />
+				<div className="flex h-full w-full flex-col items-center justify-center sm:py-32 md:px-8">
+					{children}
+				</div>
 			</div>
 			<Footer desktopOnly />
+			{/* @ts-expect-error: Server Component */}
 			<MobileBarNavigation />
 		</div>
 	);
