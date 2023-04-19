@@ -15,5 +15,5 @@ jobs:
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
           --data '{
-            "body": "❌ Deployment has failed: [{{ github.event.deployment_status.environment }}]({{ github.event.deployment_status.deployment_url }})"
+            "body": "❌ Deployment has failed: [${{ github.event.deployment_status.environment }}](${{ github.event.deployment_status.deployment_url }})"
             }'
