@@ -138,7 +138,7 @@ defmodule Flirtual.Matchmaking do
     )
   end
 
-  def create_match_conversation(user_a, user_b) do
+  def create_match_conversation(user_a, user_b, kind) do
     conversation_id = Talkjs.new_conversation_id(user_a, user_b)
 
     with {:ok, conversation} <-
@@ -146,7 +146,7 @@ defmodule Flirtual.Matchmaking do
              conversation_id,
              %{
                participants: [user_a.id, user_b.id],
-               subject: "❤️"
+               subject: if(kind === :like, do: "❤️", else: "✌️")
              }
            ),
          {:ok, _} <-
@@ -224,7 +224,7 @@ defmodule Flirtual.Matchmaking do
                         |> change(%{opposite_id: item.id})
                         |> Repo.update(),
                       true <- item.type === :like and opposite_item.type === :like,
-                      {:ok, _} <- create_match_conversation(user, target),
+                      {:ok, _} <- create_match_conversation(user, target, kind),
                       {:ok, _} <- deliver_match_email(target, user) do
                    {:ok, opposite_item}
                  else
