@@ -3,6 +3,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
   import Ecto.Query
 
+  alias Flirtual.Talkjs
   alias Flirtual.User.Profile.Block
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
@@ -68,6 +69,8 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              LikesAndPasses
              |> where(profile_id: ^profile_id, target_id: ^target_id)
              |> Repo.delete_all(),
+           {:ok, _} <-
+             Talkjs.delete_participants(user_id: profile_id, target_id: target_id),
            {:ok, _} <- ChangeQueue.add(profile_id) do
         count
       else
@@ -83,6 +86,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              LikesAndPasses
              |> where(profile_id: ^profile_id)
              |> Repo.delete_all(),
+           {:ok, _} <- Talkjs.delete_user_conversations(profile_id),
            {:ok, _} <- ChangeQueue.add(profile_id) do
         count
       else

@@ -1,6 +1,9 @@
 defmodule Flirtual.Talkjs do
   use Flirtual.Logger, :talkjs
 
+  require Flirtual.Utilities
+  import Flirtual.Utilities
+
   alias Flirtual.{User}
 
   defp config(key) do
@@ -72,14 +75,26 @@ defmodule Flirtual.Talkjs do
              photoUrl: nil,
              role: nil
            }),
-         {:ok, _} <- delete_user_conversations(user) do
+         {:ok, _} <- delete_user_conversations(user.id) do
       {:ok, talkjs_user}
     end
   end
 
-  defp delete_user_conversations(%User{} = user) do
-    list_conversations(user.id)
-    |> Enum.map(&delete_conversation(&1["id"]))
+  def delete_user_conversations(user_id, options \\ []) when is_uuid(user_id) do
+    soft = Keyword.get(options, :soft, false)
+
+    list_conversations(user_id)
+    |> Enum.map(
+      &if soft do
+        &1.participants
+        |> Map.keys()
+        |> Enum.map(fn participant_id ->
+          delete_participant(&1["id"], participant_id)
+        end)
+      else
+        delete_conversation(&1["id"])
+      end
+    )
     |> then(
       &Enum.reduce(&1, {:ok, length(&1)}, fn item, _ ->
         case item do
@@ -102,6 +117,23 @@ defmodule Flirtual.Talkjs do
 
   def update_conversation(conversation_id, data) do
     case fetch(:put, "conversations/" <> conversation_id, data) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+    end
+  end
+
+  def delete_participants(user_id: user_id, target_id: target_id)
+      when is_uuid(user_id) and is_uuid(target_id) do
+    conversation_id = new_conversation_id(user_id, target_id)
+
+    with {:ok, _} <- delete_participant(conversation_id, user_id),
+         {:ok, _} <- delete_participant(conversation_id, target_id) do
+      {:ok, nil}
+    end
+  end
+
+  def delete_participant(conversation_id, user_id) do
+    case fetch(:delete, "conversations/" <> conversation_id <> "/participants/" <> user_id) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
     end
