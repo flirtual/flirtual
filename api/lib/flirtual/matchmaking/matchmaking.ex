@@ -211,7 +211,7 @@ defmodule Flirtual.Matchmaking do
                ]
              )
              |> Repo.one(),
-           {:ok, _} <-
+           {:ok, opposite_item} <-
              if(is_nil(opposite_item),
                do: {:ok, nil},
                else:
@@ -219,17 +219,26 @@ defmodule Flirtual.Matchmaking do
                         item
                         |> change(%{opposite_id: opposite_item.id})
                         |> Repo.update(),
-                      {:ok, _} <-
+                      {:ok, opposite_item} <-
                         opposite_item
                         |> change(%{opposite_id: item.id})
                         |> Repo.update(),
+                      true <- item.type === :like and opposite_item.type === :like,
                       {:ok, _} <- create_match_conversation(user, target),
                       {:ok, _} <- deliver_match_email(target, user) do
-                   {:ok, nil}
+                   {:ok, opposite_item}
+                 else
+                   false -> {:ok, opposite_item}
+                   value -> value
                  end
              ) do
         %{
-          match: not is_nil(opposite_item)
+          matched:
+            if not is_nil(opposite_item) do
+              item.type === :like and opposite_item.type === :like
+            else
+              false
+            end
         }
       else
         {:error, reason} -> Repo.rollback(reason)
