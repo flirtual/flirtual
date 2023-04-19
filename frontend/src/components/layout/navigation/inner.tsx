@@ -12,7 +12,7 @@ export async function NavigationInner(props: ComponentProps<"div">) {
 		<div
 			{...props}
 			className={twMerge(
-				"flex h-full w-full max-w-md items-center justify-between gap-4 px-8 font-nunito text-white-20 sm:w-auto",
+				"flex h-full w-full items-center justify-evenly gap-4 px-4 font-nunito text-white-20 sm:w-auto",
 				props.className
 			)}
 		>
