@@ -4,6 +4,7 @@ import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+import TeamImage from "~/../public/images/team.jpg";
 
 import { TeamList } from "./team-list";
 
@@ -19,7 +20,7 @@ export default function AboutPage() {
 				containerProps={{ className: "!p-0 overflow-hidden" }}
 				title="About us"
 			>
-				<img src="/images/team.jpg" />
+				<img src={TeamImage.src} />
 				<div className="flex flex-col gap-8 px-8 py-10 sm:px-16">
 					<div className="flex flex-col gap-4">
 						<h1 className="text-2xl font-semibold">Our Story</h1>
@@ -62,21 +63,22 @@ export default function AboutPage() {
 										{
 											name: "Kyle Farwell (kfarwell)",
 											role: "Lead Developer",
-											url: "/kfarwell"
+											url: urls.profile("kfarwell")
 										},
 										{
 											name: "Anthony Tan (Tony)",
 											role: "Partnerships & Design",
-											url: "/existony"
+											url: urls.profile("existony")
 										}
 									]
 								},
 								{
-									name: "Engineering",
+									name: "Development",
 									members: [
 										{
-											name: "aries",
-											url: "/aries"
+											name: "Aries",
+											role: "Software Engineer",
+											url: "https://ariesclark.com"
 										}
 									]
 								},
@@ -85,7 +87,7 @@ export default function AboutPage() {
 									members: [
 										{
 											name: "Katten!",
-											url: "/KattenRastyr"
+											url: urls.profile("KattenRastyr")
 										}
 									]
 								},
@@ -94,19 +96,19 @@ export default function AboutPage() {
 									members: [
 										{
 											name: "Buramie",
-											url: "/Buramie"
+											url: urls.profile("Buramie")
 										},
 										{
 											name: "Solo!!",
-											url: "/SoloFlighter"
+											url: urls.profile("SoloFlighter")
 										},
 										{
 											name: "Starh",
-											url: "/Starh"
+											url: urls.profile("Starh")
 										},
 										{
 											name: "Teru",
-											url: "/TeruPie"
+											url: urls.profile("TeruPie")
 										}
 									]
 								},
