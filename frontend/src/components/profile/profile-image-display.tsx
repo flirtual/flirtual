@@ -130,39 +130,22 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 				))}
 
 				{images.length > 1 && (
-					<>
-						<div className="absolute flex h-full w-full">
-							<button
-								className="flex h-full grow items-center justify-start px-8 opacity-0 transition-opacity hover:opacity-100"
-								type="button"
-								onClick={() => set(-1)}
-							>
-								<ChevronLeftIcon className="h-8 w-8" />
-							</button>
-							<button
-								className="flex h-full grow items-center justify-end px-8 opacity-0 transition-opacity hover:opacity-100"
-								type="button"
-								onClick={() => set(1)}
-							>
-								<ChevronRightIcon className="h-8 w-8" />
-							</button>
-						</div>
-						<div className="pointer-events-auto absolute top-0 flex w-full px-8 py-6">
-							<div className="flex grow items-center gap-2">
-								{images.map((image) => (
-									<button
-										key={image.id}
-										type="button"
-										className={twMerge(
-											"h-1.5 grow rounded-full",
-											image.id === imageId ? "bg-white-10/50" : "bg-black-70/50"
-										)}
-										onClick={() => set(0, image.id)}
-									/>
-								))}
-							</div>
-						</div>
-					</>
+					<div className="absolute flex h-full w-full">
+						<button
+							className="flex h-full grow items-center justify-start px-8 opacity-0 transition-opacity hover:opacity-100"
+							type="button"
+							onClick={() => set(-1)}
+						>
+							<ChevronLeftIcon className="h-8 w-8" />
+						</button>
+						<button
+							className="flex h-full grow items-center justify-end px-8 opacity-0 transition-opacity hover:opacity-100"
+							type="button"
+							onClick={() => set(1)}
+						>
+							<ChevronRightIcon className="h-8 w-8" />
+						</button>
+					</div>
 				)}
 				<div className="pointer-events-none absolute flex h-full w-full items-center justify-center">
 					<button
@@ -195,6 +178,23 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 						</ModalOuter>
 					)}
 				</div>
+				{images.length > 1 && (
+					<div className="pointer-events-auto absolute top-0 flex w-full px-8 py-6">
+						<div className="flex grow items-center gap-2">
+							{images.map((image) => (
+								<button
+									key={image.id}
+									type="button"
+									className={twMerge(
+										"h-1.5 grow rounded-full",
+										image.id === imageId ? "bg-white-10/50" : "bg-black-70/50"
+									)}
+									onClick={() => set(0, image.id)}
+								/>
+							))}
+						</div>
+					</div>
+				)}
 				<div className="pointer-events-none absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent via-black-90/20 to-black-90/60">
 					{children}
 				</div>
