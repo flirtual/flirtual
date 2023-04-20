@@ -52,16 +52,7 @@ export async function ConversationAside({ activeConversation }: { activeConversa
 						(likes.count.friend > 99 ? "(99+✌️)" : ` (${likes.count.friend}✌️)`)}
 				</ButtonLink>
 				<div className="flex flex-col gap-4">
-					{[
-						...conversations,
-						{
-							...conversations[1],
-							lastMessage: {
-								...conversations[1].lastMessage,
-								viewed: false
-							}
-						}
-					].map((conversation) => (
+					{conversations.map((conversation) => (
 						<ConversationListItem
 							{...conversation}
 							active={activeConversation === conversation.userId}
