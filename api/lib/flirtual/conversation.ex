@@ -96,7 +96,7 @@ defmodule Flirtual.Conversation do
       field :seen_by, {:array, :binary_id}
       field :system, :boolean
 
-      field :seen, :boolean, virtual: true
+      field :viewed, :boolean, virtual: true
 
       timestamps(updated_at: false)
     end
@@ -105,8 +105,6 @@ defmodule Flirtual.Conversation do
     def decode(data) when is_list(data), do: Enum.map(data, &decode(&1))
 
     def decode(%{} = data) do
-      IO.inspect(data)
-
       %Message{
         id: data["id"],
         content: data["text"],
@@ -123,7 +121,7 @@ defmodule Flirtual.Conversation do
           :id,
           :content,
           :sender_id,
-          :seen,
+          :viewed,
           :system,
           :created_at
         ]
@@ -137,7 +135,20 @@ defmodule Flirtual.Conversation do
       def authorize(_, _, _), do: false
 
       def transform(
-            :seen,
+            :viewed,
+            %Plug.Conn{
+              assigns: %{
+                session: %Session{
+                  user_id: user_id
+                }
+              }
+            },
+            %Message{sender_id: user_id}
+          ),
+          do: true
+
+      def transform(
+            :viewed,
             %Plug.Conn{
               assigns: %{
                 session: %Session{
@@ -147,7 +158,8 @@ defmodule Flirtual.Conversation do
             },
             %Message{seen_by: seen_by}
           ) do
-        seen_by |> Enum.member?(user_id)
+        seen_by
+        |> Enum.member?(user_id)
       end
     end
   end
