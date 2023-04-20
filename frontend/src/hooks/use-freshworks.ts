@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
+import { displayName } from "~/api/user";
+
 import { useSessionUser } from "./use-session";
 
 declare global {
@@ -42,19 +44,18 @@ export function useFreshworks() {
 		window.fwSettings = { widget_id: widgetId };
 	}, [loadFreshworks]);
 
-	const openFreshworks = useCallback(() => window.FreshworksWidget("open"), []);
-	const hideFreshworks = useCallback(() => window.FreshworksWidget("hide"), []);
-
 	const user = useSessionUser();
 
-	useEffect(() => {
-		if (!loaded) return;
-
+	const openFreshworks = useCallback(() => {
 		window.FreshworksWidget("identify", "ticketForm", {
-			name: user?.profile.displayName || user?.username || "",
+			name: user ? displayName(user) : "",
 			email: user?.email || ""
 		});
-	}, [loaded, user]);
+
+		window.FreshworksWidget("open");
+	}, [user]);
+
+	const hideFreshworks = useCallback(() => window.FreshworksWidget("hide"), []);
 
 	return { openFreshworks, hideFreshworks };
 }
