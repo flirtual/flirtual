@@ -9,7 +9,7 @@ export default async function Onboarding1Page() {
 		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
 
 	return (
-		<ModelCard title="Matchmaking">
+		<ModelCard className="sm:max-w-2xl" title="Matchmaking">
 			<Onboarding1Form genders={genders} />
 		</ModelCard>
 	);

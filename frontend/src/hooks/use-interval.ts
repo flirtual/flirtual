@@ -1,7 +1,10 @@
-import { useCallback, useDebugValue, useEffect, useRef } from "react";
+import ms from "ms";
+import { useCallback, useDebugValue, useEffect, useMemo, useRef } from "react";
 
-export function useInterval(fn: () => void, timeout: number) {
+export function useInterval(fn: () => void, every: number | string) {
 	const ref = useRef<ReturnType<typeof setInterval> | null>(null);
+
+	const interval = useMemo(() => (typeof every === "string" ? ms(every) : every), [every]);
 
 	const clear = useCallback(() => {
 		if (ref.current === null) return;
@@ -10,8 +13,8 @@ export function useInterval(fn: () => void, timeout: number) {
 
 	const reset = useCallback(() => {
 		clear();
-		ref.current = setInterval(fn, timeout);
-	}, [clear, fn, timeout]);
+		ref.current = setInterval(fn, interval);
+	}, [clear, fn, interval]);
 
 	useEffect(() => {
 		reset();

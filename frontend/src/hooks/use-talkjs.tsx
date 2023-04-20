@@ -1,11 +1,21 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+	createContext,
+	startTransition,
+	useContext,
+	useEffect,
+	useMemo,
+	useState
+} from "react";
 import Talk from "talkjs";
+import { useRouter } from "next/navigation";
 
 import { talkjsAppId } from "~/const";
+import { resolveTheme } from "~/theme";
 
 import { useSession } from "./use-session";
+import { useTheme } from "./use-theme";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>([]);
@@ -13,6 +23,7 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [ready, setReady] = useState(false);
 	const [authSession] = useSession();
+	const router = useRouter();
 
 	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>(
 		[]
@@ -20,23 +31,34 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({ children }) 
 
 	useEffect(() => void Talk.ready.then(() => setReady(true)), []);
 
+	const userId = authSession?.user.id;
+	const talkjsSignature = authSession?.user.talkjsSignature;
+
 	const session = useMemo(() => {
-		if (!authSession || !ready) return null;
+		if (!userId || !talkjsSignature || !ready) return null;
 
 		return new Talk.Session({
 			appId: talkjsAppId,
-			signature: authSession.user.talkjsSignature,
-			me: new Talk.User(authSession.user.id)
+			signature: talkjsSignature,
+			me: new Talk.User(userId)
 		});
-	}, [authSession, ready]);
+	}, [userId, talkjsSignature, ready]);
 
 	useEffect(() => {
 		setUnreadConversations([]);
 		if (!session) return;
 
-		const subscription = session.unreads.onChange(setUnreadConversations);
-		return () => subscription.unsubscribe();
-	}, [session]);
+		const messageSubscription = session.onMessage(() => {
+			startTransition(() => router.refresh());
+		});
+
+		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
+
+		return () => {
+			unreadSubscription.unsubscribe();
+			messageSubscription.unsubscribe();
+		};
+	}, [session, router]);
 
 	useEffect(() => {
 		return () => session?.destroy();
@@ -59,51 +81,24 @@ export function useUnreadConversations() {
 	return useContext(UnreadConversationContext);
 }
 
-export const ConversationInbox: React.FC<
-	React.ComponentProps<"div"> & { options?: Talk.InboxOptions }
-> = ({ options, ...props }) => {
-	const session = useTalkjs();
-	const [element, setElement] = useState<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		if (!session || !element) return;
-		const inbox = session.createInbox(options);
-
-		// hack: mount.
-		try {
-			void inbox.mount(element).catch(() => {
-				/* */
-			});
-		} catch (error) {
-			/* */
-		}
-
-		// hack: mount again??
-		// hack: fixes not rendering on desktop on client router change 😭
-		setTimeout(() => {
-			try {
-				void inbox.mount(element).catch(() => {
-					/* */
-				});
-			} catch (error) {
-				/* */
-			}
-		}, 1);
-
-		return () => inbox.destroy();
-	}, [session, element, options]);
-
-	return <div {...props} ref={setElement} />;
-};
-
 export const ConversationChatbox: React.FC<
 	React.ComponentProps<"div"> & {
-		options?: Talk.InboxOptions;
 		userId: string | null;
 	}
-> = ({ options, userId, ...props }) => {
+> = ({ userId, ...props }) => {
 	const session = useTalkjs();
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
+
+	const { sessionTheme } = useTheme();
+
+	const chatbox = useMemo(() => {
+		if (!session) return null;
+
+		const dark = resolveTheme(sessionTheme) === "dark";
+		const theme = dark ? "next-dark" : "next";
+
+		return session.createChatbox({ theme });
+	}, [session, sessionTheme]);
 
 	const conversation = useMemo(() => {
 		if (!session || !userId) return null;
@@ -113,16 +108,16 @@ export const ConversationChatbox: React.FC<
 	}, [session, userId]);
 
 	useEffect(() => {
-		if (!session || !element) return;
-
-		const chatbox = session.createChatbox(options);
+		if (!chatbox || !conversation) return;
 		chatbox.select(conversation);
+	}, [chatbox, conversation]);
 
-		// hack: fixes not rendering on desktop on client router change 😭
-		setTimeout(() => void chatbox.mount(element), 1);
+	useEffect(() => {
+		if (!element) return;
 
-		return () => chatbox.destroy();
-	}, [session, element, conversation, options]);
+		void chatbox?.mount(element);
+		return () => chatbox?.destroy();
+	}, [chatbox, element]);
 
 	return <div {...props} ref={setElement} />;
 };

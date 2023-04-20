@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 
 import { useInterval } from "~/hooks/use-interval";
+import { UCImage } from "~/components/uc-image";
 
 import { SnapSection } from "./snap-section";
 
@@ -29,7 +30,10 @@ export const SectionAvatarProfiles: React.FC<{ values: Array<string> }> = ({ val
 						{activeValue}
 					</span>
 				</div>
-				<img className="scale-125 lg:h-[60vh] lg:scale-100" src="/images/profile-showcase.png" />
+				<UCImage
+					className="scale-125 lg:h-[60vh] lg:scale-100"
+					src="303e4ab2-b72f-4947-829e-e818514be4d9"
+				/>
 			</div>
 		</SnapSection>
 	);

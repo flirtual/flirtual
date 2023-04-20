@@ -1,5 +1,6 @@
 import { Dispatch, PropsWithChildren } from "react";
 import { ShieldExclamationIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/navigation";
 
 import { displayName, User } from "~/api/user";
 import { api } from "~/api";
@@ -23,6 +24,7 @@ export const ReportProfileModel: React.FC<ReportProfileModelProps> = ({
 	onVisibilityChange
 }) => {
 	const toasts = useToast();
+	const router = useRouter();
 	const reportReasons = useAttributeList("report-reason");
 
 	return (
@@ -36,10 +38,15 @@ export const ReportProfileModel: React.FC<ReportProfileModelProps> = ({
 				}}
 				onSubmit={async ({ reasonId, targetId, message }) => {
 					if (!reasonId) return;
-					await api.report.create({ body: { reasonId, targetId, message } });
+					await api.report
+						.create({ body: { reasonId, targetId, message } })
+						.then(() => {
+							toasts.add({ type: "success", label: "Thank you for your report!" });
+							onVisibilityChange(false);
 
-					toasts.add({ type: "success", label: "Thank you for your report!" });
-					onVisibilityChange(false);
+							return router.refresh();
+						})
+						.catch(toasts.addError);
 				}}
 			>
 				{({ FormField }) => (

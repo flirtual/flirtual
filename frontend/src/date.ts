@@ -6,6 +6,9 @@ export function yearsAgo(date: Date): number {
 	return Math.floor((Date.now() - date.getTime()) / yearInMilliseconds);
 }
 
-export function timeSince(date: Date): string {
-	return ms(date.getTime() / 1000, { long: true });
+const fiveSecondsInMilliseconds = 5e3;
+
+export function timeSince(date: Date, short: boolean = false): string {
+	const since = Date.now() - date.getTime();
+	return since < fiveSecondsInMilliseconds ? "just now" : ms(since, { long: !short });
 }

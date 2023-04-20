@@ -1,5 +1,22 @@
+import { CreatedAtModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
+import { ProspectKind } from "./matchmaking";
 
-export async function list(options: NarrowFetchOptions = {}): Promise<Array<unknown>> {
-	return fetch<Array<unknown>>("get", "conversations", options);
+export type Message = CreatedAtModel & {
+	id: string;
+	content: ProspectKind;
+	seen: boolean;
+	system: boolean;
+	senderId: string;
+};
+
+export type Conversation = CreatedAtModel & {
+	id: string;
+	kind: ProspectKind;
+	lastMessage: Message;
+	userId: string;
+};
+
+export async function list(options: NarrowFetchOptions = {}): Promise<Array<Conversation>> {
+	return fetch<Array<Conversation>>("get", "conversations", options);
 }

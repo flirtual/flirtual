@@ -25,7 +25,7 @@ export default async function SettingsLayout({ children }: React.ComponentProps<
 			<Header />
 			<div className="flex w-full grow flex-col md:flex-row">
 				<SettingsNavigation />
-				<div className="flex h-full w-full flex-col items-center justify-center sm:py-32 md:px-8">
+				<div className="flex h-full w-full flex-col items-center justify-center sm:py-16 md:px-8">
 					{children}
 				</div>
 			</div>

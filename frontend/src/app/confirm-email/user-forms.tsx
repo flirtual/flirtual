@@ -6,9 +6,11 @@ import { Form, FormButton } from "~/components/forms";
 import { User } from "~/api/user";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useInterval } from "~/hooks/use-interval";
+import { useToast } from "~/hooks/use-toast";
 
 export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 	const router = useRouter();
+	const toasts = useToast();
 
 	useInterval(() => {
 		if (!user) return;
@@ -24,8 +26,17 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 				fields={{}}
 				requireChange={false}
 				onSubmit={async () => {
-					await api.user.resendConfirmEmail(user.id);
-					router.refresh();
+					await api.user
+						.resendConfirmEmail(user.id)
+						.then(() => {
+							toasts.add({
+								type: "success",
+								label: "Resent confirmation email"
+							});
+
+							return router.refresh();
+						})
+						.catch(toasts.addError);
 				}}
 			>
 				<span className="text-xl">
@@ -44,8 +55,17 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 					currentPassword: ""
 				}}
 				onSubmit={async (body) => {
-					await api.user.updateEmail(user.id, { body });
-					router.refresh();
+					await api.user
+						.updateEmail(user.id, { body })
+						.then(() => {
+							toasts.add({
+								type: "success",
+								label: "Email changed successfully"
+							});
+
+							return router.refresh();
+						})
+						.catch(toasts.addError);
 				}}
 			>
 				{({ FormField }) => (

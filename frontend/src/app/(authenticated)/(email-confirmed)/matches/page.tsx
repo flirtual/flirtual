@@ -1,3 +1,6 @@
+import { ConversationAside } from "./aside";
+
 export default function ConversationListPage() {
-	return null;
+	// @ts-expect-error: Server Component
+	return <ConversationAside />;
 }

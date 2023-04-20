@@ -174,7 +174,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 										{report.user ? displayName(report.user) : "Unknown"}
 									</InlineLink>
 								</div>
-								<p className="whitespace-pre">{report.message}</p>
+								<p className="whitespace-pre-wrap">{report.message}</p>
 							</div>
 						))}
 					</div>

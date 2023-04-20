@@ -60,6 +60,8 @@ export const urls = {
 		me: "/me",
 		profile: (username: string) => `/${username}`
 	},
+	profile: (user?: User | string) =>
+		`/${user ? (typeof user === "string" ? user : user.username) : "me"}`,
 	browse: (kind?: ProspectKind) => url("/browse", { kind }),
 	conversations: {
 		list: "/matches",

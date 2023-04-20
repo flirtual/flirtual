@@ -95,7 +95,7 @@ export const ConsoleForm: React.FC = () => {
 					</>
 				)}
 			</Form>
-			<div className="col-span-7 flex max-h-96 w-full flex-col overflow-hidden overflow-x-auto rounded-xl bg-black-80 shadow-brand-1">
+			<div className="col-span-7 flex max-h-96 w-full flex-col overflow-hidden overflow-x-auto rounded-xl bg-black-80 text-white-20 shadow-brand-1">
 				<div className="flex items-center justify-between gap-4 p-4 pb-0">
 					{history[previousHistoryIdx] && nextHistoryIdx !== historyIdx && (
 						<button
