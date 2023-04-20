@@ -136,12 +136,18 @@ defmodule Flirtual.Talkjs do
     case fetch(:delete, "conversations/" <> conversation_id <> "/participants/" <> user_id) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
+
+      {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
+        {:ok, Poison.decode!(body)}
     end
   end
 
   def delete_conversation(conversation_id) do
     case fetch(:delete, "conversations/" <> conversation_id) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+
+      {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
         {:ok, Poison.decode!(body)}
     end
   end
