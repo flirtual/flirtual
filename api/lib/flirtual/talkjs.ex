@@ -153,13 +153,6 @@ defmodule Flirtual.Talkjs do
     end
   end
 
-  def list_conversations() do
-    case fetch(:get, "conversations") do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        Poison.decode!(body)["data"]
-    end
-  end
-
   def list_conversations(user_id, options \\ []) do
     case fetch(:get, "users/" <> user_id <> "/conversations", nil, query: options) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->

@@ -3,16 +3,16 @@ defmodule FlirtualWeb.ConversationController do
 
   import Plug.Conn
   import Phoenix.Controller
+  alias Flirtual.Policy
+  alias Flirtual.Conversation
   alias Flirtual.Talkjs
 
   action_fallback FlirtualWeb.FallbackController
 
   def list(conn, _) do
-    conn |> json(Talkjs.list_conversations(conn.assigns[:session].user.id))
-  end
-
-  def list_unread(conn, _) do
-    conn |> json(Talkjs.list_conversations(conn.assigns[:session].user.id, unreadsOnly: true))
+    with conversations <- Conversation.list(user_id: conn.assigns[:session].user.id) do
+      conn |> json(Policy.transform(conn, conversations))
+    end
   end
 
   def list_messages(conn, %{"user_id" => user_id}) do
