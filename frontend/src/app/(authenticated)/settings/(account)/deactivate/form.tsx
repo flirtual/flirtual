@@ -17,6 +17,7 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 
 	return (
 		<ModelCard
+			className="sm:max-w-2xl"
 			title={deactivated ? "Reactivate Account" : "Deactivate Account"}
 			titleProps={{ className: "md:text-3xl" }}
 		>

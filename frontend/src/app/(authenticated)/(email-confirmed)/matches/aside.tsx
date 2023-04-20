@@ -3,6 +3,8 @@ import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 import { ButtonLink } from "~/components/button";
+import { HeartIcon } from "~/components/icons/gradient/heart";
+import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { thruServerCookies, withSession } from "~/server-utilities";
 import { api } from "~/api";
 import { urls } from "~/urls";
@@ -42,14 +44,25 @@ export async function ConversationAside({ activeConversation }: { activeConversa
 				)}
 			>
 				<ButtonLink
-					className="w-fit"
+					className="w-full"
 					href={session.user.subscription?.active ? urls.likes : urls.subscription}
 					size="sm"
 				>
-					See who liked you{" "}
-					{likes.count.love && (likes.count.love > 99 ? "(99+❤️)" : ` (${likes.count.love}❤️)`)}
-					{likes.count.friend &&
-						(likes.count.friend > 99 ? "(99+✌️)" : ` (${likes.count.friend}✌️)`)}
+					See who likes you{" "}
+					<span className="whitespace-nowrap">
+						{likes.count.love && (
+							<>
+								({likes.count.love > 99 ? "99+" : likes.count.love}
+								<HeartIcon className="inline h-4" gradient={false} />)
+							</>
+						)}{" "}
+						{likes.count.friend && (
+							<>
+								({likes.count.friend > 99 ? "99+" : likes.count.friend}
+								<PeaceIcon className="inline h-4" gradient={false} />)
+							</>
+						)}
+					</span>
 				</ButtonLink>
 				<div className="flex flex-col gap-4">
 					{conversations.map((conversation) => (

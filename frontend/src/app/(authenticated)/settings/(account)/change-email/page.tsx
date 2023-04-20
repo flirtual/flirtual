@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountChangeEmailPage() {
 	return (
-		<ModelCard title="Change Email">
+		<ModelCard className="sm:max-w-2xl" title="Change Email">
 			<ChangeEmailForm />
 		</ModelCard>
 	);

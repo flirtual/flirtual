@@ -4,7 +4,7 @@ import { NotificationsForm } from "./form";
 
 export default function SettingsAccountNotificationsPage() {
 	return (
-		<ModelCard title="Notifications">
+		<ModelCard className="sm:max-w-2xl" title="Notifications">
 			<NotificationsForm />
 		</ModelCard>
 	);

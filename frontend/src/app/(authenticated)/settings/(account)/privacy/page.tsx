@@ -4,7 +4,7 @@ import { PrivacyForm } from "./form";
 
 export default function SettingsAccountPrivacyPage() {
 	return (
-		<ModelCard title="Account Privacy">
+		<ModelCard className="sm:max-w-2xl" title="Account Privacy">
 			<PrivacyForm />
 		</ModelCard>
 	);
