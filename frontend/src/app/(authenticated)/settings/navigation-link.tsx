@@ -41,12 +41,12 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({ children, ...pro
 		</Link>
 	) : (
 		<button
-			className="flex justify-between gap-4 px-6 py-2 text-black-80 focus:outline-none hocus:bg-brand-gradient hocus:text-white-20 hocus:shadow-brand-1 dark:text-white-20 md:hocus:bg-white-30 md:hocus:bg-none md:hocus:text-black-80 dark:md:hocus:bg-white-20"
+			className="flex justify-between gap-2 px-6 py-2 text-left text-black-80 focus:outline-none hocus:bg-brand-gradient hocus:text-white-20 hocus:shadow-brand-1 dark:text-white-20 md:hocus:bg-white-30 md:hocus:bg-none md:hocus:text-black-80 dark:md:hocus:bg-white-20"
 			type="button"
 			onClick={props.onClick}
 		>
-			{Icon && <Icon className="w-3" />}
-			{children}
+			{Icon && <Icon className="w-6 shrink-0" />}
+			<span className="w-full">{children}</span>
 			<NavIcon className="w-6" />
 		</button>
 	);

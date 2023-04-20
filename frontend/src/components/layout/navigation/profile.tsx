@@ -146,10 +146,6 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 									</ProfileNavigationItem>
 								</>
 							)}
-							<ProfileNavigationItemDivider className="hidden sm:block" />
-							<ProfileNavigationItem className="hidden sm:block" onClick={() => logout()}>
-								Logout
-							</ProfileNavigationItem>
 						</div>
 					</motion.div>
 				)}

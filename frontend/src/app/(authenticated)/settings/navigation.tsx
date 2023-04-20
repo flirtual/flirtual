@@ -2,6 +2,7 @@
 
 import {
 	AdjustmentsHorizontalIcon,
+	ArrowLeftOnRectangleIcon,
 	AtSymbolIcon,
 	BeakerIcon,
 	BellIcon,
@@ -19,6 +20,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
+import { useSession } from "~/hooks/use-session";
 
 import { NavigationCategory } from "./navigation-category";
 import { NavigationHeader } from "./navigation-header";
@@ -27,6 +29,7 @@ import { NavigationLink } from "./navigation-link";
 export const SettingsNavigation: FC = () => {
 	const layoutSegment = useSelectedLayoutSegment();
 	const { openFreshworks } = useFreshworks();
+	const [, , logout] = useSession();
 
 	return (
 		<div className="flex w-full shrink-0 grow-0 flex-col shadow-brand-1 md:mt-16 md:w-80 md:rounded-tr-2xl md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
@@ -67,6 +70,9 @@ export const SettingsNavigation: FC = () => {
 					</NavigationLink>
 					<NavigationLink href={urls.settings.deactivateAccount} Icon={ExclamationCircleIcon}>
 						Deactivate account
+					</NavigationLink>
+					<NavigationLink Icon={ArrowLeftOnRectangleIcon} onClick={logout}>
+						Logout
 					</NavigationLink>
 				</NavigationCategory>
 				<div className="sm:hidden">
