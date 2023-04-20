@@ -15,6 +15,8 @@ import { filterBy } from "~/utilities";
 import { Pill } from "~/components/profile/pill/pill";
 import { LikeAndPassItem } from "~/api/matchmaking";
 import { yearsAgo } from "~/date";
+import { HeartIcon } from "~/components/icons/gradient/heart";
+import { PeaceIcon } from "~/components/icons/gradient/peace";
 
 export default async function LikesPage() {
 	const { user } = await withSession();
@@ -71,7 +73,11 @@ export default async function LikesPage() {
 												)}
 											</div>
 										</div>
-										<p>{kind === "love" ? "❤️" : "✌️"}</p>
+										{kind === "love" ? (
+											<HeartIcon className="h-8" />
+										) : (
+											<PeaceIcon className="h-8" />
+										)}
 									</div>
 								</Link>
 							))}

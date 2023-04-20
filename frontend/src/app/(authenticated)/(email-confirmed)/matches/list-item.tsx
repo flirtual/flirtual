@@ -4,6 +4,8 @@ import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
 import { User, displayName } from "~/api/user";
+import { HeartIcon } from "~/components/icons/gradient/heart";
+import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { TimeSince } from "~/components/time-since";
 import { urls } from "~/urls";
 
@@ -36,7 +38,11 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						<span className="truncate font-montserrat text-lg font-semibold leading-tight">
 							{displayName(user)}
 						</span>
-						<span>{kind === "love" ? "❤️" : "✌️"}</span>
+						{kind === "love" ? (
+							<HeartIcon className="inline h-5" />
+						) : (
+							<PeaceIcon className="inline h-5" />
+						)}
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
 						<span className="w-full truncate text-black-50 dark:text-white-40">
