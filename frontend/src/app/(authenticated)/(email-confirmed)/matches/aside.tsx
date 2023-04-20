@@ -25,7 +25,7 @@ export async function ConversationAside({ activeConversation }: { activeConversa
 	const HeaderIcon = activeConversation ? ChevronLeftIcon : XMarkIcon;
 
 	return (
-		<div className="flex w-full shrink-0 grow-0 flex-col sm:h-[calc(100vh-9rem)] md:w-96 md:rounded-t-xl md:bg-white-20 md:text-white-20 md:shadow-brand-1 dark:md:bg-black-70">
+		<div className="flex w-full shrink-0 grow-0 flex-col sm:min-h-[calc(100vh-9rem)] md:w-96 md:rounded-t-xl md:bg-white-20 md:shadow-brand-1 dark:md:bg-black-70">
 			<div className="flex h-16 w-full items-center justify-center bg-black-70 p-4 text-white-20 md:rounded-t-xl md:bg-brand-gradient">
 				<Link
 					className="absolute left-4 flex shrink-0 md:hidden"
@@ -52,7 +52,16 @@ export async function ConversationAside({ activeConversation }: { activeConversa
 						(likes.count.friend > 99 ? "(99+✌️)" : ` (${likes.count.friend}✌️)`)}
 				</ButtonLink>
 				<div className="flex flex-col gap-4">
-					{conversations.map((conversation) => (
+					{[
+						...conversations,
+						{
+							...conversations[1],
+							lastMessage: {
+								...conversations[1].lastMessage,
+								viewed: false
+							}
+						}
+					].map((conversation) => (
 						<ConversationListItem
 							{...conversation}
 							active={activeConversation === conversation.userId}

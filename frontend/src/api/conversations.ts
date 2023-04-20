@@ -5,7 +5,7 @@ import { ProspectKind } from "./matchmaking";
 export type Message = CreatedAtModel & {
 	id: string;
 	content: ProspectKind;
-	seen: boolean;
+	viewed: boolean;
 	system: boolean;
 	senderId: string;
 };
