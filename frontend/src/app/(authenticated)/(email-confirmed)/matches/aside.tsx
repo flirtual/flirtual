@@ -49,18 +49,20 @@ export async function ConversationAside({ activeConversation }: { activeConversa
 					size="sm"
 				>
 					See who likes you{" "}
-					{likes.count.love && (
-						<>
-							({likes.count.love > 99 ? "99+" : likes.count.love}
-							<HeartIcon className="inline h-4" gradient={false} />)
-						</>
-					)}
-					{likes.count.friend && (
-						<>
-							({likes.count.friend > 99 ? "99+" : likes.count.friend}
-							<PeaceIcon className="inline h-4" gradient={false} />)
-						</>
-					)}
+					<span className="whitespace-nowrap">
+						{likes.count.love && (
+							<>
+								({likes.count.love > 99 ? "99+" : likes.count.love}
+								<HeartIcon className="inline h-4" gradient={false} />)
+							</>
+						)}{" "}
+						{likes.count.friend && (
+							<>
+								({likes.count.friend > 99 ? "99+" : likes.count.friend}
+								<PeaceIcon className="inline h-4" gradient={false} />)
+							</>
+						)}
+					</span>
 				</ButtonLink>
 				<div className="flex flex-col gap-4">
 					{conversations.map((conversation) => (
