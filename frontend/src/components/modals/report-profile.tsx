@@ -38,15 +38,12 @@ export const ReportProfileModel: React.FC<ReportProfileModelProps> = ({
 				}}
 				onSubmit={async ({ reasonId, targetId, message }) => {
 					if (!reasonId) return;
-					await api.report
-						.create({ body: { reasonId, targetId, message } })
-						.then(() => {
-							toasts.add({ type: "success", label: "Thank you for your report!" });
-							onVisibilityChange(false);
+					await api.report.create({ body: { reasonId, targetId, message } });
 
-							return router.refresh();
-						})
-						.catch(toasts.addError);
+					toasts.add({ type: "success", label: "Thank you for your report!" });
+					onVisibilityChange(false);
+
+					return router.refresh();
 				}}
 			>
 				{({ FormField }) => (
