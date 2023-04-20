@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import { displayName } from "~/api/user";
 
@@ -16,9 +16,9 @@ declare global {
 
 const widgetId = 73000002566;
 
-export function useFreshworks() {
-	const [loaded, setLoaded] = useState(false);
+let loaded = false;
 
+export function useFreshworks() {
 	const loadFreshworks = useCallback(() => {
 		if (loaded) return;
 
@@ -26,8 +26,8 @@ export function useFreshworks() {
 		script.src = `https://widget.freshworks.com/widgets/${widgetId}.js`;
 
 		document.body.appendChild(script);
-		setLoaded(true);
-	}, [loaded]);
+		loaded = true;
+	}, []);
 
 	useEffect(() => {
 		if (typeof window.FreshworksWidget !== "function") {
@@ -53,6 +53,7 @@ export function useFreshworks() {
 		});
 
 		window.FreshworksWidget("open");
+		window.FreshworksWidget("hide", "launcher");
 	}, [user]);
 
 	const hideFreshworks = useCallback(() => window.FreshworksWidget("hide"), []);
