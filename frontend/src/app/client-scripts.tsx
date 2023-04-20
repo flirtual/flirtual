@@ -13,8 +13,6 @@ declare global {
 		Blinkloader: {
 			optimize: (options: unknown) => void;
 		};
-		fwSettings: Record<string, unknown>;
-		FreshworksWidget: (...args: Array<unknown>) => void;
 	}
 }
 
@@ -27,14 +25,6 @@ export const ClientScripts: React.FC = () => {
 				void navigator.serviceWorker.register("/sw.js");
 			});
 		}
-
-		/* eslint-disable */
-		// @ts-expect-error
-		!function(){if("function"!=typeof window.FreshworksWidget){var n=function(){n.q.push(arguments)};n.q=[],window.FreshworksWidget=n}}() 
-		/* eslint-enable */
-
-		window.fwSettings = { widget_id: 73000002566 };
-		window.FreshworksWidget("hide", "launcher");
 	}, []);
 
 	const searchParams = useSearchParams();
@@ -71,7 +61,6 @@ export const ClientScripts: React.FC = () => {
 					});
 				}}
 			/>
-			<Script src="https://widget.freshworks.com/widgets/73000002566.js" strategy="lazyOnload" />
 		</>
 	);
 };
