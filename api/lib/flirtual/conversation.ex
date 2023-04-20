@@ -21,10 +21,10 @@ defmodule Flirtual.Conversation do
     timestamps(updated_at: false)
   end
 
-  defp encode(:kind, :like), do: "❤️"
+  defp encode(:kind, :love), do: "❤️"
   defp encode(:kind, :friend), do: "✌️"
 
-  defp decode(:subject, "❤️"), do: :like
+  defp decode(:subject, "❤️"), do: :love
   defp decode(:subject, "✌️"), do: :friend
 
   defp decode([]), do: []
