@@ -53,7 +53,7 @@ export const NotificationsForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormField name="mobile">
+					{/* <FormField name="mobile">
 						{(field) => (
 							<>
 								<InputLabel className="text-2xl font-semibold">Mobile notifications</InputLabel>
@@ -67,7 +67,7 @@ export const NotificationsForm: React.FC = () => {
 								/>
 							</>
 						)}
-					</FormField>
+					</FormField> */}
 					<FormButton>Update</FormButton>
 				</>
 			)}
