@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountAppearancePage() {
 	return (
-		<ModelCard title="Appearance">
+		<ModelCard className="sm:max-w-2xl" title="Appearance">
 			<AppearanceForm />
 		</ModelCard>
 	);

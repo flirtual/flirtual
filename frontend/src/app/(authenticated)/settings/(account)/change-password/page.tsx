@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountChangePasswordPage() {
 	return (
-		<ModelCard title="Change Password">
+		<ModelCard className="sm:max-w-2xl" title="Change Password">
 			<ChangePasswordForm />
 		</ModelCard>
 	);

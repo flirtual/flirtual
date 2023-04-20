@@ -13,7 +13,7 @@ export default async function SettingsAccountDeactivatePage() {
 	const deleteReasons = await withAttributeList("delete-reason");
 
 	return (
-		<ModelCard title="Delete Account">
+		<ModelCard className="sm:max-w-2xl" title="Delete Account">
 			<DeleteForm deleteReasons={deleteReasons} />
 		</ModelCard>
 	);
