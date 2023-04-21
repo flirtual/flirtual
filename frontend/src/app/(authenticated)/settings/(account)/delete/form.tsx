@@ -18,8 +18,6 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 }) => {
 	const router = useRouter();
 
-	console.log(deleteReasons);
-
 	return (
 		<Form
 			withCaptcha

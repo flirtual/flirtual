@@ -9,7 +9,6 @@ module.exports = {
 		"@ariesclark/eslint-config/tailwindcss"
 	],
 	rules: {
-		"@next/next/no-img-element": "off",
 		"@next/next/no-html-link-for-pages": "off"
 	}
 };

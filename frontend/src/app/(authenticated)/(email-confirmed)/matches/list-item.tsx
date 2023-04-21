@@ -7,6 +7,7 @@ import { User, displayName } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { TimeSince } from "~/components/time-since";
+import { UserAvatar } from "~/components/user-avatar";
 import { urls } from "~/urls";
 
 export type ConversationListItemProps = Conversation & { user: User; active?: boolean };
@@ -23,10 +24,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 					className="shrink-0 before:absolute before:h-full before:w-full"
 					href={urls.conversations.with(user.id)}
 				>
-					<img
-						className="aspect-square h-20 w-20 rounded-l-xl object-cover"
-						src={urls.userAvatar(user)}
-					/>
+					<UserAvatar className="h-20 w-20 rounded-l-xl" height={128} user={user} width={128} />
 				</Link>
 				{!lastMessage.viewed && (
 					<div className="absolute -left-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-theme-2 shadow-brand-1">

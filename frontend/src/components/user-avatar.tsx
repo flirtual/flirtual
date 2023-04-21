@@ -1,16 +1,19 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { User } from "~/api/user/user";
+import { User, displayName } from "~/api/user/user";
 import { urls } from "~/urls";
 
-export type UserAvatarProps = Omit<React.ComponentProps<"img">, "src"> & { user: User };
+import { Image, ImageProps } from "./image";
+
+export type UserAvatarProps = Omit<ImageProps, "src" | "alt"> & { user: User };
 
 export const UserAvatar: React.FC<UserAvatarProps> = ({ user, ...props }) => {
 	return (
-		<img
+		<Image
 			{...props}
-			className={twMerge("aspect-square shrink-0 rounded-full object-cover", props.className)}
+			alt={`${displayName(user)}'s avatar`}
+			className={twMerge("aspect-square shrink-0 object-cover", props.className)}
 			src={urls.userAvatar(user)}
 		/>
 	);

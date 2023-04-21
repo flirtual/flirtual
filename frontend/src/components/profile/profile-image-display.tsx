@@ -2,7 +2,6 @@
 
 import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import ms from "ms";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
@@ -16,6 +15,8 @@ import { api } from "~/api";
 
 import { ModalOuter } from "../modal";
 import { Tooltip } from "../tooltip";
+import { TimeSince } from "../time-since";
+import { Image } from "../image";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
@@ -25,17 +26,19 @@ export interface ProfileImageDisplayProps {
 interface SingleImageProps {
 	image: ProfileImage;
 	className?: string;
+	priority?: boolean;
 }
 
-const SingleImage: React.FC<SingleImageProps> = ({ className, image }) => {
+const SingleImage: React.FC<SingleImageProps> = ({ className, image, priority }) => {
 	return (
-		<img
+		<Image
+			alt={"Profile image"}
 			className={twMerge("aspect-square object-cover", className)}
+			height={500}
+			priority={priority}
+			quality={priority ? "normal" : "best"}
 			src={image.url}
-			onError={({ currentTarget }) => {
-				// If the image fails to load (doesn't exist), use a fallback.
-				currentTarget.src = urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4");
-			}}
+			width={500}
 		/>
 	);
 };
@@ -47,13 +50,8 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4">
 			<span>
-				<span suppressHydrationWarning>{`Uploaded ${ms(
-					Date.now() - new Date(image.createdAt).getTime(),
-					{
-						long: true
-					}
-				)} ago`}</span>
-				, and was {image.scanned ? "" : <span className="font-bold">not scanned</span>}.
+				Uploaded <TimeSince value={image.createdAt} /> ago, and was{" "}
+				{image.scanned ? "" : <span className="font-bold">not scanned</span>}.
 			</span>
 			<div className="flex gap-4 text-white-20">
 				<Tooltip value="Search image">
@@ -118,10 +116,11 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 	return (
 		<div className="relative shrink-0 overflow-hidden">
 			<div className="relative flex aspect-square shrink-0 bg-black-70">
-				{images.map((image) => (
+				{images.map((image, imageIdx) => (
 					<SingleImage
 						image={image}
 						key={image.id}
+						priority={imageIdx === 0}
 						className={twMerge(
 							"transition-opacity duration-500",
 							image.id === imageId ? "opacity-100" : "absolute h-full w-full opacity-0"

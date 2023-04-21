@@ -5,6 +5,7 @@ import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
+import { Image } from "~/components/image";
 
 import { DiscordEmbed } from "./discord-embed";
 
@@ -49,7 +50,13 @@ export default function EventsPage() {
 						Our weekly events are hosted in our VRChat worlds, but you can join them anytime! Feel
 						free to use them for your own events too.
 					</p>
-					<img className="max-w-sm rounded-xl shadow-brand-1" src="/images/speeddate.png" />
+					<Image
+						alt="Flirtual Speed Dating"
+						className="max-w-sm rounded-xl shadow-brand-1"
+						height={900}
+						src={urls.media("b593e4e1-bef3-4ab8-b9ea-74628ebf694b")}
+						width={1200}
+					/>
 					<h2 className="text-xl font-semibold">Flirtual Speed Dating</h2>
 					<p>
 						Get to know people in 1-on-1 speed dating/friend-making rounds. Each round is 3 minutes
@@ -57,7 +64,13 @@ export default function EventsPage() {
 						interest tags, and night mode included.
 					</p>
 					<ButtonLink href="/speeddate">Flirtual Speed Dating</ButtonLink>
-					<img className="max-w-sm rounded-xl shadow-brand-1" src="/images/club.png" />
+					<Image
+						alt="The Flirtual Club"
+						className="max-w-sm rounded-xl shadow-brand-1"
+						height={900}
+						src={urls.media("660c7e75-9634-45d1-a306-628eeef0a620")}
+						width={1200}
+					/>
 					<h2 className="text-xl font-semibold">The Flirtual Club</h2>
 					<p>Outdoor music festival with audiolink. Vibe on.</p>
 					<ButtonLink href="/club">The Flirtual Club</ButtonLink>

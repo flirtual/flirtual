@@ -7,7 +7,6 @@ export interface ImageListItemProps {
 }
 
 function getFilename(name: string, kind: string) {
-	console.log(name, kind);
 	return `flirtual-${name.replaceAll(/\//g, "-")}.${kind}`;
 }
 
@@ -38,6 +37,7 @@ async function ImageListItem(item: ImageListItemProps) {
 						: "repeating-conic-gradient(#fff 0% 25%, #eee 0% 50%) 50% / 30px 30px"
 				}}
 			>
+				{/* eslint-disable-next-line @next/next/no-img-element */}
 				<img className="h-fit w-full" src={data.src} />
 			</a>
 			<div className="flex gap-2">

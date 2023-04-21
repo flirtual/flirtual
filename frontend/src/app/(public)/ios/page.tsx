@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 
+import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
@@ -20,15 +21,33 @@ export default function IOSPage() {
 					<ol className="list-decimal pl-4">
 						<li>
 							Using Safari, tap the Share button.{" "}
-							<img className="my-4 rounded-3xl shadow-brand-1" src="/images/ios1.png" />
+							<Image
+								alt="Share button picture"
+								className="my-4 rounded-3xl shadow-brand-1"
+								height={192}
+								src={urls.media("f1a3002d-2944-4e99-9fc8-5413a2473265")}
+								width={750}
+							/>
 						</li>
 						<li>
 							Tap &quot;Add to Home Screen&quot;.
-							<img className="my-4 rounded-3xl shadow-brand-1" src="/images/ios2.png" />
+							<Image
+								alt="Add to Home Screen picture"
+								className="my-4 rounded-3xl shadow-brand-1"
+								height={820}
+								src={urls.media("d06a8bb9-a757-4e6f-9689-d906b29c9649")}
+								width={750}
+							/>
 						</li>
 						<li>
 							Tap &quot;Add&quot;.
-							<img className="my-4 rounded-3xl shadow-brand-1" src="/images/ios3.png" />
+							<Image
+								alt="Add button picture"
+								className="my-4 rounded-3xl shadow-brand-1"
+								height={456}
+								src={urls.media("0c683ec4-a7d5-4825-b6a3-0233be664b81")}
+								width={750}
+							/>
 						</li>
 					</ol>
 					<p>That&apos;s it! You can now find Flirtual on your Home Screen.</p>

@@ -55,7 +55,7 @@ const ProfileNavigationItemDivider: React.FC<ProfileNavigationItemDividerProps> 
 };
 
 export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
-	const [session, mutateSession, logout] = useSession();
+	const [session, mutateSession] = useSession();
 	const [visible, setVisible] = useState(false);
 	const elementRef = useRef<HTMLDivElement>(null);
 	const location = useLocation();
@@ -80,7 +80,13 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 				)}
 				onClick={() => setVisible(true)}
 			>
-				<UserAvatar className="h-10 w-10 transition-transform" user={user} />
+				<UserAvatar
+					priority
+					className="h-10 w-10 rounded-full transition-transform"
+					height={64}
+					user={user}
+					width={64}
+				/>
 			</button>
 			<AnimatePresence>
 				{visible && (
@@ -96,8 +102,10 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							href={urls.user.me}
 						>
 							<UserAvatar
-								className="h-8 w-8 scale-125 transition-transform group-hocus:brightness-90"
+								className="h-8 w-8 scale-125 rounded-full transition-transform group-hocus:brightness-90"
+								height={128}
 								user={user}
+								width={128}
 							/>
 							<span className="ml-2 font-montserrat font-semibold">Profile</span>
 						</Link>

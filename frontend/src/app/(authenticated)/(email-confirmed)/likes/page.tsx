@@ -57,7 +57,7 @@ export default async function LikesPage() {
 							{items.map(({ id, user, kind }) => (
 								<Link href={urls.user.profile(user.username)} key={id}>
 									<div className="flex items-center gap-4 rounded-xl bg-white-10 p-4 shadow-brand-1 dark:bg-black-80">
-										<UserAvatar className="h-16" user={user} />
+										<UserAvatar className="h-16" height={64} user={user} width={64} />
 										<div className="flex grow flex-col">
 											<h1 className="text-2xl font-semibold">{displayName(user)}</h1>
 											<div className="flex gap-2">

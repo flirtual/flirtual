@@ -43,6 +43,7 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
 							</div>
 							<div className="h-full">{children}</div>
 							<div className="absolute left-0 top-full -z-10 flex h-screen w-screen justify-center bg-white-30 p-16 dark:bg-black-70">
+								{/* eslint-disable-next-line @next/next/no-img-element */}
 								<img className="h-fit w-16" src={flirtualMark.src} />
 							</div>
 						</div>

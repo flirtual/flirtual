@@ -7,6 +7,7 @@ import { getEmptyImage } from "react-dnd-html5-backend";
 import { twMerge } from "tailwind-merge";
 
 import { TailCircleIcon } from "./icons/tail-circle";
+import { Image, ImageProps } from "./image";
 
 export interface ArrangeableImageProps {
 	uploading?: boolean;
@@ -20,12 +21,16 @@ interface DragItem {
 	itemIdx: number;
 }
 
-const ArrangeableImagePreview: React.FC<React.ComponentProps<"img">> = (props) => (
-	<img
-		{...props}
-		className={twMerge("aspect-square h-full w-full rounded-md object-cover", props.className)}
-	/>
-);
+const ArrangeableImagePreview: React.FC<Omit<ImageProps, "width" | "height">> = (props) => {
+	return (
+		<Image
+			{...props}
+			className={twMerge("aspect-square h-full w-full rounded-md object-cover", props.className)}
+			height={175}
+			width={175}
+		/>
+	);
+};
 
 export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 	src,
@@ -75,7 +80,11 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 					className="fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center bg-black-90/60 p-4 backdrop-blur-sm md:p-16"
 					onClick={() => setFullPreview(false)}
 				>
-					<ArrangeableImagePreview className="h-auto w-full md:w-96" src={src} />
+					<ArrangeableImagePreview
+						alt="Profile image"
+						className="h-auto w-full md:w-96"
+						src={src}
+					/>
 				</div>
 			)}
 			<div className="group relative aspect-square max-h-full w-full shrink-0" ref={dragDropRef}>
@@ -84,10 +93,11 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 						className="pointer-events-none absolute left-0 top-0 z-50 w-full rounded-md shadow-brand-1"
 						style={{ transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }}
 					>
-						<ArrangeableImagePreview src={src} />
+						<ArrangeableImagePreview alt="Draggable image" src={src} />
 					</div>
 				)}
 				<ArrangeableImagePreview
+					alt="Profile image"
 					className={twMerge("transition-all", dragging && "brightness-50")}
 					src={src}
 				/>

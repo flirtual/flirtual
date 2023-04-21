@@ -4,7 +4,7 @@ import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
-import TeamImage from "~/../public/images/team.jpg";
+import { Image } from "~/components/image";
 
 import { TeamList } from "./team-list";
 
@@ -20,7 +20,12 @@ export default function AboutPage() {
 				containerProps={{ className: "!p-0 overflow-hidden" }}
 				title="About us"
 			>
-				<img src={TeamImage.src} />
+				<Image
+					alt="Picture of the Flirtual Team in VRChat"
+					height={618}
+					src={urls.media("54b456c6-4435-4cdc-ac05-cb958d4065c6")}
+					width={1888}
+				/>
 				<div className="flex flex-col gap-8 px-8 py-10 sm:px-16">
 					<div className="flex flex-col gap-4">
 						<h1 className="text-2xl font-semibold">Our Story</h1>

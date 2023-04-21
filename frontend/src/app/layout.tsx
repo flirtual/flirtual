@@ -2,12 +2,12 @@ import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";
 
-import { api } from "~/api";
 import { withOptionalSession } from "~/server-utilities";
 import { siteOrigin, urls } from "~/urls";
 import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
 import { SessionProvider } from "~/components/session-provider";
+import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 
 import { ClientScripts } from "./client-scripts";
 import { HydrationBlock } from "./hydration-block";
@@ -83,18 +83,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 							`.trim()
 					}}
 				/>
-				{session && (
-					<>
-						<link as="image" href={urls.userAvatar(session.user)} rel="preload" />
-						<link
-							as="fetch"
-							crossOrigin="use-credentials"
-							href={api.newUrl("auth/session").href}
-							rel="preload"
-						/>
-					</>
-				)}
-				<link color="#e9658b" href="/safari-pinned-tab.svg" rel="mask-icon" />
+				<link color="#e9658b" href={SafariPinnedTabImage.src} rel="mask-icon" />
 				<ClientScripts />
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>

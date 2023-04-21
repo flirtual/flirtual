@@ -31,7 +31,6 @@ export function FormField<K extends keyof T, T extends FormFieldsDefault>({
 	const autofocus = searchParams.get("af") === field.props.id;
 
 	useEffect(() => {
-		console.log({ autofocus }, ref.current);
 		if (!autofocus) return;
 		setTimeout(() => {
 			if (!ref.current) return;

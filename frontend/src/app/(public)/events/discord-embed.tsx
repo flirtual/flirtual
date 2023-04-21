@@ -13,7 +13,7 @@ export const DiscordEmbed: React.FC = () => {
 
 	const [session] = useSession();
 
-	if (!clientSide) return null;
+	if (!clientSide) return <div style={{ height: 600, width: "100%" }} />;
 
 	return (
 		<WidgetBot
