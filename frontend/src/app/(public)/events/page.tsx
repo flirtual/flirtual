@@ -52,7 +52,7 @@ export default function EventsPage() {
 					</p>
 					<Image
 						alt="Flirtual Speed Dating"
-						className="max-w-sm rounded-xl shadow-brand-1"
+						className="w-full max-w-sm rounded-xl shadow-brand-1"
 						height={900}
 						src={urls.media("b593e4e1-bef3-4ab8-b9ea-74628ebf694b")}
 						width={1200}
@@ -66,7 +66,7 @@ export default function EventsPage() {
 					<ButtonLink href="/speeddate">Flirtual Speed Dating</ButtonLink>
 					<Image
 						alt="The Flirtual Club"
-						className="max-w-sm rounded-xl shadow-brand-1"
+						className="w-full max-w-sm rounded-xl shadow-brand-1"
 						height={900}
 						src={urls.media("660c7e75-9634-45d1-a306-628eeef0a620")}
 						width={1200}

@@ -54,33 +54,34 @@ export default async function LikesPage() {
 						</div>
 					) : (
 						<div className="flex flex-col gap-4">
-							{items.map(({ id, user, kind }) => (
-								<Link href={urls.user.profile(user.username)} key={id}>
-									<div className="flex items-center gap-4 rounded-xl bg-white-10 p-4 shadow-brand-1 dark:bg-black-80">
-										<UserAvatar className="h-16" height={64} user={user} width={64} />
-										<div className="flex grow flex-col">
-											<h1 className="text-2xl font-semibold">{displayName(user)}</h1>
-											<div className="flex gap-2">
-												{user.bornAt && <Pill small={true}>{yearsAgo(new Date(user.bornAt))}</Pill>}
-												{/* @ts-expect-error: Server Component */}
-												<GenderPills
-													simple
-													attributes={filterBy(user.profile.attributes, "type", "gender")}
-												/>
-												{user.profile.country && (
-													/* @ts-expect-error: Server Component */
-													<CountryPill code={user.profile.country} flagOnly={true} />
-												)}
+							{items.map(({ id, user, kind }) => {
+								const Icon = kind === "love" ? HeartIcon : PeaceIcon;
+								return (
+									<Link href={urls.user.profile(user.username)} key={id}>
+										<div className="flex items-center gap-4 rounded-xl bg-white-10 p-4 shadow-brand-1 dark:bg-black-80">
+											<UserAvatar className="h-16 rounded-xl" height={64} user={user} width={64} />
+											<div className="flex grow flex-col">
+												<h1 className="text-2xl font-semibold">{displayName(user)}</h1>
+												<div className="flex gap-2">
+													{user.bornAt && (
+														<Pill small={true}>{yearsAgo(new Date(user.bornAt))}</Pill>
+													)}
+													{/* @ts-expect-error: Server Component */}
+													<GenderPills
+														simple
+														attributes={filterBy(user.profile.attributes, "type", "gender")}
+													/>
+													{user.profile.country && (
+														/* @ts-expect-error: Server Component */
+														<CountryPill code={user.profile.country} flagOnly={true} />
+													)}
+												</div>
 											</div>
+											<Icon className="h-8 pr-4" />
 										</div>
-										{kind === "love" ? (
-											<HeartIcon className="h-8" />
-										) : (
-											<PeaceIcon className="h-8" />
-										)}
-									</div>
-								</Link>
-							))}
+									</Link>
+								);
+							})}
 						</div>
 					)}
 				</div>

@@ -16,7 +16,7 @@ import { api } from "~/api";
 import { ModalOuter } from "../modal";
 import { Tooltip } from "../tooltip";
 import { TimeSince } from "../time-since";
-import { Image } from "../image";
+import { UserImage } from "../user-avatar";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
@@ -27,18 +27,22 @@ interface SingleImageProps {
 	image: ProfileImage;
 	className?: string;
 	priority?: boolean;
+	large?: boolean;
 }
 
-const SingleImage: React.FC<SingleImageProps> = ({ className, image, priority }) => {
+const SingleImage: React.FC<SingleImageProps> = (props) => {
+	const { className, image, large = false, priority = false } = props;
+
 	return (
-		<Image
+		<UserImage
 			alt={"Profile image"}
-			className={twMerge("aspect-square object-cover", className)}
-			height={500}
+			className={className}
+			fill={large}
+			height={!large ? 512 : undefined}
+			options={{ quality: large ? "normal" : "smart" }}
 			priority={priority}
-			quality={priority ? "normal" : "best"}
 			src={image.url}
-			width={500}
+			width={!large ? 512 : undefined}
 		/>
 	);
 };
@@ -171,7 +175,9 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 								>
 									<XMarkIcon className="h-6 w-6" />
 								</button>
-								<SingleImage className="max-h-[80vh]" image={curImage} />
+								<div className="relative aspect-square w-auto md:h-screen md:max-h-[80vh]">
+									<SingleImage large className="object-cover" image={curImage} />
+								</div>
 								{session?.user.tags?.includes("moderator") && <ImageToolbar image={curImage} />}
 							</div>
 						</ModalOuter>

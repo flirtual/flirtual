@@ -8,6 +8,7 @@ import { twMerge } from "tailwind-merge";
 
 import { TailCircleIcon } from "./icons/tail-circle";
 import { Image, ImageProps } from "./image";
+import { UserImage } from "./user-avatar";
 
 export interface ArrangeableImageProps {
 	uploading?: boolean;
@@ -21,11 +22,14 @@ interface DragItem {
 	itemIdx: number;
 }
 
-const ArrangeableImagePreview: React.FC<Omit<ImageProps, "width" | "height">> = (props) => {
+const ArrangeableImagePreview: React.FC<
+	Omit<ImageProps, "width" | "height" | "src"> & { src: string }
+> = (props) => {
 	return (
-		<Image
+		<UserImage
 			{...props}
-			className={twMerge("aspect-square h-full w-full rounded-md object-cover", props.className)}
+			alt="Profile image"
+			className={twMerge("h-full w-full rounded-md", props.className)}
 			height={175}
 			width={175}
 		/>
@@ -80,10 +84,12 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 					className="fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center bg-black-90/60 p-4 backdrop-blur-sm md:p-16"
 					onClick={() => setFullPreview(false)}
 				>
-					<ArrangeableImagePreview
+					<UserImage
 						alt="Profile image"
-						className="h-auto w-full md:w-96"
+						className="h-auto w-full rounded-md md:w-96"
+						height={1024}
 						src={src}
+						width={1024}
 					/>
 				</div>
 			)}

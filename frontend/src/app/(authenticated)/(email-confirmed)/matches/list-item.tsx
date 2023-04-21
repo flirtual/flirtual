@@ -24,7 +24,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 					className="shrink-0 before:absolute before:h-full before:w-full"
 					href={urls.conversations.with(user.id)}
 				>
-					<UserAvatar className="h-20 w-20 rounded-l-xl" height={128} user={user} width={128} />
+					<UserAvatar className="h-20 w-20 rounded-l-xl" height={80} user={user} width={80} />
 				</Link>
 				{!lastMessage.viewed && (
 					<div className="absolute -left-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-theme-2 shadow-brand-1">
