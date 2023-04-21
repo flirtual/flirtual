@@ -110,12 +110,12 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							<span className="ml-2 font-montserrat font-semibold">Profile</span>
 						</Link>
 						<div className="flex flex-col-reverse gap-2 p-2 pb-1 pl-12 sm:flex-col sm:pb-2 sm:pt-1">
-							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
 							<ProfileNavigationItem
 								href={isDesktop ? urls.settings.matchmaking() : urls.settings.list()}
 							>
 								Settings
 							</ProfileNavigationItem>
+							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.resources.download}>Get app</ProfileNavigationItem>
 							{user.tags?.includes("moderator") && (
 								<>
