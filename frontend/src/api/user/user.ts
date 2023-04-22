@@ -3,6 +3,7 @@ import { snakeCase } from "change-case";
 import { DatedModel, UuidModel } from "../common";
 import { fetch, NarrowFetchOptions } from "../exports";
 import { Subscription } from "../subscription";
+import { Connection } from "../connections";
 
 import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";
@@ -27,6 +28,7 @@ export type User = UuidModel &
 		profile: Profile;
 		subscription?: Subscription;
 		tags?: Array<UserTags>;
+		//connections?: Array<Connection>;
 	};
 
 export function displayName(user: User) {

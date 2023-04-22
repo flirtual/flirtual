@@ -1,5 +1,7 @@
 "use client";
 
+import { FC } from "react";
+
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -11,7 +13,7 @@ import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
 import { urls } from "~/urls";
 
-export const BiographyForm: React.FC = () => {
+export const BiographyForm: FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
@@ -30,9 +32,11 @@ export const BiographyForm: React.FC = () => {
 					file: null,
 					src: image.url
 				})) as Array<ImageSetValue>,
-				biography: user.profile.biography || ""
+				biography: user.profile.biography || "",
+				vrchat: user.profile.vrchat || "",
+				discord: user.profile.discord || ""
 			}}
-			onSubmit={async ({ displayName, biography, ...values }) => {
+			onSubmit={async ({ displayName, biography, discord, vrchat, ...values }) => {
 				const [profile, images] = await Promise.all([
 					await api.user.profile.update(user.id, {
 						query: {
@@ -40,7 +44,9 @@ export const BiographyForm: React.FC = () => {
 						},
 						body: {
 							displayName,
-							biography: html(biography)
+							biography: html(biography),
+							discord: discord.trim() || "",
+							vrchat: vrchat.trim() || ""
 						}
 					}),
 					await api.user.profile.images.update(user.id, {
@@ -99,6 +105,52 @@ export const BiographyForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
+					<div className="flex flex-col gap-4">
+						<InputLabel
+							inline
+							hint={
+								<InputLabelHint className="text-sm">
+									This information will not be shared outside of Flirtual without your permission,
+									and is used in accordance with our{" "}
+									<InlineLink href={urls.resources.privacyPolicy}>Privacy Policy</InlineLink>.
+								</InputLabelHint>
+							}
+						>
+							Add accounts to your profile
+						</InputLabel>
+						<div className="flex gap-4">
+							<FormField className="basis-64" name="vrchat">
+								{(field) => (
+									<>
+										<InputLabel {...field.labelProps}>VRChat</InputLabel>
+										<InputText {...field.props} />
+									</>
+								)}
+							</FormField>
+							<FormField className="basis-64" name="discord">
+								{(field) => (
+									<>
+										<InputLabel {...field.labelProps}>Discord</InputLabel>
+										<InputText {...field.props} />
+									</>
+								)}
+							</FormField>
+						</div>
+						{/* {availableConnections.length !== 0 && (
+							<div className="flex flex-wrap gap-4">
+								{availableConnections.map((type) => (
+									<AddConnectionButton key={type} type={type} />
+								))}
+							</div>
+						)}
+						{user.connections && (
+							<div className="flex flex-wrap gap-4">
+								{user.connections.map((connection) => (
+									<ConnectionItem {...connection} key={connection.type} />
+								))}
+							</div>
+						)} */}
+					</div>
 					<FormButton>Update</FormButton>
 				</>
 			)}

@@ -106,6 +106,7 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 
 export * as attributes from "./attributes";
 export * as auth from "./auth";
+export * as connections from "./connections";
 export * as conversations from "./conversations";
 export * as debug from "./debug";
 export * as user from "./user";

@@ -32,6 +32,8 @@ export type Profile = Partial<UpdatedAtModel> & {
 	domsub?: ProfileDomsub;
 	monopoly?: ProfileMonopoly;
 	country?: string;
+	vrchat?: string;
+	discord?: string;
 	openness?: number;
 	conscientiousness?: number;
 	agreeableness?: number;
@@ -57,7 +59,15 @@ export type ProfileAttribute = (typeof ProfileAttributes)[number];
 export type UpdateProfileBody = Partial<
 	Pick<
 		Profile,
-		"displayName" | "biography" | "new" | "country" | "languages" | "serious" | "customInterests"
+		| "displayName"
+		| "biography"
+		| "new"
+		| "country"
+		| "languages"
+		| "serious"
+		| "customInterests"
+		| "vrchat"
+		| "discord"
 	>
 > & {
 	[K in ProfileAttribute as `${K}Id`]?: Array<string>;

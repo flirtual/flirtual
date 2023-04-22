@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 	title: "Bio & pics"
 };
 
-export default function SettingsProfileBiographyPage() {
+export default async function SettingsProfileBiographyPage() {
 	return (
 		<ModelCard className="sm:max-w-2xl" title="Bio & pics">
 			<BiographyForm />
