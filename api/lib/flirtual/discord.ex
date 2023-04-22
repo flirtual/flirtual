@@ -1,8 +1,10 @@
 defmodule Flirtual.Discord do
   use Flirtual.Logger, :discord
+  use Flirtual.Connection.Provider, :discord
 
   import Flirtual.Utilities
 
+  alias Flirtual.Connection
   alias Flirtual.Report
   alias Flirtual.Attribute
   alias Flirtual.Subscription
@@ -10,7 +12,7 @@ defmodule Flirtual.Discord do
 
   @default_color 15_295_883
 
-  defp config(key) do
+  def config(key) do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
   end
 
@@ -29,6 +31,82 @@ defmodule Flirtual.Discord do
       Poison.encode!(body),
       [{"content-type", "application/json"}]
     )
+  end
+
+  def authorize_url(_, %{state: state}) do
+    URI.new(
+      "https://discord.com/api/oauth2/authorize?" <>
+        URI.encode_query(%{
+          client_id: config(:client_id),
+          redirect_uri: redirect_url!(),
+          state: state,
+          response_type: "code",
+          scope: "identify",
+          prompt: "none"
+        })
+    )
+  end
+
+  def exchange_code(code) when is_binary(code) do
+    with {:ok, %HTTPoison.Response{body: body}} <-
+           HTTPoison.post(
+             url("oauth2/token"),
+             URI.encode_query(%{
+               client_id: config(:client_id),
+               client_secret: config(:client_secret),
+               grant_type: "authorization_code",
+               redirect_uri: redirect_url!(),
+               code: code
+             }),
+             [{"content-type", "application/x-www-form-urlencoded"}]
+           ),
+         {:ok, body} <- Poison.decode(body),
+         %{"access_token" => access_token, "token_type" => token_type} <- body do
+      {:ok, "#{token_type} #{access_token}"}
+    else
+      %{"error" => "invalid_grant"} ->
+        {:error, :invalid_grant}
+
+      %{"error" => _} = body ->
+        log(:critical, [:exchange_code], body)
+        {:error, :upstream}
+
+      reason ->
+        log(:critical, [:exchange_code], reason)
+        {:error, :upstream}
+    end
+  end
+
+  def profile_avatar_url(%Connection{uid: id, avatar: avatar}),
+    do: "https://cdn.discordapp.com/avatars/#{id}/#{avatar}.png"
+
+  def profile_url(%Connection{uid: id}), do: "https://discord.com/users/#{id}"
+
+  def get_profile(authorization) do
+    with {:ok, %HTTPoison.Response{body: body}} <-
+           HTTPoison.get(
+             url("oauth2/@me"),
+             [{"authorization", authorization}]
+           ),
+         {:ok, body} <- Poison.decode(body),
+         %{"user" => profile} <- body,
+         %{
+           "id" => id,
+           "username" => username,
+           "discriminator" => discriminator,
+           "avatar" => avatar
+         } <- profile do
+      {:ok,
+       %{
+         uid: id,
+         display_name: "#{username}##{discriminator}",
+         avatar: avatar
+       }}
+    else
+      reason ->
+        log(:critical, [:get_profile], reason)
+        {:error, :upstream}
+    end
   end
 
   def deliver_webhook(:banned,

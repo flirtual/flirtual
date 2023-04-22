@@ -74,6 +74,8 @@ defmodule Flirtual.User.Profile do
     field :reset_love_count, :integer
     field :reset_friend_at, :utc_datetime
     field :reset_friend_count, :integer
+    field :vrchat, :string
+    field :discord, :string
 
     has_one :preferences, Preferences, references: :user_id, foreign_key: :profile_id
     has_one :custom_weights, CustomWeights, references: :user_id, foreign_key: :profile_id
@@ -169,6 +171,8 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :custom_interests,
       :preferences,
       :custom_weights,
+      :vrchat,
+      :discord,
       :images,
       :updated_at
     ]

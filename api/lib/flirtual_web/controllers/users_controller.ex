@@ -17,7 +17,6 @@ defmodule FlirtualWeb.UsersController do
   alias Flirtual.Repo
   alias FlirtualWeb.SessionController
   alias Flirtual.{User, Users, Policy}
-  alias User.Connection
 
   action_fallback FlirtualWeb.FallbackController
 
@@ -26,46 +25,6 @@ defmodule FlirtualWeb.UsersController do
          {_, conn} = SessionController.create(conn, user) do
       conn |> put_status(:created) |> json(Policy.transform(conn, user))
     end
-  end
-
-  def start_connection(conn, %{"connection_type" => connection_type}) do
-    connection_type = to_atom(connection_type)
-
-    url = User.Connection.get_authorize_url(connection_type)
-    conn |> redirect(external: url)
-  end
-
-  def create_connection(conn, %{"connection_type" => connection_type} = params) do
-    user = conn.assigns[:session].user
-    connection_type = to_atom(connection_type)
-
-    if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error,
-       {:forbidden, "Cannot update this user's connections",
-        %{
-          user_id: user.id,
-          connection_type: connection_type
-        }}}
-    else
-      with {:ok, connection} <- Users.assign_connection(user.id, connection_type, params) do
-        conn |> json(connection)
-      end
-    end
-  end
-
-  def list_connections(conn, %{"user_id" => user_id}) do
-    user =
-      if(conn.assigns[:session].user.id === user_id,
-        do: conn.assigns[:session].user,
-        else: Users.get(user_id)
-      )
-
-    connections =
-      Users.list_connections_by_user_id(user_id)
-      |> Enum.map(&%Connection{&1 | user: user})
-      |> Enum.filter(&Policy.can?(conn, :read, &1))
-
-    conn |> json(connections)
   end
 
   def get(conn, %{"user_id" => user_id}) do

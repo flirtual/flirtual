@@ -8,7 +8,6 @@ defmodule Flirtual.User do
   import Ecto.Changeset
   import Ecto.Query
   import Flirtual.Utilities
-  import Flirtual.Utilities.Changeset
 
   alias Ecto.Changeset
 
@@ -52,7 +51,7 @@ defmodule Flirtual.User do
     field :incognito_at, :utc_datetime
     field :active_at, :utc_datetime
 
-    has_many :connections, Flirtual.User.Connection
+    has_many :connections, Flirtual.Connection
     has_many :sessions, Flirtual.User.Session
 
     has_one :preferences, Flirtual.User.Preferences
@@ -65,6 +64,7 @@ defmodule Flirtual.User do
   def default_assoc do
     [
       subscription: Flirtual.Subscription.default_assoc(),
+      connections: Flirtual.Connection.default_assoc(),
       preferences: Flirtual.User.Preferences.default_assoc(),
       profile: Flirtual.User.Profile.default_assoc()
     ]

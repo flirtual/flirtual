@@ -11,8 +11,8 @@ defmodule Flirtual.Users do
   alias Flirtual.Talkjs
   alias Flirtual.Jwt
   alias Flirtual.Talkjs
-  alias Flirtual.{Repo, User}
-  alias Flirtual.User.{Preferences, Connection}
+  alias Flirtual.{Repo, User, Connection}
+  alias Flirtual.User.{Preferences}
   alias Flirtual.Stripe
 
   def get(id)
@@ -349,70 +349,6 @@ defmodule Flirtual.Users do
         reason -> Repo.rollback(reason)
       end
     end)
-  end
-
-  def assign_connection(user_id, :discord = connection_type, %{"code" => code}) do
-    connection = get_connection(user_id, connection_type)
-
-    body =
-      URI.encode_query(%{
-        client_id: Application.fetch_env!(:flirtual, :discord_client_id),
-        client_secret: Application.fetch_env!(:flirtual, :discord_client_secret),
-        grant_type: "authorization_code",
-        code: code,
-        redirect_uri: "http://127.0.0.1:4000/v1/auth/connect/discord"
-      })
-
-    headers = %{"content-type" => "application/x-www-form-urlencoded"}
-
-    case HTTPoison.post("https://discord.com/api/oauth2/token", body, headers) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        %{
-          "access_token" => access_token,
-          "token_type" => token_type
-        } = Poison.decode!(body)
-
-        case HTTPoison.get("https://discord.com/api/users/@me", %{
-               authorization: token_type <> " " <> access_token
-             }) do
-          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-            external_profile = Poison.decode!(body)
-
-            {:ok, connection} =
-              %Connection{
-                (connection || %Connection{user_id: user_id})
-                | external_id: external_profile["id"],
-                  type: connection_type
-              }
-              |> Connection.update_changeset()
-              |> Repo.insert_or_update()
-
-            {:ok, Connection.assign_connection(connection, external_profile)}
-
-          {_, _} ->
-            {:error, {:bad_request, "Couldn't get user information"}}
-        end
-
-      {_, _} ->
-        {:error, {:bad_request, "Connection failed"}}
-    end
-  end
-
-  def assign_connection(_, _, _) do
-    {:error, {:not_found, "Unknown connection type"}}
-  end
-
-  def list_connections_by_user_id(user_id) do
-    Connection
-    |> where(user_id: ^user_id)
-    |> Repo.all()
-    |> Enum.map(&Connection.get_profile(&1))
-  end
-
-  def get_connection(user_id, type) do
-    Connection
-    |> where(user_id: ^user_id, type: ^type)
-    |> Repo.one()
   end
 
   def create(attrs, options \\ []) do

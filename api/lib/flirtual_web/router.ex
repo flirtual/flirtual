@@ -99,17 +99,25 @@ defmodule FlirtualWeb.Router do
             get "/", UsersController, :get_current_user
             delete "/", UsersController, :delete
           end
-
-          scope "/connect/:connection_type" do
-            pipe_through([:require_authenticated_user])
-
-            get "/authorize", UsersController, :start_connection
-            get "/", UsersController, :assign_connection
-          end
         end
 
         post "/evaluate", DebugController, :evaluate
         get "/error", DebugController, :error
+
+        scope "/vrchat" do
+          pipe_through([:require_authenticated_user])
+
+          get "/search", VRChatController, :search
+        end
+
+        scope "/connections" do
+          pipe_through([:require_authenticated_user])
+
+          get "/available", ConnectionController, :list_available
+
+          get "/authorize", ConnectionController, :authorize
+          get "/grant", ConnectionController, :grant
+        end
 
         scope "/plans" do
           pipe_through :require_authenticated_user

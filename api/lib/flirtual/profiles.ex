@@ -68,6 +68,8 @@ defmodule Flirtual.Profiles do
                 :country,
                 :serious,
                 :new,
+                :vrchat,
+                :discord,
                 :languages,
                 :custom_interests
               ] ++ @attribute_keys ++ @attribute_types
@@ -75,6 +77,8 @@ defmodule Flirtual.Profiles do
     embedded_schema do
       field :display_name, :string
       field :biography, :string
+      field :vrchat, :string, default: ""
+      field :discord, :string, default: ""
       field :domsub, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :domsub)]
       field :monopoly, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :monopoly)]
       field :country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)]
@@ -134,6 +138,8 @@ defmodule Flirtual.Profiles do
         display_name: transform_value(attrs.display_name, profile.display_name),
         biography: transform_value(attrs.biography, profile.biography),
         serious: transform_value(attrs.serious, profile.serious),
+        vrchat: transform_value(attrs.vrchat, profile.vrchat),
+        discord: transform_value(attrs.discord, profile.discord),
         new: transform_value(attrs.new, profile.new),
         country: transform_value(attrs.country, profile.country),
         domsub: transform_value(attrs.domsub, profile.domsub),

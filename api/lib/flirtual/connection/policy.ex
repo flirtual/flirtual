@@ -1,17 +1,8 @@
-defmodule Flirtual.User.Connection.Policy do
-  use Flirtual.Policy,
-    only: [
-      :type,
-      :external_id,
-      :name,
-      :avatar_url,
-      :url,
-      :updated_at,
-      :created_at
-    ]
+defmodule Flirtual.Connection.Policy do
+  use Flirtual.Policy
 
   alias Flirtual.User
-  alias Flirtual.User.Connection
+  alias Flirtual.Connection
 
   # Any user can view the other user's connection if
   # their connections privacy setting is set to everyone.
@@ -45,4 +36,10 @@ defmodule Flirtual.User.Connection.Policy do
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
+
+  def transform(:avatar_url, _, %Connection{} = connection),
+    do: Connection.provider!(connection.type).profile_avatar_url(connection)
+
+  def transform(:url, _, %Connection{} = connection),
+    do: Connection.provider!(connection.type).profile_url(connection)
 end

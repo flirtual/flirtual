@@ -86,6 +86,7 @@ defmodule Flirtual.EmbeddedSchema do
 
         with {:ok, value} <-
                prepare_changeset(attrs)
+               |> Map.put(:empty_values, [])
                |> changeset(attrs, context)
                |> apply_action(action) do
           {:ok, value}
