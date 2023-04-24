@@ -12,7 +12,7 @@ defmodule Flirtual.User.Preferences do
     belongs_to :user, User, primary_key: true
 
     field :nsfw, :boolean, default: false
-    field :theme, Ecto.Enum, values: [:light, :dark, :system], default: :system
+    field :theme, Ecto.Enum, values: [:light, :dark, :system], default: :light
 
     has_one :email_notifications, EmailNotifications,
       references: :user_id,
