@@ -32,6 +32,12 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     timestamps()
   end
 
+  def get(user: %User{id: user_id}, target: %User{id: target_id}) do
+    LikesAndPasses
+    |> where(profile_id: ^user_id, target_id: ^target_id)
+    |> Repo.one()
+  end
+
   def match_exists?(user: %User{id: user_id}, target: %User{id: target_id}) do
     LikesAndPasses
     |> where(profile_id: ^user_id, target_id: ^target_id)

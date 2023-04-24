@@ -36,6 +36,7 @@ defmodule Flirtual.User do
 
     field :password, :string, virtual: true, redact: true
     field :visible, :boolean, virtual: true
+    field :relation, :map, virtual: true
     field :matched, :boolean, virtual: true
     field :blocked, :boolean, virtual: true
 
@@ -174,6 +175,10 @@ defmodule Flirtual.User do
 
   def blocked?(%User{} = user, %User{} = target) do
     Block.exists?(user: user, target: target)
+  end
+
+  def relation(%User{} = user, %User{} = target) do
+    LikesAndPasses.get(user: user, target: target)
   end
 
   def matched?(%User{} = user, %User{} = target) do
@@ -446,6 +451,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :active_at,
       :tags,
       :visible,
+      :relation,
       :matched,
       :blocked,
       :subscription,

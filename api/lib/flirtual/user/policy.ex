@@ -133,6 +133,7 @@ defmodule Flirtual.User.Policy do
     :updated_at,
     :created_at,
     :matched,
+    :relation,
     :blocked
   ]
 
@@ -208,6 +209,17 @@ defmodule Flirtual.User.Policy do
   end
 
   def transform(:visible, _, user), do: User.visible?(user)
+
+  def transform(
+        :relation,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        user
+      ),
+      do: User.relation(session.user, user)
 
   def transform(
         :matched,
