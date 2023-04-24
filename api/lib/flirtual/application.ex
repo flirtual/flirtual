@@ -7,7 +7,11 @@ defmodule Flirtual.Application do
 
   @impl true
   def start(_type, _args) do
+    topologies = Application.get_env(:libcluster, :topologies) || []
+
     children = [
+      # Start the Cluster supervisor
+      {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]},
       # Start the Ecto repository
       Flirtual.Repo,
       Flirtual.Elasticsearch,

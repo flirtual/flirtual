@@ -36,6 +36,22 @@ config :stripity_stripe,
 config :flirtual, FlirtualWeb.Endpoint, secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
 
 if config_env() == :prod do
+  app_name =
+    System.get_env("FLY_APP_NAME") ||
+      raise "FLY_APP_NAME not available"
+
+  config :libcluster,
+    topologies: [
+      fly6pn: [
+        strategy: Cluster.Strategy.DNSPoll,
+        config: [
+          polling_interval: 5_000,
+          query: "#{app_name}.internal",
+          node_basename: app_name
+        ]
+      ]
+    ]
+
   config :flirtual, Flirtual.Repo,
     # ssl: true,
     url: System.fetch_env!("DATABASE_URL"),

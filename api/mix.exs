@@ -57,7 +57,8 @@ defmodule Flirtual.MixProject do
       {:poison, "~> 3.0"},
       {:jason, "~> 1.2"},
       {:joken, "~> 2.5"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:libcluster, "~> 3.3"}
     ]
   end
 
