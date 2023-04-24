@@ -185,15 +185,19 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 							<PremiumBadge />
 						</InputLabel>
 						<span>
-							Moving a slider to the left will decrease its priority in matchmaking. Moving a slider
-							to the right will increase its priority. Flirtual Supporters can customize each slider
-							in their matchmaking algorithm.
+							Customize who you see on Flirtual. Slide right to increase importance, left to
+							decrease. Premium subscribers unlock full customization.
+						</span>
+						<span>
+							For example, slide &quot;Same country&quot; to the right to see more people from your
+							country, or left if you want to see more people from other countries.
 						</span>
 					</div>
 					{CustomWeightList.map((key) => {
 						if (
-							(["monopoly", "domsub", "kinks"].includes(key) && !user.preferences?.nsfw) ||
-							(key === "serious" && !fields.serious.props.value)
+							(key === "monopoly" && !fields.monopoly.props.value) ||
+							(key === "serious" && !fields.serious.props.value) ||
+							(["domsub", "kinks"].includes(key) && !user.preferences?.nsfw)
 						)
 							return null;
 
@@ -218,14 +222,24 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 												{
 													{
 														country: "Same country",
-														games: "Social VR games in common",
-														defaultInterests: "Standard interests in common",
-														customInterests: "Custom interests in common",
-														personality: "Personality similarity",
+														monopoly:
+															fields.monopoly.props.value === "monogamous"
+																? "Monogamous"
+																: "Non-monogamous",
+														games: "Shared VR games",
+														defaultInterests: "Common interests",
+														customInterests: "Common custom interests",
+														personality: "Personality match",
 														serious: "Open to serious dating",
-														monopoly: "NSFW match",
-														domsub: "Dom/sub/switch match",
-														kinks: "Kink matches",
+														domsub:
+															user.profile.domsub === "dominant"
+																? "Submissive"
+																: user.profile.domsub === "submissive"
+																? "Dominant"
+																: user.profile.domsub === "switch"
+																? "Switch"
+																: "Dom/sub/switch match",
+														kinks: "Kink compatibility",
 														likes: "People who have liked you"
 													}[key]
 												}
