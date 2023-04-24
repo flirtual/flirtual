@@ -4,6 +4,7 @@ import { DatedModel, UuidModel } from "../common";
 import { fetch, NarrowFetchOptions } from "../exports";
 import { Subscription } from "../subscription";
 import { Connection } from "../connections";
+import { LikeAndPassItem } from "../matchmaking";
 
 import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";
@@ -17,7 +18,8 @@ export type User = UuidModel &
 		language?: string;
 		talkjsSignature?: string;
 		visible: boolean;
-		matched: boolean;
+		relation?: LikeAndPassItem;
+		matched?: boolean;
 		blocked: boolean;
 		bornAt?: string;
 		activeAt?: string;

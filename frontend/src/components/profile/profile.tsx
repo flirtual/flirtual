@@ -6,6 +6,7 @@ import { withSession } from "~/server-utilities";
 import { yearsAgo } from "~/date";
 
 import { InlineLink } from "../inline-link";
+import { Button } from "../button";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfileVerificationBadge } from "./verification-badge";
@@ -17,6 +18,7 @@ import { GenderPills } from "./pill/genders";
 import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { MatchActions } from "./match-actions";
+import { RelationActions } from "./relation-actions";
 
 export async function Profile({ user }: { user: User }) {
 	const session = await withSession();
@@ -53,7 +55,11 @@ export async function Profile({ user }: { user: User }) {
 				</ProfileImageDisplay>
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
-					{user.matched && <MatchActions user={user} />}
+					{user.matched ? (
+						<MatchActions user={user} />
+					) : (
+						user.relation && <RelationActions user={user} />
+					)}
 					{user.profile.new && !myProfile ? (
 						session?.user.profile.new ? (
 							<span className="text-xl italic dark:text-white-20">
