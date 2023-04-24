@@ -57,7 +57,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: React.PropsWithChildren) {
 	const session = await withOptionalSession();
-	const theme = session?.user.preferences?.theme ?? "system";
+	const theme = session?.user.preferences?.theme ?? "light";
 
 	return (
 		<html suppressHydrationWarning className={theme} lang="en">

@@ -11,7 +11,7 @@ export function useTheme() {
 	const [session, mutateSession] = useSession();
 	const router = useRouter();
 
-	const sessionTheme = session?.user.preferences?.theme ?? "system";
+	const sessionTheme = session?.user.preferences?.theme ?? "light";
 	const browserTheme = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
 	const theme = sessionTheme === "system" ? browserTheme : sessionTheme;
 
