@@ -1,11 +1,16 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
+import { Button } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+	const router = useRouter();
+
 	return (
 		<div className="flex min-h-screen w-full justify-center bg-brand-gradient px-8 py-16 text-white-10 sm:items-center">
 			<div className="flex flex-col justify-between gap-8 sm:justify-start">
@@ -21,6 +26,14 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 							<br className="hidden sm:block" /> Thank you for your patience!
 						</p>
 					</div>
+				</div>
+				<div className="flex gap-2">
+					<Button className="w-fit" kind="secondary" size="sm" onClick={reset}>
+						Reload
+					</Button>
+					<Button className="w-fit" kind="secondary" size="sm" onClick={() => router.back()}>
+						Back
+					</Button>
 				</div>
 				<div className="flex flex-col">
 					<div>
