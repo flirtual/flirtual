@@ -48,6 +48,8 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     LikesAndPasses
     |> where(profile_id: ^user_id, target_id: ^target_id)
     |> preload(:opposite)
+    |> order_by(:type)
+    |> limit(1)
     |> Repo.one()
   end
 
