@@ -1,13 +1,13 @@
 defmodule FlirtualWeb.MatchmakingController do
   use FlirtualWeb, :controller
 
-  action_fallback FlirtualWeb.FallbackController
-
   import Flirtual.Utilities
-  alias Flirtual.Subscription
+  import Flirtual.Matchmaking
+
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.{Users, Policy}
-  import Flirtual.Matchmaking
+
+  action_fallback FlirtualWeb.FallbackController
 
   def list_prospects(conn, %{"kind" => kind}) do
     with {:ok, prospect_ids} <-

@@ -2,8 +2,6 @@ defmodule Flirtual.User.Profile do
   use Flirtual.Schema, primary_key: false
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.Policy
 
-  import Flirtual.Attribute, only: [validate_attribute_list: 5]
-
   import Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query

@@ -27,10 +27,12 @@ defmodule Flirtual.User.Profile.Prospect do
              Enum.map(
                prospects,
                &Map.merge(&1, %{
-                 updated_at: now,
-                 created_at: now
+                 updated_at: {:placeholder, :now},
+                 created_at: {:placeholder, :now}
                })
-             )
+             ),
+             on_conflict: :replace_all,
+             placeholder: %{now: now}
            ) do
       {:ok, count}
     end
