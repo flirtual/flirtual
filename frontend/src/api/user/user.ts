@@ -3,11 +3,10 @@ import { snakeCase } from "change-case";
 import { DatedModel, UuidModel } from "../common";
 import { fetch, NarrowFetchOptions } from "../exports";
 import { Subscription } from "../subscription";
-import { Connection } from "../connections";
-import { LikeAndPassItem } from "../matchmaking";
 
 import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";
+import { Relationship } from "./relationship";
 
 export type UserTags = "admin" | "moderator" | "beta_tester" | "debugger" | "verified";
 
@@ -18,9 +17,7 @@ export type User = UuidModel &
 		language?: string;
 		talkjsSignature?: string;
 		visible: boolean;
-		relation?: LikeAndPassItem;
-		matched?: boolean;
-		blocked: boolean;
+		relationship?: Relationship;
 		bornAt?: string;
 		activeAt?: string;
 		emailConfirmedAt?: string;

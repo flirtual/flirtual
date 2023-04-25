@@ -1,3 +1,4 @@
+import { CreatedAtModel, UuidModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
 
 export const ProspectKind = ["love", "friend"] as const;
@@ -5,14 +6,17 @@ export type ProspectKind = (typeof ProspectKind)[number];
 
 export type ProspectRespondType = "like" | "pass";
 
-export interface LikeAndPassItem {
-	id: string;
-	profileId: string;
-	targetId: string;
-	type: ProspectRespondType;
-	kind: ProspectKind;
-	createdAt: string;
-}
+export type LikeAndPassItem = UuidModel &
+	CreatedAtModel & {
+		profileId: string;
+		targetId: string;
+		type: ProspectRespondType;
+		kind: ProspectKind;
+		match?: undefined;
+	} & {
+		match: true;
+		opposite?: LikeAndPassItem;
+	};
 
 export async function listProspects(
 	options: NarrowFetchOptions<undefined, { kind: ProspectKind }>
