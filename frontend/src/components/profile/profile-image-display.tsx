@@ -3,6 +3,7 @@
 import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useSwipeable } from "react-swipeable";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -117,8 +118,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 		[images]
 	);
 
+	const swipeHandlers = useSwipeable({
+		onSwipedLeft: () => set(1),
+		onSwipedRight: () => set(-1),
+		preventScrollOnSwipe: true
+	});
+
 	return (
-		<div className="relative shrink-0 overflow-hidden">
+		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
 			<div className="relative flex aspect-square shrink-0 bg-black-70">
 				{images.map((image, imageIdx) => (
 					<SingleImage
@@ -135,18 +142,18 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 				{images.length > 1 && (
 					<div className="absolute flex h-full w-full">
 						<button
-							className="flex h-full grow items-center justify-start px-8 opacity-0 transition-opacity hover:opacity-100"
+							className="flex h-full grow items-center justify-start px-8 opacity-70 transition-opacity hover:opacity-100"
 							type="button"
 							onClick={() => set(-1)}
 						>
-							<ChevronLeftIcon className="h-8 w-8" />
+							<ChevronLeftIcon className="h-8 w-8 fill-white-10 drop-shadow" />
 						</button>
 						<button
-							className="flex h-full grow items-center justify-end px-8 opacity-0 transition-opacity hover:opacity-100"
+							className="flex h-full grow items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
 							type="button"
 							onClick={() => set(1)}
 						>
-							<ChevronRightIcon className="h-8 w-8" />
+							<ChevronRightIcon className="h-8 w-8 fill-white-10 drop-shadow" />
 						</button>
 					</div>
 				)}
@@ -176,7 +183,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 									<XMarkIcon className="h-6 w-6" />
 								</button>
 								<div className="relative aspect-square w-auto md:h-screen md:max-h-[80vh]">
-									<SingleImage large className="object-cover" image={curImage} />
+									<SingleImage large className="!relative object-cover" image={curImage} />
 								</div>
 								{session?.user.tags?.includes("moderator") && <ImageToolbar image={curImage} />}
 							</div>

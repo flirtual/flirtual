@@ -27,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-portal": "^4.2.2",
     "react-quill": "^2.0.0",
+    "react-swipeable": "^7.0.0",
     "sanitize-html": "^2.10.0",
     "sass": "^1.62.0",
     "server-only": "^0.0.1",
