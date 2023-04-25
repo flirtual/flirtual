@@ -57,7 +57,7 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 								? "liked"
 								: "homied"
 							: "passed on"
-					} ${displayName(user)}`}
+					} ${displayName(user)}.`}
 				</span>
 				<Button className="shrink-0" size="sm" onClick={() => alert("TODO")}>
 					Undo
@@ -70,7 +70,7 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 			<div className="flex items-center gap-3">
 				<SparklesIcon className="h-6 w-6 shrink-0" />
 				<span className="text-xl [overflow-wrap:anywhere] dark:text-white-20">
-					{`${displayName(user)} ${relationship.likedMe === "love" ? "liked" : "homied"} you`}
+					{`${displayName(user)} ${relationship.likedMe === "love" ? "liked" : "homied"} you!`}
 				</span>
 			</div>
 		);
