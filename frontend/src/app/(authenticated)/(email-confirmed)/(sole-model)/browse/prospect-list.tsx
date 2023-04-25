@@ -25,7 +25,7 @@ export async function ProspectList({ kind, prospects }: ProspectListProps) {
 					<ProspectActionBar mode={kind} userId={prospect.id} />
 				</>
 			) : (
-				<OutOfProspects />
+				<OutOfProspects mode={kind} user={session.user} />
 			)}
 			<DebuggerActions session={session} />
 		</>
