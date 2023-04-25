@@ -15,7 +15,7 @@ defmodule Flirtual.Encoder do
             |> Enum.map(fn property ->
               {property,
                quote do
-                 value.unquote(property)
+                 Access.get(value, unquote(property))
                end}
             end)
           )

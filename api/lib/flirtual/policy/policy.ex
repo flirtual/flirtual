@@ -25,6 +25,18 @@ defmodule Flirtual.Policy do
     not can?(conn, action, target, opts)
   end
 
+  def filter([], _, _), do: []
+
+  def filter(values, conn, action) when is_list(values) and is_atom(action) do
+    values |> Enum.filter(fn value -> can?(conn, action, value) end)
+  end
+
+  def reject([], _, _), do: []
+
+  def reject(values, conn, action) when is_list(values) and is_atom(action) do
+    values |> Enum.reject(fn value -> can?(conn, action, value) end)
+  end
+
   def transform(conn, target, opts \\ [])
 
   def transform(_, %{__reference_key__: _} = target, _), do: target

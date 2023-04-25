@@ -12,7 +12,6 @@ defmodule FlirtualWeb.MatchmakingController do
   def list_prospects(conn, %{"kind" => kind}) do
     with {:ok, prospect_ids} <-
            compute_prospects(conn.assigns[:session].user, to_atom(kind, :love)) do
-      IO.inspect(prospect_ids)
       conn |> json(prospect_ids)
     end
   end
@@ -57,25 +56,25 @@ defmodule FlirtualWeb.MatchmakingController do
 
   def list_matches(conn, %{"unrequited" => _}) do
     with items <-
-           LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id) do
+           LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id)
+           |> Policy.filter(conn, :read)
+           |> then(&Policy.transform(conn, &1)) do
       conn
       |> json(%{
-        count: Enum.group_by(items, & &1.kind) |> Map.map(fn {_, v} -> length(v) end),
-        items:
-          if(Subscription.active?(conn.assigns[:session].user.subscription),
-            do: items,
-            else: []
-          )
+        count: Enum.group_by(items, & &1.kind) |> Map.new(fn {k, v} -> {k, length(v)} end),
+        items: items
       })
     end
   end
 
   def list_matches(conn, _) do
     with items <-
-           LikesAndPasses.list_matches(profile_id: conn.assigns[:session].user_id) do
+           LikesAndPasses.list_matches(profile_id: conn.assigns[:session].user_id)
+           |> Policy.filter(conn, :read)
+           |> then(&Policy.transform(conn, &1)) do
       conn
       |> json(%{
-        count: Enum.group_by(items, & &1.kind) |> Map.map(fn {_, v} -> length(v) end),
+        count: Enum.group_by(items, & &1.kind) |> Map.new(fn {k, v} -> {k, length(v)} end),
         items: items
       })
     end

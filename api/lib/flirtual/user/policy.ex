@@ -132,9 +132,7 @@ defmodule Flirtual.User.Policy do
     :deactivated_at,
     :updated_at,
     :created_at,
-    :matched,
-    :relation,
-    :blocked
+    :relationship
   ]
 
   def transform(
@@ -211,7 +209,7 @@ defmodule Flirtual.User.Policy do
   def transform(:visible, _, user), do: User.visible?(user)
 
   def transform(
-        :relation,
+        :relationship,
         %Plug.Conn{
           assigns: %{
             session: session
@@ -219,29 +217,7 @@ defmodule Flirtual.User.Policy do
         },
         user
       ),
-      do: User.relation(session.user, user)
-
-  def transform(
-        :matched,
-        %Plug.Conn{
-          assigns: %{
-            session: session
-          }
-        },
-        user
-      ),
-      do: User.matched?(session.user, user)
-
-  def transform(
-        :blocked,
-        %Plug.Conn{
-          assigns: %{
-            session: session
-          }
-        },
-        user
-      ),
-      do: User.blocked?(session.user, user)
+      do: User.relationship(session.user, user)
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
   def transform(key, _, _) when key in @moderator_property_keys, do: nil

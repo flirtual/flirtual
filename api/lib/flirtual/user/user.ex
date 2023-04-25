@@ -9,6 +9,7 @@ defmodule Flirtual.User do
   import Ecto.Query
   import Flirtual.Utilities
 
+  alias Flirtual.User.Relationship
   alias Ecto.Changeset
 
   alias Flirtual.User.Profile.Image
@@ -36,9 +37,7 @@ defmodule Flirtual.User do
 
     field :password, :string, virtual: true, redact: true
     field :visible, :boolean, virtual: true
-    field :relation, :map, virtual: true
-    field :matched, :boolean, virtual: true
-    field :blocked, :boolean, virtual: true
+    field :relationship, :map, virtual: true
 
     field :tags, {:array, Ecto.Enum},
       values: @tags,
@@ -177,8 +176,8 @@ defmodule Flirtual.User do
     Block.exists?(user: user, target: target)
   end
 
-  def relation(%User{} = user, %User{} = target) do
-    LikesAndPasses.get(user: user, target: target)
+  def relationship(%User{} = user, %User{} = target) do
+    Relationship.get(user, target)
   end
 
   def matched?(%User{} = user, %User{} = target) do
@@ -451,7 +450,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :active_at,
       :tags,
       :visible,
-      :relation,
+      :relationship,
       :matched,
       :blocked,
       :subscription,
