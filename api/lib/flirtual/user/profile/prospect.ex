@@ -32,7 +32,8 @@ defmodule Flirtual.User.Profile.Prospect do
                })
              ),
              on_conflict: :replace_all,
-             placeholder: %{now: now}
+             conflict_target: [:profile_id, :target_id, :kind],
+             placeholders: %{now: now}
            ) do
       {:ok, count}
     end
