@@ -12,9 +12,7 @@ export type LikeAndPassItem = UuidModel &
 		targetId: string;
 		type: ProspectRespondType;
 		kind: ProspectKind;
-		match?: undefined;
-	} & {
-		match: true;
+		match?: boolean;
 		opposite?: LikeAndPassItem;
 	};
 
