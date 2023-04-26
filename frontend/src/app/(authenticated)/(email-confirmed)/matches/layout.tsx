@@ -3,11 +3,14 @@ import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { MobileBarNavigation } from "~/components/layout/navigation/mobile-bar";
 import { ModelCard } from "~/components/model-card";
+import { withSession } from "~/server-utilities";
 import { urls } from "~/urls";
 
 import { withConversations } from "./data";
+import { LikesYouButton } from "./likes-you-button";
 
 export default async function ConversationsLayout({ children }: { children: React.ReactNode }) {
+	const session = await withSession();
 	const conversations = await withConversations();
 
 	return (
@@ -27,6 +30,8 @@ export default async function ConversationsLayout({ children }: { children: Reac
 							will match! After you match, you can message each other on Flirtual and meet up in VR.
 						</p>
 						<ButtonLink href={urls.browse()}>Browse</ButtonLink>
+						{/* @ts-expect-error: Server Component */}
+						<LikesYouButton user={session.user} />
 					</ModelCard>
 				</div>
 			) : (

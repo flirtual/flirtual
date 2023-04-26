@@ -76,7 +76,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 					dangerouslySetInnerHTML={{
 						__html: `
 								const url - new URL(location);
-							  if (url.pathname === "/browse" && url.searchParams.get("kind") === "friend")
+							  if (url.pathname === "/homies")
 									document.documentElement.classList.add("friend-mode");
 							`.trim()
 					}}

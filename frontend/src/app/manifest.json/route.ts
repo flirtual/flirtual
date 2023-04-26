@@ -28,7 +28,7 @@ export async function GET() {
 		shortcuts: [
 			{
 				name: "Browse",
-				url: urls.browse("love"),
+				url: urls.browse(),
 				description: "Find new dates",
 				icons: [
 					{

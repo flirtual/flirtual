@@ -136,9 +136,12 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 									<span
 										suppressHydrationWarning
 										className="text-xs text-black-50 dark:text-white-50"
-									>{`${report.createdAt} (${ms(Date.now() - new Date(report.createdAt).getTime(), {
-										long: true
-									})} ago)`}</span>
+									>{`${new Date(report.createdAt).toLocaleString()} (${ms(
+										Date.now() - new Date(report.createdAt).getTime(),
+										{
+											long: true
+										}
+									)} ago)`}</span>
 									<div className="flex items-center justify-between gap-4 pr-3">
 										<span className="text-lg font-semibold">{report.reason.name}</span>
 										{!report.reviewedAt && (
@@ -163,7 +166,8 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 										)}
 									</div>
 								</div>
-								<div className="flex items-baseline gap-4">
+								<div className="flex items-baseline gap-1">
+									Reporter:
 									<InlineLink
 										href={
 											report.user

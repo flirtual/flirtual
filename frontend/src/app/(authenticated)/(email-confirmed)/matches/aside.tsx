@@ -2,27 +2,16 @@ import { twMerge } from "tailwind-merge";
 import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
-import { ButtonLink } from "~/components/button";
-import { HeartIcon } from "~/components/icons/gradient/heart";
-import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { thruServerCookies, withSession } from "~/server-utilities";
-import { api } from "~/api";
+import { withSession } from "~/server-utilities";
 import { urls } from "~/urls";
 
 import { withConversations } from "./data";
 import { ConversationListItem } from "./list-item";
+import { LikesYouButton } from "./likes-you-button";
 
 export async function ConversationAside({ activeConversation }: { activeConversation?: string }) {
 	const session = await withSession();
-
 	const conversations = await withConversations();
-
-	const likes = await api.matchmaking.listMatches({
-		...thruServerCookies(),
-		query: {
-			unrequited: true
-		}
-	});
 
 	const HeaderIcon = activeConversation ? ChevronLeftIcon : XMarkIcon;
 
@@ -43,27 +32,8 @@ export async function ConversationAside({ activeConversation }: { activeConversa
 					activeConversation && "hidden sm:flex"
 				)}
 			>
-				<ButtonLink
-					className="w-full"
-					href={session.user.subscription?.active ? urls.likes : urls.subscription}
-					size="sm"
-				>
-					See who likes you{" "}
-					<span className="whitespace-nowrap">
-						{likes.count.love && (
-							<>
-								({likes.count.love > 99 ? "99+" : likes.count.love}
-								<HeartIcon className="inline h-4" gradient={false} />)
-							</>
-						)}{" "}
-						{likes.count.friend && (
-							<>
-								({likes.count.friend > 99 ? "99+" : likes.count.friend}
-								<PeaceIcon className="inline h-4" gradient={false} />)
-							</>
-						)}
-					</span>
-				</ButtonLink>
+				{/* @ts-expect-error: Server Component */}
+				<LikesYouButton user={session.user} />
 				<div className="flex flex-col gap-4">
 					{conversations.map((conversation) => (
 						<ConversationListItem

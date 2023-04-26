@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { useEffect } from "react";
 
@@ -27,16 +27,12 @@ export const ClientScripts: React.FC = () => {
 		}
 	}, []);
 
-	const searchParams = useSearchParams();
 	const pathname = usePathname();
 
-	const kind = searchParams.get("kind");
-
 	useEffect(() => {
-		if (pathname === "/browse" && kind === "friend")
-			document.documentElement.classList.add("friend-mode");
+		if (pathname === "/homies") document.documentElement.classList.add("friend-mode");
 		return () => document.documentElement.classList.remove("friend-mode");
-	}, [kind, pathname]);
+	}, [pathname]);
 
 	useEffect(() => {
 		document.documentElement.classList.remove(...PreferenceThemes);
