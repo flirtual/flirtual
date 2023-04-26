@@ -62,18 +62,16 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 	return (
 		<html suppressHydrationWarning className={theme} lang="en">
 			<head>
-				{theme === "system" && (
-					<script
-						dangerouslySetInnerHTML={{
-							__html: `
-								${resolveTheme.toString()}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+							${resolveTheme.toString()}
 
-								document.documentElement.classList.remove("system");
-								document.documentElement.classList.add(resolveTheme());
-							`.trim()
-						}}
-					/>
-				)}
+							document.documentElement.classList.remove("${theme}");
+							document.documentElement.classList.add(resolveTheme("${theme}"));
+						`.trim()
+					}}
+				/>
 				<script
 					dangerouslySetInnerHTML={{
 						__html: `
