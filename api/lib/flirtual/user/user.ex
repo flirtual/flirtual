@@ -192,6 +192,11 @@ defmodule Flirtual.User do
       ),
       do: user
 
+  def with_relationship(%User{} = user, nil) do
+    user
+    |> Map.put(:relationship, nil)
+  end
+
   def with_relationship(%User{} = user, %User{} = target) do
     user
     |> Map.put(:relationship, relationship(target, user))
