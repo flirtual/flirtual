@@ -10,7 +10,7 @@ import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputCheckbox, InputLabel, InputText } from "~/components/inputs";
 import { urls } from "~/urls";
 
-export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
+export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 	const router = useRouter();
 
 	return (
@@ -25,7 +25,7 @@ export const LoginForm: React.FC<{ to?: string }> = ({ to }) => {
 			onSubmit={async (body) => {
 				await api.auth.login({ body });
 
-				router.push(to ?? urls.browse());
+				router.push(next ?? urls.browse());
 				router.refresh();
 			}}
 		>

@@ -166,3 +166,11 @@ export function groupBy<T extends ReadonlyArray<object>, K extends PropertyKey>(
 export function isUuid(value: string): boolean {
 	return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
+
+export function tryJsonParse<T>(value: string, fallbackValue: T): T {
+	try {
+		return JSON.parse(value) as T;
+	} catch {
+		return fallbackValue;
+	}
+}

@@ -21,6 +21,10 @@ export function toAbsoluteUrl(href: string) {
 	return new URL(href, siteOrigin);
 }
 
+export function toRelativeUrl(url: URL) {
+	return url.href.slice(url.origin.length);
+}
+
 export function urlEqual(a: URL, b: URL) {
 	return a.origin === b.origin && a.pathname === b.pathname && a.search === b.search;
 }
@@ -55,7 +59,7 @@ export const urls = {
 	// pages
 	default: "/",
 	register: "/register",
-	login: (to?: string) => url("/login", { to }),
+	login: (next?: string) => url("/login", { next }),
 	forgotPassword: "/forgot",
 	user: {
 		me: "/me",

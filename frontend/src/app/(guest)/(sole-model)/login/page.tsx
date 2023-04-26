@@ -10,14 +10,14 @@ export const metadata: Metadata = {
 
 export interface LoginPageProps {
 	searchParams?: {
-		to?: string;
+		next?: string;
 	};
 }
 
 export default function LoginPage(props: LoginPageProps) {
 	return (
 		<ModelCard className="sm:w-full sm:max-w-lg" title="Log in">
-			<LoginForm to={props.searchParams?.to} />
+			<LoginForm next={props.searchParams?.next} />
 		</ModelCard>
 	);
 }
