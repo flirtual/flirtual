@@ -72,7 +72,8 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (p
 				elementProps.className
 			)}
 			onClick={(event) => {
-				if (disabled) event.preventDefault();
+				if (disabled) return event.preventDefault();
+				if (elementProps.onClick) elementProps.onClick(event);
 			}}
 		>
 			{Icon && <Icon className="h-6" />}

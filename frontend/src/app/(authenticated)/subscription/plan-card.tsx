@@ -1,10 +1,10 @@
 import { twMerge } from "tailwind-merge";
 
-import { api } from "~/api";
-import { ButtonLink } from "~/components/button";
 import { withSession } from "~/server-utilities";
 
-interface PlanCardProps {
+import { PlanButtonLink } from "./plan-button.link";
+
+export interface PlanCardProps {
 	id: string;
 	duration: string;
 	price: number;
@@ -52,18 +52,7 @@ export async function PlanCard(props: PlanCardProps) {
 					</div>
 				</div>
 			)}
-			<ButtonLink
-				kind={highlight ? "primary" : "secondary"}
-				size="sm"
-				target="_self"
-				href={
-					activePlan
-						? api.subscription.manageUrl().toString()
-						: api.subscription.checkoutUrl(props.id).toString()
-				}
-			>
-				{activePlan ? "Manage" : "Subscribe"}
-			</ButtonLink>
+			<PlanButtonLink {...props} active={activePlan} />
 		</div>
 	);
 

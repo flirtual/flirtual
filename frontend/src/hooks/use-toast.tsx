@@ -71,7 +71,7 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 			)}
 			onClick={() => toast.remove()}
 		>
-			<Icon className="h-5 w-5" strokeWidth={2} />
+			<Icon className="h-5 w-5 shrink-0" strokeWidth={2} />
 			{toast.children}
 		</motion.button>
 	);

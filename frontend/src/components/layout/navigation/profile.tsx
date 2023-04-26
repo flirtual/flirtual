@@ -16,6 +16,7 @@ import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useLocation } from "~/hooks/use-location";
+import { useProgressiveWebApp } from "~/hooks/use-pwa";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
@@ -63,7 +64,9 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 
 	useClickOutside(elementRef, () => setVisible(false), visible);
 	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
+
 	const isDesktop = useScreenBreakpoint("md");
+	const isPwa = useProgressiveWebApp();
 
 	if (!session) return null;
 	const { user } = session;
@@ -116,7 +119,11 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 								Settings
 							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
-							<ProfileNavigationItem href={urls.resources.download}>Get app</ProfileNavigationItem>
+							{!isPwa && (
+								<ProfileNavigationItem href={urls.resources.download}>
+									Get app
+								</ProfileNavigationItem>
+							)}
 							{user.tags?.includes("moderator") && (
 								<>
 									<ProfileNavigationItemDivider Icon={ShieldExclamationIcon} />
