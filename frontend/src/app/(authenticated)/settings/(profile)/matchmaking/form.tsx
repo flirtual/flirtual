@@ -1,6 +1,7 @@
 "use client";
 
-import { FC, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FC, startTransition, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
@@ -38,6 +39,7 @@ export interface MatchmakingFormProps {
 
 export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 	const [session] = useSession();
+	const router = useRouter();
 	const toasts = useToast();
 
 	const [expanded, setExpanded] = useState(false);
@@ -110,6 +112,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 					})
 				]);
 
+				startTransition(() => router.refresh());
 				toasts.add({ type: "success", label: "Successfully updated matchmaking settings!" });
 			}}
 		>
