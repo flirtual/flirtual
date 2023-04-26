@@ -8,7 +8,13 @@ import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";
 import { Relationship } from "./relationship";
 
-export type UserTags = "admin" | "moderator" | "beta_tester" | "debugger" | "verified";
+export type UserTags =
+	| "admin"
+	| "moderator"
+	| "beta_tester"
+	| "debugger"
+	| "verified"
+	| "legacy_vrlfp";
 
 export type User = UuidModel &
 	Partial<DatedModel> & {

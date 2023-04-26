@@ -2,7 +2,7 @@ import { PropertiesHyphen, Property } from "csstype";
 import sanitizeHtml, { Attributes } from "sanitize-html";
 
 import { rgb } from "./colors";
-import { isInternalHref } from "./urls";
+import { isInternalHref, siteOrigin, toAbsoluteUrl } from "./urls";
 import { entries } from "./utilities";
 
 export function toStyleProperties(style: PropertiesHyphen, initial: string = ""): string {
@@ -79,6 +79,8 @@ export const editorColors = [
 const colorHexRegex = new RegExp(editorColors.join("|"), "i");
 const colorRgbRegex = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
 
+const allowedOrigins = [siteOrigin, "https://vrchat.com"];
+
 export function html(value: string) {
 	return sanitizeHtml(
 		value /* .replaceAll(/<p>(((\s)|(<br>))+)<\/p>|<h\d>(((\s)|(<br>))+)<\/h\d>/gi, "") */,
@@ -127,7 +129,11 @@ export function html(value: string) {
 					};
 				},
 				a: (tagName, attribs) => {
-					if (isInternalHref(attribs.href)) return { tagName, attribs };
+					const url = toAbsoluteUrl(attribs.href ?? "/");
+
+					if (isInternalHref(url)) return { tagName, attribs };
+					if (!allowedOrigins.includes(url.origin)) return { tagName: "span", attribs };
+
 					return { tagName, attribs: { ...attribs, target: "_blank", rel: "noopener" } };
 				}
 			}
