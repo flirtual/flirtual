@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FC, useCallback, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { api } from "~/api";
+import { ResponseChangesetError, api } from "~/api";
 import { ProspectKind, ProspectRespondType, RespondProspectBody } from "~/api/matchmaking";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
@@ -38,9 +38,15 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					setRespondHistory((respondHistory) => [...respondHistory, body]);
 					return router.refresh();
 				})
-				.catch(toasts.addError);
+				.catch((reason) => {
+					if (
+						!(reason instanceof ResponseChangesetError) &&
+						!Object.keys(reason.properties).includes("userId")
+					)
+						return toasts.addError(reason);
+				});
 		},
-		[userId, mode, router, toasts.addError]
+		[userId, mode, router, toasts]
 	);
 
 	const respondReverse = useCallback(async () => {
