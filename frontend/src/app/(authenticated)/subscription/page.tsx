@@ -18,9 +18,8 @@ export const metadata: Metadata = {
 };
 
 export default async function SubscriptionPage() {
-	const {
-		user: { subscription }
-	} = await withSession();
+	const { user } = await withSession();
+	const { subscription } = user;
 
 	return (
 		<SoleModelLayout containerProps={{ className: "gap-8" }} footer={{ desktopOnly: true }}>
@@ -113,11 +112,11 @@ export default async function SubscriptionPage() {
 							})}
 							{/* @ts-expect-error: Server Component */}
 							<PlanCard
-								{...{
-									id: "ccd77191-c9aa-4b01-859d-e6475a87e82e",
-									duration: "Lifetime",
-									price: 99.99
-								}}
+								discount={user.tags?.includes("legacy_vrlfp") ? 50 : undefined}
+								duration="Lifetime"
+								id="ccd77191-c9aa-4b01-859d-e6475a87e82e"
+								originalPrice={99.99}
+								price={user.tags?.includes("legacy_vrlfp") ? 49.99 : 99.99}
 							/>
 						</div>
 					)}
