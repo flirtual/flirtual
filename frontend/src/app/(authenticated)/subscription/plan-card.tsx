@@ -6,7 +6,7 @@ import { withSession } from "~/server-utilities";
 
 interface PlanCardProps {
 	id: string;
-	duration: number;
+	duration: string;
 	price: number;
 	originalPrice?: number;
 	discount?: number;
@@ -40,7 +40,7 @@ export async function PlanCard(props: PlanCardProps) {
 					{`$${originalPrice}`}
 				</span>
 				<span className="font-montserrat text-3xl font-semibold">${price}</span>
-				<span>every {duration === 1 ? "month" : `${duration} months`}</span>
+				<span>{duration}</span>
 			</div>
 			{discount && (
 				<div
@@ -68,7 +68,7 @@ export async function PlanCard(props: PlanCardProps) {
 	);
 
 	return highlight ? (
-		<div className={twMerge("rounded-xl bg-brand-gradient p-1 ", highlight && containerClassName)}>
+		<div className={twMerge("rounded-xl bg-brand-gradient p-1", highlight && containerClassName)}>
 			{inner}
 		</div>
 	) : (

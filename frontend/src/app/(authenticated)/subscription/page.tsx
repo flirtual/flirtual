@@ -8,6 +8,7 @@ import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 import { withSession } from "~/server-utilities";
+import { formatDate } from "~/date";
 
 import { SuccessMessage } from "./success-message";
 import { PlanCard } from "./plan-card";
@@ -15,14 +16,6 @@ import { PlanCard } from "./plan-card";
 export const metadata: Metadata = {
 	title: "Subscription"
 };
-
-function formatDate(date: string) {
-	return new Date(date).toLocaleDateString("en-US", {
-		month: "long",
-		day: "2-digit",
-		year: "numeric"
-	});
-}
 
 export default async function SubscriptionPage() {
 	const {
@@ -96,12 +89,12 @@ export default async function SubscriptionPage() {
 							{[
 								{
 									id: "cea4b769-ad78-4b8a-bbcc-da7685ec8eb8",
-									duration: 1,
+									duration: "every 1 month",
 									price: 9.99
 								},
 								{
 									id: "8026d1d7-dd88-46c2-866c-55d11447e0da",
-									duration: 3,
+									duration: "every 3 months",
 									price: 24.99,
 									originalPrice: 29.97,
 									discount: 17,
@@ -109,7 +102,7 @@ export default async function SubscriptionPage() {
 								},
 								{
 									id: "d494397e-8485-454c-ae9a-77d74c7b53b3",
-									duration: 6,
+									duration: "every 6 months",
 									originalPrice: 59.94,
 									price: 39.99,
 									discount: 33
@@ -118,12 +111,19 @@ export default async function SubscriptionPage() {
 								// @ts-expect-error: Server Component
 								return <PlanCard {...item} key={item.id} />;
 							})}
+							{/* @ts-expect-error: Server Component */}
+							<PlanCard
+								{...{
+									id: "ccd77191-c9aa-4b01-859d-e6475a87e82e",
+									duration: "Lifetime",
+									price: 99.99
+								}}
+							/>
 						</div>
 					)}
 				</div>
-
 				<p>
-					Flirtual is still in its early days: we have 47000 users and growing, and we&apos;re
+					Flirtual is still in its early days: we have 50000 users and growing, and we&apos;re
 					always fixing and improving the platform. Offering Premium helps us pay for development
 					and cover hosting costs. Thank you for supporting us!
 				</p>
