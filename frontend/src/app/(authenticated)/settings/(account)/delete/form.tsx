@@ -12,6 +12,8 @@ import { urls } from "~/urls";
 import { sortBy } from "~/utilities";
 import { InputTextArea } from "~/components/inputs/textarea";
 import { AttributeCollection } from "~/api/attributes";
+import { HeaderSupportButton } from "~/components/layout/support-button";
+import { InlineLink } from "~/components/inline-link";
 
 export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"> }> = ({
 	deleteReasons
@@ -32,7 +34,7 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 				router.refresh();
 			}}
 		>
-			{({ FormField }) => (
+			{({ FormField, fields }) => (
 				<>
 					<span>
 						We&apos;re sorry to see you go. Would you mind telling us why you&apos;re deleting your
@@ -52,6 +54,19 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 										})
 									)}
 								/>
+								{field.props.value === "d1c0d422-f2cc-48ea-8303-a816a95ce979" ? (
+									<p>
+										Taking a break? You can{" "}
+										<InlineLink href={urls.settings.deactivateAccount}>
+											temporarily deactivate your account
+										</InlineLink>{" "}
+										instead! No one can see your profile while it&apos;s deactivated.
+									</p>
+								) : field.props.value === "ea79aa62-9259-4704-ba72-29f63b369e91" ? (
+									<p>
+										Need help? <HeaderSupportButton />.
+									</p>
+								) : null}
 							</>
 						)}
 					</FormField>
@@ -61,8 +76,12 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 								<InputLabel>Comment</InputLabel>
 								<InputTextArea
 									{...field.props}
-									placeholder="If you'd like to share more information, please leave us a comment here!"
 									rows={4}
+									placeholder={
+										fields.reasonId.props.value === "0a4a8c58-f64b-4d94-87e6-f2d92dcd9086"
+											? "We're always looking for success stories! Would you like to share one? By doing so, you agree that we may share your story."
+											: "If you'd like to share more information, please leave us a comment here!"
+									}
 								/>
 							</>
 						)}
