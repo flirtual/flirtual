@@ -4,9 +4,7 @@ import { withAttributeList } from "~/api/attributes-server";
 import { Onboarding1Form } from "./form";
 
 export default async function Onboarding1Page() {
-	const genders = (await withAttributeList("gender"))
-		.filter((gender) => gender.metadata?.simple)
-		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
+	const genders = (await withAttributeList("gender")).filter((gender) => gender.metadata?.simple);
 
 	return (
 		<ModelCard className="sm:max-w-2xl" title="Matchmaking">

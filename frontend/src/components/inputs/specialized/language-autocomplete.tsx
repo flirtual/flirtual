@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useLanguage } from "~/hooks/use-language";
 
 import {
 	InputAutocomplete,
@@ -14,6 +15,8 @@ export const InputLanguageAutocomplete: React.FC<Omit<InputAutocompleteProps, "o
 	props
 ) => {
 	const languages = useAttributeList("language");
+	const systemLanguage = useLanguage();
+
 	const options = useMemo<Array<InputAutocompleteOption>>(
 		() =>
 			languages
@@ -22,10 +25,11 @@ export const InputLanguageAutocomplete: React.FC<Omit<InputAutocompleteProps, "o
 					label: name
 				}))
 				.sort((a, b) => {
+					if (a.key === systemLanguage) return -1;
 					if (a.label > b.label) return 1;
-					return -1;
+					return 0;
 				}),
-		[languages]
+		[languages, systemLanguage]
 	);
 
 	return <InputAutocomplete placeholder="Select languages..." {...props} options={options} />;

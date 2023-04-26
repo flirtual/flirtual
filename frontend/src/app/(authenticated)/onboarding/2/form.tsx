@@ -136,9 +136,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					</FormField>
 					<FormField name="gender">
 						{(field) => {
-							const simpleGenders = genders
-								.filter((gender) => gender.metadata?.simple)
-								.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
+							const simpleGenders = genders.filter((gender) => gender.metadata?.simple);
 							const simpleGenderIds = simpleGenders.map((gender) => gender.id);
 
 							const fallbackGender = genders.find((gender) => gender.metadata?.fallback);
@@ -161,7 +159,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 										<InputAutocomplete
 											{...field.props}
 											limit={4}
-											placeholder="Select your genders..."
+											placeholder="Select your genders... (optional)"
 											options={genders.map((gender) => ({
 												key: gender.id,
 												label: gender.name,

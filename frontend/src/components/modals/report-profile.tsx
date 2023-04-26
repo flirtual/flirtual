@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 import { displayName, User } from "~/api/user";
 import { api } from "~/api";
-import { sortBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { DrawerOrModal } from "~/components/drawer-or-modal";
 import { Form, FormButton } from "~/components/forms";
@@ -54,12 +53,10 @@ const ReportProfileModelForm: FC<ReportProfileModelFormProps> = ({ user, onVisib
 							<>
 								<InputSelect
 									{...field.props}
-									options={sortBy(reportReasons, ({ metadata }) => metadata.order).map(
-										(attribute) => ({
-											key: attribute.id,
-											label: attribute.name
-										})
-									)}
+									options={reportReasons.map((attribute) => ({
+										key: attribute.id,
+										label: attribute.name
+									}))}
 								/>
 							</>
 						)}

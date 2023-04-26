@@ -9,7 +9,6 @@ import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { InputLabel, InputSelect, InputText } from "~/components/inputs";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
-import { sortBy } from "~/utilities";
 import { InputTextArea } from "~/components/inputs/textarea";
 import { AttributeCollection } from "~/api/attributes";
 import { HeaderSupportButton } from "~/components/layout/support-button";
@@ -47,12 +46,10 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 								<InputSelect
 									{...field.props}
 									placeholder="Select a reason"
-									options={sortBy(deleteReasons, ({ metadata }) => metadata.order).map(
-										(attribute) => ({
-											key: attribute.id,
-											label: attribute.name
-										})
-									)}
+									options={deleteReasons.map((attribute) => ({
+										key: attribute.id,
+										label: attribute.name
+									}))}
 								/>
 								{field.props.value === "d1c0d422-f2cc-48ea-8303-a816a95ce979" ? (
 									<p>

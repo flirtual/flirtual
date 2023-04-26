@@ -8,9 +8,7 @@ export default async function Onboarding2Page() {
 	const interests = await withAttributeList("interest");
 	const platforms = await withAttributeList("platform");
 	const sexualities = await withAttributeList("sexuality");
-	const genders = (await withAttributeList("gender")).sort((a, b) =>
-		(a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1
-	);
+	const genders = await withAttributeList("gender");
 
 	return (
 		<ModelCard className="shrink-0 sm:max-w-2xl" title="Info & tags">

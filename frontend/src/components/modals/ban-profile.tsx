@@ -5,7 +5,6 @@ import { api } from "~/api";
 import { displayName, User } from "~/api/user";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useToast } from "~/hooks/use-toast";
-import { sortBy } from "~/utilities";
 
 import { DrawerOrModal } from "../drawer-or-modal";
 import { Form, FormButton } from "../forms";
@@ -18,7 +17,7 @@ export interface BanProfileModalFormProps {
 
 export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({ user, onVisibilityChange }) => {
 	const toasts = useToast();
-	const reasons = sortBy(useAttributeList("ban-reason"), ({ metadata }) => metadata.order);
+	const reasons = useAttributeList("ban-reason");
 
 	return (
 		<Form

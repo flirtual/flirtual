@@ -6,7 +6,7 @@ import { api } from "~/api";
 import { urls } from "~/urls";
 import { User } from "~/api/user";
 
-export async function LikesYouButton(user: User) {
+export async function LikesYouButton({ user }: { user: User }) {
 	const likes = await api.matchmaking.listMatches({
 		...thruServerCookies(),
 		query: {

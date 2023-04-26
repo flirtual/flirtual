@@ -12,16 +12,17 @@ export interface GenderPillsProps {
 export async function GenderPills({ simple = false, attributes }: GenderPillsProps) {
 	const genders = await withAttributeList("gender");
 
+	const profileGenders = attributes.map(({ id }) => findBy(genders, "id", id));
+	const showFallbackGender = simple
+		? true
+		: profileGenders.every((gender) => !!gender?.metadata?.simple);
+
 	return (
 		<>
-			{attributes
-				.map(({ id }) => findBy(genders, "id", id))
-				.filter((gender) => (simple ? gender?.metadata?.simple : !gender?.metadata?.fallback))
-				.sort((a, b) => {
-					if (a?.metadata?.order || b?.metadata?.order)
-						return (a?.metadata?.order ?? 0) > (b?.metadata?.order ?? 0) ? 1 : -1;
-					return 0;
-				})
+			{profileGenders
+				.filter((gender) =>
+					gender?.metadata?.fallback ? showFallbackGender : simple ? gender?.metadata?.simple : true
+				)
 				.map(
 					(gender) =>
 						gender && (

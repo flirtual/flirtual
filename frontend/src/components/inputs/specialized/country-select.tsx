@@ -5,7 +5,6 @@ import { useMemo, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useAttributeList } from "~/hooks/use-attribute-list";
-import { sortBy } from "~/utilities";
 
 import { OptionItemProps } from "../option-window";
 import { InputSelect, InputSelectProps } from "../select";
@@ -39,6 +38,7 @@ const CountryOptionItem: React.FC<OptionItemProps<string | null>> = ({ option, e
 			)}
 		>
 			<div className="ml-4 aspect-[4/3] h-fit w-7 shrink-0 overflow-hidden rounded-md bg-black-60">
+				{/* eslint-disable-next-line @next/next/no-img-element */}
 				{viewed && <img className="h-full w-full" src={country?.metadata.flagUrl} />}
 			</div>
 			<span className="select-none px-4 py-2 text-left font-nunito text-lg">{option.label}</span>
@@ -57,13 +57,16 @@ export function InputCountrySelect(props: InputCountrySelectProps) {
 			OptionListItem={CountryOptionItem}
 			options={useMemo(
 				() =>
-					sortBy(
-						countries.map(({ id, name }) => ({
+					countries
+						.map(({ id, name }) => ({
 							key: id,
 							label: name
-						})),
-						"label"
-					),
+						}))
+						.sort((a, b) => {
+							if (a.key === "us") return -1;
+							if (a.label > b.label) return 1;
+							return 0;
+						}),
 				[countries]
 			)}
 		/>

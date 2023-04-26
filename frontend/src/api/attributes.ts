@@ -6,7 +6,6 @@ export type KinkAttributeKind = "dominant" | "submissive" | null;
 export interface AttributeMetadata {
 	gender:
 		| {
-				order?: number;
 				simple?: boolean;
 				fallback?: boolean;
 				plural?: string;
@@ -26,16 +25,13 @@ export interface AttributeMetadata {
 		pair: string;
 	};
 	"report-reason": {
-		order: number;
 		fallback?: boolean;
 	};
 	"ban-reason": {
-		order: number;
 		details: string;
 		fallback?: boolean;
 	};
 	"delete-reason": {
-		order: number;
 		fallback?: boolean;
 	};
 }
@@ -45,6 +41,7 @@ export type AttributeType = keyof AttributeMetadata;
 export type Attribute<T = unknown> = UuidModel & {
 	type: keyof AttributeMetadata;
 	name: string;
+	order?: number;
 	metadata: T;
 };
 

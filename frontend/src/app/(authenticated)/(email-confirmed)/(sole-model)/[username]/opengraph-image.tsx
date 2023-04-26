@@ -68,11 +68,6 @@ export default async function og({ params }: ProfilePageProps) {
 									filterBy(attributes, "type", "gender") as unknown as AttributeCollection<"gender">
 								)
 									.filter((gender) => gender?.metadata?.simple)
-									.sort((a, b) => {
-										if (a?.metadata?.order || b?.metadata?.order)
-											return (a?.metadata?.order ?? 0) > (b?.metadata?.order ?? 0) ? 1 : -1;
-										return 0;
-									})
 									.map((attribute) => (
 										<Pill key={attribute.id} name={attribute.name} />
 									))}

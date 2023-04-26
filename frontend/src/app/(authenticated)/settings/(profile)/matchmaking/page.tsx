@@ -10,9 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsProfileMatchmakingPage() {
-	const genders = (await withAttributeList("gender"))
-		.filter((gender) => gender.metadata?.simple)
-		.sort((a, b) => ((a.metadata?.order ?? 0) > (b.metadata?.order ?? 0) ? 1 : -1));
+	const genders = (await withAttributeList("gender")).filter((gender) => gender.metadata?.simple);
 
 	return (
 		<ModelCard className="sm:max-w-2xl" title="Matchmaking">

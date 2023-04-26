@@ -140,7 +140,7 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 										<InputAutocomplete
 											{...field.props}
 											limit={4}
-											placeholder="Select your genders..."
+											placeholder="Select your genders... (optional)"
 											options={genders.map((gender) => ({
 												key: gender.id,
 												label: gender.name,
