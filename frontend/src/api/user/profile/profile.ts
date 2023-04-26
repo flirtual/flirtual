@@ -43,6 +43,8 @@ export type Profile = Partial<UpdatedAtModel> & {
 	preferences?: ProfilePreferences;
 	customWeights?: ProfileCustomWeights;
 	images: Array<ProfileImage>;
+	resetLoveAt?: string;
+	resetFriendAt?: string;
 };
 
 export const ProfileAttributes = [
