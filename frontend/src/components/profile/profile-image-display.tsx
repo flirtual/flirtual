@@ -133,12 +133,11 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 						key={image.id}
 						priority={imageIdx === 0}
 						className={twMerge(
-							"transition-opacity duration-500",
-							image.id === imageId ? "opacity-100" : "absolute h-full w-full opacity-0"
+							"h-full w-full transition-opacity duration-500",
+							image.id === imageId ? "opacity-100" : "absolute opacity-0"
 						)}
 					/>
 				))}
-
 				{images.length > 1 && (
 					<div className="absolute flex h-full w-full">
 						<button
