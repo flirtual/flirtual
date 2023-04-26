@@ -128,7 +128,11 @@ defmodule Flirtual.Profiles do
       if value === :none do
         nil
       else
-        value || default
+        if is_nil(value) do
+          default
+        else
+          value
+        end
       end
     end
 
@@ -169,7 +173,8 @@ defmodule Flirtual.Profiles do
   def update(%Profile{} = profile, attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
-             Update.apply(attrs, context: %{required: Keyword.get(options, :required, [])}),
+             Update.apply(attrs, context: %{required: Keyword.get(options, :required, [])})
+             |> IO.inspect(),
            {:ok, profile} <-
              Update.transform(profile, attrs |> Map.from_struct()) |> Repo.update(),
            {:ok, _} <- ChangeQueue.add(profile.user_id) do
