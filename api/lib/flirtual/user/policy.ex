@@ -130,7 +130,6 @@ defmodule Flirtual.User.Policy do
       ) do
     target
     |> User.with_relationship(user)
-    |> IO.inspect()
   end
 
   @own_property_keys [
