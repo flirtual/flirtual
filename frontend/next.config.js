@@ -17,6 +17,14 @@ const nextConfig = {
 			transform: "@heroicons/react/24/solid/{{member}}"
 		}
 	},
+	async rewrites() {
+		return [
+			{
+				source: "/homies",
+				destination: "/browse?kind=friend"
+			}
+		];
+	},
 	async redirects() {
 		return [
 			{

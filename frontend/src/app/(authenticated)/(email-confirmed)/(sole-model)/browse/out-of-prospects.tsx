@@ -80,7 +80,7 @@ export const OutOfProspects: React.FC<OutOfProspectsProps> = ({ user, mode }) =>
 							<ButtonLink href={urls.subscription} size="sm">
 								Premium
 							</ButtonLink>
-							<ButtonLink href={urls.browse("love")} size="sm">
+							<ButtonLink href={urls.browse()} size="sm">
 								Leave Homie Mode
 							</ButtonLink>
 						</div>
@@ -95,7 +95,7 @@ export const OutOfProspects: React.FC<OutOfProspectsProps> = ({ user, mode }) =>
 							</p>
 						</div>
 						<div className="flex gap-4">
-							<ButtonLink href={urls.browse("love")} size="sm">
+							<ButtonLink href={urls.browse()} size="sm">
 								Leave Homie Mode
 							</ButtonLink>
 						</div>
