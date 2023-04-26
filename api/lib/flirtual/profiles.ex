@@ -173,8 +173,7 @@ defmodule Flirtual.Profiles do
   def update(%Profile{} = profile, attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
-             Update.apply(attrs, context: %{required: Keyword.get(options, :required, [])})
-             |> IO.inspect(),
+             Update.apply(attrs, context: %{required: Keyword.get(options, :required, [])}),
            {:ok, profile} <-
              Update.transform(profile, attrs |> Map.from_struct()) |> Repo.update(),
            {:ok, _} <- ChangeQueue.add(profile.user_id) do

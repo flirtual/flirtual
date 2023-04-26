@@ -120,6 +120,19 @@ defmodule Flirtual.User.Policy do
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
+  def transform(
+        %Plug.Conn{
+          assigns: %{
+            user: user
+          }
+        },
+        target
+      ) do
+    target
+    |> User.with_relationship(user)
+    |> IO.inspect()
+  end
+
   @own_property_keys [
     :email,
     :language,
@@ -131,9 +144,23 @@ defmodule Flirtual.User.Policy do
     :email_confirmed_at,
     :deactivated_at,
     :updated_at,
-    :created_at,
-    :relationship
+    :created_at
   ]
+
+  def transform(
+        :relationship,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %User{
+          id: user_id
+        }
+      ),
+      do: nil
 
   def transform(
         key,
@@ -179,19 +206,6 @@ defmodule Flirtual.User.Policy do
     |> DateTime.new!(Time.new!(0, 0, 0))
   end
 
-  def transform(
-        :connections,
-        _,
-        %User{
-          preferences: %User.Preferences{
-            privacy: %User.Preferences.Privacy{
-              connections: :everyone
-            }
-          }
-        } = user
-      ),
-      do: user.connections
-
   @day_in_seconds 86400
 
   # Truncate born at to year, to hide user's exact birthday.
@@ -207,17 +221,6 @@ defmodule Flirtual.User.Policy do
   end
 
   def transform(:visible, _, user), do: User.visible?(user)
-
-  def transform(
-        :relationship,
-        %Plug.Conn{
-          assigns: %{
-            session: session
-          }
-        },
-        user
-      ),
-      do: User.relationship(session.user, user)
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
   def transform(key, _, _) when key in @moderator_property_keys, do: nil

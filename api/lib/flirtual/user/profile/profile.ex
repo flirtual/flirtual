@@ -52,6 +52,21 @@ defmodule Flirtual.User.Profile do
     |> Enum.group_by(& &1.metadata["strength"])
   end
 
+  def fuzz_personality_key(profile, key) do
+    if(not is_nil(profile[key]) and profile[key] !== 0,
+      do: if(profile[key] > 0, do: 1, else: -1),
+      else: nil
+    )
+  end
+
+  # Fuzz to prevent inferring original personality question answers.
+  def fuzz_personality(profile) do
+    profile
+    |> Map.put(:openness, fuzz_personality_key(profile, :openness))
+    |> Map.put(:conscientiousness, fuzz_personality_key(profile, :conscientiousness))
+    |> Map.put(:agreeableness, fuzz_personality_key(profile, :agreeableness))
+  end
+
   schema "profiles" do
     belongs_to :user, User, primary_key: true
 

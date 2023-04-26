@@ -32,15 +32,15 @@ defmodule Flirtual.User.Profile.Policy do
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
+  @personality_keys [:openness, :conscientiousness, :agreeableness]
+  @connection_keys [:vrchat, :discord]
+
   @own_property_keys [
-    :country,
-    :openness,
-    :conscientiousness,
-    :agreeableness,
-    :preferences,
-    :custom_weights,
-    :updated_at
-  ]
+                       :country,
+                       :preferences,
+                       :custom_weights,
+                       :updated_at
+                     ] ++ @personality_keys ++ @connection_keys
 
   def transform(
         key,
@@ -75,6 +75,59 @@ defmodule Flirtual.User.Profile.Policy do
       ),
       do: profile.country
 
+  def transform(
+        :country,
+        _,
+        %Profile{
+          user: %User{
+            relationship: %User.Relationship{
+              matched: true
+            },
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                country: :matches
+              }
+            }
+          }
+        } = profile
+      ),
+      do: profile.country
+
+  def transform(
+        key,
+        _,
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                country: :everyone
+              }
+            }
+          }
+        } = profile
+      )
+      when key in @connection_keys,
+      do: profile[key]
+
+  def transform(
+        key,
+        _,
+        %Profile{
+          user: %User{
+            relationship: %User.Relationship{
+              matched: true
+            },
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                country: :matches
+              }
+            }
+          }
+        } = profile
+      )
+      when key in @connection_keys,
+      do: profile[key]
+
   # Any user can view this profile's personality trait
   # if their personality privacy setting is set to everyone.
   def transform(
@@ -90,12 +143,28 @@ defmodule Flirtual.User.Profile.Policy do
           }
         } = profile
       )
-      when key in [:openness, :conscientiousness, :agreeableness] do
-    # Fuzz to prevent inferring original personality question answers.
-    if(not is_nil(profile[key]) and profile[key] !== 0,
-      do: if(profile[key] > 0, do: 1, else: -1),
-      else: nil
-    )
+      when key in @personality_keys do
+    Profile.fuzz_personality_key(profile, key)
+  end
+
+  def transform(
+        key,
+        _,
+        %Profile{
+          user: %User{
+            relationship: %User.Relationship{
+              matched: true
+            },
+            preferences: %User.Preferences{
+              privacy: %User.Preferences.Privacy{
+                personality: :matches
+              }
+            }
+          }
+        } = profile
+      )
+      when key in @personality_keys do
+    Profile.fuzz_personality_key(profile, key)
   end
 
   def transform(

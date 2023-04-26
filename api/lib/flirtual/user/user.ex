@@ -180,6 +180,23 @@ defmodule Flirtual.User do
     Relationship.get(user, target)
   end
 
+  def with_relationship(
+        %User{
+          relationship: %Relationship{
+            user_id: user_id
+          }
+        } = user,
+        %User{
+          id: user_id
+        }
+      ),
+      do: user
+
+  def with_relationship(%User{} = user, %User{} = target) do
+    user
+    |> Map.put(:relationship, relationship(target, user))
+  end
+
   def matched?(%User{} = user, %User{} = target) do
     LikesAndPasses.match_exists?(user: user, target: target)
   end

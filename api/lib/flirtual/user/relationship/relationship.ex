@@ -7,6 +7,8 @@ defmodule Flirtual.User.Relationship do
   alias Flirtual.User
 
   embedded_schema do
+    field :user_id, :binary_id
+
     field :blocked, :boolean
     field :matched, :boolean
     field :type, :string
@@ -28,6 +30,7 @@ defmodule Flirtual.User.Relationship do
     matched = LikesAndPasses.matched?(lap, opposite_lap)
 
     %__MODULE__{
+      user_id: user.id,
       blocked: User.blocked?(user, target),
       type: lap[:type],
       matched: matched,
