@@ -44,6 +44,16 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
   def matched?(_, _), do: false
 
+  def get(user: %User{id: user_id}, target: %User{id: target_id}, type: type),
+    do: get(user_id: user_id, target_id: target_id, type: type)
+
+  def get(user_id: user_id, target_id: target_id, type: type) do
+    LikesAndPasses
+    |> where(profile_id: ^user_id, target_id: ^target_id, type: ^type)
+    |> preload(:opposite)
+    |> Repo.one()
+  end
+
   def get(user: %User{id: user_id}, target: %User{id: target_id}) do
     LikesAndPasses
     |> where(profile_id: ^user_id, target_id: ^target_id)

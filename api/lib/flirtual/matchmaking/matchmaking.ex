@@ -204,13 +204,7 @@ defmodule Flirtual.Matchmaking do
              |> change(Map.put(%{}, reset_count_field, reset_count + 1))
              |> Repo.update(),
            opposite_item <-
-             from(LikesAndPasses,
-               where: [
-                 profile_id: ^item.target_id,
-                 target_id: ^item.profile_id
-               ]
-             )
-             |> Repo.one(),
+             LikesAndPasses.get(user_id: item.target_id, target_id: item.profile_id, type: type),
            {:ok, opposite_item} <-
              if(is_nil(opposite_item),
                do: {:ok, nil},
