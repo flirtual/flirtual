@@ -18,6 +18,7 @@ defmodule Flirtual.Attribute do
   schema "attributes" do
     field :type, :string
     field :name, :string
+    field :order, :integer
     field :metadata, :map
 
     timestamps(inserted_at: false)
@@ -95,12 +96,14 @@ defmodule Flirtual.Attribute do
   def list(type: attribute_type) when is_binary(attribute_type) do
     Attribute
     |> where(type: ^attribute_type)
+    |> order_by([:order, :name])
     |> Repo.all()
   end
 
   def list(attribute_ids) when is_list(attribute_ids) do
     Attribute
     |> where([attribute], attribute.id in ^attribute_ids)
+    |> order_by([:order, :name])
     |> Repo.all()
   end
 
@@ -209,6 +212,7 @@ defimpl Jason.Encoder, for: Flirtual.Attribute do
       :id,
       :type,
       :name,
+      :order,
       :metadata
     ]
 end
