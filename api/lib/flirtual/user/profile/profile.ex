@@ -184,6 +184,8 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :custom_interests,
       :preferences,
       :custom_weights,
+      :reset_love_at,
+      :reset_friend_at,
       :vrchat,
       :discord,
       :images,

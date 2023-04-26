@@ -39,6 +39,8 @@ defmodule Flirtual.User.Profile.Policy do
                        :country,
                        :preferences,
                        :custom_weights,
+                       :reset_love_at,
+                       :reset_friend_at,
                        :updated_at
                      ] ++ @personality_keys ++ @connection_keys
 
