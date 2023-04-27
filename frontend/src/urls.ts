@@ -67,7 +67,7 @@ export const urls = {
 	},
 	profile: (user?: User | string) =>
 		`/${user ? (typeof user === "string" ? user : user.username) : "me"}`,
-	browse: (kind?: ProspectKind) => (kind === "friend" ? url("/homies") : url("/browse")),
+	browse: (kind?: ProspectKind) => url("/browse", { kind }),
 	conversations: {
 		list: "/matches",
 		with: (userId: string) => `/matches/${userId}`
