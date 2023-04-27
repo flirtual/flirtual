@@ -9,7 +9,7 @@ defmodule Flirtual.AttributeOrderWorker do
 
   def handle_info(:process, state) do
     schedule()
-    {:ok, _} = Profile.Attributes.update_order("hobby", :popularity)
+    {:ok, _} = Profile.Attributes.update_order("game", :popularity)
     {:noreply, state}
   end
 
