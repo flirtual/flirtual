@@ -81,7 +81,7 @@ defmodule Flirtual.User.Profile do
     Enum.map(@personality_questions, &field(&1, :boolean))
     field :serious, :boolean
     field :new, :boolean
-    field :languages, {:array, Ecto.Enum}, values: Languages.list(:iso_639_1)
+    field :languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47)
     field :custom_interests, {:array, :string}
     field :reset_love_at, :utc_datetime
     field :reset_love_count, :integer

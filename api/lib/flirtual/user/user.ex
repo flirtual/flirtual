@@ -213,7 +213,7 @@ defmodule Flirtual.User do
       :born_at
     ])
     |> validate_required(Keyword.get(options, :required, []))
-    |> validate_inclusion(:language, Languages.list(:iso_639_1),
+    |> validate_inclusion(:language, Languages.list(:bcp_47),
       message: "is an unrecognized language"
     )
     |> validate_change(:born_at, fn _, born_at ->

@@ -84,7 +84,7 @@ defmodule Flirtual.Profiles do
       field :country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)]
       field :serious, :boolean
       field :new, :boolean
-      field :languages, {:array, Ecto.Enum}, values: Languages.list(:iso_639_1)
+      field :languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47)
       field :custom_interests, {:array, :string}
 
       @attribute_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)

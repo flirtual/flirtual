@@ -85,7 +85,7 @@ defmodule Flirtual.Attribute do
     |> Enum.map(fn language ->
       %Attribute{
         id:
-          language[:iso_639_1]
+          language[:bcp_47]
           |> Atom.to_string(),
         type: "language",
         name: language[:name]
