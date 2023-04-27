@@ -21,7 +21,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 	const toasts = useToast();
 	const router = useRouter();
 
-	const [respondHistory, setRespondHistory] = useState<Array<RespondProspectBody>>([]);
+	const [lastProfile, setLastProfile] = useState<RespondProspectBody | null>(null);
 
 	const respond = useCallback(
 		async (type: ProspectRespondType, kind: ProspectKind) => {
@@ -35,7 +35,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 			await api.matchmaking
 				.respondProspect({ body })
 				.then(() => {
-					setRespondHistory((respondHistory) => [...respondHistory, body]);
+					setLastProfile(body);
 					return router.refresh();
 				})
 				.catch((reason) => {
@@ -50,20 +50,18 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 	);
 
 	const respondReverse = useCallback(async () => {
-		setRespondHistory((respondHistory) => {
-			const lastRespond = respondHistory.pop();
-			if (!lastRespond) return [];
+		if (!lastProfile) return;
+		const { userId, kind } = lastProfile;
 
-			void api.matchmaking
-				.reverseRespondProspect({
-					body: lastRespond
-				})
-				.then(() => router.refresh())
-				.catch(toasts.addError);
+		void api.matchmaking
+			.reverseRespondProspect({
+				body: { userId, kind }
+			})
+			.then(() => router.refresh())
+			.catch(toasts.addError);
 
-			return respondHistory;
-		});
-	}, [router, toasts.addError]);
+		setLastProfile(null);
+	}, [router, lastProfile, toasts.addError]);
 
 	return (
 		<div className="h-32 w-full dark:bg-black-70 sm:h-0">
@@ -72,7 +70,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					<Tooltip value="Undo previous">
 						<button
 							className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-50"
-							disabled={respondHistory.length === 0}
+							disabled={!lastProfile}
 							type="button"
 							onClick={respondReverse}
 						>
