@@ -1,9 +1,12 @@
 "use client";
 
 import { SparklesIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/navigation";
 
 import { User, displayName } from "~/api/user";
 import { urls } from "~/urls";
+import { api } from "~/api";
+import { useToast } from "~/hooks/use-toast";
 
 import { Button, ButtonLink } from "../button";
 import { VRChatIcon } from "../icons/brand/vrchat";
@@ -12,6 +15,10 @@ import { DiscordIcon } from "../icons";
 
 export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 	const { relationship } = user;
+
+	const toasts = useToast();
+	const router = useRouter();
+
 	if (!relationship) return null;
 
 	if (relationship.matched)
@@ -21,7 +28,25 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 					<ButtonLink className="w-full" href={urls.conversations.with(user.id)} size="sm">
 						Message
 					</ButtonLink>
-					<Button className="w-fit" kind="secondary" size="sm" type="button">
+					<Button
+						className="w-fit"
+						kind="secondary"
+						size="sm"
+						type="button"
+						onClick={() => {
+							void api.matchmaking
+								.unmatch({ query: { userId: user.id } })
+								.then(() => {
+									toasts.add({
+										type: "success",
+										label: `Successfully unmatched ${displayName(user)}`
+									});
+
+									return router.refresh();
+								})
+								.catch(toasts.addError);
+						}}
+					>
 						Unmatch
 					</Button>
 				</div>

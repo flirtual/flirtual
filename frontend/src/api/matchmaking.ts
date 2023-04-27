@@ -33,8 +33,19 @@ export async function respondProspect(options: NarrowFetchOptions<RespondProspec
 	return fetch("post", `prospects/respond`, options);
 }
 
-export async function reverseRespondProspect(options: NarrowFetchOptions<RespondProspectBody>) {
+export interface ReverseRespondProspectBody {
+	kind: ProspectKind;
+	userId: string;
+}
+
+export async function reverseRespondProspect(
+	options: NarrowFetchOptions<ReverseRespondProspectBody>
+) {
 	return fetch("delete", `prospects/respond`, options);
+}
+
+export async function unmatch(options: NarrowFetchOptions<undefined, { userId: string }>) {
+	return fetch("delete", `matches`, options);
 }
 
 export async function resetProspect(options: NarrowFetchOptions = {}) {
