@@ -94,7 +94,7 @@ defmodule Flirtual.User.Profile do
     has_one :custom_weights, CustomWeights, references: :user_id, foreign_key: :profile_id
 
     many_to_many :attributes, Attribute,
-      join_through: "profile_attributes",
+      join_through: Flirtual.User.Profile.Attributes,
       join_keys: [profile_id: :user_id, attribute_id: :id],
       on_replace: :delete
 

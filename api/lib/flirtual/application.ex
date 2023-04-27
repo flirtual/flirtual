@@ -24,7 +24,8 @@ defmodule Flirtual.Application do
       {Finch, name: Swoosh.Finch},
       # Start a worker by calling: Flirtual.Worker.start_link(arg)
       # {Flirtual.Worker, arg}
-      Flirtual.UserQueueWorker
+      Flirtual.UserQueueWorker,
+      Flirtual.AttributeOrderWorker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

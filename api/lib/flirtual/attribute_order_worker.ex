@@ -1,7 +1,7 @@
-defmodule Flirtual.UserQueueWorker do
+defmodule Flirtual.AttributeOrderWorker do
   use GenServer
 
-  alias Flirtual.User
+  alias Flirtual.User.Profile
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, [])
@@ -9,8 +9,7 @@ defmodule Flirtual.UserQueueWorker do
 
   def handle_info(:process, state) do
     schedule()
-
-    {:ok, _} = User.ChangeQueue.next()
+    {:ok, _} = Profile.Attributes.update_order("hobby", :popularity)
     {:noreply, state}
   end
 
@@ -19,7 +18,9 @@ defmodule Flirtual.UserQueueWorker do
     {:ok, state}
   end
 
+  @hour_in_milliseconds 3_600_000
+
   def schedule() do
-    Process.send_after(self(), :process, 2000)
+    Process.send_after(self(), :process, @hour_in_milliseconds)
   end
 end

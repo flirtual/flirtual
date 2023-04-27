@@ -8,6 +8,7 @@ defmodule Flirtual.User.Profile.Preferences do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.User.Profile.Preferences
   alias Flirtual.User.Profile
   alias Flirtual.Attribute
 
@@ -18,7 +19,7 @@ defmodule Flirtual.User.Profile.Preferences do
     field :agemax, :integer
 
     many_to_many :attributes, Attribute,
-      join_through: "profile_preference_attributes",
+      join_through: Preferences.Attributes,
       join_keys: [preferences_id: :profile_id, attribute_id: :id],
       on_replace: :delete
   end
