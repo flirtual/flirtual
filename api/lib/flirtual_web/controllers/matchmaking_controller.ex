@@ -2,8 +2,9 @@ defmodule FlirtualWeb.MatchmakingController do
   use FlirtualWeb, :controller
 
   import Flirtual.Utilities
-  import Flirtual.Matchmaking
 
+  alias Flirtual.Matchmaking
+  alias Flirtual.User.Profile.Prospect
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.{Users, Policy}
 
@@ -11,19 +12,19 @@ defmodule FlirtualWeb.MatchmakingController do
 
   def list_prospects(conn, %{"kind" => kind}) do
     with {:ok, prospect_ids} <-
-           compute_prospects(conn.assigns[:session].user, to_atom(kind, :love)) do
+           Matchmaking.list_prospects(conn.assigns[:session].user, to_atom(kind, :love)) do
       conn |> json(prospect_ids)
     end
   end
 
   def reset_prospects(conn, _) do
-    with {:ok, count} <- reset_prospects(conn.assigns[:session].user) do
+    with {:ok, count} <- Matchmaking.reset_prospects(conn.assigns[:session].user) do
       conn |> json(%{count: count})
     end
   end
 
   def inspect_query(conn, %{"kind" => kind}) do
-    conn |> json(generate_query(conn.assigns[:session].user, to_atom(kind, :love)))
+    conn |> json(Matchmaking.generate_query(conn.assigns[:session].user, to_atom(kind, :love)))
   end
 
   def respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => mode}) do
@@ -34,7 +35,7 @@ defmodule FlirtualWeb.MatchmakingController do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
       with {:ok, result} <-
-             respond_profile(
+             Matchmaking.respond_profile(
                user: user,
                target: target,
                type: to_atom(type, :like),
@@ -50,8 +51,36 @@ defmodule FlirtualWeb.MatchmakingController do
     respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => kind})
   end
 
-  def reverse_respond(_, %{"user_id" => _, "type" => _}) do
-    {:error, {:not_implemented}}
+  def reverse_respond(conn, %{"user_id" => user_id, "kind" => kind}) do
+    user = conn.assigns[:session].user
+    target = Users.get(user_id)
+    kind = to_atom(kind, :love)
+
+    if is_nil(target) or Policy.cannot?(conn, :read, target) do
+      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+    else
+      with %Prospect{} = prospect <-
+             Prospect.get(profile_id: user.id, target_id: target.id, kind: kind),
+           {:ok, _} <- Prospect.reverse(prospect) do
+        conn |> json(%{success: true})
+      else
+        nil -> {:error, {:not_found, "Prospect not found", %{user_id: user_id}}}
+        reason -> reason
+      end
+    end
+  end
+
+  def unmatch(conn, %{"user_id" => user_id}) do
+    user = conn.assigns[:session].user
+    target = Users.get(user_id)
+
+    if is_nil(target) or Policy.cannot?(conn, :read, target) do
+      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+    else
+      with LikesAndPasses.delete_all(profile_id: user.id, target_id: target.id) do
+        conn |> json(%{success: true})
+      end
+    end
   end
 
   def list_matches(conn, %{"unrequited" => _}) do

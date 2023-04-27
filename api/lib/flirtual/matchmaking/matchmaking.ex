@@ -31,9 +31,7 @@ defmodule Flirtual.Matchmaking do
     |> DateTime.truncate(:second)
   end
 
-  def compute_prospects(%User{} = user, kind, opts \\ []) do
-    profile = user.profile
-
+  def list_prospects(%User{} = user, kind) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
     reset_fields = get_reset_fields(kind)
@@ -41,60 +39,59 @@ defmodule Flirtual.Matchmaking do
     reset_at = user.profile[reset_fields.at]
     reset_count = user.profile[reset_fields.count]
 
+    should_reset =
+      reset_at === nil or
+        (reset_count >= 15 and Subscription.active?(user.subscription)) or
+        NaiveDateTime.compare(DateTime.to_naive(reset_at), now) == :lt
+
+    maybe_compute_prospects(should_reset, user, kind)
+  end
+
+  defp maybe_compute_prospects(false, user, kind) do
+    {:ok,
+     Prospect.list(profile_id: user.id, kind: kind)
+     |> Enum.map(& &1.target_id)}
+  end
+
+  defp maybe_compute_prospects(true, user, kind) do
+    reset_fields = get_reset_fields(kind)
+
     Repo.transaction(fn ->
-      prospect_ids =
-        from(
-          a in Prospect,
-          where: [profile_id: ^profile.user_id, kind: ^kind],
-          select: a.target_id
-        )
-        |> Repo.all()
-
-      query = generate_query(user, kind)
-
-      if Keyword.get(opts, :force, false) or reset_at === nil or
-           Subscription.active?(user.subscription) or
-           NaiveDateTime.compare(DateTime.to_naive(reset_at), now) == :lt do
-        with {:ok, resp} <- Elasticsearch.search(:users, query),
-             user_ids = Enum.map(resp["hits"]["hits"], & &1["_id"]),
-             {:ok, _} <- Prospect.delete_all(profile_id: profile.user_id, kind: kind),
-             {:ok, _} <-
-               Prospect.insert_all(
-                 user_ids
-                 |> Enum.map(
-                   &%{
-                     profile_id: profile.user_id,
-                     target_id: &1,
-                     kind: kind
-                   }
-                 )
-               ),
-             {:ok, _} <-
-               change(
-                 user.profile,
-                 Map.put(%{}, reset_fields.at, next_reset_at())
-                 |> Map.put(reset_fields.count, 0)
-               )
-               |> Repo.update() do
-          user_ids
-        else
-          {:error, reason} -> Repo.rollback(reason)
-          reason -> Repo.rollback(reason)
-        end
+      with query = generate_query(user, kind),
+           {:ok, resp} <- Elasticsearch.search(:users, query),
+           prospects = Enum.map(resp["hits"]["hits"], &{&1["_id"], &1["_score"]}),
+           {:ok, _} <- Prospect.delete_all(profile_id: user.id, kind: kind),
+           {:ok, _} <-
+             Prospect.insert_all(
+               prospects
+               |> Enum.map(fn {prospect_id, score} ->
+                 %{
+                   profile_id: user.id,
+                   target_id: prospect_id,
+                   kind: kind,
+                   score: score
+                 }
+               end)
+             ),
+           {:ok, _} <-
+             change(
+               user.profile,
+               Map.put(%{}, reset_fields.at, next_reset_at())
+               |> Map.put(reset_fields.count, 0)
+             )
+             |> Repo.update() do
+        prospects |> Enum.map(&elem(&1, 0))
       else
-        if reset_count >= 15 do
-          []
-        else
-          prospect_ids
-        end
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
       end
     end)
   end
 
   def reset_prospects(%User{} = user) do
     with {:ok, count} <- LikesAndPasses.delete_all(profile_id: user.id),
-         {:ok, _} <- compute_prospects(user, :love, force: true),
-         {:ok, _} <- compute_prospects(user, :friend, force: true) do
+         {:ok, _} <- maybe_compute_prospects(true, user, :love),
+         {:ok, _} <- maybe_compute_prospects(true, user, :friend) do
       {:ok, count}
     end
   end
@@ -174,8 +171,16 @@ defmodule Flirtual.Matchmaking do
     reset_count = user.profile[reset_count_field]
 
     Repo.transaction(fn repo ->
-      with {:ok, _} <-
-             Prospect.delete(profile_id: user.id, target_id: target.id),
+      with prospect <-
+             Prospect.get(profile_id: user.id, target_id: target.id, kind: kind),
+           {:ok, _} <-
+             (if is_nil(prospect) do
+                {:ok, nil}
+              else
+                prospect
+                |> change(%{completed: true})
+                |> Repo.update()
+              end),
            {:ok, item} <-
              %LikesAndPasses{}
              |> cast(
@@ -189,14 +194,14 @@ defmodule Flirtual.Matchmaking do
              )
              |> then(
                &if(get_field(&1, :profile_id) === get_field(&1, :target_id)) do
-                 add_error(&1, :user_id, "cannot respond to yourself")
+                 add_error(&1, :user_id, "Cannot respond to yourself")
                else
                  &1
                end
              )
              |> unsafe_validate_unique([:profile_id, :target_id, :kind], repo,
                error_key: :user_id,
-               message: "profile already responded"
+               message: "Profile already responded"
              )
              |> Repo.insert(),
            {:ok, _} <-

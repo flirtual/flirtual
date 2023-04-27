@@ -106,6 +106,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
            {:ok, _} <-
              Talkjs.delete_participants(user_id: profile_id, target_id: target_id),
            {:ok, _} <- ChangeQueue.add(profile_id) do
+        IO.inspect(count)
         count
       else
         {:error, reason} -> Repo.rollback(reason)
