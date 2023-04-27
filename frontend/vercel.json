@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/homies", "destination": "/browse?kind=friend" }
-  ]
-}

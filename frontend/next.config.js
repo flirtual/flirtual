@@ -18,12 +18,7 @@ const nextConfig = {
 		}
 	},
 	async rewrites() {
-		return [
-			{
-				source: "/homies",
-				destination: "/browse?kind=friend"
-			}
-		];
+		return [];
 	},
 	async redirects() {
 		return [
