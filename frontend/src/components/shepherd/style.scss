@@ -30,17 +30,17 @@
 
 	&[data-popper-placement^="top"] {
 		.shepherd-arrow {
-			@apply w-8 h-8 -z-10 bottom-0 absolute;
+			@apply w-8 h-8 z-[9998] bottom-0 absolute;
 	
 			&::before {
-				@apply bg-black-70 w-8 h-8 rotate-45 absolute;
+				@apply bg-white-20 dark:bg-black-70 w-8 h-8 rotate-45 absolute;
 				content: "";
 			}
 		}
 	}
 
 	.shepherd-content {
-		@apply font-nunito rounded-lg bg-black-70 shadow-brand-1 overflow-hidden;
+		@apply font-nunito rounded-lg bg-white-20 dark:bg-black-70 shadow-brand-1 overflow-hidden;
 
 		header.shepherd-header {
 			@apply px-4 py-2 bg-brand-gradient flex items-center justify-between;
@@ -59,18 +59,17 @@
 		}
 
 		.shepherd-text {
-			@apply p-4 text-white-10;
+			@apply p-4 text-black-80 dark:text-white-10;
 		}
 
 		footer.shepherd-footer {
 			@apply p-4 pt-0 flex gap-2 justify-end;
 
 			button.shepherd-button {
-				@apply px-4 py-2 rounded-lg font-semibold text-white-10 bg-transparent focusable;
-				margin-right: 0;
+				@apply px-4 py-2 rounded-lg font-semibold text-black-80 dark:text-white-10 bg-transparent focusable;
 
 				&.primary {
-					@apply bg-brand-gradient;
+					@apply bg-brand-gradient text-white-10;
 				}
 			}
 		}
