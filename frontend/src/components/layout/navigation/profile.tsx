@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
@@ -67,17 +67,13 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	const { loadChangelog } = useCanny();
 
 	useClickOutside(elementRef, () => setVisible(false), visible);
-	useGlobalEventListener(
-		"document",
-		"scroll",
-		() => {
-			setVisible(false);
-			if (typeof window.Canny === "function") {
-				window.Canny("closeChangelog");
-			}
-		},
-		visible
-	);
+	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
+
+	useEffect(() => {
+		if (!visible && typeof window.Canny === "function") {
+			window.Canny("closeChangelog");
+		}
+	}, [visible]);
 
 	const isDesktop = useScreenBreakpoint("md");
 	const isPwa = useProgressiveWebApp();
