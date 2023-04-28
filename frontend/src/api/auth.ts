@@ -38,7 +38,7 @@ export async function user(options: NarrowFetchOptions = {}) {
 }
 
 export async function sso(signer: string, options: NarrowFetchOptions = {}) {
-	return fetch<Session>("get", `auth/sso/${signer}`, options);
+	return fetch<{ token: string }>("get", `auth/sso/${signer}`, options);
 }
 
 export async function resetPassword(options: NarrowFetchOptions<{ email: string }>) {
