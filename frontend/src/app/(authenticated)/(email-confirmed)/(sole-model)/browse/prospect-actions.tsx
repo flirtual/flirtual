@@ -27,14 +27,25 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 	const tour = useTour(
 		"browsing",
 		useCallback(
-			({ next, back }) => [
+			({ next, back, cancel }) => [
 				{
 					id: "introduction",
 					title: "Flirtual",
 					text: `
 					Take a quick tour with us and feel free to exit anytime by clicking the <b>Exit</b> button.<br><br/>
 					We've got some matchmaking magic up our sleeves, and we can't wait to introduce you to some amazing people.
-					`
+					`,
+					buttons: [
+						{
+							text: "Exit",
+							action: cancel
+						},
+						{
+							classes: "primary",
+							text: "Continue",
+							action: next
+						}
+					]
 				},
 				{
 					id: "like",
