@@ -39,7 +39,7 @@ export const ClientScripts: React.FC = () => {
 	}, [pathname, kind]);
 
 	useEffect(() => {
-		document.documentElement.classList.remove(...PreferenceThemes);
+		document.documentElement.classList.remove(...PreferenceThemes.filter((t) => t !== theme));
 		document.documentElement.classList.add(theme);
 	}, [theme]);
 

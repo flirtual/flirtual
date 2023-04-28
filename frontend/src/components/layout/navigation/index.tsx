@@ -2,7 +2,7 @@
 
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { ComponentProps, FC, PropsWithChildren } from "react";
+import { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { IconComponentProps } from "~/components/icons";
@@ -44,7 +44,7 @@ export const ConversationListButton: FC = () => {
 	const conversationCount = clamp(useUnreadConversations().length, 0, 99);
 
 	return (
-		<NavigationIconButton href={urls.conversations.list}>
+		<NavigationIconButton href={urls.conversations.list} id="conversation-button">
 			<div className="relative">
 				<ChatBubbleLeftRightIcon className="aspect-square w-8" strokeWidth={1.5} />
 				{conversationCount !== 0 && (
@@ -83,8 +83,14 @@ export const SwitchButton: FC<SwitchButtonProps> = ({ Icon, ...props }) => {
 	);
 };
 
-const NavigationalSwitch: FC<PropsWithChildren> = ({ children }) => (
-	<div className="flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70">
+const NavigationalSwitch: FC<ComponentProps<"div">> = ({ children, ...elementProps }) => (
+	<div
+		{...elementProps}
+		className={twMerge(
+			"flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70",
+			elementProps.className
+		)}
+	>
 		{children}
 	</div>
 );
@@ -93,7 +99,7 @@ export const AuthenticatedNavigation: FC = () => {
 	return (
 		<>
 			<ProfileNavigation href={urls.user.me} />
-			<NavigationalSwitch>
+			<NavigationalSwitch id="browse-mode-switch">
 				<SwitchButton href={urls.browse()} Icon={HeartIcon} />
 				<SwitchButton href={urls.browse("friend")} Icon={PeaceIcon} />
 			</NavigationalSwitch>

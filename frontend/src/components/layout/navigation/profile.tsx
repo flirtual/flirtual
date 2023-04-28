@@ -74,6 +74,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	return (
 		<div className="relative aspect-square shrink-0">
 			<button
+				id="profile-dropdown-button"
 				type="button"
 				className={twMerge(
 					"group rounded-full p-1 transition-all",

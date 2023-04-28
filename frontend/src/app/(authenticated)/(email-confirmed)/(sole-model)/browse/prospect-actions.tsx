@@ -2,7 +2,7 @@
 
 import { ArrowUturnLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { ResponseChangesetError, api } from "~/api";
@@ -11,6 +11,7 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
+import { useTour } from "~/hooks/use-tour";
 
 export interface ProspectActionBarProps {
 	userId: string;
@@ -22,6 +23,101 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 	const router = useRouter();
 
 	const [lastProfile, setLastProfile] = useState<RespondProspectBody | null>(null);
+
+	const tour = useTour(
+		"browsing",
+		useCallback(
+			({ next, back }) => [
+				{
+					id: "introduction",
+					title: "Flirtual",
+					text: `
+					Take a quick tour with us and feel free to exit anytime by clicking the <b>Exit</b> button.<br><br/>
+					We've got some matchmaking magic up our sleeves, and we can't wait to introduce you to some amazing people.
+					`
+				},
+				{
+					id: "like",
+					title: "Like their profile?",
+					text: "Press the <b>Like button</b>! If they like you back, you'll match.",
+					attachTo: { element: "#like-button", on: "top" },
+					modalOverlayOpeningRadius: 12
+				},
+				{
+					id: "friend",
+					title: "Like their profile?",
+					text: "Or press the <b>Homie button</b> if you just want to be friends. You'll still match if it's mutual, whether you Like or Homie.",
+					attachTo: { element: "#friend-button", on: "top" },
+					modalOverlayOpeningRadius: 12
+				},
+				{
+					id: "pass",
+					title: "Not interested?",
+					text: "Press the <b>Pass button</b> to move on to the next profile.",
+					attachTo: { element: "#pass-button", on: "top" },
+					modalOverlayOpeningRadius: 12
+				},
+				{
+					id: "undo",
+					title: "Changed your mind?",
+					text: "Press <b>Undo</b> to go back and see the last profile.",
+					attachTo: { element: "#undo-button", on: "top" },
+					modalOverlayOpeningRadius: 12
+				},
+				{
+					id: "conversations",
+					title: "Shoot your shot!",
+					text: "Check your matches here. Message them and meet up in VR!",
+					attachTo: { element: "#conversation-button", on: "top" },
+					modalOverlayOpeningRadius: 20,
+					modalOverlayOpeningPadding: 4
+				},
+				{
+					id: "browse-mode",
+					title: "Looking for something else?",
+					text: `
+					Switch between <b>matchmaking modes</b> to access more profiles without filters.<br/><br/>
+					Each day, you can browse up to <b>30 profiles</b> and like or homie up to 15 of them in each mode.`,
+					attachTo: { element: "#browse-mode-switch", on: "top" },
+					modalOverlayOpeningRadius: 33
+				},
+				{
+					id: "profile-dropdown",
+					title: "Customize your experience!",
+					text: "Here you can <b>update your profile</b>, or subscribe to Premium to browse unlimited profiles and see who likes you before you match.",
+					attachTo: { element: "#profile-dropdown-button", on: "top" },
+					modalOverlayOpeningRadius: 20,
+					modalOverlayOpeningPadding: 4
+				},
+				{
+					id: "conclusion",
+					title: "Thank you!",
+					text: `
+					That concludes our tour! We hope you have a great time here and remember to treat each other kindly.<br/><br/>
+					Don't forget to stay hydrated and take breaks as needed!<br/><br/>
+					With love, the Flirtual Team ❤️`,
+					modalOverlayOpeningRadius: 20,
+					modalOverlayOpeningPadding: 4,
+					buttons: [
+						{
+							text: "Back",
+							action: back
+						},
+						{
+							classes: "primary",
+							text: "Start matching",
+							action: next
+						}
+					]
+				}
+			],
+			[]
+		)
+	);
+
+	useEffect(() => {
+		tour.start();
+	}, [tour]);
 
 	const respond = useCallback(
 		async (type: ProspectRespondType, kind: ProspectKind) => {
@@ -71,6 +167,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 						<button
 							className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-50"
 							disabled={!lastProfile}
+							id="undo-button"
 							type="button"
 							onClick={respondReverse}
 						>
@@ -81,6 +178,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 						<Tooltip value="Like profile">
 							<button
 								className="flex items-center justify-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 shadow-brand-1 sm:w-40"
+								id="like-button"
 								type="button"
 								onClick={() => respond("like", mode)}
 							>
@@ -93,6 +191,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					)}
 					<Tooltip value="Friend profile">
 						<button
+							id="friend-button"
 							type="button"
 							className={twMerge(
 								"flex items-center justify-center gap-3 rounded-xl px-6 py-4 shadow-brand-1",
@@ -107,6 +206,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					<Tooltip value="Pass profile">
 						<button
 							className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1"
+							id="pass-button"
 							type="button"
 							onClick={() => respond("pass", mode)}
 						>

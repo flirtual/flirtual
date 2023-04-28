@@ -1,6 +1,10 @@
+import { withOptionalSession } from "~/server-utilities";
+
 import { NavigationInner } from "./navigation/inner";
 
 export async function Header() {
+	const session = await withOptionalSession();
+
 	return (
 		<div className="hidden w-full flex-col sm:flex sm:h-20">
 			<header className="fixed z-10 flex w-full flex-col text-white-20">
@@ -19,7 +23,7 @@ export async function Header() {
 			</HeaderMessage> */}
 				<div className="z-10 flex w-full flex-col items-center justify-center py-2">
 					{/* @ts-expect-error: Server Component */}
-					<NavigationInner />
+					<NavigationInner desktopView user={session?.user} />
 				</div>
 			</header>
 		</div>

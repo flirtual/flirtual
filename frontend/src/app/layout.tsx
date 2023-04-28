@@ -8,6 +8,7 @@ import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
 import { SessionProvider } from "~/components/session-provider";
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
+import { ShepherdProvider } from "~/components/shepherd";
 
 import { ClientScripts } from "./client-scripts";
 import { HydrationBlock } from "./hydration-block";
@@ -62,16 +63,18 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 	return (
 		<html suppressHydrationWarning className={theme} lang="en">
 			<head>
-				<script
-					dangerouslySetInnerHTML={{
-						__html: `
+				{theme === "system" && (
+					<script
+						dangerouslySetInnerHTML={{
+							__html: `
 							${resolveTheme.toString()}
 
-							document.documentElement.classList.remove("${theme}");
+							document.documentElement.classList.remove("system");
 							document.documentElement.classList.add(resolveTheme("${theme}"));
 						`.trim()
-					}}
-				/>
+						}}
+					/>
+				)}
 				<script
 					dangerouslySetInnerHTML={{
 						__html: `
@@ -86,9 +89,11 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>
 				<HydrationBlock />
-				<SessionProvider session={session}>
-					<ToastProvider>{children}</ToastProvider>
-				</SessionProvider>
+				<ShepherdProvider>
+					<SessionProvider session={session}>
+						<ToastProvider>{children}</ToastProvider>
+					</SessionProvider>
+				</ShepherdProvider>
 			</body>
 		</html>
 	);
