@@ -26,6 +26,8 @@ config :flirtual, Flirtual.HCaptcha,
   app_id: System.fetch_env!("HCAPTCHA_APP_ID"),
   access_token: System.fetch_env!("HCAPTCHA_ACCESS_TOKEN")
 
+config :flirtual, Flirtual.Canny, access_token: System.fetch_env!("CANNY_SECRET")
+
 config :joken, default_signer: System.fetch_env!("JOKAN_SECRET")
 
 config :stripity_stripe,

@@ -99,6 +99,14 @@ defmodule FlirtualWeb.Router do
             get "/", UsersController, :get_current_user
             delete "/", UsersController, :delete
           end
+
+          scope "/sso" do
+            pipe_through :require_authenticated_user
+
+            scope "/canny" do
+              get "/", CannyController, :create_token
+            end
+          end
         end
 
         post "/evaluate", DebugController, :evaluate

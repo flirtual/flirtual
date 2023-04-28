@@ -19,6 +19,14 @@ defmodule Flirtual.Jwt do
     end
   end
 
+  def sign(config, claims, key, algorithm) do
+    with {:ok, claims} <- generate_claims(config, claims),
+         signer <- Joken.Signer.create(algorithm, key),
+         {:ok, token, _} <- Joken.generate_and_sign(config, claims, signer) do
+      {:ok, token}
+    end
+  end
+
   def validate_jwt(changeset, field, token_config, validate_claims) do
     with true <- changeset.valid?,
          {:ok, claims} <- Joken.verify_and_validate(token_config, get_field(changeset, field)),
