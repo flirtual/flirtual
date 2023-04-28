@@ -124,6 +124,7 @@ export const urls = {
 		company: "https://studiopaprika.io/",
 		contact: "https://hello.flirtu.al/",
 		contactDirect: "https://hello.flirtu.al/support/tickets/new",
+		feedback: "https://flirtual.canny.io",
 		mentalHealth: "/mentalhealth"
 	},
 

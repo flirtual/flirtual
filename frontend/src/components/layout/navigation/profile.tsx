@@ -20,6 +20,9 @@ import { useProgressiveWebApp } from "~/hooks/use-pwa";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
+import { useCanny } from "~/hooks/use-canny";
+
+import { ProfileNavigationCannyButton } from "../canny-button";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
 	{ className?: string } & (
@@ -61,9 +64,20 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	const elementRef = useRef<HTMLDivElement>(null);
 	const location = useLocation();
 	const active = urlEqual(toAbsoluteUrl(props.href), location);
+	const { loadChangelog } = useCanny();
 
 	useClickOutside(elementRef, () => setVisible(false), visible);
-	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
+	useGlobalEventListener(
+		"document",
+		"scroll",
+		() => {
+			setVisible(false);
+			if (typeof window.Canny === "function") {
+				window.Canny("closeChangelog");
+			}
+		},
+		visible
+	);
 
 	const isDesktop = useScreenBreakpoint("md");
 	const isPwa = useProgressiveWebApp();
@@ -82,7 +96,10 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 						? "bg-white-20 shadow-brand-1"
 						: "bg-transparent hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				)}
-				onClick={() => setVisible(true)}
+				onClick={() => {
+					setVisible(true);
+					loadChangelog();
+				}}
 			>
 				<UserAvatar
 					priority
@@ -120,6 +137,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 								Settings
 							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
+							<ProfileNavigationCannyButton />
 							{!isPwa && (
 								<ProfileNavigationItem href={urls.resources.download}>
 									Get app

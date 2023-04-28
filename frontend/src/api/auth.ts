@@ -37,6 +37,10 @@ export async function user(options: NarrowFetchOptions = {}) {
 	return fetch<User>("get", "auth/user", options);
 }
 
+export async function sso(signer: string, options: NarrowFetchOptions = {}) {
+	return fetch<Session>("get", `auth/sso/${signer}`, options);
+}
+
 export async function resetPassword(options: NarrowFetchOptions<{ email: string }>) {
 	await fetch("delete", "auth/password", options);
 }

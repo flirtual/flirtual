@@ -4,6 +4,7 @@ import { urls } from "~/urls";
 import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
 
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
+import { FooterCannyLink } from "./canny-button";
 
 type LinkOrButtonProps<T> = T &
 	(Pick<React.ComponentProps<"a">, "href"> | Pick<React.ComponentProps<"button">, "onClick">);
@@ -61,6 +62,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 					<ul className="flex flex-wrap gap-x-4 md:justify-center">
 						<FooterListLink href={urls.resources.events} label="Events" />
 						<FooterSupportLink />
+						<FooterCannyLink />
 						<FooterListLink href={urls.resources.networkStatus} label="Status" />
 					</ul>
 					<ul className="flex flex-wrap gap-x-4 md:justify-center">
