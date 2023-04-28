@@ -70,10 +70,9 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
 
 	useEffect(() => {
-		if (!visible && typeof window.Canny === "function") {
-			window.Canny("closeChangelog");
-		}
-	}, [visible]);
+		if (visible) loadChangelog();
+		else if (typeof window.Canny === "function") window.Canny("closeChangelog");
+	}, [loadChangelog, visible]);
 
 	const isDesktop = useScreenBreakpoint("md");
 	const isPwa = useProgressiveWebApp();
@@ -94,7 +93,6 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 				)}
 				onClick={() => {
 					setVisible(true);
-					loadChangelog();
 				}}
 			>
 				<UserAvatar
