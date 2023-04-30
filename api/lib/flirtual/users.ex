@@ -11,7 +11,7 @@ defmodule Flirtual.Users do
   alias Flirtual.Talkjs
   alias Flirtual.Jwt
   alias Flirtual.Talkjs
-  alias Flirtual.{Repo, User, Connection}
+  alias Flirtual.{Repo, User}
   alias Flirtual.User.{Preferences}
   alias Flirtual.Stripe
 

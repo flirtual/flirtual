@@ -1,9 +1,13 @@
 defmodule Flirtual.Conversation do
   use Flirtual.Schema, primary_key: :id
   use Flirtual.Policy.Target, policy: Flirtual.Conversation.Policy
+  use Flirtual.Logger, :conversation
 
   require Flirtual.Utilities
+  import Flirtual.Utilities
 
+  alias Flirtual.Conversation.Cursor
+  alias Flirtual.Jwt
   alias Flirtual.Conversation.Message
   alias Flirtual.Conversation
   alias Flirtual.Talkjs
@@ -40,10 +44,130 @@ defmodule Flirtual.Conversation do
     }
   end
 
-  def list(user_id: user_id) do
-    case Talkjs.fetch(:get, "users/" <> user_id <> "/conversations", nil) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        Poison.decode!(body)["data"] |> decode()
+  defmodule Cursor do
+    import Flirtual.Utilities
+
+    @derive [{Jason.Encoder, only: [:before, :page, :limit]}]
+    defstruct before: nil, last_before: nil, page: 0, limit: 10
+
+    def map(self, data) do
+      %{
+        previous: self |> previous(data) |> encode(),
+        next: self |> next(data) |> encode(),
+        self: self
+      }
+      |> exclude_nil()
+    end
+
+    def first(), do: %Cursor{}
+
+    def encode(nil), do: nil
+
+    def encode(%Cursor{before: before, last_before: last_before, page: page})
+        when is_integer(page) and page > 0 do
+      {:ok, token} =
+        Jwt.config("list-cursor")
+        |> Jwt.sign(%{
+          "before" => if(is_nil(before), do: nil, else: DateTime.to_unix(before, :millisecond)),
+          "last_before" =>
+            if(is_nil(last_before),
+              do: nil,
+              else: DateTime.to_unix(last_before, :millisecond)
+            ),
+          "page" => page
+        })
+
+      token
+    end
+
+    def encode(_), do: nil
+
+    def decode(token) when is_binary(token) do
+      with {:ok, claims} <-
+             Jwt.config("list-cursor")
+             |> Joken.verify_and_validate(token),
+           %{
+             "before" => before,
+             "last_before" => last_before,
+             "page" => page
+           } <- claims do
+        %Cursor{
+          before: if(is_nil(before), do: nil, else: DateTime.from_unix!(before, :millisecond)),
+          last_before:
+            if(is_nil(last_before), do: nil, else: DateTime.from_unix!(last_before, :millisecond)),
+          page: page
+        }
+      else
+        _ -> first()
+      end
+    end
+
+    def decode(_), do: first()
+
+    def next(_, []), do: nil
+
+    def next(%Cursor{} = self, data) do
+      if length(data) == self.limit do
+        %Cursor{
+          before:
+            data
+            |> List.last()
+            |> Access.get(:last_message)
+            |> Access.get(:created_at),
+          last_before: self.before,
+          page: self.page + 1
+        }
+      else
+        nil
+      end
+    end
+
+    def previous(%Cursor{page: 1}, _), do: nil
+
+    def previous(%Cursor{} = self, _) do
+      %Cursor{
+        before: self.last_before,
+        last_before: nil,
+        page: self.page - 1
+      }
+    end
+  end
+
+  def list(user_id, token \\ nil) do
+    cursor = Cursor.decode(token)
+
+    query =
+      %{
+        limit: cursor.limit,
+        lastMessageBefore:
+          if(is_nil(cursor.before), do: nil, else: DateTime.to_unix(cursor.before, :millisecond))
+      }
+      |> exclude_nil()
+
+    with {:ok, %HTTPoison.Response{body: body}} <-
+           Talkjs.fetch(
+             :get,
+             "users/" <> user_id <> "/conversations",
+             nil,
+             query: query
+           ),
+         {:ok, body} <- Poison.decode(body),
+         %{"data" => data} when is_list(data) <- body do
+      data = data |> decode()
+
+      {:ok,
+       {data,
+        %{
+          cursor: Cursor.map(cursor, data),
+          total: length(data)
+        }}}
+    else
+      %{"errorCode" => "LIMIT_OUT_OF_BOUNDS"} ->
+        {:error, :invalid_limit}
+
+      reason ->
+        log(:error, [:list], reason: reason)
+        {:error, :upstream}
     end
   end
 

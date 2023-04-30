@@ -26,6 +26,13 @@ defmodule Flirtual.Utilities.Changeset do
     end)
   end
 
+  defp evaluate_predicate_key(changeset, {:value, value}), do: value
+  defp evaluate_predicate_key(changeset, value), do: get_field(changeset, value)
+
+  defp evaluate_predicate(:equal, {a, b}), do: a === b
+  defp evaluate_predicate(:not_equal, {a, b}), do: a !== b
+  defp evaluate_predicate(predicate, {a, b}) when is_function(predicate), do: predicate.(a, b)
+
   def validate_predicate(changeset, predicate, {_, _} = keys),
     do: validate_predicate(changeset, predicate, keys, [])
 
@@ -45,13 +52,6 @@ defmodule Flirtual.Utilities.Changeset do
       )
     )
   end
-
-  defp evaluate_predicate_key(changeset, {:value, value}), do: value
-  defp evaluate_predicate_key(changeset, value), do: get_field(changeset, value)
-
-  defp evaluate_predicate(:equal, {a, b}), do: a === b
-  defp evaluate_predicate(:not_equal, {a, b}), do: a !== b
-  defp evaluate_predicate(predicate, {a, b}) when is_function(predicate), do: predicate.(a, b)
 
   def validate_predicate(changeset, predicate, options \\ []) do
     values = Keyword.fetch!(options, :values)

@@ -60,7 +60,7 @@ defmodule Flirtual.User.Profile.CustomWeights do
     |> validate(:likes)
   end
 
-  defp validate(changeset, name, options \\ []) do
+  defp validate(changeset, name) do
     %{user: %User{subscription: subscription}} = changeset.data.profile
 
     changeset

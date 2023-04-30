@@ -5,7 +5,12 @@ defmodule Flirtual.Jwt do
   import Joken.Config
 
   def config(audience, expire_in \\ 3600) do
-    default_claims(default_exp: expire_in, iss: "flirtual", aud: audience)
+    default_claims(
+      default_exp: expire_in,
+      iss: "flirtual",
+      aud: audience,
+      skip: [:iat, :nbf, :jti]
+    )
   end
 
   defp generate_claims(config, claims \\ %{}) do
@@ -13,7 +18,7 @@ defmodule Flirtual.Jwt do
   end
 
   def sign(config, claims) do
-    with {:ok, claims} <- generate_claims(config, claims),
+    with {:ok, claims} <- generate_claims(config, claims) |> IO.inspect(),
          {:ok, token, _} <- generate_and_sign(claims) do
       {:ok, token}
     end

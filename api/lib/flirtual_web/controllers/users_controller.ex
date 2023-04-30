@@ -8,7 +8,6 @@ defmodule FlirtualWeb.UsersController do
 
   import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
-  import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
   alias Flirtual.User.Profile.Block

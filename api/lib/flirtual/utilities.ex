@@ -35,6 +35,10 @@ defmodule Flirtual.Utilities do
     Map.filter(map, &(elem(&1, 0) not in keys))
   end
 
+  def exclude_nil(map) do
+    Map.reject(map, fn {_, value} -> is_nil(value) end)
+  end
+
   def filter_by(list, key, values) when is_list(values) do
     Enum.filter(list, &(&1[key] in values))
   end
@@ -49,6 +53,12 @@ defmodule Flirtual.Utilities do
 
   def exclude_by(list, key, value) do
     Enum.filter(list, &(&1[key] !== value))
+  end
+
+  def clamp(number, minimum, maximum) do
+    number
+    |> max(minimum)
+    |> min(maximum)
   end
 
   defmacro is_uuid(value) do

@@ -7,8 +7,8 @@ defmodule Flirtual.Canny do
   end
 
   def create_token(%User{} = user) do
-    Jwt.sign(
-      Jwt.config("canny"),
+    Jwt.config("canny")
+    |> Jwt.sign(
       %{
         "avatarURL" => User.avatar_url(user),
         "email" => user.email,
