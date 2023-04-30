@@ -7,9 +7,9 @@ import { InlineLink } from "~/components/inline-link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
 	const router = useRouter();
+	console.error(error);
 
 	return (
 		<div className="flex min-h-screen w-full justify-center bg-brand-gradient px-8 py-16 text-white-10 sm:items-center">
@@ -17,9 +17,9 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 				<div className="flex flex-col gap-8">
 					<FlirtualLogo className="w-64" />
 					<h1 className="font-montserrat text-2xl font-semibold sm:text-3xl">
-						Something went wrong :(
+						Something went wrong!
 					</h1>
-					<div className="flex flex-col font-nunito">
+					<div className="flex flex-col gap-4 font-nunito">
 						<p>
 							Sorry about that! There was an error processing your request.
 							<br className="hidden sm:block" /> If this issue persists, please{" "}
@@ -31,6 +31,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 						</p>
 					</div>
 				</div>
+				<span className="whitespace-pre font-mono text-xs">{error.message}</span>
 				<div className="flex gap-2">
 					<Button className="w-fit" kind="secondary" size="sm" onClick={reset}>
 						Try again

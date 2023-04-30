@@ -1,18 +1,37 @@
+"use client";
+
+import { FC } from "react";
+import useSWR from "swr";
+
 import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { thruServerCookies } from "~/server-utilities";
 import { api } from "~/api";
 import { urls } from "~/urls";
-import { User } from "~/api/user";
+import { useSession } from "~/hooks/use-session";
 
-export async function LikesYouButton({ user }: { user: User }) {
-	const likes = await api.matchmaking.listMatches({
-		...thruServerCookies(),
-		query: {
-			unrequited: true
+export const LikesYouButton: FC = () => {
+	const [session] = useSession();
+	const { data: likes } = useSWR(
+		"likes",
+		() => {
+			return api.matchmaking.listMatches({
+				query: {
+					unrequited: true
+				}
+			});
+		},
+		{
+			suspense: true,
+			fallbackData: {
+				count: {},
+				items: []
+			}
 		}
-	});
+	);
+
+	if (!session) return null;
+	const { user } = session;
 
 	return (
 		<ButtonLink
@@ -37,4 +56,4 @@ export async function LikesYouButton({ user }: { user: User }) {
 			</span>
 		</ButtonLink>
 	);
-}
+};

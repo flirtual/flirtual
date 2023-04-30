@@ -50,7 +50,7 @@ export async function GET() {
 			},
 			{
 				name: "Matches",
-				url: urls.conversations.list,
+				url: urls.conversations.list(),
 				description: "Message your matches",
 				icons: [
 					{

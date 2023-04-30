@@ -5,7 +5,10 @@ import { api } from "~/api";
 type UseUserOptions = { userId: string } | { username: string };
 
 export function useUser(options: UseUserOptions) {
-	return useSWR(["user", "userId" in options ? options.userId : options.username], () =>
-		"userId" in options ? api.user.get(options.userId) : api.user.getByUsername(options.username)
+	return useSWR(
+		["user", "userId" in options ? options.userId : options.username].join("/"),
+		() =>
+			"userId" in options ? api.user.get(options.userId) : api.user.getByUsername(options.username),
+		{ suspense: true }
 	);
 }

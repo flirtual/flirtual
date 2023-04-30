@@ -1,19 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
-import { User, displayName } from "~/api/user";
+import { displayName } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { TimeSince } from "~/components/time-since";
 import { UserAvatar } from "~/components/user-avatar";
+import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
-export type ConversationListItemProps = Conversation & { user: User; active?: boolean };
+export type ConversationListItemProps = Conversation & {
+	active?: boolean;
+	cursor?: string;
+};
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
-	const { user, kind, active = false, lastMessage } = props;
+	const { kind, active = false, userId, lastMessage, cursor } = props;
+
+	const { data: user } = useUser({ userId });
 
 	return (
 		<div
@@ -22,7 +30,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 			<div className="flex rounded-xl bg-white-30 dark:bg-black-60">
 				<Link
 					className="shrink-0 before:absolute before:h-full before:w-full"
-					href={urls.conversations.with(user.id)}
+					href={urls.conversations.with(user.id, cursor)}
 				>
 					<UserAvatar className="h-20 w-20 rounded-l-xl" height={80} user={user} width={80} />
 				</Link>

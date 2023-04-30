@@ -1,6 +1,8 @@
 import { ConversationAside } from "./aside";
+import { withConversations } from "./data.server";
 
-export default function ConversationListPage() {
-	// @ts-expect-error: Server Component
-	return <ConversationAside />;
+export default async function ConversationListPage() {
+	const initialConversations = await withConversations();
+
+	return <ConversationAside initialConversations={initialConversations} />;
 }

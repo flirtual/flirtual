@@ -44,7 +44,7 @@ export default async function LikesPage() {
 		<SoleModelLayout footer={{ desktopOnly: true }}>
 			<ModelCard className="sm:max-w-3xl" title="Likes You">
 				<div className="flex flex-col gap-8">
-					<ButtonLink className="w-fit" href={urls.conversations.list} size="sm">
+					<ButtonLink className="w-fit" href={urls.conversations.list()} size="sm">
 						Matches
 					</ButtonLink>
 					{items.length === 0 ? (

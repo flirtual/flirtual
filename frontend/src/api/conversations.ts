@@ -17,6 +17,27 @@ export type Conversation = CreatedAtModel & {
 	userId: string;
 };
 
-export async function list(options: NarrowFetchOptions = {}): Promise<Array<Conversation>> {
-	return fetch<Array<Conversation>>("get", "conversations", options);
+export interface PaginateMetadata {
+	total: number;
+	cursor: {
+		next?: string;
+		previous?: string;
+		self: {
+			before?: string;
+			page: number;
+		};
+	};
+}
+
+export interface Paginate<T> {
+	data: Array<T>;
+	metadata: PaginateMetadata;
+}
+
+export type ConversationList = Paginate<Conversation>;
+
+export async function list(
+	options: NarrowFetchOptions<undefined, { cursor?: string }>
+): Promise<ConversationList> {
+	return fetch<ConversationList>("get", "conversations", options);
 }

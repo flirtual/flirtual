@@ -6,7 +6,7 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { api, ResponseError } from "./api";
-import { toAbsoluteUrl, toRelativeUrl, urls } from "./urls";
+import { toAbsoluteUrl, urls } from "./urls";
 import { UserTags } from "./api/user";
 import { tryJsonParse } from "./utilities";
 
@@ -32,7 +32,6 @@ export const withOptionalSession = cache(async () => {
 
 export const withSession = cache(async (next?: string) => {
 	const session = await withOptionalSession();
-	next ??= toRelativeUrl(await withLocation());
 
 	if (!session) return redirect(urls.login(next));
 	return session;

@@ -44,7 +44,7 @@ export const ConversationListButton: FC = () => {
 	const conversationCount = clamp(useUnreadConversations().length, 0, 99);
 
 	return (
-		<NavigationIconButton href={urls.conversations.list} id="conversation-button">
+		<NavigationIconButton href={urls.conversations.list()} id="conversation-button">
 			<div className="relative">
 				<ChatBubbleLeftRightIcon className="aspect-square w-8" strokeWidth={1.5} />
 				{conversationCount !== 0 && (
