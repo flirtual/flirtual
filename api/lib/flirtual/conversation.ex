@@ -7,7 +7,6 @@ defmodule Flirtual.Conversation do
   import Flirtual.Utilities
 
   alias Flirtual.Conversation.Cursor
-  alias Flirtual.Jwt
   alias Flirtual.Conversation.Message
   alias Flirtual.Conversation
   alias Flirtual.Talkjs
@@ -47,8 +46,8 @@ defmodule Flirtual.Conversation do
   defmodule Cursor do
     import Flirtual.Utilities
 
-    @derive [{Jason.Encoder, only: [:before, :page, :limit]}]
-    defstruct before: nil, last_before: nil, page: 0, limit: 10
+    @derive [{Jason.Encoder, only: [:page, :limit]}]
+    defstruct before: nil, last_before: nil, page: 0, limit: 2
 
     def map(self, data) do
       %{
@@ -63,39 +62,41 @@ defmodule Flirtual.Conversation do
 
     def encode(nil), do: nil
 
-    def encode(%Cursor{before: before, last_before: last_before, page: page})
+    def encode(%Cursor{page: page} = cursor)
         when is_integer(page) and page > 0 do
-      {:ok, token} =
-        Jwt.config("list-cursor")
-        |> Jwt.sign(%{
-          "before" => if(is_nil(before), do: nil, else: DateTime.to_unix(before, :millisecond)),
-          "last_before" =>
-            if(is_nil(last_before),
-              do: nil,
-              else: DateTime.to_unix(last_before, :millisecond)
-            ),
-          "page" => page
-        })
-
-      token
+      :erlang.term_to_binary(
+        {
+          cursor.last_before,
+          cursor.before,
+          cursor.page,
+          cursor.limit
+        },
+        [
+          :compressed
+        ]
+      )
+      |> Base.url_encode64()
     end
 
     def encode(_), do: nil
 
     def decode(token) when is_binary(token) do
-      with {:ok, claims} <-
-             Jwt.config("list-cursor")
-             |> Joken.verify_and_validate(token),
-           %{
-             "before" => before,
-             "last_before" => last_before,
-             "page" => page
-           } <- claims do
+      with {:ok, binary} <- Base.url_decode64(token),
+           {
+             last_before,
+             before,
+             page,
+             limit
+           }
+           when (is_nil(last_before) or is_integer(last_before)) and
+                  (is_nil(before) or is_integer(before)) and is_integer(page) and
+                  is_integer(limit) <-
+             :erlang.binary_to_term(binary) do
         %Cursor{
-          before: if(is_nil(before), do: nil, else: DateTime.from_unix!(before, :millisecond)),
-          last_before:
-            if(is_nil(last_before), do: nil, else: DateTime.from_unix!(last_before, :millisecond)),
-          page: page
+          before: before,
+          last_before: last_before,
+          page: page,
+          limit: limit
         }
       else
         _ -> first()
@@ -113,7 +114,8 @@ defmodule Flirtual.Conversation do
             data
             |> List.last()
             |> Access.get(:last_message)
-            |> Access.get(:created_at),
+            |> Access.get(:created_at)
+            |> DateTime.to_unix(:millisecond),
           last_before: self.before,
           page: self.page + 1
         }
@@ -139,8 +141,7 @@ defmodule Flirtual.Conversation do
     query =
       %{
         limit: cursor.limit,
-        lastMessageBefore:
-          if(is_nil(cursor.before), do: nil, else: DateTime.to_unix(cursor.before, :millisecond))
+        lastMessageBefore: cursor.before
       }
       |> exclude_nil()
 
