@@ -1,6 +1,7 @@
 defmodule FlirtualWeb.MatchmakingController do
   use FlirtualWeb, :controller
 
+  import FlirtualWeb.Utilities
   import Flirtual.Utilities
 
   alias Flirtual.Matchmaking
@@ -13,7 +14,7 @@ defmodule FlirtualWeb.MatchmakingController do
   def list_prospects(conn, %{"kind" => kind}) do
     with {:ok, prospect_ids} <-
            Matchmaking.list_prospects(conn.assigns[:session].user, to_atom(kind, :love)) do
-      conn |> json(prospect_ids)
+      conn |> json_with_etag(prospect_ids)
     end
   end
 

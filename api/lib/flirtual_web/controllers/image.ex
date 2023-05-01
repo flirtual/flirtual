@@ -1,14 +1,17 @@
 defmodule FlirtualWeb.ImageController do
+  use FlirtualWeb, :controller
+
+  import FlirtualWeb.Utilities
+
   alias Flirtual.Policy
   alias Flirtual.User.Profile.Image
-  use FlirtualWeb, :controller
 
   action_fallback FlirtualWeb.FallbackController
 
   def get(conn, %{"image_id" => image_id}) do
     with %Image{} = image <- Image.get(image_id),
          :ok <- Policy.can(conn, :read, image) do
-      conn |> json(Policy.transform(conn, image))
+      conn |> json_with_etag(Policy.transform(conn, image))
     else
       nil -> {:error, {:not_found, "Image not found", %{image_id: image_id}}}
       value -> value

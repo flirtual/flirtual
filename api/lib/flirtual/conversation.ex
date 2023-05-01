@@ -47,7 +47,7 @@ defmodule Flirtual.Conversation do
     import Flirtual.Utilities
 
     @derive [{Jason.Encoder, only: [:page, :limit]}]
-    defstruct before: nil, last_before: nil, page: 0, limit: 2
+    defstruct before: nil, last_before: nil, page: 0, limit: 10
 
     def map(self, data) do
       %{

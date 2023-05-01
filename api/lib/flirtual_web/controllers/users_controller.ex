@@ -36,7 +36,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :read, user) do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
-      conn |> json(Policy.transform(conn, user))
+      conn |> json_with_etag(Policy.transform(conn, user))
     end
   end
 
@@ -50,7 +50,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :read, user) do
       {:error, {:not_found, "User not found", %{username: username}}}
     else
-      conn |> json(Policy.transform(conn, user))
+      conn |> json_with_etag(Policy.transform(conn, user))
     end
   end
 

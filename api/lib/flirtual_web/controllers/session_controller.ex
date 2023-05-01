@@ -5,6 +5,7 @@ defmodule FlirtualWeb.SessionController do
   import Plug.Conn
   import Phoenix.Controller
   import Ecto.Changeset
+  import FlirtualWeb.Utilities
   import Flirtual.Utilities.Changeset
 
   alias Flirtual.User.Session
@@ -16,7 +17,7 @@ defmodule FlirtualWeb.SessionController do
 
   def get(conn, _) do
     with :ok <- Policy.can(conn, :read, conn.assigns[:session]) do
-      conn |> json(Policy.transform(conn, conn.assigns[:session]))
+      conn |> json_with_etag(Policy.transform(conn, conn.assigns[:session]))
     end
   end
 

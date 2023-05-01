@@ -2,6 +2,7 @@ defmodule FlirtualWeb.ConversationController do
   use FlirtualWeb, :controller
 
   import Plug.Conn
+  import FlirtualWeb.Utilities
   import Phoenix.Controller
 
   alias Flirtual.Policy
@@ -17,7 +18,7 @@ defmodule FlirtualWeb.ConversationController do
            Conversation.list(user.id, cursor),
          data <- Policy.transform(conn, data) do
       conn
-      |> json(%{
+      |> json_with_etag(%{
         data: data,
         metadata: metadata
       })

@@ -2,6 +2,7 @@ defmodule FlirtualWeb.SubscriptionController do
   use FlirtualWeb, :controller
 
   import Plug.Conn
+  import FlirtualWeb.Utilities
   import Phoenix.Controller
 
   alias Flirtual.Policy
@@ -11,7 +12,7 @@ defmodule FlirtualWeb.SubscriptionController do
   action_fallback FlirtualWeb.FallbackController
 
   def list_plans(conn, _) do
-    conn |> json(Policy.transform(conn, Plan.list()))
+    conn |> json_with_etag(Policy.transform(conn, Plan.list()))
   end
 
   def checkout(conn, %{"plan_id" => plan_id}) do
