@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import { displayName } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 
+import { ProspectActionBar } from "../browse/prospect-actions";
+
 import { getProfileUser } from "./profile-user";
 
 export interface ProfilePageProps {
@@ -20,6 +22,11 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
 export default async function ProfilePage({ params }: ProfilePageProps) {
 	const user = await getProfileUser(params.username);
 
-	// @ts-expect-error: Server Component
-	return <Profile user={user} />;
+	return (
+		<>
+			{/* @ts-expect-error: Server Component */}
+			<Profile user={user} />
+			{!user.relationship?.kind && <ProspectActionBar mode="love" userId={user.id} />}
+		</>
+	);
 }
