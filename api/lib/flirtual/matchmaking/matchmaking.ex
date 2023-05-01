@@ -171,16 +171,10 @@ defmodule Flirtual.Matchmaking do
     reset_count = user.profile[reset_count_field]
 
     Repo.transaction(fn repo ->
-      with prospect <-
-             Prospect.get(profile_id: user.id, target_id: target.id, kind: kind),
-           {:ok, _} <-
-             (if is_nil(prospect) do
-                {:ok, nil}
-              else
-                prospect
-                |> change(%{completed: true})
-                |> Repo.update()
-              end),
+      with {_, _} <-
+             Prospect
+             |> where(profile_id: ^user.id, target_id: ^target.id)
+             |> Repo.update_all(set: [completed: true]),
            {:ok, item} <-
              %LikesAndPasses{}
              |> cast(
