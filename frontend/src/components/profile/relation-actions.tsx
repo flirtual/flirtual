@@ -72,7 +72,7 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 			</>
 		);
 
-	if (relationship.type)
+	if (relationship.type && relationship.kind)
 		return (
 			<div className="flex w-full items-center justify-between gap-4">
 				<span className="text-xl [overflow-wrap:anywhere] dark:text-white-20">
@@ -84,7 +84,19 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 							: "passed on"
 					} ${displayName(user)}.`}
 				</span>
-				<Button className="shrink-0" size="sm" onClick={() => alert("TODO")}>
+				<Button
+					className="shrink-0"
+					size="sm"
+					onClick={() =>
+						api.matchmaking
+							.reverseRespondProspect({
+								// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+								body: { kind: relationship.kind!, userId: user.id }
+							})
+							.then(() => router.refresh())
+							.catch(toasts.addError)
+					}
+				>
 					Undo
 				</Button>
 			</div>

@@ -77,7 +77,7 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 		? options.body
 		: JSON.stringify(typeof options.body === "object" ? toSnakeObject(options.body) : options.body);
 
-	console.log(`[fetch] ${toRelativeUrl(url)}`);
+	console.log(`[fetch] ${method} ${toRelativeUrl(url)}`);
 
 	const response = await globalThis.fetch(url, {
 		...options,
@@ -100,7 +100,7 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 		);
 		error.stack = error.stack?.split("\n").slice(2).join("\n");
 
-		console.error(`[fetch] ${toRelativeUrl(url)}: ${error.message}`);
+		console.error(`[fetch] ${method} ${toRelativeUrl(url)}: ${error.message}`);
 		throw error;
 	}
 
