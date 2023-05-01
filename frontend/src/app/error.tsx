@@ -31,7 +31,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 						</p>
 					</div>
 				</div>
-				<span className="whitespace-pre font-mono text-xs">{error.message}</span>
+				<span className="max-w-sm whitespace-pre-wrap font-mono text-xs">{error.message}</span>
 				<div className="flex gap-2">
 					<Button className="w-fit" kind="secondary" size="sm" onClick={reset}>
 						Try again

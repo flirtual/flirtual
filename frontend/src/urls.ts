@@ -69,8 +69,8 @@ export const urls = {
 		`/${user ? (typeof user === "string" ? user : user.username) : "me"}`,
 	browse: (kind?: ProspectKind) => url("/browse", { kind: kind === "love" ? undefined : kind }),
 	conversations: {
-		list: (cursor?: string) => url("/matches", { cursor }),
-		with: (userId: string, cursor?: string) => url(`/matches/${userId}`, { cursor })
+		list: () => "/matches",
+		with: (userId: string) => `/matches/${userId}`
 	},
 	likes: "/likes",
 	onboarding: (onboardingIdx: 1 | 2 | 3 | 4) => `/onboarding/${onboardingIdx}`,

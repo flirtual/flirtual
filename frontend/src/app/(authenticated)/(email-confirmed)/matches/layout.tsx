@@ -10,7 +10,7 @@ import { thruServerCookies, withSession } from "~/server-utilities";
 import { urls } from "~/urls";
 import { api } from "~/api";
 import { fromEntries } from "~/utilities";
-import { SWRConfig } from "~/components/swr-config";
+import { SWRConfig } from "~/components/swr";
 
 import { withConversations } from "./data.server";
 import { LikesYouButton } from "./likes-you-button";
@@ -22,14 +22,19 @@ const withConversationUsers = cache(async (...userIds: Array<string>) => {
 export default async function ConversationsLayout({ children }: PropsWithChildren) {
 	const session = await withSession();
 
-	const { data: conversations } = await withConversations();
+	const { data: conversations, metadata } = await withConversations();
 	const users = await withConversationUsers(...conversations.map(({ userId }) => userId));
 
 	return (
 		<SWRConfig
 			value={{
 				fallback: {
-					...fromEntries(users.map((user) => [`user/${user.id}`, user]))
+					...fromEntries(users.map((user) => [`user/${user.id}`, user])),
+					// HACK: This is a hack to make the SWR cache work with the server-side rendered
+					// conversations. The server-side rendered conversations are not in the cache, so
+					// we need to add them to the cache.
+					// BLOCKER: https://github.com/vercel/swr/issues/2594
+					[`$inf$@"conversations",null,`]: [{ data: conversations, metadata }]
 				}
 			}}
 		>

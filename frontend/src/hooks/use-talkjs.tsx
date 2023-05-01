@@ -4,14 +4,14 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from "
 import Talk from "talkjs";
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
-import { unstable_serialize } from "swr/infinite";
 
 import { talkjsAppId } from "~/const";
 import { resolveTheme } from "~/theme";
+import { unstableInfiniteSerialize } from "~/components/swr";
 
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
-import { getKey } from "./use-conversations";
+import { getConversationsKey } from "./use-conversations";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>([]);
@@ -20,8 +20,8 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({ children }) 
 	const [ready, setReady] = useState(false);
 	const [authSession] = useSession();
 
-	const { mutate } = useSWRConfig();
 	const router = useRouter();
+	const { mutate } = useSWRConfig();
 
 	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>(
 		[]
@@ -47,9 +47,10 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({ children }) 
 		if (!session) return;
 
 		const messageSubscription = session.onMessage(async () => {
-			await mutate(unstable_serialize(getKey));
+			await mutate(unstableInfiniteSerialize(getConversationsKey));
 			router.refresh();
 		});
+
 		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
 
 		return () => {

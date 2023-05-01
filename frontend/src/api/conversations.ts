@@ -24,6 +24,7 @@ export interface PaginateMetadata {
 		previous?: string;
 		self: {
 			before?: string;
+			limit: number;
 			page: number;
 		};
 	};

@@ -1,7 +1,8 @@
 "use client";
 
+import { useInView } from "framer-motion";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
@@ -10,27 +11,39 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { TimeSince } from "~/components/time-since";
 import { UserAvatar } from "~/components/user-avatar";
+import { useConversations } from "~/hooks/use-conversations";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
 export type ConversationListItemProps = Conversation & {
 	active?: boolean;
-	cursor?: string;
+	lastItem?: boolean;
 };
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
-	const { kind, active = false, userId, lastMessage, cursor } = props;
+	const { kind, active = false, lastItem = false, userId, lastMessage } = props;
 
-	const { data: user } = useUser({ userId });
+	const { loadMore } = useConversations();
+
+	const ref = useRef<HTMLDivElement>(null);
+	const { data: user } = useUser(userId);
+
+	const inView = useInView(ref);
+
+	useEffect(() => {
+		if (!lastItem || !inView) return;
+		void loadMore();
+	}, [inView, lastItem, loadMore]);
 
 	return (
 		<div
 			className={twMerge("relative rounded-xl shadow-brand-1", active && "bg-brand-gradient pb-1")}
+			ref={ref}
 		>
 			<div className="flex rounded-xl bg-white-30 dark:bg-black-60">
 				<Link
 					className="shrink-0 before:absolute before:h-full before:w-full"
-					href={urls.conversations.with(user.id, cursor)}
+					href={urls.conversations.with(user.id)}
 				>
 					<UserAvatar className="h-20 w-20 rounded-l-xl" height={80} user={user} width={80} />
 				</Link>

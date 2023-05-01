@@ -3,11 +3,9 @@
 import { twMerge } from "tailwind-merge";
 import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { FC, useCallback } from "react";
+import { FC, Suspense } from "react";
 
 import { urls } from "~/urls";
-import { Button } from "~/components/button";
-import { ConversationList } from "~/api/conversations";
 import { useConversations } from "~/hooks/use-conversations";
 
 import { ConversationListItem } from "./list-item";
@@ -15,16 +13,13 @@ import { LikesYouButton } from "./likes-you-button";
 
 export interface ConversationAsideProps {
 	activeConversation?: string;
-	initialConversations: ConversationList;
 }
 
 export const ConversationAside: FC<ConversationAsideProps> = (props) => {
-	const { activeConversation, initialConversations } = props;
-	const { data = [], size, setSize } = useConversations(initialConversations);
-
+	const { activeConversation } = props;
 	const HeaderIcon = activeConversation ? ChevronLeftIcon : XMarkIcon;
 
-	const loadMore = useCallback(() => setSize((size) => size + 1), []);
+	const { data } = useConversations();
 
 	return (
 		<div className="flex w-full shrink-0 grow-0 flex-col sm:min-h-[calc(100vh-9rem)] md:w-96 md:rounded-t-xl md:bg-white-20 md:shadow-brand-1 dark:md:bg-black-70">
@@ -45,36 +40,22 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 			>
 				<LikesYouButton />
 				<div className="flex flex-col gap-4">
-					{data.map(({ data: conversations, metadata }) => (
-						<div className="flex flex-col gap-4" key={metadata.cursor.self.page}>
-							{conversations.map((conversation) => (
-								<ConversationListItem
-									{...conversation}
-									active={activeConversation === conversation.userId}
-									cursor={""}
-									key={conversation.id}
-								/>
-							))}
-						</div>
+					{data.map(({ data: conversations, metadata }, dataIdx) => (
+						<Suspense fallback={"loading"} key={metadata.cursor.self.page}>
+							<div className="flex flex-col gap-4">
+								{conversations.map((conversation, conversationIdx) => (
+									<ConversationListItem
+										{...conversation}
+										active={activeConversation === conversation.userId}
+										key={conversation.id}
+										lastItem={
+											dataIdx === data.length - 1 && conversationIdx === conversations.length - 1
+										}
+									/>
+								))}
+							</div>
+						</Suspense>
 					))}
-					<Button className="mx-auto w-fit" size="sm" onClick={loadMore}>
-						Load more
-					</Button>
-					{/* <div className="grid grid-cols-3 items-center gap-2">
-						{(metadata.cursor.self.page === 1 || metadata.cursor.previous) && (
-							<ButtonLink href={urls.conversations.list(metadata.cursor.previous)} size="sm">
-								Back
-							</ButtonLink>
-						)}
-						<div className="col-start-2 flex items-center justify-center">
-							<span className="text-sm">{metadata.cursor.self.page + 1}</span>
-						</div>
-						{metadata.cursor.next && (
-							<ButtonLink href={urls.conversations.list(metadata.cursor.next)} size="sm">
-								Next
-							</ButtonLink>
-						)}
-					</div> */}
 				</div>
 			</div>
 		</div>
