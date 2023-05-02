@@ -360,8 +360,20 @@ defmodule Flirtual.Stripe do
     Stripe.Customer.delete(stripe_id)
   end
 
+  def get_customer(stripe_id) when is_binary(stripe_id) do
+    with {:ok, customer} <- Stripe.Customer.retrieve(stripe_id, expand: ["subscriptions"]) do
+      {:ok, customer}
+    else
+      {:error, %Stripe.Error{extra: %{http_status: 404}}} -> {:ok, nil}
+    end
+  end
+
+  def get_subscription(stripe_id) when is_binary(stripe_id) do
+    Stripe.Subscription.retrieve(stripe_id)
+  end
+
   def cancel_subscription(%Subscription{stripe_id: stripe_id}, options \\ []) do
-    subscription = Stripe.Subscription.retrieve(stripe_id)
+    subscription = get_subscription(stripe_id)
 
     with {:ok, %Stripe.Subscription{canceled_at: nil}} <- subscription,
          {:ok, _} <-

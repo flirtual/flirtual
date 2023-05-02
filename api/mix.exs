@@ -40,6 +40,7 @@ defmodule Flirtual.MixProject do
       {:cors_plug, "~> 3.0"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
+      {:redisgraph, "~> 0.1.0"},
       {:elasticsearch, "~> 1.0.0"},
       {:stripity_stripe, "~> 2.0"},
       {:phoenix_html, "~> 3.0"},
