@@ -112,15 +112,15 @@ export type ProfilePersonality = {
 };
 
 export const personalityQuestionLabels = [
+	"I daydream a lot",
+	"I find many things beautiful",
+	"I dislike it when things change",
 	"I plan my life out",
 	"Rules are important to follow",
-	"I daydream a lot",
-	"The truth is more important than people's feelings",
 	"I often do spontaneous things",
 	"Deep down most people are good people",
 	"I love helping people",
-	"I dislike it when things change",
-	"I find many things beautiful"
+	"The truth is more important than people's feelings"
 ];
 
 export const DefaultProfilePersonality = Object.freeze<ProfilePersonality>(
