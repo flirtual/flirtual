@@ -89,11 +89,10 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 					size="sm"
 					onClick={() =>
 						api.matchmaking
-							.reverseRespondProspect({
-								// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-								body: { kind: relationship.kind!, userId: user.id }
+							.unmatch({ query: { userId: user.id } })
+							.then(() => {
+								return router.refresh();
 							})
-							.then(() => router.refresh())
 							.catch(toasts.addError)
 					}
 				>
