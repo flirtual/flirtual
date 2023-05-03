@@ -368,6 +368,8 @@ defmodule Flirtual.Stripe do
     end
   end
 
+  def get_customer(_), do: {:ok, nil}
+
   def get_subscription(stripe_id) when is_binary(stripe_id) do
     Stripe.Subscription.retrieve(stripe_id)
   end
