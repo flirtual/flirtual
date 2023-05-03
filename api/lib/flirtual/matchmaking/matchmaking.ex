@@ -6,11 +6,11 @@ defmodule Flirtual.Matchmaking do
   alias Flirtual.User.Profile.Block
   alias Flirtual.Subscription
   alias Flirtual.Talkjs
+  alias Flirtual.Conversation
   alias Flirtual.Elasticsearch
   alias Flirtual.User.Profile.Prospect
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile
-  Flirtual.Utilities.Changeset
   alias Flirtual.{Repo, User, Attribute, Mailer}
 
   def get_reset_fields(kind) do
@@ -143,7 +143,7 @@ defmodule Flirtual.Matchmaking do
              conversation_id,
              %{
                participants: [user_a.id, user_b.id],
-               subject: if(kind === :like, do: "❤️", else: "✌️")
+               subject: Conversation.encode(:kind, kind)
              }
            ),
          {:ok, _} <-
