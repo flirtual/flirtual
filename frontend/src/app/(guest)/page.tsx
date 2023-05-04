@@ -18,8 +18,8 @@ export default function RootIndexPage() {
 			<SectionAvatarProfiles
 				values={[
 					"VR is a personality-first way of meeting new people.",
-					"Avatars can help you express yourself, without feeling self-conscious.",
-					"After a date or two, go on a video call or meet in real life!"
+					"Avatars help you express yourself, without feeling self-conscious.",
+					"After a VR date or two, go on a video call or meet in real life!"
 				]}
 			/>
 			<SectionCarousel

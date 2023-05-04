@@ -255,7 +255,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					<FormField name="new">
 						{(field) => (
 							<>
-								<InputLabel>New to Virtual Reality</InputLabel>
+								<InputLabel>Are you new to Virtual Reality?</InputLabel>
 								<InputSwitch {...field.props} />
 							</>
 						)}
