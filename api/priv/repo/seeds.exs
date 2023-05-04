@@ -394,7 +394,7 @@ defmodule A do
            {:ok, _} <-
              Ecto.build_assoc(profile, :preferences, %{
                agemin: agemin,
-               agemax: agemax,
+               agemax: if(agemax > 99, do: nil, else: agemax),
                attributes:
                  gender_preferences
                  |> List.flatten()
