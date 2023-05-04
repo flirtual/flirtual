@@ -64,7 +64,16 @@
 # name = string
 
 defmodule A do
+  alias Ecto.UUID
   alias Flirtual.{Repo, User, Users, Stripe, Plan, Attribute}
+  alias Flirtual.User.Profile.Image
+
+  @all_genders Attribute.list(type: "gender")
+  @all_sexuality Attribute.list(type: "sexuality")
+  @all_games Attribute.list(type: "game")
+  @all_kinks Attribute.list(type: "kink")
+  @all_platforms Attribute.list(type: "platform")
+  @all_interests Attribute.list(type: "interest")
 
   def query(query) do
     with {:ok, conn} <-
@@ -143,20 +152,14 @@ defmodule A do
         agreeableness,
         domsub
       ]) do
+    IO.puts("Creating user #{username} (#{id})")
+
     Repo.transaction(fn ->
-      with created_at =
+      with {:ok, created_at} <-
              if(is_nil(registered_unix),
-               do: nil,
-               else: DateTime.from_unix!(registered_unix, :second)
+               do: {:ok, nil},
+               else: DateTime.from_unix(registered_unix, :second)
              ),
-           email_confirmed_at = (is_confirmed === "true" && created_at) || nil,
-           deactivated_at =
-             if(is_nil(deactivated), do: nil, else: DateTime.from_unix!(deactivated, :second)),
-           banned_at = if(is_nil(banned), do: nil, else: DateTime.from_unix!(banned, :second)),
-           shadowbanned_at =
-             if(is_nil(shadowbanned), do: nil, else: DateTime.from_unix!(shadowbanned, :second)),
-           active_at =
-             if(is_nil(lastlogin), do: nil, else: DateTime.from_unix!(lastlogin, :second)),
            {:ok, user} <-
              %User{
                id: id,
@@ -167,47 +170,58 @@ defmodule A do
                stripe_id: stripe_id,
                tags:
                  [
-                   is_admin === "true" && :admin,
-                   is_mod === "true" && :moderator,
-                   is_beta === "true" && :beta_tester,
-                   is_debugger === "true" && :debugger,
-                   is_vrlfp === "true" && :legacy_vrlfp
+                   to_boolean(is_admin) && :admin,
+                   to_boolean(is_mod) && :moderator,
+                   to_boolean(is_beta) && :beta_tester,
+                   to_boolean(is_debugger) && :debugger,
+                   to_boolean(is_vrlfp) && :legacy_vrlfp
                  ]
                  |> Enum.filter(&(!!&1)),
                born_at:
-                 DateTime.new!(
-                   Date.new!(
-                     Integer.parse(String.slice(to_string(dob), 0..3)) |> elem(0),
-                     Integer.parse(String.slice(to_string(dob), 4..5)) |> elem(0),
-                     Integer.parse(String.slice(to_string(dob), 6..7)) |> elem(0)
-                   ),
-                   Time.new!(0, 0, 0)
+                 if(
+                   is_nil(dob),
+                   do: nil,
+                   else:
+                     DateTime.new!(
+                       Date.new!(
+                         Integer.parse(String.slice(to_string(dob), 0..3)) |> elem(0),
+                         Integer.parse(String.slice(to_string(dob), 4..5)) |> elem(0),
+                         Integer.parse(String.slice(to_string(dob), 6..7)) |> elem(0)
+                       ),
+                       Time.new!(0, 0, 0)
+                     )
                  ),
-               email_confirmed_at: email_confirmed_at,
-               deactivated_at: deactivated_at,
-               banned_at: banned_at,
-               shadowbanned_at: shadowbanned_at,
-               active_at: active_at,
+               email_confirmed_at: (to_boolean(is_confirmed) && created_at) || nil,
+               deactivated_at:
+                 if(is_nil(deactivated), do: nil, else: DateTime.from_unix!(deactivated, :second)),
+               banned_at: if(is_nil(banned), do: nil, else: DateTime.from_unix!(banned, :second)),
+               shadowbanned_at:
+                 if(is_nil(shadowbanned),
+                   do: nil,
+                   else: DateTime.from_unix!(shadowbanned, :second)
+                 ),
+               active_at:
+                 if(is_nil(lastlogin), do: nil, else: DateTime.from_unix!(lastlogin, :second)),
                created_at: created_at
              }
              |> Repo.insert(),
            {:ok, preferences} <-
              Ecto.build_assoc(user, :preferences, %{
                theme: if(is_nil(theme), do: :light, else: String.to_atom(theme)),
-               nsfw: nsfw === "true"
+               nsfw: to_boolean(nsfw)
              })
              |> Repo.insert(),
            {:ok, _} <-
              Ecto.build_assoc(preferences, :email_notifications, %{
-               matches: match_emails === "true",
-               messages: message_emails === "true",
-               likes: like_emails === "true",
-               newsletter: newsletter === "true"
+               matches: to_boolean(match_emails),
+               messages: to_boolean(message_emails),
+               likes: to_boolean(like_emails),
+               newsletter: to_boolean(newsletter)
              })
              |> Repo.insert(),
            {:ok, _} <-
              Ecto.build_assoc(preferences, :privacy, %{
-               analytics: optout !== "true",
+               analytics: not to_boolean(optout),
                personality: String.to_atom(privacy_personality),
                connections: :matches,
                sexuality: String.to_atom(privacy_sexuality),
@@ -224,14 +238,14 @@ defmodule A do
                  |> Enum.find(&(&1.status === "active"))
              ),
            {:ok, _} <-
-             if(premium === "true" or supporter === "true" or lifetime_premium === "true",
+             if(to_boolean(premium) or to_boolean(supporter) or to_boolean(lifetime_premium),
                do:
                  Ecto.build_assoc(user, :subscription, %{
                    plan_id:
-                     if(lifetime_premium === "true",
+                     if(to_boolean(lifetime_premium),
                        do: "ccd77191-c9aa-4b01-859d-e6475a87e82e",
                        else:
-                         if(supporter === "true",
+                         if(to_boolean(supporter),
                            do: "b8bbbad1-103e-40dd-80e6-99f0d81e9fe7",
                            else:
                              (Plan.get(
@@ -246,66 +260,22 @@ defmodule A do
                  |> Repo.insert(),
                else: {:ok, nil}
              ),
-           {:ok, [[country]]} <-
+           {:ok, country} <-
              query(
                "MATCH (u:user {id: '#{user.id}'})-[:COUNTRY]->(c:country) RETURN toLower(c.id)"
              ),
+           country =
+             country
+             |> List.flatten()
+             |> List.first(),
            {:ok, languages} <-
              query(
                "MATCH (u:user {id: '#{user.id}'})-[:KNOWS]->(l:language) RETURN toLower(l.id)"
              ),
-           languages =
-             languages
-             |> List.flatten()
-             |> Enum.map(fn lang ->
-               case lang do
-                 "sgn-br" ->
-                   :bzs
-
-                 "sgn-de" ->
-                   :gsg
-
-                 "sgn-es" ->
-                   :ssp
-
-                 "sgn-fr" ->
-                   :fsl
-
-                 "sgn-gb" ->
-                   :bfi
-
-                 "sgn-jp" ->
-                   :jsl
-
-                 "sgn-mx" ->
-                   :mfs
-
-                 "sgn-nl" ->
-                   :dse
-
-                 "sgn-pt" ->
-                   :psr
-
-                 "sgn-us" ->
-                   :ase
-
-                 lang
-                 when lang === "sgn-be-fr" or lang === "sgn-be-nl" or lang === "sgn-ch-de" or
-                        lang === "sgn-co" or lang === "sgn-dk" or lang === "sgn-gr" or
-                        lang === "sgn-ie" or lang === "sgn-it" or lang === "sgn-ni" or
-                        lang === "sgn-no" or lang === "sgn-se" or lang === "sgn-za" ->
-                   nil
-
-                 lang ->
-                   String.to_atom(lang)
-               end
-             end)
-             |> Enum.filter(&(!is_nil(&1))),
            {:ok, custom_interests} <-
              query(
                "MATCH (u:user {id: '#{user.id}'})-[:TAGGED]->(i:interest {type: 'custom'}) RETURN i.name"
              ),
-           custom_interests = custom_interests |> List.flatten(),
            {:ok, genders} <-
              query("MATCH (u:user {id: '#{user.id}'})-[:GENDER]->(g:gender) RETURN g.name"),
            {:ok, sexualities} <-
@@ -320,56 +290,10 @@ defmodule A do
              query(
                "MATCH (u:user {id: '#{user.id}'})-[:TAGGED]->(i:interest) WHERE i.type <> 'custom' RETURN i.name"
              ),
-           all_genders = Attribute.list(type: "gender"),
-           genders =
-             genders
-             |> List.flatten()
-             |> Enum.map(fn gender ->
-               all_genders |> Enum.find(&(&1.name === A.map_attribute_name(gender)))
-             end),
-           all_sexuality = Attribute.list(type: "sexuality"),
-           sexualities =
-             sexualities
-             |> List.flatten()
-             |> Enum.map(fn sexuality ->
-               all_sexuality |> Enum.find(&(&1.name === A.map_attribute_name(sexuality)))
-             end),
-           all_games = Attribute.list(type: "game"),
-           games =
-             games
-             |> List.flatten()
-             |> Enum.map(fn game ->
-               all_games |> Enum.find(&(&1.name === A.map_attribute_name(game)))
-             end),
-           all_kinks = Attribute.list(type: "kink"),
-           kinks =
-             kinks
-             |> List.flatten()
-             |> Enum.map(fn kink ->
-               all_kinks |> Enum.find(&(&1.name === A.map_attribute_name(kink)))
-             end),
-           all_platforms = Attribute.list(type: "platform"),
-           platforms =
-             platforms
-             |> List.flatten()
-             |> Enum.map(fn platform ->
-               all_platforms |> Enum.find(&(&1.name === A.map_attribute_name(platform)))
-             end),
-           all_interests = Attribute.list(type: "interest"),
-           interests =
-             interests
-             |> List.flatten()
-             |> Enum.map(fn interest ->
-               all_interests |> Enum.find(&(&1.name === A.map_attribute_name(interest)))
-             end),
-           attributes =
-             [genders, sexualities, games, kinks, platforms, interests]
-             |> List.flatten()
-             |> IO.inspect(),
            {:ok, profile} <-
              Ecto.build_assoc(user, :profile, %{
                display_name: displayname,
-               biography: bio,
+               biography: if(is_nil(bio), do: nil, else: bio |> strip_regex()),
                domsub:
                  case domsub do
                    "Dominant" -> :dominant
@@ -383,36 +307,98 @@ defmodule A do
                    "Non-monogamous" -> :nonmonogamous
                    _ -> nil
                  end,
-               country: if(is_nil(country), do: nil, else: String.to_atom(country)),
+               country:
+                 if(is_nil(country),
+                   do: nil,
+                   else: String.to_atom(country)
+                 ),
                openness: openness,
                conscientiousness: conscientiousness,
                agreeableness: agreeableness,
-               question0: survey_1 === "true",
-               question1: survey_2 === "true",
-               question2: survey_3 === "true",
-               question3: survey_4 === "true",
-               question4: survey_5 === "true",
-               question5: survey_6 === "true",
-               question6: survey_7 === "true",
-               question7: survey_8 === "true",
-               question8: survey_9 === "true",
-               serious: serious === "true",
-               new: new === true,
-               languages: languages,
-               custom_interests: custom_interests,
+               question0: to_boolean(survey_1),
+               question1: to_boolean(survey_2),
+               question2: to_boolean(survey_3),
+               question3: to_boolean(survey_4),
+               question4: to_boolean(survey_5),
+               question5: to_boolean(survey_6),
+               question6: to_boolean(survey_7),
+               question7: to_boolean(survey_8),
+               question8: to_boolean(survey_9),
+               serious: to_boolean(serious),
+               new: if(is_nil(new), do: nil, else: to_boolean(new)),
+               languages:
+                 languages
+                 |> List.flatten()
+                 |> Enum.map(&map_language(&1))
+                 |> Enum.filter(&(!is_nil(&1))),
+               custom_interests:
+                 custom_interests
+                 |> List.flatten()
+                 |> Enum.map(&(strip_regex(&1) |> String.trim())),
                vrchat:
                  if(is_nil(vrchat),
                    do: nil,
                    else: vrchat |> String.replace("https://vrchat.com/home/search/", "")
                  ),
                discord: discord,
-               attributes: attributes
+               attributes:
+                 [
+                   genders
+                   |> List.flatten()
+                   |> map_attributes(@all_genders),
+                   sexualities
+                   |> List.flatten()
+                   |> map_attributes(@all_sexuality),
+                   games
+                   |> List.flatten()
+                   |> map_attributes(@all_games),
+                   kinks
+                   |> List.flatten()
+                   |> map_attributes(@all_kinks),
+                   platforms
+                   |> List.flatten()
+                   |> map_attributes(@all_platforms),
+                   interests
+                   |> List.flatten()
+                   |> map_attributes(@all_interests)
+                 ]
+                 |> List.flatten()
              })
              |> Repo.insert(),
+           {:ok, images} <-
+             query(
+               "MATCH (u:user {id: '#{user.id}'})-[:AVATAR]->(a:avatar) RETURN a.url, a.order, a.scanned"
+             ),
+           {_, nil} <-
+             Repo.insert_all(
+               Image,
+               images
+               |> Enum.map(fn [file_id, order, scanned] ->
+                 %{
+                   id: UUID.generate(),
+                   profile_id: {:placeholder, :profile_id},
+                   external_id: file_id,
+                   order: order,
+                   scanned: if(is_nil(scanned), do: false, else: to_boolean(scanned)),
+                   updated_at: {:placeholder, :ts},
+                   created_at: {:placeholder, :ts}
+                 }
+               end),
+               placeholders: %{
+                 ts: created_at,
+                 profile_id: profile.user_id
+               }
+             ),
+           {:ok, gender_preferences} <-
+             query("MATCH (u:user {id: '#{user.id}'})-[:LF]->(g:mgender) RETURN g.name"),
            {:ok, _} <-
              Ecto.build_assoc(profile, :preferences, %{
                agemin: agemin,
-               agemax: agemax
+               agemax: agemax,
+               attributes:
+                 gender_preferences
+                 |> List.flatten()
+                 |> map_attributes(@all_genders)
              })
              |> Repo.insert(),
            {:ok, _} <-
@@ -439,6 +425,16 @@ defmodule A do
     end)
   end
 
+  def to_boolean(value) do
+    case value do
+      "true" -> true
+      "false" -> false
+      true -> true
+      false -> false
+      nil -> nil
+    end
+  end
+
   def map_custom_weight(value) do
     value = to_string(value) |> Float.parse() |> elem(0)
 
@@ -454,8 +450,67 @@ defmodule A do
     end
   end
 
-  def map_attribute_name(value) do
-    value |> String.replace("_", " ")
+  def map_language(value) do
+    case value do
+      "sgn-br" ->
+        :bzs
+
+      "sgn-de" ->
+        :gsg
+
+      "sgn-es" ->
+        :ssp
+
+      "sgn-fr" ->
+        :fsl
+
+      "sgn-gb" ->
+        :bfi
+
+      "sgn-jp" ->
+        :jsl
+
+      "sgn-mx" ->
+        :mfs
+
+      "sgn-nl" ->
+        :dse
+
+      "sgn-pt" ->
+        :psr
+
+      "sgn-us" ->
+        :ase
+
+      value
+      when value === "sgn-be-fr" or value === "sgn-be-nl" or value === "sgn-ch-de" or
+             value === "sgn-co" or value === "sgn-dk" or value === "sgn-gr" or
+             value === "sgn-ie" or value === "sgn-it" or value === "sgn-ni" or
+             value === "sgn-no" or value === "sgn-se" or value === "sgn-za" ->
+        nil
+
+      value ->
+        String.to_atom(value)
+    end
+  end
+
+  def map_attributes(value, list) do
+    value
+    |> Enum.map(fn name ->
+      list |> Enum.find(&(normalize_attribute_name(&1.name) === normalize_attribute_name(name))) ||
+        raise "Unknown attribute: #{name}"
+    end)
+  end
+
+  def normalize_attribute_name(name) do
+    String.downcase(String.replace(name, "_", " "))
+  end
+
+  def strip_regex(value) do
+    value
+    |> String.replace(~r/\\\"/, "\"")
+    |> String.replace(~r/\\'/, "'")
+    |> String.replace(~r//, "'")
   end
 end
 
@@ -559,11 +614,9 @@ defmodule Flirtual.Seeds do
     "u.domsub"
   ]
 
-  {:ok, result_set} =
-    A.query("MATCH (u:user {username: 'kfarwell'}) RETURN #{keys |> Enum.join(", ")}")
+  {:ok, users} =
+    A.query("MATCH (u:user {username: 'minimaluser'}) RETURN #{keys |> Enum.join(", ")}")
 
-  IO.inspect(result_set)
-
-  result_set
+  users
   |> Enum.map(&A.create(&1))
 end
