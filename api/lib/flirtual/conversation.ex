@@ -27,8 +27,13 @@ defmodule Flirtual.Conversation do
   def encode(:kind, :love), do: "❤️"
   def encode(:kind, :friend), do: "✌️"
 
-  defp decode(:subject, "❤️"), do: :love
-  defp decode(:subject, "✌️"), do: :friend
+  defp decode(:subject, subject) do
+    if String.contains?(subject, "✌️") do
+      :friend
+    else
+      :love
+    end
+  end
 
   defp decode([]), do: []
   defp decode(data) when is_list(data), do: Enum.map(data, &decode(&1))

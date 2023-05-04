@@ -311,11 +311,13 @@ defmodule Flirtual.Users do
     import Flirtual.HCaptcha, only: [validate_captcha: 1]
     import Flirtual.User, only: [validate_current_password: 2]
 
+    @optional [:comment]
+
     embedded_schema do
       field :reason_id, :string
       field :reason, :map, virtual: true
 
-      field :comment, :string
+      field :comment, :string, default: ""
 
       field :current_password, :string, redact: true
       field :captcha, :string, redact: true

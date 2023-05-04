@@ -166,7 +166,7 @@ defmodule Flirtual.Discord do
           author: %{
             name: User.display_name(report.target),
             icon_url: User.avatar_url(report.target),
-            url: User.url(report.target)
+            url: User.url(report.target) |> URI.to_string()
           },
           title: "New report",
           fields:
@@ -189,10 +189,13 @@ defmodule Flirtual.Discord do
                 },
                 else: nil
               ),
-              %{
-                name: "Details",
-                value: report.message
-              }
+              if(report.message !== "",
+                do: %{
+                  name: "Message",
+                  value: report.message
+                },
+                else: nil
+              )
             ]
             |> Enum.filter(&(!!&1)),
           color: @default_color

@@ -17,7 +17,7 @@ defmodule Flirtual.Report do
   alias Flirtual.User.ChangeQueue
 
   schema "reports" do
-    field :message, :string
+    field :message, :string, default: ""
 
     belongs_to :user, User
     belongs_to :target, User
@@ -50,8 +50,7 @@ defmodule Flirtual.Report do
     )
     |> validate_required(:reason_id)
     |> validate_attribute(:reason_id, "report-reason")
-    |> validate_required(:message)
-    |> validate_length(:message, min: 8, max: 256)
+    |> validate_length(:message, max: 256)
   end
 
   def create(attrs) do
