@@ -30,10 +30,9 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 			({ next, back, cancel }) => [
 				{
 					id: "introduction",
-					title: "Flirtual",
+					title: "Flirtual Tutorial",
 					text: `
-					Take a quick tour with us and feel free to exit anytime by clicking the <b>Exit</b> button.<br><br/>
-					We've got some matchmaking magic up our sleeves, and we can't wait to introduce you to some amazing people.
+					Take a quick tour with us! We can't wait to introduce you to some amazing people :)
 					`,
 					buttons: [
 						{
@@ -57,7 +56,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 				{
 					id: "friend",
 					title: "Like their profile?",
-					text: "Or press the <b>Homie button</b> if you just want to be friends. You'll still match if it's mutual, whether you Like or Homie.",
+					text: "Or press the <b>Homie button</b> if you want to be friends. You'll still match if it's mutual whether you Like or Homie each other.",
 					attachTo: { element: "#friend-button", on: "top" },
 					modalOverlayOpeningRadius: 12
 				},
@@ -78,7 +77,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 				{
 					id: "conversations",
 					title: "Shoot your shot!",
-					text: "Check your matches here. Message them and meet up in VR!",
+					text: "View your matches here. Message them and meet up in VR!",
 					attachTo: { element: "#conversation-button", on: "top" },
 					modalOverlayOpeningRadius: 20,
 					modalOverlayOpeningPadding: 4
@@ -87,8 +86,8 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					id: "browse-mode",
 					title: "Looking for something else?",
 					text: `
-					Switch between <b>matchmaking modes</b> to access more profiles without filters.<br/><br/>
-					Each day, you can browse up to <b>30 profiles</b> and like or homie up to 15 of them in each mode.`,
+					Switch between <b>Date Mode</b> and <b>Homie Mode</b> to see more profiles.<br/><br/>
+					Each day, you can browse up to <b>30 profiles</b> and Like or Homie up to 15 of them in each mode.`,
 					attachTo: { element: "#browse-mode-switch", on: "top" },
 					modalOverlayOpeningRadius: 33
 				},
@@ -104,9 +103,9 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					id: "conclusion",
 					title: "Thank you!",
 					text: `
-					That concludes our tour! We hope you have a great time here and remember to treat each other kindly.<br/><br/>
-					Don't forget to stay hydrated and take breaks as needed!<br/><br/>
-					With love, the Flirtual Team ❤️`,
+					That concludes our tutorial! We hope you have a great time here, and remember to treat each other kindly.<br/><br/>
+					Don't forget to drink water and take breaks as needed!<br/><br/>
+					With ❤️, the Flirtual team`,
 					modalOverlayOpeningRadius: 20,
 					modalOverlayOpeningPadding: 4,
 					buttons: [
