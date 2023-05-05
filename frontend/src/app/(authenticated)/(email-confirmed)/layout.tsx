@@ -4,5 +4,5 @@ export default async function AuthenticatedEmailConfirmedLayout({
 	children
 }: React.PropsWithChildren) {
 	await withVisibleUser();
-	return children;
+	return <>{children}</>;
 }
