@@ -86,7 +86,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					id: "browse-mode",
 					title: "Looking for something else?",
 					text: `
-					Switch between <b>Date Mode</b> and <b>Homie Mode</b> to see more profiles.<br/><br/>
+					Switch between <b>Date Mode</b> and <b>Homie Mode</b> (without matchmaking filters) to see more profiles.<br/><br/>
 					Each day, you can browse up to <b>30 profiles</b> and Like or Homie up to 15 of them in each mode.`,
 					attachTo: { element: "#browse-mode-switch", on: "top" },
 					modalOverlayOpeningRadius: 33
