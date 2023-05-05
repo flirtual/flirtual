@@ -26,7 +26,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 	const { loadMore } = useConversations();
 
 	const ref = useRef<HTMLDivElement>(null);
-	const { data: user } = useUser(userId);
+	const user = useUser(userId);
 
 	const inView = useInView(ref);
 
@@ -34,6 +34,8 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 		if (!lastItem || !inView) return;
 		void loadMore();
 	}, [inView, lastItem, loadMore]);
+
+	if (!user) return null;
 
 	return (
 		<div

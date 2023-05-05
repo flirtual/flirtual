@@ -16,7 +16,7 @@ import { withConversations } from "./data.server";
 import { LikesYouButton } from "./likes-you-button";
 
 const withConversationUsers = cache(async (...userIds: Array<string>) => {
-	return api.user.bulk({ ...thruServerCookies(), body: userIds });
+	return (await api.user.bulk({ ...thruServerCookies(), body: userIds })).filter(Boolean);
 });
 
 export default async function ConversationsLayout({ children }: PropsWithChildren) {

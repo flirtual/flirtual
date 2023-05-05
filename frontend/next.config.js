@@ -2,7 +2,8 @@
 const nextConfig = {
 	reactStrictMode: true,
 	experimental: {
-		appDir: true
+		appDir: true,
+		serverActions: true
 	},
 	images: {
 		domains: ["media.flirtu.al"],
