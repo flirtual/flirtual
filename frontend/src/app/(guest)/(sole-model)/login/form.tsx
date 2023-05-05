@@ -47,16 +47,6 @@ export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 							</>
 						)}
 					</FormField>
-					<FormField name="rememberMe">
-						{({ props, labelProps }) => (
-							<div className="flex items-center gap-4">
-								<InputCheckbox {...props} />
-								<InputLabel {...labelProps} inline>
-									Stay logged in
-								</InputLabel>
-							</div>
-						)}
-					</FormField>
 					<div className="flex flex-col gap-4">
 						<FormButton>Log in</FormButton>
 						<FormInputMessages messages={errors} />
