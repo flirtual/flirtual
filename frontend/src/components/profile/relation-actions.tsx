@@ -74,8 +74,8 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 
 	if (relationship.type && relationship.kind)
 		return (
-			<div className="flex w-full items-center justify-between gap-4">
-				<span className="text-xl [overflow-wrap:anywhere] dark:text-white-20">
+			<div className="flex w-full items-center justify-between gap-4 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
+				<span className="text-xl text-white-20 [overflow-wrap:anywhere]">
 					{`You ${
 						relationship.type === "like"
 							? relationship.kind === "love"
@@ -86,6 +86,7 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 				</span>
 				<Button
 					className="shrink-0"
+					kind="secondary"
 					size="sm"
 					onClick={() =>
 						api.matchmaking
@@ -103,9 +104,9 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 
 	if (relationship.likedMe)
 		return (
-			<div className="flex items-center gap-3">
-				<SparklesIcon className="h-6 w-6 shrink-0" />
-				<span className="text-xl [overflow-wrap:anywhere] dark:text-white-20">
+			<div className="flex items-center gap-3 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
+				<SparklesIcon className="h-6 w-6 shrink-0 text-white-20" />
+				<span className="text-xl text-white-20 [overflow-wrap:anywhere]">
 					{`${displayName(user)} ${relationship.likedMe === "love" ? "liked" : "homied"} you!`}
 				</span>
 			</div>
