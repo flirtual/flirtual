@@ -1,6 +1,6 @@
 # Script for populating the database. You can run it as:
 #
-#     mix run priv/repo/seeds.exs
+#     mix run priv/repo/migrate.exs
 #
 # Inside the script, you can read and write to any of your
 # repositories directly:
@@ -64,8 +64,13 @@
 # name = string
 
 defmodule A do
+  import Ecto.Query
+
+  alias Flirtual.Report
+  alias Flirtual.User.Profile.Block
+  alias Flirtual.User.Profile.LikesAndPasses
   alias Ecto.UUID
-  alias Flirtual.{Repo, User, Users, Stripe, Plan, Attribute}
+  alias Flirtual.{Repo, User, Stripe, Plan, Attribute}
   alias Flirtual.User.Profile.Image
 
   @all_genders Attribute.list(type: "gender")
@@ -75,18 +80,13 @@ defmodule A do
   @all_platforms Attribute.list(type: "platform")
   @all_interests Attribute.list(type: "interest")
 
-  def query(query) do
-    with {:ok, conn} <-
-           Redix.start_link(
-             "***REMOVED***"
-           ),
-         {:ok, %{result_set: result_set}} <- RedisGraph.query(conn, "vrlfp", query),
-         :ok <- Redix.stop(conn) do
+  def query(conn, query) do
+    with {:ok, %{result_set: result_set}} <- RedisGraph.query(conn, "vrlfp", query) do
       {:ok, result_set}
     end
   end
 
-  def create([
+  def create_user(conn, [
         id,
         username,
         email,
@@ -152,13 +152,36 @@ defmodule A do
         agreeableness,
         domsub
       ]) do
-    IO.puts("Creating user #{username} (#{id})")
-
     Repo.transaction(fn ->
-      with {:ok, created_at} <-
+      with user <- User.get(id),
+           {:ok, _} <-
+             if(is_nil(user),
+               do: {:ok, nil},
+               else: Repo.delete(user)
+             ),
+           {:ok, created_at} <-
              if(is_nil(registered_unix),
                do: {:ok, nil},
                else: DateTime.from_unix(registered_unix, :second)
+             ),
+           born_at =
+             if(is_nil(dob),
+               do: nil,
+               else:
+                 case Date.new(
+                        Integer.parse(String.slice(to_string(dob), 0..3)) |> elem(0),
+                        Integer.parse(String.slice(to_string(dob), 4..5)) |> elem(0),
+                        Integer.parse(String.slice(to_string(dob), 6..7)) |> elem(0)
+                      ) do
+                   {:ok, date} ->
+                     DateTime.new!(
+                       date,
+                       Time.new!(0, 0, 0)
+                     )
+
+                   {:error, :invalid_date} ->
+                     nil
+                 end
              ),
            {:ok, user} <-
              %User{
@@ -177,20 +200,7 @@ defmodule A do
                    to_boolean(is_vrlfp) && :legacy_vrlfp
                  ]
                  |> Enum.filter(&(!!&1)),
-               born_at:
-                 if(
-                   is_nil(dob),
-                   do: nil,
-                   else:
-                     DateTime.new!(
-                       Date.new!(
-                         Integer.parse(String.slice(to_string(dob), 0..3)) |> elem(0),
-                         Integer.parse(String.slice(to_string(dob), 4..5)) |> elem(0),
-                         Integer.parse(String.slice(to_string(dob), 6..7)) |> elem(0)
-                       ),
-                       Time.new!(0, 0, 0)
-                     )
-                 ),
+               born_at: born_at,
                email_confirmed_at: (to_boolean(is_confirmed) && created_at) || nil,
                deactivated_at:
                  if(is_nil(deactivated), do: nil, else: DateTime.from_unix!(deactivated, :second)),
@@ -198,7 +208,7 @@ defmodule A do
                shadowbanned_at:
                  if(is_nil(shadowbanned),
                    do: nil,
-                   else: DateTime.from_unix!(shadowbanned, :second)
+                   else: created_at
                  ),
                active_at:
                  if(is_nil(lastlogin), do: nil, else: DateTime.from_unix!(lastlogin, :second)),
@@ -248,13 +258,18 @@ defmodule A do
                          if(to_boolean(supporter),
                            do: "b8bbbad1-103e-40dd-80e6-99f0d81e9fe7",
                            else:
-                             (Plan.get(
-                                product_id: stripe_subscription.plan.product,
-                                price_id: stripe_subscription.plan.id
-                              ) || raise("User missing subscription"))[:id]
+                             if(is_nil(stripe_subscription),
+                               do: "5aa4b6ed-0aff-454a-a48f-948342cdd94a",
+                               else:
+                                 Plan.get(
+                                   product_id: stripe_subscription.plan.product,
+                                   price_id: stripe_subscription.plan.id
+                                 )[:id]
+                             )
                          )
                      ),
-                   stripe_id: stripe_subscription[:id],
+                   stripe_id:
+                     if(is_nil(stripe_subscription), do: nil, else: stripe_subscription.id),
                    cancelled_at: nil
                  })
                  |> Repo.insert(),
@@ -262,6 +277,7 @@ defmodule A do
              ),
            {:ok, country} <-
              query(
+               conn,
                "MATCH (u:user {id: '#{user.id}'})-[:COUNTRY]->(c:country) RETURN toLower(c.id)"
              ),
            country =
@@ -270,30 +286,36 @@ defmodule A do
              |> List.first(),
            {:ok, languages} <-
              query(
+               conn,
                "MATCH (u:user {id: '#{user.id}'})-[:KNOWS]->(l:language) RETURN toLower(l.id)"
              ),
            {:ok, custom_interests} <-
              query(
+               conn,
                "MATCH (u:user {id: '#{user.id}'})-[:TAGGED]->(i:interest {type: 'custom'}) RETURN i.name"
              ),
            {:ok, genders} <-
-             query("MATCH (u:user {id: '#{user.id}'})-[:GENDER]->(g:gender) RETURN g.name"),
+             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:GENDER]->(g:gender) RETURN g.name"),
            {:ok, sexualities} <-
-             query("MATCH (u:user {id: '#{user.id}'})-[:SEXUALITY]->(s:sexuality) RETURN s.name"),
+             query(
+               conn,
+               "MATCH (u:user {id: '#{user.id}'})-[:SEXUALITY]->(s:sexuality) RETURN s.name"
+             ),
            {:ok, games} <-
-             query("MATCH (u:user {id: '#{user.id}'})-[:PLAYS]->(g:game) RETURN g.name"),
+             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:PLAYS]->(g:game) RETURN g.name"),
            {:ok, kinks} <-
-             query("MATCH (u:user {id: '#{user.id}'})-[:KINK]->(k:kink) RETURN k.name"),
+             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:KINK]->(k:kink) RETURN k.name"),
            {:ok, platforms} <-
-             query("MATCH (u:user {id: '#{user.id}'})-[:USES]->(p:platform) RETURN p.name"),
+             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:USES]->(p:platform) RETURN p.name"),
            {:ok, interests} <-
              query(
+               conn,
                "MATCH (u:user {id: '#{user.id}'})-[:TAGGED]->(i:interest) WHERE i.type <> 'custom' RETURN i.name"
              ),
            {:ok, profile} <-
              Ecto.build_assoc(user, :profile, %{
                display_name: displayname,
-               biography: if(is_nil(bio), do: nil, else: bio |> strip_regex()),
+               biography: if(is_nil(bio), do: nil, else: bio |> strip_redis()),
                domsub:
                  case domsub do
                    "Dominant" -> :dominant
@@ -314,7 +336,11 @@ defmodule A do
                  ),
                openness: openness,
                conscientiousness: conscientiousness,
-               agreeableness: agreeableness,
+               agreeableness:
+                 case agreeableness do
+                   "0.5" -> 1
+                   value -> value
+                 end,
                question0: to_boolean(survey_1),
                question1: to_boolean(survey_2),
                question2: to_boolean(survey_3),
@@ -334,7 +360,7 @@ defmodule A do
                custom_interests:
                  custom_interests
                  |> List.flatten()
-                 |> Enum.map(&(strip_regex(&1) |> String.trim())),
+                 |> Enum.map(&(strip_redis(&1) |> String.trim())),
                vrchat:
                  if(is_nil(vrchat),
                    do: nil,
@@ -367,7 +393,8 @@ defmodule A do
              |> Repo.insert(),
            {:ok, images} <-
              query(
-               "MATCH (u:user {id: '#{user.id}'})-[:AVATAR]->(a:avatar) RETURN a.url, a.order, a.scanned"
+               conn,
+               "MATCH (u:user {id: '#{user.id}'})-[:AVATAR]->(a:avatar) WITH DISTINCT a.url AS url, a.order AS order, a.scanned AS scanned ORDER BY a.order RETURN url, order, scanned"
              ),
            {_, nil} <-
              Repo.insert_all(
@@ -390,7 +417,7 @@ defmodule A do
                }
              ),
            {:ok, gender_preferences} <-
-             query("MATCH (u:user {id: '#{user.id}'})-[:LF]->(g:mgender) RETURN g.name"),
+             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:LF]->(g:mgender) RETURN g.name"),
            {:ok, _} <-
              Ecto.build_assoc(profile, :preferences, %{
                agemin: agemin,
@@ -415,14 +442,188 @@ defmodule A do
                likes: weight_likes |> A.map_custom_weight()
              })
              |> Repo.insert() do
-        Users.get(user.id)
-        |> IO.inspect()
+        nil
       else
         reason ->
-          IO.inspect(reason)
+          IO.inspect([id, reason])
           Repo.rollback(reason)
       end
     end)
+  end
+
+  @relation_chunk_size 50
+
+  def create_user_relations(conn, user_id) do
+    {:ok, likes} =
+      query(
+        conn,
+        "MATCH (a:user {id: '#{user_id}'})-[l:LIKED]->(b:user) RETURN l.type, l.date, b.id"
+      )
+
+    likes
+    |> Enum.uniq_by(fn [type, _, target_id] -> [map_like_type(type), target_id] end)
+    |> Enum.map(fn [type, created_at, target_id] ->
+      %{
+        type: {:placeholder, :type},
+        kind: map_like_type(type),
+        profile_id: {:placeholder, :profile_id},
+        target_id: target_id,
+        created_at: DateTime.from_unix!(created_at, :second)
+      }
+    end)
+    |> Enum.chunk_every(@relation_chunk_size)
+    |> Enum.map(fn chunk ->
+      {_, nil} =
+        Repo.insert_all(
+          LikesAndPasses,
+          chunk,
+          placeholders: %{
+            profile_id: user_id,
+            type: :like
+          },
+          on_conflict: :replace_all,
+          conflict_target: [:profile_id, :target_id, :kind]
+        )
+    end)
+
+    {:ok, passes} =
+      query(
+        conn,
+        "MATCH (a:user {id: '#{user_id}'})-[p:PASSED]->(b:user) RETURN p.date, b.id"
+      )
+
+    passes
+    |> Enum.uniq_by(fn [_, target_id] -> target_id end)
+    |> Enum.map(fn [created_at, target_id] ->
+      %{
+        type: {:placeholder, :type},
+        kind: {:placeholder, :kind},
+        profile_id: {:placeholder, :profile_id},
+        target_id: target_id,
+        created_at: DateTime.from_unix!(created_at, :second)
+      }
+    end)
+    |> Enum.chunk_every(@relation_chunk_size)
+    |> Enum.map(fn chunk ->
+      {_, nil} =
+        Repo.insert_all(
+          LikesAndPasses,
+          chunk,
+          placeholders: %{
+            profile_id: user_id,
+            kind: :love,
+            type: :pass
+          },
+          on_conflict: :replace_all,
+          conflict_target: [:profile_id, :target_id, :kind]
+        )
+    end)
+
+    {:ok, friend_passes} =
+      query(
+        conn,
+        "MATCH (a:user {id: '#{user_id}'})-[p:HPASSED]->(b:user) RETURN p.date, b.id"
+      )
+
+    friend_passes
+    |> Enum.uniq_by(fn [_, target_id] -> target_id end)
+    |> Enum.map(fn [created_at, target_id] ->
+      %{
+        type: {:placeholder, :type},
+        kind: {:placeholder, :kind},
+        profile_id: {:placeholder, :profile_id},
+        target_id: target_id,
+        created_at: DateTime.from_unix!(created_at, :second)
+      }
+    end)
+    |> Enum.chunk_every(@relation_chunk_size)
+    |> Enum.map(fn chunk ->
+      {_, nil} =
+        Repo.insert_all(
+          LikesAndPasses,
+          chunk,
+          placeholders: %{
+            profile_id: user_id,
+            kind: :friend,
+            type: :pass
+          },
+          on_conflict: :replace_all,
+          conflict_target: [:profile_id, :target_id, :kind]
+        )
+    end)
+
+    {:ok, blocks} =
+      query(
+        conn,
+        "MATCH (a:user {id: '#{user_id}'})-[:BLOCKED]->(b:user) RETURN b.id"
+      )
+
+    {_, nil} =
+      Repo.insert_all(
+        Block,
+        blocks
+        |> Enum.uniq_by(fn [target_id] -> target_id end)
+        |> Enum.map(fn [target_id] ->
+          %{
+            id: UUID.generate(),
+            profile_id: {:placeholder, :profile_id},
+            target_id: target_id,
+            created_at: {:placeholder, :created_at}
+          }
+        end),
+        placeholders: %{
+          profile_id: user_id,
+          created_at: DateTime.utc_now() |> DateTime.truncate(:second)
+        },
+        on_conflict: :replace_all,
+        conflict_target: [:profile_id, :target_id]
+      )
+
+    {:ok, reports} =
+      query(
+        conn,
+        "MATCH (a:user {id: '#{user_id}'})-[r:REPORTED]->(b:user) RETURN r.reviewed, r.reason, r.details, r.date, b.id"
+      )
+
+    Report
+    |> where(user_id: ^user_id)
+    |> Repo.all()
+    |> Enum.map(&Repo.delete(&1))
+
+    {_, nil} =
+      Repo.insert_all(
+        Report,
+        reports
+        |> Enum.uniq_by(fn [_, _, _, _, target_id] -> target_id end)
+        |> Enum.map(fn [reviewed, reason, details, date, target_id] ->
+          %{
+            id: UUID.generate(),
+            user_id: {:placeholder, :user_id},
+            target_id: target_id,
+            reason_id: map_report_reason(reason),
+            message:
+              case details do
+                details when details === "None" or details === "Missing" -> ""
+                details -> details
+              end,
+            reviewed_at: (to_boolean(reviewed) && DateTime.from_unix!(date, :second)) || nil,
+            updated_at: DateTime.from_unix!(date, :second),
+            created_at: DateTime.from_unix!(date, :second)
+          }
+        end),
+        placeholders: %{
+          user_id: user_id
+        }
+      )
+
+    {:ok, nil}
+  end
+
+  def map_like_type(value) do
+    case value do
+      value when value === "like" or value === "date" or value === "hookup" -> :love
+      "homie" -> :friend
+    end
   end
 
   def to_boolean(value) do
@@ -432,6 +633,49 @@ defmodule A do
       true -> true
       false -> false
       nil -> nil
+    end
+  end
+
+  def map_report_reason(value) do
+    case value do
+      "Advertising" ->
+        "b65e9c3e-aede-4fad-a142-8663280533e4"
+
+      "Harassment" ->
+        "e27fec41-242e-43c5-ba8c-b65cb81bec37"
+
+      "Hateful content" ->
+        "4ed69630-f562-4ff5-98cd-13f532aa0ec3"
+
+      "Illegal content" ->
+        "54a3d2b8-ae36-408c-adec-47d1ec2421c9"
+
+      "Impersonating me or someone else" ->
+        "3e3f7fc0-6474-4b3c-b1c6-3630fb0a1248"
+
+      "Nude or NSFW pictures" ->
+        "adc8230f-8774-4483-a181-fd196e54f622"
+
+      "Scam, malware, or harmful links" ->
+        "0afca9ab-3529-4398-befb-7a5965d0ed2d"
+
+      "Self-harm content" ->
+        "aad1e4d6-cef9-4d52-abbb-0a3a8dbcfbef"
+
+      "Spam or troll account" ->
+        "03250970-0ec2-49f0-949e-29deb5e77372"
+
+      "Underage user" ->
+        "d43252a0-e06d-4985-afd4-b41d27928f72"
+
+      "Violent or disturbing content" ->
+        "50c84dcb-4b4a-4bf3-83c6-9a92a481c464"
+
+      value when value === "Other" or value === "Missing" ->
+        "9e159e11-b7d2-4508-99fd-7b2c305f13a7"
+
+      _ ->
+        "9e159e11-b7d2-4508-99fd-7b2c305f13a7"
     end
   end
 
@@ -500,21 +744,34 @@ defmodule A do
       list |> Enum.find(&(normalize_attribute_name(&1.name) === normalize_attribute_name(name))) ||
         raise "Unknown attribute: #{name}"
     end)
+    |> MapSet.new()
+    |> MapSet.to_list()
   end
 
   def normalize_attribute_name(name) do
-    String.downcase(String.replace(name, "_", " "))
+    case name do
+      "Transsexual" -> "transgender"
+      name -> String.downcase(String.replace(name, "_", " "))
+    end
   end
 
-  def strip_regex(value) do
+  def strip_redis(value) do
+    value =
+      value
+      |> String.replace(~r/\\\"/, "\"")
+      |> String.replace(~r/\\'/, "'")
+      |> String.replace(~r//, "'")
+
     value
-    |> String.replace(~r/\\\"/, "\"")
-    |> String.replace(~r/\\'/, "'")
-    |> String.replace(~r//, "'")
+    |> String.codepoints()
+    |> Enum.filter(&String.valid?(&1))
+    |> List.to_string()
   end
 end
 
-defmodule Flirtual.Seeds do
+defmodule Flirtual.Migrate do
+  alias Flirtual.User.ChangeQueue
+
   keys = [
     "u.id",
     "u.username",
@@ -614,9 +871,87 @@ defmodule Flirtual.Seeds do
     "u.domsub"
   ]
 
-  {:ok, users} =
-    A.query("MATCH (u:user {username: 'minimaluser'}) RETURN #{keys |> Enum.join(", ")}")
+  {:ok, conn} = Redix.start_link("redis://localhost:6379")
 
-  users
-  |> Enum.map(&A.create(&1))
+  @create_users false
+  @create_relations true
+
+  @skip 0
+  @limit 60000
+  @chunk_size 100
+
+  {:ok, users} =
+    A.query(
+      conn,
+      "MATCH (u:user) RETURN u.id ORDER BY u.id SKIP #{@skip} LIMIT #{@limit}"
+    )
+
+  if @create_users do
+    users
+    |> Enum.with_index()
+    |> Enum.chunk_every(@chunk_size)
+    |> Enum.with_index()
+    |> Enum.map(fn {chunk, chunk_idx} ->
+      Task.async(fn ->
+        chunk
+        |> Enum.map(fn {[id], idx} ->
+          idx = idx + @skip
+
+          try do
+            {:ok, [user]} =
+              A.query(conn, "MATCH (u:user {id: '#{id}'}) RETURN #{keys |> Enum.join(", ")}")
+
+            # IO.inspect(user)
+
+            {:ok, _} = A.create_user(conn, user)
+
+            IO.puts("CREATE\t##{idx}\t#{id}")
+          rescue
+            exception ->
+              IO.puts("CREATE\tFAIL\tCHUNK\t#{chunk_idx}\t#{id}")
+              reraise(exception, __STACKTRACE__)
+          end
+        end)
+      end)
+    end)
+    |> Task.await_many(:infinity)
+
+    IO.puts("SUCCESS\tCREATE\t#{users |> Enum.count()}")
+  else
+    IO.puts("SKIP\tCREATE\t#{users |> Enum.count()}")
+  end
+
+  if @create_relations do
+    users
+    |> Enum.with_index()
+    |> Enum.chunk_every(@chunk_size)
+    |> Enum.with_index()
+    |> Enum.map(fn {chunk, chunk_idx} ->
+      Task.async(fn ->
+        chunk
+        |> Enum.map(fn {[id], idx} ->
+          idx = idx + @skip
+
+          try do
+            #{:ok, _} = A.create_user_relations(conn, id)
+            IO.puts("RELATE\tSUCCESS\t#{id}")
+
+            id
+          rescue
+            exception ->
+              IO.puts("RELATE\tFAIL\tCHUNK\t#{chunk_idx}\t#{id}")
+              reraise(exception, __STACKTRACE__)
+          end
+        end)
+        |> ChangeQueue.add()
+
+        IO.puts("RELATE\tSUCCESS\tCHUNK\t#{chunk_idx}")
+      end)
+    end)
+    |> Task.await_many(:infinity)
+
+    IO.puts("RELATE\tSUCCESS\t#{users |> Enum.count()}")
+  else
+    IO.puts("RELATE\tSKIP\t#{users |> Enum.count()}")
+  end
 end

@@ -23,7 +23,7 @@ defmodule Flirtual.Report do
     belongs_to :target, User
     belongs_to :reason, Attribute
 
-    field :reviewed_at, :naive_datetime
+    field :reviewed_at, :utc_datetime
 
     timestamps(inserted_at: :created_at)
   end

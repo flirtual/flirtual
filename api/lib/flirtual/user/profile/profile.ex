@@ -75,9 +75,9 @@ defmodule Flirtual.User.Profile do
     field :domsub, Ecto.Enum, values: @domsub_values
     field :monopoly, Ecto.Enum, values: @monopoly_values
     field :country, Ecto.Enum, values: Countries.list(:iso_3166_1)
-    field :openness, :integer
-    field :conscientiousness, :integer
-    field :agreeableness, :integer
+    field :openness, :integer, default: 1
+    field :conscientiousness, :integer, default: 0
+    field :agreeableness, :integer, default: 1
     Enum.map(@personality_questions, &field(&1, :boolean))
     field :serious, :boolean
     field :new, :boolean

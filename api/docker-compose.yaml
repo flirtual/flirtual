@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:alpine
-    command: postgres -N 200
+    command: postgres -N 500
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
@@ -21,6 +21,16 @@ services:
       - elasticsearch_data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+  redis:
+    image: redis/redis-stack:latest
+    restart: always
+    volumes:
+      - redis_data:/data
+      - ./priv/repo/dump.rdb:/data/dump.rdb
+    ports:
+      - 6379:6379
+      - 8001:8001
 volumes:
   postgres_data:
   elasticsearch_data:
+  redis_data:

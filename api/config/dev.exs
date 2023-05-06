@@ -15,7 +15,9 @@ config :flirtual, Flirtual.Repo,
   hostname: "localhost",
   database: "flirtual_dev",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 50
+  pool_size: 200,
+  queue_target: 15000,
+  queue_interval: 5000
 
 config :flirtual, Flirtual.Elasticsearch, url: "http://localhost:9200"
 

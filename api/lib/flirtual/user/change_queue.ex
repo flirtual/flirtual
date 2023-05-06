@@ -41,6 +41,30 @@ defmodule Flirtual.User.ChangeQueue do
     |> Repo.insert_or_update(on_conflict: :nothing)
   end
 
+  def add([]), do: {:ok, 0}
+
+  def add(user_ids) when is_list(user_ids) do
+    log(:debug, ["add"], user_ids)
+
+    {count, nil} =
+      Repo.insert_all(
+        ChangeQueue,
+        user_ids
+        |> Enum.map(
+          &%{
+            user_id: &1,
+            created_at: {:placeholder, :now}
+          }
+        ),
+        on_conflict: :nothing,
+        placeholders: %{
+          now: DateTime.truncate(DateTime.utc_now(), :second)
+        }
+      )
+
+    {:ok, count}
+  end
+
   def remove(user_id) when is_uuid(user_id) do
     log(:debug, ["remove"], user_id)
 
@@ -79,7 +103,7 @@ defmodule Flirtual.User.ChangeQueue do
     items = fetch(limit)
 
     with :ok <- process_items(items, :elasticsearch),
-         :ok <- process_items(items, :talkjs),
+         # :ok <- process_items(items, :talkjs),
          :ok <-
            items
            |> Enum.map(& &1.user_id)
