@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { toRelativeUrl, urls } from "~/urls";
+import { urls } from "~/urls";
 import { entries, Expand, fromEntries, toCamelObject, toSnakeObject } from "~/utilities";
 
 export function newUrl(pathname: string, query: Record<string, string | undefined> = {}): URL {
@@ -77,8 +77,6 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 		? options.body
 		: JSON.stringify(typeof options.body === "object" ? toSnakeObject(options.body) : options.body);
 
-	console.log(`[fetch] ${method} ${toRelativeUrl(url)}`);
-
 	const response = await globalThis.fetch(url, {
 		...options,
 		credentials: "include",
@@ -99,8 +97,6 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 			responseBody
 		);
 		error.stack = error.stack?.split("\n").slice(2).join("\n");
-
-		console.error(`[fetch] ${method} ${toRelativeUrl(url)}: ${error.message}`);
 		throw error;
 	}
 

@@ -7,5 +7,5 @@ export default async function GuestLayout({ children }: React.PropsWithChildren)
 	const session = await withOptionalSession();
 	if (session) redirect(urls.browse());
 
-	return children;
+	return <>{children}</>;
 }

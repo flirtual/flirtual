@@ -7,7 +7,7 @@ import { getEmptyImage } from "react-dnd-html5-backend";
 import { twMerge } from "tailwind-merge";
 
 import { TailCircleIcon } from "./icons/tail-circle";
-import { Image, ImageProps } from "./image";
+import { ImageProps } from "./image";
 import { UserImage } from "./user-avatar";
 
 export interface ArrangeableImageProps {

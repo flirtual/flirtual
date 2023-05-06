@@ -1,8 +1,10 @@
-import { useRouter } from "next/navigation";
-import { useCallback, useDebugValue, useMemo } from "react";
+"use client";
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useDebugValue, useEffect, useMemo } from "react";
 
 import { api } from "~/api";
-import { PreferenceTheme } from "~/api/user/preferences";
+import { PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
 
 import { useMediaQuery } from "./use-media-query";
 import { useSession } from "./use-session";
@@ -10,6 +12,8 @@ import { useSession } from "./use-session";
 export function useTheme() {
 	const [session, mutateSession] = useSession();
 	const router = useRouter();
+
+	console.log(session?.user.preferences?.theme);
 
 	const sessionTheme = session?.user.preferences?.theme ?? "light";
 	const browserTheme = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
@@ -50,3 +54,25 @@ export function useTheme() {
 		[theme, sessionTheme, browserTheme, setTheme]
 	);
 }
+
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+	const { theme } = useTheme();
+
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
+	const kind = searchParams.get("kind");
+
+	useEffect(() => {
+		if (pathname === "/browse" && kind === "friend")
+			document.documentElement.classList.add("friend-mode");
+		return () => document.documentElement.classList.remove("friend-mode");
+	}, [pathname, kind]);
+
+	useEffect(() => {
+		document.documentElement.classList.remove(...PreferenceThemes.filter((t) => t !== theme));
+		document.documentElement.classList.add(theme);
+	}, [theme]);
+
+	return <>{children}</>;
+};

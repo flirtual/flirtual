@@ -17,6 +17,8 @@ export function useSession(options: UseSessionOptions = {}) {
 		options
 	);
 
+	//console.log({ session: session?.user.id });
+
 	const update = useCallback(
 		async (session?: Session | null, refresh: boolean = true) => {
 			await mutate(session, { revalidate: false });

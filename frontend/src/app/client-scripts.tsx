@@ -1,12 +1,9 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { useEffect } from "react";
 
-import { PreferenceThemes } from "~/api/user/preferences";
 import { uploadcarePublicKey } from "~/const";
-import { useTheme } from "~/hooks/use-theme";
 
 declare global {
 	interface Window {
@@ -17,8 +14,6 @@ declare global {
 }
 
 export const ClientScripts: React.FC = () => {
-	const { theme } = useTheme();
-
 	useEffect(() => {
 		if ("serviceWorker" in navigator) {
 			window.addEventListener("load", function () {
@@ -26,22 +21,6 @@ export const ClientScripts: React.FC = () => {
 			});
 		}
 	}, []);
-
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
-
-	const kind = searchParams.get("kind");
-
-	useEffect(() => {
-		if (pathname === "/browse" && kind === "friend")
-			document.documentElement.classList.add("friend-mode");
-		return () => document.documentElement.classList.remove("friend-mode");
-	}, [pathname, kind]);
-
-	useEffect(() => {
-		document.documentElement.classList.remove(...PreferenceThemes.filter((t) => t !== theme));
-		document.documentElement.classList.add(theme);
-	}, [theme]);
 
 	return (
 		<>

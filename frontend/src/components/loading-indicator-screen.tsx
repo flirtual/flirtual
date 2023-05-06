@@ -43,7 +43,7 @@ export const LoadingIndicator: React.FC<IconComponentProps> = (props) => {
 };
 
 export const LoadingIndicatorScreen: React.FC = () => (
-	<div className="fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center bg-black-90/60 p-4 backdrop-blur-sm md:p-16">
+	<div className="fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center bg-black-80 p-4 md:p-16">
 		<LoadingIndicator className="w-16 grow-0 text-white-10" />
 	</div>
 );

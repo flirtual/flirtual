@@ -1,6 +1,7 @@
 import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 import { withOptionalSession } from "~/server-utilities";
 import { siteOrigin, urls } from "~/urls";
@@ -9,11 +10,12 @@ import { ToastProvider } from "~/hooks/use-toast";
 import { SessionProvider } from "~/components/session-provider";
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { ShepherdProvider } from "~/components/shepherd";
+import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 
 import { ClientScripts } from "./client-scripts";
-import { HydrationBlock } from "./hydration-block";
 
 import "~/css/index.scss";
+import { ThemeProvider } from "~/hooks/use-theme";
 
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
@@ -88,12 +90,15 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 				<ClientScripts />
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>
-				<HydrationBlock />
-				<ShepherdProvider>
+				<Suspense fallback={<LoadingIndicatorScreen />}>
 					<SessionProvider session={session}>
-						<ToastProvider>{children}</ToastProvider>
+						<ThemeProvider>
+							<ShepherdProvider>
+								<ToastProvider>{children}</ToastProvider>
+							</ShepherdProvider>
+						</ThemeProvider>
 					</SessionProvider>
-				</ShepherdProvider>
+				</Suspense>
 			</body>
 		</html>
 	);
