@@ -1,28 +1,26 @@
 defmodule Flirtual.User.Profile.LikesAndPasses do
-  use Flirtual.Schema
+  use Flirtual.Schema, primary_key: false
   use Flirtual.Policy.Target, policy: Flirtual.User.Profile.LikesAndPasses.Policy
 
   import Ecto.Query
 
   alias Flirtual.Talkjs
-  alias Flirtual.User.Profile.Block
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
   alias Flirtual.User
   alias Flirtual.User.Profile.LikesAndPasses
 
   schema "likes_and_passes" do
-    belongs_to :profile, Flirtual.User.Profile, references: :user_id
-    belongs_to :target, Flirtual.User.Profile, references: :user_id
-
-    belongs_to :opposite, LikesAndPasses
+    belongs_to :profile, Flirtual.User.Profile, references: :user_id, primary_key: true
+    belongs_to :target, Flirtual.User.Profile, references: :user_id, primary_key: true
 
     field :type, Ecto.Enum, values: [:like, :pass]
-    field :kind, Ecto.Enum, values: [:love, :friend]
+    field :kind, Ecto.Enum, values: [:love, :friend], primary_key: true
 
+    field :opposite, :map, virtual: true
     field :match, :boolean, virtual: true
 
-    timestamps()
+    timestamps(updated_at: false)
   end
 
   def matched?(
@@ -50,14 +48,14 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   def get(user_id: user_id, target_id: target_id, type: type) do
     LikesAndPasses
     |> where(profile_id: ^user_id, target_id: ^target_id, type: ^type)
-    |> preload(:opposite)
+    |> with_opposite()
     |> Repo.one()
   end
 
   def get(user: %User{id: user_id}, target: %User{id: target_id}) do
     LikesAndPasses
     |> where(profile_id: ^user_id, target_id: ^target_id)
-    |> preload(:opposite)
+    |> with_opposite()
     |> order_by(:type)
     |> limit(1)
     |> Repo.one()
@@ -66,34 +64,31 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   def match_exists?(user: %User{id: user_id}, target: %User{id: target_id}) do
     LikesAndPasses
     |> where(profile_id: ^user_id, target_id: ^target_id)
-    |> where([item], not is_nil(item.opposite_id))
+    |> with_opposite()
+    # |> where([item], not is_nil(item.opposite_id))
     |> Repo.exists?()
   end
 
   def list(profile_id: profile_id) do
     LikesAndPasses
     |> where(profile_id: ^profile_id)
-    |> preload(:opposite)
+    |> with_opposite()
     |> Repo.all()
   end
 
   def list_matches(profile_id: profile_id) do
     LikesAndPasses
     |> where(profile_id: ^profile_id, type: :like)
-    |> where([item], not is_nil(item.opposite_id))
-    |> preload(:opposite)
+    |> with_opposite(nil: false)
+    # |> where([item], not is_nil(item.opposite_id))
     |> Repo.all()
   end
 
   def list_unrequited(profile_id: profile_id) do
     LikesAndPasses
     |> where(target_id: ^profile_id, type: :like)
-    |> where([item], is_nil(item.opposite_id))
-    |> join(:left, [lap], block in Block,
-      on: lap.profile_id == block.target_id and lap.target_id == block.profile_id
-    )
-    |> where([lap, block], is_nil(block.id))
-    |> preload(:opposite)
+    |> with_opposite(nil: true)
+    # |> where([item], is_nil(item.opposite_id))
     |> Repo.all()
   end
 
@@ -106,7 +101,6 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
            {:ok, _} <-
              Talkjs.delete_participants(user_id: profile_id, target_id: target_id),
            {:ok, _} <- ChangeQueue.add(profile_id) do
-        IO.inspect(count)
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -129,6 +123,24 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         reason -> Repo.rollback(reason)
       end
     end)
+  end
+
+  def with_opposite(query, options \\ []) do
+    query
+    |> join(:left, [self], opposite in LikesAndPasses,
+      on: self.profile_id == opposite.target_id and self.target_id == opposite.profile_id
+    )
+    |> select_merge([self, opposite], %{
+      opposite: opposite,
+      match: not is_nil(opposite) and self.type == :like and opposite.type == :like
+    })
+    |> then(
+      &case Keyword.get(options, nil) do
+        nil -> &1
+        true -> where(&1, [_, opposite], is_nil(opposite))
+        false -> where(&1, [_, opposite], not is_nil(opposite))
+      end
+    )
   end
 
   defimpl Jason.Encoder do
