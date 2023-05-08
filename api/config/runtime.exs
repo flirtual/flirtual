@@ -16,7 +16,9 @@ config :flirtual, Flirtual.Discord,
   client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
   client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),
   access_token: System.fetch_env!("DISCORD_ACCESS_TOKEN"),
-  webhook_moderation: System.fetch_env!("DISCORD_WEBHOOK_MODERATION")
+  webhook_moderation: System.fetch_env!("DISCORD_WEBHOOK_MODERATION"),
+  webhook_moderation_flags: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_FLAGS"),
+  webhook_moderation_pics: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_PICS")
 
 config :flirtual, Flirtual.Talkjs,
   app_id: System.fetch_env!("TALKJS_APP_ID"),

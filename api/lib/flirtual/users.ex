@@ -4,6 +4,7 @@ defmodule Flirtual.Users do
   import Flirtual.Utilities.Changeset
 
   import Flirtual.HCaptcha, only: [validate_captcha: 1]
+  import Flirtual.Flag, only: [validate_allowed_email: 2]
 
   alias Flirtual.Elasticsearch
   alias Flirtual.Discord
@@ -174,6 +175,7 @@ defmodule Flirtual.Users do
       |> validate_predicate(:not_equal, {:email, {:value, user.email}},
         message: "New email cannot be the same as the old email"
       )
+      |> validate_allowed_email(:email)
     end
   end
 
@@ -387,6 +389,7 @@ defmodule Flirtual.Users do
              |> cast(attrs, [:username, :email, :password])
              |> User.validate_unique_username()
              |> User.validate_unique_email()
+             |> validate_allowed_email(:email)
              |> User.validate_password()
              |> User.put_password()
              |> Repo.insert(),

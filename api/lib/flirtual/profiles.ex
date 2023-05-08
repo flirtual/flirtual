@@ -9,6 +9,7 @@ defmodule Flirtual.Profiles do
   alias Flirtual.{Repo}
   alias Flirtual.User.{Profile}
   alias Flirtual.User.Profile.{Image}
+  alias Flirtual.Flag
 
   def get_personality_by_user_id(user_id)
       when is_binary(user_id) do
@@ -176,7 +177,12 @@ defmodule Flirtual.Profiles do
              Update.apply(attrs, context: %{required: Keyword.get(options, :required, [])}),
            {:ok, profile} <-
              Update.transform(profile, attrs |> Map.from_struct()) |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(profile.user_id) do
+           {:ok, _} <- ChangeQueue.add(profile.user_id),
+           :ok <-
+             Flag.check_flags(
+               profile.user_id,
+               profile.biography <> " " <> Enum.join(profile.custom_interests, " ")
+             ) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)

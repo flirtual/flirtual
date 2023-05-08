@@ -204,6 +204,28 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:flagged_text, user: %User{} = user, flags: flags) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: %{
+            name: User.display_name(user),
+            icon_url: User.avatar_url(user),
+            url: User.url(user) |> URI.to_string()
+          },
+          title: "Profile auto-flagged",
+          fields: [
+            %{
+              name: "Flags",
+              value: flags
+            }
+          ],
+          color: @default_color
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:exit_survey,
         user: %User{} = user,
         reason: %Attribute{type: "delete-reason"} = reason,
