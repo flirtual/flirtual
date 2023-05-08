@@ -65,4 +65,41 @@ defmodule Flirtual.Flag do
         :ok
     end
   end
+
+  def check_openai_moderation(user_id, text) do
+    user = Users.get(user_id)
+
+    IO.inspect(text)
+
+    case OpenAI.moderations(input: text) do
+      {:ok, %{results: [%{"categories" => categories, "category_scores" => scores}]}} ->
+        flagged_categories =
+          categories
+          |> Enum.reject(fn {category, _flagged} -> category == "sexual" end)
+          |> Enum.filter(fn {_category, flagged} -> flagged end)
+
+        IO.inspect(flagged_categories)
+
+        if Enum.any?(flagged_categories) do
+          flags =
+            flagged_categories
+            |> Enum.map(fn {category, _flagged} ->
+              "#{category} (#{Float.round(scores[category], 2)})"
+            end)
+            |> Enum.join(", ")
+
+          Flirtual.Discord.deliver_webhook(:flagged_text, user: user, flags: flags)
+        end
+
+        :ok
+
+      {:error, reason} ->
+        Flirtual.Discord.deliver_webhook(:flagged_text,
+          user: user,
+          flags: "error: #{inspect(reason)}"
+        )
+
+        :ok
+    end
+  end
 end

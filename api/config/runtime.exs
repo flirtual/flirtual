@@ -37,6 +37,10 @@ config :stripity_stripe,
   signing_secret: System.fetch_env!("STRIPE_SIGNING_SECRET"),
   json_library: Poison
 
+config :openai,
+  organization_key: System.fetch_env!("OPENAI_ORG_ID"),
+  api_key: System.fetch_env!("OPENAI_ACCESS_TOKEN")
+
 config :flirtual, FlirtualWeb.Endpoint, secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
 
 if config_env() == :prod do

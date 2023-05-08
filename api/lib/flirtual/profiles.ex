@@ -182,7 +182,8 @@ defmodule Flirtual.Profiles do
              Flag.check_flags(
                profile.user_id,
                profile.biography <> " " <> Enum.join(profile.custom_interests, " ")
-             ) do
+             ),
+           :ok <- Flag.check_openai_moderation(profile.user_id, profile.biography) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)

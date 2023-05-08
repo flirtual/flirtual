@@ -49,6 +49,7 @@ defmodule Flirtual.MixProject do
       {:recase, "~> 0.5"},
       {:swoosh, "~> 1.3"},
       {:vrchat, "~> 1.11"},
+      {:openai, "~> 0.5.2"},
       {:phoenix_swoosh, "~> 1.0"},
       {:gen_smtp, "~> 1.2"},
       {:finch, "~> 0.12.0"},
