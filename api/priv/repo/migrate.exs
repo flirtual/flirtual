@@ -400,12 +400,17 @@ defmodule A do
              Repo.insert_all(
                Image,
                images
-               |> Enum.map(fn [file_id, order, scanned] ->
+               |> Enum.sort(fn [_, order1, _], [_, order2, _] -> order1 < order2 end)
+               |> Enum.filter(fn [file_id, _, _] ->
+                 file_id !== "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
+               end)
+               |> Enum.with_index()
+               |> Enum.map(fn {[file_id, _, scanned], file_index} ->
                  %{
                    id: UUID.generate(),
                    profile_id: {:placeholder, :profile_id},
                    external_id: file_id,
-                   order: order,
+                   order: file_index,
                    scanned: if(is_nil(scanned), do: false, else: to_boolean(scanned)),
                    updated_at: {:placeholder, :ts},
                    created_at: {:placeholder, :ts}
@@ -873,7 +878,7 @@ defmodule Flirtual.Migrate do
 
   {:ok, conn} = Redix.start_link("redis://localhost:6379")
 
-  @create_users false
+  @create_users true
   @create_relations true
 
   @skip 0
@@ -933,7 +938,7 @@ defmodule Flirtual.Migrate do
           idx = idx + @skip
 
           try do
-            #{:ok, _} = A.create_user_relations(conn, id)
+            # {:ok, _} = A.create_user_relations(conn, id)
             IO.puts("RELATE\tSUCCESS\t#{id}")
 
             id
