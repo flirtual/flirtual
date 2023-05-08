@@ -60,11 +60,12 @@ if config_env() == :prod do
       ]
     ]
 
-  config :flirtual, Flirtual.Repo,
+  config :flirtual, Flirtual.Repo.Local,
     # ssl: true,
     url: System.fetch_env!("DATABASE_URL"),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: if(System.get_env("ECTO_IPV6"), do: [:inet6], else: [])
+    socket_options: if(System.get_env("ECTO_IPV6"), do: [:inet6], else: []),
+    priv: "priv/repo"
 
   config :flirtual, Flirtual.Elasticsearch,
     url: System.fetch_env!("ELASTICSEARCH_URL"),
