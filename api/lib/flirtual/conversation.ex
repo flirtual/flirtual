@@ -114,12 +114,11 @@ defmodule Flirtual.Conversation do
 
     def next(%Cursor{} = self, data) do
       if length(data) == self.limit do
+        last_conversation = data |> List.last()
+
         %Cursor{
           before:
-            data
-            |> List.last()
-            |> Access.get(:last_message, data)
-            |> Access.get(:created_at)
+            (last_conversation[:last_message] || last_conversation)[:created_at]
             |> DateTime.to_unix(:millisecond),
           last_before: self.before,
           page: self.page + 1
