@@ -60,6 +60,16 @@ defmodule Flirtual.Matchmaking do
       with query = generate_query(user, kind),
            {:ok, resp} <- Elasticsearch.search(:users, query),
            prospects = Enum.map(resp["hits"]["hits"], &{&1["_id"], &1["_score"]}),
+           # TODO: This is a hack to ignore users who aren't in the database but exist for some
+           # reason in Elasticsearch. We should figure out why this is happening.
+           prospects =
+             User
+             |> where([user], user.id in ^Enum.map(prospects, &elem(&1, 0)))
+             |> select([user], user.id)
+             |> Repo.all()
+             |> Enum.map(fn user_id ->
+               {user_id, prospects |> Enum.find(&(elem(&1, 0) == user_id)) |> elem(1)}
+             end),
            {:ok, _} <- Prospect.delete_all(profile_id: user.id, kind: kind),
            {:ok, _} <-
              Prospect.insert_all(
