@@ -12,12 +12,8 @@ defmodule Flirtual.Application do
     children = [
       # Start the Cluster supervisor
       {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]},
-      # Start the RPC server
-      {Fly.RPC, []},
       # Start the Ecto repository
-      Flirtual.Repo.Local,
-      # Start the supervisor for LSN tracking
-      {Fly.Postgres.LSN.Supervisor, repo: Flirtual.Repo.Local},
+      Flirtual.Repo,
       # Start Elasticsearch
       Flirtual.Elasticsearch,
       # Start the Telemetry supervisor

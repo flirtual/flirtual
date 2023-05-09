@@ -9,7 +9,7 @@ config :flirtual,
   origin: origin
 
 # Configure your database
-config :flirtual, Flirtual.Repo.Local,
+config :flirtual, Flirtual.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
@@ -17,8 +17,7 @@ config :flirtual, Flirtual.Repo.Local,
   show_sensitive_data_on_connection_error: true,
   pool_size: 200,
   queue_target: 15000,
-  queue_interval: 5000,
-  priv: "priv/repo"
+  queue_interval: 5000
 
 config :flirtual, Flirtual.Elasticsearch, url: "http://localhost:9200"
 
