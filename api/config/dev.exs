@@ -59,4 +59,4 @@ config :phoenix,
   # Initialize plugs at runtime for faster development compilation
   plug_init_mode: :runtime
 
-config :logger, level: :debug
+config :logger, level: :info

@@ -23,4 +23,4 @@ config :flirtual, FlirtualWeb.Endpoint,
   ]
 
 # Do not print debug messages in production
-config :logger, level: :debug
+config :logger, level: :info
