@@ -245,6 +245,8 @@ defmodule Flirtual.Conversation do
       }
     end
 
+    def decode(_), do: nil
+
     defimpl Jason.Encoder do
       use Flirtual.Encoder,
         only: [
