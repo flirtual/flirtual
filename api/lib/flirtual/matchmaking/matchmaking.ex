@@ -208,15 +208,7 @@ defmodule Flirtual.Matchmaking do
              if(is_nil(opposite_item),
                do: {:ok, nil},
                else:
-                 with {:ok, _} <-
-                        item
-                        |> change(%{opposite_id: opposite_item.id})
-                        |> Repo.update(),
-                      {:ok, opposite_item} <-
-                        opposite_item
-                        |> change(%{opposite_id: item.id})
-                        |> Repo.update(),
-                      true <- item.type === :like and opposite_item.type === :like,
+                 with true <- item.type === :like and opposite_item.type === :like,
                       {:ok, _} <- create_match_conversation(user, target, kind),
                       {:ok, _} <- deliver_match_email(target, user) do
                    {:ok, opposite_item}

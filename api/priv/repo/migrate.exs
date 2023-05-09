@@ -404,6 +404,7 @@ defmodule A do
                |> Enum.filter(fn [file_id, _, _] ->
                  file_id !== "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"
                end)
+               |> Enum.slice(0..15)
                |> Enum.with_index()
                |> Enum.map(fn {[file_id, _, scanned], file_index} ->
                  %{
@@ -878,7 +879,7 @@ defmodule Flirtual.Migrate do
 
   {:ok, conn} = Redix.start_link("redis://localhost:6379")
 
-  @create_users true
+  @create_users false
   @create_relations true
 
   @skip 0
@@ -938,7 +939,7 @@ defmodule Flirtual.Migrate do
           idx = idx + @skip
 
           try do
-            # {:ok, _} = A.create_user_relations(conn, id)
+            {:ok, _} = A.create_user_relations(conn, id)
             IO.puts("RELATE\tSUCCESS\t#{id}")
 
             id
