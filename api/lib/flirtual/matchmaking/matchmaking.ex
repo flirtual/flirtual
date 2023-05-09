@@ -96,6 +96,11 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
+  # TODO: Temporarily disabled for beta testing
+  def deliver_match_email(_, _) do
+    {:ok, nil}
+  end
+
   def deliver_match_email(user, target_user) do
     action_url = User.url(target_user)
 
