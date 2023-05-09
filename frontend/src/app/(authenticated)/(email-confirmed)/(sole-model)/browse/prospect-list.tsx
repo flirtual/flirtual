@@ -21,7 +21,7 @@ export async function ProspectList({ kind, prospects }: ProspectListProps) {
 			{prospect ? (
 				<>
 					{/* @ts-expect-error: Server Component */}
-					<Profile key={prospect.id} user={prospect} />
+					<Profile hideRelationActions key={prospect.id} user={prospect} />
 					<ProspectActionBar mode={kind} userId={prospect.id} />
 				</>
 			) : (

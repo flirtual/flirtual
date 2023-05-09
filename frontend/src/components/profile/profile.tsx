@@ -18,7 +18,14 @@ import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { RelationActions } from "./relation-actions";
 
-export async function Profile({ user }: { user: User }) {
+export interface ProfileProps {
+	user: User;
+	hideRelationActions?: boolean;
+}
+
+export async function Profile(props: ProfileProps) {
+	const { user, hideRelationActions = false } = props;
+
 	const session = await withSession();
 	const myProfile = session.user.id === user.id;
 
@@ -53,7 +60,7 @@ export async function Profile({ user }: { user: User }) {
 				</ProfileImageDisplay>
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
-					<RelationActions user={user} />
+					{!hideRelationActions && <RelationActions user={user} />}
 					{user.profile.new && !myProfile ? (
 						session?.user.profile.new ? (
 							<span className="text-xl italic dark:text-white-20">
