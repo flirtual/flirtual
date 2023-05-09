@@ -118,7 +118,7 @@ defmodule Flirtual.Conversation do
           before:
             data
             |> List.last()
-            |> Access.get(:last_message)
+            |> Access.get(:last_message, data)
             |> Access.get(:created_at)
             |> DateTime.to_unix(:millisecond),
           last_before: self.before,
