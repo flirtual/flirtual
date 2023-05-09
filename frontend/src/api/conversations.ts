@@ -13,7 +13,7 @@ export type Message = CreatedAtModel & {
 export type Conversation = CreatedAtModel & {
 	id: string;
 	kind: ProspectKind;
-	lastMessage: Message;
+	lastMessage?: Message;
 	userId: string;
 };
 

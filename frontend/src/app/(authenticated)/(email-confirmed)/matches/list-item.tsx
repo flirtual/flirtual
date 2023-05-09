@@ -49,7 +49,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 				>
 					<UserAvatar className="h-20 w-20 rounded-l-xl" height={80} user={user} width={80} />
 				</Link>
-				{!lastMessage.viewed && (
+				{!(lastMessage?.viewed ?? true) && (
 					<div className="absolute -left-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-theme-2 shadow-brand-1">
 						<div className="h-4 w-4 animate-ping rounded-full bg-theme-1" />
 					</div>
@@ -67,12 +67,14 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
 						<span className="w-full truncate text-black-50 dark:text-white-40">
-							{lastMessage.content}
+							{lastMessage?.content ?? "It's a match!"}
 						</span>
-						<TimeSince
-							className="shrink-0 text-xs text-black-60 dark:text-white-50"
-							value={lastMessage.createdAt}
-						/>
+						{lastMessage && (
+							<TimeSince
+								className="shrink-0 text-xs text-black-60 dark:text-white-50"
+								value={lastMessage.createdAt}
+							/>
+						)}
 					</div>
 				</div>
 			</div>
