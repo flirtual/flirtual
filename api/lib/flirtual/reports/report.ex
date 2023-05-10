@@ -87,26 +87,6 @@ defmodule Flirtual.Report do
     end)
   end
 
-  def validate_query(changeset, field, query) do
-    validate_change(changeset, field, fn field, value ->
-      if not Repo.exists?(query.(value)) do
-        [{field, "does not exist"}]
-      else
-        []
-      end
-    end)
-  end
-
-  def validate_queries(changeset, queries) do
-    Enum.reduce(queries, changeset, fn {field, query}, changeset ->
-      validate_query(changeset, field, query)
-    end)
-  end
-
-  def get(report_id) when is_uuid(report_id) do
-    Report |> where(id: ^report_id) |> Repo.one()
-  end
-
   def clear(%Report{} = report) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
@@ -136,35 +116,67 @@ defmodule Flirtual.Report do
     end)
   end
 
+  def get(report_id) when is_uuid(report_id) do
+    Report |> where(id: ^report_id) |> Repo.one()
+  end
+
   def list(target_id: target_id) when is_uuid(target_id) do
-    Report |> where(target_id: ^target_id) |> Repo.all()
+    Report
+    |> where(target_id: ^target_id)
+    |> order_by(asc: :created_at)
+    |> Repo.all()
+  end
+
+  defmodule List do
+    use Flirtual.EmbeddedSchema
+
+    @optional [:reason_id, :target_id, :user_id]
+
+    embedded_schema do
+      field :reason_id, :string
+      field :target_id, :string
+      field :user_id, :string
+      field :reviewed, :boolean, default: false
+    end
+
+    def changeset(value, _, _) do
+      value
+      |> validate_attribute(:reason_id, "report-reason")
+      |> validate_uuid(:target_id)
+      |> validate_uuid(:user_id)
+      |> validate_queries(
+        target_id: &where(User, id: ^&1),
+        user_id: &where(User, id: ^&1)
+      )
+    end
+
+    def validate_query(changeset, field, query) do
+      validate_change(changeset, field, fn field, value ->
+        if not Repo.exists?(query.(value)) do
+          [{field, "does not exist"}]
+        else
+          []
+        end
+      end)
+    end
+
+    def validate_queries(changeset, queries) do
+      Enum.reduce(queries, changeset, fn {field, query}, changeset ->
+        validate_query(changeset, field, query)
+      end)
+    end
   end
 
   def list(attrs) do
-    with {:ok, attrs} <-
-           cast_arbitrary(
-             %{
-               reason_id: :string,
-               target_id: :string,
-               user_id: :string,
-               reviewed: :boolean
-             },
-             attrs
-           )
-           |> validate_attribute(:reason_id, "report-reason")
-           |> validate_uuid(:target_id)
-           |> validate_uuid(:user_id)
-           |> validate_queries(
-             target_id: &where(User, id: ^&1),
-             user_id: &where(User, id: ^&1)
-           )
-           |> apply_action(:read) do
+    with {:ok, attrs} <- List.apply(attrs) do
       include_reviewed = attrs[:reviewed] || false
 
-      Report
-      |> where([report], ^include_reviewed or is_nil(report.reviewed_at))
-      |> preload(^default_assoc())
-      |> Repo.all()
+      {:ok,
+       Report
+       |> where([report], ^include_reviewed or is_nil(report.reviewed_at))
+       |> order_by(desc: :created_at)
+       |> preload(^default_assoc())
+       |> Repo.all()}
     end
   end
 end

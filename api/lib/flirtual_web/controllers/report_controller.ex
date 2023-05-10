@@ -9,7 +9,7 @@ defmodule FlirtualWeb.ReportController do
   action_fallback FlirtualWeb.FallbackController
 
   def list(conn, params) do
-    with reports <- Report.list(params) do
+    with {:ok, reports} <- Report.list(params) do
       conn |> json(reports |> Enum.filter(&Policy.can?(conn, :read, &1)))
     end
   end
