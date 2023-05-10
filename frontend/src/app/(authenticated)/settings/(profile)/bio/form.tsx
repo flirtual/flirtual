@@ -45,8 +45,8 @@ export const BiographyForm: FC = () => {
 						body: {
 							displayName,
 							biography: html(biography),
-							discord: discord.trim() || "",
-							vrchat: vrchat.trim() || ""
+							discord: discord.trim() || null,
+							vrchat: vrchat.trim() || null
 						}
 					}),
 					await api.user.profile.images.update(user.id, {

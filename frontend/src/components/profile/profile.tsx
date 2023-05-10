@@ -6,6 +6,8 @@ import { withSession } from "~/server-utilities";
 import { yearsAgo } from "~/date";
 
 import { InlineLink } from "../inline-link";
+import { VRChatIcon } from "../icons/brand/vrchat";
+import { DiscordIcon } from "../icons";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfileVerificationBadge } from "./verification-badge";
@@ -61,6 +63,27 @@ export async function Profile(props: ProfileProps) {
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
 					{!hideRelationActions && <RelationActions user={user} />}
+					{(user.profile.discord || user.profile.vrchat) && (
+						<div className="flex flex-col gap-2">
+							{user.profile.vrchat && (
+								<div className="flex items-center gap-2">
+									<div className="w-6">
+										<VRChatIcon className="h-6" />
+									</div>
+									VRChat:{" "}
+									<InlineLink className="w-full" href={urls.vrchat(user.profile.vrchat)}>
+										{user.profile.vrchat}
+									</InlineLink>
+								</div>
+							)}
+							{user.profile.discord && (
+								<div className="flex items-center gap-2">
+									<DiscordIcon className="h-6 w-6" />
+									Discord: <span>{user.profile.discord}</span>
+								</div>
+							)}
+						</div>
+					)}
 					{user.profile.new && !myProfile ? (
 						session?.user.profile.new ? (
 							<span className="text-xl italic dark:text-white-20">

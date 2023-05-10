@@ -32,8 +32,8 @@ export type Profile = Partial<UpdatedAtModel> & {
 	domsub?: ProfileDomsub;
 	monopoly?: ProfileMonopoly;
 	country?: string;
-	vrchat?: string;
-	discord?: string;
+	vrchat?: string | null;
+	discord?: string | null;
 	openness?: number;
 	conscientiousness?: number;
 	agreeableness?: number;

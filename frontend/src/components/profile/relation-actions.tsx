@@ -50,25 +50,6 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 						Unmatch
 					</Button>
 				</div>
-				<div className="flex flex-col gap-2">
-					{user.profile.vrchat && (
-						<div className="flex items-center gap-2">
-							<div className="w-6">
-								<VRChatIcon className="h-6" />
-							</div>
-							VRChat:{" "}
-							<InlineLink className="w-full" href={urls.vrchat(user.profile.vrchat)}>
-								{user.profile.vrchat}
-							</InlineLink>
-						</div>
-					)}
-					{user.profile.discord && (
-						<div className="flex items-center gap-2">
-							<DiscordIcon className="h-6 w-6" />
-							Discord: <span>{user.profile.discord}</span>
-						</div>
-					)}
-				</div>
 			</>
 		);
 
