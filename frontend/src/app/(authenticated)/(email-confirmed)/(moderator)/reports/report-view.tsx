@@ -4,15 +4,9 @@
 import { createContext, Dispatch, SetStateAction, useContext, useMemo, useState } from "react";
 import useSWR, { KeyedMutator } from "swr";
 import { twMerge } from "tailwind-merge";
-import {
-	ArrowTopRightOnSquareIcon,
-	MinusSmallIcon,
-	PlusIcon,
-	ShieldCheckIcon
-} from "@heroicons/react/24/solid";
+import { ArrowTopRightOnSquareIcon, ShieldCheckIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import ms from "ms";
-import { CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
@@ -24,6 +18,7 @@ import { ListOptions, Report } from "~/api/report";
 import { BanProfile } from "~/components/profile/action-bar/ban-profile";
 import { Tooltip } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
+import { TimeRelative } from "~/components/time-relative";
 
 type CompleteReport = Report & { user?: User; target: User };
 
@@ -51,7 +46,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 	const { mutate } = useContext(ReportListContext);
 	const toasts = useToast();
 
-	const CollapseIcon = collapsed ? PlusIcon : MinusSmallIcon;
+	const CollapseIcon = collapsed ? ChevronRightIcon : ChevronDownIcon;
 
 	const activeReports = reports.filter((report) => !report.reviewedAt);
 
@@ -60,7 +55,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 			<div className="flex flex-col">
 				<div className="flex items-center justify-between gap-4 sm:justify-start">
 					<button
-						className="flex h-fit gap-4 text-left"
+						className="flex h-fit items-center gap-4 text-left"
 						type="button"
 						onClick={() => setCollapsed((collapsed) => !collapsed)}
 					>
@@ -133,15 +128,11 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 								)}
 							>
 								<div className="flex flex-col">
-									<span
-										suppressHydrationWarning
-										className="text-xs text-black-50 dark:text-white-50"
-									>{`${new Date(report.createdAt).toLocaleString()} (${ms(
-										Date.now() - new Date(report.createdAt).getTime(),
-										{
-											long: true
-										}
-									)} ago)`}</span>
+									<span className="text-xs text-black-50 first-letter:capitalize dark:text-white-50">
+										<TimeRelative approximate suffix="since" value={report.createdAt} />{" "}
+										{new Date(report.createdAt).toLocaleString()}
+									</span>
+
 									<div className="flex items-center justify-between gap-4 pr-3">
 										<span className="text-lg font-semibold">{report.reason.name}</span>
 										{!report.reviewedAt && (
@@ -221,7 +212,11 @@ export const ReportView: React.FC = () => {
 				[listOptions, setListOptions, reports, mutate]
 			)}
 		>
-			<ModelCard className="sm:max-w-4xl" containerProps={{ className: "gap-8" }} title="Reports">
+			<ModelCard
+				className="sm:max-w-4xl"
+				containerProps={{ className: "gap-8 min-h-screen" }}
+				title="Reports"
+			>
 				<div>
 					<span>{reports.length} reports</span>
 				</div>

@@ -16,7 +16,7 @@ import { api } from "~/api";
 
 import { ModalOuter } from "../modal";
 import { Tooltip } from "../tooltip";
-import { TimeSince } from "../time-since";
+import { TimeRelative } from "../time-relative";
 import { UserImage } from "../user-avatar";
 
 export interface ProfileImageDisplayProps {
@@ -55,8 +55,13 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4">
 			<span>
-				Uploaded <TimeSince value={image.createdAt} /> ago, and was{" "}
-				{image.scanned ? "" : <span className="font-bold">not scanned</span>}.
+				Uploaded <TimeRelative value={image.createdAt} />
+				{image.scanned !== null && (
+					<>
+						, and was {image.scanned ? "scanned" : <span className="font-bold">not scanned</span>}
+					</>
+				)}
+				.
 			</span>
 			<div className="flex gap-4 text-white-20">
 				<Tooltip value="Search image">

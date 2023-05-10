@@ -1,10 +1,22 @@
+import { Metadata } from "next";
+
 import { ConversationChatbox } from "~/hooks/use-talkjs";
+import { displayName } from "~/api/user";
 
 import { ConversationAside } from "../aside";
+import { getProfileUser } from "../../(sole-model)/[username]/profile-user";
 
 export interface ConversationPageProps {
 	params: {
 		userId: string;
+	};
+}
+
+export async function generateMetadata({ params }: ConversationPageProps): Promise<Metadata> {
+	const user = await getProfileUser(params.userId);
+
+	return {
+		title: displayName(user)
 	};
 }
 

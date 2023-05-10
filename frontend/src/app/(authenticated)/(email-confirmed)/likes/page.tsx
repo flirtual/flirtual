@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
 import { api } from "~/api";
 import { User, displayName } from "~/api/user";
@@ -17,6 +18,10 @@ import { LikeAndPassItem } from "~/api/matchmaking";
 import { yearsAgo } from "~/date";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+
+export const metadata: Metadata = {
+	title: "Liked me"
+};
 
 export default async function LikesPage() {
 	const { user } = await withSession();

@@ -7,7 +7,7 @@ import { fetch, NarrowFetchOptions } from "./exports";
 export type Report = Expand<
 	UuidModel &
 		DatedModel & {
-			reason: Attribute<"report-reason">;
+			reason: Pick<Attribute<"report-reason">, "id" | "name">;
 			message: string;
 			reviewedAt?: string;
 			userId?: string;

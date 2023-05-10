@@ -9,7 +9,7 @@ import { Conversation } from "~/api/conversations";
 import { displayName } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { TimeSince } from "~/components/time-since";
+import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar } from "~/components/user-avatar";
 import { useConversations } from "~/hooks/use-conversations";
 import { useUser } from "~/hooks/use-user";
@@ -70,8 +70,8 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 							{lastMessage?.content ?? "It's a match!"}
 						</span>
 						{lastMessage && (
-							<TimeSince
-								className="shrink-0 text-xs text-black-60 dark:text-white-50"
+							<TimeRelative
+								elementProps={{ className: "shrink-0 text-xs text-black-60 dark:text-white-50" }}
 								value={lastMessage.createdAt}
 							/>
 						)}
