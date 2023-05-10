@@ -14,6 +14,3 @@ contact_links:
   - name: Discord
     url: https://discord.gg/flirtual
     about: Join our Discord community for help, developer discussion, and more
-  - name: Open a flirtual-phx issue
-    url: https://github.com/flirtual/flirtual-phx/issues/new/choose
-    about: This repository is for Flirtual's Next.js front-end; open Phoenix back-end issues in the flirtual-phx repository instead
