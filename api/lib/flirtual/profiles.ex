@@ -40,6 +40,7 @@ defmodule Flirtual.Profiles do
     import Flirtual.Utilities
     import Flirtual.Attribute
 
+    alias Flirtual.Profiles.Update
     alias Flirtual.User.Profile
     alias Flirtual.Languages
     alias Flirtual.Countries
@@ -90,6 +91,22 @@ defmodule Flirtual.Profiles do
 
       @attribute_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)
       @attribute_types |> Enum.map(fn key -> field(key, {:array, :string}, virtual: true) end)
+    end
+
+    def create(%{profile: profile}) do
+      %Update{
+        display_name: profile.display_name,
+        biography: profile.biography,
+        vrchat: profile.vrchat,
+        discord: profile.discord,
+        domsub: profile.domsub,
+        monopoly: profile.monopoly,
+        country: profile.country,
+        serious: profile.serious,
+        new: profile.new,
+        languages: profile.languages,
+        custom_interests: profile.custom_interests
+      }
     end
 
     def changeset(value, _, %{required: required}) do
@@ -174,7 +191,12 @@ defmodule Flirtual.Profiles do
   def update(%Profile{} = profile, attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
-             Update.apply(attrs, context: %{required: Keyword.get(options, :required, [])}),
+             Update.apply(attrs,
+               context: %{
+                 profile: profile,
+                 required: Keyword.get(options, :required, [])
+               }
+             ),
            {:ok, profile} <-
              Update.transform(profile, attrs |> Map.from_struct()) |> Repo.update(),
            {:ok, _} <- ChangeQueue.add(profile.user_id),

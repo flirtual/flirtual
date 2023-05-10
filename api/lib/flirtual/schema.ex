@@ -62,11 +62,11 @@ defmodule Flirtual.EmbeddedSchema do
 
   defmacro __before_compile__(_) do
     quote do
-      def create() do
+      def create(_) do
         %__MODULE__{}
       end
 
-      def prepare_changeset(attrs \\ %{}) do
+      def prepare_changeset(attrs \\ %{}, context \\ %{}) do
         keys =
           __MODULE__.__schema__(:fields)
           |> Enum.filter(fn k -> k not in @exclude end)
@@ -75,8 +75,8 @@ defmodule Flirtual.EmbeddedSchema do
           keys
           |> Enum.filter(fn k -> k not in @optional end)
 
-        create()
-        |> cast(attrs, keys)
+        create(context)
+        |> cast(attrs, keys, empty_values: [nil])
         |> validate_required(required_keys)
       end
 
@@ -85,8 +85,7 @@ defmodule Flirtual.EmbeddedSchema do
         context = Keyword.get(options, :context, %{})
 
         with {:ok, value} <-
-               prepare_changeset(attrs)
-               |> Map.put(:empty_values, [])
+               prepare_changeset(attrs, context)
                |> changeset(attrs, context)
                |> apply_action(action) do
           {:ok, value}
