@@ -6,8 +6,8 @@ import { api } from "~/api";
 import { displayName } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
+import { TimeRelative } from "~/components/time-relative";
 import { environment, gitCommitSha, gitCommitUrl } from "~/const-server";
-import { timeSince } from "~/date";
 import { withOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
@@ -66,9 +66,7 @@ export default async function DebuggerPage() {
 					)}
 					<div className="flex justify-between gap-8 text-sm">
 						<span className="shrink-0">Age: </span>
-						<span className="truncate font-mono text-sm">
-							{session ? timeSince(new Date(session?.createdAt)) : ""}
-						</span>
+						{session ? <TimeRelative value={session.createdAt} /> : "Unavailable"}
 					</div>
 				</div>
 				<div className="flex flex-col">
