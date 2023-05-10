@@ -1,4 +1,6 @@
 defmodule Flirtual.Matchmaking do
+  use Flirtual.Logger, :matchmaking
+
   import Flirtual.Utilities
   import Ecto.Changeset
   import Ecto.Query
@@ -31,35 +33,40 @@ defmodule Flirtual.Matchmaking do
     |> DateTime.truncate(:second)
   end
 
-  def list_prospects(%User{} = user, kind) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-
+  def should_compute_prospects?(user, kind) do
     reset_fields = get_reset_fields(kind)
 
     reset_at = user.profile[reset_fields.at]
     reset_count = user.profile[reset_fields.count]
 
-    should_reset =
-      reset_at === nil or
-        (reset_count >= 15 and Subscription.active?(user.subscription)) or
-        NaiveDateTime.compare(DateTime.to_naive(reset_at), now) == :lt
-
-    maybe_compute_prospects(should_reset, user, kind)
+    reset_at === nil or
+      (Subscription.active?(user.subscription) and reset_count >= 15) or
+      DateTime.compare(reset_at, DateTime.utc_now()) == :lt
   end
 
-  defp maybe_compute_prospects(false, user, kind) do
+  def list_prospects(%User{} = user, kind) do
+    if(should_compute_prospects?(user, kind)) do
+      log(:info, ["compute", kind], user.id)
+      compute_prospects(user, kind)
+    else
+      log(:info, ["skip-compute", kind], user.id)
+      list_existing_prospects(user, kind)
+    end
+  end
+
+  defp list_existing_prospects(user, kind) do
     {:ok,
      Prospect.list(profile_id: user.id, kind: kind)
      |> Enum.map(& &1.target_id)}
   end
 
-  defp maybe_compute_prospects(true, user, kind) do
+  defp compute_prospects(user, kind) do
     reset_fields = get_reset_fields(kind)
 
     Repo.transaction(fn ->
       with query = generate_query(user, kind),
            {:ok, resp} <- Elasticsearch.search(:users, query),
-           prospects = Enum.map(resp["hits"]["hits"], &{&1["_id"], &1["_score"]}),
+           prospects = Enum.map(resp["hits"]["hits"], &{&1["_id"], &1["_score"]}) |> IO.inspect(),
            # TODO: This is a hack to ignore users who aren't in the database but exist for some
            # reason in Elasticsearch. We should figure out why this is happening.
            prospects =
@@ -100,8 +107,8 @@ defmodule Flirtual.Matchmaking do
 
   def reset_prospects(%User{} = user) do
     with {:ok, count} <- LikesAndPasses.delete_all(profile_id: user.id),
-         {:ok, _} <- maybe_compute_prospects(true, user, :love),
-         {:ok, _} <- maybe_compute_prospects(true, user, :friend) do
+         {:ok, _} <- compute_prospects(user, :love),
+         {:ok, _} <- compute_prospects(user, :friend) do
       {:ok, count}
     end
   end
@@ -406,11 +413,7 @@ defmodule Flirtual.Matchmaking do
   def queries(%User{} = user, :friend) do
     Enum.map(
       [
-        :likes,
-        :interests,
-        :games,
-        :country,
-        :personality
+        :likes
       ],
       &query(&1, user)
     )
