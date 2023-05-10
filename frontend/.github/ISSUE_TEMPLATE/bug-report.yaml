@@ -19,7 +19,6 @@ body:
       label: "To reproduce"
       description: "How do you trigger this issue? Please walk us through it step by step."
       value: |
-        Steps to reproduce the behavior:
         1. Go to '...'
         2. Click on '....'
         3. Scroll down to '....'
