@@ -172,10 +172,17 @@ defmodule Flirtual.Report do
       include_reviewed = attrs[:reviewed] || false
 
       {:ok,
-       Report
-       |> where([report], ^include_reviewed or is_nil(report.reviewed_at))
-       |> order_by(desc: :created_at)
-       |> preload(^default_assoc())
+       from(report in Report,
+         where: ^include_reviewed or is_nil(report.reviewed_at),
+         order_by: [desc: report.created_at],
+         join: reason in assoc(report, :reason),
+         select_merge: %{
+           reason: %{
+             id: reason.id,
+             name: reason.name
+           }
+         }
+       )
        |> Repo.all()}
     end
   end
