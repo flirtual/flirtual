@@ -80,6 +80,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     LikesAndPasses
     |> where(profile_id: ^profile_id, type: :like)
     |> with_opposite(nil: false)
+    |> order_by(desc: :created_at)
     |> Repo.all()
   end
 
@@ -87,6 +88,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     LikesAndPasses
     |> where(target_id: ^profile_id, type: :like)
     |> with_opposite(nil: true)
+    |> order_by(desc: :created_at)
     |> Repo.all()
   end
 
