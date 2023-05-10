@@ -1,0 +1,19 @@
+contact_links:
+  - name: Feature request
+    url: https://flirtual.canny.io/features
+    about: Suggest an idea or improvement
+  - name: Roadmap
+    url: https://flirtual.canny.io
+    about: See what we're working on
+  - name: Changelog
+    url: https://flirtual.canny.io/changelog
+    about: See our latest updates
+  - name: Support
+    url: https://hello.flirtu.al
+    about: Contact us for help with your account
+  - name: Discord
+    url: https://discord.gg/flirtual
+    about: Join our Discord community for help, developer discussion, and more
+  - name: Open a flirtual-phx issue
+    url: https://github.com/flirtual/flirtual-phx/issues/new/choose
+    about: This repository is for Flirtual's Next.js front-end; open Phoenix back-end issues in the flirtual-phx repository instead
