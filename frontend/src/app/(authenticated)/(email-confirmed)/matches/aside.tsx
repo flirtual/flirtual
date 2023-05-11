@@ -41,7 +41,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 				<LikesYouButton />
 				<div className="flex flex-col gap-4">
 					{data.map(({ data: conversations, metadata }, dataIdx) => (
-						<Suspense fallback={"loading"} key={metadata.cursor.self.page}>
+						<Suspense fallback={"Loading..."} key={metadata.cursor.self.page}>
 							<div className="flex flex-col gap-4">
 								{conversations.map((conversation, conversationIdx) => (
 									<ConversationListItem
