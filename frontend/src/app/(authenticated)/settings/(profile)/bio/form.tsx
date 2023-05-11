@@ -110,9 +110,7 @@ export const BiographyForm: FC = () => {
 							inline
 							hint={
 								<InputLabelHint className="text-sm">
-									This information will not be shared outside of Flirtual without your permission,
-									and is used in accordance with our{" "}
-									<InlineLink href={urls.resources.privacyPolicy}>Privacy Policy</InlineLink>.
+									People can see your accounts after you match, to help you meet up.
 								</InputLabelHint>
 							}
 						>
