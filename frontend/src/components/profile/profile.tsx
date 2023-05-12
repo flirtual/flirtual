@@ -22,11 +22,11 @@ import { RelationActions } from "./relation-actions";
 
 export interface ProfileProps {
 	user: User;
-	hideRelationActions?: boolean;
+	direct?: boolean;
 }
 
 export async function Profile(props: ProfileProps) {
-	const { user, hideRelationActions = false } = props;
+	const { user, direct = false } = props;
 
 	const session = await withSession();
 	const myProfile = session.user.id === user.id;
@@ -62,13 +62,13 @@ export async function Profile(props: ProfileProps) {
 				</ProfileImageDisplay>
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
-					{!hideRelationActions && <RelationActions user={user} />}
+					<RelationActions direct={direct} user={user} />
 					{(user.profile.discord || user.profile.vrchat) && (
 						<div className="flex flex-col gap-2">
 							{user.profile.vrchat && (
 								<div className="flex items-center gap-2">
 									<div className="w-6">
-										<VRChatIcon className="h-6" />
+										<VRChatIcon className="h-6 text-black-90" />
 									</div>
 									VRChat:{" "}
 									<InlineLink className="w-full" href={urls.vrchat(user.profile.vrchat)}>

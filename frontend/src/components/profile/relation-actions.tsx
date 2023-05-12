@@ -9,11 +9,8 @@ import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
 
 import { Button, ButtonLink } from "../button";
-import { VRChatIcon } from "../icons/brand/vrchat";
-import { InlineLink } from "../inline-link";
-import { DiscordIcon } from "../icons";
 
-export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
+export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({ user, direct }) => {
 	const { relationship } = user;
 
 	const toasts = useToast();
@@ -53,7 +50,7 @@ export const RelationActions: React.FC<{ user: User }> = ({ user }) => {
 			</>
 		);
 
-	if (relationship.type && relationship.kind)
+	if (direct && relationship.type && relationship.kind)
 		return (
 			<div className="flex w-full items-center justify-between gap-4 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
 				<span className="text-xl text-white-20 [overflow-wrap:anywhere]">
