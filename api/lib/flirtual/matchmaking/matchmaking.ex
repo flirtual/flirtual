@@ -428,7 +428,7 @@ defmodule Flirtual.Matchmaking do
       "term" => %{
         "liked" => %{
           "value" => user.id,
-          "boost" => 20 * (Map.get(custom_weights, :likes) || 1)
+          "boost" => 30 * (Map.get(custom_weights, :likes) || 1)
         }
       }
     }
@@ -474,7 +474,7 @@ defmodule Flirtual.Matchmaking do
           "term" => %{
             "attributes" => %{
               "value" => &1.id,
-              "boost" => 15 * (Map.get(custom_weights, :default_interests) || 1)
+              "boost" => 20 * (Map.get(custom_weights, :default_interests) || 1)
             }
           }
         }
@@ -486,7 +486,7 @@ defmodule Flirtual.Matchmaking do
           "term" => %{
             "attributes" => %{
               "value" => &1.id,
-              "boost" => 5 * (Map.get(custom_weights, :custom_interests) || 1)
+              "boost" => 25 * (Map.get(custom_weights, :custom_interests) || 1)
             }
           }
         }
@@ -505,7 +505,7 @@ defmodule Flirtual.Matchmaking do
         "term" => %{
           "attributes" => %{
             "value" => &1.id,
-            "boost" => 3 * (Map.get(custom_weights, :games) || 1)
+            "boost" => 1 * (Map.get(custom_weights, :games) || 1)
           }
         }
       }
@@ -521,7 +521,7 @@ defmodule Flirtual.Matchmaking do
         "term" => %{
           "country" => %{
             "value" => country,
-            "boost" => 3 * (Map.get(custom_weights, :country) || 1)
+            "boost" => 15 * (Map.get(custom_weights, :country) || 1)
           }
         }
       },
@@ -555,7 +555,7 @@ defmodule Flirtual.Matchmaking do
         "term" => %{
           "serious" => %{
             "value" => serious,
-            "boost" => 5 * (Map.get(custom_weights, :serious) || 1)
+            "boost" => 3 * (Map.get(custom_weights, :serious) || 1)
           }
         }
       },
@@ -570,7 +570,7 @@ defmodule Flirtual.Matchmaking do
       do: %{
         "terms" => %{
           "domsub" => User.Profile.get_domsub_match(domsub),
-          "boost" => 5 * (Map.get(custom_weights, :domsub) || 1)
+          "boost" => 3 * (Map.get(custom_weights, :domsub) || 1)
         }
       },
       else: []
@@ -590,7 +590,7 @@ defmodule Flirtual.Matchmaking do
               "term" => %{
                 "attributes" => %{
                   "value" => &1.id,
-                  "boost" => 3 * (Map.get(custom_weights, :kinks) || 1)
+                  "boost" => 2 * (Map.get(custom_weights, :kinks) || 1)
                 }
               }
             }
@@ -601,7 +601,7 @@ defmodule Flirtual.Matchmaking do
               "term" => %{
                 "attributes_lf" => %{
                   "value" => &1.id,
-                  "boost" => 3 * (Map.get(custom_weights, :kinks) || 1)
+                  "boost" => 2 * (Map.get(custom_weights, :kinks) || 1)
                 }
               }
             }
@@ -624,7 +624,7 @@ defmodule Flirtual.Matchmaking do
                 "scale" => 3
               }
             },
-            "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+            "boost" => 4.5 * (Map.get(custom_weights, :personality) || 1)
           }
         }
       else
@@ -639,7 +639,7 @@ defmodule Flirtual.Matchmaking do
                 "scale" => 3
               }
             },
-            "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+            "boost" => 4.5 * (Map.get(custom_weights, :personality) || 1)
           }
         }
       else
@@ -654,7 +654,7 @@ defmodule Flirtual.Matchmaking do
                 "scale" => 3
               }
             },
-            "boost" => 1.5 * (Map.get(custom_weights, :personality) || 1)
+            "boost" => 4.5 * (Map.get(custom_weights, :personality) || 1)
           }
         }
       else
