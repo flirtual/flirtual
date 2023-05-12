@@ -203,7 +203,7 @@ defmodule Flirtual.Profiles do
            :ok <-
              Flag.check_flags(
                profile.user_id,
-               profile.biography <> " " <> Enum.join(profile.custom_interests, " ")
+               (profile.biography || "") <> " " <> Enum.join(profile.custom_interests || [], " ")
              ),
            :ok <- Flag.check_openai_moderation(profile.user_id, profile.biography) do
         profile
