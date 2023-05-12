@@ -29,7 +29,9 @@ export const Onboarding3Form: React.FC = () => {
 					src: image.url
 				})) as Array<ImageSetValue>,
 				biography: user.profile.biography || "",
-				connectionsPrivacy: user.preferences?.privacy.connections ?? "matches"
+				vrchat: user.profile.vrchat || "",
+				discord: user.profile.discord || ""
+				// connectionsPrivacy: user.preferences?.privacy.connections ?? "matches"
 			}}
 			onSubmit={async (values) => {
 				await Promise.all([
@@ -39,14 +41,16 @@ export const Onboarding3Form: React.FC = () => {
 						},
 						body: {
 							biography: values.biography,
-							displayName: values.displayName
-						}
-					}),
-					api.user.preferences.updatePrivacy(user.id, {
-						body: {
-							connections: values.connectionsPrivacy
+							displayName: values.displayName,
+							discord: values.discord.trim() || null,
+							vrchat: values.vrchat.trim() || null
 						}
 					})
+					// api.user.preferences.updatePrivacy(user.id, {
+					// 	body: {
+					// 		connections: values.connectionsPrivacy
+					// 	}
+					// })
 				]);
 
 				if (values.images.length) {
@@ -95,6 +99,36 @@ export const Onboarding3Form: React.FC = () => {
 							</>
 						)}
 					</FormField>
+					<div className="flex flex-col gap-4">
+						<InputLabel
+							inline
+							hint={
+								<InputLabelHint className="text-sm">
+									People can see your accounts after you match, to help you meet up.
+								</InputLabelHint>
+							}
+						>
+							Add accounts to your profile
+						</InputLabel>
+						<div className="flex gap-4">
+							<FormField className="basis-64" name="vrchat">
+								{(field) => (
+									<>
+										<InputLabel {...field.labelProps}>VRChat</InputLabel>
+										<InputText {...field.props} />
+									</>
+								)}
+							</FormField>
+							<FormField className="basis-64" name="discord">
+								{(field) => (
+									<>
+										<InputLabel {...field.labelProps}>Discord</InputLabel>
+										<InputText {...field.props} />
+									</>
+								)}
+							</FormField>
+						</div>
+					</div>
 					{/* <div className="flex flex-col gap-2">
 						<InputLabel>Connect accounts</InputLabel>
 						<div className="flex flex-col gap-4">
