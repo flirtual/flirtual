@@ -19,12 +19,84 @@ defmodule Flirtual.Elasticsearch do
     log(:warn, [index_name, "delete-index"], nil)
 
     Elasticsearch.delete(Flirtual.Elasticsearch, "/" <> index_name)
+  end
 
-    Elasticsearch.Index.create_from_file(
+  def create_index(:users = index) do
+    index_name = get_index_name(index)
+    log(:warn, [index_name, "create-index"], nil)
+
+    Elasticsearch.Index.create(
       Flirtual.Elasticsearch,
       index_name,
-      "priv/elasticsearch/users.json"
+      %{
+        "mappings" => %{
+          "properties" => %{
+            "id" => %{
+              "type" => "keyword"
+            },
+            "dob" => %{
+              "type" => "date"
+            },
+            "agemin" => %{
+              "type" => "integer"
+            },
+            "agemax" => %{
+              "type" => "integer"
+            },
+            "active_at" => %{
+              "type" => "date"
+            },
+            "openness" => %{
+              "type" => "byte"
+            },
+            "conscientiousness" => %{
+              "type" => "byte"
+            },
+            "agreeableness:" => %{
+              "type" => "byte"
+            },
+            "attributes" => %{
+              "type" => "keyword"
+            },
+            "attributes_lf" => %{
+              "type" => "keyword"
+            },
+            "custom_interests" => %{
+              "type" => "keyword"
+            },
+            "country" => %{
+              "type" => "keyword"
+            },
+            "monopoly" => %{
+              "type" => "keyword"
+            },
+            "serious" => %{
+              "type" => "boolean"
+            },
+            "domsub" => %{
+              "type" => "keyword"
+            },
+            "liked" => %{
+              "type" => "keyword"
+            },
+            "passed" => %{
+              "type" => "keyword"
+            },
+            "blocked" => %{
+              "type" => "keyword"
+            }
+          }
+        }
+      }
     )
+  end
+
+  def recreate_index(index) when is_atom(index) do
+    index_name = get_index_name(index)
+    log(:warn, [index_name, "recreate-index"], nil)
+
+    delete_index(index)
+    create_index(index)
   end
 
   defp bulk_changes_body(changes) do
