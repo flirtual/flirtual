@@ -403,9 +403,12 @@ defmodule Flirtual.User do
 end
 
 defimpl Elasticsearch.Document, for: Flirtual.User do
-  alias Flirtual.User
-
   import Flirtual.Utilities
+  import Ecto.Query
+
+  alias Flirtual.User.Profile.LikesAndPasses
+  alias Flirtual.User
+  alias Flirtual.Repo
 
   def id(%User{} = user), do: user.id
   def routing(_), do: false
@@ -442,8 +445,12 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           country: profile.country,
           monopoly: profile.monopoly,
           serious: profile.serious,
-          nsfw: user.preferences.nsfw
-          # liked: profile.liked_and_passed |> Enum.filter(&(&1.type === :like)),
+          nsfw: user.preferences.nsfw,
+          liked:
+            LikesAndPasses
+            |> where(profile_id: ^profile.user_id, type: :like)
+            |> select([item], item.target_id)
+            |> Repo.all()
         },
         if(user.preferences.nsfw,
           do: %{

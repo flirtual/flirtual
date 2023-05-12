@@ -270,7 +270,8 @@ defmodule Flirtual.Matchmaking do
     profile = user.profile
 
     %{
-      # "explain" => true,
+      "explain" => false,
+      "_source" => false,
       "size" => 30,
       "query" => %{
         "bool" => %{

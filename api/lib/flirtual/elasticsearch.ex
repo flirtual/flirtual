@@ -9,7 +9,7 @@ defmodule Flirtual.Elasticsearch do
 
   def search(index, query) when is_atom(index) do
     index_name = get_index_name(index)
-    log(:debug, [index_name, "search"], query)
+    log(:info, [index_name, "search"], query)
 
     Elasticsearch.post(Flirtual.Elasticsearch, "/" <> index_name <> "/_search", query)
   end
