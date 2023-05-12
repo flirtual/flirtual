@@ -264,6 +264,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 						{(field) => (
 							<>
 								<InputLabel hint="(up to 7)">Personal interest tags</InputLabel>
+								<InputLabel hint="You can add custom interests too!" />
 								<InputAutocomplete
 									{...field.props}
 									supportArbitrary
