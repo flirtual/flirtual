@@ -38,6 +38,7 @@ defmodule Flirtual.MixProject do
       {:phoenix_ecto, "~> 4.4"},
       {:plug_redirect, "~> 1.0"},
       {:cors_plug, "~> 3.0"},
+      {:shortuuid, "~> 2.0"},
       {:ecto_shortuuid, "~> 0.1"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
