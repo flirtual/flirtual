@@ -25,7 +25,7 @@ defmodule Flirtual.Logger do
 
           Logger.unquote(level)(
             unquote(logger_name) <>
-              if(length(list) === 0, do: "", else: "(" <> Enum.join(list, "/") <> ")") <>
+              if(Enum.empty?(list), do: "", else: "(" <> Enum.join(list, "/") <> ")") <>
               if(is_binary(details),
                 do: ": ",
                 else: ":\n"

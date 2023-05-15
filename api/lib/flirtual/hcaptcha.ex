@@ -45,7 +45,7 @@ defmodule Flirtual.HCaptcha do
           []
 
         %{"success" => false, "error-codes" => error_codes} ->
-          if length(error_codes) === 0 do
+          if Enum.empty?(error_codes) do
             [{field, "is invalid"}]
           else
             Enum.map(error_codes, &{field, &1})

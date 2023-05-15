@@ -121,7 +121,7 @@ defmodule Flirtual.User do
       # onboarding validations
       ## onboarding/1
       {
-        length(filter_by(profile.preferences.attributes, :type, "gender")) == 0,
+        Enum.empty?(filter_by(profile.preferences.attributes, :type, "gender")),
         %{reason: "missing gender preferences", to: "/onboarding/1"}
       },
       ## onboarding/2
@@ -130,20 +130,19 @@ defmodule Flirtual.User do
         %{reason: "missing birthday", to: "/onboarding/2"}
       },
       {
-        length(filter_by(profile.attributes, :type, "gender")) === 0,
+        Enum.empty?(filter_by(profile.attributes, :type, "gender")),
         %{reason: "missing profile genders", to: "/onboarding/2"}
       },
       {
-        length(profile.languages) === 0,
+        Enum.empty?(profile.languages),
         %{reason: "missing profile languages", to: "/onboarding/2"}
       },
       {
-        length(filter_by(profile.attributes, :type, "platform")) === 0,
+        Enum.empty?(filter_by(profile.attributes, :type, "platform")),
         %{reason: "missing profile platforms", to: "/onboarding/2"}
       },
       {
-        length(filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests) ===
-          0,
+        Enum.empty?(filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests),
         %{reason: "missing profile interests", to: "/onboarding/2"}
       },
       ## onboarding/3
@@ -152,7 +151,7 @@ defmodule Flirtual.User do
         %{reason: "profile biography too short", to: "/onboarding/3"}
       },
       {
-        length(profile.images) == 0,
+        Enum.empty?(profile.images),
         %{reason: "missing profile pictures", to: "/onboarding/3"}
       },
       # email verification

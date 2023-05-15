@@ -205,7 +205,7 @@ defmodule Flirtual.User.Policy do
     |> DateTime.new!(Time.new!(0, 0, 0))
   end
 
-  @day_in_seconds 86400
+  @day_in_seconds 86_400
 
   # Truncate born at to year, to hide user's exact birthday.
   def transform(:born_at, _, %User{born_at: born_at} = user) when not is_nil(born_at) do

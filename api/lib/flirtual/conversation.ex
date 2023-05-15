@@ -99,7 +99,7 @@ defmodule Flirtual.Conversation do
            when (is_nil(last_before) or is_integer(last_before)) and
                   (is_nil(before) or is_integer(before)) and is_integer(page) and
                   is_integer(limit) <-
-             :erlang.binary_to_term(binary) do
+             :erlang.binary_to_term(binary, [:safe]) do
         %Cursor{
           before: before,
           last_before: last_before,

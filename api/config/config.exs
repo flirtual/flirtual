@@ -47,7 +47,7 @@ config :phoenix,
   json_library: Jason
 
 config :pre_commit,
-  commands: ["format"]
+  commands: ["check --fix"]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -81,7 +81,7 @@ defmodule FlirtualWeb.UsersController do
       |> json(
         case User.visible(user) do
           {:error, errors} ->
-            %{visible: length(errors) === 0, reasons: errors |> Enum.filter(&(!&1[:silent]))}
+            %{visible: Enum.empty?(errors), reasons: errors |> Enum.filter(&(!&1[:silent]))}
 
           {:ok, _} ->
             %{visible: true, reasons: []}
