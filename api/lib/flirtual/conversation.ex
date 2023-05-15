@@ -260,8 +260,15 @@ defmodule Flirtual.Conversation do
       %Message{
         id: data["id"],
         content: data["text"],
-        sender_id: data["senderId"],
-        seen_by: data["readBy"],
+        sender_id:
+          case data["senderId"] do
+            sender_id when is_uuid(sender_id) ->
+              ShortUUID.encode!(sender_id)
+
+            _ ->
+              nil
+          end,
+        seen_by: data["readBy"] |> Enum.map(&ShortUUID.encode!/1),
         system: data["type"] === "SystemMessage",
         created_at: DateTime.from_unix!(data["createdAt"], :millisecond)
       }
