@@ -35,10 +35,10 @@ defmodule Flirtual.Report do
   def changeset(%Report{} = report, attrs) do
     cast(report, attrs, [:user_id, :target_id, :reason_id, :message])
     |> validate_required(:user_id)
-    |> validate_uuid(:user_id)
+    |> validate_uid(:user_id)
     |> foreign_key_constraint(:user_id)
     |> validate_required(:target_id)
-    |> validate_uuid(:target_id)
+    |> validate_uid(:target_id)
     |> foreign_key_constraint(:target_id)
     |> then(
       &validate_change(&1, :target_id, fn _, target_id ->
@@ -116,11 +116,11 @@ defmodule Flirtual.Report do
     end)
   end
 
-  def get(report_id) when is_uuid(report_id) do
+  def get(report_id) when is_uid(report_id) do
     Report |> where(id: ^report_id) |> Repo.one()
   end
 
-  def list(target_id: target_id) when is_uuid(target_id) do
+  def list(target_id: target_id) when is_uid(target_id) do
     Report
     |> where(target_id: ^target_id)
     |> order_by(asc: :created_at)
@@ -142,8 +142,8 @@ defmodule Flirtual.Report do
     def changeset(value, _, _) do
       value
       |> validate_attribute(:reason_id, "report-reason")
-      |> validate_uuid(:target_id)
-      |> validate_uuid(:user_id)
+      |> validate_uid(:target_id)
+      |> validate_uid(:user_id)
       |> validate_queries(
         target_id: &where(User, id: ^&1),
         user_id: &where(User, id: ^&1)

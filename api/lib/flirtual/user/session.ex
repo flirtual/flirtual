@@ -70,8 +70,8 @@ defmodule Flirtual.User.Session do
       },
       [:sudoer_id, :user_id]
     )
-    |> validate_uuid(:sudoer_id)
-    |> validate_uuid(:user_id)
+    |> validate_uid(:sudoer_id)
+    |> validate_uid(:user_id)
     |> then(
       &if(get_field(&1, :user_id) === get_field(&1, :sudoer_id)) do
         add_error(&1, :user_id, "cannot sudo yourself")

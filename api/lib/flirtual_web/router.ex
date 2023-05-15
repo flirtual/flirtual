@@ -169,9 +169,8 @@ defmodule FlirtualWeb.Router do
           get "/", ConversationController, :list
           get "/unread", ConversationController, :list_unread
 
-          scope "/:user_id" do
-            get "/", ConversationController, :list_messages
-            post "/", ConversationController, :create
+          scope "/:conversation_id" do
+            get "/", ConversationController, :get
           end
         end
 

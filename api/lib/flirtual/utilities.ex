@@ -61,11 +61,23 @@ defmodule Flirtual.Utilities do
     |> min(maximum)
   end
 
+  defmacro is_uid(value) do
+    quote do
+      is_uuid(unquote(value)) or is_shortuuid(unquote(value))
+    end
+  end
+
   defmacro is_uuid(value) do
     quote do
       is_binary(unquote(value)) and byte_size(unquote(value)) == 36 and
         binary_part(unquote(value), 8, 1) == "-" and binary_part(unquote(value), 13, 1) == "-" and
         binary_part(unquote(value), 18, 1) == "-" and binary_part(unquote(value), 23, 1) == "-"
+    end
+  end
+
+  defmacro is_shortuuid(value) do
+    quote do
+      is_binary(unquote(value)) and byte_size(unquote(value)) == 22
     end
   end
 

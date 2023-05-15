@@ -31,6 +31,7 @@ defmodule Flirtual.User do
     field :email, :string
     field :username, :string
     field :password_hash, :string, redact: true
+    field :talkjs_id, :string, virtual: true
     field :talkjs_signature, :string, redact: true
     field :stripe_id, :string
     field :language, :string, default: "en"
@@ -227,7 +228,7 @@ defmodule Flirtual.User do
     end)
   end
 
-  def get(id) when is_uuid(id) do
+  def get(id) when is_uid(id) do
     User |> where(id: ^id) |> preload(^default_assoc()) |> Repo.one()
   end
 
@@ -473,6 +474,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :language,
       :born_at,
       :talkjs_signature,
+      :talkjs_id,
       :shadowbanned_at,
       :email_confirmed_at,
       :deactivated_at,

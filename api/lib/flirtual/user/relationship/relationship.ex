@@ -2,6 +2,7 @@ defmodule Flirtual.User.Relationship do
   use Flirtual.Schema, primary_key: :id
   use Flirtual.Policy.Target, policy: __MODULE__.Policy
 
+  alias Flirtual.Talkjs
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Relationship
   alias Flirtual.User
@@ -11,6 +12,7 @@ defmodule Flirtual.User.Relationship do
 
     field :blocked, :boolean
     field :matched, :boolean
+    field :conversation_id, :string
     field :type, :string
     field :kind, :string
     field :liked_me, :map
@@ -35,7 +37,8 @@ defmodule Flirtual.User.Relationship do
       type: lap[:type],
       matched: matched,
       kind: maybe_reduce_kind(lap[:kind], opposite_lap[:kind], matched),
-      liked_me: liked_me(opposite_lap)
+      liked_me: liked_me(opposite_lap),
+      conversation_id: if(matched, do: Talkjs.new_conversation_id(user, target), else: nil)
     }
   end
 
@@ -46,7 +49,8 @@ defmodule Flirtual.User.Relationship do
         :matched,
         :type,
         :kind,
-        :liked_me
+        :liked_me,
+        :conversation_id
       ]
   end
 

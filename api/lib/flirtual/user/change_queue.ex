@@ -19,7 +19,7 @@ defmodule Flirtual.User.ChangeQueue do
     timestamps(updated_at: false)
   end
 
-  def get(user_id) when is_uuid(user_id) do
+  def get(user_id) when is_uid(user_id) do
     log(:debug, ["get"], user_id)
 
     ChangeQueue |> where(user_id: ^user_id) |> Repo.one()
@@ -29,7 +29,7 @@ defmodule Flirtual.User.ChangeQueue do
 
   def add(%User{} = user), do: add(user.id)
 
-  def add(user_id) when is_uuid(user_id) do
+  def add(user_id) when is_uid(user_id) do
     log(:debug, ["add"], user_id)
 
     case get(user_id) do
@@ -65,7 +65,7 @@ defmodule Flirtual.User.ChangeQueue do
     {:ok, count}
   end
 
-  def remove(user_id) when is_uuid(user_id) do
+  def remove(user_id) when is_uid(user_id) do
     log(:debug, ["remove"], user_id)
 
     with {_, nil} <-

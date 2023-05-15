@@ -61,7 +61,7 @@ defmodule Flirtual.Connection do
     |> Repo.one()
   end
 
-  def get(user_id, type) when is_uuid(user_id) and type in @provider_types do
+  def get(user_id, type) when is_uid(user_id) and type in @provider_types do
     Connection
     |> where(user_id: ^user_id, type: ^type)
     |> Repo.one()

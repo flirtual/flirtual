@@ -42,7 +42,10 @@ defmodule Flirtual.Conversation do
     %Conversation{
       id: data["id"],
       kind: decode(:subject, data["subject"]),
-      participants: data["participants"] |> Map.keys(),
+      participants:
+        data["participants"]
+        |> Map.keys()
+        |> Enum.map(&ShortUUID.encode!(&1)),
       last_message: data["lastMessage"] |> Message.decode(),
       created_at: DateTime.from_unix!(data["createdAt"], :millisecond)
     }
@@ -139,6 +142,26 @@ defmodule Flirtual.Conversation do
     end
   end
 
+  def get(conversation_id) when is_binary(conversation_id) do
+    with {:ok, %HTTPoison.Response{body: body}} <-
+           Talkjs.fetch(
+             :get,
+             "conversations/" <> conversation_id,
+             nil
+           ),
+         {:ok, data} <- Poison.decode(body),
+         %{"id" => _} <- data do
+      {:ok, decode(data)}
+    else
+      %{"errorCode" => "CONVERSATION_NOT_FOUND"} ->
+        {:error, :not_found}
+
+      reason ->
+        log(:error, [:get], reason: reason)
+        {:error, :upstream}
+    end
+  end
+
   def list(user_id, token \\ nil) do
     cursor = Cursor.decode(token)
 
@@ -152,7 +175,7 @@ defmodule Flirtual.Conversation do
     with {:ok, %HTTPoison.Response{body: body}} <-
            Talkjs.fetch(
              :get,
-             "users/" <> user_id <> "/conversations",
+             "users/" <> ShortUUID.decode!(user_id) <> "/conversations",
              nil,
              query: query
            ),

@@ -1,12 +1,35 @@
 defmodule Flirtual.Utilities.Changeset do
-  alias Ecto.UUID
   import Ecto.Changeset
+
+  def validate_uid(changeset, field) do
+    validate_change(changeset, field, fn field, value ->
+      case Ecto.ShortUUID.dump(value) do
+        :error -> [{field, "is not a valid uid"}]
+        {:ok, _} -> []
+      end
+    end)
+  end
 
   def validate_uuid(changeset, field) do
     validate_change(changeset, field, fn field, value ->
-      case UUID.dump(value) do
+      case Ecto.UUID.dump(value) do
         :error -> [{field, "is not a valid uuid"}]
         {:ok, _} -> []
+      end
+    end)
+  end
+
+  def validate_uids(changeset, field) do
+    validate_change(changeset, field, fn field, values ->
+      if Enum.any?(values, fn value ->
+           case Ecto.ShortUUID.dump(value) do
+             :error -> true
+             {:ok, _} -> false
+           end
+         end) do
+        [{field, "contains an invalid uid"}]
+      else
+        []
       end
     end)
   end
@@ -14,7 +37,7 @@ defmodule Flirtual.Utilities.Changeset do
   def validate_uuids(changeset, field) do
     validate_change(changeset, field, fn field, values ->
       if Enum.any?(values, fn value ->
-           case UUID.dump(value) do
+           case Ecto.UUID.dump(value) do
              :error -> true
              {:ok, _} -> false
            end
@@ -26,7 +49,7 @@ defmodule Flirtual.Utilities.Changeset do
     end)
   end
 
-  defp evaluate_predicate_key(changeset, {:value, value}), do: value
+  defp evaluate_predicate_key(_, {:value, value}), do: value
   defp evaluate_predicate_key(changeset, value), do: get_field(changeset, value)
 
   defp evaluate_predicate(:equal, {a, b}), do: a === b

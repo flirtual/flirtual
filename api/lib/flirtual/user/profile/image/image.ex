@@ -35,7 +35,7 @@ defmodule Flirtual.User.Profile.Image do
     url(not_found())
   end
 
-  def get(image_id) when is_uuid(image_id) do
+  def get(image_id) when is_uid(image_id) do
     Repo.get_by(Image, id: image_id)
   end
 

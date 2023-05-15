@@ -73,16 +73,12 @@ defmodule Flirtual.Flag do
   def check_openai_moderation(user_id, text) do
     user = Users.get(user_id)
 
-    IO.inspect(text)
-
     case OpenAI.moderations(input: text) do
       {:ok, %{results: [%{"categories" => categories, "category_scores" => scores}]}} ->
         flagged_categories =
           categories
           |> Enum.reject(fn {category, _flagged} -> category == "sexual" end)
           |> Enum.filter(fn {_category, flagged} -> flagged end)
-
-        IO.inspect(flagged_categories)
 
         if Enum.any?(flagged_categories) do
           flags =

@@ -21,7 +21,10 @@ defmodule Flirtual.Talkjs do
 
   def new_conversation_id(user_id, target_user_id)
       when is_binary(user_id) and is_binary(target_user_id) do
-    Enum.sort([user_id, target_user_id])
+    Enum.sort([
+      user_id,
+      target_user_id
+    ])
     |> Poison.encode!()
     |> then(&:crypto.hash(:sha, &1))
     |> Base.encode16(case: :lower)
@@ -29,7 +32,7 @@ defmodule Flirtual.Talkjs do
   end
 
   def new_user_signature(user_id) do
-    :crypto.mac(:hmac, :sha256, config(:access_token), user_id)
+    :crypto.mac(:hmac, :sha256, config(:access_token), ShortUUID.decode!(user_id))
     |> Base.encode16(case: :lower)
   end
 
@@ -80,7 +83,7 @@ defmodule Flirtual.Talkjs do
     end
   end
 
-  def delete_user_conversations(user_id, options \\ []) when is_uuid(user_id) do
+  def delete_user_conversations(user_id, options \\ []) when is_uid(user_id) do
     soft = Keyword.get(options, :soft, false)
 
     list_conversations(user_id)
@@ -106,7 +109,7 @@ defmodule Flirtual.Talkjs do
   end
 
   def update_user(user_id, params) do
-    case fetch(:put, "users/" <> user_id, params) do
+    case fetch(:put, "users/" <> ShortUUID.decode!(user_id), params) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
 
@@ -123,7 +126,7 @@ defmodule Flirtual.Talkjs do
   end
 
   def delete_participants(user_id: user_id, target_id: target_id)
-      when is_uuid(user_id) and is_uuid(target_id) do
+      when is_uid(user_id) and is_uid(target_id) do
     conversation_id = new_conversation_id(user_id, target_id)
 
     with {:ok, _} <- delete_participant(conversation_id, user_id),
@@ -133,7 +136,10 @@ defmodule Flirtual.Talkjs do
   end
 
   def delete_participant(conversation_id, user_id) do
-    case fetch(:delete, "conversations/" <> conversation_id <> "/participants/" <> user_id) do
+    case fetch(
+           :delete,
+           "conversations/" <> conversation_id <> "/participants/" <> ShortUUID.decode!(user_id)
+         ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
 
@@ -160,7 +166,9 @@ defmodule Flirtual.Talkjs do
   end
 
   def list_conversations(user_id, options \\ []) do
-    case fetch(:get, "users/" <> user_id <> "/conversations", nil, query: options) do
+    case fetch(:get, "users/" <> ShortUUID.decode!(user_id) <> "/conversations", nil,
+           query: options
+         ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Poison.decode!(body)["data"]
     end

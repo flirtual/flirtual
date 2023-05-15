@@ -251,7 +251,7 @@ defmodule Flirtual.Profiles do
           |> Enum.with_index()
           |> Enum.map(fn {file_id, file_idx} ->
             %{
-              id: UUID.generate(),
+              id: Ecto.ShortUUID.generate(),
               profile_id: {:placeholder, :profile_id},
               external_id: file_id,
               order: image_count + file_idx,

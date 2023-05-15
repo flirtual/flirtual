@@ -99,7 +99,7 @@ defmodule Flirtual.Subscription do
     subscription |> change(%{cancelled_at: now}) |> Repo.update()
   end
 
-  def get(user_id: user_id) when is_uuid(user_id) do
+  def get(user_id: user_id) when is_uid(user_id) do
     Subscription |> where(user_id: ^user_id) |> Repo.one()
   end
 

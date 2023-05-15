@@ -22,7 +22,7 @@ defmodule Flirtual.Plan do
     timestamps(updated_at: false)
   end
 
-  def get(plan_id) when is_uuid(plan_id) do
+  def get(plan_id) when is_uid(plan_id) do
     Plan |> where(id: ^plan_id) |> Repo.one()
   end
 

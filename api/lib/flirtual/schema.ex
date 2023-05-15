@@ -12,10 +12,10 @@ defmodule Flirtual.Schema do
 
       @primary_key (with primary_key when not is_boolean(primary_key) <-
                            Keyword.get(options, :primary_key, :id) do
-                      {primary_key, :binary_id, autogenerate: true}
+                      {primary_key, Ecto.ShortUUID, autogenerate: true}
                     end)
 
-      @foreign_key_type :binary_id
+      @foreign_key_type Ecto.ShortUUID
       @timestamps_opts [type: :utc_datetime, inserted_at: :created_at]
 
       def fetch(term, key) do

@@ -185,7 +185,7 @@ defmodule A do
              ),
            {:ok, user} <-
              %User{
-               id: id,
+               id: ShortUUID.encode!(id),
                username: username,
                email: email,
                password_hash: password,
@@ -253,13 +253,13 @@ defmodule A do
                  Ecto.build_assoc(user, :subscription, %{
                    plan_id:
                      if(to_boolean(lifetime_premium),
-                       do: "ccd77191-c9aa-4b01-859d-e6475a87e82e",
+                       do: "CJv2NQ7AiEimvDoZJ3uQTe",
                        else:
                          if(to_boolean(supporter),
-                           do: "b8bbbad1-103e-40dd-80e6-99f0d81e9fe7",
+                           do: "43V699voRpLqskJEM42Vsa",
                            else:
                              if(is_nil(stripe_subscription),
-                               do: "5aa4b6ed-0aff-454a-a48f-948342cdd94a",
+                               do: "rFxKcnAZGQtwckWUQbrG9J",
                                else:
                                  Plan.get(
                                    product_id: stripe_subscription.plan.product,
@@ -408,7 +408,7 @@ defmodule A do
                |> Enum.with_index()
                |> Enum.map(fn {[file_id, _, scanned], file_index} ->
                  %{
-                   id: UUID.generate(),
+                   id: Ecto.ShortUUID.generate(),
                    profile_id: {:placeholder, :profile_id},
                    external_id: file_id,
                    order: file_index,
@@ -571,7 +571,7 @@ defmodule A do
         |> Enum.uniq_by(fn [target_id] -> target_id end)
         |> Enum.map(fn [target_id] ->
           %{
-            id: UUID.generate(),
+            id: Ecto.ShortUUID.generate(),
             profile_id: {:placeholder, :profile_id},
             target_id: target_id,
             created_at: {:placeholder, :created_at}
@@ -603,7 +603,7 @@ defmodule A do
         |> Enum.uniq_by(fn [_, _, _, _, target_id] -> target_id end)
         |> Enum.map(fn [reviewed, reason, details, date, target_id] ->
           %{
-            id: UUID.generate(),
+            id: Ecto.ShortUUID.generate(),
             user_id: {:placeholder, :user_id},
             target_id: target_id,
             reason_id: map_report_reason(reason),
@@ -645,43 +645,43 @@ defmodule A do
   def map_report_reason(value) do
     case value do
       "Advertising" ->
-        "b65e9c3e-aede-4fad-a142-8663280533e4"
+        "L6FRU2xjUiZwHUbegAcWTa"
 
       "Harassment" ->
-        "e27fec41-242e-43c5-ba8c-b65cb81bec37"
+        "AFe9ijRg9MYGubm2Efi4Ki"
 
       "Hateful content" ->
-        "4ed69630-f562-4ff5-98cd-13f532aa0ec3"
+        "wFkctcaaf5B4Ef5i3ggY3G"
 
       "Illegal content" ->
-        "54a3d2b8-ae36-408c-adec-47d1ec2421c9"
+        "BtJvp62cJ5vm6CeuCPTP5H"
 
       "Impersonating me or someone else" ->
-        "3e3f7fc0-6474-4b3c-b1c6-3630fb0a1248"
+        "Ec5fqqgVo5X3s4QCeFUJ6D"
 
       "Nude or NSFW pictures" ->
-        "adc8230f-8774-4483-a181-fd196e54f622"
+        "ymWd4JdTqpnBLmGSLmJRvY"
 
       "Scam, malware, or harmful links" ->
-        "0afca9ab-3529-4398-befb-7a5965d0ed2d"
+        "MyexHAyY8gzQjBQ6agCSx3"
 
       "Self-harm content" ->
-        "aad1e4d6-cef9-4d52-abbb-0a3a8dbcfbef"
+        "vTzgZw4Eexx7fehzCM9PQY"
 
       "Spam or troll account" ->
-        "03250970-0ec2-49f0-949e-29deb5e77372"
+        "Ur6iAuTDCktZe3zZQGqtZ2"
 
       "Underage user" ->
-        "d43252a0-e06d-4985-afd4-b41d27928f72"
+        "zu6HcxQxmJDDq4rmvJazkf"
 
       "Violent or disturbing content" ->
-        "50c84dcb-4b4a-4bf3-83c6-9a92a481c464"
+        "Wf4t9FT7Lmvnn73KqpZGPG"
 
       value when value === "Other" or value === "Missing" ->
-        "9e159e11-b7d2-4508-99fd-7b2c305f13a7"
+        "9iwmQ8huhkngyY9BgLDE9W"
 
       _ ->
-        "9e159e11-b7d2-4508-99fd-7b2c305f13a7"
+        "9iwmQ8huhkngyY9BgLDE9W"
     end
   end
 

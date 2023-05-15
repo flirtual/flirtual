@@ -164,7 +164,7 @@ defmodule Flirtual.Matchmaking do
            Talkjs.update_conversation(
              conversation_id,
              %{
-               participants: [user_a.id, user_b.id],
+               participants: [ShortUUID.decode!(user_a.id), ShortUUID.decode!(user_b.id)],
                subject: Conversation.encode(:kind, kind)
              }
            ),

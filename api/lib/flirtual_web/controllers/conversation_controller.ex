@@ -11,6 +11,20 @@ defmodule FlirtualWeb.ConversationController do
 
   action_fallback FlirtualWeb.FallbackController
 
+  def get(conn, %{"conversation_id" => conversation_id}) do
+    with {:ok, conversation} <- Conversation.get(conversation_id),
+         conversation <- Policy.transform(conn, conversation) do
+      conn
+      |> json_with_etag(conversation)
+    else
+      {:error, :not_found} ->
+        {:error, {:not_found, "Conversation not found"}}
+
+      reason ->
+        reason
+    end
+  end
+
   def list(conn, %{"cursor" => cursor}) do
     user = conn.assigns[:session].user
 

@@ -221,6 +221,19 @@ defmodule Flirtual.User.Policy do
 
   def transform(:visible, _, user), do: User.visible?(user)
 
+  def transform(
+        :talkjs_id,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user_id: user_id
+            }
+          }
+        },
+        %User{id: id}
+      ),
+      do: ShortUUID.decode!(id)
+
   def transform(key, _, _) when key in @own_property_keys, do: nil
   def transform(key, _, _) when key in @moderator_property_keys, do: nil
 

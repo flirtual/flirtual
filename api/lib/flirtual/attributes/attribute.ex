@@ -24,7 +24,7 @@ defmodule Flirtual.Attribute do
     timestamps(inserted_at: false)
   end
 
-  def get(attribute_id) when is_uuid(attribute_id) do
+  def get(attribute_id) when is_uid(attribute_id) do
     Attribute
     |> where(id: ^attribute_id)
     |> Repo.one()
@@ -37,7 +37,7 @@ defmodule Flirtual.Attribute do
 
   def get(_), do: nil
 
-  def get(attribute_id, type) when is_uuid(attribute_id) and is_binary(type) do
+  def get(attribute_id, type) when is_uid(attribute_id) and is_binary(type) do
     Attribute
     |> where(id: ^attribute_id, type: ^type)
     |> Repo.one()
@@ -121,7 +121,7 @@ defmodule Flirtual.Attribute do
       )
 
     changeset
-    |> validate_uuid(id_key)
+    |> validate_uid(id_key)
     |> then(fn changeset ->
       if not changeset.valid? or not changed?(changeset, id_key) do
         changeset
@@ -176,7 +176,7 @@ defmodule Flirtual.Attribute do
       |> Map.put(:_, {:array, :string}),
       %{_: if(is_nil(ids), do: get_field(changeset, field_name) |> Enum.map(& &1.id), else: ids)}
     )
-    |> validate_uuids(:_)
+    |> validate_uids(:_)
     |> then(fn changeset ->
       if not changeset.valid? do
         changeset

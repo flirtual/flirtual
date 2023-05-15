@@ -59,6 +59,7 @@ defmodule Flirtual.User.Profile.Prospect do
              Enum.map(
                prospects,
                &Map.merge(&1, %{
+                 id: Ecto.ShortUUID.generate(),
                  created_at: {:placeholder, :now}
                })
              ),
