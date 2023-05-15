@@ -230,9 +230,9 @@ defmodule Flirtual.User.Policy do
             }
           }
         },
-        %User{id: id}
+        %User{id: user_id}
       ),
-      do: ShortUUID.decode!(id)
+      do: ShortUUID.decode!(user_id)
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
   def transform(key, _, _) when key in @moderator_property_keys, do: nil

@@ -18,7 +18,7 @@ defmodule Flirtual.Jwt do
   end
 
   def sign(config, claims) do
-    with {:ok, claims} <- generate_claims(config, claims) |> IO.inspect(),
+    with {:ok, claims} <- generate_claims(config, claims),
          {:ok, token, _} <- generate_and_sign(claims) do
       {:ok, token}
     end

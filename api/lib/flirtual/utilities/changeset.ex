@@ -59,6 +59,20 @@ defmodule Flirtual.Utilities.Changeset do
   def validate_predicate(changeset, predicate, {_, _} = keys),
     do: validate_predicate(changeset, predicate, keys, [])
 
+  def validate_predicate(changeset, predicate, options) do
+    values = Keyword.fetch!(options, :values)
+
+    if not evaluate_predicate(predicate, values) do
+      add_error(
+        changeset,
+        Keyword.fetch!(options, :field),
+        Keyword.get(options, :message, "is invalid")
+      )
+    else
+      changeset
+    end
+  end
+
   def validate_predicate(changeset, predicate, {a, b}, options) do
     default_field = (is_atom(a) and a) || (is_atom(b) and b) || nil
 
@@ -74,20 +88,6 @@ defmodule Flirtual.Utilities.Changeset do
         }
       )
     )
-  end
-
-  def validate_predicate(changeset, predicate, options \\ []) do
-    values = Keyword.fetch!(options, :values)
-
-    if not evaluate_predicate(predicate, values) do
-      add_error(
-        changeset,
-        Keyword.fetch!(options, :field),
-        Keyword.get(options, :message, "is invalid")
-      )
-    else
-      changeset
-    end
   end
 
   def validate_changed(changeset, field, options \\ []) do

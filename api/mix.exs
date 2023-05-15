@@ -48,7 +48,6 @@ defmodule Flirtual.MixProject do
       {:stripity_stripe, "~> 2.0"},
       {:phoenix_html, "~> 3.0"},
       {:faker, "~> 0.17"},
-      {:pre_commit, "~> 0.3.4", only: :dev},
       {:recase, "~> 0.5"},
       {:swoosh, "~> 1.3"},
       {:vrchat, "~> 1.11"},
@@ -63,7 +62,10 @@ defmodule Flirtual.MixProject do
       {:jason, "~> 1.2"},
       {:joken, "~> 2.5"},
       {:plug_cowboy, "~> 2.5"},
-      {:libcluster, "~> 3.3"}
+      {:libcluster, "~> 3.3"},
+      {:pre_commit, "~> 0.3.4", only: :dev},
+      {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 

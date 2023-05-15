@@ -5,7 +5,6 @@ defmodule Flirtual.Profiles do
   import Flirtual.Utilities.Changeset
 
   alias Flirtual.User.ChangeQueue
-  alias Ecto.UUID
   alias Flirtual.{Repo}
   alias Flirtual.User.{Profile}
   alias Flirtual.User.Profile.{Image}

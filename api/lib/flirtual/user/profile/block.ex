@@ -33,10 +33,7 @@ defmodule Flirtual.User.Profile.Block do
              |> Repo.insert(),
            {:ok, _} <- LikesAndPasses.delete_all(profile_id: user_id, target_id: target_id),
            {:ok, _} <- Prospect.delete_all(profile_id: user_id, target_id: target_id),
-           # TODO: Remove conversations, and vice versa.
-           # TODO: Add a way to add multiple items to the change queue.
-           {:ok, _} <- ChangeQueue.add(user_id),
-           {:ok, _} <- ChangeQueue.add(target_id) do
+           {:ok, _} <- ChangeQueue.add([user_id, target_id]) do
         item
       else
         {:error, reason} -> Repo.rollback(reason)

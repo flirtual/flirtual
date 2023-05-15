@@ -37,7 +37,7 @@ defmodule Flirtual.Flag do
     end
   end
 
-  def check_flags(user_id, nil), do: :ok
+  def check_flags(_, nil), do: :ok
 
   def check_flags(user_id, text) do
     user = Users.get(user_id)
@@ -68,7 +68,7 @@ defmodule Flirtual.Flag do
     end
   end
 
-  def check_openai_moderation(user_id, nil), do: :ok
+  def check_openai_moderation(_, nil), do: :ok
 
   def check_openai_moderation(user_id, text) do
     user = Users.get(user_id)
