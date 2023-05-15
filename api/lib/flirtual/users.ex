@@ -338,7 +338,7 @@ defmodule Flirtual.Users do
     Repo.transaction(fn ->
       with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
            {:ok, user} <- Repo.delete(user),
-           {:ok, _} <- Elasticsearch.delete(:users, user.id),
+           :ok <- Elasticsearch.delete(:users, user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Stripe.delete_customer(user),
            {:ok, _} <-

@@ -203,7 +203,19 @@ defmodule Flirtual.Elasticsearch do
   end
 
   def delete(index, id) when is_atom(index) and is_binary(id) do
-    Elasticsearch.delete(Flirtual.Elasticsearch, "/" <> get_index_name(index) <> "/_doc/#{id}")
+    with {:ok, _} <-
+           Elasticsearch.delete(
+             Flirtual.Elasticsearch,
+             "/" <> get_index_name(index) <> "/_doc/#{id}"
+           ) do
+      :ok
+    else
+      {:error, %Elasticsearch.Exception{type: "not_found"}} ->
+        :ok
+
+      reason ->
+        reason
+    end
   end
 
   def encode(item), do: Elasticsearch.Document.encode(item)
