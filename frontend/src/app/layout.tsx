@@ -2,6 +2,7 @@ import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";
 import { Suspense } from "react";
+import NextTopLoader from "@kfarwell/nextjs-toploader";
 
 import { withOptionalSession } from "~/server-utilities";
 import { siteOrigin, urls } from "~/urls";
@@ -90,6 +91,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 				<ClientScripts />
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>
+				<NextTopLoader color={["#FF8975", "#E9658B"]} showSpinner={false} />
 				<Suspense fallback={<LoadingIndicatorScreen />}>
 					<SessionProvider session={session}>
 						<ThemeProvider>
