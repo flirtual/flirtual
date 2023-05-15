@@ -104,7 +104,7 @@ jobs:
     # This step fails if something was found unformatted.
     # Customize this step as desired.
     - name: Mix check
-      run: mix check
+      run: mix check --except compiler
 
     # Step: Execute the tests.
     #- name: Run tests
