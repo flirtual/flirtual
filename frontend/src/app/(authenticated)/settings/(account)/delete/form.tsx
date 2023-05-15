@@ -51,7 +51,7 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 										label: attribute.name
 									}))}
 								/>
-								{field.props.value === "d1c0d422-f2cc-48ea-8303-a816a95ce979" ? (
+								{field.props.value === "sQcEHRLCffbLfcgM4zAELf" ? (
 									<p>
 										Taking a break? You can{" "}
 										<InlineLink href={urls.settings.deactivateAccount}>
@@ -59,7 +59,7 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 										</InlineLink>{" "}
 										instead! No one can see your profile while it&apos;s deactivated.
 									</p>
-								) : field.props.value === "ea79aa62-9259-4704-ba72-29f63b369e91" ? (
+								) : field.props.value === "J3vVp9PWZQi5cEuk8G8wij" ? (
 									<p>
 										Need help? <HeaderSupportButton />.
 									</p>
@@ -75,7 +75,7 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 									{...field.props}
 									rows={4}
 									placeholder={
-										fields.reasonId.props.value === "0a4a8c58-f64b-4d94-87e6-f2d92dcd9086"
+										fields.reasonId.props.value === "jrAqzBkasZwqfjSPAazNq3"
 											? "We're always looking for success stories! Would you like to share one? By doing so, you agree that we may share your story."
 											: "If you'd like to share more information, please leave us a comment here!"
 									}

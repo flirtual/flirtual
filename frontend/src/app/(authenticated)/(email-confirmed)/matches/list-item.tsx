@@ -21,7 +21,7 @@ export type ConversationListItemProps = Conversation & {
 };
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
-	const { kind, active = false, lastItem = false, userId, lastMessage } = props;
+	const { id, kind, active = false, lastItem = false, userId, lastMessage } = props;
 
 	const { loadMore } = useConversations();
 
@@ -45,7 +45,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 			<div className="flex rounded-xl bg-white-30 dark:bg-black-60">
 				<Link
 					className="shrink-0 before:absolute before:h-full before:w-full"
-					href={urls.conversations.with(user.id)}
+					href={urls.conversations.of(id)}
 				>
 					<UserAvatar className="h-20 w-20 rounded-l-xl" height={80} user={user} width={80} />
 				</Link>

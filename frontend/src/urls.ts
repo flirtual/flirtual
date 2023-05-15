@@ -70,7 +70,7 @@ export const urls = {
 	browse: (kind?: ProspectKind) => url("/browse", { kind: kind === "love" ? undefined : kind }),
 	conversations: {
 		list: () => "/matches",
-		with: (userId: string) => `/matches/${userId}`
+		of: (conversationId: string) => `/matches/${conversationId}`
 	},
 	likes: "/likes",
 	onboarding: (onboardingIdx: 1 | 2 | 3 | 4) => `/onboarding/${onboardingIdx}`,

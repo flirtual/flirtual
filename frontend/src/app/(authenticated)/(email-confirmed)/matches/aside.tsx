@@ -12,12 +12,12 @@ import { ConversationListItem } from "./list-item";
 import { LikesYouButton } from "./likes-you-button";
 
 export interface ConversationAsideProps {
-	activeConversation?: string;
+	activeConversationId?: string;
 }
 
 export const ConversationAside: FC<ConversationAsideProps> = (props) => {
-	const { activeConversation } = props;
-	const HeaderIcon = activeConversation ? ChevronLeftIcon : XMarkIcon;
+	const { activeConversationId } = props;
+	const HeaderIcon = activeConversationId ? ChevronLeftIcon : XMarkIcon;
 
 	const { data } = useConversations();
 
@@ -26,7 +26,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 			<div className="flex h-16 w-full items-center justify-center bg-black-70 p-4 text-white-20 md:rounded-t-xl md:bg-brand-gradient">
 				<Link
 					className="absolute left-4 flex shrink-0 md:hidden"
-					href={activeConversation ? urls.conversations.list() : urls.browse()}
+					href={activeConversationId ? urls.conversations.list() : urls.browse()}
 				>
 					<HeaderIcon className="w-6" />
 				</Link>
@@ -35,7 +35,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 			<div
 				className={twMerge(
 					"flex h-full flex-col gap-8 px-4 py-6",
-					activeConversation && "hidden sm:flex"
+					activeConversationId && "hidden sm:flex"
 				)}
 			>
 				<LikesYouButton />
@@ -46,7 +46,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 								{conversations.map((conversation, conversationIdx) => (
 									<ConversationListItem
 										{...conversation}
-										active={activeConversation === conversation.userId}
+										active={activeConversationId === conversation.id}
 										key={conversation.id}
 										lastItem={
 											dataIdx === data.length - 1 && conversationIdx === conversations.length - 1

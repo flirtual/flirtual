@@ -83,16 +83,16 @@ export default async function SubscriptionPage() {
 							<li key={itemIdx}>{item}</li>
 						))}
 					</ul>
-					{subscription?.plan.id !== "ccd77191-c9aa-4b01-859d-e6475a87e82e" && (
+					{subscription?.plan.id !== "CJv2NQ7AiEimvDoZJ3uQTe" && (
 						<div className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-4">
 							{[
 								{
-									id: "cea4b769-ad78-4b8a-bbcc-da7685ec8eb8",
+									id: "2nAci9TWPaMaYFzVASVgme",
 									duration: "every 1 month",
 									price: 9.99
 								},
 								{
-									id: "8026d1d7-dd88-46c2-866c-55d11447e0da",
+									id: "PHpCmDBMX6wCkuXXr36foQ",
 									duration: "every 3 months",
 									price: 24.99,
 									originalPrice: 29.97,
@@ -100,7 +100,7 @@ export default async function SubscriptionPage() {
 									highlight: true
 								},
 								{
-									id: "d494397e-8485-454c-ae9a-77d74c7b53b3",
+									id: "5NcKBUELrTmZr6JQQFespf",
 									duration: "every 6 months",
 									originalPrice: 59.94,
 									price: 39.99,
@@ -114,7 +114,7 @@ export default async function SubscriptionPage() {
 							<PlanCard
 								discount={user.tags?.includes("legacy_vrlfp") ? 50 : undefined}
 								duration="Lifetime"
-								id="ccd77191-c9aa-4b01-859d-e6475a87e82e"
+								id="CJv2NQ7AiEimvDoZJ3uQTe"
 								originalPrice={99.99}
 								price={user.tags?.includes("legacy_vrlfp") ? 49.99 : 99.99}
 							/>

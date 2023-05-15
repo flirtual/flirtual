@@ -1,9 +1,17 @@
 import { ProspectKind, ProspectRespondType } from "../matchmaking";
 
-export interface Relationship {
+export type Relationship = {
 	blocked: boolean;
-	matched: boolean;
 	likedMe?: ProspectKind;
 	type?: ProspectRespondType;
 	kind?: ProspectKind;
-}
+} & (
+	| {
+			matched: false;
+			conversationId?: undefined;
+	  }
+	| {
+			matched: true;
+			conversationId: string;
+	  }
+);

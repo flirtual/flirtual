@@ -21,6 +21,7 @@ export type User = UuidModel &
 		email: string;
 		username: string;
 		language?: string;
+		talkjsId?: string;
 		talkjsSignature?: string;
 		visible: boolean;
 		relationship?: Relationship;

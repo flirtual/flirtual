@@ -17,6 +17,13 @@ export type Conversation = CreatedAtModel & {
 	userId: string;
 };
 
+export async function get(
+	conversationId: string,
+	options: NarrowFetchOptions = {}
+): Promise<Conversation> {
+	return fetch<Conversation>("get", `conversations/${conversationId}`, options);
+}
+
 export interface PaginateMetadata {
 	total: number;
 	cursor: {

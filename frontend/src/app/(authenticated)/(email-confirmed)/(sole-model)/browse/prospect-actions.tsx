@@ -145,6 +145,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					return router.refresh();
 				})
 				.catch((reason) => {
+					console.log(reason);
 					if (
 						!(reason instanceof ResponseChangesetError) &&
 						!Object.keys(reason.properties).includes("userId")

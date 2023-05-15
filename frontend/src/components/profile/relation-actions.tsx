@@ -22,7 +22,11 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({ use
 		return (
 			<>
 				<div className="flex gap-4">
-					<ButtonLink className="w-full" href={urls.conversations.with(user.id)} size="sm">
+					<ButtonLink
+						className="w-full"
+						href={urls.conversations.of(relationship.conversationId)}
+						size="sm"
+					>
 						Message
 					</ButtonLink>
 					<Button

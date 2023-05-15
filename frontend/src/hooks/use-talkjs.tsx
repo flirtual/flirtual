@@ -29,18 +29,18 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({ children }) 
 
 	useEffect(() => void Talk.ready.then(() => setReady(true)), []);
 
-	const userId = authSession?.user.id;
+	const talkjsUserId = authSession?.user.talkjsId;
 	const talkjsSignature = authSession?.user.talkjsSignature;
 
 	const session = useMemo(() => {
-		if (!userId || !talkjsSignature || !ready) return null;
+		if (!talkjsUserId || !talkjsSignature || !ready) return null;
 
 		return new Talk.Session({
 			appId: talkjsAppId,
 			signature: talkjsSignature,
-			me: new Talk.User(userId)
+			me: new Talk.User(talkjsUserId)
 		});
-	}, [userId, talkjsSignature, ready]);
+	}, [talkjsUserId, talkjsSignature, ready]);
 
 	useEffect(() => {
 		setUnreadConversations([]);
@@ -82,9 +82,9 @@ export function useUnreadConversations() {
 
 export const ConversationChatbox: React.FC<
 	React.ComponentProps<"div"> & {
-		userId: string | null;
+		conversationId: string | null;
 	}
-> = ({ userId, ...props }) => {
+> = ({ conversationId, ...props }) => {
 	const session = useTalkjs();
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
@@ -100,11 +100,10 @@ export const ConversationChatbox: React.FC<
 	}, [session, sessionTheme]);
 
 	const conversation = useMemo(() => {
-		if (!session || !userId) return null;
-
-		const conversationId = Talk.oneOnOneId(session.me, userId);
+		if (!session || !conversationId) return null;
+		console.log(conversationId);
 		return session.getOrCreateConversation(conversationId);
-	}, [session, userId]);
+	}, [session, conversationId]);
 
 	useEffect(() => {
 		if (!chatbox || !conversation) return;

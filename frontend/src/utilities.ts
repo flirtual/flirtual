@@ -163,6 +163,14 @@ export function groupBy<T extends ReadonlyArray<object>, K extends PropertyKey>(
 	}, {}) as GroupBy<T, K>;
 }
 
+export function isUid(value: string): boolean {
+	return isShortUuid(value) || isUuid(value);
+}
+
+export function isShortUuid(value: string): boolean {
+	return value.length === 22;
+}
+
 export function isUuid(value: string): boolean {
 	return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
