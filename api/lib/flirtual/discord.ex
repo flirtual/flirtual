@@ -231,7 +231,7 @@ defmodule Flirtual.Discord do
         reason: %Attribute{type: "delete-reason"} = reason,
         comment: comment
       ) do
-    webhook(:moderation, %{
+    webhook(:admin, %{
       embeds: [
         %{
           title: "New exit survey",
