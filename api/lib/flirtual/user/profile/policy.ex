@@ -102,7 +102,7 @@ defmodule Flirtual.User.Profile.Policy do
           user: %User{
             preferences: %User.Preferences{
               privacy: %User.Preferences.Privacy{
-                country: :everyone
+                connections: :everyone
               }
             }
           }
@@ -121,7 +121,7 @@ defmodule Flirtual.User.Profile.Policy do
             },
             preferences: %User.Preferences{
               privacy: %User.Preferences.Privacy{
-                country: :matches
+                connections: :matches
               }
             }
           }
