@@ -428,7 +428,7 @@ defmodule Flirtual.Matchmaking do
       "term" => %{
         "liked" => %{
           "value" => user.id,
-          "boost" => 30 * (Map.get(custom_weights, :likes) || 1)
+          "boost" => 19 * (Map.get(custom_weights, :likes) || 1)
         }
       }
     }
