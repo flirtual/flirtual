@@ -63,9 +63,14 @@ export default async function LikesPage() {
 								const Icon = kind === "love" ? HeartIcon : PeaceIcon;
 								return (
 									<Link href={urls.user.profile(user.username)} key={id}>
-										<div className="flex items-center gap-4 rounded-xl bg-white-10 p-4 shadow-brand-1 dark:bg-black-80">
-											<UserAvatar className="h-16 rounded-xl" height={64} user={user} width={64} />
-											<div className="flex grow flex-col">
+										<div className="flex items-center gap-4 overflow-hidden rounded-xl bg-white-10 py-4 shadow-brand-1 dark:bg-black-80">
+											<UserAvatar
+												className="ml-4 aspect-square h-16 rounded-lg"
+												height={64}
+												user={user}
+												width={64}
+											/>
+											<div className="flex w-full grow flex-col">
 												<h1 className="text-2xl font-semibold">{displayName(user)}</h1>
 												<div className="flex gap-2">
 													{user.bornAt && (
@@ -82,7 +87,7 @@ export default async function LikesPage() {
 													)}
 												</div>
 											</div>
-											<Icon className="h-8 pr-4" />
+											<Icon className="h-8 shrink-0 pr-4 sm:mr-2" />
 										</div>
 									</Link>
 								);

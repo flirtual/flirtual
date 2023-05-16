@@ -15,7 +15,11 @@ export async function CountryPill({ code, flagOnly = false }: CountryPillProps) 
 	if (!country) return null;
 
 	return (
-		<Pill className={flagOnly ? "overflow-hidden p-0" : ""} hocusable={false} small={true}>
+		<Pill
+			className={twMerge("shrink-0", flagOnly && "overflow-hidden p-0")}
+			hocusable={false}
+			small={true}
+		>
 			<img
 				className={twMerge("h-8 shrink-0", flagOnly ? "" : "-ml-4 rounded-l-xl")}
 				src={country.metadata.flagUrl}

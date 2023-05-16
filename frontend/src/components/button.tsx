@@ -8,7 +8,7 @@ import { isInternalHref } from "~/urls";
 import { IconComponent } from "./icons";
 
 const defaultClassName = twMerge(
-	"focusable select-none rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
+	"focusable flex select-none items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
 );
 
 const sizes = {
@@ -46,7 +46,7 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (p
 				defaultClassName,
 				size && sizes[size],
 				kind && kinds[kind],
-				Icon && "flex items-center justify-center gap-4",
+				Icon && "flex gap-4",
 				elementProps.className
 			)}
 		>
@@ -68,7 +68,7 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (p
 				defaultClassName,
 				size && sizes[size],
 				kind && kinds[kind],
-				Icon && "flex items-center justify-center gap-4",
+				Icon && "flex  gap-4",
 				elementProps.className
 			)}
 			onClick={(event) => {
@@ -77,7 +77,7 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (p
 			}}
 		>
 			{Icon && <Icon className="h-6" />}
-			{elementProps.children}
+			<span>{elementProps.children}</span>
 		</Link>
 	);
 };

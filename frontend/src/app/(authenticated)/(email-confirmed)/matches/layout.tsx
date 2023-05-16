@@ -11,6 +11,7 @@ import { urls } from "~/urls";
 import { api } from "~/api";
 import { fromEntries } from "~/utilities";
 import { SWRConfig } from "~/components/swr";
+import { SoleModelLayout } from "~/components/layout/sole-model";
 
 import { withConversations } from "./data.server";
 import { LikesYouButton } from "./likes-you-button";
@@ -38,38 +39,39 @@ export default async function ConversationsLayout({ children }: PropsWithChildre
 				}
 			}}
 		>
-			<div className="flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col">
-				{/* @ts-expect-error: Server Component */}
-				<Header />
-				{conversations.length === 0 ? (
-					<div className="flex w-full max-w-screen-lg grow flex-col items-center justify-center sm:px-8">
-						<ModelCard
-							className="sm:max-w-xl"
-							containerProps={{ className: "gap-4" }}
-							title="No matches"
-						>
-							<h1 className="text-2xl font-semibold">
-								You haven&apos;t matched with anyone yet :(
-							</h1>
-							<p>
-								If you and someone else both like or homie each other (it&apos;s mutual), then you
-								will match! After you match, you can message each other on Flirtual and meet up in
-								VR.
-							</p>
-							<ButtonLink href={urls.browse()}>Browse</ButtonLink>
+			{conversations.length === 0 ? (
+				<SoleModelLayout footer={{ desktopOnly: true }}>
+					<ModelCard
+						className="sm:max-w-xl"
+						containerProps={{ className: "gap-8" }}
+						title="No matches"
+					>
+						<h1 className="text-2xl font-semibold">You haven&apos;t matched with anyone yet</h1>
+						<p>
+							If you and someone else both like or homie each other (it&apos;s mutual), then you
+							will match! After you match, you can message each other on Flirtual and meet up in VR.
+						</p>
+						<div className="grid gap-4 sm:grid-cols-2">
+							<ButtonLink href={urls.browse()} size="sm">
+								Browse
+							</ButtonLink>
 							{/* @ts-expect-error: Server Component */}
 							<LikesYouButton user={session.user} />
-						</ModelCard>
-					</div>
-				) : (
+						</div>
+					</ModelCard>
+				</SoleModelLayout>
+			) : (
+				<div className="flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col">
+					{/* @ts-expect-error: Server Component */}
+					<Header />
 					<div className="flex w-full max-w-screen-lg grow flex-col sm:flex-row md:mt-16 md:px-8">
 						{children}
 					</div>
-				)}
-				<Footer desktopOnly />
-				{/* @ts-expect-error: Server Component */}
-				<MobileBarNavigation />
-			</div>
+					<Footer desktopOnly />
+					{/* @ts-expect-error: Server Component */}
+					<MobileBarNavigation />
+				</div>
+			)}
 		</SWRConfig>
 	);
 }
