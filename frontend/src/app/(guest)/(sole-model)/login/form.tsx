@@ -25,8 +25,8 @@ export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 			onSubmit={async (body) => {
 				await api.auth.login({ body });
 
-				router.push(next ?? urls.browse());
 				router.refresh();
+				router.push(next ?? urls.browse());
 			}}
 		>
 			{({ errors, FormField }) => (
