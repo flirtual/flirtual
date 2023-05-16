@@ -32,10 +32,12 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 			...thruServerCookies(),
 			body: prospectIds
 		})
-	).sort(
-		// Maintain sort order, highest scored prospects first, then less as it goes on.
-		(a, b) => prospectIds.indexOf(a.id) - prospectIds.indexOf(b.id)
-	);
+	)
+		.filter(({ visible }) => visible)
+		.sort(
+			// Maintain sort order, highest scored prospects first, then less as it goes on.
+			(a, b) => prospectIds.indexOf(a.id) - prospectIds.indexOf(b.id)
+		);
 
 	// @ts-expect-error: Server Component
 	return <ProspectList kind={kind} prospects={prospects} />;
