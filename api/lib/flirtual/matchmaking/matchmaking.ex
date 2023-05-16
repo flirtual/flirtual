@@ -181,6 +181,9 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
+  def reduce_kind(a, b) when a === :friend or b === :friend, do: :friend
+  def reduce_kind(_, _), do: :love
+
   def respond_profile(opts \\ []) do
     user = Keyword.fetch!(opts, :user)
     target = Keyword.fetch!(opts, :target)
@@ -226,12 +229,13 @@ defmodule Flirtual.Matchmaking do
              |> Repo.update(),
            opposite_item <-
              LikesAndPasses.get(user_id: item.target_id, target_id: item.profile_id, type: type),
+           match_kind = reduce_kind(item.kind, opposite_item.kind),
            {:ok, opposite_item} <-
              if(is_nil(opposite_item),
                do: {:ok, nil},
                else:
                  with true <- item.type === :like and opposite_item.type === :like,
-                      {:ok, _} <- create_match_conversation(user, target, kind),
+                      {:ok, _} <- create_match_conversation(user, target, match_kind),
                       {:ok, _} <- deliver_match_email(target, user) do
                    {:ok, opposite_item}
                  else

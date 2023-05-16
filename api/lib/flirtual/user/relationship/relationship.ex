@@ -2,6 +2,7 @@ defmodule Flirtual.User.Relationship do
   use Flirtual.Schema, primary_key: :id
   use Flirtual.Policy.Target, policy: __MODULE__.Policy
 
+  alias Flirtual.Matchmaking
   alias Flirtual.Talkjs
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Relationship
@@ -21,10 +22,6 @@ defmodule Flirtual.User.Relationship do
   defp liked_me(%LikesAndPasses{type: :like, kind: kind}), do: kind
   defp liked_me(_), do: nil
 
-  defp maybe_reduce_kind(a, _, false), do: a
-  defp maybe_reduce_kind(a, b, true) when a === :friend or b === :friend, do: :friend
-  defp maybe_reduce_kind(a, _, true), do: a
-
   def get(%User{} = user, %User{} = target) do
     lap = LikesAndPasses.get(user: user, target: target)
     opposite_lap = lap[:opposite] || LikesAndPasses.get(user: target, target: user)
@@ -36,7 +33,8 @@ defmodule Flirtual.User.Relationship do
       blocked: User.blocked?(user, target),
       type: lap[:type],
       matched: matched,
-      kind: maybe_reduce_kind(lap[:kind], opposite_lap[:kind], matched),
+      kind:
+        if(matched, do: Matchmaking.reduce_kind(lap[:kind], opposite_lap[:kind]), else: lap[:kind]),
       liked_me: liked_me(opposite_lap),
       conversation_id: if(matched, do: Talkjs.new_conversation_id(user, target), else: nil)
     }
