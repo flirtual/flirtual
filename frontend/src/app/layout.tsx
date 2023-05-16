@@ -64,7 +64,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 	const theme = session?.user.preferences?.theme ?? "light";
 
 	return (
-		<html suppressHydrationWarning className={twMerge("text-sm sm:text-base", theme)} lang="en">
+		<html suppressHydrationWarning className={theme} lang="en">
 			<head>
 				{theme === "system" && (
 					<script

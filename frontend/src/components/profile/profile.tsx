@@ -72,7 +72,7 @@ export async function Profile(props: ProfileProps) {
 									</div>
 									VRChat:{" "}
 									<InlineLink className="w-full" href={urls.vrchat(user.profile.vrchat)}>
-										{user.profile.vrchat}
+										{decodeURIComponent(user.profile.vrchat)}
 									</InlineLink>
 								</div>
 							)}

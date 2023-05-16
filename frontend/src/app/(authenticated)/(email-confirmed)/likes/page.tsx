@@ -47,31 +47,37 @@ export default async function LikesPage() {
 
 	return (
 		<SoleModelLayout footer={{ desktopOnly: true }}>
-			<ModelCard className="sm:max-w-3xl" title="Likes You">
-				<div className="flex flex-col gap-8">
-					<ButtonLink className="w-fit" href={urls.conversations.list()} size="sm">
-						Matches
-					</ButtonLink>
+			<ModelCard
+				className="sm:max-w-3xl"
+				containerProps={{ className: "p-0 sm:px-16 sm:py-10" }}
+				title="Likes You"
+			>
+				<div className="flex flex-col gap-8 py-8 sm:py-0">
+					<div className="px-4 sm:p-0">
+						<ButtonLink className="w-fit" href={urls.conversations.list()} size="sm">
+							Matches
+						</ButtonLink>
+					</div>
 					{items.length === 0 ? (
 						<div className="flex flex-col gap-1">
 							<span className="text-xl font-semibold">No one has liked you yet 😔</span>
 							<span>But it&apos;s only a matter of time.</span>
 						</div>
 					) : (
-						<div className="flex flex-col gap-4">
+						<div className="flex flex-col gap-2 sm:gap-4">
 							{items.map(({ id, user, kind }) => {
 								const Icon = kind === "love" ? HeartIcon : PeaceIcon;
 								return (
 									<Link href={urls.user.profile(user.username)} key={id}>
-										<div className="flex items-center gap-4 overflow-hidden rounded-xl bg-white-10 py-4 shadow-brand-1 dark:bg-black-80">
+										<div className="flex items-center gap-4 bg-white-10 p-4 dark:bg-black-80 sm:rounded-xl sm:shadow-brand-1">
 											<UserAvatar
-												className="ml-4 aspect-square h-16 rounded-lg"
+												className="aspect-square h-16 rounded-lg"
 												height={64}
 												user={user}
 												width={64}
 											/>
 											<div className="flex w-full grow flex-col">
-												<h1 className="text-2xl font-semibold">{displayName(user)}</h1>
+												<h1 className="text-xl font-semibold sm:text-2xl">{displayName(user)}</h1>
 												<div className="flex gap-2">
 													{user.bornAt && (
 														<Pill small={true}>{yearsAgo(new Date(user.bornAt))}</Pill>
