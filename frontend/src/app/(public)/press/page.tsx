@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { ButtonLink } from "~/components/button";
+import { urls } from "~/urls";
 
 import { PressItem } from "./press-item";
 
@@ -20,7 +21,11 @@ export default async function PressPage() {
 			>
 				<div className="flex flex-col gap-4">
 					<span className="text-2xl font-semibold">Press kit</span>
-					<ButtonLink download className="w-fit" href="/presskit.zip">
+					<ButtonLink
+						download
+						className="w-fit"
+						href={urls.media("156ad154-17be-488d-9ae2-f17ffa72c64c")}
+					>
 						Download
 					</ButtonLink>
 				</div>

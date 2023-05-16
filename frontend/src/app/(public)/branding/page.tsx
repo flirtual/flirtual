@@ -4,6 +4,7 @@ import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { ButtonLink } from "~/components/button";
+import { urls } from "~/urls";
 
 import { ColorBlock } from "./color-block";
 import { ImageList } from "./image-list";
@@ -90,7 +91,11 @@ export default async function BrandingPage() {
 				<div className="flex flex-col gap-4">
 					<span className="text-2xl font-semibold">Need more?</span>
 					<span>Download our full press kit for more graphics and information.</span>
-					<ButtonLink download className="w-fit" href="/presskit.zip">
+					<ButtonLink
+						download
+						className="w-fit"
+						href={urls.media("156ad154-17be-488d-9ae2-f17ffa72c64c")}
+					>
 						Download
 					</ButtonLink>
 				</div>
