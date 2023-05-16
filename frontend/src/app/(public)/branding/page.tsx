@@ -82,10 +82,8 @@ export default async function BrandingPage() {
 					<span className="text-2xl font-semibold">Colors</span>
 					<div className="flex flex-wrap gap-2 text-white-20">
 						<ColorBlock name="Gradient" value="linear-gradient(to right, #FF8975, #E9658B)" />
+						<ColorBlock name="Homie Mode" value="linear-gradient(to right, #82BF72, #4D8888)" />
 						<ColorBlock name="Pink" value="#E9658B" />
-						<ColorBlock invert name="White" value="#FFFAFA" />
-						<ColorBlock name="Black" value="#131516" />
-						<ColorBlock invert name="Grey" value="#E4E4E4" />
 						<ColorBlock invert name="Cream" value="#FFFAF0" />
 					</div>
 				</div>
