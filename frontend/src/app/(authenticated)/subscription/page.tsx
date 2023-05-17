@@ -68,32 +68,57 @@ export default async function SubscriptionPage() {
 						</div>
 					</div>
 				)}
-				<div className="flex flex-col gap-4">
-					<ul className="list-inside list-disc">
-						{[
-							"See who likes you before you match.",
-							"Browse unlimited profiles.",
-							<span key="">
+				<div className="flex flex-col gap-8">
+					{subscription?.active ? (
+						<ul className="text-2xl">
+							<li>
+								👀 <InlineLink href={urls.likes}>See who likes you before you match</InlineLink>
+							</li>
+							<li>
+								♾️ <InlineLink href={urls.browse()}>Browse unlimited profiles</InlineLink>
+							</li>
+							<li>
+								🎚️{" "}
 								<InlineLink href={urls.settings.matchmaking()}>
 									Control your matchmaking priorities
 								</InlineLink>
-								.
-							</span>
-						].map((item, itemIdx) => (
-							<li key={itemIdx}>{item}</li>
-						))}
-					</ul>
+							</li>
+						</ul>
+					) : (
+						<ul className="flex flex-col gap-4">
+							<li className="flex flex-col">
+								<span className="text-xl font-semibold">👀 See who likes you before you match</span>
+								No more guesswork. Discover who&apos;s already interested in you, match faster and
+								never miss a potential connection.
+							</li>
+							<li className="flex flex-col">
+								<span className="text-xl font-semibold">♾️ Browse unlimited profiles</span>
+								Can&apos;t get enough of us? Remove the daily limit and browse a wider range of
+								profiles, whenever you want.
+							</li>
+							<li className="flex flex-col">
+								<span className="text-xl font-semibold">
+									🎚️ Control your matchmaking priorities
+								</span>
+								<span>
+									Sometimes one size doesn&apos;t fit all. Customize your algorithm to find exactly
+									the right people for you.{" "}
+									<InlineLink href={urls.settings.matchmaking()}>(Check it out)</InlineLink>
+								</span>
+							</li>
+						</ul>
+					)}
 					{subscription?.plan.id !== "CJv2NQ7AiEimvDoZJ3uQTe" && (
 						<div className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-4">
 							{[
 								{
 									id: "2nAci9TWPaMaYFzVASVgme",
-									duration: "every 1 month",
+									duration: "1 month",
 									price: 9.99
 								},
 								{
 									id: "PHpCmDBMX6wCkuXXr36foQ",
-									duration: "every 3 months",
+									duration: "3 months",
 									price: 24.99,
 									originalPrice: 29.97,
 									discount: 17,
@@ -101,7 +126,7 @@ export default async function SubscriptionPage() {
 								},
 								{
 									id: "5NcKBUELrTmZr6JQQFespf",
-									duration: "every 6 months",
+									duration: "6 months",
 									originalPrice: 59.94,
 									price: 39.99,
 									discount: 33
@@ -110,14 +135,21 @@ export default async function SubscriptionPage() {
 								// @ts-expect-error: Server Component
 								return <PlanCard {...item} key={item.id} />;
 							})}
-							{/* @ts-expect-error: Server Component */}
-							<PlanCard
-								discount={user.tags?.includes("legacy_vrlfp") ? 50 : undefined}
-								duration="Lifetime"
-								id="CJv2NQ7AiEimvDoZJ3uQTe"
-								originalPrice={99.99}
-								price={user.tags?.includes("legacy_vrlfp") ? 49.99 : 99.99}
-							/>
+							<div className="col-span-full flex flex-col gap-2">
+								{/* @ts-expect-error: Server Component */}
+								<PlanCard
+									discount={user.tags?.includes("legacy_vrlfp") ? 50 : undefined}
+									duration="Lifetime"
+									id="CJv2NQ7AiEimvDoZJ3uQTe"
+									originalPrice={99.99}
+									price={user.tags?.includes("legacy_vrlfp") ? 49.99 : 99.99}
+									description={
+										user.tags?.includes("legacy_vrlfp")
+											? "50% off for VRLFP users. Thanks for your early support!"
+											: undefined
+									}
+								/>
+							</div>
 						</div>
 					)}
 				</div>

@@ -11,10 +11,11 @@ export interface PlanCardProps {
 	originalPrice?: number;
 	discount?: number;
 	highlight?: boolean;
+	description?: string;
 }
 
 export async function PlanCard(props: PlanCardProps) {
-	const { duration, price, originalPrice = props.price, discount, highlight } = props;
+	const { duration, price, originalPrice = props.price, discount, highlight, description } = props;
 	const { user } = await withSession();
 
 	const activePlan = (user.subscription?.active && user.subscription.plan.id === props.id) ?? false;
@@ -27,20 +28,22 @@ export async function PlanCard(props: PlanCardProps) {
 				"relative flex flex-col justify-between gap-16 rounded-xl p-6",
 				highlight
 					? "bg-white-20 dark:bg-black-80"
-					: [containerClassName, "bg-white-25 dark:bg-black-80"]
+					: [containerClassName, "bg-white-25 dark:bg-black-80"],
+				duration === "Lifetime" && (description ? "gap-4" : "sm:flex-row")
 			)}
 		>
 			<div className="flex flex-col">
 				<span
 					className={twMerge(
 						"font-montserrat text-sm font-semibold text-black-60 line-through dark:text-white-50",
-						price === originalPrice && "invisible"
+						price === originalPrice &&
+							(duration === "Lifetime" ? "hidden" : "hidden sm:invisible sm:block")
 					)}
 				>
 					{`$${originalPrice}`}
 				</span>
 				<span className="font-montserrat text-3xl font-semibold">${price}</span>
-				<span>{duration}</span>
+				<span className="mt-1 text-xl">{duration}</span>
 			</div>
 			{discount && (
 				<div
@@ -52,7 +55,8 @@ export async function PlanCard(props: PlanCardProps) {
 					</div>
 				</div>
 			)}
-			<PlanButtonLink {...props} active={activePlan} />
+			{description && <span>{description}</span>}
+			<PlanButtonLink {...props} active={activePlan} lifetime={duration === "Lifetime"} />
 		</div>
 	);
 
