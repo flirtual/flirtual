@@ -229,7 +229,7 @@ defmodule Flirtual.Matchmaking do
              |> Repo.update(),
            opposite_item <-
              LikesAndPasses.get(user_id: item.target_id, target_id: item.profile_id, type: type),
-           match_kind = reduce_kind(item.kind, opposite_item.kind),
+           match_kind = reduce_kind(item.kind, opposite_item[:kind]),
            {:ok, opposite_item} <-
              if(is_nil(opposite_item),
                do: {:ok, nil},
