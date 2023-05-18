@@ -26,6 +26,8 @@ export const RegisterForm: React.FC = () => {
 			}}
 			onSubmit={async (values, { captcha }) => {
 				await api.user.create({ body: { ...values, captcha } });
+
+				router.refresh();
 				router.push(urls.onboarding(1));
 			}}
 		>
