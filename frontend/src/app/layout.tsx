@@ -12,11 +12,11 @@ import { SessionProvider } from "~/components/session-provider";
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { ShepherdProvider } from "~/components/shepherd";
 import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
+import { ThemeProvider } from "~/hooks/use-theme";
 
 import { ClientScripts } from "./client-scripts";
 
 import "~/css/index.scss";
-import { ThemeProvider } from "~/hooks/use-theme";
 
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });

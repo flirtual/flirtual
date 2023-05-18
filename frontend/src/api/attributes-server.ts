@@ -15,7 +15,7 @@ import {
 } from "./attributes";
 
 const _withAttributeList = cache((type: AttributeType) => {
-	return list(type, thruServerCookies());
+	return list(type, { ...thruServerCookies(), cache: "force-cache" });
 });
 
 export async function withAttributeList<T extends AttributeType>(
@@ -25,7 +25,7 @@ export async function withAttributeList<T extends AttributeType>(
 }
 
 const _withAttribute = cache((type: AttributeType, id: string) => {
-	return get(type, id, thruServerCookies());
+	return get(type, id, { ...thruServerCookies(), cache: "force-cache" });
 });
 
 export function withAttribute<T extends AttributeType>(

@@ -13,10 +13,7 @@ import { tryJsonParse } from "./utilities";
 export function thruServerCookies() {
 	return {
 		headers: {
-			cookie: cookies()
-				.getAll()
-				.map(({ name, value }) => `${name}=${value}`)
-				.join("; ")
+			cookie: cookies().toString()
 		},
 		cache: "no-store" as const
 	};
