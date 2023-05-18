@@ -44,7 +44,7 @@ defmodule Flirtual.User do
       values: @tags,
       default: []
 
-    field :born_at, :utc_datetime
+    field :born_at, :date
     field :email_confirmed_at, :utc_datetime
     field :deactivated_at, :utc_datetime
     field :banned_at, :utc_datetime

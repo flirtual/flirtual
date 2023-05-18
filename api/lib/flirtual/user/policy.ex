@@ -211,12 +211,8 @@ defmodule Flirtual.User.Policy do
   def transform(:born_at, _, %User{born_at: born_at} = user) when not is_nil(born_at) do
     now = Date.utc_today()
 
-    DateTime.new!(
-      Date.new!(now.year - get_years_since(user.born_at), now.month, now.day),
-      Time.new!(0, 0, 0, 0)
-    )
-    |> DateTime.add(-@day_in_seconds)
-    |> DateTime.truncate(:second)
+    Date.new!(now.year - get_years_since(user.born_at), now.month, now.day)
+    |> Date.add(1)
   end
 
   def transform(:visible, _, user), do: User.visible?(user)

@@ -173,11 +173,7 @@ defmodule A do
                         Integer.parse(String.slice(to_string(dob), 4..5)) |> elem(0),
                         Integer.parse(String.slice(to_string(dob), 6..7)) |> elem(0)
                       ) do
-                   {:ok, date} ->
-                     DateTime.new!(
-                       date,
-                       Time.new!(0, 0, 0)
-                     )
+                   {:ok, date} -> date
 
                    {:error, :invalid_date} ->
                      nil

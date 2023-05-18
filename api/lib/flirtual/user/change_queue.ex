@@ -103,6 +103,7 @@ defmodule Flirtual.User.ChangeQueue do
     items = fetch(limit)
 
     with :ok <- process_items(items, :elasticsearch),
+         # todo: enable talkjs sync after migration.
          # :ok <- process_items(items, :talkjs),
          :ok <-
            items
