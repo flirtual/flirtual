@@ -38,7 +38,7 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 			withGlobalId
 			className="flex flex-col gap-8"
 			fields={{
-				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
+				bornAt: user.bornAt ? new Date(user.bornAt.replaceAll("-", "/")) : new Date(),
 				new: profile.new ?? false,
 				country: profile.country ?? null,
 				languages: profile.languages ?? [],

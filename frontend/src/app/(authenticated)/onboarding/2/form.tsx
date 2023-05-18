@@ -41,7 +41,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 			className="flex flex-col gap-8"
 			requireChange={false}
 			fields={{
-				bornAt: user.bornAt ? new Date(user.bornAt) : new Date(),
+				bornAt: user.bornAt ? new Date(user.bornAt.replaceAll("-", "/")) : new Date(),
 				country: user.profile.country ?? null,
 				new: profile.new ?? false,
 				sexualityPrivacy: user.preferences?.privacy.sexuality ?? "everyone",
