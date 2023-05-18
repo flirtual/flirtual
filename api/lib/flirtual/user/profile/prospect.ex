@@ -22,9 +22,10 @@ defmodule Flirtual.User.Profile.Prospect do
     timestamps(updated_at: false)
   end
 
-  def get(profile_id: profile_id, target_id: target_id, kind: kind) do
+  def get(profile_id: profile_id, target_id: target_id) do
     Prospect
-    |> where(profile_id: ^profile_id, target_id: ^target_id, kind: ^kind)
+    |> where(profile_id: ^profile_id, target_id: ^target_id)
+    |> limit(1)
     |> Repo.one()
   end
 

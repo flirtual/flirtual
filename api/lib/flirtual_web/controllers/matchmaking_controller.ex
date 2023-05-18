@@ -61,7 +61,7 @@ defmodule FlirtualWeb.MatchmakingController do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
       with %Prospect{} = prospect <-
-             Prospect.get(profile_id: user.id, target_id: target.id, kind: kind),
+             Prospect.get(profile_id: user.id, target_id: target.id),
            {:ok, _} <- Prospect.reverse(prospect) do
         conn |> json(%{success: true})
       else
