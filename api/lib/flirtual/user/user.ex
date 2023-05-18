@@ -419,7 +419,6 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
       list
       |> Enum.map(& &1.metadata["alias_of"])
       |> Attribute.list()
-      |> IO.inspect()
 
     list
     |> Enum.map(fn attribute ->
@@ -431,7 +430,26 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           attribute
       end
     end)
-    |> IO.inspect()
+    |> Enum.uniq_by(& &1.id)
+    |> Enum.sort_by(& &1.order)
+  end
+
+  def normalize_attribute_pairs(list) when is_list(list) do
+    attribute_pairs =
+      list
+      |> Enum.map(& &1.metadata["pair"])
+      |> Attribute.list()
+
+    list
+    |> Enum.map(fn attribute ->
+      case attribute.metadata["pair"] do
+        pair_id when is_uid(pair_id) ->
+          Enum.find(attribute_pairs, &(&1.id == pair_id))
+
+        _ ->
+          attribute
+      end
+    end)
     |> Enum.uniq_by(& &1.id)
     |> Enum.sort_by(& &1.order)
   end
@@ -439,11 +457,32 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
   def encode(%User{} = user) do
     profile = user.profile
 
-    profile.attributes
-    |> filter_by(:type, "gender")
-    |> normalize_attribute_aliases()
-    |> Enum.map(& &1.name)
-    |> IO.inspect()
+    attributes =
+      profile.attributes
+      |> normalize_attribute_aliases()
+      |> then(
+        &if(user.preferences.nsfw,
+          do: &1,
+          else: exclude_by(&1, :type, "kink")
+        )
+      )
+      |> Enum.map(& &1.id)
+      |> Enum.sort()
+
+    attributes_lf =
+      profile.preferences.attributes
+      |> then(
+        &if(user.preferences.nsfw,
+          do:
+            &1 ++
+              (profile.attributes
+               |> filter_by(:type, "kink")
+               |> normalize_attribute_pairs()),
+          else: exclude_by(&1, :type, "kink")
+        )
+      )
+      |> Enum.map(& &1.id)
+      |> Enum.sort()
 
     document =
       Map.merge(
@@ -457,20 +496,8 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           conscientiousness: profile.conscientiousness,
           agreeableness: profile.agreeableness,
           custom_interests: [],
-          attributes:
-            if(user.preferences.nsfw,
-              do: profile.attributes,
-              else: exclude_by(profile.attributes, :type, "kink")
-            )
-            |> Enum.map(& &1.id),
-          attributes_lf:
-            if(user.preferences.nsfw,
-              do:
-                (profile.preferences.attributes |> Enum.map(& &1.id)) ++
-                  (filter_by(profile.attributes, :type, "kink")
-                   |> Enum.map(& &1.metadata["pair"])),
-              else: exclude_by(profile.preferences.attributes, :type, "kink") |> Enum.map(& &1.id)
-            ),
+          attributes: attributes,
+          attributes_lf: attributes_lf,
           country: profile.country,
           monopoly: profile.monopoly,
           serious: profile.serious,
