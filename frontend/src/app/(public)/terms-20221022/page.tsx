@@ -15,6 +15,12 @@ export default function TermsPage() {
 			<ModelCard className="w-full sm:max-w-2xl" title="Terms of Service">
 				<div className="flex flex-col gap-4">
 					<p>
+						These terms were effective from 2022-10-22 to [DATE].{" "}
+						<InlineLink href={urls.resources.termsOfService}>
+							Click here for our current Terms of Service.
+						</InlineLink>
+					</p>
+					<p>
 						This website (the &quot;Website&quot;) is operated by STUDIO PAPRIKA, INC.
 						(&quot;us&quot;, &quot;we&quot;, or &quot;Studio Paprika&quot;).
 					</p>
@@ -73,7 +79,10 @@ export default function TermsPage() {
 					</div>
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Third Party Services</h1>
-						<p>Studio Paprika is not responsible for third-party services.</p>
+						<p>
+							Studio Paprika is not responsible for the third-party services of Google LLC,
+							Cloudflare, Redis Labs, Amazon Web Services, Uploadcare, TalkJS, or Elasticsearch.
+						</p>
 					</div>
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Rights</h1>
@@ -102,8 +111,10 @@ export default function TermsPage() {
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Security</h1>
 						<p>
-							The Website runs on infrastructure provided by third parties. This infrastructure is
-							protected by industry standard security efforts such as firewalls.
+							The Website runs on a virtualized server hosted in the United States by Google LLC.
+							This server is protected by industry standard efforts such as firewalls. You can read
+							about Google&apos;s security efforts{" "}
+							<InlineLink href="https://cloud.google.com/security/infrastructure">here</InlineLink>.
 						</p>
 						<p>
 							Your connection to the Website uses{" "}
