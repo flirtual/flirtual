@@ -20,6 +20,12 @@ export default function PrivacyPage() {
 				title="Privacy Policy"
 			>
 				<p>
+					This policy was effective from 2022-10-22 to [DATE].{" "}
+					<InlineLink href={urls.resources.privacyPolicy}>
+						Click here for our current Privacy Policy.
+					</InlineLink>
+				</p>
+				<p>
 					Your username, your display name, your profile pictures, your bio, your age, your gender,
 					your matchmaking preferences, your personal interest tags, your selected VR apps/games,
 					and whether or not you are new to VR will be visible to other users. Your additional
@@ -41,9 +47,8 @@ export default function PrivacyPage() {
 
 				<p>
 					Your account email will not be shown to other users. Your account email may be accessed by
-					Amazon Web Services, TalkJS, and Freshworks in order to deliver transactional, marketing,
-					and support messages according to your preferences, but will not be shared with other
-					third-parties. You may opt out of{" "}
+					TalkJS in order to deliver message notifications via email, but will not be shared with
+					other third-parties. You may opt out of{" "}
 					<InlineLink href={urls.settings.notifications}>message email notifications</InlineLink>,
 					which will remove your email address from TalkJS&apos; records.
 				</p>
@@ -57,53 +62,39 @@ export default function PrivacyPage() {
 				</p>
 				<p>Your password is stored hashed and salted.</p>
 				<p>
-					We use certain trusted third parties that provide services to Flirtual. We may share user
-					personal data with these third parties, but only for the purpose of providing their
-					services. For more information and examples, see below.
+					The Website runs on a virtualized server hosted in the United States by Google LLC. For
+					additional information regarding Google&apos;s privacy practices, please review the{" "}
+					<InlineLink href="https://cloud.google.com/terms/cloud-privacy-notice">
+						Google Cloud Privacy Notice
+					</InlineLink>{" "}
+					and <InlineLink href="https://policies.google.com/privacy">Privacy Policy</InlineLink>.
 				</p>
 				<p>
-					<strong>Cloud Hosting Services:</strong> to provide reliable and secure infrastructure for
-					managing and operating our platform (for example, Fly.io and Vercel).
-				</p>
-				<p>
-					<strong>In-App Functionality Services:</strong> to facilitate key features such as
-					messaging and optimized image hosting within our app (for example, TalkJS).
-				</p>
-				<p>
-					<strong>Billing Services:</strong> to manage payments and subscriptions (for example,
-					Stripe).
-				</p>
-				<p>
-					<strong>Social Media Services:</strong> to allow users to connect their accounts with our
-					platform and facilitate social interactions (for example, Discord).
-				</p>
-				<p>
-					<strong>Security and Performance Services:</strong> to safeguard our platform, protect our
-					users, and enhance overall performance (for example, Cloudflare).
-				</p>
-				<p>
-					<strong>Insight and Improvement Services:</strong> to gather user feedback and perform
-					analytics for continual improvement of our platform (for example, Canny).
-				</p>
-				<p>
-					<strong>Communication Services:</strong> to assist with sending transactional and
-					marketing communications to users (for example, Amazon Web Services).
-				</p>
-				<p>
-					<strong>Moderation Services:</strong> to ensure appropriate conduct within the app and
-					maintain community standards (for example, Google Cloud).
-				</p>
-				<p>
-					<strong>IT Services:</strong> to assist in various operations of our business, such as
-					when a user interacts with our support services, which may involve processing users&apos;
-					personal data (for example, Freshworks).
-				</p>
-				<p>
-					We review third parties we engage with to ensure they have adequate data protection and
-					information security measures in place. We take measures to protect and anonymize data
-					shared with third parties, as appropriate given the nature of the services provided. We
-					only provide trusted third parties with the personal data necessary for the service they
-					are providing.
+					We employ the third-party services of Cloudflare, Redis Labs, Amazon Web Services,
+					Uploadcare, TalkJS, and Elasticsearch to enable, secure, and improve our services and
+					performance. For additional information regarding Cloudflare&apos;s privacy practices,
+					please review their{" "}
+					<InlineLink href="https://www.cloudflare.com/privacypolicy/">Privacy Policy</InlineLink>.
+					For additional information regarding Redis Labs’ privacy practices, please review their{" "}
+					<InlineLink href="https://redislabs.com/wp-content/uploads/2020/08/privacy-policy.pdf">
+						Privacy Policy
+					</InlineLink>
+					. For additional information regarding Amazon Web Services’ privacy practices, please
+					review their{" "}
+					<InlineLink href="https://aws.amazon.com/compliance/data-privacy/">
+						Data Privacy Center
+					</InlineLink>
+					. For additional information regarding Uploadcare’s privacy practices, please review their{" "}
+					<InlineLink href="https://uploadcare.com/about/privacy-policy/">
+						Privacy Policy
+					</InlineLink>
+					. For additional information regarding TalkJS&apos; privacy practices, please review their{" "}
+					<InlineLink href="https://talkjs.com/terms">Terms of Service</InlineLink>. For additional
+					information regarding Elasticsearch&apos;s privacy practices, please review their{" "}
+					<InlineLink href="https://www.elastic.co/legal/privacy-statement">
+						Privacy Statement
+					</InlineLink>
+					.
 				</p>
 				<p>
 					If you find a vulnerability or privacy leak, please{" "}
