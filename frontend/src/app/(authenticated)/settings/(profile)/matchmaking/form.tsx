@@ -230,8 +230,8 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 																? "Monogamous"
 																: "Non-monogamous",
 														games: "Shared VR games",
-														defaultInterests: "Common interests",
-														customInterests: "Common custom interests",
+														defaultInterests: "Shared interests",
+														customInterests: "Shared custom interests",
 														personality: "Personality match",
 														serious: "Open to serious dating",
 														domsub:
