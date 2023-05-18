@@ -403,6 +403,7 @@ defmodule Flirtual.User do
 end
 
 defimpl Elasticsearch.Document, for: Flirtual.User do
+  alias Flirtual.Attribute
   import Flirtual.Utilities
   import Ecto.Query
 
@@ -413,8 +414,36 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
   def id(%User{} = user), do: user.id
   def routing(_), do: false
 
+  def normalize_attribute_aliases(list) when is_list(list) do
+    attribute_aliases =
+      list
+      |> Enum.map(& &1.metadata["alias_of"])
+      |> Attribute.list()
+      |> IO.inspect()
+
+    list
+    |> Enum.map(fn attribute ->
+      case attribute.metadata["alias_of"] do
+        alias_id when is_uid(alias_id) ->
+          Enum.find(attribute_aliases, &(&1.id == alias_id))
+
+        _ ->
+          attribute
+      end
+    end)
+    |> IO.inspect()
+    |> Enum.uniq_by(& &1.id)
+    |> Enum.sort_by(& &1.order)
+  end
+
   def encode(%User{} = user) do
     profile = user.profile
+
+    profile.attributes
+    |> filter_by(:type, "gender")
+    |> normalize_attribute_aliases()
+    |> Enum.map(& &1.name)
+    |> IO.inspect()
 
     document =
       Map.merge(

@@ -17,9 +17,13 @@ defmodule FlirtualWeb.Utilities do
   def json_with_etag(conn, term) do
     etag = ~s[W/"#{term |> :erlang.phash2() |> Integer.to_string(16)}"]
 
+    cache_control =
+      get_resp_header(conn, "cache-control")
+      |> List.first() || "private"
+
     conn =
       conn
-      |> put_resp_header("cache-control", "private")
+      |> put_resp_header("cache-control", cache_control)
       |> put_resp_header("etag", etag)
 
     if etag in get_req_header(conn, "if-none-match") do

@@ -3,6 +3,7 @@ defmodule FlirtualWeb.AttributeController do
 
   import Plug.Conn
   import Phoenix.Controller
+  import FlirtualWeb.Utilities
 
   alias Flirtual.Attribute
 
@@ -13,7 +14,7 @@ defmodule FlirtualWeb.AttributeController do
 
     conn
     |> put_resp_header("cache-control", "public, max-age=86400, immutable")
-    |> json(attributes)
+    |> json_with_etag(attributes)
   end
 
   def list(conn, %{"attribute_type" => attribute_type}) do
@@ -21,6 +22,6 @@ defmodule FlirtualWeb.AttributeController do
 
     conn
     |> put_resp_header("cache-control", "public, max-age=86400, immutable")
-    |> json(attributes)
+    |> json_with_etag(attributes)
   end
 end
