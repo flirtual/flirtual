@@ -180,7 +180,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 							disabled={!lastProfile}
 							id="undo-button"
 							type="button"
-							onClick={respondReverse}
+							onClick={() => void respondReverse()}
 						>
 							<ArrowUturnLeftIcon className="w-5" strokeWidth={3} />
 						</button>
@@ -191,7 +191,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 								className="flex items-center justify-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 shadow-brand-1 sm:w-40"
 								id="like-button"
 								type="button"
-								onClick={() => respond("like", mode)}
+								onClick={() => void respond("like", mode)}
 							>
 								<HeartIcon className="w-8 shrink-0" gradient={false} />
 								<span className="hidden font-montserrat text-lg font-extrabold md:inline">
@@ -208,7 +208,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 								"flex items-center justify-center gap-3 rounded-xl px-6 py-4 shadow-brand-1",
 								mode === "friend" ? "w-40 bg-brand-gradient" : "bg-black-50"
 							)}
-							onClick={() => respond("like", "friend")}
+							onClick={() => void respond("like", "friend")}
 						>
 							<PeaceIcon className="w-8 shrink-0" gradient={false} />
 							<span className="hidden font-montserrat text-lg font-extrabold md:inline">Homie</span>
@@ -219,7 +219,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 							className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1"
 							id="pass-button"
 							type="button"
-							onClick={() => respond("pass", mode)}
+							onClick={() => void respond("pass", mode)}
 						>
 							<XMarkIcon className="w-5" strokeWidth={3} />
 						</button>
