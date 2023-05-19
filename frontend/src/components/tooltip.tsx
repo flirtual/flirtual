@@ -6,6 +6,7 @@ import { Portal } from "react-portal";
 import { twMerge } from "tailwind-merge";
 
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 
 export interface TooltipProps {
 	value: ReactNode;
@@ -30,6 +31,7 @@ export const Tooltip: FC<TooltipProps> = ({
 	const [rect, setRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
 	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
+	const isMobile = !useScreenBreakpoint("md");
 
 	useEffect(() => {
 		if (!elementRef.current || !ref.current) return;
@@ -42,8 +44,9 @@ export const Tooltip: FC<TooltipProps> = ({
 		<div
 			className={twMerge("", fragmentClassName)}
 			ref={elementRef}
-			onPointerLeave={() => setVisible(false)}
-			onPointerEnter={() => {
+			onMouseLeave={() => setVisible(false)}
+			onMouseEnter={() => {
+				if (isMobile) return;
 				setVisible(true);
 			}}
 		>
