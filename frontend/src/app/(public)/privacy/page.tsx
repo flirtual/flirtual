@@ -30,9 +30,9 @@ export default function PrivacyPage() {
 					your {privacySettingLink}, but your specific questionnaire answers will not be visible.
 				</p>
 				<p>
-					We use Matomo Analytics for secure, on-premises data analytics. We may share anonymized
-					statistics about Flirtual (for example, the number of users that use a particular Social
-					VR app or game). You can opt out of these statistics in your {privacySettingLink}.
+					We use first-party, on-premises data analytics. We may share anonymized statistics about
+					Flirtual (for example, the number of users that use a particular Social VR app or game).
+					You can opt out of these statistics in your {privacySettingLink}.
 				</p>
 				<p>
 					Your messages and message history with other users are hosted by and shared with TalkJS,
