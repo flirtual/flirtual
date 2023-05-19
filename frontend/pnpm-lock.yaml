@@ -8,8 +8,8 @@ dependencies:
     specifier: ^2.0.18
     version: 2.0.18(react@18.2.0)
   '@kfarwell/nextjs-toploader':
-    specifier: ^1.4.3
-    version: 1.4.3(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.4.5
+    version: 1.4.5(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
   '@tailwindcss/forms':
     specifier: ^0.5.3
     version: 0.5.3(tailwindcss@3.3.2)
@@ -330,8 +330,8 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@kfarwell/nextjs-toploader@1.4.3(next@13.4.3)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-xuv41YAkdCuqcwhiihQrout37lAb8Y08P4pqr07Pxv5j4z1K4Ei6bWnVphjt77EtX/u4lvZf9ss+eFsKoVk5uA==}
+  /@kfarwell/nextjs-toploader@1.4.5(next@13.4.3)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-72SCWDYacT9j37ze7buzFGF2aQlZocS/U3HwqZKGr5HAmMpJPbi1Geht01G6rG/+wR4DNVIcCasUrk9tSDH2Dw==}
     peerDependencies:
       next: '>= 6.0.0'
       react: '>= 16.0.0'
