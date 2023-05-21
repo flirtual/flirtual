@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsProfileMatchmakingPage() {
-	const genders = (await withAttributeList("gender")).filter((gender) => gender.metadata?.simple);
+	const genders = (await withAttributeList("gender")).filter(
+		({ metadata }) => metadata.simple || metadata.fallback
+	);
 
 	return (
 		<ModelCard className="sm:max-w-2xl" title="Matchmaking">

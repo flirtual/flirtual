@@ -53,7 +53,10 @@ export async function Profile(props: ProfileProps) {
 						</div>
 						<div className="flex flex-wrap items-center gap-2 font-montserrat ">
 							{/* @ts-expect-error: Server Component */}
-							<GenderPills attributes={filterBy(user.profile.attributes, "type", "gender")} />
+							<GenderPills
+								attributes={filterBy(user.profile.attributes, "type", "gender")}
+								className="!bg-opacity-70"
+							/>
 							{/* @ts-expect-error: Server Component */}
 							{user.profile.country && <CountryPill code={user.profile.country} />}
 						</div>

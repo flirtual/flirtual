@@ -60,7 +60,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					...profile.customInterests
 				]
 			}}
-			onSubmit={async ({ bornAt, interest, ...values }) => {
+			onSubmit={async ({ bornAt, interest, gender, ...values }) => {
 				const customInterests = interest.filter(
 					(id) => !interests.find((interest) => interest.id === id)
 				);
@@ -84,11 +84,14 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 							new: values.new,
 							customInterests,
 							...(fromEntries(
-								AttributeKeys.filter((key) => key !== "interest").map((type) => {
-									// @ts-expect-error: don't want to deal with this.
-									return [`${type}Id`, values[type]] as const;
-								})
+								AttributeKeys.filter((key) => key !== "interest" && key !== "gender").map(
+									(type) => {
+										// @ts-expect-error: don't want to deal with this.
+										return [`${type}Id`, values[type]] as const;
+									}
+								)
 							) as { [K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string> }),
+							genderId: gender.filter((id) => id !== "other"),
 							interestId: interest.filter((id) => !customInterests.includes(id))
 						}
 					}),
@@ -139,27 +142,31 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 							const simpleGenders = genders.filter((gender) => gender.metadata?.simple);
 							const simpleGenderIds = simpleGenders.map((gender) => gender.id);
 
-							const fallbackGender = genders.find((gender) => gender.metadata?.fallback);
-
 							return (
 								<>
 									<InputLabel {...field.labelProps}>Gender</InputLabel>
 									<InputCheckboxList
 										{...field.props}
-										items={simpleGenders.map((gender) => ({
-											key: gender.id,
-											label: gender.name,
-											conflicts:
-												gender.metadata && Array.isArray(gender.metadata.conflicts)
-													? gender.metadata.conflicts
-													: []
-										}))}
+										items={[
+											...simpleGenders.map((gender) => ({
+												key: gender.id,
+												label: gender.name,
+												conflicts:
+													gender.metadata && Array.isArray(gender.metadata.conflicts)
+														? gender.metadata.conflicts
+														: []
+											})),
+											{
+												key: "other",
+												label: "Other"
+											}
+										]}
 									/>
-									{field.props.value.includes(fallbackGender?.id ?? "") && (
+									{field.props.value.includes("other") && (
 										<InputAutocomplete
 											{...field.props}
 											limit={4}
-											placeholder="Select your genders... (optional)"
+											placeholder="Select your genders..."
 											options={genders.map((gender) => ({
 												key: gender.id,
 												label: gender.name,

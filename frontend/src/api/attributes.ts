@@ -4,14 +4,13 @@ import { fetch, NarrowFetchOptions } from "./exports";
 export type KinkAttributeKind = "dominant" | "submissive" | null;
 
 export interface AttributeMetadata {
-	gender:
-		| {
-				simple?: boolean;
-				fallback?: boolean;
-				plural?: string;
-				conflicts?: Array<string>;
-		  }
-		| undefined;
+	gender: {
+		simple?: boolean;
+		fallback?: boolean;
+		plural?: string;
+		conflicts?: Array<string>;
+		aliasOf?: string;
+	};
 	sexuality: undefined;
 	language: undefined;
 	game: undefined;
