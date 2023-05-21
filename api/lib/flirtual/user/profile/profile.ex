@@ -96,7 +96,8 @@ defmodule Flirtual.User.Profile do
     many_to_many :attributes, Attribute,
       join_through: Flirtual.User.Profile.Attributes,
       join_keys: [profile_id: :user_id, attribute_id: :id],
-      on_replace: :delete
+      on_replace: :delete,
+      preload_order: [asc: :type, asc: :order, asc: :name]
 
     has_many :images, Image, references: :user_id, foreign_key: :profile_id
 

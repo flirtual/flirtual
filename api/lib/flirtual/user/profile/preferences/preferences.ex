@@ -21,7 +21,8 @@ defmodule Flirtual.User.Profile.Preferences do
     many_to_many :attributes, Attribute,
       join_through: Preferences.Attributes,
       join_keys: [preferences_id: :profile_id, attribute_id: :id],
-      on_replace: :delete
+      on_replace: :delete,
+      preload_order: [asc: :type, asc: :order, asc: :name]
   end
 
   def default_assoc do
