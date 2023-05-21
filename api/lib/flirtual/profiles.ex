@@ -275,7 +275,7 @@ defmodule Flirtual.Profiles do
                },
                %{image_ids: image_ids}
              )
-             |> validate_uuids(:image_ids)
+             |> validate_uids(:image_ids)
              |> validate_length(:image_ids, min: 1, max: 16)
              |> apply_action(:update),
            images <-
