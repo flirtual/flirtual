@@ -38,6 +38,8 @@ defmodule Flirtual.Conversation do
   defp decode([]), do: []
   defp decode(data) when is_list(data), do: Enum.map(data, &decode(&1))
 
+  defp decode(%{"participants" => %{}}), do: nil
+
   defp decode(%{} = data) do
     %Conversation{
       id: data["id"],
@@ -150,9 +152,13 @@ defmodule Flirtual.Conversation do
              nil
            ),
          {:ok, data} <- Poison.decode(body),
-         %{"id" => _} <- data do
-      {:ok, decode(data)}
+         %{"id" => _} <- data,
+         %Conversation{} = conversation <- decode(data) do
+      {:ok, conversation}
     else
+      nil ->
+        {:error, :not_found}
+
       %{"errorCode" => "CONVERSATION_NOT_FOUND"} ->
         {:error, :not_found}
 
@@ -181,7 +187,7 @@ defmodule Flirtual.Conversation do
            ),
          {:ok, body} <- Poison.decode(body),
          %{"data" => data} when is_list(data) <- body do
-      data = data |> decode()
+      data = data |> decode() |> Enum.reject(&is_nil/1)
 
       {:ok,
        {data,

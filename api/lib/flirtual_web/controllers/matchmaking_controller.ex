@@ -86,7 +86,8 @@ defmodule FlirtualWeb.MatchmakingController do
 
   def list_matches(conn, %{"unrequited" => _}) do
     with items <-
-           LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id) do
+           LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id)
+           |> Policy.filter(conn, :count) do
       conn
       |> json(%{
         count: Enum.group_by(items, & &1.kind) |> Map.new(fn {k, v} -> {k, length(v)} end),

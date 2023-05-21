@@ -4,6 +4,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
   import Ecto.Query
 
+  alias Flirtual.User.Profile.Block
   alias Flirtual.Talkjs
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
@@ -82,6 +83,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     LikesAndPasses
     |> where(profile_id: ^profile_id, type: :like)
     |> with_opposite(nil: false)
+    |> exclude_blocked()
     |> order_by(desc: :created_at)
     |> Repo.all()
   end
@@ -90,6 +92,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     LikesAndPasses
     |> where(target_id: ^profile_id, type: :like)
     |> with_opposite(nil: true)
+    |> exclude_blocked()
     |> order_by(desc: :created_at)
     |> Repo.all()
   end
@@ -127,14 +130,24 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     end)
   end
 
+  def exclude_blocked(query) do
+    query
+    |> join(:left, [lap, _], block in Block,
+      on:
+        (lap.profile_id == block.profile_id and lap.target_id == block.target_id) or
+          (lap.profile_id == block.target_id and lap.target_id == block.profile_id)
+    )
+    |> where([lap, _, block], is_nil(block))
+  end
+
   def with_opposite(query, options \\ []) do
     query
-    |> join(:left, [self], opposite in LikesAndPasses,
-      on: self.profile_id == opposite.target_id and self.target_id == opposite.profile_id
+    |> join(:left, [lap], opposite in LikesAndPasses,
+      on: lap.profile_id == opposite.target_id and lap.target_id == opposite.profile_id
     )
-    |> select_merge([self, opposite], %{
+    |> select_merge([lap, opposite], %{
       opposite: opposite,
-      match: not is_nil(opposite) and self.type == :like and opposite.type == :like
+      match: not is_nil(opposite) and lap.type == :like and opposite.type == :like
     })
     |> then(
       &case Keyword.get(options, nil) do

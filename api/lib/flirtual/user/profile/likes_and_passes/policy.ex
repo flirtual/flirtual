@@ -12,6 +12,24 @@ defmodule Flirtual.User.Profile.LikesAndPasses.Policy do
   ]
 
   def authorize(
+        :count,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{
+                id: user_id
+              }
+            }
+          }
+        },
+        %LikesAndPasses{
+          target_id: user_id,
+          type: :like
+        }
+      ),
+      do: true
+
+  def authorize(
         :read,
         %Plug.Conn{
           assigns: %{
