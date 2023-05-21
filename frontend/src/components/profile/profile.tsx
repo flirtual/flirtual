@@ -57,8 +57,10 @@ export async function Profile(props: ProfileProps) {
 								attributes={filterBy(user.profile.attributes, "type", "gender")}
 								className="!bg-opacity-70"
 							/>
-							{/* @ts-expect-error: Server Component */}
-							{user.profile.country && <CountryPill code={user.profile.country} />}
+							{user.profile.country && (
+								/* @ts-expect-error: Server Component */
+								<CountryPill className="!bg-opacity-70" code={user.profile.country} />
+							)}
 						</div>
 						{user.activeAt && <ActivityIndicator lastActiveAt={new Date(user.activeAt)} />}
 					</div>

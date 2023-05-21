@@ -30,10 +30,12 @@ const colors = {
 	theme: {
 		1: "var(--theme-1)",
 		2: "var(--theme-2)",
-		"light-1": "var(--theme-light-1)",
-		"light-2": "var(--theme-light-2)",
-		"dark-1": "var(--theme-dark-1)",
-		"dark-2": "var(--theme-dark-2)"
+		"light-1": "var(--light-theme-1)",
+		"light-2": "var(--light-theme-2)",
+		"dark-1": "var(--dark-theme-1)",
+		"dark-2": "var(--dark-theme-2)",
+		"friend-1": "var(--friend-theme-1)",
+		"friend-2": "var(--friend-theme-2)"
 	}
 };
 

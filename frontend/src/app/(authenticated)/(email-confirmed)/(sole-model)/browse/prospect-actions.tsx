@@ -145,7 +145,6 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					return router.refresh();
 				})
 				.catch((reason) => {
-					console.log(reason);
 					if (
 						!(reason instanceof ResponseChangesetError) &&
 						!Object.keys(reason.properties).includes("userId")
@@ -205,8 +204,8 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 							id="friend-button"
 							type="button"
 							className={twMerge(
-								"flex items-center justify-center gap-3 rounded-xl px-6 py-4 shadow-brand-1",
-								mode === "friend" ? "w-40 bg-brand-gradient" : "bg-black-50"
+								"flex items-center justify-center gap-3 rounded-xl bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 px-6 py-4 shadow-brand-1",
+								mode === "friend" && "w-40"
 							)}
 							onClick={() => respond("like", "friend")}
 						>
