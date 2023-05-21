@@ -6,9 +6,9 @@ defmodule Flirtual.Conversation do
   require Flirtual.Utilities
   import Flirtual.Utilities
 
-  alias Flirtual.Conversation.Cursor
-  alias Flirtual.Conversation.Message
   alias Flirtual.Conversation
+  alias Flirtual.Conversation.Message
+  alias Flirtual.Conversation.Cursor
   alias Flirtual.Talkjs
   alias Flirtual.User.Profile.LikesAndPasses
 
@@ -38,7 +38,7 @@ defmodule Flirtual.Conversation do
   defp decode([]), do: []
   defp decode(data) when is_list(data), do: Enum.map(data, &decode(&1))
 
-  defp decode(%{"participants" => %{}}), do: nil
+  defp decode(%{"participants" => participants}) when participants === %{}, do: nil
 
   defp decode(%{} = data) do
     %Conversation{
