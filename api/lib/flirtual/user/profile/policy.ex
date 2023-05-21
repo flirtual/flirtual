@@ -202,8 +202,57 @@ defmodule Flirtual.User.Profile.Policy do
     |> Enum.map(&%{id: &1.id, type: &1.type})
   end
 
+  @nsfw_property_keys [
+    :domsub
+  ]
+
   def transform(
-        :domsub,
+        key,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{
+                preferences: %User.Preferences{
+                  nsfw: true,
+                  privacy: %User.Preferences.Privacy{
+                    kinks: :everyone
+                  }
+                }
+              }
+            }
+          }
+        },
+        %Profile{} = profile
+      )
+      when key in @nsfw_property_keys,
+      do: profile[key]
+
+  def transform(
+        key,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{
+                relationship: %User.Relationship{
+                  matched: true
+                },
+                preferences: %User.Preferences{
+                  nsfw: true,
+                  privacy: %User.Preferences.Privacy{
+                    kinks: :matches
+                  }
+                }
+              }
+            }
+          }
+        },
+        %Profile{} = profile
+      )
+      when key in @nsfw_property_keys,
+      do: profile[key]
+
+  def transform(
+        key,
         %Plug.Conn{
           assigns: %{
             session: %{
@@ -215,10 +264,12 @@ defmodule Flirtual.User.Profile.Policy do
             }
           }
         },
-        %Profile{} = profile
-      ),
-      do: profile.domsub
+        profile
+      )
+      when key in @nsfw_property_keys,
+      do: profile[key]
 
-  def transform(:domsub, _, _), do: nil
+  def transform(key, _, _) when key in @nsfw_property_keys, do: nil
+
   def transform(key, _, _) when key in @own_property_keys, do: nil
 end
