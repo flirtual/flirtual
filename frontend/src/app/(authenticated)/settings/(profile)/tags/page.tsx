@@ -6,7 +6,7 @@ import { withAttributeList } from "~/api/attributes-server";
 import { TagsForm } from "./form";
 
 export const metadata: Metadata = {
-	title: "Information & tags"
+	title: "Info & tags"
 };
 
 export default async function SettingsProfileTagsPage() {
@@ -17,7 +17,7 @@ export default async function SettingsProfileTagsPage() {
 	const genders = await withAttributeList("gender");
 
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Information & tags">
+		<ModelCard className="sm:max-w-2xl" title="Info & tags">
 			<TagsForm {...{ games, genders, interests, platforms, sexualities }} />
 		</ModelCard>
 	);
