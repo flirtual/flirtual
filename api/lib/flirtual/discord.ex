@@ -121,7 +121,7 @@ defmodule Flirtual.Discord do
       embeds: [
         %{
           author: %{
-            name: User.display_name(user),
+            name: "#{User.display_name(user)} (#{user.id})",
             url: User.url(user),
             icon_url: User.avatar_url(user)
           },
@@ -130,7 +130,8 @@ defmodule Flirtual.Discord do
             [
               %{
                 name: "Moderator",
-                value: "[#{User.display_name(moderator)}](#{User.url(moderator)})",
+                value:
+                  "[#{User.display_name(moderator)} (#{moderator.id})](#{User.url(moderator)})",
                 inline: true
               },
               %{
@@ -164,7 +165,7 @@ defmodule Flirtual.Discord do
       embeds: [
         %{
           author: %{
-            name: User.display_name(report.target),
+            name: "#{User.display_name(report.target)} (#{report.target.id})",
             icon_url: User.avatar_url(report.target),
             url: User.url(report.target) |> URI.to_string()
           },
@@ -173,7 +174,8 @@ defmodule Flirtual.Discord do
             [
               %{
                 name: "Reporter",
-                value: "[#{User.display_name(report.user)}](#{User.url(report.user)})",
+                value:
+                  "[#{User.display_name(report.user)} (#{report.user.id})](#{User.url(report.user)})",
                 inline: true
               },
               %{
@@ -209,7 +211,7 @@ defmodule Flirtual.Discord do
       embeds: [
         %{
           author: %{
-            name: User.display_name(user),
+            name: "#{User.display_name(user)} (#{user.id})",
             icon_url: User.avatar_url(user),
             url: User.url(user) |> URI.to_string()
           },
