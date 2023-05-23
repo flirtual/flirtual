@@ -59,7 +59,7 @@ export default async function LikesPage() {
 						</ButtonLink>
 					</div>
 					{items.length === 0 ? (
-						<div className="flex flex-col gap-1">
+						<div className="flex flex-col gap-1 px-4 sm:px-0">
 							<span className="text-xl font-semibold">No one has liked you yet 😔</span>
 							<span>But it&apos;s only a matter of time.</span>
 						</div>

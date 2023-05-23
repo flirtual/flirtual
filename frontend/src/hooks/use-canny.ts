@@ -6,6 +6,7 @@ import { resolveTheme } from "~/theme";
 
 import { useSessionUser } from "./use-session";
 import { useTheme } from "./use-theme";
+import { useScreenBreakpoint } from "./use-screen-breakpoint";
 
 declare global {
 	interface Window {
@@ -23,6 +24,7 @@ let loaded = false;
 export function useCanny() {
 	const user = useSessionUser();
 	const { sessionTheme } = useTheme();
+	const isMobile = !useScreenBreakpoint("sm");
 
 	const loadCanny = useCallback(() => {
 		if (loaded) return;
@@ -83,11 +85,11 @@ export function useCanny() {
 		identifyUser();
 		window.Canny("initChangelog", {
 			appID: appId,
-			position: "bottom",
+			position: isMobile ? "top" : "bottom",
 			align: "left",
 			theme: resolveTheme(sessionTheme)
 		});
-	}, [identifyUser, loadCanny, sessionTheme]);
+	}, [identifyUser, isMobile, loadCanny, sessionTheme]);
 
 	return { openFeedback, loadChangelog };
 }
