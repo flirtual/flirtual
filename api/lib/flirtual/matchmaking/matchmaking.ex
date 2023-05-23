@@ -416,13 +416,7 @@ defmodule Flirtual.Matchmaking do
   end
 
   def queries(%User{} = user, :friend) do
-    Enum.map(
-      [
-        :likes
-      ],
-      &query(&1, user)
-    )
-    |> List.flatten()
+    []
   end
 
   def query(:likes, %User{} = user) do
