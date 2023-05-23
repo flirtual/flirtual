@@ -78,20 +78,16 @@ export default function AboutPage() {
 									]
 								},
 								{
-									name: "Development",
+									name: "Staff",
 									members: [
 										{
 											name: "Aries",
-											role: "Software Engineer",
+											role: "Software Developer",
 											url: "https://ariesclark.com"
-										}
-									]
-								},
-								{
-									name: "Community Lead",
-									members: [
+										},
 										{
 											name: "Katten!",
+											role: "Community Partner",
 											url: urls.profile("KattenRastyr")
 										}
 									]
@@ -104,16 +100,20 @@ export default function AboutPage() {
 											url: urls.profile("Buramie")
 										},
 										{
+											name: "Kart²",
+											url: urls.profile("KartSquared")
+										},
+										{
+											name: "Krauser",
+											url: urls.profile("Krauser")
+										},
+										{
 											name: "Solo!!",
 											url: urls.profile("SoloFlighter")
 										},
 										{
 											name: "Starh",
 											url: urls.profile("Starh")
-										},
-										{
-											name: "Teru",
-											url: urls.profile("TeruPie")
 										}
 									]
 								},
@@ -127,19 +127,16 @@ export default function AboutPage() {
 									]
 								},
 								{
-									name: "VRChat World Creator",
+									name: "VR Creators",
 									members: [
 										{
 											name: "Faxmashine",
+											role: "VRChat World",
 											url: "https://www.faxmashine.com/"
-										}
-									]
-								},
-								{
-									name: "VRChat Avatar Creator",
-									members: [
+										},
 										{
 											name: "Juice",
+											role: "VRChat Avatar",
 											url: "https://info.mdcr.tv/"
 										}
 									]
