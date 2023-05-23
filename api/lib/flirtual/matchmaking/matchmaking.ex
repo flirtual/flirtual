@@ -171,7 +171,7 @@ defmodule Flirtual.Matchmaking do
          {:ok, _} <-
            Talkjs.create_messages(conversation_id, [
              %{
-               text: "It's a match",
+               text: "It's a match!",
                type: "SystemMessage"
              }
            ]) do
