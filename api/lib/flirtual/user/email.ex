@@ -11,7 +11,7 @@ defmodule Flirtual.User.Email do
 
       Reason: #{message}
 
-      Your account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision or if you would like us to delete your account immediately.
+      Your account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision or if you would like us to delete your account immediately. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.
 
       The Flirtual Team
       """,
@@ -20,7 +20,7 @@ defmodule Flirtual.User.Email do
 
       <p>Reason: #{message}</p>
 
-      <p>Your account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision or if you would like us to delete your account immediately.</p>
+      <p>Your account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision or if you would like us to delete your account immediately. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.</p>
 
       <p>The Flirtual Team</p>
       """
