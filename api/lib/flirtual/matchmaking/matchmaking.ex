@@ -313,7 +313,8 @@ defmodule Flirtual.Matchmaking do
             }
           ],
           "filter" => filters(user, kind),
-          "should" => queries(user, kind)
+          "should" => queries(user, kind),
+          "minimum_should_match" => 0
         }
       }
     }
