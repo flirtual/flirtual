@@ -91,7 +91,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 				<ClientScripts />
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>
-				<NextTopLoader color={["#FF8975", "#E9658B"]} showSpinner={false} />
+				<NextTopLoader color={["#FF8975", "#E9658B"]} height={5} showSpinner={false} />
 				<Suspense fallback={<LoadingIndicatorScreen />}>
 					<SessionProvider session={session}>
 						<ThemeProvider>
