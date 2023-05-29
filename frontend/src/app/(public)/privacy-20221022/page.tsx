@@ -20,7 +20,7 @@ export default function PrivacyPage() {
 				title="Privacy Policy"
 			>
 				<p>
-					This policy was effective from 2022-10-22 to [DATE].{" "}
+					This policy was effective from 2022-10-22 to 2023-06-05.{" "}
 					<InlineLink href={urls.resources.privacyPolicy}>
 						Click here for our current Privacy Policy.
 					</InlineLink>

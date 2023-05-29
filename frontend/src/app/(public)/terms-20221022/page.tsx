@@ -15,7 +15,7 @@ export default function TermsPage() {
 			<ModelCard className="w-full sm:max-w-2xl" title="Terms of Service">
 				<div className="flex flex-col gap-4">
 					<p>
-						These terms were effective from 2022-10-22 to [DATE].{" "}
+						These terms were effective from 2022-10-22 to 2023-06-05.{" "}
 						<InlineLink href={urls.resources.termsOfService}>
 							Click here for our current Terms of Service.
 						</InlineLink>

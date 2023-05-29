@@ -41,9 +41,8 @@ export default function PrivacyPage() {
 
 				<p>
 					Your account email will not be shown to other users. Your account email may be accessed by
-					Amazon Web Services, TalkJS, and Freshworks in order to deliver transactional, marketing,
-					and support messages according to your preferences, but will not be shared with other
-					third-parties. You may opt out of{" "}
+					third parties in order to deliver transactional, marketing, and support messages according
+					to your preferences. You may opt out of{" "}
 					<InlineLink href={urls.settings.notifications}>message email notifications</InlineLink>,
 					which will remove your email address from TalkJS&apos; records.
 				</p>
