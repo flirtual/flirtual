@@ -278,43 +278,53 @@ defmodule Flirtual.Matchmaking do
       "_source" => false,
       "size" => 30,
       "query" => %{
-        "bool" => %{
-          "must_not" => [
+        "function_score" => %{
+          "query" => %{
+            "bool" => %{
+              "must_not" => [
+                %{
+                  "ids" => %{
+                    "values" =>
+                      [
+                        # Exclude yourself.
+                        user.id,
+                        # Exclude users you've already liked or passed.
+                        LikesAndPasses
+                        |> where(profile_id: ^profile.user_id, type: :like)
+                        |> or_where(profile_id: ^profile.user_id, type: :pass, kind: :love)
+                        |> or_where(profile_id: ^profile.user_id, type: :pass, kind: ^kind)
+                        |> distinct(true)
+                        |> select([item], item.target_id)
+                        |> Repo.all(),
+                        # Exclude blocked users.
+                        Block
+                        |> where(profile_id: ^profile.user_id)
+                        |> distinct(true)
+                        |> select([item], item.target_id)
+                        |> Repo.all(),
+                        # Exclude users who blocked you.
+                        Block
+                        |> where(target_id: ^profile.user_id)
+                        |> distinct(true)
+                        |> select([item], item.target_id)
+                        |> Repo.all()
+                      ]
+                      |> List.flatten()
+                      |> Enum.uniq()
+                  }
+                }
+              ],
+              "filter" => filters(user, kind),
+              "should" => queries(user, kind),
+              "minimum_should_match" => 0
+            }
+          },
+          functions: [
             %{
-              "ids" => %{
-                "values" =>
-                  [
-                    # Exclude yourself.
-                    user.id,
-                    # Exclude users you've already liked or passed.
-                    LikesAndPasses
-                    |> where(profile_id: ^profile.user_id, type: :like)
-                    |> or_where(profile_id: ^profile.user_id, type: :pass, kind: :love)
-                    |> or_where(profile_id: ^profile.user_id, type: :pass, kind: ^kind)
-                    |> distinct(true)
-                    |> select([item], item.target_id)
-                    |> Repo.all(),
-                    # Exclude blocked users.
-                    Block
-                    |> where(profile_id: ^profile.user_id)
-                    |> distinct(true)
-                    |> select([item], item.target_id)
-                    |> Repo.all(),
-                    # Exclude users who blocked you.
-                    Block
-                    |> where(target_id: ^profile.user_id)
-                    |> distinct(true)
-                    |> select([item], item.target_id)
-                    |> Repo.all()
-                  ]
-                  |> List.flatten()
-                  |> Enum.uniq()
-              }
+              random_score: %{}
             }
           ],
-          "filter" => filters(user, kind),
-          "should" => queries(user, kind),
-          "minimum_should_match" => 0
+          boost_mode: "sum"
         }
       }
     }
