@@ -42,6 +42,8 @@ config :openai,
   organization_key: System.fetch_env!("OPENAI_ORG_ID"),
   api_key: System.fetch_env!("OPENAI_ACCESS_TOKEN")
 
+config :flirtual, session_signing_salt: System.fetch_env!("SESSION_SIGNING_SALT")
+
 config :flirtual, FlirtualWeb.Endpoint, secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
 
 if config_env() == :prod do

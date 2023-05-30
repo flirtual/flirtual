@@ -45,7 +45,7 @@ defmodule FlirtualWeb.Endpoint do
     same_site: "Lax",
     max_age: Session.max_age(),
     key: "session",
-    signing_salt: "mGFTg14t"
+    signing_salt: {Application, :fetch_env!, [:flirtual, :session_signing_salt]}
 
   plug FlirtualWeb.Router
 end
