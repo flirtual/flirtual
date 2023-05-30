@@ -25,6 +25,7 @@ defmodule Flirtual.User.Policy do
 
   @own_actions [
     :read,
+    :inspect,
     :update
   ]
 
@@ -97,8 +98,8 @@ defmodule Flirtual.User.Policy do
       do: :admin in user.tags
 
   @debugger_actions [
-    :arbitrary_code_execution,
-    :read_error_cipher
+    :read_error_cipher,
+    :inspect
   ]
 
   def authorize(

@@ -98,7 +98,7 @@ defmodule FlirtualWeb.UsersController do
         else: Users.get(user_id)
       )
 
-    if is_nil(user) or Policy.cannot?(conn, :read, user) do
+    if is_nil(user) or Policy.cannot?(conn, :inspect, user) do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
       conn |> json(Elasticsearch.Document.encode(user))
