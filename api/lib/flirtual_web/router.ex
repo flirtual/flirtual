@@ -109,7 +109,6 @@ defmodule FlirtualWeb.Router do
           end
         end
 
-        post "/evaluate", DebugController, :evaluate
         get "/error", DebugController, :error
 
         scope "/vrchat" do
