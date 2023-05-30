@@ -173,7 +173,8 @@ defmodule A do
                         Integer.parse(String.slice(to_string(dob), 4..5)) |> elem(0),
                         Integer.parse(String.slice(to_string(dob), 6..7)) |> elem(0)
                       ) do
-                   {:ok, date} -> date
+                   {:ok, date} ->
+                     date
 
                    {:error, :invalid_date} ->
                      nil
@@ -356,7 +357,13 @@ defmodule A do
                custom_interests:
                  custom_interests
                  |> List.flatten()
-                 |> Enum.map(&(strip_redis(&1) |> String.trim())),
+                 |> Enum.map(
+                   &(strip_redis(&1)
+                     |> String.replace("_", " ", global: true)
+                     # Remove double spaces.
+                     |> String.replace("  ", " ", global: true)
+                     |> String.trim())
+                 ),
                vrchat:
                  if(is_nil(vrchat),
                    do: nil,
