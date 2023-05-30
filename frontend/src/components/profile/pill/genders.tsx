@@ -25,16 +25,18 @@ export async function GenderPills({
 	const visibleGenders = sortBy(
 		[
 			...new Set(
-				profileGenders
-					.map((gender) =>
-						gender.metadata.aliasOf
-							? findBy(genders, "id", gender.metadata.aliasOf) ?? gender
-							: gender
-					)
-					.filter((gender) => {
-						if (simple) return gender.metadata.simple || gender.metadata.fallback;
-						return true;
-					})
+				simple
+					? profileGenders
+							.map((gender) =>
+								gender.metadata.aliasOf
+									? findBy(genders, "id", gender.metadata.aliasOf) ?? gender
+									: gender
+							)
+							.filter((gender) => {
+								if (simple) return gender.metadata.simple || gender.metadata.fallback;
+								return true;
+							})
+					: profileGenders
 			)
 		],
 		"order"
