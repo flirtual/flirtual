@@ -122,12 +122,18 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 						{(field) => {
 							const simpleGenders = genders.filter((gender) => gender.metadata?.simple);
 							const simpleGenderIds = simpleGenders.map((gender) => gender.id);
+							const checkboxValue = field.props.value.some(
+								(id) => !simpleGenderIds.includes(id) && id !== "other"
+							)
+								? [...field.props.value, "other"]
+								: field.props.value;
 
 							return (
 								<>
 									<InputLabel {...field.labelProps}>Gender</InputLabel>
 									<InputCheckboxList
 										{...field.props}
+										value={checkboxValue}
 										items={[
 											...simpleGenders.map((gender) => ({
 												key: gender.id,
@@ -143,7 +149,7 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 											}
 										]}
 									/>
-									{field.props.value.includes("other") && (
+									{checkboxValue.includes("other") && (
 										<InputAutocomplete
 											{...field.props}
 											limit={4}
