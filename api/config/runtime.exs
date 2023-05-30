@@ -75,12 +75,6 @@ if config_env() == :prod do
       {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
     ]
 
-  config :flirtual, Flirtual.Elastic,
-    url: System.fetch_env!("ELASTICSEARCH_URL"),
-    default_headers: [
-      {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
-    ]
-
   # Configuring the mailer
   config :flirtual, Flirtual.Mailer,
     adapter: Swoosh.Adapters.SMTP,
