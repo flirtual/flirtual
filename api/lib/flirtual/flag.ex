@@ -7,8 +7,8 @@ defmodule Flirtual.Flag do
   alias Flirtual.{Flag, Repo, Users}
 
   schema "flags" do
-    field :type, :string
-    field :flag, :string
+    field(:type, :string)
+    field(:flag, :string)
 
     timestamps(inserted_at: false)
   end
@@ -42,19 +42,25 @@ defmodule Flirtual.Flag do
   def check_flags(user_id, text) do
     user = Users.get(user_id)
 
-    query = """
-      SELECT flag
-      FROM flags
-      WHERE type = 'text'
-      AND $1 ~* ('(?<![[:alnum:]])' || flag || '(?![[:alnum:]])')
-    """
+    # query = """
+    #   SELECT flag
+    #   FROM flags
+    #   WHERE type = 'text'
+    #   AND $1 ~* ('(?<![[:alnum:]])' || flag || '(?![[:alnum:]])')
+    # """
 
-    case Repo.query(query, [text]) do
-      {:ok, %Postgrex.Result{rows: []}} ->
+    case Flag
+         |> where([flag], flag.type == "text")
+         |> where(
+           [flag],
+           fragment("? ~* ('(\\?<![[:alnum:]])' || ? || '(\\?![[:alnum:]])')", ^text, flag.flag)
+         )
+         |> Repo.all() do
+      [] ->
         :ok
 
-      {:ok, %Postgrex.Result{rows: rows}} when is_list(rows) ->
-        flags = Enum.map_join(rows, ", ", fn [flag] -> flag end)
+      flags when is_list(flags) ->
+        flags = flags |> Enum.map_join(", ", & &1.flag)
         Flirtual.Discord.deliver_webhook(:flagged_text, user: user, flags: flags)
         :ok
 
