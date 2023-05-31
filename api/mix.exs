@@ -65,7 +65,8 @@ defmodule Flirtual.MixProject do
       {:libcluster, "~> 3.3"},
       {:pre_commit, "~> 0.3.4", only: :dev},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:sobelow, "~> 0.12", only: [:dev, :test], runtime: false}
     ]
   end
 
