@@ -1,4 +1,4 @@
-[![Flirtual](frontend/public/images/brand/black.png)](https://flirtu.al)
+[![Flirtual](frontend/public/images/brand/gradient.png)](https://flirtu.al)
 
 [![AGPL-3.0](https://img.shields.io/github/license/flirtual/flirtual?color=663366&label=%C2%A9%202018-2023%20Studio%20Paprika&logo=gnu)](LICENSE)
 [![Discord](https://img.shields.io/discord/455219574036496404?color=5865f2&label=Discord&logo=discord&logoColor=5865f2&style=flat)](https://flirtu.al/discord)
