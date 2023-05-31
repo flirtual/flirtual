@@ -13,12 +13,12 @@
 
   ## list of tools (see `mix check` docs for a list of default curated tools)
   tools: [
-    {:credo, "mix credo --mute-exit-status"}
+    {:credo, "mix credo --mute-exit-status"},
     ## curated tools may be disabled (e.g. the check for compilation warnings)
-    # {:compiler, false},
+    {:compiler, "mix compile"},
 
     ## ...or have command & args adjusted (e.g. enable skip comments for sobelow)
-    # {:sobelow, "mix sobelow --exit --skip"},
+    {:sobelow, "mix sobelow --exit medium --skip"}
 
     ## ...or reordered (e.g. to see output from dialyzer before others)
     # {:dialyzer, order: -1},
