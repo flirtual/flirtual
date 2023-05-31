@@ -3,8 +3,7 @@
     "build": "next build",
     "dev": "next dev -H 127.0.0.1",
     "vercel-dev": "vercel dev --listen 127.0.0.1:3000",
-    "start": "next start -H 127.0.0.1",
-    "prepare": "husky install"
+    "start": "next start -H 127.0.0.1"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.8.1",
