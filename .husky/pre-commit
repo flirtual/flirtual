@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-if git diff --cached --quiet -- "api/*"; then
+if ! git diff --cached --quiet -- "api/*"; then
     cd api
     mix check --only formatter --only credo --fix
     cd ..
 fi
 
-if git diff --cached --quiet -- "frontend/*"; then
+if ! git diff --cached --quiet -- "frontend/*"; then
     cd frontend
     pnpm lint-staged
     cd ..
