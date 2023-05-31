@@ -6,9 +6,11 @@ name: Elixir CI
 # different name for the main branch like "master" or "production".
 on:
   push:
-    branches: [ "main" ]  # adapt branch for project
+    branches: [ "main" ]
+    paths: [ "api/**" ]
   pull_request:
-    branches: [ "main" ]  # adapt branch for project
+    branches: [ "main" ]
+    paths: [ "api/**" ]
 
 permissions:
   contents: read
@@ -38,6 +40,9 @@ jobs:
       matrix:
         otp: ['25.0']       # Define the OTP version [required]
         elixir: ['1.13.4']    # Define the elixir version [required]
+    defaults:
+      run:
+        working-directory: ./api
     steps:
     # Step: Setup Elixir + Erlang image as the base.
     - name: Set up Elixir
@@ -57,7 +62,7 @@ jobs:
       env:
         cache-name: cache-elixir-deps
       with:
-        path: deps
+        path: api/deps
         key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
           ${{ runner.os }}-mix-${{ env.cache-name }}-
@@ -71,7 +76,7 @@ jobs:
       env:
         cache-name: cache-compiled-build
       with:
-        path: _build
+        path: api/_build
         key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
           ${{ runner.os }}-mix-${{ env.cache-name }}-
