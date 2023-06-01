@@ -55,7 +55,7 @@ export default async function ConversationsLayout({ children }: PropsWithChildre
 							<ButtonLink href={urls.browse()} size="sm">
 								Browse
 							</ButtonLink>
-							<LikesYouButton user={session.user} />
+							<LikesYouButton />
 						</div>
 					</ModelCard>
 				</SoleModelLayout>

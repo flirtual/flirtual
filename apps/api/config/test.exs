@@ -20,7 +20,7 @@ config :flirtual, Flirtual.Repo,
 # you can enable the server option below.
 config :flirtual, FlirtualWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "***REMOVED***",
+  secret_key_base: "qSuvZaUX+Ee+Kz2HLGE8XMsQikWf2uYBENL06Dtb93pis6eTRJBogpw3Ebr7s6l3",
   server: false
 
 # In test we don't send emails.
