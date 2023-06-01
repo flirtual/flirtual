@@ -2,7 +2,10 @@
     "scripts": {
         "prepare": "husky install"
     },
-	"devDependencies": {
-		"husky": "^8.0.3"
-	}
+    "devDependencies": {
+        "@ariesclark/eslint-config": "^1.5.1",
+        "eslint": "^8.41.0",
+        "husky": "^8.0.3",
+        "lint-staged": "^13.2.2"
+    }
 }

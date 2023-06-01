@@ -7,10 +7,10 @@ name: Elixir CI
 on:
   push:
     branches: [ "main" ]
-    paths: [ "api/**" ]
+    paths: [ "apps/api/**" ]
   pull_request:
     branches: [ "main" ]
-    paths: [ "api/**" ]
+    paths: [ "apps/api/**" ]
 
 permissions:
   contents: read
@@ -42,7 +42,7 @@ jobs:
         elixir: ['1.13.4']    # Define the elixir version [required]
     defaults:
       run:
-        working-directory: ./api
+        working-directory: ./apps/api
     steps:
     # Step: Setup Elixir + Erlang image as the base.
     - name: Set up Elixir
@@ -62,7 +62,7 @@ jobs:
       env:
         cache-name: cache-elixir-deps
       with:
-        path: api/deps
+        path: apps/api/deps
         key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
           ${{ runner.os }}-mix-${{ env.cache-name }}-
@@ -76,7 +76,7 @@ jobs:
       env:
         cache-name: cache-compiled-build
       with:
-        path: api/_build
+        path: apps/api/_build
         key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
           ${{ runner.os }}-mix-${{ env.cache-name }}-

@@ -20,7 +20,7 @@ defmodule Flirtual.MixProject do
   def application do
     [
       mod: {Flirtual.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ecto_sql]
     ]
   end
 

@@ -1,14 +1,15 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-if ! git diff --cached --quiet -- "api/*"; then
-    cd api
+# Pre-commit hook for linting and formatting apps.
+if ! git diff --cached --quiet -- "apps/api/*"; then
+    cd apps/api
     mix check --only formatter --only credo --fix
     cd ..
 fi
 
-if ! git diff --cached --quiet -- "frontend/*"; then
-    cd frontend
+if ! git diff --cached --quiet -- "apps/frontend/*"; then
+    cd apps/frontend
     pnpm lint-staged
     cd ..
 fi

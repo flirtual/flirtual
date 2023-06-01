@@ -2,7 +2,7 @@ name: Fly Deploy
 on:
   push:
     branches: [ "production" ]
-    paths: [ "api/**" ]
+    paths: [ "apps/api/**" ]
 jobs:
   deploy:
     name: Deploy app
@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
-        working-directory: ./api
+        working-directory: ./apps/api
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
