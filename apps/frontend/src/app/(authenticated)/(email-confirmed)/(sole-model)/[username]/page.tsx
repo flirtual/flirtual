@@ -24,7 +24,6 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
 	return (
 		<>
-			{/* @ts-expect-error: Server Component */}
 			<Profile direct user={user} />
 			{user.relationship && !user.relationship?.kind && (
 				<ProspectActionBar mode="love" userId={user.id} />

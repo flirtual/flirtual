@@ -1,10 +1,3 @@
-import { urls } from "~/urls";
-import { displayName, User } from "~/api/user";
-import { Html } from "~/components/html";
-import { filterBy } from "~/utilities";
-import { withSession } from "~/server-utilities";
-import { yearsAgo } from "~/date";
-
 import { InlineLink } from "../inline-link";
 import { VRChatIcon } from "../icons/brand/vrchat";
 import { DiscordIcon } from "../icons";
@@ -19,6 +12,13 @@ import { GenderPills } from "./pill/genders";
 import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { RelationActions } from "./relation-actions";
+
+import { yearsAgo } from "~/date";
+import { withSession } from "~/server-utilities";
+import { filterBy } from "~/utilities";
+import { Html } from "~/components/html";
+import { displayName, User } from "~/api/user";
+import { urls } from "~/urls";
 
 export interface ProfileProps {
 	user: User;
@@ -52,13 +52,11 @@ export async function Profile(props: ProfileProps) {
 							)}
 						</div>
 						<div className="flex flex-wrap items-center gap-2 font-montserrat ">
-							{/* @ts-expect-error: Server Component */}
 							<GenderPills
 								attributes={filterBy(user.profile.attributes, "type", "gender")}
 								className="!bg-opacity-70"
 							/>
 							{user.profile.country && (
-								/* @ts-expect-error: Server Component */
 								<CountryPill className="!bg-opacity-70" code={user.profile.country} />
 							)}
 						</div>
@@ -107,7 +105,6 @@ export async function Profile(props: ProfileProps) {
 							Don&apos;t forget to <InlineLink href={urls.settings.bio}>add a bio</InlineLink>!
 						</span>
 					) : null}
-					{/* @ts-expect-error: Server Component */}
 					<PillCollection user={user} />
 				</div>
 				<ProfileActionBar user={user} />

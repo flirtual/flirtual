@@ -26,7 +26,6 @@ export function SoleModelLayout({
 				props.className
 			)}
 		>
-			{/* @ts-expect-error: Server Component */}
 			<Header />
 			<div
 				{...containerProps}
@@ -38,7 +37,6 @@ export function SoleModelLayout({
 				{children}
 			</div>
 			<Footer {...footer} />
-			{/* @ts-expect-error: Server Component */}
 			{mobileNavigation !== false && <MobileBarNavigation />}
 		</div>
 	);

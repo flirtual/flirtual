@@ -1,6 +1,9 @@
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 
+import { SuccessMessage } from "./success-message";
+import { PlanCard } from "./plan-card";
+
 import { api } from "~/api";
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
@@ -9,9 +12,6 @@ import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 import { withSession } from "~/server-utilities";
 import { formatDate } from "~/date";
-
-import { SuccessMessage } from "./success-message";
-import { PlanCard } from "./plan-card";
 
 export const metadata: Metadata = {
 	title: "Subscription"
@@ -132,11 +132,9 @@ export default async function SubscriptionPage() {
 									discount: 33
 								}
 							].map((item) => {
-								// @ts-expect-error: Server Component
 								return <PlanCard {...item} key={item.id} />;
 							})}
 							<div className="col-span-full flex flex-col gap-2">
-								{/* @ts-expect-error: Server Component */}
 								<PlanCard
 									discount={user.tags?.includes("legacy_vrlfp") ? 50 : undefined}
 									duration="Lifetime"

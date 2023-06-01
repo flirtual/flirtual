@@ -1,11 +1,11 @@
+import { OutOfProspects } from "./out-of-prospects";
+import { ProspectActionBar } from "./prospect-actions";
+import { DebuggerActions } from "./debugger-actions";
+
 import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { withSession } from "~/server-utilities";
-
-import { OutOfProspects } from "./out-of-prospects";
-import { ProspectActionBar } from "./prospect-actions";
-import { DebuggerActions } from "./debugger-actions";
 
 export interface ProspectListProps {
 	prospects: Array<User>;
@@ -20,7 +20,6 @@ export async function ProspectList({ kind, prospects }: ProspectListProps) {
 		<>
 			{prospect ? (
 				<>
-					{/* @ts-expect-error: Server Component */}
 					<Profile key={prospect.id} user={prospect} />
 					<ProspectActionBar mode={kind} userId={prospect.id} />
 				</>

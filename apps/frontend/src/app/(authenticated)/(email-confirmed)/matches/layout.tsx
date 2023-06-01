@@ -1,6 +1,9 @@
 // eslint-disable-next-line import/named
 import { PropsWithChildren, cache } from "react";
 
+import { withConversations } from "./data.server";
+import { LikesYouButton } from "./likes-you-button";
+
 import { ButtonLink } from "~/components/button";
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
@@ -12,9 +15,6 @@ import { api } from "~/api";
 import { fromEntries } from "~/utilities";
 import { SWRConfig } from "~/components/swr";
 import { SoleModelLayout } from "~/components/layout/sole-model";
-
-import { withConversations } from "./data.server";
-import { LikesYouButton } from "./likes-you-button";
 
 const withConversationUsers = cache(async (...userIds: Array<string>) => {
 	return (await api.user.bulk({ ...thruServerCookies(), body: userIds })).filter(Boolean);
@@ -55,20 +55,17 @@ export default async function ConversationsLayout({ children }: PropsWithChildre
 							<ButtonLink href={urls.browse()} size="sm">
 								Browse
 							</ButtonLink>
-							{/* @ts-expect-error: Server Component */}
 							<LikesYouButton user={session.user} />
 						</div>
 					</ModelCard>
 				</SoleModelLayout>
 			) : (
 				<div className="flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col">
-					{/* @ts-expect-error: Server Component */}
 					<Header />
 					<div className="flex w-full max-w-screen-lg grow flex-col sm:flex-row md:mt-16 md:px-8">
 						{children}
 					</div>
 					<Footer desktopOnly />
-					{/* @ts-expect-error: Server Component */}
 					<MobileBarNavigation />
 				</div>
 			)}

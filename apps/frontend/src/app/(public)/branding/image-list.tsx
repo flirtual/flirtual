@@ -65,7 +65,6 @@ export async function ImageList({ className, items }: ImageListProps) {
 	return (
 		<div className={twMerge("grid grid-cols-1 gap-4 sm:grid-cols-3", className)}>
 			{items.map((item) => {
-				/* @ts-expect-error: Server Component */
 				return <ImageListItem key={item.name} {...item} />;
 			})}
 		</div>

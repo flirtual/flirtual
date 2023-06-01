@@ -80,14 +80,12 @@ export default async function LikesPage() {
 												<h1 className="text-xl font-semibold sm:text-2xl">{displayName(user)}</h1>
 												<div className="flex w-full gap-2">
 													{user.bornAt && <Pill small>{yearsAgo(new Date(user.bornAt))}</Pill>}
-													{/* @ts-expect-error: Server Component */}
 													<GenderPills
 														simple
 														small
 														attributes={filterBy(user.profile.attributes, "type", "gender")}
 													/>
 													{user.profile.country && (
-														/* @ts-expect-error: Server Component */
 														<CountryPill flagOnly code={user.profile.country} />
 													)}
 												</div>

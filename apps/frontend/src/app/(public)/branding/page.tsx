@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 
+import { ColorBlock } from "./color-block";
+import { ImageList } from "./image-list";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { ButtonLink } from "~/components/button";
 import { urls } from "~/urls";
-
-import { ColorBlock } from "./color-block";
-import { ImageList } from "./image-list";
 
 export const metadata: Metadata = {
 	title: "Branding"
@@ -30,7 +30,6 @@ export default async function BrandingPage() {
 					<span>
 						Please do not edit, change, distort, recolor, or reconfigure the Flirtual logo.
 					</span>
-					{/* @ts-expect-error: Server Component */}
 					<ImageList
 						items={[
 							{
@@ -55,7 +54,6 @@ export default async function BrandingPage() {
 						Use these only when the Flirtual brand is clearly visible or has been well established
 						elsewhere on the page or in the design.
 					</span>
-					{/* @ts-expect-error: Server Component */}
 					<ImageList
 						className="sm:grid-cols-4"
 						items={[
