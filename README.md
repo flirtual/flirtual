@@ -40,6 +40,10 @@ In `apps/frontend/`:
 * Install the [Stripe CLI](https://stripe.com/docs/stripe-cli#install) and login using ``stripe login``.
 * ``stripe listen --forward-to localhost:4000/v1/stripe``
 
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING](https://github.com/flirtual/flirtual/blob/main/.github/CONTRIBUTING.md) for more information.
+
 ## License
 
 Copyright (C) 2018-2023 Studio Paprika
