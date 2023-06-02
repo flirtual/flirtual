@@ -1,0 +1,13 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "zone.homie.flirtual.pwa",
+            "sha256_cert_fingerprints": [
+                "E8:A1:BC:8D:DD:4E:C5:2B:55:39:A0:1B:29:A4:48:32:6A:F0:43:7B:CF:39:7E:4A:65:48:6F:3F:28:6C:BB:CD",
+                "DB:80:DC:6B:46:52:7F:AF:33:26:BA:3B:EC:6B:02:72:BC:13:6A:09:64:D4:92:A1:B7:4D:13:42:A3:62:29:74"
+            ]
+        }
+    }
+]
