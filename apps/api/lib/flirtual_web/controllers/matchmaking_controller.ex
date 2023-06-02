@@ -84,13 +84,19 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
+  @activity_cutoff DateTime.new!(Date.new!(2022, 10, 21), Time.new!(0, 0, 0))
+
   def list_matches(conn, %{"unrequited" => _}) do
     with items <-
            LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id)
            |> Policy.filter(conn, :count) do
       conn
       |> json(%{
-        count: Enum.group_by(items, & &1.kind) |> Map.new(fn {k, v} -> {k, length(v)} end),
+        count:
+          items
+          |> Enum.filter(&(&1.active_at |> DateTime.compare(@activity_cutoff) === :gt))
+          |> Enum.group_by(& &1.kind)
+          |> Map.new(fn {k, v} -> {k, length(v)} end),
         items:
           items
           |> Policy.filter(conn, :read)
