@@ -23,7 +23,7 @@ export default function AboutPage() {
 				<Image
 					alt="Picture of the Flirtual Team in VRChat"
 					height={618}
-					src={urls.media("54b456c6-4435-4cdc-ac05-cb958d4065c6")}
+					src={urls.media("e9060915-cc16-4d0c-892e-765bf18d9d5f")}
 					width={1888}
 				/>
 				<div className="flex flex-col gap-8 px-8 py-10 sm:px-16">
