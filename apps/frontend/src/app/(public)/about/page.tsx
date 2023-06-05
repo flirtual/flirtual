@@ -1,12 +1,12 @@
 import { Metadata } from "next";
 
+import { TeamList } from "./team-list";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { Image } from "~/components/image";
-
-import { TeamList } from "./team-list";
 
 export const metadata: Metadata = {
 	title: "About us"
@@ -32,8 +32,7 @@ export default function AboutPage() {
 						<p>
 							Back in 2018—at the height of the Ugandan Knuckles craze—kfarwell joined VRChat. He
 							found out that people were dating in VR, but realized there was no VR dating site. So
-							he made one. Now he&apos;s moved 2000 miles to live with his partner from VR. (It
-							works!)
+							he made one.
 						</p>
 						<p>
 							Virtual Reality Looking-For-Partner (VRLFP) was the first VR dating site. We provided
@@ -44,12 +43,9 @@ export default function AboutPage() {
 						<p>
 							Why are we doing this? Because VR has changed our lives. Honestly. It&apos;s helped us
 							come out of our shells, meet some of our best friends, survive quarantine sane, and
-							fall in love.
-						</p>
-						<p>
-							Yep. We really want this &quot;metaverse&quot; thing to go well, and help everyone
-							find true connection and belonging, like VR has done for us. Everything we do—from
-							Flirtual to projects like ROVR and homie.zone—is us trying to make that happen.
+							fall in love. Everyone on our team has met a best friend or romantic partner through
+							VR. We really want to help everyone find true connection and belonging, as VR has done
+							for us.
 						</p>
 						<p>So have fun! Be kind to each other. And don&apos;t forget to drink water.</p>
 						<div className="flex flex-col">
