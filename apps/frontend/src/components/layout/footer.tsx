@@ -1,10 +1,10 @@
 import { twMerge } from "tailwind-merge";
 
-import { urls } from "~/urls";
-import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
-
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 import { FooterCannyLink } from "./canny-button";
+
+import { urls } from "~/urls";
+import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
 
 type LinkOrButtonProps<T> = T &
 	(Pick<React.ComponentProps<"a">, "href"> | Pick<React.ComponentProps<"button">, "onClick">);
@@ -66,14 +66,18 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 						<FooterListLink href={urls.resources.networkStatus} label="Status" />
 					</ul>
 					<ul className="flex flex-wrap gap-x-4 md:justify-center">
+						<FooterListLink href={urls.resources.about} label="About" />
 						<FooterListLink href={urls.resources.press} label="Press" />
 						<FooterListLink href={urls.resources.branding} label="Branding" />
 						<FooterListLink href={urls.resources.developers} label="Developers" />
 					</ul>
 					<ul className="flex flex-wrap gap-x-4 md:justify-center">
-						<FooterListLink href={urls.resources.about} label="About Us" />
-						<FooterListLink href={urls.resources.termsOfService} label="Terms of Service" />
-						<FooterListLink href={urls.resources.privacyPolicy} label="Privacy Policy" />
+						<FooterListLink
+							href={urls.resources.communityGuidelines}
+							label="Community Guidelines"
+						/>
+						<FooterListLink href={urls.resources.termsOfService} label="Terms" />
+						<FooterListLink href={urls.resources.privacyPolicy} label="Privacy" />
 					</ul>
 				</div>
 				<div className="flex justify-between md:text-lg">

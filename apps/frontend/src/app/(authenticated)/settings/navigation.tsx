@@ -18,13 +18,13 @@ import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { useSelectedLayoutSegment } from "next/navigation";
 
-import { useFreshworks } from "~/hooks/use-freshworks";
-import { urls } from "~/urls";
-import { useSession } from "~/hooks/use-session";
-
 import { NavigationCategory } from "./navigation-category";
 import { NavigationHeader } from "./navigation-header";
 import { NavigationLink } from "./navigation-link";
+
+import { useFreshworks } from "~/hooks/use-freshworks";
+import { urls } from "~/urls";
+import { useSession } from "~/hooks/use-session";
 
 export const SettingsNavigation: FC = () => {
 	const layoutSegment = useSelectedLayoutSegment();
@@ -99,6 +99,9 @@ export const SettingsNavigation: FC = () => {
 				</div>
 				<div className="sm:hidden">
 					<NavigationCategory name="Legal">
+						<NavigationLink href={urls.resources.communityGuidelines}>
+							Community Guidelines
+						</NavigationLink>
 						<NavigationLink href={urls.resources.termsOfService}>Terms of Service</NavigationLink>
 						<NavigationLink href={urls.resources.privacyPolicy}>Privacy Policy</NavigationLink>
 						<NavigationLink href={urls.resources.company}>&copy; Studio Paprika</NavigationLink>
