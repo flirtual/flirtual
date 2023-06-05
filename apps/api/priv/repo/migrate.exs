@@ -152,6 +152,7 @@ defmodule A do
         agreeableness,
         domsub
       ]) do
+    id = ShortUUID.encode!(id)
     Repo.transaction(fn ->
       with user <- User.get(id),
            {:ok, _} <-
@@ -182,7 +183,7 @@ defmodule A do
              ),
            {:ok, user} <-
              %User{
-               id: ShortUUID.encode!(id),
+               id: id,
                username: username,
                email: email,
                password_hash: password,
@@ -275,7 +276,7 @@ defmodule A do
            {:ok, country} <-
              query(
                conn,
-               "MATCH (u:user {id: '#{user.id}'})-[:COUNTRY]->(c:country) RETURN toLower(c.id)"
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:COUNTRY]->(c:country) RETURN toLower(c.id)"
              ),
            country =
              country
@@ -284,30 +285,30 @@ defmodule A do
            {:ok, languages} <-
              query(
                conn,
-               "MATCH (u:user {id: '#{user.id}'})-[:KNOWS]->(l:language) RETURN toLower(l.id)"
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:KNOWS]->(l:language) RETURN toLower(l.id)"
              ),
            {:ok, custom_interests} <-
              query(
                conn,
-               "MATCH (u:user {id: '#{user.id}'})-[:TAGGED]->(i:interest {type: 'custom'}) RETURN i.name"
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:TAGGED]->(i:interest {type: 'custom'}) RETURN i.name"
              ),
            {:ok, genders} <-
-             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:GENDER]->(g:gender) RETURN g.name"),
+             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:GENDER]->(g:gender) RETURN g.name"),
            {:ok, sexualities} <-
              query(
                conn,
-               "MATCH (u:user {id: '#{user.id}'})-[:SEXUALITY]->(s:sexuality) RETURN s.name"
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:SEXUALITY]->(s:sexuality) RETURN s.name"
              ),
            {:ok, games} <-
-             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:PLAYS]->(g:game) RETURN g.name"),
+             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:PLAYS]->(g:game) RETURN g.name"),
            {:ok, kinks} <-
-             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:KINK]->(k:kink) RETURN k.name"),
+             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:KINK]->(k:kink) RETURN k.name"),
            {:ok, platforms} <-
-             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:USES]->(p:platform) RETURN p.name"),
+             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:USES]->(p:platform) RETURN p.name"),
            {:ok, interests} <-
              query(
                conn,
-               "MATCH (u:user {id: '#{user.id}'})-[:TAGGED]->(i:interest) WHERE i.type <> 'custom' RETURN i.name"
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:TAGGED]->(i:interest) WHERE i.type <> 'custom' RETURN i.name"
              ),
            {:ok, profile} <-
              Ecto.build_assoc(user, :profile, %{
@@ -397,7 +398,7 @@ defmodule A do
            {:ok, images} <-
              query(
                conn,
-               "MATCH (u:user {id: '#{user.id}'})-[:AVATAR]->(a:avatar) WITH DISTINCT a.url AS url, a.order AS order, a.scanned AS scanned ORDER BY a.order RETURN url, order, scanned"
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:AVATAR]->(a:avatar) WITH DISTINCT a.url AS url, a.order AS order, a.scanned AS scanned ORDER BY a.order RETURN url, order, scanned"
              ),
            {_, nil} <-
              Repo.insert_all(
@@ -426,7 +427,7 @@ defmodule A do
                }
              ),
            {:ok, gender_preferences} <-
-             query(conn, "MATCH (u:user {id: '#{user.id}'})-[:LF]->(g:mgender) RETURN g.name"),
+             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:LF]->(g:mgender) RETURN g.name"),
            {:ok, _} <-
              Ecto.build_assoc(profile, :preferences, %{
                agemin: agemin,
@@ -469,6 +470,8 @@ defmodule A do
         "MATCH (a:user {id: '#{user_id}'})-[l:LIKED]->(b:user) RETURN l.type, l.date, b.id"
       )
 
+    user_id = ShortUUID.encode!(user_id)
+
     likes
     |> Enum.uniq_by(fn [type, _, target_id] -> [map_like_type(type), target_id] end)
     |> Enum.map(fn [type, created_at, target_id] ->
@@ -476,7 +479,7 @@ defmodule A do
         type: {:placeholder, :type},
         kind: map_like_type(type),
         profile_id: {:placeholder, :profile_id},
-        target_id: target_id,
+        target_id: ShortUUID.encode!(target_id),
         created_at: DateTime.from_unix!(created_at, :second)
       }
     end)
@@ -498,7 +501,7 @@ defmodule A do
     {:ok, passes} =
       query(
         conn,
-        "MATCH (a:user {id: '#{user_id}'})-[p:PASSED]->(b:user) RETURN p.date, b.id"
+        "MATCH (a:user {id: '#{ShortUUID.decode!(user_id)}'})-[p:PASSED]->(b:user) RETURN p.date, b.id"
       )
 
     passes
@@ -508,7 +511,7 @@ defmodule A do
         type: {:placeholder, :type},
         kind: {:placeholder, :kind},
         profile_id: {:placeholder, :profile_id},
-        target_id: target_id,
+        target_id: ShortUUID.encode!(target_id),
         created_at: DateTime.from_unix!(created_at, :second)
       }
     end)
@@ -531,7 +534,7 @@ defmodule A do
     {:ok, friend_passes} =
       query(
         conn,
-        "MATCH (a:user {id: '#{user_id}'})-[p:HPASSED]->(b:user) RETURN p.date, b.id"
+        "MATCH (a:user {id: '#{ShortUUID.decode!(user_id)}'})-[p:HPASSED]->(b:user) RETURN p.date, b.id"
       )
 
     friend_passes
@@ -541,7 +544,7 @@ defmodule A do
         type: {:placeholder, :type},
         kind: {:placeholder, :kind},
         profile_id: {:placeholder, :profile_id},
-        target_id: target_id,
+        target_id: ShortUUID.encode!(target_id),
         created_at: DateTime.from_unix!(created_at, :second)
       }
     end)
@@ -564,7 +567,7 @@ defmodule A do
     {:ok, blocks} =
       query(
         conn,
-        "MATCH (a:user {id: '#{user_id}'})-[:BLOCKED]->(b:user) RETURN b.id"
+        "MATCH (a:user {id: '#{ShortUUID.decode!(user_id)}'})-[:BLOCKED]->(b:user) RETURN b.id"
       )
 
     {_, nil} =
@@ -576,7 +579,7 @@ defmodule A do
           %{
             id: Ecto.ShortUUID.generate(),
             profile_id: {:placeholder, :profile_id},
-            target_id: target_id,
+            target_id: ShortUUID.encode!(target_id),
             created_at: {:placeholder, :created_at}
           }
         end),
@@ -591,7 +594,7 @@ defmodule A do
     {:ok, reports} =
       query(
         conn,
-        "MATCH (a:user {id: '#{user_id}'})-[r:REPORTED]->(b:user) RETURN r.reviewed, r.reason, r.details, r.date, b.id"
+        "MATCH (a:user {id: '#{ShortUUID.decode!(user_id)}'})-[r:REPORTED]->(b:user) RETURN r.reviewed, r.reason, r.details, r.date, b.id"
       )
 
     Report
@@ -608,7 +611,7 @@ defmodule A do
           %{
             id: Ecto.ShortUUID.generate(),
             user_id: {:placeholder, :user_id},
-            target_id: target_id,
+            target_id: ShortUUID.encode!(target_id),
             reason_id: map_report_reason(reason),
             message:
               case details do
@@ -885,8 +888,8 @@ defmodule Flirtual.Migrate do
   @create_users false
   @create_relations true
 
-  @skip 0
-  @limit 60000
+  @skip 50000
+  @limit 10000
   @chunk_size 100
 
   {:ok, users} =
@@ -952,7 +955,7 @@ defmodule Flirtual.Migrate do
               reraise(exception, __STACKTRACE__)
           end
         end)
-        |> ChangeQueue.add()
+        #|> ChangeQueue.add()
 
         IO.puts("RELATE\tSUCCESS\tCHUNK\t#{chunk_idx}")
       end)
