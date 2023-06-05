@@ -31,7 +31,7 @@ config :flirtual, Flirtual.HCaptcha,
 
 config :flirtual, Flirtual.Canny, access_token: System.fetch_env!("CANNY_SECRET")
 
-config :joken, default_signer: System.fetch_env!("JOKAN_SECRET")
+config :joken, default_signer: System.fetch_env!("JOKEN_SECRET")
 
 config :stripity_stripe,
   api_key: System.fetch_env!("STRIPE_ACCESS_TOKEN"),
