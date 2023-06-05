@@ -1,7 +1,7 @@
 import Config
 
 root_origin = URI.parse("https://flirtu.al")
-frontend_origin = URI.parse("https://next.flirtu.al")
+frontend_origin = URI.parse("https://flirtu.al")
 origin = URI.parse("https://api.flirtu.al")
 
 config :flirtual,
