@@ -3,6 +3,9 @@
 
 import { ImageResponse } from "next/server";
 
+import { ProfilePageProps } from "./page";
+import { getProfileUser } from "./profile-user";
+
 import { urls } from "~/urls";
 import { displayName } from "~/api/user";
 import { withAttribute } from "~/api/attributes-server";
@@ -10,10 +13,7 @@ import { filterBy } from "~/utilities";
 import { yearsAgo } from "~/date";
 import { AttributeCollection } from "~/api/attributes";
 
-import { ProfilePageProps } from "./page";
-import { getProfileUser } from "./profile-user";
-
-export const alt = "About Acme";
+export const alt = "Flirtual";
 export const contentType = "image/svg+xml";
 
 const brandGradient = "linear-gradient(to right, #ff8975, #e9658b)";
@@ -45,7 +45,7 @@ export default async function og({ params }: ProfilePageProps) {
 				/>
 				<div tw="flex p-16 w-full h-full relative">
 					<img
-						src="https://flirtu.al/img/brand/flirtual-black.svg"
+						src="https://flirtu.al/images/brand/black.svg"
 						tw="absolute right-0 bottom-0 h-16 mb-16 mr-16"
 					/>
 					<div style={{ gap: "4rem" }} tw="flex w-full h-full items-center overflow-hidden">
