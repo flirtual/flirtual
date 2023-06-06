@@ -180,6 +180,7 @@ defmodule Flirtual.User.Policy do
 
   @moderator_property_keys [
     :shadowbanned_at,
+    :banned_at,
     :email_confirmed_at
   ]
 
