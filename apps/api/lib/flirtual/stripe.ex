@@ -460,10 +460,10 @@ defmodule Flirtual.Stripe do
     log(:info, [event.type, event.id], event)
 
     with %User{} = user <- User.get(stripe_id: customer_stripe_id),
+         # Legacy Supporter does not have a price_id, which means we can't
+         # find their associated plan using the typical method, so we have
+         # to hardcode it.
          %Plan{} = plan <-
-          # Legacy Supporter does not have a price_id, which means we can't
-          # find their associated plan using the typical method, so we have
-          # to hardcode it.
            if(product_id === "prod_LGQim2AINber1U",
              do: Plan.get("43V699voRpLqskJEM42Vsa"),
              else: Plan.get(product_id: product_id, price_id: price_id)
