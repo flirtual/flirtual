@@ -328,28 +328,35 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  defmodule Suspend do
+    use Flirtual.EmbeddedSchema
+
+    embedded_schema do
+      field :message, :string
+
+      field :reason_id, :string
+      field :reason, :map, virtual: true
+    end
+
+    def changeset(value, _, _) do
+      value
+      |> validate_attribute(:reason_id, "ban-reason")
+      |> validate_length(:message, min: 8)
+    end
+  end
+
   def suspend(%{assigns: %{session: %{user_id: user_id}}}, %{"user_id" => user_id}),
     do: {:error, {:bad_request, "Cannot suspend yourself", %{user_id: user_id}}}
 
-  def suspend(conn, %{"user_id" => user_id} = params) do
+  def suspend(conn, %{"user_id" => user_id} = attrs) do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :suspend, user) do
       {:error, {:forbidden, "Cannot suspend this user", %{user_id: user_id}}}
     else
-      with {:ok, attrs} <-
-             cast_arbitrary(
-               %{
-                 message: :string,
-                 reason_id: :string
-               },
-               params
-             )
-             |> validate_required([:message, :reason_id])
-             |> validate_attribute(:reason_id, "ban-reason")
-             |> apply_action(:update),
-           reason <- Attribute.list(attrs.reason_id, "ban-reason"),
-           {:ok, user} <- User.suspend(user, reason, attrs.message, conn.assigns[:session].user) do
+      with {:ok, attrs} <- Suspend.apply(attrs),
+           {:ok, user} <-
+             User.suspend(user, attrs.reason, attrs.message, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
     end
