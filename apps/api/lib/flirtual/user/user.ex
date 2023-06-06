@@ -28,36 +28,37 @@ defmodule Flirtual.User do
   @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp]
 
   schema "users" do
-    field :email, :string
-    field :username, :string
-    field :password_hash, :string, redact: true
-    field :talkjs_id, :string, virtual: true
-    field :talkjs_signature, :string, redact: true
-    field :stripe_id, :string
-    field :language, :string, default: "en"
+    field(:email, :string)
+    field(:username, :string)
+    field(:password_hash, :string, redact: true)
+    field(:talkjs_id, :string, virtual: true)
+    field(:talkjs_signature, :string, redact: true)
+    field(:stripe_id, :string)
+    field(:language, :string, default: "en")
 
-    field :password, :string, virtual: true, redact: true
-    field :visible, :boolean, virtual: true
-    field :relationship, :map, virtual: true
+    field(:password, :string, virtual: true, redact: true)
+    field(:visible, :boolean, virtual: true)
+    field(:relationship, :map, virtual: true)
 
-    field :tags, {:array, Ecto.Enum},
+    field(:tags, {:array, Ecto.Enum},
       values: @tags,
       default: []
+    )
 
-    field :born_at, :date
-    field :email_confirmed_at, :utc_datetime
-    field :deactivated_at, :utc_datetime
-    field :banned_at, :utc_datetime
-    field :shadowbanned_at, :utc_datetime
-    field :incognito_at, :utc_datetime
-    field :active_at, :utc_datetime
+    field(:born_at, :date)
+    field(:email_confirmed_at, :utc_datetime)
+    field(:deactivated_at, :utc_datetime)
+    field(:banned_at, :utc_datetime)
+    field(:shadowbanned_at, :utc_datetime)
+    field(:incognito_at, :utc_datetime)
+    field(:active_at, :utc_datetime)
 
-    has_many :connections, Flirtual.Connection
-    has_many :sessions, Flirtual.User.Session
+    has_many(:connections, Flirtual.Connection)
+    has_many(:sessions, Flirtual.User.Session)
 
-    has_one :preferences, Flirtual.User.Preferences
-    has_one :subscription, Subscription
-    has_one :profile, Flirtual.User.Profile
+    has_one(:preferences, Flirtual.User.Preferences)
+    has_one(:subscription, Subscription)
+    has_one(:profile, Flirtual.User.Profile)
 
     timestamps()
   end
@@ -115,8 +116,10 @@ defmodule Flirtual.User do
         %{reason: "account hidden"}
       },
       {
+        # This validation should not be exposed to the end user,
+        # We've temporarily disabled hiding it until we can find a better solution.
         not is_nil(user.shadowbanned_at),
-        %{reason: "account shadow banned", silent: true}
+        %{reason: "account shadow banned"}
       },
       # onboarding validations
       ## onboarding/1
