@@ -60,6 +60,21 @@ defmodule Flirtual.User.Profile.Policy do
       when key in @own_property_keys,
       do: profile[key]
 
+  def transform(
+        key,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %Profile{
+          user_id: user_id
+        } = profile
+      )
+      when key in @connection_keys do
+    if :moderator in session.user.tags, do: profile[key], else: nil
+  end
+
   # Any user can view this profile's country if their
   # country privacy setting is set to everyone.
   def transform(
