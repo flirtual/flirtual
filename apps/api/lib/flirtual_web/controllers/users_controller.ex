@@ -17,7 +17,7 @@ defmodule FlirtualWeb.UsersController do
   alias FlirtualWeb.SessionController
   alias Flirtual.{User, Users, Policy}
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   def create(conn, params) do
     with {:ok, user} <- Users.create(params),
@@ -332,10 +332,10 @@ defmodule FlirtualWeb.UsersController do
     use Flirtual.EmbeddedSchema
 
     embedded_schema do
-      field :message, :string
+      field(:message, :string)
 
-      field :reason_id, :string
-      field :reason, :map, virtual: true
+      field(:reason_id, :string)
+      field(:reason, :map, virtual: true)
     end
 
     def changeset(value, _, _) do
@@ -368,7 +368,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :suspend, user) do
       {:error, {:forbidden, "Cannot unsuspend this user", %{user_id: user_id}}}
     else
-      with {:ok, user} <- User.unsuspend(user) do
+      with {:ok, user} <- User.unsuspend(user, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
     end

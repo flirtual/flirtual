@@ -24,13 +24,26 @@ defmodule Flirtual.Discord do
     do: url("webhooks/" <> config(String.to_existing_atom("webhook_#{name}")))
 
   def webhook(name, body) when is_atom(name) do
-    log(:debug, [name], body)
+    log(:critical, [name], body)
 
-    HTTPoison.post(
-      webhook_url(name),
-      Poison.encode!(body),
-      [{"content-type", "application/json"}]
-    )
+    with {:ok, %HTTPoison.Response{status_code: 204}} <-
+           HTTPoison.post(
+             webhook_url(name),
+             Poison.encode!(body),
+             [{"content-type", "application/json"}]
+           ) do
+      :ok
+    else
+      {:ok, %HTTPoison.Response{} = response} ->
+        log(:error, [name], response)
+        {:error, :upstream}
+
+      {:error, reason} ->
+        {:error, reason}
+
+      reason ->
+        reason
+    end
   end
 
   def authorize_url(_, %{state: state}) do
@@ -109,7 +122,16 @@ defmodule Flirtual.Discord do
     end
   end
 
-  def deliver_webhook(:banned,
+  def md_display_name(%User{} = user),
+    do: md_display_name(user, true)
+
+  def md_display_name(%User{} = user, false),
+    do: "#{User.display_name(user)} (#{user.id})"
+
+  def md_display_name(%User{} = user, true),
+    do: "[#{md_display_name(user, false)}](#{User.url(user)})"
+
+  def deliver_webhook(:suspended,
         user: %User{} = user,
         moderator: %User{} = moderator,
         reason: %Attribute{type: "ban-reason"} = reason,
@@ -121,17 +143,16 @@ defmodule Flirtual.Discord do
       embeds: [
         %{
           author: %{
-            name: "#{User.display_name(user)} (#{user.id})",
-            url: User.url(user),
+            name: md_display_name(user, false),
+            url: User.url(user) |> URI.to_string(),
             icon_url: User.avatar_url(user)
           },
-          title: "User banned",
+          title: "User suspended",
           fields:
             [
               %{
                 name: "Moderator",
-                value:
-                  "[#{User.display_name(moderator)} (#{moderator.id})](#{User.url(moderator)})",
+                value: md_display_name(moderator),
                 inline: true
               },
               %{
@@ -160,12 +181,36 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:unsuspended,
+        user: %User{} = user,
+        moderator: %User{} = moderator
+      ) do
+    webhook(:moderation, %{
+      embeds: [
+        %{
+          author: %{
+            name: md_display_name(user, false),
+            url: User.url(user) |> URI.to_string(),
+            icon_url: User.avatar_url(user)
+          },
+          title: "User unsuspended",
+          fields: %{
+            name: "Moderator",
+            value: md_display_name(moderator),
+            inline: true
+          },
+          color: @default_color
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:report, %Report{} = report) do
     webhook(:moderation, %{
       embeds: [
         %{
           author: %{
-            name: "#{User.display_name(report.target)} (#{report.target.id})",
+            name: md_display_name(report.target, false),
             icon_url: User.avatar_url(report.target),
             url: User.url(report.target) |> URI.to_string()
           },
@@ -174,8 +219,7 @@ defmodule Flirtual.Discord do
             [
               %{
                 name: "Reporter",
-                value:
-                  "[#{User.display_name(report.user)} (#{report.user.id})](#{User.url(report.user)})",
+                value: md_display_name(report.user),
                 inline: true
               },
               %{
@@ -211,7 +255,7 @@ defmodule Flirtual.Discord do
       embeds: [
         %{
           author: %{
-            name: "#{User.display_name(user)} (#{user.id})",
+            name: md_display_name(user, false),
             icon_url: User.avatar_url(user),
             url: User.url(user) |> URI.to_string()
           },

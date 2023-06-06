@@ -17,13 +17,13 @@ defmodule Flirtual.Report do
   alias Flirtual.User.ChangeQueue
 
   schema "reports" do
-    field :message, :string, default: ""
+    field(:message, :string, default: "")
 
-    belongs_to :user, User
-    belongs_to :target, User
-    belongs_to :reason, Attribute
+    belongs_to(:user, User)
+    belongs_to(:target, User)
+    belongs_to(:reason, Attribute)
 
-    field :reviewed_at, :utc_datetime
+    field(:reviewed_at, :utc_datetime)
 
     timestamps(inserted_at: :created_at)
   end
@@ -77,7 +77,7 @@ defmodule Flirtual.Report do
              ),
            {_, _} <- Block.create(user: reporter, target: reported),
            {:ok, _} <- ChangeQueue.add(reported.id),
-           {:ok, _} <-
+           :ok <-
              Discord.deliver_webhook(:report, %Report{report | user: reporter, target: reported}) do
         report
       else
@@ -133,10 +133,10 @@ defmodule Flirtual.Report do
     @optional [:reason_id, :target_id, :user_id]
 
     embedded_schema do
-      field :reason_id, :string
-      field :target_id, :string
-      field :user_id, :string
-      field :reviewed, :boolean, default: false
+      field(:reason_id, :string)
+      field(:target_id, :string)
+      field(:user_id, :string)
+      field(:reviewed, :boolean, default: false)
     end
 
     def changeset(value, _, _) do
