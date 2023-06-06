@@ -387,7 +387,7 @@ defmodule Flirtual.Matchmaking do
           "attributes_lf" =>
             attributes
             |> filter_by(:type, "gender")
-            |> Enum.filter(& &1.metadata["simple"])
+            |> Attribute.normalize_aliases()
             |> Enum.map(& &1.id)
         }
       },
@@ -397,6 +397,7 @@ defmodule Flirtual.Matchmaking do
           "attributes" =>
             preferences.attributes
             |> filter_by(:type, "gender")
+            |> Attribute.normalize_aliases()
             |> Enum.map(& &1.id)
         }
       }
