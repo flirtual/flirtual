@@ -461,7 +461,13 @@ defmodule Flirtual.Stripe do
 
     with %User{} = user <- User.get(stripe_id: customer_stripe_id),
          %Plan{} = plan <-
-           Plan.get(product_id: product_id, price_id: price_id),
+          # Legacy Supporter does not have a price_id, which means we can't
+          # find their associated plan using the typical method, so we have
+          # to hardcode it.
+           if(product_id === "prod_LGQim2AINber1U",
+             do: Plan.get("43V699voRpLqskJEM42Vsa"),
+             else: Plan.get(product_id: product_id, price_id: price_id)
+           ),
          {:ok, subscription} <- Subscription.apply(user, plan, subscription_stripe_id) do
       log(:info, [event.type, event.id], subscription)
       :ok
