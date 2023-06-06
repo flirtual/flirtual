@@ -258,8 +258,8 @@ defmodule Flirtual.User do
            {:ok, _} <- ChangeQueue.add(user.id),
            {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message),
-           {:ok, _} <-
-             Discord.deliver_webhook(:banned,
+           :ok <-
+             Discord.deliver_webhook(:suspended,
                user: user,
                moderator: moderator,
                reason: reason,
@@ -273,13 +273,18 @@ defmodule Flirtual.User do
     end)
   end
 
-  def unsuspend(%User{} = user) do
+  def unsuspend(%User{} = user, %User{} = moderator) do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
              |> change(%{banned_at: nil, shadowbanned_at: nil})
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(user.id) do
+           {:ok, _} <- ChangeQueue.add(user.id),
+           :ok <-
+             Discord.deliver_webhook(:unsuspended,
+               user: user,
+               moderator: moderator
+             ) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)

@@ -341,7 +341,7 @@ defmodule Flirtual.Users do
            :ok <- Elasticsearch.delete(:users, user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Stripe.delete_customer(user),
-           {:ok, _} <-
+           :ok <-
              Discord.deliver_webhook(:exit_survey,
                user: user,
                reason: attrs.reason,
