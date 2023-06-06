@@ -34,14 +34,30 @@ defmodule Flirtual.Subscription do
   def active?(%Subscription{cancelled_at: nil}), do: true
   def active?(_), do: false
 
+  def reset_matchmaking_timer(profile) do
+    profile
+    |> change(%{reset_love_at: nil, reset_friend_at: nil})
+    |> Repo.update()
+  end
+
   def apply(user, plan, stripe_id \\ nil)
 
   # Create subscription, since user doesn't have an existing one.
   def apply(%User{subscription: nil} = user, %Plan{} = plan, stripe_id)
       when is_binary(stripe_id) do
-    %Subscription{}
-    |> change(%{user_id: user.id, plan_id: plan.id, stripe_id: stripe_id})
-    |> Repo.insert()
+    Repo.transaction(fn ->
+      with {:ok, subscription} <-
+             %Subscription{}
+             |> change(%{user_id: user.id, plan_id: plan.id, stripe_id: stripe_id})
+             |> Repo.insert(),
+           {:ok, _} <-
+             reset_matchmaking_timer(user.profile) do
+        {:ok, subscription}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   # Update subscription, stripe_id didn't change.
@@ -51,47 +67,72 @@ defmodule Flirtual.Subscription do
             %Subscription{
               stripe_id: stripe_id
             } = subscription
-        },
+        } = user,
         %Plan{} = plan,
         stripe_id
       ) do
-    change(subscription, %{plan_id: plan.id, cancelled_at: nil})
-    |> Repo.update()
+    Repo.transaction(fn ->
+      with {:ok, subscription} <-
+             change(subscription, %{plan_id: plan.id, cancelled_at: nil})
+             |> Repo.update(),
+           {:ok, _} <-
+             reset_matchmaking_timer(user.profile) do
+        {:ok, subscription}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
-  # Update subscription, and cancel existing Stripe subscription.
+  # Update subscription, and supersede existing Stripe subscription.
   def apply(
         %User{
           subscription:
             %Subscription{
               cancelled_at: nil
             } = subscription
-        },
+        } = user,
         %Plan{} = plan,
         stripe_id
       ) do
-    with {:ok, _} <- Stripe.cancel_subscription(subscription, superseded: true),
-         {:ok, subscription} <-
-           subscription
-           |> change(%{
-             plan_id: plan.id,
-             stripe_id: stripe_id || subscription.stripe_id,
-             cancelled_at: nil
-           })
-           |> Repo.update() do
-      {:ok, subscription}
-    end
+    Repo.transaction(fn ->
+      with {:ok, _} <- Stripe.cancel_subscription(subscription, superseded: true),
+           {:ok, subscription} <-
+             subscription
+             |> change(%{
+               plan_id: plan.id,
+               stripe_id: stripe_id || subscription.stripe_id,
+               cancelled_at: nil
+             })
+             |> Repo.update(),
+           {:ok, _} <- reset_matchmaking_timer(user.profile) do
+        {:ok, subscription}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   # Renew subscription, previous subscription already cancelled.
-  def apply(%User{subscription: subscription}, %Plan{} = plan, stripe_id) do
-    subscription
-    |> change(%{
-      plan_id: plan.id,
-      stripe_id: stripe_id || subscription.stripe_id,
-      cancelled_at: nil
-    })
-    |> Repo.update()
+  def apply(%User{subscription: subscription} = user, %Plan{} = plan, stripe_id) do
+    Repo.transaction(fn ->
+      with {:ok, subscription} <-
+             subscription
+             |> change(%{
+               plan_id: plan.id,
+               stripe_id: stripe_id || subscription.stripe_id,
+               cancelled_at: nil
+             })
+             |> Repo.update(),
+           {:ok, _} <- reset_matchmaking_timer(user.profile) do
+        {:ok, subscription}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   def cancel(%Subscription{} = subscription) do
