@@ -103,7 +103,7 @@ defmodule Flirtual.User.ChangeQueue do
     items = fetch(limit)
 
     with :ok <- process_items(items, :elasticsearch),
-         #  :ok <- process_items(items, :talkjs),
+         :ok <- process_items(items, :talkjs),
          :ok <-
            items
            |> Enum.map(& &1.user_id)
