@@ -88,7 +88,7 @@ defmodule Flirtual.Report do
   end
 
   def clear(%Report{} = report) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     with {:ok, report} <- change(report, %{reviewed_at: now}) |> Repo.update() do
       {:ok, Repo.preload(report, default_assoc())}
