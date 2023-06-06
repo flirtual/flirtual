@@ -148,8 +148,10 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 					if (
 						!(reason instanceof ResponseChangesetError) &&
 						!Object.keys(reason.properties).includes("userId")
-					)
-						return toasts.addError(reason);
+					) {
+						toasts.addError(reason)
+						return router.refresh();
+					}
 				});
 		},
 		[userId, mode, router, toasts]
