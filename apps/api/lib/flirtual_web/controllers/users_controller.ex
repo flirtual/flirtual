@@ -355,7 +355,8 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:forbidden, "Cannot suspend this user", %{user_id: user_id}}}
     else
       with {:ok, attrs} <- Suspend.apply(attrs),
-           {:ok, user} <- User.suspend(user, attrs.reason, attrs.message, conn.assigns[:session].user) do
+           {:ok, user} <-
+             User.suspend(user, attrs.reason, attrs.message, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
       end
     end
