@@ -422,52 +422,12 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
   def id(%User{} = user), do: user.id
   def routing(_), do: false
 
-  def normalize_attribute_aliases(list) when is_list(list) do
-    attribute_aliases =
-      list
-      |> Enum.map(& &1.metadata["alias_of"])
-      |> Attribute.list()
-
-    list
-    |> Enum.map(fn attribute ->
-      case attribute.metadata["alias_of"] do
-        alias_id when is_uid(alias_id) ->
-          Enum.find(attribute_aliases, &(&1.id == alias_id))
-
-        _ ->
-          attribute
-      end
-    end)
-    |> Enum.uniq_by(& &1.id)
-    |> Enum.sort_by(& &1.order)
-  end
-
-  def normalize_attribute_pairs(list) when is_list(list) do
-    attribute_pairs =
-      list
-      |> Enum.map(& &1.metadata["pair"])
-      |> Attribute.list()
-
-    list
-    |> Enum.map(fn attribute ->
-      case attribute.metadata["pair"] do
-        pair_id when is_uid(pair_id) ->
-          Enum.find(attribute_pairs, &(&1.id == pair_id))
-
-        _ ->
-          attribute
-      end
-    end)
-    |> Enum.uniq_by(& &1.id)
-    |> Enum.sort_by(& &1.order)
-  end
-
   def encode(%User{} = user) do
     profile = user.profile
 
     attributes =
       profile.attributes
-      |> normalize_attribute_aliases()
+      |> Attribute.normalize_aliases()
       |> then(
         &if(user.preferences.nsfw,
           do: &1,
@@ -485,7 +445,7 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
             &1 ++
               (profile.attributes
                |> filter_by(:type, "kink")
-               |> normalize_attribute_pairs()),
+               |> Attribute.normalize_pairs()),
           else: exclude_by(&1, :type, "kink")
         )
       )
