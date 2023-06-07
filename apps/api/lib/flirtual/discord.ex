@@ -147,7 +147,7 @@ defmodule Flirtual.Discord do
             url: User.url(user) |> URI.to_string(),
             icon_url: User.avatar_url(user)
           },
-          title: "User suspended",
+          title: "User banned",
           fields:
             [
               %{
@@ -175,7 +175,7 @@ defmodule Flirtual.Discord do
                 ],
                 else: []
               ),
-          color: @default_color
+          color: 16_711_680
         }
       ]
     })

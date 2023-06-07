@@ -12,6 +12,7 @@ import { GenderPills } from "./pill/genders";
 import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { RelationActions } from "./relation-actions";
+import { ProfileModInfo } from "./mod-info";
 
 import { yearsAgo } from "~/date";
 import { withSession } from "~/server-utilities";
@@ -107,6 +108,7 @@ export async function Profile(props: ProfileProps) {
 					) : null}
 					<PillCollection user={user} />
 				</div>
+				{session.user.tags?.includes("moderator") && <ProfileModInfo user={user} />}
 				<ProfileActionBar user={user} />
 			</div>
 		</div>
