@@ -19,6 +19,7 @@ import { BanProfile } from "~/components/profile/action-bar/ban-profile";
 import { Tooltip } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { TimeRelative } from "~/components/time-relative";
+import { formatDateTime } from "~/date";
 
 type CompleteReport = Report & { user?: User; target: User };
 
@@ -128,9 +129,12 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 								)}
 							>
 								<div className="flex flex-col">
-									<span className="text-xs text-black-50 first-letter:capitalize dark:text-white-50">
+									<span
+										suppressHydrationWarning
+										className="text-xs text-black-50 first-letter:capitalize dark:text-white-50"
+									>
 										<TimeRelative approximate suffix="since" value={report.createdAt} />{" "}
-										{new Date(report.createdAt).toLocaleString()}
+										{formatDateTime(report.createdAt)}
 									</span>
 
 									<div className="flex items-center justify-between gap-4 pr-3">

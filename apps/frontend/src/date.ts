@@ -59,3 +59,12 @@ export function formatDate(date: string) {
 		year: "numeric"
 	});
 }
+
+/**
+ * Formats a date using navigator.language to mitigate Chrome bug ignoring locale
+ */
+export function formatDateTime(date: string) {
+	return new Date(date).toLocaleString(
+		typeof navigator === "undefined" ? "en-CA" : navigator.language
+	);
+}

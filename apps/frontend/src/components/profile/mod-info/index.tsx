@@ -1,6 +1,7 @@
 "use client";
 
 import { User } from "~/api/user";
+import { formatDateTime } from "~/date";
 import { useSession } from "~/hooks/use-session";
 
 export const ProfileModInfo: React.FC<{ user: User }> = ({ user }) => {
@@ -10,34 +11,34 @@ export const ProfileModInfo: React.FC<{ user: User }> = ({ user }) => {
 
 	return (
 		<div className="mx-8 flex flex-col">
-			<span>
+			<span suppressHydrationWarning>
 				<span className="font-bold">Registered:</span>{" "}
-				{user.createdAt && new Date(user.createdAt).toLocaleString()}
+				{user.createdAt && formatDateTime(user.createdAt)}
 			</span>
-			<span>
+			<span suppressHydrationWarning>
 				<span className="font-bold">Last login:</span>{" "}
-				{user.activeAt && new Date(user.activeAt).toLocaleString()}
+				{user.activeAt && formatDateTime(user.activeAt)}
 			</span>
-			<span>
+			<span suppressHydrationWarning>
 				<span className="font-bold">Banned:</span>{" "}
 				{user.bannedAt ? (
-					<span className="text-red-500">{new Date(user.bannedAt).toLocaleString()}</span>
+					<span className="text-red-500">{formatDateTime(user.bannedAt)}</span>
 				) : (
 					"No"
 				)}
 			</span>
-			<span>
+			<span suppressHydrationWarning>
 				<span className="font-bold">Shadowbanned:</span>{" "}
 				{user.shadowbannedAt ? (
-					<span className="text-red-500">{new Date(user.shadowbannedAt).toLocaleString()}</span>
+					<span className="text-red-500">{formatDateTime(user.shadowbannedAt)}</span>
 				) : (
 					"No"
 				)}
 			</span>
-			<span>
+			<span suppressHydrationWarning>
 				<span className="font-bold">Deactivated:</span>{" "}
 				{user.deactivatedAt ? (
-					<span className="text-red-500">{new Date(user.deactivatedAt).toLocaleString()}</span>
+					<span className="text-red-500">{formatDateTime(user.deactivatedAt)}</span>
 				) : (
 					"No"
 				)}
