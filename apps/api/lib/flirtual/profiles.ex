@@ -130,7 +130,7 @@ defmodule Flirtual.Profiles do
           changeset
         else
           interests =
-            (get_field(changeset, :interest_id) || []) ++
+            (get_field(changeset, :interest) || []) ++
               (get_field(changeset, :custom_interests) || [])
 
           changeset
