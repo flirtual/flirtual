@@ -498,6 +498,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :born_at,
       :talkjs_signature,
       :talkjs_id,
+      :banned_at,
       :shadowbanned_at,
       :email_confirmed_at,
       :deactivated_at,
