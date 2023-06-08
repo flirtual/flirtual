@@ -87,10 +87,31 @@ defmodule Flirtual.Report do
     end)
   end
 
+  def maybe_resolve_shadowban(target_id) when is_uid(target_id) do
+    case Report
+         |> where([report], report.target_id == ^target_id and is_nil(report.reviewed_at))
+         |> Repo.all() do
+      [] ->
+        # No unresolved reports, remove shadowban.
+        {:ok, _} =
+          User.get(target_id)
+          |> change(%{shadowbanned_at: nil})
+          |> Repo.update()
+
+        :ok
+
+      _ ->
+        :ok
+    end
+  end
+
   def clear(%Report{} = report) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
-    with {:ok, report} <- change(report, %{reviewed_at: now}) |> Repo.update() do
+    with {:ok, report} <-
+           change(report, %{reviewed_at: now})
+           |> Repo.update(),
+         :ok <- maybe_resolve_shadowban(report.target_id) do
       {:ok, Repo.preload(report, default_assoc())}
     end
   end
