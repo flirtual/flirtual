@@ -20,7 +20,6 @@ export async function GET() {
 				purpose: "any maskable"
 			}
 		],
-		theme_color: "#e9658b",
 		background_color: "#fffaf0",
 		start_url: siteOrigin,
 		display: "standalone",

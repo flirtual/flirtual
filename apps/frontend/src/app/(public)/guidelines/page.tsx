@@ -178,8 +178,9 @@ export default function GuidelinesPage() {
 							<p>
 								Misusing Flirtual or attempts to maliciously exploit Flirtual will be investigated.
 								Good-faith vulnerability research in accordance with our Terms of Service is
-								welcome, and bugs can be{" "}
-								<InlineLink href={urls.resources.contactDirect}>reported here</InlineLink>.
+								welcome, and bugs can be reported via{" "}
+								<InlineLink href={urls.resources.vulnerabilityReport}>GitHub</InlineLink> or{" "}
+								<InlineLink href={urls.resources.contactDirect}>email</InlineLink>.
 							</p>
 						</div>
 					</div>

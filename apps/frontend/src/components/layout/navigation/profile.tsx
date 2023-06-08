@@ -10,6 +10,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { ProfileNavigationCannyButton } from "../canny-button";
+
 import { api } from "~/api";
 import { IconComponent } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
@@ -21,8 +23,6 @@ import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 import { useCanny } from "~/hooks/use-canny";
-
-import { ProfileNavigationCannyButton } from "../canny-button";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
 	{ className?: string } & (
@@ -154,17 +154,17 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 									<ProfileNavigationItem href={urls.moderation.reports}>
 										Statistics
 									</ProfileNavigationItem>
-									{session.sudoerId && (
-										<ProfileNavigationItem
-											onClick={async () => {
-												const session = await api.auth.revokeSudo();
-												await mutateSession(session);
-											}}
-										>
-											Revoke Sudo
-										</ProfileNavigationItem>
-									)}
 								</>
+							)}
+							{session.sudoerId && (
+								<ProfileNavigationItem
+									onClick={async () => {
+										const session = await api.auth.revokeSudo();
+										await mutateSession(session);
+									}}
+								>
+									Revoke Sudo
+								</ProfileNavigationItem>
 							)}
 							{user.tags?.includes("debugger") && (
 								<>

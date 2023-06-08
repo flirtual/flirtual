@@ -29,7 +29,7 @@ export const Onboarding3Form: React.FC = () => {
 					src: image.url
 				})) as Array<ImageSetValue>,
 				biography: user.profile.biography || "",
-				vrchat: user.profile.vrchat || "",
+				vrchat: decodeURIComponent(user.profile.vrchat || ""),
 				discord: user.profile.discord || ""
 				// connectionsPrivacy: user.preferences?.privacy.connections ?? "matches"
 			}}
