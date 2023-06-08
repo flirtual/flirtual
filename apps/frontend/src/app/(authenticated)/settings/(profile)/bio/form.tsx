@@ -33,7 +33,7 @@ export const BiographyForm: FC = () => {
 					src: image.url
 				})) as Array<ImageSetValue>,
 				biography: user.profile.biography || "",
-				vrchat: user.profile.vrchat || "",
+				vrchat: decodeURIComponent(user.profile.vrchat || ""),
 				discord: user.profile.discord || ""
 			}}
 			onSubmit={async ({ displayName, biography, discord, vrchat, ...values }) => {
