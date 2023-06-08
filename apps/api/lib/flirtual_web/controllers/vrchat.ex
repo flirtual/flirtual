@@ -3,6 +3,7 @@ defmodule FlirtualWeb.VRChatController do
 
   import Plug.Conn
   import Phoenix.Controller
+  import FlirtualWeb.Utilities
 
   action_fallback FlirtualWeb.FallbackController
 
@@ -16,7 +17,7 @@ defmodule FlirtualWeb.VRChatController do
          {:ok, users} <-
            VRChat.Users.search_users(vrchat_conn, search: Flirtual.VRChat.escape(display_name)) do
       conn
-      |> json(
+      |> json_with_etag(
         users
         |> Enum.map(
           &%{

@@ -7,11 +7,9 @@ defmodule FlirtualWeb.UsersController do
   import Ecto.Changeset
 
   import FlirtualWeb.Utilities
-  import Flirtual.Utilities.Changeset
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
   alias Flirtual.User.Profile.Block
-  alias Flirtual.Attribute
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
   alias FlirtualWeb.SessionController
@@ -56,7 +54,7 @@ defmodule FlirtualWeb.UsersController do
 
   def bulk(conn, %{"_json" => user_ids}) do
     conn
-    |> json(
+    |> json_with_etag(
       Users.by_ids(user_ids)
       |> Enum.map(
         &if(not is_nil(&1) and Policy.can?(conn, :read, &1),
@@ -79,7 +77,7 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
       conn
-      |> json(
+      |> json_with_etag(
         case User.visible(user) do
           {:error, errors} ->
             %{visible: Enum.empty?(errors), reasons: errors |> Enum.filter(&(!&1[:silent]))}
@@ -101,7 +99,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :inspect, user) do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
-      conn |> json(Elasticsearch.Document.encode(user))
+      conn |> json_with_etag(Elasticsearch.Document.encode(user))
     end
   end
 
@@ -383,6 +381,6 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def get_current_user(conn, _) do
-    conn |> json(Policy.transform(conn, conn.assigns[:session].user))
+    conn |> json_with_etag(Policy.transform(conn, conn.assigns[:session].user))
   end
 end

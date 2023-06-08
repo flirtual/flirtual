@@ -9,7 +9,7 @@ defmodule FlirtualWeb.MatchmakingController do
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.{Users, Policy}
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   def list_prospects(conn, %{"kind" => kind}) do
     with {:ok, prospect_ids} <-
@@ -25,7 +25,10 @@ defmodule FlirtualWeb.MatchmakingController do
   end
 
   def inspect_query(conn, %{"kind" => kind}) do
-    conn |> json(Matchmaking.generate_query(conn.assigns[:session].user, to_atom(kind, :love)))
+    conn
+    |> json_with_etag(
+      Matchmaking.generate_query(conn.assigns[:session].user, to_atom(kind, :love))
+    )
   end
 
   def respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => mode}) do
@@ -52,10 +55,9 @@ defmodule FlirtualWeb.MatchmakingController do
     respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => kind})
   end
 
-  def reverse_respond(conn, %{"user_id" => user_id, "kind" => kind}) do
+  def reverse_respond(conn, %{"user_id" => user_id}) do
     user = conn.assigns[:session].user
     target = Users.get(user_id)
-    kind = to_atom(kind, :love)
 
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
@@ -78,7 +80,7 @@ defmodule FlirtualWeb.MatchmakingController do
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
       {:error, {:not_found, "User not found", %{user_id: user_id}}}
     else
-      with LikesAndPasses.delete_all(profile_id: user.id, target_id: target.id) do
+      with {:ok, _} <- LikesAndPasses.delete_all(profile_id: user.id, target_id: target.id) do
         conn |> json(%{success: true})
       end
     end
@@ -91,7 +93,7 @@ defmodule FlirtualWeb.MatchmakingController do
            LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id)
            |> Policy.filter(conn, :count) do
       conn
-      |> json(%{
+      |> json_with_etag(%{
         count:
           items
           |> Enum.filter(&(&1.active_at |> DateTime.compare(@activity_cutoff) === :gt))
@@ -109,7 +111,7 @@ defmodule FlirtualWeb.MatchmakingController do
     with items <-
            LikesAndPasses.list_matches(profile_id: conn.assigns[:session].user_id) do
       conn
-      |> json(%{
+      |> json_with_etag(%{
         count: Enum.group_by(items, & &1.kind) |> Map.new(fn {k, v} -> {k, length(v)} end),
         items:
           items

@@ -34,7 +34,7 @@ defmodule FlirtualWeb.ProfileController do
     if is_nil(personality) or Policy.cannot?(conn, :read, stub_profile) do
       {:error, {:not_found, "User not found", Map.take(stub_profile, [:user_id])}}
     else
-      conn |> json(personality)
+      conn |> json_with_etag(personality)
     end
   end
 

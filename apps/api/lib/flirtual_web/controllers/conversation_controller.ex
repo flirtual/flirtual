@@ -9,7 +9,7 @@ defmodule FlirtualWeb.ConversationController do
   alias Flirtual.Conversation
   alias Flirtual.Talkjs
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   def get(conn, %{"conversation_id" => conversation_id}) do
     with {:ok, conversation} <- Conversation.get(conversation_id),
@@ -43,6 +43,6 @@ defmodule FlirtualWeb.ConversationController do
 
   def list_messages(conn, %{"user_id" => user_id}) do
     conversation_id = Talkjs.new_conversation_id(conn.assigns[:session].user.id, user_id)
-    conn |> json(Talkjs.list_messages(conversation_id))
+    conn |> json_with_etag(Talkjs.list_messages(conversation_id))
   end
 end
