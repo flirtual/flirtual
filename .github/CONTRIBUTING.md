@@ -2,7 +2,7 @@
 
 ## Bug reports
 
-If you find a vulnerability or privacy leak, please [report it to us discreetly](https://hello.flirtu.al/support/tickets/new).
+If you find a vulnerability or privacy leak, please report it to us discreetly via [GitHub](https://github.com/flirtual/flirtual/security/advisories/new) or [email](https://hello.flirtu.al/support/tickets/new).
 
 For non-security bugs, first [search existing issues](https://github.com/flirtual/flirtual/issues). If your bug hasn't been reported already, [open an issue](https://github.com/flirtual/flirtual/issues/new?assignees=&labels=triage&projects=&template=bug-report.yaml)
 

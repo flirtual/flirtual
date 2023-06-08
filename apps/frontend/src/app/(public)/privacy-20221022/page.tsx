@@ -97,8 +97,9 @@ export default function PrivacyPage() {
 					.
 				</p>
 				<p>
-					If you find a vulnerability or privacy leak, please{" "}
-					<InlineLink href={urls.resources.contact}>report it to us discreetly</InlineLink>.
+					If you find a vulnerability or privacy leak, please report it to us discreetly via{" "}
+					<InlineLink href={urls.resources.vulnerabilityReport}>GitHub</InlineLink> or{" "}
+					<InlineLink href={urls.resources.contactDirect}>email</InlineLink>.
 				</p>
 				<p>
 					You can review data that we have on file in your{" "}
