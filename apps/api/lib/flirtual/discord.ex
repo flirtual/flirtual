@@ -11,6 +11,8 @@ defmodule Flirtual.Discord do
   alias Flirtual.{User}
 
   @default_color 15_295_883
+  @destructive_color 16_711_680
+  @success_color 65280
 
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
@@ -175,7 +177,7 @@ defmodule Flirtual.Discord do
                 ],
                 else: []
               ),
-          color: 16_711_680
+          color: @destructive_color
         }
       ]
     })
@@ -199,7 +201,7 @@ defmodule Flirtual.Discord do
             value: md_display_name(moderator),
             inline: true
           },
-          color: @default_color
+          color: @success_color
         }
       ]
     })
@@ -245,6 +247,48 @@ defmodule Flirtual.Discord do
             ]
             |> Enum.filter(&(!!&1)),
           color: @default_color
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:review_report,
+        report: %Report{} = report,
+        moderator: %User{} = moderator,
+        was_shadow_banned: was_shadow_banned
+      ) do
+    webhook(:moderation, %{
+      embeds: [
+        %{
+          author: %{
+            name: md_display_name(report.target, false),
+            icon_url: User.avatar_url(report.target),
+            url: User.url(report.target) |> URI.to_string()
+          },
+          title: "Report reviewed",
+          fields:
+            [
+              %{
+                name: "Moderator",
+                value: md_display_name(moderator),
+                inline: true
+              },
+              %{
+                name: "Report",
+                value: "[View report](https://flirtu.al/reports/#{report.id})",
+                inline: true
+              },
+              if(was_shadow_banned,
+                do: %{
+                  name: "No longer shadowbanned ✅",
+                  value:
+                    "This user has been cleared of all reports, and is now back in matchmaking."
+                },
+                else: nil
+              )
+            ]
+            |> Enum.filter(&(!!&1)),
+          color: @success_color
         }
       ]
     })

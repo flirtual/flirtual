@@ -62,7 +62,7 @@ defmodule Flirtual.Report do
            %User{} = reporter <- User.get(report.user_id),
            %User{} = reported <- User.get(report.target_id),
            existing_unique_reports <-
-             list(target_id: reported.id)
+             list_unresolved(target_id: reported.id)
              |> Enum.map(& &1.user_id)
              |> Enum.uniq(),
            {:ok, reported} <-
@@ -88,39 +88,55 @@ defmodule Flirtual.Report do
   end
 
   def maybe_resolve_shadowban(target_id) when is_uid(target_id) do
-    case Report
-         |> where([report], report.target_id == ^target_id and is_nil(report.reviewed_at))
-         |> Repo.all() do
+    case list_unresolved(target_id: target_id) do
       [] ->
-        # No unresolved reports, remove shadowban.
-        {:ok, _} =
-          User.get(target_id)
-          |> change(%{shadowbanned_at: nil})
-          |> Repo.update()
+        # No unresolved reports.
+        case User
+             |> where([user], user.id == ^target_id and not is_nil(user.shadowbanned_at))
+             |> Repo.one() do
+          nil ->
+            # User is not shadowbanned.
+            {:ok, false}
 
-        :ok
+          user ->
+            # User is shadowbanned, resolve.
+            {:ok, _} =
+              user
+              |> change(%{shadowbanned_at: nil})
+              |> Repo.update()
+
+            {:ok, true}
+        end
 
       _ ->
-        :ok
+        # User has unresolved reports, do nothing.
+        {:ok, false}
     end
   end
 
-  def clear(%Report{} = report) do
+  def clear(%Report{} = report, moderator) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     with {:ok, report} <-
            change(report, %{reviewed_at: now})
            |> Repo.update(),
-         :ok <- maybe_resolve_shadowban(report.target_id) do
+         %User{} = reported <- User.get(report.target_id),
+         {:ok, was_shadow_banned} <- maybe_resolve_shadowban(report.target_id),
+         :ok <-
+           Discord.deliver_webhook(:review_report,
+             report: %Report{report | target: reported},
+             moderator: moderator,
+             was_shadow_banned: was_shadow_banned
+           ) do
       {:ok, Repo.preload(report, default_assoc())}
     end
   end
 
-  def clear_all(reports) do
+  def clear_all(reports, moderator) do
     Repo.transaction(fn ->
       with {:ok, count} <-
              reports
-             |> Enum.map(&clear(&1))
+             |> Enum.map(&clear(&1, moderator))
              |> then(
                &Enum.reduce(&1, {:ok, 0}, fn item, _ ->
                  case item do
@@ -144,6 +160,13 @@ defmodule Flirtual.Report do
   def list(target_id: target_id) when is_uid(target_id) do
     Report
     |> where(target_id: ^target_id)
+    |> order_by(asc: :created_at)
+    |> Repo.all()
+  end
+
+  def list_unresolved(target_id: target_id) when is_uid(target_id) do
+    Report
+    |> where([report], report.target_id == ^target_id and is_nil(report.reviewed_at))
     |> order_by(asc: :created_at)
     |> Repo.all()
   end
