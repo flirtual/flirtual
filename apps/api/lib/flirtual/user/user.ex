@@ -296,6 +296,9 @@ defmodule Flirtual.User do
   def validate_username(changeset) do
     changeset
     |> validate_required([:username])
+    |> validate_format(:username, ~r/^[a-zA-Z0-9_]+$/,
+      message: "must only contain letters, numbers, or underscores"
+    )
     |> validate_length(:username, min: 3, max: 32)
   end
 
