@@ -1,10 +1,10 @@
 import { Url } from "next/dist/shared/lib/router/router";
 
-import { ProspectKind } from "~/api/matchmaking";
-
 import { User } from "./api/user";
 import { ConfirmEmailPageProps } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
+
+import { ProspectKind } from "~/api/matchmaking";
 
 export const siteOrigin = process.env.NEXT_PUBLIC_ORIGIN as string;
 if (!siteOrigin) throw new ReferenceError("Site origin not defined");
@@ -125,6 +125,7 @@ export const urls = {
 		contact: "https://hello.flirtu.al/",
 		contactDirect: "https://hello.flirtu.al/support/tickets/new",
 		feedback: "https://flirtual.canny.io",
+		vulnerabilityReport: "https://github.com/flirtual/flirtual/security/advisories/new",
 		mentalHealth: "/mentalhealth"
 	},
 
