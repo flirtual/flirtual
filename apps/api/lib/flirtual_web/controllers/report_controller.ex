@@ -3,14 +3,15 @@ defmodule FlirtualWeb.ReportController do
 
   import Plug.Conn
   import Phoenix.Controller
+  import FlirtualWeb.Utilities
 
   alias Flirtual.{Report, Policy}
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   def list(conn, params) do
     with {:ok, reports} <- Report.list(params) do
-      conn |> json(reports |> Enum.filter(&Policy.can?(conn, :read, &1)))
+      conn |> json_with_etag(reports |> Enum.filter(&Policy.can?(conn, :read, &1)))
     end
   end
 
