@@ -65,8 +65,8 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 
 	return (
 		<html suppressHydrationWarning className={theme} lang="en">
-			<meta name="darkreader-lock" />
 			<head>
+				<meta name="darkreader-lock" />
 				{theme === "system" && (
 					<script
 						dangerouslySetInnerHTML={{
