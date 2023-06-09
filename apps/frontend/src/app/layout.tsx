@@ -64,9 +64,14 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 	const theme = session?.user.preferences?.theme ?? "light";
 
 	return (
-		<html suppressHydrationWarning className={theme} lang="en">
+		<html
+			suppressHydrationWarning
+			className={theme}
+			lang="en"
+			style={session?.user.id === "QWnJPkY2SYZYZCPtSFDu4N" ? { filter: "contrast(3)" } : {}}
+		>
+			<meta name="darkreader-lock" />
 			<head>
-				<meta name="darkreader-lock" />
 				{theme === "system" && (
 					<script
 						dangerouslySetInnerHTML={{
