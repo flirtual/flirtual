@@ -8,10 +8,11 @@ import { temporaryDirectory } from "../consts";
 
 import { url } from ".";
 
-export const viewImageUrl = (imageId: string) => url(`/v1/images/${imageId}/view`);
+export const viewImageUrl = (imageId: string, query: Record<string, string>) =>
+	url(`/v1/images/${imageId}/view?${new URLSearchParams(query).toString()}`);
 
 export const download = async (fileGroup: string, imageId: string) => {
-	const response = await fetch(viewImageUrl(imageId), {
+	const response = await fetch(viewImageUrl(imageId, { format: "jpeg" }), {
 		redirect: "follow"
 	});
 

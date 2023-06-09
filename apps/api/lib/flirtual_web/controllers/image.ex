@@ -26,14 +26,14 @@ defmodule FlirtualWeb.ImageController do
 
   @year_in_seconds 31_536_000
 
-  def view(conn, %{"image_id" => image_id}) do
+  def view(conn, %{"image_id" => image_id} = params) do
     with %Image{} = image <- Image.get(image_id),
          :ok <- Policy.can(conn, :view, image) do
       conn
       |> put_resp_header("cache-control", "public, max-age=#{@year_in_seconds}, immutable")
       |> put_resp_header("etag", image.external_id)
       |> put_status(:permanent_redirect)
-      |> redirect(external: Image.url(image))
+      |> redirect(external: Image.url(image, params |> Map.delete("image_id")))
     else
       nil -> conn |> redirect(external: Image.url(nil))
       value -> value

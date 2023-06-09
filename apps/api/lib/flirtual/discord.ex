@@ -330,7 +330,12 @@ defmodule Flirtual.Discord do
     })
   end
 
-  def deliver_webhook(:flagged_image, user: %User{} = user, image: %Image{} = image) do
+  def deliver_webhook(:flagged_image,
+        user: %User{} = user,
+        image: %Image{} = image,
+        classifications: classifications,
+        flag: flag
+      ) do
     webhook(:moderation_pics, %{
       embeds: [
         %{
@@ -339,6 +344,27 @@ defmodule Flirtual.Discord do
           image: %{
             url: image |> Image.url()
           },
+          fields: [
+            %{
+              name: "Classifications",
+              value:
+                classifications["deepDanbooru"]
+                |> Map.to_list()
+                |> Enum.sort(fn {_, v1}, {_, v2} -> v1 >= v2 end)
+                |> Enum.map_join(", ", fn {k, v} ->
+                  "``#{k} #{:erlang.float_to_binary(Float.parse(to_string(v)) |> elem(0), decimals: 2)}``"
+                end)
+            },
+            %{
+              name: "Categories",
+              value:
+                classifications["nsfwjs"]
+                |> Map.to_list()
+                |> Enum.concat([{to_string(flag), 1}])
+                |> Enum.filter(fn {_, v} -> v >= 0.5 end)
+                |> Enum.map_join(", ", fn {k, _} -> k end)
+            }
+          ],
           color: @default_color
         }
       ]

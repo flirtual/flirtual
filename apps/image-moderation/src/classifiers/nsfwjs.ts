@@ -39,10 +39,12 @@ export const classify: Classifier<Result> = async (_, fileGroup) => {
 			map.set(
 				path.basename(filename, path.extname(filename)),
 				Object.fromEntries(
-					predictions.map(({ className, probability }) => [
-						className.toLowerCase(),
-						parseFloat(probability.toFixed(4))
-					])
+					predictions
+						.map(({ className, probability }) => [
+							className.toLowerCase(),
+							parseFloat(probability.toFixed(4))
+						])
+						.filter(([, probability]) => (probability as number) > 0.5)
 				) as Result
 			);
 		})
