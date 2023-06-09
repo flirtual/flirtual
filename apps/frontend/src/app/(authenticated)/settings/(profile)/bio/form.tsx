@@ -54,7 +54,7 @@ export const BiographyForm: FC = () => {
 					})
 				]);
 
-				toasts.add({ type: "success", label: "Successfully updated biography!" });
+				toasts.add({ type: "success", label: "Successfully updated bio & pics!" });
 
 				await mutateSession({
 					...session,

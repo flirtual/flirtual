@@ -8,16 +8,16 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { ModalOuter } from "../modal";
+import { Tooltip } from "../tooltip";
+import { TimeRelative } from "../time-relative";
+import { UserImage } from "../user-avatar";
+
 import { ProfileImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
-
-import { ModalOuter } from "../modal";
-import { Tooltip } from "../tooltip";
-import { TimeRelative } from "../time-relative";
-import { UserImage } from "../user-avatar";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
@@ -69,7 +69,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 						<MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
 					</Link>
 				</Tooltip>
-				<Tooltip value="Delete image">
+				<Tooltip value="Remove image">
 					<button
 						type="button"
 						onClick={async () => {

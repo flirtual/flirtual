@@ -9,6 +9,8 @@ defmodule FlirtualWeb.ImageController do
   alias Flirtual.Repo
   alias Flirtual.Policy
   alias Flirtual.User.Profile.Image
+  alias Flirtual.User
+  alias Flirtual.Discord
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -39,8 +41,21 @@ defmodule FlirtualWeb.ImageController do
   end
 
   def delete(conn, %{"image_id" => image_id}) do
+    user = conn.assigns[:session].user
+
     with %Image{} = image <- Image.get(image_id),
+         %User{} = image_owner <- User.get(image.profile_id),
          :ok <- Policy.can(conn, :delete, image),
+         :ok <-
+           if(:moderator in user.tags and user.id != image_owner.id,
+             do:
+               Discord.deliver_webhook(:removed_image,
+                 user: image_owner,
+                 moderator: user,
+                 image: image
+               ),
+             else: :ok
+           ),
          {:ok, _} <- Image.delete(image) do
       conn |> json(%{deleted: true})
     else

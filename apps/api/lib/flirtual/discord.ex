@@ -11,9 +11,9 @@ defmodule Flirtual.Discord do
   alias Flirtual.Subscription
   alias Flirtual.{User}
 
-  @default_color 15_295_883
+  @default_color 255
   @destructive_color 16_711_680
-  @success_color 65280
+  @success_color 65_280
 
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
@@ -134,7 +134,8 @@ defmodule Flirtual.Discord do
   def md_display_name(%User{} = user, true),
     do: "[#{md_display_name(user, false)}](#{User.url(user)})"
 
-    def webhook_author(%User{} = user), do: %{
+  def webhook_author(%User{} = user),
+    do: %{
       name: md_display_name(user, false),
       url: User.url(user) |> URI.to_string(),
       icon_url: User.avatar_url(user)
@@ -206,6 +207,32 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:removed_image,
+        user: %User{} = user,
+        moderator: %User{} = moderator,
+        image: %Image{} = image
+      ) do
+    webhook(:moderation_pics, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Image removed",
+          fields: [
+            %{
+              name: "Moderator",
+              value: md_display_name(moderator),
+              inline: true
+            }
+          ],
+          image: %{
+            url: image |> Image.url()
+          },
+          color: @destructive_color
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:report, %Report{} = report) do
     webhook(:moderation, %{
       embeds: [
@@ -226,7 +253,7 @@ defmodule Flirtual.Discord do
               },
               if(not is_nil(report.target.shadowbanned_at),
                 do: %{
-                  name: "Shadow banned ⚠️",
+                  name: "Shadowbanned ⚠️",
                   value:
                     "This user has received multiple reports, so they've been removed from matchmaking. Please clear reports to unban if appropriate."
                 },
