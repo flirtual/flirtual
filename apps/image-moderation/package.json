@@ -1,0 +1,31 @@
+{
+  "name": "image-moderation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsc && pnpm -s start | pino-pretty"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.7.0",
+    "@tensorflow/tfjs-node": "^4.7.0",
+    "dotenv": "^16.1.4",
+    "nsfwjs": "^2.4.2",
+    "pino": "^8.14.1",
+    "tslib": "^2.5.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@ariesclark/eslint-config": "^1.5.1",
+    "@total-typescript/ts-reset": "^0.4.2",
+    "@types/mime-types": "^2.1.1",
+    "discord-api-types": "^0.37.43",
+    "eslint": "^8.42.0",
+    "mime-types": "^2.1.35",
+    "pino-pretty": "^10.0.0",
+    "typescript": "^5.1.3"
+  }
+}

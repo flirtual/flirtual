@@ -4,15 +4,16 @@ defmodule Flirtual.Discord do
 
   import Flirtual.Utilities
 
+  alias Flirtual.User.Profile.Image
   alias Flirtual.Connection
   alias Flirtual.Report
   alias Flirtual.Attribute
   alias Flirtual.Subscription
   alias Flirtual.{User}
 
-  @default_color 15_295_883
+  @default_color 255
   @destructive_color 16_711_680
-  @success_color 65280
+  @success_color 65_280
 
   def config(key) do
     Application.get_env(:flirtual, Flirtual.Discord)[key]
@@ -133,6 +134,13 @@ defmodule Flirtual.Discord do
   def md_display_name(%User{} = user, true),
     do: "[#{md_display_name(user, false)}](#{User.url(user)})"
 
+  def webhook_author(%User{} = user),
+    do: %{
+      name: md_display_name(user, false),
+      url: User.url(user) |> URI.to_string(),
+      icon_url: User.avatar_url(user)
+    }
+
   def deliver_webhook(:suspended,
         user: %User{} = user,
         moderator: %User{} = moderator,
@@ -144,11 +152,7 @@ defmodule Flirtual.Discord do
         if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
       embeds: [
         %{
-          author: %{
-            name: md_display_name(user, false),
-            url: User.url(user) |> URI.to_string(),
-            icon_url: User.avatar_url(user)
-          },
+          author: webhook_author(user),
           title: "User banned",
           fields:
             [
@@ -190,11 +194,7 @@ defmodule Flirtual.Discord do
     webhook(:moderation, %{
       embeds: [
         %{
-          author: %{
-            name: md_display_name(user, false),
-            url: User.url(user) |> URI.to_string(),
-            icon_url: User.avatar_url(user)
-          },
+          author: webhook_author(user),
           title: "User unsuspended",
           fields: %{
             name: "Moderator",
@@ -207,15 +207,37 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:removed_image,
+        user: %User{} = user,
+        moderator: %User{} = moderator,
+        image: %Image{} = image
+      ) do
+    webhook(:moderation_pics, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Image removed",
+          fields: [
+            %{
+              name: "Moderator",
+              value: md_display_name(moderator),
+              inline: true
+            }
+          ],
+          image: %{
+            url: image |> Image.url()
+          },
+          color: @destructive_color
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:report, %Report{} = report) do
     webhook(:moderation, %{
       embeds: [
         %{
-          author: %{
-            name: md_display_name(report.target, false),
-            icon_url: User.avatar_url(report.target),
-            url: User.url(report.target) |> URI.to_string()
-          },
+          author: webhook_author(report.target),
           title: "New report",
           fields:
             [
@@ -231,7 +253,7 @@ defmodule Flirtual.Discord do
               },
               if(not is_nil(report.target.shadowbanned_at),
                 do: %{
-                  name: "Shadow banned ⚠️",
+                  name: "Shadowbanned ⚠️",
                   value:
                     "This user has received multiple reports, so they've been removed from matchmaking. Please clear reports to unban if appropriate."
                 },
@@ -260,11 +282,7 @@ defmodule Flirtual.Discord do
     webhook(:moderation, %{
       embeds: [
         %{
-          author: %{
-            name: md_display_name(report.target, false),
-            icon_url: User.avatar_url(report.target),
-            url: User.url(report.target) |> URI.to_string()
-          },
+          author: webhook_author(report.target),
           title: "Report reviewed",
           fields:
             [
@@ -298,11 +316,7 @@ defmodule Flirtual.Discord do
     webhook(:moderation_flags, %{
       embeds: [
         %{
-          author: %{
-            name: md_display_name(user, false),
-            icon_url: User.avatar_url(user),
-            url: User.url(user) |> URI.to_string()
-          },
+          author: webhook_author(user),
           title: "Profile auto-flagged",
           fields: [
             %{
@@ -310,6 +324,21 @@ defmodule Flirtual.Discord do
               value: flags
             }
           ],
+          color: @default_color
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:flagged_image, user: %User{} = user, image: %Image{} = image) do
+    webhook(:moderation_pics, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Image auto-flagged",
+          image: %{
+            url: image |> Image.url()
+          },
           color: @default_color
         }
       ]

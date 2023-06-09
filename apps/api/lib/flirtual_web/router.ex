@@ -8,7 +8,7 @@ defmodule FlirtualWeb.Router do
   import FlirtualWeb.SessionController
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   def require_authenticated_user(conn, _opts) do
@@ -16,6 +16,23 @@ defmodule FlirtualWeb.Router do
       conn
     else
       conn |> put_error(:unauthorized, "Missing credentials") |> halt()
+    end
+  end
+
+  def fetch_authorization_token(conn, _) do
+    with authorization_header when is_list(authorization_header) <-
+           get_req_header(conn, "authorization"),
+         authorization_value when is_binary(authorization_value) <-
+           List.first(authorization_header),
+         [token_type, token] <- String.split(authorization_value, " ") do
+      conn
+      |> assign(:authorization_token_type, token_type)
+      |> assign(:authorization_token, token)
+    else
+      _ ->
+        conn
+        |> put_error(:unauthorized, "Missing credentials")
+        |> halt()
     end
   end
 
@@ -38,83 +55,96 @@ defmodule FlirtualWeb.Router do
   end
 
   scope "/", FlirtualWeb do
-    pipe_through :api
+    pipe_through(:api)
 
     scope "/v1" do
       scope "/attributes" do
         scope "/:attribute_type" do
-          get "/", AttributeController, :list
+          get("/", AttributeController, :list)
 
           scope "/:attribute_id" do
-            get "/", AttributeController, :get
+            get("/", AttributeController, :get)
           end
+        end
+      end
+
+      scope "/images" do
+        scope "/scan-queue" do
+          pipe_through(:fetch_authorization_token)
+
+          get("/", ImageController, :scan_queue)
+          post("/", ImageController, :resolve_scan_queue)
+        end
+
+        scope "/:image_id" do
+          get("/view", ImageController, :view)
         end
       end
     end
 
     scope "/" do
-      pipe_through [:fetch_session, :fetch_current_session]
+      pipe_through([:fetch_session, :fetch_current_session])
 
       scope "/v1/" do
         scope "/auth" do
           scope "/session" do
-            post "/", SessionController, :login
+            post("/", SessionController, :login)
 
             scope "/" do
-              pipe_through :require_authenticated_user
+              pipe_through(:require_authenticated_user)
 
-              get "/", SessionController, :get
-              delete "/", SessionController, :delete
+              get("/", SessionController, :get)
+              delete("/", SessionController, :delete)
             end
           end
 
           scope "/email/confirm" do
-            post "/", UsersController, :confirm_email
+            post("/", UsersController, :confirm_email)
 
             scope "/" do
-              pipe_through :require_authenticated_user
+              pipe_through(:require_authenticated_user)
 
-              delete "/", UsersController, :resend_confirm_email
+              delete("/", UsersController, :resend_confirm_email)
             end
           end
 
           scope "/password" do
-            delete "/", UsersController, :reset_password
+            delete("/", UsersController, :reset_password)
 
             scope "/reset" do
-              post "/", UsersController, :confirm_reset_password
+              post("/", UsersController, :confirm_reset_password)
             end
           end
 
           scope "/sudo" do
-            pipe_through :require_authenticated_user
+            pipe_through(:require_authenticated_user)
 
-            post "/", SessionController, :sudo
-            delete "/", SessionController, :revoke_sudo
+            post("/", SessionController, :sudo)
+            delete("/", SessionController, :revoke_sudo)
           end
 
           scope "/user" do
-            pipe_through :require_authenticated_user
+            pipe_through(:require_authenticated_user)
 
-            get "/", UsersController, :get_current_user
-            delete "/", UsersController, :delete
+            get("/", UsersController, :get_current_user)
+            delete("/", UsersController, :delete)
           end
 
           scope "/sso" do
-            pipe_through :require_authenticated_user
+            pipe_through(:require_authenticated_user)
 
             scope "/canny" do
-              get "/", CannyController, :create_token
+              get("/", CannyController, :create_token)
             end
           end
         end
 
-        get "/error", DebugController, :error
+        get("/error", DebugController, :error)
 
         scope "/vrchat" do
           pipe_through([:require_authenticated_user])
 
-          get "/search", VRChatController, :search
+          get("/search", VRChatController, :search)
         end
 
         # scope "/connections" do
@@ -127,129 +157,128 @@ defmodule FlirtualWeb.Router do
         # end
 
         scope "/plans" do
-          pipe_through :require_authenticated_user
+          pipe_through(:require_authenticated_user)
 
-          get "/", SubscriptionController, :list_plans
+          get("/", SubscriptionController, :list_plans)
         end
 
         scope "/images" do
-          pipe_through :require_authenticated_user
+          pipe_through(:require_authenticated_user)
 
           scope "/:image_id" do
-            get "/", ImageController, :get
-            get "/view", ImageController, :view
+            get("/", ImageController, :get)
 
-            delete "/", ImageController, :delete
+            delete("/", ImageController, :delete)
           end
         end
 
         scope "/subscriptions" do
-          pipe_through :require_authenticated_user
+          pipe_through(:require_authenticated_user)
 
-          get "/checkout", SubscriptionController, :checkout
-          get "/manage", SubscriptionController, :manage
+          get("/checkout", SubscriptionController, :checkout)
+          get("/manage", SubscriptionController, :manage)
         end
 
         scope "/reports" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
-          get "/", ReportController, :list
-          post "/", ReportController, :create
-          delete "/", ReportController, :delete
+          get("/", ReportController, :list)
+          post("/", ReportController, :create)
+          delete("/", ReportController, :delete)
 
           scope "/:report_id" do
-            delete "/", ReportController, :delete
+            delete("/", ReportController, :delete)
           end
         end
 
         scope "/conversations" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
-          get "/", ConversationController, :list
-          get "/unread", ConversationController, :list_unread
+          get("/", ConversationController, :list)
+          get("/unread", ConversationController, :list_unread)
 
           scope "/:conversation_id" do
-            get "/", ConversationController, :get
+            get("/", ConversationController, :get)
           end
         end
 
         scope "/prospects" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
-          get "/", MatchmakingController, :list_prospects
-          delete "/", MatchmakingController, :reset_prospects
+          get("/", MatchmakingController, :list_prospects)
+          delete("/", MatchmakingController, :reset_prospects)
 
-          get "/inspect", MatchmakingController, :inspect_query
+          get("/inspect", MatchmakingController, :inspect_query)
 
-          post "/respond", MatchmakingController, :respond
-          delete "/respond", MatchmakingController, :reverse_respond
+          post("/respond", MatchmakingController, :respond)
+          delete("/respond", MatchmakingController, :reverse_respond)
         end
 
         scope "/matches" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
-          get "/", MatchmakingController, :list_matches
-          delete "/", MatchmakingController, :unmatch
+          get("/", MatchmakingController, :list_matches)
+          delete("/", MatchmakingController, :unmatch)
         end
 
         scope "/users" do
-          post "/", UsersController, :create
+          post("/", UsersController, :create)
 
-          post "/bulk", UsersController, :bulk
+          post("/bulk", UsersController, :bulk)
 
           scope "/:username/username" do
             pipe_through([:require_authenticated_user, :require_valid_user])
 
-            get "/", UsersController, :get
+            get("/", UsersController, :get)
           end
 
           scope "/:user_id" do
-            pipe_through :require_authenticated_user
+            pipe_through(:require_authenticated_user)
 
-            get "/", UsersController, :get
-            post "/", UsersController, :update
+            get("/", UsersController, :get)
+            post("/", UsersController, :update)
 
-            get "/visible", UsersController, :visible
-            get "/inspect", UsersController, :inspect
+            get("/visible", UsersController, :visible)
+            get("/inspect", UsersController, :inspect)
 
-            post "/deactivate", UsersController, :deactivate
-            delete "/deactivate", UsersController, :reactivate
+            post("/deactivate", UsersController, :deactivate)
+            delete("/deactivate", UsersController, :reactivate)
 
-            post "/block", UsersController, :block
-            delete "/block", UsersController, :unblock
+            post("/block", UsersController, :block)
+            delete("/block", UsersController, :unblock)
 
-            post "/suspend", UsersController, :suspend
-            delete "/suspend", UsersController, :unsuspend
+            post("/suspend", UsersController, :suspend)
+            delete("/suspend", UsersController, :unsuspend)
 
             scope "/email" do
-              post "/", UsersController, :update_email
+              post("/", UsersController, :update_email)
             end
 
-            post "/password", UsersController, :update_password
+            post("/password", UsersController, :update_password)
 
-            get "/connections", UsersController, :list_connections
+            get("/connections", UsersController, :list_connections)
 
             scope "/preferences" do
-              post "/", UsersController, :update_preferences
-              post "/privacy", UsersController, :update_privacy_preferences
-              post "/notifications", UsersController, :update_notifications_preferences
+              post("/", UsersController, :update_preferences)
+              post("/privacy", UsersController, :update_privacy_preferences)
+              post("/notifications", UsersController, :update_notifications_preferences)
             end
 
             scope "/profile" do
-              post "/", ProfileController, :update
+              post("/", ProfileController, :update)
 
               scope "/personality" do
-                get "/", ProfileController, :get_personality
-                post "/", ProfileController, :update_personality
+                get("/", ProfileController, :get_personality)
+                post("/", ProfileController, :update_personality)
               end
 
               scope "/images" do
-                post "/", ProfileController, :update_images
-                put "/", ProfileController, :create_images
+                post("/", ProfileController, :update_images)
+                put("/", ProfileController, :create_images)
               end
 
-              post "/preferences", ProfileController, :update_preferences
-              post "/custom-weights", ProfileController, :update_custom_weights
+              post("/preferences", ProfileController, :update_preferences)
+              post("/custom-weights", ProfileController, :update_custom_weights)
             end
           end
         end
@@ -259,16 +288,16 @@ defmodule FlirtualWeb.Router do
 
   if Mix.env() == :dev do
     pipeline :browser do
-      plug :accepts, ["html"]
-      plug :fetch_session
-      plug :protect_from_forgery
-      plug :put_secure_browser_headers
+      plug(:accepts, ["html"])
+      plug(:fetch_session)
+      plug(:protect_from_forgery)
+      plug(:put_secure_browser_headers)
     end
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 end
