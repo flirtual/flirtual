@@ -14,24 +14,46 @@ void (async () => {
 		const groupFile = path.resolve(temporaryDirectory, group);
 
 		const cleanup = async (): Promise<void> =>
+			// Remove the group's directory and all its contents.
 			fs.rm(group, { recursive: true, force: true }).catch(() => void 0);
 
 		try {
 			const imageIds = await scanQueue.list({ size });
 			if (imageIds.length === 0) {
-				log.info({ groupFile }, "No images to process...");
+				log.info({ groupFile }, "Zero queued images...");
 
 				// Wait for a minute before checking again.
 				setTimeout(() => execute(size), 60 * 1000);
 				return;
 			}
 
+			log.info({ groupFile }, `Processing ${imageIds.length} images...`);
 			await fs.mkdir(groupFile, { recursive: true }).catch(() => void 0);
 
 			// Download available images that have not been scanned yet.
-			await Promise.all(imageIds.map((imageId) => images.download(groupFile, imageId)));
+			const downloadedImageIds = (
+				await Promise.all(
+					imageIds.map(
+						async (imageId) => [imageId, await images.download(groupFile, imageId)] as const
+					)
+				)
+			)
+				// Some images may fail to download, so we filter them out.
+				// We also filter out images that we just cannot process.
+				.filter(([, downloaded]) => downloaded)
+				.map(([imageId]) => imageId);
 
-			const map = await classify(groupFile, imageIds);
+			if (downloadedImageIds.length === 0) {
+				// If no images were downloaded, we can skip the classification.
+				log.warn({ groupFile }, "Zero images downloaded.");
+
+				// Wait 10 seconds before trying again.
+				setTimeout(() => execute(size), 10 * 1000);
+				return;
+			}
+
+			// Classify the downloaded images.
+			const map = await classify(groupFile, downloadedImageIds);
 			await scanQueue.update(Object.fromEntries(map.entries()));
 
 			log.info({ groupFile }, `Updated ${imageIds.length} images.`);

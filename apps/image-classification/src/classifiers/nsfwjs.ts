@@ -26,6 +26,7 @@ export const classify: Classifier<Result> = async (_, groupFile) => {
 	const model = await load();
 
 	const files = (await fs.readdir(path.resolve(temporaryDirectory, groupFile))).filter(
+		// Some classifiers output files into the group's directory, so we filter them out.
 		(filename) => path.extname(filename) !== ".json"
 	);
 
@@ -34,17 +35,22 @@ export const classify: Classifier<Result> = async (_, groupFile) => {
 			const data = await fs.readFile(path.resolve(temporaryDirectory, groupFile, filename));
 			const image = tf.node.decodeImage(data, 3) as tf.Tensor3D;
 
+			// Classify the image using the TensorFlow model.
 			const predictions = await model.classify(image);
 			image.dispose();
 
+			const imageId = path.basename(filename, path.extname(filename));
+
 			map.set(
-				path.basename(filename, path.extname(filename)),
+				imageId,
 				Object.fromEntries(
 					predictions
 						.map(({ className, probability }) => [
 							className.toLowerCase(),
+							// Round the probability to 4 decimal places.
 							parseFloat(probability.toFixed(4))
 						])
+						// Filter out predictions with a probability of less than 50%.
 						.filter(([, probability]) => (probability as number) > 0.5)
 				) as Result
 			);
