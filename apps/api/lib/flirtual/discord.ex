@@ -334,7 +334,7 @@ defmodule Flirtual.Discord do
         user: %User{} = user,
         image: %Image{} = image,
         classifications: classifications,
-        flag: flag
+        type: type
       ) do
     webhook(:moderation_pics, %{
       embeds: [
@@ -360,7 +360,7 @@ defmodule Flirtual.Discord do
               value:
                 classifications["nsfwjs"]
                 |> Map.to_list()
-                |> Enum.concat([{to_string(flag), 1}])
+                |> Enum.concat([{to_string(type), 1}])
                 |> Enum.filter(fn {_, v} -> v >= 0.5 end)
                 |> Enum.map_join(", ", fn {k, _} -> k end)
             }

@@ -85,12 +85,12 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   end
 
   def classify_image(%Image{} = image, classifications) do
-    flag = classify_flag?(classifications)
-    safe = flag == :safe
+    type = classify_flag?(classifications)
+    safe = type == :safe
 
     log(:info, ["classify", image.id], %{
       classifications: classifications,
-      flagged: not safe
+      type: type
     })
 
     if not safe do
@@ -99,7 +99,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
           user: user,
           image: image,
           classifications: classifications,
-          flag: flag
+          type: type
         )
       end
     end

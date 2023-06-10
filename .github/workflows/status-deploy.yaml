@@ -1,4 +1,4 @@
-name: Deployment Failure notification
+name: Deployment failure notification
 on: [deployment_status]
 
 jobs:
