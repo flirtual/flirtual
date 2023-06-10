@@ -18,16 +18,24 @@ FROM base as build
 
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
-    apt-get install -y python-is-python3 pkg-config build-essential 
+    apt-get install -y python-is-python3 pkg-config build-essential unzip curl git
 
 # Install node modules
 COPY --link package.json .
 RUN npm install
 
+# Install Deep Danbooru.
+RUN git clone https://github.com/flirtual/deep-danbooru
+WORKDIR /app/deep-danbooru
+
+RUN pip install -r requirements.txt
+
 # Copy application code
 COPY --link . .
 
-RUN curl -L https://github.com/KichangKim/DeepDanbooru/releases/download/v3-20211112-sgd-e28/deepdanbooru-v3-20211112-sgd-e28.zip -o model.zip
+RUN curl -L https://github.com/KichangKim/DeepDanbooru/releases/download/v3-20211112-sgd-e28/deepdanbooru-v3-20211112-sgd-e28.zip -o deep-danbooru/model.zip
+RUN unzip deep-danbooru/model.zip -d deep-danbooru
+RUN rm deep-danbooru/model.zip
 
 # Final stage for app image
 FROM base
