@@ -9,6 +9,7 @@ import { temporaryDirectory } from "../consts";
 import type { Classifier } from ".";
 
 let _model: nsfw.NSFWJS;
+tf.enableProdMode();
 
 const load = async () => {
 	if (_model) return _model;

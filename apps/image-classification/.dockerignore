@@ -1,5 +1,11 @@
 fly.toml
 Dockerfile
 .dockerignore
+tmp
+deep-danbooru
 node_modules
 .git
+.env.*
+.eslintrc.js
+.eslintignore
+.gitignore
