@@ -137,9 +137,7 @@ defmodule Flirtual.User.Profile.Policy do
             session: session
           }
         },
-        %Profile{
-          user_id: user_id
-        } = profile
+        profile
       )
       when key in @connection_keys do
     if :moderator in session.user.tags, do: profile[key], else: nil

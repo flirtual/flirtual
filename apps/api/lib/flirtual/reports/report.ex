@@ -157,20 +157,6 @@ defmodule Flirtual.Report do
     Report |> where(id: ^report_id) |> Repo.one()
   end
 
-  def list(target_id: target_id) when is_uid(target_id) do
-    Report
-    |> where(target_id: ^target_id)
-    |> order_by(asc: :created_at)
-    |> Repo.all()
-  end
-
-  def list_unresolved(target_id: target_id) when is_uid(target_id) do
-    Report
-    |> where([report], report.target_id == ^target_id and is_nil(report.reviewed_at))
-    |> order_by(asc: :created_at)
-    |> Repo.all()
-  end
-
   defmodule List do
     use Flirtual.EmbeddedSchema
 
@@ -211,6 +197,13 @@ defmodule Flirtual.Report do
     end
   end
 
+  def list(target_id: target_id) when is_uid(target_id) do
+    Report
+    |> where(target_id: ^target_id)
+    |> order_by(asc: :created_at)
+    |> Repo.all()
+  end
+
   def list(attrs) do
     with {:ok, attrs} <- List.apply(attrs) do
       include_reviewed = attrs[:reviewed] || false
@@ -229,6 +222,13 @@ defmodule Flirtual.Report do
        )
        |> Repo.all()}
     end
+  end
+
+  def list_unresolved(target_id: target_id) when is_uid(target_id) do
+    Report
+    |> where([report], report.target_id == ^target_id and is_nil(report.reviewed_at))
+    |> order_by(asc: :created_at)
+    |> Repo.all()
   end
 end
 
