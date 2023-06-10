@@ -10,13 +10,13 @@ defmodule Flirtual.User.Profile.Image do
   alias Flirtual.User.Profile
 
   schema "profile_images" do
-    belongs_to :profile, Profile, references: :user_id
+    belongs_to(:profile, Profile, references: :user_id)
 
-    field :external_id, :string
-    field :scanned, :boolean, default: false
-    field :order, :integer
+    field(:external_id, :string)
+    field(:scanned, :boolean, default: false)
+    field(:order, :integer)
 
-    field :url, :string, virtual: true
+    field(:url, :string, virtual: true)
 
     timestamps()
   end
@@ -25,13 +25,25 @@ defmodule Flirtual.User.Profile.Image do
     %Image{external_id: "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"}
   end
 
-  def url(%Image{external_id: external_id}) do
+  def url(_, params \\ %{})
+
+  def url(%Image{external_id: external_id}, params) do
     URI.new!("https://media.flirtu.al/")
-    |> URI.merge(external_id <> "/")
+    |> URI.merge(
+      external_id <>
+        "/" <>
+        (Map.to_list(params)
+         |> then(
+           &if(&1 == [],
+             do: "",
+             else: "-/" <> Enum.map_join(&1, "-/", fn {k, v} -> "#{k}/#{v}" end) <> "/"
+           )
+         ))
+    )
     |> URI.to_string()
   end
 
-  def url(_) do
+  def url(_, _) do
     url(not_found())
   end
 

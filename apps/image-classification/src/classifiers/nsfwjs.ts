@@ -9,6 +9,7 @@ import { temporaryDirectory } from "../consts";
 import type { Classifier } from ".";
 
 let _model: nsfw.NSFWJS;
+tf.enableProdMode();
 
 const load = async () => {
 	if (_model) return _model;
@@ -20,17 +21,17 @@ const load = async () => {
 
 export type Result = { [K in nsfw.predictionType["className"] as Lowercase<K>]: number };
 
-export const classify: Classifier<Result> = async (_, fileGroup) => {
+export const classify: Classifier<Result> = async (_, groupFile) => {
 	const map = new Map<string, Result>();
 	const model = await load();
 
-	const files = (await fs.readdir(path.resolve(temporaryDirectory, fileGroup))).filter(
+	const files = (await fs.readdir(path.resolve(temporaryDirectory, groupFile))).filter(
 		(filename) => path.extname(filename) !== ".json"
 	);
 
 	await Promise.all(
 		files.map(async (filename) => {
-			const data = await fs.readFile(path.resolve(temporaryDirectory, fileGroup, filename));
+			const data = await fs.readFile(path.resolve(temporaryDirectory, groupFile, filename));
 			const image = tf.node.decodeImage(data, 3) as tf.Tensor3D;
 
 			const predictions = await model.classify(image);
@@ -39,10 +40,12 @@ export const classify: Classifier<Result> = async (_, fileGroup) => {
 			map.set(
 				path.basename(filename, path.extname(filename)),
 				Object.fromEntries(
-					predictions.map(({ className, probability }) => [
-						className.toLowerCase(),
-						parseFloat(probability.toFixed(4))
-					])
+					predictions
+						.map(({ className, probability }) => [
+							className.toLowerCase(),
+							parseFloat(probability.toFixed(4))
+						])
+						.filter(([, probability]) => (probability as number) > 0.5)
 				) as Result
 			);
 		})

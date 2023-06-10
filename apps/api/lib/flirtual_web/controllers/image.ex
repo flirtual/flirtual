@@ -26,14 +26,14 @@ defmodule FlirtualWeb.ImageController do
 
   @year_in_seconds 31_536_000
 
-  def view(conn, %{"image_id" => image_id}) do
+  def view(conn, %{"image_id" => image_id} = params) do
     with %Image{} = image <- Image.get(image_id),
          :ok <- Policy.can(conn, :view, image) do
       conn
       |> put_resp_header("cache-control", "public, max-age=#{@year_in_seconds}, immutable")
       |> put_resp_header("etag", image.external_id)
       |> put_status(:permanent_redirect)
-      |> redirect(external: Image.url(image))
+      |> redirect(external: Image.url(image, params |> Map.delete("image_id")))
     else
       nil -> conn |> redirect(external: Image.url(nil))
       value -> value
@@ -64,19 +64,18 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
-  def scan_queue(conn, _) do
+  def scan_queue(conn, %{"size" => size}) do
+    {size, _} = Integer.parse(size)
+
     if String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
          conn.assigns[:authorization_token] !==
            Application.fetch_env!(:flirtual, :scan_queue_access_token) do
       {:error, {:unauthorized, "Invalid access token"}}
     else
-      images = Moderation.list_scan_queue()
+      images = Moderation.list_scan_queue(size)
 
       conn
-      |> json(%{
-        hash: :crypto.hash(:sha, :erlang.term_to_binary(images)) |> Base.encode16(case: :lower),
-        data: images
-      })
+      |> json(images)
     end
   end
 

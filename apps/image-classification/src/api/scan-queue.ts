@@ -3,22 +3,15 @@ import { Classification } from "../classifiers";
 
 import { url } from ".";
 
-const scanQueueUrl = url("/v1/images/scan-queue");
-
-interface ScanQueue {
-	data: Array<string>;
-	hash: string;
-}
-
-export const list = () =>
-	fetch(scanQueueUrl, {
+export const list = (options: { size: number }) =>
+	fetch(url("/v1/images/scan-queue", options), {
 		headers: {
 			authorization: `Bearer ${accessToken}`
 		}
-	}).then((res) => res.json()) as Promise<ScanQueue>;
+	}).then((res) => res.json()) as Promise<Array<string>>;
 
 export const update = (data: Record<string, Classification>) => {
-	return fetch(scanQueueUrl, {
+	return fetch(url("/v1/images/scan-queue"), {
 		method: "post",
 		headers: {
 			authorization: `Bearer ${accessToken}`,

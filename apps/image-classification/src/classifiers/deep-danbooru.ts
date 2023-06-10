@@ -8,13 +8,13 @@ import type { Classifier } from ".";
 
 export type Result = Record<string, number>;
 
-export const classify: Classifier<Result> = async (imageIds, fileGroup) => {
+export const classify: Classifier<Result> = async (imageIds, groupFile) => {
 	const map = new Map<string, Result>();
 
 	const args = [
 		"deepdanbooru/__main__.py",
 		"evaluate",
-		path.resolve(temporaryDirectory, fileGroup),
+		path.resolve(temporaryDirectory, groupFile),
 		"--project-path",
 		"./",
 		"--allow-folder",
@@ -35,7 +35,7 @@ export const classify: Classifier<Result> = async (imageIds, fileGroup) => {
 	await Promise.all(
 		imageIds.map(async (imageId) => {
 			const content = await fs.readFile(
-				path.resolve(temporaryDirectory, fileGroup, `${imageId}.json`),
+				path.resolve(temporaryDirectory, groupFile, `${imageId}.json`),
 				"utf-8"
 			);
 			const data = JSON.parse(content) as Record<string, string>;

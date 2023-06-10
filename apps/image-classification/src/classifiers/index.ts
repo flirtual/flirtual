@@ -25,16 +25,16 @@ export type Classification = {
 		: never;
 };
 
-export const classify = async (fileGroup: string, imageIds: Array<string>) => {
+export const classify = async (groupFile: string, imageIds: Array<string>) => {
 	const map = new Map<string, Classification>();
 
 	(
 		await Promise.all(
 			Object.entries(classifiers).map(async ([classifierId, { classify }]) => {
-				const child = log.child({ fileGroup, classifierId });
+				const child = log.child({ groupFile, classifierId });
 				child.info(`Classifying...`);
 
-				return [classifierId, await classify(imageIds, fileGroup), child] as const;
+				return [classifierId, await classify(imageIds, groupFile), child] as const;
 			})
 		)
 	).map(([classifierId, classificationGroup, log]) => {

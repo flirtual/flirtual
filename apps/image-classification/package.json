@@ -1,11 +1,10 @@
 {
-  "name": "image-moderation",
+  "name": "image-classification",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "tsc && pnpm -s start | pino-pretty"
+    "dev": "docker build . -t image-classification && docker run -it --env-file .env.local --rm image-classification"
   },
   "dependencies": {
     "@tensorflow/tfjs": "^4.7.0",
