@@ -63,10 +63,10 @@ export const urls = {
 	forgotPassword: "/forgot",
 	user: {
 		me: "/me",
-		profile: (username: string) => `/${username}`
+		profile: (username: string) => `/${username.toLowerCase()}`
 	},
 	profile: (user?: User | string) =>
-		`/${user ? (typeof user === "string" ? user : user.username) : "me"}`,
+		`/${user ? (typeof user === "string" ? user : user.username).toLowerCase() : "me"}`,
 	browse: (kind?: ProspectKind) => url("/browse", { kind: kind === "love" ? undefined : kind }),
 	conversations: {
 		list: () => "/matches",
