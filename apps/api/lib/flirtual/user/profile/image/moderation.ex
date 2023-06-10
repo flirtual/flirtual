@@ -2,6 +2,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   use Flirtual.Logger, :image_moderation
 
   import Ecto.Query
+  import Ecto.Changeset
 
   alias Flirtual.User
   alias Flirtual.Discord
@@ -74,11 +75,11 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     end
   end
 
-  def list_scan_queue() do
+  def list_scan_queue(size) do
     Image
     |> where(scanned: false)
     |> order_by(asc: :created_at)
-    |> limit(10)
+    |> limit(^size)
     |> select([image], image.id)
     |> Repo.all()
   end
@@ -103,9 +104,9 @@ defmodule Flirtual.User.Profile.Image.Moderation do
       end
     end
 
-    # image
-    # |> change(%{scanned: true})
-    # |> Repo.update()
+    image
+    |> change(%{scanned: true})
+    |> Repo.update()
   end
 
   def update_scan_queue(data) do

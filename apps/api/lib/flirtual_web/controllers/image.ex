@@ -64,19 +64,18 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
-  def scan_queue(conn, _) do
+  def scan_queue(conn, %{"size" => size}) do
+    {size, _} = Integer.parse(size)
+
     if String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
          conn.assigns[:authorization_token] !==
            Application.fetch_env!(:flirtual, :scan_queue_access_token) do
       {:error, {:unauthorized, "Invalid access token"}}
     else
-      images = Moderation.list_scan_queue()
+      images = Moderation.list_scan_queue(size)
 
       conn
-      |> json(%{
-        hash: :crypto.hash(:sha, :erlang.term_to_binary(images)) |> Base.encode16(case: :lower),
-        data: images
-      })
+      |> json(images)
     end
   end
 
