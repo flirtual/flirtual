@@ -1,0 +1,16 @@
+name: Deploy Image Classification
+on:
+  push:
+    branches: [ "production" ]
+    paths: [ "apps/image-classification/**" ]
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        working-directory: ./apps/image-classification
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
