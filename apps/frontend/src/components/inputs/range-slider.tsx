@@ -2,9 +2,9 @@
 
 import React, { useCallback, useMemo } from "react";
 
-import { clamp } from "~/utilities";
-
 import { SliderInputInner } from "./slider";
+
+import { clamp } from "~/utilities";
 
 export type InputRangeSliderValue = [min: number, max: number];
 
@@ -38,7 +38,10 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 
 	const onChange = useCallback(
 		([min, max]: InputRangeSliderValue) => {
-			props.onChange.call(null, [clamp(min, limit.min, max), clamp(max, min, limit.max)]);
+			props.onChange.call(null, [
+				clamp(min, limit.min, max),
+				clamp(max, min, limit.max)
+			]);
 		},
 		[limit, props.onChange]
 	);

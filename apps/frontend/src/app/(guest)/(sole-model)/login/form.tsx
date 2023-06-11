@@ -43,7 +43,11 @@ export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 						{({ props, labelProps }) => (
 							<>
 								<InputLabel {...labelProps}>Password</InputLabel>
-								<InputText {...props} autoComplete="current-password" type="password" />
+								<InputText
+									{...props}
+									autoComplete="current-password"
+									type="password"
+								/>
 							</>
 						)}
 					</FormField>

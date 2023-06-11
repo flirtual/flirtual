@@ -24,26 +24,36 @@ export const Tooltip: FC<TooltipProps> = ({
 }) => {
 	const [visible, setVisible] = useState(false);
 
-	const elementRef = useRef<HTMLDivElement>(null);
-	const ref = useRef<HTMLDivElement>(null);
+	const elementReference = useRef<HTMLDivElement>(null);
+	const reference = useRef<HTMLDivElement>(null);
 
-	const [elementRect, setElementRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
+	const [elementRect, setElementRect] = useState({
+		x: 0,
+		y: 0,
+		width: 0,
+		height: 0
+	});
 	const [rect, setRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
-	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
+	useGlobalEventListener(
+		"document",
+		"scroll",
+		() => setVisible(false),
+		visible
+	);
 	const isMobile = !useScreenBreakpoint("md");
 
 	useEffect(() => {
-		if (!elementRef.current || !ref.current) return;
+		if (!elementReference.current || !reference.current) return;
 
-		setElementRect(elementRef.current.getBoundingClientRect());
-		setRect(ref.current.getBoundingClientRect());
+		setElementRect(elementReference.current.getBoundingClientRect());
+		setRect(reference.current.getBoundingClientRect());
 	}, [visible]);
 
 	return (
 		<div
 			className={twMerge("", fragmentClassName)}
-			ref={elementRef}
+			ref={elementReference}
 			onMouseLeave={() => setVisible(false)}
 			onMouseEnter={() => {
 				if (isMobile) return;
@@ -57,7 +67,7 @@ export const Tooltip: FC<TooltipProps> = ({
 						<motion.div
 							animate={{ opacity: 1 }}
 							initial={{ opacity: 0 }}
-							ref={ref}
+							ref={reference}
 							transition={{ damping: 10, delay: 0.1 }}
 							className={twMerge(
 								"pointer-events-none fixed left-0 top-0 z-50 -mt-4 select-none rounded-lg bg-black-80 px-3 py-1 text-base text-white-20 shadow-brand-1 dark:bg-white-20 dark:text-black-80",

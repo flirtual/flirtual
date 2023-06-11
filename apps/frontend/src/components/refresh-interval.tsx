@@ -10,7 +10,10 @@ export interface RefreshIntervalProps {
 	children: () => ReactNode;
 }
 
-export const RefreshInterval: FC<RefreshIntervalProps> = ({ every, children }) => {
+export const RefreshInterval: FC<RefreshIntervalProps> = ({
+	every,
+	children
+}) => {
 	const [, setValue] = useState(0);
 
 	useInterval(

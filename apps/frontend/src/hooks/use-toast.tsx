@@ -45,8 +45,10 @@ const ToastContext = createContext<ToastContext>({
 	toasts: [],
 	// @ts-expect-error: this should never happen.
 	add: () => null,
-	remove: () => undefined,
-	addError: () => undefined
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	remove: () => {},
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	addError: () => {}
 });
 
 export function useToast() {
@@ -92,7 +94,9 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				ttl: ttl ? ms(ttl) : null,
 				children: (
 					<div className="flex flex-col">
-						{label && <span className="font-montserrat font-semibold">{label}</span>}
+						{label && (
+							<span className="font-montserrat font-semibold">{label}</span>
+						)}
 						{children}
 					</div>
 				),
@@ -143,7 +147,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		>
 			{children}
 			<AnimatePresence>
-				{toasts.length !== 0 && (
+				{toasts.length > 0 && (
 					<div className="pointer-events-none fixed right-0 top-0 z-[999] flex flex-col-reverse gap-2 p-8 text-white-20 sm:top-16">
 						{toasts.map((toast) => (
 							<ToastItem {...toast} key={toast.id} />

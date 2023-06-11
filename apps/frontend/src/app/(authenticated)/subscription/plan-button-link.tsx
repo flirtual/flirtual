@@ -2,16 +2,16 @@
 
 import { FC } from "react";
 
+import { PlanCardProps } from "./plan-card";
+
 import { ButtonLink } from "~/components/button";
 import { api } from "~/api";
 import { useProgressiveWebApp } from "~/hooks/use-pwa";
 import { useToast } from "~/hooks/use-toast";
 
-import { PlanCardProps } from "./plan-card";
-
-export const PlanButtonLink: FC<PlanCardProps & { active: boolean; lifetime: boolean }> = (
-	props
-) => {
+export const PlanButtonLink: FC<
+	PlanCardProps & { active: boolean; lifetime: boolean }
+> = (props) => {
 	const { highlight, id, active, lifetime } = props;
 
 	const toasts = useToast();

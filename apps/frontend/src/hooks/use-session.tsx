@@ -7,7 +7,10 @@ import { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { urls } from "~/urls";
 
-export type UseSessionOptions = Omit<SWRConfiguration<Session | null>, "fetcher" | "fallbackData">;
+export type UseSessionOptions = Omit<
+	SWRConfiguration<Session | null>,
+	"fetcher" | "fallbackData"
+>;
 
 export function useSession(options: UseSessionOptions = {}) {
 	const router = useRouter();

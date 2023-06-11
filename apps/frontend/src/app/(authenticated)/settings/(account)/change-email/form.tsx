@@ -25,7 +25,10 @@ export const ChangeEmailForm: React.FC = () => {
 				currentPassword: ""
 			}}
 			onSubmit={async (body) => {
-				await mutateSession({ ...session, user: await api.user.updateEmail(user.id, { body }) });
+				await mutateSession({
+					...session,
+					user: await api.user.updateEmail(user.id, { body })
+				});
 				router.push(urls.confirmEmail({ to: urls.settings.list() }));
 			}}
 		>
@@ -51,7 +54,11 @@ export const ChangeEmailForm: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Confirm current password</InputLabel>
-								<InputText {...field.props} autoComplete="current-password" type="password" />
+								<InputText
+									{...field.props}
+									autoComplete="current-password"
+									type="password"
+								/>
 							</>
 						)}
 					</FormField>

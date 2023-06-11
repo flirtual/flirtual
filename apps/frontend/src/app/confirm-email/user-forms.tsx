@@ -40,9 +40,10 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 				}}
 			>
 				<span className="text-xl">
-					Please check your email address, <span className="font-semibold">{user.email}</span>, for
-					a confirmation link to activate your account. If you don&apos;t see it in your inbox,
-					please check your spam folder!
+					Please check your email address,{" "}
+					<span className="font-semibold">{user.email}</span>, for a
+					confirmation link to activate your account. If you don&apos;t see it
+					in your inbox, please check your spam folder!
 				</span>
 				<FormButton>Resend confirmation email</FormButton>
 			</Form>
@@ -71,24 +72,34 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 				{({ FormField }) => (
 					<div className="flex flex-col gap-4">
 						<div>
-							<h1 className="font-montserrat text-xl font-semibold">Wrong email address?</h1>
+							<h1 className="font-montserrat text-xl font-semibold">
+								Wrong email address?
+							</h1>
 							<h2 className="text-lg">
-								If you provided the wrong address, or if you&apos;d like to try a different email,
-								you can enter a new address below:
+								If you provided the wrong address, or if you&apos;d like to try
+								a different email, you can enter a new address below:
 							</h2>
 						</div>
 						<FormField name="email">
 							{(field) => (
 								<>
-									<InputLabel {...field.labelProps}>New email address</InputLabel>
-									<InputText {...field.props} autoComplete="email" type="email" />
+									<InputLabel {...field.labelProps}>
+										New email address
+									</InputLabel>
+									<InputText
+										{...field.props}
+										autoComplete="email"
+										type="email"
+									/>
 								</>
 							)}
 						</FormField>
 						<FormField name="emailConfirmation">
 							{(field) => (
 								<>
-									<InputLabel {...field.labelProps}>Confirm email address</InputLabel>
+									<InputLabel {...field.labelProps}>
+										Confirm email address
+									</InputLabel>
 									<InputText {...field.props} autoComplete="off" type="email" />
 								</>
 							)}
@@ -96,8 +107,14 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 						<FormField name="currentPassword">
 							{(field) => (
 								<>
-									<InputLabel {...field.labelProps}>Confirm current password</InputLabel>
-									<InputText {...field.props} autoComplete="current-password" type="password" />
+									<InputLabel {...field.labelProps}>
+										Confirm current password
+									</InputLabel>
+									<InputText
+										{...field.props}
+										autoComplete="current-password"
+										type="password"
+									/>
 								</>
 							)}
 						</FormField>

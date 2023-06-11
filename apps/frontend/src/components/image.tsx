@@ -4,9 +4,12 @@ import { FC } from "react";
 import NextImage from "next/image";
 
 import { urls } from "~/urls";
-import { ImageOptions, serializeImageOptions } from "~/imageLoader";
+import { ImageOptions, serializeImageOptions } from "~/image-loader";
 
-export type ImageProps = Omit<Parameters<typeof NextImage>[0], "loader" | "quality" | "src"> & {
+export type ImageProps = Omit<
+	Parameters<typeof NextImage>[0],
+	"loader" | "quality" | "src"
+> & {
 	options?: ImageOptions;
 	src: string;
 };

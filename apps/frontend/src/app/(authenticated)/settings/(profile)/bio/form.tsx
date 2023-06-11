@@ -5,9 +5,17 @@ import { FC } from "react";
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import { ImageSetValue, InputImageSet } from "~/components/forms/input-image-set";
+import {
+	ImageSetValue,
+	InputImageSet
+} from "~/components/forms/input-image-set";
 import { InlineLink } from "~/components/inline-link";
-import { InputEditor, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
+import {
+	InputEditor,
+	InputLabel,
+	InputLabelHint,
+	InputText
+} from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
@@ -36,7 +44,13 @@ export const BiographyForm: FC = () => {
 				vrchat: decodeURIComponent(user.profile.vrchat || ""),
 				discord: user.profile.discord || ""
 			}}
-			onSubmit={async ({ displayName, biography, discord, vrchat, ...values }) => {
+			onSubmit={async ({
+				displayName,
+				biography,
+				discord,
+				vrchat,
+				...values
+			}) => {
 				const [profile, images] = await Promise.all([
 					await api.user.profile.update(user.id, {
 						query: {
@@ -54,7 +68,10 @@ export const BiographyForm: FC = () => {
 					})
 				]);
 
-				toasts.add({ type: "success", label: "Successfully updated bio & pics!" });
+				toasts.add({
+					type: "success",
+					label: "Successfully updated bio & pics!"
+				});
 
 				await mutateSession({
 					...session,
@@ -76,9 +93,13 @@ export const BiographyForm: FC = () => {
 								<InputLabel {...field.labelProps}>Display name</InputLabel>
 								<InputText {...field.props} />
 								<InputLabelHint className="text-sm">
-									This is how you&apos;ll appear around Flirtual. Your display name can contain
-									special characters and doesn&apos;t need to be unique. Your profile link (
-									<InlineLink className="font-mono" href={urls.user.profile(user.username)}>
+									This is how you&apos;ll appear around Flirtual. Your display
+									name can contain special characters and doesn&apos;t need to
+									be unique. Your profile link (
+									<InlineLink
+										className="font-mono"
+										href={urls.user.profile(user.username)}
+									>
 										flirtu.al/
 										{user.username}
 									</InlineLink>
@@ -90,7 +111,11 @@ export const BiographyForm: FC = () => {
 					<FormField name="images">
 						{(field) => (
 							<>
-								<InputLabel {...field.labelProps} inline hint="Upload your VR avatar pictures!">
+								<InputLabel
+									{...field.labelProps}
+									inline
+									hint="Upload your VR avatar pictures!"
+								>
 									Profile pictures
 								</InputLabel>
 								<InputImageSet {...field.props} />
@@ -110,7 +135,8 @@ export const BiographyForm: FC = () => {
 							inline
 							hint={
 								<InputLabelHint className="text-sm">
-									People can see your accounts after you match, to help you meet up.
+									People can see your accounts after you match, to help you meet
+									up.
 								</InputLabelHint>
 							}
 						>

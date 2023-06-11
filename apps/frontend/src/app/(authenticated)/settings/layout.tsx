@@ -14,7 +14,9 @@ export const metadata: Metadata = {
 	}
 };
 
-export default async function SettingsLayout({ children }: React.ComponentProps<"div">) {
+export default async function SettingsLayout({
+	children
+}: React.ComponentProps<"div">) {
 	return (
 		<div
 			className={twMerge(

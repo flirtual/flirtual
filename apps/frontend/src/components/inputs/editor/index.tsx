@@ -1,10 +1,11 @@
 import dynamic from "next/dynamic";
 import React from "react";
 
+import { EditorSkeleton } from "./skeleton";
+
 import { editorColors } from "~/html";
 
 import "./style.scss";
-import { EditorSkeleton } from "./skeleton";
 
 // Quill throws an error on the server if imported directly,
 // so we lazily import it, which only renders when needed on client.
@@ -28,7 +29,10 @@ export interface InputEditorProps {
 	onChange: React.Dispatch<string>;
 }
 
-export const InputEditor: React.FC<InputEditorProps> = ({ value, onChange }) => {
+export const InputEditor: React.FC<InputEditorProps> = ({
+	value,
+	onChange
+}) => {
 	return (
 		<ReactQuill
 			className="prose dark:prose-invert"

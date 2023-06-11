@@ -6,7 +6,11 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { ResponseChangesetError, api } from "~/api";
-import { ProspectKind, ProspectRespondType, RespondProspectBody } from "~/api/matchmaking";
+import {
+	ProspectKind,
+	ProspectRespondType,
+	RespondProspectBody
+} from "~/api/matchmaking";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip } from "~/components/tooltip";
@@ -18,11 +22,16 @@ export interface ProspectActionBarProps {
 	mode: ProspectKind;
 }
 
-export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) => {
+export const ProspectActionBar: FC<ProspectActionBarProps> = ({
+	userId,
+	mode
+}) => {
 	const toasts = useToast();
 	const router = useRouter();
 
-	const [lastProfile, setLastProfile] = useState<RespondProspectBody | null>(null);
+	const [lastProfile, setLastProfile] = useState<RespondProspectBody | null>(
+		null
+	);
 
 	const tour = useTour(
 		"browsing",
@@ -134,7 +143,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 			const body = {
 				type,
 				kind,
-				mode: mode !== kind ? mode : undefined,
+				mode: mode === kind ? undefined : mode,
 				userId
 			};
 
@@ -211,7 +220,9 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({ userId, mode }) 
 							onClick={() => respond("like", "friend")}
 						>
 							<PeaceIcon className="w-8 shrink-0" gradient={false} />
-							<span className="hidden font-montserrat text-lg font-extrabold md:inline">Homie</span>
+							<span className="hidden font-montserrat text-lg font-extrabold md:inline">
+								Homie
+							</span>
 						</button>
 					</Tooltip>
 					<Tooltip value="Pass profile">

@@ -22,7 +22,10 @@ export default async function SubscriptionPage() {
 	const { subscription } = user;
 
 	return (
-		<SoleModelLayout containerProps={{ className: "gap-8" }} footer={{ desktopOnly: true }}>
+		<SoleModelLayout
+			containerProps={{ className: "gap-8" }}
+			footer={{ desktopOnly: true }}
+		>
 			<ModelCard
 				className="sm:max-w-3xl"
 				containerProps={{ className: "gap-8" }}
@@ -72,10 +75,16 @@ export default async function SubscriptionPage() {
 					{subscription?.active ? (
 						<ul className="text-2xl">
 							<li>
-								👀 <InlineLink href={urls.likes}>See who likes you before you match</InlineLink>
+								👀{" "}
+								<InlineLink href={urls.likes}>
+									See who likes you before you match
+								</InlineLink>
 							</li>
 							<li>
-								♾️ <InlineLink href={urls.browse()}>Browse unlimited profiles</InlineLink>
+								♾️{" "}
+								<InlineLink href={urls.browse()}>
+									Browse unlimited profiles
+								</InlineLink>
 							</li>
 							<li>
 								🎚️{" "}
@@ -87,23 +96,29 @@ export default async function SubscriptionPage() {
 					) : (
 						<ul className="flex flex-col gap-4">
 							<li className="flex flex-col">
-								<span className="text-xl font-semibold">👀 See who likes you before you match</span>
-								No more guesswork. Discover who&apos;s already interested in you, match faster and
-								never miss a potential connection.
+								<span className="text-xl font-semibold">
+									👀 See who likes you before you match
+								</span>
+								No more guesswork. Discover who&apos;s already interested in
+								you, match faster and never miss a potential connection.
 							</li>
 							<li className="flex flex-col">
-								<span className="text-xl font-semibold">♾️ Browse unlimited profiles</span>
-								Can&apos;t get enough of us? Remove the daily limit and browse a wider range of
-								profiles, whenever you want.
+								<span className="text-xl font-semibold">
+									♾️ Browse unlimited profiles
+								</span>
+								Can&apos;t get enough of us? Remove the daily limit and browse a
+								wider range of profiles, whenever you want.
 							</li>
 							<li className="flex flex-col">
 								<span className="text-xl font-semibold">
 									🎚️ Control your matchmaking priorities
 								</span>
 								<span>
-									Sometimes one size doesn&apos;t fit all. Customize your algorithm to find exactly
-									the right people for you.{" "}
-									<InlineLink href={urls.settings.matchmaking()}>(Check it out)</InlineLink>
+									Sometimes one size doesn&apos;t fit all. Customize your
+									algorithm to find exactly the right people for you.{" "}
+									<InlineLink href={urls.settings.matchmaking()}>
+										(Check it out)
+									</InlineLink>
 								</span>
 							</li>
 						</ul>
@@ -136,7 +151,6 @@ export default async function SubscriptionPage() {
 							})}
 							<div className="col-span-full flex flex-col gap-2">
 								<PlanCard
-									discount={user.tags?.includes("legacy_vrlfp") ? 50 : undefined}
 									duration="Lifetime"
 									id="CJv2NQ7AiEimvDoZJ3uQTe"
 									originalPrice={99.99}
@@ -146,15 +160,19 @@ export default async function SubscriptionPage() {
 											? "50% off for VRLFP users. Thanks for your early support!"
 											: undefined
 									}
+									discount={
+										user.tags?.includes("legacy_vrlfp") ? 50 : undefined
+									}
 								/>
 							</div>
 						</div>
 					)}
 				</div>
 				<p>
-					Flirtual is still in its early days: we have 50000 users and growing, and we&apos;re
-					always fixing and improving the platform. Offering Premium helps us pay for development
-					and cover hosting costs. Thank you for supporting us!
+					Flirtual is still in its early days: we have 50000 users and growing,
+					and we&apos;re always fixing and improving the platform. Offering
+					Premium helps us pay for development and cover hosting costs. Thank
+					you for supporting us!
 				</p>
 			</ModelCard>
 		</SoleModelLayout>

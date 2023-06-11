@@ -33,12 +33,17 @@ export default async function og({ params }: ProfilePageProps) {
 	const user = await getProfileUser(params.username);
 
 	const attributes = await Promise.all(
-		user.profile.attributes.map((attribute) => withAttribute(attribute.type, attribute.id))
+		user.profile.attributes.map((attribute) =>
+			withAttribute(attribute.type, attribute.id)
+		)
 	);
 
 	return new ImageResponse(
 		(
-			<div style={{ fontFamily: "Nunito" }} tw="flex flex-col w-full h-full bg-[#FFFAF0]">
+			<div
+				style={{ fontFamily: "Nunito" }}
+				tw="flex flex-col w-full h-full bg-[#FFFAF0]"
+			>
 				<div
 					style={{ backgroundImage: brandGradient, boxShadow }}
 					tw="absolute bottom-0 left-0 flex h-3 w-full"
@@ -48,8 +53,14 @@ export default async function og({ params }: ProfilePageProps) {
 						src="https://flirtu.al/images/brand/black.svg"
 						tw="absolute right-0 bottom-0 h-16 mb-16 mr-16"
 					/>
-					<div style={{ gap: "4rem" }} tw="flex w-full h-full items-center overflow-hidden">
-						<div style={{ backgroundImage: brandGradient, boxShadow }} tw="flex p-2 rounded-3xl">
+					<div
+						style={{ gap: "4rem" }}
+						tw="flex w-full h-full items-center overflow-hidden"
+					>
+						<div
+							style={{ backgroundImage: brandGradient, boxShadow }}
+							tw="flex p-2 rounded-3xl"
+						>
 							<img
 								src={urls.userAvatar(user)}
 								style={{ objectFit: "cover", height: 384, width: 384 }}
@@ -58,14 +69,26 @@ export default async function og({ params }: ProfilePageProps) {
 						</div>
 						<div style={{ gap: "2rem", width: 600 }} tw="flex flex-col">
 							<div style={{ gap: "1rem" }} tw="flex items-baseline">
-								<span style={{ fontFamily: "Montserrat" }} tw="text-6xl font-bold">
+								<span
+									style={{ fontFamily: "Montserrat" }}
+									tw="text-6xl font-bold"
+								>
 									{displayName(user)}
 								</span>
-								{user.bornAt && <span tw="text-4xl">{yearsAgo(new Date(user.bornAt))}</span>}
+								{user.bornAt && (
+									<span tw="text-4xl">{yearsAgo(new Date(user.bornAt))}</span>
+								)}
 							</div>
-							<div style={{ gap: "0.5rem" }} tw="flex flex-wrap w-full max-w-full">
+							<div
+								style={{ gap: "0.5rem" }}
+								tw="flex flex-wrap w-full max-w-full"
+							>
 								{(
-									filterBy(attributes, "type", "gender") as unknown as AttributeCollection<"gender">
+									filterBy(
+										attributes,
+										"type",
+										"gender"
+									) as unknown as AttributeCollection<"gender">
 								)
 									.filter((gender) => gender?.metadata?.simple)
 									.map((attribute) => (

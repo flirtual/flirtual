@@ -1,21 +1,24 @@
 import { ShieldExclamationIcon } from "@heroicons/react/24/solid";
 import { Dispatch, FC, PropsWithChildren } from "react";
 
+import { DrawerOrModal } from "../drawer-or-modal";
+import { Form, FormButton } from "../forms";
+import { InputLabel, InputSelect, InputTextArea } from "../inputs";
+
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useToast } from "~/hooks/use-toast";
-
-import { DrawerOrModal } from "../drawer-or-modal";
-import { Form, FormButton } from "../forms";
-import { InputLabel, InputSelect, InputTextArea } from "../inputs";
 
 export interface BanProfileModalFormProps {
 	user: User;
 	onVisibilityChange: Dispatch<boolean>;
 }
 
-export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({ user, onVisibilityChange }) => {
+export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({
+	user,
+	onVisibilityChange
+}) => {
 	const toasts = useToast();
 	const reasons = useAttributeList("ban-reason");
 
@@ -42,11 +45,16 @@ export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({ user, onVisi
 		>
 			{({ FormField, fields: { message } }) => (
 				<>
-					<FormField className="flex flex-row items-center gap-4" name="targetId">
+					<FormField
+						className="flex flex-row items-center gap-4"
+						name="targetId"
+					>
 						{() => (
 							<>
 								<ShieldExclamationIcon className="h-6 w-6" />
-								<span className="text-xl">Ban profile: {displayName(user)}</span>
+								<span className="text-xl">
+									Ban profile: {displayName(user)}
+								</span>
 							</>
 						)}
 					</FormField>
@@ -62,7 +70,8 @@ export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({ user, onVisi
 									onChange={(reasonId) => {
 										field.props.onChange(reasonId);
 										message.props.onChange(
-											reasons.find((reason) => reason.id === reasonId)?.metadata.details || ""
+											reasons.find((reason) => reason.id === reasonId)?.metadata
+												.details || ""
 										);
 									}}
 								/>
@@ -102,7 +111,10 @@ export const BanProfileModal: FC<BanProfileModalProps> = ({
 }) => {
 	return (
 		<DrawerOrModal visible={visible} onVisibilityChange={onVisibilityChange}>
-			<BanProfileModalForm user={user} onVisibilityChange={onVisibilityChange} />
+			<BanProfileModalForm
+				user={user}
+				onVisibilityChange={onVisibilityChange}
+			/>
 			{children}
 		</DrawerOrModal>
 	);

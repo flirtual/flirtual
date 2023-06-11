@@ -40,12 +40,20 @@ export async function updatePrivacy(
 	userId: string,
 	options: NarrowFetchOptions<Partial<PrivacyPreferences>>
 ) {
-	return fetch<PrivacyPreferences>("post", `users/${userId}/preferences/privacy`, options);
+	return fetch<PrivacyPreferences>(
+		"post",
+		`users/${userId}/preferences/privacy`,
+		options
+	);
 }
 
 export async function updateNotifications(
 	userId: string,
 	options: NarrowFetchOptions<Partial<PrivacyPreferences>>
 ) {
-	return fetch<PrivacyPreferences>("post", `users/${userId}/preferences/notifications`, options);
+	return fetch<PrivacyPreferences>(
+		"post",
+		`users/${userId}/preferences/notifications`,
+		options
+	);
 }

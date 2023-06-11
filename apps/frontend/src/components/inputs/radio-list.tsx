@@ -2,7 +2,10 @@ import React from "react";
 
 import { CheckboxListItem, InputCheckboxList } from "./checkbox-list";
 
-export type RadioListItem<T extends string> = Omit<CheckboxListItem<T>, "conflicts">;
+export type RadioListItem<T extends string> = Omit<
+	CheckboxListItem<T>,
+	"conflicts"
+>;
 
 export interface InputRadioListProps<T extends string> {
 	value?: T;
@@ -18,14 +21,18 @@ export interface InputRadioListProps<T extends string> {
  * Where multiple controls exist, ``InputRadioList`` allow one to be selected out of them all,
  * whereas ``InputCheckboxList`` allow multiple values to be selected.
  */
-export function InputRadioList<T extends string>(props: InputRadioListProps<T>) {
+export function InputRadioList<T extends string>(
+	props: InputRadioListProps<T>
+) {
 	return (
 		<InputCheckboxList
 			{...props}
 			value={props.value ? [props.value] : []}
 			items={props.items.map((item) => {
 				// every item conflicts with every other item, except itself.
-				const conflicts = props.items.map(({ key }) => key).filter((key) => item.key !== key);
+				const conflicts = props.items
+					.map(({ key }) => key)
+					.filter((key) => item.key !== key);
 
 				return {
 					...item,

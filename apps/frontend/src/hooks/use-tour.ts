@@ -1,10 +1,14 @@
 import { useCallback, useContext, useEffect, useMemo } from "react";
-import { ShepherdOptionsWithType, ShepherdTourContext, Tour } from "react-shepherd";
+import {
+	ShepherdOptionsWithType,
+	ShepherdTourContext,
+	Tour
+} from "react-shepherd";
 
 import "~/components/shepherd/style.scss";
-import { useLocalStorage } from "~/hooks/use-local-storage";
-
 import { useScrollLock } from "./use-scroll-lock";
+
+import { useLocalStorage } from "~/hooks/use-local-storage";
 
 export function useShepherd() {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -18,7 +22,10 @@ export function useTour(
 	const shepherd = useShepherd();
 	const [, setScrollLocked] = useScrollLock();
 
-	const [completed, setCompleted] = useLocalStorage(`tour-${name}-completed`, false);
+	const [completed, setCompleted] = useLocalStorage(
+		`tour-${name}-completed`,
+		false
+	);
 
 	const steps = useMemo(
 		() =>
@@ -42,8 +49,11 @@ export function useTour(
 
 	const start = useCallback(
 		(onlyIfUncompleted: boolean = true) => {
-			const started = shepherd.steps.some((step) => steps.find(({ id }) => id === step.id));
-			if (started || completed === null || (onlyIfUncompleted && completed)) return;
+			const started = shepherd.steps.some((step) =>
+				steps.find(({ id }) => id === step.id)
+			);
+			if (started || completed === null || (onlyIfUncompleted && completed))
+				return;
 
 			setScrollLocked(true);
 
@@ -74,7 +84,7 @@ export function useTour(
 			shepherd.off("complete", onComplete);
 			shepherd.off("cancel", onComplete);
 
-			steps.forEach(({ id }) => shepherd.removeStep(id));
+			for (const { id } of steps) shepherd.removeStep(id);
 			shepherd.cancel();
 		};
 	}, [shepherd, steps, setCompleted, setScrollLocked]);

@@ -29,7 +29,9 @@ export interface RespondProspectBody {
 	userId: string;
 }
 
-export async function respondProspect(options: NarrowFetchOptions<RespondProspectBody>) {
+export async function respondProspect(
+	options: NarrowFetchOptions<RespondProspectBody>
+) {
 	return fetch("post", `prospects/respond`, options);
 }
 
@@ -44,7 +46,9 @@ export async function reverseRespondProspect(
 	return fetch("delete", `prospects/respond`, options);
 }
 
-export async function unmatch(options: NarrowFetchOptions<undefined, { userId: string }>) {
+export async function unmatch(
+	options: NarrowFetchOptions<undefined, { userId: string }>
+) {
 	return fetch("delete", `matches`, options);
 }
 

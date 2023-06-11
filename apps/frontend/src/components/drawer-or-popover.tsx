@@ -2,10 +2,13 @@
 
 import { Children, Dispatch, useRef } from "react";
 
-import { useClickOutside } from "~/hooks/use-click-outside";
-import { ScreenBreakpoint, useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
-
 import { Drawer } from "./drawer";
+
+import { useClickOutside } from "~/hooks/use-click-outside";
+import {
+	ScreenBreakpoint,
+	useScreenBreakpoint
+} from "~/hooks/use-screen-breakpoint";
 
 export interface DrawerOrPopoverProps {
 	children: React.ReactNode;
@@ -19,8 +22,8 @@ export const DrawerOrPopover: React.FC<DrawerOrPopoverProps> = (props) => {
 
 	const [overlayNode, contentNode] = Children.toArray(children);
 
-	const overlayParentRef = useRef<HTMLDivElement>(null);
-	useClickOutside(overlayParentRef, () => onVisibilityChange(false));
+	const overlayParentReference = useRef<HTMLDivElement>(null);
+	useClickOutside(overlayParentReference, () => onVisibilityChange(false));
 
 	if (!useScreenBreakpoint(breakpoint)) {
 		return (
@@ -37,7 +40,7 @@ export const DrawerOrPopover: React.FC<DrawerOrPopoverProps> = (props) => {
 		<div className="relative">
 			{contentNode}
 			{visible && (
-				<div className="absolute z-10 mt-4" ref={overlayParentRef}>
+				<div className="absolute z-10 mt-4" ref={overlayParentReference}>
 					{overlayNode}
 				</div>
 			)}

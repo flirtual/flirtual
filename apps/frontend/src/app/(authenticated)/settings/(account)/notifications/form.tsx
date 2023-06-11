@@ -28,11 +28,17 @@ export const NotificationsForm: React.FC = () => {
 			onSubmit={async (values) => {
 				await api.user.preferences.updateNotifications(user.id, {
 					body: fromEntries(
-						keys(preferences.emailNotifications).map((key) => [key, values.email.includes(key)])
+						keys(preferences.emailNotifications).map((key) => [
+							key,
+							values.email.includes(key)
+						])
 					)
 				});
 
-				toasts.add({ type: "success", label: "Saved notification preferences!" });
+				toasts.add({
+					type: "success",
+					label: "Saved notification preferences!"
+				});
 			}}
 		>
 			{({ FormField }) => (
@@ -40,14 +46,20 @@ export const NotificationsForm: React.FC = () => {
 					<FormField name="email">
 						{(field) => (
 							<>
-								<InputLabel className="text-2xl font-semibold">Email notifications</InputLabel>
+								<InputLabel className="text-2xl font-semibold">
+									Email notifications
+								</InputLabel>
 								<InputCheckboxList
 									{...field.props}
 									items={[
 										{ key: "matches", label: "Match notifications" },
 										{ key: "messages", label: "Message notifications" },
 										{ key: "likes", label: "Weekly profile like reminders" },
-										{ key: "newsletter", label: "Product updates", labelHint: "we won't spam you!" }
+										{
+											key: "newsletter",
+											label: "Product updates",
+											labelHint: "we won't spam you!"
+										}
 									]}
 								/>
 							</>

@@ -5,12 +5,12 @@ import { forwardRef } from "react";
 
 import { hcaptchaSiteKey } from "~/const";
 
-export type FormCaptchaRef = HCaptcha;
+export type FormCaptchaReference = HCaptcha;
 
-export const FormCaptcha = forwardRef<HCaptcha, unknown>((props, ref) => {
+export const FormCaptcha = forwardRef<HCaptcha, unknown>((props, reference) => {
 	return (
 		<HCaptcha
-			ref={ref}
+			ref={reference}
 			sitekey={hcaptchaSiteKey}
 			size="invisible"
 			onVerify={() => {

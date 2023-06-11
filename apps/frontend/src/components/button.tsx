@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-import { isInternalHref } from "~/urls";
-
 import { IconComponent } from "./icons";
+
+import { isInternalHref } from "~/urls";
 
 const defaultClassName = twMerge(
 	"focusable flex select-none items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
@@ -32,8 +32,16 @@ export interface ButtonProps {
 	disabled?: boolean;
 	Icon?: IconComponent;
 }
-export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (props) => {
-	const { size = "base", kind = "primary", disabled, Icon, ...elementProps } = props;
+export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
+	props
+) => {
+	const {
+		size = "base",
+		kind = "primary",
+		disabled,
+		Icon,
+		...elementProps
+	} = props;
 
 	return (
 		<button
@@ -56,8 +64,16 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (p
 	);
 };
 
-export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (props) => {
-	const { size = "base", kind = "primary", disabled, Icon, ...elementProps } = props;
+export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
+	props
+) => {
+	const {
+		size = "base",
+		kind = "primary",
+		disabled,
+		Icon,
+		...elementProps
+	} = props;
 
 	return (
 		<Link

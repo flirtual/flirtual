@@ -6,14 +6,24 @@ import { api } from "~/api";
 import { AttributeCollection } from "~/api/attributes";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import { InputAutocomplete, InputDateSelect, InputLabel, InputSwitch } from "~/components/inputs";
+import {
+	InputAutocomplete,
+	InputDateSelect,
+	InputLabel,
+	InputSwitch
+} from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { InputCountrySelect, InputLanguageAutocomplete } from "~/components/inputs/specialized";
+import {
+	InputCountrySelect,
+	InputLanguageAutocomplete
+} from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy, fromEntries } from "~/utilities";
 
-const AttributeKeys = [...(["gender", "sexuality", "platform", "game", "interest"] as const)];
+const AttributeKeys = [
+	...(["gender", "sexuality", "platform", "game", "interest"] as const)
+];
 
 export interface TagsFormProps {
 	games: AttributeCollection<"game">;
@@ -38,7 +48,9 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 			withGlobalId
 			className="flex flex-col gap-8"
 			fields={{
-				bornAt: user.bornAt ? new Date(user.bornAt.replaceAll("-", "/")) : new Date(),
+				bornAt: user.bornAt
+					? new Date(user.bornAt.replaceAll("-", "/"))
+					: new Date(),
 				new: profile.new ?? false,
 				country: profile.country ?? null,
 				languages: profile.languages ?? [],
@@ -46,18 +58,21 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 					AttributeKeys.map((type) => {
 						return [
 							type,
-							filterBy(profile.attributes, "type", type).map(({ id }) => id) ?? []
+							filterBy(profile.attributes, "type", type).map(({ id }) => id) ??
+								[]
 						] as const;
 					})
 				) as { [K in (typeof AttributeKeys)[number]]: Array<string> }),
 				interest: [
-					...filterBy(profile.attributes, "type", "interest").map(({ id }) => id),
+					...filterBy(profile.attributes, "type", "interest").map(
+						({ id }) => id
+					),
 					...profile.customInterests
 				]
 			}}
 			onSubmit={async ({ bornAt, interest, gender, ...values }) => {
 				const customInterests = interest.filter(
-					(id) => !interests.find((interest) => interest.id === id)
+					(id) => !interests.some((interest) => interest.id === id)
 				);
 
 				const [newUser, newProfile] = await Promise.all([
@@ -76,20 +91,25 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 							new: values.new,
 							customInterests,
 							...(fromEntries(
-								AttributeKeys.filter((key) => key !== "interest" && key !== "gender").map(
-									(type) => {
-										// @ts-expect-error: don't want to deal with this.
-										return [`${type}Id`, values[type]] as const;
-									}
-								)
-							) as { [K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string> }),
+								AttributeKeys.filter(
+									(key) => key !== "interest" && key !== "gender"
+								).map((type) => {
+									// @ts-expect-error: don't want to deal with this.
+									return [`${type}Id`, values[type]] as const;
+								})
+							) as {
+								[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
+							}),
 							genderId: gender.filter((id) => id !== "other"),
 							interestId: interest.filter((id) => !customInterests.includes(id))
 						}
 					})
 				]);
 
-				toasts.add({ type: "success", label: "Successfully updated profile tags!" });
+				toasts.add({
+					type: "success",
+					label: "Successfully updated profile tags!"
+				});
 
 				await mutateSession({
 					...session,
@@ -120,10 +140,14 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 					</FormField>
 					<FormField name="gender">
 						{(field) => {
-							const simpleGenders = genders.filter((gender) => gender.metadata?.simple);
-							const simpleGenderIds = simpleGenders.map((gender) => gender.id);
+							const simpleGenders = genders.filter(
+								(gender) => gender.metadata?.simple
+							);
+							const simpleGenderIds = new Set(
+								simpleGenders.map((gender) => gender.id)
+							);
 							const checkboxValue = field.props.value.some(
-								(id) => !simpleGenderIds.includes(id) && id !== "other"
+								(id) => !simpleGenderIds.has(id) && id !== "other"
 							)
 								? [...field.props.value, "other"]
 								: field.props.value;
@@ -139,7 +163,8 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 												key: gender.id,
 												label: gender.name,
 												conflicts:
-													gender.metadata && Array.isArray(gender.metadata.conflicts)
+													gender.metadata &&
+													Array.isArray(gender.metadata.conflicts)
 														? gender.metadata.conflicts
 														: []
 											})),
@@ -157,7 +182,7 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 											options={genders.map((gender) => ({
 												key: gender.id,
 												label: gender.name,
-												hidden: simpleGenderIds.includes(gender.id)
+												hidden: simpleGenderIds.has(gender.id)
 											}))}
 										/>
 									)}
@@ -220,8 +245,11 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 								<InputAutocomplete
 									{...field.props}
 									limit={5}
-									options={games.map((game) => ({ key: game.id, label: game.name }))}
 									placeholder="Select your favorite games..."
+									options={games.map((game) => ({
+										key: game.id,
+										label: game.name
+									}))}
 								/>
 							</>
 						)}

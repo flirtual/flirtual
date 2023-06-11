@@ -14,7 +14,10 @@ export interface ResetPasswordFormProps {
 	email: string;
 }
 
-export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token, email }) => {
+export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
+	token,
+	email
+}) => {
 	const [success, setSuccess] = useState(false);
 
 	return (
@@ -34,7 +37,10 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token, ema
 			{({ FormField }) =>
 				success ? (
 					<>
-						<p>Your password has been reset. You can now login with your new password.</p>
+						<p>
+							Your password has been reset. You can now login with your new
+							password.
+						</p>
 						<div className="flex gap-4">
 							<ButtonLink className="w-fit" href={urls.login()} size="sm">
 								Login
@@ -47,7 +53,12 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token, ema
 							{(field) => (
 								<>
 									<InputLabel>Email</InputLabel>
-									<InputText {...field.props} disabled autoComplete="off" type="email" />
+									<InputText
+										{...field.props}
+										disabled
+										autoComplete="off"
+										type="email"
+									/>
 								</>
 							)}
 						</FormField>

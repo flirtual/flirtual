@@ -1,7 +1,14 @@
-import React, { createContext, RefObject, useContext, useId, useMemo, useState } from "react";
+import React, {
+	createContext,
+	RefObject,
+	useContext,
+	useId,
+	useMemo,
+	useState
+} from "react";
 
 import { FormFieldFC, FormField } from "~/components/forms/field";
-import { FormCaptchaRef } from "~/components/forms/captcha";
+import { FormCaptchaReference } from "~/components/forms/captcha";
 import { entries } from "~/utilities";
 import { ResponseChangesetError } from "~/api";
 
@@ -19,7 +26,7 @@ export interface InputFormOptions<T extends FormFieldsDefault> {
 	requireChange?: boolean | Array<keyof T>;
 	withCaptcha?: boolean;
 	withGlobalId?: boolean;
-	captchaRef: RefObject<FormCaptchaRef>;
+	captchaRef: RefObject<FormCaptchaReference>;
 	onSubmit: InputFormSubmitFunction<T>;
 	fields: T;
 }
@@ -139,7 +146,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 						name: key,
 						value,
 						disabled: submitting,
-						onChange: (value) => setValues((values) => ({ ...values, [key]: value }))
+						onChange: (value) =>
+							setValues((values) => ({ ...values, [key]: value }))
 					};
 
 					return [

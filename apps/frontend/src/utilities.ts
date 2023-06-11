@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-array-reduce */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { camelCase, snakeCase } from "change-case";
 
@@ -36,14 +37,17 @@ export function entries<T extends {}>(value: T): Entries<T> {
 }
 
 export type ArrayElement<A> = A extends ReadonlyArray<infer T> ? T : never;
-export type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> };
+export type DeepWriteable<T> = {
+	-readonly [P in keyof T]: DeepWriteable<T[P]>;
+};
 export type Cast<X, Y> = X extends Y ? X : Y;
 export type FromEntries<T> = T extends Array<[infer Key, any]>
 	? { [K in Cast<Key, string>]: Extract<ArrayElement<T>, [K, any]>[1] }
 	: { [key in string]: any };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function fromEntries<T extends Array<any>>(value: T): FromEntries<DeepWriteable<T>> {
+export function fromEntries<T extends Array<any>>(
+	value: T
+): FromEntries<DeepWriteable<T>> {
 	return Object.fromEntries(value) as FromEntries<T>;
 }
 
@@ -53,13 +57,23 @@ export function keys<T extends {}>(value: T): Array<keyof T> {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function omit<T extends {}, K extends keyof T>(value: T, keys: Array<K>): Omit<T, K> {
-	return fromEntries(entries(value).filter(([key]) => !keys.includes(key as K))) as Omit<T, K>;
+export function omit<T extends {}, K extends keyof T>(
+	value: T,
+	keys: Array<K>
+): Omit<T, K> {
+	return fromEntries(
+		entries(value).filter(([key]) => !keys.includes(key as K))
+	) as Omit<T, K>;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function pick<T extends {}, K extends keyof T>(value: T, keys: Array<K>): Pick<T, K> {
-	return fromEntries(entries(value).filter(([key]) => keys.includes(key as K))) as Pick<T, K>;
+export function pick<T extends {}, K extends keyof T>(
+	value: T,
+	keys: Array<K>
+): Pick<T, K> {
+	return fromEntries(
+		entries(value).filter(([key]) => keys.includes(key as K))
+	) as Pick<T, K>;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -72,7 +86,10 @@ export function pickBy<T extends {}>(
 	) as Partial<T>;
 }
 
-export function transformObject<T>(object: any, transformer: (key: string, value: any) => any): T {
+export function transformObject<T>(
+	object: any,
+	transformer: (key: string, value: any) => any
+): T {
 	if (Array.isArray(object))
 		return object.map((innerObject) => {
 			return transformObject(innerObject, transformer);
@@ -94,7 +111,10 @@ export function toCamelObject<T>(object: any): T {
 }
 
 export function toSnakeObject<T>(object: any): T {
-	return transformObject(object, (key, value) => [snakeCase(key), toSnakeObject(value)]);
+	return transformObject(object, (key, value) => [
+		snakeCase(key),
+		toSnakeObject(value)
+	]);
 }
 
 export function capitalize<T extends string>(value: T): Capitalize<T> {
@@ -110,22 +130,31 @@ export function sortBy<T>(
 	key: keyof T | ((value: T) => string | number),
 	direction: 1 | -1 = -1
 ): Array<T> {
-	const valueFn = typeof key === "function" ? key : (value: T) => value[key];
+	const valueFunction =
+		typeof key === "function" ? key : (value: T) => value[key];
 
 	return [...array].sort((a, b) => {
-		const aValue = valueFn(a),
-			bValue = valueFn(b);
+		const aValue = valueFunction(a),
+			bValue = valueFunction(b);
 
 		if (aValue || bValue) return aValue < bValue ? direction : -direction;
 		return 0;
 	});
 }
 
-export function filterBy<T, K extends keyof T>(array: Array<T>, key: K, value: T[K]): Array<T> {
+export function filterBy<T, K extends keyof T>(
+	array: Array<T>,
+	key: K,
+	value: T[K]
+): Array<T> {
 	return array.filter((arrayValue) => arrayValue[key] === value);
 }
 
-export function excludeBy<T, K extends keyof T>(array: Array<T>, key: K, value: T[K]): Array<T>;
+export function excludeBy<T, K extends keyof T>(
+	array: Array<T>,
+	key: K,
+	value: T[K]
+): Array<T>;
 export function excludeBy<T, K extends keyof T>(
 	array: Array<T>,
 	key: K,
@@ -137,29 +166,42 @@ export function excludeBy<T, K extends keyof T>(
 	value: T[K] | Array<T[K]>
 ): Array<T> {
 	return array.filter((arrayValue) =>
-		Array.isArray(value) ? !value.includes(arrayValue[key]) : arrayValue[key] !== value
+		Array.isArray(value)
+			? !value.includes(arrayValue[key])
+			: arrayValue[key] !== value
 	);
 }
 
-export function findBy<T, K extends keyof T>(array: Array<T>, key: K, value: T[K]): T | undefined {
+export function findBy<T, K extends keyof T>(
+	array: Array<T>,
+	key: K,
+	value: T[K]
+): T | undefined {
 	return array.find((arrayValue) => arrayValue[key] === value);
 }
 
-export function someBy<T, K extends keyof T>(array: Array<T>, key: K, value: T[K]): boolean {
+export function someBy<T, K extends keyof T>(
+	array: Array<T>,
+	key: K,
+	value: T[K]
+): boolean {
 	return array.some((arrayValue) => arrayValue[key] === value);
 }
 
-export type GroupBy<T extends ReadonlyArray<unknown>, K extends PropertyKey> = { [_ in K]: T };
+export type GroupBy<T extends ReadonlyArray<unknown>, K extends PropertyKey> = {
+	[_ in K]: T;
+};
 
 export function groupBy<T extends ReadonlyArray<object>, K extends PropertyKey>(
 	array: T,
+	// eslint-disable-next-line unicorn/prevent-abbreviations
 	fn: (value: T[number]) => K
 ): GroupBy<T, K> {
-	return array.reduce((prev: any, curr) => {
-		const key = fn(curr);
-		const group = prev[key] || [];
-		group.push(curr);
-		return { ...prev, [key]: group };
+	return array.reduce((previous: any, current) => {
+		const key = fn(current);
+		const group = previous[key] || [];
+		group.push(current);
+		return { ...previous, [key]: group };
 	}, {}) as GroupBy<T, K>;
 }
 
@@ -172,7 +214,9 @@ export function isShortUuid(value: string): boolean {
 }
 
 export function isUuid(value: string): boolean {
-	return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+	return /^[\da-f]{8}-[\da-f]{4}-[1-5][\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/i.test(
+		value
+	);
 }
 
 export function tryJsonParse<T>(value: string, fallbackValue: T): T {

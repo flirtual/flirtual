@@ -5,6 +5,8 @@ function rgbComponentToHex(c: number) {
 
 export const rgb = {
 	toHex: (r: number, g: number, b: number): string => {
-		return `#${rgbComponentToHex(r)}${rgbComponentToHex(g)}${rgbComponentToHex(b)}`;
+		return `#${rgbComponentToHex(r)}${rgbComponentToHex(g)}${rgbComponentToHex(
+			b
+		)}`;
 	}
 };

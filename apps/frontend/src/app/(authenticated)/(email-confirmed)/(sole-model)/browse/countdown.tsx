@@ -7,7 +7,7 @@ function useCountdown(date: string): string {
 
 	useEffect(() => {
 		const updateTimer = () => {
-			const now = new Date().getTime();
+			const now = Date.now();
 			const target = new Date(date).getTime();
 			const distance = target - now;
 
@@ -17,9 +17,9 @@ function useCountdown(date: string): string {
 				const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
 				setTimeRemaining(
-					`${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
+					`${hours.toString().padStart(2, "0")}:${minutes
 						.toString()
-						.padStart(2, "0")}`
+						.padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
 				);
 			} else {
 				setTimeRemaining("00:00:00");

@@ -1,6 +1,6 @@
-import { ModelCard } from "~/components/model-card";
-
 import { PrivacyForm } from "./form";
+
+import { ModelCard } from "~/components/model-card";
 
 export default function SettingsAccountPrivacyPage() {
 	return (

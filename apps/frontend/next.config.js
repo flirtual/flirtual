@@ -8,7 +8,7 @@ const nextConfig = {
 	images: {
 		domains: ["media.flirtu.al"],
 		loader: "custom",
-		loaderFile: "./src/imageLoader.ts"
+		loaderFile: "./src/image-loader.ts"
 	},
 	modularizeImports: {
 		"@heroicons/react/24/outline": {
@@ -37,12 +37,14 @@ const nextConfig = {
 			},
 			{
 				source: "/speeddate",
-				destination: "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539",
+				destination:
+					"https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539",
 				permanent: false
 			},
 			{
 				source: "/club",
-				destination: "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4",
+				destination:
+					"https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4",
 				permanent: false
 			},
 			{

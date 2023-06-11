@@ -8,7 +8,11 @@ export type MobileButtonProps = LinkProps & {
 	Icon: IconComponent;
 };
 
-export const MobileButton: React.FC<MobileButtonProps> = ({ Icon, label, ...props }) => {
+export const MobileButton: React.FC<MobileButtonProps> = ({
+	Icon,
+	label,
+	...props
+}) => {
 	return (
 		<Link
 			{...props}
@@ -17,7 +21,9 @@ export const MobileButton: React.FC<MobileButtonProps> = ({ Icon, label, ...prop
 		>
 			<Icon className="h-8" />
 			<div className="flex flex-col justify-center text-left">
-				<span className="font-montserrat text-xs font-bold uppercase">Download on</span>
+				<span className="font-montserrat text-xs font-bold uppercase">
+					Download on
+				</span>
 				<span className="font-nunito">{label}</span>
 			</div>
 		</Link>

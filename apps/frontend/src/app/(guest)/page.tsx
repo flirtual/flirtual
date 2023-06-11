@@ -1,7 +1,3 @@
-import { MobileButton } from "~/components/mobile-button";
-import { Footer } from "~/components/layout/footer";
-import { AppleIcon, GooglePlayIcon, MetaIcon, MicrosoftIcon } from "~/components/icons";
-
 import { urls } from "../../urls";
 
 import { SectionCallToAction } from "./section-call-to-action";
@@ -10,6 +6,15 @@ import { SectionAvatarProfiles } from "./section-avatar-profiles";
 import { SectionTestimonial } from "./section-testimonial";
 import { SnapSection } from "./snap-section";
 import { LandingButton } from "./landing-button";
+
+import {
+	AppleIcon,
+	GooglePlayIcon,
+	MetaIcon,
+	MicrosoftIcon
+} from "~/components/icons";
+import { Footer } from "~/components/layout/footer";
+import { MobileButton } from "~/components/mobile-button";
 
 export default function RootIndexPage() {
 	return (
@@ -73,10 +78,26 @@ export default function RootIndexPage() {
 							Sign up
 						</LandingButton>
 						<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
-							<MobileButton href={urls.apps.android} Icon={GooglePlayIcon} label="Google Play" />
-							<MobileButton href={urls.apps.ios} Icon={AppleIcon} label="iPhone/iPad" />
-							<MobileButton href={urls.apps.windows} Icon={MicrosoftIcon} label="Windows" />
-							<MobileButton href={urls.apps.sideQuest} Icon={MetaIcon} label="SideQuest" />
+							<MobileButton
+								href={urls.apps.android}
+								Icon={GooglePlayIcon}
+								label="Google Play"
+							/>
+							<MobileButton
+								href={urls.apps.ios}
+								Icon={AppleIcon}
+								label="iPhone/iPad"
+							/>
+							<MobileButton
+								href={urls.apps.windows}
+								Icon={MicrosoftIcon}
+								label="Windows"
+							/>
+							<MobileButton
+								href={urls.apps.sideQuest}
+								Icon={MetaIcon}
+								label="SideQuest"
+							/>
 						</div>
 					</div>
 				</div>

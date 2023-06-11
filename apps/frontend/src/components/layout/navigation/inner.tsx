@@ -8,7 +8,10 @@ import { AuthenticatedNavigation, GuestNavigation } from ".";
 import { User } from "~/api/user";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 
-export type NavigationInnerProps = ComponentProps<"div"> & { desktopView?: boolean; user?: User };
+export type NavigationInnerProps = ComponentProps<"div"> & {
+	desktopView?: boolean;
+	user?: User;
+};
 
 export const NavigationInner: FC<NavigationInnerProps> = (props) => {
 	const { user, desktopView = false, ...elementProps } = props;

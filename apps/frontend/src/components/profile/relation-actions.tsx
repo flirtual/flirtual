@@ -3,14 +3,17 @@
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
+import { Button, ButtonLink } from "../button";
+
 import { User, displayName } from "~/api/user";
 import { urls } from "~/urls";
 import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
 
-import { Button, ButtonLink } from "../button";
-
-export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({ user, direct }) => {
+export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
+	user,
+	direct
+}) => {
 	const { relationship } = user;
 
 	const toasts = useToast();
@@ -89,7 +92,9 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({ use
 			<div className="flex items-center gap-3 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
 				<SparklesIcon className="h-6 w-6 shrink-0 text-white-20" />
 				<span className="text-xl text-white-20 [overflow-wrap:anywhere]">
-					{`${displayName(user)} ${relationship.likedMe === "love" ? "liked" : "homied"} you!`}
+					{`${displayName(user)} ${
+						relationship.likedMe === "love" ? "liked" : "homied"
+					} you!`}
 				</span>
 			</div>
 		);

@@ -41,7 +41,9 @@ export async function sso(signer: string, options: NarrowFetchOptions = {}) {
 	return fetch<{ token: string }>("get", `auth/sso/${signer}`, options);
 }
 
-export async function resetPassword(options: NarrowFetchOptions<{ email: string }>) {
+export async function resetPassword(
+	options: NarrowFetchOptions<{ email: string }>
+) {
 	await fetch("delete", "auth/password", options);
 }
 
@@ -52,6 +54,8 @@ export interface ConfirmResetPassword {
 	token: string;
 }
 
-export async function confirmResetPassword(options: NarrowFetchOptions<ConfirmResetPassword>) {
+export async function confirmResetPassword(
+	options: NarrowFetchOptions<ConfirmResetPassword>
+) {
 	await fetch("post", "auth/password/reset", options);
 }

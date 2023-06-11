@@ -3,13 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { useToast } from "~/hooks/use-toast";
-import { api } from "~/api";
-import { User } from "~/api/user";
-
 import { Button } from "../button";
 import { ReportProfileModel } from "../modals/report-profile";
 import { Tooltip } from "../tooltip";
+
+import { useToast } from "~/hooks/use-toast";
+import { api } from "~/api";
+import { User } from "~/api/user";
 
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
@@ -38,9 +38,17 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 			>
 				Unblock
 			</Button>
-			<ReportProfileModel user={user} visible={reportVisible} onVisibilityChange={setReportVisible}>
+			<ReportProfileModel
+				user={user}
+				visible={reportVisible}
+				onVisibilityChange={setReportVisible}
+			>
 				<Tooltip value="Report profile">
-					<Button className="w-fit" size="sm" onClick={() => setReportVisible(true)}>
+					<Button
+						className="w-fit"
+						size="sm"
+						onClick={() => setReportVisible(true)}
+					>
 						Report
 					</Button>
 				</Tooltip>

@@ -1,17 +1,20 @@
 import { RefObject, useDebugValue, useEffect } from "react";
 
-export function useEventListener<T extends HTMLElement, K extends keyof HTMLElementEventMap>(
+export function useEventListener<
+	T extends HTMLElement,
+	K extends keyof HTMLElementEventMap
+>(
 	eventName: K,
 	callback: (event: HTMLElementEventMap[K]) => void,
-	ref: RefObject<T>
+	reference: RefObject<T>
 ) {
 	useEffect(() => {
-		if (!ref.current) return;
-		const element = ref.current;
+		if (!reference.current) return;
+		const element = reference.current;
 
 		element.addEventListener(eventName, callback);
 		return () => element.removeEventListener(eventName, callback);
-	}, [eventName, ref, callback]);
+	}, [eventName, reference, callback]);
 }
 
 export type GlobalEventSource = "document" | "window" | "body";
@@ -34,14 +37,19 @@ export function useGlobalEventListener<
 	condition: boolean = true
 ) {
 	const name = String(eventName);
-	const fn = callback as EventListenerOrEventListenerObject;
+	const function_ = callback as EventListenerOrEventListenerObject;
 
 	useDebugValue(`${name} on ${source}`);
 
 	useEffect(() => {
-		const element = source === "document" ? document : source === "window" ? window : document.body;
-		if (condition) element.addEventListener(name, fn);
+		const element =
+			source === "document"
+				? document
+				: source === "window"
+				? window
+				: document.body;
+		if (condition) element.addEventListener(name, function_);
 
-		return () => element.removeEventListener(name, fn);
-	}, [name, source, fn, condition]);
+		return () => element.removeEventListener(name, function_);
+	}, [name, source, function_, condition]);
 }

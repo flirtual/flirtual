@@ -1,10 +1,10 @@
 import { Dispatch } from "react";
 
-import { api } from "~/api";
-import { useSessionUser } from "~/hooks/use-session";
-
 import { ArrangeableImageSet } from "../arrangeable-image-set";
 import { InputFile } from "../inputs";
+
+import { api } from "~/api";
+import { useSessionUser } from "~/hooks/use-session";
 
 export interface ImageSetValue {
 	id: string | null;
@@ -30,10 +30,10 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 					src: image.src,
 					uploading: !!image.file
 				}))}
-				onChange={(arrValue) =>
+				onChange={(arrayValue) =>
 					onChange(
 						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-						arrValue.map(({ src }) => value.find((a) => a.src === src)!)
+						arrayValue.map(({ src }) => value.find((a) => a.src === src)!)
 					)
 				}
 			/>
@@ -54,7 +54,9 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 						}))
 					]);
 
-					const newImages = await api.user.profile.images.upload(user.id, { body: files });
+					const newImages = await api.user.profile.images.upload(user.id, {
+						body: files
+					});
 
 					onChange([
 						...value.filter((image) => "id" in image),

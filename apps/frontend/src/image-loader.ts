@@ -18,9 +18,10 @@ export type Quality = (typeof Quality)[UploadcareQuality];
 export function resolveImageQuality(quality?: number): UploadcareQuality {
 	if (!quality) return "smart";
 
-	return Object.keys(Quality).reduce((prev, key) => {
+	// eslint-disable-next-line unicorn/no-array-reduce
+	return Object.keys(Quality).reduce((previous, key) => {
 		if (quality === Quality[key as UploadcareQuality]) return key;
-		return prev;
+		return previous;
 	}, "smart") as UploadcareQuality;
 }
 
@@ -33,21 +34,31 @@ interface ImageInformation {
 	hash: string;
 }
 
-function getImageId(src: string): string {
-	return new URL(src).pathname.split("/", 2)[1];
+function getImageId(source: string): string {
+	return new URL(source).pathname.split("/", 2)[1];
 }
 
-export async function getImageInformation(src: string): Promise<ImageInformation> {
-	const url = `${urls.media(getImageId(src))}-/json/`;
-	return fetch(url).then((res) => res.json()) as Promise<ImageInformation>;
+export async function getImageInformation(
+	source: string
+): Promise<ImageInformation> {
+	const url = `${urls.media(getImageId(source))}-/json/`;
+	return fetch(url).then((response) =>
+		response.json()
+	) as Promise<ImageInformation>;
 }
 
-export type ImageOptions = Record<string, string | null | Array<string | number | null>>;
+export type ImageOptions = Record<
+	string,
+	string | null | Array<string | number | null>
+>;
 
 export function serializeImageOptions(options: ImageOptions = {}): string {
-	return Object.entries(options).reduce((prev, [key, value]) => {
-		if (!value) return prev;
-		return `${prev}-/${key}/${Array.isArray(value) ? value.join("/") : value}/`;
+	// eslint-disable-next-line unicorn/no-array-reduce
+	return Object.entries(options).reduce((previous, [key, value]) => {
+		if (!value) return previous;
+		return `${previous}-/${key}/${
+			Array.isArray(value) ? value.join("/") : value
+		}/`;
 	}, "");
 }
 
@@ -55,7 +66,11 @@ export function media(id: string, options: ImageOptions = {}): string {
 	return `https://media.flirtu.al/${id}/${serializeImageOptions(options)}`;
 }
 
-export default function imageLoader({ src, width, quality }: ImageLoaderProps): string {
+export default function imageLoader({
+	src,
+	width,
+	quality
+}: ImageLoaderProps): string {
 	const { hostname, href } = new URL(src);
 	if (hostname !== "media.flirtu.al") return src;
 

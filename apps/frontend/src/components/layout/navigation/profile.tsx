@@ -48,11 +48,18 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 	);
 };
 
-const ProfileNavigationItemDivider: React.FC<ProfileNavigationItemDividerProps> = (props) => {
-	const className = twMerge("relative flex items-center gap-4", props.className);
+const ProfileNavigationItemDivider: React.FC<
+	ProfileNavigationItemDividerProps
+> = (props) => {
+	const className = twMerge(
+		"relative flex items-center gap-4",
+		props.className
+	);
 	return (
 		<div className={className}>
-			{props.Icon && <props.Icon className="absolute -left-10 h-5 w-5 shrink-0" />}
+			{props.Icon && (
+				<props.Icon className="absolute -left-10 h-5 w-5 shrink-0" />
+			)}
 			<hr className="w-full border-t-2 border-white-40" />
 		</div>
 	);
@@ -61,13 +68,18 @@ const ProfileNavigationItemDivider: React.FC<ProfileNavigationItemDividerProps> 
 export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	const [session, mutateSession] = useSession();
 	const [visible, setVisible] = useState(false);
-	const elementRef = useRef<HTMLDivElement>(null);
+	const elementReference = useRef<HTMLDivElement>(null);
 	const location = useLocation();
 	const active = urlEqual(toAbsoluteUrl(props.href), location);
 	const { loadChangelog } = useCanny();
 
-	useClickOutside(elementRef, () => setVisible(false), visible);
-	useGlobalEventListener("document", "scroll", () => setVisible(false), visible);
+	useClickOutside(elementReference, () => setVisible(false), visible);
+	useGlobalEventListener(
+		"document",
+		"scroll",
+		() => setVisible(false),
+		visible
+	);
 
 	useEffect(() => {
 		if (visible) loadChangelog();
@@ -110,7 +122,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 						className="absolute -bottom-1 -left-2 z-10 flex w-44 flex-col-reverse overflow-hidden rounded-3xl rounded-b-none bg-white-10 p-4 text-black-80 shadow-brand-1 sm:-top-2 sm:bottom-inherit sm:flex-col sm:rounded-3xl"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
-						ref={elementRef}
+						ref={elementReference}
 					>
 						<Link
 							className="group flex shrink-0 items-center gap-2 hover:text-theme-2"
@@ -122,15 +134,21 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 								user={user}
 								width={128}
 							/>
-							<span className="ml-2 font-montserrat font-semibold">Profile</span>
+							<span className="ml-2 font-montserrat font-semibold">
+								Profile
+							</span>
 						</Link>
 						<div className="flex flex-col-reverse gap-2 p-2 pb-1 pl-12 sm:flex-col sm:pb-2 sm:pt-1">
 							<ProfileNavigationItem
-								href={isDesktop ? urls.settings.matchmaking() : urls.settings.list()}
+								href={
+									isDesktop ? urls.settings.matchmaking() : urls.settings.list()
+								}
 							>
 								Settings
 							</ProfileNavigationItem>
-							<ProfileNavigationItem href={urls.subscription}>Premium</ProfileNavigationItem>
+							<ProfileNavigationItem href={urls.subscription}>
+								Premium
+							</ProfileNavigationItem>
 							<ProfileNavigationCannyButton />
 							{!isPwa && (
 								<ProfileNavigationItem href={urls.resources.download}>
@@ -150,7 +168,9 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							)}
 							{user.tags?.includes("admin") && (
 								<>
-									<ProfileNavigationItemDivider Icon={PresentationChartLineIcon} />
+									<ProfileNavigationItemDivider
+										Icon={PresentationChartLineIcon}
+									/>
 									<ProfileNavigationItem href={urls.moderation.reports}>
 										Statistics
 									</ProfileNavigationItem>

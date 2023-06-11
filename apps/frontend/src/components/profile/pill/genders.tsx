@@ -1,10 +1,10 @@
 import { twMerge } from "tailwind-merge";
 
+import { Pill } from "./pill";
+
 import { PartialAttribute } from "~/api/attributes";
 import { findBy, sortBy } from "~/utilities";
 import { withAttributeList } from "~/api/attributes-server";
-
-import { Pill } from "./pill";
 
 export interface GenderPillsProps {
 	simple?: boolean;
@@ -21,7 +21,9 @@ export async function GenderPills({
 }: GenderPillsProps) {
 	const genders = await withAttributeList("gender");
 
-	const profileGenders = attributes.map(({ id }) => findBy(genders, "id", id)).filter(Boolean);
+	const profileGenders = attributes
+		.map(({ id }) => findBy(genders, "id", id))
+		.filter(Boolean);
 	const visibleGenders = sortBy(
 		[
 			...new Set(
@@ -33,7 +35,8 @@ export async function GenderPills({
 									: gender
 							)
 							.filter((gender) => {
-								if (simple) return gender.metadata.simple || gender.metadata.fallback;
+								if (simple)
+									return gender.metadata.simple || gender.metadata.fallback;
 								return true;
 							})
 					: profileGenders
@@ -42,18 +45,21 @@ export async function GenderPills({
 		"order"
 	);
 
-	if (!visibleGenders.length)
+	if (visibleGenders.length === 0)
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		visibleGenders.push(genders.find(({ metadata }) => metadata.fallback)!);
 
 	return (
 		<>
-			{visibleGenders.map((gender, genderIdx) => (
+			{visibleGenders.map((gender, genderIndex) => (
 				<Pill
-					className={twMerge(className, genderIdx !== 0 && small && simple && "hidden sm:flex")}
 					hocusable={false}
 					key={gender.id}
 					small={small}
+					className={twMerge(
+						className,
+						genderIndex !== 0 && small && simple && "hidden sm:flex"
+					)}
 				>
 					{gender.name}
 				</Pill>

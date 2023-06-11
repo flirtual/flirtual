@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
-import { ModelCard } from "~/components/model-card";
-
 import { ChangeEmailForm } from "./form";
+
+import { ModelCard } from "~/components/model-card";
 
 export const metadata: Metadata = {
 	title: "Change Email"

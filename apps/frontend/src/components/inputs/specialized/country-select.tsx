@@ -4,18 +4,21 @@ import { useInView } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useAttributeList } from "~/hooks/use-attribute-list";
-
 import { OptionItemProps } from "../option-window";
 import { InputSelect, InputSelectProps } from "../select";
+
+import { useAttributeList } from "~/hooks/use-attribute-list";
 
 export type InputCountrySelectProps = Omit<
 	InputSelectProps<string | null>,
 	"options" | "optionWindowProps"
 >;
 
-const CountryOptionItem: React.FC<OptionItemProps<string | null>> = ({ option, elementProps }) => {
-	const elementRef = useRef<HTMLButtonElement>(null);
+const CountryOptionItem: React.FC<OptionItemProps<string | null>> = ({
+	option,
+	elementProps
+}) => {
+	const elementReference = useRef<HTMLButtonElement>(null);
 
 	const countries = useAttributeList("country");
 	const country = useMemo(
@@ -23,11 +26,11 @@ const CountryOptionItem: React.FC<OptionItemProps<string | null>> = ({ option, e
 		[countries, option.key]
 	);
 
-	const viewed = useInView(elementRef, { once: true });
+	const viewed = useInView(elementReference, { once: true });
 
 	return (
 		<button
-			ref={elementRef}
+			ref={elementReference}
 			type="button"
 			{...elementProps}
 			className={twMerge(
@@ -38,10 +41,14 @@ const CountryOptionItem: React.FC<OptionItemProps<string | null>> = ({ option, e
 			)}
 		>
 			<div className="ml-4 aspect-[4/3] h-fit w-7 shrink-0 overflow-hidden rounded-md bg-black-60">
-				{/* eslint-disable-next-line @next/next/no-img-element */}
-				{viewed && <img className="h-full w-full" src={country?.metadata.flagUrl} />}
+				{viewed && (
+					// eslint-disable-next-line @next/next/no-img-element
+					<img className="h-full w-full" src={country?.metadata.flagUrl} />
+				)}
 			</div>
-			<span className="select-none px-4 py-2 text-left font-nunito text-lg">{option.label}</span>
+			<span className="select-none px-4 py-2 text-left font-nunito text-lg">
+				{option.label}
+			</span>
 		</button>
 	);
 };

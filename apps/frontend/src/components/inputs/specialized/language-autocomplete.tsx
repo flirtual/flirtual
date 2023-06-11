@@ -2,18 +2,18 @@
 
 import { useMemo } from "react";
 
-import { useAttributeList } from "~/hooks/use-attribute-list";
-import { useLanguage } from "~/hooks/use-language";
-
 import {
 	InputAutocomplete,
 	InputAutocompleteOption,
 	InputAutocompleteProps
 } from "../autocomplete";
 
-export const InputLanguageAutocomplete: React.FC<Omit<InputAutocompleteProps, "options">> = (
-	props
-) => {
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useLanguage } from "~/hooks/use-language";
+
+export const InputLanguageAutocomplete: React.FC<
+	Omit<InputAutocompleteProps, "options">
+> = (props) => {
 	const languages = useAttributeList("language");
 	const systemLanguage = useLanguage();
 
@@ -32,5 +32,11 @@ export const InputLanguageAutocomplete: React.FC<Omit<InputAutocompleteProps, "o
 		[languages, systemLanguage]
 	);
 
-	return <InputAutocomplete placeholder="Select languages..." {...props} options={options} />;
+	return (
+		<InputAutocomplete
+			placeholder="Select languages..."
+			{...props}
+			options={options}
+		/>
+	);
 };

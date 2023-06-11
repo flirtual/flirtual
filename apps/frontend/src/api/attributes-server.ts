@@ -3,8 +3,6 @@ import "server-only";
 // eslint-disable-next-line import/named
 import { cache } from "react";
 
-import { thruServerCookies } from "~/server-utilities";
-
 import {
 	AttributeType,
 	get,
@@ -13,6 +11,8 @@ import {
 	Attribute,
 	AttributeMetadata
 } from "./attributes";
+
+import { thruServerCookies } from "~/server-utilities";
 
 const _withAttributeList = cache((type: AttributeType) => {
 	return list(type, { ...thruServerCookies(), cache: "force-cache" });
@@ -32,5 +32,7 @@ export function withAttribute<T extends AttributeType>(
 	type: T,
 	id: string
 ): Promise<Attribute<AttributeMetadata[T]>> {
-	return _withAttribute(type, id) as unknown as Promise<Attribute<AttributeMetadata[T]>>;
+	return _withAttribute(type, id) as unknown as Promise<
+		Attribute<AttributeMetadata[T]>
+	>;
 }

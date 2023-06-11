@@ -1,17 +1,19 @@
 import { Metadata } from "next";
 
-import { displayName } from "~/api/user";
-import { Profile } from "~/components/profile/profile";
-
 import { ProspectActionBar } from "../browse/prospect-actions";
 
 import { getProfileUser } from "./profile-user";
+
+import { displayName } from "~/api/user";
+import { Profile } from "~/components/profile/profile";
 
 export interface ProfilePageProps {
 	params: { username: string };
 }
 
-export async function generateMetadata({ params }: ProfilePageProps): Promise<Metadata> {
+export async function generateMetadata({
+	params
+}: ProfilePageProps): Promise<Metadata> {
 	const user = await getProfileUser(params.username);
 
 	return {

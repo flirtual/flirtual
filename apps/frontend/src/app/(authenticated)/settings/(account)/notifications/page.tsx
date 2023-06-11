@@ -1,6 +1,6 @@
-import { ModelCard } from "~/components/model-card";
-
 import { NotificationsForm } from "./form";
+
+import { ModelCard } from "~/components/model-card";
 
 export default function SettingsAccountNotificationsPage() {
 	return (

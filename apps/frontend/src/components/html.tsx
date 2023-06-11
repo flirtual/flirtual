@@ -3,7 +3,9 @@ import { twMerge } from "tailwind-merge";
 
 import { html } from "~/html";
 
-export type HtmlProps = Omit<React.ComponentProps<"span">, "children"> & { children: string };
+export type HtmlProps = Omit<React.ComponentProps<"span">, "children"> & {
+	children: string;
+};
 
 export const Html: React.FC<HtmlProps> = ({ children, ...props }) => (
 	<span

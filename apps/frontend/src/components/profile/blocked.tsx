@@ -1,8 +1,8 @@
-import { User, displayName } from "~/api/user";
-
 import { ModelCard } from "../model-card";
 
 import { BlockedActions } from "./blocked-actions";
+
+import { User, displayName } from "~/api/user";
 
 export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 	return (
@@ -13,7 +13,8 @@ export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 			}}
 		>
 			<span>
-				You&apos;ve blocked <span className="font-semibold">{displayName(user)}</span>, so you
+				You&apos;ve blocked{" "}
+				<span className="font-semibold">{displayName(user)}</span>, so you
 				can&apos;t see their profile, and they can&apos;t see yours either.
 			</span>
 			<BlockedActions user={user} />

@@ -2,12 +2,12 @@
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
-import { FlirtualLogo } from "~/components/logo";
-import { urls } from "~/urls";
-
 import { BackgroundVideo } from "./background-video";
 import { LandingButton } from "./landing-button";
 import { SnapSection } from "./snap-section";
+
+import { urls } from "~/urls";
+import { FlirtualLogo } from "~/components/logo";
 
 export const SectionCallToAction: React.FC = () => (
 	<SnapSection

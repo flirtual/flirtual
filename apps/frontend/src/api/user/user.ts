@@ -63,7 +63,10 @@ export async function bulk(options: NarrowFetchOptions<Array<string>>) {
 	return fetch<Array<User>>("post", "users/bulk", options);
 }
 
-export async function getByUsername(username: string, options: NarrowFetchOptions = {}) {
+export async function getByUsername(
+	username: string,
+	options: NarrowFetchOptions = {}
+) {
 	return fetch<User>("get", `users/${username}/username`, options);
 }
 
@@ -75,7 +78,10 @@ export interface UserVisibility {
 	}>;
 }
 
-export async function visible(userId: string, options: NarrowFetchOptions = {}) {
+export async function visible(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
 	return fetch<UserVisibility>("get", `users/${userId}/visible`, options);
 }
 
@@ -123,19 +129,30 @@ export async function updatePassword(
 	return fetch<User>("post", `users/${userId}/password`, options);
 }
 
-export async function confirmEmail(options: NarrowFetchOptions<{ token: string }>) {
+export async function confirmEmail(
+	options: NarrowFetchOptions<{ token: string }>
+) {
 	return fetch<User>("post", `auth/email/confirm`, options);
 }
 
-export async function resendConfirmEmail(userId: string, options: NarrowFetchOptions = {}) {
+export async function resendConfirmEmail(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
 	return fetch("delete", `auth/email/confirm`, options);
 }
 
-export async function deactivate(userId: string, options: NarrowFetchOptions = {}) {
+export async function deactivate(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
 	return fetch<User>("post", `users/${userId}/deactivate`, options);
 }
 
-export async function reactivate(userId: string, options: NarrowFetchOptions = {}) {
+export async function reactivate(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
 	return fetch<User>("delete", `users/${userId}/deactivate`, options);
 }
 
@@ -143,7 +160,10 @@ export async function block(userId: string, options: NarrowFetchOptions = {}) {
 	return fetch<User>("post", `users/${userId}/block`, options);
 }
 
-export async function unblock(userId: string, options: NarrowFetchOptions = {}) {
+export async function unblock(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
 	return fetch<User>("delete", `users/${userId}/block`, options);
 }
 
@@ -157,7 +177,10 @@ export async function suspend(
 	return fetch<User>("post", `users/${userId}/suspend`, options);
 }
 
-export async function unsuspend(userId: string, options: NarrowFetchOptions = {}) {
+export async function unsuspend(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
 	return fetch<User>("delete", `users/${userId}/suspend`, options);
 }
 

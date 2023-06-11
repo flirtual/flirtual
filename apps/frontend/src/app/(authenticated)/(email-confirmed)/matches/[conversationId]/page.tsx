@@ -3,14 +3,14 @@ import { Metadata } from "next";
 import { cache } from "react";
 import { redirect } from "next/navigation";
 
+import { ConversationAside } from "../aside";
+import { getProfileUser } from "../../(sole-model)/[username]/profile-user";
+
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { displayName } from "~/api/user";
 import { api } from "~/api";
 import { urls } from "~/urls";
 import { thruServerCookies } from "~/server-utilities";
-
-import { ConversationAside } from "../aside";
-import { getProfileUser } from "../../(sole-model)/[username]/profile-user";
 
 export interface ConversationPageProps {
 	params: {
@@ -24,7 +24,9 @@ const getConversation = cache(async (conversationId: string) => {
 		.catch(() => redirect(urls.conversations.list()));
 });
 
-export async function generateMetadata({ params }: ConversationPageProps): Promise<Metadata> {
+export async function generateMetadata({
+	params
+}: ConversationPageProps): Promise<Metadata> {
 	const conversation = await getConversation(params.conversationId);
 	const user = await getProfileUser(conversation.userId);
 
@@ -33,7 +35,9 @@ export async function generateMetadata({ params }: ConversationPageProps): Promi
 	};
 }
 
-export default async function ConversationPage({ params }: ConversationPageProps) {
+export default async function ConversationPage({
+	params
+}: ConversationPageProps) {
 	const conversation = await getConversation(params.conversationId);
 
 	return (

@@ -7,12 +7,14 @@ import { twMerge } from "tailwind-merge";
 
 import { useLocalStorage } from "~/hooks/use-local-storage";
 
-export const HeaderMessage: React.FC<React.PropsWithChildren<{ className?: string }>> = ({
-	children,
-	...props
-}) => {
+export const HeaderMessage: React.FC<
+	React.PropsWithChildren<{ className?: string }>
+> = ({ children, ...props }) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [dismissMobile, setDismissMobile] = useLocalStorage("dismissMobile", false);
+	const [dismissMobile, setDismissMobile] = useLocalStorage(
+		"dismissMobile",
+		false
+	);
 
 	// todo: fix header dismissal
 	return (

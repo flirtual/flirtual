@@ -16,7 +16,12 @@ export const TailCircleIcon: IconComponent = (props) => {
 			</defs>
 			<g fill="none" fillRule="evenodd">
 				<g transform="translate(1 1)">
-					<path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke={`url(#${id})`} strokeWidth="2">
+					<path
+						d="M36 18c0-9.94-8.06-18-18-18"
+						id="Oval-2"
+						stroke={`url(#${id})`}
+						strokeWidth="2"
+					>
 						<animateTransform
 							attributeName="transform"
 							dur="0.9s"

@@ -1,6 +1,9 @@
 import { twMerge } from "tailwind-merge";
 
-export const Popover: React.FC<React.ComponentProps<"div">> = ({ children, ...props }) => {
+export const Popover: React.FC<React.ComponentProps<"div">> = ({
+	children,
+	...props
+}) => {
 	return (
 		<div {...props} className={twMerge("group relative", props.className)}>
 			{children}

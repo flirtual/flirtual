@@ -7,7 +7,13 @@ import { InlineLink } from "~/components/inline-link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
-export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+export default function Error({
+	error,
+	reset
+}: {
+	error: Error;
+	reset: () => void;
+}) {
 	const router = useRouter();
 	console.error(error);
 
@@ -23,20 +29,31 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 						<p>
 							Sorry about that! There was an error processing your request.
 							<br className="hidden sm:block" /> If this issue persists, please{" "}
-							<InlineLink className="text-white-10 underline" href={urls.resources.contact}>
+							<InlineLink
+								className="text-white-10 underline"
+								href={urls.resources.contact}
+							>
 								contact us
 							</InlineLink>{" "}
 							or check back later.
-							<br className="hidden sm:block" /> Thank you for your patience &lt;3
+							<br className="hidden sm:block" /> Thank you for your patience
+							&lt;3
 						</p>
 					</div>
 				</div>
-				<span className="max-w-sm whitespace-pre-wrap font-mono text-xs">{error.message}</span>
+				<span className="max-w-sm whitespace-pre-wrap font-mono text-xs">
+					{error.message}
+				</span>
 				<div className="flex gap-2">
 					<Button className="w-fit" kind="secondary" size="sm" onClick={reset}>
 						Try again
 					</Button>
-					<Button className="w-fit" kind="secondary" size="sm" onClick={() => router.back()}>
+					<Button
+						className="w-fit"
+						kind="secondary"
+						size="sm"
+						onClick={() => router.back()}
+					>
 						Go back
 					</Button>
 				</div>

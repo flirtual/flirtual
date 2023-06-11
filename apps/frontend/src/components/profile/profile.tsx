@@ -12,7 +12,7 @@ import { GenderPills } from "./pill/genders";
 import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { RelationActions } from "./relation-actions";
-import { ProfileModInfo } from "./mod-info";
+import { ProfileModeratorInfo } from "./moderator-info";
 
 import { yearsAgo } from "~/date";
 import { withSession } from "~/server-utilities";
@@ -48,7 +48,9 @@ export async function Profile(props: ProfileProps) {
 									<span className="text-shadow-brand text-3xl leading-none">
 										{yearsAgo(new Date(user.bornAt))}
 									</span>
-									{user.tags?.includes("verified") && <ProfileVerificationBadge />}
+									{user.tags?.includes("verified") && (
+										<ProfileVerificationBadge />
+									)}
 								</div>
 							)}
 						</div>
@@ -58,10 +60,15 @@ export async function Profile(props: ProfileProps) {
 								className="!bg-opacity-70"
 							/>
 							{user.profile.country && (
-								<CountryPill className="!bg-opacity-70" code={user.profile.country} />
+								<CountryPill
+									className="!bg-opacity-70"
+									code={user.profile.country}
+								/>
 							)}
 						</div>
-						{user.activeAt && <ActivityIndicator lastActiveAt={new Date(user.activeAt)} />}
+						{user.activeAt && (
+							<ActivityIndicator lastActiveAt={new Date(user.activeAt)} />
+						)}
 					</div>
 				</ProfileImageDisplay>
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
@@ -75,7 +82,10 @@ export async function Profile(props: ProfileProps) {
 										<VRChatIcon className="h-6 text-black-90" />
 									</div>
 									VRChat:{" "}
-									<InlineLink className="w-full" href={urls.vrchat(user.profile.vrchat)}>
+									<InlineLink
+										className="w-full"
+										href={urls.vrchat(user.profile.vrchat)}
+									>
 										{decodeURIComponent(user.profile.vrchat)}
 									</InlineLink>
 								</div>
@@ -103,12 +113,15 @@ export async function Profile(props: ProfileProps) {
 						<Html className="text-xl">{user.profile.biography}</Html>
 					) : myProfile ? (
 						<span className="text-xl italic dark:text-white-20">
-							Don&apos;t forget to <InlineLink href={urls.settings.bio}>add a bio</InlineLink>!
+							Don&apos;t forget to{" "}
+							<InlineLink href={urls.settings.bio}>add a bio</InlineLink>!
 						</span>
 					) : null}
 					<PillCollection user={user} />
 				</div>
-				{session.user.tags?.includes("moderator") && <ProfileModInfo user={user} />}
+				{session.user.tags?.includes("moderator") && (
+					<ProfileModeratorInfo user={user} />
+				)}
 				<ProfileActionBar user={user} />
 			</div>
 		</div>

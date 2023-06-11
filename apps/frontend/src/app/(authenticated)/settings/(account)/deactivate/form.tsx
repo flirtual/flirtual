@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import { api } from "~/api";
 import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
-import { Form, FormAlternativeActionLink, FormButton } from "~/components/forms";
+import {
+	Form,
+	FormAlternativeActionLink,
+	FormButton
+} from "~/components/forms";
 import { ModelCard } from "~/components/model-card";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
@@ -27,10 +31,15 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 				fields={{}}
 				requireChange={false}
 				onSubmit={async () => {
-					await (deactivated ? api.user.reactivate(user.id) : api.user.deactivate(user.id))
+					await (deactivated
+						? api.user.reactivate(user.id)
+						: api.user.deactivate(user.id)
+					)
 						.then(() =>
 							toasts.add({
-								label: `Successfully ${deactivated ? "reactivated" : "deactivated"} account.`,
+								label: `Successfully ${
+									deactivated ? "reactivated" : "deactivated"
+								} account.`,
 								type: "success"
 							})
 						)
@@ -43,8 +52,8 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 						{deactivated && user.subscription?.active && (
 							<div className="mb-8 flex flex-col items-start gap-2">
 								<p>
-									⚠️ Your Premium subscription is still active while your account is deactivated and
-									will be renewed automatically.
+									⚠️ Your Premium subscription is still active while your
+									account is deactivated and will be renewed automatically.
 								</p>
 								<ButtonLink
 									href={api.subscription.manageUrl()}
@@ -62,7 +71,9 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 								: "This will temporarily remove you from matchmaking and hide your profile from other users until you come back here and reactivate your account."}
 						</span>
 						<div className="flex flex-col gap-4">
-							<FormButton>{deactivated ? "Reactivate account" : "Deactivate account"}</FormButton>
+							<FormButton>
+								{deactivated ? "Reactivate account" : "Deactivate account"}
+							</FormButton>
 							<FormAlternativeActionLink href={urls.settings.deleteAccount}>
 								Permanently delete your account instead?
 							</FormAlternativeActionLink>

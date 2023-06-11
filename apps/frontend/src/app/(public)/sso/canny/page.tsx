@@ -11,10 +11,14 @@ export interface CannyPageProps {
 export default async function CannyPage({ searchParams }: CannyPageProps) {
 	const redirectURL = searchParams?.redirect;
 	const companyID = searchParams?.companyID;
-	if (!redirectURL || !redirectURL.startsWith("https://") || !companyID) return null;
+	if (!redirectURL || !redirectURL.startsWith("https://") || !companyID)
+		return null;
 
 	const session = await withOptionalSession();
-	if (!session) redirect(urls.login(`/sso/canny?companyID=${companyID}&redirect=${redirectURL}`));
+	if (!session)
+		redirect(
+			urls.login(`/sso/canny?companyID=${companyID}&redirect=${redirectURL}`)
+		);
 
 	const { token } = await api.auth.sso("canny", thruServerCookies());
 	redirect(

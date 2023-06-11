@@ -7,17 +7,27 @@ import { urls } from "~/urls";
 import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
 
 type LinkOrButtonProps<T> = T &
-	(Pick<React.ComponentProps<"a">, "href"> | Pick<React.ComponentProps<"button">, "onClick">);
+	(
+		| Pick<React.ComponentProps<"a">, "href">
+		| Pick<React.ComponentProps<"button">, "onClick">
+	);
 
 type FooterListIconLinkProps = LinkOrButtonProps<{ Icon: IconComponent }>;
 
-export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({ Icon, ...props }) =>
+export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
+	Icon,
+	...props
+}) =>
 	"href" in props ? (
 		<a className="cursor-pointer hover:brightness-90" {...props}>
 			<Icon className="h-6 w-6 sm:h-8 sm:w-8" />
 		</a>
 	) : (
-		<button className="cursor-pointer hover:brightness-90" type="button" {...props}>
+		<button
+			className="cursor-pointer hover:brightness-90"
+			type="button"
+			{...props}
+		>
 			<Icon className="h-6 w-6 sm:h-8 sm:w-8" />
 		</button>
 	);
@@ -38,7 +48,9 @@ export const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
 	</li>
 );
 
-export type FooterProps = React.ComponentProps<"footer"> & { desktopOnly?: boolean };
+export type FooterProps = React.ComponentProps<"footer"> & {
+	desktopOnly?: boolean;
+};
 
 export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 	return (
@@ -54,8 +66,14 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 				<div className="flex items-center gap-8 md:mx-auto md:justify-center">
 					<div className="flex gap-4">
 						<FooterIconSupportLink />
-						<FooterListIconLink href={urls.socials.discord} Icon={DiscordIcon} />
-						<FooterListIconLink href={urls.socials.twitter} Icon={TwitterIcon} />
+						<FooterListIconLink
+							href={urls.socials.discord}
+							Icon={DiscordIcon}
+						/>
+						<FooterListIconLink
+							href={urls.socials.twitter}
+							Icon={TwitterIcon}
+						/>
 					</div>
 				</div>
 				<div className="flex max-w-screen-sm flex-col md:mx-auto">
@@ -63,21 +81,33 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 						<FooterListLink href={urls.resources.events} label="Events" />
 						<FooterSupportLink />
 						<FooterCannyLink />
-						<FooterListLink href={urls.resources.networkStatus} label="Status" />
+						<FooterListLink
+							href={urls.resources.networkStatus}
+							label="Status"
+						/>
 					</ul>
 					<ul className="flex flex-wrap gap-x-4 md:justify-center">
 						<FooterListLink href={urls.resources.about} label="About" />
 						<FooterListLink href={urls.resources.press} label="Press" />
 						<FooterListLink href={urls.resources.branding} label="Branding" />
-						<FooterListLink href={urls.resources.developers} label="Developers" />
+						<FooterListLink
+							href={urls.resources.developers}
+							label="Developers"
+						/>
 					</ul>
 					<ul className="flex flex-wrap gap-x-4 md:justify-center">
 						<FooterListLink
 							href={urls.resources.communityGuidelines}
 							label="Community Guidelines"
 						/>
-						<FooterListLink href={urls.resources.termsOfService} label="Terms" />
-						<FooterListLink href={urls.resources.privacyPolicy} label="Privacy" />
+						<FooterListLink
+							href={urls.resources.termsOfService}
+							label="Terms"
+						/>
+						<FooterListLink
+							href={urls.resources.privacyPolicy}
+							label="Privacy"
+						/>
 					</ul>
 				</div>
 				<div className="flex justify-between md:text-lg">

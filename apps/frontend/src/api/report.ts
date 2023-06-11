@@ -1,8 +1,8 @@
-import { Expand } from "~/utilities";
-
 import { Attribute } from "./attributes";
 import { DatedModel, UuidModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
+
+import { Expand } from "~/utilities";
 
 export type Report = Expand<
 	UuidModel &
@@ -25,15 +25,22 @@ export async function list(options: ListOptions): Promise<Array<Report>> {
 }
 
 export async function create(
-	options: NarrowFetchOptions<Pick<Report, "targetId"> & { reasonId: string; message: string }>
+	options: NarrowFetchOptions<
+		Pick<Report, "targetId"> & { reasonId: string; message: string }
+	>
 ): Promise<Report> {
 	return fetch<Report>("post", "reports", options);
 }
 
-export async function clear(reportId: string, options: NarrowFetchOptions = {}): Promise<Report> {
+export async function clear(
+	reportId: string,
+	options: NarrowFetchOptions = {}
+): Promise<Report> {
 	return fetch<Report>("delete", `reports/${reportId}`, options);
 }
 
-export async function clearAll(options: NarrowFetchOptions<undefined, { targetId: string }>) {
+export async function clearAll(
+	options: NarrowFetchOptions<undefined, { targetId: string }>
+) {
 	return fetch<{ count: number }>("delete", `reports`, options);
 }

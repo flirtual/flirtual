@@ -2,25 +2,30 @@
 
 import { useCallback, useState } from "react";
 
+import { SnapSection } from "./snap-section";
+
 import { useInterval } from "~/hooks/use-interval";
 import { UCImage } from "~/components/uc-image";
 
-import { SnapSection } from "./snap-section";
-
-export const SectionAvatarProfiles: React.FC<{ values: Array<string> }> = ({ values }) => {
-	const [activeIdx, setActiveIdx] = useState(0);
+export const SectionAvatarProfiles: React.FC<{ values: Array<string> }> = ({
+	values
+}) => {
+	const [activeIndex, setActiveIndex] = useState(0);
 
 	useInterval(
 		useCallback(() => {
-			setActiveIdx((activeIdx) => (activeIdx + 1) % values.length);
+			setActiveIndex((activeIndex) => (activeIndex + 1) % values.length);
 		}, [values.length]),
 		5000
 	);
 
-	const activeValue = values[activeIdx];
+	const activeValue = values[activeIndex];
 
 	return (
-		<SnapSection className="bg-brand-gradient px-8 py-16 md:px-16" id="avatar-profiles">
+		<SnapSection
+			className="bg-brand-gradient px-8 py-16 md:px-16"
+			id="avatar-profiles"
+		>
 			<div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col items-center justify-center gap-8">
 				<div className="flex flex-col items-center justify-center gap-8 text-center">
 					<h1 className="mt-8 font-montserrat text-5xl font-extrabold md:text-7xl">

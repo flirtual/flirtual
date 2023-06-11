@@ -22,10 +22,12 @@ export interface InputAutocompleteProps<K extends string = string> {
 	onChange: React.Dispatch<Array<K>>;
 }
 
-export function InputAutocomplete<K extends string>(props: InputAutocompleteProps<K>) {
+export function InputAutocomplete<K extends string>(
+	props: InputAutocompleteProps<K>
+) {
 	const {
 		value: values = [],
-		limit = Infinity,
+		limit = Number.POSITIVE_INFINITY,
 		supportArbitrary = false,
 		onChange,
 		options,
@@ -54,13 +56,13 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 		[options, values, supportArbitrary]
 	);
 
-	const placeholder = visibleValueOptions.length ? "" : props.placeholder;
+	const placeholder = visibleValueOptions.length > 0 ? "" : props.placeholder;
 
-	const inputRef = useRef<HTMLInputElement>(null);
+	const inputReference = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
 	const [overlayVisible, setOverlayVisible] = useState(false);
 
-	const optionWindowRef = useRef<HTMLDivElement>(null);
+	const optionWindowReference = useRef<HTMLDivElement>(null);
 
 	const onInputChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
 		({ currentTarget }) => {
@@ -93,7 +95,7 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 		<div
 			{...elementProps}
 			className="group relative"
-			onClick={() => inputRef.current?.focus()}
+			onClick={() => inputReference.current?.focus()}
 			onFocus={() => setOverlayVisible(true)}
 			onBlur={({ currentTarget, relatedTarget }) => {
 				if (currentTarget.contains(relatedTarget)) return;
@@ -103,11 +105,11 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 			onKeyDown={(event) => {
 				if (
 					(event.key !== "ArrowUp" && event.key !== "ArrowDown") ||
-					optionWindowRef.current?.contains(document.activeElement)
+					optionWindowReference.current?.contains(document.activeElement)
 				)
 					return;
 
-				optionWindowRef.current?.focus();
+				optionWindowReference.current?.focus();
 				event.preventDefault();
 			}}
 		>
@@ -133,10 +135,11 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 						autoComplete="off"
 						className="grow border-none bg-transparent placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50"
 						placeholder={placeholder}
-						ref={inputRef}
+						ref={inputReference}
 						type="text"
 						value={inputValue}
 						style={{
+							// eslint-disable-next-line unicorn/explicit-length-check
 							width: `${(inputValue.length || placeholder?.length || 1) + 1}em`
 						}}
 						onChange={onInputChange}
@@ -144,7 +147,7 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 							const { key, currentTarget } = event;
 							const value = currentTarget.value.trim();
 
-							if (key === "Enter" && value.length !== 0) {
+							if (key === "Enter" && value.length > 0) {
 								const exactMatchOption = options.find(
 									({ label }) => label.toLowerCase() === value.toLowerCase()
 								);
@@ -152,9 +155,13 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 								if (
 									exactMatchOption ||
 									// If there is only one suggestion and it's close enough to the input.
-									(suggestions.length === 1 && fuzzy(value, suggestions[0].key) > 0.7)
+									(suggestions.length === 1 &&
+										fuzzy(value, suggestions[0].key) > 0.7)
 								) {
-									props.onChange([...values, exactMatchOption?.key ?? suggestions[0].key]);
+									props.onChange([
+										...values,
+										exactMatchOption?.key ?? suggestions[0].key
+									]);
 									setInputValue("");
 
 									event.preventDefault();
@@ -170,7 +177,7 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 								}
 							}
 
-							if (key !== "Backspace" || value.length !== 0) return;
+							if (key !== "Backspace" || value.length > 0) return;
 							event.preventDefault();
 
 							const lastValue = values.at(-1);
@@ -190,12 +197,12 @@ export function InputAutocomplete<K extends string>(props: InputAutocompleteProp
 					>
 						<InputOptionWindow
 							options={suggestions}
-							ref={optionWindowRef}
+							ref={optionWindowReference}
 							onOptionClick={({ option }) => {
 								if (values.length === limit) return;
 								props.onChange([...values, option.key as K]);
 
-								inputRef.current?.focus();
+								inputReference.current?.focus();
 								setInputValue("");
 							}}
 						/>

@@ -1,12 +1,12 @@
 import { snakeCase } from "change-case";
 
-import { AttributeType, PartialAttributeCollection } from "~/api/attributes";
-
 import { UpdatedAtModel } from "../../common";
 import { fetch, NarrowFetchOptions } from "../../exports";
 
 import { ProfileImage } from "./images";
 import { ProfileCustomWeights } from "./custom-weights";
+
+import { AttributeType, PartialAttributeCollection } from "~/api/attributes";
 
 export type ProfilePreferences = UpdatedAtModel & {
 	agemin?: number;
@@ -125,7 +125,10 @@ export const personalityQuestionLabels = [
 
 export const DefaultProfilePersonality = Object.freeze<ProfilePersonality>(
 	Object.fromEntries(
-		personalityQuestionLabels.map((_, questionIdx) => [`question${questionIdx}`, null])
+		personalityQuestionLabels.map((_, questionIndex) => [
+			`question${questionIndex}`,
+			null
+		])
 	) as unknown as ProfilePersonality
 );
 
@@ -158,15 +161,19 @@ export async function updatePreferences(
 		| undefined
 	>
 ) {
-	return fetch<ProfilePreferences>("post", `users/${userId}/profile/preferences`, {
-		...options,
-		query: {
-			required: Array.isArray(options.query?.required)
-				? options.query?.required.map((key) => snakeCase(key))
-				: undefined,
-			requiredAttributes: Array.isArray(options.query?.requiredAttributes)
-				? options.query?.requiredAttributes.map((key) => snakeCase(key))
-				: undefined
+	return fetch<ProfilePreferences>(
+		"post",
+		`users/${userId}/profile/preferences`,
+		{
+			...options,
+			query: {
+				required: Array.isArray(options.query?.required)
+					? options.query?.required.map((key) => snakeCase(key))
+					: undefined,
+				requiredAttributes: Array.isArray(options.query?.requiredAttributes)
+					? options.query?.requiredAttributes.map((key) => snakeCase(key))
+					: undefined
+			}
 		}
-	});
+	);
 }

@@ -5,13 +5,20 @@ import { AttributeCollection } from "~/api/attributes";
 import { ProfileDomsubList } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import { InputAutocomplete, InputLabel, InputRadioList, InputSwitch } from "~/components/inputs";
+import {
+	InputAutocomplete,
+	InputLabel,
+	InputRadioList,
+	InputSwitch
+} from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy } from "~/utilities";
 
-export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({ kinks }) => {
+export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
+	kinks
+}) => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
@@ -24,7 +31,10 @@ export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({ kin
 			fields={{
 				nsfw: user.preferences?.nsfw ?? false,
 				domsub: user.profile.domsub,
-				kinks: filterBy(user.profile.attributes, "type", "kink").map(({ id }) => id) ?? [],
+				kinks:
+					filterBy(user.profile.attributes, "type", "kink").map(
+						({ id }) => id
+					) ?? [],
 				kinksPrivacy: user.preferences?.privacy.kinks ?? "everyone"
 			}}
 			onSubmit={async ({ domsub, kinks, kinksPrivacy, nsfw }) => {
@@ -35,11 +45,16 @@ export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({ kin
 							kinkId: kinks
 						}
 					}),
-					api.user.preferences.updatePrivacy(user.id, { body: { kinks: kinksPrivacy } }),
+					api.user.preferences.updatePrivacy(user.id, {
+						body: { kinks: kinksPrivacy }
+					}),
 					api.user.preferences.update(user.id, { body: { nsfw } })
 				]);
 
-				toasts.add({ type: "success", label: "Successfully updated NSFW settings!" });
+				toasts.add({
+					type: "success",
+					label: "Successfully updated NSFW settings!"
+				});
 
 				await mutateSession({
 					...session,

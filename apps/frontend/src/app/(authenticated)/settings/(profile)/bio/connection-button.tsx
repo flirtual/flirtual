@@ -24,7 +24,9 @@ export const AddConnectionButton: FC<AddConnectionButtonProps> = ({ type }) => {
 			className="flex items-center gap-2 rounded-lg bg-brand-gradient px-4 py-2 text-white-20"
 			href={api.connections.authorizeUrl(type, location.href).href}
 		>
-			<span className="font-montserrat text-lg font-semibold">{label[type]}</span>
+			<span className="font-montserrat text-lg font-semibold">
+				{label[type]}
+			</span>
 			<PlusIcon className="h-5 w-5" strokeWidth={3} />
 		</a>
 	);
@@ -32,7 +34,10 @@ export const AddConnectionButton: FC<AddConnectionButtonProps> = ({ type }) => {
 
 export type ConnectionItemProps = Connection;
 
-export const ConnectionItem: FC<ConnectionItemProps> = ({ type, displayName }) => {
+export const ConnectionItem: FC<ConnectionItemProps> = ({
+	type,
+	displayName
+}) => {
 	return (
 		<div className="flex grow basis-64 flex-col gap-2 bg-white-30 p-4">
 			<span className="text-sm font-semibold">{label[type]}</span>

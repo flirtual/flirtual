@@ -23,23 +23,20 @@ export const ClientScripts: React.FC = () => {
 	}, []);
 
 	return (
-		<>
-			{/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
-			<Script
-				src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"
-				onReady={() => {
-					window.Blinkloader.optimize({
-						pubkey: uploadcarePublicKey,
-						cdnBase: "https://media.flirtu.al",
-						lazyload: false,
-						smartCompression: true,
-						retina: true,
-						webp: true,
-						responsive: true,
-						fadeIn: true
-					});
-				}}
-			/>
-		</>
+		<Script
+			src="https://media.flirtu.al/libs/blinkloader/3.x/blinkloader.min.js"
+			onReady={() => {
+				window.Blinkloader.optimize({
+					pubkey: uploadcarePublicKey,
+					cdnBase: "https://media.flirtu.al",
+					lazyload: false,
+					smartCompression: true,
+					retina: true,
+					webp: true,
+					responsive: true,
+					fadeIn: true
+				});
+			}}
+		/>
 	);
 };

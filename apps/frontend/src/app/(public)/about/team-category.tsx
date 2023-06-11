@@ -11,7 +11,9 @@ export interface TeamCategory {
 	members: Array<TeamMember>;
 }
 
-export const TeamCategory: React.FC<{ category: TeamCategory }> = ({ category }) => {
+export const TeamCategory: React.FC<{ category: TeamCategory }> = ({
+	category
+}) => {
 	return (
 		<div className="flex flex-col gap-1">
 			<span className="text-xl font-semibold">{category.name}</span>

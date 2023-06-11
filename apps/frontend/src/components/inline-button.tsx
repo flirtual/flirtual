@@ -5,7 +5,10 @@ type InlineButtonProps = React.ComponentProps<"button"> &
 		highlight?: boolean;
 	};
 
-export const InlineButton: React.FC<InlineButtonProps> = ({ highlight = true, ...props }) => (
+export const InlineButton: React.FC<InlineButtonProps> = ({
+	highlight = true,
+	...props
+}) => (
 	<button
 		{...props}
 		type="button"

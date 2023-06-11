@@ -42,7 +42,9 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 			className="flex flex-col gap-8"
 			requireChange={false}
 			fields={{
-				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
+				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(
+					({ id }) => id
+				),
 				age: [
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
@@ -70,7 +72,11 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 							agemin: agemin === absMinAge ? null : agemin,
 							agemax: agemax === absMaxAge ? null : agemax,
 							attributes: [
-								...excludeBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
+								...excludeBy(
+									preferences?.attributes ?? [],
+									"type",
+									"gender"
+								).map(({ id }) => id),
 								...values.gender
 							]
 						}
@@ -104,16 +110,27 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 								<>
 									<InputLabel
 										{...field.labelProps}
-										hint={min === absMinAge && max === absMaxAge ? "any age" : `${min} to ${max}`}
+										hint={
+											min === absMinAge && max === absMaxAge
+												? "any age"
+												: `${min} to ${max}`
+										}
 									>
 										Age range
 									</InputLabel>
-									<InputRangeSlider {...field.props} max={absMaxAge} min={absMinAge} />
+									<InputRangeSlider
+										{...field.props}
+										max={absMaxAge}
+										min={absMinAge}
+									/>
 								</>
 							);
 						}}
 					</FormField>
-					<FormField className="flex-col-reverse gap-4 sm:flex-row sm:items-center" name="serious">
+					<FormField
+						className="flex-col-reverse gap-4 sm:flex-row sm:items-center"
+						name="serious"
+					>
 						{(field) => (
 							<>
 								<InputSwitch {...field.props} />

@@ -14,7 +14,10 @@ export interface RelativeTimeOptions {
 	suffix?: string;
 }
 
-export function relativeTime(date: Date, options: RelativeTimeOptions = {}): string {
+export function relativeTime(
+	date: Date,
+	options: RelativeTimeOptions = {}
+): string {
 	const { approximate = true, suffix = "ago" } = options;
 	const since = Date.now() - date.getTime();
 
@@ -22,12 +25,16 @@ export function relativeTime(date: Date, options: RelativeTimeOptions = {}): str
 
 	if (since < minuteInMilliseconds) {
 		const seconds = Math.floor(since / secondInMilliseconds);
-		return seconds === 1 ? `a second ${suffix}` : `${seconds} seconds ${suffix}`;
+		return seconds === 1
+			? `a second ${suffix}`
+			: `${seconds} seconds ${suffix}`;
 	}
 
 	if (since < hourInMilliseconds) {
 		const minutes = Math.floor(since / minuteInMilliseconds);
-		return minutes === 1 ? `a minute ${suffix}` : `${minutes} minutes ${suffix}`;
+		return minutes === 1
+			? `a minute ${suffix}`
+			: `${minutes} minutes ${suffix}`;
 	}
 
 	if (since < dayInMilliseconds) {

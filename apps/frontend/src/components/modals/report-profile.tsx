@@ -15,7 +15,10 @@ interface ReportProfileModelFormProps {
 	onVisibilityChange: Dispatch<boolean>;
 }
 
-const ReportProfileModelForm: FC<ReportProfileModelFormProps> = ({ user, onVisibilityChange }) => {
+const ReportProfileModelForm: FC<ReportProfileModelFormProps> = ({
+	user,
+	onVisibilityChange
+}) => {
 	const toasts = useToast();
 	const router = useRouter();
 	const reportReasons = useAttributeList("report-reason");
@@ -40,11 +43,16 @@ const ReportProfileModelForm: FC<ReportProfileModelFormProps> = ({ user, onVisib
 		>
 			{({ FormField }) => (
 				<>
-					<FormField className="flex flex-row items-center gap-4" name="targetId">
+					<FormField
+						className="flex flex-row items-center gap-4"
+						name="targetId"
+					>
 						{() => (
 							<>
 								<ShieldExclamationIcon className="h-6 w-6" />
-								<span className="text-xl">Report profile: {displayName(user)}</span>
+								<span className="text-xl">
+									Report profile: {displayName(user)}
+								</span>
 							</>
 						)}
 					</FormField>
@@ -94,7 +102,10 @@ export const ReportProfileModel: React.FC<ReportProfileModelProps> = ({
 }) => {
 	return (
 		<DrawerOrModal visible={visible} onVisibilityChange={onVisibilityChange}>
-			<ReportProfileModelForm user={user} onVisibilityChange={onVisibilityChange} />
+			<ReportProfileModelForm
+				user={user}
+				onVisibilityChange={onVisibilityChange}
+			/>
 			{children}
 		</DrawerOrModal>
 	);

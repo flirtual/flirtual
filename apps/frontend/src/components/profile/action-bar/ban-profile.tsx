@@ -9,9 +9,17 @@ export const BanProfile: React.FC<{ user: User }> = ({ user }) => {
 	const [visible, setVisible] = useState(false);
 
 	return (
-		<BanProfileModal user={user} visible={visible} onVisibilityChange={setVisible}>
+		<BanProfileModal
+			user={user}
+			visible={visible}
+			onVisibilityChange={setVisible}
+		>
 			<Tooltip fragmentClassName="h-6 w-6" value="Ban profile">
-				<button className="h-full w-full" type="button" onClick={() => setVisible(true)}>
+				<button
+					className="h-full w-full"
+					type="button"
+					onClick={() => setVisible(true)}
+				>
 					<ShieldExclamationIcon className="h-full w-full" />
 				</button>
 			</Tooltip>

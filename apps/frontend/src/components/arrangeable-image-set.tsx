@@ -18,23 +18,23 @@ export const ArrangeableImageSet: React.FC<{
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<div className="grid grid-cols-3 gap-2">
-				{value.map((image, imageIdx) => (
+				{value.map((image, imageIndex) => (
 					<ArrangeableImage
 						{...image}
-						idx={imageIdx}
-						key={imageIdx}
-						moveImage={(sourceIdx: number, targetIdx: number) => {
-							const sourceItem = value[sourceIdx];
-							const targetItem = value[targetIdx];
+						idx={imageIndex}
+						key={imageIndex}
+						moveImage={(sourceIndex: number, targetIndex: number) => {
+							const sourceItem = value[sourceIndex];
+							const targetItem = value[targetIndex];
 
 							const newValue = [...value];
-							newValue[sourceIdx] = targetItem;
-							newValue[targetIdx] = sourceItem;
+							newValue[sourceIndex] = targetItem;
+							newValue[targetIndex] = sourceItem;
 
 							onChange?.(newValue);
 						}}
 						onDelete={() => {
-							onChange?.(value.filter((_, idx) => imageIdx !== idx));
+							onChange?.(value.filter((_, index) => imageIndex !== index));
 						}}
 					/>
 				))}

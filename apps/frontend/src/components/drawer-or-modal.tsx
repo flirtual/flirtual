@@ -2,10 +2,13 @@
 
 import { Children, Dispatch } from "react";
 
-import { ScreenBreakpoint, useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
-
 import { Drawer } from "./drawer";
 import { Modal } from "./modal";
+
+import {
+	ScreenBreakpoint,
+	useScreenBreakpoint
+} from "~/hooks/use-screen-breakpoint";
 
 export interface DrawerOrModalProps {
 	children: React.ReactNode;

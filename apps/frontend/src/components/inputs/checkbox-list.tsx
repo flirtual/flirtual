@@ -17,7 +17,9 @@ export interface InputCheckboxListProps<K extends string> {
 	onChange: React.Dispatch<CheckboxListValue<K>>;
 }
 
-export function InputCheckboxList<T extends string>(props: InputCheckboxListProps<T>) {
+export function InputCheckboxList<T extends string>(
+	props: InputCheckboxListProps<T>
+) {
 	const { value, items = [], onChange } = props;
 	const id = useId();
 
@@ -33,7 +35,11 @@ export function InputCheckboxList<T extends string>(props: InputCheckboxListProp
 							value={value.includes(item.key)}
 							onChange={(itemValue) => {
 								itemValue
-									? onChange([item.key, ...value].filter((key) => !item.conflicts?.includes(key)))
+									? onChange(
+											[item.key, ...value].filter(
+												(key) => !item.conflicts?.includes(key)
+											)
+									  )
 									: onChange(value.filter((otherKey) => otherKey !== item.key));
 							}}
 						/>

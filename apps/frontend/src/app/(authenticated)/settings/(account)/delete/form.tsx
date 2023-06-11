@@ -14,9 +14,9 @@ import { AttributeCollection } from "~/api/attributes";
 import { HeaderSupportButton } from "~/components/layout/support-button";
 import { InlineLink } from "~/components/inline-link";
 
-export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"> }> = ({
-	deleteReasons
-}) => {
+export const DeleteForm: FC<{
+	deleteReasons: AttributeCollection<"delete-reason">;
+}> = ({ deleteReasons }) => {
 	const router = useRouter();
 
 	return (
@@ -36,8 +36,8 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 			{({ FormField, fields }) => (
 				<>
 					<span>
-						We&apos;re sorry to see you go. Would you mind telling us why you&apos;re deleting your
-						account so we can improve?
+						We&apos;re sorry to see you go. Would you mind telling us why
+						you&apos;re deleting your account so we can improve?
 					</span>
 					<FormField name="reasonId">
 						{(field) => (
@@ -57,7 +57,8 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 										<InlineLink href={urls.settings.deactivateAccount}>
 											temporarily deactivate your account
 										</InlineLink>{" "}
-										instead! No one can see your profile while it&apos;s deactivated.
+										instead! No one can see your profile while it&apos;s
+										deactivated.
 									</p>
 								) : field.props.value === "J3vVp9PWZQi5cEuk8G8wij" ? (
 									<p>
@@ -87,14 +88,19 @@ export const DeleteForm: FC<{ deleteReasons: AttributeCollection<"delete-reason"
 						{(field) => (
 							<>
 								<InputLabel>Confirm current password</InputLabel>
-								<InputText {...field.props} autoComplete="current-password" type="password" />
+								<InputText
+									{...field.props}
+									autoComplete="current-password"
+									type="password"
+								/>
 							</>
 						)}
 					</FormField>
 					<div className="flex flex-col gap-4">
 						<span>
 							Are you sure you want to delete your account?{" "}
-							<span className="font-semibold">This action is irreversible</span>.
+							<span className="font-semibold">This action is irreversible</span>
+							.
 						</span>
 					</div>
 					<FormButton>Delete account</FormButton>

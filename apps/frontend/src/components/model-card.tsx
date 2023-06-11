@@ -14,7 +14,13 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	containerProps = {},
 	...props
 }) => (
-	<div {...props} className={twMerge("w-full shrink-0 sm:w-full sm:max-w-lg", props.className)}>
+	<div
+		{...props}
+		className={twMerge(
+			"w-full shrink-0 sm:w-full sm:max-w-lg",
+			props.className
+		)}
+	>
 		<div
 			{...titleProps}
 			className={twMerge(

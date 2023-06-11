@@ -1,17 +1,17 @@
 import { useCallback, useEffect } from "react";
 
-import { displayName } from "~/api/user";
-import { urls } from "~/urls";
-import { resolveTheme } from "~/theme";
-
 import { useSessionUser } from "./use-session";
 import { useTheme } from "./use-theme";
 import { useScreenBreakpoint } from "./use-screen-breakpoint";
 
+import { displayName } from "~/api/user";
+import { urls } from "~/urls";
+import { resolveTheme } from "~/theme";
+
 declare global {
 	interface Window {
 		Canny: {
-			(...args: Array<unknown>): void;
+			(...arguments_: Array<unknown>): void;
 			q: Array<unknown>;
 		};
 	}
@@ -34,7 +34,7 @@ export function useCanny() {
 		script.id = "canny-jssdk";
 		script.async = true;
 
-		document.body.appendChild(script);
+		document.body.append(script);
 		loaded = true;
 	}, []);
 

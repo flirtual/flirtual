@@ -25,7 +25,10 @@ function fromDateString(value: string): globalThis.Date {
 	return new Date(year, month, day);
 }
 
-export type InputDateSelectProps = Pick<InputCalendarProps, "value" | "onChange" | "min" | "max">;
+export type InputDateSelectProps = Pick<
+	InputCalendarProps,
+	"value" | "onChange" | "min" | "max"
+>;
 
 export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	const [inputValue, setInputValue] = useState(toDateString(props.value));
@@ -46,7 +49,10 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	);
 
 	return (
-		<DrawerOrPopover visible={drawerVisible} onVisibilityChange={setDrawerVisible}>
+		<DrawerOrPopover
+			visible={drawerVisible}
+			onVisibilityChange={setDrawerVisible}
+		>
 			<div className="flex h-full w-full justify-center">
 				<InputCalendar
 					className="w-fit sm:shadow-brand-1"
@@ -103,7 +109,11 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 						const { currentTarget } = event;
 						const { selectionStart, selectionEnd } = currentTarget;
 
-						setTimeout(() => currentTarget.setSelectionRange(selectionStart, selectionEnd), 0);
+						setTimeout(
+							() =>
+								currentTarget.setSelectionRange(selectionStart, selectionEnd),
+							0
+						);
 					};
 
 					switch (event.key) {

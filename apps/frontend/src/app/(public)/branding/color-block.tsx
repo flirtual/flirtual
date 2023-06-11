@@ -6,7 +6,11 @@ export interface ColorBlockProps {
 	invert?: boolean;
 }
 
-export const ColorBlock: React.FC<ColorBlockProps> = ({ name, value, invert }) => (
+export const ColorBlock: React.FC<ColorBlockProps> = ({
+	name,
+	value,
+	invert
+}) => (
 	<div
 		className={twMerge("grow rounded-lg border p-4", invert && "text-black-80")}
 		style={{ background: value }}
