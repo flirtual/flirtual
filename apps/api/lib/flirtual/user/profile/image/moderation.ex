@@ -9,6 +9,10 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   alias Flirtual.Repo
   alias Flirtual.User.Profile.Image
 
+  # These tags are not indicative of Flirtual's content policies, nor are they
+  # an explicit list of forbidden content. They are simply used to classify
+  # images for moderation purposes.
+
   # https://github.com/flirtual/deep-danbooru
   # https://danbooru.donmai.us/wiki_pages/tag_groups
   def classify_flag?(classifications) do
