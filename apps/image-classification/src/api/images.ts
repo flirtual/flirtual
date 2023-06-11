@@ -1,5 +1,5 @@
-import { createWriteStream } from "fs";
-import path from "path";
+import { createWriteStream } from "node:fs";
+import path from "node:path";
 
 import mime from "mime-types";
 
@@ -10,11 +10,16 @@ import { url } from ".";
 
 export const download = async (groupFile: string, imageId: string) => {
 	try {
-		const response = await fetch(url(`/v1/images/${imageId}/view`, { format: "jpeg" }), {
-			redirect: "follow"
-		});
+		const response = await fetch(
+			url(`/v1/images/${imageId}/view`, { format: "jpeg" }),
+			{
+				redirect: "follow"
+			}
+		);
 
-		const extension = mime.extension(response.headers.get("content-type") || "");
+		const extension = mime.extension(
+			response.headers.get("content-type") || ""
+		);
 		if (!extension) {
 			log.warn({ groupFile }, `Unknown content type for ${imageId}.`);
 			return false;
@@ -28,7 +33,11 @@ export const download = async (groupFile: string, imageId: string) => {
 			return false;
 		}
 
-		const output = path.resolve(temporaryDirectory, groupFile, `${imageId}.${extension}`);
+		const output = path.resolve(
+			temporaryDirectory,
+			groupFile,
+			`${imageId}.${extension}`
+		);
 
 		const buffer = Buffer.from(await response.arrayBuffer());
 		createWriteStream(output).write(buffer);

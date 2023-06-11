@@ -1,6 +1,6 @@
-import { spawn } from "child_process";
-import fs from "fs/promises";
-import path from "path";
+import { spawn } from "node:child_process";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 import { temporaryDirectory } from "../consts";
 import { log } from "../log";
@@ -44,7 +44,7 @@ export const classify: Classifier<Result> = async (imageIds, groupFile) => {
 		imageIds.map(async (imageId) => {
 			const content = await fs.readFile(
 				path.resolve(temporaryDirectory, groupFile, `${imageId}.json`),
-				"utf-8"
+				"utf8"
 			);
 			const data = JSON.parse(content) as Record<string, string>;
 
@@ -54,7 +54,7 @@ export const classify: Classifier<Result> = async (imageIds, groupFile) => {
 					Object.entries(data).map(([tag, probability]) => [
 						tag,
 						// Round the probability to 4 decimal places.
-						parseFloat(parseFloat(probability).toFixed(4))
+						Number.parseFloat(Number.parseFloat(probability).toFixed(4))
 					])
 				)
 			);
