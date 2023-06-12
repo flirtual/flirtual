@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { twMerge } from "tailwind-merge";
 
-import { Pill } from "./pill";
-
 import { withAttribute } from "~/api/attributes-server";
+
+import { Pill } from "./pill";
 
 export interface CountryPillProps {
 	code: string;

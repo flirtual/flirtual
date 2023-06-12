@@ -1,3 +1,10 @@
+import { yearsAgo } from "~/date";
+import { withSession } from "~/server-utilities";
+import { filterBy } from "~/utilities";
+import { Html } from "~/components/html";
+import { displayName, User } from "~/api/user";
+import { urls } from "~/urls";
+
 import { InlineLink } from "../inline-link";
 import { VRChatIcon } from "../icons/brand/vrchat";
 import { DiscordIcon } from "../icons";
@@ -13,13 +20,6 @@ import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { RelationActions } from "./relation-actions";
 import { ProfileModeratorInfo } from "./moderator-info";
-
-import { yearsAgo } from "~/date";
-import { withSession } from "~/server-utilities";
-import { filterBy } from "~/utilities";
-import { Html } from "~/components/html";
-import { displayName, User } from "~/api/user";
-import { urls } from "~/urls";
 
 export interface ProfileProps {
 	user: User;

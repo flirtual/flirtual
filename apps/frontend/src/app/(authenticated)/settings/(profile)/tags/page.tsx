@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
-import { TagsForm } from "./form";
-
 import { ModelCard } from "~/components/model-card";
 import { withAttributeList } from "~/api/attributes-server";
+
+import { TagsForm } from "./form";
 
 export const metadata: Metadata = {
 	title: "Info & tags"

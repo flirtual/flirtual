@@ -1,14 +1,14 @@
 import { ShieldExclamationIcon } from "@heroicons/react/24/solid";
 import { Dispatch, FC, PropsWithChildren } from "react";
 
-import { DrawerOrModal } from "../drawer-or-modal";
-import { Form, FormButton } from "../forms";
-import { InputLabel, InputSelect, InputTextArea } from "../inputs";
-
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useToast } from "~/hooks/use-toast";
+
+import { InputLabel, InputSelect, InputTextArea } from "../inputs";
+import { Form, FormButton } from "../forms";
+import { DrawerOrModal } from "../drawer-or-modal";
 
 export interface BanProfileModalFormProps {
 	user: User;

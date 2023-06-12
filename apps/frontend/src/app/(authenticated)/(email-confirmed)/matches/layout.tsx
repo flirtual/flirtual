@@ -1,9 +1,6 @@
 // eslint-disable-next-line import/named
 import { PropsWithChildren, cache } from "react";
 
-import { withConversations } from "./data.server";
-import { LikesYouButton } from "./likes-you-button";
-
 import { ButtonLink } from "~/components/button";
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
@@ -15,6 +12,9 @@ import { api } from "~/api";
 import { fromEntries } from "~/utilities";
 import { SWRConfig } from "~/components/swr";
 import { SoleModelLayout } from "~/components/layout/sole-model";
+
+import { LikesYouButton } from "./likes-you-button";
+import { withConversations } from "./data.server";
 
 const withConversationUsers = cache(async (...userIds: Array<string>) => {
 	return (

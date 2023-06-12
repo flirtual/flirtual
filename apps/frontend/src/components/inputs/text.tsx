@@ -5,9 +5,9 @@ import { EyeSlashIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { IconComponent } from "../icons";
-
 import { omit } from "~/utilities";
+
+import { IconComponent } from "../icons";
 
 export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
 	Icon?: IconComponent;

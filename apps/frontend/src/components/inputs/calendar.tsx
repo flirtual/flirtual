@@ -10,13 +10,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
 
+import { IconComponent } from "~/components/icons";
+
 import {
 	InputOptionEvent,
 	InputOptionWindow,
 	InputSelectOption
 } from "./option-window";
-
-import { IconComponent } from "~/components/icons";
 
 const MonthNames = Object.freeze(
 	Array.from({ length: 12 })

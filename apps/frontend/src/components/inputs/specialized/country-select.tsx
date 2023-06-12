@@ -4,10 +4,10 @@ import { useInView } from "framer-motion";
 import { useMemo, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { useAttributeList } from "~/hooks/use-attribute-list";
+
 import { OptionItemProps } from "../option-window";
 import { InputSelect, InputSelectProps } from "../select";
-
-import { useAttributeList } from "~/hooks/use-attribute-list";
 
 export type InputCountrySelectProps = Omit<
 	InputSelectProps<string | null>,

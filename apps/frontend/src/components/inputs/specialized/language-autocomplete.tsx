@@ -2,14 +2,14 @@
 
 import { useMemo } from "react";
 
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useLanguage } from "~/hooks/use-language";
+
 import {
 	InputAutocomplete,
 	InputAutocompleteOption,
 	InputAutocompleteProps
 } from "../autocomplete";
-
-import { useAttributeList } from "~/hooks/use-attribute-list";
-import { useLanguage } from "~/hooks/use-language";
 
 export const InputLanguageAutocomplete: React.FC<
 	Omit<InputAutocompleteProps, "options">

@@ -1,8 +1,8 @@
-import { Onboarding4Form } from "./form";
-
 import { ModelCard } from "~/components/model-card";
 import { thruServerCookies, withSession } from "~/server-utilities";
 import { api } from "~/api";
+
+import { Onboarding4Form } from "./form";
 
 export default async function Onboarding4Page() {
 	const session = await withSession();

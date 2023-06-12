@@ -1,12 +1,12 @@
-import { Pill } from "./pill";
-import { PillCollectionExpansion } from "./expansion";
-import { PillAttributeList } from "./attribute-list";
-
 import { User } from "~/api/user";
 import { urls } from "~/urls";
 import { capitalize, groupBy } from "~/utilities";
 import { withSession } from "~/server-utilities";
 import { withAttribute } from "~/api/attributes-server";
+
+import { PillAttributeList } from "./attribute-list";
+import { PillCollectionExpansion } from "./expansion";
+import { Pill } from "./pill";
 
 function getPersonalityLabels({
 	profile: { openness, conscientiousness, agreeableness }

@@ -1,8 +1,8 @@
 import { decode } from "jsonwebtoken";
 
-import { ResetPasswordForm } from "./form";
-
 import { ModelCard } from "~/components/model-card";
+
+import { ResetPasswordForm } from "./form";
 
 export interface ResetPasswordPageProps {
 	params: { token: string };

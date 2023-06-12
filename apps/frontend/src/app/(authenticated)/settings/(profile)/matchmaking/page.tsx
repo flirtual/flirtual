@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
-import { MatchmakingForm } from "./form";
-
 import { ModelCard } from "~/components/model-card";
 import { withAttributeList } from "~/api/attributes-server";
+
+import { MatchmakingForm } from "./form";
 
 export const metadata: Metadata = {
 	title: "Matchmaking"

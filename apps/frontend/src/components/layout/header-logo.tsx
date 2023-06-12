@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { FlirtualLogo } from "../logo";
-
 import { urls } from "~/urls";
 import { useSession } from "~/hooks/use-session";
+
+import { FlirtualLogo } from "../logo";
 
 export const HeaderLogo: React.FC = () => {
 	const [session] = useSession();

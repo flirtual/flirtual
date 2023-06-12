@@ -1,10 +1,10 @@
 import { twMerge } from "tailwind-merge";
 
-import { Pill } from "./pill";
-
 import { PartialAttribute } from "~/api/attributes";
 import { findBy, sortBy } from "~/utilities";
 import { withAttributeList } from "~/api/attributes-server";
+
+import { Pill } from "./pill";
 
 export interface GenderPillsProps {
 	simple?: boolean;

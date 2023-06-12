@@ -1,7 +1,7 @@
-import { Onboarding2Form } from "./form";
-
 import { ModelCard } from "~/components/model-card";
 import { withAttributeList } from "~/api/attributes-server";
+
+import { Onboarding2Form } from "./form";
 
 export default async function Onboarding2Page() {
 	const games = await withAttributeList("game");

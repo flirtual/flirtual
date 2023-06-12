@@ -2,13 +2,13 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { FormInputMessages } from "./input-messages";
-
 import {
 	FormFieldsDefault,
 	InputFormField,
 	useFormContext
 } from "~/hooks/use-input-form";
+
+import { FormInputMessages } from "./input-messages";
 
 export type FormFieldProps<
 	K extends keyof T,

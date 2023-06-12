@@ -2,10 +2,10 @@
 
 import { useCallback, useState } from "react";
 
-import { SnapSection } from "./snap-section";
-
 import { UCImage } from "~/components/uc-image";
 import { useInterval } from "~/hooks/use-interval";
+
+import { SnapSection } from "./snap-section";
 
 export interface SectionCarouselProps {
 	values: Array<[src: string, label: string]>;

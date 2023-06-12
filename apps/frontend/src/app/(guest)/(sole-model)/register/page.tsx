@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
-import { RegisterForm } from "./form";
-
 import { ModelCard } from "~/components/model-card";
+
+import { RegisterForm } from "./form";
 
 export const metadata: Metadata = {
 	title: "Create account"

@@ -1,6 +1,6 @@
-import { Onboarding3Form } from "./form";
-
 import { ModelCard } from "~/components/model-card";
+
+import { Onboarding3Form } from "./form";
 
 export default function Onboarding3Page() {
 	return (

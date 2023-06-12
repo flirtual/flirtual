@@ -1,12 +1,12 @@
 import { Metadata } from "next";
 
-import { TeamList } from "./team-list";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { Image } from "~/components/image";
+
+import { TeamList } from "./team-list";
 
 export const metadata: Metadata = {
 	title: "About us"

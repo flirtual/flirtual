@@ -2,13 +2,13 @@
 
 import { Children, Dispatch, useRef } from "react";
 
-import { Drawer } from "./drawer";
-
 import { useClickOutside } from "~/hooks/use-click-outside";
 import {
 	ScreenBreakpoint,
 	useScreenBreakpoint
 } from "~/hooks/use-screen-breakpoint";
+
+import { Drawer } from "./drawer";
 
 export interface DrawerOrPopoverProps {
 	children: React.ReactNode;

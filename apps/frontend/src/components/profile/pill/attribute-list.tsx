@@ -2,11 +2,11 @@
 
 import { FC } from "react";
 
-import { Pill } from "./pill";
-
 import { Attribute } from "~/api/attributes";
 import { User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
+
+import { Pill } from "./pill";
 
 interface PillAttributeListProps {
 	attributes?: Array<Attribute>;

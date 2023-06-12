@@ -3,15 +3,15 @@
 
 import { ImageResponse } from "next/server";
 
-import { ProfilePageProps } from "./page";
-import { getProfileUser } from "./profile-user";
-
 import { urls } from "~/urls";
 import { displayName } from "~/api/user";
 import { withAttribute } from "~/api/attributes-server";
 import { filterBy } from "~/utilities";
 import { yearsAgo } from "~/date";
 import { AttributeCollection } from "~/api/attributes";
+
+import { getProfileUser } from "./profile-user";
+import { ProfilePageProps } from "./page";
 
 export const alt = "Flirtual";
 export const contentType = "image/svg+xml";

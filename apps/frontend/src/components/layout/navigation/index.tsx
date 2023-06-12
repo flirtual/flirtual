@@ -5,8 +5,6 @@ import Link from "next/link";
 import { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { ProfileNavigation } from "./profile";
-
 import { IconComponentProps } from "~/components/icons";
 import { useLocation } from "~/hooks/use-location";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
@@ -16,6 +14,8 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { HomeIcon } from "~/components/icons/gradient/home";
 import { LoginIcon } from "~/components/icons/gradient/login";
+
+import { ProfileNavigation } from "./profile";
 
 const NavigationIconButton: FC<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

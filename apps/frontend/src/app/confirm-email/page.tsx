@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 
-import { ConfirmTokenForm } from "./confirm-token-form";
-import { UserForms } from "./user-forms";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { withOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
+
+import { UserForms } from "./user-forms";
+import { ConfirmTokenForm } from "./confirm-token-form";
 
 export const metadata: Metadata = {
 	title: "Confirm email"

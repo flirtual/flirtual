@@ -1,6 +1,6 @@
-import { SnapSection } from "./snap-section";
-
 import { UCImage } from "~/components/uc-image";
+
+import { SnapSection } from "./snap-section";
 
 export interface SectionTestimonialProps {
 	images: Array<string>;

@@ -1,10 +1,10 @@
 import { twMerge } from "tailwind-merge";
 
-import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
-import { FooterCannyLink } from "./canny-button";
-
 import { urls } from "~/urls";
 import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
+
+import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
+import { FooterCannyLink } from "./canny-button";
 
 type LinkOrButtonProps<T> = T &
 	(

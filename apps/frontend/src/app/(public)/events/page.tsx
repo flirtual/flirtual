@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 
-import { DiscordEmbed } from "./discord-embed";
-
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 import { Image } from "~/components/image";
+
+import { DiscordEmbed } from "./discord-embed";
 
 export const metadata: Metadata = {
 	title: "Events"

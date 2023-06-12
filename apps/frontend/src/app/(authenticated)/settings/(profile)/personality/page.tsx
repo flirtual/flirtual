@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
-import { PersonalityForm } from "./form";
-
 import { ModelCard } from "~/components/model-card";
 import { api } from "~/api";
 import { thruServerCookies, withSession } from "~/server-utilities";
+
+import { PersonalityForm } from "./form";
 
 export const metadata: Metadata = {
 	title: "Personality"

@@ -2,11 +2,11 @@
 
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
 
+import { useFreshworks } from "~/hooks/use-freshworks";
+
 import { InlineButton } from "../inline-button";
 
 import { FooterListIconLink, FooterListLink } from "./footer";
-
-import { useFreshworks } from "~/hooks/use-freshworks";
 
 export const FooterSupportLink: React.FC = () => {
 	return (

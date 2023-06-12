@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-import { IconComponent } from "./icons";
-
 import { isInternalHref } from "~/urls";
+
+import { IconComponent } from "./icons";
 
 const defaultClassName = twMerge(
 	"focusable flex select-none items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"

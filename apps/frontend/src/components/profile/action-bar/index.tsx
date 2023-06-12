@@ -9,14 +9,14 @@ import {
 } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
-import { BanProfile } from "./ban-profile";
-import { ReportProfile } from "./report-profile";
-
 import { User } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
 import { Tooltip } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
+
+import { ReportProfile } from "./report-profile";
+import { BanProfile } from "./ban-profile";
 
 export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 	const [session, mutateSession] = useSession();

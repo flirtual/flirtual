@@ -1,10 +1,10 @@
 import { Url } from "next/dist/shared/lib/router/router";
 
+import { ProspectKind } from "~/api/matchmaking";
+
 import { User } from "./api/user";
 import { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
-
-import { ProspectKind } from "~/api/matchmaking";
 
 export const siteOrigin = process.env.NEXT_PUBLIC_ORIGIN as string;
 if (!siteOrigin) throw new ReferenceError("Site origin not defined");

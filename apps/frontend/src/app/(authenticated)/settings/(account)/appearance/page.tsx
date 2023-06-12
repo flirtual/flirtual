@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
-import { ThemePreview } from "./theme-preview";
-
 import { ModelCard } from "~/components/model-card";
 import { InputLabel } from "~/components/inputs";
 import { PreferenceThemes } from "~/api/user/preferences";
+
+import { ThemePreview } from "./theme-preview";
 
 export const metadata: Metadata = {
 	title: "Appearance"

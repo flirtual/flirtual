@@ -1,11 +1,11 @@
-import { Countdown } from "./countdown";
-
 import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
+
+import { Countdown } from "./countdown";
 
 export interface OutOfProspectsProps {
 	user: User;

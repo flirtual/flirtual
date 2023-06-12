@@ -5,11 +5,11 @@ import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { FC, Suspense } from "react";
 
-import { ConversationListItem } from "./list-item";
-import { LikesYouButton } from "./likes-you-button";
-
 import { urls } from "~/urls";
 import { useConversations } from "~/hooks/use-conversations";
+
+import { ConversationListItem } from "./list-item";
+import { LikesYouButton } from "./likes-you-button";
 
 export interface ConversationAsideProps {
 	activeConversationId?: string;

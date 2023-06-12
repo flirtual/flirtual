@@ -1,12 +1,12 @@
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 
-import { ProspectList } from "./prospect-list";
-
 import { api } from "~/api";
 import { thruServerCookies } from "~/server-utilities";
 import { ProspectKind } from "~/api/matchmaking";
 import { urls } from "~/urls";
+
+import { ProspectList } from "./prospect-list";
 
 interface BrowsePageProps {
 	searchParams: { kind?: string };

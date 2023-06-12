@@ -12,16 +12,16 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { ModalOuter } from "../modal";
-import { Tooltip } from "../tooltip";
-import { TimeRelative } from "../time-relative";
-import { UserImage } from "../user-avatar";
-
 import { ProfileImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
+
+import { UserImage } from "../user-avatar";
+import { TimeRelative } from "../time-relative";
+import { Tooltip } from "../tooltip";
+import { ModalOuter } from "../modal";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;

@@ -18,13 +18,13 @@ import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { useSelectedLayoutSegment } from "next/navigation";
 
-import { NavigationCategory } from "./navigation-category";
-import { NavigationHeader } from "./navigation-header";
-import { NavigationLink } from "./navigation-link";
-
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
 import { useSession } from "~/hooks/use-session";
+
+import { NavigationCategory } from "./navigation-category";
+import { NavigationHeader } from "./navigation-header";
+import { NavigationLink } from "./navigation-link";
 
 export const SettingsNavigation: FC = () => {
 	const layoutSegment = useSelectedLayoutSegment();

@@ -4,8 +4,6 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 
-import { ClientScripts } from "./client-scripts";
-
 import { withOptionalSession } from "~/server-utilities";
 import { siteOrigin, urls } from "~/urls";
 import { resolveTheme } from "~/theme";
@@ -15,6 +13,8 @@ import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { ShepherdProvider } from "~/components/shepherd";
 import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 import { ThemeProvider } from "~/hooks/use-theme";
+
+import { ClientScripts } from "./client-scripts";
 
 import "~/css/index.scss";
 

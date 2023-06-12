@@ -1,8 +1,8 @@
+import { User, displayName } from "~/api/user";
+
 import { ModelCard } from "../model-card";
 
 import { BlockedActions } from "./blocked-actions";
-
-import { User, displayName } from "~/api/user";
 
 export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 	return (

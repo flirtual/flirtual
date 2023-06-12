@@ -1,11 +1,11 @@
-import { OutOfProspects } from "./out-of-prospects";
-import { ProspectActionBar } from "./prospect-actions";
-import { DebuggerActions } from "./debugger-actions";
-
 import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { withSession } from "~/server-utilities";
+
+import { DebuggerActions } from "./debugger-actions";
+import { ProspectActionBar } from "./prospect-actions";
+import { OutOfProspects } from "./out-of-prospects";
 
 export interface ProspectListProps {
 	prospects: Array<User>;

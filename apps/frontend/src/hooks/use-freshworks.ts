@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from "react";
 
-import { useSessionUser } from "./use-session";
-
 import { displayName } from "~/api/user";
 import { freshworksWidgetId } from "~/const";
+
+import { useSessionUser } from "./use-session";
 
 declare global {
 	interface Window {

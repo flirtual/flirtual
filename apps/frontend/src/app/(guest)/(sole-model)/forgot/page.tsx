@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
-import { ForgotPasswordForm } from "./form";
-
 import { ModelCard } from "~/components/model-card";
+
+import { ForgotPasswordForm } from "./form";
 
 export const metadata: Metadata = {
 	title: "Reset password"

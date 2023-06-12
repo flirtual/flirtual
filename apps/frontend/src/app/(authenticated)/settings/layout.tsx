@@ -1,11 +1,11 @@
 import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";
 
-import { SettingsNavigation } from "./navigation";
-
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { MobileBarNavigation } from "~/components/layout/navigation/mobile-bar";
+
+import { SettingsNavigation } from "./navigation";
 
 export const metadata: Metadata = {
 	title: {

@@ -1,8 +1,8 @@
+import { Expand } from "~/utilities";
+
 import { Attribute } from "./attributes";
 import { DatedModel, UuidModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
-
-import { Expand } from "~/utilities";
 
 export type Report = Expand<
 	UuidModel &

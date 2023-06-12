@@ -3,14 +3,14 @@ import { Metadata } from "next";
 import { cache } from "react";
 import { redirect } from "next/navigation";
 
-import { ConversationAside } from "../aside";
-import { getProfileUser } from "../../(sole-model)/[username]/profile-user";
-
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { displayName } from "~/api/user";
 import { api } from "~/api";
 import { urls } from "~/urls";
 import { thruServerCookies } from "~/server-utilities";
+
+import { getProfileUser } from "../../(sole-model)/[username]/profile-user";
+import { ConversationAside } from "../aside";
 
 export interface ConversationPageProps {
 	params: {

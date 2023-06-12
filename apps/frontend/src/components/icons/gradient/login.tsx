@@ -2,7 +2,10 @@ import { useId } from "react";
 
 import { GradientIconProps } from ".";
 
-export const LoginIcon: React.FC<GradientIconProps> = ({ gradient = true, ...props }) => {
+export const LoginIcon: React.FC<GradientIconProps> = ({
+	gradient = true,
+	...props
+}) => {
 	const id = useId();
 
 	return (

@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 
-import { ColorBlock } from "./color-block";
-import { ImageList } from "./image-list";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { ButtonLink } from "~/components/button";
 import { urls } from "~/urls";
+
+import { ImageList } from "./image-list";
+import { ColorBlock } from "./color-block";
 
 export const metadata: Metadata = {
 	title: "Branding"

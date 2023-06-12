@@ -2,10 +2,10 @@
 
 import { useCallback, useState } from "react";
 
-import { SnapSection } from "./snap-section";
-
 import { useInterval } from "~/hooks/use-interval";
 import { UCImage } from "~/components/uc-image";
+
+import { SnapSection } from "./snap-section";
 
 export const SectionAvatarProfiles: React.FC<{ values: Array<string> }> = ({
 	values

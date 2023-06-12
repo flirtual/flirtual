@@ -3,13 +3,13 @@
 import { FC, useState } from "react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 
-import { Pill } from "./pill";
-import { PillAttributeList } from "./attribute-list";
-
 import { User } from "~/api/user";
 import { ProfileMonopolyLabel } from "~/api/user/profile";
 import { urls } from "~/urls";
 import { Attribute } from "~/api/attributes";
+
+import { PillAttributeList } from "./attribute-list";
+import { Pill } from "./pill";
 
 export interface PillCollectionExpansionProps {
 	user: User;

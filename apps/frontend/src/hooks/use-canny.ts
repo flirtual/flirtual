@@ -1,12 +1,12 @@
 import { useCallback, useEffect } from "react";
 
-import { useSessionUser } from "./use-session";
-import { useTheme } from "./use-theme";
-import { useScreenBreakpoint } from "./use-screen-breakpoint";
-
 import { displayName } from "~/api/user";
 import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
+
+import { useSessionUser } from "./use-session";
+import { useTheme } from "./use-theme";
+import { useScreenBreakpoint } from "./use-screen-breakpoint";
 
 declare global {
 	interface Window {

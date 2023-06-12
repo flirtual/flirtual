@@ -1,8 +1,8 @@
 import { twMerge } from "tailwind-merge";
 
-import { PlanButtonLink } from "./plan-button-link";
-
 import { withSession } from "~/server-utilities";
+
+import { PlanButtonLink } from "./plan-button-link";
 
 export interface PlanCardProps {
 	id: string;

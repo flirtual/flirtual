@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 
-import { PressItem } from "./press-item";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { ButtonLink } from "~/components/button";
 import { urls } from "~/urls";
+
+import { PressItem } from "./press-item";
 
 export const metadata: Metadata = {
 	title: "Press"

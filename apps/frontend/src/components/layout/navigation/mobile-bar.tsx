@@ -1,6 +1,6 @@
-import { NavigationInner } from "./inner";
-
 import { withOptionalSession } from "~/server-utilities";
+
+import { NavigationInner } from "./inner";
 
 export async function MobileBarNavigation() {
 	const session = await withOptionalSession();

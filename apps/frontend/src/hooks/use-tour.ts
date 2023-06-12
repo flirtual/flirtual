@@ -6,9 +6,9 @@ import {
 } from "react-shepherd";
 
 import "~/components/shepherd/style.scss";
-import { useScrollLock } from "./use-scroll-lock";
-
 import { useLocalStorage } from "~/hooks/use-local-storage";
+
+import { useScrollLock } from "./use-scroll-lock";
 
 export function useShepherd() {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -11,13 +11,13 @@ import Talk from "talkjs";
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
 
-import { useSession } from "./use-session";
-import { useTheme } from "./use-theme";
-import { getConversationsKey } from "./use-conversations";
-
 import { talkjsAppId } from "~/const";
 import { resolveTheme } from "~/theme";
 import { unstableInfiniteSerialize } from "~/components/swr";
+
+import { useSession } from "./use-session";
+import { useTheme } from "./use-theme";
+import { getConversationsKey } from "./use-conversations";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(

@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
-import { NsfwForm } from "./form";
-
 import { ModelCard } from "~/components/model-card";
 import { withAttributeList } from "~/api/attributes-server";
+
+import { NsfwForm } from "./form";
 
 export const metadata: Metadata = {
 	title: "NSFW"

@@ -1,8 +1,8 @@
 "use client";
 
-import { FooterListLink } from "./footer";
-
 import { useCanny } from "~/hooks/use-canny";
+
+import { FooterListLink } from "./footer";
 
 export const FooterCannyLink: React.FC = () => {
 	return <FooterListLink label="Feedback" onClick={useCanny().openFeedback} />;

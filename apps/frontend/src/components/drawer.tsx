@@ -2,10 +2,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRef } from "react";
 import { Portal } from "react-portal";
 
-import flirtualMark from "../../public/images/brand/mark/default.svg";
-
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+
+import flirtualMark from "../../public/images/brand/mark/default.svg";
 
 export interface DrawerProps {
 	visible: boolean;

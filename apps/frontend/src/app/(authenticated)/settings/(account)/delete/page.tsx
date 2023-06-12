@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
-import { DeleteForm } from "./form";
-
 import { ModelCard } from "~/components/model-card";
 import { withAttributeList } from "~/api/attributes-server";
+
+import { DeleteForm } from "./form";
 
 export const metadata: Metadata = {
 	title: "Delete Account"

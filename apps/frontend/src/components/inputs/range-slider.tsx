@@ -2,9 +2,9 @@
 
 import React, { useCallback, useMemo } from "react";
 
-import { SliderInputInner } from "./slider";
-
 import { clamp } from "~/utilities";
+
+import { SliderInputInner } from "./slider";
 
 export type InputRangeSliderValue = [min: number, max: number];
 

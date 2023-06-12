@@ -2,9 +2,9 @@
 
 import { ComponentProps, FC, useMemo } from "react";
 
-import { RefreshInterval } from "./refresh-interval";
-
 import { RelativeTimeOptions, relativeTime } from "~/date";
+
+import { RefreshInterval } from "./refresh-interval";
 
 type TimeRelativeProps = {
 	elementProps?: ComponentProps<"span">;

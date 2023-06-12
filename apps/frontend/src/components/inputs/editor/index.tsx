@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 import React from "react";
 
-import { EditorSkeleton } from "./skeleton";
-
 import { editorColors } from "~/html";
+
+import { EditorSkeleton } from "./skeleton";
 
 import "./style.scss";
 

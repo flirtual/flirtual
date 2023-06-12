@@ -3,11 +3,11 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useDebugValue, useEffect, useMemo } from "react";
 
-import { useMediaQuery } from "./use-media-query";
-import { useSession } from "./use-session";
-
 import { api } from "~/api";
 import { PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
+
+import { useMediaQuery } from "./use-media-query";
+import { useSession } from "./use-session";
 
 export function useTheme() {
 	const [session, mutateSession] = useSession();

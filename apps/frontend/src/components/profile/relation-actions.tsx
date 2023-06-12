@@ -3,12 +3,12 @@
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
-import { Button, ButtonLink } from "../button";
-
 import { User, displayName } from "~/api/user";
 import { urls } from "~/urls";
 import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
+
+import { Button, ButtonLink } from "../button";
 
 export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 	user,

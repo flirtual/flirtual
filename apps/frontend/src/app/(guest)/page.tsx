@@ -1,12 +1,3 @@
-import { urls } from "../../urls";
-
-import { SectionCallToAction } from "./section-call-to-action";
-import { SectionCarousel } from "./section-carousel";
-import { SectionAvatarProfiles } from "./section-avatar-profiles";
-import { SectionTestimonial } from "./section-testimonial";
-import { SnapSection } from "./snap-section";
-import { LandingButton } from "./landing-button";
-
 import {
 	AppleIcon,
 	GooglePlayIcon,
@@ -15,6 +6,15 @@ import {
 } from "~/components/icons";
 import { Footer } from "~/components/layout/footer";
 import { MobileButton } from "~/components/mobile-button";
+
+import { urls } from "../../urls";
+
+import { SectionCallToAction } from "./section-call-to-action";
+import { SectionCarousel } from "./section-carousel";
+import { SectionAvatarProfiles } from "./section-avatar-profiles";
+import { SectionTestimonial } from "./section-testimonial";
+import { SnapSection } from "./snap-section";
+import { LandingButton } from "./landing-button";
 
 export default function RootIndexPage() {
 	return (

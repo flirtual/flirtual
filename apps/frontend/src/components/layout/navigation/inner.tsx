@@ -3,10 +3,10 @@
 import { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { AuthenticatedNavigation, GuestNavigation } from ".";
-
 import { User } from "~/api/user";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+
+import { AuthenticatedNavigation, GuestNavigation } from ".";
 
 export type NavigationInnerProps = ComponentProps<"div"> & {
 	desktopView?: boolean;
