@@ -15,7 +15,7 @@ defmodule Flirtual.User.ChangeQueue do
   alias Flirtual.User.ChangeQueue
 
   schema "user_change_queue" do
-    belongs_to :user, User, primary_key: true
+    belongs_to(:user, User, primary_key: true)
     timestamps(updated_at: false)
   end
 
@@ -103,7 +103,7 @@ defmodule Flirtual.User.ChangeQueue do
     items = fetch(limit)
 
     with :ok <- process_items(items, :elasticsearch),
-         :ok <- process_items(items, :talkjs),
+         # :ok <- process_items(items, :talkjs),
          :ok <-
            items
            |> Enum.map(& &1.user_id)
