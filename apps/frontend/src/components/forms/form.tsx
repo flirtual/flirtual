@@ -9,7 +9,7 @@ import {
 } from "~/hooks/use-input-form";
 import { omit } from "~/utilities";
 
-import { FormCaptcha, FormCaptchaRef } from "./captcha";
+import { FormCaptcha, FormCaptchaReference } from "./captcha";
 import { FormInputMessages } from "./input-messages";
 
 export type FormChildrenFunction<T extends FormFieldsDefault> = (
@@ -30,12 +30,15 @@ export type FormProps<T extends FormFieldsDefault> = Omit<
 	};
 
 export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
-	const captchaRef = useRef<FormCaptchaRef>(null);
+	const captchaReference = useRef<FormCaptchaReference>(null);
 
 	props = Object.assign({ formErrorMessages: true }, props);
-	const form = useInputForm({ ...props, captchaRef });
+	const form = useInputForm({ ...props, captchaRef: captchaReference });
 
-	const children = typeof props.children === "function" ? props.children(form) : props.children;
+	const children =
+		typeof props.children === "function"
+			? props.children(form)
+			: props.children;
 
 	return (
 		<form
@@ -51,8 +54,10 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 		>
 			<FormContext.Provider value={form}>
 				{children}
-				{props.formErrorMessages && <FormInputMessages messages={form.errors} />}
-				{props.withCaptcha && <FormCaptcha ref={captchaRef} />}
+				{props.formErrorMessages && (
+					<FormInputMessages messages={form.errors} />
+				)}
+				{props.withCaptcha && <FormCaptcha ref={captchaReference} />}
 			</FormContext.Provider>
 		</form>
 	);

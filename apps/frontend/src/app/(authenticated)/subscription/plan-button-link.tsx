@@ -9,9 +9,9 @@ import { useToast } from "~/hooks/use-toast";
 
 import { PlanCardProps } from "./plan-card";
 
-export const PlanButtonLink: FC<PlanCardProps & { active: boolean; lifetime: boolean }> = (
-	props
-) => {
+export const PlanButtonLink: FC<
+	PlanCardProps & { active: boolean; lifetime: boolean }
+> = (props) => {
 	const { highlight, id, active, lifetime } = props;
 
 	const toasts = useToast();

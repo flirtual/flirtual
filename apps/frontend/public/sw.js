@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable unicorn/no-empty-file */
 
 /* addEventListener("fetch", (fetchEvent) => {
 	const request = fetchEvent.request;

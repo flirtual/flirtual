@@ -18,7 +18,8 @@ export function useConversations() {
 		setSize
 	} = useSWRInfinite(
 		getConversationsKey,
-		async ([, cursor]: [unknown, string]) => api.conversations.list({ query: { cursor } }),
+		async ([, cursor]: [unknown, string]) =>
+			api.conversations.list({ query: { cursor } }),
 		{
 			suspense: true
 		}

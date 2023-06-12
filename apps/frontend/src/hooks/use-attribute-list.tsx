@@ -6,7 +6,10 @@ import { AttributeCollection, AttributeMetadata } from "~/api/attributes";
 
 export function useAttributeList<T extends keyof AttributeMetadata>(
 	name: T,
-	options: Omit<SWRConfiguration<AttributeCollection<T>>, "fetcher" | "fallbackData"> = {}
+	options: Omit<
+		SWRConfiguration<AttributeCollection<T>>,
+		"fetcher" | "fallbackData"
+	> = {}
 ) {
 	useDebugValue(name);
 

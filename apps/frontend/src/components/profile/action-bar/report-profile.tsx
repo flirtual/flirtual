@@ -9,9 +9,17 @@ export const ReportProfile: React.FC<{ user: User }> = ({ user }) => {
 	const [reportVisible, setReportVisible] = useState(false);
 
 	return (
-		<ReportProfileModel user={user} visible={reportVisible} onVisibilityChange={setReportVisible}>
+		<ReportProfileModel
+			user={user}
+			visible={reportVisible}
+			onVisibilityChange={setReportVisible}
+		>
 			<Tooltip value="Report profile">
-				<button className="h-6 w-6" type="button" onClick={() => setReportVisible(true)}>
+				<button
+					className="h-6 w-6"
+					type="button"
+					onClick={() => setReportVisible(true)}
+				>
 					<FlagIcon className="h-full w-full" />
 				</button>
 			</Tooltip>

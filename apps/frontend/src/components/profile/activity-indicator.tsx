@@ -5,7 +5,9 @@ export interface ActivityIndicatorProps {
 	lastActiveAt: Date;
 }
 
-export const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({ lastActiveAt }) => {
+export const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
+	lastActiveAt
+}) => {
 	const timeSince = Date.now() - lastActiveAt.getTime();
 
 	return timeSince < twoWeeksInMillieseconds ? (

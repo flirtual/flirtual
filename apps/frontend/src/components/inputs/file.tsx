@@ -4,19 +4,22 @@ import { forwardRef } from "react";
 
 export type InputFileValue = Array<File>;
 
-export type InputFileProps = Omit<React.ComponentProps<"input">, "onChange" | "value" | "type"> & {
+export type InputFileProps = Omit<
+	React.ComponentProps<"input">,
+	"onChange" | "value" | "type"
+> & {
 	onChange?: React.Dispatch<InputFileValue>;
 };
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
-	({ onChange, ...props }, ref) => (
+	({ onChange, ...props }, reference) => (
 		<input
 			{...props}
-			ref={ref}
+			ref={reference}
 			type="file"
 			onChange={({ currentTarget }) => {
 				if (!onChange || !currentTarget.files) return;
-				onChange(Array.from(currentTarget.files));
+				onChange([...currentTarget.files]);
 			}}
 		/>
 	)

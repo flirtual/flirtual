@@ -15,7 +15,7 @@ export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
 };
 
 export const InputText: React.FC<InputTextProps> = (props) => {
-	const inputRef = useRef<HTMLInputElement>(null);
+	const inputReference = useRef<HTMLInputElement>(null);
 	const [inputVisible, setInputVisible] = useState(props.type !== "password");
 
 	const type = inputVisible
@@ -24,13 +24,14 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 			: props.type || "text"
 		: "password";
 
-	const Icon = props.Icon ?? props.type === "date" ? CalendarDaysIcon : undefined;
+	const Icon =
+		props.Icon ?? props.type === "date" ? CalendarDaysIcon : undefined;
 	const InputVisibleIcon = inputVisible ? EyeIcon : EyeSlashIcon;
 
 	return (
 		<div
 			className="focusable-within flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20"
-			onClick={() => inputRef.current?.focus()}
+			onClick={() => inputReference.current?.focus()}
 		>
 			{Icon && (
 				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">
@@ -39,7 +40,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 			)}
 			<input
 				{...omit(props, ["type", "Icon"])}
-				ref={inputRef}
+				ref={inputReference}
 				type={type}
 				className={twMerge(
 					"w-full border-none bg-transparent px-4 py-2 font-nunito placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50",

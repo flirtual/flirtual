@@ -19,7 +19,14 @@ export interface PillProps {
 }
 
 export const Pill: React.FC<PillProps> = (props) => {
-	const { Icon, active = false, hocusable = true, small = false, href, ...elementProps } = props;
+	const {
+		Icon,
+		active = false,
+		hocusable = true,
+		small = false,
+		href,
+		...elementProps
+	} = props;
 	const Element = href ? Link : "div";
 
 	const [hocused, setHocused] = useState(false);
@@ -45,10 +52,12 @@ export const Pill: React.FC<PillProps> = (props) => {
 			>
 				{Icon && <Icon className="h-4" />}
 				<motion.div
-					animate={href && hocused ? { marginRight: "1.5rem" } : { marginRight: 0 }}
 					className="flex items-center gap-2"
 					initial={{ marginRight: 0 }}
 					transition={{ type: "spring" }}
+					animate={
+						href && hocused ? { marginRight: "1.5rem" } : { marginRight: 0 }
+					}
 				>
 					{props.children}
 				</motion.div>

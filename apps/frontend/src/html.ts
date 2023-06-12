@@ -5,9 +5,16 @@ import { rgb } from "./colors";
 import { isInternalHref, siteOrigin, toAbsoluteUrl } from "./urls";
 import { entries } from "./utilities";
 
-export function toStyleProperties(style: PropertiesHyphen, initial: string = ""): string {
+export function toStyleProperties(
+	style: PropertiesHyphen,
+	initial: string = ""
+): string {
+	// eslint-disable-next-line unicorn/no-array-reduce
 	return entries(style).reduce(
-		(prev, curr) => (curr ? `${prev ? `${prev};` : ""}${curr[0]}:${curr[1]}` : prev),
+		(previous, current) =>
+			current
+				? `${previous ? `${previous};` : ""}${current[0]}:${current[1]}`
+				: previous,
 		initial
 	);
 }
@@ -77,9 +84,10 @@ export const editorColors = [
 ];
 
 const colorHexRegex = new RegExp(editorColors.join("|"), "i");
-const colorRgbRegex = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
+const colorRgbRegex =
+	/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
 
-const allowedOrigins = [siteOrigin, "https://vrchat.com"];
+const allowedOrigins = new Set([siteOrigin, "https://vrchat.com"]);
 
 export function html(value: string) {
 	return sanitizeHtml(
@@ -104,10 +112,13 @@ export function html(value: string) {
 					const alignMatch = attribs.class?.match(/ql-align-(\w+)/);
 					if (alignMatch) {
 						attribs.class = attribs.class.replace(alignMatch[0], "");
-						style = { ...style, "text-align": alignMatch[1] as Property.TextAlign };
+						style = {
+							...style,
+							"text-align": alignMatch[1] as Property.TextAlign
+						};
 					}
 
-					(["color", "background-color"] as const).forEach((key) => {
+					for (const key of ["color", "background-color"] as const) {
 						const match = style[key]?.match(colorRgbRegex);
 						if (match) {
 							style = {
@@ -119,7 +130,7 @@ export function html(value: string) {
 								)
 							};
 						}
-					});
+					}
 
 					attribs.style = toStyleProperties(style);
 
@@ -132,9 +143,13 @@ export function html(value: string) {
 					const url = toAbsoluteUrl(attribs.href ?? "/");
 
 					if (isInternalHref(url)) return { tagName, attribs };
-					if (!allowedOrigins.includes(url.origin)) return { tagName: "span", attribs };
+					if (!allowedOrigins.has(url.origin))
+						return { tagName: "span", attribs };
 
-					return { tagName, attribs: { ...attribs, target: "_blank", rel: "noopener" } };
+					return {
+						tagName,
+						attribs: { ...attribs, target: "_blank", rel: "noopener" }
+					};
 				}
 			}
 		}

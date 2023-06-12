@@ -7,7 +7,7 @@ export interface ImageListItemProps {
 }
 
 function getFilename(name: string, kind: string) {
-	return `flirtual-${name.replaceAll(/\//g, "-")}.${kind}`;
+	return `flirtual-${name.replaceAll("/", "-")}.${kind}`;
 }
 
 async function getFile(name: string, kind: string) {
@@ -63,7 +63,9 @@ export interface ImageListProps {
 
 export async function ImageList({ className, items }: ImageListProps) {
 	return (
-		<div className={twMerge("grid grid-cols-1 gap-4 sm:grid-cols-3", className)}>
+		<div
+			className={twMerge("grid grid-cols-1 gap-4 sm:grid-cols-3", className)}
+		>
 			{items.map((item) => {
 				return <ImageListItem key={item.name} {...item} />;
 			})}

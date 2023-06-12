@@ -23,11 +23,20 @@ export interface InputSelectProps<T> {
 }
 
 export function InputSelect<K>(props: InputSelectProps<K>) {
-	const { placeholder = "Select an option", optional = false, OptionListItem } = props;
+	const {
+		placeholder = "Select an option",
+		optional = false,
+		OptionListItem
+	} = props;
 	const [overlayVisible, setOverlayVisible] = useState(false);
 
-	const activeOption = props.options.find((option) => option.key === props.value);
-	const options = props.options.map((option) => ({ ...option, active: option === activeOption }));
+	const activeOption = props.options.find(
+		(option) => option.key === props.value
+	);
+	const options = props.options.map((option) => ({
+		...option,
+		active: option === activeOption
+	}));
 
 	return (
 		<div
@@ -49,7 +58,10 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 				>
 					<ChevronUpDownIcon className="h-7 w-7" />
 				</button>
-				<div className="flex w-full justify-between gap-2 px-4 py-2" tabIndex={0}>
+				<div
+					className="flex w-full justify-between gap-2 px-4 py-2"
+					tabIndex={0}
+				>
 					<span
 						className={twMerge(
 							"w-full select-none text-left",

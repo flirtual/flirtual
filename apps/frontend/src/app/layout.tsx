@@ -4,8 +4,6 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 
-import { ClientScripts } from "./client-scripts";
-
 import { withOptionalSession } from "~/server-utilities";
 import { siteOrigin, urls } from "~/urls";
 import { resolveTheme } from "~/theme";
@@ -16,9 +14,14 @@ import { ShepherdProvider } from "~/components/shepherd";
 import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 import { ThemeProvider } from "~/hooks/use-theme";
 
+import { ClientScripts } from "./client-scripts";
+
 import "~/css/index.scss";
 
-const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
+const montserrat = Montserrat({
+	variable: "--font-montserrat",
+	subsets: ["latin"]
+});
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -59,7 +62,9 @@ export const metadata: Metadata = {
 	}
 };
 
-export default async function RootLayout({ children }: React.PropsWithChildren) {
+export default async function RootLayout({
+	children
+}: React.PropsWithChildren) {
 	const session = await withOptionalSession();
 	const theme = session?.user.preferences?.theme ?? "light";
 
@@ -92,7 +97,11 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
 				<ClientScripts />
 			</head>
 			<body className={twMerge(montserrat.variable, nunito.variable)}>
-				<NextTopLoader color={["#FF8975", "#E9658B"]} height={5} showSpinner={false} />
+				<NextTopLoader
+					color={["#FF8975", "#E9658B"]}
+					height={5}
+					showSpinner={false}
+				/>
 				<Suspense fallback={<LoadingIndicatorScreen />}>
 					<SessionProvider session={session}>
 						<ThemeProvider>

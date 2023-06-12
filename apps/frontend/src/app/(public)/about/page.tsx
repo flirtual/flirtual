@@ -1,12 +1,12 @@
 import { Metadata } from "next";
 
-import { TeamList } from "./team-list";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { Image } from "~/components/image";
+
+import { TeamList } from "./team-list";
 
 export const metadata: Metadata = {
 	title: "About us"
@@ -30,28 +30,35 @@ export default function AboutPage() {
 					<div className="flex flex-col gap-4">
 						<h1 className="text-2xl font-semibold">Our Story</h1>
 						<p>
-							Back in 2018—at the height of the Ugandan Knuckles craze—kfarwell joined VRChat. He
-							found out that people were dating in VR, but realized there was no VR dating site. So
-							he made one.
+							Back in 2018—at the height of the Ugandan Knuckles craze—kfarwell
+							joined VRChat. He found out that people were dating in VR, but
+							realized there was no VR dating site. So he made one.
 						</p>
 						<p>
-							Virtual Reality Looking-For-Partner (VRLFP) was the first VR dating site. We provided
-							tens of thousands of matches to users all over the world, helping thousands of people
-							meet in VR. With the new-and-improved Flirtual, we&apos;ll connect millions more VR
+							Virtual Reality Looking-For-Partner (VRLFP) was the first VR
+							dating site. We provided tens of thousands of matches to users all
+							over the world, helping thousands of people meet in VR. With the
+							new-and-improved Flirtual, we&apos;ll connect millions more VR
 							users for dates, friendship, and everything in between.
 						</p>
 						<p>
-							Why are we doing this? Because VR has changed our lives. Honestly. It&apos;s helped us
-							come out of our shells, meet some of our best friends, survive quarantine sane, and
-							fall in love. Everyone on our team has met a best friend or romantic partner through
-							VR. We really want to help everyone find true connection and belonging, as VR has done
-							for us.
+							Why are we doing this? Because VR has changed our lives. Honestly.
+							It&apos;s helped us come out of our shells, meet some of our best
+							friends, survive quarantine sane, and fall in love. Everyone on
+							our team has met a best friend or romantic partner through VR. We
+							really want to help everyone find true connection and belonging,
+							as VR has done for us.
 						</p>
-						<p>So have fun! Be kind to each other. And don&apos;t forget to drink water.</p>
+						<p>
+							So have fun! Be kind to each other. And don&apos;t forget to drink
+							water.
+						</p>
 						<div className="flex flex-col">
 							<span>{"<3"}</span>
 							<p>The Flirtual Team</p>
-							<InlineLink href={urls.socials.discord}>Join our Discord</InlineLink>
+							<InlineLink href={urls.socials.discord}>
+								Join our Discord
+							</InlineLink>
 						</div>
 					</div>
 					<div className="flex flex-col gap-4">

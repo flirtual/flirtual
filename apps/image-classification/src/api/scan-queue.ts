@@ -8,7 +8,7 @@ export const list = (options: { size: number }) =>
 		headers: {
 			authorization: `Bearer ${accessToken}`
 		}
-	}).then((res) => res.json()) as Promise<Array<string>>;
+	}).then((response) => response.json()) as Promise<Array<string>>;
 
 export const update = (data: Record<string, Classification>) => {
 	return fetch(url("/v1/images/scan-queue"), {
@@ -18,5 +18,5 @@ export const update = (data: Record<string, Classification>) => {
 			"content-type": "application/json"
 		},
 		body: JSON.stringify({ data })
-	}).then((res) => res.json());
+	}).then((response) => response.json());
 };

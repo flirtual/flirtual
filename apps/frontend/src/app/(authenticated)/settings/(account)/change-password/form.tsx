@@ -34,7 +34,11 @@ export const ChangePasswordForm: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Confirm current password</InputLabel>
-								<InputText {...field.props} autoComplete="current-password" type="password" />
+								<InputText
+									{...field.props}
+									autoComplete="current-password"
+									type="password"
+								/>
 							</>
 						)}
 					</FormField>
@@ -42,7 +46,11 @@ export const ChangePasswordForm: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>New password</InputLabel>
-								<InputText {...field.props} autoComplete="new-password" type="password" />
+								<InputText
+									{...field.props}
+									autoComplete="new-password"
+									type="password"
+								/>
 							</>
 						)}
 					</FormField>
@@ -50,7 +58,11 @@ export const ChangePasswordForm: React.FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>Confirm new password</InputLabel>
-								<InputText {...field.props} autoComplete="new-password" type="password" />
+								<InputText
+									{...field.props}
+									autoComplete="new-password"
+									type="password"
+								/>
 							</>
 						)}
 					</FormField>

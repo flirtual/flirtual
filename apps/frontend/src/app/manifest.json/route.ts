@@ -81,7 +81,8 @@ export async function GET() {
 				]
 			}
 		],
-		description: "The first VR dating app. Join thousands for dates in VR apps like VRChat.",
+		description:
+			"The first VR dating app. Join thousands for dates in VR apps like VRChat.",
 		ovr_package_name: "zone.homie.flirtual.pwa",
 		iarc_rating_id: "6e4124cb-ab7a-416e-aeb3-f93a42787fa4",
 		screenshots: [

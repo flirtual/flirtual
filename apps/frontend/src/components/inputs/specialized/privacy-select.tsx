@@ -1,4 +1,7 @@
-import { PrivacyPreferenceOption, PrivacyPreferenceOptions } from "~/api/user/preferences";
+import {
+	PrivacyPreferenceOption,
+	PrivacyPreferenceOptions
+} from "~/api/user/preferences";
 import { InputSelect, InputSelectProps } from "~/components/inputs";
 
 export const InputPrivacySelect: React.FC<

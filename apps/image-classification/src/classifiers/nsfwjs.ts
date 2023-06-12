@@ -1,5 +1,5 @@
-import fs from "fs/promises";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 import * as nsfw from "nsfwjs";
 import * as tf from "@tensorflow/tfjs-node";
@@ -19,20 +19,26 @@ const load = async () => {
 	return _model;
 };
 
-export type Result = { [K in nsfw.predictionType["className"] as Lowercase<K>]: number };
+export type Result = {
+	[K in nsfw.predictionType["className"] as Lowercase<K>]: number;
+};
 
 export const classify: Classifier<Result> = async (_, groupFile) => {
 	const map = new Map<string, Result>();
 	const model = await load();
 
-	const files = (await fs.readdir(path.resolve(temporaryDirectory, groupFile))).filter(
+	const files = (
+		await fs.readdir(path.resolve(temporaryDirectory, groupFile))
+	).filter(
 		// Some classifiers output files into the group's directory, so we filter them out.
 		(filename) => path.extname(filename) !== ".json"
 	);
 
 	await Promise.all(
 		files.map(async (filename) => {
-			const data = await fs.readFile(path.resolve(temporaryDirectory, groupFile, filename));
+			const data = await fs.readFile(
+				path.resolve(temporaryDirectory, groupFile, filename)
+			);
 			const image = tf.node.decodeImage(data, 3) as tf.Tensor3D;
 
 			// Classify the image using the TensorFlow model.
@@ -48,7 +54,7 @@ export const classify: Classifier<Result> = async (_, groupFile) => {
 						.map(({ className, probability }) => [
 							className.toLowerCase(),
 							// Round the probability to 4 decimal places.
-							parseFloat(probability.toFixed(4))
+							Number.parseFloat(probability.toFixed(4))
 						])
 						// Filter out predictions with a probability of less than 50%.
 						.filter(([, probability]) => (probability as number) > 0.5)

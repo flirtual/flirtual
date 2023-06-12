@@ -72,8 +72,13 @@ export const withTaggedUser = cache(async (...tags: Array<UserTags>) => {
 export const withLocation = cache(async () => {
 	const pathname = headers().get("x-invoke-path") ?? "/";
 
-	const query = tryJsonParse(decodeURIComponent(headers().get("x-invoke-query") ?? "{}"), {});
+	const query = tryJsonParse(
+		decodeURIComponent(headers().get("x-invoke-query") ?? "{}"),
+		{}
+	);
 	const queryString = new URLSearchParams(query).toString();
 
-	return toAbsoluteUrl(`${pathname}${Object.keys(query).length ? `?${queryString}` : ""}`);
+	return toAbsoluteUrl(
+		`${pathname}${Object.keys(query).length > 0 ? `?${queryString}` : ""}`
+	);
 });

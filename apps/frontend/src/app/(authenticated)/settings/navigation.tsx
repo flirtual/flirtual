@@ -18,25 +18,33 @@ import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { useSelectedLayoutSegment } from "next/navigation";
 
-import { NavigationCategory } from "./navigation-category";
-import { NavigationHeader } from "./navigation-header";
-import { NavigationLink } from "./navigation-link";
-
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
 import { useSession } from "~/hooks/use-session";
 
+import { NavigationCategory } from "./navigation-category";
+import { NavigationHeader } from "./navigation-header";
+import { NavigationLink } from "./navigation-link";
+
 export const SettingsNavigation: FC = () => {
 	const layoutSegment = useSelectedLayoutSegment();
 	const { openFreshworks } = useFreshworks();
-	const [, , logout] = useSession();
+	const logout = useSession()[2];
 
 	return (
 		<div className="flex w-full shrink-0 grow-0 flex-col shadow-brand-1 md:mt-16 md:w-80 md:rounded-tr-2xl md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
 			<NavigationHeader {...{ navigationInner: layoutSegment }} />
-			<nav className={twMerge("flex-col gap-8 py-8", layoutSegment ? "hidden md:flex" : "flex")}>
+			<nav
+				className={twMerge(
+					"flex-col gap-8 py-8",
+					layoutSegment ? "hidden md:flex" : "flex"
+				)}
+			>
 				<NavigationCategory name="Profile">
-					<NavigationLink href={urls.settings.matchmaking()} Icon={AdjustmentsHorizontalIcon}>
+					<NavigationLink
+						href={urls.settings.matchmaking()}
+						Icon={AdjustmentsHorizontalIcon}
+					>
 						Matchmaking
 					</NavigationLink>
 					<NavigationLink href={urls.settings.bio} Icon={PencilSquareIcon}>
@@ -68,7 +76,10 @@ export const SettingsNavigation: FC = () => {
 					<NavigationLink href={urls.settings.changePassword} Icon={KeyIcon}>
 						Change password
 					</NavigationLink>
-					<NavigationLink href={urls.settings.deactivateAccount} Icon={ExclamationCircleIcon}>
+					<NavigationLink
+						href={urls.settings.deactivateAccount}
+						Icon={ExclamationCircleIcon}
+					>
 						Deactivate account
 					</NavigationLink>
 					<NavigationLink Icon={ArrowLeftOnRectangleIcon} onClick={logout}>
@@ -78,23 +89,35 @@ export const SettingsNavigation: FC = () => {
 				<div className="sm:hidden">
 					<NavigationCategory name="Social">
 						<NavigationLink href={urls.resources.events}>Events</NavigationLink>
-						<NavigationLink href={urls.socials.discord}>Discord server</NavigationLink>
-						<NavigationLink href={urls.socials.vrchat}>VRChat group</NavigationLink>
+						<NavigationLink href={urls.socials.discord}>
+							Discord server
+						</NavigationLink>
+						<NavigationLink href={urls.socials.vrchat}>
+							VRChat group
+						</NavigationLink>
 						<NavigationLink href={urls.socials.twitter}>Twitter</NavigationLink>
 					</NavigationCategory>
 				</div>
 				<div className="sm:hidden">
 					<NavigationCategory name="Help">
 						<NavigationLink onClick={openFreshworks}>Support</NavigationLink>
-						<NavigationLink href={urls.resources.networkStatus}>Network Status</NavigationLink>
+						<NavigationLink href={urls.resources.networkStatus}>
+							Network Status
+						</NavigationLink>
 					</NavigationCategory>
 				</div>
 				<div className="sm:hidden">
 					<NavigationCategory name="Info">
-						<NavigationLink href={urls.resources.about}>About Us</NavigationLink>
+						<NavigationLink href={urls.resources.about}>
+							About Us
+						</NavigationLink>
 						<NavigationLink href={urls.resources.press}>Press</NavigationLink>
-						<NavigationLink href={urls.resources.branding}>Branding</NavigationLink>
-						<NavigationLink href={urls.resources.developers}>Developers</NavigationLink>
+						<NavigationLink href={urls.resources.branding}>
+							Branding
+						</NavigationLink>
+						<NavigationLink href={urls.resources.developers}>
+							Developers
+						</NavigationLink>
 					</NavigationCategory>
 				</div>
 				<div className="sm:hidden">
@@ -102,9 +125,15 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.resources.communityGuidelines}>
 							Community Guidelines
 						</NavigationLink>
-						<NavigationLink href={urls.resources.termsOfService}>Terms of Service</NavigationLink>
-						<NavigationLink href={urls.resources.privacyPolicy}>Privacy Policy</NavigationLink>
-						<NavigationLink href={urls.resources.company}>&copy; Studio Paprika</NavigationLink>
+						<NavigationLink href={urls.resources.termsOfService}>
+							Terms of Service
+						</NavigationLink>
+						<NavigationLink href={urls.resources.privacyPolicy}>
+							Privacy Policy
+						</NavigationLink>
+						<NavigationLink href={urls.resources.company}>
+							&copy; Studio Paprika
+						</NavigationLink>
 					</NavigationCategory>
 				</div>
 			</nav>

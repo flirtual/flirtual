@@ -1,6 +1,6 @@
-import { NavigationInner } from "./navigation/inner";
-
 import { withOptionalSession } from "~/server-utilities";
+
+import { NavigationInner } from "./navigation/inner";
 
 export async function Header() {
 	const session = await withOptionalSession();

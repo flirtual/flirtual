@@ -32,5 +32,7 @@ export function withAttribute<T extends AttributeType>(
 	type: T,
 	id: string
 ): Promise<Attribute<AttributeMetadata[T]>> {
-	return _withAttribute(type, id) as unknown as Promise<Attribute<AttributeMetadata[T]>>;
+	return _withAttribute(type, id) as unknown as Promise<
+		Attribute<AttributeMetadata[T]>
+	>;
 }

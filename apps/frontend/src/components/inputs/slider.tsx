@@ -5,7 +5,9 @@ import { twMerge } from "tailwind-merge";
 
 import { clamp } from "~/utilities";
 
-export const SliderInputInner: React.FC<Omit<React.ComponentProps<"input">, "type">> = (props) => (
+export const SliderInputInner: React.FC<
+	Omit<React.ComponentProps<"input">, "type">
+> = (props) => (
 	<input
 		{...props}
 		type="range"

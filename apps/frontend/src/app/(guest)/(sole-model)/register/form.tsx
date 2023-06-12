@@ -6,7 +6,12 @@ import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
-import { InputCheckbox, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
+import {
+	InputCheckbox,
+	InputLabel,
+	InputLabelHint,
+	InputText
+} from "~/components/inputs";
 import { urls } from "~/urls";
 
 export const RegisterForm: React.FC = () => {
@@ -53,7 +58,11 @@ export const RegisterForm: React.FC = () => {
 						{({ props, labelProps }) => (
 							<>
 								<InputLabel {...labelProps}>Password</InputLabel>
-								<InputText {...props} autoComplete="new-password" type="password" />
+								<InputText
+									{...props}
+									autoComplete="new-password"
+									type="password"
+								/>
 							</>
 						)}
 					</FormField>
@@ -67,11 +76,17 @@ export const RegisterForm: React.FC = () => {
 									hint={
 										<InputLabelHint className="max-w-[34ch]">
 											to the{" "}
-											<a className="underline" href={urls.resources.termsOfService}>
+											<a
+												className="underline"
+												href={urls.resources.termsOfService}
+											>
 												Terms of Service
 											</a>{" "}
 											&{" "}
-											<a className="underline" href={urls.resources.privacyPolicy}>
+											<a
+												className="underline"
+												href={urls.resources.privacyPolicy}
+											>
 												Privacy Policy
 											</a>{" "}
 											and I&apos;m at least 18 years of age
@@ -92,7 +107,8 @@ export const RegisterForm: React.FC = () => {
 									inline
 									hint={
 										<InputLabelHint className="max-w-[34ch]">
-											with new features, changes, and offers (we won&apos;t spam you)
+											with new features, changes, and offers (we won&apos;t spam
+											you)
 										</InputLabelHint>
 									}
 								>
@@ -106,7 +122,9 @@ export const RegisterForm: React.FC = () => {
 							className="w-full rounded-xl bg-brand-gradient p-4 shadow-brand-1"
 							type="submit"
 						>
-							<span className="font-montserrat text-xl text-white-10">Create account</span>
+							<span className="font-montserrat text-xl text-white-10">
+								Create account
+							</span>
 						</button>
 						<FormInputMessages messages={errors} />
 						<div className="flex flex-col font-nunito text-lg">

@@ -15,10 +15,15 @@ export interface DrawerProps {
 
 export const Drawer: React.FC<DrawerProps> = (props) => {
 	const { visible, children, onVisibilityChange } = props;
-	const overlayRef = useRef<HTMLDivElement>(null);
+	const overlayReference = useRef<HTMLDivElement>(null);
 
-	useClickOutside(overlayRef, () => onVisibilityChange(false), visible);
-	useGlobalEventListener("document", "scroll", () => onVisibilityChange(false), visible);
+	useClickOutside(overlayReference, () => onVisibilityChange(false), visible);
+	useGlobalEventListener(
+		"document",
+		"scroll",
+		() => onVisibilityChange(false),
+		visible
+	);
 
 	return (
 		<AnimatePresence>
@@ -31,7 +36,7 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
 						dragConstraints={{ top: 0, bottom: 0 }}
 						exit={{ y: "100%" }}
 						initial={{ y: "100%" }}
-						ref={overlayRef}
+						ref={overlayReference}
 						transition={{ damping: 25 }}
 						onDragEnd={(_, { offset }) => {
 							if (offset.y > 300) onVisibilityChange(false);

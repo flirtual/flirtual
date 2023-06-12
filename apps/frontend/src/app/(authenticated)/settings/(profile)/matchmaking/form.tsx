@@ -46,13 +46,16 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 
 	if (!session) return null;
 	const { user } = session;
-	const { preferences, customWeights = DefaultProfileCustomWeights } = user.profile;
+	const { preferences, customWeights = DefaultProfileCustomWeights } =
+		user.profile;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
+				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(
+					({ id }) => id
+				),
 				age: [
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
@@ -91,7 +94,11 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 							agemin: agemin === absMinAge ? null : agemin,
 							agemax: agemax === absMaxAge ? null : agemax,
 							attributes: [
-								...excludeBy(preferences?.attributes ?? [], "type", "gender").map(({ id }) => id),
+								...excludeBy(
+									preferences?.attributes ?? [],
+									"type",
+									"gender"
+								).map(({ id }) => id),
 								...values.gender
 							]
 						}
@@ -113,7 +120,10 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 				]);
 
 				startTransition(() => router.refresh());
-				toasts.add({ type: "success", label: "Successfully updated matchmaking settings!" });
+				toasts.add({
+					type: "success",
+					label: "Successfully updated matchmaking settings!"
+				});
 			}}
 		>
 			{({ FormField, fields }) => (
@@ -140,16 +150,27 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 								<>
 									<InputLabel
 										{...field.labelProps}
-										hint={min === absMinAge && max === absMaxAge ? "any age" : `${min} to ${max}`}
+										hint={
+											min === absMinAge && max === absMaxAge
+												? "any age"
+												: `${min} to ${max}`
+										}
 									>
 										Age range
 									</InputLabel>
-									<InputRangeSlider {...field.props} max={absMaxAge} min={absMinAge} />
+									<InputRangeSlider
+										{...field.props}
+										max={absMaxAge}
+										min={absMinAge}
+									/>
 								</>
 							);
 						}}
 					</FormField>
-					<FormField className="flex-col-reverse gap-4 sm:flex-row sm:items-center" name="serious">
+					<FormField
+						className="flex-col-reverse gap-4 sm:flex-row sm:items-center"
+						name="serious"
+					>
 						{(field) => (
 							<>
 								<InputSwitch {...field.props} />
@@ -188,12 +209,14 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 							<PremiumBadge />
 						</InputLabel>
 						<span>
-							Customize who you see on Flirtual. Slide right to increase importance, left to
-							decrease. Premium subscribers unlock full customization.
+							Customize who you see on Flirtual. Slide right to increase
+							importance, left to decrease. Premium subscribers unlock full
+							customization.
 						</span>
 						<span>
-							For example, slide &quot;Same country&quot; to the right to see more people from your
-							country, or left if you want to see more people from other countries.
+							For example, slide &quot;Same country&quot; to the right to see
+							more people from your country, or left if you want to see more
+							people from other countries.
 						</span>
 					</div>
 					{CustomWeightList.map((key) => {
@@ -250,10 +273,12 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 										</InputLabel>
 										<InputSlider
 											{...field.props}
-											disabled={key === "country" ? false : !user.subscription?.active}
 											max={2}
 											min={0}
 											step={0.25}
+											disabled={
+												key === "country" ? false : !user.subscription?.active
+											}
 										/>
 									</>
 								)}

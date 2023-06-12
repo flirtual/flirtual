@@ -10,10 +10,13 @@ import { isUid } from "~/utilities";
 export const getProfileUser = cache(async (username: string) => {
 	const session = await withSession();
 
-	if (session.user.id === username || session.user.username === username) redirect(urls.user.me);
+	if (session.user.id === username || session.user.username === username)
+		redirect(urls.user.me);
 
 	if (isUid(username))
-		return await api.user.get(username, thruServerCookies()).catch(() => redirect(urls.default));
+		return await api.user
+			.get(username, thruServerCookies())
+			.catch(() => redirect(urls.default));
 
 	return username === "me"
 		? session.user

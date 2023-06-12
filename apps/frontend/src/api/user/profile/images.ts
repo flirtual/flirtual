@@ -19,10 +19,24 @@ export async function upload(
 	return create(userId, { ...options, body: fileIds });
 }
 
-export async function create(userId: string, options: NarrowFetchOptions<Array<string>>) {
-	return fetch<ProfileImageList>("put", `users/${userId}/profile/images`, options);
+export async function create(
+	userId: string,
+	options: NarrowFetchOptions<Array<string>>
+) {
+	return fetch<ProfileImageList>(
+		"put",
+		`users/${userId}/profile/images`,
+		options
+	);
 }
 
-export async function update(userId: string, options: NarrowFetchOptions<Array<string>>) {
-	return fetch<ProfileImageList>("post", `users/${userId}/profile/images`, options);
+export async function update(
+	userId: string,
+	options: NarrowFetchOptions<Array<string>>
+) {
+	return fetch<ProfileImageList>(
+		"post",
+		`users/${userId}/profile/images`,
+		options
+	);
 }

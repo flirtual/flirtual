@@ -32,8 +32,16 @@ export interface ButtonProps {
 	disabled?: boolean;
 	Icon?: IconComponent;
 }
-export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (props) => {
-	const { size = "base", kind = "primary", disabled, Icon, ...elementProps } = props;
+export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
+	props
+) => {
+	const {
+		size = "base",
+		kind = "primary",
+		disabled,
+		Icon,
+		...elementProps
+	} = props;
 
 	return (
 		<button
@@ -56,8 +64,16 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (p
 	);
 };
 
-export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (props) => {
-	const { size = "base", kind = "primary", disabled, Icon, ...elementProps } = props;
+export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
+	props
+) => {
+	const {
+		size = "base",
+		kind = "primary",
+		disabled,
+		Icon,
+		...elementProps
+	} = props;
 
 	return (
 		<Link

@@ -1,15 +1,17 @@
 import { RefObject, useCallback, useEffect, useState } from "react";
 
-export function useScrollLock<T extends { style: CSSStyleDeclaration }>(ref?: RefObject<T>) {
+export function useScrollLock<T extends { style: CSSStyleDeclaration }>(
+	reference?: RefObject<T>
+) {
 	const [locked, setLocked] = useState(false);
 
 	const set = useCallback(
 		(locked: boolean) => {
-			const { style } = ref?.current ?? document.body;
+			const { style } = reference?.current ?? document.body;
 			if (locked) return void (style.overflow = "hidden");
 			style.overflow = "";
 		},
-		[ref]
+		[reference]
 	);
 
 	useEffect(() => {

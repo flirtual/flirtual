@@ -9,12 +9,22 @@ import { Image, ImageProps } from "./image";
 export type UserAvatarProps = Omit<ImageProps, "src" | "alt"> & { user: User };
 
 export const UserAvatar: React.FC<UserAvatarProps> = ({ user, ...props }) => {
-	return <UserImage {...props} alt={`${displayName(user)}'s avatar`} src={urls.userAvatar(user)} />;
+	return (
+		<UserImage
+			{...props}
+			alt={`${displayName(user)}'s avatar`}
+			src={urls.userAvatar(user)}
+		/>
+	);
 };
 
 export type UserImageProps = Omit<ImageProps, "src"> & { src: string };
 
-export const UserImage: React.FC<UserImageProps> = ({ options, src, ...props }) => {
+export const UserImage: React.FC<UserImageProps> = ({
+	options,
+	src,
+	...props
+}) => {
 	return (
 		<Image
 			{...props}

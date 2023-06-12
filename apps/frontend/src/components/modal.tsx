@@ -13,10 +13,9 @@ export interface ModalProps {
 	onVisibilityChange: Dispatch<boolean>;
 }
 
-export const ModalOuter: React.FC<ModalProps & { modalOuterProps?: HTMLMotionProps<"div"> }> = ({
-	modalOuterProps,
-	...props
-}) => {
+export const ModalOuter: React.FC<
+	ModalProps & { modalOuterProps?: HTMLMotionProps<"div"> }
+> = ({ modalOuterProps, ...props }) => {
 	const { children, visible, onVisibilityChange } = props;
 	const [, setScrollLock] = useScrollLock();
 

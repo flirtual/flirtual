@@ -466,7 +466,13 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           openness: profile.openness,
           conscientiousness: profile.conscientiousness,
           agreeableness: profile.agreeableness,
-          custom_interests: [],
+          custom_interests:
+            profile.custom_interests
+            |> Enum.map(
+              &(&1
+                |> String.downcase()
+                |> String.replace(~r/ |-/, "_"))
+            ),
           attributes: attributes,
           attributes_lf: attributes_lf,
           country: profile.country,

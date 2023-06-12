@@ -21,14 +21,21 @@ export type ConversationListItemProps = Conversation & {
 };
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
-	const { id, kind, active = false, lastItem = false, userId, lastMessage } = props;
+	const {
+		id,
+		kind,
+		active = false,
+		lastItem = false,
+		userId,
+		lastMessage
+	} = props;
 
 	const { loadMore } = useConversations();
 
-	const ref = useRef<HTMLDivElement>(null);
+	const reference = useRef<HTMLDivElement>(null);
 	const user = useUser(userId);
 
-	const inView = useInView(ref);
+	const inView = useInView(reference);
 
 	useEffect(() => {
 		if (!lastItem || !inView) return;
@@ -39,15 +46,23 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 
 	return (
 		<div
-			className={twMerge("relative rounded-xl shadow-brand-1", active && "bg-brand-gradient pb-1")}
-			ref={ref}
+			ref={reference}
+			className={twMerge(
+				"relative rounded-xl shadow-brand-1",
+				active && "bg-brand-gradient pb-1"
+			)}
 		>
 			<div className="flex rounded-xl bg-white-30 dark:bg-black-60">
 				<Link
 					className="shrink-0 before:absolute before:h-full before:w-full"
 					href={urls.conversations.of(id)}
 				>
-					<UserAvatar className="h-20 w-20 rounded-l-xl" height={80} user={user} width={80} />
+					<UserAvatar
+						className="h-20 w-20 rounded-l-xl"
+						height={80}
+						user={user}
+						width={80}
+					/>
 				</Link>
 				{!(lastMessage?.viewed ?? true) && (
 					<div className="absolute -left-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-theme-2 shadow-brand-1">
@@ -71,8 +86,10 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						</span>
 						{lastMessage && (
 							<TimeRelative
-								elementProps={{ className: "shrink-0 text-xs text-black-60 dark:text-white-50" }}
 								value={lastMessage.createdAt}
+								elementProps={{
+									className: "shrink-0 text-xs text-black-60 dark:text-white-50"
+								}}
 							/>
 						)}
 					</div>

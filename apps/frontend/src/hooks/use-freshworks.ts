@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 
 import { displayName } from "~/api/user";
+import { freshworksWidgetId } from "~/const";
 
 import { useSessionUser } from "./use-session";
 
@@ -8,13 +9,11 @@ declare global {
 	interface Window {
 		fwSettings: Record<string, unknown>;
 		FreshworksWidget: {
-			(...args: Array<unknown>): void;
+			(...arguments_: Array<unknown>): void;
 			q: Array<unknown>;
 		};
 	}
 }
-
-const widgetId = 73000002566;
 
 let loaded = false;
 
@@ -23,9 +22,9 @@ export function useFreshworks() {
 		if (loaded) return;
 
 		const script = document.createElement("script");
-		script.src = `https://widget.freshworks.com/widgets/${widgetId}.js`;
+		script.src = `https://widget.freshworks.com/widgets/${freshworksWidgetId}.js`;
 
-		document.body.appendChild(script);
+		document.body.append(script);
 		loaded = true;
 	}, []);
 
@@ -41,7 +40,7 @@ export function useFreshworks() {
 			);
 		}
 
-		window.fwSettings = { widget_id: widgetId };
+		window.fwSettings = { widget_id: freshworksWidgetId };
 	}, [loadFreshworks]);
 
 	const user = useSessionUser();

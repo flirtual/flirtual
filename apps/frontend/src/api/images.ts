@@ -9,6 +9,9 @@ export async function get(
 }
 
 export { _delete as delete };
-async function _delete(imageId: string, options: NarrowFetchOptions = {}): Promise<ProfileImage> {
+async function _delete(
+	imageId: string,
+	options: NarrowFetchOptions = {}
+): Promise<ProfileImage> {
 	return fetch<ProfileImage>("delete", `images/${imageId}`, options);
 }

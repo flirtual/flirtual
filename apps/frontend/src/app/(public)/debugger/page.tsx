@@ -21,7 +21,11 @@ export default async function DebuggerPage() {
 
 	return (
 		<div className="flex h-screen w-screen bg-cream font-nunito dark:bg-black-80 sm:items-center sm:justify-center">
-			<ModelCard className="h-full sm:h-fit" containerProps={{ className: "gap-4" }} title="Debug">
+			<ModelCard
+				className="h-full sm:h-fit"
+				containerProps={{ className: "gap-4" }}
+				title="Debug"
+			>
 				<div className="flex flex-col">
 					<span className="font-montserrat text-lg font-bold">Agent</span>
 					<div className="flex justify-between gap-8 text-sm">
@@ -41,7 +45,9 @@ export default async function DebuggerPage() {
 							className="truncate font-mono text-sm"
 							href={session ? urls.user.profile(session.user.username) : null}
 						>
-							{session ? `${displayName(session.user)} (${session.user.username})` : "Unavailable"}
+							{session
+								? `${displayName(session.user)} (${session.user.username})`
+								: "Unavailable"}
 						</InlineLink>
 					</div>
 					<div className="flex justify-between gap-8 text-sm">
@@ -66,19 +72,30 @@ export default async function DebuggerPage() {
 					)}
 					<div className="flex justify-between gap-8 text-sm">
 						<span className="shrink-0">Age: </span>
-						{session ? <TimeRelative value={session.createdAt} /> : "Unavailable"}
+						<span className="font-mono">
+							{session ? (
+								<TimeRelative value={session.createdAt} />
+							) : (
+								"Unavailable"
+							)}
+						</span>
 					</div>
 				</div>
 				<div className="flex flex-col">
 					<span className="font-montserrat text-lg font-bold">Build</span>
 					<div className="flex justify-between gap-8 text-sm">
 						<span className="shrink-0">Environment: </span>
-						<span className="truncate font-mono text-sm">{capitalize(environment)}</span>
+						<span className="truncate font-mono text-sm">
+							{capitalize(environment)}
+						</span>
 					</div>
 					<div className="flex justify-between gap-8 text-sm">
 						<span className="shrink-0">Commit: </span>
-						<InlineLink className="truncate font-mono text-sm" href={gitCommitUrl}>
-							{gitCommitSha || "Unavailable"}
+						<InlineLink
+							className="truncate font-mono text-sm"
+							href={gitCommitUrl}
+						>
+							{gitCommitSha ? gitCommitSha.slice(0, 8) : "Unavailable"}
 						</InlineLink>
 					</div>
 				</div>

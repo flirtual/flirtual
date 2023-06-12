@@ -4,7 +4,7 @@ import { User } from "~/api/user";
 import { formatDateTime } from "~/date";
 import { useSession } from "~/hooks/use-session";
 
-export const ProfileModInfo: React.FC<{ user: User }> = ({ user }) => {
+export const ProfileModeratorInfo: React.FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
 
 	if (!session || !session.user.tags?.includes("moderator")) return null;
@@ -30,7 +30,9 @@ export const ProfileModInfo: React.FC<{ user: User }> = ({ user }) => {
 			<span suppressHydrationWarning>
 				<span className="font-bold">Shadowbanned:</span>{" "}
 				{user.shadowbannedAt ? (
-					<span className="text-red-500">{formatDateTime(user.shadowbannedAt)}</span>
+					<span className="text-red-500">
+						{formatDateTime(user.shadowbannedAt)}
+					</span>
 				) : (
 					"No"
 				)}
@@ -38,7 +40,9 @@ export const ProfileModInfo: React.FC<{ user: User }> = ({ user }) => {
 			<span suppressHydrationWarning>
 				<span className="font-bold">Deactivated:</span>{" "}
 				{user.deactivatedAt ? (
-					<span className="text-red-500">{formatDateTime(user.deactivatedAt)}</span>
+					<span className="text-red-500">
+						{formatDateTime(user.deactivatedAt)}
+					</span>
 				) : (
 					"No"
 				)}

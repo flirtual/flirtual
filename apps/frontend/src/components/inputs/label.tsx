@@ -5,11 +5,16 @@ export type InputLabelProps = React.ComponentProps<"label"> & {
 	hint?: React.ReactNode;
 };
 
-export const InputLabelHint: React.FC<React.ComponentProps<"span">> = (props) => {
+export const InputLabelHint: React.FC<React.ComponentProps<"span">> = (
+	props
+) => {
 	return (
 		<span
 			{...props}
-			className={twMerge("text-base text-black-50 dark:text-white-50", props.className)}
+			className={twMerge(
+				"text-base text-black-50 dark:text-white-50",
+				props.className
+			)}
 		/>
 	);
 };
@@ -27,7 +32,11 @@ export const InputLabel: React.FC<InputLabelProps> = (props) => {
 			)}
 		>
 			{children}
-			{typeof hint === "string" ? <InputLabelHint>{hint}</InputLabelHint> : hint}
+			{typeof hint === "string" ? (
+				<InputLabelHint>{hint}</InputLabelHint>
+			) : (
+				hint
+			)}
 		</label>
 	);
 };

@@ -44,9 +44,15 @@ export const ConversationListButton: FC = () => {
 	const conversationCount = clamp(useUnreadConversations().length, 0, 99);
 
 	return (
-		<NavigationIconButton href={urls.conversations.list()} id="conversation-button">
+		<NavigationIconButton
+			href={urls.conversations.list()}
+			id="conversation-button"
+		>
 			<div className="relative">
-				<ChatBubbleLeftRightIcon className="aspect-square w-8" strokeWidth={1.5} />
+				<ChatBubbleLeftRightIcon
+					className="aspect-square w-8"
+					strokeWidth={1.5}
+				/>
 				{conversationCount !== 0 && (
 					<div className="absolute -right-2 top-0 flex h-5 w-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:h-0 group-hocus:w-0 group-hocus:opacity-0">
 						<span className="select-none font-mono text-sm font-semibold leading-none text-white-20">
@@ -83,7 +89,10 @@ export const SwitchButton: FC<SwitchButtonProps> = ({ Icon, ...props }) => {
 	);
 };
 
-const NavigationalSwitch: FC<ComponentProps<"div">> = ({ children, ...elementProps }) => (
+const NavigationalSwitch: FC<ComponentProps<"div">> = ({
+	children,
+	...elementProps
+}) => (
 	<div
 		{...elementProps}
 		className={twMerge(

@@ -1,6 +1,10 @@
 "use client";
 
-import { EllipsisHorizontalIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import {
+	EllipsisHorizontalIcon,
+	PencilSquareIcon,
+	TrashIcon
+} from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
 import { useDrag, useDragLayer, useDrop } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
@@ -14,7 +18,7 @@ export interface ArrangeableImageProps {
 	uploading?: boolean;
 	src: string;
 	idx: number;
-	moveImage: (sourceIdx: number, targetIdx: number) => void;
+	moveImage: (sourceIndex: number, targetIndex: number) => void;
 	onDelete: () => void;
 }
 
@@ -43,7 +47,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 	moveImage,
 	onDelete
 }) => {
-	const [{ dragging }, dragRef, preview] = useDrag({
+	const [{ dragging }, dragReference, preview] = useDrag({
 		type: "item",
 		item: { itemIdx: idx } as DragItem,
 		collect: (monitor) => ({
@@ -53,7 +57,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 
 	useEffect(() => void preview(getEmptyImage(), {}), [preview]);
 
-	const [, dropRef] = useDrop({
+	const [, dropReference] = useDrop({
 		accept: "item",
 		drop: (item: DragItem) => {
 			moveImage(idx, item.itemIdx);
@@ -61,13 +65,16 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 		}
 	});
 
-	const ref = useRef<HTMLDivElement | null>(null);
+	const reference = useRef<HTMLDivElement | null>(null);
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const dragDropRef = dragRef(dropRef(ref)) as any;
+	const dragDropReference = dragReference(dropReference(reference)) as any;
 
 	const { currentItem, dragOffset } = useDragLayer((monitor) => {
 		const currentItem = monitor.getItem() as DragItem;
-		const dragOffset = monitor.getDifferenceFromInitialOffset() ?? { x: 0, y: 0 };
+		const dragOffset = monitor.getDifferenceFromInitialOffset() ?? {
+			x: 0,
+			y: 0
+		};
 
 		return {
 			currentItem,
@@ -93,11 +100,16 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 					/>
 				</div>
 			)}
-			<div className="group relative aspect-square max-h-full w-full shrink-0" ref={dragDropRef}>
+			<div
+				className="group relative aspect-square max-h-full w-full shrink-0"
+				ref={dragDropReference}
+			>
 				{dragging && (
 					<div
 						className="pointer-events-none absolute left-0 top-0 z-50 w-full rounded-md shadow-brand-1"
-						style={{ transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }}
+						style={{
+							transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)`
+						}}
 					>
 						<ArrangeableImagePreview alt="Draggable image" src={src} />
 					</div>
@@ -124,7 +136,11 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 					>
 						<div className="flex items-center justify-center rounded-md bg-black-70/80 p-1 transition-all group-hocus-within:bg-black-70">
 							<div className="flex w-0 items-center justify-center gap-2 opacity-0 transition-all group-hocus-within:w-fit group-hocus-within:pr-2 group-hocus-within:opacity-100">
-								<button className="opacity-60 hocus:opacity-100" type="button" onClick={onDelete}>
+								<button
+									className="opacity-60 hocus:opacity-100"
+									type="button"
+									onClick={onDelete}
+								>
 									<TrashIcon className="h-4 w-4 text-white-20" />
 								</button>
 								<button

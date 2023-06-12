@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { api } from "~/api";
 import { Session } from "~/api/auth";
 
-export const DebuggerActions: React.FC<{ session: Session }> = ({ session }) => {
+export const DebuggerActions: React.FC<{ session: Session }> = ({
+	session
+}) => {
 	const router = useRouter();
 
 	if (!session.user.tags?.includes("debugger")) return null;

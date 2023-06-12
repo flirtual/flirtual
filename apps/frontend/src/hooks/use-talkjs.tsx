@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useState
+} from "react";
 import Talk from "talkjs";
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
@@ -14,18 +20,22 @@ import { useTheme } from "./use-theme";
 import { getConversationsKey } from "./use-conversations";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
-const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>([]);
+const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
+	[]
+);
 
-export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
+	children
+}) => {
 	const [ready, setReady] = useState(false);
 	const [authSession] = useSession();
 
 	const router = useRouter();
 	const { mutate } = useSWRConfig();
 
-	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>(
-		[]
-	);
+	const [unreadConversations, setUnreadConversations] = useState<
+		Array<Talk.UnreadConversation>
+	>([]);
 
 	useEffect(() => void Talk.ready.then(() => setReady(true)), []);
 

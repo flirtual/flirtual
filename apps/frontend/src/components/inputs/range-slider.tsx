@@ -38,7 +38,10 @@ export const InputRangeSlider: React.FC<InputRangeSliderProps> = (props) => {
 
 	const onChange = useCallback(
 		([min, max]: InputRangeSliderValue) => {
-			props.onChange.call(null, [clamp(min, limit.min, max), clamp(max, min, limit.max)]);
+			props.onChange.call(null, [
+				clamp(min, limit.min, max),
+				clamp(max, min, limit.max)
+			]);
 		},
 		[limit, props.onChange]
 	);

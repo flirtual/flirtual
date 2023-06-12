@@ -54,13 +54,19 @@ export default async function LikesPage() {
 			>
 				<div className="flex flex-col gap-8 py-8 sm:py-0">
 					<div className="px-4 sm:p-0">
-						<ButtonLink className="w-fit" href={urls.conversations.list()} size="sm">
+						<ButtonLink
+							className="w-fit"
+							href={urls.conversations.list()}
+							size="sm"
+						>
 							Matches
 						</ButtonLink>
 					</div>
 					{items.length === 0 ? (
 						<div className="flex flex-col gap-1 px-4 sm:px-0">
-							<span className="text-xl font-semibold">No one has liked you yet 😔</span>
+							<span className="text-xl font-semibold">
+								No one has liked you yet 😔
+							</span>
 							<span>But it&apos;s only a matter of time.</span>
 						</div>
 					) : (
@@ -77,13 +83,21 @@ export default async function LikesPage() {
 												width={64}
 											/>
 											<div className="flex w-full grow flex-col">
-												<h1 className="text-xl font-semibold sm:text-2xl">{displayName(user)}</h1>
+												<h1 className="text-xl font-semibold sm:text-2xl">
+													{displayName(user)}
+												</h1>
 												<div className="flex w-full gap-2">
-													{user.bornAt && <Pill small>{yearsAgo(new Date(user.bornAt))}</Pill>}
+													{user.bornAt && (
+														<Pill small>{yearsAgo(new Date(user.bornAt))}</Pill>
+													)}
 													<GenderPills
 														simple
 														small
-														attributes={filterBy(user.profile.attributes, "type", "gender")}
+														attributes={filterBy(
+															user.profile.attributes,
+															"type",
+															"gender"
+														)}
 													/>
 													{user.profile.country && (
 														<CountryPill flagOnly code={user.profile.country} />

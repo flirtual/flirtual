@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"name": "✨ flirtual",
+			"path": "../"
+		},
+		{
+			"name": "🚀 api.flirtu.al",
+			"path": "../apps/api"
+		},
+		{
+			"name": "🚀 flirtu.al",
+			"path": "../apps/frontend"
+		},
+		{
+			"name": "🚀 image classification",
+			"path": "../apps/image-classification"
+		},
+	],
+	"settings": {
+		"files.exclude": {
+			"**/node_modules/": true,
+			"**/pnpm-lock.yaml": true
+		},
+		"editor.formatOnSave": true,
+		"cSpell.words": [
+			"flirtual"
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"dbaeumer.vscode-eslint"
+		],
+	}
+}

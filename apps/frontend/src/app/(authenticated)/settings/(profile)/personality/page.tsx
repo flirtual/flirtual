@@ -12,7 +12,10 @@ export const metadata: Metadata = {
 
 export default async function SettingsProfilePersonalityPage() {
 	const session = await withSession();
-	const personality = await api.user.profile.getPersonality(session.user.id, thruServerCookies());
+	const personality = await api.user.profile.getPersonality(
+		session.user.id,
+		thruServerCookies()
+	);
 
 	return (
 		<ModelCard className="sm:max-w-2xl" title="Personality">

@@ -12,12 +12,20 @@ import { twMerge } from "tailwind-merge";
 
 import { IconComponent } from "~/components/icons";
 
-import { InputOptionEvent, InputOptionWindow, InputSelectOption } from "./option-window";
+import {
+	InputOptionEvent,
+	InputOptionWindow,
+	InputSelectOption
+} from "./option-window";
 
 const MonthNames = Object.freeze(
-	new Array(12).fill(undefined).map((_, monthIdx) => {
-		return new Date(2022, monthIdx, 1).toLocaleDateString(undefined, { month: "long" });
-	})
+	Array.from({ length: 12 })
+		.fill(null)
+		.map((_, monthIndex) => {
+			return new Date(2022, monthIndex, 1).toLocaleDateString(undefined, {
+				month: "long"
+			});
+		})
 );
 
 export function getMonthLength(date: Date): number {
@@ -39,7 +47,9 @@ export function dateEqual(a: Date, b: Date): boolean {
 	);
 }
 
-type CalendarButtonProps = React.ComponentProps<"button"> & { Icon: IconComponent };
+type CalendarButtonProps = React.ComponentProps<"button"> & {
+	Icon: IconComponent;
+};
 
 const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 	<button
@@ -90,13 +100,19 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 					options={props.options}
 					onOptionClick={(event) => {
 						props.onOptionAction(
-							event as InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string>
+							event as InputOptionEvent<
+								React.SyntheticEvent<HTMLButtonElement>,
+								string
+							>
 						);
 						setVisible(false);
 					}}
 					onOptionFocus={(event) => {
 						props.onOptionAction(
-							event as InputOptionEvent<React.SyntheticEvent<HTMLButtonElement>, string>
+							event as InputOptionEvent<
+								React.SyntheticEvent<HTMLButtonElement>,
+								string
+							>
 						);
 					}}
 				/>
@@ -109,7 +125,10 @@ const yearInMilliseconds = 3.154e10;
 
 export type MinmaxDate = "now" | Date;
 
-export type InputCalendarProps = Omit<React.ComponentProps<"div">, "onChange"> & {
+export type InputCalendarProps = Omit<
+	React.ComponentProps<"div">,
+	"onChange"
+> & {
 	value: Date;
 	offset?: number;
 	min?: MinmaxDate;
@@ -167,10 +186,10 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 		const minYear = min.getFullYear();
 		const maxYear = max.getFullYear();
 
-		return new Array(offset * 2)
-			.fill(undefined)
-			.map((_, idx) => {
-				const year = currentYear + (idx - offset);
+		return Array.from({ length: offset * 2 })
+			.fill(null)
+			.map((_, index) => {
+				const year = currentYear + (index - offset);
 
 				if (year < minYear || year > maxYear) return null;
 				return year;
@@ -214,7 +233,11 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	const monthLength = getMonthLength(displayDate);
 
 	const lastMonthLength = getMonthLength(
-		new Date(displayDate.getFullYear(), displayDate.getMonth() - 1, displayDate.getDate())
+		new Date(
+			displayDate.getFullYear(),
+			displayDate.getMonth() - 1,
+			displayDate.getDate()
+		)
 	);
 
 	return (
@@ -229,20 +252,30 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			<div className="w-full">
 				<div className="mb-4 flex items-center justify-between">
 					<div className="flex gap-2">
-						<CalendarButton Icon={ChevronDoubleLeftIcon} onClick={() => progressYear(-1)} />
-						<CalendarButton Icon={ChevronLeftIcon} onClick={() => progressMonth(-1)} />
+						<CalendarButton
+							Icon={ChevronDoubleLeftIcon}
+							onClick={() => progressYear(-1)}
+						/>
+						<CalendarButton
+							Icon={ChevronLeftIcon}
+							onClick={() => progressMonth(-1)}
+						/>
 					</div>
 					<div className="mx-4 flex w-full justify-center gap-2">
 						<LabelSelect
-							options={MonthNames.map((label, monthIdx) => ({
-								key: monthIdx.toString(),
+							options={MonthNames.map((label, monthIndex) => ({
+								key: monthIndex.toString(),
 								label,
-								active: monthIdx === value.getMonth()
+								active: monthIndex === value.getMonth()
 							}))}
 							onOptionAction={({ option }) => {
 								if (!option.key) return;
 								doChange(
-									new Date(value.getFullYear(), Number.parseInt(option.key), value.getDate())
+									new Date(
+										value.getFullYear(),
+										Number.parseInt(option.key),
+										value.getDate()
+									)
 								);
 							}}
 						>
@@ -256,15 +289,27 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 							}))}
 							onOptionAction={({ option }) => {
 								if (!option.key) return;
-								doChange(new Date(Number.parseInt(option.key), value.getMonth(), value.getDate()));
+								doChange(
+									new Date(
+										Number.parseInt(option.key),
+										value.getMonth(),
+										value.getDate()
+									)
+								);
 							}}
 						>
 							{displayDate.toLocaleDateString("en-CA", { year: "numeric" })}
 						</LabelSelect>
 					</div>
 					<div className="flex gap-2">
-						<CalendarButton Icon={ChevronRightIcon} onClick={() => progressMonth(1)} />
-						<CalendarButton Icon={ChevronDoubleRightIcon} onClick={() => progressYear(1)} />
+						<CalendarButton
+							Icon={ChevronRightIcon}
+							onClick={() => progressMonth(1)}
+						/>
+						<CalendarButton
+							Icon={ChevronDoubleRightIcon}
+							onClick={() => progressYear(1)}
+						/>
 					</div>
 				</div>
 
@@ -272,66 +317,78 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 					<table className="w-full text-black-70 dark:text-white-10">
 						<thead>
 							<tr>
-								{["S", "M", "T", "W", "T", "F", "S"].map((name, idx) => (
-									<th className="h-10 w-10 select-none font-extrabold" key={idx}>
+								{["S", "M", "T", "W", "T", "F", "S"].map((name, index) => (
+									<th
+										className="h-10 w-10 select-none font-extrabold"
+										key={index}
+									>
 										{name}
 									</th>
 								))}
 							</tr>
 						</thead>
 						<tbody>
-							{new Array(6).fill(undefined).map((_, weekIdx) => {
-								return (
-									<tr className="" key={weekIdx}>
-										{new Array(7).fill(undefined).map((_, dayIdx) => {
-											const previousMonth = weekIdx === 0 && dayIdx < dayOffset;
+							{Array.from({ length: 6 })
+								.fill(null)
+								.map((_, weekIndex) => {
+									return (
+										<tr className="" key={weekIndex}>
+											{Array.from({ length: 7 })
+												.fill(null)
+												.map((_, dayIndex) => {
+													const previousMonth =
+														weekIndex === 0 && dayIndex < dayOffset;
 
-											const nthDay = dayIdx + (7 * weekIdx - dayOffset) + 1;
-											const date = new Date(
-												displayDate.getFullYear(),
-												displayDate.getMonth(),
-												nthDay
-											);
+													const nthDay =
+														dayIndex + (7 * weekIndex - dayOffset) + 1;
+													const date = new Date(
+														displayDate.getFullYear(),
+														displayDate.getMonth(),
+														nthDay
+													);
 
-											const nextMonth = nthDay > monthLength;
-											const currentMonth = !previousMonth && !nextMonth;
+													const nextMonth = nthDay > monthLength;
+													const currentMonth = !previousMonth && !nextMonth;
 
-											const day = previousMonth
-												? lastMonthLength - (dayOffset - dayIdx) + 1
-												: nextMonth
-												? nthDay % monthLength
-												: nthDay;
+													const day = previousMonth
+														? lastMonthLength - (dayOffset - dayIndex) + 1
+														: nextMonth
+														? nthDay % monthLength
+														: nthDay;
 
-											const disabled = !(compare(date) === 0);
-											const active = dateEqual(props.value, date);
+													const disabled = !(compare(date) === 0);
+													const active = dateEqual(props.value, date);
 
-											return (
-												<td className="p-1" key={dayIdx}>
-													<button
-														type="button"
-														className={twMerge(
-															"h-10 w-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
-															disabled ? "" : "focusable bg-white-25 dark:bg-black-50",
-															active
-																? "bg-brand-gradient text-white-20"
-																: (!currentMonth || disabled) && "text-black-30 dark:text-black-10"
-														)}
-														onClick={(event) => {
-															doChange(date);
-															onDateClick?.(event);
-														}}
-													>
-														{day.toLocaleString("en-US", {
-															minimumIntegerDigits: 2,
-															useGrouping: false
-														})}
-													</button>
-												</td>
-											);
-										})}
-									</tr>
-								);
-							})}
+													return (
+														<td className="p-1" key={dayIndex}>
+															<button
+																type="button"
+																className={twMerge(
+																	"h-10 w-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
+																	disabled
+																		? ""
+																		: "focusable bg-white-25 dark:bg-black-50",
+																	active
+																		? "bg-brand-gradient text-white-20"
+																		: (!currentMonth || disabled) &&
+																				"text-black-30 dark:text-black-10"
+																)}
+																onClick={(event) => {
+																	doChange(date);
+																	onDateClick?.(event);
+																}}
+															>
+																{day.toLocaleString("en-US", {
+																	minimumIntegerDigits: 2,
+																	useGrouping: false
+																})}
+															</button>
+														</td>
+													);
+												})}
+										</tr>
+									);
+								})}
 						</tbody>
 					</table>
 				</div>

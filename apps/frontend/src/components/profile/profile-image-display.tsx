@@ -1,6 +1,10 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "@heroicons/react/24/solid";
+import {
+	ChevronLeftIcon,
+	ChevronRightIcon,
+	TrashIcon
+} from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSwipeable } from "react-swipeable";
@@ -8,16 +12,16 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { ModalOuter } from "../modal";
-import { Tooltip } from "../tooltip";
-import { TimeRelative } from "../time-relative";
-import { UserImage } from "../user-avatar";
-
 import { ProfileImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
+
+import { UserImage } from "../user-avatar";
+import { TimeRelative } from "../time-relative";
+import { Tooltip } from "../tooltip";
+import { ModalOuter } from "../modal";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
@@ -39,11 +43,11 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 			alt={"Profile image"}
 			className={className}
 			fill={large}
-			height={!large ? 512 : undefined}
+			height={large ? undefined : 512}
 			options={{ quality: large ? "normal" : "smart" }}
 			priority={priority}
 			src={image.url}
-			width={!large ? 512 : undefined}
+			width={large ? undefined : 512}
 		/>
 	);
 };
@@ -58,7 +62,12 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 				Uploaded <TimeRelative value={image.createdAt} />
 				{image.scanned !== null && (
 					<>
-						, and was {image.scanned ? "scanned" : <span className="font-bold">not scanned</span>}
+						, and was{" "}
+						{image.scanned ? (
+							"scanned"
+						) : (
+							<span className="font-bold">not scanned</span>
+						)}
 					</>
 				)}
 				.
@@ -94,7 +103,10 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 	);
 };
 
-export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images, children }) => {
+export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
+	images,
+	children
+}) => {
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
 	const [session] = useSession();
@@ -102,21 +114,25 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 	const [imageId, setImageId] = useState(firstImageId);
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
 
-	const curImage = useMemo(
+	const currentImage = useMemo(
 		() => images.find((image) => image.id === imageId) ?? 0,
 		[imageId, images]
 	);
 
 	const set = useCallback(
 		(direction: -1 | 0 | 1, imageId?: string) => {
-			setImageId((curImageId) => {
+			setImageId((currentImageId) => {
 				if (imageId !== undefined) return imageId;
 
-				const curImageIdx = images.findIndex((image) => image.id === curImageId) ?? 0;
+				const currentImageIndex =
+					images.findIndex((image) => image.id === currentImageId) ?? 0;
 
-				const newImageOffset = curImageIdx + direction;
+				const newImageOffset = currentImageIndex + direction;
 				const newImageId =
-					images[(newImageOffset < 0 ? images.length - 1 : newImageOffset) % images.length].id;
+					images[
+						(newImageOffset < 0 ? images.length - 1 : newImageOffset) %
+							images.length
+					].id;
 				return newImageId;
 			});
 		},
@@ -132,11 +148,11 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 	return (
 		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
 			<div className="relative flex aspect-square shrink-0 bg-black-70">
-				{images.map((image, imageIdx) => (
+				{images.map((image, imageIndex) => (
 					<SingleImage
 						image={image}
 						key={image.id}
-						priority={imageIdx === 0}
+						priority={imageIndex === 0}
 						className={twMerge(
 							"h-full w-full transition-opacity duration-500",
 							image.id === imageId ? "opacity-100" : "absolute opacity-0"
@@ -167,7 +183,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 						type="button"
 						onClick={() => setExpandedImage(true)}
 					/>
-					{curImage && (
+					{currentImage && (
 						<ModalOuter
 							visible={expandedImage}
 							modalOuterProps={{
@@ -187,9 +203,15 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({ images
 									<XMarkIcon className="h-6 w-6" />
 								</button>
 								<div className="relative aspect-square w-auto md:h-screen md:max-h-[80vh]">
-									<SingleImage large className="!relative object-cover" image={curImage} />
+									<SingleImage
+										large
+										className="!relative object-cover"
+										image={currentImage}
+									/>
 								</div>
-								{session?.user.tags?.includes("moderator") && <ImageToolbar image={curImage} />}
+								{session?.user.tags?.includes("moderator") && (
+									<ImageToolbar image={currentImage} />
+								)}
 							</div>
 						</ModalOuter>
 					)}

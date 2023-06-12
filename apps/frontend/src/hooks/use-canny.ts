@@ -11,7 +11,7 @@ import { useScreenBreakpoint } from "./use-screen-breakpoint";
 declare global {
 	interface Window {
 		Canny: {
-			(...args: Array<unknown>): void;
+			(...arguments_: Array<unknown>): void;
 			q: Array<unknown>;
 		};
 	}
@@ -34,7 +34,7 @@ export function useCanny() {
 		script.id = "canny-jssdk";
 		script.async = true;
 
-		document.body.appendChild(script);
+		document.body.append(script);
 		loaded = true;
 	}, []);
 

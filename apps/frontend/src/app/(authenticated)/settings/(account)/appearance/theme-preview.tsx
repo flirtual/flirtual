@@ -27,7 +27,9 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 	return (
 		<Tooltip
 			value={
-				theme == "system" ? "Automatically match your system theme" : capitalize(theme) + " theme"
+				theme == "system"
+					? "Automatically match your system theme"
+					: capitalize(theme) + " theme"
 			}
 		>
 			<button
@@ -45,7 +47,9 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 					src={urls.media(ThemeImage[theme])}
 					width={320}
 				/>
-				{active && <CheckCircleIcon className="absolute right-0.5 top-0.5 h-6 w-6 text-white-10" />}
+				{active && (
+					<CheckCircleIcon className="absolute right-0.5 top-0.5 h-6 w-6 text-white-10" />
+				)}
 			</button>
 		</Tooltip>
 	);

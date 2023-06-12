@@ -1,6 +1,10 @@
 "use client";
 
-import { ArrowTopRightOnSquareIcon, ChevronRightIcon, LinkIcon } from "@heroicons/react/24/outline";
+import {
+	ArrowTopRightOnSquareIcon,
+	ChevronRightIcon,
+	LinkIcon
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
@@ -13,7 +17,10 @@ export type NavigationLinkProps = {
 	Icon?: IconComponent;
 } & ({ href: string } | { onClick: () => void });
 
-export const NavigationLink: React.FC<NavigationLinkProps> = ({ children, ...props }) => {
+export const NavigationLink: React.FC<NavigationLinkProps> = ({
+	children,
+	...props
+}) => {
 	const pathname = usePathname();
 	const Icon = props.Icon;
 	const NavIcon =

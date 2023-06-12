@@ -154,7 +154,11 @@ module.exports = {
 				"&::-ms-track"
 			]);
 
-			addVariant("range-thumb", ["&::-webkit-slider-thumb", "&::-moz-range-thumb", "&::-ms-thumb"]);
+			addVariant("range-thumb", [
+				"&::-webkit-slider-thumb",
+				"&::-moz-range-thumb",
+				"&::-ms-thumb"
+			]);
 
 			addComponents({
 				".focusable": {

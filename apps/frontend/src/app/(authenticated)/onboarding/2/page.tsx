@@ -12,7 +12,15 @@ export default async function Onboarding2Page() {
 
 	return (
 		<ModelCard className="shrink-0 sm:max-w-2xl" title="Info & tags">
-			<Onboarding2Form {...{ games, genders, interests, platforms, sexualities }} />
+			<Onboarding2Form
+				{...{
+					games,
+					genders,
+					interests,
+					platforms,
+					sexualities
+				}}
+			/>
 		</ModelCard>
 	);
 }

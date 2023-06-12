@@ -13,7 +13,7 @@ export async function upload(
 	body.append("UPLOADCARE_PUB_KEY", uploadcarePublicKey);
 	if (options.store) body.append("UPLOADCARE_STORE", "1");
 
-	files.forEach((file) => body.append(file.name, file));
+	for (const file of files) body.append(file.name, file);
 
 	const response = await fetch("https://upload.uploadcare.com/base/", {
 		method: "post",

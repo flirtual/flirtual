@@ -38,11 +38,18 @@ export interface OptionItemProps<K> {
 	};
 }
 
-export type InputOptionWindowProps<K> = Omit<ComponentProps<"div">, "onChange"> & {
+export type InputOptionWindowProps<K> = Omit<
+	ComponentProps<"div">,
+	"onChange"
+> & {
 	options: Array<InputSelectOption<K>>;
 	OptionItem?: FC<OptionItemProps<K>>;
-	onOptionClick?: EventHandler<InputOptionEvent<MouseEvent<HTMLButtonElement>, K>>;
-	onOptionFocus?: EventHandler<InputOptionEvent<FocusEvent<HTMLButtonElement>, K>>;
+	onOptionClick?: EventHandler<
+		InputOptionEvent<MouseEvent<HTMLButtonElement>, K>
+	>;
+	onOptionFocus?: EventHandler<
+		InputOptionEvent<FocusEvent<HTMLButtonElement>, K>
+	>;
 };
 
 function getFirstActiveElement(root: HTMLElement): HTMLElement {
@@ -53,14 +60,19 @@ function getFirstActiveElement(root: HTMLElement): HTMLElement {
 	);
 }
 
-export function focusElementByKeydown({ code, currentTarget }: KeyboardEvent<HTMLDivElement>) {
+export function focusElementByKeydown({
+	code,
+	currentTarget
+}: KeyboardEvent<HTMLDivElement>) {
 	if (!code.startsWith("Key")) return;
 	const key = code.slice(3).toLowerCase();
 	const elements = currentTarget.querySelectorAll("*[data-key]");
 
-	for (let i = 0; i < elements.length; i++) {
-		const element = elements[i];
-		if (!(element instanceof HTMLElement) || !element.dataset.name?.toLowerCase().startsWith(key))
+	for (const element of elements) {
+		if (
+			!(element instanceof HTMLElement) ||
+			!element.dataset.name?.toLowerCase().startsWith(key)
+		)
 			continue;
 
 		element.focus({});
@@ -87,102 +99,109 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const InputOptionWindow = forwardRef<HTMLDivElement, InputOptionWindowProps<unknown>>(
-	(props, ref) => {
-		const {
-			options,
-			onOptionClick,
-			onOptionFocus,
-			OptionItem = DefaultOptionItem,
-			...elementProps
-		} = props;
-		const optionsRef = useRef<HTMLDivElement>(null);
+export const InputOptionWindow = forwardRef<
+	HTMLDivElement,
+	InputOptionWindowProps<unknown>
+>((props, reference) => {
+	const {
+		options,
+		onOptionClick,
+		onOptionFocus,
+		OptionItem = DefaultOptionItem,
+		...elementProps
+	} = props;
+	const optionsReference = useRef<HTMLDivElement>(null);
 
-		const focusOption = useCallback((target: -1 | 1 | 0) => {
-			const { current: root } = optionsRef;
-			if (!root) return;
+	const focusOption = useCallback((target: -1 | 1 | 0) => {
+		const { current: root } = optionsReference;
+		if (!root) return;
 
-			const firstActiveElement = getFirstActiveElement(root);
-			if (!root.contains(document.activeElement) || !document.activeElement || target === 0) {
-				if (root.firstChild instanceof HTMLElement) firstActiveElement.focus();
-				return;
-			}
+		const firstActiveElement = getFirstActiveElement(root);
+		if (
+			!root.contains(document.activeElement) ||
+			!document.activeElement ||
+			target === 0
+		) {
+			if (root.firstChild instanceof HTMLElement) firstActiveElement.focus();
+			return;
+		}
 
-			const sibling =
-				document.activeElement[target === -1 ? "previousSibling" : "nextSibling"] ??
-				root[target === -1 ? "lastChild" : "firstChild"];
-			if (sibling instanceof HTMLElement) sibling.focus();
-		}, []);
+		const sibling =
+			document.activeElement[
+				target === -1 ? "previousSibling" : "nextSibling"
+			] ?? root[target === -1 ? "lastChild" : "firstChild"];
+		if (sibling instanceof HTMLElement) sibling.focus();
+	}, []);
 
-		// useEffect(() => focusOption(0), [focusOption]);
+	// useEffect(() => focusOption(0), [focusOption]);
 
-		useEffect(() => {
-			const { current: root } = optionsRef;
-			if (!root) return;
+	useEffect(() => {
+		const { current: root } = optionsReference;
+		if (!root) return;
 
-			const activeElement = root.querySelector("*[data-active=true]");
-			if (!activeElement || !(activeElement instanceof HTMLElement)) return;
+		const activeElement = root.querySelector("*[data-active=true]");
+		if (!activeElement || !(activeElement instanceof HTMLElement)) return;
 
-			activeElement.focus({});
+		activeElement.focus({});
 
-			// todo: this scrolls the entire page, not the container.
-			// activeElement.scrollIntoView({ block: "start" });
-		}, []);
+		// todo: this scrolls the entire page, not the container.
+		// activeElement.scrollIntoView({ block: "start" });
+	}, []);
 
-		return (
-			<div
-				ref={ref}
-				tabIndex={-1}
-				className={twMerge(
-					"focusable-within flex max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70",
-					elementProps.className
-				)}
-				onFocusCapture={(event) => {
-					props.onFocusCapture?.(event);
+	return (
+		<div
+			ref={reference}
+			tabIndex={-1}
+			className={twMerge(
+				"focusable-within flex max-h-52 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70",
+				elementProps.className
+			)}
+			onFocusCapture={(event) => {
+				props.onFocusCapture?.(event);
 
-					if (event.currentTarget !== event.target) return;
-					focusOption(0);
-				}}
-				onKeyDown={(event) => {
-					props.onKeyDown?.(event);
-					focusElementByKeydown(event);
+				if (event.currentTarget !== event.target) return;
+				focusOption(0);
+			}}
+			onKeyDown={(event) => {
+				props.onKeyDown?.(event);
+				focusElementByKeydown(event);
 
-					switch (event.key) {
-						case "ArrowUp": {
-							event.preventDefault();
-							focusOption(-1);
-							return;
-						}
-						case "ArrowDown": {
-							event.preventDefault();
-							focusOption(1);
-							return;
-						}
+				switch (event.key) {
+					case "ArrowUp": {
+						event.preventDefault();
+						focusOption(-1);
+						return;
 					}
-				}}
-			>
-				<div className="flex w-full flex-col" ref={optionsRef}>
-					{options.map((option) => {
-						if (!option.key) return null;
+					case "ArrowDown": {
+						event.preventDefault();
+						focusOption(1);
+						return;
+					}
+				}
+			}}
+		>
+			<div className="flex w-full flex-col" ref={optionsReference}>
+				{options.map((option) => {
+					if (!option.key) return null;
 
-						return (
-							<OptionItem
-								// eslint-disable-next-line @typescript-eslint/no-explicit-any
-								key={option.key as any}
-								option={option}
-								elementProps={{
-									"data-active": option.active ?? false,
-									"data-key": option.key,
-									"data-name": option.label,
-									onClick: (event) => onOptionClick?.(Object.assign(event, { option })),
-									onFocus: (event) => onOptionFocus?.(Object.assign(event, { option }))
-								}}
-							/>
-						);
-					})}
-				</div>
+					return (
+						<OptionItem
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							key={option.key as any}
+							option={option}
+							elementProps={{
+								"data-active": option.active ?? false,
+								"data-key": option.key,
+								"data-name": option.label,
+								onClick: (event) =>
+									onOptionClick?.(Object.assign(event, { option })),
+								onFocus: (event) =>
+									onOptionFocus?.(Object.assign(event, { option }))
+							}}
+						/>
+					);
+				})}
 			</div>
-		);
-	}
-);
+		</div>
+	);
+});

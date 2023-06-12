@@ -8,12 +8,15 @@ export interface NavigationHeaderProps {
 	navigationInner: string | null;
 }
 
-export const NavigationHeader: React.FC<NavigationHeaderProps> = ({ navigationInner }) => {
+export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
+	navigationInner
+}) => {
 	const query = useSearchParams();
 
 	const Icon = navigationInner ? ChevronLeftIcon : XMarkIcon;
 	const returnTo = ensureRelativeUrl(
-		query.get("return") ?? (navigationInner ? urls.settings.list() : urls.browse())
+		query.get("return") ??
+			(navigationInner ? urls.settings.list() : urls.browse())
 	);
 
 	return (

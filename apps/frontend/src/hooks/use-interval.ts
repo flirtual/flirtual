@@ -1,27 +1,30 @@
 import ms from "ms";
 import { useCallback, useDebugValue, useEffect, useMemo, useRef } from "react";
 
-export function useInterval(fn: () => void, every: number | string) {
-	const ref = useRef<ReturnType<typeof setInterval> | null>(null);
+export function useInterval(callback: () => void, every: number | string) {
+	const reference = useRef<ReturnType<typeof setInterval> | null>(null);
 
-	const interval = useMemo(() => (typeof every === "string" ? ms(every) : every), [every]);
+	const interval = useMemo(
+		() => (typeof every === "string" ? ms(every) : every),
+		[every]
+	);
 
 	const clear = useCallback(() => {
-		if (ref.current === null) return;
-		clearInterval(ref.current);
+		if (reference.current === null) return;
+		clearInterval(reference.current);
 	}, []);
 
 	const reset = useCallback(() => {
 		clear();
-		ref.current = setInterval(fn, interval);
-	}, [clear, fn, interval]);
+		reference.current = setInterval(callback, interval);
+	}, [clear, callback, interval]);
 
 	useEffect(() => {
 		reset();
 		return () => clear();
 	}, [reset, clear]);
 
-	useDebugValue(ref.current);
+	useDebugValue(reference.current);
 
-	return { ref, clear, reset };
+	return { ref: reference, clear, reset };
 }

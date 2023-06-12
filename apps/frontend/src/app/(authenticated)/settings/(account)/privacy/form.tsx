@@ -23,7 +23,9 @@ export const PrivacyForm: React.FC = () => {
 			className="flex flex-col gap-8"
 			fields={{ ...user.preferences.privacy }}
 			onSubmit={async (body, { reset }) => {
-				const privacy = await api.user.preferences.updatePrivacy(user.id, { body });
+				const privacy = await api.user.preferences.updatePrivacy(user.id, {
+					body
+				});
 				reset(privacy);
 
 				toasts.add({ type: "success", label: "Saved privacy preferences!" });

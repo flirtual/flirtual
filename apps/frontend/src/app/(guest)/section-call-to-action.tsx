@@ -2,8 +2,8 @@
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
-import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
+import { FlirtualLogo } from "~/components/logo";
 
 import { BackgroundVideo } from "./background-video";
 import { LandingButton } from "./landing-button";

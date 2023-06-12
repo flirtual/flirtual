@@ -31,12 +31,12 @@ export const ForgotPasswordForm: React.FC = () => {
 					<>
 						<p>
 							If you have an account, we&apos;ll send an email to{" "}
-							<span className="font-semibold">{fields.email.props.value}</span> with a link to reset
-							your password.
+							<span className="font-semibold">{fields.email.props.value}</span>{" "}
+							with a link to reset your password.
 							<br />
 							<br />
-							If you don&apos;t see it, check your spam folder, and if you still don&apos;t see it,
-							contact us.
+							If you don&apos;t see it, check your spam folder, and if you still
+							don&apos;t see it, contact us.
 						</p>
 						<div className="flex gap-4">
 							<ButtonLink className="w-fit" href={urls.login()} size="sm">
@@ -50,12 +50,19 @@ export const ForgotPasswordForm: React.FC = () => {
 					</>
 				) : (
 					<>
-						<p>Please enter your email and we&apos;ll send along a link to reset your password.</p>
+						<p>
+							Please enter your email and we&apos;ll send along a link to reset
+							your password.
+						</p>
 						<FormField name="email">
 							{(field) => (
 								<>
 									<InputLabel>Account email</InputLabel>
-									<InputText {...field.props} autoComplete="email" type="email" />
+									<InputText
+										{...field.props}
+										autoComplete="email"
+										type="email"
+									/>
 								</>
 							)}
 						</FormField>

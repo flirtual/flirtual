@@ -1,12 +1,26 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { createContext, Dispatch, SetStateAction, useContext, useMemo, useState } from "react";
+import {
+	createContext,
+	Dispatch,
+	SetStateAction,
+	useContext,
+	useMemo,
+	useState
+} from "react";
 import useSWR, { KeyedMutator } from "swr";
 import { twMerge } from "tailwind-merge";
-import { ArrowTopRightOnSquareIcon, ShieldCheckIcon } from "@heroicons/react/24/solid";
+import {
+	ArrowTopRightOnSquareIcon,
+	ShieldCheckIcon
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { CheckIcon, ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import {
+	CheckIcon,
+	ChevronDownIcon,
+	ChevronRightIcon
+} from "@heroicons/react/24/outline";
 
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
@@ -42,7 +56,10 @@ interface ProfileReportViewProps {
 	reports: Array<CompleteReport>;
 }
 
-const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports }) => {
+const ProfileReportView: React.FC<ProfileReportViewProps> = ({
+	reported,
+	reports
+}) => {
 	const [collapsed, setCollapsed] = useState(reports.length >= 2);
 	const { mutate } = useContext(ReportListContext);
 	const toasts = useToast();
@@ -81,8 +98,12 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 										.then(({ count }) =>
 											toasts.add({
 												type: "success",
-												label: `Successfully cleared ${count} report${count !== 1 ? "s" : ""}`,
-												children: <span className="text-sm">User: {reported.id}</span>
+												label: `Successfully cleared ${count} report${
+													count === 1 ? "" : "s"
+												}`,
+												children: (
+													<span className="text-sm">User: {reported.id}</span>
+												)
 											})
 										);
 
@@ -103,12 +124,18 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 							: ""}{" "}
 						reports
 					</span>
-					{reported.shadowbannedAt && <span className="font-bold text-red-600">Shadowbanned</span>}
+					{reported.shadowbannedAt && (
+						<span className="font-bold text-red-600">Shadowbanned</span>
+					)}
 				</div>
 			</div>
 			<div className="flex flex-col pl-10">
 				{collapsed ? (
-					<button className="flex flex-col" type="button" onClick={() => setCollapsed(false)}>
+					<button
+						className="flex flex-col"
+						type="button"
+						onClick={() => setCollapsed(false)}
+					>
 						{entries(groupBy(activeReports, (report) => report.reason.id))
 							.sort()
 							.map(([reasonId, reports]) => (
@@ -133,12 +160,18 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 										suppressHydrationWarning
 										className="text-xs text-black-50 first-letter:capitalize dark:text-white-50"
 									>
-										<TimeRelative approximate suffix="since" value={report.createdAt} />{" "}
+										<TimeRelative
+											approximate
+											suffix="since"
+											value={report.createdAt}
+										/>{" "}
 										{formatDateTime(report.createdAt)}
 									</span>
 
 									<div className="flex items-center justify-between gap-4 pr-3">
-										<span className="text-lg font-semibold">{report.reason.name}</span>
+										<span className="text-lg font-semibold">
+											{report.reason.name}
+										</span>
 										{!report.reviewedAt && (
 											<Tooltip value="Clear single report">
 												<button
@@ -184,7 +217,9 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({ reported, reports
 };
 
 export const ReportView: React.FC = () => {
-	const [listOptions, setListOptions] = useState<ListOptions>({ query: { reviewed: false } });
+	const [listOptions, setListOptions] = useState<ListOptions>({
+		query: { reviewed: false }
+	});
 
 	const { data: reports = [], mutate } = useSWR(
 		["reports", listOptions],
@@ -207,12 +242,21 @@ export const ReportView: React.FC = () => {
 		}
 	);
 
-	const grouped = useMemo(() => groupBy(reports, ({ targetId }) => targetId), [reports]);
+	const grouped = useMemo(
+		() => groupBy(reports, ({ targetId }) => targetId),
+		[reports]
+	);
 
 	return (
 		<ReportListContext.Provider
 			value={useMemo(
-				() => ({ listOptions, reports, setListOptions, mutate } as ReportListContext),
+				() =>
+					({
+						listOptions,
+						reports,
+						setListOptions,
+						mutate
+					} as ReportListContext),
 				[listOptions, setListOptions, reports, mutate]
 			)}
 		>
@@ -226,7 +270,11 @@ export const ReportView: React.FC = () => {
 				</div>
 				<div className="flex flex-col gap-4">
 					{entries(grouped).map(([targetId, reports]) => (
-						<ProfileReportView key={targetId} reported={reports[0].target} reports={reports} />
+						<ProfileReportView
+							key={targetId}
+							reported={reports[0].target}
+							reports={reports}
+						/>
 					))}
 				</div>
 			</ModelCard>

@@ -9,14 +9,18 @@ defmodule Flirtual.User.Profile.Image.Moderation do
   alias Flirtual.Repo
   alias Flirtual.User.Profile.Image
 
+  # These tags are not indicative of Flirtual's content policies, nor are they
+  # an explicit list of forbidden content. They are simply used to classify
+  # images for moderation purposes.
+
   # https://github.com/flirtual/deep-danbooru
   # https://danbooru.donmai.us/wiki_pages/tag_groups
   def classify_flag?(classifications) do
     case classifications do
       # Neutral usually applies for real-life images.
-      %{"nsfwjs" => %{"neutral" => _}, "deepDanbooru" => %{"blood" => _}} -> :illegal
+      %{"nsfwjs" => %{"neutral" => _}, "deepDanbooru" => %{"blood" => _}} -> :violence
       %{"nsfwjs" => %{"neutral" => _}, "deepDanbooru" => %{"drugs" => _}} -> :illegal
-      %{"nsfwjs" => %{"neutral" => _}, "deepDanbooru" => %{"weapon" => _}} -> :illegal
+      %{"nsfwjs" => %{"neutral" => _}, "deepDanbooru" => %{"weapon" => _}} -> :violence
       # Specific or niche classifications.
       %{"deepDanbooru" => %{"ahegao" => _}} -> :nsfw
       %{"deepDanbooru" => %{"ass_focus" => _}} -> :nsfw

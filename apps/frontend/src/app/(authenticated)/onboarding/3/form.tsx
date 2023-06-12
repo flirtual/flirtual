@@ -2,12 +2,20 @@
 
 import { useRouter } from "next/navigation";
 
-import { InputEditor, InputLabel, InputLabelHint, InputText } from "~/components/inputs";
+import {
+	InputEditor,
+	InputLabel,
+	InputLabelHint,
+	InputText
+} from "~/components/inputs";
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
-import { ImageSetValue, InputImageSet } from "~/components/forms/input-image-set";
+import {
+	ImageSetValue,
+	InputImageSet
+} from "~/components/forms/input-image-set";
 import { useSession } from "~/hooks/use-session";
 
 export const Onboarding3Form: React.FC = () => {
@@ -53,7 +61,7 @@ export const Onboarding3Form: React.FC = () => {
 					// })
 				]);
 
-				if (values.images.length) {
+				if (values.images.length > 0) {
 					await api.user.profile.images.update(user.id, {
 						body: values.images.map((image) => image.id).filter(Boolean)
 					});
@@ -70,8 +78,9 @@ export const Onboarding3Form: React.FC = () => {
 								<InputLabel {...field.labelProps}>Display name</InputLabel>
 								<InputText {...field.props} />
 								<InputLabelHint className="text-sm">
-									This is how you&apos;ll appear around Flirtual. Your display name can contain
-									special characters and doesn&apos;t need to be unique. Your profile link (
+									This is how you&apos;ll appear around Flirtual. Your display
+									name can contain special characters and doesn&apos;t need to
+									be unique. Your profile link (
 									<span className="font-mono">
 										flirtu.al/
 										{user.username}
@@ -84,7 +93,11 @@ export const Onboarding3Form: React.FC = () => {
 					<FormField name="images">
 						{(field) => (
 							<>
-								<InputLabel {...field.labelProps} inline hint="Upload your VR avatar pictures!">
+								<InputLabel
+									{...field.labelProps}
+									inline
+									hint="Upload your VR avatar pictures!"
+								>
 									Profile pictures
 								</InputLabel>
 								<InputImageSet {...field.props} />
@@ -104,7 +117,8 @@ export const Onboarding3Form: React.FC = () => {
 							inline
 							hint={
 								<InputLabelHint className="text-sm">
-									People can see your accounts after you match, to help you meet up.
+									People can see your accounts after you match, to help you meet
+									up.
 								</InputLabelHint>
 							}
 						>

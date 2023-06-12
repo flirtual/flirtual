@@ -9,8 +9,14 @@ type InlineLinkProps = Omit<Parameters<typeof Link>[0], "href"> & {
 	highlight?: boolean;
 };
 
-export const InlineLink: React.FC<InlineLinkProps> = ({ href, highlight = true, ...props }) => {
-	return href !== null ? (
+export const InlineLink: React.FC<InlineLinkProps> = ({
+	href,
+	highlight = true,
+	...props
+}) => {
+	return href === null ? (
+		<span {...props} />
+	) : (
 		<Link
 			{...props}
 			href={href.toString()}
@@ -21,7 +27,5 @@ export const InlineLink: React.FC<InlineLinkProps> = ({ href, highlight = true, 
 				props.className
 			)}
 		/>
-	) : (
-		<span {...props} />
 	);
 };

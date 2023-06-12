@@ -4,11 +4,13 @@ import { capitalize, groupBy } from "~/utilities";
 import { withSession } from "~/server-utilities";
 import { withAttribute } from "~/api/attributes-server";
 
-import { Pill } from "./pill";
-import { PillCollectionExpansion } from "./expansion";
 import { PillAttributeList } from "./attribute-list";
+import { PillCollectionExpansion } from "./expansion";
+import { Pill } from "./pill";
 
-function getPersonalityLabels({ profile: { openness, conscientiousness, agreeableness } }: User) {
+function getPersonalityLabels({
+	profile: { openness, conscientiousness, agreeableness }
+}: User) {
 	if (!openness || !conscientiousness || !agreeableness) return [];
 
 	return [
@@ -22,7 +24,9 @@ export async function PillCollection(props: { user: User }) {
 	const session = await withSession();
 	const { user } = props;
 
-	const sessionAttributeIds = session.user.profile.attributes.map(({ id }) => id);
+	const sessionAttributeIds = new Set(
+		session.user.profile.attributes.map(({ id }) => id)
+	);
 	const editable = session.user.id === user.id;
 
 	const sessionPersonalityLabels = getPersonalityLabels(session.user);
@@ -50,14 +54,15 @@ export async function PillCollection(props: { user: User }) {
 				href={editable ? urls.settings.tags("sexuality") : undefined}
 				user={user}
 			/>
-			{personalityLabels.length !== 0 && (
+			{personalityLabels.length > 0 && (
 				<div className="flex w-full flex-wrap gap-2">
 					{personalityLabels.map((personalityLabel) => (
 						<Pill
 							href={editable ? urls.settings.personality : undefined}
 							key={personalityLabel}
 							active={
-								session.user.id !== user.id && sessionPersonalityLabels.includes(personalityLabel)
+								session.user.id !== user.id &&
+								sessionPersonalityLabels.includes(personalityLabel)
 							}
 						>
 							{personalityLabel}
@@ -68,7 +73,7 @@ export async function PillCollection(props: { user: User }) {
 			<div className="flex w-full flex-wrap gap-2">
 				{(attributes.interest ?? []).map(({ id, name }) => (
 					<Pill
-						active={session.user.id !== user.id && sessionAttributeIds.includes(id)}
+						active={session.user.id !== user.id && sessionAttributeIds.has(id)}
 						href={editable ? urls.settings.tags("interest") : undefined}
 						key={id}
 					>
@@ -100,7 +105,11 @@ export async function PillCollection(props: { user: User }) {
 					</Pill>
 				</div>
 			)}
-			<PillCollectionExpansion attributes={attributes} editable={editable} user={user} />
+			<PillCollectionExpansion
+				attributes={attributes}
+				editable={editable}
+				user={user}
+			/>
 		</div>
 	);
 }

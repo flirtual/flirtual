@@ -1,19 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { urls } from "~/urls";
-import { entries, Expand, fromEntries, toCamelObject, toSnakeObject } from "~/utilities";
+import {
+	entries,
+	Expand,
+	fromEntries,
+	toCamelObject,
+	toSnakeObject
+} from "~/utilities";
 
-export function newUrl(pathname: string, query: Record<string, string | undefined> = {}): URL {
-	const searchParams = new URLSearchParams(
+export function newUrl(
+	pathname: string,
+	query: Record<string, string | undefined> = {}
+): URL {
+	const searchParameters = new URLSearchParams(
 		fromEntries(
-			entries(toSnakeObject(query) as Record<string, string | undefined>).filter(([, v]) =>
-				Boolean(v)
-			)
+			entries(
+				toSnakeObject(query) as Record<string, string | undefined>
+			).filter(([, v]) => Boolean(v))
 		) as Record<string, string>
 	);
-	searchParams.sort();
+	searchParameters.sort();
 
 	return new URL(
-		`${pathname}${Object.keys(query).length > 0 ? `?${searchParams.toString()}` : ""}`,
+		`${pathname}${
+			Object.keys(query).length > 0 ? `?${searchParameters.toString()}` : ""
+		}`,
 		urls.api
 	);
 }
@@ -72,10 +83,17 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 	pathname: string,
 	options: O
 ): Promise<T | Response> {
-	const url = newUrl(pathname, options.query as Record<string, string | undefined>);
+	const url = newUrl(
+		pathname,
+		options.query as Record<string, string | undefined>
+	);
 	const body: any = options.raw
 		? options.body
-		: JSON.stringify(typeof options.body === "object" ? toSnakeObject(options.body) : options.body);
+		: JSON.stringify(
+				typeof options.body === "object"
+					? toSnakeObject(options.body)
+					: options.body
+		  );
 
 	const response = await globalThis.fetch(url, {
 		...options,
@@ -92,10 +110,10 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 	const responseBody = toCamelObject<any>(await response.json());
 
 	if (!response.ok || "error" in responseBody) {
-		const error = new (responseBody?.error.properties ? ResponseChangesetError : ResponseError)(
-			response,
-			responseBody
-		);
+		const error = new (
+			responseBody?.error.properties ? ResponseChangesetError : ResponseError
+		)(response, responseBody);
+
 		error.stack = error.stack?.split("\n").slice(2).join("\n");
 		throw error;
 	}

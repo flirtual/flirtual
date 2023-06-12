@@ -11,7 +11,9 @@ export interface ProfilePageProps {
 	params: { username: string };
 }
 
-export async function generateMetadata({ params }: ProfilePageProps): Promise<Metadata> {
+export async function generateMetadata({
+	params
+}: ProfilePageProps): Promise<Metadata> {
 	const user = await getProfileUser(params.username);
 
 	return {

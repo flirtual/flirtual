@@ -8,8 +8,8 @@ import { ProfileMonopolyLabel } from "~/api/user/profile";
 import { urls } from "~/urls";
 import { Attribute } from "~/api/attributes";
 
-import { Pill } from "./pill";
 import { PillAttributeList } from "./attribute-list";
+import { Pill } from "./pill";
 
 export interface PillCollectionExpansionProps {
 	user: User;
@@ -17,7 +17,9 @@ export interface PillCollectionExpansionProps {
 	attributes: Record<string, Array<Attribute>>;
 }
 
-export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (props) => {
+export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
+	props
+) => {
 	const { editable, user, attributes } = props;
 	const [expanded, setExpanded] = useState(false);
 

@@ -4,16 +4,18 @@ import { useMemo } from "react";
 import { toAbsoluteUrl } from "~/urls";
 
 export function useLocation() {
-	const searchParams = useSearchParams();
+	const searchParameters = useSearchParams();
 	const pathname = usePathname();
 
 	return useMemo(
 		() =>
 			toAbsoluteUrl(
 				`${pathname}${
-					Array.from(searchParams.keys()).length !== 0 ? `?${searchParams.toString()}` : ""
+					[...searchParameters.keys()].length === 0
+						? ""
+						: `?${searchParameters.toString()}`
 				}`
 			),
-		[searchParams, pathname]
+		[searchParameters, pathname]
 	);
 }
