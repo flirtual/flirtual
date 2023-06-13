@@ -31,7 +31,11 @@ export const metadata: Metadata = {
 		default: "Flirtual"
 	},
 	description:
-		"Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat. Formerly VRLFP.",
+		"Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat.",
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
+		{ media: "(prefers-color-scheme: dark)", color: "#111111" }
+	],
 	manifest: "/manifest.json",
 	applicationName: "Flirtual",
 	appleWebApp: {
@@ -48,7 +52,7 @@ export const metadata: Metadata = {
 		type: "website",
 		title: "Flirtual",
 		description:
-			"The first and largest VR dating app. Join thousands for dates in VR apps like VRChat."
+			"The first VR dating app. Join thousands for dates in VR apps like VRChat."
 	},
 	appLinks: {
 		android: {
@@ -70,8 +74,8 @@ export default async function RootLayout({
 
 	return (
 		<html suppressHydrationWarning className={theme} lang="en">
-			<meta name="darkreader-lock" />
 			<head>
+				<meta name="darkreader-lock" />
 				{theme === "system" && (
 					<script
 						dangerouslySetInnerHTML={{
