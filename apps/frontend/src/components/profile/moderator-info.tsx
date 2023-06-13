@@ -1,64 +1,82 @@
-"use client";
-
 import { User } from "~/api/user";
-import { formatDateTime } from "~/date";
-import { useSession } from "~/hooks/use-session";
+import { thruServerCookies, withSession } from "~/server-utilities";
+import { api } from "~/api";
 
-export const ProfileModeratorInfo: React.FC<{ user: User }> = ({ user }) => {
-	const [session] = useSession();
+import { DateTimeRelative } from "../datetime-relative";
 
-	if (!session || !session.user.tags?.includes("moderator")) return null;
+export async function ProfileModeratorInfo({ user }: { user: User }) {
+	const session = await withSession();
+	if (!session.user.tags?.includes("moderator")) return null;
+
+	const { visible, reasons } = await api.user.visible(
+		user.id,
+		thruServerCookies()
+	);
 
 	return (
 		<div className="mx-8 flex flex-col">
-			<span suppressHydrationWarning>
+			<span>
 				<span className="font-bold">Registered:</span>{" "}
-				{user.createdAt && formatDateTime(user.createdAt)}
+				{user.createdAt && <DateTimeRelative value={user.createdAt} />}
 			</span>
-			<span suppressHydrationWarning>
+			<span>
 				<span className="font-bold">Last login:</span>{" "}
-				{user.activeAt && formatDateTime(user.activeAt)}
+				{user.activeAt && <DateTimeRelative value={user.activeAt} />}
 			</span>
-			<span suppressHydrationWarning>
+			<span>
 				<span className="font-bold">Banned:</span>{" "}
 				{user.bannedAt ? (
-					<span className="text-red-500">{formatDateTime(user.bannedAt)}</span>
+					<DateTimeRelative
+						elementProps={{ className: "text-red-500" }}
+						value={user.bannedAt}
+					/>
 				) : (
 					"No"
 				)}
 			</span>
-			<span suppressHydrationWarning>
+			<span>
 				<span className="font-bold">Shadowbanned:</span>{" "}
 				{user.shadowbannedAt ? (
-					<span className="text-red-500">
-						{formatDateTime(user.shadowbannedAt)}
-					</span>
+					<DateTimeRelative
+						elementProps={{ className: "text-red-500" }}
+						value={user.shadowbannedAt}
+					/>
 				) : (
 					"No"
 				)}
 			</span>
-			<span suppressHydrationWarning>
+			<span>
 				<span className="font-bold">Deactivated:</span>{" "}
 				{user.deactivatedAt ? (
-					<span className="text-red-500">
-						{formatDateTime(user.deactivatedAt)}
-					</span>
+					<DateTimeRelative
+						elementProps={{ className: "text-red-500" }}
+						value={user.deactivatedAt}
+					/>
 				) : (
 					"No"
 				)}
 			</span>
 			<span>
 				<span className="font-bold">Visible:</span>{" "}
-				{user.visible ? "Yes" : <span className="text-red-500">No</span>}
+				{visible ? (
+					"Yes"
+				) : (
+					<span className="text-red-500">
+						No
+						{reasons.length > 0
+							? `, ${reasons.map(({ reason }) => reason).join(", ")}.`
+							: ""}
+					</span>
+				)}
 			</span>
 			<span>
 				<span className="font-bold">Premium:</span>{" "}
 				{user.subscription?.active ? (
-					<span className="text-red-500">{user.subscription.plan.name}</span>
+					<span className="text-green-500">{user.subscription.plan.name}</span>
 				) : (
 					"No"
 				)}
 			</span>
 		</div>
 	);
-};
+}
