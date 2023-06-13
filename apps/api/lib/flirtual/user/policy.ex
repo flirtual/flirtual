@@ -220,8 +220,6 @@ defmodule Flirtual.User.Policy do
     |> Date.add(1)
   end
 
-  def transform(:visible, _, user), do: User.visible?(user)
-
   def transform(
         :talkjs_id,
         %Plug.Conn{

@@ -97,13 +97,22 @@ defmodule Flirtual.User.ChangeQueue do
       preload: [user: ^User.default_assoc()]
     )
     |> Repo.all()
+    |> Enum.map(fn item ->
+      %{
+        item
+        | user: %User{
+            item.user
+            | visible: User.visible?(item.user)
+          }
+      }
+    end)
   end
 
   def next(limit \\ 1000) do
     items = fetch(limit)
 
     with :ok <- process_items(items, :elasticsearch),
-         :ok <- process_items(items, :talkjs),
+         #:ok <- process_items(items, :talkjs),
          :ok <-
            items
            |> Enum.map(& &1.user_id)
@@ -130,6 +139,16 @@ defmodule Flirtual.User.ChangeQueue do
   defp process_items(items, :elasticsearch) do
     documents = Elasticsearch.get(:users, Enum.map(items, & &1.user_id))
 
+    items
+    |> Enum.group_by(& &1.user.visible)
+    |> Map.to_list()
+    |> Enum.each(fn {visible, items} ->
+      {_, nil} =
+        User
+        |> where([user], user.id in ^Enum.map(items, & &1.user_id))
+        |> Repo.update_all(set: [visible: visible])
+    end)
+
     Elasticsearch.bulk(
       :users,
       Enum.map(items, fn item ->
@@ -139,9 +158,9 @@ defmodule Flirtual.User.ChangeQueue do
         document_exists? = not is_nil(Enum.find(documents, &(&1["id"] === document_id)))
 
         type =
-          if(not User.visible?(item.user),
-            do: :delete,
-            else: if(document_exists?, do: :update, else: :create)
+          if(item.user.visible,
+            do: if(document_exists?, do: :update, else: :create),
+            else: :delete
           )
 
         {

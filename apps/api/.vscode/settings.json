@@ -4,5 +4,6 @@
 		".elixir_ls": true,
 		"deps": true,
 		"mix.lock": true
-	}
+	},
+	"editor.formatOnSave": false
 }
