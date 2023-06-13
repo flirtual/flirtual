@@ -20,7 +20,6 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
     field :opposite, :map, virtual: true
     field :match, :boolean, virtual: true
-    field :active_at, :utc_datetime, virtual: true
 
     timestamps(updated_at: false)
   end
@@ -95,9 +94,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> with_opposite(nil: true)
     |> exclude_blocked()
     |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
-    |> select_merge([lap, _, _, user], %{
-      active_at: user.active_at
-    })
+    |> where([_, _, _, user], user.visible)
     |> order_by(desc: :created_at)
     |> Repo.all()
   end
