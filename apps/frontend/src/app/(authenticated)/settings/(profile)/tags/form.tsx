@@ -10,6 +10,7 @@ import {
 	InputAutocomplete,
 	InputDateSelect,
 	InputLabel,
+	InputLabelHint,
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
@@ -59,7 +60,7 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 						return [
 							type,
 							filterBy(profile.attributes, "type", type).map(({ id }) => id) ??
-								[]
+							[]
 						] as const;
 					})
 				) as { [K in (typeof AttributeKeys)[number]]: Array<string> }),
@@ -98,8 +99,8 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 									return [`${type}Id`, values[type]] as const;
 								})
 							) as {
-								[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
-							}),
+									[K in (typeof AttributeKeys)[number]as `${K}Ids`]: Array<string>;
+								}),
 							genderId: gender.filter((id) => id !== "other"),
 							interestId: interest.filter((id) => !customInterests.includes(id))
 						}
@@ -164,7 +165,7 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 												label: gender.name,
 												conflicts:
 													gender.metadata &&
-													Array.isArray(gender.metadata.conflicts)
+														Array.isArray(gender.metadata.conflicts)
 														? gender.metadata.conflicts
 														: []
 											})),
@@ -266,7 +267,9 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 						{(field) => (
 							<>
 								<InputLabel hint="(up to 7)">Personal interest tags</InputLabel>
-								<InputLabel hint="You can add custom interests too!" />
+								<InputLabelHint className="-mt-2">
+									You can add custom interests too!
+								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
 									supportArbitrary

@@ -4,20 +4,33 @@ import { siteOrigin, urls } from "~/urls";
 
 export async function GET() {
 	return NextResponse.json({
+		id: "flirtual",
 		name: "Flirtual",
 		short_name: "Flirtual",
 		icons: [
 			{
-				src: urls.media("b5df3a2a-4a8b-4f9f-a332-7337caa0d80b"),
+				src: urls.media("36caae65-e07f-4ccf-9290-f4d329de66a6"),
 				sizes: "192x192",
 				type: "image/png",
-				purpose: "any maskable"
+				purpose: "any"
 			},
 			{
-				src: urls.media("3b32c8d4-a8d2-44d6-8d58-4f114937f107"),
+				src: urls.media("ae8bdc6b-2073-491a-9d09-58fce4223d4e"),
 				sizes: "512x512",
 				type: "image/png",
-				purpose: "any maskable"
+				purpose: "any"
+			},
+			{
+				src: urls.media("4977b687-26ae-4da7-b1aa-7fbf6cd2b14e"),
+				sizes: "192x192",
+				type: "image/png",
+				purpose: "maskable"
+			},
+			{
+				src: urls.media("680f5d7b-65dd-4cd2-bcad-15d4b4ae200b"),
+				sizes: "512x512",
+				type: "image/png",
+				purpose: "maskable"
 			}
 		],
 		background_color: "#fffaf0",
@@ -31,6 +44,10 @@ export async function GET() {
 				description: "Find new dates",
 				icons: [
 					{
+						src: urls.media("143f16e8-288c-429c-86d9-5bd1404b42a3"),
+						sizes: "96x96"
+					},
+					{
 						src: urls.media("8c2015ab-ee61-4f5e-ad69-d4d03e45a90a"),
 						sizes: "256x256"
 					}
@@ -41,6 +58,10 @@ export async function GET() {
 				url: urls.browse("friend"),
 				description: "Find new homies",
 				icons: [
+					{
+						src: urls.media("7275f45b-680a-4e19-b793-4554784a8fb1"),
+						sizes: "96x96"
+					},
 					{
 						src: urls.media("83e96aea-cd0a-42a6-b178-ebf253c02f50"),
 						sizes: "256x256"
@@ -53,6 +74,10 @@ export async function GET() {
 				description: "Message your matches",
 				icons: [
 					{
+						src: urls.media("544e3a7a-7604-4415-b132-bf02aa49550d"),
+						sizes: "96x96"
+					},
+					{
 						src: urls.media("21747a8e-1863-4534-b184-e6b0940245db"),
 						sizes: "256x256"
 					}
@@ -64,6 +89,10 @@ export async function GET() {
 				description: "View your profile",
 				icons: [
 					{
+						src: urls.media("086711c1-e359-4a10-bcd5-492ef4687936"),
+						sizes: "96x96"
+					},
+					{
 						src: urls.media("9e9b05bf-56a8-45d2-b593-2b3d05077560"),
 						sizes: "256x256"
 					}
@@ -74,6 +103,10 @@ export async function GET() {
 				url: urls.settings.list(),
 				description: "Change settings and edit your profile",
 				icons: [
+					{
+						src: urls.media("037c3224-2390-4dbc-bfdf-09bbbe53ef5d"),
+						sizes: "96x96"
+					},
 					{
 						src: urls.media("6987eb07-6baa-4500-aed0-c09a94a49b19"),
 						sizes: "256x256"
@@ -114,6 +147,13 @@ export async function GET() {
 				platform: "narrow",
 				label: "Meet in VR!"
 			}
-		]
+		],
+		lang: "en",
+		handle_links: "preferred",
+		launch_handler: {
+			client_mode: ["navigate-existing", "auto"]
+		},
+		orientation: "any",
+		edge_side_panel: {}
 	});
 }
