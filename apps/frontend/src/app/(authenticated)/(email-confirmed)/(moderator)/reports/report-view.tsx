@@ -33,7 +33,7 @@ import { BanProfile } from "~/components/profile/action-bar/ban-profile";
 import { Tooltip } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { TimeRelative } from "~/components/time-relative";
-import { formatDateTime } from "~/date";
+import { DateTimeRelative } from "~/components/datetime-relative";
 
 type CompleteReport = Report & { user?: User; target: User };
 
@@ -165,7 +165,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 											suffix="since"
 											value={report.createdAt}
 										/>{" "}
-										{formatDateTime(report.createdAt)}
+										<DateTimeRelative value={report.createdAt} />
 									</span>
 
 									<div className="flex items-center justify-between gap-4 pr-3">
