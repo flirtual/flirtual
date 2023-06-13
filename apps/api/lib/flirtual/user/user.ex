@@ -35,9 +35,9 @@ defmodule Flirtual.User do
     field(:talkjs_signature, :string, redact: true)
     field(:stripe_id, :string)
     field(:language, :string, default: "en")
+    field(:visible, :boolean)
 
     field(:password, :string, virtual: true, redact: true)
-    field(:visible, :boolean, virtual: true)
     field(:relationship, :map, virtual: true)
 
     field(:tags, {:array, Ecto.Enum},
