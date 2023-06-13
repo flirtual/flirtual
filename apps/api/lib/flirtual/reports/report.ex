@@ -121,13 +121,7 @@ defmodule Flirtual.Report do
            change(report, %{reviewed_at: now})
            |> Repo.update(),
          %User{} = reported <- User.get(report.target_id),
-         {:ok, was_shadow_banned} <- maybe_resolve_shadowban(report.target_id),
-         :ok <-
-           Discord.deliver_webhook(:review_report,
-             report: %Report{report | target: reported},
-             moderator: moderator,
-             was_shadow_banned: was_shadow_banned
-           ) do
+         {:ok, was_shadow_banned} <- maybe_resolve_shadowban(report.target_id) do
       {:ok, Repo.preload(report, default_assoc())}
     end
   end
