@@ -50,7 +50,7 @@ export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 				<>
 					<InputLabel
 						inline
-						hint="Your answers are hidden from other users, and you can skip this and come back later."
+						hint="Your answers are hidden from other users. You can skip this and come back later."
 					>
 						This helps us match you with compatible people, based on the Big 5
 						Personality Test.

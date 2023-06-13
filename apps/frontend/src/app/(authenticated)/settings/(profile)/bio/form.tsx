@@ -131,17 +131,12 @@ export const BiographyForm: FC = () => {
 						)}
 					</FormField>
 					<div className="flex flex-col gap-4">
-						<InputLabel
-							inline
-							hint={
-								<InputLabelHint className="text-sm">
-									People can see your accounts after you match, to help you meet
-									up.
-								</InputLabelHint>
-							}
-						>
-							Add accounts to your profile
+						<InputLabel hint="(optional)">
+							Add accounts to your profiles
 						</InputLabel>
+						<InputLabelHint className="-mt-3 text-sm">
+							People can see your accounts after you match, to help you meet up.
+						</InputLabelHint>
 						<div className="flex gap-4">
 							<FormField className="basis-64" name="vrchat">
 								{(field) => (
