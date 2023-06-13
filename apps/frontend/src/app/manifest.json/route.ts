@@ -9,13 +9,13 @@ export async function GET() {
 		short_name: "Flirtual",
 		icons: [
 			{
-				src: urls.media("39014c67-7134-43a7-bfd5-1355a84fb04d"),
+				src: urls.media("36caae65-e07f-4ccf-9290-f4d329de66a6"),
 				sizes: "192x192",
 				type: "image/png",
 				purpose: "any"
 			},
 			{
-				src: urls.media("55172ecc-f045-4819-a4b3-b323e862a277"),
+				src: urls.media("ae8bdc6b-2073-491a-9d09-58fce4223d4e"),
 				sizes: "512x512",
 				type: "image/png",
 				purpose: "any"
