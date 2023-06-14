@@ -6,6 +6,9 @@
     "start": "next start -H 127.0.0.1"
   },
   "dependencies": {
+    "@capacitor/android": "^5.0.5",
+    "@capacitor/core": "^5.0.5",
+    "@capacitor/ios": "^5.0.5",
     "@hcaptcha/react-hcaptcha": "^1.8.1",
     "@heroicons/react": "^2.0.18",
     "@kfarwell/nextjs-toploader": "^1.4.5",
@@ -43,6 +46,7 @@
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^1.6.1",
+    "@capacitor/cli": "^5.0.5",
     "@hcaptcha/types": "^1.0.3",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
