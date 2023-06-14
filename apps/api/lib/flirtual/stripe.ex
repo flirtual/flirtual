@@ -451,7 +451,8 @@ defmodule Flirtual.Stripe do
             object: %Stripe.Subscription{
               id: subscription_stripe_id,
               plan: %Stripe.Plan{id: price_id, product: product_id},
-              customer: customer_stripe_id
+              customer: customer_stripe_id,
+              status: "active"
             }
           }
         } = event
