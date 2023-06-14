@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
 	appName: "Flirtual",
 	webDir: "public",
 	server: {
-		androidScheme: "https"
+		androidScheme: "https",
+		url: "https://flirtu.al"
 	}
 };
 
