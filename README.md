@@ -1,4 +1,4 @@
-[![Flirtual](apps/frontend/public/images/brand/gradient.png)](https://flirtu.al)
+[![Flirtual](apps/frontend/public/images/brand/gradient.svg)](https://flirtu.al)
 
 [![AGPL-3.0](https://img.shields.io/github/license/flirtual/flirtual?color=663366&label=%C2%A9%202018-2023%20Studio%20Paprika&logo=gnu)](LICENSE)
 [![Discord](https://img.shields.io/discord/455219574036496404?color=5865f2&label=Discord&logo=discord&logoColor=5865f2&style=flat)](https://discord.gg/flirtual)
@@ -6,46 +6,19 @@
 
 The first VR dating app.
 
-## Get started
+## Architecture
+Flirtual is a monorepo, with the following applications:
 
-### API
+* [**Frontend**](/apps/frontend/) - The main service which users interact with, written in TypeScript, served using [Next.js](https://nextjs.org/).
 
-In `apps/api/`:
-* Install [Docker](https://docs.docker.com/get-docker/) and the [asdf version manager](https://asdf-vm.com/guide/getting-started.html).
-  * ``asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git``
-  * ``asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git``
-  * Use ``asdf install`` to install Elixir and Erlang.
-* Configure the required environment variables.
-  * Copy `.env.example` to `.env.local`.
-  * Fill in all the required values.
-* Set up the project.
-  * `. .env.local`
-  * `mix setup`.
-* Start the server with `./dev.sh`.
-* Now you can visit [`127.0.0.1:4000`](http://127.0.0.1:4000) from your browser.
+* [**API**](/apps/api/) - The backend service, written in Elixir, served using [Phoenix](https://phoenixframework.org/); Responsible for handling all user data, authentication, and communication between the frontend and other services.
 
-### Frontend
-
-In `apps/frontend/`:
-* Install [Node.js](https://github.com/nvm-sh/nvm) and [pnpm](https://pnpm.io/installation).
-* Fetch all project dependencies with  `pnpm install`.
-* Configure the required environment variables.
-  * Copy ``.env.example`` to ``.env.local``.
-  * Fill in all the required values.
-* Start the server with `pnpm dev`.
-* Now you can visit [`127.0.0.1:3000`](http://127.0.0.1:3000) from your browser.
-
-### Stripe/subscription testing
-
-* Install the [Stripe CLI](https://stripe.com/docs/stripe-cli#install) and login using ``stripe login``.
-* ``stripe listen --forward-to localhost:4000/v1/stripe``
+* [**Image Classification**](/apps/image-classification/) - The image classification service, written in TypeScript; AI classification using [TensorFlow](https://www.tensorflow.org).
 
 ## Contributing
-
-Contributions are welcome! See [CONTRIBUTING](https://github.com/flirtual/flirtual/blob/main/.github/CONTRIBUTING.md) for more information.
+See the [contribution guide](/.github/CONTRIBUTING.md) for more information.
 
 ## License
-
 Copyright (C) 2018-2023 Studio Paprika
 
 This program is free software: you can redistribute it and/or modify
@@ -55,8 +28,8 @@ by the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+[GNU Affero General Public License](/LICENSE) for more details.
 
 You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+along with this program. If not, see <https://www.gnu.org/licenses/>.

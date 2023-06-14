@@ -14,9 +14,13 @@ Available via [infinitered/nsfwjs](https://github.com/infinitered/nsfwjs).
 
 This classifier is used for generalistic categorization of images, by marking images as neutral, drawing, ect.
 
-## Running the application.
-Running the application locally is relatively straight forward. To begin, Ensure you've got Docker installed and have ran ``pnpm install`` in the ``apps/image-classification`` directory.
+## Starting the application
+Running the application locally is relatively straight forward.
 
-The [api service](/apps/api/) must be running, and have unscanned images available for classification.
+* To begin, Ensure you've got Docker installed and have ran ``pnpm install``.
 
-Finally, run ``pnpm dev`` to run the classification engine.
+* Copy ``.env.example`` to ``.env.local`` and fill in the required values.
+
+* The [API](/apps/api/) must be running, and have images available for classification.
+
+* Finally, run ``pnpm dev`` to run the classification engine.
