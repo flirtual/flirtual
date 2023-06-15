@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "490794512096",
+    "project_id": "flirtual-firebase",
+    "storage_bucket": "flirtual-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490794512096:android:a05d15a643d800858baa85",
+        "android_client_info": {
+          "package_name": "zone.homie.flirtual.pwa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "490794512096-6msad6g95vbr2trfb92chc7ibpkd4bci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zone.homie.flirtual.pwa",
+            "certificate_hash": "04597d06bf9324a8cc5e72002a14543d668780dd"
+          }
+        },
+        {
+          "client_id": "490794512096-d7dcer80q5qkt1nrnirt2365q09hmf9h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcLCSfzlcFe2-0Karmbe-VHA4qz7Ui0Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "490794512096-d7dcer80q5qkt1nrnirt2365q09hmf9h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

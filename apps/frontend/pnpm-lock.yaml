@@ -14,6 +14,9 @@ dependencies:
   '@capacitor/ios':
     specifier: ^5.0.5
     version: 5.0.5(@capacitor/core@5.0.5)
+  '@capacitor/push-notifications':
+    specifier: ^5.0.4
+    version: 5.0.4(@capacitor/core@5.0.5)
   '@hcaptcha/react-hcaptcha':
     specifier: ^1.8.1
     version: 1.8.1(react-dom@18.2.0)(react@18.2.0)
@@ -336,6 +339,14 @@ packages:
 
   /@capacitor/ios@5.0.5(@capacitor/core@5.0.5):
     resolution: {integrity: sha512-U72TPbKN1HlUqEGCOPsCBp6j93Qu1TazWUuA8Q1yfcGDfSOE0zMDNl3eU7XO5OyzpV7z9lf8NJdehimezVl7sA==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
+    dev: false
+
+  /@capacitor/push-notifications@5.0.4(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-q/3iCmsvvOjgH7fhfSVGQC7e85bVAgwAuSFzWAg5Sg6hq/XZnxK/TyQJ3M2DVfIfyHUc1OBXsMgi8vCQ4UhPAg==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:
