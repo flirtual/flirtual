@@ -114,14 +114,13 @@ defmodule Flirtual.Report do
     end
   end
 
-  def clear(%Report{} = report, moderator) do
+  def clear(%Report{} = report, _) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     with {:ok, report} <-
            change(report, %{reviewed_at: now})
            |> Repo.update(),
-         %User{} = reported <- User.get(report.target_id),
-         {:ok, was_shadow_banned} <- maybe_resolve_shadowban(report.target_id) do
+         {:ok, _} <- maybe_resolve_shadowban(report.target_id) do
       {:ok, Repo.preload(report, default_assoc())}
     end
   end

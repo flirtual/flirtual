@@ -1,4 +1,4 @@
-package al.flirtu.mobile;
+package zone.homie.flirtual.pwa;
 
 import com.getcapacitor.BridgeActivity;
 

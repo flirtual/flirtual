@@ -272,13 +272,14 @@ defmodule Flirtual.Mailer do
 
   # subject, body_text, body_html, action_url \\ nil
   def send(recipient, options) do
+    from = Keyword.get(options, :from, "noreply@flirtu.al")
     subject = Keyword.fetch!(options, :subject)
     action_url = Keyword.get(options, :action_url)
 
     email =
       new()
       |> to(recipient)
-      |> from({"Flirtual", "noreply@flirtu.al"})
+      |> from({"Flirtual", from})
       |> subject(subject)
       |> text_body(
         Keyword.fetch!(options, :body_text)
