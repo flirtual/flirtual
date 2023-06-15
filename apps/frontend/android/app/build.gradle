@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "al.flirtu.mobile"
+    namespace "zone.homie.flirtual.pwa"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "al.flirtu.mobile"
+        applicationId "zone.homie.flirtual.pwa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

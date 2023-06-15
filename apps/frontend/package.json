@@ -2,7 +2,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev -H 127.0.0.1",
-    "vercel-dev": "vercel dev --listen 127.0.0.1:3000",
+    "android-uninstall": "adb uninstall zone.homie.flirtual.pwa",
+    "android-install": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk",
     "start": "next start -H 127.0.0.1"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "@kfarwell/nextjs-toploader": "^1.4.5",
     "@tailwindcss/forms": "^0.5.3",
     "@total-typescript/ts-reset": "^0.4.2",
+    "@trapezedev/configure": "^7.0.10",
     "@widgetbot/react-embed": "^1.7.0",
     "ansi-to-html": "^0.7.2",
     "change-case": "^4.1.2",
@@ -46,6 +48,7 @@
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^1.6.1",
+    "@capacitor/assets": "^2.0.4",
     "@capacitor/cli": "^5.0.5",
     "@hcaptcha/types": "^1.0.3",
     "@tailwindcss/forms": "^0.5.3",
@@ -60,7 +63,9 @@
     "@types/sanitize-html": "^2.9.0",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.42.0",
+    "native-run": "^1.7.2",
     "postcss": "^8.4.24",
+    "run-cap-on-android": "^1.0.3",
     "tailwindcss": "^3.3.2",
     "tailwindcss-hocus": "^0.0.7",
     "typescript": "^5.1.3"

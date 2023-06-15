@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Flirtual</string>
     <string name="title_activity_main">Flirtual</string>
-    <string name="package_name">al.flirtu.mobile</string>
-    <string name="custom_url_scheme">al.flirtu.mobile</string>
+    <string name="package_name">zone.homie.flirtual.pwa</string>
+    <string name="custom_url_scheme">zone.homie.flirtual.pwa</string>
 </resources>
