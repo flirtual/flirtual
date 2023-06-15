@@ -314,7 +314,12 @@ defmodule Flirtual.Matchmaking do
           },
           functions: [
             %{
-              random_score: %{}
+              random_score: %{},
+              weight:
+                case kind do
+                  :love -> 1
+                  :friend -> 30
+                end
             }
           ],
           boost_mode: "sum"
@@ -413,7 +418,8 @@ defmodule Flirtual.Matchmaking do
         :serious,
         :domsub,
         :kinks,
-        :personality
+        :personality,
+        :active_at
       ],
       &query(&1, user)
     )
@@ -421,7 +427,13 @@ defmodule Flirtual.Matchmaking do
   end
 
   def queries(%User{} = user, :friend) do
-    []
+    Enum.map(
+      [
+        :active_at
+      ],
+      &query(&1, user)
+    )
+    |> List.flatten()
   end
 
   def query(:likes, %User{} = user) do
@@ -580,7 +592,6 @@ defmodule Flirtual.Matchmaking do
     )
   end
 
-  # todo: check this later, pretty sure it's wrong.
   def query(:kinks, %User{} = user) do
     %{profile: %{preferences: preferences, custom_weights: custom_weights} = profile} = user
 
@@ -664,5 +675,20 @@ defmodule Flirtual.Matchmaking do
         []
       end
     ]
+  end
+
+  def query(:active_at, %User{} = user) do
+    %{
+      "function_score" => %{
+        "exp" => %{
+          "active_at" => %{
+            "scale" => "7d",
+            "offset" => "1d",
+            "decay" => 0.5
+          }
+        },
+        "boost" => 30
+      }
+    }
   end
 end

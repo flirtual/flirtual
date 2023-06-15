@@ -151,6 +151,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 				.respondProspect({ body })
 				.then(() => {
 					setLastProfile(body);
+					window.scrollTo({ top: 0, behavior: "smooth" });
 					return router.refresh();
 				})
 				.catch((reason) => {
