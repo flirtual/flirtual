@@ -5,6 +5,7 @@ defmodule Flirtual.User.Email do
   def deliver(%User{} = user, :suspended, message) do
     Mailer.send(
       user,
+      from: "moderation@flirtu.al",
       subject: "Your account has been disabled",
       body_text: """
       Our moderation team has found your Flirtual account in violation of our rules.
