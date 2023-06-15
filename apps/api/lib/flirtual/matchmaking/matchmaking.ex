@@ -315,10 +315,11 @@ defmodule Flirtual.Matchmaking do
           functions: [
             %{
               random_score: %{},
-              weight: case kind do
-                :love -> 1
-                :friend -> 30
-              end
+              weight:
+                case kind do
+                  :love -> 1
+                  :friend -> 30
+                end
             }
           ],
           boost_mode: "sum"
