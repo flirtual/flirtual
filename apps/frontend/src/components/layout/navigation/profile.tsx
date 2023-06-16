@@ -87,7 +87,6 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	}, [loadChangelog, visible]);
 
 	const isDesktop = useScreenBreakpoint("md");
-	const isPwa = useProgressiveWebApp();
 
 	if (!session) return null;
 	const { user } = session;
@@ -150,11 +149,12 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 								Premium
 							</ProfileNavigationItem>
 							<ProfileNavigationCannyButton />
-							{!isPwa && (
-								<ProfileNavigationItem href={urls.resources.download}>
-									Get app
-								</ProfileNavigationItem>
-							)}
+							<ProfileNavigationItem
+								className="native:hidden"
+								href={urls.resources.download}
+							>
+								Get app
+							</ProfileNavigationItem>
 							{user.tags?.includes("moderator") && (
 								<>
 									<ProfileNavigationItemDivider Icon={ShieldExclamationIcon} />

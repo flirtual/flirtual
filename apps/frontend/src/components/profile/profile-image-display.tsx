@@ -85,11 +85,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 							await api.images
 								.delete(image.id)
 								.then(() => {
-									toasts.add({
-										type: "success",
-										label: "Successfully deleted image!"
-									});
-
+									toasts.add("Image removed successfully");
 									return router.refresh();
 								})
 								.catch(toasts.addError);

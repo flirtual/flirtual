@@ -226,3 +226,5 @@ export function tryJsonParse<T>(value: string, fallbackValue: T): T {
 		return fallbackValue;
 	}
 }
+
+export const noop = () => void 0;

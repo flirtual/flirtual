@@ -36,12 +36,9 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 						: api.user.deactivate(user.id)
 					)
 						.then(() =>
-							toasts.add({
-								label: `Successfully ${
-									deactivated ? "reactivated" : "deactivated"
-								} account.`,
-								type: "success"
-							})
+							toasts.add(
+								`${deactivated ? "Reactivated" : "Deactivated"} account`
+							)
 						)
 						.catch(toasts.addError);
 					router.refresh();

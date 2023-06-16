@@ -5,13 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useLocalStorage } from "~/hooks/use-local-storage";
+import { usePreferences } from "~/hooks/use-preferences";
 
 export const HeaderMessage: React.FC<
 	React.PropsWithChildren<{ className?: string }>
 > = ({ children, ...props }) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [dismissMobile, setDismissMobile] = useLocalStorage(
+	const [dismissMobile, setDismissMobile] = usePreferences(
 		"dismissMobile",
 		false
 	);

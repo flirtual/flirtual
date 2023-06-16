@@ -91,15 +91,9 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 										await api.report
 											.clearAll({ query: { targetId: user.id } })
 											.then(({ count }) =>
-												toasts.add({
-													type: "success",
-													label: `Successfully cleared ${count} report${
-														count === 1 ? "" : "s"
-													}`,
-													children: (
-														<span className="text-sm">User: {user.id}</span>
-													)
-												})
+												toasts.add(
+													`Cleared ${count} report${count === 1 ? "" : "s"}`
+												)
 											)
 											.catch(toasts.addError);
 									}}
@@ -121,11 +115,7 @@ export const ProfileActionBar: React.FC<{ user: User }> = ({ user }) => {
 									await api.user
 										.block(user.id)
 										.then(() => {
-											toasts.add({
-												type: "success",
-												label: "User blocked successfully"
-											});
-
+											toasts.add("User blocked successfully");
 											return router.refresh();
 										})
 										.catch(toasts.addError);

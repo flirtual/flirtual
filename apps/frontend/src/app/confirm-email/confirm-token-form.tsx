@@ -27,10 +27,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 					await api.user
 						.confirmEmail({ body: { token } })
 						.then(() => {
-							toasts.add({
-								type: "success",
-								label: "Email changed successfully"
-							});
+							toasts.add("Email changed successfully");
 
 							setConfirmSuccess(true);
 							return router.refresh();

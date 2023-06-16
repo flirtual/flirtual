@@ -34,12 +34,7 @@ export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({
 			onSubmit={async ({ targetId, ...body }) => {
 				await api.user.suspend(targetId, { body });
 
-				toasts.add({
-					type: "success",
-					label: `Successfully banned profile!`,
-					children: <span className="text-sm">User: {user.id}</span>
-				});
-
+				toasts.add("Account suspended");
 				onVisibilityChange(false);
 			}}
 		>

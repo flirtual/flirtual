@@ -35,7 +35,7 @@ const ReportProfileModelForm: FC<ReportProfileModelFormProps> = ({
 				if (!reasonId) return;
 				await api.report.create({ body: { reasonId, targetId, message } });
 
-				toasts.add({ type: "success", label: "Thank you for your report!" });
+				toasts.add("Thank you for your report");
 				onVisibilityChange(false);
 
 				return router.refresh();

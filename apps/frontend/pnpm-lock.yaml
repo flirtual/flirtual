@@ -8,13 +8,34 @@ dependencies:
   '@capacitor/android':
     specifier: ^5.0.5
     version: 5.0.5(@capacitor/core@5.0.5)
+  '@capacitor/app':
+    specifier: ^5.0.3
+    version: 5.0.3(@capacitor/core@5.0.5)
+  '@capacitor/clipboard':
+    specifier: ^5.0.4
+    version: 5.0.4(@capacitor/core@5.0.5)
   '@capacitor/core':
     specifier: ^5.0.5
     version: 5.0.5
+  '@capacitor/device':
+    specifier: ^5.0.4
+    version: 5.0.4(@capacitor/core@5.0.5)
   '@capacitor/ios':
     specifier: ^5.0.5
     version: 5.0.5(@capacitor/core@5.0.5)
+  '@capacitor/preferences':
+    specifier: ^5.0.4
+    version: 5.0.4(@capacitor/core@5.0.5)
   '@capacitor/push-notifications':
+    specifier: ^5.0.4
+    version: 5.0.4(@capacitor/core@5.0.5)
+  '@capacitor/screen-orientation':
+    specifier: ^5.0.4
+    version: 5.0.4(@capacitor/core@5.0.5)
+  '@capacitor/share':
+    specifier: ^5.0.4
+    version: 5.0.4(@capacitor/core@5.0.5)
+  '@capacitor/toast':
     specifier: ^5.0.4
     version: 5.0.4(@capacitor/core@5.0.5)
   '@hcaptcha/react-hcaptcha':
@@ -254,6 +275,14 @@ packages:
       '@capacitor/core': 5.0.5
     dev: false
 
+  /@capacitor/app@5.0.3(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-YqGWnD+O8wjNVyIctZCMkVqOr3RhxunLUBbmLpdRc66RzPN7xEk8GAwxY2YV/ehTL054mo3uqovpWvei7rYsEA==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
+    dev: false
+
   /@capacitor/assets@2.0.4(@types/node@20.3.0)(typescript@5.1.3):
     resolution: {integrity: sha512-1zYuwJujihsCLavojpZQQEjQjxG8BgD2/QWaX1Je2TQgN8UVbmnQG7gO+6gaHqP+hgZu7SOcJ+BlMG+tarBXLA==}
     engines: {node: '>=10.3.0'}
@@ -331,10 +360,26 @@ packages:
       - supports-color
     dev: true
 
+  /@capacitor/clipboard@5.0.4(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-x15Vdq8h5eh6iSYzrdwQXjtlbRe8kNWDOG9HtGGa8xlKoqDECYS7VqFhrZUXJpJpjWDUDqIwF9JpcSoLRHiHbg==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
+    dev: false
+
   /@capacitor/core@5.0.5:
     resolution: {integrity: sha512-sulwWXEhYI6cBIj1WnH9k+a8z1f4XTRDtdh3YfXNdeV36UT7T55GCeGrPoQMm7ww6iWyGuv1VEzVIuZFga8rtw==}
     dependencies:
       tslib: 2.5.3
+    dev: false
+
+  /@capacitor/device@5.0.4(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-Zt2eCPfT4oh/VYWURhixj/cRjgpEFD+HgPoldzL9N88ugraqq13p/RKEhUGJ6/tCFVwflVRC5984NsAotm25Jw==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
     dev: false
 
   /@capacitor/ios@5.0.5(@capacitor/core@5.0.5):
@@ -345,8 +390,40 @@ packages:
       '@capacitor/core': 5.0.5
     dev: false
 
+  /@capacitor/preferences@5.0.4(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-GV3QysJ724GO/CE8KHRYdq8tpzCrJWKVtOJGkLoPt+qlr88SNN+ayNMXlZE1LCMJ5eevdWDreSjQXiYfkUvnoA==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
+    dev: false
+
   /@capacitor/push-notifications@5.0.4(@capacitor/core@5.0.5):
     resolution: {integrity: sha512-q/3iCmsvvOjgH7fhfSVGQC7e85bVAgwAuSFzWAg5Sg6hq/XZnxK/TyQJ3M2DVfIfyHUc1OBXsMgi8vCQ4UhPAg==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
+    dev: false
+
+  /@capacitor/screen-orientation@5.0.4(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-4cRu/rTVgkEuypmNij34BveLmig2mRVRKkp+3p0HAYoDv6iQltNWLiByiWLgcFY1AiBL2CEz5B/3LUPVIRBTEw==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
+    dev: false
+
+  /@capacitor/share@5.0.4(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-Owkg6xmpWAoUZxu+joc+L5PxrWdGR/nAhKYGb2mVenf0Fljm1kwjKKJRySLmaO4uHiDD2JVwV2azV2w6ZC6DTg==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
+    dev: false
+
+  /@capacitor/toast@5.0.4(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-qyhh5p13a59VuRXgCQMXv/AKHGgwG32orWqXeFiUNqzJXZIyqMu3MmK+ok2yQGrlXLbu5s3n0xMM2bCVkPpx+Q==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:

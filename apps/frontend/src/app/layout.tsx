@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
+import { userAgentFromString } from "next/server";
+import { headers } from "next/headers";
 
 import { withOptionalSession } from "~/server-utilities";
 import { siteOrigin, urls } from "~/urls";
@@ -13,6 +15,7 @@ import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { ShepherdProvider } from "~/components/shepherd";
 import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 import { ThemeProvider } from "~/hooks/use-theme";
+import { DevicePlatform, DeviceProvider } from "~/hooks/use-device";
 
 import { ClientScripts } from "./client-scripts";
 
@@ -72,48 +75,66 @@ export default async function RootLayout({
 	const session = await withOptionalSession();
 	const theme = session?.user.preferences?.theme ?? "light";
 
-	return (
-		<html suppressHydrationWarning className={theme} lang="en">
-			<head>
-				<meta name="darkreader-lock" />
-				{theme === "system" && (
-					<script
-						dangerouslySetInnerHTML={{
-							__html: `
-							${resolveTheme.toString()}
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const userAgent = userAgentFromString(headers().get("user-agent")!);
 
-							document.documentElement.classList.remove("system");
-							document.documentElement.classList.add(resolveTheme("${theme}"));
-						`.trim()
-						}}
-					/>
-				)}
+	let platform = (userAgent.os.name?.toLowerCase() ?? "web") as DevicePlatform;
+	if (!["android", "ios"].includes(platform)) platform = "web";
+
+	const native = userAgent.ua.includes("Flirtual-Native");
+
+	return (
+		<html
+			suppressHydrationWarning
+			data-native={native}
+			data-platform={platform}
+			data-theme={theme}
+			lang="en"
+		>
+			<head suppressHydrationWarning>
+				<meta name="darkreader-lock" />
 				<script
 					dangerouslySetInnerHTML={{
 						__html: `
-								const url = new URL(location);
-							  if (url.pathname === "/browse" && url.searchParams.get("kind") === "friend")
-									document.documentElement.classList.add("friend-mode");
-							`.trim()
+							${resolveTheme.toString()}
+							document.documentElement.dataset.theme = resolveTheme("${theme}");
+
+							const url = new URL(location);
+							const themeStyle = url.pathname === "/browse" && url.searchParams.get("kind") === "friend" ? "friend" : "love";
+						
+							Object.assign(document.documentElement.dataset, { themeStyle });
+						`.trim()
 					}}
 				/>
 				<link color="#e9658b" href={SafariPinnedTabImage.src} rel="mask-icon" />
 				<ClientScripts />
 			</head>
-			<body className={twMerge(montserrat.variable, nunito.variable)}>
+			<body
+				className={twMerge(
+					montserrat.variable,
+					nunito.variable,
+					"overscroll-none"
+				)}
+			>
 				<NextTopLoader
 					color={["#FF8975", "#E9658B"]}
 					height={5}
 					showSpinner={false}
 				/>
 				<Suspense fallback={<LoadingIndicatorScreen />}>
-					<SessionProvider session={session}>
-						<ThemeProvider>
-							<ShepherdProvider>
-								<ToastProvider>{children}</ToastProvider>
-							</ShepherdProvider>
-						</ThemeProvider>
-					</SessionProvider>
+					<DeviceProvider
+						native={native}
+						platform={platform}
+						userAgent={userAgent}
+					>
+						<SessionProvider session={session}>
+							<ThemeProvider>
+								<ShepherdProvider>
+									<ToastProvider>{children}</ToastProvider>
+								</ShepherdProvider>
+							</ThemeProvider>
+						</SessionProvider>
+					</DeviceProvider>
 				</Suspense>
 			</body>
 		</html>

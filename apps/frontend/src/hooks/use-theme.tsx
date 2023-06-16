@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useDebugValue, useEffect, useMemo } from "react";
 
 import { api } from "~/api";
-import { PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
+import { PreferenceTheme } from "~/api/user/preferences";
 
 import { useMediaQuery } from "./use-media-query";
 import { useSession } from "./use-session";
@@ -64,16 +64,14 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 	const kind = searchParameters.get("kind");
 
 	useEffect(() => {
-		if (pathname === "/browse" && kind === "friend")
-			document.documentElement.classList.add("friend-mode");
-		return () => document.documentElement.classList.remove("friend-mode");
+		const themeStyle =
+			pathname === "/browse" && kind === "friend" ? "friend" : "love";
+
+		Object.assign(document.documentElement.dataset, { themeStyle });
 	}, [pathname, kind]);
 
 	useEffect(() => {
-		document.documentElement.classList.remove(
-			...PreferenceThemes.filter((t) => t !== theme)
-		);
-		document.documentElement.classList.add(theme);
+		Object.assign(document.documentElement.dataset, { theme });
 	}, [theme]);
 
 	return <>{children}</>;

@@ -96,15 +96,9 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 									await api.report
 										.clearAll({ query: { targetId: reported.id } })
 										.then(({ count }) =>
-											toasts.add({
-												type: "success",
-												label: `Successfully cleared ${count} report${
-													count === 1 ? "" : "s"
-												}`,
-												children: (
-													<span className="text-sm">User: {reported.id}</span>
-												)
-											})
+											toasts.add(
+												`Cleared ${count} report${count === 1 ? "" : "s"}`
+											)
 										);
 
 									await mutate();
@@ -180,11 +174,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 													onClick={async () => {
 														await api.report.clear(report.id);
 
-														toasts.add({
-															type: "success",
-															label: "Cleared report successfully!"
-														});
-
+														toasts.add("Cleared single report");
 														await mutate();
 													}}
 												>

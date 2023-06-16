@@ -1,13 +1,12 @@
 "use client";
 
+import { Toast as NativeToast } from "@capacitor/toast";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
-import ms from "ms";
 import {
 	createContext,
 	PropsWithChildren,
-	ReactNode,
 	useCallback,
 	useContext,
 	useMemo,
@@ -15,19 +14,21 @@ import {
 } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { useDevice } from "./use-device";
+
 export type ToastType = "success" | "error" | "warning";
+export type ToastDuration = "short" | "long";
 
 export interface CreateToast {
-	type: ToastType;
-	ttl?: string | null;
-	label?: string;
-	children?: ReactNode;
+	type?: ToastType;
+	duration?: ToastDuration;
+	value: string;
 }
 
 export interface Toast {
 	id: string;
 	type: ToastType;
-	children: ReactNode;
+	children: string;
 	ttl: number | null;
 	remove: () => void;
 }
@@ -35,21 +36,13 @@ export interface Toast {
 export interface ToastContext {
 	toasts: Array<Toast>;
 
-	add: (toast: CreateToast) => Toast;
+	add: (toast: CreateToast | string) => Toast;
 	addError: (reason: unknown) => void;
 
 	remove: (toast: Pick<Toast, "id">) => void;
 }
 
-const ToastContext = createContext<ToastContext>({
-	toasts: [],
-	// @ts-expect-error: this should never happen.
-	add: () => null,
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	remove: () => {},
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	addError: () => {}
-});
+const ToastContext = createContext<ToastContext>({} as ToastContext);
 
 export function useToast() {
 	return useContext(ToastContext);
@@ -74,32 +67,34 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 			onClick={() => toast.remove()}
 		>
 			<Icon className="h-5 w-5 shrink-0" strokeWidth={2} />
-			{toast.children}
+			<span className="font-montserrat font-semibold">{toast.children}</span>
 		</motion.button>
 	);
 };
 
 export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const [toasts, setToasts] = useState<Array<Toast>>([]);
+	const { native } = useDevice();
 
 	const remove = useCallback((toast: Pick<Toast, "id">) => {
 		setToasts((toasts) => toasts.filter(({ id }) => id !== toast.id));
 	}, []);
 
 	const add = useCallback(
-		({ type, ttl = "5s", label, children }: CreateToast) => {
+		(options: CreateToast | string) => {
+			if (typeof options === "string") options = { value: options };
+			const { type = "success", duration = "short", value } = options;
+
+			// Match duration of native toasts.
+			// See https://capacitorjs.com/docs/apis/toast
+			const ttl = duration === "short" ? 2000 : 3500;
+
 			const toast: Toast = {
 				type,
 				id: String(performance.now()),
-				ttl: ttl ? ms(ttl) : null,
-				children: (
-					<div className="flex flex-col">
-						{label && (
-							<span className="font-montserrat font-semibold">{label}</span>
-						)}
-						{children}
-					</div>
-				),
+
+				ttl,
+				children: value,
 				remove: function () {
 					remove(this);
 				}
@@ -107,10 +102,19 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
 			if (toast.ttl) setTimeout(() => toast.remove(), toast.ttl);
 
+			if (native)
+				void NativeToast.show({
+					duration,
+					text: value,
+					// Android only supports bottom position.
+					position: "bottom"
+				});
+
 			setToasts((toasts) => [toast, ...toasts]);
+
 			return toast;
 		},
-		[remove]
+		[remove, native]
 	);
 
 	const addError = useCallback(
@@ -127,7 +131,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
 			return add({
 				type: "error",
-				label: message
+				value: message
 			});
 		},
 		[add]
@@ -146,15 +150,19 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			)}
 		>
 			{children}
-			<AnimatePresence>
-				{toasts.length > 0 && (
-					<div className="pointer-events-none fixed right-0 top-0 z-[999] flex flex-col-reverse gap-2 p-8 text-white-20 sm:top-16">
-						{toasts.map((toast) => (
-							<ToastItem {...toast} key={toast.id} />
-						))}
-					</div>
-				)}
-			</AnimatePresence>
+			{!native && (
+				// We only want to render the toasts if we're not a native device, as
+				// toasts are handled by the device itself.
+				<AnimatePresence>
+					{toasts.length > 0 && (
+						<div className="pointer-events-none fixed right-0 top-0 z-[999] flex flex-col-reverse gap-2 p-8 text-white-20 sm:top-16">
+							{toasts.map((toast) => (
+								<ToastItem {...toast} key={toast.id} />
+							))}
+						</div>
+					)}
+				</AnimatePresence>
+			)}
 		</ToastContext.Provider>
 	);
 };

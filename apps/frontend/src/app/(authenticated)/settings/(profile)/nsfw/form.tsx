@@ -51,10 +51,7 @@ export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
 					api.user.preferences.update(user.id, { body: { nsfw } })
 				]);
 
-				toasts.add({
-					type: "success",
-					label: "Successfully updated NSFW settings!"
-				});
+				toasts.add("Saved NSFW preferences");
 
 				await mutateSession({
 					...session,

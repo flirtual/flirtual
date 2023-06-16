@@ -25,3 +25,7 @@
 * Remove existing app, if installed: ``adb uninstall zone.homie.flirtual.pwa``
 
 * Install the development build onto your device: ``adb install app/build/outputs/apk/debug/app-debug.apk``
+
+* Proxy the required services to your device using ``adb reverse tcp:3000 tcp:3000 && adb reverse tcp:4000 tcp:4000``.
+
+* Now you can open the app on your device.
