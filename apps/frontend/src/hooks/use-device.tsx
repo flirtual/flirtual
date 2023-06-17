@@ -20,6 +20,8 @@ export type DeviceProviderProps = React.PropsWithChildren<
 >;
 
 export function DeviceProvider({ children, ...value }: DeviceProviderProps) {
+	console.log(value);
+
 	return (
 		<DeviceContext.Provider value={value}>{children}</DeviceContext.Provider>
 	);

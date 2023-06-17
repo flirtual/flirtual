@@ -16,6 +16,7 @@ import { ShepherdProvider } from "~/components/shepherd";
 import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 import { ThemeProvider } from "~/hooks/use-theme";
 import { DevicePlatform, DeviceProvider } from "~/hooks/use-device";
+import { NotificationProvider } from "~/hooks/use-notifications";
 
 import { ClientScripts } from "./client-scripts";
 
@@ -97,12 +98,14 @@ export default async function RootLayout({
 					dangerouslySetInnerHTML={{
 						__html: `
 							${resolveTheme.toString()}
-							document.documentElement.dataset.theme = resolveTheme("${theme}");
 
 							const url = new URL(location);
 							const themeStyle = url.pathname === "/browse" && url.searchParams.get("kind") === "friend" ? "friend" : "love";
 						
-							Object.assign(document.documentElement.dataset, { themeStyle });
+							Object.assign(document.documentElement.dataset, {
+								theme: resolveTheme("${theme}"),
+								themeStyle,
+							});
 						`.trim()
 					}}
 				/>
@@ -127,13 +130,15 @@ export default async function RootLayout({
 						platform={platform}
 						userAgent={userAgent}
 					>
-						<SessionProvider session={session}>
-							<ThemeProvider>
-								<ShepherdProvider>
-									<ToastProvider>{children}</ToastProvider>
-								</ShepherdProvider>
-							</ThemeProvider>
-						</SessionProvider>
+						<ToastProvider>
+							<NotificationProvider>
+								<SessionProvider session={session}>
+									<ThemeProvider>
+										<ShepherdProvider>{children}</ShepherdProvider>
+									</ThemeProvider>
+								</SessionProvider>
+							</NotificationProvider>
+						</ToastProvider>
 					</DeviceProvider>
 				</Suspense>
 			</body>

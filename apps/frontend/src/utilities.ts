@@ -227,4 +227,26 @@ export function tryJsonParse<T>(value: string, fallbackValue: T): T {
 	}
 }
 
+export function hashCode(value: string): number {
+	let hash = 0;
+	const length = value.length;
+
+	for (let index = 0; index < length; index++) {
+		hash = (hash << 5) - hash + (value.codePointAt(index) || 1);
+		hash = Math.trunc(hash);
+	}
+
+	return hash;
+}
+
+export function tinySimpleHash(value: string): number {
+	let h = 9;
+
+	for (let index = 0; index < value.length; ) {
+		h = Math.imul(h ^ (value.codePointAt(index++) || 1), 9 ** 9);
+	}
+
+	return h ^ (h >>> 9);
+}
+
 export const noop = () => void 0;

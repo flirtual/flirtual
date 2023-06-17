@@ -18,6 +18,7 @@ import { unstableInfiniteSerialize } from "~/components/swr";
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
 import { getConversationsKey } from "./use-conversations";
+import { useNotifications } from "./use-notifications";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
@@ -33,6 +34,7 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 	const router = useRouter();
 	const { mutate } = useSWRConfig();
 
+	const { pushRegistrationId } = useNotifications();
 	const [unreadConversations, setUnreadConversations] = useState<
 		Array<Talk.UnreadConversation>
 	>([]);
@@ -51,6 +53,18 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 			me: new Talk.User(talkjsUserId)
 		});
 	}, [talkjsUserId, talkjsSignature, ready]);
+
+	useEffect(() => {
+		if (!session || !pushRegistrationId) return;
+
+		void (async () => {
+			await session.clearPushRegistrations();
+			await session.setPushRegistration({
+				provider: "fcm",
+				pushRegistrationId
+			});
+		})();
+	}, [session, pushRegistrationId]);
 
 	useEffect(() => {
 		setUnreadConversations([]);

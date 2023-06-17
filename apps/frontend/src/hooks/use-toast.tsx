@@ -105,7 +105,12 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			if (native)
 				void NativeToast.show({
 					duration,
-					text: value,
+					text:
+						type === "success"
+							? value
+							: type === "warning"
+							? `warning: ${value}`
+							: `Error: ${value}`,
 					// Android only supports bottom position.
 					position: "bottom"
 				});
