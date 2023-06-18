@@ -1,20 +1,25 @@
+import { FC } from "react";
+import useSWR from "swr";
+
 import { User } from "~/api/user";
-import { thruServerCookies, withSession } from "~/server-utilities";
 import { api } from "~/api";
+import { useSession } from "~/hooks/use-session";
 
 import { DateTimeRelative } from "../datetime-relative";
 
-export async function ProfileModeratorInfo({ user }: { user: User }) {
-	const session = await withSession();
-	if (!session.user.tags?.includes("moderator")) return null;
+export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
+	const [session] = useSession();
 
-	const { visible, reasons } = await api.user.visible(
-		user.id,
-		thruServerCookies()
-	);
+	const {
+		data: { visible, reasons }
+	} = useSWR(["user", user.id, "visible"], () => api.user.visible(user.id), {
+		suspense: true
+	});
+
+	if (!session || !session.user?.tags?.includes("moderator")) return null;
 
 	return (
-		<div className="mx-8 flex flex-col">
+		<div className="flex flex-col">
 			<span>
 				<span className="font-bold">Registered:</span>{" "}
 				{user.createdAt && <DateTimeRelative value={user.createdAt} />}
@@ -79,4 +84,4 @@ export async function ProfileModeratorInfo({ user }: { user: User }) {
 			</span>
 		</div>
 	);
-}
+};

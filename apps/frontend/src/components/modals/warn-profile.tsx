@@ -1,30 +1,25 @@
-import { ShieldExclamationIcon } from "@heroicons/react/24/solid";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Dispatch, FC, PropsWithChildren } from "react";
-import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import { displayName, User } from "~/api/user";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 import { useToast } from "~/hooks/use-toast";
+import { api } from "~/api";
 
-import { InputLabel, InputSelect, InputTextArea } from "../inputs";
-import { Form, FormButton } from "../forms";
+import { InputLabel, InputTextArea } from "../inputs";
+import { Form, FormButton, FormMessage } from "../forms";
 import { DrawerOrModal } from "../drawer-or-modal";
 import { UserAvatar } from "../user-avatar";
 
-export interface BanProfileModalFormProps {
+export interface WarnProfileModalFormProps {
 	user: User;
 	onVisibilityChange: Dispatch<boolean>;
 }
 
-export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({
+export const WarnProfileModalForm: FC<WarnProfileModalFormProps> = ({
 	user,
 	onVisibilityChange
 }) => {
 	const toasts = useToast();
-	const router = useRouter();
-
-	const reasons = useAttributeList("ban-reason");
 
 	return (
 		<Form
@@ -32,23 +27,20 @@ export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({
 			requireChange={false}
 			fields={{
 				targetId: user.id,
-				reasonId: reasons[0]?.id,
-				message: reasons[0]?.metadata.details
+				message: ""
 			}}
 			onSubmit={async ({ targetId, ...body }) => {
-				await api.user.suspend(targetId, { body });
+				await api.user.warn(targetId, { body });
 
-				router.refresh();
-				toasts.add("Account suspended");
-
+				toasts.add("Account warned");
 				onVisibilityChange(false);
 			}}
 		>
-			{({ FormField, fields: { message } }) => (
+			{({ FormField }) => (
 				<>
 					<div className="flex flex-row items-center gap-4">
-						<ShieldExclamationIcon className="h-6 w-6" />
-						<span className="text-xl">Ban profile</span>
+						<ExclamationTriangleIcon className="h-6 w-6" />
+						<span className="text-xl">Warn profile</span>
 					</div>
 					<FormField name="targetId">
 						{(field) => (
@@ -73,52 +65,32 @@ export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({
 							</>
 						)}
 					</FormField>
-					<FormField name="reasonId">
-						{(field) => (
-							<>
-								<InputSelect
-									{...field.props}
-									options={reasons.map((attribute) => ({
-										key: attribute.id,
-										label: attribute.name
-									}))}
-									onChange={(reasonId) => {
-										field.props.onChange(reasonId);
-										message.props.onChange(
-											reasons.find((reason) => reason.id === reasonId)?.metadata
-												.details || ""
-										);
-									}}
-								/>
-							</>
-						)}
-					</FormField>
 					<FormField name="message">
 						{(field) => (
 							<>
 								<InputLabel {...field.labelProps}>Message</InputLabel>
-								<InputTextArea
-									{...field.props}
-									placeholder="Write a custom ban reason for the user."
-									rows={6}
-								/>
+								<InputTextArea {...field.props} rows={6} />
 							</>
 						)}
 					</FormField>
-					<FormButton>Yonk</FormButton>
+					<FormMessage size="sm" type="warning">
+						{displayName(user)} still has an existing{" "}
+						<strong>unresolved warning</strong>, you&apos;ll be overwriting it.
+					</FormMessage>
+					<FormButton>Warn</FormButton>
 				</>
 			)}
 		</Form>
 	);
 };
 
-type BanProfileModalProps = PropsWithChildren<{
+type WarnProfileModalProps = PropsWithChildren<{
 	user: User;
 	visible: boolean;
 	onVisibilityChange: Dispatch<boolean>;
 }>;
 
-export const BanProfileModal: FC<BanProfileModalProps> = ({
+export const WarnProfileModal: FC<WarnProfileModalProps> = ({
 	user,
 	children,
 	visible,
@@ -126,7 +98,7 @@ export const BanProfileModal: FC<BanProfileModalProps> = ({
 }) => {
 	return (
 		<DrawerOrModal visible={visible} onVisibilityChange={onVisibilityChange}>
-			<BanProfileModalForm
+			<WarnProfileModalForm
 				user={user}
 				onVisibilityChange={onVisibilityChange}
 			/>

@@ -50,7 +50,9 @@ export function FormField<K extends keyof T, T extends FormFieldsDefault>({
 			ref={reference}
 		>
 			{children(field)}
-			<FormInputMessages messages={field.errors} />
+			<FormInputMessages
+				messages={field.errors.map((value) => ({ type: "error", value }))}
+			/>
 		</div>
 	);
 }

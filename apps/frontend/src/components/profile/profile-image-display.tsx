@@ -12,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { ProfileImage } from "~/api/user/profile/images";
+import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
@@ -111,7 +111,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
 
 	const currentImage = useMemo(
-		() => images.find((image) => image.id === imageId) ?? 0,
+		() => images.find((image) => image.id === imageId) ?? null,
 		[imageId, images]
 	);
 
@@ -144,17 +144,26 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	return (
 		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
 			<div className="relative flex aspect-square shrink-0 bg-black-70">
-				{images.map((image, imageIndex) => (
+				{currentImage ? (
+					images.map((image, imageIndex) => (
+						<SingleImage
+							image={image}
+							key={image.id}
+							priority={imageIndex === 0}
+							className={twMerge(
+								"h-full w-full transition-opacity duration-500",
+								image.id === imageId ? "opacity-100" : "absolute opacity-0"
+							)}
+						/>
+					))
+				) : (
 					<SingleImage
-						image={image}
-						key={image.id}
-						priority={imageIndex === 0}
-						className={twMerge(
-							"h-full w-full transition-opacity duration-500",
-							image.id === imageId ? "opacity-100" : "absolute opacity-0"
-						)}
+						priority
+						className={twMerge("h-full w-full")}
+						image={notFoundImage}
+						key={notFoundImage.id}
 					/>
-				))}
+				)}
 				{images.length > 1 && (
 					<div className="absolute flex h-full w-full">
 						<button

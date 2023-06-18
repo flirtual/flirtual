@@ -72,9 +72,21 @@ defmodule Flirtual.User do
     ]
   end
 
-  def avatar_url(%User{} = user) do
-    Image.url(Enum.at(user.profile.images, 0))
+  def avatar_url(%User{} = user), do: avatar_url(user, 1980)
+
+  def avatar_url(%User{} = user, size) when is_integer(size) do
+    size = Integer.to_string(size)
+
+    Enum.at(user.profile.images, 0)
+    |> Image.url(
+      scale_crop: ["#{size}x#{size}", :smart_faces_points],
+      format: :auto,
+      resize: "#{size}x",
+      quality: :smart
+    )
   end
+
+  def avatar_thumbnail_url(%User{} = user), do: avatar_url(user, 64)
 
   def url(%User{} = user) do
     Application.fetch_env!(:flirtual, :frontend_origin)
@@ -284,6 +296,33 @@ defmodule Flirtual.User do
              Discord.deliver_webhook(:unsuspended,
                user: user,
                moderator: moderator
+             ) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def warn(
+        %User{} = user,
+        message,
+        %User{} = moderator
+      ) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{})
+             |> Repo.update(),
+           :ok <-
+             Discord.deliver_webhook(:warned,
+               user: user,
+               moderator: moderator,
+               message: message,
+               at: now
              ) do
         user
       else

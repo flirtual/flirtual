@@ -184,6 +184,15 @@ export async function unsuspend(
 	return fetch<User>("delete", `users/${userId}/suspend`, options);
 }
 
+export async function warn(
+	userId: string,
+	options: NarrowFetchOptions<{
+		message: string;
+	}>
+) {
+	return fetch<User>("post", `users/${userId}/warn`, options);
+}
+
 export { _delete as delete };
 async function _delete(
 	options: NarrowFetchOptions<{

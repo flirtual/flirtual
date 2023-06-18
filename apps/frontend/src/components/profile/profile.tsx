@@ -19,7 +19,6 @@ import { GenderPills } from "./pill/genders";
 import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { RelationActions } from "./relation-actions";
-import { ProfileModeratorInfo } from "./moderator-info";
 
 export interface ProfileProps {
 	user: User;
@@ -71,7 +70,7 @@ export async function Profile(props: ProfileProps) {
 						)}
 					</div>
 				</ProfileImageDisplay>
-				<div className="flex h-full grow flex-col gap-6 break-words p-8">
+				<div className="flex h-full grow flex-col gap-6 break-words p-8 pb-0">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} user={user} />
 					{(user.profile.discord || user.profile.vrchat) && (
@@ -119,9 +118,6 @@ export async function Profile(props: ProfileProps) {
 					) : null}
 					<PillCollection user={user} />
 				</div>
-				{session.user.tags?.includes("moderator") && (
-					<ProfileModeratorInfo user={user} />
-				)}
 				<ProfileActionBar user={user} />
 			</div>
 		</div>

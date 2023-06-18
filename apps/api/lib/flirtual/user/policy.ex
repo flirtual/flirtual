@@ -46,7 +46,8 @@ defmodule Flirtual.User.Policy do
       do: true
 
   @moderator_actions [
-    :suspend
+    :suspend,
+    :warn
   ]
 
   def authorize(

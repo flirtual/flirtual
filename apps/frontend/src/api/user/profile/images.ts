@@ -1,4 +1,5 @@
 import { DatedModel, UuidModel } from "~/api/common";
+import { urls } from "~/urls";
 
 import { fetch, NarrowFetchOptions } from "../../exports";
 import { upload as uploadFiles } from "../../file";
@@ -8,6 +9,13 @@ export type ProfileImage = UuidModel &
 		url: string;
 		scanned?: boolean;
 	};
+
+export const notFoundImage = {
+	id: "not-found",
+	url: urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
+	createdAt: new Date().toISOString(),
+	updatedAt: new Date().toISOString()
+};
 
 export type ProfileImageList = Array<ProfileImage>;
 

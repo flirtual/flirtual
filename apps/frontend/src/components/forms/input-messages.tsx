@@ -1,9 +1,51 @@
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { FC, PropsWithChildren } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { capitalize } from "~/utilities";
 
+export type FormMessageType = "error" | "warning" | "success" | "informative";
+export type FormMessageSize = "sm" | "md";
+
+export interface FormMessage {
+	type: FormMessageType;
+	size?: FormMessageSize;
+	value: string;
+}
+
+const formMessageStyle: Record<FormMessageType, string> = {
+	error: "text-red-600 dark:text-red-400",
+	warning: "text-yellow-600 dark:text-yellow-400",
+	success: "text-green-600 dark:text-green-400",
+	informative: "text-black-60 dark:text-white-50"
+};
+
+const formMessageSize: Record<FormMessageSize, string> = {
+	sm: "text-md",
+	md: "text-lg"
+};
+
+export type FormMessageProps = PropsWithChildren<Omit<FormMessage, "value">>;
+
+export const FormMessage: FC<FormMessageProps> = (props) => {
+	const { type, size = "md", children } = props;
+
+	return (
+		<div
+			className={twMerge(
+				"flex gap-2 font-nunito",
+				formMessageStyle[type],
+				formMessageSize[size]
+			)}
+		>
+			<ExclamationCircleIcon className="mt-1 h-6 w-6 shrink-0" />
+			<span>{children}</span>
+		</div>
+	);
+};
+
 export interface FormInputMessagesProps {
-	messages?: Array<string>;
+	messages?: Array<FormMessage>;
 }
 
 export const FormInputMessages: React.FC<FormInputMessagesProps> = ({
@@ -13,14 +55,10 @@ export const FormInputMessages: React.FC<FormInputMessagesProps> = ({
 
 	return (
 		<div className="flex flex-col gap-2">
-			{messages.map((message, messageIndex) => (
-				<div
-					className="flex gap-2 font-nunito text-red-600 dark:text-red-400"
-					key={messageIndex}
-				>
-					<ExclamationCircleIcon className="mt-1 h-6 w-6 shrink-0" />
-					<span className="text-lg">{capitalize(message)}</span>
-				</div>
+			{messages.map(({ value, ...message }, messageIndex) => (
+				<FormMessage key={messageIndex} {...message}>
+					{capitalize(value)}
+				</FormMessage>
 			))}
 		</div>
 	);
