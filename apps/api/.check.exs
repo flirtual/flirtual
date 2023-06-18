@@ -18,7 +18,7 @@
     {:compiler, "mix compile"},
 
     ## ...or have command & args adjusted (e.g. enable skip comments for sobelow)
-    {:sobelow, "mix sobelow --exit medium --skip"}
+    # {:sobelow, "mix sobelow --exit medium --skip"}
 
     ## ...or reordered (e.g. to see output from dialyzer before others)
     # {:dialyzer, order: -1},
