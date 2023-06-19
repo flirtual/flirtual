@@ -304,7 +304,7 @@ defmodule Flirtual.Stripe do
             discounts:
               if(:legacy_vrlfp in user.tags,
                 do: [
-                  %{coupon: "vrlfp3"}
+                  %{coupon: "KoqHexUI"}
                 ],
                 else: []
               )
