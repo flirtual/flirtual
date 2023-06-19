@@ -93,8 +93,8 @@ export async function update(
 	options: NarrowFetchOptions<
 		UpdateUserBody,
 		| {
-				required?: Array<keyof UpdateUserBody>;
-		  }
+			required?: Array<keyof UpdateUserBody>;
+		}
 		| undefined
 	>
 ) {
@@ -218,4 +218,11 @@ async function _delete(
 	}>
 ) {
 	return fetch<User>("delete", `auth/user`, options);
+}
+
+export async function adminDelete(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("delete", `users/${userId}`, options);
 }

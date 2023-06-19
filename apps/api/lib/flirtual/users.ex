@@ -355,6 +355,20 @@ defmodule Flirtual.Users do
     end)
   end
 
+  def admin_delete(%User{} = user) do
+    Repo.transaction(fn ->
+      with {:ok, user} <- Repo.delete(user),
+           :ok <- Elasticsearch.delete(:users, user.id),
+           {:ok, _} <- Talkjs.delete_user(user),
+           {:ok, _} <- Stripe.delete_customer(user) do
+        {:ok, user}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def create(attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
