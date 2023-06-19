@@ -9,7 +9,7 @@ import {
 	ShieldCheckIcon
 } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 
 import { User, displayName } from "~/api/user";
 import { api } from "~/api";
@@ -37,7 +37,9 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	return (
 		<div className="flex flex-col gap-8 p-8 dark:bg-black-70">
 			{session.user.tags?.includes("moderator") && (
-				<ProfileModeratorInfo user={user} />
+				<Suspense>
+					<ProfileModeratorInfo user={user} />
+				</Suspense>
 			)}
 			<div className="flex w-full justify-between gap-3">
 				<div className="flex gap-4">

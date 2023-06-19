@@ -1,8 +1,18 @@
 "use client";
 
 // eslint-disable-next-line import/named
-import { use, useCallback, useDebugValue, useState } from "react";
+import { use, useCallback, useDebugValue, useState, useMemo } from "react";
 import { Preferences } from "@capacitor/preferences";
+
+export async function getPreference<T>(key: string, defaultValue: T) {
+	return (
+		typeof window === "undefined"
+			? Promise.resolve({ value: null })
+			: Preferences.get({ key })
+	).then(({ value: localValue }) =>
+		localValue ? (JSON.parse(localValue) as T) : defaultValue
+	);
+}
 
 /**
  * A hook for getting and setting preferences.
@@ -13,15 +23,13 @@ import { Preferences } from "@capacitor/preferences";
  * @see [Capacitor.js Preferences Plugin](https://capacitorjs.com/docs/apis/preferences)
  */
 export function usePreferences<T>(key: string, defaultValue: T) {
-	// eslint-disable-next-line react/hook-use-state
-	const [, setLastUpdated] = useState(Date.now());
+	const [lastUpdated, setLastUpdated] = useState(Date.now());
 
 	const value = use(
-		(typeof window === "undefined"
-			? Promise.resolve({ value: null })
-			: Preferences.get({ key })
-		).then(({ value: localValue }) =>
-			localValue ? (JSON.parse(localValue) as T) : defaultValue
+		useMemo(
+			() => getPreference(key, defaultValue),
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			[key, defaultValue, lastUpdated]
 		)
 	);
 

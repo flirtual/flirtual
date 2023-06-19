@@ -214,7 +214,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 										image={currentImage}
 									/>
 								</div>
-								{session?.user.tags?.includes("moderator") && (
+								{session?.user?.tags?.includes("moderator") && (
 									<ImageToolbar image={currentImage} />
 								)}
 							</div>
