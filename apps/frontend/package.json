@@ -13,6 +13,7 @@
     "@capacitor/clipboard": "^5.0.4",
     "@capacitor/core": "^5.0.5",
     "@capacitor/device": "^5.0.4",
+    "@capacitor/dialog": "^5.0.4",
     "@capacitor/ios": "^5.0.5",
     "@capacitor/local-notifications": "^5.0.4",
     "@capacitor/preferences": "^5.0.4",

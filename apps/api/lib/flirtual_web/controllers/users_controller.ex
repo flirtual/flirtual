@@ -433,6 +433,19 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def admin_delete(conn, %{"user_id" => user_id} = attrs) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :delete, user) do
+      {:error, {:forbidden, "Cannot delete this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <-
+             Users.admin_delete(user) do
+        conn |> json(%{deleted: true})
+      end
+    end
+  end
+
   def get_current_user(conn, _) do
     conn |> json_with_etag(Policy.transform(conn, conn.assigns[:session].user))
   end

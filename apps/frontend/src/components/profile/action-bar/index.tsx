@@ -6,10 +6,12 @@ import {
 	ClipboardDocumentIcon,
 	NoSymbolIcon,
 	ScaleIcon,
-	ShieldCheckIcon
+	ShieldCheckIcon,
+	TrashIcon
 } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { FC, Suspense } from "react";
+import { Dialog } from "@capacitor/dialog";
 
 import { User, displayName } from "~/api/user";
 import { api } from "~/api";
@@ -88,23 +90,45 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 							{session.user.id !== user.id &&
 								session.user.tags.includes("moderator") && <ActionDivider />}
 							{user.id !== session.user.id && (
-								<Tooltip value="Impersonate">
-									<button
-										className="disabled:cursor-not-allowed disabled:opacity-50"
-										disabled={!!user.bannedAt}
-										type="button"
-										onClick={async () => {
-											const session = await api.auth.sudo({
-												body: { userId: user.id }
-											});
+								<>
+									<Tooltip value="Delete account">
+										<button
+											className="text-red-500"
+											type="button"
+											onClick={async () => {
+												const { value } = await Dialog.confirm({
+													title: "Confirm",
+													message:
+														"Are you sure you want to delete this account?"
+												});
+												if (!value) return;
+												await api.user
+													.adminDelete(user.id)
+													.then(() => toasts.add("User deleted successfully"))
+													.catch(toasts.addError);
+											}}
+										>
+											<TrashIcon className="h-6 w-6" />
+										</button>
+									</Tooltip>
+									<Tooltip value="Impersonate">
+										<button
+											className="disabled:cursor-not-allowed disabled:opacity-50"
+											disabled={!!user.bannedAt}
+											type="button"
+											onClick={async () => {
+												const session = await api.auth.sudo({
+													body: { userId: user.id }
+												});
 
-											toasts.add(`Impersonating ${displayName(user)}`);
-											await mutateSession(session);
-										}}
-									>
-										<ArrowRightOnRectangleIcon className="h-6 w-6" />
-									</button>
-								</Tooltip>
+												toasts.add(`Impersonating ${displayName(user)}`);
+												await mutateSession(session);
+											}}
+										>
+											<ArrowRightOnRectangleIcon className="h-6 w-6" />
+										</button>
+									</Tooltip>
+								</>
 							)}
 						</>
 					)}
