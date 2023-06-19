@@ -372,6 +372,59 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  defmodule Warn do
+    use Flirtual.EmbeddedSchema
+
+    embedded_schema do
+      field(:message, :string)
+    end
+
+    def changeset(value, _, _) do
+      value
+      |> validate_length(:message, min: 8)
+    end
+  end
+
+  def warn(%{assigns: %{session: %{user_id: user_id}}}, %{"user_id" => user_id}),
+    do: {:error, {:bad_request, "Cannot warn yourself", %{user_id: user_id}}}
+
+  def warn(conn, %{"user_id" => user_id} = attrs) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :warn, user) do
+      {:error, {:forbidden, "Cannot warn this user", %{user_id: user_id}}}
+    else
+      with {:ok, attrs} <- Warn.apply(attrs),
+           {:ok, user} <-
+             User.warn(user, attrs.message, conn.assigns[:session].user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def revoke_warn(conn, %{"user_id" => user_id} = attrs) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :warn, user) do
+      {:error, {:forbidden, "Cannot revoke warning for this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <-
+             User.revoke_warn(user, conn.assigns[:session].user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def acknowledge_warn(
+        %{assigns: %{session: %{user_id: user_id}}} = conn,
+        %{"user_id" => user_id}
+      ) do
+    with {:ok, user} <-
+           User.acknowledge_warn(conn.assigns[:session].user) do
+      conn |> json(Policy.transform(conn, user))
+    end
+  end
+
   def delete(conn, attrs) do
     user = conn.assigns[:session].user
 

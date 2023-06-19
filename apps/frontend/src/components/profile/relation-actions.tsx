@@ -41,11 +41,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 							void api.matchmaking
 								.unmatch({ query: { userId: user.id } })
 								.then(() => {
-									toasts.add({
-										type: "success",
-										label: `Successfully unmatched ${displayName(user)}`
-									});
-
+									toasts.add(`Unmatched ${displayName(user)}`);
 									return router.refresh();
 								})
 								.catch(toasts.addError);

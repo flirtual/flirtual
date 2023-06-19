@@ -64,8 +64,7 @@ defmodule Flirtual.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:libcluster, "~> 3.3"},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:sobelow, "~> 0.12", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 

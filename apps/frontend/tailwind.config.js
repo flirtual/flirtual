@@ -42,7 +42,7 @@ const colors = {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
-	darkMode: "class",
+	darkMode: ["class", '[data-theme="dark"]'],
 	theme: {
 		extend: {
 			fontFamily: {
@@ -159,6 +159,13 @@ module.exports = {
 				"&::-moz-range-thumb",
 				"&::-ms-thumb"
 			]);
+
+			// Device specific variants
+			addVariant("native", `:is([data-native="true"] &)`);
+
+			for (const platform of ["web", "android", "ios"]) {
+				addVariant(platform, `:is([data-platform="${platform}"] &)`);
+			}
 
 			addComponents({
 				".focusable": {

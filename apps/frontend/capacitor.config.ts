@@ -9,7 +9,9 @@ const config: CapacitorConfig = {
 		hostname: "127.0.0.1",
 		url: "http://127.0.0.1:3000",
 		cleartext: true
-	}
+	},
+	appendUserAgent: "Flirtual-Native",
+	plugins: {}
 };
 
 export default config;

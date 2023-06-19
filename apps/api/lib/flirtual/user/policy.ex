@@ -46,7 +46,8 @@ defmodule Flirtual.User.Policy do
       do: true
 
   @moderator_actions [
-    :suspend
+    :suspend,
+    :warn
   ]
 
   def authorize(
@@ -137,6 +138,7 @@ defmodule Flirtual.User.Policy do
     :email,
     :language,
     :talkjs_signature,
+    :moderator_message,
     :active_at,
     :tags,
     :connections,
@@ -179,6 +181,7 @@ defmodule Flirtual.User.Policy do
       do: user[key]
 
   @moderator_property_keys [
+    :moderator_message,
     :shadowbanned_at,
     :banned_at,
     :deactivated_at,
@@ -209,8 +212,6 @@ defmodule Flirtual.User.Policy do
     |> DateTime.to_date()
     |> DateTime.new!(Time.new!(0, 0, 0))
   end
-
-  @day_in_seconds 86_400
 
   # Truncate born at to year, to hide user's exact birthday.
   def transform(:born_at, _, %User{born_at: born_at} = user) when not is_nil(born_at) do

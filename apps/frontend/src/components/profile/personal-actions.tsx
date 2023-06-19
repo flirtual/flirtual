@@ -4,12 +4,12 @@ import { PencilIcon, ShareIcon } from "@heroicons/react/24/solid";
 
 import { User } from "~/api/user";
 import { toAbsoluteUrl, urls } from "~/urls";
-import { useToast } from "~/hooks/use-toast";
+import { useShare } from "~/hooks/use-share";
 
 import { Button, ButtonLink } from "../button";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
-	const toasts = useToast();
+	const share = useShare();
 
 	return (
 		<div className="flex gap-4">
@@ -19,27 +19,24 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				Icon={PencilIcon}
 				size="sm"
 			>
-				Edit profile
+				Edit
 			</ButtonLink>
 			<Button
 				className="w-1/2"
 				Icon={ShareIcon}
 				size="sm"
 				onClick={async () => {
-					const link = toAbsoluteUrl(
+					const url = toAbsoluteUrl(
 						urls.user.profile(user.username)
 					).toString();
 
-					await navigator.clipboard.writeText(link);
-					toasts.add({ type: "success", label: "Copied link!" });
-
-					await navigator.share({
+					await share({
 						text: "Check out my Flirtual profile!",
-						url: link
+						url
 					});
 				}}
 			>
-				Share profile
+				Share
 			</Button>
 		</div>
 	);

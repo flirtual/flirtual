@@ -13,6 +13,7 @@ defmodule Flirtual.Discord do
 
   @default_color 255
   @destructive_color 16_711_680
+  @warn_color 16_636_429
   @success_color 65_280
 
   def config(key) do
@@ -138,7 +139,13 @@ defmodule Flirtual.Discord do
     do: %{
       name: md_display_name(user, false),
       url: User.url(user) |> URI.to_string(),
-      icon_url: User.avatar_url(user)
+      icon_url: User.avatar_thumbnail_url(user)
+    }
+
+  def webhook_author_footer(%User{} = user),
+    do: %{
+      text: md_display_name(user, false),
+      icon_url: User.avatar_thumbnail_url(user)
     }
 
   def deliver_webhook(:suspended,
@@ -154,21 +161,13 @@ defmodule Flirtual.Discord do
         %{
           author: webhook_author(user),
           title: "User banned",
+          description: message,
           fields:
             [
-              %{
-                name: "Moderator",
-                value: md_display_name(moderator),
-                inline: true
-              },
               %{
                 name: "Reason",
                 value: reason.name,
                 inline: true
-              },
-              %{
-                name: "Message",
-                value: message
               }
             ] ++
               if(Subscription.active?(user.subscription),
@@ -181,7 +180,9 @@ defmodule Flirtual.Discord do
                 ],
                 else: []
               ),
-          color: @destructive_color
+          color: @destructive_color,
+          footer: webhook_author_footer(moderator),
+          timestamp: DateTime.to_iso8601(user.banned_at)
         }
       ]
     })
@@ -196,12 +197,63 @@ defmodule Flirtual.Discord do
         %{
           author: webhook_author(user),
           title: "User unsuspended",
-          fields: %{
-            name: "Moderator",
-            value: md_display_name(moderator),
-            inline: true
-          },
-          color: @success_color
+          color: @success_color,
+          footer: webhook_author_footer(moderator),
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:warned,
+        user: %User{} = user,
+        moderator: %User{} = moderator,
+        message: message,
+        at: warned_at
+      ) do
+    webhook(:moderation, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "User warned",
+          description: message,
+          color: @warn_color,
+          footer: webhook_author_footer(moderator),
+          timestamp: warned_at |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:warn_revoked,
+        user: %User{} = user,
+        moderator: %User{} = moderator,
+        at: warn_revoked_at
+      ) do
+    webhook(:moderation, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Warning revoked",
+          color: @success_color,
+          footer: webhook_author_footer(moderator),
+          timestamp: warn_revoked_at |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:warn_acknowledged,
+        user: %User{} = user,
+        at: warn_acknowledged_at
+      ) do
+    webhook(:moderation, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Warning acknowledged",
+          color: @success_color,
+          timestamp: warn_acknowledged_at |> DateTime.to_iso8601()
         }
       ]
     })
@@ -217,17 +269,12 @@ defmodule Flirtual.Discord do
         %{
           author: webhook_author(user),
           title: "Image removed",
-          fields: [
-            %{
-              name: "Moderator",
-              value: md_display_name(moderator),
-              inline: true
-            }
-          ],
           image: %{
             url: image |> Image.url()
           },
-          color: @destructive_color
+          color: @destructive_color,
+          footer: webhook_author_footer(moderator),
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ]
     })
@@ -268,7 +315,8 @@ defmodule Flirtual.Discord do
               )
             ]
             |> Enum.filter(&(!!&1)),
-          color: @default_color
+          color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ]
     })
@@ -286,7 +334,8 @@ defmodule Flirtual.Discord do
               value: flags
             }
           ],
-          color: @default_color
+          color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ]
     })
@@ -327,7 +376,8 @@ defmodule Flirtual.Discord do
                 |> Enum.map_join(", ", fn {k, _} -> k end)
             }
           ],
-          color: @default_color
+          color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ]
     })
@@ -360,14 +410,14 @@ defmodule Flirtual.Discord do
                     value:
                       user.profile.attributes
                       |> filter_by(:type, "gender")
-                      |> Enum.map(
+                      |> Enum.map_join(
+                        ", \n",
                         &if &1.metadata["simple"] do
                           "**" <> &1.name <> "**"
                         else
                           &1.name
                         end
-                      )
-                      |> Enum.join(", \n"),
+                      ),
                     inline: true
                   },
                   %{
@@ -375,8 +425,7 @@ defmodule Flirtual.Discord do
                     value:
                       user.profile.preferences.attributes
                       |> filter_by(:type, "gender")
-                      |> Enum.map(& &1.name)
-                      |> Enum.join(", \n"),
+                      |> Enum.map_join(", \n", & &1.name),
                     inline: true
                   }
                 ]
@@ -389,7 +438,8 @@ defmodule Flirtual.Discord do
               }
             ]
             |> List.flatten(),
-          color: @default_color
+          color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ]
     })

@@ -32,10 +32,7 @@ export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 					{ body }
 				);
 
-				toasts.add({
-					type: "success",
-					label: "Successfully updated personality settings!"
-				});
+				toasts.add("Saved personality settings");
 
 				await mutateSession({
 					...session,

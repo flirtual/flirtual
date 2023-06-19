@@ -35,10 +35,7 @@ export const NotificationsForm: React.FC = () => {
 					)
 				});
 
-				toasts.add({
-					type: "success",
-					label: "Saved notification preferences!"
-				});
+				toasts.add("Saved notification preferences");
 			}}
 		>
 			{({ FormField }) => (

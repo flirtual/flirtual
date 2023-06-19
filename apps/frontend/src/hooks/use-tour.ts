@@ -6,9 +6,9 @@ import {
 } from "react-shepherd";
 
 import "~/components/shepherd/style.scss";
-import { useLocalStorage } from "~/hooks/use-local-storage";
 
 import { useScrollLock } from "./use-scroll-lock";
+import { usePreferences } from "./use-preferences";
 
 export function useShepherd() {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -22,7 +22,7 @@ export function useTour(
 	const shepherd = useShepherd();
 	const [, setScrollLocked] = useScrollLock();
 
-	const [completed, setCompleted] = useLocalStorage(
+	const [completed, setCompleted] = usePreferences(
 		`tour-${name}-completed`,
 		false
 	);

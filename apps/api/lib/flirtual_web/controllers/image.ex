@@ -2,11 +2,8 @@ defmodule FlirtualWeb.ImageController do
   use FlirtualWeb, :controller
 
   import FlirtualWeb.Utilities
-  import Ecto.Changeset
-  import Ecto.Query
 
   alias Flirtual.User.Profile.Image.Moderation
-  alias Flirtual.Repo
   alias Flirtual.Policy
   alias Flirtual.User.Profile.Image
   alias Flirtual.User
@@ -33,7 +30,15 @@ defmodule FlirtualWeb.ImageController do
       |> put_resp_header("cache-control", "public, max-age=#{@year_in_seconds}, immutable")
       |> put_resp_header("etag", image.external_id)
       |> put_status(:permanent_redirect)
-      |> redirect(external: Image.url(image, params |> Map.delete("image_id")))
+      |> redirect(
+        external:
+          image
+          |> Image.url(
+            params
+            |> Map.delete("image_id")
+            |> Keyword.new()
+          )
+      )
     else
       nil -> conn |> redirect(external: Image.url(nil))
       value -> value

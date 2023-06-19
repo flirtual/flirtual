@@ -28,7 +28,7 @@ export const PrivacyForm: React.FC = () => {
 				});
 				reset(privacy);
 
-				toasts.add({ type: "success", label: "Saved privacy preferences!" });
+				toasts.add("Saved privacy preferences");
 			}}
 		>
 			{({ FormField }) => (

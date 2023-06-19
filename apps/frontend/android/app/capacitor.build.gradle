@@ -9,7 +9,15 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
-
+    implementation project(':capacitor-app')
+    implementation project(':capacitor-clipboard')
+    implementation project(':capacitor-device')
+    implementation project(':capacitor-local-notifications')
+    implementation project(':capacitor-preferences')
+    implementation project(':capacitor-push-notifications')
+    implementation project(':capacitor-screen-orientation')
+    implementation project(':capacitor-share')
+    implementation project(':capacitor-toast')
 
 }
 

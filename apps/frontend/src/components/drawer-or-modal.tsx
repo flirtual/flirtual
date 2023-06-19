@@ -14,7 +14,7 @@ export interface DrawerOrModalProps {
 	children: React.ReactNode;
 	breakpoint?: ScreenBreakpoint;
 	visible: boolean;
-	onVisibilityChange: Dispatch<boolean>;
+	onVisibilityChange?: Dispatch<boolean>;
 }
 
 export const DrawerOrModal: React.FC<DrawerOrModalProps> = (props) => {

@@ -126,7 +126,9 @@ export const RegisterForm: React.FC = () => {
 								Create account
 							</span>
 						</button>
-						<FormInputMessages messages={errors} />
+						<FormInputMessages
+							messages={errors.map((value) => ({ type: "error", value }))}
+						/>
 						<div className="flex flex-col font-nunito text-lg">
 							<FormAlternativeActionLink href={urls.login()}>
 								Already have an account? Log in!

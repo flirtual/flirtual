@@ -55,7 +55,9 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 			<FormContext.Provider value={form}>
 				{children}
 				{props.formErrorMessages && (
-					<FormInputMessages messages={form.errors} />
+					<FormInputMessages
+						messages={form.errors.map((value) => ({ type: "error", value }))}
+					/>
 				)}
 				{props.withCaptcha && <FormCaptcha ref={captchaReference} />}
 			</FormContext.Provider>

@@ -29,11 +29,7 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 					await api.user
 						.resendConfirmEmail(user.id)
 						.then(() => {
-							toasts.add({
-								type: "success",
-								label: "Resent confirmation email"
-							});
-
+							toasts.add("Resent confirmation email");
 							return router.refresh();
 						})
 						.catch(toasts.addError);
@@ -59,11 +55,7 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 					await api.user
 						.updateEmail(user.id, { body })
 						.then(() => {
-							toasts.add({
-								type: "success",
-								label: "Email changed successfully"
-							});
-
+							toasts.add("Email changed successfully");
 							return router.refresh();
 						})
 						.catch(toasts.addError);

@@ -10,8 +10,7 @@ import { isUid } from "~/utilities";
 export const getProfileUser = cache(async (username: string) => {
 	const session = await withSession();
 
-	if (session.user.id === username || session.user.username === username)
-		redirect(urls.user.me);
+	if (username === "me") redirect(session.user.username.toLowerCase());
 
 	if (isUid(username))
 		return await api.user

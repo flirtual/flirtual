@@ -12,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { ProfileImage } from "~/api/user/profile/images";
+import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
@@ -85,11 +85,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 							await api.images
 								.delete(image.id)
 								.then(() => {
-									toasts.add({
-										type: "success",
-										label: "Successfully deleted image!"
-									});
-
+									toasts.add("Image removed successfully");
 									return router.refresh();
 								})
 								.catch(toasts.addError);
@@ -115,7 +111,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
 
 	const currentImage = useMemo(
-		() => images.find((image) => image.id === imageId) ?? 0,
+		() => images.find((image) => image.id === imageId) ?? null,
 		[imageId, images]
 	);
 
@@ -148,17 +144,26 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	return (
 		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
 			<div className="relative flex aspect-square shrink-0 bg-black-70">
-				{images.map((image, imageIndex) => (
+				{currentImage ? (
+					images.map((image, imageIndex) => (
+						<SingleImage
+							image={image}
+							key={image.id}
+							priority={imageIndex === 0}
+							className={twMerge(
+								"h-full w-full transition-opacity duration-500",
+								image.id === imageId ? "opacity-100" : "absolute opacity-0"
+							)}
+						/>
+					))
+				) : (
 					<SingleImage
-						image={image}
-						key={image.id}
-						priority={imageIndex === 0}
-						className={twMerge(
-							"h-full w-full transition-opacity duration-500",
-							image.id === imageId ? "opacity-100" : "absolute opacity-0"
-						)}
+						priority
+						className={twMerge("h-full w-full")}
+						image={notFoundImage}
+						key={notFoundImage.id}
 					/>
-				))}
+				)}
 				{images.length > 1 && (
 					<div className="absolute flex h-full w-full">
 						<button
@@ -177,13 +182,13 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						</button>
 					</div>
 				)}
-				<div className="pointer-events-none absolute flex h-full w-full items-center justify-center">
-					<button
-						className="pointer-events-auto h-full w-1/3"
-						type="button"
-						onClick={() => setExpandedImage(true)}
-					/>
-					{currentImage && (
+				{currentImage && (
+					<div className="pointer-events-none absolute flex h-full w-full items-center justify-center">
+						<button
+							className="pointer-events-auto h-full w-1/3"
+							type="button"
+							onClick={() => setExpandedImage(true)}
+						/>
 						<ModalOuter
 							visible={expandedImage}
 							modalOuterProps={{
@@ -214,8 +219,9 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								)}
 							</div>
 						</ModalOuter>
-					)}
-				</div>
+					</div>
+				)}
+
 				{images.length > 1 && (
 					<div className="pointer-events-auto absolute top-0 flex w-full px-8 py-6">
 						<div className="flex grow items-center gap-2">

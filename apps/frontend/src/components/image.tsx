@@ -3,8 +3,8 @@
 import { FC } from "react";
 import NextImage from "next/image";
 
-import { urls } from "~/urls";
 import { ImageOptions, serializeImageOptions } from "~/image-loader";
+import { notFoundImage } from "~/api/user/profile/images";
 
 export type ImageProps = Omit<
 	Parameters<typeof NextImage>[0],
@@ -27,7 +27,7 @@ export const Image: FC<ImageProps> = ({ options = {}, src, ...props }) => {
 			src={src}
 			onError={({ currentTarget }) => {
 				// If the image fails to load (doesn't exist), use a fallback.
-				currentTarget.src = urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4");
+				currentTarget.src = notFoundImage.url;
 			}}
 		/>
 	);

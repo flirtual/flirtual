@@ -120,10 +120,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 				]);
 
 				startTransition(() => router.refresh());
-				toasts.add({
-					type: "success",
-					label: "Successfully updated matchmaking settings!"
-				});
+				toasts.add("Saved matchmaking preferences");
 			}}
 		>
 			{({ FormField, fields }) => (

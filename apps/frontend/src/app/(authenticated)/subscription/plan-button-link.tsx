@@ -31,7 +31,7 @@ export const PlanButtonLink: FC<
 				if (!isPwa) return;
 				toasts.add({
 					type: "warning",
-					label:
+					value:
 						"Sorry, we cannot take payments in the app. Subscriptions can be purchased on our website using a desktop or mobile browser."
 				});
 

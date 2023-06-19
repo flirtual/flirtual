@@ -1,5 +1,6 @@
 import { ShieldExclamationIcon } from "@heroicons/react/24/solid";
 import { Dispatch, FC, PropsWithChildren } from "react";
+import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
@@ -9,6 +10,7 @@ import { useToast } from "~/hooks/use-toast";
 import { InputLabel, InputSelect, InputTextArea } from "../inputs";
 import { Form, FormButton } from "../forms";
 import { DrawerOrModal } from "../drawer-or-modal";
+import { UserAvatar } from "../user-avatar";
 
 export interface BanProfileModalFormProps {
 	user: User;
@@ -20,6 +22,8 @@ export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({
 	onVisibilityChange
 }) => {
 	const toasts = useToast();
+	const router = useRouter();
+
 	const reasons = useAttributeList("ban-reason");
 
 	return (
@@ -34,27 +38,38 @@ export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({
 			onSubmit={async ({ targetId, ...body }) => {
 				await api.user.suspend(targetId, { body });
 
-				toasts.add({
-					type: "success",
-					label: `Successfully banned profile!`,
-					children: <span className="text-sm">User: {user.id}</span>
-				});
+				router.refresh();
+				toasts.add("Account suspended");
 
 				onVisibilityChange(false);
 			}}
 		>
 			{({ FormField, fields: { message } }) => (
 				<>
-					<FormField
-						className="flex flex-row items-center gap-4"
-						name="targetId"
-					>
-						{() => (
+					<div className="flex flex-row items-center gap-4">
+						<ShieldExclamationIcon className="h-6 w-6" />
+						<span className="text-xl">Ban profile</span>
+					</div>
+					<FormField name="targetId">
+						{(field) => (
 							<>
-								<ShieldExclamationIcon className="h-6 w-6" />
-								<span className="text-xl">
-									Ban profile: {displayName(user)}
-								</span>
+								<InputLabel {...field.labelProps}>Target</InputLabel>
+								<div className="flex items-center gap-4">
+									<UserAvatar
+										className="h-8 w-8 rounded-full"
+										height={64}
+										user={user}
+										width={64}
+									/>
+									<div className="flex flex-col">
+										<span className="text-lg font-semibold">
+											{displayName(user)}
+										</span>
+										<span className="font-mono text-sm brightness-75">
+											{user.id}
+										</span>
+									</div>
+								</div>
 							</>
 						)}
 					</FormField>

@@ -53,7 +53,9 @@ export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 					</FormField>
 					<div className="flex flex-col gap-4">
 						<FormButton>Log in</FormButton>
-						<FormInputMessages messages={errors} />
+						<FormInputMessages
+							messages={errors.map((value) => ({ type: "error", value }))}
+						/>
 						<div className="flex flex-col font-nunito text-lg">
 							<FormAlternativeActionLink href={urls.register}>
 								Don&apos;t have an account yet? Sign up!
