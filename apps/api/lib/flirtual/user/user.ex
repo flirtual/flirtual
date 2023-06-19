@@ -358,9 +358,7 @@ defmodule Flirtual.User do
     end)
   end
 
-  def acknowledge_warn(
-        %User{} = user
-      ) do
+  def acknowledge_warn(%User{} = user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     Repo.transaction(fn ->

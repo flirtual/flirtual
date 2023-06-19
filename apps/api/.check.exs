@@ -15,7 +15,7 @@
   tools: [
     {:credo, "mix credo --mute-exit-status"},
     ## curated tools may be disabled (e.g. the check for compilation warnings)
-    {:compiler, "mix compile"},
+    {:compiler, "mix compile"}
 
     ## ...or have command & args adjusted (e.g. enable skip comments for sobelow)
     # {:sobelow, "mix sobelow --exit medium --skip"}
