@@ -182,13 +182,13 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						</button>
 					</div>
 				)}
-				<div className="pointer-events-none absolute flex h-full w-full items-center justify-center">
-					<button
-						className="pointer-events-auto h-full w-1/3"
-						type="button"
-						onClick={() => setExpandedImage(true)}
-					/>
-					{currentImage && (
+				{currentImage && (
+					<div className="pointer-events-none absolute flex h-full w-full items-center justify-center">
+						<button
+							className="pointer-events-auto h-full w-1/3"
+							type="button"
+							onClick={() => setExpandedImage(true)}
+						/>
 						<ModalOuter
 							visible={expandedImage}
 							modalOuterProps={{
@@ -219,8 +219,9 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								)}
 							</div>
 						</ModalOuter>
-					)}
-				</div>
+					</div>
+				)}
+
 				{images.length > 1 && (
 					<div className="pointer-events-auto absolute top-0 flex w-full px-8 py-6">
 						<div className="flex grow items-center gap-2">

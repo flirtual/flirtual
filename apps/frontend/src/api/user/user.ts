@@ -23,6 +23,7 @@ export type User = UuidModel &
 		language?: string;
 		talkjsId?: string;
 		talkjsSignature?: string;
+		moderatorMessage?: string;
 		visible: boolean;
 		relationship?: Relationship;
 		bornAt?: string;
@@ -191,6 +192,20 @@ export async function warn(
 	}>
 ) {
 	return fetch<User>("post", `users/${userId}/warn`, options);
+}
+
+export async function deleteWarn(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("delete", `users/${userId}/warn`, options);
+}
+
+export async function acknowledgeWarn(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("put", `users/${userId}/warn`, options);
 }
 
 export { _delete as delete };

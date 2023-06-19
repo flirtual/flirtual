@@ -10,7 +10,7 @@ import { useScrollLock } from "~/hooks/use-scroll-lock";
 export interface ModalProps {
 	children: React.ReactNode;
 	visible: boolean;
-	onVisibilityChange: Dispatch<boolean>;
+	onVisibilityChange?: Dispatch<boolean>;
 }
 
 export const ModalOuter: React.FC<
@@ -39,7 +39,7 @@ export const ModalOuter: React.FC<
 							modalOuterProps?.className
 						)}
 						onClick={() => {
-							onVisibilityChange(false);
+							onVisibilityChange?.(false);
 						}}
 					>
 						{children}
@@ -63,7 +63,7 @@ export const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
 					event.stopPropagation();
 				}}
 			>
-				<div className="relative flex w-full flex-col justify-center gap-y-3 rounded-3xl bg-white-30 px-3 py-4 dark:bg-black-70">
+				<div className="relative flex w-full flex-col justify-center gap-y-3 rounded-3xl bg-white-30 px-3 py-4 text-black-80 dark:bg-black-70 dark:text-white-20">
 					<div className="h-full">{children}</div>
 				</div>
 			</motion.div>

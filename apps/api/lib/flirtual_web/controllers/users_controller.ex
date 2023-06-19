@@ -402,6 +402,29 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def revoke_warn(conn, %{"user_id" => user_id} = attrs) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :warn, user) do
+      {:error, {:forbidden, "Cannot revoke warning for this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <-
+             User.revoke_warn(user, conn.assigns[:session].user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def acknowledge_warn(
+        %{assigns: %{session: %{user_id: user_id}}} = conn,
+        %{"user_id" => user_id}
+      ) do
+    with {:ok, user} <-
+           User.acknowledge_warn(conn.assigns[:session].user) do
+      conn |> json(Policy.transform(conn, user))
+    end
+  end
+
   def delete(conn, attrs) do
     user = conn.assigns[:session].user
 

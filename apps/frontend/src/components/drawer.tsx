@@ -10,18 +10,18 @@ import flirtualMark from "../../public/images/brand/mark/default.svg";
 export interface DrawerProps {
 	visible: boolean;
 	children: React.ReactNode;
-	onVisibilityChange: React.Dispatch<boolean>;
+	onVisibilityChange?: React.Dispatch<boolean>;
 }
 
 export const Drawer: React.FC<DrawerProps> = (props) => {
 	const { visible, children, onVisibilityChange } = props;
 	const overlayReference = useRef<HTMLDivElement>(null);
 
-	useClickOutside(overlayReference, () => onVisibilityChange(false), visible);
+	useClickOutside(overlayReference, () => onVisibilityChange?.(false), visible);
 	useGlobalEventListener(
 		"document",
 		"scroll",
-		() => onVisibilityChange(false),
+		() => onVisibilityChange?.(false),
 		visible
 	);
 
@@ -39,10 +39,10 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
 						ref={overlayReference}
 						transition={{ damping: 25 }}
 						onDragEnd={(_, { offset }) => {
-							if (offset.y > 300) onVisibilityChange(false);
+							if (offset.y > 300) onVisibilityChange?.(false);
 						}}
 					>
-						<div className="relative flex w-full flex-col justify-center gap-y-3 rounded-t-3xl bg-white-30 px-3 py-4 dark:bg-black-70">
+						<div className="relative flex w-full flex-col justify-center gap-y-3 rounded-t-3xl bg-white-30 px-3 py-4 text-black-80 dark:bg-black-70 dark:text-white-20">
 							<div className="px-3 pt-1">
 								<div className="h-2 w-full rounded-full bg-white-20 dark:bg-black-60" />
 							</div>

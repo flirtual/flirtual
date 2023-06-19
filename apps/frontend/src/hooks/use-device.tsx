@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 import type { userAgentFromString } from "next/server";
 
@@ -20,7 +20,9 @@ export type DeviceProviderProps = React.PropsWithChildren<
 >;
 
 export function DeviceProvider({ children, ...value }: DeviceProviderProps) {
-	console.log(value);
+	useEffect(() => {
+		console.log("device", { platform: value.platform, native: value.native });
+	});
 
 	return (
 		<DeviceContext.Provider value={value}>{children}</DeviceContext.Provider>

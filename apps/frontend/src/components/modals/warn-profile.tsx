@@ -1,5 +1,6 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Dispatch, FC, PropsWithChildren } from "react";
+import { useRouter } from "next/navigation";
 
 import { displayName, User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
@@ -20,6 +21,7 @@ export const WarnProfileModalForm: FC<WarnProfileModalFormProps> = ({
 	onVisibilityChange
 }) => {
 	const toasts = useToast();
+	const router = useRouter();
 
 	return (
 		<Form
@@ -27,16 +29,26 @@ export const WarnProfileModalForm: FC<WarnProfileModalFormProps> = ({
 			requireChange={false}
 			fields={{
 				targetId: user.id,
-				message: ""
+				message: user.moderatorMessage ?? ""
 			}}
-			onSubmit={async ({ targetId, ...body }) => {
-				await api.user.warn(targetId, { body });
+			onSubmit={async ({ targetId, message }) => {
+				if (!message) {
+					await api.user.deleteWarn(targetId);
+
+					toasts.add("Account warning removed");
+					onVisibilityChange(false);
+					return;
+				}
+
+				await api.user.warn(targetId, { body: { message } });
 
 				toasts.add("Account warned");
 				onVisibilityChange(false);
+
+				router.refresh();
 			}}
 		>
-			{({ FormField }) => (
+			{({ FormField, fields: { message } }) => (
 				<>
 					<div className="flex flex-row items-center gap-4">
 						<ExclamationTriangleIcon className="h-6 w-6" />
@@ -69,14 +81,20 @@ export const WarnProfileModalForm: FC<WarnProfileModalFormProps> = ({
 						{(field) => (
 							<>
 								<InputLabel {...field.labelProps}>Message</InputLabel>
-								<InputTextArea {...field.props} rows={6} />
+								<InputTextArea autoFocus {...field.props} rows={6} />
 							</>
 						)}
 					</FormField>
-					<FormMessage size="sm" type="warning">
-						{displayName(user)} still has an existing{" "}
-						<strong>unresolved warning</strong>, you&apos;ll be overwriting it.
-					</FormMessage>
+					{!!user.moderatorMessage && message.changed && (
+						<FormMessage
+							size="sm"
+							type={message.props.value ? "informative" : "warning"}
+						>
+							{displayName(user)} still has an{" "}
+							<strong>unacknowledged warning</strong>, you&apos;ll be{" "}
+							{message.props.value ? "overwriting" : "removing"} it.
+						</FormMessage>
+					)}
 					<FormButton>Warn</FormButton>
 				</>
 			)}

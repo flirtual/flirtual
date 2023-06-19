@@ -225,6 +225,40 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:warn_revoked,
+        user: %User{} = user,
+        moderator: %User{} = moderator,
+        at: warn_revoked_at
+      ) do
+    webhook(:moderation, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Warning revoked",
+          color: @success_color,
+          footer: webhook_author_footer(moderator),
+          timestamp: warn_revoked_at |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:warn_acknowledged,
+        user: %User{} = user,
+        at: warn_acknowledged_at
+      ) do
+    webhook(:moderation, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Warning acknowledged",
+          color: @success_color,
+          timestamp: warn_acknowledged_at |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:removed_image,
         user: %User{} = user,
         moderator: %User{} = moderator,

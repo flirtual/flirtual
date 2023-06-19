@@ -2,11 +2,8 @@ defmodule FlirtualWeb.ImageController do
   use FlirtualWeb, :controller
 
   import FlirtualWeb.Utilities
-  import Ecto.Changeset
-  import Ecto.Query
 
   alias Flirtual.User.Profile.Image.Moderation
-  alias Flirtual.Repo
   alias Flirtual.Policy
   alias Flirtual.User.Profile.Image
   alias Flirtual.User

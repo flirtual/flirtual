@@ -36,6 +36,7 @@ defmodule Flirtual.User do
     field(:stripe_id, :string)
     field(:language, :string, default: "en")
     field(:visible, :boolean)
+    field(:moderator_message, :string)
 
     field(:password, :string, virtual: true, redact: true)
     field(:relationship, :map, virtual: true)
@@ -315,13 +316,61 @@ defmodule Flirtual.User do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
-             |> change(%{})
+             |> change(%{moderator_message: message})
              |> Repo.update(),
            :ok <-
              Discord.deliver_webhook(:warned,
                user: user,
                moderator: moderator,
                message: message,
+               at: now
+             ) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def revoke_warn(
+        %User{} = user,
+        %User{} = moderator
+      ) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{moderator_message: nil})
+             |> Repo.update(),
+           :ok <-
+             Discord.deliver_webhook(:warn_revoked,
+               user: user,
+               moderator: moderator,
+               at: now
+             ) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def acknowledge_warn(
+        %User{} = user
+      ) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{moderator_message: nil})
+             |> Repo.update(),
+           :ok <-
+             Discord.deliver_webhook(:warn_acknowledged,
+               user: user,
                at: now
              ) do
         user
@@ -544,6 +593,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :username,
       :language,
       :born_at,
+      :moderator_message,
       :talkjs_signature,
       :talkjs_id,
       :banned_at,

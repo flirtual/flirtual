@@ -1,8 +1,15 @@
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import {
+	CheckIcon,
+	ExclamationCircleIcon,
+	ExclamationTriangleIcon,
+	InformationCircleIcon
+} from "@heroicons/react/24/outline";
 import { FC, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { capitalize } from "~/utilities";
+
+import { IconComponent } from "../icons";
 
 export type FormMessageType = "error" | "warning" | "success" | "informative";
 export type FormMessageSize = "sm" | "md";
@@ -20,6 +27,13 @@ const formMessageStyle: Record<FormMessageType, string> = {
 	informative: "text-black-60 dark:text-white-50"
 };
 
+const formMessageIcon: Record<FormMessageType, IconComponent> = {
+	error: ExclamationCircleIcon,
+	warning: ExclamationTriangleIcon,
+	success: CheckIcon,
+	informative: InformationCircleIcon
+};
+
 const formMessageSize: Record<FormMessageSize, string> = {
 	sm: "text-md",
 	md: "text-lg"
@@ -29,6 +43,7 @@ export type FormMessageProps = PropsWithChildren<Omit<FormMessage, "value">>;
 
 export const FormMessage: FC<FormMessageProps> = (props) => {
 	const { type, size = "md", children } = props;
+	const Icon = formMessageIcon[type];
 
 	return (
 		<div
@@ -38,7 +53,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 				formMessageSize[size]
 			)}
 		>
-			<ExclamationCircleIcon className="mt-1 h-6 w-6 shrink-0" />
+			<Icon className="mt-1 h-6 w-6 shrink-0" />
 			<span>{children}</span>
 		</div>
 	);

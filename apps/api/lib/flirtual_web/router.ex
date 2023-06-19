@@ -250,7 +250,11 @@ defmodule FlirtualWeb.Router do
             post("/suspend", UsersController, :suspend)
             delete("/suspend", UsersController, :unsuspend)
 
-            post("/warn", UsersController, :warn)
+            scope "/warn" do
+              post("/", UsersController, :warn)
+              delete("/", UsersController, :revoke_warn)
+              put("/", UsersController, :acknowledge_warn)
+            end
 
             scope "/email" do
               post("/", UsersController, :update_email)

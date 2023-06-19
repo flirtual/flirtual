@@ -677,7 +677,7 @@ defmodule Flirtual.Matchmaking do
     ]
   end
 
-  def query(:active_at, %User{} = user) do
+  def query(:active_at, _) do
     %{
       "function_score" => %{
         "exp" => %{
