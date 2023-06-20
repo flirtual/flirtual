@@ -16,7 +16,8 @@ defmodule FlirtualWeb.Endpoint do
       Application.fetch_env!(:flirtual, :frontend_origin),
       Application.fetch_env!(:flirtual, :origin)
     ])
-    |> MapSet.to_list() |> Enum.map(&to_string/1)
+    |> MapSet.to_list()
+    |> Enum.map(&to_string/1)
   end
 
   def get_root_host() do

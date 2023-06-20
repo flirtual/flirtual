@@ -21,7 +21,8 @@ defmodule Flirtual.Mailer do
   @company_address "530 Divisadero Street | San Francisco, CA | 94117 | USA"
 
   defp format_text_body(body_text) do
-    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} = get_urls()
+    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
+      get_urls()
 
     """
     #{body_text}
@@ -36,7 +37,8 @@ defmodule Flirtual.Mailer do
   end
 
   defp format_html_body(body_html, subject, action_url) do
-    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} = get_urls()
+    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
+      get_urls()
 
     """
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

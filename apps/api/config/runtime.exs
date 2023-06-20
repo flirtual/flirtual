@@ -43,6 +43,7 @@ config :openai,
   api_key: System.fetch_env!("OPENAI_ACCESS_TOKEN")
 
 origin = URI.parse(System.fetch_env!("ORIGIN"))
+
 config :flirtual,
   root_origin: URI.parse(System.fetch_env!("ROOT_ORIGIN")),
   frontend_origin: URI.parse(System.fetch_env!("FRONTEND_ORIGIN")),
