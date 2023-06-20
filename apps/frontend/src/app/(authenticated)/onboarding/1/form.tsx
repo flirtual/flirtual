@@ -11,12 +11,11 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
 	InputLabel,
-	InputRangeSlider,
-	InputRangeSliderValue,
 	InputSelect,
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
+import { Slider } from "~/components/inputs/slider";
 import { useSessionUser } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { excludeBy, filterBy } from "~/utilities";
@@ -48,7 +47,7 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 				age: [
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
-				] satisfies InputRangeSliderValue,
+				],
 				serious: user.profile.serious ?? false,
 				monopoly: user.profile.monopoly
 			}}
@@ -103,13 +102,13 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 						)}
 					</FormField>
 					<FormField name="age">
-						{(field) => {
-							const [min, max] = field.props.value;
+						{({labelProps, props: {value, onChange, ...props}}) => {
+							const [min, max] = value;
 
 							return (
 								<>
 									<InputLabel
-										{...field.labelProps}
+										{...labelProps}
 										hint={
 											min === absMinAge && max === absMaxAge
 												? "any age"
@@ -118,10 +117,12 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 									>
 										Age range
 									</InputLabel>
-									<InputRangeSlider
-										{...field.props}
+									<Slider
+										{...props}
 										max={absMaxAge}
 										min={absMinAge}
+										value={value}
+										onValueChange={onChange}
 									/>
 								</>
 							);

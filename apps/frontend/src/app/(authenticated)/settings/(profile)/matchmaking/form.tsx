@@ -18,13 +18,11 @@ import { FormButton } from "~/components/forms/button";
 import {
 	InputLabel,
 	InputLabelHint,
-	InputRangeSlider,
-	InputRangeSliderValue,
 	InputSelect,
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { InputSlider } from "~/components/inputs/slider";
+import { Slider } from "~/components/inputs/slider";
 import { PremiumBadge } from "~/components/premium-badge";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -59,7 +57,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 				age: [
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
-				] satisfies InputRangeSliderValue,
+				],
 				serious: user.profile.serious ?? false,
 				monopoly: user.profile.monopoly,
 				weightCountry: customWeights.country,
@@ -140,13 +138,13 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 						)}
 					</FormField>
 					<FormField name="age">
-						{(field) => {
-							const [min, max] = field.props.value;
+						{({ labelProps, props: { value, onChange, ...props } }) => {
+							const [min, max] = value;
 
 							return (
 								<>
 									<InputLabel
-										{...field.labelProps}
+										{...labelProps}
 										hint={
 											min === absMinAge && max === absMaxAge
 												? "any age"
@@ -155,10 +153,12 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 									>
 										Age range
 									</InputLabel>
-									<InputRangeSlider
-										{...field.props}
+									<Slider
+										{...props}
 										max={absMaxAge}
 										min={absMinAge}
+										value={value}
+										onValueChange={onChange}
 									/>
 								</>
 							);
@@ -226,18 +226,18 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 
 						return (
 							<FormField key={key} name={`weight${capitalize(key)}`}>
-								{(field) => (
+								{({ labelProps, props: { value, onChange, ...props } }) => (
 									<>
 										<InputLabel
-											{...field.labelProps}
+											{...labelProps}
 											hint={
 												<InputLabelHint
 													className={twMerge(
 														"ml-auto",
-														field.props.value === 0 ? "!text-red-500" : ""
+														value === 0 ? "!text-red-500" : ""
 													)}
 												>
-													{field.props.value}x
+													{value}x
 												</InputLabelHint>
 											}
 										>
@@ -268,14 +268,16 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 												}
 											</span>
 										</InputLabel>
-										<InputSlider
-											{...field.props}
+										<Slider
+											{...props}
 											max={2}
 											min={0}
 											step={0.25}
+											value={[value]}
 											disabled={
 												key === "country" ? false : !user.subscription?.active
 											}
+											onValueChange={(values) => onChange(values[0])}
 										/>
 									</>
 								)}
