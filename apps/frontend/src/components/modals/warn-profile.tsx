@@ -37,6 +37,8 @@ export const WarnProfileModalForm: FC<WarnProfileModalFormProps> = ({
 
 					toasts.add("Account warning removed");
 					onVisibilityChange(false);
+
+					router.refresh();
 					return;
 				}
 

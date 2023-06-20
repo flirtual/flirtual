@@ -3,14 +3,13 @@
 import {
 	ArrowLeftOnRectangleIcon,
 	ArrowRightOnRectangleIcon,
-	ClipboardDocumentIcon,
 	NoSymbolIcon,
 	ScaleIcon,
 	ShieldCheckIcon,
 	TrashIcon
 } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import { FC, Suspense } from "react";
+import { FC, Suspense, useState } from "react";
 import { Dialog } from "@capacitor/dialog";
 
 import { User, displayName } from "~/api/user";
@@ -34,13 +33,18 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
 
+	const [warnProfileVisible, setWarnProfileVisible] = useState(false);
+
 	if (!session) return null;
 
 	return (
 		<div className="flex flex-col gap-8 p-8 dark:bg-black-70">
 			{session.user.tags?.includes("moderator") && (
 				<Suspense>
-					<ProfileModeratorInfo user={user} />
+					<ProfileModeratorInfo
+						setWarnProfileVisible={setWarnProfileVisible}
+						user={user}
+					/>
 				</Suspense>
 			)}
 			<div className="flex w-full justify-between gap-3">
@@ -49,7 +53,11 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 						session.user.tags?.includes("moderator") && (
 							<>
 								<BanProfile user={user} />
-								<WarnProfile user={user} />
+								<WarnProfile
+									user={user}
+									visible={warnProfileVisible}
+									onVisibilityChange={setWarnProfileVisible}
+								/>
 								<ActionDivider />
 								<Tooltip fragmentClassName="h-6 w-6" value="Clear reports">
 									<button
@@ -101,6 +109,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 													message:
 														"Are you sure you want to delete this account?"
 												});
+
 												if (!value) return;
 												await api.user
 													.adminDelete(user.id)
@@ -145,26 +154,6 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 									}}
 								>
 									<ArrowLeftOnRectangleIcon className="h-6 w-6" />
-								</button>
-							</Tooltip>
-						</>
-					)}
-					{session.user.tags?.includes("debugger") && (
-						<>
-							<Tooltip value="Copy user id">
-								<button
-									type="button"
-									onClick={() => navigator.clipboard.writeText(user.id)}
-								>
-									<ClipboardDocumentIcon className="h-6 w-6" />
-								</button>
-							</Tooltip>
-							<Tooltip value="Copy username">
-								<button
-									type="button"
-									onClick={() => navigator.clipboard.writeText(user.username)}
-								>
-									<ClipboardDocumentIcon className="h-6 w-6" />
 								</button>
 							</Tooltip>
 						</>
