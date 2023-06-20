@@ -3,6 +3,7 @@ import { FC, PropsWithChildren } from "react";
 import useSWR from "swr";
 import { Slot } from "@radix-ui/react-slot";
 import { Clipboard } from "@capacitor/clipboard";
+import { useRouter } from "next/navigation";
 
 import { User } from "~/api/user";
 import { api } from "~/api";
@@ -32,6 +33,8 @@ const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({
 
 export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
+	const toasts = useToast();
+	const router = useRouter();
 
 	const {
 		data: { visible, reasons }
@@ -157,7 +160,7 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 							{user.moderatorMessage}
 						</span>
 					) : (
-						"None"
+						<span className="brightness-75 hover:brightness-100">None</span>
 					)}
 				</span>
 				<span>
@@ -165,10 +168,34 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 					<span
 						className="cursor-pointer brightness-75 hover:brightness-100"
 						onClick={async () => {
-							Dialog.prompt({});
+							const { value } = await Dialog.prompt({
+								message: "Moderator Note",
+								inputText: user.moderatorNote,
+								title: "Moderator Note"
+							});
+
+							if (!value) {
+								await api.user
+									.deleteNote(user.id)
+									.then(() => {
+										toasts.add("Note deleted");
+										return router.refresh();
+									})
+									.catch(toasts.addError);
+
+								return;
+							}
+
+							await api.user
+								.note(user.id, { body: { message: value } })
+								.then(() => {
+									toasts.add("Note updated")
+									return router.refresh();
+								})
+								.catch(toasts.addError);
 						}}
 					>
-						{"" || "None, write one by clicking here."}
+						{user.moderatorNote || "None, write one by clicking here."}
 					</span>
 				</span>
 			</div>

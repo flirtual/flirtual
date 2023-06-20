@@ -433,6 +433,46 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  defmodule Note do
+    use Flirtual.EmbeddedSchema
+
+    embedded_schema do
+      field(:message, :string)
+    end
+
+    def changeset(value, _, _) do
+      value
+      |> validate_length(:message, min: 0, max: 256)
+    end
+  end
+
+  def add_note(conn, %{"user_id" => user_id} = attrs) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :note, user) do
+      {:error, {:forbidden, "Cannot note this user", %{user_id: user_id}}}
+    else
+      with {:ok, attrs} <- Note.apply(attrs),
+           {:ok, user} <-
+             User.add_note(user, attrs.message, conn.assigns[:session].user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def remove_note(conn, %{"user_id" => user_id} = attrs) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :note, user) do
+      {:error, {:forbidden, "Cannot remove note for this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <-
+             User.remove_note(user, conn.assigns[:session].user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
   def admin_delete(conn, %{"user_id" => user_id} = attrs) do
     user = Users.get(user_id)
 

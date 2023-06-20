@@ -37,6 +37,7 @@ defmodule Flirtual.User do
     field(:language, :string, default: "en")
     field(:visible, :boolean)
     field(:moderator_message, :string)
+    field(:moderator_note, :string)
 
     field(:password, :string, virtual: true, redact: true)
     field(:relationship, :map, virtual: true)
@@ -379,6 +380,45 @@ defmodule Flirtual.User do
     end)
   end
 
+  def add_note(
+        %User{} = user,
+        message,
+        %User{} = moderator
+      ) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{moderator_note: message})
+             |> Repo.update() do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def remove_note(
+        %User{} = user,
+        %User{} = moderator
+      ) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{moderator_note: nil})
+             |> Repo.update() do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def validate_username(changeset) do
     changeset
     |> validate_required([:username])
@@ -592,6 +632,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :language,
       :born_at,
       :moderator_message,
+      :moderator_note,
       :talkjs_signature,
       :talkjs_id,
       :banned_at,

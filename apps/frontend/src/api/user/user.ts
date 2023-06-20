@@ -24,6 +24,7 @@ export type User = UuidModel &
 		talkjsId: string;
 		talkjsSignature?: string;
 		moderatorMessage?: string;
+		moderatorNote?: string;
 		visible: boolean;
 		relationship?: Relationship;
 		bornAt?: string;
@@ -93,8 +94,8 @@ export async function update(
 	options: NarrowFetchOptions<
 		UpdateUserBody,
 		| {
-			required?: Array<keyof UpdateUserBody>;
-		}
+				required?: Array<keyof UpdateUserBody>;
+		  }
 		| undefined
 	>
 ) {
@@ -206,6 +207,22 @@ export async function acknowledgeWarn(
 	options: NarrowFetchOptions = {}
 ) {
 	return fetch<User>("put", `users/${userId}/warn`, options);
+}
+
+export async function note(
+	userId: string,
+	options: NarrowFetchOptions<{
+		message: string;
+	}>
+) {
+	return fetch<User>("post", `users/${userId}/note`, options);
+}
+
+export async function deleteNote(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("delete", `users/${userId}/note`, options);
 }
 
 export { _delete as delete };
