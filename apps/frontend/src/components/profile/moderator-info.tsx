@@ -11,6 +11,7 @@ import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy } from "~/utilities";
+import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
@@ -41,6 +42,7 @@ export const ProfileModeratorInfo: FC<{
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
+	const genders = useAttributeList("gender");
 
 	const {
 		data: { visible, reasons }
@@ -244,7 +246,10 @@ export const ProfileModeratorInfo: FC<{
 									"type",
 									"gender"
 								)
-									.map(({ id }) => id)
+									.map(
+										// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+										({ id }) => genders.find((gender) => gender.id === id)!.name
+									)
 									.join(", ")}
 							</span>
 						</span>
