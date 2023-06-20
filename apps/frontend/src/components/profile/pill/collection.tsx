@@ -20,6 +20,14 @@ function getPersonalityLabels({
 	];
 }
 
+function isDomsubMatch(value1: string | undefined, value2: string | undefined) {
+	const a = new Set([value1, value2]);
+	return (
+		(value1 === "switch" && value2 === "switch") ||
+		(a.has("dominant") && a.has("submissive"))
+	);
+}
+
 export async function PillCollection(props: { user: User }) {
 	const session = await withSession();
 	const { user } = props;
@@ -44,7 +52,10 @@ export async function PillCollection(props: { user: User }) {
 		<div className="flex flex-wrap gap-4">
 			<div className="flex w-full">
 				{user.profile.serious && (
-					<Pill href={editable ? urls.settings.matchmaking() : undefined}>
+					<Pill
+						active={session.user.id !== user.id && session.user.profile.serious}
+						href={editable ? urls.settings.matchmaking() : undefined}
+					>
 						Open to serious dating
 					</Pill>
 				)}
@@ -100,7 +111,13 @@ export async function PillCollection(props: { user: User }) {
 			/>
 			{user.profile.domsub && (
 				<div className="flex w-full flex-wrap gap-2">
-					<Pill href={editable ? urls.settings.nsfw : undefined}>
+					<Pill
+						href={editable ? urls.settings.nsfw : undefined}
+						active={
+							session.user.id !== user.id &&
+							isDomsubMatch(user.profile.domsub, session.user.profile.domsub)
+						}
+					>
 						{capitalize(user.profile.domsub)}
 					</Pill>
 				</div>
@@ -108,6 +125,7 @@ export async function PillCollection(props: { user: User }) {
 			<PillCollectionExpansion
 				attributes={attributes}
 				editable={editable}
+				session={session}
 				user={user}
 			/>
 		</div>
