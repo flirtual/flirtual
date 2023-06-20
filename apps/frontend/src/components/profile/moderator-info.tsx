@@ -10,8 +10,10 @@ import { User } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { filterBy } from "~/utilities";
 
 import { DateTimeRelative } from "../datetime-relative";
+import { InlineLink } from "../inline-link";
 
 const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({
 	value,
@@ -49,7 +51,7 @@ export const ProfileModeratorInfo: FC<{
 	if (!session || !session.user?.tags?.includes("moderator")) return null;
 
 	return (
-		<div className="-mx-4 flex flex-col gap-4 rounded-xl bg-black-90/80 px-4 py-3 font-mono text-white-20">
+		<div className="-mx-4 flex flex-col gap-4 rounded-xl bg-white-30 px-4 py-3 font-mono dark:bg-black-90/80 dark:text-white-20">
 			<div className="flex flex-col">
 				<span>
 					<span className="font-bold">ID:</span>{" "}
@@ -215,6 +217,54 @@ export const ProfileModeratorInfo: FC<{
 					</span>
 				</span>
 			</div>
+			{session.user.tags.includes("admin") && (
+				<>
+					<div className="flex flex-col">
+						<span>
+							<span className="font-bold">Email:</span>{" "}
+							<CopyClick value={user.email}>
+								<span className="cursor-pointer brightness-75 hover:brightness-100">
+									{user.email}
+								</span>
+							</CopyClick>
+						</span>
+						<span>
+							<span className="font-bold">Date of birth:</span>{" "}
+							<span className="brightness-75 hover:brightness-100">
+								{user.bornAt}
+							</span>
+						</span>
+						<span>
+							<span className="font-bold">Looking for:</span>{" "}
+							<span className="brightness-75 hover:brightness-100">
+								{user.profile.preferences?.agemin ?? 18}-
+								{user.profile.preferences?.agemax ?? "99+"}{" "}
+								{filterBy(
+									user.profile.preferences?.attributes ?? [],
+									"type",
+									"gender"
+								)
+									.map(({ id }) => id)
+									.join(", ")}
+							</span>
+						</span>
+						<span>
+							<span className="font-bold">Stripe customer:</span>{" "}
+							<InlineLink
+								href={`https://dashboard.stripe.com/customers/${user.stripeId}`}
+							>
+								{user.stripeId}
+							</InlineLink>
+						</span>
+						<span>
+							<span className="font-bold">Tags:</span>{" "}
+							<span className="brightness-75 hover:brightness-100">
+								{user.tags?.join(", ")}
+							</span>
+						</span>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };
