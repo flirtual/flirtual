@@ -86,6 +86,8 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						</span>
 						{lastMessage && (
 							<TimeRelative
+								approximate
+								approximateTo={60}
 								value={lastMessage.createdAt}
 								elementProps={{
 									className: "shrink-0 text-xs text-black-60 dark:text-white-50"
