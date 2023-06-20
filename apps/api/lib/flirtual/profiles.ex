@@ -126,7 +126,7 @@ defmodule Flirtual.Profiles do
       |> validate_length(:platform, min: 1, max: 8)
       |> validate_attributes(:interest_id, "interest")
       |> then(fn changeset ->
-        if not changed?(changeset, :interest_id) or not changed?(changeset, :custom_interests) do
+        if not changed?(changeset, :interest_id) and not changed?(changeset, :custom_interests) do
           changeset
         else
           interests =
