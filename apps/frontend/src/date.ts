@@ -11,6 +11,7 @@ export function yearsAgo(date: Date): number {
 
 export interface RelativeTimeOptions {
 	approximate?: boolean;
+	approximateTo?: number;
 	suffix?: string;
 }
 
@@ -18,10 +19,11 @@ export function relativeTime(
 	date: Date,
 	options: RelativeTimeOptions = {}
 ): string {
-	const { approximate = true, suffix = "ago" } = options;
+	const { approximate = true, approximateTo = 5, suffix = "ago" } = options;
 	const since = Date.now() - date.getTime();
 
-	if (approximate && since < secondInMilliseconds * 5) return "just now";
+	if (approximate && since < secondInMilliseconds * approximateTo)
+		return "just now";
 
 	if (since < minuteInMilliseconds) {
 		const seconds = Math.floor(since / secondInMilliseconds);
