@@ -1,11 +1,34 @@
-import { FC } from "react";
+import { Dialog } from "@capacitor/dialog";
+import { FC, PropsWithChildren } from "react";
 import useSWR from "swr";
+import { Slot } from "@radix-ui/react-slot";
+import { Clipboard } from "@capacitor/clipboard";
 
 import { User } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 
 import { DateTimeRelative } from "../datetime-relative";
+
+const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({
+	value,
+	children
+}) => {
+	const toasts = useToast();
+
+	return (
+		<Slot
+			className="cursor-pointer"
+			onClick={async () => {
+				await Clipboard.write({ string: value });
+				toasts.add("Copied to clipboard");
+			}}
+		>
+			{children}
+		</Slot>
+	);
+};
 
 export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
@@ -19,69 +42,136 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 	if (!session || !session.user?.tags?.includes("moderator")) return null;
 
 	return (
-		<div className="flex flex-col">
-			<span>
-				<span className="font-bold">Registered:</span>{" "}
-				{user.createdAt && <DateTimeRelative value={user.createdAt} />}
-			</span>
-			<span>
-				<span className="font-bold">Last login:</span>{" "}
-				{user.activeAt && <DateTimeRelative value={user.activeAt} />}
-			</span>
-			<span>
-				<span className="font-bold">Banned:</span>{" "}
-				{user.bannedAt ? (
-					<DateTimeRelative
-						elementProps={{ className: "text-red-500" }}
-						value={user.bannedAt}
-					/>
-				) : (
-					"No"
-				)}
-			</span>
-			<span>
-				<span className="font-bold">Shadowbanned:</span>{" "}
-				{user.shadowbannedAt ? (
-					<DateTimeRelative
-						elementProps={{ className: "text-red-500" }}
-						value={user.shadowbannedAt}
-					/>
-				) : (
-					"No"
-				)}
-			</span>
-			<span>
-				<span className="font-bold">Deactivated:</span>{" "}
-				{user.deactivatedAt ? (
-					<DateTimeRelative
-						elementProps={{ className: "text-red-500" }}
-						value={user.deactivatedAt}
-					/>
-				) : (
-					"No"
-				)}
-			</span>
-			<span>
-				<span className="font-bold">Visible:</span>{" "}
-				{visible ? (
-					"Yes"
-				) : (
-					<span className="text-red-500">
-						No
-						{reasons.length > 0
-							? `, ${reasons.map(({ reason }) => reason).join(", ")}.`
-							: ""}
+		<div className="-mx-4 flex flex-col gap-4 rounded-xl bg-black-90/80 px-4 py-3 font-mono text-white-20">
+			<div className="flex flex-col">
+				<span>
+					<span className="font-bold">ID:</span>{" "}
+					<CopyClick value={user.id}>
+						<span className="brightness-75 hover:brightness-100">
+							{user.id}
+						</span>
+					</CopyClick>
+				</span>
+				<span>
+					<span className="font-bold">Legacy ID:</span>{" "}
+					<CopyClick value={user.talkjsId}>
+						<span className="brightness-75 hover:brightness-100">
+							{user.talkjsId}
+						</span>
+					</CopyClick>
+				</span>
+			</div>
+			<div className="flex flex-col">
+				{user.createdAt && (
+					<span>
+						<span className="font-bold">Registered:</span>{" "}
+						<CopyClick value={user.createdAt}>
+							<DateTimeRelative
+								className="brightness-75 hover:brightness-100"
+								value={user.createdAt}
+							/>
+						</CopyClick>
 					</span>
 				)}
-			</span>
-			<span>
-				<span className="font-bold">Premium:</span>{" "}
-				{user.subscription?.active ? (
-					<span className="text-green-500">{user.subscription.plan.name}</span>
-				) : (
-					"No"
+				{user.activeAt && (
+					<span>
+						<span className="font-bold">Last login:</span>{" "}
+						<CopyClick value={user.activeAt}>
+							<DateTimeRelative
+								className="brightness-75 hover:brightness-100"
+								value={user.activeAt}
+							/>
+						</CopyClick>
+					</span>
 				)}
-			</span>
+			</div>
+			<div className="flex flex-col">
+				<span>
+					<span className="font-bold">Banned:</span>{" "}
+					{user.bannedAt ? (
+						<CopyClick value={user.bannedAt}>
+							<DateTimeRelative
+								className="text-red-500 brightness-75 hover:brightness-100"
+								value={user.bannedAt}
+							/>
+						</CopyClick>
+					) : (
+						<span className="brightness-75 hover:brightness-100">No</span>
+					)}
+				</span>
+				<span>
+					<span className="font-bold">Shadowbanned:</span>{" "}
+					{user.shadowbannedAt ? (
+						<CopyClick value={user.shadowbannedAt}>
+							<DateTimeRelative
+								className="text-red-500"
+								value={user.shadowbannedAt}
+							/>
+						</CopyClick>
+					) : (
+						<span className="brightness-75 hover:brightness-100">No</span>
+					)}
+				</span>
+				<span>
+					<span className="font-bold">Deactivated:</span>{" "}
+					{user.deactivatedAt ? (
+						<CopyClick value={user.deactivatedAt}>
+							<DateTimeRelative
+								className="text-red-500"
+								value={user.deactivatedAt}
+							/>
+						</CopyClick>
+					) : (
+						<span className="brightness-75 hover:brightness-100">No</span>
+					)}
+				</span>
+				<span>
+					<span className="font-bold">Visible:</span>{" "}
+					{visible ? (
+						<span className="brightness-75 hover:brightness-100">Yes</span>
+					) : (
+						<span className="text-red-500 brightness-75 hover:brightness-100">
+							No
+							{reasons.length > 0
+								? `, ${reasons.map(({ reason }) => reason).join(", ")}.`
+								: ""}
+						</span>
+					)}
+				</span>
+				<span>
+					<span className="font-bold">Premium:</span>{" "}
+					{user.subscription?.active ? (
+						<span className="text-green-500  brightness-75 hover:brightness-100">
+							{user.subscription.plan.name}
+						</span>
+					) : (
+						"No"
+					)}
+				</span>
+			</div>
+			<div className="flex flex-col">
+				<span>
+					<span className="font-bold">Moderator Message:</span>{" "}
+					{user.moderatorMessage ? (
+						<span className="text-yellow-500  brightness-75 hover:brightness-100">
+							{user.moderatorMessage}
+						</span>
+					) : (
+						"None"
+					)}
+				</span>
+				<span>
+					<span className="font-bold">Moderator Note:</span>{" "}
+					<span
+						className="cursor-pointer brightness-75 hover:brightness-100"
+						onClick={async () => {
+							Dialog.prompt({});
+						}}
+					>
+						{"" || "None, write one by clicking here."}
+					</span>
+				</span>
+			</div>
 		</div>
 	);
 };

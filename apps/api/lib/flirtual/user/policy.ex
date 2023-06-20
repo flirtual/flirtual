@@ -223,13 +223,7 @@ defmodule Flirtual.User.Policy do
 
   def transform(
         :talkjs_id,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
+        _,
         %User{id: user_id}
       ),
       do: ShortUUID.decode!(user_id)
