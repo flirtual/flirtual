@@ -42,11 +42,20 @@ config :openai,
   organization_key: System.fetch_env!("OPENAI_ORG_ID"),
   api_key: System.fetch_env!("OPENAI_ACCESS_TOKEN")
 
+origin = URI.parse(System.fetch_env!("ORIGIN"))
 config :flirtual,
+  root_origin: URI.parse(System.fetch_env!("ROOT_ORIGIN")),
+  frontend_origin: URI.parse(System.fetch_env!("FRONTEND_ORIGIN")),
+  origin: origin,
   session_signing_salt: System.fetch_env!("SESSION_SIGNING_SALT"),
   scan_queue_access_token: System.fetch_env!("SCAN_QUEUE_ACCESS_TOKEN")
 
-config :flirtual, FlirtualWeb.Endpoint, secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
+config :flirtual, FlirtualWeb.Endpoint,
+  secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
+  url: [
+    host: origin.host,
+    port: origin.port
+  ]
 
 if config_env() == :prod do
   app_name =

@@ -1,0 +1,82 @@
+PODS:
+  - Capacitor (5.0.5):
+    - CapacitorCordova
+  - CapacitorApp (5.0.3):
+    - Capacitor
+  - CapacitorClipboard (5.0.4):
+    - Capacitor
+  - CapacitorCordova (5.0.5)
+  - CapacitorDevice (5.0.4):
+    - Capacitor
+  - CapacitorDialog (5.0.4):
+    - Capacitor
+  - CapacitorLocalNotifications (5.0.4):
+    - Capacitor
+  - CapacitorPreferences (5.0.4):
+    - Capacitor
+  - CapacitorPushNotifications (5.0.4):
+    - Capacitor
+  - CapacitorScreenOrientation (5.0.4):
+    - Capacitor
+  - CapacitorShare (5.0.4):
+    - Capacitor
+  - CapacitorToast (5.0.4):
+    - Capacitor
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@5.0.5_@capacitor+core@5.0.5/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@5.0.3_@capacitor+core@5.0.5/node_modules/@capacitor/app`)"
+  - "CapacitorClipboard (from `../../node_modules/.pnpm/@capacitor+clipboard@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/clipboard`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@5.0.5_@capacitor+core@5.0.5/node_modules/@capacitor/ios`)"
+  - "CapacitorDevice (from `../../node_modules/.pnpm/@capacitor+device@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/device`)"
+  - "CapacitorDialog (from `../../node_modules/.pnpm/@capacitor+dialog@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/dialog`)"
+  - "CapacitorLocalNotifications (from `../../node_modules/.pnpm/@capacitor+local-notifications@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/local-notifications`)"
+  - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/preferences`)"
+  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/push-notifications`)"
+  - "CapacitorScreenOrientation (from `../../node_modules/.pnpm/@capacitor+screen-orientation@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/screen-orientation`)"
+  - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/share`)"
+  - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/toast`)"
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/.pnpm/@capacitor+ios@5.0.5_@capacitor+core@5.0.5/node_modules/@capacitor/ios"
+  CapacitorApp:
+    :path: "../../node_modules/.pnpm/@capacitor+app@5.0.3_@capacitor+core@5.0.5/node_modules/@capacitor/app"
+  CapacitorClipboard:
+    :path: "../../node_modules/.pnpm/@capacitor+clipboard@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/clipboard"
+  CapacitorCordova:
+    :path: "../../node_modules/.pnpm/@capacitor+ios@5.0.5_@capacitor+core@5.0.5/node_modules/@capacitor/ios"
+  CapacitorDevice:
+    :path: "../../node_modules/.pnpm/@capacitor+device@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/device"
+  CapacitorDialog:
+    :path: "../../node_modules/.pnpm/@capacitor+dialog@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/dialog"
+  CapacitorLocalNotifications:
+    :path: "../../node_modules/.pnpm/@capacitor+local-notifications@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/local-notifications"
+  CapacitorPreferences:
+    :path: "../../node_modules/.pnpm/@capacitor+preferences@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/preferences"
+  CapacitorPushNotifications:
+    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/push-notifications"
+  CapacitorScreenOrientation:
+    :path: "../../node_modules/.pnpm/@capacitor+screen-orientation@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/screen-orientation"
+  CapacitorShare:
+    :path: "../../node_modules/.pnpm/@capacitor+share@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/share"
+  CapacitorToast:
+    :path: "../../node_modules/.pnpm/@capacitor+toast@5.0.4_@capacitor+core@5.0.5/node_modules/@capacitor/toast"
+
+SPEC CHECKSUMS:
+  Capacitor: b1248915663add1bd6567e2b67c1c1fa3abcf5e8
+  CapacitorApp: 7a5dec8b33573707164b293475d5c89ba684364a
+  CapacitorClipboard: 46f3959735fa0d96b9989dafcc4aed52e624d163
+  CapacitorCordova: f8c06b897c74ee8f7701fe10e6443b40822bc83a
+  CapacitorDevice: eb4b5e3b42ac35d2527f20aad296b59e0785dc8d
+  CapacitorDialog: fe8b913cdf8c73cabe556974565fc44f2a09c75f
+  CapacitorLocalNotifications: 2c95d27ccf9cc28ecc59d69b54d29074c1740172
+  CapacitorPreferences: 82a9ecf5355283a3b3cf7ac217d8c5534c4dee8a
+  CapacitorPushNotifications: 3704ac3dac68a9bfc669fb384cbc7beec9b1f100
+  CapacitorScreenOrientation: 566575e032ebb9506b328525c6237452efb51fb1
+  CapacitorShare: 427bba238a1e3f116b2b349019aec6ea7f42cebd
+  CapacitorToast: fcc4329f01d06cf02f190f8f5ce7f16509a2263c
+
+PODFILE CHECKSUM: 59d4c0c137b0cef32d35f704d941b0f9c32d70db
+
+COCOAPODS: 1.12.1
