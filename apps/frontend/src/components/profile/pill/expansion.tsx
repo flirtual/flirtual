@@ -4,6 +4,7 @@ import { FC, useState } from "react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 
 import { User } from "~/api/user";
+import { Session } from "~/api/auth";
 import { ProfileMonopolyLabel } from "~/api/user/profile";
 import { urls } from "~/urls";
 import { Attribute } from "~/api/attributes";
@@ -15,19 +16,26 @@ export interface PillCollectionExpansionProps {
 	user: User;
 	editable: boolean;
 	attributes: Record<string, Array<Attribute>>;
+	session: Session;
 }
 
 export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 	props
 ) => {
-	const { editable, user, attributes } = props;
+	const { editable, user, attributes, session } = props;
 	const [expanded, setExpanded] = useState(false);
 
 	return expanded ? (
 		<>
 			{user.profile.monopoly && (
 				<div className="flex w-full flex-wrap gap-2">
-					<Pill href={editable ? urls.settings.matchmaking() : undefined}>
+					<Pill
+						href={editable ? urls.settings.matchmaking() : undefined}
+						active={
+							session.user.id !== user.id &&
+							session.user.profile.monopoly === user.profile.monopoly
+						}
+					>
 						{ProfileMonopolyLabel[user.profile.monopoly]}
 					</Pill>
 				</div>
