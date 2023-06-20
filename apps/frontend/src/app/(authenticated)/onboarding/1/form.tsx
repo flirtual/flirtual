@@ -9,11 +9,7 @@ import { ProfileMonopolyLabel, ProfileMonopolyList } from "~/api/user/profile";
 import { Button } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import {
-	InputLabel,
-	InputSelect,
-	InputSwitch
-} from "~/components/inputs";
+import { InputLabel, InputSelect, InputSwitch } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
 import { useSessionUser } from "~/hooks/use-session";
@@ -102,7 +98,7 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 						)}
 					</FormField>
 					<FormField name="age">
-						{({labelProps, props: {value, onChange, ...props}}) => {
+						{({ labelProps, props: { value, onChange, ...props } }) => {
 							const [min, max] = value;
 
 							return (
