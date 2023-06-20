@@ -144,11 +144,11 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 				<span>
 					<span className="font-bold">Premium:</span>{" "}
 					{user.subscription?.active ? (
-						<span className="text-green-500  brightness-75 hover:brightness-100">
+						<span className="text-green-500 brightness-75 hover:brightness-100">
 							{user.subscription.plan.name}
 						</span>
 					) : (
-						"No"
+						<span className="brightness-75 hover:brightness-100">No</span>
 					)}
 				</span>
 			</div>
@@ -174,7 +174,7 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 								title: "Moderator Note"
 							});
 
-							if (!value) {
+							if (!value && !!user.moderatorNote) {
 								await api.user
 									.deleteNote(user.id)
 									.then(() => {
@@ -189,7 +189,7 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 							await api.user
 								.note(user.id, { body: { message: value } })
 								.then(() => {
-									toasts.add("Note updated")
+									toasts.add("Note updated");
 									return router.refresh();
 								})
 								.catch(toasts.addError);
