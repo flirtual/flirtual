@@ -47,7 +47,8 @@ defmodule Flirtual.User.Policy do
 
   @moderator_actions [
     :suspend,
-    :warn
+    :warn,
+    :note
   ]
 
   def authorize(
@@ -183,6 +184,7 @@ defmodule Flirtual.User.Policy do
 
   @moderator_property_keys [
     :moderator_message,
+    :moderator_note,
     :shadowbanned_at,
     :banned_at,
     :deactivated_at,
@@ -224,13 +226,7 @@ defmodule Flirtual.User.Policy do
 
   def transform(
         :talkjs_id,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
+        _,
         %User{id: user_id}
       ),
       do: ShortUUID.decode!(user_id)

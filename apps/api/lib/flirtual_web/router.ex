@@ -258,6 +258,11 @@ defmodule FlirtualWeb.Router do
               put("/", UsersController, :acknowledge_warn)
             end
 
+            scope "/note" do
+              post("/", UsersController, :add_note)
+              delete("/", UsersController, :remove_note)
+            end
+
             scope "/email" do
               post("/", UsersController, :update_email)
             end

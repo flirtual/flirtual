@@ -5,12 +5,13 @@ import { ComponentProps, FC, useMemo } from "react";
 import { useHydrated } from "~/hooks/use-hydrated";
 
 interface DateTimeRelativeProps {
-	elementProps?: ComponentProps<"span">;
 	value: string;
 }
 
-export const DateTimeRelative: FC<DateTimeRelativeProps> = (props) => {
-	const { value, elementProps } = props;
+export const DateTimeRelative: FC<
+	DateTimeRelativeProps & ComponentProps<"span">
+> = (props) => {
+	const { value, ...elementProps } = props;
 	const date = useMemo(() => new Date(value), [value]);
 
 	const hydrated = useHydrated();
