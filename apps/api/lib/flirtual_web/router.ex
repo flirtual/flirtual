@@ -238,6 +238,8 @@ defmodule FlirtualWeb.Router do
             get("/", UsersController, :get)
             post("/", UsersController, :update)
 
+            delete("/", UsersController, :admin_delete)
+
             get("/visible", UsersController, :visible)
             get("/inspect", UsersController, :inspect)
 

@@ -81,7 +81,8 @@ defmodule Flirtual.User.Policy do
   end
 
   @admin_actions [
-    :sudo
+    :sudo,
+    :delete
   ]
 
   def authorize(

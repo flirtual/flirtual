@@ -20,6 +20,9 @@ dependencies:
   '@capacitor/device':
     specifier: ^5.0.4
     version: 5.0.4(@capacitor/core@5.0.5)
+  '@capacitor/dialog':
+    specifier: ^5.0.4
+    version: 5.0.4(@capacitor/core@5.0.5)
   '@capacitor/ios':
     specifier: ^5.0.5
     version: 5.0.5(@capacitor/core@5.0.5)
@@ -382,6 +385,14 @@ packages:
 
   /@capacitor/device@5.0.4(@capacitor/core@5.0.5):
     resolution: {integrity: sha512-Zt2eCPfT4oh/VYWURhixj/cRjgpEFD+HgPoldzL9N88ugraqq13p/RKEhUGJ6/tCFVwflVRC5984NsAotm25Jw==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.0.5
+    dev: false
+
+  /@capacitor/dialog@5.0.4(@capacitor/core@5.0.5):
+    resolution: {integrity: sha512-YYztwkLyg3UyT6650MLJkSVhQi5mSaM0fCYqJf1kHCnCbJO1i8RyyR/IVJf9YyDCFySAKc4j9vmIX7ruQp0JOg==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:
