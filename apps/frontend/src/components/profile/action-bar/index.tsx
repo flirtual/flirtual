@@ -15,7 +15,7 @@ import { Dialog } from "@capacitor/dialog";
 import { User, displayName } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
-import { Tooltip } from "~/components/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 
 import { ProfileModeratorInfo } from "../moderator-info";
@@ -59,36 +59,42 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 									onVisibilityChange={setWarnProfileVisible}
 								/>
 								<ActionDivider />
-								<Tooltip fragmentClassName="h-6 w-6" value="Clear reports">
-									<button
-										type="button"
-										onClick={async () => {
-											await api.report
-												.clearAll({ query: { targetId: user.id } })
-												.then(({ count }) =>
-													toasts.add(
-														`Cleared ${count} report${count === 1 ? "" : "s"}`
-													)
-												)
-												.catch(toasts.addError);
-										}}
-									>
-										<ShieldCheckIcon className="h-6 w-6" />
-									</button>
-								</Tooltip>
-								{session.user.tags?.includes("admin") && user.bannedAt && (
-									<Tooltip value="Pardon profile">
+								<Tooltip>
+									<TooltipTrigger asChild>
 										<button
 											type="button"
 											onClick={async () => {
-												await api.user.unsuspend(user.id);
-
-												toasts.add(`Pardoned ${displayName(user)}`);
-												router.refresh();
+												await api.report
+													.clearAll({ query: { targetId: user.id } })
+													.then(({ count }) =>
+														toasts.add(
+															`Cleared ${count} report${count === 1 ? "" : "s"}`
+														)
+													)
+													.catch(toasts.addError);
 											}}
 										>
-											<ScaleIcon className="h-6 w-6" />
+											<ShieldCheckIcon className="h-6 w-6" />
 										</button>
+									</TooltipTrigger>
+									<TooltipContent>Clear reports</TooltipContent>
+								</Tooltip>
+								{session.user.tags?.includes("admin") && user.bannedAt && (
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<button
+												type="button"
+												onClick={async () => {
+													await api.user.unsuspend(user.id);
+
+													toasts.add(`Pardoned ${displayName(user)}`);
+													router.refresh();
+												}}
+											>
+												<ScaleIcon className="h-6 w-6" />
+											</button>
+										</TooltipTrigger>
+										<TooltipContent>Pardon profile</TooltipContent>
 									</Tooltip>
 								)}
 							</>
@@ -99,43 +105,49 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 								session.user.tags.includes("moderator") && <ActionDivider />}
 							{user.id !== session.user.id && (
 								<>
-									<Tooltip value="Delete account">
-										<button
-											className="text-red-500"
-											type="button"
-											onClick={async () => {
-												const { value } = await Dialog.confirm({
-													title: "Confirm",
-													message:
-														"Are you sure you want to delete this account?"
-												});
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<button
+												className="text-red-500"
+												type="button"
+												onClick={async () => {
+													const { value } = await Dialog.confirm({
+														title: "Confirm",
+														message:
+															"Are you sure you want to delete this account?"
+													});
 
-												if (!value) return;
-												await api.user
-													.adminDelete(user.id)
-													.then(() => toasts.add("User deleted successfully"))
-													.catch(toasts.addError);
-											}}
-										>
-											<TrashIcon className="h-6 w-6" />
-										</button>
+													if (!value) return;
+													await api.user
+														.adminDelete(user.id)
+														.then(() => toasts.add("User deleted successfully"))
+														.catch(toasts.addError);
+												}}
+											>
+												<TrashIcon className="h-6 w-6" />
+											</button>
+										</TooltipTrigger>
+										<TooltipContent>Delete account</TooltipContent>
 									</Tooltip>
-									<Tooltip value="Impersonate">
-										<button
-											className="disabled:cursor-not-allowed disabled:opacity-50"
-											disabled={!!user.bannedAt}
-											type="button"
-											onClick={async () => {
-												const session = await api.auth.sudo({
-													body: { userId: user.id }
-												});
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<button
+												className="disabled:cursor-not-allowed disabled:opacity-50"
+												disabled={!!user.bannedAt}
+												type="button"
+												onClick={async () => {
+													const session = await api.auth.sudo({
+														body: { userId: user.id }
+													});
 
-												toasts.add(`Impersonating ${displayName(user)}`);
-												await mutateSession(session);
-											}}
-										>
-											<ArrowRightOnRectangleIcon className="h-6 w-6" />
-										</button>
+													toasts.add(`Impersonating ${displayName(user)}`);
+													await mutateSession(session);
+												}}
+											>
+												<ArrowRightOnRectangleIcon className="h-6 w-6" />
+											</button>
+										</TooltipTrigger>
+										<TooltipContent>Impersonate</TooltipContent>
 									</Tooltip>
 								</>
 							)}
@@ -145,16 +157,19 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 						<>
 							{session.user.id !== user.id &&
 								session.user?.tags?.includes("moderator") && <ActionDivider />}
-							<Tooltip value="Cancel Impersonation">
-								<button
-									type="button"
-									onClick={async () => {
-										const session = await api.auth.revokeSudo();
-										await mutateSession(session);
-									}}
-								>
-									<ArrowLeftOnRectangleIcon className="h-6 w-6" />
-								</button>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<button
+										type="button"
+										onClick={async () => {
+											const session = await api.auth.revokeSudo();
+											await mutateSession(session);
+										}}
+									>
+										<ArrowLeftOnRectangleIcon className="h-6 w-6" />
+									</button>
+								</TooltipTrigger>
+								<TooltipContent>Cancel Impersonation</TooltipContent>
 							</Tooltip>
 						</>
 					)}
@@ -162,22 +177,25 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 				<div className="flex gap-4">
 					{session.user.id !== user.id && (
 						<>
-							<Tooltip value="Block profile">
-								<button
-									className="h-6 w-6"
-									type="button"
-									onClick={async () => {
-										await api.user
-											.block(user.id)
-											.then(() => {
-												toasts.add("User blocked successfully");
-												return router.refresh();
-											})
-											.catch(toasts.addError);
-									}}
-								>
-									<NoSymbolIcon className="h-full w-full" />
-								</button>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<button
+										className="h-6 w-6"
+										type="button"
+										onClick={async () => {
+											await api.user
+												.block(user.id)
+												.then(() => {
+													toasts.add("User blocked successfully");
+													return router.refresh();
+												})
+												.catch(toasts.addError);
+										}}
+									>
+										<NoSymbolIcon className="h-full w-full" />
+									</button>
+								</TooltipTrigger>
+								<TooltipContent>Block profile</TooltipContent>
 							</Tooltip>
 							<ReportProfile user={user} />
 						</>

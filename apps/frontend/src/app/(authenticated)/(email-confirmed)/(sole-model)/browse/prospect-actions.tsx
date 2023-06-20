@@ -13,7 +13,7 @@ import {
 } from "~/api/matchmaking";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { Tooltip } from "~/components/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { useTour } from "~/hooks/use-tour";
 
@@ -184,57 +184,69 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 		<div className="h-32 w-full dark:bg-black-70 sm:h-0">
 			<div className="pointer-events-none fixed bottom-0 left-0 flex w-full items-center justify-center bg-gradient-to-b from-transparent to-black-90/50 p-8">
 				<div className="pointer-events-auto flex h-32 items-center gap-3 overflow-hidden rounded-xl pb-16 text-white-10">
-					<Tooltip value="Undo previous">
-						<button
-							className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-50"
-							disabled={!lastProfile}
-							id="undo-button"
-							type="button"
-							onClick={respondReverse}
-						>
-							<ArrowUturnLeftIcon className="w-5" strokeWidth={3} />
-						</button>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<button
+								className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-50"
+								disabled={!lastProfile}
+								id="undo-button"
+								type="button"
+								onClick={respondReverse}
+							>
+								<ArrowUturnLeftIcon className="w-5" strokeWidth={3} />
+							</button>
+						</TooltipTrigger>
+						<TooltipContent>Undo previous</TooltipContent>
 					</Tooltip>
 					{mode === "love" && (
-						<Tooltip value="Like profile">
-							<button
-								className="flex items-center justify-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 shadow-brand-1 sm:w-40"
-								id="like-button"
-								type="button"
-								onClick={() => respond("like", mode)}
-							>
-								<HeartIcon className="w-8 shrink-0" gradient={false} />
-								<span className="hidden font-montserrat text-lg font-extrabold md:inline">
-									Like
-								</span>
-							</button>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<button
+									className="flex items-center justify-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 shadow-brand-1 sm:w-40"
+									id="like-button"
+									type="button"
+									onClick={() => respond("like", mode)}
+								>
+									<HeartIcon className="w-8 shrink-0" gradient={false} />
+									<span className="hidden font-montserrat text-lg font-extrabold md:inline">
+										Like
+									</span>
+								</button>
+							</TooltipTrigger>
+							<TooltipContent>Like profile</TooltipContent>
 						</Tooltip>
 					)}
-					<Tooltip value="Friend profile">
-						<button
-							id="friend-button"
-							type="button"
-							className={twMerge(
-								"flex items-center justify-center gap-3 rounded-xl bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 px-6 py-4 shadow-brand-1",
-								mode === "friend" && "w-40"
-							)}
-							onClick={() => respond("like", "friend")}
-						>
-							<PeaceIcon className="w-8 shrink-0" gradient={false} />
-							<span className="hidden font-montserrat text-lg font-extrabold md:inline">
-								Homie
-							</span>
-						</button>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<button
+								id="friend-button"
+								type="button"
+								className={twMerge(
+									"flex items-center justify-center gap-3 rounded-xl bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 px-6 py-4 shadow-brand-1",
+									mode === "friend" && "w-40"
+								)}
+								onClick={() => respond("like", "friend")}
+							>
+								<PeaceIcon className="w-8 shrink-0" gradient={false} />
+								<span className="hidden font-montserrat text-lg font-extrabold md:inline">
+									Homie
+								</span>
+							</button>
+						</TooltipTrigger>
+						<TooltipContent>Friend profile</TooltipContent>
 					</Tooltip>
-					<Tooltip value="Pass profile">
-						<button
-							className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1"
-							id="pass-button"
-							type="button"
-							onClick={() => respond("pass", mode)}
-						>
-							<XMarkIcon className="w-5" strokeWidth={3} />
-						</button>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<button
+								className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1"
+								id="pass-button"
+								type="button"
+								onClick={() => respond("pass", mode)}
+							>
+								<XMarkIcon className="w-5" strokeWidth={3} />
+							</button>
+						</TooltipTrigger>
+						<TooltipContent>Pass profile</TooltipContent>
 					</Tooltip>
 				</div>
 			</div>

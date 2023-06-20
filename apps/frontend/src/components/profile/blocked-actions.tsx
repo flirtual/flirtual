@@ -9,7 +9,7 @@ import { User } from "~/api/user";
 
 import { Button } from "../button";
 import { ReportProfileModel } from "../modals/report-profile";
-import { Tooltip } from "../tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
@@ -39,14 +39,17 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 				visible={reportVisible}
 				onVisibilityChange={setReportVisible}
 			>
-				<Tooltip value="Report profile">
-					<Button
-						className="w-fit"
-						size="sm"
-						onClick={() => setReportVisible(true)}
-					>
-						Report
-					</Button>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Button
+							className="w-fit"
+							size="sm"
+							onClick={() => setReportVisible(true)}
+						>
+							Report
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent>Report profile</TooltipContent>
 				</Tooltip>
 			</ReportProfileModel>
 		</div>

@@ -20,7 +20,7 @@ import { api } from "~/api";
 
 import { UserImage } from "../user-avatar";
 import { TimeRelative } from "../time-relative";
-import { Tooltip } from "../tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { ModalOuter } from "../modal";
 
 export interface ProfileImageDisplayProps {
@@ -73,26 +73,32 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 				.
 			</span>
 			<div className="flex gap-4 text-white-20">
-				<Tooltip value="Search image">
-					<Link href={urls.moderation.imageSearch(image.url)} target="_blank">
-						<MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
-					</Link>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Link href={urls.moderation.imageSearch(image.url)} target="_blank">
+							<MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
+						</Link>
+					</TooltipTrigger>
+					<TooltipContent>Search image</TooltipContent>
 				</Tooltip>
-				<Tooltip value="Remove image">
-					<button
-						type="button"
-						onClick={async () => {
-							await api.images
-								.delete(image.id)
-								.then(() => {
-									toasts.add("Image removed successfully");
-									return router.refresh();
-								})
-								.catch(toasts.addError);
-						}}
-					>
-						<TrashIcon className="h-5 w-5" />
-					</button>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<button
+							type="button"
+							onClick={async () => {
+								await api.images
+									.delete(image.id)
+									.then(() => {
+										toasts.add("Image removed successfully");
+										return router.refresh();
+									})
+									.catch(toasts.addError);
+							}}
+						>
+							<TrashIcon className="h-5 w-5" />
+						</button>
+					</TooltipTrigger>
+					<TooltipContent>Remove image</TooltipContent>
 				</Tooltip>
 			</div>
 		</div>

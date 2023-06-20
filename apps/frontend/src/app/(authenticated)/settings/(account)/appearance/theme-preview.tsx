@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 import { PreferenceTheme } from "~/api/user/preferences";
 import { Image } from "~/components/image";
-import { Tooltip } from "~/components/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useTheme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
@@ -25,32 +25,33 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 	const active = theme === sessionTheme;
 
 	return (
-		<Tooltip
-			value={
-				theme == "system"
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<button
+					type="button"
+					className={twMerge(
+						"relative overflow-hidden rounded-xl p-1",
+						active ? "bg-theme-2" : "border-transparent"
+					)}
+					onClick={() => setTheme(theme)}
+				>
+					<Image
+						alt={`${capitalize(theme)} theme preview`}
+						className="rounded-xl"
+						height={206}
+						src={urls.media(ThemeImage[theme])}
+						width={320}
+					/>
+					{active && (
+						<CheckCircleIcon className="absolute right-0.5 top-0.5 h-6 w-6 text-white-10" />
+					)}
+				</button>
+			</TooltipTrigger>
+			<TooltipContent>
+				{theme == "system"
 					? "Automatically match your system theme"
-					: capitalize(theme) + " theme"
-			}
-		>
-			<button
-				type="button"
-				className={twMerge(
-					"relative overflow-hidden rounded-xl p-1",
-					active ? "bg-theme-2" : "border-transparent"
-				)}
-				onClick={() => setTheme(theme)}
-			>
-				<Image
-					alt={`${capitalize(theme)} theme preview`}
-					className="rounded-xl"
-					height={206}
-					src={urls.media(ThemeImage[theme])}
-					width={320}
-				/>
-				{active && (
-					<CheckCircleIcon className="absolute right-0.5 top-0.5 h-6 w-6 text-white-10" />
-				)}
-			</button>
+					: capitalize(theme) + " theme"}
+			</TooltipContent>
 		</Tooltip>
 	);
 };

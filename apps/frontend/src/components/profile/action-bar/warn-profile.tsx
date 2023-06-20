@@ -2,7 +2,7 @@ import { FC } from "react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 
 import { User } from "~/api/user";
-import { Tooltip } from "~/components/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { WarnProfileModal } from "~/components/modals/warn-profile";
 
 export interface WarnProfileProps {
@@ -22,14 +22,13 @@ export const WarnProfile: FC<WarnProfileProps> = ({
 			visible={visible}
 			onVisibilityChange={onVisibilityChange}
 		>
-			<Tooltip fragmentClassName="h-6 w-6" value="Warn profile">
-				<button
-					className="h-full w-full"
-					type="button"
-					onClick={() => onVisibilityChange(true)}
-				>
-					<ExclamationTriangleIcon className="h-full w-full" />
-				</button>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<button type="button" onClick={() => onVisibilityChange(true)}>
+						<ExclamationTriangleIcon className="h-6 w-6" />
+					</button>
+				</TooltipTrigger>
+				<TooltipContent>Warn profile</TooltipContent>
 			</Tooltip>
 		</WarnProfileModal>
 	);
