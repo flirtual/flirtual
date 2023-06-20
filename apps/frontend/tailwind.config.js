@@ -147,6 +147,7 @@ module.exports = {
 		require("@tailwindcss/forms"),
 		require("@tailwindcss/typography"),
 		require("tailwindcss-hocus"),
+		require("tailwindcss-animate"),
 		plugin(({ addVariant, addComponents }) => {
 			addVariant("range-track", [
 				"&::-webkit-slider-runnable-track",

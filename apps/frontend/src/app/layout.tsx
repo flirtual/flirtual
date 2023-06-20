@@ -17,6 +17,7 @@ import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 import { ThemeProvider } from "~/hooks/use-theme";
 import { DevicePlatform, DeviceProvider } from "~/hooks/use-device";
 import { NotificationProvider } from "~/hooks/use-notifications";
+import { TooltipProvider } from "~/components/tooltip";
 
 import { ClientScripts } from "./client-scripts";
 
@@ -131,13 +132,15 @@ export default async function RootLayout({
 						userAgent={userAgent}
 					>
 						<ToastProvider>
-							<NotificationProvider>
-								<SessionProvider session={session}>
-									<ThemeProvider>
-										<ShepherdProvider>{children}</ShepherdProvider>
-									</ThemeProvider>
-								</SessionProvider>
-							</NotificationProvider>
+							<TooltipProvider>
+								<NotificationProvider>
+									<SessionProvider session={session}>
+										<ThemeProvider>
+											<ShepherdProvider>{children}</ShepherdProvider>
+										</ThemeProvider>
+									</SessionProvider>
+								</NotificationProvider>
+							</TooltipProvider>
 						</ToastProvider>
 					</DeviceProvider>
 				</Suspense>

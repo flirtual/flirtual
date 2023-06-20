@@ -1,89 +1,30 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { FC, ReactNode, useEffect, useRef, useState } from "react";
-import { Portal } from "react-portal";
+import * as React from "react";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { twMerge } from "tailwind-merge";
 
-import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+const TooltipProvider = TooltipPrimitive.Provider;
 
-export interface TooltipProps {
-	value: ReactNode;
-	className?: string;
+const Tooltip = TooltipPrimitive.Root;
 
-	fragmentClassName?: string;
-	children: ReactNode;
-}
+const TooltipTrigger = TooltipPrimitive.Trigger;
 
-export const Tooltip: FC<TooltipProps> = ({
-	value,
-	fragmentClassName,
-	children,
-	...elementProps
-}) => {
-	const [visible, setVisible] = useState(false);
+const TooltipContent = React.forwardRef<
+	React.ElementRef<typeof TooltipPrimitive.Content>,
+	React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, reference) => (
+	<TooltipPrimitive.Content
+		ref={reference}
+		sideOffset={sideOffset}
+		className={twMerge(
+			"z-50 overflow-hidden rounded-lg bg-black-80 px-3 py-1 font-nunito text-base text-white-20 shadow-brand-1 animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1 dark:bg-white-20 dark:text-black-80",
+			className
+		)}
+		{...props}
+	/>
+));
 
-	const elementReference = useRef<HTMLDivElement>(null);
-	const reference = useRef<HTMLDivElement>(null);
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
-	const [elementRect, setElementRect] = useState({
-		x: 0,
-		y: 0,
-		width: 0,
-		height: 0
-	});
-	const [rect, setRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
-
-	useGlobalEventListener(
-		"document",
-		"scroll",
-		() => setVisible(false),
-		visible
-	);
-	const isMobile = !useScreenBreakpoint("md");
-
-	useEffect(() => {
-		if (!elementReference.current || !reference.current) return;
-
-		setElementRect(elementReference.current.getBoundingClientRect());
-		setRect(reference.current.getBoundingClientRect());
-	}, [visible]);
-
-	return (
-		<div
-			className={twMerge("", fragmentClassName)}
-			ref={elementReference}
-			onMouseLeave={() => setVisible(false)}
-			onMouseEnter={() => {
-				if (isMobile) return;
-				setVisible(true);
-			}}
-		>
-			{children}
-			<AnimatePresence>
-				{visible && (
-					<Portal>
-						<motion.div
-							animate={{ opacity: 1 }}
-							initial={{ opacity: 0 }}
-							ref={reference}
-							transition={{ damping: 10, delay: 0.1 }}
-							className={twMerge(
-								"pointer-events-none fixed left-0 top-0 z-50 -mt-4 select-none rounded-lg bg-black-80 px-3 py-1 text-base text-white-20 shadow-brand-1 dark:bg-white-20 dark:text-black-80",
-								elementProps.className
-							)}
-							style={{
-								transform: `translate(${
-									elementRect.x - rect.width / 2 + elementRect.width / 2
-								}px, ${elementRect.y - rect.height}px)`
-							}}
-						>
-							{value}
-						</motion.div>
-					</Portal>
-				)}
-			</AnimatePresence>
-		</div>
-	);
-};
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

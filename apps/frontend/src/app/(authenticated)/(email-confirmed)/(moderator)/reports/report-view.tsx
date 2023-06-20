@@ -30,7 +30,7 @@ import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { ListOptions, Report } from "~/api/report";
 import { BanProfile } from "~/components/profile/action-bar/ban-profile";
-import { Tooltip } from "~/components/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { TimeRelative } from "~/components/time-relative";
 import { DateTimeRelative } from "~/components/datetime-relative";
@@ -83,29 +83,35 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 						</span>
 					</button>
 					<div className="flex gap-4">
-						<Tooltip value="View profile">
-							<Link href={urls.user.profile(reported.username)}>
-								<ArrowTopRightOnSquareIcon className="h-6 w-6" />
-							</Link>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<Link href={urls.user.profile(reported.username)}>
+									<ArrowTopRightOnSquareIcon className="h-6 w-6" />
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent>View profile</TooltipContent>
 						</Tooltip>
-						<Tooltip value="Clear reports">
-							<button
-								className="h-fit"
-								type="button"
-								onClick={async () => {
-									await api.report
-										.clearAll({ query: { targetId: reported.id } })
-										.then(({ count }) =>
-											toasts.add(
-												`Cleared ${count} report${count === 1 ? "" : "s"}`
-											)
-										);
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<button
+									className="h-fit"
+									type="button"
+									onClick={async () => {
+										await api.report
+											.clearAll({ query: { targetId: reported.id } })
+											.then(({ count }) =>
+												toasts.add(
+													`Cleared ${count} report${count === 1 ? "" : "s"}`
+												)
+											);
 
-									await mutate();
-								}}
-							>
-								<ShieldCheckIcon className="h-6 w-6" />
-							</button>
+										await mutate();
+									}}
+								>
+									<ShieldCheckIcon className="h-6 w-6" />
+								</button>
+							</TooltipTrigger>
+							<TooltipContent>Clear reports</TooltipContent>
 						</Tooltip>
 						<BanProfile user={reported} />
 					</div>
@@ -167,19 +173,22 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 											{report.reason.name}
 										</span>
 										{!report.reviewedAt && (
-											<Tooltip value="Clear single report">
-												<button
-													className="h-fit"
-													type="button"
-													onClick={async () => {
-														await api.report.clear(report.id);
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<button
+														className="h-fit"
+														type="button"
+														onClick={async () => {
+															await api.report.clear(report.id);
 
-														toasts.add("Cleared single report");
-														await mutate();
-													}}
-												>
-													<CheckIcon className="h-5 w-5" strokeWidth={2} />
-												</button>
+															toasts.add("Cleared single report");
+															await mutate();
+														}}
+													>
+														<CheckIcon className="h-5 w-5" strokeWidth={2} />
+													</button>
+												</TooltipTrigger>
+												<TooltipContent>Clear single report</TooltipContent>
 											</Tooltip>
 										)}
 									</div>

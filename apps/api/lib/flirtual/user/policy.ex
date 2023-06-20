@@ -142,7 +142,6 @@ defmodule Flirtual.User.Policy do
     :talkjs_signature,
     :moderator_message,
     :active_at,
-    :tags,
     :connections,
     :born_at,
     :email_confirmed_at,

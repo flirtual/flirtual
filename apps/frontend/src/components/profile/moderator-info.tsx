@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { Slot } from "@radix-ui/react-slot";
 import { Clipboard } from "@capacitor/clipboard";
 import { useRouter } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
 import { User } from "~/api/user";
 import { api } from "~/api";
@@ -31,7 +32,10 @@ const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({
 	);
 };
 
-export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
+export const ProfileModeratorInfo: FC<{
+	user: User;
+	setWarnProfileVisible: (value: boolean) => void;
+}> = ({ user, setWarnProfileVisible }) => {
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
@@ -60,6 +64,14 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 					<CopyClick value={user.talkjsId}>
 						<span className="brightness-75 hover:brightness-100">
 							{user.talkjsId}
+						</span>
+					</CopyClick>
+				</span>
+				<span>
+					<span className="font-bold">Username:</span>{" "}
+					<CopyClick value={user.username}>
+						<span className="brightness-75 hover:brightness-100">
+							{user.username}
 						</span>
 					</CopyClick>
 				</span>
@@ -144,37 +156,41 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 				<span>
 					<span className="font-bold">Premium:</span>{" "}
 					{user.subscription?.active ? (
-						<span className="text-green-500  brightness-75 hover:brightness-100">
+						<span className="text-green-500 brightness-75 hover:brightness-100">
 							{user.subscription.plan.name}
 						</span>
 					) : (
-						"No"
+						<span className="brightness-75 hover:brightness-100">No</span>
 					)}
 				</span>
 			</div>
 			<div className="flex flex-col">
 				<span>
 					<span className="font-bold">Moderator Message:</span>{" "}
-					{user.moderatorMessage ? (
-						<span className="text-yellow-500  brightness-75 hover:brightness-100">
-							{user.moderatorMessage}
-						</span>
-					) : (
-						<span className="brightness-75 hover:brightness-100">None</span>
-					)}
+					<span
+						className={twMerge(
+							user.moderatorMessage && "text-yellow-500",
+							"cursor-pointer brightness-75 hover:brightness-100"
+						)}
+						onClick={() => setWarnProfileVisible(true)}
+					>
+						{user.moderatorMessage ?? "None"}
+					</span>
 				</span>
 				<span>
 					<span className="font-bold">Moderator Note:</span>{" "}
 					<span
 						className="cursor-pointer brightness-75 hover:brightness-100"
 						onClick={async () => {
-							const { value } = await Dialog.prompt({
+							const { value, cancelled } = await Dialog.prompt({
 								message: "Moderator Note",
 								inputText: user.moderatorNote,
 								title: "Moderator Note"
 							});
 
-							if (!value) {
+							if (cancelled) return;
+
+							if (!value && !!user.moderatorNote) {
 								await api.user
 									.deleteNote(user.id)
 									.then(() => {
@@ -189,7 +205,7 @@ export const ProfileModeratorInfo: FC<{ user: User }> = ({ user }) => {
 							await api.user
 								.note(user.id, { body: { message: value } })
 								.then(() => {
-									toasts.add("Note updated")
+									toasts.add("Note updated");
 									return router.refresh();
 								})
 								.catch(toasts.addError);
