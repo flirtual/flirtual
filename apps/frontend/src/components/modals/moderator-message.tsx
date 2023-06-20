@@ -24,15 +24,13 @@ export const ModeratorMessageModal: FC = () => {
 			<div className="flex min-h-[24rem] flex-col justify-between gap-4 px-2 sm:max-w-sm">
 				<div className="flex flex-col gap-4">
 					<h1 className="max-w-sm font-montserrat text-xl font-bold tracking-tight">
-						You&apos;ve received a warning for violating the{" "}
-						<InlineLink href={urls.resources.communityGuidelines}>
-							Community Guidelines
-						</InlineLink>
-						.
+						You&apos;ve received a message from the Flirtual moderation team
 					</h1>
 					<div className="flex flex-col gap-4">
 						<div className="h-1 w-1/2 rounded-full bg-brand-gradient" />
-						<p className="max-w-md">{session.user.moderatorMessage}</p>
+						<p className="max-w-md font-nunito">
+							{session.user.moderatorMessage}
+						</p>
 						<div className="h-1 w-2/12 rounded-full bg-brand-gradient" />
 					</div>
 				</div>
@@ -50,16 +48,13 @@ export const ModeratorMessageModal: FC = () => {
 					>
 						Acknowledge
 					</Button>
-					<span className="max-w-sm text-xs brightness-75">
-						If you feel this warning was issued in error, please contact us at{" "}
-						<InlineLink href={urls.resources.contactDirect}>
-							our support desk
-						</InlineLink>{" "}
-						or open a ticket in the{" "}
-						<InlineLink href={urls.socials.discord}>
-							#server-reports channel
+					<span className="flex max-w-sm flex-row justify-center gap-4 font-nunito text-xs">
+						<InlineLink href={urls.resources.communityGuidelines}>
+							Community guidelines
 						</InlineLink>
-						.
+						<InlineLink href={urls.resources.contactDirect}>
+							Contact us
+						</InlineLink>
 					</span>
 				</div>
 			</div>
