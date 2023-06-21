@@ -282,6 +282,23 @@ defmodule Flirtual.User.Profile.Policy do
       when key in @nsfw_property_keys,
       do: profile[key]
 
+  @admin_property_keys [
+    :preferences
+  ]
+
+  def transform(
+        key,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %Profile{} = profile
+      )
+      when key in @admin_property_keys do
+    if :admin in session.user.tags, do: profile[key], else: nil
+  end
+
   def transform(key, _, _) when key in @nsfw_property_keys, do: nil
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
