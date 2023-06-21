@@ -220,7 +220,7 @@ defmodule Flirtual.User.Policy do
     now = Date.utc_today()
 
     Date.new!(now.year - get_years_since(user.born_at), now.month, now.day)
-    |> Date.add(1)
+    |> Date.add(-1)
   end
 
   def transform(
