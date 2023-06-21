@@ -247,9 +247,9 @@ export const ProfileModeratorInfo: FC<{
 									"gender"
 								)
 									.map(
-										// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-										({ id }) => genders.find((gender) => gender.id === id)!.name
+										({ id }) => genders.find((gender) => gender.id === id)?.name
 									)
+									.filter(Boolean)
 									.join(", ")}
 							</span>
 						</span>
