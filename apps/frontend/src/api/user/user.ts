@@ -23,6 +23,7 @@ export type User = UuidModel &
 		language?: string;
 		talkjsId: string;
 		talkjsSignature?: string;
+		stripeId?: string;
 		moderatorMessage?: string;
 		moderatorNote?: string;
 		visible: boolean;
@@ -94,8 +95,8 @@ export async function update(
 	options: NarrowFetchOptions<
 		UpdateUserBody,
 		| {
-				required?: Array<keyof UpdateUserBody>;
-		  }
+			required?: Array<keyof UpdateUserBody>;
+		}
 		| undefined
 	>
 ) {

@@ -3,22 +3,33 @@ defmodule Flirtual.Mailer do
 
   import Swoosh.Email
 
-  @origin Application.compile_env!(:flirtual, :frontend_origin)
+  defp get_origin() do
+    Application.fetch_env!(:flirtual, :frontend_origin)
+  end
 
-  @twitter_url "https://twitter.com/getflirtual"
-  @discord_url @origin |> URI.merge("/discord") |> URI.to_string()
-  @unsubscribe_url @origin |> URI.merge("/settings/notifications") |> URI.to_string()
+  defp get_urls() do
+    origin = get_origin()
+
+    twitter_url = "https://twitter.com/getflirtual"
+    discord_url = origin |> URI.merge("/discord") |> URI.to_string()
+    unsubscribe_url = origin |> URI.merge("/settings/notifications") |> URI.to_string()
+
+    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url}
+  end
 
   @company "Studio Paprika"
   @company_address "530 Divisadero Street | San Francisco, CA | 94117 | USA"
 
   defp format_text_body(body_text) do
+    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
+      get_urls()
+
     """
     #{body_text}
     ---
-    Twitter: #{@twitter_url}
-    Discord: #{@discord_url}
-    Unsubscribe: #{@unsubscribe_url}
+    Twitter: #{twitter_url}
+    Discord: #{discord_url}
+    Unsubscribe: #{unsubscribe_url}
 
     © #{Date.utc_today().year} #{@company}
     #{@company_address}
@@ -26,6 +37,9 @@ defmodule Flirtual.Mailer do
   end
 
   defp format_html_body(body_html, subject, action_url) do
+    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
+      get_urls()
+
     """
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths responsejs " style="" lang="en">
@@ -65,8 +79,8 @@ defmodule Flirtual.Mailer do
                                                 </tr>
                                                 <tr>
                                                   <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                                    <a href="#{@origin |> URI.to_string()}" style="text-decoration: none;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">
-                                                      &nbsp;<img src="#{@origin |> URI.merge("/images/brand/white.png") |> URI.to_string()}" style="padding: 0px;border: medium none;width: 335px;height: 91.249px;line-height: 100%;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" alt="Flirtual" class="fr-fil fr-dib" border="0" width="335" height="91.249">&nbsp;
+                                                    <a href="#{get_origin() |> URI.to_string()}" style="text-decoration: none;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">
+                                                      &nbsp;<img src="#{get_origin() |> URI.merge("/images/brand/white.png") |> URI.to_string()}" style="padding: 0px;border: medium none;width: 335px;height: 91.249px;line-height: 100%;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" alt="Flirtual" class="fr-fil fr-dib" border="0" width="335" height="91.249">&nbsp;
                                                     </a>
                                                   </td>
                                                 </tr>
@@ -196,11 +210,11 @@ defmodule Flirtual.Mailer do
                                             <tr>
                                               <td style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;color: #212121;text-transform: uppercase;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" data-slot-container="1" class="ui-sortable" align="center">
                                                 <div data-slot="text">
-                                                  <a href="#{@twitter_url}" rel="noopener noreferrer" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Twitter</a>
+                                                  <a href="#{twitter_url}" rel="noopener noreferrer" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Twitter</a>
                                                   <span style="font-family:arial, sans-serif; font-size:10px; line-height:20px; color:#dddddd;">&nbsp;|&nbsp;</span>
-                                                  <a href="#{@discord_url}" rel="noopener noreferrer" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Discord</a>
+                                                  <a href="#{discord_url}" rel="noopener noreferrer" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Discord</a>
                                                   <span style="font-family:arial, sans-serif; font-size:10px; line-height:20px; color:#dddddd;">&nbsp;|&nbsp;</span>
-                                                  <a href="#{@unsubscribe_url}" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Unsubscribe</a>
+                                                  <a href="#{unsubscribe_url}" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Unsubscribe</a>
                                                 </div>
                                               </td>
                                             </tr>

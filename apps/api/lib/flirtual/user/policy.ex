@@ -205,6 +205,25 @@ defmodule Flirtual.User.Policy do
     if :moderator in session.user.tags, do: user[key], else: nil
   end
 
+  @admin_property_keys [
+    :email,
+    :born_at,
+    :stripe_id
+  ]
+
+  def transform(
+        key,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %User{} = user
+      )
+      when key in @admin_property_keys do
+    if :admin in session.user.tags, do: user[key], else: nil
+  end
+
   def transform(
         :active_at,
         _,
