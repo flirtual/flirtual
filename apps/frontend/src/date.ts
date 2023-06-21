@@ -6,7 +6,16 @@ const monthInMilliseconds = 2.628e9;
 const yearInMilliseconds = 3.154e10;
 
 export function yearsAgo(date: Date): number {
-	return Math.floor((Date.now() - date.getTime()) / yearInMilliseconds);
+	const today = new Date();
+	const currentYear = today.getUTCFullYear();
+	const dateThisYear = new Date(
+		currentYear,
+		date.getUTCMonth(),
+		date.getUTCDate()
+	);
+	let diff = currentYear - date.getUTCFullYear();
+	if (today.getTime() < dateThisYear.getTime()) diff--;
+	return diff;
 }
 
 export interface RelativeTimeOptions {
