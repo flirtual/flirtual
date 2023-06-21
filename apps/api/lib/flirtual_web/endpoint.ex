@@ -20,11 +20,6 @@ defmodule FlirtualWeb.Endpoint do
     |> Enum.map(&to_string/1)
   end
 
-  def get_root_host() do
-    Application.fetch_env!(:flirtual, :root_origin)
-    |> Map.get(:host)
-  end
-
   plug(CORSPlug,
     origin: &__MODULE__.get_origins/0
   )
@@ -47,7 +42,14 @@ defmodule FlirtualWeb.Endpoint do
     json_decoder: Phoenix.json_library()
   )
 
-  plug(FlirtualWeb.Session)
+  plug(Plug.Session,
+    store: :cookie,
+    same_site: "Lax",
+    max_age: Session.max_age(),
+    key: "session",
+    domain: {Application, :fetch_env!, [:flirtual, :root_origin]},
+    signing_salt: {Application, :fetch_env!, [:flirtual, :session_signing_salt]}
+  )
 
   plug(FlirtualWeb.Router)
 end
