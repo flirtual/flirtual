@@ -382,11 +382,8 @@ defmodule Flirtual.User do
 
   def add_note(
         %User{} = user,
-        message,
-        %User{} = moderator
+        message
       ) do
-    now = DateTime.utc_now() |> DateTime.truncate(:second)
-
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
@@ -400,12 +397,7 @@ defmodule Flirtual.User do
     end)
   end
 
-  def remove_note(
-        %User{} = user,
-        %User{} = moderator
-      ) do
-    now = DateTime.utc_now() |> DateTime.truncate(:second)
-
+  def remove_note(%User{} = user) do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
@@ -635,6 +627,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :moderator_note,
       :talkjs_signature,
       :talkjs_id,
+      :stripe_id,
       :banned_at,
       :shadowbanned_at,
       :email_confirmed_at,

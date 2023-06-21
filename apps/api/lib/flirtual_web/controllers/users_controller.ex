@@ -402,7 +402,7 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def revoke_warn(conn, %{"user_id" => user_id} = attrs) do
+  def revoke_warn(conn, %{"user_id" => user_id}) do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :warn, user) do
@@ -454,32 +454,32 @@ defmodule FlirtualWeb.UsersController do
     else
       with {:ok, attrs} <- Note.apply(attrs),
            {:ok, user} <-
-             User.add_note(user, attrs.message, conn.assigns[:session].user) do
+             User.add_note(user, attrs.message) do
         conn |> json(Policy.transform(conn, user))
       end
     end
   end
 
-  def remove_note(conn, %{"user_id" => user_id} = attrs) do
+  def remove_note(conn, %{"user_id" => user_id}) do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :note, user) do
       {:error, {:forbidden, "Cannot remove note for this user", %{user_id: user_id}}}
     else
       with {:ok, user} <-
-             User.remove_note(user, conn.assigns[:session].user) do
+             User.remove_note(user) do
         conn |> json(Policy.transform(conn, user))
       end
     end
   end
 
-  def admin_delete(conn, %{"user_id" => user_id} = attrs) do
+  def admin_delete(conn, %{"user_id" => user_id}) do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :delete, user) do
       {:error, {:forbidden, "Cannot delete this user", %{user_id: user_id}}}
     else
-      with {:ok, user} <-
+      with {:ok, _} <-
              Users.admin_delete(user) do
         conn |> json(%{deleted: true})
       end
