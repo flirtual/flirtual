@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import * as Sentry from "@sentry/nextjs";
+
 import { urls } from "~/urls";
 import {
 	entries,
@@ -7,7 +9,6 @@ import {
 	toCamelObject,
 	toSnakeObject
 } from "~/utilities";
-
 export function newUrl(
 	pathname: string,
 	query: Record<string, string | undefined> = {}
@@ -115,6 +116,8 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 		)(response, responseBody);
 
 		error.stack = error.stack?.split("\n").slice(2).join("\n");
+
+		if (error.statusCode > 499) Sentry.captureException(error);
 		throw error;
 	}
 

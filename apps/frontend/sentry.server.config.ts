@@ -4,7 +4,10 @@
 
 import * as Sentry from "@sentry/nextjs";
 
+import { sentryDsn } from "~/const";
+
 Sentry.init({
-	tracesSampleRate: 1,
-	debug: false
+	dsn: sentryDsn,
+	sampleRate: 1,
+	tracesSampleRate: 1
 });

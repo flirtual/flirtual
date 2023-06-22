@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { Toast as NativeToast } from "@capacitor/toast";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
@@ -133,6 +134,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				"Unknown request error";
 
 			console.error(reason);
+			Sentry.captureException(reason);
 
 			return add({
 				type: "error",

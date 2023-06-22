@@ -24,6 +24,7 @@ export const Image: FC<ImageProps> = ({ options = {}, src, ...props }) => {
 	return (
 		<NextImage
 			{...props}
+			data-sentry-block
 			src={src}
 			onError={({ currentTarget }) => {
 				// If the image fails to load (doesn't exist), use a fallback.

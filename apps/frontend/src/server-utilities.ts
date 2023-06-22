@@ -1,5 +1,6 @@
 import "server-only";
 
+import * as Sentry from "@sentry/nextjs";
 // eslint-disable-next-line import/named
 import { cache } from "react";
 import { cookies, headers } from "next/headers";
@@ -30,7 +31,15 @@ export const withOptionalSession = cache(async () => {
 export const withSession = cache(async (next?: string) => {
 	const session = await withOptionalSession();
 
+	// Set the user context for Sentry depending on the user's privacy settings.
+	Sentry.setUser(
+		session?.user.preferences?.privacy.analytics
+			? { id: session?.user.id }
+			: null
+	);
+
 	if (!session) return redirect(urls.login(next));
+
 	return session;
 });
 

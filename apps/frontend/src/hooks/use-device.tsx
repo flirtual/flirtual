@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { createContext, useContext, useEffect } from "react";
 
 import type { userAgentFromString } from "next/server";
@@ -21,8 +22,8 @@ export type DeviceProviderProps = React.PropsWithChildren<
 
 export function DeviceProvider({ children, ...value }: DeviceProviderProps) {
 	useEffect(() => {
-		console.log("device", { platform: value.platform, native: value.native });
-	});
+		Sentry.setTag("native", value.native ? "yes" : "no");
+	}, [value.native]);
 
 	return (
 		<DeviceContext.Provider value={value}>{children}</DeviceContext.Provider>

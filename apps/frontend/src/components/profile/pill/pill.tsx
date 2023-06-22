@@ -52,6 +52,7 @@ export const Pill: React.FC<PillProps> = (props) => {
 			>
 				{Icon && <Icon className="h-4" />}
 				<motion.div
+					data-sentry-block
 					className="flex items-center gap-2"
 					initial={{ marginRight: 0 }}
 					transition={{ type: "spring" }}

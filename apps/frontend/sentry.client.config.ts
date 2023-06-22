@@ -4,15 +4,17 @@
 
 import * as Sentry from "@sentry/nextjs";
 
+import { sentryDsn } from "~/const";
+
 Sentry.init({
+	dsn: sentryDsn,
+	sampleRate: 1,
 	tracesSampleRate: 1,
-	debug: false,
 	replaysOnErrorSampleRate: 1,
-	replaysSessionSampleRate: 0.1,
+	replaysSessionSampleRate: 0.5,
 	integrations: [
 		new Sentry.Replay({
-			maskAllText: true,
-			blockAllMedia: true
+			maskAllInputs: true
 		})
 	]
 });

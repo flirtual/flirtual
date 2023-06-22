@@ -90,6 +90,7 @@ module.exports = {
 		];
 	}
 };
+
 const { withSentryConfig } = require("@sentry/nextjs");
 
 module.exports = withSentryConfig(
@@ -104,8 +105,8 @@ module.exports = withSentryConfig(
 		// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 		widenClientFileUpload: true,
 		transpileClientSDK: true,
-		tunnelRoute: "/api/sentry",
-		hideSourceMaps: true,
-		disableLogger: true
+		hideSourceMaps: false,
+		disableLogger: false,
+		tunnelRoute: "/api/sentry"
 	}
 );
