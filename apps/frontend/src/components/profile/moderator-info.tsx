@@ -264,7 +264,9 @@ export const ProfileModeratorInfo: FC<{
 						<span>
 							<span className="font-bold">Tags:</span>{" "}
 							<span className="brightness-75 hover:brightness-100">
-								{user.tags?.join(", ")}
+								{user.tags && user.tags.length > 0
+									? user.tags?.join(", ")
+									: "None"}
 							</span>
 						</span>
 					</div>

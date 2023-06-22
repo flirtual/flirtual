@@ -205,6 +205,31 @@ defmodule Flirtual.User.Policy do
     if :moderator in session.user.tags, do: user[key], else: nil
   end
 
+  def transform(
+        :active_at,
+        _,
+        %User{} = user
+      ) do
+    user.active_at
+    |> DateTime.to_date()
+    |> DateTime.new!(Time.new!(0, 0, 0))
+  end
+
+  # Truncate born at to year, to hide user's exact birthday.
+  def transform(:born_at, _, %User{born_at: born_at} = user) when not is_nil(born_at) do
+    now = Date.utc_today()
+
+    Date.new!(now.year - get_years_since(user.born_at), now.month, now.day)
+    |> Date.add(-1)
+  end
+
+  def transform(
+        :talkjs_id,
+        _,
+        %User{id: user_id}
+      ),
+      do: ShortUUID.decode!(user_id)
+
   @admin_property_keys [
     :email,
     :born_at,
@@ -223,31 +248,6 @@ defmodule Flirtual.User.Policy do
       when key in @admin_property_keys do
     if :admin in session.user.tags, do: user[key], else: nil
   end
-
-  def transform(
-        :active_at,
-        _,
-        %User{} = user
-      ) do
-    user.active_at
-    |> DateTime.to_date()
-    |> DateTime.new!(Time.new!(0, 0, 0))
-  end
-
-  # Truncate born at to year, to hide user's exact birthday.
-  def transform(:born_at, _, %User{born_at: born_at} = user) when not is_nil(born_at) do
-    now = Date.utc_today()
-
-    Date.new!(now.year - get_years_since(user.born_at), now.month, now.day)
-    |> Date.add(1)
-  end
-
-  def transform(
-        :talkjs_id,
-        _,
-        %User{id: user_id}
-      ),
-      do: ShortUUID.decode!(user_id)
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
   def transform(key, _, _) when key in @moderator_property_keys, do: nil
