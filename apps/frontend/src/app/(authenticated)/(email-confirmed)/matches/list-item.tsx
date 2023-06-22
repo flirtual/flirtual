@@ -46,6 +46,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 
 	return (
 		<div
+			data-sentry-mask
 			ref={reference}
 			className={twMerge(
 				"relative rounded-xl shadow-brand-1",

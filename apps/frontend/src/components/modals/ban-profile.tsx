@@ -62,7 +62,7 @@ export const BanProfileModalForm: FC<BanProfileModalFormProps> = ({
 										width={64}
 									/>
 									<div className="flex flex-col">
-										<span className="text-lg font-semibold">
+										<span data-sentry-mask className="text-lg font-semibold">
 											{displayName(user)}
 										</span>
 										<span className="font-mono text-sm brightness-75">

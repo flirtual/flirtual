@@ -14,8 +14,11 @@ export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 		>
 			<span>
 				You&apos;ve blocked{" "}
-				<span className="font-semibold">{displayName(user)}</span>, so you
-				can&apos;t see their profile, and they can&apos;t see yours either.
+				<span data-sentry-mask className="font-semibold">
+					{displayName(user)}
+				</span>
+				, so you can&apos;t see their profile, and they can&apos;t see yours
+				either.
 			</span>
 			<BlockedActions user={user} />
 		</ModelCard>
