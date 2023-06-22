@@ -11,9 +11,11 @@ Sentry.init({
 	sampleRate: 1,
 	tracesSampleRate: 1,
 	replaysOnErrorSampleRate: 1,
-	replaysSessionSampleRate: 0.5,
+	replaysSessionSampleRate: 0.1,
 	integrations: [
 		new Sentry.Replay({
+			blockAllMedia: false,
+			maskAllText: false,
 			maskAllInputs: true
 		})
 	]
