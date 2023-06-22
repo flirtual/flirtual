@@ -38,7 +38,17 @@ config :flirtual, Flirtual.Elasticsearch,
 config :bodyguard,
   default_error: {:unauthorized, "Unauthorized"}
 
+config :sentry,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  included_environments: [
+    :production,
+    :staging,
+    :development
+  ]
+
 config :logger, :console,
+  backends: [:console, Sentry.LoggerBackend],
   format: "level=$level $metadata\n$message\n\n",
   metadata: [:request_id]
 

@@ -1,7 +1,7 @@
 defmodule FlirtualWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :flirtual
 
-  alias Flirtual.User.Session
+  use Sentry.PlugCapture
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -40,6 +40,10 @@ defmodule FlirtualWeb.Endpoint do
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
+  )
+
+  plug(Sentry.PlugContext,
+    request_id_header: "fly-request-id"
   )
 
   plug(FlirtualWeb.Session)

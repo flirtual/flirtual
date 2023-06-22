@@ -58,6 +58,9 @@ config :flirtual, FlirtualWeb.Endpoint,
     port: origin.port
   ]
 
+config :sentry,
+  dsn: System.fetch_env!("SENTRY_DSN")
+
 if config_env() == :prod do
   app_name =
     System.get_env("FLY_APP_NAME") ||

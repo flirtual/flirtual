@@ -13,7 +13,7 @@ defmodule FlirtualWeb.SessionController do
   alias Flirtual.Users
   alias Flirtual.User
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   def get(conn, _) do
     with :ok <- Policy.can(conn, :read, conn.assigns[:session]) do
@@ -138,10 +138,15 @@ defmodule FlirtualWeb.SessionController do
   def fetch_current_session(conn, _) do
     with {token, conn} when not is_nil(token) <- ensure_session_token(conn),
          %Session{} = session <- Session.get(token: token),
-         {:ok, session} <- Session.maybe_update_activity(session) do
+         {:ok, session} <- Session.maybe_update_activity(session),
+         %User{} = user <- session.user do
+      Sentry.Context.set_user_context(%{
+        id: user.id
+      })
+
       conn
       |> assign(:session, session)
-      |> assign(:user, session.user)
+      |> assign(:user, user)
     else
       _ ->
         conn
