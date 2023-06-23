@@ -19,8 +19,8 @@ import { InlineLink } from "../inline-link";
 export interface InputSelectOption<K> {
 	key: K;
 	label: string;
-	definition: string;
-	definitionLink: string;
+	definition?: string;
+	definitionLink?: string;
 	active?: boolean;
 }
 
