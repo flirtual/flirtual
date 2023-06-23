@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { Toast as NativeToast } from "@capacitor/toast";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
@@ -67,7 +68,9 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 			onClick={() => toast.remove()}
 		>
 			<Icon className="h-5 w-5 shrink-0" strokeWidth={2} />
-			<span className="font-montserrat font-semibold">{toast.children}</span>
+			<span data-sentry-mask className="font-montserrat font-semibold">
+				{toast.children}
+			</span>
 		</motion.button>
 	);
 };
@@ -133,6 +136,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				"Unknown request error";
 
 			console.error(reason);
+			Sentry.captureException(reason);
 
 			return add({
 				type: "error",

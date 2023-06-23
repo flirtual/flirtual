@@ -33,7 +33,7 @@ export default async function SubscriptionPage() {
 			>
 				<SuccessMessage />
 				{subscription && (
-					<div className="flex flex-col gap-4">
+					<div data-sentry-mask className="flex flex-col gap-4">
 						<h1 className="text-2xl font-semibold">
 							{subscription.active ? "Active" : "Inactive"} Subscription
 						</h1>

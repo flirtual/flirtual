@@ -1,5 +1,6 @@
 import "server-only";
 
+import * as Sentry from "@sentry/nextjs";
 // eslint-disable-next-line import/named
 import { cache } from "react";
 import { cookies, headers } from "next/headers";
@@ -20,11 +21,22 @@ export function thruServerCookies() {
 }
 
 export const withOptionalSession = cache(async () => {
-	return await api.auth.session(thruServerCookies()).catch((reason) => {
-		if (!(reason instanceof ResponseError)) throw reason;
-		if (reason.statusCode === 401) return null;
-		throw reason;
-	});
+	const session = await api.auth
+		.session(thruServerCookies())
+		.catch((reason) => {
+			if (!(reason instanceof ResponseError)) throw reason;
+			if (reason.statusCode === 401) return null;
+			throw reason;
+		});
+
+	// Set the user context for Sentry depending on the user's privacy settings.
+	Sentry.setUser(
+		session?.user.preferences?.privacy.analytics
+			? { id: session?.user.id }
+			: null
+	);
+
+	return session;
 });
 
 export const withSession = cache(async (next?: string) => {

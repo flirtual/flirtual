@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Metadata } from "next";
@@ -84,6 +85,7 @@ export default async function RootLayout({
 	if (!["android", "ios"].includes(platform)) platform = "web";
 
 	const native = userAgent.ua.includes("Flirtual-Native");
+	Sentry.setTag("native", native ? "yes" : "no");
 
 	return (
 		<html

@@ -2,14 +2,24 @@ defmodule FlirtualWeb.ErrorHelpers do
   import Phoenix.Controller
   import Plug.Conn
 
+  alias Plug.Conn.Status
+
   def put_error(%Plug.Conn{} = conn, status) do
+    status_code = Status.code(status)
+    message = status_code |> Status.reason_phrase()
+
+    if status_code > 499, do: Sentry.capture_message(message)
+
     conn
-    |> put_status(status)
-    |> json(new_error(Plug.Conn.Status.code(status) |> Plug.Conn.Status.reason_phrase()))
+    |> put_status(status_code)
+    |> json(new_error(message))
   end
 
   def put_error(%Plug.Conn{} = conn, status, message \\ nil, details \\ %{}) do
-    message = message || Plug.Conn.Status.code(status) |> Plug.Conn.Status.reason_phrase()
+    status_code = Status.code(status)
+    message = message || status_code |> Status.reason_phrase()
+
+    if status_code > 499, do: Sentry.capture_message(message)
 
     conn
     |> put_status(status)
@@ -18,22 +28,6 @@ defmodule FlirtualWeb.ErrorHelpers do
 
   def new_error(message, details \\ %{}) do
     %{error: Map.merge(details, %{message: message})}
-  end
-
-  def format_stack(stack) do
-    Enum.map(stack, fn {module, function, arity, extra} ->
-      String.replace(to_string(module), "Elixir.", "") <>
-        "." <>
-        to_string(function) <>
-        if(is_list(arity),
-          do: "(" <> Enum.join(Enum.map(arity, &inspect(&1)), ", ") <> ")",
-          else: "/" <> to_string(arity)
-        ) <>
-        "\n  at " <>
-        to_string(Keyword.get(extra, :file, "unknown")) <>
-        ":" <> to_string(Keyword.get(extra, :line, "1"))
-    end)
-    |> Enum.join("\n")
   end
 
   def transform_changeset_errors(%Ecto.Changeset{} = changeset) do

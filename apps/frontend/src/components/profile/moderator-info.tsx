@@ -53,7 +53,10 @@ export const ProfileModeratorInfo: FC<{
 	if (!session || !session.user?.tags?.includes("moderator")) return null;
 
 	return (
-		<div className="-mx-4 flex flex-col gap-4 rounded-xl bg-white-30 px-4 py-3 font-mono dark:bg-black-90/80 dark:text-white-20">
+		<div
+			data-sentry-mask
+			className="-mx-4 flex flex-col gap-4 rounded-xl bg-white-30 px-4 py-3 font-mono dark:bg-black-90/80 dark:text-white-20"
+		>
 			<div className="flex flex-col">
 				<span>
 					<span className="font-bold">ID:</span>{" "}

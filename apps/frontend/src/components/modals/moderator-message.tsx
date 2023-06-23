@@ -28,7 +28,7 @@ export const ModeratorMessageModal: FC = () => {
 					</h1>
 					<div className="flex flex-col gap-4">
 						<div className="h-1 w-1/2 rounded-full bg-brand-gradient" />
-						<p className="max-w-md font-nunito">
+						<p data-sentry-mask className="max-w-md font-nunito">
 							{session.user.moderatorMessage}
 						</p>
 						<div className="h-1 w-2/12 rounded-full bg-brand-gradient" />

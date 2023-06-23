@@ -52,6 +52,16 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def preview(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) do
+      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+    else
+      conn |> json_with_etag(User.preview(user))
+    end
+  end
+
   def bulk(conn, %{"_json" => user_ids}) do
     conn
     |> json_with_etag(

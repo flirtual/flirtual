@@ -51,7 +51,8 @@ const ReportProfileModelForm: FC<ReportProfileModelFormProps> = ({
 							<>
 								<ShieldExclamationIcon className="h-6 w-6" />
 								<span className="text-xl">
-									Report profile: {displayName(user)}
+									Report profile:{" "}
+									<span data-sentry-mask>{displayName(user)}</span>
 								</span>
 							</>
 						)}

@@ -141,5 +141,5 @@ export const ConversationChatbox: React.FC<
 		return () => chatbox?.destroy();
 	}, [chatbox, element]);
 
-	return <div {...props} ref={setElement} />;
+	return <div data-sentry-block {...props} ref={setElement} />;
 };

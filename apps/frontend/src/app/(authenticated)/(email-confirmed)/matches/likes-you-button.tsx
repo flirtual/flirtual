@@ -40,7 +40,7 @@ export const LikesYouButton: FC = () => {
 			size="sm"
 		>
 			See who likes you{" "}
-			<span className="whitespace-nowrap">
+			<span data-sentry-mask className="whitespace-nowrap">
 				{likes.count.love && (
 					<>
 						({likes.count.love > 99 ? "99+" : likes.count.love}

@@ -48,7 +48,10 @@ export async function Profile(props: ProfileProps) {
 					: {}
 			}}
 		>
-			<div className="flex w-full bg-brand-gradient sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1">
+			<div
+				data-sentry-mask
+				className="flex w-full bg-brand-gradient sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1"
+			>
 				<div className="flex w-full flex-col overflow-hidden bg-cream text-black-70 dark:bg-black-80 dark:text-white-20 sm:rounded-3xl sm:bg-white-20 sm:dark:bg-black-70">
 					<ProfileImageDisplay images={user.profile.images}>
 						<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">

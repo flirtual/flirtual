@@ -1,6 +1,8 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 import { Button } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
@@ -15,7 +17,11 @@ export default function Error({
 	reset: () => void;
 }) {
 	const router = useRouter();
-	console.error(error);
+
+	useEffect(() => {
+		Sentry.captureException(error);
+		console.error(error);
+	});
 
 	return (
 		<div className="flex min-h-screen w-full justify-center bg-brand-gradient px-8 py-16 text-white-10 sm:items-center">

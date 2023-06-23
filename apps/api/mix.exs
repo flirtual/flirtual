@@ -61,6 +61,7 @@ defmodule Flirtual.MixProject do
       {:poison, "~> 3.0"},
       {:jason, "~> 1.2"},
       {:joken, "~> 2.5"},
+      {:sentry, "~> 8.0"},
       {:plug_cowboy, "~> 2.5"},
       {:libcluster, "~> 3.3"},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},

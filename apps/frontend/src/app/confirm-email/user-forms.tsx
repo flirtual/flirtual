@@ -37,9 +37,11 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 			>
 				<span className="text-xl">
 					Please check your email address,{" "}
-					<span className="font-semibold">{user.email}</span>, for a
-					confirmation link to activate your account. If you don&apos;t see it
-					in your inbox, please check your spam folder!
+					<span data-sentry-mask className="font-semibold">
+						{user.email}
+					</span>
+					, for a confirmation link to activate your account. If you don&apos;t
+					see it in your inbox, please check your spam folder!
 				</span>
 				<FormButton>Resend confirmation email</FormButton>
 			</Form>

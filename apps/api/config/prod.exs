@@ -9,5 +9,8 @@ config :flirtual, FlirtualWeb.Endpoint,
     ip: {0, 0, 0, 0, 0, 0, 0, 0}
   ]
 
+config :sentry,
+  environment_name: :production
+
 # Do not print debug messages in production
 config :logger, level: :info
