@@ -214,7 +214,7 @@ defmodule Flirtual.User do
               }
             )
         ]
-        |> Enum.filter(&not is_nil(&1))
+        |> Enum.filter(&(not is_nil(&1)))
     }
   end
 
