@@ -199,6 +199,8 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 											options={genders.map((gender) => ({
 												key: gender.id,
 												label: gender.name,
+												definition: gender.metadata.definition,
+												definitionLink: gender.metadata.definitionLink,
 												hidden: simpleGenderIds.has(gender.id)
 											}))}
 										/>

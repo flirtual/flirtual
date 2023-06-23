@@ -60,7 +60,7 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 						return [
 							type,
 							filterBy(profile.attributes, "type", type).map(({ id }) => id) ??
-								[]
+							[]
 						] as const;
 					})
 				) as { [K in (typeof AttributeKeys)[number]]: Array<string> }),
@@ -99,8 +99,8 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 									return [`${type}Id`, values[type]] as const;
 								})
 							) as {
-								[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
-							}),
+									[K in (typeof AttributeKeys)[number]as `${K}Ids`]: Array<string>;
+								}),
 							genderId: gender.filter((id) => id !== "other"),
 							interestId: interest.filter((id) => !customInterests.includes(id))
 						}
@@ -162,7 +162,7 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 												label: gender.name,
 												conflicts:
 													gender.metadata &&
-													Array.isArray(gender.metadata.conflicts)
+														Array.isArray(gender.metadata.conflicts)
 														? gender.metadata.conflicts
 														: []
 											})),
@@ -180,6 +180,8 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 											options={genders.map((gender) => ({
 												key: gender.id,
 												label: gender.name,
+												definition: gender.metadata.definition,
+												definitionLink: gender.metadata.definitionLink,
 												hidden: simpleGenderIds.has(gender.id)
 											}))}
 										/>
@@ -198,7 +200,9 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 									placeholder="Select your sexualities..."
 									options={sexualities.map((sexuality) => ({
 										key: sexuality.id,
-										label: sexuality.name
+										label: sexuality.name,
+										definition: sexuality.metadata.definition,
+										definitionLink: sexuality.metadata.definitionLink
 									}))}
 								/>
 							</>

@@ -5,6 +5,8 @@ import { FC } from "react";
 import { Attribute } from "~/api/attributes";
 import { User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { InlineLink } from "~/components/inline-link";
 
 import { Pill } from "./pill";
 
@@ -28,15 +30,43 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 
 	return (
 		<div className="flex w-full flex-wrap gap-2">
-			{attributes.map(({ id, name }) => (
-				<Pill
-					active={session.user.id !== user.id && sessionAttributeIds.has(id)}
-					href={href}
-					key={id}
-				>
-					{name}
-				</Pill>
-			))}
+			{attributes.map(({ id, name, metadata }) => {
+				const meta = metadata as {
+					definition?: string;
+					definitionLink?: string;
+				};
+
+				return (
+					<Tooltip key={id}>
+						<TooltipTrigger asChild>
+							<div>
+								<Pill
+									href={href}
+									active={
+										session.user.id !== user.id && sessionAttributeIds.has(id)
+									}
+								>
+									{name}
+								</Pill>
+							</div>
+						</TooltipTrigger>
+						{metadata !== undefined &&
+							(meta.definition || meta.definitionLink) && (
+								<TooltipContent>
+									{meta.definition}{" "}
+									{meta.definitionLink && (
+										<InlineLink
+											className="pointer-events-auto"
+											href={meta.definitionLink}
+										>
+											Learn more
+										</InlineLink>
+									)}
+								</TooltipContent>
+							)}
+					</Tooltip>
+				);
+			})}
 		</div>
 	);
 };

@@ -10,8 +10,13 @@ export interface AttributeMetadata {
 		plural?: string;
 		conflicts?: Array<string>;
 		aliasOf?: string;
+		definition?: string;
+		definitionLink: string;
 	};
-	sexuality: undefined;
+	sexuality: {
+		definition?: string;
+		definitionLink: string;
+	};
 	language: undefined;
 	game: undefined;
 	interest: undefined;
@@ -22,6 +27,8 @@ export interface AttributeMetadata {
 	kink: {
 		kind: KinkAttributeKind;
 		pair: string;
+		definition?: string;
+		definitionLink: string;
 	};
 	"report-reason": {
 		fallback?: boolean;
