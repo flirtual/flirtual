@@ -4,11 +4,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch, fuzzy } from "fast-fuzzy";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { InlineLink } from "../inline-link";
+
 import { InputOptionWindow } from "./option-window";
 
 export interface InputAutocompleteOption<K extends string = string> {
 	key: K;
 	label: string;
+	definition?: string;
+	definitionLink?: string;
 	hidden?: boolean;
 }
 
@@ -46,6 +51,8 @@ export function InputAutocomplete<K extends string>(
 									? {
 											key: value,
 											label: value,
+											definition: value,
+											definitionLink: value,
 											hidden: false
 									  }
 									: undefined);
@@ -125,9 +132,28 @@ export function InputAutocomplete<K extends string>(
 									props.onChange(values.filter((v) => v !== option.key));
 								}}
 							>
-								<span className="pointer-events-none select-none font-nunito text-lg text-white-20">
-									{option.label}
-								</span>
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<div>
+											<span className="pointer-events-none select-none font-nunito text-lg text-white-20">
+												{option.label}
+											</span>
+										</div>
+									</TooltipTrigger>
+									{(option.definition || option.definitionLink) && (
+										<TooltipContent>
+											{option.definition}{" "}
+											{option.definitionLink && (
+												<InlineLink
+													className="pointer-events-auto"
+													href={option.definitionLink}
+												>
+													Learn more
+												</InlineLink>
+											)}
+										</TooltipContent>
+									)}
+								</Tooltip>
 							</button>
 						);
 					})}

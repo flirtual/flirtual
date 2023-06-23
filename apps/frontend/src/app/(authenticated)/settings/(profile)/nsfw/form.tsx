@@ -108,7 +108,9 @@ export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
 											limit={8}
 											options={kinks.map((attribute) => ({
 												key: attribute.id,
-												label: attribute.name
+												label: attribute.name,
+												definition: attribute.metadata.definition,
+												definitionLink: attribute.metadata.definitionLink
 											}))}
 										/>
 									</>

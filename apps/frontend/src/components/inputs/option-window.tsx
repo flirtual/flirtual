@@ -13,9 +13,14 @@ import {
 } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { InlineLink } from "../inline-link";
+
 export interface InputSelectOption<K> {
 	key: K;
 	label: string;
+	definition: string;
+	definitionLink: string;
 	active?: boolean;
 }
 
@@ -84,18 +89,37 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	const { option, elementProps } = props;
 
 	return (
-		<button
-			{...elementProps}
-			type="button"
-			className={twMerge(
-				"px-4 py-2 text-left hocus:outline-none",
-				option.active
-					? "bg-brand-gradient text-white-20"
-					: "text-black-70 focus:outline-none hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20"
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<button
+					{...elementProps}
+					type="button"
+					className={twMerge(
+						"px-4 py-2 text-left hocus:outline-none",
+						option.active
+							? "bg-brand-gradient text-white-20"
+							: "text-black-70 focus:outline-none hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20"
+					)}
+				>
+					<span className="select-none font-nunito text-lg">
+						{option.label}
+					</span>
+				</button>
+			</TooltipTrigger>
+			{(option.definition || option.definitionLink) && (
+				<TooltipContent align="start">
+					{option.definition}{" "}
+					{option.definitionLink && (
+						<InlineLink
+							className="pointer-events-auto"
+							href={option.definitionLink}
+						>
+							Learn more
+						</InlineLink>
+					)}
+				</TooltipContent>
 			)}
-		>
-			<span className="select-none font-nunito text-lg">{option.label}</span>
-		</button>
+		</Tooltip>
 	);
 };
 
@@ -128,7 +152,7 @@ export const InputOptionWindow = forwardRef<
 
 		const sibling =
 			document.activeElement[
-				target === -1 ? "previousSibling" : "nextSibling"
+			target === -1 ? "previousSibling" : "nextSibling"
 			] ?? root[target === -1 ? "lastChild" : "firstChild"];
 		if (sibling instanceof HTMLElement) sibling.focus();
 	}, []);
