@@ -189,6 +189,35 @@ defmodule Flirtual.User do
     end)
   end
 
+  def preview(%User{} = user) do
+    %{
+      id: user.id,
+      name: display_name(user),
+      age: get_years_since(user.born_at),
+      serious: user.profile.serious,
+      dark: user.preferences.theme === :dark,
+      avatar_url: avatar_url(user, 384),
+      attributes:
+        [
+          if(user.preferences.privacy.country === :everyone and user.profile.country,
+            do: Attribute.get(Atom.to_string(user.profile.country), "country"),
+            else: nil
+          )
+          | user.profile.attributes
+            |> Attribute.normalize_aliases()
+            |> Enum.filter(&(&1.type in ["gender", "sexuality", "interest"]))
+            |> Enum.map(
+              &%{
+                id: &1.id,
+                type: &1.type,
+                name: &1.name
+              }
+            )
+        ]
+        |> Enum.filter(&not is_nil(&1))
+    }
+  end
+
   def blocked?(%User{} = user, %User{} = target) do
     Block.exists?(user: user, target: target)
   end

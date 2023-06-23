@@ -21,15 +21,13 @@ export function thruServerCookies() {
 }
 
 export const withOptionalSession = cache(async () => {
-	return await api.auth.session(thruServerCookies()).catch((reason) => {
-		if (!(reason instanceof ResponseError)) throw reason;
-		if (reason.statusCode === 401) return null;
-		throw reason;
-	});
-});
-
-export const withSession = cache(async (next?: string) => {
-	const session = await withOptionalSession();
+	const session = await api.auth
+		.session(thruServerCookies())
+		.catch((reason) => {
+			if (!(reason instanceof ResponseError)) throw reason;
+			if (reason.statusCode === 401) return null;
+			throw reason;
+		});
 
 	// Set the user context for Sentry depending on the user's privacy settings.
 	Sentry.setUser(
@@ -38,8 +36,13 @@ export const withSession = cache(async (next?: string) => {
 			: null
 	);
 
-	if (!session) return redirect(urls.login(next));
+	return session;
+});
 
+export const withSession = cache(async (next?: string) => {
+	const session = await withOptionalSession();
+
+	if (!session) return redirect(urls.login(next));
 	return session;
 });
 

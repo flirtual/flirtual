@@ -3,6 +3,7 @@ import { snakeCase } from "change-case";
 import { DatedModel, UuidModel } from "../common";
 import { fetch, NarrowFetchOptions } from "../exports";
 import { Subscription } from "../subscription";
+import { Attribute } from "../attributes";
 
 import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";
@@ -62,6 +63,23 @@ export async function get(userId: string, options: NarrowFetchOptions = {}) {
 	return fetch<User>("get", `users/${userId}`, options);
 }
 
+export interface UserPreview {
+	id: string;
+	name: string;
+	age: number;
+	serious: boolean;
+	dark: boolean;
+	attributes: Array<Attribute>;
+	avatarUrl: string;
+}
+
+export async function preview(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<UserPreview>("get", `users/${userId}/preview`, options);
+}
+
 export async function bulk(options: NarrowFetchOptions<Array<string>>) {
 	return fetch<Array<User>>("post", "users/bulk", options);
 }
@@ -95,8 +113,8 @@ export async function update(
 	options: NarrowFetchOptions<
 		UpdateUserBody,
 		| {
-			required?: Array<keyof UpdateUserBody>;
-		}
+				required?: Array<keyof UpdateUserBody>;
+		  }
 		| undefined
 	>
 ) {

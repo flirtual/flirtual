@@ -68,6 +68,12 @@ defmodule FlirtualWeb.Router do
         end
       end
 
+      scope "/users" do
+        scope "/:user_id" do
+          get("/preview", UsersController, :preview)
+        end
+      end
+
       scope "/images" do
         scope "/scan-queue" do
           pipe_through(:fetch_authorization_token)
