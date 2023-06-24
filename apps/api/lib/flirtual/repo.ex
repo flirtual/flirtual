@@ -3,7 +3,7 @@ defmodule Flirtual.Repo do
     otp_app: :flirtual,
     adapter: Ecto.Adapters.Postgres
 
-  #use Paginator, include_total_count: true
+  # use Paginator, include_total_count: true
 end
 
 # defimpl Jason.Encoder, for: Paginator.Page do

@@ -64,6 +64,7 @@ defmodule FlirtualWeb.UsersController do
 
   def search(conn, params) do
     IO.inspect(params)
+
     with {:ok, page} <- User.search(params) do
       page = %{page | entries: Policy.transform(conn, page.entries)}
       conn |> json(page)

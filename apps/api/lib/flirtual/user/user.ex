@@ -334,25 +334,26 @@ defmodule Flirtual.User do
           |> Map.get(:search, "")
           |> String.trim()
 
-        entries = User
-        |> preload(^default_assoc())
-        |> then(
-          &if(is_binary(value) and String.length(value) > 0,
-            do:
-              if(is_uid(value),
-                # if the value is a uid, search by id.
-                do: or_where(&1, id: ^value),
-                # loosely search by similarity.
-                else:
-                  Enum.reduce(@default_search_fields, &1, fn field, query ->
-                    ilike_with_similarity(query, field, value)
-                  end)
-              ),
-            else: &1
+        entries =
+          User
+          |> preload(^default_assoc())
+          |> then(
+            &if(is_binary(value) and String.length(value) > 0,
+              do:
+                if(is_uid(value),
+                  # if the value is a uid, search by id.
+                  do: or_where(&1, id: ^value),
+                  # loosely search by similarity.
+                  else:
+                    Enum.reduce(@default_search_fields, &1, fn field, query ->
+                      ilike_with_similarity(query, field, value)
+                    end)
+                ),
+              else: &1
+            )
           )
-        )
-        |> paginate(attrs.page, attrs.limit)
-        |> Repo.all()
+          |> paginate(attrs.page, attrs.limit)
+          |> Repo.all()
 
         %{
           entries: entries,
