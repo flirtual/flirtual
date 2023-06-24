@@ -117,6 +117,7 @@ export const urls = {
 	},
 
 	moderation: {
+		search: "/search",
 		reports: "/reports",
 		imageSearch: (imageLink: string) =>
 			`https://lens.google.com/uploadbyurl?url=${imageLink}`

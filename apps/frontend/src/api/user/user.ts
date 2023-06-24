@@ -1,7 +1,13 @@
 import { snakeCase } from "change-case";
 
 import { DatedModel, UuidModel } from "../common";
-import { fetch, NarrowFetchOptions } from "../exports";
+import {
+	fetch,
+	FetchOptions,
+	NarrowFetchOptions,
+	Paginate,
+	PaginateOptions
+} from "../exports";
 import { Subscription } from "../subscription";
 import { Attribute } from "../attributes";
 
@@ -82,6 +88,16 @@ export async function preview(
 
 export async function bulk(options: NarrowFetchOptions<Array<string>>) {
 	return fetch<Array<User>>("post", "users/bulk", options);
+}
+
+export async function search(
+	query: PaginateOptions<{ search?: string }> = {},
+	requestOptions: FetchOptions = {}
+) {
+	return fetch<Paginate<User>>("get", "users", {
+		...requestOptions,
+		query
+	});
 }
 
 export async function getByUsername(

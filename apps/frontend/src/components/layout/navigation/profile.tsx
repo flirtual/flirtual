@@ -16,7 +16,6 @@ import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useLocation } from "~/hooks/use-location";
-import { useProgressiveWebApp } from "~/hooks/use-pwa";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
@@ -161,8 +160,8 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 									<ProfileNavigationItem href={urls.moderation.reports}>
 										Reports
 									</ProfileNavigationItem>
-									<ProfileNavigationItem href={urls.moderation.reports}>
-										Lookup
+									<ProfileNavigationItem href={urls.moderation.search}>
+										Search
 									</ProfileNavigationItem>
 								</>
 							)}

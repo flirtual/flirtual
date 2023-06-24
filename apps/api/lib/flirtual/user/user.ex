@@ -283,6 +283,93 @@ defmodule Flirtual.User do
 
   def get(_), do: nil
 
+  def ilike_with_similarity(query, key, value) do
+    query
+    |> or_where([user], field(user, ^key) == ^value)
+    |> or_where([user], ilike(field(user, ^key), ^"%#{value}%"))
+    |> order_by([user], {:desc, fragment("similarity(?, ?)", field(user, ^key), ^value)})
+  end
+
+  defmodule Search do
+    use Flirtual.EmbeddedSchema
+
+    @optional [
+      :search,
+      :limit,
+      :before,
+      :after
+    ]
+
+    embedded_schema do
+      field(:search, :string, default: "")
+
+      # Pagination options.
+      field(:limit, :integer, default: 10)
+      field(:page, :integer, default: 1)
+    end
+
+    def changeset(value, _, _) do
+      value
+      |> validate_number(:limit, greater_than_or_equal_to: 1, less_than_or_equal_to: 100)
+    end
+  end
+
+  def paginate(query, page, size) do
+    query
+    |> limit(^size)
+    |> offset(^size * (^page - 1))
+  end
+
+  @default_search_fields [
+    :email,
+    :username,
+    :stripe_id
+  ]
+
+  def search(attrs) do
+    Repo.transaction(fn ->
+      with {:ok, attrs} <- Search.apply(attrs) do
+        value =
+          attrs
+          |> Map.get(:search, "")
+          |> String.trim()
+
+        entries = User
+        |> preload(^default_assoc())
+        |> then(
+          &if(is_binary(value) and String.length(value) > 0,
+            do:
+              if(is_uid(value),
+                # if the value is a uid, search by id.
+                do: or_where(&1, id: ^value),
+                # loosely search by similarity.
+                else:
+                  Enum.reduce(@default_search_fields, &1, fn field, query ->
+                    ilike_with_similarity(query, field, value)
+                  end)
+              ),
+            else: &1
+          )
+        )
+        |> paginate(attrs.page, attrs.limit)
+        |> Repo.all()
+
+        %{
+          entries: entries,
+          metadata: %{
+            page: attrs.page,
+            limit: attrs.limit
+          }
+        }
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def search(_, _), do: []
+
   def suspend(
         %User{} = user,
         %Attribute{type: "ban-reason"} = reason,

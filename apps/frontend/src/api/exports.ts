@@ -48,6 +48,19 @@ export class ResponseChangesetError extends ResponseError {
 	}
 }
 
+export interface Paginate<T> {
+	entries: Array<T>;
+	metadata: {
+		page: number;
+		limit: number;
+	};
+}
+
+export type PaginateOptions<T> = T & {
+	limit?: number;
+	page?: number;
+};
+
 export type FetchOptions = Expand<
 	Omit<RequestInit, "method" | "body"> & {
 		query?: unknown;

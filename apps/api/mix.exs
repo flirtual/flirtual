@@ -42,6 +42,7 @@ defmodule Flirtual.MixProject do
       {:ecto_shortuuid, "~> 0.1"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
+      {:paginator, "~> 1.2.0"},
       {:fly_postgres, "~> 0.3.1"},
       {:redisgraph, "~> 0.1.0"},
       {:elasticsearch, "~> 1.0.0"},
