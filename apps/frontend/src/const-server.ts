@@ -1,7 +1,5 @@
 import "server-only";
 
-export const environment = (process.env.VERCEL_ENV ||
-	process.env.NODE_ENV) as string;
 export const region = process.env.VERCEL_REGION as string;
 
 export const gitOrganization = process.env.VERCEL_GIT_REPO_OWNER as string;

@@ -43,8 +43,7 @@ config :sentry,
   root_source_code_path: File.cwd!(),
   included_environments: [
     :production,
-    :staging,
-    :development
+    :staging
   ]
 
 config :logger, :console,

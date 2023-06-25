@@ -4,12 +4,14 @@
 
 import * as Sentry from "@sentry/nextjs";
 
-import { sentryDsn, apiUrl, siteOrigin } from "~/const";
+import { sentryDsn, apiUrl, siteOrigin, environment } from "~/const";
 
 Sentry.init({
+	enabled: environment !== "development",
 	dsn: sentryDsn,
 	sampleRate: 1,
 	tracesSampleRate: 0,
+	enableTracing: false,
 	replaysOnErrorSampleRate: 1,
 	replaysSessionSampleRate: 0,
 	integrations: [

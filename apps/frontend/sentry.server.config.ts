@@ -4,10 +4,12 @@
 
 import * as Sentry from "@sentry/nextjs";
 
-import { sentryDsn } from "~/const";
+import { environment, sentryDsn } from "~/const";
 
 Sentry.init({
+	enabled: environment !== "development",
 	dsn: sentryDsn,
 	sampleRate: 1,
+	enableTracing: false,
 	tracesSampleRate: 0
 });
