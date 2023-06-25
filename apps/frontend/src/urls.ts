@@ -5,12 +5,7 @@ import { ProspectKind } from "~/api/matchmaking";
 import { User } from "./api/user";
 import { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
-
-export const siteOrigin = process.env.NEXT_PUBLIC_ORIGIN as string;
-if (!siteOrigin) throw new ReferenceError("Site origin not defined");
-
-export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
-if (!apiUrl) throw new ReferenceError("API url not defined");
+import { siteOrigin } from "./const";
 
 export function ensureRelativeUrl(pathname: string) {
 	if (!isInternalHref(pathname))

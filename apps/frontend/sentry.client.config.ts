@@ -4,7 +4,7 @@
 
 import * as Sentry from "@sentry/nextjs";
 
-import { sentryDsn } from "~/const";
+import { sentryDsn, apiUrl, siteOrigin } from "~/const";
 
 Sentry.init({
 	dsn: sentryDsn,
@@ -16,7 +16,12 @@ Sentry.init({
 		new Sentry.Replay({
 			blockAllMedia: false,
 			maskAllText: false,
-			maskAllInputs: true
+			maskAllInputs: true,
+			networkDetailAllowUrls: [
+				window.location.origin,
+				new URL(siteOrigin).origin,
+				new URL(apiUrl).origin
+			]
 		})
 	]
 });
