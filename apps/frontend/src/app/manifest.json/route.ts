@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { siteOrigin, urls } from "~/urls";
+import { siteOrigin } from "~/const";
+import { urls } from "~/urls";
 
 export async function GET() {
 	return NextResponse.json({

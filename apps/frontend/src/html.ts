@@ -2,8 +2,9 @@ import { PropertiesHyphen, Property } from "csstype";
 import sanitizeHtml, { Attributes } from "sanitize-html";
 
 import { rgb } from "./colors";
-import { isInternalHref, siteOrigin, toAbsoluteUrl } from "./urls";
+import { isInternalHref, toAbsoluteUrl } from "./urls";
 import { entries } from "./utilities";
+import { siteOrigin } from "./const";
 
 export function toStyleProperties(
 	style: PropertiesHyphen,

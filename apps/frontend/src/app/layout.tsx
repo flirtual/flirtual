@@ -7,8 +7,9 @@ import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
 
+import { siteOrigin } from "~/const";
 import { withOptionalSession } from "~/server-utilities";
-import { siteOrigin, urls } from "~/urls";
+import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
 import { SessionProvider } from "~/components/session-provider";
