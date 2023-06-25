@@ -9,9 +9,9 @@ import { sentryDsn, apiUrl, siteOrigin } from "~/const";
 Sentry.init({
 	dsn: sentryDsn,
 	sampleRate: 1,
-	tracesSampleRate: 1,
+	tracesSampleRate: 0,
 	replaysOnErrorSampleRate: 1,
-	replaysSessionSampleRate: 0.1,
+	replaysSessionSampleRate: 0,
 	integrations: [
 		new Sentry.Replay({
 			blockAllMedia: false,

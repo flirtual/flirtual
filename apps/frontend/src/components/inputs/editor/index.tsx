@@ -35,6 +35,7 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 }) => {
 	return (
 		<ReactQuill
+			data-sentry-mask
 			className="prose dark:prose-invert"
 			value={value}
 			formats={[

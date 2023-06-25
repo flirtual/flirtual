@@ -10,5 +10,5 @@ import { sentryDsn } from "~/const";
 Sentry.init({
 	dsn: sentryDsn,
 	sampleRate: 1,
-	tracesSampleRate: 0.5
+	tracesSampleRate: 0
 });
