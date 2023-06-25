@@ -252,6 +252,10 @@ defmodule Flirtual.User.Policy do
   def transform(key, _, _) when key in @own_property_keys, do: nil
   def transform(key, _, _) when key in @moderator_property_keys, do: nil
 
+  # HACK: This value is potentially out of sync, so we ignore the value from the database,
+  # and compute the users' visibility based on their current state.
+  def transform(:visible, _, %User{} = user), do: User.visible?(user)
+
   def transform(:preferences, conn, user) do
     if(Policy.can?(conn, :read, user.preferences), do: user.preferences, else: nil)
   end
