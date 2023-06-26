@@ -85,7 +85,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 					<div className="flex gap-4">
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<Link href={urls.user.profile(reported.username)}>
+								<Link href={urls.profile(reported)}>
 									<ArrowTopRightOnSquareIcon className="h-6 w-6" />
 								</Link>
 							</TooltipTrigger>
@@ -198,7 +198,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 									<InlineLink
 										href={
 											report.user
-												? urls.user.profile(report.user.username)
+												? urls.profile(report.user)
 												: urls.moderation.reports
 										}
 									>

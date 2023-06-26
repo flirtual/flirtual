@@ -74,7 +74,7 @@ export default async function LikesPage() {
 							{items.map(({ id, user, kind }) => {
 								const Icon = kind === "love" ? HeartIcon : PeaceIcon;
 								return (
-									<Link href={urls.user.profile(user.username)} key={id}>
+									<Link href={urls.profile(user)} key={id}>
 										<div className="flex items-center gap-4 bg-white-10 p-4 dark:bg-black-80 sm:rounded-xl sm:shadow-brand-1">
 											<UserAvatar
 												className="aspect-square h-16 rounded-lg"

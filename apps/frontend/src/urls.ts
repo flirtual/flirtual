@@ -67,15 +67,22 @@ export const urls = {
 	login: (next?: string) => url("/login", { next }),
 	forgotPassword: "/forgot",
 	user: {
-		me: "/me",
-		profile: (username: string) => `/${username.toLowerCase()}`
+		me: "/me"
 	},
-	profile: (user?: User | string) =>
-		`/${
-			user
-				? (typeof user === "string" ? user : user.username).toLowerCase()
-				: "me"
-		}`,
+	profile: (user?: User | string) => {
+		if (!user) return "me";
+
+		return `/${
+			typeof user === "string"
+				? user.toLowerCase()
+				: // HACK: This is a temporary fix because some users have usernames
+				// that are 22 characters long, which is the same length as a user id, and
+				// that causes a errors when resolving the route.
+				user.username.length === 22
+				? user.id
+				: user.username.toLowerCase()
+		}`;
+	},
 	browse: (kind?: ProspectKind) =>
 		url("/browse", { kind: kind === "love" ? undefined : kind }),
 	conversations: {

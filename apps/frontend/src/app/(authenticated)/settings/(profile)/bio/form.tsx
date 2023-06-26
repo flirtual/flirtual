@@ -93,10 +93,7 @@ export const BiographyForm: FC = () => {
 									This is how you&apos;ll appear around Flirtual. Your display
 									name can contain special characters and doesn&apos;t need to
 									be unique. Your profile link (
-									<InlineLink
-										className="font-mono"
-										href={urls.user.profile(user.username)}
-									>
+									<InlineLink className="font-mono" href={urls.profile(user)}>
 										flirtu.al/
 										{user.username}
 									</InlineLink>

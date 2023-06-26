@@ -26,9 +26,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				Icon={ShareIcon}
 				size="sm"
 				onClick={async () => {
-					const url = toAbsoluteUrl(
-						urls.user.profile(user.username)
-					).toString();
+					const url = toAbsoluteUrl(urls.profile(user)).toString();
 
 					await share({
 						text: "Check out my Flirtual profile!",

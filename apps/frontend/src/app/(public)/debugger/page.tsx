@@ -44,7 +44,7 @@ export default async function DebuggerPage() {
 						<span className="shrink-0">User profile: </span>
 						<InlineLink
 							className="truncate font-mono text-sm"
-							href={session ? urls.user.profile(session.user.username) : null}
+							href={session ? urls.profile(session.user) : null}
 						>
 							{session
 								? `${displayName(session.user)} (${session.user.username})`
