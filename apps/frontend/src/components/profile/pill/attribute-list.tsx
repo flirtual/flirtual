@@ -14,7 +14,7 @@ interface PillAttributeListProps {
 	attributes?: Array<Attribute>;
 	user: User;
 	href?: string;
-	activeIds?: Set<string>;
+	activeIds?: Array<string>;
 }
 
 export const PillAttributeList: FC<PillAttributeListProps> = ({
@@ -26,7 +26,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	const [session] = useSession();
 	if (!session || !attributes?.length) return null;
 	const attributeIds =
-		activeIds || new Set(session.user.profile.attributes.map(({ id }) => id));
+		activeIds || session.user.profile.attributes.map(({ id }) => id);
 
 	return (
 		<div className="flex w-full flex-wrap gap-2">
@@ -41,7 +41,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 						<TooltipTrigger asChild>
 							<div>
 								<Pill
-									active={session.user.id !== user.id && attributeIds.has(id)}
+									active={session.user.id !== user.id && attributeIds.includes(id)}
 									href={href}
 								>
 									{name}
