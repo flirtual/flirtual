@@ -36,7 +36,6 @@ defmodule FlirtualWeb.ImageController do
           |> Image.url(
             params
             |> Map.delete("image_id")
-            |> Keyword.new()
           )
       )
     else

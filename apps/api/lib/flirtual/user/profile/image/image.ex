@@ -25,14 +25,16 @@ defmodule Flirtual.User.Profile.Image do
     %Image{external_id: "e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"}
   end
 
-  def url(_, params \\ [])
+  def url(_, params \\ %{})
+
+  def url(image, params) when is_list(params), do: url(image, Map.new(params))
 
   def url(%Image{external_id: external_id}, params) do
     URI.new!("https://media.flirtu.al/")
     |> URI.merge(
       external_id <>
         "/" <>
-        (Keyword.to_list(params)
+        (Map.to_list(params)
          |> then(
            &if(&1 == [],
              do: "",
