@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 
-import { Attribute } from "~/api/attributes";
+import { Attribute, AttributeMetadata } from "~/api/attributes";
 import { User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
@@ -28,9 +28,22 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 		session.user.profile.attributes.map(({ id }) => id)
 	);
 
+	const attributeMatches = (
+		id: string,
+		type: string,
+		metadata: unknown
+	): boolean => {
+		let targetId = id;
+		if (type === "kink") {
+			const kinkMetadata = metadata as AttributeMetadata["kink"];
+			if (kinkMetadata.pair) targetId = kinkMetadata.pair;
+		}
+		return sessionAttributeIds.has(targetId);
+	};
+
 	return (
 		<div className="flex w-full flex-wrap gap-2">
-			{attributes.map(({ id, name, metadata }) => {
+			{attributes.map(({ id, type, name, metadata }) => {
 				const meta = metadata as {
 					definition?: string;
 					definitionLink?: string;
@@ -43,7 +56,8 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 								<Pill
 									href={href}
 									active={
-										session.user.id !== user.id && sessionAttributeIds.has(id)
+										session.user.id !== user.id &&
+										attributeMatches(id, type, metadata)
 									}
 								>
 									{name}
