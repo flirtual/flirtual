@@ -17,11 +17,22 @@ export const download = async (groupFile: string, imageId: string) => {
 			}
 		);
 
+		if (!response.ok) {
+			const body = await response.json().catch(() => null);
+			const error =
+				(body && typeof body === "object" && "error" in body && body?.error) ||
+				response.statusText;
+
+			log.error({ groupFile, imageId, error }, `Download failed.`);
+			return false;
+		}
+
 		const extension = mime.extension(
 			response.headers.get("content-type") || ""
 		);
+
 		if (!extension) {
-			log.warn({ groupFile }, `Unknown content type for ${imageId}.`);
+			log.warn({ groupFile, imageId }, `Unknown content type.`);
 			return false;
 		}
 
@@ -29,7 +40,7 @@ export const download = async (groupFile: string, imageId: string) => {
 		// And we expect to receive jpeg images, but they simply return the original image.
 		// https://uploadcare.com/docs/cdn-operations/#limits
 		if (extension === "svg") {
-			log.warn({ groupFile }, `SVG images not supported.`);
+			log.warn({ groupFile, imageId }, `SVG images not supported.`);
 			return false;
 		}
 
