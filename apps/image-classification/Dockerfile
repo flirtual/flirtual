@@ -36,8 +36,8 @@ WORKDIR /app/deep-danbooru
 RUN apt-get install -y python3 python3-pip
 
 ## Install Deep Danbooru's dependencies.
-RUN pip install -r requirements.txt &&\
-    pip install .[tensorflow]
+RUN pip install --break-system-packages -r requirements.txt &&\
+    pip install --break-system-packages .[tensorflow]
 
 # Build application.
 # We want to do this as late as possible so we can
