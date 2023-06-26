@@ -7,7 +7,8 @@ import { User } from "~/api/user";
 import { Session } from "~/api/auth";
 import { ProfileMonopolyLabel } from "~/api/user/profile";
 import { urls } from "~/urls";
-import { Attribute } from "~/api/attributes";
+import { Attribute, AttributeMetadata } from "~/api/attributes";
+import { filterBy } from "~/utilities";
 
 import { PillAttributeList } from "./attribute-list";
 import { Pill } from "./pill";
@@ -44,8 +45,17 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 				attributes={attributes.kink}
 				href={editable ? urls.settings.nsfw : undefined}
 				user={user}
+				activeIds={
+					new Set(
+						filterBy(session.user.profile.attributes, "type", "kink").map(
+							(attribute) =>
+								(attribute.metadata as AttributeMetadata["kink"]).pair
+						)
+					)
+				}
 			/>
 			<PillAttributeList
+				activeIds={new Set(session.user.profile.languages)}
 				attributes={attributes.language}
 				href={editable ? urls.settings.tags("language") : undefined}
 				user={user}
