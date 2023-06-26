@@ -37,6 +37,8 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 		if (type === "kink") {
 			const kinkMetadata = metadata as AttributeMetadata["kink"];
 			if (kinkMetadata.pair) targetId = kinkMetadata.pair;
+		} else if (type === "language") {
+			return session.user.profile.languages.includes(targetId);
 		}
 		return sessionAttributeIds.has(targetId);
 	};
