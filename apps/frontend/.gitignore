@@ -4,6 +4,5 @@ npm-debug.log
 node_modules
 .next
 .vercel
-.DS_Store
 # Sentry Auth Token
 .sentryclirc

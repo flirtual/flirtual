@@ -7,3 +7,6 @@
 *.gz
 *.zip
 *.tar
+
+# Junk
+.DS_Store
