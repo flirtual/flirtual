@@ -24,6 +24,8 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
+	<key>NSCameraUsageDescription</key>
+	<string>Your camera is used to capture and upload your profile picture.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>UIMainStoryboardFile</key>
