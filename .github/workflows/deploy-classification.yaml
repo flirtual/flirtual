@@ -3,9 +3,10 @@ on:
   push:
     branches: [ "production" ]
     paths: [ "apps/image-classification/**" ]
+  workflow_dispatch:
 jobs:
   deploy:
-    name: Deploy app
+    name: Deploy Image Classification
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
