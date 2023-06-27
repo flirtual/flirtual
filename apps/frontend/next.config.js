@@ -1,10 +1,6 @@
 /** @type {import("next").NextConfig */
 module.exports = {
 	reactStrictMode: true,
-	experimental: {
-		appDir: true,
-		serverActions: true
-	},
 	images: {
 		domains: ["media.flirtu.al"],
 		loader: "custom",
