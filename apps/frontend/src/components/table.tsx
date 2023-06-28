@@ -32,7 +32,7 @@ const TableBody = React.forwardRef<
 	React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, reference) => (
 	<tbody
-		className={twMerge("bg-black-60 font-nunito", className)}
+		className={twMerge("bg-white-30 font-nunito dark:bg-black-60", className)}
 		ref={reference}
 		{...props}
 	/>
@@ -58,7 +58,7 @@ const TableRow = React.forwardRef<
 	<tr
 		ref={reference}
 		className={twMerge(
-			"transition-colors even:bg-black-50 data-[state=selected]:brightness-75",
+			"transition-colors even:bg-white-20 data-[state=selected]:brightness-75 dark:even:bg-black-50",
 			className
 		)}
 		{...props}

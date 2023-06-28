@@ -17,7 +17,7 @@ export const BanProfile: React.FC<{ user: User }> = ({ user }) => {
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<button type="button" onClick={() => setVisible(true)}>
-						<ShieldExclamationIcon className="h-6 w-6" />
+						<ShieldExclamationIcon className="h-6 w-6 text-red-500" />
 					</button>
 				</TooltipTrigger>
 				<TooltipContent>Ban profile</TooltipContent>
