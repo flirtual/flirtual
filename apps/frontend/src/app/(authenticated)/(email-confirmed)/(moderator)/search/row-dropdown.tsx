@@ -18,7 +18,11 @@ import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urls } from "~/urls";
 import { lowercase } from "~/utilities";
 
-export const RowDropdown: FC<{ user: User }> = ({ user }) => {
+export interface RowDropdownProps {
+	user: User;
+}
+
+export const RowDropdown: FC<RowDropdownProps> = ({ user }) => {
 	const [session] = useSession();
 
 	return (

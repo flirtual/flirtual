@@ -63,11 +63,13 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def search(conn, params) do
-    IO.inspect(params)
-
-    with {:ok, page} <- User.search(params) do
-      page = %{page | entries: Policy.transform(conn, page.entries)}
-      conn |> json(page)
+    if Policy.cannot?(conn, :search, conn.assigns[:session].user) do
+      {:error, {:forbidden, "Forbidden"}}
+    else
+      with {:ok, page} <- User.search(params) do
+        page = %{page | entries: Policy.transform(conn, page.entries)}
+        conn |> json(page)
+      end
     end
   end
 

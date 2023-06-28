@@ -48,7 +48,8 @@ defmodule Flirtual.User.Policy do
   @moderator_actions [
     :suspend,
     :warn,
-    :note
+    :note,
+    :search
   ]
 
   def authorize(
