@@ -74,7 +74,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 													.catch(toasts.addError);
 											}}
 										>
-											<ShieldCheckIcon className="h-6 w-6" />
+											<ShieldCheckIcon className="h-6 w-6 text-green-500" />
 										</button>
 									</TooltipTrigger>
 									<TooltipContent>Clear reports</TooltipContent>

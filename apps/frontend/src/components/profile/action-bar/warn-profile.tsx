@@ -25,7 +25,7 @@ export const WarnProfile: FC<WarnProfileProps> = ({
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<button type="button" onClick={() => onVisibilityChange(true)}>
-						<ExclamationTriangleIcon className="h-6 w-6" />
+						<ExclamationTriangleIcon className="h-6 w-6 text-yellow-400" />
 					</button>
 				</TooltipTrigger>
 				<TooltipContent>Warn profile</TooltipContent>
