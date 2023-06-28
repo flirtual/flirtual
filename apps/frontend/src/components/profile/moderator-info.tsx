@@ -1,6 +1,5 @@
 import { Dialog } from "@capacitor/dialog";
 import { FC, PropsWithChildren } from "react";
-import useSWR from "swr";
 import { Slot } from "@radix-ui/react-slot";
 import { Clipboard } from "@capacitor/clipboard";
 import { useRouter } from "next/navigation";
@@ -12,6 +11,7 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useUserVisibility } from "~/hooks/use-user-visiblity";
 
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
@@ -44,11 +44,7 @@ export const ProfileModeratorInfo: FC<{
 	const router = useRouter();
 	const genders = useAttributeList("gender");
 
-	const {
-		data: { visible, reasons }
-	} = useSWR(["user", user.id, "visible"], () => api.user.visible(user.id), {
-		suspense: true
-	});
+	const { visible, reasons } = useUserVisibility(user.id);
 
 	if (!session || !session.user?.tags?.includes("moderator")) return null;
 

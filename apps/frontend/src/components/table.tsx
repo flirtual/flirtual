@@ -88,7 +88,7 @@ const TableCell = React.forwardRef<
 	<td
 		ref={reference}
 		className={twMerge(
-			"p-4 align-middle [&:has([role=checkbox])]:pr-0",
+			"w-[0] p-4 align-middle [&:has([role=checkbox])]:pr-0",
 			className
 		)}
 		{...props}

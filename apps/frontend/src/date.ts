@@ -1,3 +1,5 @@
+import { capitalize } from "./utilities";
+
 const secondInMilliseconds = 1e3;
 const minuteInMilliseconds = 6e4;
 const hourInMilliseconds = 3.6e6;
@@ -22,49 +24,74 @@ export interface RelativeTimeOptions {
 	approximate?: boolean;
 	approximateTo?: number;
 	suffix?: string;
+	capitalize?: boolean;
 }
 
-export function relativeTime(
-	date: Date,
-	options: RelativeTimeOptions = {}
-): string {
-	const { approximate = true, approximateTo = 5, suffix = "ago" } = options;
+function maybeCapitalize<T extends string>(
+	value: T,
+	shouldCapitalize: boolean
+): T | Capitalize<T> {
+	return shouldCapitalize ? capitalize(value) : value;
+}
+
+export function relativeTime(date: Date, options: RelativeTimeOptions = {}) {
+	const {
+		approximate = true,
+		approximateTo = 5,
+		capitalize: shouldCapitalize = true,
+		suffix = "ago"
+	} = options;
+
 	const since = Date.now() - date.getTime();
 
 	if (approximate && since < secondInMilliseconds * approximateTo)
-		return "just now";
+		return maybeCapitalize("just now", shouldCapitalize);
 
 	if (since < minuteInMilliseconds) {
 		const seconds = Math.floor(since / secondInMilliseconds);
-		return seconds === 1
-			? `a second ${suffix}`
-			: `${seconds} seconds ${suffix}`;
+		return maybeCapitalize(
+			seconds === 1 ? `a second ${suffix}` : `${seconds} seconds ${suffix}`,
+			shouldCapitalize
+		);
 	}
 
 	if (since < hourInMilliseconds) {
 		const minutes = Math.floor(since / minuteInMilliseconds);
-		return minutes === 1
-			? `a minute ${suffix}`
-			: `${minutes} minutes ${suffix}`;
+		return maybeCapitalize(
+			minutes === 1 ? `a minute ${suffix}` : `${minutes} minutes ${suffix}`,
+			shouldCapitalize
+		);
 	}
 
 	if (since < dayInMilliseconds) {
 		const hours = Math.floor(since / hourInMilliseconds);
-		return hours === 1 ? `an hour ${suffix}` : `${hours} hours ${suffix}`;
+		return maybeCapitalize(
+			hours === 1 ? `an hour ${suffix}` : `${hours} hours ${suffix}`,
+			shouldCapitalize
+		);
 	}
 
 	if (since < monthInMilliseconds) {
 		const days = Math.floor(since / dayInMilliseconds);
-		return days === 1 ? `a day ${suffix}` : `${days} days ${suffix}`;
+		return maybeCapitalize(
+			days === 1 ? `a day ${suffix}` : `${days} days ${suffix}`,
+			shouldCapitalize
+		);
 	}
 
 	if (since < yearInMilliseconds) {
 		const months = Math.floor(since / monthInMilliseconds);
-		return months === 1 ? `a month ${suffix}` : `${months} months ${suffix}`;
+		return maybeCapitalize(
+			months === 1 ? `a month ${suffix}` : `${months} months ${suffix}`,
+			shouldCapitalize
+		);
 	}
 
 	const years = Math.floor(since / yearInMilliseconds);
-	return years === 1 ? `a year ${suffix}` : `${years} years ${suffix}`;
+	return maybeCapitalize(
+		years === 1 ? `a year ${suffix}` : `${years} years ${suffix}`,
+		shouldCapitalize
+	);
 }
 
 /**

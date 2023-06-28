@@ -199,7 +199,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 										href={
 											report.user
 												? urls.profile(report.user)
-												: urls.moderation.reports
+												: urls.moderation.reports()
 										}
 									>
 										{report.user ? displayName(report.user) : "Unknown"}

@@ -25,7 +25,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 		: "password";
 
 	const Icon =
-		props.Icon ?? props.type === "date" ? CalendarDaysIcon : undefined;
+		props.Icon ?? (props.type === "date" ? CalendarDaysIcon : undefined);
 	const InputVisibleIcon = inputVisible ? EyeIcon : EyeSlashIcon;
 
 	return (

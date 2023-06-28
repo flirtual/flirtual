@@ -169,6 +169,10 @@ module.exports = {
 			}
 
 			addComponents({
+				".focused": {
+					"@apply outline-none ring-2 ring-theme-1 ring-offset-2 dark:ring-offset-black-50":
+						{}
+				},
 				".focusable": {
 					"@apply focus:outline-none focus:ring-2 focus:ring-theme-1 focus:ring-offset-2 focus:dark:ring-offset-black-50":
 						{}

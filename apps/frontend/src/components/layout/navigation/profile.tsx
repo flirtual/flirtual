@@ -157,7 +157,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							{user.tags?.includes("moderator") && (
 								<>
 									<ProfileNavigationItemDivider Icon={ShieldExclamationIcon} />
-									<ProfileNavigationItem href={urls.moderation.reports}>
+									<ProfileNavigationItem href={urls.moderation.reports()}>
 										Reports
 									</ProfileNavigationItem>
 									<ProfileNavigationItem href={urls.moderation.search}>
@@ -170,7 +170,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 									<ProfileNavigationItemDivider
 										Icon={PresentationChartLineIcon}
 									/>
-									<ProfileNavigationItem href={urls.moderation.reports}>
+									<ProfileNavigationItem href={urls.moderation.reports()}>
 										Statistics
 									</ProfileNavigationItem>
 								</>

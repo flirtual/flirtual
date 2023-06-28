@@ -8,11 +8,15 @@ module.exports = {
 	},
 	modularizeImports: {
 		"@heroicons/react/24/outline": {
-			transform: "@heroicons/react/24/outline/{{member}}",
+			transform: "@heroicons/react/24/outline/{{ member }}",
 			preventFullImport: true
 		},
 		"@heroicons/react/24/solid": {
-			transform: "@heroicons/react/24/solid/{{member}}",
+			transform: "@heroicons/react/24/solid/{{ member }}",
+			preventFullImport: true
+		},
+		"lucide-react": {
+			transform: "lucide-react/dist/esm/icons/{{ kebabCase member }}",
 			preventFullImport: true
 		}
 	},

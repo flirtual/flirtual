@@ -125,6 +125,10 @@ export function uncapitalize<T extends string>(value: T): Uncapitalize<T> {
 	return `${value[0].toLowerCase()}${value.slice(1)}` as Uncapitalize<T>;
 }
 
+export function lowercase<T extends string>(value: T): Lowercase<T> {
+	return value.toLowerCase() as Lowercase<T>;
+}
+
 export function sortBy<T>(
 	array: Array<T>,
 	key: keyof T | ((value: T) => string | number),

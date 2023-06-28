@@ -24,6 +24,7 @@
     "@hcaptcha/react-hcaptcha": "^1.8.1",
     "@heroicons/react": "^2.0.18",
     "@kfarwell/nextjs-toploader": "^1.4.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.5",
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.6",
