@@ -26,7 +26,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
 	<DropdownMenuPrimitive.SubTrigger
 		ref={reference}
 		className={twMerge(
-			"flex cursor-default select-none items-center rounded-md px-3 py-1.5 text-sm outline-none focus:bg-black-50 data-[state=open]:bg-black-50",
+			"flex cursor-default select-none items-center rounded-md px-3 py-1.5 text-sm outline-none focus:bg-white-30 data-[state=open]:bg-white-30 dark:focus:bg-black-50 dark:data-[state=open]:bg-black-50",
 			inset && "pl-8",
 			className
 		)}
@@ -82,7 +82,7 @@ const DropdownMenuItem = React.forwardRef<
 	<DropdownMenuPrimitive.Item
 		ref={reference}
 		className={twMerge(
-			"relative flex cursor-pointer select-none items-center rounded-md px-3 py-1.5 text-sm outline-none transition-colors focus:bg-black-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+			"relative flex cursor-pointer select-none items-center rounded-md px-3 py-1.5 text-sm outline-none transition-colors focus:bg-white-30 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-black-50",
 			inset && "pl-8",
 			className
 		)}
@@ -160,7 +160,7 @@ const DropdownMenuSeparator = React.forwardRef<
 	React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
 >(({ className, ...props }, reference) => (
 	<DropdownMenuPrimitive.Separator
-		className={twMerge("my-1 h-0.5 bg-black-50", className)}
+		className={twMerge("my-1 h-0.5 bg-white-30 dark:bg-black-50", className)}
 		ref={reference}
 		{...props}
 	/>
