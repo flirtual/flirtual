@@ -24,6 +24,7 @@ import { TooltipProvider } from "~/components/tooltip";
 import { ClientScripts } from "./client-scripts";
 
 import "~/css/index.scss";
+import AppUrlListener from "~/components/app-url-listener";
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat",
@@ -129,6 +130,7 @@ export default async function RootLayout({
 					showSpinner={false}
 				/>
 				<Suspense fallback={<LoadingIndicatorScreen />}>
+					<AppUrlListener />
 					<DeviceProvider
 						native={native}
 						platform={platform}

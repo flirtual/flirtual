@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "W7SGV4W282.zone.homie.flirtual.pwa",
+        "paths": [
+          "*"
+        ]
+      }
+    ]
+  }
+}
