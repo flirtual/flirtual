@@ -443,7 +443,7 @@ defmodule Flirtual.Matchmaking do
       "term" => %{
         "liked" => %{
           "value" => user.id,
-          "boost" => 19 * (Map.get(custom_weights, :likes) || 1)
+          "boost" => 15 * (Map.get(custom_weights, :likes) || 1)
         }
       }
     }
@@ -687,7 +687,7 @@ defmodule Flirtual.Matchmaking do
             "decay" => 0.5
           }
         },
-        "boost" => 30
+        "boost" => 20
       }
     }
   end
