@@ -19,6 +19,7 @@ import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
 import { getConversationsKey } from "./use-conversations";
 import { useNotifications } from "./use-notifications";
+import { useDevice } from "./use-device";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
@@ -28,6 +29,8 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 	children
 }) => {
+	const { platform } = useDevice();
+
 	const [ready, setReady] = useState(false);
 	const [authSession] = useSession();
 
@@ -60,11 +63,11 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 		void (async () => {
 			await session.clearPushRegistrations();
 			await session.setPushRegistration({
-				provider: "fcm",
+				provider: platform === "ios" ? "apns" : "fcm",
 				pushRegistrationId
 			});
 		})();
-	}, [session, pushRegistrationId]);
+	}, [session, pushRegistrationId, platform]);
 
 	useEffect(() => {
 		setUnreadConversations([]);
