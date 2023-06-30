@@ -69,7 +69,7 @@ module.exports = {
 				inherit: "inherit"
 			},
 			animation: {
-				"scroll-x-screen": "scroll-x-screen 30s linear infinite",
+				"scroll-x-screen": "scroll-x-screen 60s linear infinite",
 				"bounce-x": "bounceX 1s infinite"
 			},
 			keyframes: {
