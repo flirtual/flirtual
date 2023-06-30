@@ -6,6 +6,9 @@
 *.ap_
 *.aab
 
+# Build metadata
+app/release/output-metadata.json
+
 # Files for the ART/Dalvik VM
 *.dex
 
