@@ -1,8 +1,8 @@
 "use client";
 
 import {
+	ArrowsPointingOutIcon,
 	EllipsisHorizontalIcon,
-	PencilSquareIcon,
 	TrashIcon
 } from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
@@ -150,7 +150,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 										setFullPreview((fullPreview) => !fullPreview);
 									}}
 								>
-									<PencilSquareIcon className="h-4 w-4 text-white-20" />
+									<ArrowsPointingOutIcon className="h-4 w-4 text-white-20" />
 								</button>
 							</div>
 							<button className="opacity-60 hocus:opacity-100" type="button">
