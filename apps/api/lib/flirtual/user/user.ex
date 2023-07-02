@@ -283,11 +283,18 @@ defmodule Flirtual.User do
 
   def get(_), do: nil
 
-  def ilike_with_similarity(query, key, value) do
-    query
-    |> or_where([user], field(user, ^key) == ^value)
-    |> or_where([user], ilike(field(user, ^key), ^"%#{value}%"))
-    |> order_by([user], {:desc, fragment("similarity(?, ?)", field(user, ^key), ^value)})
+  def ilike_with_similarity(query, {as, key}, value) when is_atom(as) and is_atom(key) do
+    from([{^as, q}] in query,
+      order_by: {:desc, fragment("similarity(?, ?)", field(q, ^key), ^value)},
+      or_where: field(q, ^key) == ^value or ilike(field(q, ^key), ^"%#{value}%")
+    )
+  end
+
+  def ilike_with_similarity(query, key, value) when is_atom(key) do
+    from(q in query,
+      order_by: {:desc, fragment("similarity(?, ?)", field(q, ^key), ^value)},
+      or_where: field(q, ^key) == ^value or ilike(field(q, ^key), ^"%#{value}%")
+    )
   end
 
   defmodule Search do
@@ -320,10 +327,15 @@ defmodule Flirtual.User do
     |> offset(^size * (^page - 1))
   end
 
+  # Order determines priority of similarity.
   @default_search_fields [
-    :email,
+    {:profile, :display_name},
     :username,
-    :stripe_id
+    {:profile, :vrchat},
+    {:profile, :discord},
+    :email,
+    :stripe_id,
+    {:profile, :biography}
   ]
 
   def search(attrs) do
@@ -336,6 +348,7 @@ defmodule Flirtual.User do
            entries when is_list(entries) <-
              User
              |> preload(^default_assoc())
+             |> join(:left, [user], profile in assoc(user, :profile), as: :profile)
              |> then(
                &if(is_binary(value) and String.length(value) > 0,
                  do:
