@@ -10,8 +10,8 @@ export const InputPrivacySelect: React.FC<
 	<InputSelect
 		{...props}
 		options={PrivacyPreferenceOptions.map((option) => ({
-			key: option,
-			label: {
+			id: option,
+			name: {
 				everyone: "Anyone on Flirtual",
 				matches: "Matches only",
 				me: "Just me"

@@ -15,13 +15,25 @@ import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";
 import { Relationship } from "./relationship";
 
-export type UserTags =
-	| "admin"
-	| "moderator"
-	| "beta_tester"
-	| "debugger"
-	| "verified"
-	| "legacy_vrlfp";
+export const userTags = [
+	"admin",
+	"moderator",
+	"beta_tester",
+	"debugger",
+	"verified",
+	"legacy_vrlfp"
+] as const;
+
+export const userTagNames: Record<UserTags, string> = {
+	admin: "Admin",
+	moderator: "Moderator",
+	beta_tester: "Beta Tester",
+	debugger: "Debugger",
+	verified: "Verified",
+	legacy_vrlfp: "Legacy VRLFP"
+};
+
+export type UserTags = (typeof userTags)[number];
 
 export type User = UuidModel &
 	Partial<DatedModel> & {

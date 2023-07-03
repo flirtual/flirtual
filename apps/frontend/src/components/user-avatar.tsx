@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { User, displayName } from "~/api/user/user";
@@ -14,6 +14,19 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({ user, ...props }) => {
 			{...props}
 			alt={`${displayName(user)}'s avatar`}
 			src={urls.userAvatar(user)}
+		/>
+	);
+};
+
+export type UserThumbnailProps = Omit<UserAvatarProps, "width" | "height">;
+
+export const UserThumbnail: FC<UserThumbnailProps> = (props) => {
+	return (
+		<UserAvatar
+			{...props}
+			className={twMerge("rounded-xl", props.className)}
+			height={32}
+			width={32}
 		/>
 	);
 };

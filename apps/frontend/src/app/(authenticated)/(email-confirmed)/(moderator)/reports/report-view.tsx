@@ -29,11 +29,11 @@ import { entries, groupBy, sortBy } from "~/utilities";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { ListOptions, Report } from "~/api/report";
-import { BanProfile } from "~/components/profile/action-bar/ban-profile";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { TimeRelative } from "~/components/time-relative";
 import { DateTimeRelative } from "~/components/datetime-relative";
+import { ProfileDropdown } from "~/components/profile/dropdown";
 
 type CompleteReport = Report & { user?: User; target: User };
 
@@ -113,7 +113,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							</TooltipTrigger>
 							<TooltipContent>Clear reports</TooltipContent>
 						</Tooltip>
-						<BanProfile user={reported} />
+						<ProfileDropdown user={reported} />
 					</div>
 				</div>
 				<div className="flex items-baseline justify-between gap-4 pl-10 sm:justify-start">

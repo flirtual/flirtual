@@ -21,7 +21,8 @@ export const ProfileMonopolyList = ["monogamous", "nonmonogamous"] as const;
 export const ProfileMonopolyLabel = {
 	monogamous: "Monogamous",
 	nonmonogamous: "Non-monogamous"
-} as const;
+};
+
 export type ProfileMonopoly = (typeof ProfileMonopolyList)[number];
 
 export type Profile = Partial<UpdatedAtModel> & {

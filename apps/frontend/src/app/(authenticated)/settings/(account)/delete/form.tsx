@@ -47,8 +47,8 @@ export const DeleteForm: FC<{
 									{...field.props}
 									placeholder="Select a reason"
 									options={deleteReasons.map((attribute) => ({
-										key: attribute.id,
-										label: attribute.name
+										id: attribute.id,
+										name: attribute.name
 									}))}
 								/>
 								{field.props.value === "sQcEHRLCffbLfcgM4zAELf" ? (

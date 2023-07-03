@@ -26,16 +26,13 @@ import {
 	TableRow
 } from "~/components/table";
 import { Button } from "~/components/button";
-import { UserAvatar } from "~/components/user-avatar";
+import { UserThumbnail } from "~/components/user-avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { TimeRelative } from "~/components/time-relative";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { urls } from "~/urls";
 import { relativeTime } from "~/date";
-
-import { RowDropdown } from "./row-dropdown";
-
-const dayInMilliseconds = 8.64e7;
+import { ProfileDropdown } from "~/components/profile/dropdown";
 
 export const columns: Array<ColumnDef<User>> = [
 	{
@@ -49,12 +46,7 @@ export const columns: Array<ColumnDef<User>> = [
 					className="flex w-fit items-center gap-4"
 					href={urls.profile(user)}
 				>
-					<UserAvatar
-						className="rounded-xl"
-						height={32}
-						user={user}
-						width={32}
-					/>
+					<UserThumbnail user={user} />
 					<div className="flex w-[8em] flex-col truncate">
 						<span>{name}</span>
 						{name !== user.username && (
@@ -172,7 +164,7 @@ export const columns: Array<ColumnDef<User>> = [
 	{
 		id: "actions",
 		enableHiding: false,
-		cell: ({ row: { original: user } }) => <RowDropdown user={user} />
+		cell: ({ row: { original: user } }) => <ProfileDropdown user={user} />
 	}
 ];
 

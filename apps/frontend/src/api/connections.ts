@@ -1,7 +1,13 @@
 import { UpdatedAtModel } from "./common";
 import { NarrowFetchOptions, fetch, newUrl } from "./exports";
 
-export type ConnectionType = "discord" | "vrchat";
+export const connectionType = ["discord", "vrchat"] as const;
+export type ConnectionType = (typeof connectionType)[number];
+
+export const connectionTypeName: Record<ConnectionType, string> = {
+	discord: "Discord",
+	vrchat: "VRChat"
+};
 
 export type Connection = UpdatedAtModel & {
 	type: ConnectionType;

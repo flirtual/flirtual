@@ -37,8 +37,7 @@ const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({
 
 export const ProfileModeratorInfo: FC<{
 	user: User;
-	setWarnProfileVisible: (value: boolean) => void;
-}> = ({ user, setWarnProfileVisible }) => {
+}> = ({ user }) => {
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
@@ -175,7 +174,6 @@ export const ProfileModeratorInfo: FC<{
 							user.moderatorMessage && "text-yellow-500",
 							"cursor-pointer brightness-75 hover:brightness-100"
 						)}
-						onClick={() => setWarnProfileVisible(true)}
 					>
 						{user.moderatorMessage ?? "None"}
 					</span>
@@ -214,7 +212,7 @@ export const ProfileModeratorInfo: FC<{
 								.catch(toasts.addError);
 						}}
 					>
-						{user.moderatorNote || "None, write one by clicking here."}
+						{user.moderatorNote || "None"}
 					</span>
 				</span>
 			</div>

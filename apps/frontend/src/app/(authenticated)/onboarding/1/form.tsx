@@ -153,8 +153,8 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 									optional
 									placeholder="Relationship type"
 									options={ProfileMonopolyList.map((item) => ({
-										key: item,
-										label: ProfileMonopolyLabel[item]
+										id: item,
+										name: ProfileMonopolyLabel[item]
 									}))}
 								/>
 							)}

@@ -193,8 +193,8 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 									optional
 									placeholder="Relationship type"
 									options={ProfileMonopolyList.map((item) => ({
-										key: item,
-										label: ProfileMonopolyLabel[item]
+										id: item,
+										name: ProfileMonopolyLabel[item]
 									}))}
 								/>
 							)}

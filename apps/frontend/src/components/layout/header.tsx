@@ -7,7 +7,7 @@ export async function Header() {
 
 	return (
 		<div className="hidden w-full flex-col sm:flex sm:h-20">
-			<header className="fixed z-10 flex w-full flex-col text-white-20">
+			<header className="fixed z-50 flex w-full flex-col text-white-20">
 				<div className="absolute top-0 h-full w-full flex-col bg-brand-gradient shadow-brand-1 md:ml-[-50vw] md:mt-[calc(-50vw+80px)] md:h-[50vw] md:w-[200vw] md:rounded-half" />
 				{/* <HeaderMessage className="hidden sm:flex">
 				Download the{" "}
