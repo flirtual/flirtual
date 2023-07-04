@@ -4,7 +4,7 @@ import {
 	ExclamationTriangleIcon,
 	InformationCircleIcon
 } from "@heroicons/react/24/outline";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { capitalize } from "~/utilities";
@@ -44,9 +44,17 @@ export type FormMessageProps = PropsWithChildren<Omit<FormMessage, "value">>;
 export const FormMessage: FC<FormMessageProps> = (props) => {
 	const { type, size = "md", children } = props;
 	const Icon = formMessageIcon[type];
+	const reference = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (reference.current) {
+			reference.current.scrollIntoView({ behavior: "smooth" });
+		}
+	}, [children]);
 
 	return (
 		<div
+			ref={reference}
 			className={twMerge(
 				"flex gap-2 font-nunito",
 				formMessageStyle[type],
