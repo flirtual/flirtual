@@ -10,9 +10,11 @@ defmodule Flirtual.User.ChangeQueue do
 
   alias Flirtual.Talkjs
   alias Flirtual.Elasticsearch
+  alias Flirtual.Subscription
   alias Flirtual.Repo
   alias Flirtual.User
   alias Flirtual.User.ChangeQueue
+  alias Flirtual.User.Profile
 
   schema "user_change_queue" do
     belongs_to(:user, User, primary_key: true)
@@ -113,6 +115,7 @@ defmodule Flirtual.User.ChangeQueue do
 
     with :ok <- process_items(items, :elasticsearch),
          :ok <- process_items(items, :talkjs),
+         :ok <- process_items(items, :premium_reset),
          :ok <-
            items
            |> Enum.map(& &1.user_id)
@@ -170,5 +173,18 @@ defmodule Flirtual.User.ChangeQueue do
         }
       end)
     )
+  end
+
+  defp process_items(items, :premium_reset) do
+    premium_items =
+      items
+      |> Enum.filter(&Subscription.active?(&1.user.subscription))
+
+    {_, nil} =
+      Profile
+      |> where([profile], profile.user_id in ^Enum.map(premium_items, & &1.user_id))
+      |> Repo.update_all(set: [reset_love_at: nil])
+
+    :ok
   end
 end
