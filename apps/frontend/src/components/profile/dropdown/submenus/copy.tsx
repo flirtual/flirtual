@@ -59,7 +59,7 @@ export const ProfileDropdownCopySubmenu: FC<
 						onClick={() => Clipboard.write({ string: user.email })}
 					>
 						<AtSign className="h-5 w-5" />
-						Email Address
+						Email address
 					</DropdownMenuItem>
 				)}
 				<DropdownMenuSeparator />

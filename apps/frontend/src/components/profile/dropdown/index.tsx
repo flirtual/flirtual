@@ -2,9 +2,9 @@ import {
 	ClipboardList,
 	FileJson,
 	Flag,
-	FolderKey,
 	Gem,
 	MoreHorizontal,
+	Shield,
 	Tags,
 	UserCircle2
 } from "lucide-react";
@@ -60,7 +60,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 								className="gap-2"
 								disabled={session.user.id === user.id}
 							>
-								<FolderKey className="h-5 w-5" />
+								<Shield className="h-5 w-5" />
 								<span>Moderate</span>
 							</DropdownMenuSubTrigger>
 						</ProfileDropdownModerateSubmenu>

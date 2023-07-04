@@ -37,13 +37,13 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 				>
 					<button className="w-full gap-2" type="button">
 						<Gavel className="h-5 w-5" />
-						Suspend
+						Ban
 					</button>
 				</DropdownMenuItem>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Suspend profile</DialogTitle>
+					<DialogTitle>Ban profile</DialogTitle>
 				</DialogHeader>
 				<Form
 					className="flex flex-col gap-8"
@@ -56,7 +56,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 					onSubmit={async ({ targetId, ...body }) => {
 						await api.user.suspend(targetId, { body });
 
-						toasts.add("Account suspended");
+						toasts.add("Account banned");
 						router.refresh();
 
 						setOpen(false);

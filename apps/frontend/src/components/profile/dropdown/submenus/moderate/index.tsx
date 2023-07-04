@@ -52,7 +52,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 						<DropdownMenuItem asChild disabled={!user.bannedAt}>
 							<button className="w-full gap-2" type="button">
 								<Scale className="h-5 w-5" />
-								Pardon Suspension
+								Unban
 							</button>
 						</DropdownMenuItem>
 						<AlertDialog>
@@ -62,7 +62,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 									onSelect={(event) => event.preventDefault()}
 								>
 									<Trash2 className="h-5 w-5" />
-									Delete Account
+									Delete account
 								</DropdownMenuItem>
 							</AlertDialogTrigger>
 							<AlertDialogContent>
@@ -92,7 +92,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 													.catch(toasts.addError);
 											}}
 										>
-											Delete Account
+											Delete account
 										</Button>
 									</AlertDialogAction>
 									<AlertDialogCancel asChild>
