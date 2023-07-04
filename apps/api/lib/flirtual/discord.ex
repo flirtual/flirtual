@@ -154,7 +154,7 @@ defmodule Flirtual.Discord do
         reason: %Attribute{type: "ban-reason"} = reason,
         message: message
       ) do
-    webhook(:moderation, %{
+    webhook(:moderation_actions, %{
       content:
         if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
       embeds: [
@@ -192,7 +192,7 @@ defmodule Flirtual.Discord do
         user: %User{} = user,
         moderator: %User{} = moderator
       ) do
-    webhook(:moderation, %{
+    webhook(:moderation_actions, %{
       embeds: [
         %{
           author: webhook_author(user),
@@ -211,7 +211,7 @@ defmodule Flirtual.Discord do
         message: message,
         at: warned_at
       ) do
-    webhook(:moderation, %{
+    webhook(:moderation_actions, %{
       embeds: [
         %{
           author: webhook_author(user),
@@ -230,7 +230,7 @@ defmodule Flirtual.Discord do
         moderator: %User{} = moderator,
         at: warn_revoked_at
       ) do
-    webhook(:moderation, %{
+    webhook(:moderation_actions, %{
       embeds: [
         %{
           author: webhook_author(user),
@@ -247,7 +247,7 @@ defmodule Flirtual.Discord do
         user: %User{} = user,
         at: warn_acknowledged_at
       ) do
-    webhook(:moderation, %{
+    webhook(:moderation_actions, %{
       embeds: [
         %{
           author: webhook_author(user),
@@ -281,7 +281,7 @@ defmodule Flirtual.Discord do
   end
 
   def deliver_webhook(:report, %Report{} = report) do
-    webhook(:moderation, %{
+    webhook(:moderation_reports, %{
       embeds: [
         %{
           author: webhook_author(report.target),
