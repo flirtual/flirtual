@@ -9,7 +9,7 @@ export const SnapSection = forwardRef<
 		{...props}
 		ref={reference}
 		className={twMerge(
-			"min-h-screen w-full snap-start snap-always",
+			"min-h-screen w-full snap-start snap-always pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)]",
 			props.className
 		)}
 	>

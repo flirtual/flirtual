@@ -229,7 +229,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 				)}
 
 				{images.length > 1 && (
-					<div className="pointer-events-auto absolute top-0 flex w-full px-8 py-6">
+					<div className="pointer-events-auto absolute top-0 flex w-full px-8 py-6 pt-[max(env(safe-area-inset-top),1.5rem)]">
 						<div className="flex grow items-center gap-2">
 							{images.map((image) => (
 								<button

@@ -71,7 +71,8 @@ export const metadata: Metadata = {
 			url: siteOrigin,
 			should_fallback: true
 		}
-	}
+	},
+	viewport: "width=device-width, initial-scale=1, viewport-fit=cover"
 };
 
 export default async function RootLayout({
@@ -106,7 +107,7 @@ export default async function RootLayout({
 
 							const url = new URL(location);
 							const themeStyle = url.pathname === "/browse" && url.searchParams.get("kind") === "friend" ? "friend" : "love";
-						
+
 							Object.assign(document.documentElement.dataset, {
 								theme: resolveTheme("${theme}"),
 								themeStyle,

@@ -45,7 +45,7 @@ export default async function ConversationPage({
 			<ConversationAside activeConversationId={conversation.id} />
 			<div className="flex h-full w-full flex-col items-center justify-center md:pl-8">
 				<ConversationChatbox
-					className="h-[calc(100vh-8rem)] w-full overflow-hidden shadow-brand-1 md:h-[32rem] md:rounded-xl"
+					className="h-[calc(100vh-7.7rem-env(safe-area-inset-top))] w-full overflow-hidden shadow-brand-1 md:h-[32rem] md:rounded-xl"
 					conversationId={conversation.id}
 				/>
 			</div>

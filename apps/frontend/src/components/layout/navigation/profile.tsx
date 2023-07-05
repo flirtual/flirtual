@@ -117,7 +117,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 				{visible && (
 					<motion.div
 						animate={{ opacity: 1 }}
-						className="absolute -bottom-1 -left-2 z-10 flex w-44 flex-col-reverse overflow-hidden rounded-3xl rounded-b-none bg-white-10 p-4 text-black-80 shadow-brand-1 sm:-top-2 sm:bottom-inherit sm:flex-col sm:rounded-3xl"
+						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom)+0.5em)*-1)] z-10 flex w-44 flex-col-reverse overflow-hidden rounded-3xl rounded-b-none bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom)+1.15rem)] text-black-80 shadow-brand-1 sm:-top-2 sm:bottom-inherit sm:flex-col sm:rounded-3xl"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementReference}
