@@ -687,7 +687,7 @@ defmodule Flirtual.Matchmaking do
             "decay" => 0.5
           }
         },
-        "boost" => 20
+        "boost" => 15
       }
     }
   end
