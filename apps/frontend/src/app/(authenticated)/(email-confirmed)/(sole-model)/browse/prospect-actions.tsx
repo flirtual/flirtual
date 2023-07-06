@@ -182,12 +182,12 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 
 	return (
 		<div className="h-32 w-full dark:bg-black-70 sm:h-0">
-			<div className="pointer-events-none fixed bottom-0 left-0 flex w-full items-center justify-center bg-gradient-to-b from-transparent to-black-90/50 p-8 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
+			<div className="pointer-events-none fixed bottom-0 left-0 flex w-full items-center justify-center bg-gradient-to-b from-transparent to-black-90/50 px-2 py-8 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
 				<div className="pointer-events-auto flex h-32 items-center gap-3 overflow-hidden rounded-xl pb-16 text-white-10">
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<button
-								className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-50"
+								className="flex h-fit max-w-[15vw] items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-50"
 								disabled={!lastProfile}
 								id="undo-button"
 								type="button"
@@ -202,7 +202,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<button
-									className="flex items-center justify-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 shadow-brand-1 sm:w-40"
+									className="flex max-w-[20vw] items-center justify-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 shadow-brand-1 sm:w-40"
 									id="like-button"
 									type="button"
 									onClick={() => respond("like", mode)}
@@ -222,7 +222,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 								id="friend-button"
 								type="button"
 								className={twMerge(
-									"flex items-center justify-center gap-3 rounded-xl bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 px-6 py-4 shadow-brand-1",
+									"flex max-w-[20vw] items-center justify-center gap-3 rounded-xl bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 px-6 py-4 shadow-brand-1",
 									mode === "friend" && "w-40"
 								)}
 								onClick={() => respond("like", "friend")}
@@ -238,7 +238,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<button
-								className="flex h-fit items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1"
+								className="flex h-fit max-w-[15vw] items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1"
 								id="pass-button"
 								type="button"
 								onClick={() => respond("pass", mode)}
