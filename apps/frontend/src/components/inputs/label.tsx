@@ -12,7 +12,7 @@ export const InputLabelHint: React.FC<React.ComponentProps<"span">> = (
 		<span
 			{...props}
 			className={twMerge(
-				"text-base text-black-50 dark:text-white-50",
+				"select-none text-base text-black-50 dark:text-white-50",
 				props.className
 			)}
 		/>

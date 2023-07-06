@@ -34,7 +34,7 @@ export async function PlanCard(props: PlanCardProps) {
 	const inner = (
 		<div
 			className={twMerge(
-				"relative flex flex-col justify-between gap-16 rounded-xl p-6",
+				"relative flex select-none flex-col justify-between gap-16 rounded-xl p-6",
 				highlight
 					? "bg-white-20 dark:bg-black-80"
 					: [containerClassName, "bg-white-25 dark:bg-black-80"],

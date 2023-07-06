@@ -208,7 +208,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 									onClick={() => respond("like", mode)}
 								>
 									<HeartIcon className="w-8 shrink-0" gradient={false} />
-									<span className="hidden font-montserrat text-lg font-extrabold md:inline">
+									<span className="hidden select-none font-montserrat text-lg font-extrabold md:inline">
 										Like
 									</span>
 								</button>
@@ -228,7 +228,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 								onClick={() => respond("like", "friend")}
 							>
 								<PeaceIcon className="w-8 shrink-0" gradient={false} />
-								<span className="hidden font-montserrat text-lg font-extrabold md:inline">
+								<span className="hidden select-none font-montserrat text-lg font-extrabold md:inline">
 									Homie
 								</span>
 							</button>

@@ -35,7 +35,7 @@ export const DeleteForm: FC<{
 		>
 			{({ FormField, fields }) => (
 				<>
-					<span>
+					<span className="select-none">
 						We&apos;re sorry to see you go. Would you mind telling us why
 						you&apos;re deleting your account so we can improve?
 					</span>
@@ -52,7 +52,7 @@ export const DeleteForm: FC<{
 									}))}
 								/>
 								{field.props.value === "sQcEHRLCffbLfcgM4zAELf" ? (
-									<p>
+									<p className="select-none">
 										Taking a break? You can{" "}
 										<InlineLink href={urls.settings.deactivateAccount}>
 											temporarily deactivate your account
@@ -97,7 +97,7 @@ export const DeleteForm: FC<{
 						)}
 					</FormField>
 					<div className="flex flex-col gap-4">
-						<span>
+						<span className="select-none">
 							Are you sure you want to delete your account?{" "}
 							<span className="font-semibold">This action is irreversible</span>
 							.

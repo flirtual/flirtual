@@ -34,10 +34,10 @@ export default async function SubscriptionPage() {
 				<SuccessMessage />
 				{subscription && (
 					<div data-sentry-mask className="flex flex-col gap-4">
-						<h1 className="text-2xl font-semibold">
+						<h1 className="select-none text-2xl font-semibold">
 							{subscription.active ? "Active" : "Inactive"} Subscription
 						</h1>
-						<div className="flex flex-col">
+						<div className="flex select-none flex-col">
 							<div className="flex items-center gap-2">
 								<SparklesIcon className="inline h-5 w-5" />
 								<span>{subscription.plan.name}</span>
@@ -73,7 +73,7 @@ export default async function SubscriptionPage() {
 				)}
 				<div className="flex flex-col gap-8">
 					{subscription?.active ? (
-						<ul className="text-2xl">
+						<ul className="select-none text-xl">
 							<li>
 								👀{" "}
 								<InlineLink href={urls.likes}>
@@ -94,23 +94,23 @@ export default async function SubscriptionPage() {
 							</li>
 						</ul>
 					) : (
-						<ul className="flex flex-col gap-4">
+						<ul className="flex select-none flex-col gap-4">
 							<li className="flex flex-col">
-								<span className="text-xl font-semibold">
+								<span className="text-lg font-semibold">
 									👀 See who likes you before you match
 								</span>
 								No more guesswork. Discover who&apos;s already interested in
 								you, match faster and never miss a potential connection.
 							</li>
 							<li className="flex flex-col">
-								<span className="text-xl font-semibold">
+								<span className="text-lg font-semibold">
 									♾️ Browse unlimited profiles
 								</span>
 								Can&apos;t get enough of us? Remove the daily limit and browse a
 								wider range of profiles, whenever you want.
 							</li>
 							<li className="flex flex-col">
-								<span className="text-xl font-semibold">
+								<span className="text-lg font-semibold">
 									🎚️ Control your matchmaking priorities
 								</span>
 								<span>
@@ -169,7 +169,7 @@ export default async function SubscriptionPage() {
 							</div>
 						)}
 				</div>
-				<p>
+				<p className="select-none">
 					Flirtual is still in its early days: we have 50000 users and growing,
 					and we&apos;re always fixing and improving the platform. Offering
 					Premium helps us pay for development and cover hosting costs. Thank

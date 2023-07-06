@@ -205,12 +205,12 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 							<span>Matchmaking priorities</span>
 							<PremiumBadge />
 						</InputLabel>
-						<span>
+						<span className="select-none">
 							Customize who you see on Flirtual. Slide right to increase
 							importance, left to decrease. Premium subscribers unlock full
 							customization.
 						</span>
-						<span>
+						<span className="select-none">
 							For example, slide &quot;Same country&quot; to the right to see
 							more people from your country, or left if you want to see more
 							people from other countries.

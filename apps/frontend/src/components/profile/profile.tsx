@@ -44,7 +44,7 @@ export async function Profile(props: ProfileProps) {
 								user.id,
 								thruServerCookies()
 							)
-					  }
+						}
 					: {}
 			}}
 		>
@@ -61,7 +61,7 @@ export async function Profile(props: ProfileProps) {
 								</span>
 								{user.bornAt && (
 									<div className="flex h-fit items-center gap-2">
-										<span className="text-shadow-brand text-3xl leading-none">
+										<span className="text-shadow-brand select-none text-3xl leading-none">
 											{yearsAgo(new Date(user.bornAt))}
 										</span>
 										{user.tags?.includes("verified") && (
@@ -91,7 +91,7 @@ export async function Profile(props: ProfileProps) {
 							)}
 						</div>
 					</ProfileImageDisplay>
-					<div className="flex h-full grow flex-col gap-6 break-words p-8 pb-0">
+					<div className="flex h-full grow flex-col gap-6 break-words p-8 pb-4">
 						{myProfile && <PersonalActions user={user} />}
 						<RelationActions direct={direct} user={user} />
 						{(user.profile.discord || user.profile.vrchat) && (

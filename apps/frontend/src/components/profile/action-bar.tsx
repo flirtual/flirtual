@@ -20,10 +20,16 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
 
-	if (!session) return null;
+	if (
+		!session ||
+		(session.user.id === user.id &&
+			!session.user.tags?.includes("moderator") &&
+			!session.user.tags?.includes("admin"))
+	)
+		return null;
 
 	return (
-		<div className="flex flex-col gap-8 p-8 dark:bg-black-70">
+		<div className="flex flex-col gap-8 px-8 pb-0 pt-4 dark:bg-black-70 md:pb-4">
 			{session.user.tags?.includes("moderator") && (
 				<Suspense>
 					<ProfileModeratorInfo user={user} />

@@ -13,6 +13,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({ user, ...props }) => {
 		<UserImage
 			{...props}
 			alt={`${displayName(user)}'s avatar`}
+			draggable={false}
 			src={urls.userAvatar(user)}
 		/>
 	);
@@ -41,7 +42,7 @@ export const UserImage: React.FC<UserImageProps> = ({
 	return (
 		<Image
 			{...props}
-			className={twMerge("aspect-square shrink-0", props.className)}
+			className={twMerge("aspect-square shrink-0 select-none", props.className)}
 			src={src}
 			options={{
 				scale_crop: [`1980x1980`, "smart_faces_points"],

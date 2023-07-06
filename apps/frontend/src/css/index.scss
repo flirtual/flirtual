@@ -46,6 +46,10 @@
   }
 }
 
+iframe {
+  user-select: none;
+}
+
 #canny-changelog-iframe {
   padding-top: env(safe-area-inset-top);
   padding-right: env(safe-area-inset-right);

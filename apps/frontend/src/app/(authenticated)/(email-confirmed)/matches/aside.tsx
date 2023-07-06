@@ -22,7 +22,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const { data } = useConversations();
 
 	return (
-		<div className="flex w-full shrink-0 grow-0 flex-col sm:min-h-[calc(100vh-9rem)] md:w-96 md:rounded-t-xl md:bg-white-20 md:shadow-brand-1 dark:md:bg-black-70">
+		<div className="flex w-full shrink-0 grow-0 select-none flex-col sm:min-h-[calc(100vh-9rem)] md:w-96 md:rounded-t-xl md:bg-white-20 md:shadow-brand-1 dark:md:bg-black-70">
 			<div className="flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top)+0.5rem),1rem)] text-white-20 md:rounded-t-xl md:bg-brand-gradient">
 				<Link
 					className="absolute left-4 flex shrink-0 md:hidden"

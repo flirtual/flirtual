@@ -32,7 +32,7 @@ export const SettingsNavigation: FC = () => {
 	const logout = useSession()[2];
 
 	return (
-		<div className="flex w-full shrink-0 grow-0 flex-col shadow-brand-1 md:mt-16 md:w-80 md:rounded-tr-2xl md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
+		<div className="flex w-full shrink-0 grow-0 select-none flex-col shadow-brand-1 md:mt-16 md:w-80 md:rounded-tr-2xl md:bg-white-20 md:text-white-20 dark:md:bg-black-70">
 			<NavigationHeader {...{ navigationInner: layoutSegment }} />
 			<nav
 				className={twMerge(

@@ -57,7 +57,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 		<footer
 			{...props}
 			className={twMerge(
-				"w-full justify-center bg-brand-gradient px-8 py-12 font-nunito text-white-20 sm:p-16",
+				"w-full select-none justify-center bg-brand-gradient px-8 py-12 font-nunito text-white-20 sm:p-16",
 				desktopOnly ? "hidden sm:flex" : "flex",
 				props.className
 			)}

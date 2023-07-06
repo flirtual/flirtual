@@ -16,7 +16,7 @@ export const MobileButton: React.FC<MobileButtonProps> = ({
 	return (
 		<Link
 			{...props}
-			className="flex w-56 items-center gap-4 rounded-xl bg-white-10 px-6 py-4 text-black-70 shadow-brand-1"
+			className="flex w-56 select-none items-center gap-4 rounded-xl bg-white-10 px-6 py-4 text-black-70 shadow-brand-1"
 			target="_blank"
 		>
 			<Icon className="h-8" />
