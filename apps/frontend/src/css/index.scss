@@ -56,3 +56,14 @@ iframe {
   padding-bottom: env(safe-area-inset-bottom);
   padding-left: env(safe-area-inset-left);
 }
+
+#freshworks-frame-wrapper>iframe {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-image: linear-gradient(to bottom, var(--light-theme-2) 50%, #fff 50%);
+}
+
+img,
+a {
+  -webkit-touch-callout: none;
+}

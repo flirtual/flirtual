@@ -19,7 +19,10 @@ export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 	...props
 }) =>
 	"href" in props ? (
-		<a className="cursor-pointer hover:brightness-90" {...props}>
+		<a
+			className="touch-callout-default cursor-pointer hover:brightness-90"
+			{...props}
+		>
 			<Icon className="h-6 w-6 sm:h-8 sm:w-8" />
 		</a>
 	) : (
@@ -114,7 +117,10 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 					<span className="hidden sm:inline">Made with ♥︎ in VR</span>
 					<span>
 						© {new Date().getFullYear()}{" "}
-						<a className="hover:underline" href={urls.resources.company}>
+						<a
+							className="touch-callout-default hover:underline"
+							href={urls.resources.company}
+						>
 							Studio Paprika
 						</a>
 					</span>

@@ -184,6 +184,12 @@ module.exports = {
 				".text-shadow-brand": {
 					"text-shadow":
 						"0 0 8px rgba(0,0,0,0.1), 0 2px 2px rgba(0, 0, 0, 0.14), 0 2px 1px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.2)"
+				},
+				".touch-callout-default": {
+					"-webkit-touch-callout": "default"
+				},
+				".touch-callout-none": {
+					"-webkit-touch-callout": "none"
 				}
 			});
 		})

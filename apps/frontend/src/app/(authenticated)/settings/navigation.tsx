@@ -36,7 +36,7 @@ export const SettingsNavigation: FC = () => {
 			<NavigationHeader {...{ navigationInner: layoutSegment }} />
 			<nav
 				className={twMerge(
-					"flex-col gap-8 py-8",
+					"flex-col gap-8 py-8 pt-[calc(env(safe-area-inset-top)+5.75rem)] md:pt-8",
 					layoutSegment ? "hidden md:flex" : "flex"
 				)}
 			>

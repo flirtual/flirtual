@@ -29,7 +29,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 		return null;
 
 	return (
-		<div className="flex flex-col gap-8 px-8 pb-0 pt-4 dark:bg-black-70 md:pb-4">
+		<div className="flex flex-col gap-8 px-8 py-4 sm:pb-8">
 			{session.user.tags?.includes("moderator") && (
 				<Suspense>
 					<ProfileModeratorInfo user={user} />

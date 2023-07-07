@@ -106,6 +106,7 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 							>
 						);
 						setVisible(false);
+						setVisible(true);
 					}}
 					onOptionFocus={(event) => {
 						props.onOptionAction(

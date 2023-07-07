@@ -216,7 +216,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								<div className="relative aspect-square w-auto md:h-screen md:max-h-[80vh]">
 									<SingleImage
 										large
-										className="!relative object-cover"
+										className="touch-callout-default !relative object-cover"
 										image={currentImage}
 									/>
 								</div>

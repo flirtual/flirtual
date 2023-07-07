@@ -27,6 +27,7 @@ export const InlineLink: React.FC<InlineLinkProps> = ({
 			className={twMerge(
 				"focus:outline-none hocus:underline",
 				highlight && "text-theme-2",
+				href && !isInternalHref(href) && "touch-callout-default",
 				props.className
 			)}
 		/>

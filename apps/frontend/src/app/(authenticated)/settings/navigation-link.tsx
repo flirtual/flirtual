@@ -37,7 +37,8 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 				"flex justify-between gap-4 px-6 py-2 focus:outline-none hocus:shadow-brand-1",
 				toAbsoluteUrl(props.href).pathname === pathname
 					? "bg-brand-gradient text-white-20 shadow-brand-1"
-					: "text-black-80 hocus:bg-brand-gradient hocus:text-white-20 dark:text-white-20 md:hocus:bg-white-30 md:hocus:bg-none md:hocus:text-black-80 dark:md:hocus:bg-white-20"
+					: "text-black-80 hocus:bg-brand-gradient hocus:text-white-20 dark:text-white-20 md:hocus:bg-white-30 md:hocus:bg-none md:hocus:text-black-80 dark:md:hocus:bg-white-20",
+				!isInternalHref(props.href) && "touch-callout-default"
 			)}
 		>
 			<div className="flex gap-2">

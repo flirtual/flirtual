@@ -23,7 +23,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 
 	return (
 		<div className="flex w-full shrink-0 grow-0 select-none flex-col sm:min-h-[calc(100vh-9rem)] md:w-96 md:rounded-t-xl md:bg-white-20 md:shadow-brand-1 dark:md:bg-black-70">
-			<div className="flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top)+0.5rem),1rem)] text-white-20 md:rounded-t-xl md:bg-brand-gradient">
+			<div className="fixed z-10 flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top)+0.5rem),1rem)] text-white-20 md:static md:rounded-t-xl md:bg-brand-gradient">
 				<Link
 					className="absolute left-4 flex shrink-0 md:hidden"
 					href={
@@ -36,7 +36,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 			</div>
 			<div
 				className={twMerge(
-					"flex h-full flex-col gap-8 px-4 py-6",
+					"flex h-full flex-col gap-8 px-4 pb-6 pt-[calc(env(safe-area-inset-top)+5rem)] md:pt-6",
 					activeConversationId && "hidden sm:flex"
 				)}
 			>

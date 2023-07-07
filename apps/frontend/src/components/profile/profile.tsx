@@ -139,7 +139,9 @@ export async function Profile(props: ProfileProps) {
 						) : null}
 						<PillCollection user={user} />
 					</div>
-					<ProfileActionBar user={user} />
+					<div className="pb-[env(safe-area-inset-bottom)] dark:bg-black-70">
+						<ProfileActionBar user={user} />
+					</div>
 				</div>
 			</div>
 		</SWRConfig>
