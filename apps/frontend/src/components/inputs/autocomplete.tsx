@@ -159,7 +159,7 @@ export function InputAutocomplete<K extends string>(
 					})}
 					<input
 						autoComplete="off"
-						className="grow border-none bg-transparent placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50"
+						className="grow border-none bg-transparent caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50"
 						placeholder={placeholder}
 						ref={inputReference}
 						type="text"
