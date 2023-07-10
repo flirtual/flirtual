@@ -4,12 +4,24 @@ import { FlagIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { FC, Suspense } from "react";
 
-import { User } from "~/api/user";
+import { User, displayName } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
-import { DialogTrigger } from "~/components/dialog/dialog";
+import { DialogFooter, DialogTrigger } from "~/components/dialog/dialog";
+
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger
+} from "../dialog/alert";
+import { Button } from "../button";
 
 import { ProfileModeratorInfo } from "./moderator-info";
 import { ProfileDropdown } from "./dropdown";
@@ -43,26 +55,59 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 				<div className="ml-auto flex gap-4">
 					{session.user.id !== user.id && (
 						<>
-							<Tooltip>
-								<TooltipTrigger asChild>
-									<button
-										className="h-6 w-6 shrink-0"
-										type="button"
-										onClick={async () => {
-											await api.user
-												.block(user.id)
-												.then(() => {
-													toasts.add("User blocked successfully");
-													return router.refresh();
-												})
-												.catch(toasts.addError);
-										}}
-									>
-										<NoSymbolIcon className="h-full w-full" />
-									</button>
-								</TooltipTrigger>
-								<TooltipContent>Block profile</TooltipContent>
-							</Tooltip>
+							<AlertDialog>
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<AlertDialogTrigger asChild>
+											<button
+												className="h-6 w-6 shrink-0"
+												type="button"
+												onClick={async () => {
+													await api.user;
+												}}
+											>
+												<NoSymbolIcon className="h-full w-full" />
+											</button>
+										</AlertDialogTrigger>
+									</TooltipTrigger>
+									<TooltipContent>Block profile</TooltipContent>
+								</Tooltip>
+								<AlertDialogContent>
+									<AlertDialogHeader>
+										<AlertDialogTitle>
+											Block {displayName(user)}?
+										</AlertDialogTitle>
+									</AlertDialogHeader>
+									<AlertDialogDescription>
+										This will prevent you from seeing each other&apos;s profiles
+										and messaging each other. This action is permanent and
+										cannot be undone later.
+									</AlertDialogDescription>
+									<DialogFooter>
+										<AlertDialogCancel asChild>
+											<Button kind="tertiary" size="sm">
+												Cancel
+											</Button>
+										</AlertDialogCancel>
+										<AlertDialogAction asChild>
+											<Button
+												size="sm"
+												onClick={async () => {
+													await api.user
+														.block(user.id)
+														.then(() => {
+															toasts.add("User blocked successfully");
+															return router.refresh();
+														})
+														.catch(toasts.addError);
+												}}
+											>
+												Block
+											</Button>
+										</AlertDialogAction>
+									</DialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
 							<Tooltip>
 								<ReportDialog user={user}>
 									<TooltipTrigger asChild>

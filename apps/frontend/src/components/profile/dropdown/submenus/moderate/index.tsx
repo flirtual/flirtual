@@ -71,16 +71,20 @@ export const ProfileDropdownModerateSubmenu: FC<
 								</AlertDialogHeader>
 								<AlertDialogDescription>
 									This action cannot be undone. This action will permanently
-									delete the{" "}
+									delete the account{" "}
 									<InlineLink href={urls.profile(user)}>
 										{displayName(user)}
 									</InlineLink>{" "}
-									account and it will be unrecoverable.
+									and it will be unrecoverable.
 								</AlertDialogDescription>
 								<DialogFooter>
+									<AlertDialogCancel asChild>
+										<Button kind="tertiary" size="sm">
+											Cancel
+										</Button>
+									</AlertDialogCancel>
 									<AlertDialogAction asChild>
 										<Button
-											kind="tertiary"
 											size="sm"
 											onClick={async () => {
 												await api.user
@@ -95,9 +99,6 @@ export const ProfileDropdownModerateSubmenu: FC<
 											Delete account
 										</Button>
 									</AlertDialogAction>
-									<AlertDialogCancel asChild>
-										<Button size="sm">Cancel</Button>
-									</AlertDialogCancel>
 								</DialogFooter>
 							</AlertDialogContent>
 						</AlertDialog>

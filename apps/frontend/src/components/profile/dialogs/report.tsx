@@ -15,12 +15,14 @@ import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
 	children
 }) => {
+	const [session] = useSession();
 	const router = useRouter();
 	const toasts = useToast();
 
@@ -64,9 +66,11 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 											>
 												{displayName(user)}
 											</span>
-											<span className="font-mono text-sm brightness-75">
-												{user.id}
-											</span>
+											{session?.user.tags?.includes("moderator") && (
+												<span className="font-mono text-sm brightness-75">
+													{user.id}
+												</span>
+											)}
 										</div>
 									</div>
 								)}
