@@ -49,7 +49,19 @@ export const ProfileDropdownModerateSubmenu: FC<
 				{session?.user.tags?.includes("admin") && (
 					<>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem asChild disabled={!user.bannedAt}>
+						<DropdownMenuItem
+							asChild
+							disabled={!user.bannedAt}
+							onClick={() => {
+								api.user
+									.unsuspend(user.id)
+									.then(() => {
+										toasts.add("User unbanned successfully");
+										return router.refresh();
+									})
+									.catch(toasts.addError);
+							}}
+						>
 							<button className="w-full gap-2" type="button">
 								<Scale className="h-5 w-5" />
 								Unban
