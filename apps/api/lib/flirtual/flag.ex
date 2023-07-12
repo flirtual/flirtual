@@ -42,13 +42,6 @@ defmodule Flirtual.Flag do
   def check_flags(user_id, text) do
     user = Users.get(user_id)
 
-    # query = """
-    #   SELECT flag
-    #   FROM flags
-    #   WHERE type = 'text'
-    #   AND $1 ~* ('(?<![[:alnum:]])' || flag || '(?![[:alnum:]])')
-    # """
-
     case Flag
          |> where([flag], flag.type == "text")
          |> where(

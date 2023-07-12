@@ -341,6 +341,34 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:flagged_duplicate,
+        user: %User{} = user,
+        duplicates: duplicates,
+        type: type,
+        text: text
+      ) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Potential duplicate auto-flagged",
+          fields: [
+            %{
+              name: "Duplicates",
+              value: duplicates
+            },
+            %{
+              name: "Flagged #{type}",
+              value: text
+            }
+          ],
+          color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:flagged_image,
         user: %User{} = user,
         image: %Image{} = image,

@@ -9,6 +9,7 @@ defmodule Flirtual.Profiles do
   alias Flirtual.User.{Profile}
   alias Flirtual.User.Profile.{Image}
   alias Flirtual.Flag
+  alias Flirtual.Hash
 
   def get_personality_by_user_id(user_id)
       when is_binary(user_id) do
@@ -204,7 +205,10 @@ defmodule Flirtual.Profiles do
                profile.user_id,
                (profile.biography || "") <> " " <> Enum.join(profile.custom_interests || [], " ")
              ),
-           :ok <- Flag.check_openai_moderation(profile.user_id, profile.biography) do
+           :ok <- Flag.check_openai_moderation(profile.user_id, profile.biography),
+           :ok <- Hash.check_hash(profile.user_id, "display name", profile.display_name),
+           :ok <- Hash.check_hash(profile.user_id, "VRChat", profile.vrchat),
+           :ok <- Hash.check_hash(profile.user_id, "Discord", profile.discord) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
