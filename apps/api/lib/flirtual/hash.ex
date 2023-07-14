@@ -65,6 +65,8 @@ defmodule Flirtual.Hash do
     |> Repo.all()
   end
 
+  def check_hash(_, _, nil), do: :ok
+
   def check_hash(_, _, ""), do: :ok
 
   def check_hash(user_id, type, text) when is_binary(type) and is_binary(text) do
