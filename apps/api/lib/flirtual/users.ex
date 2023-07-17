@@ -15,6 +15,7 @@ defmodule Flirtual.Users do
   alias Flirtual.{Repo, User}
   alias Flirtual.User.{Preferences}
   alias Flirtual.Stripe
+  alias Flirtual.Hash
 
   def get(id)
       when is_binary(id) do
@@ -74,9 +75,9 @@ defmodule Flirtual.Users do
     use Flirtual.EmbeddedSchema
 
     embedded_schema do
-      field :password, :string, redact: true
-      field :password_confirmation, :string, redact: true
-      field :current_password, :string, redact: true
+      field(:password, :string, redact: true)
+      field(:password_confirmation, :string, redact: true)
+      field(:current_password, :string, redact: true)
     end
 
     def changeset(value, _, %{user: user}) do
@@ -125,12 +126,12 @@ defmodule Flirtual.Users do
     alias Flirtual.Users
 
     embedded_schema do
-      field :email, :string
-      field :password, :string, redact: true
-      field :password_confirmation, :string, redact: true
-      field :token, :string, redact: true
+      field(:email, :string)
+      field(:password, :string, redact: true)
+      field(:password_confirmation, :string, redact: true)
+      field(:token, :string, redact: true)
 
-      field :user, :map, virtual: true
+      field(:user, :map, virtual: true)
     end
 
     def changeset(value, _, _) do
@@ -162,9 +163,9 @@ defmodule Flirtual.Users do
     use Flirtual.EmbeddedSchema
 
     embedded_schema do
-      field :email, :string
-      field :email_confirmation, :string
-      field :current_password, :string, redact: true
+      field(:email, :string)
+      field(:email_confirmation, :string)
+      field(:current_password, :string, redact: true)
     end
 
     def changeset(value, _, %{user: user}) do
@@ -197,6 +198,7 @@ defmodule Flirtual.Users do
              user
              |> User.update_email_changeset(attrs |> Map.from_struct())
              |> Repo.update(),
+           :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, _} <- ChangeQueue.add(user.id),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
@@ -213,8 +215,8 @@ defmodule Flirtual.Users do
     import Flirtual.Jwt, only: [validate_jwt: 4]
 
     embedded_schema do
-      field :token, :string, redact: true
-      field :user, :map, virtual: true
+      field(:token, :string, redact: true)
+      field(:user, :map, virtual: true)
     end
 
     def changeset(value, _, _) do
@@ -316,13 +318,13 @@ defmodule Flirtual.Users do
     @optional [:comment]
 
     embedded_schema do
-      field :reason_id, :string
-      field :reason, :map, virtual: true
+      field(:reason_id, :string)
+      field(:reason, :map, virtual: true)
 
-      field :comment, :string, default: ""
+      field(:comment, :string, default: "")
 
-      field :current_password, :string, redact: true
-      field :captcha, :string, redact: true
+      field(:current_password, :string, redact: true)
+      field(:captcha, :string, redact: true)
     end
 
     def changeset(value, _, %{user: user}) do
@@ -341,6 +343,7 @@ defmodule Flirtual.Users do
            :ok <- Elasticsearch.delete(:users, user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Stripe.delete_customer(user),
+           :ok <- Hash.delete(user.id),
            :ok <-
              Discord.deliver_webhook(:exit_survey,
                user: user,
@@ -428,6 +431,8 @@ defmodule Flirtual.Users do
              Ecto.build_assoc(profile, :preferences)
              |> Repo.insert(),
            user <- Repo.preload(user, User.default_assoc()),
+           :ok <- Hash.check_hash(user.id, "username", attrs[:username]),
+           :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, _} <- Talkjs.update_user(user),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
