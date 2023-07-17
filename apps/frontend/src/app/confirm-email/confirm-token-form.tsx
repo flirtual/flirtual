@@ -10,6 +10,7 @@ import {
 import { api } from "~/api/";
 import { Form, FormButton } from "~/components/forms";
 import { useToast } from "~/hooks/use-toast";
+import { urls } from "~/urls";
 
 export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	const [confirmSuccess, setConfirmSuccess] = useState<boolean | null>(null);
@@ -32,7 +33,10 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 							setConfirmSuccess(true);
 							return router.refresh();
 						})
-						.catch(toasts.addError);
+						.catch((reason) => {
+							toasts.addError(reason);
+							router.push(urls.confirmEmail());
+						});
 				}}
 			>
 				{() => (
