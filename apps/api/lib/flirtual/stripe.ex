@@ -357,7 +357,10 @@ defmodule Flirtual.Stripe do
   def delete_customer(%User{stripe_id: nil}), do: {:ok, nil}
 
   def delete_customer(%User{stripe_id: stripe_id}) when is_binary(stripe_id) do
-    Stripe.Customer.delete(stripe_id)
+    case Stripe.Customer.delete(stripe_id) do
+      {:ok, customer} -> {:ok, customer}
+      {:error, %Stripe.Error{extra: %{http_status: 404}}} -> {:ok, nil}
+    end
   end
 
   def get_customer(stripe_id) when is_binary(stripe_id) do
