@@ -55,8 +55,12 @@ defmodule Flirtual.Hash do
     |> Repo.insert()
   end
 
-  def delete(user_id: user_id) when is_binary(user_id) do
-    Hash |> where(user_id: ^user_id) |> Repo.delete_all()
+  def delete(user_id) when is_binary(user_id) do
+    case Hash |> where(user_id: ^user_id) |> Repo.delete_all() do
+      {_, nil} -> :ok
+      {:error, reason} -> {:error, reason}
+      reason -> reason
+    end
   end
 
   def get(type, hash) when is_binary(type) and is_binary(hash) do
