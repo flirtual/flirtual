@@ -361,9 +361,8 @@ defmodule Flirtual.Stripe do
   end
 
   def get_customer(stripe_id) when is_binary(stripe_id) do
-    with {:ok, customer} <- Stripe.Customer.retrieve(stripe_id, expand: ["subscriptions"]) do
-      {:ok, customer}
-    else
+    case Stripe.Customer.retrieve(stripe_id, expand: ["subscriptions"]) do
+      {:ok, customer} -> {:ok, customer}
       {:error, %Stripe.Error{extra: %{http_status: 404}}} -> {:ok, nil}
     end
   end
