@@ -104,7 +104,7 @@ defmodule Flirtual.Profiles do
         country: profile.country,
         serious: profile.serious,
         new: profile.new,
-        languages: profile.languages,
+        languages: if(profile.languages === [], do: nil, else: profile.languages),
         custom_interests: profile.custom_interests
       }
     end
@@ -116,7 +116,7 @@ defmodule Flirtual.Profiles do
       |> validate_length(:biography, min: 48, max: 8192)
       |> validate_length(:languages, min: 1, max: 5)
       |> validate_attributes(:gender_id, "gender")
-      |> validate_length(:gender_id, min: 1, max: 4)
+      |> validate_length(:gender, min: 1, max: 4)
       |> validate_attributes(:sexuality_id, "sexuality")
       |> validate_length(:sexuality, max: 3)
       |> validate_attributes(:kink_id, "kink")

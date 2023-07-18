@@ -65,7 +65,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 						return [
 							type,
 							filterBy(profile.attributes, "type", type).map(({ id }) => id) ??
-							[]
+								[]
 						] as const;
 					})
 				) as { [K in (typeof AttributeKeys)[number]]: Array<string> }),
@@ -107,8 +107,8 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 									return [`${type}Id`, values[type]] as const;
 								})
 							) as {
-									[K in (typeof AttributeKeys)[number]as `${K}Ids`]: Array<string>;
-								}),
+								[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
+							}),
 							genderId: gender.filter((id) => id !== "other"),
 							interestId: interest.filter((id) => !customInterests.includes(id))
 						}
@@ -126,7 +126,6 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					user: {
 						...newUser,
 						preferences: {
-							// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 							...newUser.preferences!,
 							privacy: privacyPreferences
 						},
@@ -181,7 +180,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 												label: gender.name,
 												conflicts:
 													gender.metadata &&
-														Array.isArray(gender.metadata.conflicts)
+													Array.isArray(gender.metadata.conflicts)
 														? gender.metadata.conflicts
 														: []
 											})),
