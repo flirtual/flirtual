@@ -53,6 +53,9 @@ export const Onboarding3Form: React.FC = () => {
 							discord: values.discord.trim() || null,
 							vrchat: values.vrchat.trim() || null
 						}
+					}),
+					await api.user.profile.images.update(user.id, {
+						body: values.images.map((image) => image.id).filter(Boolean)
 					})
 					// api.user.preferences.updatePrivacy(user.id, {
 					// 	body: {
@@ -60,12 +63,6 @@ export const Onboarding3Form: React.FC = () => {
 					// 	}
 					// })
 				]);
-
-				if (values.images.length > 0) {
-					await api.user.profile.images.update(user.id, {
-						body: values.images.map((image) => image.id).filter(Boolean)
-					});
-				}
 
 				router.push(urls.onboarding(4));
 			}}

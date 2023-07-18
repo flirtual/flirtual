@@ -275,12 +275,12 @@ defmodule Flirtual.Profiles do
       with {:ok, _} <-
              cast_arbitrary(
                %{
-                 image_ids: {:array, :string}
+                 images: {:array, :string}
                },
-               %{image_ids: image_ids}
+               %{images: image_ids}
              )
-             |> validate_uids(:image_ids)
-             |> validate_length(:image_ids, min: 1, max: 16)
+             |> validate_uids(:images)
+             |> validate_length(:images, min: 1, max: 16)
              |> apply_action(:update),
            images <-
              Enum.map(profile.images, fn image ->
