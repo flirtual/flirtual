@@ -1,11 +1,18 @@
-import { twMerge } from "tailwind-merge";
+"use client";
 
-import { withSession } from "~/server-utilities";
+import { twMerge } from "tailwind-merge";
+import { FC, useMemo } from "react";
+
+import { useSession } from "~/hooks/use-session";
+import { useInAppPurchase } from "~/hooks/use-in-app-purchase";
+import { useDevice } from "~/hooks/use-device";
+import { usePlans } from "~/hooks/use-plans";
 
 import { PlanButtonLink } from "./plan-button-link";
 
 export interface PlanCardProps {
 	id: string;
+	oneMonthId?: string;
 	duration: string;
 	price: number;
 	originalPrice?: number;
@@ -14,16 +21,49 @@ export interface PlanCardProps {
 	description?: string;
 }
 
-export async function PlanCard(props: PlanCardProps) {
+export const PlanCard: FC<PlanCardProps> = (props) => {
 	const {
+		id,
+		oneMonthId,
 		duration,
-		price,
-		originalPrice = props.price,
+		price: stripePrice,
+		originalPrice: originalStripePrice = stripePrice,
 		discount,
 		highlight,
 		description
 	} = props;
-	const { user } = await withSession();
+	const [session] = useSession();
+	const { platform } = useDevice();
+
+	const plans = usePlans();
+	const plan = useMemo(() => plans.find((plan) => plan.id === id), [plans, id]);
+	const oneMonthPlan = useMemo(
+		() => plans.find((plan) => plan.id === oneMonthId),
+		[plans, oneMonthId]
+	);
+
+	const { products } = useInAppPurchase();
+	const platformId = platform === "ios" ? plan?.appleId : plan?.googleId;
+	const oneMonthPlatformId =
+		platform === "ios" ? oneMonthPlan?.appleId : oneMonthPlan?.googleId;
+
+	const product = platformId ? products[platformId] : null;
+	const oneMonthProduct = oneMonthPlatformId
+		? products[oneMonthPlatformId]
+		: null;
+
+	const user = session?.user;
+	if (!user) return null;
+
+	console.log(product);
+
+	const price = product
+		? product.pricing!.priceMicros! / 1_000_000
+		: stripePrice;
+	const originalPrice = product
+		? ((oneMonthProduct?.pricing?.priceMicros ?? 0) / 1_000_000) *
+		Number.parseInt(product?.pricing?.billingPeriod?.slice(1, 2) ?? "0")
+		: originalStripePrice;
 
 	const activePlan =
 		(user.subscription?.active && user.subscription.plan.id === props.id) ??
@@ -46,14 +86,14 @@ export async function PlanCard(props: PlanCardProps) {
 					className={twMerge(
 						"font-montserrat text-sm font-semibold text-black-60 line-through dark:text-white-50",
 						price === originalPrice &&
-							(duration === "Lifetime"
-								? "hidden"
-								: "hidden sm:invisible sm:block")
+						(duration === "Lifetime"
+							? "hidden"
+							: "hidden sm:invisible sm:block")
 					)}
 				>
 					{`$${originalPrice}`}
 				</span>
-				<span className="font-montserrat text-3xl font-semibold">${price}</span>
+				<span className="font-montserrat text-3xl font-semibold">{price}</span>
 				<span className="mt-1 text-xl">{duration}</span>
 			</div>
 			{discount && (
@@ -90,4 +130,4 @@ export async function PlanCard(props: PlanCardProps) {
 	) : (
 		inner
 	);
-}
+};

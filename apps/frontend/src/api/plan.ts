@@ -1,4 +1,5 @@
 import { DatedModel, UuidModel } from "./common";
+import { fetch, NarrowFetchOptions } from "./exports";
 
 export const SubscriptionFeatures = ["custom_weights"] as const;
 export type SubscriptionFeature = (typeof SubscriptionFeatures)[number];
@@ -9,4 +10,12 @@ export type Plan = UuidModel &
 		features: Array<SubscriptionFeature>;
 		productId?: string;
 		priceId?: string;
+		appleId?: string;
+		googleId?: string;
 	};
+
+export async function list(
+	options: NarrowFetchOptions = {}
+): Promise<Array<Plan>> {
+	return fetch<Array<Plan>>("get", "plans", options);
+}

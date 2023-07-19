@@ -20,6 +20,8 @@ defmodule Flirtual.Subscription do
 
     field :active, :string, virtual: true
     field :stripe_id, :string
+    field :google_id, :string
+    field :apple_id, :string
     field :cancelled_at, :utc_datetime
 
     timestamps()

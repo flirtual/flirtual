@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { urls } from "~/urls";
 
-export default async function SettingsPage() {
+export default function SettingsPage() {
 	const router = useRouter();
 
 	const isDesktop = useScreenBreakpoint("md");

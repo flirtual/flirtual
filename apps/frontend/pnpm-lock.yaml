@@ -101,6 +101,9 @@ dependencies:
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
+  cordova-plugin-purchase:
+    specifier: ^13.6.0
+    version: 13.6.0
   csstype:
     specifier: ^3.1.2
     version: 3.1.2
@@ -3103,6 +3106,10 @@ packages:
   /cookie@0.4.2:
     resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /cordova-plugin-purchase@13.6.0:
+    resolution: {integrity: sha512-Af68kbpC2e+ArbASqlvy3TirI2zlOEtYac2GBNJ5dhrn8oSureY+9O6tUOWqA+QkT5xyMjZHdf6XncJH/V97ow==}
     dev: false
 
   /core-util-is@1.0.3:

@@ -23,8 +23,7 @@ export function newUrl(
 	searchParameters.sort();
 
 	return new URL(
-		`${pathname}${
-			Object.keys(query).length > 0 ? `?${searchParameters.toString()}` : ""
+		`${pathname}${Object.keys(query).length > 0 ? `?${searchParameters.toString()}` : ""
 		}`,
 		urls.api
 	);
@@ -71,8 +70,8 @@ export type FetchOptions = Expand<
 
 export type NarrowFetchOptions<Body = undefined, Query = undefined> = Expand<
 	Omit<FetchOptions, "body" | "query"> &
-		(Body extends undefined ? { body?: undefined } : { body: Expand<Body> }) &
-		(Query extends undefined ? { query?: undefined } : { query: Expand<Query> })
+	(Body extends undefined ? { body?: undefined } : { body: Expand<Body> }) &
+	(Query extends undefined ? { query?: undefined } : { query: Expand<Query> })
 >;
 
 export type FetchMethod = "get" | "post" | "delete" | "patch" | "put";
@@ -104,10 +103,10 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 	const body: any = options.raw
 		? options.body
 		: JSON.stringify(
-				typeof options.body === "object"
-					? toSnakeObject(options.body)
-					: options.body
-		  );
+			typeof options.body === "object"
+				? toSnakeObject(options.body)
+				: options.body
+		);
 
 	const response = await globalThis.fetch(url, {
 		...options,
@@ -146,5 +145,6 @@ export * as user from "./user";
 export * as file from "./file";
 export * as images from "./images";
 export * as matchmaking from "./matchmaking";
+export * as plan from "./plan";
 export * as report from "./report";
 export * as subscription from "./subscription";

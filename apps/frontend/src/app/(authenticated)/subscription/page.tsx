@@ -10,8 +10,8 @@ import { urls } from "~/urls";
 import { withSession } from "~/server-utilities";
 import { formatDate } from "~/date";
 
-import { PlanCard } from "./plan-card";
 import { SuccessMessage } from "./success-message";
+import { PlanList } from "./plan-list";
 
 export const metadata: Metadata = {
 	title: "Subscription"
@@ -123,51 +123,7 @@ export default async function SubscriptionPage() {
 							</li>
 						</ul>
 					)}
-					{subscription?.plan.id !== "CJv2NQ7AiEimvDoZJ3uQTe" &&
-						subscription?.plan.id !== "Di7Sypboma4ryhy6MUagyS" && (
-							<div className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-4">
-								{[
-									{
-										id: "LVjvu5YE7PjUJxVrkfsnMi",
-										duration: "1 month",
-										price: 14.99
-									},
-									{
-										id: "fBDvWjdgvG6zEZMj6ZfyNG",
-										duration: "3 months",
-										price: 29.99,
-										originalPrice: 44.97,
-										discount: 33,
-										highlight: true
-									},
-									{
-										id: "Wt4aFY7jVzvSNFK9qcYAr5",
-										duration: "6 months",
-										price: 44.99,
-										originalPrice: 89.94,
-										discount: 50
-									}
-								].map((item) => {
-									return <PlanCard {...item} key={item.id} />;
-								})}
-								<div className="col-span-full flex flex-col gap-2">
-									<PlanCard
-										duration="Lifetime"
-										id="Di7Sypboma4ryhy6MUagyS"
-										originalPrice={129.99}
-										price={user.tags?.includes("legacy_vrlfp") ? 64.99 : 129.99}
-										description={
-											user.tags?.includes("legacy_vrlfp")
-												? "50% off for VRLFP users. Thanks for your early support!"
-												: undefined
-										}
-										discount={
-											user.tags?.includes("legacy_vrlfp") ? 50 : undefined
-										}
-									/>
-								</div>
-							</div>
-						)}
+					<PlanList />
 				</div>
 				<p className="select-none">
 					Flirtual is still in its early days: we have 50000 users and growing,

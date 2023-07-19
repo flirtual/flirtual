@@ -18,6 +18,8 @@ defmodule Flirtual.Plan do
 
     field :product_id, :string
     field :price_id, :string
+    field :google_id, :string
+    field :apple_id, :string
 
     timestamps(updated_at: false)
   end
@@ -45,6 +47,9 @@ defimpl Jason.Encoder, for: Flirtual.Plan do
       :name,
       :product_id,
       :price_id,
+      :price_id,
+      :google_id,
+      :apple_id,
       :created_at
     ]
 end
