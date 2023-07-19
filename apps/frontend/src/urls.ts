@@ -72,16 +72,15 @@ export const urls = {
 	profile: (user?: User | string) => {
 		if (!user) return "me";
 
-		return `/${
-			typeof user === "string"
+		return `/${typeof user === "string"
 				? user.toLowerCase()
 				: // HACK: This is a temporary fix because some users have usernames
 				// that are 22 characters long, which is the same length as a user id, and
 				// that causes a errors when resolving the route.
 				user.username.length === 22
-				? user.id
-				: user.username.toLowerCase()
-		}`;
+					? user.id
+					: user.username.toLowerCase()
+			}`;
 	},
 	browse: (kind?: ProspectKind) =>
 		url("/browse", { kind: kind === "love" ? undefined : kind }),
@@ -126,7 +125,13 @@ export const urls = {
 			`https://lens.google.com/uploadbyurl?url=${imageLink}`
 	},
 
-	admin: {},
+	admin: {
+		stats: "/stats",
+		statsData: (name: string) =>
+			`https://storage.cloud.google.com/flirtual-stats/${name}.csv`,
+		statsChart: (name: string) =>
+			`https://storage.cloud.google.com/flirtual-stats/${name}.svg`
+	},
 
 	debugger: {
 		default: "/debugger",

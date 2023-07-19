@@ -170,8 +170,8 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 									<ProfileNavigationItemDivider
 										Icon={PresentationChartLineIcon}
 									/>
-									<ProfileNavigationItem href={urls.moderation.reports()}>
-										Statistics
+									<ProfileNavigationItem href={urls.admin.stats}>
+										Stats
 									</ProfileNavigationItem>
 								</>
 							)}
