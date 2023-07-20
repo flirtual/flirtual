@@ -8,6 +8,11 @@ module.exports = {
 		"@ariesclark/eslint-config/tailwindcss"
 	],
 	root: true,
+	settings: {
+		react: {
+			version: "18"
+		}
+	},
 	rules: {
 		"@next/next/no-html-link-for-pages": "off"
 	}
