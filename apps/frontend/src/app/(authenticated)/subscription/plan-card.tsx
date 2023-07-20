@@ -1,7 +1,7 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { FC, useMemo } from "react";
+import { Dispatch, FC, SetStateAction, useMemo } from "react";
 
 import { useSession } from "~/hooks/use-session";
 import { usePurchase } from "~/hooks/use-purchase";
@@ -14,6 +14,8 @@ export interface PlanCardProps {
 	id: string;
 	oneMonthId?: string;
 	duration: string;
+	disabled: boolean;
+	setPurchasePending: Dispatch<SetStateAction<boolean>>;
 	price: number;
 	originalPrice?: number;
 	discount?: number;
@@ -60,6 +62,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const price = product
 		? product.pricing!.priceMicros! / 1_000_000
 		: stripePrice;
+	const displayPrice = product ? product.pricing!.price : `$${stripePrice}`;
 	const originalPrice = product
 		? ((oneMonthProduct?.pricing?.priceMicros ?? 0) / 1_000_000) *
 		  Number.parseInt(product?.pricing?.billingPeriod?.slice(1, 2) ?? "0")
@@ -91,9 +94,11 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 								: "hidden sm:invisible sm:block")
 					)}
 				>
-					{`$${originalPrice}`}
+					{originalPrice}
 				</span>
-				<span className="font-montserrat text-3xl font-semibold">{price}</span>
+				<span className="font-montserrat text-3xl font-semibold">
+					{displayPrice}
+				</span>
 				<span className="mt-1 text-xl">{duration}</span>
 			</div>
 			{discount && (
@@ -113,7 +118,9 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 			<PlanButtonLink
 				{...props}
 				active={activePlan}
+				disabled={props.disabled}
 				lifetime={duration === "Lifetime"}
+				product={product}
 			/>
 		</div>
 	);

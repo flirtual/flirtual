@@ -1,38 +1,26 @@
 "use client";
 
-import {
-	useState,
-	useEffect,
-	useMemo,
-	createContext,
-	useContext,
-	FC,
-	PropsWithChildren
-} from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { useDevice } from "./use-device";
 import { usePlans } from "./use-plans";
 
 import "cordova-plugin-purchase";
+import { Dialog } from "@capacitor/dialog";
 
-const { store, Platform, ProductType, Product } = CdvPurchase;
-store.error(console.error);
+export type Product = InstanceType<typeof CdvPurchase.Product>;
 
-export interface PurchaseContext {
-	loaded: boolean;
-	products: Record<string, InstanceType<typeof Product>>;
-	store: typeof store;
-}
+// store.verbosity = LogLevel.DEBUG;
 
-const PurchaseContext = createContext({} as PurchaseContext);
-
-export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
+export const usePurchase = () => {
 	const [ready, setReady] = useState(false);
+	const [store, setStore] = useState<InstanceType<
+		typeof CdvPurchase.Store
+	> | null>(null);
+
 	const { platform } = useDevice();
 
-	const [products, setProducts] = useState<
-		Record<string, InstanceType<typeof Product>>
-	>({});
+	const [products, setProducts] = useState<Record<string, Product>>({});
 	const plans = usePlans();
 
 	const supportedPlans = useMemo(
@@ -44,14 +32,17 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	);
 
 	useEffect(() => {
+		setStore(CdvPurchase.store);
 		console.log("store: before ready");
-		store.ready(() => {
+		CdvPurchase.store.ready(() => {
 			setReady(true);
 			console.log("store: ready");
 		});
 	}, []);
 
 	useEffect(() => {
+		const { store, Platform, ProductType } = CdvPurchase;
+
 		void (async () => {
 			const products = supportedPlans.map((plan) => ({
 				id: (platform === "ios" ? plan.appleId : plan.googleId)!,
@@ -60,19 +51,10 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				type: ProductType.PAID_SUBSCRIPTION
 			}));
 
-			console.log("store: before products register", products);
 			store.register(products);
-			console.log("store: after products register");
 
-			console.log("store: before initialize");
 			await store.initialize();
-			console.log("store: after initialize");
-
-			console.log("store: before update");
 			await store.update();
-			console.log("store: after update");
-
-			console.log("store: products get", store.products);
 
 			store.when().productUpdated((product) => {
 				setProducts((products) => ({
@@ -80,24 +62,19 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					[product.id]: product
 				}));
 			});
+
+			store.when().approved((transaction) => {
+				void Dialog.alert({
+					title: `Purchase successful`,
+					message: JSON.stringify(transaction, null, 2)
+				});
+			});
 		})();
 	}, [supportedPlans, platform, ready]);
 
-	return (
-		<PurchaseContext.Provider
-			value={{
-				loaded: ready,
-				products,
-				store
-			}}
-		>
-			{children}
-		</PurchaseContext.Provider>
-	);
-};
-
-// store.verbosity = LogLevel.DEBUG;
-
-export const usePurchase = () => {
-	return useContext(PurchaseContext);
+	return {
+		ready,
+		products,
+		store
+	};
 };
