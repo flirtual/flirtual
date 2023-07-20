@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { FC, useMemo } from "react";
 
 import { useSession } from "~/hooks/use-session";
-import { useInAppPurchase } from "~/hooks/use-in-app-purchase";
+import { usePurchase } from "~/hooks/use-purchase";
 import { useDevice } from "~/hooks/use-device";
 import { usePlans } from "~/hooks/use-plans";
 
@@ -42,7 +42,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		[plans, oneMonthId]
 	);
 
-	const { products } = useInAppPurchase();
+	const { products } = usePurchase();
 	const platformId = platform === "ios" ? plan?.appleId : plan?.googleId;
 	const oneMonthPlatformId =
 		platform === "ios" ? oneMonthPlan?.appleId : oneMonthPlan?.googleId;
@@ -62,7 +62,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		: stripePrice;
 	const originalPrice = product
 		? ((oneMonthProduct?.pricing?.priceMicros ?? 0) / 1_000_000) *
-		Number.parseInt(product?.pricing?.billingPeriod?.slice(1, 2) ?? "0")
+		  Number.parseInt(product?.pricing?.billingPeriod?.slice(1, 2) ?? "0")
 		: originalStripePrice;
 
 	const activePlan =
@@ -86,9 +86,9 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 					className={twMerge(
 						"font-montserrat text-sm font-semibold text-black-60 line-through dark:text-white-50",
 						price === originalPrice &&
-						(duration === "Lifetime"
-							? "hidden"
-							: "hidden sm:invisible sm:block")
+							(duration === "Lifetime"
+								? "hidden"
+								: "hidden sm:invisible sm:block")
 					)}
 				>
 					{`$${originalPrice}`}
