@@ -20,11 +20,12 @@ import { ThemeProvider } from "~/hooks/use-theme";
 import { DevicePlatform, DeviceProvider } from "~/hooks/use-device";
 import { NotificationProvider } from "~/hooks/use-notifications";
 import { TooltipProvider } from "~/components/tooltip";
+import AppUrlListener from "~/components/app-url-listener";
+import { PurchaseProvider } from "~/hooks/use-purchase";
 
 import { ClientScripts } from "./client-scripts";
 
 import "~/css/index.scss";
-import AppUrlListener from "~/components/app-url-listener";
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat",
@@ -81,7 +82,6 @@ export default async function RootLayout({
 	const session = await withOptionalSession();
 	const theme = session?.user.preferences?.theme ?? "light";
 
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
 
 	let platform = (userAgent.os.name?.toLowerCase() ?? "web") as DevicePlatform;
@@ -141,9 +141,11 @@ export default async function RootLayout({
 							<TooltipProvider>
 								<NotificationProvider>
 									<SessionProvider session={session}>
-										<ThemeProvider>
-											<ShepherdProvider>{children}</ShepherdProvider>
-										</ThemeProvider>
+										<PurchaseProvider>
+											<ThemeProvider>
+												<ShepherdProvider>{children}</ShepherdProvider>
+											</ThemeProvider>
+										</PurchaseProvider>
 									</SessionProvider>
 								</NotificationProvider>
 							</TooltipProvider>
