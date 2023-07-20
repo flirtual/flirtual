@@ -21,14 +21,16 @@ export default function StatsPage() {
     <SoleModelLayout>
       <ModelCard className="w-full sm:max-w-2xl" title="Stats">
         {stats.map((stat) => (
-          <div className="flex gap-2" key={stat}>
+          <div className="flex justify-between" key={stat}>
             {stat}
-            <a className="underline" href={urls.admin.statsData(stat)}>
-              Data
-            </a>
-            <a className="underline" href={urls.admin.statsChart(stat)}>
-              Chart
-            </a>
+            <div className="flex gap-2">
+              <a className="underline" href={urls.admin.statsData(stat)}>
+                Data
+              </a>
+              <a className="underline" href={urls.admin.statsChart(stat)}>
+                Chart
+              </a>
+            </div>
           </div>
         ))}
       </ModelCard>
