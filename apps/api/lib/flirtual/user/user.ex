@@ -33,6 +33,7 @@ defmodule Flirtual.User do
     field(:password_hash, :string, redact: true)
     field(:talkjs_id, :string, virtual: true)
     field(:talkjs_signature, :string, redact: true)
+    field(:listmonk_id, :integer)
     field(:stripe_id, :string)
     field(:language, :string, default: "en")
     field(:visible, :boolean)

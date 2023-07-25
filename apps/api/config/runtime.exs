@@ -32,6 +32,11 @@ config :flirtual, Flirtual.HCaptcha,
 
 config :flirtual, Flirtual.Canny, access_token: System.fetch_env!("CANNY_SECRET")
 
+config :flirtual, Flirtual.Listmonk,
+  url: System.fetch_env!("LISTMONK_URL"),
+  username: System.fetch_env!("LISTMONK_USERNAME"),
+  password: System.fetch_env!("LISTMONK_PASSWORD")
+
 config :joken, default_signer: System.fetch_env!("JOKEN_SECRET")
 
 config :stripity_stripe,

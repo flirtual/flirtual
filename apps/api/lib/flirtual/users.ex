@@ -10,6 +10,7 @@ defmodule Flirtual.Users do
   alias Flirtual.Discord
   alias Flirtual.User.ChangeQueue
   alias Flirtual.Talkjs
+  alias Flirtual.Listmonk
   alias Flirtual.Jwt
   alias Flirtual.Talkjs
   alias Flirtual.{Repo, User}
@@ -434,6 +435,7 @@ defmodule Flirtual.Users do
            :ok <- Hash.check_hash(user.id, "username", attrs[:username]),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, _} <- Talkjs.update_user(user),
+           {:ok, _} <- Listmonk.create_subscriber(user),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
       else

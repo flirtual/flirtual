@@ -10,6 +10,7 @@ defmodule Flirtual.User.ChangeQueue do
 
   alias Flirtual.Talkjs
   alias Flirtual.Elasticsearch
+  alias Flirtual.Listmonk
   alias Flirtual.Subscription
   alias Flirtual.Repo
   alias Flirtual.User
@@ -115,6 +116,7 @@ defmodule Flirtual.User.ChangeQueue do
 
     with :ok <- process_items(items, :elasticsearch),
          :ok <- process_items(items, :talkjs),
+         :ok <- process_items(items, :listmonk),
          :ok <- process_items(items, :premium_reset),
          :ok <-
            items
@@ -173,6 +175,16 @@ defmodule Flirtual.User.ChangeQueue do
         }
       end)
     )
+  end
+
+  defp process_items(items, :listmonk) do
+    Enum.map(items, &Listmonk.update_subscriber(&1.user))
+    |> Enum.reduce(:ok, fn item, _ ->
+      case item do
+        {:error, _} -> item
+        {:ok, _} -> :ok
+      end
+    end)
   end
 
   defp process_items(items, :premium_reset) do
