@@ -272,9 +272,30 @@ defmodule Flirtual.Users do
         %Preferences.EmailNotifications{} = notification_preferences,
         attrs
       ) do
-    notification_preferences
-    |> Preferences.EmailNotifications.update_changeset(attrs)
-    |> Repo.update()
+    with {:ok, notification_preferences} <-
+           notification_preferences
+           |> Preferences.EmailNotifications.update_changeset(attrs)
+           |> Repo.update(),
+         %User{listmonk_id: listmonk_id} <-
+           User
+           |> Ecto.Query.where(id: ^notification_preferences.preferences_id)
+           |> Ecto.Query.select([:listmonk_id])
+           |> Flirtual.Repo.one(),
+         {:ok, _} <-
+           Listmonk.update_subscription(
+             listmonk_id,
+             if notification_preferences.newsletter do
+               :add
+             else
+               :remove
+             end,
+             1
+           ) do
+      {:ok, notification_preferences}
+    else
+      {:error, reason} -> Repo.rollback(reason)
+      reason -> Repo.rollback(reason)
+    end
   end
 
   def deactivate(%User{} = user) do

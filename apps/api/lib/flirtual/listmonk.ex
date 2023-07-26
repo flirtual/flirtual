@@ -33,12 +33,26 @@ defmodule Flirtual.Listmonk do
     )
   end
 
+  def get_subscriber_lists(%User{} = user) do
+    if user.preferences.email_notifications.newsletter do
+      [1, 3]
+    else
+      [3]
+    end
+  end
+
   def create_subscriber(%User{} = user) do
     body = %{
       "email" => user.email,
       "name" => User.display_name(user),
-      "status" => "disabled",
-      "preconfirm_subscriptions" => true
+      "status" =>
+        if is_nil(user.email_confirmed_at) do
+          "disabled"
+        else
+          "enabled"
+        end,
+      "preconfirm_subscriptions" => true,
+      "lists" => get_subscriber_lists(user)
     }
 
     case fetch(:post, "subscribers", body) do
@@ -56,7 +70,13 @@ defmodule Flirtual.Listmonk do
     end
   end
 
-  def update_subscriber(%User{} = user) do
+  # User isn't an existing Listmonk subscriber, create one.
+  def update_subscriber(%User{listmonk_id: nil} = user) do
+    create_subscriber(user)
+  end
+
+  # User is an existing Listmonk subscriber, update their details.
+  def update_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
     case fetch(:get, "subscribers/#{user.listmonk_id}") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         subscriber = Poison.decode!(body)["data"]
@@ -72,7 +92,8 @@ defmodule Flirtual.Listmonk do
           "email" => user.email,
           "name" => User.display_name(user),
           "status" => status,
-          "preconfirm_subscriptions" => true
+          "preconfirm_subscriptions" => true,
+          "lists" => get_subscriber_lists(user)
         }
 
         case fetch(:put, "subscribers/#{user.listmonk_id}", body) do
@@ -88,9 +109,11 @@ defmodule Flirtual.Listmonk do
     end
   end
 
-  def update_subscription(%User{} = user, action, list_id) do
+  def update_subscription(nil, _, _) do {:ok, nil} end
+
+  def update_subscription(listmonk_id, action, list_id) when is_integer(listmonk_id) do
     body = %{
-      "ids" => [user.listmonk_id],
+      "ids" => [listmonk_id],
       "action" => action,
       "target_list_ids" => [list_id],
       "status" => "confirmed"

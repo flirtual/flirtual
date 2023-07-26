@@ -181,7 +181,7 @@ defmodule Flirtual.User.ChangeQueue do
     Enum.map(items, &Listmonk.update_subscriber(&1.user))
     |> Enum.reduce(:ok, fn item, _ ->
       case item do
-        {:error, _} -> item
+        :error -> {:error, nil}
         {:ok, _} -> :ok
       end
     end)
