@@ -157,6 +157,7 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 				.catch((reason) => {
 					if (
 						!(reason instanceof ResponseChangesetError) &&
+						reason &&
 						!Object.keys(reason.properties).includes("userId")
 					)
 						toasts.addError(reason);
