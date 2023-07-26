@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/named
 import { PropsWithChildren, cache } from "react";
 
 import { ButtonLink } from "~/components/button";
@@ -57,6 +56,11 @@ export default async function ConversationsLayout({
 							If you and someone else both like or homie each other (it&apos;s
 							mutual), then you will match! After you match, you can message
 							each other on Flirtual and meet up in VR.
+						</p>
+						<p>
+							We prioritize showing you people that have liked or homied you,
+							and showing your profile to people you have liked or homied, so
+							you can match.
 						</p>
 						<div className="grid gap-4 sm:grid-cols-2">
 							<ButtonLink href={urls.browse()} size="sm">

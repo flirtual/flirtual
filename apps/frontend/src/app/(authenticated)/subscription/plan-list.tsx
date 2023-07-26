@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { useSession } from "~/hooks/use-session";
 
@@ -8,6 +8,7 @@ import { PlanCard } from "./plan-card";
 
 export const PlanList: FC = () => {
 	const [session] = useSession();
+	const [purchasePending, setPurchasePending] = useState(false);
 
 	if (!session) return null;
 
@@ -43,15 +44,24 @@ export const PlanList: FC = () => {
 								discount: 50
 							}
 						].map((item) => {
-							return <PlanCard {...item} key={item.id} />;
+							return (
+								<PlanCard
+									{...item}
+									disabled={purchasePending}
+									key={item.id}
+									setPurchasePending={setPurchasePending}
+								/>
+							);
 						})}
 						<div className="col-span-full flex flex-col gap-2">
 							<PlanCard
+								disabled={purchasePending}
 								discount={user.tags?.includes("legacy_vrlfp") ? 50 : undefined}
 								duration="Lifetime"
 								id="Di7Sypboma4ryhy6MUagyS"
 								originalPrice={129.99}
 								price={user.tags?.includes("legacy_vrlfp") ? 64.99 : 129.99}
+								setPurchasePending={setPurchasePending}
 								description={
 									user.tags?.includes("legacy_vrlfp")
 										? "50% off for VRLFP users. Thanks for your early support!"

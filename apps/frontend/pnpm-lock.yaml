@@ -44,6 +44,9 @@ dependencies:
   '@capacitor/toast':
     specifier: ^5.0.6
     version: 5.0.6(@capacitor/core@5.2.1)
+  '@capgo/capacitor-purchases':
+    specifier: ^5.0.7
+    version: 5.0.7(@capacitor/core@5.2.1)
   '@hcaptcha/react-hcaptcha':
     specifier: ^1.8.1
     version: 1.8.1(react-dom@18.2.0)(react@18.2.0)
@@ -494,6 +497,14 @@ packages:
 
   /@capacitor/toast@5.0.6(@capacitor/core@5.2.1):
     resolution: {integrity: sha512-djkRHVT8YtLJC1vvOnDU3EfAHfQYqAD7LYEXmSmhYuTnXRIggX93m/NkazwLnnpr95kDbs2VVPM/J6dqqYuJng==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.2.1
+    dev: false
+
+  /@capgo/capacitor-purchases@5.0.7(@capacitor/core@5.2.1):
+    resolution: {integrity: sha512-RXd28mlAciNWX4SL8EFPzmf0QsoqIsMFYdLIWZFhsqJM6qndtfoKmR36wJSJATrCJ/YsO2DiOiqcONRjpsBytA==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:

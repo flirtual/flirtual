@@ -55,7 +55,7 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
 				size && sizes[size],
 				kind && kinds[kind],
 				Icon && "flex gap-4",
-				disabled && "cursor-not-allowed opacity-50",
+				disabled && "cursor-not-allowed opacity-75",
 				elementProps.className
 			)}
 		>

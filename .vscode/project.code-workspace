@@ -27,6 +27,8 @@
 			"flirtual"
 		]
 	},
+	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+	"eslint.format.enable": true,
 	"extensions": {
 		"recommendations": [
 			"dbaeumer.vscode-eslint"
