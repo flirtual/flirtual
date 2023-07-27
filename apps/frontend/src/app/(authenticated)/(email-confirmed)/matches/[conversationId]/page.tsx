@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-// eslint-disable-next-line import/named
 import { cache } from "react";
 import { redirect } from "next/navigation";
 
