@@ -9,12 +9,10 @@ import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { twMerge } from "tailwind-merge";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
-import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
 
@@ -33,6 +31,53 @@ interface SingleImageProps {
 	className?: string;
 	priority?: boolean;
 	large?: boolean;
+}
+
+const reverseSearchEngines = [
+	{
+		name: "Google Images",
+		url: (url: string) =>
+			`https://lens.google.com/uploadbyurl?url=${encodeURIComponent(url)}`
+	},
+	{
+		name: "TinEye",
+		url: (url: string) =>
+			`https://www.tineye.com/search?url=${encodeURIComponent(url)}`
+	},
+	{
+		name: "Yandex",
+		url: (url: string) =>
+			`https://yandex.com/images/search?url=${encodeURIComponent(
+				url
+			)}&rpt=imageview`
+	},
+	{
+		name: "Bing",
+		url: (url: string) =>
+			`https://www.bing.com/images/search?q=imgurl:${encodeURIComponent(
+				url
+			)}&view=detailv2&iss=sbi&FORM=IRSBIQ`
+	},
+	{
+		name: "Karmadecay",
+		url: (url: string) =>
+			`http://karmadecay.com/search?q=${encodeURIComponent(url)}`
+	},
+	{
+		name: "IQDB",
+		url: (url: string) => `https://iqdb.org/?url=${encodeURIComponent(url)}`
+	},
+	{
+		name: "ImgOps",
+		url: (url: string) =>
+			`https://imgops.com/start?url=${encodeURIComponent(url)}`
+	}
+];
+
+function reverseSearch(url: string) {
+	for (const engine of reverseSearchEngines) {
+		window.open(engine.url(url), "_blank");
+	}
 }
 
 const SingleImage: React.FC<SingleImageProps> = (props) => {
@@ -75,9 +120,9 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 			<div className="flex gap-4 text-white-20">
 				<Tooltip>
 					<TooltipTrigger asChild>
-						<Link href={urls.moderation.imageSearch(image.url)} target="_blank">
+						<button type="button" onClick={() => reverseSearch(image.url)}>
 							<MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
-						</Link>
+						</button>
 					</TooltipTrigger>
 					<TooltipContent>Search image</TooltipContent>
 				</Tooltip>
