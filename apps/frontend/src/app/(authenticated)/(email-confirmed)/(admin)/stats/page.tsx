@@ -23,7 +23,7 @@ export default function StatsPage() {
 		<SoleModelLayout>
 			<ModelCard className="w-full sm:max-w-2xl" title="Stats">
 				{stats.map((stat) => (
-					<div className="flex justify-between" key={stat}>
+					<div className="flex justify-between odd:bg-black-60/20" key={stat}>
 						{stat}
 						<div className="flex gap-2">
 							<a className="underline" href={urls.admin.statsData(stat)}>
