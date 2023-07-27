@@ -11,6 +11,7 @@ const stats = [
 	"likes",
 	"homies",
 	"matches",
+	"reports",
 	"bans",
 	"visible",
 	...[1, 2, 7, 14, 30, 60, 90, 180, 365].map((n) => `retention_${n}`),
