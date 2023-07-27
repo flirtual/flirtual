@@ -1,20 +1,19 @@
 "use client";
 
-import { FC, useMemo, useRef } from "react";
+import { FC, useMemo } from "react";
 import { SelectItemText } from "@radix-ui/react-select";
-import { useInView } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { InputSelect, InputSelectProps, SelectItem } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = (props) => {
-	const reference = useRef<HTMLDivElement>(null);
 	const country = useAttributeList("country").find(
 		(country) => country.id === props.value
 	);
 
-	const viewed = useInView(reference, { once: true });
+	const [reference, viewed] = useInView({ triggerOnce: true });
 	if (!country) return null;
 
 	return (

@@ -1,9 +1,9 @@
 "use client";
 
-import { useInView } from "framer-motion";
 import Link from "next/link";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useLayoutEffect } from "react";
 import { twMerge } from "tailwind-merge";
+import { useInView } from "react-intersection-observer";
 
 import { Conversation } from "~/api/conversations";
 import { displayName } from "~/api/user";
@@ -32,14 +32,13 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 
 	const { loadMore } = useConversations();
 
-	const reference = useRef<HTMLDivElement>(null);
 	const user = useUser(userId);
 
-	const inView = useInView(reference);
+	const [reference, inView] = useInView();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (!lastItem || !inView) return;
-		void loadMore();
+		setTimeout(() => loadMore(), 500);
 	}, [inView, lastItem, loadMore]);
 
 	if (!user) return null;
@@ -83,7 +82,16 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
 						<span className="w-full truncate text-black-50 dark:text-white-40">
-							{lastMessage?.content ?? "It's a match!"}
+							{lastMessage ? (
+								<>
+									{lastMessage?.senderId !== userId && !lastMessage.system && (
+										<span>You — </span>
+									)}
+									{lastMessage.content}
+								</>
+							) : (
+								<span className="truncate">It&apos;s a match!</span>
+							)}
 						</span>
 						{lastMessage && (
 							<TimeRelative

@@ -73,7 +73,7 @@ export default async function ConversationsLayout({
 			) : (
 				<div className="flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col">
 					<Header />
-					<div className="flex w-full max-w-screen-lg grow flex-col sm:flex-row md:mt-16 md:px-8">
+					<div className="flex w-full max-w-screen-lg grow flex-col md:mt-16 md:flex-row md:px-8">
 						{children}
 					</div>
 					<Footer desktopOnly />
