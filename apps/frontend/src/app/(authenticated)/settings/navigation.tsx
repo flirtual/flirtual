@@ -9,6 +9,7 @@ import {
 	ExclamationCircleIcon,
 	EyeSlashIcon,
 	FireIcon,
+	GiftIcon,
 	KeyIcon,
 	PencilSquareIcon,
 	SwatchIcon,
@@ -61,6 +62,9 @@ export const SettingsNavigation: FC = () => {
 					</NavigationLink>
 				</NavigationCategory>
 				<NavigationCategory name="Account">
+					{/* <NavigationLink href={urls.settings.referral} Icon={GiftIcon}>
+						Refer a friend
+					</NavigationLink> */}
 					<NavigationLink href={urls.settings.appearance} Icon={SwatchIcon}>
 						Appearance
 					</NavigationLink>
