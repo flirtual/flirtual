@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUturnLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { FC, useCallback, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -11,8 +12,10 @@ import {
 	ProspectRespondType,
 	RespondProspectBody
 } from "~/api/matchmaking";
+import { DialogTrigger } from "~/components/dialog/dialog";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { LetterDialog } from "~/components/profile/dialogs/letter";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { useTour } from "~/hooks/use-tour";
@@ -183,7 +186,28 @@ export const ProspectActionBar: FC<ProspectActionBarProps> = ({
 
 	return (
 		<div className="h-32 w-full dark:bg-black-70 sm:h-0">
-			<div className="pointer-events-none fixed bottom-0 left-0 flex w-full items-center justify-center bg-gradient-to-b from-transparent to-black-90/50 px-2 py-8 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
+			<div className="pointer-events-none fixed bottom-0 left-0 flex w-full flex-col items-center justify-center gap-3 bg-gradient-to-b from-transparent to-black-90/50 px-2 py-8 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
+				{/* <div className="pointer-events-auto flex items-center gap-3 overflow-hidden rounded-xl text-white-10">
+					<Tooltip>
+						<LetterDialog>
+							<TooltipTrigger asChild>
+								<DialogTrigger asChild>
+									<button
+										className="flex max-w-[20vw] items-center justify-center gap-3 rounded-xl bg-gradient-to-tr from-[#72b9bf] to-[#4d6c88] px-6 py-4 shadow-brand-1"
+										id="letter-button"
+										type="button"
+									>
+										<EnvelopeIcon className="w-8 shrink-0" />
+										<span className="hidden select-none font-montserrat text-lg font-extrabold md:inline">
+											Send letter
+										</span>
+									</button>
+								</DialogTrigger>
+							</TooltipTrigger>
+						</LetterDialog>
+						<TooltipContent>0 envelopes</TooltipContent>
+					</Tooltip>
+				</div> */}
 				<div className="pointer-events-auto flex h-32 items-center gap-3 overflow-hidden rounded-xl pb-16 text-white-10">
 					<Tooltip>
 						<TooltipTrigger asChild>
