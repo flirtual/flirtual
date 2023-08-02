@@ -35,7 +35,6 @@ export const Pill: React.FC<PillProps> = (props) => {
 		<AnimatePresence>
 			<Element
 				{...elementProps}
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				href={href!}
 				className={twMerge(
 					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 sm:text-base",

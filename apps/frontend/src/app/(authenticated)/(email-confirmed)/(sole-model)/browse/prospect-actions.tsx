@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowUturnLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { FC, useCallback, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -12,10 +11,8 @@ import {
 	ProspectRespondType,
 	RespondProspectBody
 } from "~/api/matchmaking";
-import { DialogTrigger } from "~/components/dialog/dialog";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { LetterDialog } from "~/components/profile/dialogs/letter";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { useTour } from "~/hooks/use-tour";

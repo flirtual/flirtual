@@ -41,8 +41,10 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 						<TooltipTrigger asChild>
 							<div>
 								<Pill
-									active={session.user.id !== user.id && attributeIds.includes(id)}
 									href={href}
+									active={
+										session.user.id !== user.id && attributeIds.includes(id)
+									}
 								>
 									{name}
 								</Pill>

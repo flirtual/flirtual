@@ -1,7 +1,6 @@
 import "server-only";
 
 import * as Sentry from "@sentry/nextjs";
-// eslint-disable-next-line import/named
 import { cache } from "react";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";

@@ -32,7 +32,6 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 				}))}
 				onChange={(arrayValue) =>
 					onChange(
-						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 						arrayValue.map(({ src }) => value.find((a) => a.src === src)!)
 					)
 				}

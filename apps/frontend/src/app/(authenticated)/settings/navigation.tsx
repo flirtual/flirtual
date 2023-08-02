@@ -9,7 +9,6 @@ import {
 	ExclamationCircleIcon,
 	EyeSlashIcon,
 	FireIcon,
-	GiftIcon,
 	KeyIcon,
 	PencilSquareIcon,
 	SwatchIcon,

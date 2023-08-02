@@ -1,6 +1,5 @@
 "use client";
 
-// eslint-disable-next-line import/named
 import { use, useCallback, useDebugValue, useState, useMemo } from "react";
 import { Preferences } from "@capacitor/preferences";
 

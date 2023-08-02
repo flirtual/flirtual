@@ -152,7 +152,7 @@ export const InputOptionWindow = forwardRef<
 
 		const sibling =
 			document.activeElement[
-			target === -1 ? "previousSibling" : "nextSibling"
+				target === -1 ? "previousSibling" : "nextSibling"
 			] ?? root[target === -1 ? "lastChild" : "firstChild"];
 		if (sibling instanceof HTMLElement) sibling.focus();
 	}, []);

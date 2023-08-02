@@ -44,7 +44,7 @@ export async function Profile(props: ProfileProps) {
 								user.id,
 								thruServerCookies()
 							)
-						}
+					  }
 					: {}
 			}}
 		>

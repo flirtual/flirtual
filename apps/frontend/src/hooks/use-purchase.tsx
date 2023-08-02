@@ -1,16 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { CapacitorPurchases } from "@capgo/capacitor-purchases";
-import { Dialog } from "@capacitor/dialog";
-
-import { rcAppleKey, rcGoogleKey } from "~/const";
-
-import { useDevice } from "./use-device";
-import { usePlans } from "./use-plans";
-
 export const usePurchase = () => {
-	const [ready] = useState(false);
+	/* const [ready] = useState(false);
 
 	const { platform } = useDevice();
 
@@ -35,9 +26,9 @@ export const usePurchase = () => {
 		void (async () => {
 			const { offerings } = await CapacitorPurchases.getOfferings();
 		})();
-	}, [supportedPlans, platform, ready]);
+	}, [supportedPlans, platform]); */
 
 	return {
-		ready
+		ready: false
 	};
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FC, useEffect, useLayoutEffect } from "react";
+import { FC, useLayoutEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import { useInView } from "react-intersection-observer";
 

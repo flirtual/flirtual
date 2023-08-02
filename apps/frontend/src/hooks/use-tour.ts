@@ -11,7 +11,6 @@ import { useScrollLock } from "./use-scroll-lock";
 import { usePreferences } from "./use-preferences";
 
 export function useShepherd() {
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	return useContext(ShepherdTourContext)!;
 }
 

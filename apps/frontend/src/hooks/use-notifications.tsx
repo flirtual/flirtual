@@ -7,7 +7,6 @@ import {
 import {
 	PropsWithChildren,
 	createContext,
-	// eslint-disable-next-line import/named
 	use,
 	useContext,
 	useEffect,

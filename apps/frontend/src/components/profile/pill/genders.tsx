@@ -31,16 +31,16 @@ export async function GenderPills({
 			...new Set(
 				simple
 					? profileGenders
-						.map((gender) =>
-							gender.metadata.aliasOf
-								? findBy(genders, "id", gender.metadata.aliasOf) ?? gender
-								: gender
-						)
-						.filter((gender) => {
-							if (simple)
-								return gender.metadata.simple || gender.metadata.fallback;
-							return true;
-						})
+							.map((gender) =>
+								gender.metadata.aliasOf
+									? findBy(genders, "id", gender.metadata.aliasOf) ?? gender
+									: gender
+							)
+							.filter((gender) => {
+								if (simple)
+									return gender.metadata.simple || gender.metadata.fallback;
+								return true;
+							})
 					: profileGenders
 			)
 		],
@@ -48,7 +48,6 @@ export async function GenderPills({
 	);
 
 	if (visibleGenders.length === 0)
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		visibleGenders.push(genders.find(({ metadata }) => metadata.fallback)!);
 
 	return (

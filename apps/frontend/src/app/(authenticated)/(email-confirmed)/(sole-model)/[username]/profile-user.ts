@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-// eslint-disable-next-line import/named
 import { cache } from "react";
 
 import { api } from "~/api";

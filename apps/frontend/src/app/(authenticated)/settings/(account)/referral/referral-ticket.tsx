@@ -1,21 +1,14 @@
 "use client";
 
-import {
-	ArrowUpOnSquareIcon,
-	ShareIcon,
-	Square2StackIcon
-} from "@heroicons/react/24/outline";
+import { ArrowUpOnSquareIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { Slot } from "@radix-ui/react-slot";
-import { Clipboard } from "@capacitor/clipboard";
 
-import { useToast } from "~/hooks/use-toast";
 import { FlirtualMark } from "~/components/mark";
 import { useDevice } from "~/hooks/use-device";
 import { useShare } from "~/hooks/use-share";
 
 export const ReferralTicket: React.FC<{ code: string }> = ({ code }) => {
 	const { platform } = useDevice();
-	const toasts = useToast();
 	const share = useShare();
 
 	return (

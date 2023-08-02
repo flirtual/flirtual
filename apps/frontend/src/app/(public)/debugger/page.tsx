@@ -1,5 +1,4 @@
 import { headers } from "next/headers";
-// eslint-disable-next-line import/named
 import { parse as parsePlatform } from "platform";
 
 import { api } from "~/api";
@@ -16,7 +15,6 @@ import { capitalize } from "~/utilities";
 export default async function DebuggerPage() {
 	const session = await withOptionalSession().catch(() => null);
 
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const userAgent = headers().get("user-agent")!;
 	const { os, name, version, layout } = parsePlatform(userAgent);
 

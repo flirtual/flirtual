@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import {
 	createContext,
@@ -255,7 +254,7 @@ export const ReportView: React.FC = () => {
 						reports,
 						setListOptions,
 						mutate
-					} as ReportListContext),
+					}) as ReportListContext,
 				[listOptions, setListOptions, reports, mutate]
 			)}
 		>

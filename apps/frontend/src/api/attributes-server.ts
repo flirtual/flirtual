@@ -1,6 +1,5 @@
 import "server-only";
 
-// eslint-disable-next-line import/named
 import { cache } from "react";
 
 import { thruServerCookies } from "~/server-utilities";
