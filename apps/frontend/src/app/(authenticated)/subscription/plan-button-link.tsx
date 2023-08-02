@@ -1,13 +1,11 @@
 "use client";
 
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Dispatch, FC, SetStateAction } from "react";
 
-import { Button, ButtonLink } from "~/components/button";
+import { ButtonLink } from "~/components/button";
 import { api } from "~/api";
 import { useProgressiveWebApp } from "~/hooks/use-pwa";
 import { useToast } from "~/hooks/use-toast";
-import { Product } from "~/hooks/use-purchase";
 
 import { PlanCardProps } from "./plan-card";
 
@@ -15,23 +13,22 @@ export const PlanButtonLink: FC<
 	PlanCardProps & {
 		active: boolean;
 		lifetime: boolean;
-		product: Product | null;
+		// product: Product | null;
 		setPurchasePending: Dispatch<SetStateAction<boolean>>;
 	}
 > = (props) => {
-	const { highlight, id, active, lifetime, product, setPurchasePending } =
-		props;
+	const { highlight, id, active, lifetime } = props;
 
 	const toasts = useToast();
 	const isPwa = useProgressiveWebApp();
 
-	const [pending, setPending] = useState(false);
+	// const [pending, setPending] = useState(false);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		setPurchasePending(pending);
-	}, [pending, setPurchasePending]);
+	}, [pending, setPurchasePending]); */
 
-	if (product) {
+	/* if (product) {
 		return (
 			<Button
 				disabled={props.disabled || pending}
@@ -62,7 +59,7 @@ export const PlanButtonLink: FC<
 				)}
 			</Button>
 		);
-	}
+	} */
 
 	return (
 		<ButtonLink

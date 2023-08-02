@@ -1,12 +1,9 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { Dispatch, FC, SetStateAction, useMemo } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 
 import { useSession } from "~/hooks/use-session";
-import { usePurchase } from "~/hooks/use-purchase";
-import { useDevice } from "~/hooks/use-device";
-import { usePlans } from "~/hooks/use-plans";
 
 import { PlanButtonLink } from "./plan-button-link";
 
@@ -25,8 +22,6 @@ export interface PlanCardProps {
 
 export const PlanCard: FC<PlanCardProps> = (props) => {
 	const {
-		id,
-		oneMonthId,
 		duration,
 		price: stripePrice,
 		originalPrice: originalStripePrice = stripePrice,
@@ -35,7 +30,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		description
 	} = props;
 	const [session] = useSession();
-	const { platform } = useDevice();
+	/*  const { platform } = useDevice();
 
 	const plans = usePlans();
 	const plan = useMemo(() => plans.find((plan) => plan.id === id), [plans, id]);
@@ -52,21 +47,19 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const product = platformId ? products[platformId] : null;
 	const oneMonthProduct = oneMonthPlatformId
 		? products[oneMonthPlatformId]
-		: null;
+		: null;  */
 
 	const user = session?.user;
 	if (!user) return null;
 
-	console.log(product);
-
-	const price = product
+	const price = /* product
 		? product.pricing!.priceMicros! / 1_000_000
-		: stripePrice;
-	const displayPrice = product ? product.pricing!.price : `$${stripePrice}`;
-	const originalPrice = product
+		:  */ stripePrice;
+	const displayPrice = /* product ? product.pricing!.price :  */ `$${stripePrice}`;
+	const originalPrice = /*  product
 		? ((oneMonthProduct?.pricing?.priceMicros ?? 0) / 1_000_000) *
 		  Number.parseInt(product?.pricing?.billingPeriod?.slice(1, 2) ?? "0")
-		: originalStripePrice;
+		:  */ originalStripePrice;
 
 	const activePlan =
 		(user.subscription?.active && user.subscription.plan.id === props.id) ??
@@ -120,7 +113,6 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				active={activePlan}
 				disabled={props.disabled}
 				lifetime={duration === "Lifetime"}
-				product={product}
 			/>
 		</div>
 	);
