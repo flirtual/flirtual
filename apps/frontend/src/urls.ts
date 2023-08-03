@@ -136,8 +136,7 @@ export const urls = {
 	},
 
 	debugger: {
-		default: "/debugger",
-		console: "/debugger/console"
+		default: "/debugger"
 	},
 
 	resources: {
