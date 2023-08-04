@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { FC, useLayoutEffect } from "react";
+import { FC, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
-import { useInView } from "react-intersection-observer";
 
 import { Conversation } from "~/api/conversations";
 import { displayName } from "~/api/user";
@@ -11,7 +10,6 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar } from "~/components/user-avatar";
-import { useConversations } from "~/hooks/use-conversations";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -21,32 +19,14 @@ export type ConversationListItemProps = Conversation & {
 };
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
-	const {
-		id,
-		kind,
-		active = false,
-		lastItem = false,
-		userId,
-		lastMessage
-	} = props;
-
-	const { loadMore } = useConversations();
+	const { id, kind, active = false, userId, lastMessage } = props;
 
 	const user = useUser(userId);
-
-	const [reference, inView] = useInView();
-
-	useLayoutEffect(() => {
-		if (!lastItem || !inView) return;
-		setTimeout(() => loadMore(), 500);
-	}, [inView, lastItem, loadMore]);
-
 	if (!user) return null;
 
 	return (
 		<div
 			data-sentry-mask
-			ref={reference}
 			className={twMerge(
 				"relative rounded-xl shadow-brand-1",
 				active && "bg-brand-gradient pb-1"
@@ -109,3 +89,25 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 		</div>
 	);
 };
+
+export const ConversationListItemSkeleton = forwardRef<HTMLDivElement, unknown>(
+	(props, reference) => {
+		return (
+			<div className="relative rounded-xl shadow-brand-1" ref={reference}>
+				<div className="flex rounded-xl bg-white-30 dark:bg-black-60">
+					<div className="h-20 w-20 animate-pulse rounded-l-xl bg-white-20 dark:bg-black-50" />
+					<div className="flex w-1 grow flex-col gap-1 p-4">
+						<div className="flex justify-between gap-4">
+							<span className="h-5 w-1/2 animate-pulse rounded bg-white-20 dark:bg-black-50" />
+							<span className="h-5 w-5 animate-pulse rounded bg-white-20 dark:bg-black-50" />
+						</div>
+						<div className="flex items-baseline justify-between gap-4">
+							<span className="h-5 w-full animate-pulse rounded bg-white-20 dark:bg-black-50" />
+							<span className="h-5 w-1/4 animate-pulse rounded bg-white-20 dark:bg-black-50" />
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+);

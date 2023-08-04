@@ -17,9 +17,9 @@ import { unstableInfiniteSerialize } from "~/components/swr";
 
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
-import { getConversationsKey } from "./use-conversations";
 import { useNotifications } from "./use-notifications";
 import { useDevice } from "./use-device";
+import { getConversationsKey } from "./use-conversations.shared";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(

@@ -3,12 +3,16 @@
 import { twMerge } from "tailwind-merge";
 import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { FC, Suspense } from "react";
+import { FC, Suspense, useLayoutEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 import { urls } from "~/urls";
 import { useConversations } from "~/hooks/use-conversations";
 
-import { ConversationListItem } from "./list-item";
+import {
+	ConversationListItem,
+	ConversationListItemSkeleton
+} from "./list-item";
 import { LikesYouButton } from "./likes-you-button";
 
 export interface ConversationAsideProps {
@@ -19,7 +23,13 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const { activeConversationId } = props;
 	const HeaderIcon = activeConversationId ? ChevronLeftIcon : XMarkIcon;
 
-	const { data } = useConversations();
+	const { data, loadMore } = useConversations();
+	const [loadMoreReference, loadMoreInView] = useInView();
+
+	useLayoutEffect(() => {
+		if (!loadMoreInView) return;
+		void loadMore();
+	}, [loadMoreInView, loadMore]);
 
 	return (
 		<div className="flex w-full shrink-0 grow-0 select-none flex-col md:min-h-[calc(100vh-9rem)] md:w-96 md:rounded-t-xl md:bg-white-20 md:shadow-brand-1 dark:md:bg-black-70">
@@ -43,22 +53,28 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 				<LikesYouButton />
 				<div className="flex flex-col gap-4">
 					{data.map(({ data: conversations, metadata }, dataIndex) => (
-						<Suspense fallback={"Loading..."} key={metadata.cursor.self.page}>
-							<div className="flex flex-col gap-4">
-								{conversations.map((conversation, conversationIndex) => (
+						<div
+							className="flex flex-col gap-4"
+							key={metadata.cursor.self.page}
+						>
+							{conversations.map((conversation, conversationIndex) => (
+								<Suspense
+									fallback={<ConversationListItemSkeleton />}
+									key={conversation.id}
+								>
 									<ConversationListItem
 										{...conversation}
 										active={activeConversationId === conversation.id}
-										key={conversation.id}
 										lastItem={
 											dataIndex === data.length - 1 &&
 											conversationIndex === conversations.length - 1
 										}
 									/>
-								))}
-							</div>
-						</Suspense>
+								</Suspense>
+							))}
+						</div>
 					))}
+					<ConversationListItemSkeleton ref={loadMoreReference} />
 				</div>
 			</div>
 		</div>

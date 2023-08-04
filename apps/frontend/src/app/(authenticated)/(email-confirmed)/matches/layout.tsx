@@ -1,4 +1,5 @@
 import { PropsWithChildren, cache } from "react";
+import * as swrInfinite from "swr/infinite";
 
 import { ButtonLink } from "~/components/button";
 import { Footer } from "~/components/layout/footer";
@@ -11,6 +12,7 @@ import { api } from "~/api";
 import { fromEntries } from "~/utilities";
 import { SWRConfig } from "~/components/swr";
 import { SoleModelLayout } from "~/components/layout/sole-model";
+import { getConversationsKey } from "~/hooks/use-conversations.shared";
 
 import { LikesYouButton } from "./likes-you-button";
 import { withConversations } from "./data.server";
@@ -34,11 +36,9 @@ export default async function ConversationsLayout({
 			value={{
 				fallback: {
 					...fromEntries(users.map((user) => [`user/${user.id}`, user])),
-					// HACK: This is a hack to make the SWR cache work with the server-side rendered
-					// conversations. The server-side rendered conversations are not in the cache, so
-					// we need to add them to the cache.
-					// BLOCKER: https://github.com/vercel/swr/issues/2594
-					[`$inf$@"conversations",null,`]: [{ data: conversations, metadata }]
+					[swrInfinite.unstable_serialize(getConversationsKey)]: [
+						{ data: conversations, metadata }
+					]
 				}
 			}}
 		>
