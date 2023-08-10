@@ -536,7 +536,7 @@ defmodule Flirtual.Matchmaking do
         "term" => %{
           "country" => %{
             "value" => country,
-            "boost" => 15 * (Map.get(custom_weights, :country) || 1)
+            "boost" => 20 * (Map.get(custom_weights, :country) || 1)
           }
         }
       },
