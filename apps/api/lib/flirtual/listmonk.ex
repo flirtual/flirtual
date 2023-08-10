@@ -109,7 +109,9 @@ defmodule Flirtual.Listmonk do
     end
   end
 
-  def update_subscription(nil, _, _) do {:ok, nil} end
+  def update_subscription(nil, _, _) do
+    {:ok, nil}
+  end
 
   def update_subscription(listmonk_id, action, list_id) when is_integer(listmonk_id) do
     body = %{
