@@ -1,6 +1,7 @@
 "use client";
 
 import React, {
+	CSSProperties,
 	createContext,
 	useContext,
 	useEffect,
@@ -127,9 +128,18 @@ export const ConversationChatbox: React.FC<
 
 	const conversation = useMemo(() => {
 		if (!session || !conversationId) return null;
-		console.log(conversationId);
 		return session.getOrCreateConversation(conversationId);
 	}, [session, conversationId]);
+
+	const height = useMemo(() => {
+		if (!element) return "0px";
+		const insetBottom = getComputedStyle(element).getPropertyValue(
+			"--safe-area-inset-bottom"
+		);
+		return insetBottom === "0px"
+			? "calc(100dvh - 11.75rem)"
+			: "calc(100dvh - 14.75rem - var(--safe-area-inset-bottom))";
+	}, [element]);
 
 	useEffect(() => {
 		if (!chatbox || !conversation) return;
@@ -143,5 +153,18 @@ export const ConversationChatbox: React.FC<
 		return () => chatbox?.destroy();
 	}, [chatbox, element]);
 
-	return <div data-sentry-block {...props} ref={setElement} />;
+	return (
+		<div
+			data-sentry-block
+			className="w-full overflow-hidden md:h-[32rem] md:rounded-xl md:pt-0"
+			style={
+				{
+					"--safe-area-inset-bottom": "env(safe-area-inset-bottom)",
+					height
+				} as CSSProperties
+			}
+			{...props}
+			ref={setElement}
+		/>
+	);
 };
