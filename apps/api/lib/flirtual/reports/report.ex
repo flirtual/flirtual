@@ -114,22 +114,33 @@ defmodule Flirtual.Report do
     end
   end
 
-  def clear(%Report{} = report, _) do
+  def clear(%Report{} = report, moderator, silent \\ false) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     with {:ok, report} <-
            change(report, %{reviewed_at: now})
            |> Repo.update(),
-         {:ok, _} <- maybe_resolve_shadowban(report.target_id) do
+         %User{} = reported <- User.get(report.target_id),
+         {:ok, was_shadow_banned} <- maybe_resolve_shadowban(report.target_id),
+         :ok <-
+           if(silent,
+             do: :ok,
+             else:
+               Discord.deliver_webhook(:review_report,
+                 report: %Report{report | target: reported},
+                 moderator: moderator,
+                 was_shadow_banned: was_shadow_banned
+               )
+           ) do
       {:ok, Repo.preload(report, default_assoc())}
     end
   end
 
-  def clear_all(reports, moderator) do
+  def clear_all(reports, moderator, silent \\ false) do
     Repo.transaction(fn ->
       with {:ok, count} <-
              reports
-             |> Enum.map(&clear(&1, moderator))
+             |> Enum.map(&clear(&1, moderator, silent))
              |> then(
                &Enum.reduce(&1, {:ok, 0}, fn item, _ ->
                  case item do
