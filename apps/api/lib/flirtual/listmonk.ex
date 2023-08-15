@@ -109,6 +109,20 @@ defmodule Flirtual.Listmonk do
     end
   end
 
+  def delete_subscriber(%User{listmonk_id: nil}) do
+    {:ok, nil}
+  end
+
+  def delete_subscriber(%User{listmonk_id: listmonk_id} = user) when is_integer(listmonk_id) do
+    case fetch(:delete, "subscribers/#{user.listmonk_id}") do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)["data"]}
+
+      _ ->
+        :error
+    end
+  end
+
   def update_subscription(nil, _, _) do
     {:ok, nil}
   end
