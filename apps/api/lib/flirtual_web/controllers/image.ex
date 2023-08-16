@@ -68,31 +68,33 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
+  def authenticated?(conn) do
+    String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
+         conn.assigns[:authorization_token] ==
+           Application.fetch_env!(:flirtual, :scan_queue_access_token)
+  end
+
   def scan_queue(conn, %{"size" => size}) do
     {size, _} = Integer.parse(size)
 
-    if String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
-         conn.assigns[:authorization_token] !==
-           Application.fetch_env!(:flirtual, :scan_queue_access_token) do
-      {:error, {:unauthorized, "Invalid access token"}}
-    else
+    if authenticated?(conn) do
       images = Moderation.list_scan_queue(size)
 
       conn
       |> json(images)
+    else
+      {:error, {:unauthorized, "Invalid access token"}}
     end
   end
 
   def resolve_scan_queue(conn, %{"data" => data}) do
-    if String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
-         conn.assigns[:authorization_token] !==
-           Application.fetch_env!(:flirtual, :scan_queue_access_token) do
-      {:error, {:unauthorized, "Invalid access token"}}
-    else
+    if authenticated?(conn) do
       case Moderation.update_scan_queue(data) do
         {:ok, _} -> conn |> json(%{updated: true})
         _ -> {:error, {:unprocessable_entity, "Unable to update scan queue"}}
       end
+    else
+      {:error, {:unauthorized, "Invalid access token"}}
     end
   end
 end

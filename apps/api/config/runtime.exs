@@ -44,6 +44,9 @@ config :stripity_stripe,
   signing_secret: System.fetch_env!("STRIPE_SIGNING_SECRET"),
   json_library: Poison
 
+config :flirtual, FlirtualWeb.RevenueCatController,
+  signing_secret: System.fetch_env!("REVENUECAT_SIGNING_SECRET")
+
 config :openai,
   organization_key: System.fetch_env!("OPENAI_ORG_ID"),
   api_key: System.fetch_env!("OPENAI_ACCESS_TOKEN")
