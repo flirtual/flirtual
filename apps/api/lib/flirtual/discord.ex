@@ -322,6 +322,45 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:review_report,
+        report: %Report{} = report,
+        moderator: %User{} = moderator,
+        was_shadow_banned: was_shadow_banned
+      ) do
+    webhook(:moderation_reports, %{
+      embeds: [
+        %{
+          author: webhook_author(report.target),
+          title: "Report reviewed",
+          fields:
+            [
+              %{
+                name: "Moderator",
+                value: md_display_name(moderator),
+                inline: true
+              },
+              %{
+                name: "Report",
+                value: "[View report](https://flirtu.al/reports/#{report.id})",
+                inline: true
+              },
+              if(was_shadow_banned,
+                do: %{
+                  name: "No longer shadowbanned ✅",
+                  value:
+                    "This user has been cleared of all reports, and is now back in matchmaking."
+                },
+                else: nil
+              )
+            ]
+            |> Enum.filter(&(!!&1)),
+          color: @success_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:flagged_text, user: %User{} = user, flags: flags) do
     webhook(:moderation_flags, %{
       embeds: [

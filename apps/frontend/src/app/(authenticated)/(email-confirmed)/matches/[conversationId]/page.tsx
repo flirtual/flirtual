@@ -7,6 +7,8 @@ import { displayName } from "~/api/user";
 import { api } from "~/api";
 import { urls } from "~/urls";
 import { thruServerCookies } from "~/server-utilities";
+import { UserAvatar } from "~/components/user-avatar";
+import { InlineLink } from "~/components/inline-link";
 
 import { getProfileUser } from "../../(sole-model)/[username]/profile-user";
 import { ConversationAside } from "../aside";
@@ -38,15 +40,31 @@ export default async function ConversationPage({
 	params
 }: ConversationPageProps) {
 	const conversation = await getConversation(params.conversationId);
+	const user = await getProfileUser(conversation.userId);
 
 	return (
 		<>
 			<ConversationAside activeConversationId={conversation.id} />
 			<div className="flex h-full w-full flex-col items-center justify-center md:pl-8">
-				<ConversationChatbox
-					className="h-[min(calc(100vh-3.5rem-env(safe-area-inset-bottom)),calc(100vh-4rem))] w-full overflow-hidden pt-[max(calc(env(safe-area-inset-top)+3.25rem),3.75rem)] shadow-brand-1 md:h-[32rem] md:rounded-xl md:pt-0"
-					conversationId={conversation.id}
-				/>
+				<div className="h-full w-full md:rounded-xl md:shadow-brand-1">
+					<div className="mt-[max(calc(3.25rem+env(safe-area-inset-top)),3.75rem)] flex w-full bg-brand-gradient p-3 md:mt-0 md:rounded-t-xl">
+						<InlineLink
+							className="flex items-center gap-4 hocus:no-underline"
+							href={urls.profile(user)}
+						>
+							<UserAvatar
+								className="rounded-full"
+								height={40}
+								user={user}
+								width={40}
+							/>
+							<span className="select-none font-montserrat text-xl font-semibold text-white-10">
+								{displayName(user)}
+							</span>
+						</InlineLink>
+					</div>
+					<ConversationChatbox conversationId={conversation.id} />
+				</div>
 			</div>
 		</>
 	);

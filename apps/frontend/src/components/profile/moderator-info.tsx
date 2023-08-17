@@ -168,7 +168,9 @@ export const ProfileModeratorInfo: FC<{
 			</div>
 			<div className="flex flex-col">
 				<span>
-					<span className="font-bold">Moderator Message:</span>{" "}
+					<span className="font-bold">
+						Moderator Message (visible to user):
+					</span>{" "}
 					<span
 						className={twMerge(
 							user.moderatorMessage && "text-yellow-500",
@@ -179,7 +181,7 @@ export const ProfileModeratorInfo: FC<{
 					</span>
 				</span>
 				<span>
-					<span className="font-bold">Moderator Note:</span>{" "}
+					<span className="font-bold">Moderator Note (private):</span>{" "}
 					<span
 						className="cursor-pointer brightness-75 hover:brightness-100"
 						onClick={async () => {

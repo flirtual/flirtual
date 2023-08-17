@@ -86,6 +86,12 @@ defmodule FlirtualWeb.Router do
           get("/view", ImageController, :view)
         end
       end
+
+      scope "/revenuecat" do
+        pipe_through(:fetch_authorization_token)
+
+        post("/", RevenueCatController, :webhook)
+      end
     end
 
     scope "/" do

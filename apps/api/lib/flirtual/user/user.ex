@@ -397,7 +397,7 @@ defmodule Flirtual.User do
              user
              |> change(%{banned_at: now})
              |> Repo.update(),
-           {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator),
+           {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
            {:ok, _} <- ChangeQueue.add(user.id),
            {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message),

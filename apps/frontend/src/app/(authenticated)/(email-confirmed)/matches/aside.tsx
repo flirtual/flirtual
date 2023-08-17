@@ -74,7 +74,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 							))}
 						</div>
 					))}
-					<ConversationListItemSkeleton ref={loadMoreReference} />
+					<div ref={loadMoreReference} />
 				</div>
 			</div>
 		</div>
