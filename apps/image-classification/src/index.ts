@@ -30,20 +30,22 @@ const execute = async (size: number) => {
 		await fs.mkdir(groupFile, { recursive: true }).catch(() => void 0);
 
 		// Download available images that have not been scanned yet.
-		const downloadedImageIds = (
-			await Promise.all(
-				imageIds.map(
-					async (imageId) =>
-						[imageId, await images.download(groupFile, imageId)] as const
-				)
+		const downloadedImages = await Promise.all(
+			imageIds.map(
+				async (imageId) =>
+					[imageId, await images.download(groupFile, imageId)] as const
 			)
-		)
-			// Some images may fail to download, so we filter them out.
-			// We also filter out images that we just cannot process.
-			.filter(([, downloaded]) => downloaded)
-			.map(([imageId]) => imageId);
+		);
 
-		if (downloadedImageIds.length === 0) {
+		const scannableImages = downloadedImages.filter(
+			([, downloaded]) => downloaded
+		);
+
+		const skippedImages = downloadedImages.filter(
+			([, downloaded]) => !downloaded
+		);
+
+		if (scannableImages.length === 0) {
 			// If no images were downloaded, we can skip the classification.
 			log.warn({ groupFile }, "Zero images downloaded.");
 
@@ -53,8 +55,19 @@ const execute = async (size: number) => {
 		}
 
 		// Classify the downloaded images.
-		const map = await classify(groupFile, downloadedImageIds);
-		await scanQueue.update(Object.fromEntries(map.entries()));
+		const map = await classify(
+			groupFile,
+			scannableImages.map(([id]) => id)
+		);
+		await scanQueue.update(
+			Object.fromEntries([
+				...map.entries(),
+				// Mark all skipped images as scanned, since
+				// things break occasionally and we don't want
+				// to keep re-downloading the same images.
+				skippedImages.map(([id]) => [id, {}])
+			])
+		);
 
 		log.info({ groupFile }, `Updated ${imageIds.length} images.`);
 	} catch (reason) {
