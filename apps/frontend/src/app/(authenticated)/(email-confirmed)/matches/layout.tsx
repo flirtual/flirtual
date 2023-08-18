@@ -71,7 +71,8 @@ export default async function ConversationsLayout({
 					</ModelCard>
 				</SoleModelLayout>
 			) : (
-				<div className="flex min-h-[100dvh] grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col">
+				// eslint-disable-next-line tailwindcss/no-contradicting-classname
+				<div className="flex min-h-[100dvh] min-h-[100vh] grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col">
 					<Header />
 					<div className="flex w-full max-w-screen-lg grow flex-col md:mt-16 md:flex-row md:px-8">
 						{children}

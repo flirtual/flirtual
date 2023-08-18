@@ -136,9 +136,10 @@ export const ConversationChatbox: React.FC<
 		const insetBottom = getComputedStyle(element).getPropertyValue(
 			"--safe-area-inset-bottom"
 		);
+		const unit = CSS.supports("height", "100dvh") ? "dvh" : "vh";
 		return insetBottom === "0px"
-			? "calc(100dvh - 11.75rem)"
-			: "calc(100dvh - 14.75rem - var(--safe-area-inset-bottom))";
+			? `calc(100${unit} - 11.75rem)`
+			: `calc(100${unit} - 14.75rem - var(--safe-area-inset-bottom))`;
 	}, [element]);
 
 	useEffect(() => {
