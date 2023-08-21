@@ -196,7 +196,7 @@ defmodule Flirtual.Discord do
       embeds: [
         %{
           author: webhook_author(user),
-          title: "User unsuspended",
+          title: "User unbanned",
           color: @success_color,
           footer: webhook_author_footer(moderator),
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
