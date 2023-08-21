@@ -70,8 +70,8 @@ defmodule FlirtualWeb.ImageController do
 
   def authenticated?(conn) do
     String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
-         conn.assigns[:authorization_token] ==
-           Application.fetch_env!(:flirtual, :scan_queue_access_token)
+      conn.assigns[:authorization_token] ==
+        Application.fetch_env!(:flirtual, :scan_queue_access_token)
   end
 
   def scan_queue(conn, %{"size" => size}) do
