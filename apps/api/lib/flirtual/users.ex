@@ -238,7 +238,8 @@ defmodule Flirtual.Users do
       with {:ok, attrs} <- ConfirmUpdateEmail.apply(attrs),
            {:ok, user} <-
              User.confirm_email_changeset(attrs.user)
-             |> Repo.update() do
+             |> Repo.update(),
+           {:ok, _} <- ChangeQueue.add(user.id) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)

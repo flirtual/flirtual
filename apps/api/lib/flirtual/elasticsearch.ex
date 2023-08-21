@@ -14,6 +14,28 @@ defmodule Flirtual.Elasticsearch do
     Elasticsearch.post(Flirtual.Elasticsearch, "/" <> index_name <> "/_search", query)
   end
 
+  # def recompute_user(user) do
+  #   document = encode(user)
+  #   document_exists? = exists?(:users, user.id)
+
+  #   type =
+  #     if(user.visible,
+  #       do: if(document_exists?, do: :update, else: :create),
+  #       else: :delete
+  #     )
+
+  #   case type do
+  #     :create ->
+  #       create(:users, user.id, document)
+
+  #     :update ->
+  #       update(:users, user.id, document)
+
+  #     :delete ->
+  #       delete(:users, user.id)
+  #   end
+  # end
+
   def delete_index(index) when is_atom(index) do
     index_name = get_index_name(index)
     log(:warn, [index_name, "delete-index"], nil)

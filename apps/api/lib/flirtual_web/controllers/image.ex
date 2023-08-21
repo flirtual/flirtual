@@ -1,4 +1,5 @@
 defmodule FlirtualWeb.ImageController do
+  alias Flirtual.User.ChangeQueue
   use FlirtualWeb, :controller
 
   import FlirtualWeb.Utilities
@@ -60,7 +61,8 @@ defmodule FlirtualWeb.ImageController do
                ),
              else: :ok
            ),
-         {:ok, _} <- Image.delete(image) do
+         {:ok, _} <- Image.delete(image),
+         {:ok, _} <- ChangeQueue.add(image.profile_id) do
       conn |> json(%{deleted: true})
     else
       nil -> {:error, {:not_found, "Image not found", %{image_id: image_id}}}

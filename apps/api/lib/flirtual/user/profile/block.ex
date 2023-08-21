@@ -14,8 +14,8 @@ defmodule Flirtual.User.Profile.Block do
   @derive {Jason.Encoder, only: [:profile_id, :target_id, :created_at]}
 
   schema "blocks" do
-    belongs_to :profile, Flirtual.User.Profile, references: :user_id
-    belongs_to :target, Flirtual.User.Profile, references: :user_id
+    belongs_to(:profile, Flirtual.User.Profile, references: :user_id)
+    belongs_to(:target, Flirtual.User.Profile, references: :user_id)
 
     timestamps(updated_at: false)
   end
@@ -57,8 +57,7 @@ defmodule Flirtual.User.Profile.Block do
   def delete(%Block{} = item) do
     Repo.transaction(fn ->
       with {:ok, item} <- Repo.delete(item),
-           {:ok, _} <- ChangeQueue.add(item.profile_id),
-           {:ok, _} <- ChangeQueue.add(item.target_id) do
+           {:ok, _} <- ChangeQueue.add([item.profile_id, item.target_id]) do
         item
       else
         {:error, reason} -> Repo.rollback(reason)
