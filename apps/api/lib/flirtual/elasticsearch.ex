@@ -38,14 +38,14 @@ defmodule Flirtual.Elasticsearch do
 
   def delete_index(index) when is_atom(index) do
     index_name = get_index_name(index)
-    log(:warn, [index_name, "delete-index"], nil)
+    log(:warning, [index_name, "delete-index"], nil)
 
     Elasticsearch.delete(Flirtual.Elasticsearch, "/" <> index_name)
   end
 
   def create_index(:users = index) do
     index_name = get_index_name(index)
-    log(:warn, [index_name, "create-index"], nil)
+    log(:warning, [index_name, "create-index"], nil)
 
     Elasticsearch.Index.create(
       Flirtual.Elasticsearch,
@@ -115,7 +115,7 @@ defmodule Flirtual.Elasticsearch do
 
   def recreate_index(index) when is_atom(index) do
     index_name = get_index_name(index)
-    log(:warn, [index_name, "recreate-index"], nil)
+    log(:warning, [index_name, "recreate-index"], nil)
 
     delete_index(index)
     create_index(index)
