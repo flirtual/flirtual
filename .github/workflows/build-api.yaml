@@ -43,7 +43,7 @@ jobs:
       uses: erlef/setup-beam@v1
       with:
         version-type: strict
-        version-file: apps/api/.tool-versions
+        version-file: .tool-versions
 
     # Step: Check out the code.
     - name: Checkout code
