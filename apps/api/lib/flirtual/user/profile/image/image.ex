@@ -38,13 +38,17 @@ defmodule Flirtual.User.Profile.Image do
          |> then(
            &if(&1 == [],
              do: "",
-             else: "-/" <> Enum.map_join(&1, "/-/", fn {k, v} -> "#{k}/#{case v do
-                 v when is_list(v) -> Enum.join(v, "/")
-                 v when is_binary(v) -> v
-                 v when is_atom(v) -> Atom.to_string(v)
-                 v when is_integer(v) -> Integer.to_string(v)
-                 _ -> raise "Invalid value #{v} for key #{k}"
-               end}" end) <> "/"
+             else:
+               "-/" <>
+                 Enum.map_join(&1, "/-/", fn {k, v} ->
+                   "#{k}/#{case v do
+                     v when is_list(v) -> Enum.join(v, "/")
+                     v when is_binary(v) -> v
+                     v when is_atom(v) -> Atom.to_string(v)
+                     v when is_integer(v) -> Integer.to_string(v)
+                     _ -> raise "Invalid value #{v} for key #{k}"
+                   end}"
+                 end) <> "/"
            )
          ))
     )

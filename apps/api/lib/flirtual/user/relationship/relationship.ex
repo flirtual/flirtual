@@ -22,6 +22,19 @@ defmodule Flirtual.User.Relationship do
   defp liked_me(%LikesAndPasses{type: :like, kind: kind}), do: kind
   defp liked_me(_), do: nil
 
+  @spec get(%Flirtual.User{:id => any, optional(any) => any}, %Flirtual.User{
+          :id => any,
+          optional(any) => any
+        }) :: %Flirtual.User.Relationship{
+          blocked: boolean,
+          conversation_id: nil | binary,
+          id: nil,
+          kind: any,
+          liked_me: any,
+          matched: boolean,
+          type: any,
+          user_id: any
+        }
   def get(%User{} = user, %User{} = target) do
     lap = LikesAndPasses.get(user: user, target: target)
     opposite_lap = lap[:opposite] || LikesAndPasses.get(user: target, target: user)
@@ -34,7 +47,10 @@ defmodule Flirtual.User.Relationship do
       type: lap[:type],
       matched: matched,
       kind:
-        if(matched, do: Matchmaking.reduce_kind(lap[:kind], opposite_lap[:kind]), else: lap[:kind]),
+        if(matched,
+          do: Matchmaking.reduce_kind(lap[:kind], opposite_lap[:kind]),
+          else: lap[:kind]
+        ),
       liked_me: liked_me(opposite_lap),
       conversation_id: if(matched, do: Talkjs.new_conversation_id(user, target), else: nil)
     }
