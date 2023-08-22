@@ -33,13 +33,7 @@ jobs:
           --health-retries 5
 
     runs-on: ubuntu-latest
-    name: Build & Compile API on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
-    strategy:
-      # Specify the OTP and Elixir versions to use when building
-      # and running the workflow steps.
-      matrix:
-        otp: ['25.0']       # Define the OTP version [required]
-        elixir: ['1.13.4']    # Define the elixir version [required]
+    name: Build & Compile API
     defaults:
       run:
         working-directory: ./apps/api
@@ -48,8 +42,8 @@ jobs:
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
       with:
-        otp-version: ${{matrix.otp}}
-        elixir-version: ${{matrix.elixir}}
+        version-type: strict
+        version-file: apps/api/.tool-versions
 
     # Step: Check out the code.
     - name: Checkout code
