@@ -46,9 +46,8 @@ jobs:
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
       with:
-        path: apps/api
         version-type: strict
-        version-file: .tool-versions
+        version-file: apps/api/.tool-versions
 
     # Step: Define how to cache deps. Restores existing cache if present.
     - name: Cache deps
