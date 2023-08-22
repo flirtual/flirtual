@@ -437,7 +437,7 @@ defmodule Flirtual.Stripe do
       ) do
     with %User{} = user <- User.get(stripe_id: customer_stripe_id),
          %Plan{recurring: false} = plan <- Plan.get(plan_id),
-         {:ok, subscription} <- Subscription.apply(user, plan, payment_stripe_id) do
+         {:ok, subscription} <- Subscription.apply(:stripe, user, plan, payment_stripe_id) do
       log(:info, [event.type, event.id], subscription)
       :ok
     else
@@ -471,7 +471,7 @@ defmodule Flirtual.Stripe do
              do: Plan.get("43V699voRpLqskJEM42Vsa"),
              else: Plan.get(product_id: product_id, price_id: price_id)
            ),
-         {:ok, subscription} <- Subscription.apply(user, plan, subscription_stripe_id) do
+         {:ok, subscription} <- Subscription.apply(:stripe, user, plan, subscription_stripe_id) do
       log(:info, [event.type, event.id], subscription)
       :ok
     else

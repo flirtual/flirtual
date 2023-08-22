@@ -42,10 +42,10 @@ defmodule Flirtual.Subscription do
     |> Repo.update()
   end
 
-  def apply(user, plan, stripe_id \\ nil)
+  def apply(:stripe, user, plan, stripe_id \\ nil)
 
   # Create subscription, since user doesn't have an existing one.
-  def apply(%User{subscription: nil} = user, %Plan{} = plan, stripe_id)
+  def apply(:stripe, %User{subscription: nil} = user, %Plan{} = plan, stripe_id)
       when is_binary(stripe_id) do
     Repo.transaction(fn ->
       with {:ok, subscription} <-
@@ -64,6 +64,7 @@ defmodule Flirtual.Subscription do
 
   # Update subscription, stripe_id didn't change.
   def apply(
+        :stripe,
         %User{
           subscription:
             %Subscription{
@@ -89,6 +90,7 @@ defmodule Flirtual.Subscription do
 
   # Update subscription, and supersede existing Stripe subscription.
   def apply(
+        :stripe,
         %User{
           subscription:
             %Subscription{
@@ -118,7 +120,7 @@ defmodule Flirtual.Subscription do
   end
 
   # Renew subscription, previous subscription already cancelled.
-  def apply(%User{subscription: subscription} = user, %Plan{} = plan, stripe_id) do
+  def apply(:stripe, %User{subscription: subscription} = user, %Plan{} = plan, stripe_id) do
     Repo.transaction(fn ->
       with {:ok, subscription} <-
              subscription

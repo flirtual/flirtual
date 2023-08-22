@@ -15,7 +15,14 @@ defmodule Flirtual.RevenueCat do
           }
         } = event
       ) do
-    # add subscription
+    with %User{} = user <- User.get(revenuecat_id: customer_id),
+         %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
+         {:ok, subscription} <- Subscription.apply(:revenuecat, user, plan) do
+      log(:info, [event.type, event.id], subscription)
+      :ok
+    else
+      value -> event_error(event, value)
+    end
   end
 
   def handle_event(

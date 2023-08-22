@@ -33,6 +33,10 @@ defmodule Flirtual.Plan do
     Plan |> where(product_id: ^product_id, price_id: ^price_id) |> Repo.one()
   end
 
+  def get(revenuecat_id: revenuecat_id) when is_binary(revenuecat_id) do
+    Plan |> where(apple_id: ^revenuecat_id) |> or_where(google_id: ^revenuecat_id) |> Repo.one()
+  end
+
   def get(_), do: nil
 
   def list() do
