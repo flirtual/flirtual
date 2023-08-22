@@ -469,4 +469,8 @@ defmodule Flirtual.Users do
       end
     end)
   end
+
+  def count do
+    Repo.aggregate(User, :count)
+  end
 end

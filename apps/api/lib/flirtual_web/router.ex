@@ -69,6 +69,8 @@ defmodule FlirtualWeb.Router do
       end
 
       scope "/users" do
+        get("/count", UsersController, :count)
+
         scope "/:user_id" do
           get("/preview", UsersController, :preview)
         end

@@ -510,4 +510,8 @@ defmodule FlirtualWeb.UsersController do
   def get_current_user(conn, _) do
     conn |> json_with_etag(Policy.transform(conn, conn.assigns[:session].user))
   end
+
+  def count(conn, _) do
+    conn |> json(%{count: Users.count()})
+  end
 end
