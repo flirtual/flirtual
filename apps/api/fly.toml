@@ -40,5 +40,5 @@ kill_timeout = 5
     method = "get"
     path = "/v1/health"
     protocol = "http"
-    [[services.http_checks.headers]]
+    [services.http_checks.headers]
       X-Forwarded-Proto = "https"
