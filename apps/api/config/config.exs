@@ -12,6 +12,7 @@ config :flirtual,
 
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   pubsub_server: Flirtual.PubSub,
   http: [
     port: 4000

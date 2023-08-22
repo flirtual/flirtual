@@ -31,10 +31,7 @@ config :flirtual, FlirtualWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [
-    ip: {0, 0, 0, 0},
-    protocol_options: [
-      idle_timeout: :infinity
-    ]
+    ip: {0, 0, 0, 0}
   ],
   check_origin: false,
   code_reloader: true,

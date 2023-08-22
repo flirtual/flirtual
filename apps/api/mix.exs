@@ -64,6 +64,7 @@ defmodule Flirtual.MixProject do
       {:jason, "~> 1.2"},
       {:joken, "~> 2.5"},
       {:sentry, "~> 8.0"},
+      {:bandit, "~> 1.0-pre"},
       {:plug_cowboy, "~> 2.5"},
       {:libcluster, "~> 3.3"},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
