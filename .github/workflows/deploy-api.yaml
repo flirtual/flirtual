@@ -2,7 +2,7 @@ name: Deploy API
 on:
   push:
     branches: [ "production" ]
-    paths: [ "apps/api/**" ]
+    paths: [ "apps/api/**", ".github/workflows/deploy-api.yaml" ]
   workflow_dispatch:
 jobs:
   deploy:

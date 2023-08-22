@@ -7,10 +7,10 @@ name: Build & Compile API
 on:
   push:
     branches: [ "main" ]
-    paths: [ "apps/api/**" ]
+    paths: [ "apps/api/**", ".github/workflows/build-api.yaml" ]
   pull_request:
     branches: [ "main" ]
-    paths: [ "apps/api/**" ]
+    paths: [ "apps/api/**", ".github/workflows/build-api.yaml" ]
 
 permissions:
   contents: read

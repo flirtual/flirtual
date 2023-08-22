@@ -2,7 +2,7 @@ name: Deploy Image Classification
 on:
   push:
     branches: [ "production" ]
-    paths: [ "apps/image-classification/**" ]
+    paths: [ "apps/image-classification/**", ".github/workflows/deploy-classification.yaml" ]
   workflow_dispatch:
 jobs:
   deploy:
