@@ -307,7 +307,10 @@ defmodule Flirtual.Mailer do
         )
       )
 
-    with {:ok, _metadata} <- deliver(email) do
+    with {:ok, _metadata} <-
+           deliver(email,
+             tls_options: :tls_certificate_check.options(System.fetch_env!("SMTP_RELAY"))
+           ) do
       {:ok, email}
     end
   end

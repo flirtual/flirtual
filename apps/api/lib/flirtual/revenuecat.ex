@@ -1,4 +1,6 @@
 defmodule Flirtual.RevenueCat do
+  use Flirtual.Logger, :revenuecat
+
   alias Flirtual.Plan
   alias Flirtual.Repo
   alias Flirtual.User
@@ -20,8 +22,6 @@ defmodule Flirtual.RevenueCat do
          {:ok, subscription} <- Subscription.apply(:revenuecat, user, plan) do
       log(:info, [event.type, event.id], subscription)
       :ok
-    else
-      value -> event_error(event, value)
     end
   end
 

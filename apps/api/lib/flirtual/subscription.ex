@@ -42,7 +42,7 @@ defmodule Flirtual.Subscription do
     |> Repo.update()
   end
 
-  def apply(:stripe, user, plan, stripe_id \\ nil)
+  def apply(source, user, plan, stripe_id \\ nil)
 
   # Create subscription, since user doesn't have an existing one.
   def apply(:stripe, %User{subscription: nil} = user, %Plan{} = plan, stripe_id)
