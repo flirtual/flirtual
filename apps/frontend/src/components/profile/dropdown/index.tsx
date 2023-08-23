@@ -89,7 +89,17 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 								target="_blank"
 							>
 								<Gem className="h-5 w-5" />
-								View customer
+								View Stripe customer
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem asChild>
+							<Link
+								className="gap-2"
+								href={`https://app.revenuecat.com/customers/${user.revenuecatId}`}
+								target="_blank"
+							>
+								<Gem className="h-5 w-5" />
+								View RevenueCat customer
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />

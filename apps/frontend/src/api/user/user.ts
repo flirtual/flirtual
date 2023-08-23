@@ -43,6 +43,7 @@ export type User = UuidModel &
 		talkjsId: string;
 		talkjsSignature?: string;
 		stripeId?: string;
+		revenuecatId?: string;
 		moderatorMessage?: string;
 		moderatorNote?: string;
 		visible: boolean;

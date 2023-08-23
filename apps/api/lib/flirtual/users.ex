@@ -6,6 +6,7 @@ defmodule Flirtual.Users do
   import Flirtual.HCaptcha, only: [validate_captcha: 1]
   import Flirtual.Flag, only: [validate_allowed_email: 2]
 
+  alias Ecto.UUID
   alias Flirtual.Elasticsearch
   alias Flirtual.Discord
   alias Flirtual.User.ChangeQueue
@@ -16,6 +17,7 @@ defmodule Flirtual.Users do
   alias Flirtual.{Repo, User}
   alias Flirtual.User.{Preferences}
   alias Flirtual.Stripe
+  alias Flirtual.RevenueCat
   alias Flirtual.Hash
 
   def get(id)
@@ -367,6 +369,7 @@ defmodule Flirtual.Users do
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Stripe.delete_customer(user),
+           {:ok, _} <- RevenueCat.delete_customer(user),
            :ok <- Hash.delete(user.id),
            :ok <-
              Discord.deliver_webhook(:exit_survey,
@@ -389,6 +392,7 @@ defmodule Flirtual.Users do
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Stripe.delete_customer(user),
+           {:ok, _} <- RevenueCat.delete_customer(user),
            :ok <- Hash.delete(user.id) do
         {:ok, user}
       else
@@ -437,7 +441,10 @@ defmodule Flirtual.Users do
              |> User.put_password()
              |> Repo.insert(),
            {:ok, user} <-
-             change(user, %{talkjs_signature: Talkjs.new_user_signature(user.id)})
+             change(user, %{
+               talkjs_signature: Talkjs.new_user_signature(user.id),
+               revenuecat_id: UUID.generate()
+             })
              |> Repo.update(),
            {:ok, preferences} <-
              Ecto.build_assoc(user, :preferences)

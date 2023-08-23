@@ -141,6 +141,7 @@ defmodule Flirtual.User.Policy do
     :email,
     :language,
     :talkjs_signature,
+    :revenuecat_id,
     :moderator_message,
     :active_at,
     :connections,
@@ -234,7 +235,8 @@ defmodule Flirtual.User.Policy do
   @admin_property_keys [
     :email,
     :born_at,
-    :stripe_id
+    :stripe_id,
+    :revenuecat_id
   ]
 
   def transform(

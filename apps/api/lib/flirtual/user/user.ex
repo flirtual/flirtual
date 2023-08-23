@@ -35,6 +35,7 @@ defmodule Flirtual.User do
     field(:talkjs_signature, :string, redact: true)
     field(:listmonk_id, :integer)
     field(:stripe_id, :string)
+    field(:revenuecat_id, Ecto.ShortUUID)
     field(:language, :string, default: "en")
     field(:visible, :boolean)
     field(:moderator_message, :string)
@@ -282,6 +283,10 @@ defmodule Flirtual.User do
     User |> where(stripe_id: ^stripe_id) |> preload(^default_assoc()) |> Repo.one()
   end
 
+  def get(revenuecat_id: revenuecat_id) when is_binary(revenuecat_id) do
+    User |> where(revenuecat_id: ^revenuecat_id) |> preload(^default_assoc()) |> Repo.one()
+  end
+
   def get(_), do: nil
 
   def ilike_with_similarity(query, {as, key}, value) when is_atom(as) and is_atom(key) do
@@ -336,6 +341,7 @@ defmodule Flirtual.User do
     {:profile, :discord},
     :email,
     :stripe_id,
+    :revenuecat_id,
     {:profile, :biography}
   ]
 
@@ -757,6 +763,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :talkjs_signature,
       :talkjs_id,
       :stripe_id,
+      :revenuecat_id,
       :banned_at,
       :shadowbanned_at,
       :email_confirmed_at,

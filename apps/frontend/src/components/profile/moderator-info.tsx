@@ -261,6 +261,14 @@ export const ProfileModeratorInfo: FC<{
 							</InlineLink>
 						</span>
 						<span>
+							<span className="font-bold">RevenueCat customer:</span>{" "}
+							<InlineLink
+								href={`https://app.revenuecat.com/customers/${user.revenuecatId}`}
+							>
+								{user.revenuecatId}
+							</InlineLink>
+						</span>
+						<span>
 							<span className="font-bold">Tags:</span>{" "}
 							<span className="brightness-75 hover:brightness-100">
 								{user.tags && user.tags.length > 0

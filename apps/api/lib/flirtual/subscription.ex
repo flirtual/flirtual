@@ -44,7 +44,7 @@ defmodule Flirtual.Subscription do
 
   def apply(source, user, plan, stripe_id \\ nil)
 
-  # Create subscription, since user doesn't have an existing one.
+  # Stripe: Create subscription, since user doesn't have an existing one.
   def apply(:stripe, %User{subscription: nil} = user, %Plan{} = plan, stripe_id)
       when is_binary(stripe_id) do
     Repo.transaction(fn ->
@@ -62,7 +62,7 @@ defmodule Flirtual.Subscription do
     end)
   end
 
-  # Update subscription, stripe_id didn't change.
+  # Stripe: Update subscription, stripe_id didn't change.
   def apply(
         :stripe,
         %User{
@@ -88,7 +88,7 @@ defmodule Flirtual.Subscription do
     end)
   end
 
-  # Update subscription, and supersede existing Stripe subscription.
+  # Stripe: Update subscription, and supersede existing Stripe subscription.
   def apply(
         :stripe,
         %User{
@@ -119,7 +119,7 @@ defmodule Flirtual.Subscription do
     end)
   end
 
-  # Renew subscription, previous subscription already cancelled.
+  # Stripe: Renew subscription, previous subscription already cancelled.
   def apply(:stripe, %User{subscription: subscription} = user, %Plan{} = plan, stripe_id) do
     Repo.transaction(fn ->
       with {:ok, subscription} <-
@@ -129,6 +129,91 @@ defmodule Flirtual.Subscription do
                stripe_id: stripe_id || subscription.stripe_id,
                cancelled_at: nil
              })
+             |> Repo.update(),
+           {:ok, _} <- reset_matchmaking_timer(user.profile) do
+        {:ok, subscription}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  # Ignore event when platform doesn't match existing subscription.
+  def apply(
+        _,
+        %User{
+          subscription:
+            %Subscription{
+              apple_id: apple_id
+            } = subscription
+        },
+        _,
+        platform,
+        _
+      )
+      when not is_nil(apple_id) and platform not in ["APP_STORE", "MAC_APP_STORE"] do
+    {:ok, subscription}
+  end
+  def apply(
+        _,
+        %User{
+          subscription:
+            %Subscription{
+              google_id: google_id
+            } = subscription
+        },
+        _,
+        platform,
+        _
+      )
+      when not is_nil(google_id) and platform != "PLAY_STORE" do
+    {:ok, subscription}
+  end
+
+  # RevenueCat: Create subscription, since user doesn't have an existing one.
+  def apply(:revenuecat, %User{subscription: nil} = user, %Plan{} = plan, platform, event_id) do
+    Repo.transaction(fn ->
+      with {:ok, subscription} <-
+             %Subscription{}
+             |> change(
+               %{user_id: user.id, plan_id: plan.id}
+               |> Map.merge(
+                 case platform do
+                   "APP_STORE" -> %{apple_id: event_id}
+                   "MAC_APP_STORE" -> %{apple_id: event_id}
+                   "PLAY_STORE" -> %{google_id: event_id}
+                 end
+               )
+             )
+             |> Repo.insert(),
+           {:ok, _} <-
+             reset_matchmaking_timer(user.profile) do
+        {:ok, subscription}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  # RevenueCat: Renew subscription, possibly updating plan.
+  def apply(
+        :revenuecat,
+        %User{
+          subscription:
+            %Subscription{
+              cancelled_at: nil
+            } = subscription
+        } = user,
+        %Plan{} = plan,
+        _,
+        _
+      ) do
+    Repo.transaction(fn ->
+      with {:ok, subscription} <-
+             subscription
+             |> change(%{plan_id: plan.id, cancelled_at: nil})
              |> Repo.update(),
            {:ok, _} <- reset_matchmaking_timer(user.profile) do
         {:ok, subscription}
