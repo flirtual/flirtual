@@ -12,7 +12,7 @@ import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
-export const DebugInfo: React.FC<{ commit?: string }> = async ({ commit }) => {
+export const DebugInfo: React.FC = async () => {
 	const [session] = useSession();
 	const isDebugger =
 		session && (session.user.tags?.includes("debugger") || session.sudoerId);
