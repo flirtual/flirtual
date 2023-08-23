@@ -140,7 +140,9 @@ export const SettingsNavigation: FC = () => {
 						</NavigationLink>
 					</NavigationCategory>
 				</div>
-				<span className="px-6 text-black-10">Flirtual {gitCommitSha}</span>
+				<span className="px-6 text-black-10">
+					Flirtual {gitCommitSha?.slice(0, 8)}
+				</span>
 			</nav>
 		</div>
 	);
