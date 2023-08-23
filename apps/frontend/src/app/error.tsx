@@ -9,11 +9,13 @@ import { InlineLink } from "~/components/inline-link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
+import { DebugInfo } from "./(public)/debugger/debug-info";
+
 export default function Error({
 	error,
 	reset
 }: {
-	error: Error;
+	error: Error & { digest?: string };
 	reset: () => void;
 }) {
 	const router = useRouter();
@@ -50,6 +52,12 @@ export default function Error({
 				<span className="max-w-sm whitespace-pre-wrap font-mono text-xs">
 					{error.message}
 				</span>
+				{error.digest && (
+					<span className="max-w-sm whitespace-pre-wrap font-mono text-xs">
+						{error.digest}
+					</span>
+				)}
+				<DebugInfo />
 				<div className="flex gap-2">
 					<Button className="w-fit" kind="secondary" size="sm" onClick={reset}>
 						Try again
