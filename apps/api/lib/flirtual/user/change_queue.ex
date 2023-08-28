@@ -111,7 +111,7 @@ defmodule Flirtual.User.ChangeQueue do
     end)
   end
 
-  def next(limit \\ 1000) do
+  def next(limit \\ 100) do
     items = fetch(limit)
 
     with :ok <- process_items(items, :elasticsearch),
