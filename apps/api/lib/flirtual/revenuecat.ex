@@ -8,6 +8,28 @@ defmodule Flirtual.RevenueCat do
 
   import Ecto.Changeset
 
+  defp config(key) do
+    Application.get_env(:flirtual, Flirtual.RevenueCatController)[key]
+  end
+
+  def new_url(pathname, query) do
+    URI.parse("https://api.revenuecat.com/v1/" <> pathname)
+    |> then(&if(is_nil(query), do: &1, else: Map.put(&1, :query, URI.encode_query(query))))
+    |> URI.to_string()
+  end
+
+  def fetch(method, pathname, body \\ nil, options \\ []) do
+    raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
+    url = new_url(pathname, Keyword.get(options, :query))
+
+    log(:info, [method, url], body)
+
+    HTTPoison.request(method, url, raw_body, [
+      {"authorization", "Bearer " <> config(:access_token)},
+      {"content-type", "application/json"}
+    ])
+  end
+
   def handle_event(
         %{
           event: %{
@@ -28,14 +50,12 @@ defmodule Flirtual.RevenueCat do
     end
   end
 
-  def handle_event(
-        %{
-          event: %{
-            type: "EXPIRATION",
-            app_user_id: customer_id
-          }
+  def handle_event(%{
+        event: %{
+          type: "EXPIRATION",
+          app_user_id: customer_id
         }
-      ) do
+      }) do
     with %User{} = user <- User.get(revenuecat_id: customer_id),
          {:ok, _} <-
            Subscription.cancel(user.subscription) do
@@ -48,7 +68,20 @@ defmodule Flirtual.RevenueCat do
     :ok
   end
 
-  def delete(user) do
-    # delete customer if exists
+  def delete(%User{
+        revenuecat_id: nil
+      }) do
+    :ok
+  end
+
+  def delete(%User{
+        revenuecat_id: revenuecat_id
+      }) do
+    with {:ok, %HTTPoison.Response{status_code: 200}} <-
+           fetch(:delete, "subscribers/#{revenuecat_id}") do
+      :ok
+    else
+      {:error, %HTTPoison.Response{status_code: 404}} -> :ok
+    end
   end
 end
