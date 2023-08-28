@@ -155,6 +155,7 @@ defmodule Flirtual.Subscription do
       when not is_nil(apple_id) and platform not in ["APP_STORE", "MAC_APP_STORE"] do
     {:ok, subscription}
   end
+
   def apply(
         _,
         %User{

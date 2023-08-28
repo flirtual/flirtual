@@ -369,7 +369,7 @@ defmodule Flirtual.Users do
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Stripe.delete_customer(user),
-          #  {:ok, _} <- RevenueCat.delete_customer(user),
+           #  {:ok, _} <- RevenueCat.delete_customer(user),
            :ok <- Hash.delete(user.id),
            :ok <-
              Discord.deliver_webhook(:exit_survey,
@@ -392,7 +392,7 @@ defmodule Flirtual.Users do
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Stripe.delete_customer(user),
-          #  {:ok, _} <- RevenueCat.delete_customer(user),
+           #  {:ok, _} <- RevenueCat.delete_customer(user),
            :ok <- Hash.delete(user.id) do
         {:ok, user}
       else
