@@ -12,7 +12,7 @@ import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
-export const DebugInfo: React.FC = async () => {
+export const DebugInfo: React.FC = () => {
 	const [session] = useSession();
 	const isDebugger =
 		session && (session.user.tags?.includes("debugger") || session.sudoerId);
@@ -39,6 +39,7 @@ export const DebugInfo: React.FC = async () => {
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">User profile: </span>
 					<InlineLink
+						highlight={false}
 						href={isDebugger ? urls.profile(session.user) : null}
 						className={twMerge(
 							"truncate font-mono text-sm",
@@ -53,6 +54,7 @@ export const DebugInfo: React.FC = async () => {
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">User object: </span>
 					<InlineLink
+						highlight={false}
 						href={isDebugger ? api.newUrl(`users/${session.user.id}`) : null}
 						className={twMerge(
 							"truncate font-mono text-sm",
