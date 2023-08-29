@@ -3,7 +3,6 @@ defmodule FlirtualWeb.VRChatController do
 
   import Plug.Conn
   import Phoenix.Controller
-  import FlirtualWeb.Utilities
 
   action_fallback FlirtualWeb.FallbackController
 

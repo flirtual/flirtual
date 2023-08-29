@@ -12,6 +12,7 @@ export type Plan = UuidModel &
 		priceId?: string;
 		appleId?: string;
 		googleId?: string;
+		revenuecatId?: string;
 	};
 
 export async function list(

@@ -36,7 +36,7 @@ export const LikesYouButton: FC = () => {
 	return (
 		<ButtonLink
 			className="w-full"
-			href={user.subscription?.active ? urls.likes : urls.subscription}
+			href={user.subscription?.active ? urls.likes : urls.subscription.default}
 			size="sm"
 		>
 			See who likes you{" "}

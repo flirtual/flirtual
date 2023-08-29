@@ -32,28 +32,47 @@ defmodule Flirtual.RevenueCat do
 
   def handle_event(
         %{
-          event: %{
-            type: type,
-            product_id: product_id,
-            app_user_id: customer_id,
-            store: platform,
-            id: event_id
+          "event" => %{
+            "type" => type,
+            "product_id" => product_id,
+            "app_user_id" => customer_id,
+            "store" => platform,
+            "id" => event_id
           }
-        } = event
+        }
       )
       when type in ["INITIAL_PURCHASE", "RENEWAL"] do
-    with %User{} = user <- User.get(revenuecat_id: customer_id),
-         %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
-         {:ok, subscription} <- Subscription.apply(:revenuecat, user, plan, platform, event_id) do
-      log(:info, [event.type, event.id], subscription)
+    with %User{} = user <- User.get(revenuecat_id: customer_id) |> IO.inspect(),
+         %Plan{} = plan <- Plan.get(revenuecat_id: product_id) |> IO.inspect(),
+         {:ok, subscription} <- Subscription.apply(:revenuecat, user, plan, platform, event_id) |> IO.inspect() do
+      log(:info, [type, event_id], subscription)
+      :ok
+    end
+  end
+
+  def handle_event(
+        %{
+          "event" => %{
+            "type" => "PRODUCT_CHANGE",
+            "new_product_id" => product_id,
+            "app_user_id" => customer_id,
+            "store" => platform,
+            "id" => event_id
+          }
+        }
+      ) do
+    with %User{} = user <- User.get(revenuecat_id: customer_id) |> IO.inspect(),
+         %Plan{} = plan <- Plan.get(revenuecat_id: product_id) |> IO.inspect(),
+         {:ok, subscription} <- Subscription.apply(:revenuecat, user, plan, platform, event_id) |> IO.inspect() do
+      log(:info, ["PRODUCT_CHANGE", event_id], subscription)
       :ok
     end
   end
 
   def handle_event(%{
-        event: %{
-          type: "EXPIRATION",
-          app_user_id: customer_id
+        "event" => %{
+          "type" => "EXPIRATION",
+          "app_user_id" => customer_id
         }
       }) do
     with %User{} = user <- User.get(revenuecat_id: customer_id),

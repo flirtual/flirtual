@@ -144,7 +144,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							>
 								Settings
 							</ProfileNavigationItem>
-							<ProfileNavigationItem href={urls.subscription}>
+							<ProfileNavigationItem href={urls.subscription.default}>
 								Premium
 							</ProfileNavigationItem>
 							<ProfileNavigationCannyButton />

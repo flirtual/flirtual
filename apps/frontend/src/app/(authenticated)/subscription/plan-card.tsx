@@ -30,24 +30,6 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		description
 	} = props;
 	const [session] = useSession();
-	/*  const { platform } = useDevice();
-
-	const plans = usePlans();
-	const plan = useMemo(() => plans.find((plan) => plan.id === id), [plans, id]);
-	const oneMonthPlan = useMemo(
-		() => plans.find((plan) => plan.id === oneMonthId),
-		[plans, oneMonthId]
-	);
-
-	const { products } = usePurchase();
-	const platformId = platform === "ios" ? plan?.appleId : plan?.googleId;
-	const oneMonthPlatformId =
-		platform === "ios" ? oneMonthPlan?.appleId : oneMonthPlan?.googleId;
-
-	const product = platformId ? products[platformId] : null;
-	const oneMonthProduct = oneMonthPlatformId
-		? products[oneMonthPlatformId]
-		: null;  */
 
 	const user = session?.user;
 	if (!user) return null;

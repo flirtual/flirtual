@@ -19,7 +19,10 @@ export const SuccessMessage: React.FC = () => {
 					<h1 className="text-xl font-semibold">
 						We&apos;ve received your order.
 					</h1>
-					<Link className="absolute right-0 top-0" href={urls.subscription}>
+					<Link
+						className="absolute right-0 top-0"
+						href={urls.subscription.default}
+					>
 						<XMarkIcon className="h-6 w-6" />
 					</Link>
 				</div>

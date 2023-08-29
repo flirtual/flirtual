@@ -1,10 +1,15 @@
 "use client";
 
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { CapacitorPurchases } from "@capgo/capacitor-purchases";
+import { useRouter } from "next/navigation";
 
 import { ButtonLink } from "~/components/button";
 import { api } from "~/api";
-import { useProgressiveWebApp } from "~/hooks/use-pwa";
+import { usePlans } from "~/hooks/use-plans";
+import { urls } from "~/urls";
+import { useDevice } from "~/hooks/use-device";
 import { useToast } from "~/hooks/use-toast";
 
 import { PlanCardProps } from "./plan-card";
@@ -13,44 +18,52 @@ export const PlanButtonLink: FC<
 	PlanCardProps & {
 		active: boolean;
 		lifetime: boolean;
-		// product: Product | null;
-		setPurchasePending: Dispatch<SetStateAction<boolean>>;
 	}
 > = (props) => {
 	const { highlight, id, active, lifetime } = props;
 
+	const router = useRouter();
+	const { native } = useDevice();
 	const toasts = useToast();
-	const isPwa = useProgressiveWebApp();
 
-	// const [pending, setPending] = useState(false);
+	const plans = usePlans();
+	const plan = useMemo(() => plans.find((plan) => plan.id === id), [plans, id]);
 
-	/* useEffect(() => {
-		setPurchasePending(pending);
-	}, [pending, setPurchasePending]); */
+	const [pending, setPending] = useState(false);
 
-	/* if (product) {
+	const purchase = useCallback(async () => {
+		if (!plan || !plan.googleId || !plan.appleId || !plan.revenuecatId)
+			throw new Error("Plan not available yet");
+
+		const options = {
+			identifier: plan?.revenuecatId,
+			offeringIdentifier: "default"
+		};
+
+		console.log("Attempting purchase", plan.name, options);
+		setPending(true);
+
+		await CapacitorPurchases.purchasePackage(options)
+			.then(() => {
+				setPending(false);
+
+				router.refresh();
+				return router.push(urls.subscription.success);
+			})
+			.catch((reason) => {
+				toasts.addError(reason);
+				setPending(false);
+			});
+	}, [plan, router, toasts]);
+
+	/* if (plan) {
 		return (
 			<Button
 				disabled={props.disabled || pending}
 				kind={highlight ? "primary" : "secondary"}
 				size="sm"
 				onClick={async () => {
-					setPending(true);
-					const offer = product.getOffer();
-
-					if (!offer) {
-						toasts.addError("Unknown product offer");
-						return;
-					}
-
-					if (!offer.canPurchase) {
-						toasts.addError("Cannot purchase product offer");
-						return;
-					}
-
-					const error = await offer.order().catch((reason) => reason);
-					if (error) toasts.addError(error);
-					setPending(false);
+					console.log("click");
 				}}
 			>
 				{active ? "Manage" : lifetime ? "Purchase" : "Subscribe"}
@@ -63,6 +76,7 @@ export const PlanButtonLink: FC<
 
 	return (
 		<ButtonLink
+			disabled={props.disabled || pending}
 			kind={highlight ? "primary" : "secondary"}
 			size="sm"
 			target="_self"
@@ -72,17 +86,16 @@ export const PlanButtonLink: FC<
 					: api.subscription.checkoutUrl(id).toString()
 			}
 			onClick={(event) => {
-				if (!isPwa) return;
-				toasts.add({
-					type: "warning",
-					value:
-						"Sorry, we cannot take payments in the app. Subscriptions can be purchased on our website using a desktop or mobile browser."
-				});
+				if (!native) return;
 
 				event.preventDefault();
+				void purchase();
 			}}
 		>
 			{active ? "Manage" : lifetime ? "Purchase" : "Subscribe"}
+			{pending && (
+				<Loader2 className="absolute right-12 h-4 w-4 animate-spin" />
+			)}
 		</ButtonLink>
 	);
 };

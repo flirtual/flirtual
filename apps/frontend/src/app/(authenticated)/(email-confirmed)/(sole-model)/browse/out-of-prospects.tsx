@@ -63,7 +63,7 @@ export const OutOfProspects: React.FC<OutOfProspectsProps> = ({
 								<p>You are out of profiles for today :(</p>
 								<p>
 									You can{" "}
-									<InlineLink href={urls.subscription}>
+									<InlineLink href={urls.subscription.default.default}>
 										upgrade to Premium
 									</InlineLink>{" "}
 									to <em>browse unlimited profiles</em> and{" "}
@@ -85,7 +85,7 @@ export const OutOfProspects: React.FC<OutOfProspectsProps> = ({
 								)}
 							</div>
 							<div className="flex gap-4">
-								<ButtonLink href={urls.subscription} size="sm">
+								<ButtonLink href={urls.subscription.default} size="sm">
 									Premium
 								</ButtonLink>
 								<ButtonLink href={urls.browse("friend")} size="sm">
@@ -115,7 +115,7 @@ export const OutOfProspects: React.FC<OutOfProspectsProps> = ({
 							<p>You are out of homies for today :(</p>
 							<p>
 								You can{" "}
-								<InlineLink href={urls.subscription}>
+								<InlineLink href={urls.subscription.default}>
 									upgrade to Premium
 								</InlineLink>{" "}
 								to <em>browse unlimited profiles</em> and{" "}
@@ -129,7 +129,7 @@ export const OutOfProspects: React.FC<OutOfProspectsProps> = ({
 							)}
 						</div>
 						<div className="flex gap-4">
-							<ButtonLink href={urls.subscription} size="sm">
+							<ButtonLink href={urls.subscription.default} size="sm">
 								Premium
 							</ButtonLink>
 							<ButtonLink href={urls.browse()} size="sm">

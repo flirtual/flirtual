@@ -92,7 +92,10 @@ export const urls = {
 	likes: "/likes",
 	onboarding: (onboardingIndex: 1 | 2 | 3 | 4) =>
 		`/onboarding/${onboardingIndex}`,
-	subscription: "/subscription",
+	subscription: {
+		default: "/subscription",
+		success: url("/subscription", { success: "yes" })
+	},
 	confirmEmail: (query: ConfirmEmailPageProperties["searchParams"] = {}) =>
 		url("/confirm-email", query),
 

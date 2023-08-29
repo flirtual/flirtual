@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export default async function LikesPage() {
 	const { user } = await withSession();
 
-	if (!user.subscription?.active) redirect(urls.subscription);
+	if (!user.subscription?.active) redirect(urls.subscription.default);
 
 	const result = await api.matchmaking.listMatches({
 		...thruServerCookies(),

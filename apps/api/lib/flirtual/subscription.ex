@@ -186,8 +186,8 @@ defmodule Flirtual.Subscription do
                    "PLAY_STORE" -> %{google_id: event_id}
                  end
                )
-             )
-             |> Repo.insert(),
+             ) |> IO.inspect()
+             |> Repo.insert() |> IO.inspect(),
            {:ok, _} <-
              reset_matchmaking_timer(user.profile) do
         {:ok, subscription}
