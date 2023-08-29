@@ -1,5 +1,7 @@
 defmodule FlirtualWeb.Router do
   use FlirtualWeb, :router
+  use Plug.ErrorHandler
+  use Flirtual.Logger, :router
 
   import Phoenix.Router
   import Plug.Conn
@@ -333,5 +335,14 @@ defmodule FlirtualWeb.Router do
 
       forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
+  end
+
+  @impl Plug.ErrorHandler
+  def handle_errors(conn, params) do
+    log(:critical, ["unhandled request error"], params)
+
+    conn
+    |> FlirtualWeb.ErrorHelpers.put_error(:internal_server_error)
+    |> halt()
   end
 end
