@@ -341,7 +341,6 @@ defmodule Flirtual.User do
     {:profile, :discord},
     :email,
     :stripe_id,
-    :revenuecat_id,
     {:profile, :biography}
   ]
 
