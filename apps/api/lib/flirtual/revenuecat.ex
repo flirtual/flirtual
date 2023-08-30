@@ -41,7 +41,7 @@ defmodule Flirtual.RevenueCat do
           }
         }
       )
-      when type in ["INITIAL_PURCHASE", "RENEWAL"] do
+      when type in ["INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION", "NON_RENEWING_PURCHASE"] do
     with %User{} = user <- User.get(revenuecat_id: customer_id) |> IO.inspect(),
          %Plan{} = plan <- Plan.get(revenuecat_id: product_id) |> IO.inspect(),
          {:ok, subscription} <- Subscription.apply(:revenuecat, user, plan, platform, event_id) |> IO.inspect() do

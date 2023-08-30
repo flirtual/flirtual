@@ -6,30 +6,34 @@ import {
 	createContext,
 	useContext,
 	useEffect,
-	useState
+	useCallback
 } from "react";
-import { CapacitorPurchases, CustomerInfo } from "@capgo/capacitor-purchases";
+import { CapacitorPurchases } from "@capgo/capacitor-purchases";
+import { useRouter } from "next/navigation";
 
 import { environment, rcAppleKey, rcGoogleKey } from "~/const";
+import { urls } from "~/urls";
+import { api } from "~/api";
 
 import { useDevice } from "./use-device";
 import { useSessionUser } from "./use-session";
+import { usePlans } from "./use-plans";
+import { useToast } from "./use-toast";
 
 interface PurchaseContext {
-	customer: CustomerInfo | null;
+	purchase: (planId: string) => Promise<void>;
 }
 
 const PurchaseContext = createContext<PurchaseContext>({} as PurchaseContext);
 
 export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
-	//const [ready, setReady] = useState(false);
-
-	const { platform } = useDevice();
+	const { platform, native } = useDevice();
+	const toasts = useToast();
+	const router = useRouter();
 
 	const user = useSessionUser();
-	const [customer, setCustomer] = useState<CustomerInfo | null>(null);
 
-	//const plans = usePlans();
+	const plans = usePlans();
 
 	useEffect(() => {
 		void (async () => {
@@ -44,33 +48,55 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				apiKey: platform === "ios" ? rcAppleKey : rcGoogleKey,
 				appUserID: user?.revenuecatId
 			});
-
-			const { customerInfo } = await CapacitorPurchases.getCustomerInfo();
-			setCustomer(customerInfo);
 		})();
 	}, [platform, user?.revenuecatId]);
 
-	console.log(customer);
+	const purchase = useCallback(
+		async (planId: string) => {
+			if (!native) {
+				const url = user?.subscription?.active
+					? api.subscription.manageUrl().toString()
+					: api.subscription.checkoutUrl(planId).toString();
 
-	/* const supportedPlans = useMemo(
-		() =>
-			plans.filter((plan) => {
-				return !!(platform === "ios" ? plan.appleId : plan.googleId);
-			}),
-		[plans, platform]
+				return router.push(url);
+			}
+
+			const plan = plans?.find((plan) => plan.id === planId);
+
+			if (!plan || !plan.googleId || !plan.appleId || !plan.revenuecatId)
+				throw new Error("Plan not available yet");
+
+			const productId = platform === "ios" ? plan.appleId : plan.googleId;
+			const { customerInfo } = await CapacitorPurchases.getCustomerInfo();
+
+			if (
+				customerInfo.activeSubscriptions.includes(productId) &&
+				customerInfo.managementURL
+			) {
+				return router.push(customerInfo.managementURL);
+			}
+
+			const options = {
+				identifier: plan?.revenuecatId,
+				offeringIdentifier: "default"
+			};
+
+			return CapacitorPurchases.purchasePackage(options)
+				.then(() => {
+					router.refresh();
+					return router.push(urls.subscription.success);
+				})
+				.catch((reason) => {
+					toasts.addError(reason);
+				});
+		},
+		[router, toasts, plans, native, user?.subscription?.active, platform]
 	);
-
-	useEffect(() => {
-		void (async () => {
-			const { offerings } = await CapacitorPurchases.getOfferings();
-		})();
-	}, [supportedPlans, platform]);
- */
 
 	return (
 		<PurchaseContext.Provider
 			value={{
-				customer
+				purchase
 			}}
 		>
 			{children}

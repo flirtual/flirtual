@@ -10,7 +10,7 @@ defmodule Flirtual.UserQueueWorker do
   def handle_info(:process, state) do
     schedule()
 
-    {:ok, _} = User.ChangeQueue.next()
+    #{:ok, _} = User.ChangeQueue.next()
     {:noreply, state}
   end
 

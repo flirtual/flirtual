@@ -69,6 +69,7 @@ export const DebugInfo: React.FC = () => {
 						<span className="shrink-0">Sudoer object: </span>
 						<InlineLink
 							className="truncate font-mono text-sm"
+							highlight={false}
 							href={api.newUrl(`users/${session.sudoerId}`)}
 						>
 							{session?.user.id}

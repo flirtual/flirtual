@@ -19,6 +19,8 @@ defmodule Flirtual.Subscription do
     belongs_to :plan, Plan
 
     field :active, :string, virtual: true
+    field :platform, :string, virtual: true
+
     field :stripe_id, :string
     field :google_id, :string
     field :apple_id, :string
@@ -203,9 +205,7 @@ defmodule Flirtual.Subscription do
         :revenuecat,
         %User{
           subscription:
-            %Subscription{
-              cancelled_at: nil
-            } = subscription
+            %Subscription{} = subscription
         } = user,
         %Plan{} = plan,
         _,
@@ -247,6 +247,7 @@ defimpl Jason.Encoder, for: Flirtual.Subscription do
       Map.take(value, [
         :plan,
         :active,
+        :platform,
         :cancelled_at,
         :updated_at,
         :created_at
@@ -267,4 +268,13 @@ defmodule Flirtual.Subscription.Policy do
 
   def transform(:active, _, %Subscription{} = subscription),
     do: Subscription.active?(subscription)
+
+    def transform(:platform, _, %Subscription{stripe_id: stripe_id}) when is_binary(stripe_id),
+    do: :web
+
+    def transform(:platform, _, %Subscription{apple_id: apple_id}) when is_binary(apple_id),
+    do: :ios
+
+    def transform(:platform, _, %Subscription{google_id: google_id}) when is_binary(google_id),
+    do: :android
 end

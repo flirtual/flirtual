@@ -82,6 +82,16 @@ export async function get(userId: string, options: NarrowFetchOptions = {}) {
 	return fetch<User>("get", `users/${userId}`, options);
 }
 
+export async function count(options: NarrowFetchOptions = {}) {
+	const { count } = await fetch<{ count: number }>(
+		"get",
+		"users/count",
+		options
+	);
+
+	return count;
+}
+
 export interface UserPreview {
 	id: string;
 	name: string;

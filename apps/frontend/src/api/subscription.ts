@@ -2,11 +2,14 @@ import { DatedModel, UuidModel } from "./common";
 import { newUrl } from "./exports";
 import { Plan } from "./plan";
 
+type SubscriptionPlatform = "web" | "android" | "ios";
+
 export type Subscription = UuidModel &
 	DatedModel & {
 		active: boolean;
 		plan: Plan;
 		cancelledAt?: string;
+		platform: SubscriptionPlatform;
 	};
 
 export interface SessionCheckout {

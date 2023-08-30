@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CapacitorConfig } from "@capacitor/cli";
 import { config } from "dotenv";
 

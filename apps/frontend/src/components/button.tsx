@@ -31,6 +31,8 @@ export interface ButtonProps {
 	kind?: ButtonKind;
 	disabled?: boolean;
 	Icon?: IconComponent;
+
+	iconClassName?: string;
 }
 export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
 	props
@@ -40,6 +42,7 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
 		kind = "primary",
 		disabled,
 		Icon,
+		iconClassName,
 		...elementProps
 	} = props;
 
@@ -59,7 +62,7 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
 				elementProps.className
 			)}
 		>
-			{Icon && <Icon className="h-6" />}
+			{Icon && <Icon className={twMerge("h-6 shrink-0", iconClassName)} />}
 			{elementProps.children}
 		</button>
 	);
@@ -73,6 +76,7 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 		kind = "primary",
 		disabled,
 		Icon,
+		iconClassName,
 		...elementProps
 	} = props;
 
@@ -85,7 +89,7 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 				defaultClassName,
 				size && sizes[size],
 				kind && kinds[kind],
-				Icon && "flex  gap-4",
+				Icon && "flex gap-4",
 				elementProps.className
 			)}
 			onClick={(event) => {
@@ -93,7 +97,7 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 				if (elementProps.onClick) elementProps.onClick(event);
 			}}
 		>
-			{Icon && <Icon className="h-6" />}
+			{Icon && <Icon className={twMerge("h-6 shrink-0", iconClassName)} />}
 			<span>{elementProps.children}</span>
 		</Link>
 	);

@@ -1,25 +1,26 @@
 import { SparklesIcon } from "@heroicons/react/24/solid";
-import { Metadata } from "next";
 
-import { api } from "~/api";
-import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
-import { withSession } from "~/server-utilities";
 import { formatDate } from "~/date";
+import { withSession } from "~/server-utilities";
+import { api } from "~/api";
 
 import { SuccessMessage } from "./success-message";
 import { PlanList } from "./plan-list";
-
-export const metadata: Metadata = {
-	title: "Subscription"
-};
+import { ManageButton } from "./manage-button";
+import {
+	MatchSubscriptionPlatform,
+	PlatformMismatchMessage
+} from "./platform-mismatch";
 
 export default async function SubscriptionPage() {
 	const { user } = await withSession();
 	const { subscription } = user;
+
+	const totalUsers = await api.user.count();
 
 	return (
 		<SoleModelLayout
@@ -32,6 +33,7 @@ export default async function SubscriptionPage() {
 				title="Flirtual Premium"
 			>
 				<SuccessMessage />
+				<PlatformMismatchMessage />
 				{subscription && (
 					<div data-sentry-mask className="flex flex-col gap-4">
 						<h1 className="select-none text-2xl font-semibold">
@@ -48,32 +50,16 @@ export default async function SubscriptionPage() {
 									: `Since ${formatDate(subscription.updatedAt)}`}
 							</span>
 						</div>
-						<div className="mt-2 flex gap-4">
-							{subscription.active ? (
-								<ButtonLink
-									href={api.subscription.manageUrl()}
-									kind="primary"
-									size="sm"
-									target="_self"
-								>
-									Manage
-								</ButtonLink>
-							) : (
-								<ButtonLink
-									href={api.subscription.checkoutUrl(subscription.plan.id)}
-									kind="primary"
-									size="sm"
-									target="_self"
-								>
-									Resubscribe
-								</ButtonLink>
-							)}
-						</div>
 					</div>
 				)}
+				<MatchSubscriptionPlatform>
+					<div className="flex gap-4">
+						<ManageButton />
+					</div>
+				</MatchSubscriptionPlatform>
 				<div className="flex flex-col gap-8">
 					{subscription?.active ? (
-						<ul className="select-none text-xl">
+						<ul className="select-none text-lg">
 							<li>
 								👀{" "}
 								<InlineLink href={urls.likes}>
@@ -123,13 +109,21 @@ export default async function SubscriptionPage() {
 							</li>
 						</ul>
 					)}
-					<PlanList />
+					<MatchSubscriptionPlatform>
+						<PlanList />
+					</MatchSubscriptionPlatform>{" "}
 				</div>
-				<p className="select-none">
-					Flirtual is still in its early days: we have 50000 users and growing,
-					and we&apos;re always fixing and improving the platform. Offering
-					Premium helps us pay for development and cover hosting costs. Thank
-					you for supporting us!
+				<p>
+					Flirtual is still in its early days: we have{" "}
+					<span className="font-semibold">
+						{Math.floor(totalUsers / 1000) * 1000} users
+					</span>{" "}
+					and growing, and we&apos;re always releasing new features and
+					improving the platform. Offering Premium helps us pay for development
+					and cover hosting costs.{" "}
+					{subscription
+						? "Thank you for supporting us!"
+						: "If you like what we're doing, consider supporting us by subscribing!"}
 				</p>
 			</ModelCard>
 		</SoleModelLayout>

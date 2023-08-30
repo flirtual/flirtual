@@ -63,7 +63,7 @@ export const OutOfProspects: React.FC<OutOfProspectsProps> = ({
 								<p>You are out of profiles for today :(</p>
 								<p>
 									You can{" "}
-									<InlineLink href={urls.subscription.default.default}>
+									<InlineLink href={urls.subscription.default}>
 										upgrade to Premium
 									</InlineLink>{" "}
 									to <em>browse unlimited profiles</em> and{" "}
