@@ -16,6 +16,7 @@ defmodule Flirtual.User.ChangeQueue do
   alias Flirtual.User
   alias Flirtual.User.ChangeQueue
   alias Flirtual.User.Profile
+  alias Flirtual.User.Profile.Prospect
 
   schema "user_change_queue" do
     belongs_to(:user, User, primary_key: true)
@@ -152,6 +153,13 @@ defmodule Flirtual.User.ChangeQueue do
         User
         |> where([user], user.id in ^Enum.map(items, & &1.user_id))
         |> Repo.update_all(set: [visible: visible])
+
+        if not visible do
+          {_, nil} =
+            Prospect
+            |> where([prospect], prospect.target_id in ^Enum.map(items, & &1.user_id))
+            |> Repo.delete_all()
+        end
     end)
 
     Elasticsearch.bulk(
