@@ -154,12 +154,12 @@ defmodule Flirtual.User.ChangeQueue do
         |> where([user], user.id in ^Enum.map(items, & &1.user_id))
         |> Repo.update_all(set: [visible: visible])
 
-        if not visible do
-          {_, nil} =
-            Prospect
-            |> where([prospect], prospect.target_id in ^Enum.map(items, & &1.user_id))
-            |> Repo.delete_all()
-        end
+      if not visible do
+        {_, nil} =
+          Prospect
+          |> where([prospect], prospect.target_id in ^Enum.map(items, & &1.user_id))
+          |> Repo.delete_all()
+      end
     end)
 
     Elasticsearch.bulk(
