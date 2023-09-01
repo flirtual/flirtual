@@ -2,8 +2,7 @@
 
 import {
 	ShieldExclamationIcon,
-	PresentationChartLineIcon,
-	CommandLineIcon
+	PresentationChartLineIcon
 } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -184,11 +183,6 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 								>
 									Revoke Sudo
 								</ProfileNavigationItem>
-							)}
-							{user.tags?.includes("debugger") && (
-								<>
-									<ProfileNavigationItemDivider Icon={CommandLineIcon} />
-								</>
 							)}
 						</div>
 					</motion.div>
