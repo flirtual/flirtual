@@ -15,16 +15,16 @@ defmodule Flirtual.Subscription do
   alias Flirtual.Subscription
 
   schema "subscriptions" do
-    belongs_to :user, User
-    belongs_to :plan, Plan
+    belongs_to(:user, User)
+    belongs_to(:plan, Plan)
 
-    field :active, :string, virtual: true
-    field :platform, :string, virtual: true
+    field(:active, :string, virtual: true)
+    field(:platform, :string, virtual: true)
 
-    field :stripe_id, :string
-    field :google_id, :string
-    field :apple_id, :string
-    field :cancelled_at, :utc_datetime
+    field(:stripe_id, :string)
+    field(:google_id, :string)
+    field(:apple_id, :string)
+    field(:cancelled_at, :utc_datetime)
 
     timestamps()
   end
@@ -188,8 +188,10 @@ defmodule Flirtual.Subscription do
                    "PLAY_STORE" -> %{google_id: event_id}
                  end
                )
-             ) |> IO.inspect()
-             |> Repo.insert() |> IO.inspect(),
+             )
+             |> IO.inspect()
+             |> Repo.insert()
+             |> IO.inspect(),
            {:ok, _} <-
              reset_matchmaking_timer(user.profile) do
         {:ok, subscription}
@@ -204,8 +206,7 @@ defmodule Flirtual.Subscription do
   def apply(
         :revenuecat,
         %User{
-          subscription:
-            %Subscription{} = subscription
+          subscription: %Subscription{} = subscription
         } = user,
         %Plan{} = plan,
         _,
@@ -269,12 +270,12 @@ defmodule Flirtual.Subscription.Policy do
   def transform(:active, _, %Subscription{} = subscription),
     do: Subscription.active?(subscription)
 
-    def transform(:platform, _, %Subscription{stripe_id: stripe_id}) when is_binary(stripe_id),
+  def transform(:platform, _, %Subscription{stripe_id: stripe_id}) when is_binary(stripe_id),
     do: :web
 
-    def transform(:platform, _, %Subscription{apple_id: apple_id}) when is_binary(apple_id),
+  def transform(:platform, _, %Subscription{apple_id: apple_id}) when is_binary(apple_id),
     do: :ios
 
-    def transform(:platform, _, %Subscription{google_id: google_id}) when is_binary(google_id),
+  def transform(:platform, _, %Subscription{google_id: google_id}) when is_binary(google_id),
     do: :android
 end

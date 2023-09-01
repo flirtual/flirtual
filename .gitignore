@@ -9,4 +9,5 @@
 *.tar
 
 # Junk
+node_modules
 .DS_Store
