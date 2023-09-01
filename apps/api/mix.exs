@@ -55,6 +55,8 @@ defmodule Flirtual.MixProject do
       {:openai, "~> 0.5.2"},
       {:phoenix_swoosh, "~> 1.0"},
       {:gen_smtp, "~> 1.2"},
+      {:pigeon, "~> 2.0.0-rc.1"},
+      {:httpoison, "~> 2.0", override: true},
       {:tls_certificate_check, "~> 1.20"},
       {:finch, "~> 0.12.0"},
       {:telemetry_metrics, "~> 0.6"},
