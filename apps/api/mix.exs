@@ -58,7 +58,7 @@ defmodule Flirtual.MixProject do
       {:pigeon, "~> 2.0.0-rc.1"},
       {:httpoison, "~> 2.0", override: true},
       {:tls_certificate_check, "~> 1.20"},
-      {:finch, "~> 0.12.0"},
+      {:finch, "~> 0.16.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
@@ -69,7 +69,7 @@ defmodule Flirtual.MixProject do
       {:bandit, "~> 1.0-pre"},
       {:plug_cowboy, "~> 2.5"},
       {:libcluster, "~> 3.3"},
-      {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
+      {:ex_check, "~> 0.15.0", only: [:dev], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
