@@ -111,12 +111,24 @@ export default function AboutPage() {
 											url: urls.profile("Krauser")
 										},
 										{
+											name: "Reploidsham",
+											url: urls.profile("Reploidsham")
+										},
+										{
+											name: "Ryu",
+											url: urls.profile("Ryu")
+										},
+										{
 											name: "Solo!!",
 											url: urls.profile("SoloFlighter")
 										},
 										{
 											name: "Starh",
 											url: urls.profile("Starh")
+										},
+										{
+											name: "The_Blarg",
+											url: urls.profile("The_Blarg")
 										}
 									]
 								},
