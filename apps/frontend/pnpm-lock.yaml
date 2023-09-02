@@ -44,9 +44,6 @@ dependencies:
   '@capacitor/toast':
     specifier: ^5.0.6
     version: 5.0.6(@capacitor/core@5.2.1)
-  '@capgo/capacitor-purchases':
-    specifier: ^5.0.7
-    version: 5.0.7(@capacitor/core@5.2.1)
   '@hcaptcha/react-hcaptcha':
     specifier: ^1.8.1
     version: 1.8.1(react-dom@18.2.0)(react@18.2.0)
@@ -77,6 +74,9 @@ dependencies:
   '@radix-ui/react-tooltip':
     specifier: ^1.0.6
     version: 1.0.6(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+  '@revenuecat/purchases-capacitor':
+    specifier: 6.0.0-beta.1
+    version: 6.0.0-beta.1(@capacitor/core@5.2.1)
   '@sentry/nextjs':
     specifier: ^7.59.2
     version: 7.59.2(next@13.4.10)(react@18.2.0)
@@ -500,14 +500,6 @@ packages:
 
   /@capacitor/toast@5.0.6(@capacitor/core@5.2.1):
     resolution: {integrity: sha512-djkRHVT8YtLJC1vvOnDU3EfAHfQYqAD7LYEXmSmhYuTnXRIggX93m/NkazwLnnpr95kDbs2VVPM/J6dqqYuJng==}
-    peerDependencies:
-      '@capacitor/core': ^5.0.0
-    dependencies:
-      '@capacitor/core': 5.2.1
-    dev: false
-
-  /@capgo/capacitor-purchases@5.0.7(@capacitor/core@5.2.1):
-    resolution: {integrity: sha512-RXd28mlAciNWX4SL8EFPzmf0QsoqIsMFYdLIWZFhsqJM6qndtfoKmR36wJSJATrCJ/YsO2DiOiqcONRjpsBytA==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:
@@ -1599,6 +1591,19 @@ packages:
 
   /@react-dnd/shallowequal@4.0.2:
     resolution: {integrity: sha512-/RVXdLvJxLg4QKvMoM5WlwNR9ViO9z8B/qPcc+C0Sa/teJY7QG7kJ441DwzOjMYEY7GmU4dj5EcGHIkKZiQZCA==}
+    dev: false
+
+  /@revenuecat/purchases-capacitor@6.0.0-beta.1(@capacitor/core@5.2.1):
+    resolution: {integrity: sha512-diNrJQvpgYLmet7hBaC1mTcGerTf9Gtg96Qk7S1cJ9ZIvNLS7pzBCgHJSO8mtfBXBIhn7jVQ5RFW4vQqhHspYA==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.2.1
+      '@revenuecat/purchases-typescript-internal': 6.1.0
+    dev: false
+
+  /@revenuecat/purchases-typescript-internal@6.1.0:
+    resolution: {integrity: sha512-/36kkOOQ7vSNsq1zaklU7Y8G5IEd8NDnToqbZU5ZAZty/YOtt7pKZw2oQpIztFrB7T0SPwUUtcLjUsEok1PnVQ==}
     dev: false
 
   /@rollup/plugin-commonjs@24.0.0(rollup@2.78.0):

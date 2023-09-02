@@ -32,5 +32,5 @@ project(':capacitor-share').projectDir = new File('../node_modules/.pnpm/@capaci
 include ':capacitor-toast'
 project(':capacitor-toast').projectDir = new File('../node_modules/.pnpm/@capacitor+toast@5.0.6_@capacitor+core@5.2.1/node_modules/@capacitor/toast/android')
 
-include ':capgo-capacitor-purchases'
-project(':capgo-capacitor-purchases').projectDir = new File('../node_modules/.pnpm/@capgo+capacitor-purchases@5.0.7_@capacitor+core@5.2.1/node_modules/@capgo/capacitor-purchases/android')
+include ':revenuecat-purchases-capacitor'
+project(':revenuecat-purchases-capacitor').projectDir = new File('../node_modules/.pnpm/@revenuecat+purchases-capacitor@6.0.0-beta.1_@capacitor+core@5.2.1/node_modules/@revenuecat/purchases-capacitor/android')

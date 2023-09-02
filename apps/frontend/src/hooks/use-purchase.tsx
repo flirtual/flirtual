@@ -8,10 +8,10 @@ import {
 	useEffect,
 	useCallback
 } from "react";
-import { CapacitorPurchases } from "@capgo/capacitor-purchases";
+import { Purchases } from "@revenuecat/purchases-capacitor";
 import { useRouter } from "next/navigation";
 
-import { environment, rcAppleKey, rcGoogleKey } from "~/const";
+import { rcAppleKey, rcGoogleKey } from "~/const";
 import { urls } from "~/urls";
 import { api } from "~/api";
 
@@ -40,11 +40,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			if (!user?.revenuecatId || !["android", "ios"].includes(platform)) return;
 			console.log("store: before ready");
 
-			await CapacitorPurchases.setDebugLogsEnabled({
-				enabled: environment === "development"
-			});
-
-			await CapacitorPurchases.setup({
+			await Purchases.configure({
 				apiKey: platform === "ios" ? rcAppleKey : rcGoogleKey,
 				appUserID: user?.revenuecatId
 			});
@@ -64,10 +60,10 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			const plan = plans?.find((plan) => plan.id === planId);
 
 			if (!plan || !plan.googleId || !plan.appleId || !plan.revenuecatId)
-				throw new Error("Plan not available yet");
+				throw new Error("Plan not available");
 
 			const productId = platform === "ios" ? plan.appleId : plan.googleId;
-			const { customerInfo } = await CapacitorPurchases.getCustomerInfo();
+			const { customerInfo } = await Purchases.getCustomerInfo();
 
 			if (
 				customerInfo.activeSubscriptions.includes(productId) &&
@@ -76,12 +72,15 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				return router.push(customerInfo.managementURL);
 			}
 
-			const options = {
-				identifier: plan?.revenuecatId,
-				offeringIdentifier: "default"
-			};
+			const aPackage = (
+				await Purchases.getOfferings()
+			).current?.availablePackages.find(
+				(availablePackage) => availablePackage.identifier === plan.revenuecatId
+			);
 
-			return CapacitorPurchases.purchasePackage(options)
+			if (!aPackage) throw new Error("Package not available");
+
+			return Purchases.purchasePackage({ aPackage })
 				.then(() => {
 					router.refresh();
 					return router.push(urls.subscription.success);
