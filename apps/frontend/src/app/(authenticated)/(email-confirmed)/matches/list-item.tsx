@@ -65,7 +65,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 							{lastMessage ? (
 								<>
 									{lastMessage?.senderId !== userId && !lastMessage.system && (
-										<span>You — </span>
+										<span>You: </span>
 									)}
 									{lastMessage.content}
 								</>
