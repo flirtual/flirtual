@@ -5,6 +5,7 @@ defmodule Flirtual.Matchmaking do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.PushNotification
   alias Flirtual.User.Profile.Block
   alias Flirtual.Subscription
   alias Flirtual.Talkjs
@@ -229,7 +230,18 @@ defmodule Flirtual.Matchmaking do
                else:
                  with true <- item.type === :like and opposite_item.type === :like,
                       {:ok, _} <- create_match_conversation(user, target, match_kind),
-                      {:ok, _} <- deliver_match_email(target, user) do
+                      {:ok, _} <- deliver_match_email(target, user),
+                      :ok <-
+                        PushNotification.send(
+                          target,
+                          "It's a match!",
+                          if(match_kind == :love,
+                            do:
+                              "#{User.display_name(user)} liked you back. Send them a message! 💞",
+                            else:
+                              "#{User.display_name(user)} homied you back. Send them a message! ✌️"
+                          )
+                        ) do
                    {:ok, opposite_item}
                  else
                    false -> {:ok, opposite_item}

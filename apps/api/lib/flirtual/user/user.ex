@@ -34,6 +34,8 @@ defmodule Flirtual.User do
     field(:talkjs_id, :string, virtual: true)
     field(:talkjs_signature, :string, redact: true)
     field(:listmonk_id, :integer)
+    field(:apns_token, :string)
+    field(:fcm_token, :string)
     field(:stripe_id, :string)
     field(:revenuecat_id, Ecto.ShortUUID)
     field(:language, :string, default: "en")

@@ -37,6 +37,19 @@ config :flirtual, Flirtual.Listmonk,
   username: System.fetch_env!("LISTMONK_USERNAME"),
   password: System.fetch_env!("LISTMONK_PASSWORD")
 
+config :flirtual, Flirtual.APNS,
+  adapter: Pigeon.APNS,
+  key: System.fetch_env!("APNS_KEY"),
+  key_identifier: System.fetch_env!("APNS_KEY_ID"),
+  team_id: System.fetch_env!("APNS_TEAM_ID"),
+  topic: System.fetch_env!("APNS_TOPIC"),
+  mode: if(config_env() == :prod, do: :prod, else: :dev)
+
+config :flirtual, Flirtual.FCM,
+  adapter: Pigeon.FCM,
+  project_id: System.fetch_env!("FCM_PROJECT_ID"),
+  service_account_json: System.fetch_env!("FCM_SERVICE_ACCOUNT")
+
 config :joken, default_signer: System.fetch_env!("JOKEN_SECRET")
 
 config :stripity_stripe,

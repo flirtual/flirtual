@@ -16,6 +16,9 @@ defmodule Flirtual.Application do
       Flirtual.Repo,
       # Start Elasticsearch
       Flirtual.Elasticsearch,
+      # Start the push notification dispatchers
+      Flirtual.APNS,
+      Flirtual.FCM,
       # Start the Telemetry supervisor
       FlirtualWeb.Telemetry,
       # Start the PubSub system
