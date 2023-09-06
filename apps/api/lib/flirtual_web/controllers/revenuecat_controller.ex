@@ -17,6 +17,15 @@ defmodule FlirtualWeb.RevenueCatController do
       |> json(%{success: true})
       |> halt()
     else
+      {:unhandled, reason} ->
+        conn
+        |> put_status(:accepted)
+        |> json(%{
+          success: true,
+          message: reason
+        })
+        |> halt()
+
       _ ->
         conn
         |> put_status(:bad_request)

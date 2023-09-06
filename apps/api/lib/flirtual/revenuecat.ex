@@ -22,7 +22,7 @@ defmodule Flirtual.RevenueCat do
     raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
-    log(:info, [method, url], body)
+    log(:debug, [method, url], body)
 
     HTTPoison.request(method, url, raw_body, [
       {"authorization", "Bearer " <> config(:access_token)},
@@ -40,11 +40,11 @@ defmodule Flirtual.RevenueCat do
         }
       })
       when type in ["INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION", "NON_RENEWING_PURCHASE"] do
-    with %User{} = user <- User.get(revenuecat_id: customer_id) |> IO.inspect(),
-         %Plan{} = plan <- Plan.get(revenuecat_id: product_id) |> IO.inspect(),
+    with %User{} = user <- User.get(revenuecat_id: customer_id),
+         %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
          {:ok, subscription} <-
-           Subscription.apply(:revenuecat, user, plan, platform, event_id) |> IO.inspect() do
-      log(:info, [type, event_id], subscription)
+           Subscription.apply(:revenuecat, user, plan, platform, event_id) do
+      log(:debug, [type, event_id], subscription)
       :ok
     end
   end
@@ -58,11 +58,11 @@ defmodule Flirtual.RevenueCat do
           "id" => event_id
         }
       }) do
-    with %User{} = user <- User.get(revenuecat_id: customer_id) |> IO.inspect(),
-         %Plan{} = plan <- Plan.get(revenuecat_id: product_id) |> IO.inspect(),
+    with %User{} = user <- User.get(revenuecat_id: customer_id),
+         %Plan{} = plan <- Plan.get(revenuecat_id: product_id),
          {:ok, subscription} <-
-           Subscription.apply(:revenuecat, user, plan, platform, event_id) |> IO.inspect() do
-      log(:info, ["PRODUCT_CHANGE", event_id], subscription)
+           Subscription.apply(:revenuecat, user, plan, platform, event_id) do
+      log(:debug, ["PRODUCT_CHANGE", event_id], subscription)
       :ok
     end
   end
@@ -80,9 +80,8 @@ defmodule Flirtual.RevenueCat do
     end
   end
 
-  def handle_event(event) do
-    IO.inspect(event)
-    :ok
+  def handle_event(_) do
+    {:unhandled, :ignored}
   end
 
   def delete(%User{

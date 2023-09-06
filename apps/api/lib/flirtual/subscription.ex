@@ -44,6 +44,14 @@ defmodule Flirtual.Subscription do
     |> Repo.update()
   end
 
+  defp update_platform_id(platform_id, event_id) do
+    case platform_id do
+      "APP_STORE" -> %{apple_id: event_id, google_id: nil, stripe_id: nil}
+      "MAC_APP_STORE" -> %{apple_id: event_id, google_id: nil, stripe_id: nil}
+      "PLAY_STORE" -> %{google_id: event_id, apple_id: nil, stripe_id: nil}
+    end
+  end
+
   def apply(source, user, plan, stripe_id \\ nil)
 
   # Stripe: Create subscription, since user doesn't have an existing one.
@@ -78,7 +86,12 @@ defmodule Flirtual.Subscription do
       ) do
     Repo.transaction(fn ->
       with {:ok, subscription} <-
-             change(subscription, %{plan_id: plan.id, cancelled_at: nil})
+             change(subscription, %{
+               plan_id: plan.id,
+               apple_id: nil,
+               google_id: nil,
+               cancelled_at: nil
+             })
              |> Repo.update(),
            {:ok, _} <-
              reset_matchmaking_timer(user.profile) do
@@ -109,6 +122,8 @@ defmodule Flirtual.Subscription do
              |> change(%{
                plan_id: plan.id,
                stripe_id: stripe_id || subscription.stripe_id,
+               apple_id: nil,
+               google_id: nil,
                cancelled_at: nil
              })
              |> Repo.update(),
@@ -129,6 +144,8 @@ defmodule Flirtual.Subscription do
              |> change(%{
                plan_id: plan.id,
                stripe_id: stripe_id || subscription.stripe_id,
+               apple_id: nil,
+               google_id: nil,
                cancelled_at: nil
              })
              |> Repo.update(),
@@ -145,33 +162,33 @@ defmodule Flirtual.Subscription do
   def apply(
         _,
         %User{
-          subscription:
-            %Subscription{
-              apple_id: apple_id
-            } = subscription
+          subscription: %Subscription{
+            apple_id: apple_id,
+            cancelled_at: nil
+          }
         },
         _,
         platform,
         _
       )
       when not is_nil(apple_id) and platform not in ["APP_STORE", "MAC_APP_STORE"] do
-    {:ok, subscription}
+    {:unhandled, :platform_mismatch}
   end
 
   def apply(
         _,
         %User{
-          subscription:
-            %Subscription{
-              google_id: google_id
-            } = subscription
+          subscription: %Subscription{
+            google_id: google_id,
+            cancelled_at: nil
+          }
         },
         _,
         platform,
         _
       )
       when not is_nil(google_id) and platform != "PLAY_STORE" do
-    {:ok, subscription}
+    {:unhandled, :platform_mismatch}
   end
 
   # RevenueCat: Create subscription, since user doesn't have an existing one.
@@ -181,17 +198,9 @@ defmodule Flirtual.Subscription do
              %Subscription{}
              |> change(
                %{user_id: user.id, plan_id: plan.id}
-               |> Map.merge(
-                 case platform do
-                   "APP_STORE" -> %{apple_id: event_id}
-                   "MAC_APP_STORE" -> %{apple_id: event_id}
-                   "PLAY_STORE" -> %{google_id: event_id}
-                 end
-               )
+               |> Map.merge(update_platform_id(platform, event_id))
              )
-             |> IO.inspect()
-             |> Repo.insert()
-             |> IO.inspect(),
+             |> Repo.insert(),
            {:ok, _} <-
              reset_matchmaking_timer(user.profile) do
         {:ok, subscription}
@@ -209,13 +218,16 @@ defmodule Flirtual.Subscription do
           subscription: %Subscription{} = subscription
         } = user,
         %Plan{} = plan,
-        _,
-        _
+        platform,
+        event_id
       ) do
     Repo.transaction(fn ->
       with {:ok, subscription} <-
              subscription
-             |> change(%{plan_id: plan.id, cancelled_at: nil})
+             |> change(
+               %{plan_id: plan.id, cancelled_at: nil}
+               |> Map.merge(update_platform_id(platform, event_id))
+             )
              |> Repo.update(),
            {:ok, _} <- reset_matchmaking_timer(user.profile) do
         {:ok, subscription}
