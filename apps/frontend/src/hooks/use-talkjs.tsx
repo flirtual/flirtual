@@ -15,6 +15,7 @@ import { useSWRConfig } from "swr";
 import { talkjsAppId } from "~/const";
 import { resolveTheme } from "~/theme";
 import { unstableInfiniteSerialize } from "~/components/swr";
+import { urls } from "~/urls";
 
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
@@ -59,15 +60,27 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 	}, [talkjsUserId, talkjsSignature, ready]);
 
 	useEffect(() => {
-		if (!session || !pushRegistrationId) return;
+		if (!session) return;
 
 		void (async () => {
+			if (!pushRegistrationId) {
+				await session.setDesktopNotificationEnabled(true);
+
+				session.onDesktopNotificationClicked((event) => {
+					router.push(urls.conversations.of(event.conversation.id));
+				});
+
+				return;
+			}
+
+			await session.setDesktopNotificationEnabled(false);
+
 			await session.setPushRegistration({
 				provider: platform === "ios" ? "apns" : "fcm",
 				pushRegistrationId
 			});
 		})();
-	}, [session, pushRegistrationId, platform]);
+	}, [session, pushRegistrationId, platform, router]);
 
 	useEffect(() => {
 		setUnreadConversations([]);
