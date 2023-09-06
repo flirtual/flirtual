@@ -47,10 +47,10 @@ defmodule Flirtual.Matchmaking do
 
   def list_prospects(%User{} = user, kind) do
     if(should_compute_prospects?(user, kind)) do
-      log(:info, ["compute", kind], user.id)
+      log(:debug, ["compute", kind], user.id)
       compute_prospects(user, kind)
     else
-      log(:info, ["skip-compute", kind], user.id)
+      log(:debug, ["skip-compute", kind], user.id)
       list_existing_prospects(user, kind)
     end
   end

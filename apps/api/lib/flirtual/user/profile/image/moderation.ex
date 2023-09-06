@@ -92,7 +92,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     type = classify_flag?(classifications)
     safe = type == :safe
 
-    log(:info, ["classify", image.id], %{
+    log(:debug, ["classify", image.id], %{
       classifications: classifications,
       type: type
     })

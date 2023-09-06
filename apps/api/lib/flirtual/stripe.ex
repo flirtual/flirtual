@@ -438,7 +438,7 @@ defmodule Flirtual.Stripe do
     with %User{} = user <- User.get(stripe_id: customer_stripe_id),
          %Plan{recurring: false} = plan <- Plan.get(plan_id),
          {:ok, subscription} <- Subscription.apply(:stripe, user, plan, payment_stripe_id) do
-      log(:info, [event.type, event.id], subscription)
+      log(:debug, [event.type, event.id], subscription)
       :ok
     else
       %Plan{} -> :ok
@@ -460,7 +460,7 @@ defmodule Flirtual.Stripe do
         } = event
       )
       when type in ["customer.subscription.created", "customer.subscription.updated"] do
-    log(:info, [event.type, event.id], event)
+    log(:debug, [event.type, event.id], event)
 
     with %User{} = user <- User.get(stripe_id: customer_stripe_id),
          # Legacy Supporter does not have a price_id, which means we can't
@@ -472,7 +472,7 @@ defmodule Flirtual.Stripe do
              else: Plan.get(product_id: product_id, price_id: price_id)
            ),
          {:ok, subscription} <- Subscription.apply(:stripe, user, plan, subscription_stripe_id) do
-      log(:info, [event.type, event.id], subscription)
+      log(:debug, [event.type, event.id], subscription)
       :ok
     else
       value -> event_error(event, value)
