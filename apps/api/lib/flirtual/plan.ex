@@ -11,16 +11,16 @@ defmodule Flirtual.Plan do
   alias Flirtual.Plan
 
   schema "plans" do
-    field :name, :string
+    field(:name, :string)
 
-    field :recurring, :boolean, default: true
-    field :purchasable, :boolean, default: true
+    field(:recurring, :boolean, default: true)
+    field(:purchasable, :boolean, default: true)
 
-    field :product_id, :string
-    field :price_id, :string
-    field :google_id, :string
-    field :apple_id, :string
-    field :revenuecat_id, :string
+    field(:product_id, :string)
+    field(:price_id, :string)
+    field(:google_id, :string)
+    field(:apple_id, :string)
+    field(:revenuecat_id, :string)
 
     timestamps(updated_at: false)
   end
@@ -56,7 +56,8 @@ defimpl Jason.Encoder, for: Flirtual.Plan do
       :google_id,
       :apple_id,
       :revenuecat_id,
-      :created_at
+      :created_at,
+      :purchasable
     ]
 end
 

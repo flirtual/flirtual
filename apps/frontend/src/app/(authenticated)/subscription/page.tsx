@@ -53,9 +53,7 @@ export default async function SubscriptionPage() {
 					</div>
 				)}
 				<MatchSubscriptionPlatform>
-					<div className="flex gap-4">
-						<ManageButton />
-					</div>
+					<ManageButton />
 				</MatchSubscriptionPlatform>
 				<div className="flex flex-col gap-8">
 					{subscription?.active ? (

@@ -15,20 +15,26 @@ export const ManageButton: FC = () => {
 	if (!session) return null;
 
 	const { subscription } = session.user;
-	if (!subscription) return null;
+	if (
+		!subscription ||
+		(subscription.cancelledAt && !subscription.plan.purchasable)
+	)
+		return null;
 
 	return (
-		<Button
-			disabled={pending}
-			Icon={pending ? Loader2 : undefined}
-			kind="primary"
-			size="sm"
-			onClick={() => {
-				setPending(true);
-				void purchase(subscription.plan.id).finally(() => setPending(false));
-			}}
-		>
-			{subscription.cancelledAt ? "Resubscribe" : "Manage"}
-		</Button>
+		<div className="flex gap-4">
+			<Button
+				disabled={pending}
+				Icon={pending ? Loader2 : undefined}
+				kind="primary"
+				size="sm"
+				onClick={() => {
+					setPending(true);
+					void purchase(subscription.plan.id).finally(() => setPending(false));
+				}}
+			>
+				{subscription.cancelledAt ? "Resubscribe" : "Manage"}
+			</Button>
+		</div>
 	);
 };
