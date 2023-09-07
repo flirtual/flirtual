@@ -37,7 +37,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 	useEffect(() => {
 		void (async () => {
-			if (!user?.revenuecatId || !["android", "ios"].includes(platform)) return;
+			if (!user?.revenuecatId || !native) return;
 			console.log("store: before ready");
 
 			await Purchases.configure({
@@ -45,7 +45,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				appUserID: user?.revenuecatId
 			});
 		})();
-	}, [platform, user?.revenuecatId]);
+	}, [platform, native, user?.revenuecatId]);
 
 	const purchase = useCallback(
 		async (planId: string) => {

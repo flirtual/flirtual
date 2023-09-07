@@ -6,7 +6,7 @@ import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 
 export const PlatformMismatchMessage: FC = () => {
-	const { platform } = useDevice();
+	const { platform, native } = useDevice();
 	const [session] = useSession();
 
 	if (!session) return null;
@@ -15,7 +15,8 @@ export const PlatformMismatchMessage: FC = () => {
 	if (
 		!subscription ||
 		!subscription.active ||
-		platform === subscription.platform
+		platform === subscription.platform ||
+		(!native && subscription.platform === "web")
 	)
 		return null;
 
@@ -57,7 +58,7 @@ export const PlatformMismatchMessage: FC = () => {
 export const MatchSubscriptionPlatform: FC<PropsWithChildren> = ({
 	children
 }) => {
-	const { platform } = useDevice();
+	const { platform, native } = useDevice();
 	const [session] = useSession();
 
 	if (!session) return children;
@@ -66,7 +67,8 @@ export const MatchSubscriptionPlatform: FC<PropsWithChildren> = ({
 	if (
 		!subscription ||
 		!subscription.active ||
-		platform === subscription.platform
+		platform === subscription.platform ||
+		(!native && subscription.platform === "web")
 	)
 		return children;
 
