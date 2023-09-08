@@ -33,6 +33,7 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 	return "href" in props ? (
 		<Link
 			href={props.href}
+			target={isInternalHref(props.href) ? "_self" : "_blank"}
 			className={twMerge(
 				"flex justify-between gap-4 px-6 py-2 focus:outline-none hocus:shadow-brand-1",
 				toAbsoluteUrl(props.href).pathname === pathname

@@ -69,7 +69,8 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				customerInfo.activeSubscriptions.includes(productId) &&
 				customerInfo.managementURL
 			) {
-				return router.push(customerInfo.managementURL);
+				window.open(customerInfo.managementURL, "_blank");
+				return;
 			}
 
 			const aPackage = (
