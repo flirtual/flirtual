@@ -26,6 +26,12 @@ interface PurchaseContext {
 
 const PurchaseContext = createContext<PurchaseContext>({} as PurchaseContext);
 
+export const getPackage = async (revenuecatId: string) => {
+	return (await Purchases.getOfferings()).current?.availablePackages.find(
+		(availablePackage) => availablePackage.identifier === revenuecatId
+	);
+};
+
 export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { platform, native } = useDevice();
 	const toasts = useToast();
@@ -73,11 +79,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				return;
 			}
 
-			const aPackage = (
-				await Purchases.getOfferings()
-			).current?.availablePackages.find(
-				(availablePackage) => availablePackage.identifier === plan.revenuecatId
-			);
+			const aPackage = await getPackage(plan.id);
 
 			if (!aPackage) throw new Error("Package not available");
 
