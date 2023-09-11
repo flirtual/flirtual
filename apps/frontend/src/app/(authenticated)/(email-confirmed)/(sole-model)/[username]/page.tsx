@@ -27,9 +27,12 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 	return (
 		<>
 			<Profile direct user={user} />
-			{!user.bannedAt && user.relationship && !user.relationship?.kind && (
-				<ProspectActionBar mode="love" userId={user.id} />
-			)}
+			{!user.bannedAt &&
+				user.relationship &&
+				!user.relationship?.blocked &&
+				!user.relationship?.kind && (
+					<ProspectActionBar mode="love" userId={user.id} />
+				)}
 		</>
 	);
 }
