@@ -22,6 +22,8 @@ PODS:
     - Capacitor
   - CapacitorToast (5.0.6):
     - Capacitor
+  - CapawesomeTeamCapacitorDatetimePicker (5.1.0):
+    - Capacitor
   - CordovaPlugins (5.3.0):
     - CapacitorCordova
   - PurchasesHybridCommon (6.1.0):
@@ -44,6 +46,7 @@ DEPENDENCIES:
   - "CapacitorScreenOrientation (from `../../node_modules/.pnpm/@capacitor+screen-orientation@5.0.6_@capacitor+core@5.3.0/node_modules/@capacitor/screen-orientation`)"
   - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@5.0.6_@capacitor+core@5.3.0/node_modules/@capacitor/share`)"
   - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@5.0.6_@capacitor+core@5.3.0/node_modules/@capacitor/toast`)"
+  - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@5.1.0_@capacitor+core@5.3.0/node_modules/@capawesome-team/capacitor-datetime-picker`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@6.0.0-beta.1_@capacitor+core@5.3.0/node_modules/@revenuecat/purchases-capacitor`)"
 
@@ -77,6 +80,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+share@5.0.6_@capacitor+core@5.3.0/node_modules/@capacitor/share"
   CapacitorToast:
     :path: "../../node_modules/.pnpm/@capacitor+toast@5.0.6_@capacitor+core@5.3.0/node_modules/@capacitor/toast"
+  CapawesomeTeamCapacitorDatetimePicker:
+    :path: "../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@5.1.0_@capacitor+core@5.3.0/node_modules/@capawesome-team/capacitor-datetime-picker"
   CordovaPlugins:
     :path: "../capacitor-cordova-ios-plugins"
   RevenuecatPurchasesCapacitor:
@@ -95,11 +100,12 @@ SPEC CHECKSUMS:
   CapacitorScreenOrientation: e5ef438489815d05340f1b51a2b1794108dc0ac3
   CapacitorShare: cd41743331cb71d217c029de54b681cbd91e0fcc
   CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
+  CapawesomeTeamCapacitorDatetimePicker: 186268f173454c636d90dbad55047b45405b20e2
   CordovaPlugins: 8ff2caec60f5f5400cc9cf86eafd95677f422538
   PurchasesHybridCommon: 195de137f1993af1a034099773eed15bf771b1d4
   RevenueCat: a70e08e45bd96bea5187dbd7b18f5f1db39646be
   RevenuecatPurchasesCapacitor: 3ca960db419048d66daa39e6ce2f3fa233ad0b0d
 
-PODFILE CHECKSUM: 1b6573fab39148831b1ca2207b79d48070993788
+PODFILE CHECKSUM: f1e05d84c4a3f5ff2fdac650cfb7cd2f222709d2
 
 COCOAPODS: 1.12.1

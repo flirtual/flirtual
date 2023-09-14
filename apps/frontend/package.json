@@ -21,6 +21,7 @@
     "@capacitor/screen-orientation": "^5.0.6",
     "@capacitor/share": "^5.0.6",
     "@capacitor/toast": "^5.0.6",
+    "@capawesome-team/capacitor-datetime-picker": "^5.1.0",
     "@hcaptcha/react-hcaptcha": "^1.8.1",
     "@heroicons/react": "^2.0.18",
     "@kfarwell/nextjs-toploader": "^1.4.5",

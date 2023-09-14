@@ -14,10 +14,12 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
+import InputDateSelectNative from "~/components/inputs/date-select-native";
 import {
 	InputCountrySelect,
 	InputLanguageAutocomplete
 } from "~/components/inputs/specialized";
+import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy, fromEntries } from "~/utilities";
@@ -37,6 +39,7 @@ export interface TagsFormProps {
 export const TagsForm: FC<TagsFormProps> = (props) => {
 	const { games, genders, interests, platforms, sexualities } = props;
 
+	const { native } = useDevice();
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
@@ -132,7 +135,20 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 								>
 									Date of birth
 								</InputLabel>
-								<InputDateSelect {...field.props} />
+								{native ? (
+									<InputDateSelectNative
+										max="now"
+										min={new Date("1900/01/01")}
+										value={field.props.value}
+										onChange={field.props.onChange}
+									/>
+								) : (
+									<InputDateSelect
+										{...field.props}
+										max="now"
+										min={new Date("1900/01/01")}
+									/>
+								)}
 							</>
 						)}
 					</FormField>

@@ -19,6 +19,7 @@ dependencies {
     implementation project(':capacitor-screen-orientation')
     implementation project(':capacitor-share')
     implementation project(':capacitor-toast')
+    implementation project(':capawesome-team-capacitor-datetime-picker')
     implementation project(':revenuecat-purchases-capacitor')
     implementation "com.android.billingclient:billing:5.2.1"
 }

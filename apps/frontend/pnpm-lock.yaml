@@ -44,6 +44,9 @@ dependencies:
   '@capacitor/toast':
     specifier: ^5.0.6
     version: 5.0.6(@capacitor/core@5.3.0)
+  '@capawesome-team/capacitor-datetime-picker':
+    specifier: ^5.1.0
+    version: 5.1.0(@capacitor/core@5.3.0)
   '@hcaptcha/react-hcaptcha':
     specifier: ^1.8.1
     version: 1.8.1(react-dom@18.2.0)(react@18.2.0)
@@ -501,6 +504,14 @@ packages:
 
   /@capacitor/toast@5.0.6(@capacitor/core@5.3.0):
     resolution: {integrity: sha512-djkRHVT8YtLJC1vvOnDU3EfAHfQYqAD7LYEXmSmhYuTnXRIggX93m/NkazwLnnpr95kDbs2VVPM/J6dqqYuJng==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.3.0
+    dev: false
+
+  /@capawesome-team/capacitor-datetime-picker@5.1.0(@capacitor/core@5.3.0):
+    resolution: {integrity: sha512-WyzaatP3lPWdNO0Ky1IHbMSgOtn4XXJBMsF8jPysgjR02YcScC/uzlwDTh+gaasZXylSBNp1KfoeEKvO9pp1tg==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:

@@ -23,6 +23,8 @@ import {
 } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { AttributeCollection } from "~/api/attributes";
+import { useDevice } from "~/hooks/use-device";
+import InputDateSelectNative from "~/components/inputs/date-select-native";
 
 const AttributeKeys = [
 	...(["gender", "sexuality", "platform", "game", "interest"] as const)
@@ -39,8 +41,8 @@ export interface Onboarding2Props {
 export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 	const { games, genders, interests, platforms, sexualities } = props;
 
+	const { native } = useDevice();
 	const [session, mutateSession] = useSession();
-
 	const router = useRouter();
 
 	if (!session) return null;
@@ -150,7 +152,20 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 								>
 									Date of birth
 								</InputLabel>
-								<InputDateSelect {...field.props} max="now" />
+								{native ? (
+									<InputDateSelectNative
+										max="now"
+										min={new Date("1900/01/01")}
+										value={field.props.value}
+										onChange={field.props.onChange}
+									/>
+								) : (
+									<InputDateSelect
+										{...field.props}
+										max="now"
+										min={new Date("1900/01/01")}
+									/>
+								)}
 							</>
 						)}
 					</FormField>
