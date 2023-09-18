@@ -78,8 +78,8 @@ dependencies:
     specifier: ^1.0.6
     version: 1.0.6(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
   '@revenuecat/purchases-capacitor':
-    specifier: 6.0.0-beta.1
-    version: 6.0.0-beta.1(@capacitor/core@5.3.0)
+    specifier: ^6.0.0
+    version: 6.0.0(@capacitor/core@5.3.0)
   '@sentry/nextjs':
     specifier: ^7.68.0
     version: 7.68.0(next@13.4.10)(react@18.2.0)
@@ -1606,17 +1606,17 @@ packages:
     resolution: {integrity: sha512-/RVXdLvJxLg4QKvMoM5WlwNR9ViO9z8B/qPcc+C0Sa/teJY7QG7kJ441DwzOjMYEY7GmU4dj5EcGHIkKZiQZCA==}
     dev: false
 
-  /@revenuecat/purchases-capacitor@6.0.0-beta.1(@capacitor/core@5.3.0):
-    resolution: {integrity: sha512-diNrJQvpgYLmet7hBaC1mTcGerTf9Gtg96Qk7S1cJ9ZIvNLS7pzBCgHJSO8mtfBXBIhn7jVQ5RFW4vQqhHspYA==}
+  /@revenuecat/purchases-capacitor@6.0.0(@capacitor/core@5.3.0):
+    resolution: {integrity: sha512-3pMu9iX+YS6IJQ2KZfBxOtCnAyjyp7d/SvK1RS42lXS0UVopf8Ol3BQKwnMV3VHnZxxMYtIkTMS+knOPszKR0g==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:
       '@capacitor/core': 5.3.0
-      '@revenuecat/purchases-typescript-internal': 6.1.0
+      '@revenuecat/purchases-typescript-internal-esm': 6.1.3
     dev: false
 
-  /@revenuecat/purchases-typescript-internal@6.1.0:
-    resolution: {integrity: sha512-/36kkOOQ7vSNsq1zaklU7Y8G5IEd8NDnToqbZU5ZAZty/YOtt7pKZw2oQpIztFrB7T0SPwUUtcLjUsEok1PnVQ==}
+  /@revenuecat/purchases-typescript-internal-esm@6.1.3:
+    resolution: {integrity: sha512-59Ne0I3vSHhtulSs/unqRZzc1x9YGwordoXBhKAw6sNugSaJVplaUFCZQ+WD1yE3iKGY0Xtfxu138SbBEoJITA==}
     dev: false
 
   /@rollup/plugin-commonjs@24.0.0(rollup@2.78.0):

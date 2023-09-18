@@ -26,12 +26,12 @@ PODS:
     - Capacitor
   - CordovaPlugins (5.3.0):
     - CapacitorCordova
-  - PurchasesHybridCommon (6.1.0):
-    - RevenueCat (= 4.25.7)
-  - RevenueCat (4.25.7)
-  - RevenuecatPurchasesCapacitor (6.0.0-beta.1):
+  - PurchasesHybridCommon (6.1.3):
+    - RevenueCat (= 4.25.10)
+  - RevenueCat (4.25.10)
+  - RevenuecatPurchasesCapacitor (6.0.0):
     - Capacitor
-    - PurchasesHybridCommon (= 6.1.0)
+    - PurchasesHybridCommon (= 6.1.3)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@5.3.0_@capacitor+core@5.3.0/node_modules/@capacitor/ios`)"
@@ -48,7 +48,7 @@ DEPENDENCIES:
   - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@5.0.6_@capacitor+core@5.3.0/node_modules/@capacitor/toast`)"
   - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@5.1.0_@capacitor+core@5.3.0/node_modules/@capawesome-team/capacitor-datetime-picker`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
-  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@6.0.0-beta.1_@capacitor+core@5.3.0/node_modules/@revenuecat/purchases-capacitor`)"
+  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@6.0.0_@capacitor+core@5.3.0/node_modules/@revenuecat/purchases-capacitor`)"
 
 SPEC REPOS:
   trunk:
@@ -85,7 +85,7 @@ EXTERNAL SOURCES:
   CordovaPlugins:
     :path: "../capacitor-cordova-ios-plugins"
   RevenuecatPurchasesCapacitor:
-    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@6.0.0-beta.1_@capacitor+core@5.3.0/node_modules/@revenuecat/purchases-capacitor"
+    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@6.0.0_@capacitor+core@5.3.0/node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 1ac9165943bc4f2137642d218c5ba05df811de69
@@ -102,10 +102,10 @@ SPEC CHECKSUMS:
   CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
   CapawesomeTeamCapacitorDatetimePicker: 186268f173454c636d90dbad55047b45405b20e2
   CordovaPlugins: 8ff2caec60f5f5400cc9cf86eafd95677f422538
-  PurchasesHybridCommon: 195de137f1993af1a034099773eed15bf771b1d4
-  RevenueCat: a70e08e45bd96bea5187dbd7b18f5f1db39646be
-  RevenuecatPurchasesCapacitor: 3ca960db419048d66daa39e6ce2f3fa233ad0b0d
+  PurchasesHybridCommon: 8f9bb910fef4d92bc4db687770d096c2d4aba52a
+  RevenueCat: c9d0c84ec1db32858fea1881e3aff91da2013442
+  RevenuecatPurchasesCapacitor: e36cb66356d53c6fe6eaa12c965c407aef29f121
 
-PODFILE CHECKSUM: f1e05d84c4a3f5ff2fdac650cfb7cd2f222709d2
+PODFILE CHECKSUM: c1a1f799261e95841cf25d53c339f18bbd8a9128
 
 COCOAPODS: 1.12.1

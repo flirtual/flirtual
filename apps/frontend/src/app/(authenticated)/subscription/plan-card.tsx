@@ -4,6 +4,9 @@ import { twMerge } from "tailwind-merge";
 import { Dispatch, FC, SetStateAction } from "react";
 
 import { useSession } from "~/hooks/use-session";
+import { usePurchase } from "~/hooks/use-purchase";
+import { usePlans } from "~/hooks/use-plans";
+import { useDevice } from "~/hooks/use-device";
 
 import { PlanButtonLink } from "./plan-button-link";
 
@@ -25,23 +28,42 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		duration,
 		price: stripePrice,
 		originalPrice: originalStripePrice = stripePrice,
-		discount,
+		discount: originalDiscount,
 		highlight,
 		description
 	} = props;
 	const [session] = useSession();
 
+	const { packages } = usePurchase();
+	const { native } = useDevice();
+	const plans = usePlans();
+
+	const plan = plans?.find((p) => p.id === props.id);
+	const currentPackage = packages.find(
+		(p) => p.identifier === plan?.revenuecatId
+	);
+	const basePlan = plans?.find((p) => p.id === props.oneMonthId);
+	const basePackage = packages.find(
+		(p) => p.identifier === basePlan?.revenuecatId
+	);
+
 	const user = session?.user;
 	if (!user) return null;
 
-	const price = /* product
-		? product.pricing!.priceMicros! / 1_000_000
-		:  */ stripePrice;
-	const displayPrice = /* product ? product.pricing!.price :  */ `$${stripePrice}`;
-	const originalPrice = /*  product
-		? ((oneMonthProduct?.pricing?.priceMicros ?? 0) / 1_000_000) *
-		  Number.parseInt(product?.pricing?.billingPeriod?.slice(1, 2) ?? "0")
-		:  */ originalStripePrice;
+	const price = currentPackage ? currentPackage.product.price : stripePrice;
+	const displayPrice = currentPackage
+		? currentPackage.product.priceString
+		: `$${stripePrice}`;
+	const originalPrice =
+		currentPackage && basePackage
+			? (basePackage.product.price ?? 0) *
+			  Number.parseInt(
+					currentPackage.product.subscriptionPeriod?.slice(1, 2) ?? "0"
+			  )
+			: originalStripePrice;
+	const discount =
+		originalDiscount ??
+		Math.round(((originalPrice - price) / originalPrice) * 100);
 
 	const activePlan =
 		(user.subscription?.active && user.subscription.plan.id === props.id) ??
@@ -63,10 +85,10 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				<span
 					className={twMerge(
 						"font-montserrat text-sm font-semibold text-black-60 line-through dark:text-white-50",
-						price === originalPrice &&
-							(duration === "Lifetime"
-								? "hidden"
-								: "hidden sm:invisible sm:block")
+						currentPackage &&
+							currentPackage?.identifier === basePackage?.identifier &&
+							"hidden sm:invisible sm:block",
+						duration === "Lifetime" && "hidden"
 					)}
 				>
 					{originalPrice}
@@ -76,7 +98,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				</span>
 				<span className="mt-1 text-xl">{duration}</span>
 			</div>
-			{discount && (
+			{!!discount && (
 				<div
 					className="absolute right-0 top-0 flex aspect-square items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
 					style={{

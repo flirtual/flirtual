@@ -6,9 +6,10 @@ import {
 	createContext,
 	useContext,
 	useEffect,
-	useCallback
+	useCallback,
+	useState
 } from "react";
-import { Purchases } from "@revenuecat/purchases-capacitor";
+import { Purchases, PurchasesPackage } from "@revenuecat/purchases-capacitor";
 import { useRouter } from "next/navigation";
 
 import { rcAppleKey, rcGoogleKey } from "~/const";
@@ -22,6 +23,7 @@ import { useToast } from "./use-toast";
 
 interface PurchaseContext {
 	purchase: (planId: string) => Promise<void>;
+	packages: Array<PurchasesPackage>;
 }
 
 const PurchaseContext = createContext<PurchaseContext>({} as PurchaseContext);
@@ -37,6 +39,8 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	const toasts = useToast();
 	const router = useRouter();
 
+	const [packages, setPackages] = useState<Array<PurchasesPackage>>([]);
+
 	const user = useSessionUser();
 
 	const plans = usePlans();
@@ -50,6 +54,9 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				apiKey: platform === "ios" ? rcAppleKey : rcGoogleKey,
 				appUserID: user?.revenuecatId
 			});
+
+			const offerings = await Purchases.getOfferings();
+			setPackages(offerings.current?.availablePackages ?? []);
 		})();
 	}, [platform, native, user?.revenuecatId]);
 
@@ -98,7 +105,8 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<PurchaseContext.Provider
 			value={{
-				purchase
+				purchase,
+				packages
 			}}
 		>
 			{children}
