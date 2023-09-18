@@ -15,6 +15,7 @@ import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
+import { useDevice } from "~/hooks/use-device";
 
 import { UserImage } from "../user-avatar";
 import { TimeRelative } from "../time-relative";
@@ -156,6 +157,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 }) => {
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
+	const { platform, native } = useDevice();
 	const [session] = useSession();
 
 	const [imageId, setImageId] = useState(firstImageId);
@@ -233,7 +235,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						</button>
 					</div>
 				)}
-				{currentImage && (
+				{platform !== "ios" && currentImage && (
 					<div className="pointer-events-none absolute flex h-full w-full items-center justify-center">
 						<button
 							className="pointer-events-auto h-full w-1/3"

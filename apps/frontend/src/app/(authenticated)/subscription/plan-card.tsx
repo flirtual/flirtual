@@ -35,7 +35,6 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const [session] = useSession();
 
 	const { packages } = usePurchase();
-	const { native } = useDevice();
 	const plans = usePlans();
 
 	const plan = plans?.find((p) => p.id === props.id);
