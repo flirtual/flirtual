@@ -157,7 +157,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 }) => {
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
-	const { platform, native } = useDevice();
+	const { platform } = useDevice();
 	const [session] = useSession();
 
 	const [imageId, setImageId] = useState(firstImageId);

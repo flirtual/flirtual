@@ -6,7 +6,6 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { useSession } from "~/hooks/use-session";
 import { usePurchase } from "~/hooks/use-purchase";
 import { usePlans } from "~/hooks/use-plans";
-import { useDevice } from "~/hooks/use-device";
 
 import { PlanButtonLink } from "./plan-button-link";
 
