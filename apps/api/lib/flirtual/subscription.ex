@@ -282,12 +282,12 @@ defmodule Flirtual.Subscription.Policy do
   def transform(:active, _, %Subscription{} = subscription),
     do: Subscription.active?(subscription)
 
-  def transform(:platform, _, %Subscription{stripe_id: stripe_id}) when is_binary(stripe_id),
-    do: :web
-
   def transform(:platform, _, %Subscription{apple_id: apple_id}) when is_binary(apple_id),
     do: :ios
 
   def transform(:platform, _, %Subscription{google_id: google_id}) when is_binary(google_id),
     do: :android
+
+  def transform(:platform, _, _),
+    do: :web
 end

@@ -15,7 +15,6 @@ export const PlatformMismatchMessage: FC = () => {
 	if (
 		!subscription ||
 		!subscription.active ||
-		!subscription.platform ||
 		platform === subscription.platform ||
 		(!native && subscription.platform === "web")
 	)
