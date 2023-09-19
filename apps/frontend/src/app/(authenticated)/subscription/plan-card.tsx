@@ -91,7 +91,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				>
 					{originalPrice}
 				</span>
-				<span className="font-montserrat text-3xl font-semibold">
+				<span className="break-all font-montserrat text-3xl font-semibold">
 					{displayPrice}
 				</span>
 				<span className="mt-1 text-xl">{duration}</span>
