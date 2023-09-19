@@ -294,6 +294,8 @@ defmodule FlirtualWeb.Router do
 
             get("/connections", UsersController, :list_connections)
 
+            post("/push-tokens", UsersController, :update_push_tokens)
+
             scope "/preferences" do
               post("/", UsersController, :update_preferences)
               post("/privacy", UsersController, :update_privacy_preferences)

@@ -42,6 +42,8 @@ export type User = UuidModel &
 		language?: string;
 		talkjsId: string;
 		talkjsSignature?: string;
+		apnsToken?: string;
+		fcmToken?: string;
 		stripeId?: string;
 		revenuecatId?: string;
 		moderatorMessage?: string;
@@ -281,6 +283,16 @@ export async function deleteNote(
 	options: NarrowFetchOptions = {}
 ) {
 	return fetch<User>("delete", `users/${userId}/note`, options);
+}
+
+export async function updatePushTokens(
+	userId: string,
+	options: NarrowFetchOptions<{
+		apnsToken?: string;
+		fcmToken?: string;
+	}>
+) {
+	return fetch<User>("post", `users/${userId}/push-tokens`, options);
 }
 
 export { _delete as delete };

@@ -16,9 +16,11 @@ import {
 import { LocalNotifications } from "@capacitor/local-notifications";
 
 import { tinySimpleHash, tryJsonParse } from "~/utilities";
+import { api } from "~/api";
 
 import { useDevice } from "./use-device";
 import { useToast } from "./use-toast";
+import { useSession } from "./use-session";
 export interface NotificationContext {
 	status: PermissionStatus["receive"];
 	pushRegistrationId?: string;
@@ -28,7 +30,8 @@ const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
 	const [pushRegistrationId, setPushRegistrationId] = useState<string>();
-	const { native } = useDevice();
+	const { platform, native } = useDevice();
+	const [session] = useSession();
 	const toasts = useToast();
 
 	const status = use(
@@ -51,7 +54,28 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 
 		const registrationListener = PushNotifications.addListener(
 			"registration",
-			(token) => setPushRegistrationId(token.value)
+			async (token) => {
+				setPushRegistrationId(token.value);
+
+				if (!session) return;
+				if (platform === "ios" && token.value !== session.user.apnsToken)
+					await api.user.updatePushTokens(session.user.id, {
+						body: {
+							apnsToken: token.value,
+							fcmToken: session.user.fcmToken
+						}
+					});
+				else if (
+					platform === "android" &&
+					token.value !== session.user.fcmToken
+				)
+					await api.user.updatePushTokens(session.user.id, {
+						body: {
+							apnsToken: session.user.apnsToken,
+							fcmToken: token.value
+						}
+					});
+			}
 		);
 
 		const errorListener = PushNotifications.addListener(
@@ -113,7 +137,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			void registrationListener.remove();
 			void errorListener.remove();
 		};
-	}, [status, toasts.addError]);
+	}, [platform, session, status, toasts.addError]);
 
 	const value = useMemo<NotificationContext>(
 		() => ({

@@ -494,6 +494,22 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def update_push_tokens(conn, %{"user_id" => user_id} = params) do
+    user =
+      if(conn.assigns[:session].user.id === user_id,
+        do: conn.assigns[:session].user,
+        else: Users.get(user_id)
+      )
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
+      {:error, {:forbidden, "Cannot update this user's push tokens", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- User.update_push_tokens(user, params) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
   def admin_delete(conn, %{"user_id" => user_id}) do
     user = Users.get(user_id)
 

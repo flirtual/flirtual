@@ -141,15 +141,15 @@ export default async function RootLayout({
 					>
 						<ToastProvider>
 							<TooltipProvider>
-								<NotificationProvider>
-									<SessionProvider session={session}>
+								<SessionProvider session={session}>
+									<NotificationProvider>
 										<PurchaseProvider>
 											<ThemeProvider>
 												<ShepherdProvider>{children}</ShepherdProvider>
 											</ThemeProvider>
 										</PurchaseProvider>
-									</SessionProvider>
-								</NotificationProvider>
+									</NotificationProvider>
+								</SessionProvider>
 							</TooltipProvider>
 						</ToastProvider>
 					</DeviceProvider>

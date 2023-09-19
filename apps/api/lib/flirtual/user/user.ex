@@ -547,6 +547,20 @@ defmodule Flirtual.User do
     end)
   end
 
+  def update_push_tokens(%User{} = user, attrs) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{apns_token: attrs["apns_token"], fcm_token: attrs["fcm_token"]})
+             |> Repo.update() do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def validate_username(changeset) do
     changeset
     |> validate_required([:username])
@@ -762,6 +776,8 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :moderator_message,
       :moderator_note,
       :talkjs_signature,
+      :apns_token,
+      :fcm_token,
       :talkjs_id,
       :stripe_id,
       :revenuecat_id,

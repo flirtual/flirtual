@@ -141,6 +141,8 @@ defmodule Flirtual.User.Policy do
     :email,
     :language,
     :talkjs_signature,
+    :apns_token,
+    :fcm_token,
     :revenuecat_id,
     :moderator_message,
     :active_at,
