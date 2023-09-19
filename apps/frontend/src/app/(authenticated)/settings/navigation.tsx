@@ -22,6 +22,7 @@ import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
 import { useSession } from "~/hooks/use-session";
 import { gitCommitSha } from "~/const";
+import { InlineLink } from "~/components/inline-link";
 
 import { NavigationCategory } from "./navigation-category";
 import { NavigationHeader } from "./navigation-header";
@@ -140,9 +141,12 @@ export const SettingsNavigation: FC = () => {
 						</NavigationLink>
 					</NavigationCategory>
 				</div>
-				<span className="px-6 text-black-10">
+				<InlineLink
+					className="px-6 text-black-10 no-underline"
+					href={urls.debugger.default}
+				>
 					Flirtual {gitCommitSha?.slice(0, 8)}
-				</span>
+				</InlineLink>
 			</nav>
 		</div>
 	);

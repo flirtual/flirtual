@@ -1,5 +1,6 @@
 "use client";
 
+import { Device } from "@capacitor/device";
 import { parse as parsePlatform } from "platform";
 import { twMerge } from "tailwind-merge";
 
@@ -12,7 +13,7 @@ import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
-export const DebugInfo: React.FC = () => {
+export const DebugInfo: React.FC = async () => {
 	const [session] = useSession();
 	const isDebugger =
 		session && (session.user.tags?.includes("debugger") || session.sudoerId);
@@ -20,11 +21,18 @@ export const DebugInfo: React.FC = () => {
 	const userAgent =
 		typeof window === "undefined" ? "" : window.navigator.userAgent;
 	const { os, name, version, layout } = parsePlatform(userAgent);
+	const deviceInfo = await Device.getInfo();
 
 	return (
 		<>
 			<div className="flex flex-col">
-				<span className="font-montserrat text-lg font-bold">Agent</span>
+				<span className="font-montserrat text-lg font-bold">Device</span>
+				<div className="flex justify-between gap-8 text-sm">
+					<span className="shrink-0">App platform: </span>
+					<span className="truncate font-mono text-sm">
+						{deviceInfo.platform}
+					</span>
+				</div>
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">Browser: </span>
 					<span className="truncate font-mono">{`${name} ${version} (${layout})`}</span>
