@@ -1,6 +1,5 @@
 "use client";
 
-import { Device } from "@capacitor/device";
 import { parse as parsePlatform } from "platform";
 import { twMerge } from "tailwind-merge";
 
@@ -9,11 +8,13 @@ import { displayName } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { TimeRelative } from "~/components/time-relative";
 import { environment, gitCommitSha } from "~/const";
+import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
 export const DebugInfo: React.FC = async () => {
+	const { platform, native } = useDevice();
 	const [session] = useSession();
 	const isDebugger =
 		session && (session.user.tags?.includes("debugger") || session.sudoerId);
@@ -21,7 +22,6 @@ export const DebugInfo: React.FC = async () => {
 	const userAgent =
 		typeof window === "undefined" ? "" : window.navigator.userAgent;
 	const { os, name, version, layout } = parsePlatform(userAgent);
-	const deviceInfo = await Device.getInfo();
 
 	return (
 		<>
@@ -30,7 +30,7 @@ export const DebugInfo: React.FC = async () => {
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">App platform: </span>
 					<span className="truncate font-mono text-sm">
-						{deviceInfo.platform}
+						{platform} ({native ? "native" : "web"})
 					</span>
 				</div>
 				<div className="flex justify-between gap-8 text-sm">

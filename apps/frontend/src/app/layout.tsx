@@ -85,6 +85,8 @@ export default async function RootLayout({
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
 
 	let platform = (userAgent.os.name?.toLowerCase() ?? "web") as DevicePlatform;
+	if (userAgent.os.name === "Mac OS" && userAgent.device.type === "mobile")
+		platform = "ios";
 	if (!["android", "ios"].includes(platform)) platform = "web";
 
 	const native = userAgent.ua.includes("Flirtual-Native");
