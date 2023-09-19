@@ -86,7 +86,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				return;
 			}
 
-			const aPackage = await getPackage(plan.id);
+			const aPackage = await getPackage(plan.revenuecatId);
 
 			if (!aPackage) throw new Error("Package not available");
 
