@@ -31,11 +31,6 @@ module.exports = {
 				permanent: false
 			},
 			{
-				source: "/invite",
-				destination: "https://homie.zone/invite",
-				permanent: false
-			},
-			{
 				source: "/speeddate",
 				destination:
 					"https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539",
