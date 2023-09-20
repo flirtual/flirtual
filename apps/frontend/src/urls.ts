@@ -59,7 +59,8 @@ export const urls = {
 	userAvatar: (user: User) =>
 		user.profile.images[0]?.url ??
 		urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
-	vrchat: (username: string) => `https://vrchat.com/home/search/${username}`,
+	vrchat: (username: string) =>
+		`https://vrchat.com/home/search/${encodeURIComponent(username)}`,
 
 	// pages
 	default: "/",
