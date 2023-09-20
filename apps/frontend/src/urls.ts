@@ -6,6 +6,7 @@ import { User } from "./api/user";
 import { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
 import { siteOrigin } from "./const";
+import { escapeVRChat } from "./vrchat";
 
 export function ensureRelativeUrl(pathname: string) {
 	if (!isInternalHref(pathname))
@@ -60,7 +61,9 @@ export const urls = {
 		user.profile.images[0]?.url ??
 		urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
 	vrchat: (username: string) =>
-		`https://vrchat.com/home/search/${encodeURIComponent(username)}`,
+		`https://vrchat.com/home/search/${encodeURIComponent(
+			escapeVRChat(username)
+		)}`,
 
 	// pages
 	default: "/",
