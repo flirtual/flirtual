@@ -340,6 +340,15 @@ defmodule FlirtualWeb.Router do
   end
 
   @impl Plug.ErrorHandler
+  def handle_errors(conn, %{
+        reason: %Phoenix.Router.NoRouteError{}
+      }) do
+    conn
+    |> FlirtualWeb.ErrorHelpers.put_error(:not_found)
+    |> halt()
+  end
+
+  @impl Plug.ErrorHandler
   def handle_errors(conn, params) do
     log(:critical, ["unhandled request error"], params)
 
