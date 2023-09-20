@@ -2,14 +2,11 @@ defmodule Flirtual.RevenueCat do
   use Flirtual.Logger, :revenuecat
 
   alias Flirtual.Plan
-  alias Flirtual.Repo
-  alias Flirtual.User
   alias Flirtual.Subscription
-
-  import Ecto.Changeset
+  alias Flirtual.User
 
   defp config(key) do
-    Application.get_env(:flirtual, Flirtual.RevenueCatController)[key]
+    Application.get_env(:flirtual, FlirtualWeb.RevenueCatController)[key]
   end
 
   def new_url(pathname, query) do
@@ -25,7 +22,7 @@ defmodule Flirtual.RevenueCat do
     log(:debug, [method, url], body)
 
     HTTPoison.request(method, url, raw_body, [
-      {"authorization", "Bearer " <> config(:access_token)},
+      {"authorization", "Bearer " <> config(:api_key)},
       {"content-type", "application/json"}
     ])
   end
@@ -84,20 +81,20 @@ defmodule Flirtual.RevenueCat do
     {:unhandled, :ignored}
   end
 
-  def delete(%User{
+  def delete_customer(%User{
         revenuecat_id: nil
       }) do
     :ok
   end
 
-  def delete(%User{
+  def delete_customer(%User{
         revenuecat_id: revenuecat_id
       }) do
     with {:ok, %HTTPoison.Response{status_code: 200}} <-
            fetch(:delete, "subscribers/#{revenuecat_id}") do
       :ok
     else
-      {:error, %HTTPoison.Response{status_code: 404}} -> :ok
+      {:ok, %HTTPoison.Response{status_code: 404}} -> :ok
     end
   end
 end
