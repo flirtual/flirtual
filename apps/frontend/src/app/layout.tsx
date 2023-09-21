@@ -77,6 +77,9 @@ export const metadata: Metadata = {
 			should_fallback: true
 		}
 	},
+	itunes: {
+		appId: "6450485324"
+	},
 	viewport: "width=device-width, initial-scale=1, viewport-fit=cover"
 };
 
