@@ -58,6 +58,12 @@ module.exports = {
 				permanent: true
 			},
 			{
+				source: "/ios",
+				destination:
+					"https://apps.apple.com/app/flirtual-vr-dating-app/id6450485324",
+				permanent: true
+			},
+			{
 				source: "/settings/account",
 				destination: "/settings",
 				permanent: true

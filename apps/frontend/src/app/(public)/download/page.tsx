@@ -21,19 +21,19 @@ export default function DownloadPage() {
 			<ModelCard className="w-full sm:max-w-2xl" title="Download app">
 				<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
 					<MobileButton
-						href={urls.apps.android}
+						href={urls.apps.apple}
+						Icon={AppleIcon}
+						label="App Store"
+					/>
+					<MobileButton
+						href={urls.apps.google}
 						Icon={GooglePlayIcon}
 						label="Google Play"
 					/>
 					<MobileButton
-						href={urls.apps.ios}
-						Icon={AppleIcon}
-						label="iPhone/iPad"
-					/>
-					<MobileButton
-						href={urls.apps.windows}
+						href={urls.apps.microsoft}
 						Icon={MicrosoftIcon}
-						label="Windows"
+						label="Microsoft Store"
 					/>
 					<MobileButton
 						href={urls.apps.sideQuest}

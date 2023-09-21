@@ -174,10 +174,10 @@ export const urls = {
 	},
 
 	apps: {
-		ios: "/ios",
-		android:
+		apple: "https://apps.apple.com/app/flirtual-vr-dating-app/id6450485324",
+		google:
 			"https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
-		windows: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
+		microsoft: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
 		sideQuest: "https://sidequestvr.com/app/9195"
 	}
 };
