@@ -22,7 +22,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 	const { id, kind, active = false, userId, lastMessage } = props;
 
 	const user = useUser(userId);
-	if (!user) return null;
+	if (!user || !user.relationship?.matched) return null;
 
 	return (
 		<div
