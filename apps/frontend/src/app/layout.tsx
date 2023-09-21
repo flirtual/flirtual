@@ -64,9 +64,13 @@ export const metadata: Metadata = {
 			"The first VR dating app. Join thousands for dates in VR apps like VRChat."
 	},
 	appLinks: {
+		ios: {
+			app_store_id: "6450485324",
+			url: urls.apps.apple
+		},
 		android: {
 			package: "zone.homie.flirtual.pwa",
-			url: urls.apps.android
+			url: urls.apps.google
 		},
 		web: {
 			url: siteOrigin,
