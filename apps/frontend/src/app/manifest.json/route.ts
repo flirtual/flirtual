@@ -37,7 +37,7 @@ export async function GET() {
 		background_color: "#fffaf0",
 		start_url: siteOrigin,
 		display: "standalone",
-		categories: ["social"],
+		categories: ["lifestyle", "social"],
 		shortcuts: [
 			{
 				name: "Browse",
@@ -121,28 +121,28 @@ export async function GET() {
 		iarc_rating_id: "6e4124cb-ab7a-416e-aeb3-f93a42787fa4",
 		screenshots: [
 			{
-				src: urls.media("eecdfea3-ae12-43bb-a1e0-a438ec99f009"),
+				src: urls.media("7b134496-3a5a-4cc9-acd1-f5e332269b3e"),
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
 				label: "Real People, Avatar Profiles"
 			},
 			{
-				src: urls.media("bcd06f9f-7b4a-4604-9d50-ebefac6dd8a9"),
+				src: urls.media("cff9ca62-2ec5-4467-8bb1-5ec0972f0a5e"),
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
-				label: "Share Interests"
+				label: "Share Interests and Personality"
 			},
 			{
-				src: urls.media("d1de5f9f-b206-40a5-9e07-1b88c16112c2"),
+				src: urls.media("7273fe85-1b60-402b-9d69-5e5b884df74d"),
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
 				label: "Match on Flirtual"
 			},
 			{
-				src: urls.media("b430ed56-4ade-4a12-b4fb-aa2a4c54a56c"),
+				src: urls.media("dcfbd0d6-1f35-44b9-9f4e-d9c50a368907"),
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
@@ -155,6 +155,22 @@ export async function GET() {
 			client_mode: ["navigate-existing", "auto"]
 		},
 		orientation: "any",
+		related_applications: [
+			{
+				platform: "itunes",
+				url: "https://apps.apple.com/app/flirtual-vr-dating-app/id6450485324"
+			},
+			{
+				platform: "play",
+				url: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
+				id: "zone.homie.flirtual.pwa"
+			},
+			{
+				platform: "windows",
+				url: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3"
+			}
+		],
+		prefer_related_applications: true,
 		edge_side_panel: {}
 	});
 }
