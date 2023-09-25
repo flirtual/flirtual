@@ -226,22 +226,7 @@ defmodule Flirtual.Matchmaking do
            match_kind = reduce_kind(item.kind, opposite_item[:kind]),
            {:ok, opposite_item} <-
              if(is_nil(opposite_item),
-               do:
-                 with true <- Subscription.active?(target.subscription) and item.type === :like,
-                      :ok <-
-                        PushNotification.send(
-                          target,
-                          if(match_kind == :love,
-                            do: "Someone liked you! ❤️",
-                            else: "Someone homied you! ✌️"
-                          ),
-                          "Open Flirtual to see who and match!"
-                        ) do
-                   {:ok, nil}
-                 else
-                   false -> {:ok, nil}
-                   value -> value
-                 end,
+               do: {:ok, nil},
                else:
                  with true <- item.type === :like and opposite_item.type === :like,
                       {:ok, _} <- create_match_conversation(user, target, match_kind),
