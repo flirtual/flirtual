@@ -12,7 +12,6 @@ import {
 	ProfilePersonality,
 	personalityQuestionLabels
 } from "~/api/user/profile";
-import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 
 export const Onboarding4Form: React.FC<{ personality: ProfilePersonality }> = ({
@@ -28,19 +27,11 @@ export const Onboarding4Form: React.FC<{ personality: ProfilePersonality }> = ({
 	return (
 		<Form
 			className="flex flex-col gap-8"
+			fields={personality}
 			requireChange={false}
-			fields={{
-				...personality,
-				personalityPrivacy: user.preferences?.privacy.personality ?? "everyone"
-			}}
-			onSubmit={async ({ personalityPrivacy, ...personalityAnswers }) => {
+			onSubmit={async (body) => {
 				await Promise.all([
-					api.user.preferences.updatePrivacy(user.id, {
-						body: { personality: personalityPrivacy }
-					}),
-					api.user.profile.updatePersonality(user.id, {
-						body: personalityAnswers
-					})
+					api.user.profile.updatePersonality(user.id, { body })
 				]);
 
 				router.push(
@@ -69,16 +60,6 @@ export const Onboarding4Form: React.FC<{ personality: ProfilePersonality }> = ({
 							)}
 						</FormField>
 					))}
-					<FormField name="personalityPrivacy">
-						{(field) => (
-							<>
-								<InputLabel inline hint="Who can see your personality traits?">
-									Personality privacy
-								</InputLabel>
-								<InputPrivacySelect {...field.props} />
-							</>
-						)}
-					</FormField>
 					<FormButton>Next page</FormButton>
 				</>
 			)}

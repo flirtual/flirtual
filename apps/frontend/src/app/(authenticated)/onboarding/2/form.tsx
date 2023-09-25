@@ -14,7 +14,6 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { InputPrivacySelect } from "~/components/inputs/specialized/privacy-select";
 import { urls } from "~/urls";
 import { filterBy, fromEntries } from "~/utilities";
 import {
@@ -59,8 +58,6 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					: new Date(),
 				country: user.profile.country ?? null,
 				new: profile.new ?? false,
-				sexualityPrivacy: user.preferences?.privacy.sexuality ?? "everyone",
-				countryPrivacy: user.preferences?.privacy.country ?? "everyone",
 				languages: user.profile.languages ?? [],
 				...(fromEntries(
 					AttributeKeys.map((type) => {
@@ -83,7 +80,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					(id) => !interests.some((interest) => interest.id === id)
 				);
 
-				const [newUser, newProfile, privacyPreferences] = await Promise.all([
+				const [newUser, newProfile] = await Promise.all([
 					api.user.update(user.id, {
 						query: {
 							required: ["bornAt"]
@@ -114,12 +111,6 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 							genderId: gender.filter((id) => id !== "other"),
 							interestId: interest.filter((id) => !customInterests.includes(id))
 						}
-					}),
-					api.user.preferences.updatePrivacy(user.id, {
-						body: {
-							sexuality: values.sexualityPrivacy,
-							country: values.countryPrivacy
-						}
 					})
 				]);
 
@@ -128,8 +119,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					user: {
 						...newUser,
 						preferences: {
-							...newUser.preferences!,
-							privacy: privacyPreferences
+							...newUser.preferences!
 						},
 						profile: {
 							...newProfile
@@ -239,31 +229,11 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 							</>
 						)}
 					</FormField>
-					<FormField name="sexualityPrivacy">
-						{(field) => (
-							<>
-								<InputLabel inline hint="Who can see your sexuality?">
-									Sexuality privacy
-								</InputLabel>
-								<InputPrivacySelect {...field.props} />
-							</>
-						)}
-					</FormField>
 					<FormField name="country">
 						{(field) => (
 							<>
 								<InputLabel hint="(optional)">Location</InputLabel>
 								<InputCountrySelect {...field.props} />
-							</>
-						)}
-					</FormField>
-					<FormField name="countryPrivacy">
-						{(field) => (
-							<>
-								<InputLabel inline hint="Who can see your country?">
-									Country privacy
-								</InputLabel>
-								<InputPrivacySelect {...field.props} />
 							</>
 						)}
 					</FormField>
