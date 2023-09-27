@@ -118,12 +118,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					...session,
 					user: {
 						...newUser,
-						preferences: {
-							...newUser.preferences!
-						},
-						profile: {
-							...newProfile
-						}
+						profile: newProfile
 					}
 				});
 
