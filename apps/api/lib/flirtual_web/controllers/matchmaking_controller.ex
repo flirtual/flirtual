@@ -11,10 +11,10 @@ defmodule FlirtualWeb.MatchmakingController do
 
   action_fallback(FlirtualWeb.FallbackController)
 
-  def list_prospects(conn, %{"kind" => kind}) do
-    with {:ok, prospect_ids} <-
-           Matchmaking.list_prospects(conn.assigns[:session].user, to_atom(kind, :love)) do
-      conn |> json_with_etag(prospect_ids)
+  def queue_information(conn, %{"kind" => kind}) do
+    with {:ok, queue_information} <-
+           Matchmaking.queue_information(conn.assigns[:session].user, to_atom(kind, :love)) do
+      conn |> json_with_etag(queue_information)
     end
   end
 

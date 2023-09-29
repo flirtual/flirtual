@@ -68,50 +68,61 @@ defmodule Flirtual.User.Profile do
   end
 
   schema "profiles" do
-    belongs_to :user, User, primary_key: true
+    belongs_to(:user, User, primary_key: true)
 
-    field :display_name, :string
-    field :biography, :string
-    field :domsub, Ecto.Enum, values: @domsub_values
-    field :monopoly, Ecto.Enum, values: @monopoly_values
-    field :country, Ecto.Enum, values: Countries.list(:iso_3166_1)
-    field :openness, :integer, default: 1
-    field :conscientiousness, :integer, default: 0
-    field :agreeableness, :integer, default: 1
+    field(:display_name, :string)
+    field(:biography, :string)
+    field(:domsub, Ecto.Enum, values: @domsub_values)
+    field(:monopoly, Ecto.Enum, values: @monopoly_values)
+    field(:country, Ecto.Enum, values: Countries.list(:iso_3166_1))
+    field(:openness, :integer, default: 1)
+    field(:conscientiousness, :integer, default: 0)
+    field(:agreeableness, :integer, default: 1)
     Enum.map(@personality_questions, &field(&1, :boolean))
-    field :serious, :boolean
-    field :new, :boolean
-    field :languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47)
-    field :custom_interests, {:array, :string}
-    field :reset_love_at, :utc_datetime
-    field :reset_love_count, :integer
-    field :reset_friend_at, :utc_datetime
-    field :reset_friend_count, :integer
-    field :vrchat, :string
-    field :discord, :string
+    field(:serious, :boolean)
+    field(:new, :boolean)
+    field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
+    field(:custom_interests, {:array, :string})
 
-    has_one :preferences, Preferences, references: :user_id, foreign_key: :profile_id
-    has_one :custom_weights, CustomWeights, references: :user_id, foreign_key: :profile_id
+    field(:vrchat, :string)
+    field(:discord, :string)
 
-    many_to_many :attributes, Attribute,
+    field(:queue_love_reset_at, :utc_datetime)
+    field(:queue_love_likes, :integer)
+    field(:queue_love_passes, :integer)
+    field(:queue_friend_reset_at, :utc_datetime)
+    field(:queue_friend_likes, :integer)
+    field(:queue_friend_passes, :integer)
+
+    field(:color_1, :string)
+    field(:color_2, :string)
+
+    has_one(:preferences, Preferences, references: :user_id, foreign_key: :profile_id)
+    has_one(:custom_weights, CustomWeights, references: :user_id, foreign_key: :profile_id)
+
+    many_to_many(:attributes, Attribute,
       join_through: Flirtual.User.Profile.Attributes,
       join_keys: [profile_id: :user_id, attribute_id: :id],
       on_replace: :delete,
       preload_order: [asc: :type, asc: :order, asc: :name]
+    )
 
-    has_many :images, Image, references: :user_id, foreign_key: :profile_id
+    has_many(:images, Image, references: :user_id, foreign_key: :profile_id)
 
-    many_to_many :blocked, Profile,
+    many_to_many(:blocked, Profile,
       join_through: Profile.Block,
       join_keys: [profile_id: :user_id, target_id: :user_id]
+    )
 
-    many_to_many :liked_and_passed, Profile,
+    many_to_many(:liked_and_passed, Profile,
       join_through: Profile.LikesAndPasses,
       join_keys: [profile_id: :user_id, target_id: :user_id]
+    )
 
-    many_to_many :prospects, Profile,
+    many_to_many(:prospects, Profile,
       join_through: Profile.Prospects,
       join_keys: [profile_id: :user_id, target_id: :user_id]
+    )
 
     timestamps(inserted_at: false)
   end
@@ -185,11 +196,13 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :custom_interests,
       :preferences,
       :custom_weights,
-      :reset_love_at,
-      :reset_friend_at,
+      :queue_love_reset_at,
+      :queue_friend_reset_at,
       :vrchat,
       :discord,
       :images,
+      :color_1,
+      :color_2,
       :updated_at
     ]
 end

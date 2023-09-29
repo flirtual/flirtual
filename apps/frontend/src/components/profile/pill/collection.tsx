@@ -1,3 +1,5 @@
+"use client"
+
 import { User } from "~/api/user";
 import { urls } from "~/urls";
 import { capitalize, groupBy } from "~/utilities";
@@ -7,6 +9,9 @@ import { withAttribute } from "~/api/attributes-server";
 import { PillAttributeList } from "./attribute-list";
 import { PillCollectionExpansion } from "./expansion";
 import { Pill } from "./pill";
+import { useSession } from "~/hooks/use-session";
+import { FC } from "react";
+import { useAttributeList } from "~/hooks/use-attribute-list";
 
 function getPersonalityLabels({
 	profile: { openness, conscientiousness, agreeableness }
@@ -28,24 +33,38 @@ function isDomsubMatch(value1: string | undefined, value2: string | undefined) {
 	);
 }
 
-export async function PillCollection(props: { user: User }) {
-	const session = await withSession();
+export const PillCollection: FC<{ user: User }> = (props) => {
 	const { user } = props;
+
+	const [session] = useSession();
+
+	const allAttributes = [
+		...useAttributeList("sexuality"), 
+		...useAttributeList("game"),
+		...useAttributeList("interest"),
+		...useAttributeList("platform"),
+		...useAttributeList("kink"),
+		...useAttributeList("language"),
+	]
+
+	const profileAttributeIds = [...new Set(
+		user.profile.attributes.map(({ id }) => id)
+	)];
+
+	if (!session) return null;
 
 	const sessionAttributeIds = new Set(
 		session.user.profile.attributes.map(({ id }) => id)
 	);
+
 	const editable = session.user.id === user.id;
 
 	const sessionPersonalityLabels = getPersonalityLabels(session.user);
 	const personalityLabels = getPersonalityLabels(user);
 
 	const attributes = groupBy(
-		await Promise.all([
-			...user.profile.attributes.map(({ type, id }) => withAttribute(type, id)),
-			...user.profile.languages.map((id) => withAttribute("language", id))
-		]),
-		({ type }) => type
+		allAttributes.filter(({ id }) => profileAttributeIds.includes(id) || user.profile.languages.includes(id)),
+		({type}) => type
 	);
 
 	return (

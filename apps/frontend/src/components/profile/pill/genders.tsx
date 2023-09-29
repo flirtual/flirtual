@@ -7,6 +7,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
 
 import { Pill } from "./pill";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { FC } from "react";
 
 export interface GenderPillsProps {
 	simple?: boolean;
@@ -15,13 +17,14 @@ export interface GenderPillsProps {
 	small?: boolean;
 }
 
-export async function GenderPills({
+export const GenderPills: FC<GenderPillsProps> = ({
 	simple = false,
 	attributes,
 	className,
 	small
-}: GenderPillsProps) {
-	const genders = await withAttributeList("gender");
+}) => {
+	const genders = useAttributeList("gender");
+	console.log(genders);
 
 	const profileGenders = attributes
 		.map(({ id }) => findBy(genders, "id", id))
@@ -47,9 +50,11 @@ export async function GenderPills({
 		"order"
 	);
 
-	if (visibleGenders.length === 0)
-		visibleGenders.push(genders.find(({ metadata }) => metadata.fallback)!);
-
+	if (visibleGenders.length === 0) {
+		const fallback = genders.find(({ metadata }) => metadata.fallback);
+		if (fallback) visibleGenders.push(fallback);
+	}
+		
 	return (
 		<>
 			{visibleGenders.map((gender, genderIndex) => (

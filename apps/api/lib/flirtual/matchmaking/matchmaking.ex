@@ -16,13 +16,6 @@ defmodule Flirtual.Matchmaking do
   alias Flirtual.User.Profile
   alias Flirtual.{Repo, User, Attribute, Mailer}
 
-  def get_reset_fields(kind) do
-    case kind do
-      :love -> %{at: :reset_love_at, count: :reset_love_count}
-      :friend -> %{at: :reset_friend_at, count: :reset_friend_count}
-    end
-  end
-
   def next_reset_at() do
     now = DateTime.utc_now()
     today_9am = DateTime.new!(Date.utc_today(), Time.new!(9, 0, 0, 0))
@@ -34,35 +27,118 @@ defmodule Flirtual.Matchmaking do
     |> DateTime.truncate(:second)
   end
 
-  def should_compute_prospects?(user, kind) do
-    reset_fields = get_reset_fields(kind)
+  # def should_compute_prospects?(user, kind) do
+  #   reset_fields = get_reset_fields(kind)
 
-    reset_at = user.profile[reset_fields.at]
-    reset_count = user.profile[reset_fields.count]
+  #   reset_at = user.profile[reset_fields.at]
+  #   reset_count = user.profile[reset_fields.count]
 
-    reset_at === nil or
-      (Subscription.active?(user.subscription) and reset_count >= 15) or
-      DateTime.compare(reset_at, DateTime.utc_now()) == :lt
+  #   reset_at === nil or
+  #     (Subscription.active?(user.subscription) and reset_count >= 15) or
+  #     DateTime.compare(reset_at, DateTime.utc_now()) == :lt
+  # end
+
+  @queue_limit 15
+
+  def get_queue_fields(profile, kind, direct \\ false) do
+    %{reset_at: reset_at, likes: likes, passes: passes} =
+      case kind do
+        :love ->
+          %{
+            reset_at: profile.queue_love_reset_at,
+            likes: profile.queue_love_likes,
+            passes: profile.queue_love_passes
+          }
+
+        :friend ->
+          %{
+            reset_at: profile.queue_friend_reset_at,
+            likes: profile.queue_friend_likes,
+            passes: profile.queue_friend_passes
+          }
+      end
+
+    likes_limit = if direct, do: @queue_limit * 2, else: @queue_limit
+    passes_limit = if direct, do: @queue_limit * 3, else: @queue_limit * 2 - likes
+
+    %{
+      reset_at: reset_at,
+      likes: likes,
+      likes_left: likes_limit - likes,
+      likes_limit: likes_limit,
+      passes: passes,
+      passes_left: passes_limit - passes,
+      passes_limit: passes_limit
+    }
   end
 
-  def list_prospects(%User{} = user, kind) do
-    if(should_compute_prospects?(user, kind)) do
-      log(:debug, ["compute", kind], user.id)
+  def queue_fields(kind) do
+    case kind do
+      :love ->
+        %{
+          reset_at: :queue_love_reset_at,
+          likes: :queue_love_likes,
+          passes: :queue_love_passes
+        }
+
+      :friend ->
+        %{
+          reset_at: :friend_reset_at,
+          likes: :friend_likes,
+          passes: :friend_passes
+        }
+    end
+  end
+
+  def reset_queue_fields(kind) do
+    %{}
+    |> Map.put(queue_fields(kind)[:reset_at], next_reset_at())
+    |> Map.put(queue_fields(kind)[:likes], 0)
+    |> Map.put(queue_fields(kind)[:passes], 0)
+  end
+
+  def queue_information(%User{} = user, kind) do
+    {:ok, existing} = list_existing_prospects(user, kind)
+    fields = get_queue_fields(user.profile, kind)
+    reset_at = fields.reset_at
+
+    if(
+      reset_at === nil or
+        DateTime.compare(reset_at, DateTime.utc_now()) == :lt or
+        existing == []
+    ) do
+      log(:info, ["compute", kind], user.id)
       compute_prospects(user, kind)
     else
-      log(:debug, ["skip-compute", kind], user.id)
-      list_existing_prospects(user, kind)
+      log(:info, ["skip-compute", kind], user.id)
+
+      {:ok,
+       %{
+         data: existing,
+         likes: fields.likes,
+         likes_left: fields.likes_left,
+         passes: fields.passes,
+         passes_left: fields.passes_left
+       }}
     end
   end
 
   defp list_existing_prospects(user, kind) do
-    {:ok,
-     Prospect.list(profile_id: user.id, kind: kind)
-     |> Enum.map(& &1.target_id)}
+    prospects =
+      Prospect
+      |> where(profile_id: ^user.id, kind: ^kind, completed: false)
+      |> order_by(desc: :score, desc: :target_id)
+      |> select([prospect], prospect.target_id)
+      |> limit(3)
+      |> Repo.all()
+
+    log(:info, ["existing", user.id, kind], prospects)
+
+    {:ok, prospects}
   end
 
   defp compute_prospects(user, kind) do
-    reset_fields = get_reset_fields(kind)
+    %{reset_at: reset_at} = get_queue_fields(user.profile, kind)
     query = generate_query(user, kind)
 
     Repo.transaction(fn ->
@@ -92,11 +168,10 @@ defmodule Flirtual.Matchmaking do
            {:ok, _} <-
              change(
                user.profile,
-               Map.put(%{}, reset_fields.at, next_reset_at())
-               |> Map.put(reset_fields.count, 0)
+               reset_queue_fields(kind)
              )
              |> Repo.update() do
-        prospects |> Enum.map(&elem(&1, 0))
+        prospects |> Enum.map(&elem(&1, 0)) |> Enum.take(3)
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
@@ -185,9 +260,10 @@ defmodule Flirtual.Matchmaking do
     type = Keyword.fetch!(opts, :type)
     kind = Keyword.get(opts, :kind, :love)
     mode = Keyword.get(opts, :mode, :love)
+    direct = Keyword.get(opts, :direct, false)
 
-    reset_count_field = get_reset_fields(mode).count
-    reset_count = user.profile[reset_count_field]
+    queue_keys = queue_fields(kind)
+    types = if type == :like, do: :likes, else: :passes
 
     Repo.transaction(fn repo ->
       with {_, _} <-
@@ -219,7 +295,10 @@ defmodule Flirtual.Matchmaking do
              |> Repo.insert(),
            {:ok, _} <-
              user.profile
-             |> change(Map.put(%{}, reset_count_field, reset_count + 1))
+             |> change(
+               {}
+               |> Map.put(queue_keys[types], user.profile[queue_keys[types]] + 1)
+             )
              |> Repo.update(),
            opposite_item <-
              LikesAndPasses.get(user_id: item.target_id, target_id: item.profile_id, type: type),

@@ -46,6 +46,8 @@ export type Profile = Partial<UpdatedAtModel> & {
 	images: Array<ProfileImage>;
 	resetLoveAt?: string;
 	resetFriendAt?: string;
+	color1?: string;
+	color2?: string;
 };
 
 export const ProfileAttributes = [

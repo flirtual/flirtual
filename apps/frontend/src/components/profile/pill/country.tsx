@@ -4,19 +4,23 @@ import { twMerge } from "tailwind-merge";
 import { withAttribute } from "~/api/attributes-server";
 
 import { Pill } from "./pill";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+import { FC } from "react";
 
 export interface CountryPillProps {
-	code: string;
+	id: string;
 	flagOnly?: boolean;
 	className?: string;
 }
 
-export async function CountryPill({
-	code,
+export const CountryPill: FC<CountryPillProps> = ({
+	id,
 	flagOnly = false,
 	className
-}: CountryPillProps) {
-	const country = await withAttribute("country", code);
+}) => {
+	const countries = useAttributeList("country");
+	const country = countries.find((country) => country.id === id);
+
 	if (!country) return null;
 
 	return (

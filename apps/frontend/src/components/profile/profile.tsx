@@ -1,3 +1,9 @@
+"use client";
+
+import { ComponentProps, FC, forwardRef, useEffect } from "react";
+import { twMerge } from "tailwind-merge";
+import { animate, useAnimate, usePresence } from "framer-motion";
+
 import { yearsAgo } from "~/date";
 import { thruServerCookies, withSession } from "~/server-utilities";
 import { filterBy } from "~/utilities";
@@ -5,6 +11,7 @@ import { Html } from "~/components/html";
 import { displayName, User } from "~/api/user";
 import { urls } from "~/urls";
 import { api } from "~/api";
+import { useSession } from "~/hooks/use-session";
 
 import { InlineLink } from "../inline-link";
 import { VRChatIcon } from "../icons/brand/vrchat";
@@ -22,35 +29,40 @@ import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { RelationActions } from "./relation-actions";
 
-export interface ProfileProps {
+export type ProfileProps = ComponentProps<"div"> & {
 	user: User;
 	direct?: boolean;
-}
+};
 
-export async function Profile(props: ProfileProps) {
-	const { user, direct = false } = props;
+export const Profile = forwardRef<HTMLDivElement, ProfileProps>(
+	(props, reference) => {
+		const { user, direct = false, className, ...elementProps } = props;
 
-	const session = await withSession();
-	const myProfile = session.user.id === user.id;
+		const [session] = useSession();
+		const [isPresent, safeToRemove] = usePresence();
+		const [scope, animate] = useAnimate();
 
-	if (user.relationship?.blocked) return <BlockedProfile user={user} />;
+		if (!session) return null;
 
-	return (
-		<SWRConfig
-			value={{
-				fallback: session.user.tags?.includes("moderator")
-					? {
-							[`@"user","${user.id}","visible",`]: await api.user.visible(
-								user.id,
-								thruServerCookies()
-							)
-					  }
-					: {}
-			}}
-		>
+		if (user.relationship?.blocked) return <BlockedProfile user={user} />;
+		const myProfile = session.user.id === user.id;
+
+		/* useEffect(() => {
+		animate(scope.current, isPresent ? {opacity: 1} : { opacity:0 }, {
+			onComplete: () => safeToRemove?.()
+		});
+	}, [isPresent]) */
+
+		return (
 			<div
+				style={{ "--theme-1": "red", "--theme-2": "blue" } as CSSProperties}
+				{...elementProps}
 				data-sentry-mask
-				className="flex w-full bg-brand-gradient sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1"
+				ref={scope}
+				className={twMerge(
+					"flex w-full bg-brand-gradient sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1",
+					className
+				)}
 			>
 				<div className="flex w-full flex-col overflow-hidden bg-cream text-black-70 dark:bg-black-80 dark:text-white-20 sm:rounded-3xl sm:bg-white-20 sm:dark:bg-black-70">
 					<ProfileImageDisplay images={user.profile.images}>
@@ -82,7 +94,7 @@ export async function Profile(props: ProfileProps) {
 								{user.profile.country && (
 									<CountryPill
 										className="!bg-opacity-70"
-										code={user.profile.country}
+										id={user.profile.country}
 									/>
 								)}
 							</div>
@@ -130,7 +142,12 @@ export async function Profile(props: ProfileProps) {
 							)
 						) : null}
 						{user.profile.biography ? (
-							<Html className="text-xl">{user.profile.biography}</Html>
+							<Html className="text-xl">
+								{user.profile.biography.replaceAll(
+									/(<p><br \/><\/p>){2,}?/g,
+									""
+								)}
+							</Html>
 						) : myProfile ? (
 							<span className="text-xl italic dark:text-white-20">
 								Don&apos;t forget to{" "}
@@ -144,6 +161,6 @@ export async function Profile(props: ProfileProps) {
 					</div>
 				</div>
 			</div>
-		</SWRConfig>
-	);
-}
+		);
+	}
+);

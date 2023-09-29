@@ -220,10 +220,14 @@ defmodule FlirtualWeb.Router do
           end
         end
 
+        scope "/queue" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+          get("/", MatchmakingController, :queue_information)
+        end
+
         scope "/prospects" do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
-          get("/", MatchmakingController, :list_prospects)
           delete("/", MatchmakingController, :reset_prospects)
 
           get("/inspect", MatchmakingController, :inspect_query)

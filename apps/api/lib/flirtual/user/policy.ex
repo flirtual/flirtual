@@ -192,8 +192,7 @@ defmodule Flirtual.User.Policy do
     :banned_at,
     :deactivated_at,
     :email_confirmed_at,
-    :created_at,
-    :active_at
+    :created_at
   ]
 
   def transform(
@@ -211,12 +210,19 @@ defmodule Flirtual.User.Policy do
 
   def transform(
         :active_at,
-        _,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
         %User{} = user
       ) do
-    user.active_at
-    |> DateTime.to_date()
-    |> DateTime.new!(Time.new!(0, 0, 0))
+    if :moderator in session.user.tags,
+      do: user.active_at,
+      else:
+        user.active_at
+        |> DateTime.to_date()
+        |> DateTime.new!(Time.new!(0, 0, 0))
   end
 
   # Truncate born at to year, to hide user's exact birthday.

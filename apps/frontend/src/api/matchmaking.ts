@@ -16,10 +16,16 @@ export type LikeAndPassItem = UuidModel &
 		opposite?: LikeAndPassItem;
 	};
 
-export async function listProspects(
+export async function queue(
 	options: NarrowFetchOptions<undefined, { kind: ProspectKind }>
-): Promise<Array<string>> {
-	return fetch<Array<string>>("get", "prospects", options);
+) {
+	return fetch<{
+		data: Array<string>;
+		passes: number;
+		likes: number;
+		likesLeft: number;
+		passesLeft: number;
+	}>("get", "queue", options);
 }
 
 export interface RespondProspectBody {

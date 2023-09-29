@@ -3,9 +3,8 @@ import { Metadata } from "next";
 import { displayName } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 
-import { ProspectActionBar } from "../browse/prospect-actions";
-
 import { getProfileUser } from "./profile-user";
+import { ProspectActions } from "../browse/prospect-actions";
 
 export interface ProfilePageProps {
 	params: { username: string };
@@ -31,7 +30,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 				user.relationship &&
 				!user.relationship?.blocked &&
 				!user.relationship?.kind && (
-					<ProspectActionBar mode="love" userId={user.id} />
+					<ProspectActions kind="love" prospect={user} />
 				)}
 		</>
 	);

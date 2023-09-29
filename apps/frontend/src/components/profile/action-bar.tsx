@@ -2,7 +2,7 @@
 
 import { FlagIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import { FC, Suspense } from "react";
+import { FC, Suspense, useState } from "react";
 
 import { User, displayName } from "~/api/user";
 import { api } from "~/api";
@@ -32,6 +32,8 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
 
+	const [showExtraInformation, setShowExtraInformation] = useState(false);
+
 	if (
 		!session ||
 		(session.user.id === user.id &&
@@ -44,7 +46,15 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 		<div className="flex flex-col gap-8 px-8 py-4 sm:pb-8">
 			{session.user.tags?.includes("moderator") && (
 				<Suspense>
-					<ProfileModeratorInfo user={user} />
+					{showExtraInformation ? <ProfileModeratorInfo user={user} /> : (
+						<button
+							className="text-primary-500 hover:underline"
+							type="button"
+							onClick={() => setShowExtraInformation(true)}
+						>
+							Show extra information
+						</button>
+					)}
 				</Suspense>
 			)}
 			<div className="flex w-full gap-4">

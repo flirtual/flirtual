@@ -12,12 +12,12 @@ defmodule Flirtual.User.Profile.Prospect do
   @derive {Jason.Encoder, only: [:kind, :target, :created_at]}
 
   schema "prospects" do
-    belongs_to :profile, Flirtual.User.Profile, references: :user_id
-    belongs_to :target, Flirtual.User.Profile, references: :user_id
+    belongs_to(:profile, Flirtual.User.Profile, references: :user_id)
+    belongs_to(:target, Flirtual.User.Profile, references: :user_id)
 
-    field :kind, Ecto.Enum, values: [:love, :friend]
-    field :score, :float, default: 0.0
-    field :completed, :boolean, default: false
+    field(:kind, Ecto.Enum, values: [:love, :friend])
+    field(:score, :float, default: 0.0)
+    field(:completed, :boolean, default: false)
 
     timestamps(updated_at: false)
   end
@@ -33,6 +33,14 @@ defmodule Flirtual.User.Profile.Prospect do
     Prospect
     |> where(profile_id: ^profile_id, kind: ^kind, completed: false)
     |> order_by(desc: :score, desc: :target_id)
+    |> Repo.all()
+  end
+
+  def list(profile_id: profile_id, kind: kind, limit: limit) do
+    Prospect
+    |> where(profile_id: ^profile_id, kind: ^kind, completed: false)
+    |> order_by(desc: :score, desc: :target_id)
+    |> limit(^limit)
     |> Repo.all()
   end
 

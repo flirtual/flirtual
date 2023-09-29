@@ -40,7 +40,7 @@ defmodule Flirtual.Subscription do
 
   def reset_matchmaking_timer(profile) do
     profile
-    |> change(%{reset_love_at: nil, reset_friend_at: nil})
+    |> change(%{queue_love_reset_at: nil, queue_friend_reset_at: nil})
     |> Repo.update()
   end
 

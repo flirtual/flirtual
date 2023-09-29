@@ -203,7 +203,7 @@ defmodule Flirtual.User.ChangeQueue do
     {_, nil} =
       Profile
       |> where([profile], profile.user_id in ^Enum.map(premium_items, & &1.user_id))
-      |> Repo.update_all(set: [reset_love_at: nil])
+      |> Repo.update_all(set: [queue_love_reset_at: nil])
 
     :ok
   end
