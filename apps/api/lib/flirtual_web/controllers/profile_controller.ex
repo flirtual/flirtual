@@ -8,7 +8,7 @@ defmodule FlirtualWeb.ProfileController do
   alias Flirtual.{Policy, Users, Profiles}
   alias Flirtual.User.{Profile}
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   def update(conn, %{"user_id" => user_id} = params) do
     user = Users.get(user_id)
@@ -81,6 +81,22 @@ defmodule FlirtualWeb.ProfileController do
 
       with {:ok, preferences} <- Profiles.update_custom_weights(custom_weights, params) do
         conn |> json(preferences)
+      end
+    end
+  end
+
+  def update_colors(conn, %{"user_id" => user_id} = params) do
+    user =
+      if(conn.assigns[:session].user.id === user_id,
+        do: conn.assigns[:session].user,
+        else: Users.get(user_id)
+      )
+
+    if is_nil(user) or Policy.cannot?(conn, :update_colors, user.profile) do
+      {:error, {:forbidden, "Cannot update this user's profile colors", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- Profiles.update_colors(user.profile, params) do
+        conn |> json(Policy.transform(conn, user))
       end
     end
   end

@@ -14,7 +14,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	return (
 		<div className="flex gap-4">
 			<ButtonLink
-				className="w-1/2"
+				className="w-1/2 text-theme-overlay"
 				href={urls.settings.bio}
 				Icon={PencilIcon}
 				size="sm"
@@ -22,7 +22,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				Edit
 			</ButtonLink>
 			<Button
-				className="w-1/2"
+				className="w-1/2 text-theme-overlay"
 				Icon={ShareIcon}
 				size="sm"
 				onClick={async () => {

@@ -314,6 +314,8 @@ defmodule FlirtualWeb.Router do
                 post("/", ProfileController, :update_personality)
               end
 
+              post("/colors", ProfileController, :update_colors)
+
               scope "/images" do
                 post("/", ProfileController, :update_images)
                 put("/", ProfileController, :create_images)

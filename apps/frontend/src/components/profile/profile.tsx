@@ -1,6 +1,12 @@
 "use client";
 
-import { ComponentProps, FC, forwardRef, useEffect } from "react";
+import {
+	CSSProperties,
+	ComponentProps,
+	FC,
+	forwardRef,
+	useEffect
+} from "react";
 import { twMerge } from "tailwind-merge";
 import { animate, useAnimate, usePresence } from "framer-motion";
 
@@ -12,6 +18,7 @@ import { displayName, User } from "~/api/user";
 import { urls } from "~/urls";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
+import { gradientTextColor } from "~/colors";
 
 import { InlineLink } from "../inline-link";
 import { VRChatIcon } from "../icons/brand/vrchat";
@@ -55,7 +62,18 @@ export const Profile = forwardRef<HTMLDivElement, ProfileProps>(
 
 		return (
 			<div
-				style={{ "--theme-1": "red", "--theme-2": "blue" } as CSSProperties}
+				style={
+					user.profile.color_1 && user.profile.color_2
+						? ({
+								"--theme-1": user.profile.color_1,
+								"--theme-2": user.profile.color_2,
+								"--theme-text": gradientTextColor(
+									user.profile.color_1,
+									user.profile.color_2
+								)
+						  } as CSSProperties)
+						: {}
+				}
 				{...elementProps}
 				data-sentry-mask
 				ref={scope}
@@ -115,7 +133,8 @@ export const Profile = forwardRef<HTMLDivElement, ProfileProps>(
 										</div>
 										VRChat:{" "}
 										<InlineLink
-											className="w-full"
+											className="w-full underline"
+											highlight={false}
 											href={urls.vrchat(user.profile.vrchat)}
 										>
 											{user.profile.vrchat}

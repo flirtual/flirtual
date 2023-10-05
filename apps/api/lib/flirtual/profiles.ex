@@ -77,17 +77,17 @@ defmodule Flirtual.Profiles do
               ] ++ @attribute_keys ++ @attribute_types
 
     embedded_schema do
-      field :display_name, :string
-      field :biography, :string
-      field :vrchat, :string, default: ""
-      field :discord, :string, default: ""
-      field :domsub, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :domsub)]
-      field :monopoly, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :monopoly)]
-      field :country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)]
-      field :serious, :boolean
-      field :new, :boolean
-      field :languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47)
-      field :custom_interests, {:array, :string}
+      field(:display_name, :string)
+      field(:biography, :string)
+      field(:vrchat, :string, default: "")
+      field(:discord, :string, default: "")
+      field(:domsub, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :domsub)])
+      field(:monopoly, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :monopoly)])
+      field(:country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)])
+      field(:serious, :boolean)
+      field(:new, :boolean)
+      field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
+      field(:custom_interests, {:array, :string})
 
       @attribute_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)
       @attribute_types |> Enum.map(fn key -> field(key, {:array, :string}, virtual: true) end)
@@ -236,6 +236,36 @@ defmodule Flirtual.Profiles do
     custom_weights
     |> Profile.CustomWeights.changeset(attrs)
     |> Repo.insert_or_update()
+  end
+
+  defmodule UpdateColors do
+    use Flirtual.EmbeddedSchema
+
+    embedded_schema do
+      field(:color_1, :string)
+      field(:color_2, :string)
+    end
+
+    def changeset(value, _, _) do
+      value
+      |> validate_required([:color_1, :color_2])
+      |> validate_format(:color_1, ~r/^#[0-9a-f]{6}$/i)
+      |> validate_format(:color_2, ~r/^#[0-9a-f]{6}$/i)
+    end
+  end
+
+  def update_colors(%Profile{} = profile, attrs) do
+    Repo.transaction(fn ->
+      with {:ok, attrs} <- UpdateColors.apply(attrs),
+           profile
+           |> change(%{color_1: attrs.color_1, color_2: attrs.color_2})
+           |> Repo.update() do
+        profile
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   def create_images(%Profile{} = profile, file_ids) do

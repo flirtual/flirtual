@@ -39,7 +39,7 @@ export const Pill: React.FC<PillProps> = (props) => {
 				className={twMerge(
 					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 sm:text-base",
 					hocusable && (active || (hocused && href))
-						? "bg-brand-gradient text-white-10"
+						? "bg-brand-gradient text-theme-overlay"
 						: "bg-white-30 text-black-70 dark:bg-black-70 dark:text-white-20 sm:dark:bg-black-60",
 					small ? "px-3 py-1 text-sm" : " px-4 py-1",
 					props.className

@@ -5,6 +5,7 @@ defmodule Flirtual.User.Profile.Policy do
 
   alias Flirtual.User
   alias Flirtual.User.Profile
+  alias Flirtual.Subscription
 
   # Any user can read any other user's profile.
   def authorize(:read, _, _), do: true
@@ -27,6 +28,26 @@ defmodule Flirtual.User.Profile.Policy do
         }
       )
       when action in @own_actions,
+      do: true
+
+  def authorize(
+        :update_colors,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{
+                id: user_id,
+                subscription: %Subscription{
+                  cancelled_at: nil
+                }
+              }
+            }
+          }
+        },
+        %Profile{
+          user_id: user_id
+        }
+      ),
       do: true
 
   # Any other action, or credentials are disallowed.

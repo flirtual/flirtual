@@ -56,7 +56,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 	if (direct && relationship.type && relationship.kind)
 		return (
 			<div className="flex w-full items-center justify-between gap-4 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
-				<span className="text-xl text-white-20 [overflow-wrap:anywhere]">
+				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
 					{`You ${
 						relationship.type === "like"
 							? relationship.kind === "love"

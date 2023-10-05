@@ -76,6 +76,12 @@ export default async function SubscriptionPage() {
 									Control your matchmaking priorities
 								</InlineLink>
 							</li>
+							<li>
+								💅{" "}
+								<InlineLink href={urls.settings.appearance}>
+									Customize your profile colors
+								</InlineLink>
+							</li>
 						</ul>
 					) : (
 						<ul className="flex select-none flex-col gap-4">
@@ -101,6 +107,19 @@ export default async function SubscriptionPage() {
 									Sometimes one size doesn&apos;t fit all. Customize your
 									algorithm to find exactly the right people for you.{" "}
 									<InlineLink href={urls.settings.matchmaking()}>
+										(Check it out)
+									</InlineLink>
+								</span>
+							</li>
+							<li className="flex flex-col">
+								<span className="text-lg font-semibold">
+									💅 Customize your profile colors
+								</span>
+								<span>
+									Stand out from the crowd! Pick a custom color scheme for your
+									profile to show off your style and make a memorable first
+									impression.{" "}
+									<InlineLink href={urls.settings.appearance}>
 										(Check it out)
 									</InlineLink>
 								</span>

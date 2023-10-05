@@ -4,6 +4,7 @@
 let plugin = require("tailwindcss/plugin");
 
 const colors = {
+	"theme-overlay": "var(--theme-text, #F5F5F5)",
 	coral: "#FF8975",
 	pink: "#E9658B",
 	purple: "#b24592",
@@ -149,18 +150,6 @@ module.exports = {
 		require("tailwindcss-hocus"),
 		require("tailwindcss-animate"),
 		plugin(({ addVariant, addComponents }) => {
-			addVariant("range-track", [
-				"&::-webkit-slider-runnable-track",
-				"&::-moz-range-track",
-				"&::-ms-track"
-			]);
-
-			addVariant("range-thumb", [
-				"&::-webkit-slider-thumb",
-				"&::-moz-range-thumb",
-				"&::-ms-thumb"
-			]);
-
 			// Device specific variants
 			addVariant("native", `:is([data-native="true"] &)`);
 

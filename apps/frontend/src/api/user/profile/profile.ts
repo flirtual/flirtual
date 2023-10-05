@@ -46,8 +46,8 @@ export type Profile = Partial<UpdatedAtModel> & {
 	images: Array<ProfileImage>;
 	resetLoveAt?: string;
 	resetFriendAt?: string;
-	color1?: string;
-	color2?: string;
+	color_1?: string;
+	color_2?: string;
 };
 
 export const ProfileAttributes = [
@@ -147,6 +147,19 @@ export async function updatePersonality(
 	options: NarrowFetchOptions<ProfilePersonality>
 ) {
 	return fetch<Profile>("post", `users/${userId}/profile/personality`, options);
+}
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export type ProfileColors = {
+	color_1: string;
+	color_2: string;
+};
+
+export async function updateColors(
+	userId: string,
+	options: NarrowFetchOptions<ProfileColors>
+) {
+	return fetch<Profile>("post", `users/${userId}/profile/colors`, options);
 }
 
 export async function updatePreferences(
