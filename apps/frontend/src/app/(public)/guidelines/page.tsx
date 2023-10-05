@@ -17,9 +17,10 @@ export default function GuidelinesPage() {
 					<p>
 						We want Flirtual to be a positive, welcoming space for everyone.
 						These community guidelines give more information on how we moderate
-						user profiles and behaviour on Flirtual. Breaking these guidelines
+						user profiles and behavior on Flirtual. Breaking these guidelines
 						will result in account moderation, such as a permanent ban from
-						Flirtual.
+						Flirtual. We reserve the right to moderate accounts at our
+						discretion.
 					</p>
 
 					<div className="flex flex-col gap-4">
@@ -81,7 +82,7 @@ export default function GuidelinesPage() {
 						<h1 className="text-2xl font-semibold">Stay on topic</h1>
 						<p className="italic">
 							Flirtual is a platform for dating and making friends. The main
-							purpose of your profile and behaviour on Flirtual should follow
+							purpose of your profile and behavior on Flirtual should follow
 							that.
 						</p>
 

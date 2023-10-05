@@ -15,19 +15,24 @@ export default function TermsPage() {
 			<ModelCard className="w-full sm:max-w-2xl" title="Terms of Service">
 				<div className="flex flex-col gap-4">
 					<p>
-						This website (the &quot;Website&quot;) is operated by STUDIO
-						PAPRIKA, INC. (&quot;us&quot;, &quot;we&quot;, or &quot;Studio
-						Paprika&quot;).
+						These terms will be effective on 2023-10-11.{" "}
+						<InlineLink href="/terms-20230530">
+							Click here for our current Terms of Service.
+						</InlineLink>
+					</p>
+					<p>
+						This service (the &quot;Service&quot;) is operated by ROVR LABS
+						INC., doing business as Flirtual (&quot;us&quot;, &quot;we&quot;, or
+						&quot;Flirtual&quot;).
 					</p>
 
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Rules</h1>
-						<p>In order to use this Website, you must:</p>
+						<p>In order to use this Service, you must:</p>
 						<ol className="list-decimal pl-4">
 							<li>be at least 18 years of age;</li>
 							<li>
-								be legally permitted to do so under United States and local
-								laws;
+								be legally permitted to do so under Canadian and local laws;
 							</li>
 							<li>have never been convicted of a felony;</li>
 							<li>
@@ -44,15 +49,15 @@ export default function TermsPage() {
 						</ol>
 						<p>You agree not to:</p>
 						<ol className="list-decimal pl-4">
-							<li>break local or United States law;</li>
-							<li>solicit money from or defraud other Website users;</li>
+							<li>break local or Canadian law;</li>
+							<li>solicit money from or defraud other users;</li>
 							<li>
 								impersonate any person or entity or post any images of another
 								person without his or her permission;
 							</li>
 							<li>
 								post any abusive, racist, sexist, derogatory, defamatory,
-								illegal, NSFW, or otherwise harmful content to the site;
+								illegal, NSFW, or otherwise harmful content to the Service;
 							</li>
 							<li>harass any of the users on this platform;</li>
 							<li>
@@ -62,18 +67,27 @@ export default function TermsPage() {
 							<li>post spam on profiles;</li>
 							<li>infringe on any copyright;</li>
 							<li>
-								use this service in order to damage Studio Paprika or the
-								Website.
+								use this service in order to damage Flirtual or the Service.
 							</li>
 						</ol>
+						<p>
+							Please review our{" "}
+							<InlineLink href={urls.resources.communityGuidelines}>
+								Community Guidelines
+							</InlineLink>{" "}
+							for more information on how we moderate user profiles and behavior
+							on the Service. Breaking these guidelines will result in account
+							moderation, such as a permanent ban from the Service. We reserve
+							the right to moderate accounts at our discretion.
+						</p>
 					</div>
 
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Safety</h1>
 						<p>
 							We advise you to use caution when interacting with other users of
-							the website. We are not responsible for the behavior of users on
-							or off of the website or for your interactions with other users.
+							the Service. We are not responsible for the behavior of users on
+							or off of the Service or for your interactions with other users.
 							We do not screen users.
 						</p>
 					</div>
@@ -90,7 +104,7 @@ export default function TermsPage() {
 					</div>
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Third Party Services</h1>
-						<p>Studio Paprika is not responsible for third-party services.</p>
+						<p>Flirtual is not responsible for third-party services.</p>
 					</div>
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Rights</h1>
@@ -125,12 +139,12 @@ export default function TermsPage() {
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Security</h1>
 						<p>
-							The Website runs on infrastructure provided by third parties. This
+							The Service runs on infrastructure provided by third parties. This
 							infrastructure is protected by industry standard security efforts
 							such as firewalls.
 						</p>
 						<p>
-							Your connection to the Website uses{" "}
+							Your connection to the Service uses{" "}
 							<InlineLink href="https://www.ssllabs.com/ssltest/analyze.html?d=flirtu.al&latest">
 								strong transport encryption
 							</InlineLink>
@@ -149,33 +163,33 @@ export default function TermsPage() {
 						<p>
 							We have not reviewed, and cannot review, all of the material,
 							including computer software, made available through the websites
-							and webpages to which the Website links, and that link to the
-							Website. We do not have any control over those non-Studio Paprika
+							and webpages to which the Service links, and that link to the
+							Service. We do not have any control over those non-Flirtual
 							websites, and are not responsible for their contents or their use.
-							By linking to a non-Studio Paprika website, Studio Paprika does
-							not represent or imply that it endorses such website. You are
-							responsible for taking precautions as necessary to protect
-							yourself and your computer systems from viruses, worms, Trojan
-							horses, and other harmful or destructive content. Studio Paprika
-							disclaims any responsibility for any harm resulting from your use
-							of non-Studio Paprika websites and webpages.
+							By linking to a non-Flirtual website, Flirtual does not represent
+							or imply that it endorses such website. You are responsible for
+							taking precautions as necessary to protect yourself and your
+							computer systems from viruses, worms, Trojan horses, and other
+							harmful or destructive content. Flirtual disclaims any
+							responsibility for any harm resulting from your use of
+							non-Flirtual websites and webpages.
 						</p>
 					</div>
 					<div className="flex flex-col gap-2">
 						<h1 className="text-2xl font-semibold">Disclaimers</h1>
 						<p>
-							In no event will Studio Paprika, or its suppliers or licensors, be
+							In no event will Flirtual, or its suppliers or licensors, be
 							liable with respect to any subject matter of this Agreement under
 							any contract, negligence, strict liability or other legal or
 							equitable theory for: (i) any special, incidental or consequential
 							damages; (ii) the cost of procurement for substitute products or
 							services; (iii) for interruption of use or loss or corruption of
 							data; or (iv) for any amounts that exceed the fees paid by you to
-							Studio Paprika under this Agreement during the twelve (12) month
-							period prior to the cause of action. Studio Paprika shall have no
-							liability for any failure or delay due to matters beyond their
-							reasonable control. The foregoing shall not apply to the extent
-							prohibited by applicable law.
+							Flirtual under this Agreement during the twelve (12) month period
+							prior to the cause of action. Flirtual shall have no liability for
+							any failure or delay due to matters beyond their reasonable
+							control. The foregoing shall not apply to the extent prohibited by
+							applicable law.
 						</p>
 					</div>
 				</div>
