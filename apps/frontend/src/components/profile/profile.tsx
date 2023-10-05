@@ -121,6 +121,7 @@ export const Profile = forwardRef<HTMLDivElement, ProfileProps>(
 							)}
 						</div>
 					</ProfileImageDisplay>
+					<div className="h-2 bg-brand-gradient sm:hidden" />
 					<div className="flex h-full grow flex-col gap-6 break-words p-8 pb-4">
 						{myProfile && <PersonalActions user={user} />}
 						<RelationActions direct={direct} user={user} />
