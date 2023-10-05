@@ -73,7 +73,7 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "talkjs": "^0.16.5",
-    "zod": "^3.22.2"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^1.6.7",
