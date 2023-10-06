@@ -65,6 +65,24 @@ defmodule Flirtual.Listmonk do
           {:ok, data}
         end
 
+      {:ok,
+       %HTTPoison.Response{status_code: 409, body: "{\"message\":\"E-mail already exists.\"}\n"}} ->
+        case fetch(:get, "subscribers", nil,
+               query: [query: "subscribers.email = '#{user.email}'"]
+             ) do
+          {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+            data = Poison.decode!(body)["data"]
+
+            with {:ok, _} <-
+                   change(user, %{listmonk_id: hd(data["results"])["id"]})
+                   |> Repo.update() do
+              {:ok, hd(data["results"])}
+            end
+
+          _ ->
+            :error
+        end
+
       _ ->
         :error
     end
