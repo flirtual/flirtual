@@ -102,7 +102,7 @@ const ProfileColorPreview: FC = () => {
 			}
 		>
 			<div className="flex h-full w-full flex-col gap-4 rounded-lg bg-cream px-3 py-2 text-black-70">
-				<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+				<span>This is how your profile colors look in Light Mode!</span>
 				<div className="flex scale-75 flex-wrap gap-2 [transform-origin:top_left]">
 					<Pill active small>
 						Friendly
@@ -117,7 +117,7 @@ const ProfileColorPreview: FC = () => {
 				</div>
 			</div>
 			<div className="flex h-full w-full flex-col gap-4 rounded-lg bg-black-80 px-3 py-2 text-white-20">
-				<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+				<span>This is how your profile colors look in Dark Mode!</span>
 				<div className="flex scale-75 flex-wrap gap-2 [transform-origin:top_left]">
 					<Pill active small>
 						Friendly
@@ -293,7 +293,7 @@ const SaveButton: FC = () => {
 	return (
 		<FormButton disabled={disabled}>
 			Save
-			{disabled && " (premium requred)"}
+			{disabled && " (Premium required)"}
 		</FormButton>
 	);
 };
