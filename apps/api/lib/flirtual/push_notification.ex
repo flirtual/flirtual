@@ -14,7 +14,7 @@ defmodule Flirtual.PushNotification do
   defp handle_response(%FCMNotification{response: error}),
     do: log(:error, [:fcm], error)
 
-  def send(user, title, message) do
+  def send(user, title, message, url) do
     if is_binary(user.apns_token),
       do:
         APNS.push(
@@ -37,6 +37,9 @@ defmodule Flirtual.PushNotification do
             %{
               "title" => title,
               "body" => message
+            },
+            %{
+              "url" => url
             }
           ),
           on_response: &handle_response/1

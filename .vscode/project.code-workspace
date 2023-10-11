@@ -25,7 +25,8 @@
 		"editor.formatOnSave": true,
 		"cSpell.words": [
 			"flirtual"
-		]
+		],
+		"java.configuration.updateBuildConfiguration": "automatic"
 	},
 	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"eslint.format.enable": true,

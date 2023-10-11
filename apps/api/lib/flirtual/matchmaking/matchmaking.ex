@@ -319,7 +319,10 @@ defmodule Flirtual.Matchmaking do
                               "#{User.display_name(user)} liked you back. Send them a message! 💞",
                             else:
                               "#{User.display_name(user)} homied you back. Send them a message! ✌️"
-                          )
+                          ),
+                          Application.fetch_env!(:flirtual, :frontend_origin)
+                          |> URI.merge("/" <> user.id)
+                          |> URI.to_string()
                         ) do
                    {:ok, opposite_item}
                  else
