@@ -15,12 +15,6 @@ export default function TermsPage() {
 			<ModelCard className="w-full sm:max-w-2xl" title="Terms of Service">
 				<div className="flex flex-col gap-4">
 					<p>
-						These terms will be effective on 2023-10-11.{" "}
-						<InlineLink href="/terms-20230530">
-							Click here for our current Terms of Service.
-						</InlineLink>
-					</p>
-					<p>
 						This service (the &quot;Service&quot;) is operated by ROVR LABS
 						INC., doing business as Flirtual (&quot;us&quot;, &quot;we&quot;, or
 						&quot;Flirtual&quot;).
