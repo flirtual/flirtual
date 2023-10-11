@@ -7,6 +7,12 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import androidx.core.app.NotificationCompat;
@@ -48,6 +54,23 @@ public class NotificationService extends FirebaseMessagingService {
     }
   }
 
+  private Bitmap getCircleBitmap(Bitmap bitmap) {
+    int width = bitmap.getWidth();
+    int height = bitmap.getHeight();
+    Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+    Canvas canvas = new Canvas(output);
+    Paint paint = new Paint();
+    Rect rect = new Rect(0, 0, width, height);
+    RectF rectF = new RectF(rect);
+    float radius = width / 2f;
+    paint.setAntiAlias(true);
+    canvas.drawARGB(0, 0, 0, 0);
+    canvas.drawRoundRect(rectF, radius, radius, paint);
+    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+    canvas.drawBitmap(bitmap, rect, rect, paint);
+    return output;
+  }
+
   private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     String name, message, url;
 
@@ -70,7 +93,7 @@ public class NotificationService extends FirebaseMessagingService {
     protected void onPostExecute(Bitmap result) {
       Person sender = new Person.Builder()
           .setName(name)
-          .setIcon(IconCompat.createWithAdaptiveBitmap(result))
+          .setIcon(IconCompat.createWithBitmap(getCircleBitmap(result)))
           .build();
       sendNotification(name, message, sender, url);
     }
