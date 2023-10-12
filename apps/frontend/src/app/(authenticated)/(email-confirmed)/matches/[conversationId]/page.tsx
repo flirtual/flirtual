@@ -42,6 +42,9 @@ export default async function ConversationPage({
 	const conversation = await getConversation(params.conversationId);
 	const user = await getProfileUser(conversation.userId);
 
+	if (!user || !user.relationship?.matched)
+		return redirect(urls.conversations.list());
+
 	return (
 		<>
 			<ConversationAside activeConversationId={conversation.id} />
