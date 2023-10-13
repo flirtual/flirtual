@@ -95,8 +95,8 @@ defmodule FlirtualWeb.ProfileController do
     if is_nil(user) or Policy.cannot?(conn, :update_colors, user.profile) do
       {:error, {:forbidden, "Cannot update this user's profile colors", %{user_id: user_id}}}
     else
-      with {:ok, user} <- Profiles.update_colors(user.profile, params) do
-        conn |> json(Policy.transform(conn, user))
+      with {:ok, profile} <- Profiles.update_colors(user.profile, params) do
+        conn |> json(Policy.transform(conn, profile))
       end
     end
   end

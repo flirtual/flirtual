@@ -8,10 +8,12 @@ defmodule Flirtual.Subscription do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Flirtual.User.Profile
   alias Flirtual.Stripe
   alias Flirtual.Repo
   alias Flirtual.Plan
   alias Flirtual.User
+  alias Flirtual.Profiles
   alias Flirtual.Subscription
 
   schema "subscriptions" do
@@ -240,7 +242,40 @@ defmodule Flirtual.Subscription do
 
   def cancel(%Subscription{} = subscription) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
-    subscription |> change(%{cancelled_at: now}) |> Repo.update()
+
+    Repo.transaction(fn ->
+      with user <- User.get(subscription.user_id),
+           {:ok, _} <-
+             user.profile.custom_weights
+             |> change(%{
+               country: 1.0,
+               monopoly: 1.0,
+               games: 1.0,
+               default_interests: 1.0,
+               custom_interests: 1.0,
+               personality: 1.0,
+               serious: 1.0,
+               domsub: 1.0,
+               kinks: 1.0,
+               likes: 1.0
+             })
+             |> Repo.update(),
+           {:ok, _} <-
+             user.profile
+             |> Profiles.update_colors(%{
+               color_1: "#ff8975",
+               color_2: "#e9658b"
+             }),
+           {:ok, _} <-
+             subscription
+             |> change(%{cancelled_at: now})
+             |> Repo.update() do
+        subscription
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
   end
 
   def get(user_id: user_id) when is_uid(user_id) do

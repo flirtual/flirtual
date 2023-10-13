@@ -248,9 +248,22 @@ defmodule Flirtual.Profiles do
 
     def changeset(value, _, _) do
       value
-      |> validate_required([:color_1, :color_2])
       |> validate_format(:color_1, ~r/^#[0-9a-f]{6}$/i)
       |> validate_format(:color_2, ~r/^#[0-9a-f]{6}$/i)
+      |> put_change(:color_1, String.downcase(get_change(value, :color_1)))
+      |> put_change(:color_2, String.downcase(get_change(value, :color_2)))
+      |> then(fn changeset ->
+        case changeset do
+          %Ecto.Changeset{changes: %{color_1: "#ff8975", color_2: "#e9658b"}} ->
+            change(changeset, %{color_1: nil, color_2: nil})
+
+          %Ecto.Changeset{changes: %{color_1: "#b24592", color_2: "#e9658b"}} ->
+            change(changeset, %{color_1: nil, color_2: nil})
+
+          _ ->
+            changeset
+        end
+      end)
     end
   end
 
