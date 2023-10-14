@@ -63,7 +63,7 @@ export const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
 					event.stopPropagation();
 				}}
 			>
-				<div className="relative flex w-full flex-col justify-center gap-y-3 rounded-3xl bg-white-30 px-3 py-4 text-black-80 dark:bg-black-70 dark:text-white-20">
+				<div className="relative flex w-full flex-col justify-center gap-y-3 rounded-[1.25rem] bg-white-30 px-3 py-4 text-black-80 dark:bg-black-70 dark:text-white-20">
 					<div className="h-full">{children}</div>
 				</div>
 			</motion.div>
