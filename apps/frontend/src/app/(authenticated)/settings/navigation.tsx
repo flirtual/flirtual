@@ -136,9 +136,9 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.resources.privacyPolicy}>
 							Privacy Policy
 						</NavigationLink>
-						<NavigationLink href={urls.resources.company}>
-							&copy; Studio Paprika
-						</NavigationLink>
+						<div className="px-6 py-2">
+							&copy; {new Date().getFullYear()} Flirtual
+						</div>
 					</NavigationCategory>
 				</div>
 				<InlineLink

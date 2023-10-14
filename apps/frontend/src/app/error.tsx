@@ -85,12 +85,7 @@ export default function Error({
 							Twitter
 						</InlineLink>
 					</div>
-					<footer>
-						© {new Date().getFullYear()}{" "}
-						<a className="hover:underline" href={urls.resources.company}>
-							Studio Paprika
-						</a>
-					</footer>
+					<footer>© {new Date().getFullYear()} Flirtual</footer>
 				</div>
 			</div>
 		</div>

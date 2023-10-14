@@ -115,15 +115,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 				</div>
 				<div className="flex justify-between md:text-lg">
 					<span className="hidden sm:inline">Made with ♥︎ in VR</span>
-					<span>
-						© {new Date().getFullYear()}{" "}
-						<a
-							className="touch-callout-default hover:underline"
-							href={urls.resources.company}
-						>
-							Studio Paprika
-						</a>
-					</span>
+					<span>&copy; {new Date().getFullYear()} Flirtual</span>
 				</div>
 			</div>
 		</footer>

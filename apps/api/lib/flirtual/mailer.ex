@@ -17,8 +17,8 @@ defmodule Flirtual.Mailer do
     %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url}
   end
 
-  @company "Studio Paprika"
-  @company_address "530 Divisadero Street | San Francisco, CA | 94117 | USA"
+  @company "Flirtual"
+  @company_address "6D - 7398 Yonge St, #776 | Thornhill, ON | L4J 8J2 | Canada"
 
   defp format_text_body(body_text) do
     %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
