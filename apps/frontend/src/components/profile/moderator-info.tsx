@@ -255,6 +255,8 @@ export const ProfileModeratorInfo: FC<{
 						<span>
 							<span className="font-bold">Stripe customer:</span>{" "}
 							<InlineLink
+								className="underline"
+								highlight={false}
 								href={`https://dashboard.stripe.com/customers/${user.stripeId}`}
 							>
 								{user.stripeId}
@@ -263,6 +265,8 @@ export const ProfileModeratorInfo: FC<{
 						<span>
 							<span className="font-bold">RevenueCat customer:</span>{" "}
 							<InlineLink
+								className="underline"
+								highlight={false}
 								href={`https://app.revenuecat.com/customers/${user.revenuecatId}`}
 							>
 								{user.revenuecatId}
