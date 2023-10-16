@@ -110,6 +110,7 @@ export default async function RootLayout({
 			<head suppressHydrationWarning>
 				<meta name="darkreader-lock" />
 				<script
+					data-cfasync="false"
 					dangerouslySetInnerHTML={{
 						__html: `
 							${resolveTheme.toString()}
