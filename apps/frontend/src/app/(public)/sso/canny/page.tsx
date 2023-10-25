@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { api } from "~/api";
+import { ExternalRedirect } from "~/components/external-redirect";
 import { thruServerCookies, withOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
 
@@ -12,7 +13,7 @@ export default async function CannyPage({ searchParams }: CannyPageProps) {
 	const redirectURL = searchParams?.redirect;
 	const companyID = searchParams?.companyID;
 	if (!redirectURL || !redirectURL.startsWith("https://") || !companyID)
-		return null;
+		redirect(urls.default);
 
 	const session = await withOptionalSession();
 	if (!session)
@@ -21,7 +22,10 @@ export default async function CannyPage({ searchParams }: CannyPageProps) {
 		);
 
 	const { token } = await api.auth.sso("canny", thruServerCookies());
-	redirect(
-		`https://canny.io/api/redirects/sso?companyID=${companyID}&ssoToken=${token}&redirect=${redirectURL}`
+
+	return (
+		<ExternalRedirect
+			url={`https://canny.io/api/redirects/sso?companyID=${companyID}&ssoToken=${token}&redirect=${redirectURL}`}
+		/>
 	);
 }
