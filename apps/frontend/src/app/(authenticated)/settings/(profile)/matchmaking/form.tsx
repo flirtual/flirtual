@@ -105,7 +105,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 						body: {
 							country: values.weightCountry,
 							customInterests: values.weightCustomInterests,
-							defaultInterests: values.weightCustomInterests,
+							defaultInterests: values.weightDefaultInterests,
 							domsub: values.weightDomsub,
 							games: values.weightGames,
 							kinks: values.weightKinks,
