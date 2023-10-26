@@ -135,8 +135,7 @@ defmodule Flirtual.Elasticsearch do
        |> Enum.filter(&(not is_nil(&1)))
      end)
      |> List.flatten()
-     |> Enum.map(&Poison.encode!(&1))
-     |> Enum.join("\n")) <> "\n"
+     |> Enum.map_join("\n", &Poison.encode!(&1))) <> "\n"
   end
 
   def bulk(index, changes, limit \\ 100)

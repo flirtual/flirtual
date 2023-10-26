@@ -1,17 +1,18 @@
-"use client"
+"use client";
+
+import { FC } from "react";
 
 import { User } from "~/api/user";
 import { urls } from "~/urls";
 import { capitalize, groupBy } from "~/utilities";
 import { withSession } from "~/server-utilities";
 import { withAttribute } from "~/api/attributes-server";
+import { useSession } from "~/hooks/use-session";
+import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { PillAttributeList } from "./attribute-list";
 import { PillCollectionExpansion } from "./expansion";
 import { Pill } from "./pill";
-import { useSession } from "~/hooks/use-session";
-import { FC } from "react";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 
 function getPersonalityLabels({
 	profile: { openness, conscientiousness, agreeableness }
@@ -39,17 +40,17 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const [session] = useSession();
 
 	const allAttributes = [
-		...useAttributeList("sexuality"), 
+		...useAttributeList("sexuality"),
 		...useAttributeList("game"),
 		...useAttributeList("interest"),
 		...useAttributeList("platform"),
 		...useAttributeList("kink"),
-		...useAttributeList("language"),
-	]
+		...useAttributeList("language")
+	];
 
-	const profileAttributeIds = [...new Set(
-		user.profile.attributes.map(({ id }) => id)
-	)];
+	const profileAttributeIds = new Set(
+		new Set(user.profile.attributes.map(({ id }) => id))
+	);
 
 	if (!session) return null;
 
@@ -63,8 +64,11 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const personalityLabels = getPersonalityLabels(user);
 
 	const attributes = groupBy(
-		allAttributes.filter(({ id }) => profileAttributeIds.includes(id) || user.profile.languages.includes(id)),
-		({type}) => type
+		allAttributes.filter(
+			({ id }) =>
+				profileAttributeIds.has(id) || user.profile.languages.includes(id)
+		),
+		({ type }) => type
 	);
 
 	return (
@@ -149,4 +153,4 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 			/>
 		</div>
 	);
-}
+};

@@ -90,7 +90,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	const { user } = session;
 
 	return (
-		<div className="relative aspect-square shrink-0">
+		<div className="relative aspect-square shrink-0 select-none">
 			<button
 				id="profile-dropdown-button"
 				type="button"

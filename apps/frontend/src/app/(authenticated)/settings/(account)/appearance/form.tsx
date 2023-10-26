@@ -4,9 +4,9 @@ import { FC, CSSProperties, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
-import { Hash, Palette } from "lucide-react";
+import { Hash } from "lucide-react";
 
-import { InputLabel, InputText } from "~/components/inputs";
+import { InputLabel } from "~/components/inputs";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { PremiumBadge } from "~/components/premium-badge";
 import { ThemedBorder } from "~/components/themed-border";

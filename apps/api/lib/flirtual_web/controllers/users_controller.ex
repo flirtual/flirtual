@@ -9,11 +9,11 @@ defmodule FlirtualWeb.UsersController do
   import FlirtualWeb.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.User.Profile.Block
-  alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
+  alias Flirtual.User.ChangeQueue
+  alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
-  alias Flirtual.{User, Users, Policy}
+  alias Flirtual.{Policy, User, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 

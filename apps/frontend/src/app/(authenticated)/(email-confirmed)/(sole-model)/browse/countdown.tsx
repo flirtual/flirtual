@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-function useCountdown(date: string): string {
+function useCountdown(date: string, onFinish: () => void): string {
 	const [timeRemaining, setTimeRemaining] = useState("⏳");
 
 	useEffect(() => {
@@ -23,24 +23,26 @@ function useCountdown(date: string): string {
 				);
 			} else {
 				setTimeRemaining("00:00:00");
+				onFinish();
 			}
 		};
 
 		updateTimer();
-		const interval = setInterval(updateTimer, 1000);
+		const interval = setInterval(updateTimer, 1);
 
 		return () => clearInterval(interval);
-	}, [date]);
+	}, [onFinish, date]);
 
 	return timeRemaining;
 }
 
 interface CountdownProps {
 	date: string;
+	onFinish: () => void;
 }
 
-export const Countdown: React.FC<CountdownProps> = ({ date }) => {
-	const countdown = useCountdown(date);
+export const Countdown: React.FC<CountdownProps> = ({ date, onFinish }) => {
+	const countdown = useCountdown(date, onFinish);
 
-	return <>{countdown}</>;
+	return <span>{countdown}</span>;
 };

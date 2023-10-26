@@ -4,7 +4,7 @@ defmodule Flirtual.Talkjs do
   require Flirtual.Utilities
   import Flirtual.Utilities
 
-  alias Flirtual.{User}
+  alias Flirtual.User
 
   defp config(key) do
     Application.get_env(:flirtual, Flirtual.Talkjs)[key]

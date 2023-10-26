@@ -5,16 +5,21 @@ defmodule FlirtualWeb.MatchmakingController do
   import Flirtual.Utilities
 
   alias Flirtual.Matchmaking
-  alias Flirtual.User.Profile.Prospect
   alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.{Users, Policy}
+  alias Flirtual.User.Profile.Prospect
+  alias Flirtual.{Policy, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
   def queue_information(conn, %{"kind" => kind}) do
     with {:ok, queue_information} <-
            Matchmaking.queue_information(conn.assigns[:session].user, to_atom(kind, :love)) do
-      conn |> json_with_etag(queue_information)
+      conn
+      |> json_with_etag(
+        Map.merge(queue_information, %{
+          prospects: Policy.transform(conn, queue_information.prospects)
+        })
+      )
     end
   end
 
@@ -47,6 +52,32 @@ defmodule FlirtualWeb.MatchmakingController do
                mode: to_atom(mode, :love)
              ) do
         conn |> json(result)
+      else
+        {:error, :out_of_likes, reset_at} ->
+          conn
+          |> json(%{
+            success: false,
+            message: "out_of_likes",
+            reset_at: reset_at
+          })
+
+        {:error, :out_of_passes, reset_at} ->
+          conn
+          |> json(%{
+            success: false,
+            message: "out_of_passes",
+            reset_at: reset_at
+          })
+
+        {:error, %Ecto.Changeset{errors: [user_id: {"already_responded", _}]}} ->
+          conn
+          |> json(%{
+            success: false,
+            message: "already_responded"
+          })
+
+        reason ->
+          reason
       end
     end
   end

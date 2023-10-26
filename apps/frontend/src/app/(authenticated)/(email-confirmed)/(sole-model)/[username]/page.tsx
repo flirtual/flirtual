@@ -3,8 +3,9 @@ import { Metadata } from "next";
 import { displayName } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 
-import { getProfileUser } from "./profile-user";
 import { ProspectActions } from "../browse/prospect-actions";
+
+import { getProfileUser } from "./profile-user";
 
 export interface ProfilePageProps {
 	params: { username: string };

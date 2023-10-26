@@ -9,20 +9,20 @@ defmodule Flirtual.User do
   import Ecto.Query
   import Flirtual.Utilities
 
-  alias Flirtual.User.Relationship
   alias Ecto.Changeset
+  alias Flirtual.User.Relationship
 
+  alias Flirtual.Attribute
+  alias Flirtual.Discord
+  alias Flirtual.Languages
+  alias Flirtual.Repo
+  alias Flirtual.Report
+  alias Flirtual.Subscription
+  alias Flirtual.User
+  alias Flirtual.User.ChangeQueue
+  alias Flirtual.User.Profile.Block
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.User.Profile.Block
-  alias Flirtual.Subscription
-  alias Flirtual.Discord
-  alias Flirtual.Attribute
-  alias Flirtual.User.ChangeQueue
-  alias Flirtual.Report
-  alias Flirtual.Repo
-  alias Flirtual.Languages
-  alias Flirtual.User
   alias Flirtual.User.Session
 
   @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp]

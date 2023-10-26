@@ -4,12 +4,12 @@ defmodule Flirtual.Discord do
 
   import Flirtual.Utilities
 
-  alias Flirtual.User.Profile.Image
+  alias Flirtual.Attribute
   alias Flirtual.Connection
   alias Flirtual.Report
-  alias Flirtual.Attribute
   alias Flirtual.Subscription
-  alias Flirtual.{User}
+  alias Flirtual.User
+  alias Flirtual.User.Profile.Image
 
   @default_color 255
   @destructive_color 16_711_680

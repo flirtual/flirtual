@@ -1,5 +1,6 @@
 import { CreatedAtModel, UuidModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
+import { User } from "./user";
 
 export const ProspectKind = ["love", "friend"] as const;
 export type ProspectKind = (typeof ProspectKind)[number];
@@ -20,7 +21,7 @@ export async function queue(
 	options: NarrowFetchOptions<undefined, { kind: ProspectKind }>
 ) {
 	return fetch<{
-		data: Array<string>;
+		prospects: Array<User>;
 		passes: number;
 		likes: number;
 		likesLeft: number;
@@ -35,9 +36,15 @@ export interface RespondProspectBody {
 	userId: string;
 }
 
+export interface RespondProspectResponse {
+	success: boolean;
+	message?: string;
+	resetAt?: string;
+}
+
 export async function respondProspect(
 	options: NarrowFetchOptions<RespondProspectBody>
-) {
+): Promise<RespondProspectResponse> {
 	return fetch("post", `prospects/respond`, options);
 }
 

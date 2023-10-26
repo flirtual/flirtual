@@ -3,9 +3,9 @@ defmodule Flirtual.User.Profile.Policy do
 
   import Flirtual.Utilities
 
+  alias Flirtual.Subscription
   alias Flirtual.User
   alias Flirtual.User.Profile
-  alias Flirtual.Subscription
 
   # Any user can read any other user's profile.
   def authorize(:read, _, _), do: true

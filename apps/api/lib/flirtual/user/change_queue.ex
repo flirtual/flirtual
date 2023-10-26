@@ -8,11 +8,11 @@ defmodule Flirtual.User.ChangeQueue do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.Talkjs
   alias Flirtual.Elasticsearch
   alias Flirtual.Listmonk
-  alias Flirtual.Subscription
   alias Flirtual.Repo
+  alias Flirtual.Subscription
+  alias Flirtual.Talkjs
   alias Flirtual.User
   alias Flirtual.User.ChangeQueue
   alias Flirtual.User.Profile
@@ -116,8 +116,8 @@ defmodule Flirtual.User.ChangeQueue do
     items = fetch(limit)
 
     with :ok <- process_items(items, :elasticsearch),
-         :ok <- process_items(items, :talkjs),
-         :ok <- process_items(items, :listmonk),
+         # :ok <- process_items(items, :talkjs),
+         # :ok <- process_items(items, :listmonk),
          :ok <- process_items(items, :premium_reset),
          :ok <-
            items

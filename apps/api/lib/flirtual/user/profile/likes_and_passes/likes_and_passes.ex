@@ -4,22 +4,22 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
   import Ecto.Query
 
-  alias Flirtual.User.Profile.Block
-  alias Flirtual.Talkjs
-  alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
+  alias Flirtual.Talkjs
   alias Flirtual.User
+  alias Flirtual.User.ChangeQueue
+  alias Flirtual.User.Profile.Block
   alias Flirtual.User.Profile.LikesAndPasses
 
   schema "likes_and_passes" do
-    belongs_to :profile, Flirtual.User.Profile, references: :user_id, primary_key: true
-    belongs_to :target, Flirtual.User.Profile, references: :user_id, primary_key: true
+    belongs_to(:profile, Flirtual.User.Profile, references: :user_id, primary_key: true)
+    belongs_to(:target, Flirtual.User.Profile, references: :user_id, primary_key: true)
 
-    field :type, Ecto.Enum, values: [:like, :pass]
-    field :kind, Ecto.Enum, values: [:love, :friend], primary_key: true
+    field(:type, Ecto.Enum, values: [:like, :pass])
+    field(:kind, Ecto.Enum, values: [:love, :friend], primary_key: true)
 
-    field :opposite, :map, virtual: true
-    field :match, :boolean, virtual: true
+    field(:opposite, :map, virtual: true)
+    field(:match, :boolean, virtual: true)
 
     timestamps(updated_at: false)
   end

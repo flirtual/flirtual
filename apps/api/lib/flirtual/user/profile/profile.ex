@@ -10,7 +10,7 @@ defmodule Flirtual.User.Profile do
   alias Flirtual.Languages
   alias Flirtual.{Attribute, User}
   alias Flirtual.User.Profile
-  alias Flirtual.User.Profile.{Image, Preferences, CustomWeights}
+  alias Flirtual.User.Profile.{CustomWeights, Image, Preferences}
 
   @personality_questions [
     :question0,

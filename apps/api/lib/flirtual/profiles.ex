@@ -4,12 +4,12 @@ defmodule Flirtual.Profiles do
 
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.User.ChangeQueue
-  alias Flirtual.{Repo}
-  alias Flirtual.User.{Profile}
-  alias Flirtual.User.Profile.{Image}
   alias Flirtual.Flag
   alias Flirtual.Hash
+  alias Flirtual.Repo
+  alias Flirtual.User.ChangeQueue
+  alias Flirtual.User.Profile
+  alias Flirtual.User.Profile.Image
 
   def get_personality_by_user_id(user_id)
       when is_binary(user_id) do
@@ -40,10 +40,10 @@ defmodule Flirtual.Profiles do
     import Flirtual.Utilities
     import Flirtual.Attribute
 
+    alias Flirtual.Countries
+    alias Flirtual.Languages
     alias Flirtual.Profiles.Update
     alias Flirtual.User.Profile
-    alias Flirtual.Languages
-    alias Flirtual.Countries
 
     @attribute_keys [
       :gender_id,

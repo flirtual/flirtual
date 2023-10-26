@@ -7,18 +7,18 @@ defmodule Flirtual.Users do
   import Flirtual.Flag, only: [validate_allowed_email: 2]
 
   alias Ecto.UUID
-  alias Flirtual.Elasticsearch
   alias Flirtual.Discord
-  alias Flirtual.User.ChangeQueue
-  alias Flirtual.Talkjs
-  alias Flirtual.Listmonk
-  alias Flirtual.Jwt
-  alias Flirtual.Talkjs
-  alias Flirtual.{Repo, User}
-  alias Flirtual.User.{Preferences}
-  alias Flirtual.Stripe
-  alias Flirtual.RevenueCat
+  alias Flirtual.Elasticsearch
   alias Flirtual.Hash
+  alias Flirtual.Jwt
+  alias Flirtual.Listmonk
+  alias Flirtual.RevenueCat
+  alias Flirtual.Stripe
+  alias Flirtual.Talkjs
+  alias Flirtual.Talkjs
+  alias Flirtual.User.ChangeQueue
+  alias Flirtual.User.Preferences
+  alias Flirtual.{Repo, User}
 
   def get(id)
       when is_binary(id) do

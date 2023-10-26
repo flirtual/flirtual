@@ -5,8 +5,8 @@ defmodule FlirtualWeb.ProfileController do
   import Phoenix.Controller
   import FlirtualWeb.Utilities
 
-  alias Flirtual.{Policy, Users, Profiles}
-  alias Flirtual.User.{Profile}
+  alias Flirtual.User.Profile
+  alias Flirtual.{Policy, Profiles, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 

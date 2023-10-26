@@ -1,14 +1,13 @@
 import { twMerge } from "tailwind-merge";
+import { FC } from "react";
 
 import { PartialAttribute } from "~/api/attributes";
 import { findBy, sortBy } from "~/utilities";
-import { withAttributeList } from "~/api/attributes-server";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
+import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { Pill } from "./pill";
-import { useAttributeList } from "~/hooks/use-attribute-list";
-import { FC } from "react";
 
 export interface GenderPillsProps {
 	simple?: boolean;
@@ -24,7 +23,6 @@ export const GenderPills: FC<GenderPillsProps> = ({
 	small
 }) => {
 	const genders = useAttributeList("gender");
-	console.log(genders);
 
 	const profileGenders = attributes
 		.map(({ id }) => findBy(genders, "id", id))
@@ -54,7 +52,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 		const fallback = genders.find(({ metadata }) => metadata.fallback);
 		if (fallback) visibleGenders.push(fallback);
 	}
-		
+
 	return (
 		<>
 			{visibleGenders.map((gender, genderIndex) => (
@@ -88,4 +86,4 @@ export const GenderPills: FC<GenderPillsProps> = ({
 			))}
 		</>
 	);
-}
+};

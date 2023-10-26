@@ -44,8 +44,8 @@ export type Profile = Partial<UpdatedAtModel> & {
 	preferences?: ProfilePreferences;
 	customWeights?: ProfileCustomWeights;
 	images: Array<ProfileImage>;
-	resetLoveAt?: string;
-	resetFriendAt?: string;
+	queueResetLoveAt?: string;
+	queueResetFriendAt?: string;
 	color_1?: string;
 	color_2?: string;
 };

@@ -5,16 +5,16 @@ defmodule Flirtual.Matchmaking do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.PushNotification
-  alias Flirtual.User.Profile.Block
-  alias Flirtual.Subscription
-  alias Flirtual.Talkjs
   alias Flirtual.Conversation
   alias Flirtual.Elasticsearch
-  alias Flirtual.User.Profile.Prospect
-  alias Flirtual.User.Profile.LikesAndPasses
+  alias Flirtual.PushNotification
+  alias Flirtual.Subscription
+  alias Flirtual.Talkjs
   alias Flirtual.User.Profile
-  alias Flirtual.{Repo, User, Attribute, Mailer}
+  alias Flirtual.User.Profile.Block
+  alias Flirtual.User.Profile.LikesAndPasses
+  alias Flirtual.User.Profile.Prospect
+  alias Flirtual.{Attribute, Mailer, Repo, User}
 
   def next_reset_at() do
     now = DateTime.utc_now()
@@ -27,20 +27,9 @@ defmodule Flirtual.Matchmaking do
     |> DateTime.truncate(:second)
   end
 
-  # def should_compute_prospects?(user, kind) do
-  #   reset_fields = get_reset_fields(kind)
-
-  #   reset_at = user.profile[reset_fields.at]
-  #   reset_count = user.profile[reset_fields.count]
-
-  #   reset_at === nil or
-  #     (Subscription.active?(user.subscription) and reset_count >= 15) or
-  #     DateTime.compare(reset_at, DateTime.utc_now()) == :lt
-  # end
-
   @queue_limit 15
 
-  def get_queue_fields(profile, kind, direct \\ false) do
+  def get_queue_fields(profile, kind) do
     %{reset_at: reset_at, likes: likes, passes: passes} =
       case kind do
         :love ->
@@ -58,8 +47,8 @@ defmodule Flirtual.Matchmaking do
           }
       end
 
-    likes_limit = if direct, do: @queue_limit * 2, else: @queue_limit
-    passes_limit = if direct, do: @queue_limit * 3, else: @queue_limit * 2 - likes
+    likes_limit = @queue_limit
+    passes_limit = @queue_limit * 2 - likes
 
     %{
       reset_at: reset_at,
@@ -83,9 +72,9 @@ defmodule Flirtual.Matchmaking do
 
       :friend ->
         %{
-          reset_at: :friend_reset_at,
-          likes: :friend_likes,
-          passes: :friend_passes
+          reset_at: :queue_friend_reset_at,
+          likes: :queue_friend_likes,
+          passes: :queue_friend_passes
         }
     end
   end
@@ -98,47 +87,48 @@ defmodule Flirtual.Matchmaking do
   end
 
   def queue_information(%User{} = user, kind) do
-    {:ok, existing} = list_existing_prospects(user, kind)
+    {:ok, existing_next_prospects} = next_prospects(user, kind)
     fields = get_queue_fields(user.profile, kind)
     reset_at = fields.reset_at
 
-    if(
-      reset_at === nil or
-        DateTime.compare(reset_at, DateTime.utc_now()) == :lt or
-        existing == []
-    ) do
-      log(:info, ["compute", kind], user.id)
-      compute_prospects(user, kind)
-    else
-      log(:info, ["skip-compute", kind], user.id)
+    {:ok, next_prospects} =
+      if(
+        reset_at === nil or
+          DateTime.compare(reset_at, DateTime.utc_now()) == :lt or
+          existing_next_prospects == [],
+        do: compute_next_prospects(user, kind),
+        else: {:ok, existing_next_prospects}
+      )
 
-      {:ok,
-       %{
-         data: existing,
-         likes: fields.likes,
-         likes_left: fields.likes_left,
-         passes: fields.passes,
-         passes_left: fields.passes_left
-       }}
-    end
+    {:ok,
+     %{
+       prospects: Enum.map(next_prospects, &User.get(&1)),
+       likes: fields.likes,
+       likes_left:
+         fields.likes_left
+         |> max(if Subscription.active?(user.subscription), do: 1, else: 0),
+       passes: fields.passes,
+       passes_left:
+         fields.passes_left
+         |> max(if Subscription.active?(user.subscription), do: 1, else: 0)
+     }}
   end
 
-  defp list_existing_prospects(user, kind) do
-    prospects =
+  defp next_prospects(user, kind) do
+    prospect =
       Prospect
       |> where(profile_id: ^user.id, kind: ^kind, completed: false)
       |> order_by(desc: :score, desc: :target_id)
       |> select([prospect], prospect.target_id)
-      |> limit(3)
+      |> limit(2)
       |> Repo.all()
 
-    log(:info, ["existing", user.id, kind], prospects)
-
-    {:ok, prospects}
+    log(:info, ["existing", user.id, kind], prospect)
+    {:ok, prospect}
   end
 
-  defp compute_prospects(user, kind) do
-    %{reset_at: reset_at} = get_queue_fields(user.profile, kind)
+  defp compute_next_prospects(user, kind) do
+    %{reset_at: _reset_at} = get_queue_fields(user.profile, kind)
     query = generate_query(user, kind)
 
     Repo.transaction(fn ->
@@ -171,7 +161,10 @@ defmodule Flirtual.Matchmaking do
                reset_queue_fields(kind)
              )
              |> Repo.update() do
-        prospects |> Enum.map(&elem(&1, 0)) |> Enum.take(3)
+        prospects
+        |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
+        |> Enum.map(&elem(&1, 0))
+        |> Enum.slice(0, 2)
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
@@ -181,8 +174,8 @@ defmodule Flirtual.Matchmaking do
 
   def reset_prospects(%User{} = user) do
     with {:ok, count} <- LikesAndPasses.delete_all(profile_id: user.id),
-         {:ok, _} <- compute_prospects(user, :love),
-         {:ok, _} <- compute_prospects(user, :friend) do
+         {:ok, _} <- compute_next_prospects(user, :love),
+         {:ok, _} <- compute_next_prospects(user, :friend) do
       {:ok, count}
     end
   end
@@ -190,40 +183,44 @@ defmodule Flirtual.Matchmaking do
   def deliver_match_email(user, target_user) do
     action_url = User.url(target_user)
 
-    Mailer.send(
-      user,
-      subject: "It's a match!",
-      action_url: action_url,
-      body_text: """
-      #{User.display_name(target_user)} liked you back—they want to meet you too!
+    if user.preferences.email_notifications.matches do
+      Mailer.send(
+        user,
+        subject: "It's a match!",
+        action_url: action_url,
+        body_text: """
+        #{User.display_name(target_user)} liked you back—they want to meet you too!
 
-      Check out their profile:
-      #{action_url}
-      """,
-      body_html: """
-      <p>#{User.display_name(target_user)} liked you back&mdash;they want to meet you too!</p>
+        Check out their profile:
+        #{action_url}
+        """,
+        body_html: """
+        <p>#{User.display_name(target_user)} liked you back&mdash;they want to meet you too!</p>
 
-      <p><a href="#{action_url}" class="btn">Check out their profile</a></p>
+        <p><a href="#{action_url}" class="btn">Check out their profile</a></p>
 
-      <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "EmailMessage",
-        "description": "Check out their profile",
-        "potentialAction": {
-          "@type": "ViewAction",
-          "url": "#{action_url}",
-          "name": "Profile"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "Flirtual",
-          "url": "https://flirtu.al/"
+        <script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "EmailMessage",
+          "description": "Check out their profile",
+          "potentialAction": {
+            "@type": "ViewAction",
+            "url": "#{action_url}",
+            "name": "Profile"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Flirtual",
+            "url": "https://flirtu.al/"
+          }
         }
-      }
-      </script>
-      """
-    )
+        </script>
+        """
+      )
+    else
+      {:ok, :disabled}
+    end
   end
 
   def create_match_conversation(user_a, user_b, kind) do
@@ -260,89 +257,102 @@ defmodule Flirtual.Matchmaking do
     type = Keyword.fetch!(opts, :type)
     kind = Keyword.get(opts, :kind, :love)
     mode = Keyword.get(opts, :mode, :love)
-    direct = Keyword.get(opts, :direct, false)
 
-    queue_keys = queue_fields(kind)
     types = if type == :like, do: :likes, else: :passes
+    queue_keys = queue_fields(mode)
+    fields = get_queue_fields(user.profile, mode)
 
-    Repo.transaction(fn repo ->
-      with {_, _} <-
-             Prospect
-             |> where(profile_id: ^user.id, target_id: ^target.id)
-             |> Repo.update_all(set: [completed: true]),
-           {:ok, item} <-
-             %LikesAndPasses{}
-             |> cast(
-               %{
-                 profile_id: user.id,
-                 target_id: target.id,
-                 type: type,
-                 kind: kind
-               },
-               [:profile_id, :target_id, :type, :kind]
-             )
-             |> then(
-               &if(get_field(&1, :profile_id) === get_field(&1, :target_id)) do
-                 add_error(&1, :user_id, "Cannot respond to yourself")
-               else
-                 &1
-               end
-             )
-             |> unsafe_validate_unique([:profile_id, :target_id, :kind], repo,
-               error_key: :user_id,
-               message: "Profile already responded"
-             )
-             |> Repo.insert(),
-           {:ok, _} <-
-             user.profile
-             |> change(
-               {}
-               |> Map.put(queue_keys[types], user.profile[queue_keys[types]] + 1)
-             )
-             |> Repo.update(),
-           opposite_item <-
-             LikesAndPasses.get(user_id: item.target_id, target_id: item.profile_id, type: type),
-           match_kind = reduce_kind(item.kind, opposite_item[:kind]),
-           {:ok, opposite_item} <-
-             if(is_nil(opposite_item),
-               do: {:ok, nil},
-               else:
-                 with true <- item.type === :like and opposite_item.type === :like,
-                      {:ok, _} <- create_match_conversation(user, target, match_kind),
-                      {:ok, _} <- deliver_match_email(target, user),
-                      :ok <-
-                        PushNotification.send(
-                          target,
-                          "It's a match!",
-                          if(match_kind == :love,
-                            do:
-                              "#{User.display_name(user)} liked you back. Send them a message! 💞",
-                            else:
-                              "#{User.display_name(user)} homied you back. Send them a message! ✌️"
-                          ),
-                          Application.fetch_env!(:flirtual, :frontend_origin)
-                          |> URI.merge("/" <> user.id)
-                          |> URI.to_string()
-                        ) do
-                   {:ok, opposite_item}
-                 else
-                   false -> {:ok, opposite_item}
-                   value -> value
-                 end
-             ) do
-        %{
-          matched:
-            if not is_nil(opposite_item) do
-              item.type === :like and opposite_item.type === :like
-            else
-              false
-            end
-        }
+    if type == :like and fields.likes >= fields.likes_limit and
+         not Subscription.active?(user.subscription) do
+      {:error, :out_of_likes, fields.reset_at}
+    else
+      if fields.passes >= fields.passes_limit and not Subscription.active?(user.subscription) do
+        {:error, :out_of_passes, fields.reset_at}
       else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
+        Repo.transaction(fn repo ->
+          with {_, _} <-
+                 Prospect
+                 |> where(profile_id: ^user.id, target_id: ^target.id)
+                 |> Repo.update_all(set: [completed: true]),
+               {:ok, item} <-
+                 %LikesAndPasses{}
+                 |> cast(
+                   %{
+                     profile_id: user.id,
+                     target_id: target.id,
+                     type: type,
+                     kind: kind
+                   },
+                   [:profile_id, :target_id, :type, :kind]
+                 )
+                 |> then(
+                   &if(get_field(&1, :profile_id) === get_field(&1, :target_id)) do
+                     add_error(&1, :user_id, "Cannot respond to yourself")
+                   else
+                     &1
+                   end
+                 )
+                 |> unsafe_validate_unique([:profile_id, :target_id, :kind], repo,
+                   error_key: :user_id,
+                   message: "already_responded"
+                 )
+                 |> Repo.insert(),
+               {:ok, _} <-
+                 user.profile
+                 |> change(
+                   %{}
+                   |> Map.put(queue_keys[types], user.profile[queue_keys[types]] + 1)
+                 )
+                 |> Repo.update(),
+               opposite_item <-
+                 LikesAndPasses.get(
+                   user_id: item.target_id,
+                   target_id: item.profile_id,
+                   type: type
+                 ),
+               match_kind = reduce_kind(item.kind, opposite_item[:kind]),
+               {:ok, opposite_item} <-
+                 if(is_nil(opposite_item),
+                   do: {:ok, nil},
+                   else:
+                     with true <- item.type === :like and opposite_item.type === :like,
+                          {:ok, _} <- create_match_conversation(user, target, match_kind),
+                          {:ok, _} <- deliver_match_email(target, user),
+                          :ok <-
+                            PushNotification.send(
+                              target,
+                              "It's a match!",
+                              if(match_kind == :love,
+                                do:
+                                  "#{User.display_name(user)} liked you back. Send them a message! 💞",
+                                else:
+                                  "#{User.display_name(user)} homied you back. Send them a message! ✌️"
+                              ),
+                              Application.fetch_env!(:flirtual, :frontend_origin)
+                              |> URI.merge("/" <> user.id)
+                              |> URI.to_string()
+                            ) do
+                       {:ok, opposite_item}
+                     else
+                       false -> {:ok, opposite_item}
+                       value -> value
+                     end
+                 ) do
+            %{
+              matched:
+                if not is_nil(opposite_item) do
+                  item.type === :like and opposite_item.type === :like
+                else
+                  false
+                end
+            }
+          else
+            {:error, reason} -> Repo.rollback(reason)
+            reason -> Repo.rollback(reason)
+          end
+        end)
       end
-    end)
+    end
   end
 
   def generate_query(%User{} = user, kind) do
@@ -363,7 +373,7 @@ defmodule Flirtual.Matchmaking do
     %{
       "explain" => false,
       "_source" => false,
-      "size" => 30,
+      "size" => 31,
       "query" => %{
         "function_score" => %{
           "query" => %{

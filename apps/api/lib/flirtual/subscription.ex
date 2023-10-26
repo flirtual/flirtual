@@ -8,13 +8,12 @@ defmodule Flirtual.Subscription do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.User.Profile
-  alias Flirtual.Stripe
-  alias Flirtual.Repo
   alias Flirtual.Plan
-  alias Flirtual.User
   alias Flirtual.Profiles
+  alias Flirtual.Repo
+  alias Flirtual.Stripe
   alias Flirtual.Subscription
+  alias Flirtual.User
 
   schema "subscriptions" do
     belongs_to(:user, User)

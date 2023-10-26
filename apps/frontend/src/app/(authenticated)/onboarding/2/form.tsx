@@ -170,7 +170,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 
 							return (
 								<>
-									<InputLabel {...field.labelProps}>Gender</InputLabel>
+									<InputLabel {...field.labelProps}>My gender</InputLabel>
 									<InputCheckboxList
 										{...field.props}
 										value={checkboxValue}
@@ -194,7 +194,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 										<InputAutocomplete
 											{...field.props}
 											limit={4}
-											placeholder="Select your genders..."
+											placeholder="Select your gender(s)..."
 											options={genders.map((gender) => ({
 												key: gender.id,
 												label: gender.name,

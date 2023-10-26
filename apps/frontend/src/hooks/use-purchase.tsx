@@ -48,7 +48,6 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	useEffect(() => {
 		void (async () => {
 			if (!user?.revenuecatId || !native) return;
-			console.log("store: before ready");
 
 			await Purchases.configure({
 				apiKey: platform === "ios" ? rcAppleKey : rcGoogleKey,

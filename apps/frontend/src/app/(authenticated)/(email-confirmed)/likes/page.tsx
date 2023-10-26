@@ -100,7 +100,7 @@ export default async function LikesPage() {
 														)}
 													/>
 													{user.profile.country && (
-														<CountryPill flagOnly code={user.profile.country} />
+														<CountryPill flagOnly id={user.profile.country} />
 													)}
 												</div>
 											</div>
