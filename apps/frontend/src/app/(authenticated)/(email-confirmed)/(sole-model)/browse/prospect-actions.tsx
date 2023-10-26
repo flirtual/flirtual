@@ -154,9 +154,7 @@ export const ProspectActions: FC<{
 	}, [tour]);
 
 	const respond = async (type: ProspectRespondType, _kind: ProspectKind) => {
-		if (pending.current || lastResponseTime.current > Date.now() - 1200) {
-			return;
-		}
+		if (pending.current || lastResponseTime.current > Date.now() - 1200) return;
 
 		pending.current = true;
 		lastResponseTime.current = Date.now();
@@ -252,12 +250,13 @@ export const ProspectActions: FC<{
 			setLastProfile(body);
 
 			await animation;
-			router.refresh();
 			pending.current = false;
+
+			router.refresh();
 		} catch (reason) {
 			toasts.addError(reason);
-			router.refresh();
 			pending.current = false;
+			router.refresh();
 		}
 	};
 
@@ -311,10 +310,10 @@ export const ProspectActions: FC<{
 				</div> */}
 					<div className="pointer-events-auto flex h-32 items-center gap-3 overflow-hidden rounded-xl pb-16 text-white-10">
 						<Tooltip>
-							<TooltipTrigger asChild>
+							<TooltipTrigger>
 								<button
 									className="flex h-fit max-w-[15vw] items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 disabled:cursor-not-allowed disabled:brightness-50"
-									disabled={!lastProfile || actionPending}
+									disabled={!lastProfile}
 									id="undo-button"
 									type="button"
 									onClick={respondReverse}
@@ -329,7 +328,6 @@ export const ProspectActions: FC<{
 								<TooltipTrigger asChild>
 									<button
 										className="flex max-w-[20vw] items-center justify-center gap-3 rounded-xl bg-brand-gradient px-6 py-4 shadow-brand-1 transition-all disabled:brightness-50 sm:w-40"
-										disabled={actionPending}
 										id="like-button"
 										type="button"
 										onClick={() => respond("like", kind)}
@@ -346,7 +344,6 @@ export const ProspectActions: FC<{
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<button
-									disabled={actionPending}
 									id="friend-button"
 									type="button"
 									className={twMerge(
@@ -367,7 +364,6 @@ export const ProspectActions: FC<{
 							<TooltipTrigger asChild>
 								<button
 									className="flex h-fit max-w-[15vw] items-center gap-3 rounded-xl bg-black-60 p-4 shadow-brand-1 transition-all disabled:brightness-50"
-									disabled={actionPending}
 									id="pass-button"
 									type="button"
 									onClick={() => respond("pass", kind)}
