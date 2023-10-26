@@ -1,11 +1,12 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import { twMerge } from "tailwind-merge";
+import { FC } from "react";
 
-import { withAttribute } from "~/api/attributes-server";
+import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { Pill } from "./pill";
-import { useAttributeList } from "~/hooks/use-attribute-list";
-import { FC } from "react";
 
 export interface CountryPillProps {
 	id: string;
@@ -43,4 +44,4 @@ export const CountryPill: FC<CountryPillProps> = ({
 			{!flagOnly && <span>{country.name}</span>}
 		</Pill>
 	);
-}
+};
