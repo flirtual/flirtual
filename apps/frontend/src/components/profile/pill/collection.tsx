@@ -5,8 +5,6 @@ import { FC } from "react";
 import { User } from "~/api/user";
 import { urls } from "~/urls";
 import { capitalize, groupBy } from "~/utilities";
-import { withSession } from "~/server-utilities";
-import { withAttribute } from "~/api/attributes-server";
 import { useSession } from "~/hooks/use-session";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 

@@ -1,14 +1,7 @@
 "use client";
 
-import {
-	CSSProperties,
-	ComponentProps,
-	FC,
-	forwardRef,
-	useEffect
-} from "react";
+import { CSSProperties, ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
-import { useAnimate, usePresence } from "framer-motion";
 
 import { yearsAgo } from "~/date";
 import { filterBy } from "~/utilities";

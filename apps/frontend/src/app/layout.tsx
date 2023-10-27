@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
 import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
@@ -41,10 +41,6 @@ export const metadata: Metadata = {
 	},
 	description:
 		"Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat.",
-	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
-		{ media: "(prefers-color-scheme: dark)", color: "#111111" }
-	],
 	manifest: "/manifest.json",
 	applicationName: "Flirtual",
 	appleWebApp: {
@@ -79,8 +75,17 @@ export const metadata: Metadata = {
 	},
 	itunes: {
 		appId: "6450485324"
-	},
-	viewport: "width=device-width, initial-scale=1, viewport-fit=cover"
+	}
+};
+
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	viewportFit: "cover",
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
+		{ media: "(prefers-color-scheme: dark)", color: "#111111" }
+	]
 };
 
 export default async function RootLayout({

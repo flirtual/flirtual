@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unknown-property */
 
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 import { notFound } from "next/navigation";
 
 import { filterBy, findBy } from "~/utilities";
