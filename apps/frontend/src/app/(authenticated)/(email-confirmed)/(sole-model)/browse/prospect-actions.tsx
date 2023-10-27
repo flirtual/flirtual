@@ -35,7 +35,6 @@ export const ProspectActions: FC<{
 	const toasts = useToast();
 	const router = useRouter();
 
-	const [actionPending, setActionPending] = useState(false);
 	const [actionDialog, setActionDialog] = useState<{
 		message: string;
 		resetAt?: string;
@@ -240,7 +239,6 @@ export const ProspectActions: FC<{
 					}
 				}
 
-				setActionPending(false);
 				router.refresh();
 				pending.current = false;
 
@@ -249,8 +247,8 @@ export const ProspectActions: FC<{
 
 			setLastProfile(body);
 
-			await animation;
 			pending.current = false;
+			await animation;
 
 			router.refresh();
 		} catch (reason) {
@@ -262,7 +260,6 @@ export const ProspectActions: FC<{
 
 	const respondReverse = useCallback(async () => {
 		if (!lastProfile) return;
-		setActionPending(true);
 		const { userId, kind } = lastProfile;
 
 		await api.matchmaking
@@ -272,8 +269,6 @@ export const ProspectActions: FC<{
 			.catch(toasts.addError)
 			.finally(() => {
 				setLastProfile(null);
-				setActionPending(false);
-
 				router.refresh();
 			});
 	}, [router, lastProfile, toasts.addError]);
