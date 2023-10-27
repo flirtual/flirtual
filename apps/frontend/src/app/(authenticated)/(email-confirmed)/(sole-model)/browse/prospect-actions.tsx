@@ -249,7 +249,6 @@ export const ProspectActions: FC<{
 			setLastProfile(body);
 
 			pending.current = false;
-			await animation;
 
 			router.refresh();
 		} catch (reason) {
