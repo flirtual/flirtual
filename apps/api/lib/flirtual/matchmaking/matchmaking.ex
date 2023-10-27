@@ -86,16 +86,17 @@ defmodule Flirtual.Matchmaking do
     |> Map.put(queue_fields(kind)[:passes], 0)
   end
 
+  def should_reset?(reset_at) do
+    reset_at === nil or
+      DateTime.compare(reset_at, DateTime.utc_now()) == :lt
+  end
+
   def queue_information(%User{} = user, kind) do
     {:ok, existing_next_prospects} = next_prospects(user, kind)
     fields = get_queue_fields(user.profile, kind)
-    reset_at = fields.reset_at
 
     {:ok, next_prospects} =
-      if(
-        reset_at === nil or
-          DateTime.compare(reset_at, DateTime.utc_now()) == :lt or
-          existing_next_prospects == [],
+      if(existing_next_prospects == [],
         do: compute_next_prospects(user, kind),
         else: {:ok, existing_next_prospects}
       )
@@ -128,7 +129,6 @@ defmodule Flirtual.Matchmaking do
   end
 
   defp compute_next_prospects(user, kind) do
-    %{reset_at: _reset_at} = get_queue_fields(user.profile, kind)
     query = generate_query(user, kind)
 
     Repo.transaction(fn ->
@@ -136,7 +136,7 @@ defmodule Flirtual.Matchmaking do
            prospects = Enum.map(resp["hits"]["hits"], &{&1["_id"], &1["_score"]}),
            prospects =
              User
-             |> where([user], user.id in ^Enum.map(prospects, &elem(&1, 0)))
+             |> where([user], user.id in ^Enum.map(prospects, &elem(&1, 0)) and user.visible)
              |> select([user], user.id)
              |> Repo.all()
              |> Enum.map(fn user_id ->
@@ -154,17 +154,15 @@ defmodule Flirtual.Matchmaking do
                    score: score
                  }
                end)
-             ),
-           {:ok, _} <-
-             change(
-               user.profile,
-               reset_queue_fields(kind)
-             )
-             |> Repo.update() do
-        prospects
-        |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
-        |> Enum.map(&elem(&1, 0))
-        |> Enum.slice(0, 2)
+             ) do
+        value =
+          prospects
+          |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
+          |> Enum.map(&elem(&1, 0))
+          |> Enum.slice(0, 2)
+
+        log(:debug, ["computing", user.id, kind], value)
+        value
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
@@ -255,12 +253,30 @@ defmodule Flirtual.Matchmaking do
     target = Keyword.fetch!(opts, :target)
 
     type = Keyword.fetch!(opts, :type)
+    types = if type == :like, do: :likes, else: :passes
+
     kind = Keyword.get(opts, :kind, :love)
     mode = Keyword.get(opts, :mode, :love)
 
-    types = if type == :like, do: :likes, else: :passes
     queue_keys = queue_fields(mode)
-    fields = get_queue_fields(user.profile, mode)
+    existing_fields = get_queue_fields(user.profile, mode)
+
+    profile =
+      if should_reset?(existing_fields.reset_at) do
+        fields = reset_queue_fields(mode)
+
+        {:ok, profile} =
+          user.profile
+          |> change(fields)
+          |> Repo.update()
+
+        log(:info, ["reset", user.id, mode], fields)
+        profile
+      else
+        user.profile
+      end
+
+    fields = get_queue_fields(profile, mode)
 
     if type == :like and fields.likes >= fields.likes_limit and
          not Subscription.active?(user.subscription) do
@@ -298,10 +314,10 @@ defmodule Flirtual.Matchmaking do
                  )
                  |> Repo.insert(),
                {:ok, _} <-
-                 user.profile
+                 profile
                  |> change(
                    %{}
-                   |> Map.put(queue_keys[types], user.profile[queue_keys[types]] + 1)
+                   |> Map.put(queue_keys[types], profile[queue_keys[types]] + 1)
                  )
                  |> Repo.update(),
                opposite_item <-

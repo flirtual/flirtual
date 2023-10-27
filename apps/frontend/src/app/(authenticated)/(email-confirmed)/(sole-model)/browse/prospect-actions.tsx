@@ -23,6 +23,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 import { useTour } from "~/hooks/use-tour";
+import { useLocation } from "~/hooks/use-location";
 
 import { Countdown } from "./countdown";
 
@@ -45,6 +46,12 @@ export const ProspectActions: FC<{
 
 	const pending = useRef(false);
 	const lastResponseTime = useRef(0);
+
+	const location = useLocation();
+
+	useEffect(() => {
+		setActionDialog(null);
+	}, [location.href]);
 
 	const tour = useTour(
 		"browsing",
