@@ -75,7 +75,7 @@ export const SwitchButton: FC<SwitchButtonProps> = ({ Icon, ...props }) => {
 	const active = urlEqual(toAbsoluteUrl(props.href), location);
 
 	return (
-		<Link
+		<a
 			{...props}
 			className={twMerge(
 				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none",
@@ -85,7 +85,7 @@ export const SwitchButton: FC<SwitchButtonProps> = ({ Icon, ...props }) => {
 			)}
 		>
 			<Icon className="aspect-square h-6 sm:h-8" gradient={!active} />
-		</Link>
+		</a>
 	);
 };
 
