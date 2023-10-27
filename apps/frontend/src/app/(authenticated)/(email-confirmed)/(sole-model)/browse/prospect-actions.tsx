@@ -227,7 +227,8 @@ export const ProspectActions: FC<{
 					}
 					case "already_responded": {
 						router.refresh();
-						break;
+						pending.current = false;
+						return;
 					}
 					default: {
 						animation?.cancel();
