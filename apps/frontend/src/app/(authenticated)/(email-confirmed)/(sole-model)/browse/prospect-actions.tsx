@@ -165,8 +165,8 @@ export const ProspectActions: FC<{
 			userId: prospect.id
 		};
 
-		const doAnimation =
-			(type === "like" && likesLeft) || (type === "pass" && passesLeft);
+		const doAnimation = false;
+		// 	(type === "like" && likesLeft) || (type === "pass" && passesLeft);
 
 		window.scrollTo({ top: 0, behavior: "smooth" });
 
