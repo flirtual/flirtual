@@ -160,7 +160,7 @@ export const ProspectActions: FC<{
 	}, [tour]);
 
 	const respond = async (type: ProspectRespondType, _kind: ProspectKind) => {
-		if (pending.current || lastResponseTime.current > Date.now() - 1200) return;
+		if (pending.current || lastResponseTime.current > Date.now() - 800) return;
 
 		pending.current = true;
 		lastResponseTime.current = Date.now();
@@ -172,8 +172,8 @@ export const ProspectActions: FC<{
 			userId: prospect.id
 		};
 
-		const doAnimation = false;
-		// 	(type === "like" && likesLeft) || (type === "pass" && passesLeft);
+		const doAnimation =
+			(type === "like" && likesLeft) || (type === "pass" && passesLeft);
 
 		window.scrollTo({ top: 0, behavior: "smooth" });
 
