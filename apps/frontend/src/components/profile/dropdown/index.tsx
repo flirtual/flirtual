@@ -3,8 +3,8 @@ import {
 	FileJson,
 	Flag,
 	Gem,
-	MoreHorizontal,
 	Shield,
+	ShieldEllipsis,
 	Tags,
 	UserCircle2
 } from "lucide-react";
@@ -42,7 +42,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 			<DropdownMenuTrigger asChild>
 				<button className="w-fit cursor-pointer outline-none" type="button">
 					<span className="sr-only">Open menu</span>
-					<MoreHorizontal className="h-6 w-6" />
+					<ShieldEllipsis className="h-6 w-6" />
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="center" sideOffset={8}>
