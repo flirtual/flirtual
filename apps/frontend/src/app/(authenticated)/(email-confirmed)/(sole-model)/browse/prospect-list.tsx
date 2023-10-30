@@ -34,7 +34,7 @@ export const ProspectList: FC<ProspectListProps> = ({
 		<>
 			{current ? (
 				<>
-					<div className="relative">
+					<div className="relative max-w-full">
 						<Profile
 							className=""
 							id="current-profile"

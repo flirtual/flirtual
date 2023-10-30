@@ -30,7 +30,7 @@ export function SoleModelLayout({
 			<div
 				{...containerProps}
 				className={twMerge(
-					"flex w-full  grow flex-col items-center sm:justify-center sm:py-16 md:px-8",
+					"flex w-full max-w-screen-lg grow flex-col items-center sm:justify-center sm:py-16 md:px-8",
 					containerProps.className
 				)}
 			>
