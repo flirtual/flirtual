@@ -288,7 +288,7 @@ export const ProspectActions: FC<{
 	return (
 		<>
 			<div className="h-32 w-full dark:bg-black-70 sm:h-0">
-				<div className="pointer-events-none fixed bottom-0 left-0 flex w-full flex-col items-center justify-center gap-3 bg-gradient-to-b from-transparent to-black-90/50 px-2 py-8 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
+				<div className="pointer-events-none fixed bottom-0 left-0 flex w-full flex-col items-center justify-center gap-3 bg-gradient-to-b from-transparent to-black-90/30 px-2 py-8 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
 					{/* <div className="pointer-events-auto flex items-center gap-3 overflow-hidden rounded-xl text-white-10">
 					<Tooltip>
 						<LetterDialog>
@@ -310,7 +310,7 @@ export const ProspectActions: FC<{
 						<TooltipContent>0 envelopes</TooltipContent>
 					</Tooltip>
 				</div> */}
-					<div className="pointer-events-auto flex h-32 items-center gap-3 overflow-hidden rounded-xl pb-16 text-white-10">
+					<div className="pointer-events-auto my-16 flex items-center gap-3 overflow-hidden rounded-xl text-white-10 sm:my-8">
 						<Tooltip>
 							<TooltipTrigger>
 								<button

@@ -36,7 +36,7 @@ export function SoleModelLayout({
 			>
 				{children}
 			</div>
-			<Footer {...footer} />
+			<Footer className="sm:pb-36 lg:pb-20" {...footer} />
 			{mobileNavigation !== false && <MobileBarNavigation />}
 		</div>
 	);
