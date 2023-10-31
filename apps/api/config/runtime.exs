@@ -22,6 +22,10 @@ config :flirtual, Flirtual.Discord,
   webhook_moderation_actions: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_ACTIONS"),
   webhook_admin: System.fetch_env!("DISCORD_WEBHOOK_ADMIN")
 
+config :flirtual, Flirtual.Apple,
+  client_id: System.fetch_env!("APPLE_CLIENT_ID"),
+  client_secret: System.fetch_env!("APPLE_CLIENT_SECRET")
+
 config :flirtual, Flirtual.Talkjs,
   app_id: System.fetch_env!("TALKJS_APP_ID"),
   access_token: System.fetch_env!("TALKJS_ACCESS_TOKEN")

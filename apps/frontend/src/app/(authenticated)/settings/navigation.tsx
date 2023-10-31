@@ -12,7 +12,8 @@ import {
 	KeyIcon,
 	PencilSquareIcon,
 	SwatchIcon,
-	TagIcon
+	TagIcon,
+	UsersIcon
 } from "@heroicons/react/24/outline";
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
@@ -66,7 +67,18 @@ export const SettingsNavigation: FC = () => {
 					{/* <NavigationLink href={urls.settings.referral} Icon={GiftIcon}>
 						Refer a friend
 					</NavigationLink> */}
-					<NavigationLink href={urls.settings.appearance} Icon={SwatchIcon}>
+					<NavigationLink
+						newBadge
+						href={urls.settings.connections}
+						Icon={UsersIcon}
+					>
+						Connections
+					</NavigationLink>
+					<NavigationLink
+						newBadge
+						href={urls.settings.appearance}
+						Icon={SwatchIcon}
+					>
 						Appearance
 					</NavigationLink>
 					<NavigationLink href={urls.settings.privacy} Icon={EyeSlashIcon}>

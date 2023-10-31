@@ -120,6 +120,7 @@ export const urls = {
 		appearance: "/settings/appearance",
 		privacy: "/settings/privacy",
 		notifications: "/settings/notifications",
+		connections: "/settings/connections",
 		changeEmail: "/settings/change-email",
 		changePassword: "/settings/change-password",
 		deactivateAccount: "/settings/deactivate",

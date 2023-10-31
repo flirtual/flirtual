@@ -14,6 +14,7 @@ import { isInternalHref, toAbsoluteUrl } from "~/urls";
 
 export type NavigationLinkProps = {
 	children: string;
+	newBadge?: boolean;
 	Icon?: IconComponent;
 } & ({ href: string } | { onClick: () => void });
 
@@ -45,6 +46,18 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 			<div className="flex gap-2">
 				{Icon && <Icon className="w-6" />}
 				{children}
+				{"newBadge" in props && (
+					<span
+						className={twMerge(
+							"rounded-full px-2 pt-[0.4rem] text-xs font-bold leading-none text-white-20",
+							toAbsoluteUrl(props.href).pathname === pathname
+								? "bg-white-20 text-black-80"
+								: "bg-brand-gradient text-white-20 shadow-brand-1"
+						)}
+					>
+						NEW
+					</span>
+				)}
 			</div>
 			<NavIcon className="w-6" />
 		</Link>

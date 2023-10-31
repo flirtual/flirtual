@@ -6,10 +6,12 @@ defmodule FlirtualWeb.ConnectionController do
   import Ecto.Changeset
   import Flirtual.Utilities
 
-  alias Flirtual.Repo
   alias Flirtual.Connection
+  alias Flirtual.Repo
+  alias Flirtual.User
+  alias FlirtualWeb.SessionController
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   defp assign_state(conn, state) do
     conn |> put_session(:state, state)
@@ -53,40 +55,104 @@ defmodule FlirtualWeb.ConnectionController do
     end
   end
 
+  def delete(conn, %{"type" => type, "next" => next}) do
+    type = to_atom(type)
+
+    with :ok <- Connection.delete(conn.assigns[:session].user.id, type) do
+      conn |> redirect(external: next)
+    end
+  end
+
+  defp grant_next(conn, next \\ nil) do
+    next = if(next, do: next, else: get_session(conn, :next))
+
+    conn
+    |> delete_session(:state)
+    |> delete_session(:next)
+    |> redirect(external: next)
+  end
+
+  defp grant_error(conn, message) do
+    redirect(conn,
+      external:
+        Application.fetch_env!(:flirtual, :frontend_origin)
+        |> URI.merge(get_session(conn, :next) <> "?error=" <> message)
+        |> URI.to_string()
+    )
+  end
+
   def grant(conn, %{"type" => type, "code" => code, "state" => state}) do
-    user = conn.assigns[:session].user
     type = to_atom(type)
 
     with {:ok, provider} <- Connection.provider(type),
          {:ok, conn} <- validate_state(conn, state),
          {:ok, authorization} <- provider.exchange_code(code),
          {:ok, profile} <- provider.get_profile(authorization),
-         connection <- Connection.get(user.id, type),
-         {:ok, _} <-
-           Connection.changeset(connection || %Connection{}, profile)
-           |> change(%{user_id: user.id, type: type})
-           |> Repo.insert_or_update() do
-      next = get_session(conn, :next)
+         connection <- Connection.get(uid: profile.uid, type: type) do
+      user = conn.assigns[:session] && conn.assigns[:session].user
 
-      conn
-      |> delete_session(:state)
-      |> delete_session(:next)
-      |> redirect(external: next)
+      case {user, connection} do
+        {%User{} = user, nil} ->
+          %Connection{}
+          |> Connection.changeset(profile)
+          |> change(%{user_id: user.id, type: type})
+          |> Repo.insert!()
+
+          # remove legacy connections
+          if type == :discord do
+            user.profile
+            |> change(%{
+              discord: nil
+            })
+            |> Repo.update()
+          end
+
+          grant_next(conn)
+
+        {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id == user.id ->
+          grant_next(conn)
+
+        {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id != user.id ->
+          grant_error(
+            conn,
+            "This #{Connection.provider_name!(type)} account is already connected to a different Flirtual account."
+          )
+
+        {nil, %Connection{user: %User{banned_at: nil} = login_user}} ->
+          next = get_session(conn, :next)
+          {_, conn} = SessionController.create(conn, login_user)
+          grant_next(conn, next)
+
+        {nil, %Connection{user: %User{}}} ->
+          grant_error(conn, "Your account has been banned; check your email for details")
+
+        {nil, nil} ->
+          grant_error(
+            conn,
+            "No Flirtual account found for this #{Connection.provider_name!(type)} user."
+          )
+      end
     else
+      {:error, :unverified_email} ->
+        grant_error(
+          conn,
+          "Please verify your email with #{Connection.provider_name!(type)} and try again."
+        )
+
       {:error, :provider_not_found} ->
-        {:error, {:not_found, "Provider not found", %{type: type}}}
+        grant_error(conn, "Provider not found.")
 
       {:error, :not_supported} ->
-        {:error, {:bad_request, "Grant not supported", %{type: type}}}
+        grant_error(conn, "Grant not supported.")
 
       {:error, :invalid_grant} ->
-        {:error, {:bad_request, "Invalid grant", %{type: type}}}
+        grant_error(conn, "Invalid grant.")
 
       {:error, :upstream} ->
-        {:error, {:bad_request, "Upstream error", %{type: type}}}
+        grant_error(conn, "Upstream error.")
 
-      reason ->
-        reason
+      _ ->
+        grant_error(conn, "Internal Server Error.")
     end
   end
 end

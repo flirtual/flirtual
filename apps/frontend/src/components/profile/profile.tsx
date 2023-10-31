@@ -2,6 +2,7 @@
 
 import { CSSProperties, ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 
 import { yearsAgo } from "~/date";
 import { filterBy } from "~/utilities";
@@ -12,8 +13,7 @@ import { useSession } from "~/hooks/use-session";
 import { gradientTextColor } from "~/colors";
 
 import { InlineLink } from "../inline-link";
-import { VRChatIcon } from "../icons/brand/vrchat";
-import { DiscordIcon } from "../icons";
+import { VRChatOutlineIcon, DiscordIcon } from "../icons";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfileVerificationBadge } from "./verification-badge";
@@ -40,6 +40,10 @@ export const Profile: FC<ProfileProps> = (props) => {
 
 	if (user.relationship?.blocked) return <BlockedProfile user={user} />;
 	const myProfile = session.user.id === user.id;
+
+	const discordConnection = user.connections?.find(
+		(connection) => connection.type === "discord"
+	);
 
 	return (
 		<div
@@ -103,10 +107,24 @@ export const Profile: FC<ProfileProps> = (props) => {
 					<RelationActions direct={direct} user={user} />
 					{(user.profile.discord || user.profile.vrchat) && (
 						<div className="flex flex-col gap-2">
+							{discordConnection ? (
+								<div className="flex items-center gap-2">
+									<DiscordIcon className="h-6 w-6" />
+									Discord: <span>{discordConnection.displayName}</span>
+									<CheckBadgeIcon className="-ml-1 h-5 w-5 text-theme-2" />
+								</div>
+							) : (
+								user.profile.discord && (
+									<div className="flex items-center gap-2">
+										<DiscordIcon className="h-6 w-6" />
+										Discord: <span>{user.profile.discord}</span>
+									</div>
+								)
+							)}
 							{user.profile.vrchat && (
 								<div className="flex items-center gap-2">
 									<div className="w-6">
-										<VRChatIcon className="h-6 text-black-90" />
+										<VRChatOutlineIcon className="h-6 text-black-90" />
 									</div>
 									VRChat:{" "}
 									<InlineLink
@@ -116,12 +134,6 @@ export const Profile: FC<ProfileProps> = (props) => {
 									>
 										{user.profile.vrchat}
 									</InlineLink>
-								</div>
-							)}
-							{user.profile.discord && (
-								<div className="flex items-center gap-2">
-									<DiscordIcon className="h-6 w-6" />
-									Discord: <span>{user.profile.discord}</span>
 								</div>
 							)}
 						</div>

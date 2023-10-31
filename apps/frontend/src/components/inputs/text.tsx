@@ -11,6 +11,8 @@ import { IconComponent } from "../icons";
 
 export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
 	Icon?: IconComponent;
+	iconColor?: string;
+	connection?: boolean;
 	onChange?: React.Dispatch<string>;
 };
 
@@ -34,7 +36,13 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 			onClick={() => inputReference.current?.focus()}
 		>
 			{Icon && (
-				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">
+				<div
+					style={{ background: props.iconColor }}
+					className={twMerge(
+						"flex items-center justify-center bg-brand-gradient p-2 text-white-20",
+						props.connection && "h-12 w-14"
+					)}
+				>
 					<Icon className="h-7 w-7" />
 				</div>
 			)}

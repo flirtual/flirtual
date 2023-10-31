@@ -794,6 +794,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :subscription,
       :preferences,
       :profile,
+      :connections,
       :updated_at,
       :created_at
     ]

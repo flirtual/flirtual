@@ -10,6 +10,7 @@ import {
 } from "../exports";
 import { Subscription } from "../subscription";
 import { Attribute } from "../attributes";
+import { Connection } from "../connections";
 
 import { Profile } from "./profile/profile";
 import { Preferences } from "./preferences";
@@ -60,7 +61,7 @@ export type User = UuidModel &
 		profile: Profile;
 		subscription?: Subscription;
 		tags?: Array<UserTags>;
-		//connections?: Array<Connection>;
+		connections?: Array<Connection>;
 	};
 
 export function displayName(user: User) {

@@ -1,10 +1,15 @@
 "use client";
 
-import { PlusIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { FC } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
-import { Connection, ConnectionType } from "~/api/connections";
+import {
+	Connection,
+	ConnectionMetadata,
+	ConnectionType
+} from "~/api/connections";
 import { useLocation } from "~/hooks/use-location";
 
 export interface AddConnectionButtonProps {
@@ -12,23 +17,30 @@ export interface AddConnectionButtonProps {
 }
 
 const label = {
+	google: "Google",
+	apple: "Apple",
+	meta: "Meta",
 	discord: "Discord",
 	vrchat: "VRChat"
 };
 
-export const AddConnectionButton: FC<AddConnectionButtonProps> = ({ type }) => {
+export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
+	type
+}) => {
 	const location = useLocation();
+	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 
 	return (
-		<a
-			className="flex items-center gap-2 rounded-lg bg-brand-gradient px-4 py-2 text-white-20"
-			href={api.connections.authorizeUrl(type, location.href).href}
+		<Link
+			className="flex items-center justify-center gap-4 rounded-lg px-4 py-2 text-white-20 shadow-brand-1"
+			href={api.connections.authorizeUrl(type, location.href.split("?")[0])}
+			style={{ backgroundColor: color }}
 		>
+			<Icon className={twMerge("h-6 w-6", iconClassName)} />
 			<span className="font-montserrat text-lg font-semibold">
-				{label[type]}
+				Log in with {label[type]}
 			</span>
-			<PlusIcon className="h-5 w-5" strokeWidth={3} />
-		</a>
+		</Link>
 	);
 };
 

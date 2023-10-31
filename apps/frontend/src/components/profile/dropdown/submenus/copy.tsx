@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { FC, PropsWithChildren } from "react";
 
-import { ConnectionType, connectionTypeName } from "~/api/connections";
+import { ConnectionType, ConnectionMetadata } from "~/api/connections";
 import { User, displayName } from "~/api/user";
 import {
 	DropdownMenuItem,
@@ -94,7 +94,7 @@ export const ProfileDropdownCopySubmenu: FC<
 									key={type}
 									onClick={() => value && Clipboard.write({ string: value })}
 								>
-									{connectionTypeName[type]}
+									{ConnectionMetadata[type].label}
 								</DropdownMenuItem>
 							);
 						})}

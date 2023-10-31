@@ -13,23 +13,34 @@ defmodule Flirtual.Connection do
   alias Flirtual.User
 
   @providers %{
+    google: Flirtual.Google,
+    apple: Flirtual.Apple,
+    meta: Flirtual.Meta,
     discord: Flirtual.Discord,
     vrchat: Flirtual.VRChat
+  }
+
+  @provider_labels %{
+    google: "Google",
+    apple: "Apple",
+    meta: "Meta",
+    discord: "Discord",
+    vrchat: "VRChat"
   }
 
   @provider_types Map.keys(@providers)
 
   schema "connections" do
-    belongs_to :user, User
+    belongs_to(:user, User)
 
-    field :type, Ecto.Enum, values: @provider_types
-    field :uid, :string
+    field(:type, Ecto.Enum, values: @provider_types)
+    field(:uid, :string)
 
-    field :display_name, :string
-    field :avatar, :string
+    field(:display_name, :string)
+    field(:avatar, :string)
 
-    field :avatar_url, :string, virtual: true
-    field :url, :string, virtual: true
+    field(:avatar_url, :string, virtual: true)
+    field(:url, :string, virtual: true)
 
     timestamps()
   end
@@ -40,6 +51,16 @@ defmodule Flirtual.Connection do
 
   def provider(type) when type in @provider_types, do: {:ok, providers()[type]}
   def provider(_), do: {:error, :provider_not_found}
+
+  def provider_name(type) when type in @provider_types, do: {:ok, @provider_labels[type]}
+  def provider_name(_), do: {:error, :provider_not_found}
+
+  def provider_name!(type) do
+    case provider_name(type) do
+      {:ok, provider_name} -> provider_name
+      {:error, reason} -> raise reason
+    end
+  end
 
   def provider!(type) do
     case provider(type) do
@@ -61,10 +82,25 @@ defmodule Flirtual.Connection do
     |> Repo.one()
   end
 
+  def get(uid: uid, type: type) when type in @provider_types do
+    Connection
+    |> where(uid: ^uid, type: ^type)
+    |> preload(user: ^User.default_assoc())
+    |> Repo.one()
+  end
+
   def get(user_id, type) when is_uid(user_id) and type in @provider_types do
     Connection
     |> where(user_id: ^user_id, type: ^type)
     |> Repo.one()
+  end
+
+  def delete(user_id, type) when is_uid(user_id) and type in @provider_types do
+    case Connection |> where(user_id: ^user_id, type: ^type) |> Repo.delete_all() do
+      {_, nil} -> :ok
+      {:error, reason} -> {:error, reason}
+      reason -> reason
+    end
   end
 
   def list_available(%User{connections: []}), do: @provider_types

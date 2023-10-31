@@ -40,17 +40,9 @@ export const BiographyForm: FC = () => {
 					file: null,
 					src: image.url
 				})) as Array<ImageSetValue>,
-				biography: user.profile.biography || "",
-				vrchat: user.profile.vrchat || "",
-				discord: user.profile.discord || ""
+				biography: user.profile.biography || ""
 			}}
-			onSubmit={async ({
-				displayName,
-				biography,
-				discord,
-				vrchat,
-				...values
-			}) => {
+			onSubmit={async ({ displayName, biography, ...values }) => {
 				const [profile, images] = await Promise.all([
 					await api.user.profile.update(user.id, {
 						query: {
@@ -58,9 +50,7 @@ export const BiographyForm: FC = () => {
 						},
 						body: {
 							displayName,
-							biography: html(biography),
-							discord: discord.trim() || null,
-							vrchat: vrchat.trim() || null
+							biography: html(biography)
 						}
 					}),
 					await api.user.profile.images.update(user.id, {
@@ -68,7 +58,7 @@ export const BiographyForm: FC = () => {
 					})
 				]);
 
-				toasts.add("Saved biography & pictures");
+				toasts.add("Saved bio & pics");
 
 				await mutateSession({
 					...session,
@@ -124,46 +114,6 @@ export const BiographyForm: FC = () => {
 							</>
 						)}
 					</FormField>
-					<div className="flex flex-col gap-4">
-						<InputLabel hint="(optional)">
-							Add accounts to your profiles
-						</InputLabel>
-						<InputLabelHint className="-mt-3 text-sm">
-							People can see your accounts after you match, to help you meet up.
-						</InputLabelHint>
-						<div className="flex gap-4">
-							<FormField className="basis-64" name="vrchat">
-								{(field) => (
-									<>
-										<InputLabel {...field.labelProps}>VRChat</InputLabel>
-										<InputText {...field.props} />
-									</>
-								)}
-							</FormField>
-							<FormField className="basis-64" name="discord">
-								{(field) => (
-									<>
-										<InputLabel {...field.labelProps}>Discord</InputLabel>
-										<InputText {...field.props} />
-									</>
-								)}
-							</FormField>
-						</div>
-						{/* {availableConnections.length !== 0 && (
-							<div className="flex flex-wrap gap-4">
-								{availableConnections.map((type) => (
-									<AddConnectionButton key={type} type={type} />
-								))}
-							</div>
-						)}
-						{user.connections && (
-							<div className="flex flex-wrap gap-4">
-								{user.connections.map((connection) => (
-									<ConnectionItem {...connection} key={connection.type} />
-								))}
-							</div>
-						)} */}
-					</div>
 					<FormButton>Update</FormButton>
 				</>
 			)}

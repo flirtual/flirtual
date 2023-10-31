@@ -58,7 +58,7 @@ defmodule Flirtual.Discord do
           redirect_uri: redirect_url!(),
           state: state,
           response_type: "code",
-          scope: "identify",
+          scope: "identify email",
           prompt: "none"
         })
     )
@@ -102,13 +102,14 @@ defmodule Flirtual.Discord do
   def get_profile(authorization) do
     with {:ok, %HTTPoison.Response{body: body}} <-
            HTTPoison.get(
-             url("oauth2/@me"),
+             url("users/@me"),
              [{"authorization", authorization}]
            ),
-         {:ok, body} <- Poison.decode(body),
-         %{"user" => profile} <- body,
+         {:ok, profile} <- Poison.decode(body),
          %{
            "id" => id,
+           "email" => email,
+           "verified" => true,
            "username" => username,
            "discriminator" => discriminator,
            "avatar" => avatar
@@ -116,10 +117,15 @@ defmodule Flirtual.Discord do
       {:ok,
        %{
          uid: id,
-         display_name: "#{username}##{discriminator}",
+         email: email,
+         display_name:
+           if(discriminator == "0", do: username, else: "#{username}##{discriminator}"),
          avatar: avatar
        }}
     else
+      %{"verified" => false} ->
+        {:error, :unverified_email}
+
       reason ->
         log(:critical, [:get_profile], reason)
         {:error, :upstream}

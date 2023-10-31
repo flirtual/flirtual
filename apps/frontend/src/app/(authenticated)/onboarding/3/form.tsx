@@ -36,10 +36,7 @@ export const Onboarding3Form: React.FC = () => {
 					file: null,
 					src: image.url
 				})) as Array<ImageSetValue>,
-				biography: user.profile.biography || "",
-				vrchat: user.profile.vrchat || "",
-				discord: user.profile.discord || ""
-				// connectionsPrivacy: user.preferences?.privacy.connections ?? "matches"
+				biography: user.profile.biography || ""
 			}}
 			onSubmit={async (values) => {
 				await Promise.all([
@@ -49,19 +46,12 @@ export const Onboarding3Form: React.FC = () => {
 						},
 						body: {
 							biography: values.biography,
-							displayName: values.displayName,
-							discord: values.discord.trim() || null,
-							vrchat: values.vrchat.trim() || null
+							displayName: values.displayName
 						}
 					}),
 					await api.user.profile.images.update(user.id, {
 						body: values.images.map((image) => image.id).filter(Boolean)
 					})
-					// api.user.preferences.updatePrivacy(user.id, {
-					// 	body: {
-					// 		connections: values.connectionsPrivacy
-					// 	}
-					// })
 				]);
 
 				router.push(urls.onboarding(4));
@@ -109,54 +99,6 @@ export const Onboarding3Form: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<div className="flex flex-col gap-4">
-						<InputLabel hint="(optional)">
-							Add accounts to your profiles
-						</InputLabel>
-						<InputLabelHint className="-mt-3 text-sm">
-							People can see your accounts after you match, to help you meet up.
-						</InputLabelHint>
-						<div className="flex gap-4">
-							<FormField className="basis-64" name="vrchat">
-								{(field) => (
-									<>
-										<InputLabel {...field.labelProps}>VRChat</InputLabel>
-										<InputText {...field.props} />
-									</>
-								)}
-							</FormField>
-							<FormField className="basis-64" name="discord">
-								{(field) => (
-									<>
-										<InputLabel {...field.labelProps}>Discord</InputLabel>
-										<InputText {...field.props} />
-									</>
-								)}
-							</FormField>
-						</div>
-					</div>
-					{/* <div className="flex flex-col gap-2">
-						<InputLabel>Connect accounts</InputLabel>
-						<div className="flex flex-col gap-4">
-							<ConnectionButton Icon={DiscordIcon} iconClassName="bg-[#5865F2]">
-								Discord
-							</ConnectionButton>
-							<ConnectionButton Icon={LinkIcon} iconClassName="bg-black-70">
-								VRChat
-							</ConnectionButton>
-						</div>
-					</div>
-
-					<FormField name="connectionsPrivacy">
-						{(field) => (
-							<>
-								<InputLabel inline hint="Who can see your connected accounts?">
-									Connected account privacy
-								</InputLabel>
-								<InputPrivacySelect {...field.props} />
-							</>
-						)}
-					</FormField> */}
 					<FormButton>Next page</FormButton>
 				</>
 			)}
