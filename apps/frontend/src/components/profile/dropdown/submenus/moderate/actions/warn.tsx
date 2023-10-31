@@ -28,7 +28,11 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<DropdownMenuItem asChild onSelect={(event) => event.preventDefault()}>
+				<DropdownMenuItem
+					asChild
+					className="text-yellow-500"
+					onSelect={(event) => event.preventDefault()}
+				>
 					<button className="w-full gap-2" type="button">
 						<MailWarning className="h-5 w-5" />
 						Warn

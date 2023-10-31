@@ -1,5 +1,4 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { ShieldCheck } from "lucide-react";
+import { Search, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FC, PropsWithChildren } from "react";
@@ -36,7 +35,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 						className="gap-2"
 						href={urls.moderation.reports({ targetId: user.id })}
 					>
-						<MagnifyingGlassIcon className="h-5 w-5" />
+						<Search className="h-5 w-5" />
 						Created against user
 					</Link>
 				</DropdownMenuItem>
@@ -45,12 +44,16 @@ export const ProfileDropdownReportsSubmenu: FC<
 						className="gap-2"
 						href={urls.moderation.reports({ userId: user.id })}
 					>
-						<MagnifyingGlassIcon className="h-5 w-5" />
+						<Search className="h-5 w-5" />
 						Created by user
 					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem asChild disabled={session?.user.id === user.id}>
+				<DropdownMenuItem
+					asChild
+					className="text-green-500"
+					disabled={session?.user.id === user.id}
+				>
 					<button
 						className="inline-flex w-full gap-2"
 						type="button"

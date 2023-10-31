@@ -1,10 +1,10 @@
 "use client";
 
-import { PencilIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Pencil } from "lucide-react";
 
 import { IconComponent } from "../../icons";
 
@@ -69,7 +69,7 @@ export const Pill: React.FC<PillProps> = (props) => {
 						initial={{ opacity: 0 }}
 						transition={{ type: "spring" }}
 					>
-						<PencilIcon className=" h-4 w-4" />
+						<Pencil className=" h-4 w-4" />
 					</motion.div>
 				)}
 			</Element>

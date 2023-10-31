@@ -1,6 +1,6 @@
 "use client";
 
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React from "react";
@@ -23,7 +23,7 @@ export const SuccessMessage: React.FC = () => {
 						className="absolute right-0 top-0"
 						href={urls.subscription.default}
 					>
-						<XMarkIcon className="h-6 w-6" />
+						<X className="h-6 w-6" />
 					</Link>
 				</div>
 				<div className="flex flex-col">

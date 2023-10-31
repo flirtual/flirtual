@@ -1,4 +1,4 @@
-import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
+import { MoveRight } from "lucide-react";
 import Link, { LinkProps } from "next/link";
 import { twMerge } from "tailwind-merge";
 
@@ -12,7 +12,7 @@ export const FormAlternativeActionLink: React.FC<
 			props.className
 		)}
 	>
-		<ArrowLongRightIcon className="inline w-6 shrink-0" />
+		<MoveRight className="inline w-6 shrink-0" />
 		{children}
 	</Link>
 );

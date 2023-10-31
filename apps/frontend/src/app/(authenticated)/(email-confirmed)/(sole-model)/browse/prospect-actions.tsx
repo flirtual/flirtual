@@ -1,11 +1,11 @@
 /* eslint-disable require-atomic-updates */
 "use client";
 
-import { ArrowUturnLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { animate } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Undo2, X } from "lucide-react";
 
 import { api } from "~/api";
 import {
@@ -320,7 +320,7 @@ export const ProspectActions: FC<{
 									type="button"
 									onClick={respondReverse}
 								>
-									<ArrowUturnLeftIcon className="w-5" strokeWidth={3} />
+									<Undo2 className="w-5" strokeWidth={3} />
 								</button>
 							</TooltipTrigger>
 							<TooltipContent>Undo previous</TooltipContent>
@@ -370,7 +370,7 @@ export const ProspectActions: FC<{
 									type="button"
 									onClick={() => respond("pass", kind)}
 								>
-									<XMarkIcon className="w-5" strokeWidth={3} />
+									<X className="w-5" strokeWidth={3} />
 								</button>
 							</TooltipTrigger>
 							<TooltipContent>Pass profile</TooltipContent>

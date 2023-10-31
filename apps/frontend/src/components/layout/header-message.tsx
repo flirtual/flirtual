@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLongRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
+import { MoveRight, X } from "lucide-react";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -33,7 +33,7 @@ export const HeaderMessage: React.FC<
 				>
 					<div className="relative flex w-full max-w-screen-lg items-center justify-center px-8 py-4">
 						<div className="relative flex gap-4 font-montserrat leading-none sm:text-lg">
-							<ArrowLongRightIcon className="w-6 animate-bounce-x" />
+							<MoveRight className="w-6 animate-bounce-x" />
 							<span>{children}</span>
 						</div>
 						<button
@@ -41,7 +41,7 @@ export const HeaderMessage: React.FC<
 							type="button"
 							//onClick={() => setDismissMobile(true)}
 						>
-							<XMarkIcon className="w-6" strokeWidth={2} />
+							<X className="w-6" strokeWidth={2} />
 						</button>
 					</div>
 				</motion.div>

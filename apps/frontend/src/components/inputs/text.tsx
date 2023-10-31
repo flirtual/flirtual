@@ -1,9 +1,8 @@
 "use client";
 
-import { CalendarDaysIcon, EyeIcon } from "@heroicons/react/24/outline";
-import { EyeSlashIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { CalendarDays, Eye, EyeOff } from "lucide-react";
 
 import { omit } from "~/utilities";
 
@@ -26,9 +25,8 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 			: props.type || "text"
 		: "password";
 
-	const Icon =
-		props.Icon ?? (props.type === "date" ? CalendarDaysIcon : undefined);
-	const InputVisibleIcon = inputVisible ? EyeIcon : EyeSlashIcon;
+	const Icon = props.Icon ?? (props.type === "date" ? CalendarDays : undefined);
+	const InputVisibleIcon = inputVisible ? Eye : EyeOff;
 
 	return (
 		<div

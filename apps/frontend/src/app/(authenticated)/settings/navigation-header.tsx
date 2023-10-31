@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ChevronLeft, X } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -13,7 +13,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 }) => {
 	const query = useSearchParams();
 
-	const Icon = navigationInner ? ChevronLeftIcon : XMarkIcon;
+	const Icon = navigationInner ? ChevronLeft : X;
 	const returnTo = ensureRelativeUrl(
 		query.get("return") ??
 			(navigationInner ? urls.settings.list() : urls.browse())

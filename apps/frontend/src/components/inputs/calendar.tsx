@@ -1,14 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-	ChevronDoubleLeftIcon,
-	ChevronDoubleRightIcon,
-	ChevronDownIcon,
-	ChevronLeftIcon,
-	ChevronRightIcon
-} from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
+import {
+	ChevronDown,
+	ChevronLeft,
+	ChevronRight,
+	ChevronsLeft,
+	ChevronsRight
+} from "lucide-react";
 
 import { IconComponent } from "~/components/icons";
 
@@ -92,7 +92,7 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				type="button"
 			>
 				<span className="w-12">{props.children}</span>
-				<ChevronDownIcon className="h-4 w-4" strokeWidth={3} />
+				<ChevronDown className="h-4 w-4" strokeWidth={3} />
 			</button>
 			{visible && (
 				<InputOptionWindow
@@ -254,11 +254,11 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 				<div className="mb-4 flex items-center justify-between">
 					<div className="flex gap-2">
 						<CalendarButton
-							Icon={ChevronDoubleLeftIcon}
+							Icon={ChevronsLeft}
 							onClick={() => progressYear(-1)}
 						/>
 						<CalendarButton
-							Icon={ChevronLeftIcon}
+							Icon={ChevronLeft}
 							onClick={() => progressMonth(-1)}
 						/>
 					</div>
@@ -304,11 +304,11 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 					</div>
 					<div className="flex gap-2">
 						<CalendarButton
-							Icon={ChevronRightIcon}
+							Icon={ChevronRight}
 							onClick={() => progressMonth(1)}
 						/>
 						<CalendarButton
-							Icon={ChevronDoubleRightIcon}
+							Icon={ChevronsRight}
 							onClick={() => progressYear(1)}
 						/>
 					</div>

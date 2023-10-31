@@ -1,4 +1,4 @@
-import { CheckIcon } from "@heroicons/react/24/outline";
+import { Check } from "lucide-react";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -24,7 +24,7 @@ export const InputCheckbox: React.FC<InputCheckboxProps> = (props) => {
 					onChange(event.target.checked);
 				}}
 			/>
-			<CheckIcon
+			<Check
 				className="pointer-events-none absolute hidden h-6 w-6 text-white-20 peer-checked:block"
 				strokeWidth={3}
 			/>

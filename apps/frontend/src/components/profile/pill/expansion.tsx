@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useMemo, useState } from "react";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
+import { MoreHorizontal } from "lucide-react";
 
 import { User } from "~/api/user";
 import { Session } from "~/api/auth";
@@ -71,7 +71,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 		</>
 	) : (
 		<button type="button" onClick={() => setExpanded(true)}>
-			<EllipsisHorizontalIcon className="h-8 w-8" />
+			<MoreHorizontal className="h-8 w-8" />
 		</button>
 	);
 };

@@ -1,11 +1,6 @@
-import {
-	CheckIcon,
-	ExclamationCircleIcon,
-	ExclamationTriangleIcon,
-	InformationCircleIcon
-} from "@heroicons/react/24/outline";
 import { FC, PropsWithChildren, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
+import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
 
 import { capitalize } from "~/utilities";
 
@@ -28,10 +23,10 @@ const formMessageStyle: Record<FormMessageType, string> = {
 };
 
 const formMessageIcon: Record<FormMessageType, IconComponent> = {
-	error: ExclamationCircleIcon,
-	warning: ExclamationTriangleIcon,
-	success: CheckIcon,
-	informative: InformationCircleIcon
+	error: AlertCircle,
+	warning: AlertTriangle,
+	success: Check,
+	informative: Info
 };
 
 const formMessageSize: Record<FormMessageSize, string> = {
@@ -61,7 +56,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 				formMessageSize[size]
 			)}
 		>
-			<Icon className="mt-1 h-6 w-6 shrink-0" />
+			<Icon className="mt-0.5 h-6 w-6 shrink-0" />
 			<span>{children}</span>
 		</div>
 	);

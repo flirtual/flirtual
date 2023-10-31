@@ -1,23 +1,24 @@
 "use client";
 
-import {
-	AdjustmentsHorizontalIcon,
-	ArrowLeftOnRectangleIcon,
-	AtSymbolIcon,
-	BeakerIcon,
-	BellIcon,
-	ExclamationCircleIcon,
-	EyeSlashIcon,
-	FireIcon,
-	KeyIcon,
-	PencilSquareIcon,
-	SwatchIcon,
-	TagIcon,
-	UsersIcon
-} from "@heroicons/react/24/outline";
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { useSelectedLayoutSegment } from "next/navigation";
+import {
+	AtSign,
+	Bell,
+	Brain,
+	EyeOff,
+	Flame,
+	KeyRound,
+	LogOut,
+	Paintbrush,
+	PenSquare,
+	Skull,
+	SlidersHorizontal,
+	Tag,
+	UserX,
+	Users
+} from "lucide-react";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
@@ -46,60 +47,57 @@ export const SettingsNavigation: FC = () => {
 				<NavigationCategory name="Profile">
 					<NavigationLink
 						href={urls.settings.matchmaking()}
-						Icon={AdjustmentsHorizontalIcon}
+						Icon={SlidersHorizontal}
 					>
 						Matchmaking
 					</NavigationLink>
-					<NavigationLink href={urls.settings.bio} Icon={PencilSquareIcon}>
+					<NavigationLink href={urls.settings.bio} Icon={PenSquare}>
 						Bio & pics
 					</NavigationLink>
-					<NavigationLink href={urls.settings.tags()} Icon={TagIcon}>
+					<NavigationLink href={urls.settings.tags()} Icon={Tag}>
 						Info & tags
 					</NavigationLink>
-					<NavigationLink href={urls.settings.personality} Icon={BeakerIcon}>
+					<NavigationLink href={urls.settings.personality} Icon={Brain}>
 						Personality
 					</NavigationLink>
-					<NavigationLink href={urls.settings.nsfw} Icon={FireIcon}>
+					<NavigationLink href={urls.settings.nsfw} Icon={Flame}>
 						NSFW
 					</NavigationLink>
 				</NavigationCategory>
 				<NavigationCategory name="Account">
-					{/* <NavigationLink href={urls.settings.referral} Icon={GiftIcon}>
+					{/* <NavigationLink href={urls.settings.referral} Icon={Gift}>
 						Refer a friend
 					</NavigationLink> */}
 					<NavigationLink
 						newBadge
 						href={urls.settings.connections}
-						Icon={UsersIcon}
+						Icon={Users}
 					>
 						Connections
 					</NavigationLink>
 					<NavigationLink
 						newBadge
 						href={urls.settings.appearance}
-						Icon={SwatchIcon}
+						Icon={Paintbrush}
 					>
 						Appearance
 					</NavigationLink>
-					<NavigationLink href={urls.settings.privacy} Icon={EyeSlashIcon}>
+					<NavigationLink href={urls.settings.privacy} Icon={EyeOff}>
 						Privacy
 					</NavigationLink>
-					<NavigationLink href={urls.settings.notifications} Icon={BellIcon}>
+					<NavigationLink href={urls.settings.notifications} Icon={Bell}>
 						Notifications
 					</NavigationLink>
-					<NavigationLink href={urls.settings.changeEmail} Icon={AtSymbolIcon}>
+					<NavigationLink href={urls.settings.changeEmail} Icon={AtSign}>
 						Change email
 					</NavigationLink>
-					<NavigationLink href={urls.settings.changePassword} Icon={KeyIcon}>
+					<NavigationLink href={urls.settings.changePassword} Icon={KeyRound}>
 						Change password
 					</NavigationLink>
-					<NavigationLink
-						href={urls.settings.deactivateAccount}
-						Icon={ExclamationCircleIcon}
-					>
+					<NavigationLink href={urls.settings.deactivateAccount} Icon={Skull}>
 						Deactivate account
 					</NavigationLink>
-					<NavigationLink Icon={ArrowLeftOnRectangleIcon} onClick={logout}>
+					<NavigationLink Icon={LogOut} onClick={logout}>
 						Logout
 					</NavigationLink>
 				</NavigationCategory>

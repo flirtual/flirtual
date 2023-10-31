@@ -8,10 +8,9 @@ import {
 } from "@tanstack/react-table";
 import useSWR from "swr";
 import { FC, useDeferredValue, useEffect, useState } from "react";
-import { Eye, EyeOff, Gem } from "lucide-react";
+import { Eye, EyeOff, Gem, Search } from "lucide-react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import { User, displayName } from "~/api/user";
 import { ModelCard } from "~/components/model-card";
@@ -254,7 +253,7 @@ export const SearchView: React.FC = () => {
 			<div className="flex flex-col gap-4">
 				<div className="w-96">
 					<InputText
-						Icon={MagnifyingGlassIcon}
+						Icon={Search}
 						placeholder="Search"
 						value={search}
 						onChange={setSearch}

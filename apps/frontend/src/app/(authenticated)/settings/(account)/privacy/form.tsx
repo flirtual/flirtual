@@ -1,6 +1,6 @@
 "use client";
 
-import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { HelpCircle } from "lucide-react";
 
 import { api } from "~/api";
 import { Form } from "~/components/forms";
@@ -86,7 +86,7 @@ export const PrivacyForm: React.FC = () => {
 												className="flex w-fit items-center gap-2"
 												href={urls.resources.privacyPolicy}
 											>
-												<QuestionMarkCircleIcon className="w-4 shrink-0" />
+												<HelpCircle className="w-4 shrink-0" />
 												<span>Learn more</span>
 											</InlineLink>
 										</InputLabelHint>

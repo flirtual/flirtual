@@ -2,7 +2,7 @@
 
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { ImagePlus } from "lucide-react";
 
 import { ArrangeableImage, ArrangeableImageProps } from "./arrangeable-image";
 
@@ -43,7 +43,7 @@ export const ArrangeableImageSet: React.FC<{
 					htmlFor={inputId}
 					tabIndex={0}
 				>
-					<PlusIcon className="h-10 w-10 text-white-20" />
+					<ImagePlus className="h-10 w-10 text-white-20" />
 				</label>
 			</div>
 		</DndProvider>

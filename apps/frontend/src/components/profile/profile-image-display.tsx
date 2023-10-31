@@ -1,15 +1,10 @@
 "use client";
 
-import {
-	ChevronLeftIcon,
-	ChevronRightIcon,
-	TrashIcon
-} from "@heroicons/react/24/solid";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
+import { ChevronLeft, ChevronRight, Search, Trash2, X } from "lucide-react";
 
 import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
@@ -122,7 +117,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<button type="button" onClick={() => reverseSearch(image.url)}>
-							<MagnifyingGlassIcon className="h-5 w-5" strokeWidth={2} />
+							<Search className="h-5 w-5" strokeWidth={2} />
 						</button>
 					</TooltipTrigger>
 					<TooltipContent>Search image</TooltipContent>
@@ -141,7 +136,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 									.catch(toasts.addError);
 							}}
 						>
-							<TrashIcon className="h-5 w-5" />
+							<Trash2 className="h-5 w-5" />
 						</button>
 					</TooltipTrigger>
 					<TooltipContent>Remove image</TooltipContent>
@@ -224,14 +219,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							type="button"
 							onClick={() => set(-1)}
 						>
-							<ChevronLeftIcon className="h-8 w-8 fill-white-10 drop-shadow" />
+							<ChevronLeft className="h-8 w-8 text-white-10 drop-shadow" />
 						</button>
 						<button
 							className="flex h-full grow items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
 							type="button"
 							onClick={() => set(1)}
 						>
-							<ChevronRightIcon className="h-8 w-8 fill-white-10 drop-shadow" />
+							<ChevronRight className="h-8 w-8 text-white-10 drop-shadow" />
 						</button>
 					</div>
 				)}
@@ -254,11 +249,11 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								onClick={(event) => event.stopPropagation()}
 							>
 								<button
-									className="absolute right-0 m-4 brightness-75 hover:brightness-100"
+									className="absolute right-0 z-10 m-4 opacity-75 hover:opacity-100"
 									type="button"
 									onClick={() => setExpandedImage(false)}
 								>
-									<XMarkIcon className="h-6 w-6" />
+									<X className="h-6 w-6" />
 								</button>
 								<div className="relative aspect-square w-auto md:h-screen md:max-h-[80vh]">
 									<SingleImage

@@ -1,10 +1,10 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { ChevronLeftIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { FC, Suspense, useLayoutEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { ChevronLeft, X } from "lucide-react";
 
 import { urls } from "~/urls";
 import { useConversations } from "~/hooks/use-conversations";
@@ -21,7 +21,7 @@ export interface ConversationAsideProps {
 
 export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const { activeConversationId } = props;
-	const HeaderIcon = activeConversationId ? ChevronLeftIcon : XMarkIcon;
+	const HeaderIcon = activeConversationId ? ChevronLeft : X;
 
 	const { data, loadMore } = useConversations();
 	const [loadMoreReference, loadMoreInView] = useInView();

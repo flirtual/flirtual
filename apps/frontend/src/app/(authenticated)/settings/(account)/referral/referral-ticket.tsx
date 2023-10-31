@@ -1,14 +1,12 @@
 "use client";
 
-import { ArrowUpOnSquareIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { Slot } from "@radix-ui/react-slot";
 
+import { ShareIcon } from "~/components/icons/share";
 import { FlirtualMark } from "~/components/mark";
-import { useDevice } from "~/hooks/use-device";
 import { useShare } from "~/hooks/use-share";
 
 export const ReferralTicket: React.FC<{ code: string }> = ({ code }) => {
-	const { platform } = useDevice();
 	const share = useShare();
 
 	return (
@@ -28,11 +26,7 @@ export const ReferralTicket: React.FC<{ code: string }> = ({ code }) => {
 					}}
 				>
 					<div className="flex justify-center gap-1.5 text-white-10">
-						{platform === "android" ? (
-							<ShareIcon className="h-6 self-center" />
-						) : (
-							<ArrowUpOnSquareIcon className="h-6" />
-						)}
+						<ShareIcon className="mt-0.5 h-6" />
 						<span className="select-none font-montserrat text-lg font-semibold uppercase">
 							Share
 						</span>

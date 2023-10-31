@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FlagIcon } from "@heroicons/react/24/solid";
+import { Flag } from "lucide-react";
 
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
@@ -39,7 +39,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 					<TooltipTrigger asChild>
 						<DialogTrigger asChild>
 							<button className="w-fit gap-2" type="button">
-								<FlagIcon className="h-5 w-5" />
+								<Flag className="h-5 w-5" />
 							</button>
 						</DialogTrigger>
 					</TooltipTrigger>

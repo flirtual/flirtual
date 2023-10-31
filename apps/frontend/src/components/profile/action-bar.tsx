@@ -1,8 +1,8 @@
 "use client";
 
-import { FlagIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { FC, Suspense, useState } from "react";
+import { Ban, Flag } from "lucide-react";
 
 import { User, displayName } from "~/api/user";
 import { api } from "~/api";
@@ -78,7 +78,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 													await api.user;
 												}}
 											>
-												<NoSymbolIcon className="h-full w-full" />
+												<Ban className="h-full w-full" />
 											</button>
 										</AlertDialogTrigger>
 									</TooltipTrigger>
@@ -125,7 +125,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 									<TooltipTrigger asChild>
 										<DialogTrigger asChild>
 											<button className="w-full gap-2" type="button">
-												<FlagIcon className="h-6 w-6" />
+												<Flag className="h-6 w-6" />
 											</button>
 										</DialogTrigger>
 									</TooltipTrigger>

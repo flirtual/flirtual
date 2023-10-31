@@ -1,12 +1,13 @@
 "use client";
 
-import { PencilIcon, ShareIcon } from "@heroicons/react/24/solid";
+import { Pencil } from "lucide-react";
 
 import { User } from "~/api/user";
 import { toAbsoluteUrl, urls } from "~/urls";
 import { useShare } from "~/hooks/use-share";
 
 import { Button, ButtonLink } from "../button";
+import { ShareIcon } from "../icons/share";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const share = useShare();
@@ -16,7 +17,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 			<ButtonLink
 				className="w-1/2 text-theme-overlay"
 				href={urls.settings.bio}
-				Icon={PencilIcon}
+				Icon={Pencil}
 				size="sm"
 			>
 				Edit

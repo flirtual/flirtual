@@ -2,8 +2,6 @@
 
 import * as Sentry from "@sentry/nextjs";
 import { Toast as NativeToast } from "@capacitor/toast";
-import { CheckIcon } from "@heroicons/react/24/outline";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import {
 	createContext,
@@ -14,6 +12,7 @@ import {
 	useState
 } from "react";
 import { twMerge } from "tailwind-merge";
+import { AlertTriangle, Check } from "lucide-react";
 
 import { useDevice } from "./use-device";
 
@@ -50,7 +49,7 @@ export function useToast() {
 }
 
 const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
-	const Icon = toast.type === "success" ? CheckIcon : ExclamationTriangleIcon;
+	const Icon = toast.type === "success" ? Check : AlertTriangle;
 
 	return (
 		<motion.button

@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	ArrowTopRightOnSquareIcon,
-	ChevronRightIcon,
-	LinkIcon
-} from "@heroicons/react/24/outline";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
@@ -24,12 +20,6 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 }) => {
 	const pathname = usePathname();
 	const Icon = props.Icon;
-	const NavIcon =
-		!isInternalHref("href" in props ? props.href : "/") || "onClick" in props
-			? ArrowTopRightOnSquareIcon
-			: props.href.startsWith("/settings")
-			? ChevronRightIcon
-			: LinkIcon;
 
 	return "href" in props ? (
 		<Link
@@ -59,7 +49,7 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 					</span>
 				)}
 			</div>
-			<NavIcon className="w-6" />
+			<ChevronRight className="w-6 shrink-0" />
 		</Link>
 	) : (
 		<button
@@ -69,7 +59,7 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 		>
 			{Icon && <Icon className="w-6 shrink-0" />}
 			<span className="w-full">{children}</span>
-			<NavIcon className="w-6" />
+			<ChevronRight className="w-6 shrink-0" />
 		</button>
 	);
 };

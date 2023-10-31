@@ -1,7 +1,7 @@
 "use client";
 
-import { SparklesIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
+import { Sparkles } from "lucide-react";
 
 import { User, displayName } from "~/api/user";
 import { urls } from "~/urls";
@@ -86,7 +86,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 	if (relationship.likedMe)
 		return (
 			<div className="flex items-center gap-3 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
-				<SparklesIcon className="h-6 w-6 shrink-0 text-theme-overlay" />
+				<Sparkles className="h-6 w-6 shrink-0 text-theme-overlay" />
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
 					{`${displayName(user)} ${
 						relationship.likedMe === "love" ? "liked" : "homied"

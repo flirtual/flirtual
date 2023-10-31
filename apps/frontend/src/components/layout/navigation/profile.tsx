@@ -1,16 +1,21 @@
 "use client";
 
-import {
-	ShieldExclamationIcon,
-	PresentationChartLineIcon
-} from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import {
+	Download,
+	LineChart,
+	Search,
+	Settings,
+	ShieldAlert,
+	Sparkles,
+	VenetianMask
+} from "lucide-react";
 
 import { api } from "~/api";
-import { IconComponent } from "~/components/icons";
+import { DiscordOutlineIcon } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
@@ -29,13 +34,9 @@ type ProfileNavigationItemProps = React.PropsWithChildren<
 	)
 >;
 
-type ProfileNavigationItemDividerProps = React.PropsWithChildren<
-	{ className?: string } & { Icon?: IconComponent }
->;
-
 const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 	const className = twMerge(
-		"w-full text-left font-montserrat font-semibold hover:text-theme-2",
+		"flex w-full items-center gap-5 py-2 text-left font-montserrat text-lg font-semibold hover:text-theme-2",
 		props.className
 	);
 
@@ -43,23 +44,6 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 		<Link {...props} className={className} />
 	) : (
 		<button {...props} className={className} type="button" />
-	);
-};
-
-const ProfileNavigationItemDivider: React.FC<
-	ProfileNavigationItemDividerProps
-> = (props) => {
-	const className = twMerge(
-		"relative flex items-center gap-4",
-		props.className
-	);
-	return (
-		<div className={className}>
-			{props.Icon && (
-				<props.Icon className="absolute -left-10 h-5 w-5 shrink-0" />
-			)}
-			<hr className="w-full border-t-2 border-white-40" />
-		</div>
 	);
 };
 
@@ -116,7 +100,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 				{visible && (
 					<motion.div
 						animate={{ opacity: 1 }}
-						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom)+0.5em)*-1)] z-10 flex w-44 select-none flex-col-reverse overflow-hidden rounded-3xl rounded-b-none bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom)+1.15rem)] text-black-80 shadow-brand-1 sm:-top-2 sm:bottom-inherit sm:flex-col sm:rounded-3xl sm:pb-4"
+						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom)+0.5em)*-1)] z-10 flex w-44 select-none flex-col-reverse overflow-hidden rounded-3xl rounded-b-none bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom)+1.15rem)] pt-3 text-black-80 shadow-brand-1 sm:-top-2 sm:bottom-inherit sm:flex-col sm:rounded-3xl sm:pb-3 sm:pt-4"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementReference}
@@ -126,50 +110,57 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							href={urls.user.me}
 						>
 							<UserAvatar
-								className="h-8 w-8 scale-125 rounded-full transition-transform group-hocus:brightness-90"
+								className="mt-2 h-8 w-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 sm:mb-2 sm:mt-0"
 								height={128}
 								user={user}
 								width={128}
 							/>
-							<span className="ml-2 font-montserrat font-semibold">
+							<span className="pb-1 pl-2 pt-2 font-montserrat text-lg font-semibold sm:pb-2 sm:pt-1">
 								Profile
 							</span>
 						</Link>
-						<div className="flex flex-col-reverse gap-2 p-2 pb-1 pl-12 sm:flex-col sm:pb-2 sm:pt-1">
+						<div className="flex flex-col-reverse px-1 sm:flex-col">
 							<ProfileNavigationItem
 								href={
 									isDesktop ? urls.settings.matchmaking() : urls.settings.list()
 								}
 							>
+								<Settings className="h-6 w-6" />
 								Settings
 							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.subscription.default}>
+								<Sparkles className="h-6 w-6" />
 								Premium
 							</ProfileNavigationItem>
 							<ProfileNavigationCannyButton />
+							<ProfileNavigationItem href={urls.socials.discord}>
+								<DiscordOutlineIcon className="h-6 w-6" />
+								Discord
+							</ProfileNavigationItem>
 							<ProfileNavigationItem
 								className="native:hidden"
 								href={urls.resources.download}
 							>
+								<Download className="h-6 w-6" />
 								Get app
 							</ProfileNavigationItem>
 							{user.tags?.includes("moderator") && (
 								<>
-									<ProfileNavigationItemDivider Icon={ShieldExclamationIcon} />
+									<hr className="my-2 w-full border-t-2 border-white-40" />
 									<ProfileNavigationItem href={urls.moderation.reports()}>
+										<ShieldAlert className="h-6 w-6" />
 										Reports
 									</ProfileNavigationItem>
 									<ProfileNavigationItem href={urls.moderation.search}>
+										<Search className="h-6 w-6" />
 										Search
 									</ProfileNavigationItem>
 								</>
 							)}
 							{user.tags?.includes("admin") && (
 								<>
-									<ProfileNavigationItemDivider
-										Icon={PresentationChartLineIcon}
-									/>
 									<ProfileNavigationItem href={urls.admin.stats}>
+										<LineChart className="h-6 w-6" />
 										Stats
 									</ProfileNavigationItem>
 								</>
@@ -181,7 +172,8 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 										await mutateSession(session);
 									}}
 								>
-									Revoke Sudo
+									<VenetianMask className="h-6 w-6" />
+									Unsudo
 								</ProfileNavigationItem>
 							)}
 						</div>

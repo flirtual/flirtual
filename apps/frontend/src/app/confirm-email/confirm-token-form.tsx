@@ -1,11 +1,7 @@
 "use client";
+import { AlertCircle, CheckCircle2, HelpCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import {
-	CheckCircleIcon,
-	ExclamationCircleIcon,
-	QuestionMarkCircleIcon
-} from "@heroicons/react/24/solid";
 
 import { api } from "~/api/";
 import { Form, FormButton } from "~/components/forms";
@@ -51,10 +47,10 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 
 	const Icon =
 		confirmSuccess === null
-			? QuestionMarkCircleIcon
+			? HelpCircle
 			: confirmSuccess
-			? CheckCircleIcon
-			: ExclamationCircleIcon;
+			? CheckCircle2
+			: AlertCircle;
 
 	return (
 		<>

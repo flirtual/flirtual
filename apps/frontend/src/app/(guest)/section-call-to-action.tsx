@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronDown } from "lucide-react";
 
 import { urls } from "~/urls";
 import { FlirtualLogo } from "~/components/logo";
@@ -14,7 +14,7 @@ export const SectionCallToAction: React.FC = () => (
 		className="relative flex flex-col items-center justify-center font-montserrat"
 		id="call-to-action"
 	>
-		<div className="z-10 flex flex-col items-center px-8 py-16 md:px-16">
+		<div className="z-10 flex flex-col items-center px-8 pb-12 md:px-16">
 			<FlirtualLogo />
 			<h1 className="text-center text-2xl font-bold sm:text-4xl md:text-6xl">
 				The first VR dating app
@@ -36,7 +36,7 @@ export const SectionCallToAction: React.FC = () => (
 				document.querySelector("#avatar-profiles")?.scrollIntoView();
 			}}
 		>
-			<ChevronDownIcon className="h-12 w-12 animate-bounce" />
+			<ChevronDown className="h-12 w-12 animate-bounce" />
 		</button>
 	</SnapSection>
 );

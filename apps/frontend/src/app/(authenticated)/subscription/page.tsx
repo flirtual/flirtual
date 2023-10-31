@@ -1,4 +1,4 @@
-import { SparklesIcon } from "@heroicons/react/24/solid";
+import { Sparkles } from "lucide-react";
 
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
@@ -41,7 +41,7 @@ export default async function SubscriptionPage() {
 						</h1>
 						<div className="flex select-none flex-col">
 							<div className="flex items-center gap-2">
-								<SparklesIcon className="inline h-5 w-5" />
+								<Sparkles className="inline h-5 w-5" />
 								<span>{subscription.plan.name}</span>
 							</div>
 							<span className="ml-5 pl-2 text-sm text-black-30 dark:text-white-50">

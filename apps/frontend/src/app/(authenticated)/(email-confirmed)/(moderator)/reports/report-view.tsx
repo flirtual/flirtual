@@ -10,16 +10,14 @@ import {
 } from "react";
 import useSWR, { KeyedMutator } from "swr";
 import { twMerge } from "tailwind-merge";
-import {
-	ArrowTopRightOnSquareIcon,
-	ShieldCheckIcon
-} from "@heroicons/react/24/solid";
 import Link from "next/link";
 import {
-	CheckIcon,
-	ChevronDownIcon,
-	ChevronRightIcon
-} from "@heroicons/react/24/outline";
+	Check,
+	ChevronDown,
+	ChevronRight,
+	ExternalLink,
+	ShieldCheck
+} from "lucide-react";
 
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
@@ -63,7 +61,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	const { mutate } = useContext(ReportListContext);
 	const toasts = useToast();
 
-	const CollapseIcon = collapsed ? ChevronRightIcon : ChevronDownIcon;
+	const CollapseIcon = collapsed ? ChevronRight : ChevronDown;
 
 	const activeReports = reports.filter((report) => !report.reviewedAt);
 
@@ -85,7 +83,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<Link href={urls.profile(reported)}>
-									<ArrowTopRightOnSquareIcon className="h-6 w-6" />
+									<ExternalLink className="h-6 w-6" />
 								</Link>
 							</TooltipTrigger>
 							<TooltipContent>View profile</TooltipContent>
@@ -107,7 +105,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 										await mutate();
 									}}
 								>
-									<ShieldCheckIcon className="h-6 w-6" />
+									<ShieldCheck className="h-6 w-6 text-green-600" />
 								</button>
 							</TooltipTrigger>
 							<TooltipContent>Clear reports</TooltipContent>
@@ -184,7 +182,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 															await mutate();
 														}}
 													>
-														<CheckIcon className="h-5 w-5" strokeWidth={2} />
+														<Check className="h-5 w-5 text-green-600" />
 													</button>
 												</TooltipTrigger>
 												<TooltipContent>Clear single report</TooltipContent>

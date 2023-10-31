@@ -1,14 +1,10 @@
 "use client";
 
-import {
-	ArrowsPointingOutIcon,
-	EllipsisHorizontalIcon,
-	TrashIcon
-} from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
 import { useDrag, useDragLayer, useDrop } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { twMerge } from "tailwind-merge";
+import { Expand, MoreHorizontal, Trash } from "lucide-react";
 
 import { TailCircleIcon } from "./icons/tail-circle";
 import { ImageProps } from "./image";
@@ -141,7 +137,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 									type="button"
 									onClick={onDelete}
 								>
-									<TrashIcon className="h-4 w-4 text-white-20" />
+									<Trash className="h-4 w-4 text-white-20" />
 								</button>
 								<button
 									className="opacity-60 hocus:opacity-100"
@@ -150,11 +146,11 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 										setFullPreview((fullPreview) => !fullPreview);
 									}}
 								>
-									<ArrowsPointingOutIcon className="h-4 w-4 text-white-20" />
+									<Expand className="h-4 w-4 text-white-20" />
 								</button>
 							</div>
 							<button className="opacity-60 hocus:opacity-100" type="button">
-								<EllipsisHorizontalIcon className="h-4 w-4 text-white-20" />
+								<MoreHorizontal className="h-4 w-4 text-white-20" />
 							</button>
 						</div>
 					</div>

@@ -51,6 +51,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							asChild
+							className="text-green-500"
 							disabled={!user.bannedAt}
 							onClick={() => {
 								api.user

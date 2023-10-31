@@ -32,6 +32,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 			<DialogTrigger asChild>
 				<DropdownMenuItem
 					asChild
+					className="text-red-500"
 					disabled={!!user.bannedAt}
 					onSelect={(event) => event.preventDefault()}
 				>

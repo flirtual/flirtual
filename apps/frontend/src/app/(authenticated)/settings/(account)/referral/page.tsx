@@ -6,7 +6,7 @@ import { ReferralTicket } from "./referral-ticket";
 import { ReferralForm } from "./form";
 
 export const metadata: Metadata = {
-	title: "Refer a Friend"
+	title: "Refer a homie"
 };
 
 export default function SettingsAccountReferralPage() {
