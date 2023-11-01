@@ -15,6 +15,7 @@ import {
 	PenSquare,
 	Skull,
 	SlidersHorizontal,
+	Sparkles,
 	Tag,
 	UserX,
 	Users
@@ -68,6 +69,9 @@ export const SettingsNavigation: FC = () => {
 					{/* <NavigationLink href={urls.settings.referral} Icon={Gift}>
 						Refer a friend
 					</NavigationLink> */}
+					<NavigationLink href={urls.subscription.default} Icon={Sparkles}>
+						Premium
+					</NavigationLink>
 					<NavigationLink
 						newBadge
 						href={urls.settings.connections}
