@@ -3,6 +3,8 @@ PODS:
     - CapacitorCordova
   - CapacitorApp (5.0.6):
     - Capacitor
+  - CapacitorBrowser (5.1.0):
+    - Capacitor
   - CapacitorClipboard (5.0.6):
     - Capacitor
   - CapacitorCordova (5.5.1)
@@ -24,6 +26,8 @@ PODS:
     - Capacitor
   - CapacitorToast (5.0.6):
     - Capacitor
+  - CapawesomeCapacitorAppUpdate (5.0.1):
+    - Capacitor
   - CapawesomeTeamCapacitorDatetimePicker (5.1.1):
     - Capacitor
   - CordovaPlugins (5.5.1):
@@ -38,6 +42,7 @@ PODS:
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@5.5.1_@capacitor+core@5.5.1/node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/app`)"
+  - "CapacitorBrowser (from `../../node_modules/.pnpm/@capacitor+browser@5.1.0_@capacitor+core@5.5.1/node_modules/@capacitor/browser`)"
   - "CapacitorClipboard (from `../../node_modules/.pnpm/@capacitor+clipboard@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/clipboard`)"
   - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@5.5.1_@capacitor+core@5.5.1/node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/.pnpm/@capacitor+device@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/device`)"
@@ -49,6 +54,7 @@ DEPENDENCIES:
   - "CapacitorScreenOrientation (from `../../node_modules/.pnpm/@capacitor+screen-orientation@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/screen-orientation`)"
   - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/share`)"
   - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/toast`)"
+  - "CapawesomeCapacitorAppUpdate (from `../../node_modules/.pnpm/@capawesome+capacitor-app-update@5.0.1_@capacitor+core@5.5.1/node_modules/@capawesome/capacitor-app-update`)"
   - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@5.1.1_@capacitor+core@5.5.1/node_modules/@capawesome-team/capacitor-datetime-picker`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@7.0.0_@capacitor+core@5.5.1/node_modules/@revenuecat/purchases-capacitor`)"
@@ -63,6 +69,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+ios@5.5.1_@capacitor+core@5.5.1/node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../node_modules/.pnpm/@capacitor+app@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/app"
+  CapacitorBrowser:
+    :path: "../../node_modules/.pnpm/@capacitor+browser@5.1.0_@capacitor+core@5.5.1/node_modules/@capacitor/browser"
   CapacitorClipboard:
     :path: "../../node_modules/.pnpm/@capacitor+clipboard@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/clipboard"
   CapacitorCordova:
@@ -85,6 +93,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+share@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/share"
   CapacitorToast:
     :path: "../../node_modules/.pnpm/@capacitor+toast@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/toast"
+  CapawesomeCapacitorAppUpdate:
+    :path: "../../node_modules/.pnpm/@capawesome+capacitor-app-update@5.0.1_@capacitor+core@5.5.1/node_modules/@capawesome/capacitor-app-update"
   CapawesomeTeamCapacitorDatetimePicker:
     :path: "../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@5.1.1_@capacitor+core@5.5.1/node_modules/@capawesome-team/capacitor-datetime-picker"
   CordovaPlugins:
@@ -95,6 +105,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
   CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
+  CapacitorBrowser: 7a0fb6a1011abfaaf2dfedfd8248f942a8eda3d6
   CapacitorClipboard: 77edf49827ea21da2a9c05c690a4a6a4d07199c4
   CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
   CapacitorDevice: 2c968f98a1ec4d22357418c1521e7ddc46c675e6
@@ -106,12 +117,13 @@ SPEC CHECKSUMS:
   CapacitorScreenOrientation: e5ef438489815d05340f1b51a2b1794108dc0ac3
   CapacitorShare: cd41743331cb71d217c029de54b681cbd91e0fcc
   CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
+  CapawesomeCapacitorAppUpdate: abbfaa26fe3817dce42bd722731acc23e7a3274c
   CapawesomeTeamCapacitorDatetimePicker: 4fa0b9bc6df016ab5af72b56008fa2dd33713b25
   CordovaPlugins: d0f280d10ecc4819ff36b43185dfed24b24c2451
   PurchasesHybridCommon: af3b2413f9cb999bc1fdca44770bdaf39dfb89fa
   RevenueCat: 84fbe2eb9bbf63e1abf346ccd3ff9ee45d633e3b
   RevenuecatPurchasesCapacitor: c0de310959a58b3217acd7ec5ce981175bb050b1
 
-PODFILE CHECKSUM: 2180d45ced94599adb6353a56330ce2ad3e33a4b
+PODFILE CHECKSUM: 14bff3c12cc33d16dcee4a6dbdec87e5dd4e0f54
 
 COCOAPODS: 1.13.0

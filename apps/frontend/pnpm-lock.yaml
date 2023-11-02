@@ -11,6 +11,9 @@ dependencies:
   '@capacitor/app':
     specifier: ^5.0.6
     version: 5.0.6(@capacitor/core@5.5.1)
+  '@capacitor/browser':
+    specifier: ^5.1.0
+    version: 5.1.0(@capacitor/core@5.5.1)
   '@capacitor/clipboard':
     specifier: ^5.0.6
     version: 5.0.6(@capacitor/core@5.5.1)
@@ -47,6 +50,9 @@ dependencies:
   '@capawesome-team/capacitor-datetime-picker':
     specifier: ^5.1.1
     version: 5.1.1(@capacitor/core@5.5.1)
+  '@capawesome/capacitor-app-update':
+    specifier: ^5.0.1
+    version: 5.0.1(@capacitor/core@5.5.1)
   '@hcaptcha/react-hcaptcha':
     specifier: ^1.8.1
     version: 1.8.1(react-dom@18.2.0)(react@18.2.0)
@@ -379,6 +385,14 @@ packages:
       - typescript
     dev: true
 
+  /@capacitor/browser@5.1.0(@capacitor/core@5.5.1):
+    resolution: {integrity: sha512-7togqchk2Tvq4SmLaWhcrd4x48ES/GEZsceM+29aun7WhxQEVcDU0cJsVdSU2LNFwNhWgPV2GW90etVd1B3OdQ==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.5.1
+    dev: false
+
   /@capacitor/cli@5.5.1:
     resolution: {integrity: sha512-/oGd2IIc+k1H/fc7tUzP7vqMtZi0gNcJ4/4wUE2kzAnETxxxHXMM/2V62KfjCby/OOAzJbtI7n5OPlnWE9un1A==}
     engines: {node: '>=16.0.0'}
@@ -493,6 +507,14 @@ packages:
 
   /@capawesome-team/capacitor-datetime-picker@5.1.1(@capacitor/core@5.5.1):
     resolution: {integrity: sha512-2WjYAGtPOEPW5W7U6jwzoFWQwIxe/ZWF+qzMWvgULbUyWlBu9bQMicugfQZKGcbgl2iPLoifodgAPs3miN0qow==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.5.1
+    dev: false
+
+  /@capawesome/capacitor-app-update@5.0.1(@capacitor/core@5.5.1):
+    resolution: {integrity: sha512-A5I9hEFwqXYJ/Mc3xx+A0LLm0VrpPTcST9wQ08Mh+ybReDEUNwC+JEEppurJX+/tAUttnB6bZ/Kjh1jqsYPTkA==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:

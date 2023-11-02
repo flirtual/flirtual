@@ -5,6 +5,9 @@ project(':capacitor-android').projectDir = new File('../node_modules/.pnpm/@capa
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/.pnpm/@capacitor+app@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/app/android')
 
+include ':capacitor-browser'
+project(':capacitor-browser').projectDir = new File('../node_modules/.pnpm/@capacitor+browser@5.1.0_@capacitor+core@5.5.1/node_modules/@capacitor/browser/android')
+
 include ':capacitor-clipboard'
 project(':capacitor-clipboard').projectDir = new File('../node_modules/.pnpm/@capacitor+clipboard@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/clipboard/android')
 
@@ -34,6 +37,9 @@ project(':capacitor-toast').projectDir = new File('../node_modules/.pnpm/@capaci
 
 include ':capawesome-team-capacitor-datetime-picker'
 project(':capawesome-team-capacitor-datetime-picker').projectDir = new File('../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@5.1.1_@capacitor+core@5.5.1/node_modules/@capawesome-team/capacitor-datetime-picker/android')
+
+include ':capawesome-capacitor-app-update'
+project(':capawesome-capacitor-app-update').projectDir = new File('../node_modules/.pnpm/@capawesome+capacitor-app-update@5.0.1_@capacitor+core@5.5.1/node_modules/@capawesome/capacitor-app-update/android')
 
 include ':revenuecat-purchases-capacitor'
 project(':revenuecat-purchases-capacitor').projectDir = new File('../node_modules/.pnpm/@revenuecat+purchases-capacitor@7.0.0_@capacitor+core@5.5.1/node_modules/@revenuecat/purchases-capacitor/android')
