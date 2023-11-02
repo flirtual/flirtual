@@ -45,7 +45,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	return (
 		<div className="flex flex-col gap-8 px-8 py-4 sm:pb-8">
 			{session.user.tags?.includes("moderator") && (
-				<Suspense>
+				<>
 					{/* {showExtraInformation ? ( */}
 					<ProfileModeratorInfo user={user} />
 					{/* ) : (
@@ -57,7 +57,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 							Show extra information
 						</button>
 					)} */}
-				</Suspense>
+				</>
 			)}
 			<div className="flex w-full gap-4">
 				{(session.user.tags?.includes("moderator") ||
