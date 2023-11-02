@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
+import { Browser } from "@capacitor/browser";
 
 import { api } from "~/api";
 import {
@@ -31,16 +32,23 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 
 	return (
-		<Link
+		<button
 			className="flex items-center justify-center gap-4 rounded-lg px-4 py-2 text-white-20 shadow-brand-1"
-			href={api.connections.authorizeUrl(type, location.href.split("?")[0])}
 			style={{ backgroundColor: color }}
+			type="button"
+			onClick={async () =>
+				await Browser.open({
+					url: api.connections.authorizeUrl(type, location.href.split("?")[0])
+						.href,
+					windowName: "_self"
+				})
+			}
 		>
 			<Icon className={twMerge("h-6 w-6", iconClassName)} />
 			<span className="font-montserrat text-lg font-semibold">
 				Log in with {label[type]}
 			</span>
-		</Link>
+		</button>
 	);
 };
 

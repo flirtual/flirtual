@@ -73,15 +73,14 @@ export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 					</>
 				)}
 			</Form>
-			{!native && (
-				<div className="flex flex-col gap-2">
-					<div className="inline-flex items-center justify-center">
-						<hr className="my-8 h-px w-full border-0 bg-white-40 dark:bg-black-40" />
-						<span className="absolute left-1/2 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold uppercase text-black-50 dark:bg-black-70 dark:text-white-50">
-							or
-						</span>
-					</div>
-					{/* {platform === "ios" || userAgent.os.name === "Mac OS" ? (
+			<div className="flex flex-col gap-2">
+				<div className="inline-flex items-center justify-center">
+					<hr className="my-8 h-px w-full border-0 bg-white-40 dark:bg-black-40" />
+					<span className="absolute left-1/2 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold uppercase text-black-50 dark:bg-black-70 dark:text-white-50">
+						or
+					</span>
+				</div>
+				{/* {platform === "ios" || userAgent.os.name === "Mac OS" ? (
 					<>
 						<LoginConnectionButton type="apple" />
 						<LoginConnectionButton type="google" />
@@ -93,10 +92,9 @@ export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 					</>
 				)}
 				<LoginConnectionButton type="meta" /> */}
-					<LoginConnectionButton type="discord" />
-					{/* <LoginConnectionButton type="vrchat" /> */}
-				</div>
-			)}
+				<LoginConnectionButton type="discord" />
+				{/* <LoginConnectionButton type="vrchat" /> */}
+			</div>
 		</>
 	);
 };
