@@ -189,6 +189,20 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 		preventScrollOnSwipe: true
 	});
 
+	const handleKeyDown = useCallback(
+		(event: KeyboardEvent) => {
+			if (event.key === "ArrowLeft") set(-1);
+			if (event.key === "ArrowRight") set(1);
+			if (event.key === "Escape") setExpandedImage(false);
+		},
+		[set]
+	);
+
+	useEffect(() => {
+		document.addEventListener("keydown", handleKeyDown);
+		return () => document.removeEventListener("keydown", handleKeyDown);
+	}, [handleKeyDown]);
+
 	return (
 		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
 			<div className="relative flex aspect-square shrink-0 bg-black-70">
@@ -230,7 +244,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						</button>
 					</div>
 				)}
-				{platform !== "ios" && currentImage && (
+				{currentImage && (
 					<div className="pointer-events-none absolute flex h-full w-full items-center justify-center">
 						<button
 							className="pointer-events-auto h-full w-1/3"
@@ -255,7 +269,25 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								>
 									<X className="h-6 w-6" />
 								</button>
-								<div className="relative aspect-square w-auto md:h-screen md:max-h-[80vh]">
+								<div className="relative aspect-square h-[100vw] max-h-[80vh] w-full">
+									{images.length > 1 && (
+										<div className="absolute z-10 flex h-full w-full">
+											<button
+												className="flex h-full grow items-center justify-start px-8 opacity-70 transition-opacity hover:opacity-100"
+												type="button"
+												onClick={() => set(-1)}
+											>
+												<ChevronLeft className="h-8 w-8 text-white-10 drop-shadow" />
+											</button>
+											<button
+												className="flex h-full grow items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
+												type="button"
+												onClick={() => set(1)}
+											>
+												<ChevronRight className="h-8 w-8 text-white-10 drop-shadow" />
+											</button>
+										</div>
+									)}
 									<SingleImage
 										large
 										className="touch-callout-default !relative object-cover"
