@@ -79,7 +79,7 @@ export const Profile: FC<ProfileProps> = (props) => {
 										{yearsAgo(new Date(user.bornAt))}
 									</span>
 									{user.tags?.includes("verified") && (
-										<ProfileVerificationBadge />
+										<ProfileVerificationBadge tooltip="Age verified" />
 									)}
 								</div>
 							)}
@@ -111,7 +111,7 @@ export const Profile: FC<ProfileProps> = (props) => {
 								<div className="flex items-center gap-2">
 									<DiscordIcon className="h-6 w-6" />
 									Discord: <span>{discordConnection.displayName}</span>
-									<CheckBadgeIcon className="-ml-1 h-5 w-5 text-theme-2" />
+									<ProfileVerificationBadge tooltip="Discord verified" />
 								</div>
 							) : (
 								user.profile.discord && (
