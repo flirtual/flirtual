@@ -143,6 +143,7 @@ defmodule Flirtual.User.Policy do
     :talkjs_signature,
     :apns_token,
     :fcm_token,
+    :rating_prompts,
     :revenuecat_id,
     :moderator_message,
     :active_at,

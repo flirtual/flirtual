@@ -16,6 +16,8 @@ PODS:
     - Capacitor
   - CapacitorPushNotifications (5.1.0):
     - Capacitor
+  - CapacitorRateApp (4.0.3):
+    - Capacitor
   - CapacitorScreenOrientation (5.0.6):
     - Capacitor
   - CapacitorShare (5.0.6):
@@ -43,6 +45,7 @@ DEPENDENCIES:
   - "CapacitorLocalNotifications (from `../../node_modules/.pnpm/@capacitor+local-notifications@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/local-notifications`)"
   - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/preferences`)"
   - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@5.1.0_@capacitor+core@5.5.1/node_modules/@capacitor/push-notifications`)"
+  - "CapacitorRateApp (from `../../node_modules/.pnpm/capacitor-rate-app@4.0.3_@capacitor+core@5.5.1/node_modules/capacitor-rate-app`)"
   - "CapacitorScreenOrientation (from `../../node_modules/.pnpm/@capacitor+screen-orientation@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/screen-orientation`)"
   - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/share`)"
   - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/toast`)"
@@ -74,6 +77,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+preferences@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/preferences"
   CapacitorPushNotifications:
     :path: "../../node_modules/.pnpm/@capacitor+push-notifications@5.1.0_@capacitor+core@5.5.1/node_modules/@capacitor/push-notifications"
+  CapacitorRateApp:
+    :path: "../../node_modules/.pnpm/capacitor-rate-app@4.0.3_@capacitor+core@5.5.1/node_modules/capacitor-rate-app"
   CapacitorScreenOrientation:
     :path: "../../node_modules/.pnpm/@capacitor+screen-orientation@5.0.6_@capacitor+core@5.5.1/node_modules/@capacitor/screen-orientation"
   CapacitorShare:
@@ -97,6 +102,7 @@ SPEC CHECKSUMS:
   CapacitorLocalNotifications: c2d8b14794064fd4814b1d6c4ddbac8029afa295
   CapacitorPreferences: f03954bcb0ff09c792909e46bff88e3183c16b10
   CapacitorPushNotifications: b31e326c6e4eb216a622041d6ca21a973f34943f
+  CapacitorRateApp: 896df7ec6a237fea72d1955e0cb26394654b00db
   CapacitorScreenOrientation: e5ef438489815d05340f1b51a2b1794108dc0ac3
   CapacitorShare: cd41743331cb71d217c029de54b681cbd91e0fcc
   CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
@@ -106,6 +112,6 @@ SPEC CHECKSUMS:
   RevenueCat: 84fbe2eb9bbf63e1abf346ccd3ff9ee45d633e3b
   RevenuecatPurchasesCapacitor: c0de310959a58b3217acd7ec5ce981175bb050b1
 
-PODFILE CHECKSUM: 69cd3baf08fb5f2f71318010c6bcffdf1713ff74
+PODFILE CHECKSUM: 2180d45ced94599adb6353a56330ce2ad3e33a4b
 
 COCOAPODS: 1.13.0

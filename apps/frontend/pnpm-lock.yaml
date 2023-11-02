@@ -101,6 +101,9 @@ dependencies:
   ansi-to-html:
     specifier: ^0.7.2
     version: 0.7.2
+  capacitor-rate-app:
+    specifier: ^4.0.3
+    version: 4.0.3(@capacitor/core@5.5.1)
   change-case:
     specifier: ^5.1.2
     version: 5.1.2
@@ -108,8 +111,8 @@ dependencies:
     specifier: ^0.7.0
     version: 0.7.0
   cordova-plugin-purchase:
-    specifier: ^13.8.6
-    version: 13.8.6
+    specifier: ^13.9.0
+    version: 13.9.0
   csstype:
     specifier: ^3.1.2
     version: 3.1.2
@@ -2626,6 +2629,14 @@ packages:
   /caniuse-lite@1.0.30001555:
     resolution: {integrity: sha512-NzbUFKUnJ3DTcq6YyZB6+qqhfD112uR3uoEnkmfzm2wVzUNsFkU7AwBjKQ654Sp5cau0JxhFyRSn/tQZ+XfygA==}
 
+  /capacitor-rate-app@4.0.3(@capacitor/core@5.5.1):
+    resolution: {integrity: sha512-HdTftIzBSfcNfbjQFCtvdvFU83MPCt11H/QXV4t7jctLelA8jXu3qee9MiZ4dqDc+kwNoufcQ95ncoCvn5viig==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.5.1
+    dev: false
+
   /chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
     engines: {node: '>=4'}
@@ -2976,8 +2987,8 @@ packages:
       split2: 3.2.2
       through2: 4.0.2
 
-  /cordova-plugin-purchase@13.8.6:
-    resolution: {integrity: sha512-BttD5UiyAgAS07NrqE/C7sM2vXopBWbtjq0Ae/vFP0op8TnIDlGRsZbEZfG3hXyIz9fZ363nOJk4mEtAo3iPYQ==}
+  /cordova-plugin-purchase@13.9.0:
+    resolution: {integrity: sha512-dzN81dlfxYMidhPQRjpo8dNeQO7Fifwsf2fsi6AWMT+aiPBf5MVtwbzRBMiSuHJnMHCuNY9oIml37zrIXwbI/w==}
     dev: false
 
   /core-util-is@1.0.3:

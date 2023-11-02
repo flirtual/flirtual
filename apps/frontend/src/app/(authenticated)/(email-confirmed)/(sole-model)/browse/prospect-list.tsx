@@ -1,11 +1,13 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { RateApp } from "capacitor-rate-app";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { useSession } from "~/hooks/use-session";
+import { api } from "~/api";
 
 import { OutOfProspects } from "./out-of-prospects";
 import { DebuggerActions } from "./debugger-actions";
@@ -27,6 +29,30 @@ export const ProspectList: FC<ProspectListProps> = ({
 	passesLeft
 }) => {
 	const [session] = useSession();
+
+	useEffect(() => {
+		if (session?.user.createdAt) {
+			const ratingPrompts = session.user.ratingPrompts;
+			const monthsRegistered = Math.floor(
+				(Date.now() - new Date(session.user.createdAt).getTime()) /
+					2_592_000_000
+			);
+
+			if (
+				(monthsRegistered >= 1 && ratingPrompts === 0) ||
+				(monthsRegistered >= 3 && ratingPrompts === 1) ||
+				(monthsRegistered >= 6 && ratingPrompts === 2)
+			) {
+				void RateApp.requestReview();
+				void api.user.updateRatingPrompts(session.user.id, {
+					body: {
+						ratingPrompts:
+							monthsRegistered >= 6 ? 3 : monthsRegistered >= 3 ? 2 : 1
+					}
+				});
+			}
+		}
+	});
 
 	if (!session) return null;
 

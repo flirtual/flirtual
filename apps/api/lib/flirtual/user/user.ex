@@ -36,6 +36,7 @@ defmodule Flirtual.User do
     field(:listmonk_id, :integer)
     field(:apns_token, :string)
     field(:fcm_token, :string)
+    field(:rating_prompts, :integer)
     field(:stripe_id, :string)
     field(:revenuecat_id, Ecto.ShortUUID)
     field(:language, :string, default: "en")
@@ -561,6 +562,20 @@ defmodule Flirtual.User do
     end)
   end
 
+  def update_rating_prompts(%User{} = user, attrs) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{rating_prompts: attrs["rating_prompts"]})
+             |> Repo.update() do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def validate_username(changeset) do
     changeset
     |> validate_required([:username])
@@ -778,6 +793,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :talkjs_signature,
       :apns_token,
       :fcm_token,
+      :rating_prompts,
       :talkjs_id,
       :stripe_id,
       :revenuecat_id,

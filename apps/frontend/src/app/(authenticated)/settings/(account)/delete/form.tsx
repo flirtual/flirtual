@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { RateApp } from "capacitor-rate-app";
 
 import { api } from "~/api";
 import { Form } from "~/components/forms";
@@ -19,6 +20,12 @@ export const DeleteForm: FC<{
 	deleteReasons: AttributeCollection<"delete-reason">;
 }> = ({ deleteReasons }) => {
 	const router = useRouter();
+	const [requestRating, setRequestRating] = useState(false);
+
+	useEffect(() => {
+		if (requestRating) void RateApp.requestReview();
+	}, [requestRating]);
+
 	const [session] = useSession();
 	if (!session) return null;
 	const { subscription } = session.user;
@@ -69,6 +76,10 @@ export const DeleteForm: FC<{
 										id: attribute.id,
 										name: attribute.name
 									}))}
+									onChange={(value) => {
+										field.props.onChange(value);
+										setRequestRating(value === "jrAqzBkasZwqfjSPAazNq3");
+									}}
 								/>
 								{field.props.value === "sQcEHRLCffbLfcgM4zAELf" ? (
 									<p className="select-none">
