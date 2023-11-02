@@ -17,7 +17,6 @@ import {
 	SlidersHorizontal,
 	Sparkles,
 	Tag,
-	UserX,
 	Users
 } from "lucide-react";
 
