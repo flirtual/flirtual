@@ -129,7 +129,7 @@ defmodule FlirtualWeb.ConnectionController do
         {nil, nil} ->
           grant_error(
             conn,
-            "No Flirtual account found for this #{Connection.provider_name!(type)} user."
+            "No Flirtual account found for this #{Connection.provider_name!(type)} user. Ensure you are logged into the correct #{Connection.provider_name!(type)} account. If you haven't linked your #{Connection.provider_name!(type)} account, log in with your username and password first, then add your #{Connection.provider_name!(type)} account in the Connections settings."
           )
       end
     else
