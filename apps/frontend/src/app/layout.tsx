@@ -21,6 +21,7 @@ import { DevicePlatform, DeviceProvider } from "~/hooks/use-device";
 import { NotificationProvider } from "~/hooks/use-notifications";
 import { TooltipProvider } from "~/components/tooltip";
 import AppUrlListener from "~/components/app-url-listener";
+import AppUpdater from "~/components/app-updater";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 
 import { ClientScripts } from "./client-scripts";
@@ -152,6 +153,7 @@ export default async function RootLayout({
 						platform={platform}
 						userAgent={userAgent}
 					>
+						<AppUpdater />
 						<ToastProvider>
 							<TooltipProvider>
 								<SessionProvider session={session}>
