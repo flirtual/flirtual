@@ -15,8 +15,9 @@ export const PlatformMismatchMessage: FC = () => {
 	if (
 		!subscription ||
 		!subscription.active ||
-		platform === subscription.platform ||
-		(!native && subscription.platform === "web")
+		(subscription.platform === "web" && (platform === "web" || !native)) ||
+		(subscription.platform === "ios" && platform === "apple" && native) ||
+		(subscription.platform === "android" && platform === "android" && native)
 	)
 		return null;
 
@@ -24,7 +25,7 @@ export const PlatformMismatchMessage: FC = () => {
 		<div className="rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
 				Sorry, you can&apos;t make changes to this subscription{" "}
-				{platform === "ios" ? (
+				{platform === "apple" ? (
 					<>
 						in the <span className="font-semibold">iOS</span> app
 					</>

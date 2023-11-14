@@ -7,8 +7,8 @@ import { IconComponentProps } from ".";
 
 export const ShareIcon = forwardRef<SVGSVGElement, IconComponentProps>(
 	(props, reference) => {
-		const { platform, userAgent } = useDevice();
-		return platform === "ios" || userAgent.os.name === "Mac OS" ? (
+		const { platform } = useDevice();
+		return platform === "apple" ? (
 			<Share {...props} ref={reference} />
 		) : (
 			<Share2 {...props} ref={reference} />

@@ -50,7 +50,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			if (!user?.revenuecatId || !native) return;
 
 			await Purchases.configure({
-				apiKey: platform === "ios" ? rcAppleKey : rcGoogleKey,
+				apiKey: platform === "apple" ? rcAppleKey : rcGoogleKey,
 				appUserID: user?.revenuecatId
 			});
 
@@ -74,7 +74,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			if (!plan || !plan.googleId || !plan.appleId || !plan.revenuecatId)
 				throw new Error("Plan not available");
 
-			const productId = platform === "ios" ? plan.appleId : plan.googleId;
+			const productId = platform === "apple" ? plan.appleId : plan.googleId;
 			const { customerInfo } = await Purchases.getCustomerInfo();
 
 			if (

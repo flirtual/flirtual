@@ -56,7 +56,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 				setPushRegistrationId(token.value);
 
 				if (!session) return;
-				if (platform === "ios" && token.value !== session.user.apnsToken)
+				if (platform === "apple" && token.value !== session.user.apnsToken)
 					await api.user.updatePushTokens(session.user.id, {
 						body: {
 							apnsToken: token.value,

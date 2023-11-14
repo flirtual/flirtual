@@ -1,9 +1,8 @@
 "use client";
 
 import { ModelCard } from "~/components/model-card";
-import { useDevice } from "~/hooks/use-device";
-import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
-import { FormField } from "~/components/forms/field";
+// import { useDevice } from "~/hooks/use-device";
+import { InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { Form, FormButton } from "~/components/forms";
 import { api } from "~/api";
@@ -17,7 +16,7 @@ export default function SettingsAccountConnectionsPage(props: {
 		error?: string;
 	};
 }) {
-	const { platform, userAgent } = useDevice();
+	// const { platform } = useDevice();
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
@@ -75,7 +74,7 @@ export default function SettingsAccountConnectionsPage(props: {
 						<div className="grid gap-4 lg:grid-cols-2">
 							<AddConnectionButton type="discord" />
 							{/* <AddConnectionButton type="vrchat" />
-							{platform === "ios" || userAgent.os.name === "Mac OS" ? (
+							{platform === "apple" ? (
 								<>
 									<AddConnectionButton type="apple" />
 									<AddConnectionButton type="google" />

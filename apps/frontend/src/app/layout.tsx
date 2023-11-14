@@ -97,10 +97,13 @@ export default async function RootLayout({
 
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
 
-	let platform = (userAgent.os.name?.toLowerCase() ?? "web") as DevicePlatform;
-	if (userAgent.os.name === "Mac OS" && userAgent.device.type === "mobile")
-		platform = "ios";
-	if (!["android", "ios"].includes(platform)) platform = "web";
+	const platforms: Record<string, DevicePlatform> = {
+		android: "android",
+		ios: "apple",
+		"mac os": "apple"
+	};
+	const platform: DevicePlatform =
+		platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";
 
 	const native = userAgent.ua.includes("Flirtual-Native");
 	Sentry.setTag("native", native ? "yes" : "no");

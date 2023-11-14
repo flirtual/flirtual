@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect } from "react";
 
 import type { userAgentFromString } from "next/server";
 
-export type DevicePlatform = "web" | "android" | "ios";
+export type DevicePlatform = "web" | "android" | "apple";
 export type UserAgent = ReturnType<typeof userAgentFromString>;
 
 export interface DeviceContext {

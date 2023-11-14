@@ -64,7 +64,7 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 		void (async () => {
 			await session.clearPushRegistrations();
 			await session.setPushRegistration({
-				provider: platform === "ios" ? "apns" : "fcm",
+				provider: platform === "apple" ? "apns" : "fcm",
 				pushRegistrationId
 			});
 		})();
