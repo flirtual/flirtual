@@ -105,7 +105,9 @@ export const Profile: FC<ProfileProps> = (props) => {
 				<div className="flex h-full grow flex-col gap-6 break-words p-8 pb-4">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} user={user} />
-					{(user.profile.discord || user.profile.vrchat) && (
+					{(discordConnection ||
+						user.profile.discord ||
+						user.profile.vrchat) && (
 						<div className="flex flex-col gap-2">
 							{discordConnection ? (
 								<div className="flex items-center gap-2">
