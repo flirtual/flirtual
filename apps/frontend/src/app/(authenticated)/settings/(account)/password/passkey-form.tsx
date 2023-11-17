@@ -67,12 +67,17 @@ export const PasswordPasskeyForm: React.FC = () => {
 	return (
 		<>
 			<div className="flex flex-col gap-4">
-				<span className="text-2xl font-semibold">Passkeys</span>
-				<span>
+				<span className="select-none text-2xl font-semibold">Passkeys</span>
+				<span className="select-none text-black-50 dark:text-white-50">
 					Passkeys let you log in conveniently and securely with your
 					fingerprint, face, device PIN or security key instead of your
 					password. Only add passkeys on trusted devices.
 				</span>
+				{native && (
+					<span className="select-none text-black-50 dark:text-white-50">
+						⚠️ Passkeys are not yet supported on mobile.
+					</span>
+				)}
 			</div>
 			{session.user.passkeys && session.user.passkeys.length > 0 && (
 				<div className="flex flex-col gap-4">
@@ -85,6 +90,9 @@ export const PasswordPasskeyForm: React.FC = () => {
 							name={aaguidData[passkey.aaguid]?.name}
 						/>
 					))}
+					<span className="select-none text-black-50 dark:text-white-50">
+						{native ? "Tap" : "Click"} on a passkey to remove it.
+					</span>
 				</div>
 			)}
 

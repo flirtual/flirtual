@@ -100,11 +100,14 @@ export default function SettingsAccountConnectionsPage(props: {
 								)}
 							</FormField>
 							{native && (
-								<span className="select-none text-black-50 dark:text-white-50">
+								<span className="col-span-2 select-none text-black-50 dark:text-white-50">
 									⚠️ Discord connections are not yet supported on mobile. Please
 									use your web browser to connect your Discord account.
 								</span>
 							)}
+							<span className="col-span-2 select-none text-black-50 dark:text-white-50">
+								{native ? "Tap" : "Click"} on a connection to remove it.
+							</span>
 							<FormButton className="col-span-2 mt-4">Update</FormButton>
 						</div>
 					)}
