@@ -8,6 +8,7 @@ import {
 	PropsWithChildren,
 	createContext,
 	use,
+	useCallback,
 	useContext,
 	useEffect,
 	useMemo,
@@ -46,6 +47,24 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			return receive;
 		}, [native])
 	);
+
+	const resetPushCount = useCallback(() => {
+		if (
+			document.visibilityState === "hidden" ||
+			!session?.user.pushCount ||
+			session.user.pushCount === 0
+		)
+			return;
+
+		void api.user.resetPushCount(session.user.id);
+	}, [session?.user.id, session?.user.pushCount]);
+
+	useEffect(() => {
+		resetPushCount();
+		document.addEventListener("visibilitychange", resetPushCount);
+		return () =>
+			document.removeEventListener("visibilitychange", resetPushCount);
+	});
 
 	useEffect(() => {
 		if (status !== "granted") return;

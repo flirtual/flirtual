@@ -50,6 +50,7 @@ export type User = UuidModel &
 		talkjsSignature?: string;
 		apnsToken?: string;
 		fcmToken?: string;
+		pushCount?: number;
 		ratingPrompts?: number;
 		stripeId?: string;
 		revenuecatId?: string;
@@ -301,6 +302,13 @@ export async function updatePushTokens(
 	}>
 ) {
 	return fetch<User>("post", `users/${userId}/push-tokens`, options);
+}
+
+export async function resetPushCount(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("delete", `users/${userId}/push-count`, options);
 }
 
 export async function updateRatingPrompts(

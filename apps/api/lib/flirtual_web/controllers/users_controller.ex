@@ -510,6 +510,22 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def reset_push_count(conn, %{"user_id" => user_id}) do
+    user =
+      if(conn.assigns[:session].user.id === user_id,
+        do: conn.assigns[:session].user,
+        else: Users.get(user_id)
+      )
+
+    if is_nil(user) or Policy.cannot?(conn, :update, user) do
+      {:error, {:forbidden, "Cannot reset this user's push count", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- User.reset_push_count(user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
   def update_rating_prompts(conn, %{"user_id" => user_id} = params) do
     user =
       if(conn.assigns[:session].user.id === user_id,
