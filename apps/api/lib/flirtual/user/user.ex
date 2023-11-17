@@ -36,6 +36,7 @@ defmodule Flirtual.User do
     field(:listmonk_id, :integer)
     field(:apns_token, :string)
     field(:fcm_token, :string)
+    field(:push_count, :integer)
     field(:rating_prompts, :integer)
     field(:stripe_id, :string)
     field(:revenuecat_id, Ecto.ShortUUID)
@@ -62,6 +63,7 @@ defmodule Flirtual.User do
 
     has_many(:connections, Flirtual.Connection)
     has_many(:sessions, Flirtual.User.Session)
+    has_many(:passkeys, Flirtual.User.Passkey)
 
     has_one(:preferences, Flirtual.User.Preferences)
     has_one(:subscription, Subscription)
@@ -74,6 +76,7 @@ defmodule Flirtual.User do
     [
       subscription: Flirtual.Subscription.default_assoc(),
       connections: Flirtual.Connection.default_assoc(),
+      passkeys: Flirtual.User.Passkey.default_assoc(),
       preferences: Flirtual.User.Preferences.default_assoc(),
       profile: Flirtual.User.Profile.default_assoc()
     ]
@@ -562,6 +565,34 @@ defmodule Flirtual.User do
     end)
   end
 
+  def increment_push_count(%User{} = user) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{push_count: user.push_count + 1})
+             |> Repo.update() do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def reset_push_count(%User{} = user) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{push_count: 0})
+             |> Repo.update() do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def update_rating_prompts(%User{} = user, attrs) do
     Repo.transaction(fn ->
       with {:ok, user} <-
@@ -793,6 +824,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :talkjs_signature,
       :apns_token,
       :fcm_token,
+      :push_count,
       :rating_prompts,
       :talkjs_id,
       :stripe_id,
@@ -811,6 +843,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :preferences,
       :profile,
       :connections,
+      :passkeys,
       :updated_at,
       :created_at
     ]

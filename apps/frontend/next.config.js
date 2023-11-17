@@ -79,6 +79,16 @@ module.exports = {
 				permanent: true
 			},
 			{
+				source: "/settings/change-email",
+				destination: "/settings/email",
+				permanent: true
+			},
+			{
+				source: "/settings/change-password",
+				destination: "/settings/password",
+				permanent: true
+			},
+			{
 				source: "/terms-20230605",
 				destination: "/terms",
 				permanent: true
@@ -87,6 +97,11 @@ module.exports = {
 				source: "/privacy-20230605",
 				destination: "/privacy",
 				permanent: true
+			},
+			{
+				source: "/.well-known/change-password",
+				destination: "/settings/password",
+				permanent: false
 			}
 		];
 	}

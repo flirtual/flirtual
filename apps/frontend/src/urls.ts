@@ -121,8 +121,8 @@ export const urls = {
 		privacy: "/settings/privacy",
 		notifications: "/settings/notifications",
 		connections: "/settings/connections",
-		changeEmail: "/settings/change-email",
-		changePassword: "/settings/change-password",
+		email: "/settings/email",
+		password: "/settings/password",
 		deactivateAccount: "/settings/deactivate",
 		deleteAccount: "/settings/delete"
 	},

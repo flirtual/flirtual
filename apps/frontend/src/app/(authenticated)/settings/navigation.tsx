@@ -91,11 +91,15 @@ export const SettingsNavigation: FC = () => {
 					<NavigationLink href={urls.settings.notifications} Icon={Bell}>
 						Notifications
 					</NavigationLink>
-					<NavigationLink href={urls.settings.changeEmail} Icon={AtSign}>
-						Change email
+					<NavigationLink href={urls.settings.email} Icon={AtSign}>
+						Email
 					</NavigationLink>
-					<NavigationLink href={urls.settings.changePassword} Icon={KeyRound}>
-						Change password
+					<NavigationLink
+						newBadge
+						href={urls.settings.password}
+						Icon={KeyRound}
+					>
+						Password/passkeys
 					</NavigationLink>
 					<NavigationLink href={urls.settings.deactivateAccount} Icon={Skull}>
 						Deactivate account

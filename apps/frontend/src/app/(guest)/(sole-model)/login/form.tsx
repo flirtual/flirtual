@@ -1,7 +1,8 @@
+/* eslint-disable unicorn/prefer-code-point */
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
+import { FC, useEffect, useRef } from "react";
 
 import { api } from "~/api";
 import { Form, FormButton } from "~/components/forms";
@@ -10,12 +11,76 @@ import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputLabel, InputText } from "~/components/inputs";
 import { urls } from "~/urls";
 import { useDevice } from "~/hooks/use-device";
+import { useToast } from "~/hooks/use-toast";
 
 import { LoginConnectionButton } from "./login-connection-button";
 
-export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
+export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 	const router = useRouter();
-	const { native, platform, userAgent } = useDevice();
+	const { native } = useDevice();
+	const toasts = useToast();
+	const challengeGenerated = useRef(false);
+
+	useEffect(() => {
+		async function webAuthnAuthenticate() {
+			if (
+				!challengeGenerated.current &&
+				window.PublicKeyCredential &&
+				PublicKeyCredential.isConditionalMediationAvailable
+			) {
+				challengeGenerated.current = true;
+
+				const isCMA =
+					await PublicKeyCredential.isConditionalMediationAvailable();
+				if (isCMA) {
+					const challenge = await api.auth.passkeyAuthenticationChallenge();
+
+					const credential = (await navigator.credentials.get({
+						publicKey: challenge.publicKey,
+						mediation: "conditional"
+					})) as PublicKeyCredential;
+					if (!credential) return;
+
+					const response =
+						credential.response as AuthenticatorAssertionResponse;
+
+					await api.auth
+						.authenticatePasskey({
+							body: {
+								credentialId: credential.id,
+								rawId: btoa(
+									String.fromCharCode(...new Uint8Array(credential.rawId))
+								),
+								response: {
+									authenticatorData: btoa(
+										String.fromCharCode(
+											...new Uint8Array(response.authenticatorData)
+										)
+									),
+									clientDataJSON: btoa(
+										String.fromCharCode(
+											...new Uint8Array(response.clientDataJSON)
+										)
+									),
+									signature: btoa(
+										String.fromCharCode(...new Uint8Array(response.signature))
+									)
+								}
+							}
+						})
+						.then(() => {
+							router.refresh();
+							return router.push(next ?? urls.browse());
+						})
+						.catch((reason) => {
+							toasts.addError(reason);
+							challengeGenerated.current = false;
+						});
+				}
+			}
+		}
+		void webAuthnAuthenticate();
+	}, [router, toasts, next]);
 
 	return (
 		<>
@@ -40,7 +105,14 @@ export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 							{({ props, labelProps }) => (
 								<>
 									<InputLabel {...labelProps}>Username (or email)</InputLabel>
-									<InputText {...props} autoComplete="username" type="text" />
+									<InputText
+										{...props}
+										autoCapitalize="off"
+										autoComplete="username webauthn"
+										autoCorrect="off"
+										spellCheck="false"
+										type="text"
+									/>
 								</>
 							)}
 						</FormField>
@@ -81,18 +153,18 @@ export const LoginForm: React.FC<{ next?: string }> = ({ next }) => {
 							or
 						</span>
 					</div>
-					{/* {platform === "ios" || userAgent.os.name === "Mac OS" ? (
-					<>
-						<LoginConnectionButton type="apple" />
-						<LoginConnectionButton type="google" />
-					</>
-				) : (
-					<>
-						<LoginConnectionButton type="google" />
-						<LoginConnectionButton type="apple" />
-					</>
-				)}
-				<LoginConnectionButton type="meta" /> */}
+					{/* {platform === "apple" ? (
+						<>
+							<LoginConnectionButton type="apple" />
+							<LoginConnectionButton type="google" />
+						</>
+					) : (
+						<>
+							<LoginConnectionButton type="google" />
+							<LoginConnectionButton type="apple" />
+						</>
+					)}
+					<LoginConnectionButton type="meta" /> */}
 					<LoginConnectionButton type="discord" />
 					{/* <LoginConnectionButton type="vrchat" /> */}
 				</div>

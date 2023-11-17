@@ -134,6 +134,14 @@ defmodule FlirtualWeb.Router do
             end
           end
 
+          scope "/passkey" do
+            get("/registration-challenge", PasskeyController, :get_registration_challenge)
+            get("/authentication-challenge", PasskeyController, :get_authentication_challenge)
+            post("/", PasskeyController, :create)
+            delete("/", PasskeyController, :delete)
+            post("/authenticate", PasskeyController, :authenticate)
+          end
+
           scope "/sudo" do
             pipe_through(:require_authenticated_user)
 
@@ -297,6 +305,7 @@ defmodule FlirtualWeb.Router do
             get("/connections", UsersController, :list_connections)
 
             post("/push-tokens", UsersController, :update_push_tokens)
+            delete("/push-count", UsersController, :reset_push_count)
             post("/rating-prompts", UsersController, :update_rating_prompts)
 
             scope "/preferences" do

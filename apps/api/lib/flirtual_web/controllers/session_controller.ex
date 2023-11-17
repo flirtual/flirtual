@@ -44,7 +44,8 @@ defmodule FlirtualWeb.SessionController do
       |> json(Policy.transform(conn, session))
     else
       %User{} ->
-        {:error, {:unauthorized, "Your account has been banned; check your email for details"}}
+        {:error,
+         {:unauthorized, "Your account has been banned, please check your email for details."}}
 
       _ ->
         {:error, {:unauthorized, "Invalid credentials"}}

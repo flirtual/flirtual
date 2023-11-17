@@ -7,29 +7,49 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
-export const ChangePasswordForm: React.FC = () => {
-	const [session] = useSession();
+export const EmailForm: React.FC = () => {
+	const [session, mutateSession] = useSession();
 	const router = useRouter();
 
 	if (!session) return null;
+	const { user } = session;
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
-			requireChange={["password", "passwordConfirmation", "currentPassword"]}
 			fields={{
-				password: "",
-				passwordConfirmation: "",
+				email: user.email,
+				emailConfirmation: "",
 				currentPassword: ""
 			}}
 			onSubmit={async (body) => {
-				await api.user.updatePassword(session.user.id, { body });
-				router.refresh();
+				await mutateSession({
+					...session,
+					user: await api.user.updateEmail(user.id, { body })
+				});
+				router.push(urls.confirmEmail({ to: urls.settings.list() }));
 			}}
 		>
 			{({ FormField }) => (
 				<>
+					<FormField name="email">
+						{(field) => (
+							<>
+								<InputLabel>New email address</InputLabel>
+								<InputText {...field.props} type="email" />
+							</>
+						)}
+					</FormField>
+					<FormField name="emailConfirmation">
+						{(field) => (
+							<>
+								<InputLabel>Confirm new email address</InputLabel>
+								<InputText {...field.props} type="email" />
+							</>
+						)}
+					</FormField>
 					<FormField name="currentPassword">
 						{(field) => (
 							<>
@@ -37,30 +57,6 @@ export const ChangePasswordForm: React.FC = () => {
 								<InputText
 									{...field.props}
 									autoComplete="current-password"
-									type="password"
-								/>
-							</>
-						)}
-					</FormField>
-					<FormField name="password">
-						{(field) => (
-							<>
-								<InputLabel>New password</InputLabel>
-								<InputText
-									{...field.props}
-									autoComplete="new-password"
-									type="password"
-								/>
-							</>
-						)}
-					</FormField>
-					<FormField name="passwordConfirmation">
-						{(field) => (
-							<>
-								<InputLabel>Confirm new password</InputLabel>
-								<InputText
-									{...field.props}
-									autoComplete="new-password"
 									type="password"
 								/>
 							</>

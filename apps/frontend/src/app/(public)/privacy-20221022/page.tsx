@@ -63,7 +63,7 @@ export default function PrivacyPage() {
 				</p>
 				<p>
 					If you suspect your account has been compromised, please{" "}
-					<InlineLink href={urls.settings.changePassword}>
+					<InlineLink href={urls.settings.password}>
 						change your password
 					</InlineLink>{" "}
 					immediately and{" "}

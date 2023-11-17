@@ -124,7 +124,7 @@ defmodule FlirtualWeb.ConnectionController do
           grant_next(conn, next)
 
         {nil, %Connection{user: %User{}}} ->
-          grant_error(conn, "Your account has been banned; check your email for details")
+          grant_error(conn, "Your account has been banned, please check your email for details.")
 
         {nil, nil} ->
           grant_error(

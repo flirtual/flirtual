@@ -36,6 +36,11 @@ export const userTagNames: Record<UserTags, string> = {
 
 export type UserTags = (typeof userTags)[number];
 
+export type UserPasskey = UuidModel &
+	DatedModel & {
+		aaguid: string;
+	};
+
 export type User = UuidModel &
 	Partial<DatedModel> & {
 		email: string;
@@ -63,6 +68,7 @@ export type User = UuidModel &
 		subscription?: Subscription;
 		tags?: Array<UserTags>;
 		connections?: Array<Connection>;
+		passkeys?: Array<UserPasskey>;
 	};
 
 export function displayName(user: User) {
