@@ -57,6 +57,13 @@ iframe {
   padding-left: env(safe-area-inset-left);
 }
 
+.Canny_Badge {
+  background-color: var(--brand-theme-2) !important;
+  left: 15px !important;
+  top: 4px !important;
+  right: auto !important;
+}
+
 #freshworks-frame-wrapper>iframe {
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
