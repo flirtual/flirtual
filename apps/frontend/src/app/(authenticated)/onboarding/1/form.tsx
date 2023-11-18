@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 
@@ -137,29 +138,43 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 							</>
 						)}
 					</FormField>
-					<Button
-						className="w-32"
-						kind="secondary"
-						size="sm"
-						onClick={() => setExpanded((expanded) => !expanded)}
-					>
-						{expanded ? "Less ▲" : "More ▼"}
-					</Button>
-					{expanded && (
-						<FormField name="monopoly">
-							{(field) => (
-								<InputSelect
-									{...field.props}
-									optional
-									placeholder="Relationship type"
-									options={ProfileMonopolyList.map((item) => ({
-										id: item,
-										name: ProfileMonopolyLabel[item]
-									}))}
-								/>
-							)}
-						</FormField>
-					)}
+					<div className="flex flex-col gap-4">
+						<Button
+							className="w-32"
+							kind="secondary"
+							size="sm"
+							onClick={() => setExpanded((expanded) => !expanded)}
+						>
+							<div className="flex gap-1">
+								{expanded ? (
+									<>
+										Less
+										<ChevronUp />
+									</>
+								) : (
+									<>
+										More
+										<ChevronDown />
+									</>
+								)}
+							</div>
+						</Button>
+						{expanded && (
+							<FormField name="monopoly">
+								{(field) => (
+									<InputSelect
+										{...field.props}
+										optional
+										placeholder="Relationship type"
+										options={ProfileMonopolyList.map((item) => ({
+											id: item,
+											name: ProfileMonopolyLabel[item]
+										}))}
+									/>
+								)}
+							</FormField>
+						)}
+					</div>
 					<FormButton>Next page</FormButton>
 				</>
 			)}

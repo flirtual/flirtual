@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC, startTransition, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -13,6 +14,17 @@ import {
 	ProfileMonopolyList
 } from "~/api/user/profile";
 import { Button } from "~/components/button";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger
+} from "~/components/dialog/alert";
+import { DialogFooter } from "~/components/dialog/dialog";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -41,6 +53,8 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 	const toasts = useToast();
 
 	const [expanded, setExpanded] = useState(false);
+	const [likesPending, setLikesPending] = useState(false);
+	const [passesPending, setPassesPending] = useState(false);
 
 	if (!session) return null;
 	const { user } = session;
@@ -177,29 +191,139 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 							</>
 						)}
 					</FormField>
-					<Button
-						className="w-32"
-						kind="secondary"
-						size="sm"
-						onClick={() => setExpanded((expanded) => !expanded)}
-					>
-						{expanded ? "Less ▲" : "More ▼"}
-					</Button>
-					{expanded && (
-						<FormField name="monopoly">
-							{(field) => (
-								<InputSelect
-									{...field.props}
-									optional
-									placeholder="Relationship type"
-									options={ProfileMonopolyList.map((item) => ({
-										id: item,
-										name: ProfileMonopolyLabel[item]
-									}))}
-								/>
-							)}
-						</FormField>
-					)}
+					<div className="flex flex-col gap-4">
+						<Button
+							className="w-28"
+							kind="secondary"
+							size="sm"
+							onClick={() => setExpanded((expanded) => !expanded)}
+						>
+							<div className="flex gap-1">
+								{expanded ? (
+									<>
+										Less
+										<ChevronUp />
+									</>
+								) : (
+									<>
+										More
+										<ChevronDown />
+									</>
+								)}
+							</div>
+						</Button>
+						{expanded && (
+							<>
+								<FormField name="monopoly">
+									{(field) => (
+										<InputSelect
+											{...field.props}
+											optional
+											placeholder="Relationship type"
+											options={ProfileMonopolyList.map((item) => ({
+												id: item,
+												name: ProfileMonopolyLabel[item]
+											}))}
+										/>
+									)}
+								</FormField>
+								<div className="flex gap-4">
+									<AlertDialog>
+										<AlertDialogTrigger asChild>
+											<Button
+												className="w-1/2"
+												Icon={likesPending ? Loader2 : undefined}
+												iconClassName="animate-spin h-5"
+												size="sm"
+											>
+												Reset likes
+											</Button>
+										</AlertDialogTrigger>
+										<AlertDialogContent>
+											<AlertDialogHeader>
+												<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+											</AlertDialogHeader>
+											<AlertDialogDescription>
+												This will permanently undo all likes and homies
+												you&apos;ve sent. This won&apos;t affect your matches.
+											</AlertDialogDescription>
+											<DialogFooter>
+												<AlertDialogCancel asChild>
+													<Button kind="tertiary" size="sm">
+														Cancel
+													</Button>
+												</AlertDialogCancel>
+												<AlertDialogAction asChild>
+													<Button
+														size="sm"
+														onClick={async () => {
+															setLikesPending(true);
+															await api.matchmaking
+																.resetLikes()
+																.then(() => {
+																	setLikesPending(false);
+																	toasts.add("Likes reset successfully");
+																	return router.refresh();
+																})
+																.catch(toasts.addError);
+														}}
+													>
+														Reset likes
+													</Button>
+												</AlertDialogAction>
+											</DialogFooter>
+										</AlertDialogContent>
+									</AlertDialog>
+									<AlertDialog>
+										<AlertDialogTrigger asChild>
+											<Button
+												className="w-1/2"
+												Icon={passesPending ? Loader2 : undefined}
+												iconClassName="animate-spin h-5"
+												size="sm"
+											>
+												Reset passes
+											</Button>
+										</AlertDialogTrigger>
+										<AlertDialogContent>
+											<AlertDialogHeader>
+												<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+											</AlertDialogHeader>
+											<AlertDialogDescription>
+												This will permanently undo all profiles you&apos;ve
+												passed on.
+											</AlertDialogDescription>
+											<DialogFooter>
+												<AlertDialogCancel asChild>
+													<Button kind="tertiary" size="sm">
+														Cancel
+													</Button>
+												</AlertDialogCancel>
+												<AlertDialogAction asChild>
+													<Button
+														size="sm"
+														onClick={async () => {
+															setPassesPending(true);
+															await api.matchmaking
+																.resetPasses()
+																.then(() => {
+																	setPassesPending(false);
+																	toasts.add("Passes reset successfully");
+																	return router.refresh();
+																})
+																.catch(toasts.addError);
+														}}
+													>
+														Reset passes
+													</Button>
+												</AlertDialogAction>
+											</DialogFooter>
+										</AlertDialogContent>
+									</AlertDialog>
+								</div>
+							</>
+						)}
+					</div>
 					<div className="flex flex-col gap-4">
 						<InputLabel className="flex items-center gap-2 text-2xl font-semibold">
 							<span>Matchmaking priorities</span>

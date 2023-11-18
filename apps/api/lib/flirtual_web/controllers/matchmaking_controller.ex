@@ -31,6 +31,24 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
+  def reset_likes(conn, _) do
+    user = conn.assigns[:session].user
+
+    case LikesAndPasses.delete_unrequited_likes(profile_id: user.id) do
+      {:ok, count} -> conn |> json(%{count: count})
+      {:error, reason} -> conn |> json(%{error: reason})
+    end
+  end
+
+  def reset_passes(conn, _) do
+    user = conn.assigns[:session].user
+
+    case LikesAndPasses.delete_passes(profile_id: user.id) do
+      {:ok, count} -> conn |> json(%{count: count})
+      {:error, reason} -> conn |> json(%{error: reason})
+    end
+  end
+
   def inspect_query(conn, %{"kind" => kind}) do
     conn
     |> json_with_etag(

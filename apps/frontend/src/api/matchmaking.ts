@@ -69,6 +69,14 @@ export async function resetProspect(options: NarrowFetchOptions = {}) {
 	return fetch("delete", `prospects`, options);
 }
 
+export async function resetLikes(options: NarrowFetchOptions = {}) {
+	return fetch("delete", `likes`, options);
+}
+
+export async function resetPasses(options: NarrowFetchOptions = {}) {
+	return fetch("delete", `passes`, options);
+}
+
 export async function listMatches(
 	options: NarrowFetchOptions<undefined, { unrequited?: boolean }>
 ) {

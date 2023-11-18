@@ -99,6 +99,46 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> Repo.all()
   end
 
+  def delete_unrequited_likes(profile_id: profile_id) do
+    Repo.transaction(fn ->
+      liked_users =
+        LikesAndPasses
+        |> where(profile_id: ^profile_id, type: :like)
+        |> join(:left, [lap], opposite in LikesAndPasses,
+          on: lap.target_id == opposite.profile_id and lap.profile_id == opposite.target_id
+        )
+        |> where([_, opposite], is_nil(opposite) or opposite.type != :like)
+        |> select([lap, _], lap.target_id)
+        |> Repo.all()
+
+      with {count, nil} <-
+             LikesAndPasses
+             |> where(profile_id: ^profile_id, type: :like)
+             |> where([lap], lap.target_id in ^liked_users)
+             |> Repo.delete_all(),
+           {:ok, _} <- ChangeQueue.add(profile_id) do
+        count
+      else
+        {:error, reason} -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def delete_passes(profile_id: profile_id) do
+    Repo.transaction(fn ->
+      with {count, nil} <-
+             LikesAndPasses
+             |> where(profile_id: ^profile_id, type: :pass)
+             |> Repo.delete_all(),
+           {:ok, _} <- ChangeQueue.add(profile_id) do
+        count
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def delete_all(profile_id: profile_id, target_id: target_id) do
     Repo.transaction(fn ->
       with {count, nil} <-

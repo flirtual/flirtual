@@ -249,6 +249,16 @@ defmodule FlirtualWeb.Router do
           delete("/", MatchmakingController, :unmatch)
         end
 
+        scope "/likes" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+          delete("/", MatchmakingController, :reset_likes)
+        end
+
+        scope "/passes" do
+          pipe_through([:require_authenticated_user, :require_valid_user])
+          delete("/", MatchmakingController, :reset_passes)
+        end
+
         scope "/users" do
           post("/", UsersController, :create)
 
