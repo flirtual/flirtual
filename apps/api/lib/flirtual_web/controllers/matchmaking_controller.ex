@@ -7,7 +7,7 @@ defmodule FlirtualWeb.MatchmakingController do
   alias Flirtual.Matchmaking
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile.Prospect
-  alias Flirtual.{Policy, Users}
+  alias Flirtual.{Policy, User, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -141,6 +141,15 @@ defmodule FlirtualWeb.MatchmakingController do
     with items <-
            LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id)
            |> Policy.filter(conn, :count) do
+      thumbnails =
+        items
+        |> Enum.take(3)
+        |> Enum.map(fn item ->
+          item.profile_id
+          |> User.get()
+          |> User.avatar_thumbnail_url()
+        end)
+
       conn
       |> json_with_etag(%{
         count:
@@ -150,7 +159,8 @@ defmodule FlirtualWeb.MatchmakingController do
         items:
           items
           |> Policy.filter(conn, :read)
-          |> then(&Policy.transform(conn, &1))
+          |> then(&Policy.transform(conn, &1)),
+        thumbnails: thumbnails
       })
     end
   end

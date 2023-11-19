@@ -2,6 +2,7 @@
 
 import { FC } from "react";
 import useSWR from "swr";
+import { twMerge } from "tailwind-merge";
 
 import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
@@ -9,6 +10,7 @@ import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { api } from "~/api";
 import { urls } from "~/urls";
 import { useSession } from "~/hooks/use-session";
+import { Image } from "~/components/image";
 
 export const LikesYouButton: FC = () => {
 	const [session] = useSession();
@@ -25,7 +27,8 @@ export const LikesYouButton: FC = () => {
 			suspense: true,
 			fallbackData: {
 				count: {},
-				items: []
+				items: [],
+				thumbnails: []
 			}
 		}
 	);
@@ -39,21 +42,46 @@ export const LikesYouButton: FC = () => {
 			href={user.subscription?.active ? urls.likes : urls.subscription.default}
 			size="sm"
 		>
-			See who likes you{" "}
-			<span data-sentry-mask className="whitespace-nowrap">
-				{likes.count.love && (
-					<>
-						({likes.count.love > 99 ? "99+" : likes.count.love}
-						<HeartIcon className="inline h-4" gradient={false} />)
-					</>
-				)}{" "}
-				{likes.count.friend && (
-					<>
-						({likes.count.friend > 99 ? "99+" : likes.count.friend}
-						<PeaceIcon className="inline h-4" gradient={false} />)
-					</>
+			<div className="flex gap-8">
+				{likes.thumbnails && likes.thumbnails.length > 0 && (
+					<div className="flex items-center -space-x-2">
+						{likes.thumbnails?.map((thumbnail, index) => (
+							<Image
+								alt="Like preview"
+								className="rounded-full border-2 border-white-10 shadow-brand-1"
+								draggable={false}
+								height="34"
+								key={index}
+								src={thumbnail}
+								width="34"
+							/>
+						))}
+					</div>
 				)}
-			</span>
+				<div
+					className={twMerge(
+						likes.thumbnails &&
+							likes.thumbnails.length > 0 &&
+							"flex flex-col items-center"
+					)}
+				>
+					See who likes you{" "}
+					<span data-sentry-mask className="whitespace-nowrap">
+						{likes.count.love && (
+							<>
+								({likes.count.love > 99 ? "99+" : likes.count.love}
+								<HeartIcon className="inline h-4" gradient={false} />)
+							</>
+						)}{" "}
+						{likes.count.friend && (
+							<>
+								({likes.count.friend > 99 ? "99+" : likes.count.friend}
+								<PeaceIcon className="inline h-4" gradient={false} />)
+							</>
+						)}
+					</span>
+				</div>
+			</div>
 		</ButtonLink>
 	);
 };

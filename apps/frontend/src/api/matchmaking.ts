@@ -85,5 +85,6 @@ export async function listMatches(
 			[K in ProspectKind]?: number;
 		};
 		items: Array<LikeAndPassItem>;
+		thumbnails?: Array<string>;
 	}>("get", `matches`, options);
 }
