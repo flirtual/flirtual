@@ -1,67 +1,58 @@
 "use client";
-import { AlertCircle, CheckCircle2, HelpCircle } from "lucide-react";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { api } from "~/api/";
-import { Form, FormButton } from "~/components/forms";
+import { ButtonLink } from "~/components/button";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	const [confirmSuccess, setConfirmSuccess] = useState<boolean | null>(null);
 
+	const [session] = useSession();
 	const router = useRouter();
 	const toasts = useToast();
 
-	if (confirmSuccess === null) {
-		return (
-			<Form
-				className="flex flex-col gap-4"
-				fields={{}}
-				requireChange={false}
-				onSubmit={async () => {
-					await api.user
-						.confirmEmail({ body: { token } })
-						.then(() => {
-							toasts.add("Email changed successfully");
+	useEffect(() => {
+		if (confirmSuccess) return;
 
-							setConfirmSuccess(true);
-							return router.refresh();
-						})
-						.catch((reason) => {
-							toasts.addError(reason);
-							router.push(urls.confirmEmail());
-						});
-				}}
-			>
-				{() => (
-					<>
-						<span className="text-xl">Please confirm your email address</span>
-						<FormButton>Confirm</FormButton>
-					</>
-				)}
-			</Form>
-		);
-	}
+		void api.user
+			.confirmEmail({ body: { token } })
+			.then(() => {
+				setConfirmSuccess(true);
+				return setTimeout(
+					() => router.push(session ? urls.default : urls.login()),
+					1500
+				);
+			})
+			.catch((reason) => {
+				toasts.addError(reason);
+				router.push(urls.confirmEmail());
+			});
+	});
 
-	const Icon =
-		confirmSuccess === null
-			? HelpCircle
-			: confirmSuccess
-			? CheckCircle2
-			: AlertCircle;
+	const Icon = confirmSuccess ? CheckCircle2 : AlertCircle;
 
 	return (
-		<>
+		<div className="flex flex-col gap-4">
 			<div className="flex gap-4">
-				<Icon className="h-8 w-8 shrink-0" />
+				{confirmSuccess !== null && <Icon className="h-8 w-8 shrink-0" />}
 				<span className="text-xl">
-					{confirmSuccess
-						? "Thank you for confirming your email address, you may now close this window."
-						: "We couldn't confirm your email address, please try again later!"}
+					{confirmSuccess === null
+						? "Just a sec..."
+						: confirmSuccess
+						? "Your email address has been confirmed successfully."
+						: "Sorry, we couldn't confirm your email address. Please try again."}
 				</span>
 			</div>
-		</>
+			{confirmSuccess && (
+				<ButtonLink href={session ? urls.default : urls.login()}>
+					Continue
+				</ButtonLink>
+			)}
+		</div>
 	);
 };
