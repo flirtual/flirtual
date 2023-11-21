@@ -450,6 +450,7 @@ defmodule Flirtual.User do
   def warn(
         %User{} = user,
         message,
+        shadowban,
         %User{} = moderator
       ) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
@@ -457,8 +458,12 @@ defmodule Flirtual.User do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
-             |> change(%{moderator_message: message})
+             |> change(%{
+               moderator_message: message,
+               shadowbanned_at: if(shadowban, do: now, else: user.shadowbanned_at)
+             })
              |> Repo.update(),
+           {:ok, _} <- ChangeQueue.add(if(shadowban, do: user.id, else: [])),
            :ok <-
              Discord.deliver_webhook(:warned,
                user: user,
@@ -485,6 +490,7 @@ defmodule Flirtual.User do
              user
              |> change(%{moderator_message: nil})
              |> Repo.update(),
+           {:ok, _} <- Report.maybe_resolve_shadowban(user.id),
            :ok <-
              Discord.deliver_webhook(:warn_revoked,
                user: user,
@@ -507,6 +513,7 @@ defmodule Flirtual.User do
              user
              |> change(%{moderator_message: nil})
              |> Repo.update(),
+           {:ok, _} <- Report.maybe_resolve_shadowban(user.id),
            :ok <-
              Discord.deliver_webhook(:warn_acknowledged,
                user: user,

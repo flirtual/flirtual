@@ -259,6 +259,7 @@ export async function warn(
 	userId: string,
 	options: NarrowFetchOptions<{
 		message: string;
+		shadowban: boolean;
 	}>
 ) {
 	return fetch<User>("post", `users/${userId}/warn`, options);

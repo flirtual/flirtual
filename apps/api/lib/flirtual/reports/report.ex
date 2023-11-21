@@ -105,6 +105,8 @@ defmodule Flirtual.Report do
               |> change(%{shadowbanned_at: nil})
               |> Repo.update()
 
+            {:ok, _} = ChangeQueue.add(user.id)
+
             {:ok, true}
         end
 

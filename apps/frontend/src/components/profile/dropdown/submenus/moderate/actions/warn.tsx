@@ -15,7 +15,7 @@ import {
 } from "~/components/dialog/dialog";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { Form, FormButton, FormMessage } from "~/components/forms";
-import { InputLabel, InputTextArea } from "~/components/inputs";
+import { InputCheckbox, InputLabel, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import { useToast } from "~/hooks/use-toast";
 
@@ -48,9 +48,10 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 					requireChange={false}
 					fields={{
 						targetId: user.id,
-						message: user.moderatorMessage ?? ""
+						message: user.moderatorMessage ?? "",
+						shadowban: false
 					}}
-					onSubmit={async ({ targetId, message }) => {
+					onSubmit={async ({ targetId, message, shadowban }) => {
 						if (!message) {
 							await api.user.deleteWarn(targetId);
 
@@ -61,7 +62,7 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 							return;
 						}
 
-						await api.user.warn(targetId, { body: { message } });
+						await api.user.warn(targetId, { body: { message, shadowban } });
 
 						toasts.add("Account warned");
 						setOpen(false);
@@ -98,6 +99,16 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 										<InputLabel {...field.labelProps}>Message</InputLabel>
 										<InputTextArea autoFocus {...field.props} rows={6} />
 									</>
+								)}
+							</FormField>
+							<FormField name="shadowban">
+								{(field) => (
+									<div className="flex items-center gap-4">
+										<InputCheckbox {...field.props} />
+										<InputLabel {...field.labelProps}>
+											Shadowban until acknowledged
+										</InputLabel>
+									</div>
 								)}
 							</FormField>
 							{!!user.moderatorMessage && message.changed && (
