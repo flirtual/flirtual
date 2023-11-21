@@ -9,11 +9,16 @@ defmodule Flirtual.Application do
   def start(_type, _args) do
     topologies = Application.get_env(:libcluster, :topologies) || []
 
+    Oban.Telemetry.attach_default_logger()
+    Flirtual.ObanReporter.attach()
+
     children = [
       # Start the Cluster supervisor
       {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]},
       # Start the Ecto repository
       Flirtual.Repo,
+      # Start Oban
+      {Oban, Application.fetch_env!(:flirtual, Oban)},
       # Start Elasticsearch
       Flirtual.Elasticsearch,
       # Start the push notification dispatchers

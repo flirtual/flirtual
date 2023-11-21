@@ -23,6 +23,9 @@ config :flirtual, FlirtualWeb.Endpoint,
   secret_key_base: "qSuvZaUX+Ee+Kz2HLGE8XMsQikWf2uYBENL06Dtb93pis6eTRJBogpw3Ebr7s6l3",
   server: false
 
+# In tests we don't run Oban jobs
+config :flirtual, Oban, testing: :inline
+
 # In test we don't send emails.
 config :flirtual, Flirtual.Mailer, adapter: Swoosh.Adapters.Test
 

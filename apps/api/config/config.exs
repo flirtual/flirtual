@@ -23,6 +23,14 @@ config :flirtual, FlirtualWeb.Endpoint,
     accepts: ~w(json)
   ]
 
+config :flirtual, Oban,
+  repo: Flirtual.Repo,
+  plugins: [
+    {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 7},
+    {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)}
+  ],
+  queues: [default: 1]
+
 config :flirtual, Flirtual.Elasticsearch,
   api: Elasticsearch.API.HTTP,
   json_library: Jason,
