@@ -7,7 +7,7 @@ defmodule FlirtualWeb.MatchmakingController do
   alias Flirtual.Matchmaking
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile.Prospect
-  alias Flirtual.{Policy, User, Users}
+  alias Flirtual.{Policy, Subscription, User, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -145,9 +145,16 @@ defmodule FlirtualWeb.MatchmakingController do
         items
         |> Enum.take(3)
         |> Enum.map(fn item ->
-          item.profile_id
-          |> User.get()
-          |> User.avatar_thumbnail_url()
+          url =
+            item.profile_id
+            |> User.get()
+            |> User.avatar_thumbnail_url()
+
+          if not Subscription.active?(conn.assigns[:session].user.subscription) do
+            url <> "/-/blur/35/"
+          else
+            url
+          end
         end)
 
       conn

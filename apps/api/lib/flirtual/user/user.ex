@@ -91,7 +91,6 @@ defmodule Flirtual.User do
     |> Image.url(
       scale_crop: ["#{size}x#{size}", :smart_faces_points],
       format: :auto,
-      resize: "#{size}x",
       quality: :smart
     )
   end
