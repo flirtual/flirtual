@@ -22,7 +22,9 @@ const NavigationIconButton: FC<
 	ComponentProps<"a"> & { href: string; ref?: any }
 > = ({ children, ...props }) => {
 	const location = useLocation();
-	const active = urlEqual(toAbsoluteUrl(props.href), location);
+	const active =
+		toAbsoluteUrl(props.href).pathname.split("/")[1] ===
+		location.pathname.split("/")[1];
 
 	return (
 		<Link
