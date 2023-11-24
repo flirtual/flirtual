@@ -2,7 +2,6 @@
 
 import { CSSProperties, ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 
 import { yearsAgo } from "~/date";
 import { filterBy } from "~/utilities";

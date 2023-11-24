@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FC, Suspense, useState } from "react";
+import { FC } from "react";
 import { Ban, Flag } from "lucide-react";
 
 import { User, displayName } from "~/api/user";
@@ -32,7 +32,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
 
-	const [showExtraInformation, setShowExtraInformation] = useState(false);
+	// const [showExtraInformation, setShowExtraInformation] = useState(false);
 
 	if (
 		!session ||
