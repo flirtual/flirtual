@@ -68,18 +68,20 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 							return;
 						}
 
-						const response = await api.connections.grant({
-							query,
-							redirect: "manual"
-						});
+						setTimeout(async () => {
+							const response = await api.connections.grant({
+								query,
+								redirect: "manual"
+							});
 
-						const next = response.headers.get("location");
-						if (next) router.push(next);
+							const next = response.headers.get("location");
+							if (next) router.push(next);
 
-						router.refresh();
+							router.refresh();
 
-						await InAppBrowser.removeAllListeners();
-						await InAppBrowser.close();
+							await InAppBrowser.removeAllListeners();
+							await InAppBrowser.close();
+						}, 1000);
 					}
 				});
 
