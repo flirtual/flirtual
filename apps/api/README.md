@@ -18,15 +18,17 @@
 
 * Set up the project.
 
-	* Bring the environment variables into scope using:  `source .env.local`.
+	* Bring the environment variables into scope using: `source .env.local`.
 
 	* Start postgres in a detached state manually with: `docker compose up -d postgres`.
 
   * Run `mix setup` to install dependencies, create the database, and run migrations.
 
+  * Run `mix phx.gen.cert` to generate a self-signed TLS certificate.
+
 * Start the server with `./dev.sh`, this will start the server and automatically recompile on file changes.
 
-* Now you can visit [`127.0.0.1:4000`](http://127.0.0.1:4000) from your browser.
+* Now you can visit [`127.0.0.1:4001`](https://127.0.0.1:4001) from your browser.
 
 ### Stripe/subscription testing.
 
@@ -36,4 +38,4 @@
 
 * Restart the server.
 
-* ``stripe listen --forward-to localhost:4000/v1/stripe``
+* ``stripe listen --forward-to localhost:4001/v1/stripe``

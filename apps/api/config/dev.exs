@@ -33,6 +33,13 @@ config :flirtual, FlirtualWeb.Endpoint,
   http: [
     ip: {0, 0, 0, 0}
   ],
+  https: [
+    otp_app: :flirtual,
+    port: 4001,
+    cipher_suite: :strong,
+    certfile: "priv/cert/selfsigned.pem",
+    keyfile: "priv/cert/selfsigned_key.pem"
+  ],
   check_origin: false,
   code_reloader: true,
   watchers: []
