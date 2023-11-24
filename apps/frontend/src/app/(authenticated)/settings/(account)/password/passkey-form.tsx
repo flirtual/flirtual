@@ -90,9 +90,6 @@ export const PasswordPasskeyForm: React.FC = () => {
 							name={aaguidData[passkey.aaguid]?.name}
 						/>
 					))}
-					<span className="select-none text-black-50 dark:text-white-50">
-						{native ? "Tap" : "Click"} on a passkey to remove it.
-					</span>
 				</div>
 			)}
 
