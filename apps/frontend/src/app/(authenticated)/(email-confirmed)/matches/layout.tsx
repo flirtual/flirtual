@@ -62,10 +62,8 @@ export default async function ConversationsLayout({
 							and showing your profile to people you have liked or homied, so
 							you can match.
 						</p>
-						<div className="grid gap-4 sm:grid-cols-2">
-							<ButtonLink href={urls.browse()} size="sm">
-								Browse
-							</ButtonLink>
+						<div className="flex flex-col gap-4">
+							<ButtonLink href={urls.browse()}>Browse</ButtonLink>
 							<LikesYouButton />
 						</div>
 					</ModelCard>
