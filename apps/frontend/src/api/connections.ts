@@ -92,6 +92,7 @@ export function grant(
 			type: ConnectionType;
 			code: string;
 			state: string;
+			redirect?: string;
 		}
 	>
 ) {
