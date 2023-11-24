@@ -1,6 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { InAppBrowser } from "@capgo/inappbrowser";
+import { Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -9,6 +11,7 @@ import { ConnectionMetadata, ConnectionType } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 
 export interface ConnectionButtonProps {
 	type: ConnectionType;
@@ -19,6 +22,8 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const { Icon, iconClassName, label, color } = ConnectionMetadata[type];
 	const location = useLocation();
 	const [session] = useSession();
+	const router = useRouter();
+	const toasts = useToast();
 	const { native } = useDevice();
 
 	const connection = useMemo(() => {
@@ -27,28 +32,71 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			: null;
 	}, [session, type]);
 
-	const [text, setText] = useState(
-		native ? "Unavailable" : connection?.displayName ?? "Connect account"
-	);
+	const [text, setText] = useState("");
+
+	useMemo(() => {
+		setText(connection?.displayName ?? "Connect account");
+	}, [connection]);
 
 	if (!session) return null;
 
 	return (
 		<div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
-			<Link
-				className="flex w-full cursor-pointer overflow-hidden rounded-xl bg-white-40 text-left shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus:outline-none dark:bg-black-60 dark:text-white-20 focus-within:dark:ring-offset-black-50"
-				href={
-					native
-						? "#"
-						: connection
-						? api.connections.deleteUrl(type, location.href.split("?")[0])
-						: api.connections.authorizeUrl(type, location.href.split("?")[0])
-				}
-				onMouseEnter={() => {
-					if (!native && connection) setText("Disconnect account");
-				}}
-				onMouseLeave={() => {
-					if (!native) setText(connection?.displayName ?? "Connect account");
+			<div
+				className={twMerge(
+					"flex w-full overflow-hidden rounded-xl bg-white-40 text-left shadow-brand-1 focus-within:ring-2 focus-within:ring-coral focus-within:ring-offset-2 focus:outline-none dark:bg-black-60 dark:text-white-20 focus-within:dark:ring-offset-black-50",
+					!connection && "cursor-pointer"
+				)}
+				onClick={async () => {
+					if (connection) return;
+
+					if (!native) {
+						return router.push(
+							api.connections.authorizeUrl(
+								type,
+								"consent",
+								location.href.split("?")[0]
+							).href
+						);
+					}
+
+					const { authorizeUrl, state } = await api.connections.authorize(
+						type,
+						"consent",
+						location.href.split("?")[0]
+					);
+
+					await InAppBrowser.addListener("urlChangeEvent", async (event) => {
+						const url = new URL(event.url);
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						const query: any = Object.fromEntries(url.searchParams.entries());
+
+						if ("code" in query && "state" in query) {
+							if (query.state !== state) {
+								await InAppBrowser.removeAllListeners();
+								await InAppBrowser.close();
+
+								return;
+							}
+
+							setTimeout(async () => {
+								const response = await api.connections.grant({
+									query,
+									redirect: "manual"
+								});
+
+								const next = response.headers.get("location");
+								if (next) router.push(next);
+
+								router.refresh();
+
+								await InAppBrowser.removeAllListeners();
+								await InAppBrowser.close();
+							}, 1000);
+						}
+					});
+
+					await InAppBrowser.open({ url: authorizeUrl });
 				}}
 			>
 				<div
@@ -57,13 +105,30 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 				>
 					<Icon className={twMerge("h-7 w-7", iconClassName)} />
 				</div>
-				<div className="flex flex-col px-4 py-2 font-nunito leading-none">
+				<div className="flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none">
 					{label}
 					<span className="text-sm leading-none text-black-60 dark:text-white-40">
 						{text}
 					</span>
 				</div>
-			</Link>
+				{connection && (
+					<div
+						className="ml-auto cursor-pointer self-center p-3 text-black-30 hover:text-red-600"
+						onClick={async () => {
+							await api.connections
+								.delete({ query: { type } })
+								.then(() => {
+									toasts.add("Removed connection");
+									return router.refresh();
+								})
+								.catch(toasts.addError);
+							return;
+						}}
+					>
+						<Trash2 />
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };

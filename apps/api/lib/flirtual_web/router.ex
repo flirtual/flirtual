@@ -176,8 +176,13 @@ defmodule FlirtualWeb.Router do
         scope "/connections" do
           get("/available", ConnectionController, :list_available)
           get("/authorize", ConnectionController, :authorize)
-          get("/delete", ConnectionController, :delete)
           get("/grant", ConnectionController, :grant)
+
+          scope "/" do
+            pipe_through(:require_authenticated_user)
+
+            delete("/", ConnectionController, :delete)
+          end
         end
 
         scope "/plans" do

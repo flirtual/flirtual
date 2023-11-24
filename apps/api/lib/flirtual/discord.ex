@@ -50,7 +50,7 @@ defmodule Flirtual.Discord do
     end
   end
 
-  def authorize_url(_, %{state: state}) do
+  def authorize_url(_, %{state: state, prompt: prompt}) do
     URI.new(
       "https://discord.com/api/oauth2/authorize?" <>
         URI.encode_query(%{
@@ -59,7 +59,7 @@ defmodule Flirtual.Discord do
           state: state,
           response_type: "code",
           scope: "identify email",
-          prompt: "none"
+          prompt: prompt
         })
     )
   end

@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
-import { Browser } from "@capacitor/browser";
+import { InAppBrowser } from "@capgo/inappbrowser";
+import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
 import {
@@ -12,6 +12,7 @@ import {
 	ConnectionType
 } from "~/api/connections";
 import { useLocation } from "~/hooks/use-location";
+import { useDevice } from "~/hooks/use-device";
 
 export interface AddConnectionButtonProps {
 	type: ConnectionType;
@@ -29,6 +30,8 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 	type
 }) => {
 	const location = useLocation();
+	const router = useRouter();
+	const { native } = useDevice();
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 
 	return (
@@ -36,13 +39,52 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 			className="flex items-center justify-center gap-4 rounded-lg px-4 py-2 text-white-20 shadow-brand-1"
 			style={{ backgroundColor: color }}
 			type="button"
-			onClick={async () =>
-				await Browser.open({
-					url: api.connections.authorizeUrl(type, location.href.split("?")[0])
-						.href,
-					windowName: "_self"
-				})
-			}
+			onClick={async () => {
+				if (!native)
+					return router.push(
+						api.connections.authorizeUrl(
+							type,
+							"none",
+							location.href.split("?")[0]
+						).href
+					);
+
+				const { authorizeUrl, state } = await api.connections.authorize(
+					type,
+					"none",
+					location.href.split("?")[0]
+				);
+
+				await InAppBrowser.addListener("urlChangeEvent", async (event) => {
+					const url = new URL(event.url);
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					const query: any = Object.fromEntries(url.searchParams.entries());
+
+					if ("code" in query && "state" in query) {
+						if (query.state !== state) {
+							await InAppBrowser.removeAllListeners();
+							await InAppBrowser.close();
+
+							return;
+						}
+
+						const response = await api.connections.grant({
+							query,
+							redirect: "manual"
+						});
+
+						const next = response.headers.get("location");
+						if (next) router.push(next);
+
+						router.refresh();
+
+						await InAppBrowser.removeAllListeners();
+						await InAppBrowser.close();
+					}
+				});
+
+				await InAppBrowser.open({ url: authorizeUrl });
+			}}
 		>
 			<Icon className={twMerge("h-6 w-6", iconClassName)} />
 			<span className="font-montserrat text-lg font-semibold">

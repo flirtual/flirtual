@@ -59,12 +59,50 @@ export type Connection = UpdatedAtModel & {
 	avatarUrl?: string;
 };
 
-export function authorizeUrl(type: ConnectionType, next: string) {
-	return newUrl("connections/authorize", { type, next });
+export function authorizeUrl(
+	type: ConnectionType,
+	prompt: string,
+	next: string,
+	json: boolean = false
+) {
+	return newUrl("connections/authorize", {
+		type,
+		prompt,
+		next,
+		json: json ? "1" : undefined
+	});
 }
 
-export function deleteUrl(type: ConnectionType, next: string) {
-	return newUrl("connections/delete", { type, next });
+export function authorize(
+	type: ConnectionType,
+	prompt: string,
+	next: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<{
+		state: string;
+		authorizeUrl: string;
+	}>("get", authorizeUrl(type, prompt, next, true).href, options);
+}
+
+export function grant(
+	options: NarrowFetchOptions<
+		undefined,
+		{
+			type: ConnectionType;
+			code: string;
+			state: string;
+		}
+	>
+) {
+	return fetch("get", "connections/grant", { ...options, raw: true });
+}
+
+export { _delete as delete };
+export async function _delete(
+	options: NarrowFetchOptions<undefined, { type: ConnectionType }>
+) {
+	return fetch("delete", "connections", options);
 }
 
 export async function listAvailable(

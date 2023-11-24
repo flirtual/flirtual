@@ -136,6 +136,7 @@ export default async function RootLayout({
 				/>
 				<link color="#e9658b" href={SafariPinnedTabImage.src} rel="mask-icon" />
 				<ClientScripts />
+				<AppUrlListener />
 			</head>
 			<body
 				className={twMerge(
@@ -150,7 +151,6 @@ export default async function RootLayout({
 					showSpinner={false}
 				/>
 				<Suspense fallback={<LoadingIndicatorScreen />}>
-					<AppUrlListener />
 					<DeviceProvider
 						native={native}
 						platform={platform}

@@ -10,7 +10,6 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':capacitor-app')
-    implementation project(':capacitor-browser')
     implementation project(':capacitor-clipboard')
     implementation project(':capacitor-device')
     implementation project(':capacitor-dialog')
@@ -22,6 +21,7 @@ dependencies {
     implementation project(':capacitor-toast')
     implementation project(':capawesome-team-capacitor-datetime-picker')
     implementation project(':capawesome-capacitor-app-update')
+    implementation project(':capgo-inappbrowser')
     implementation project(':revenuecat-purchases-capacitor')
     implementation project(':capacitor-rate-app')
     implementation "com.android.billingclient:billing:5.2.1"

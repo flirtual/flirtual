@@ -1,14 +1,13 @@
 "use client";
 
 import { ModelCard } from "~/components/model-card";
-// import { useDevice } from "~/hooks/use-device";
 import { InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { Form, FormButton } from "~/components/forms";
 import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
 import { VRChatIcon } from "~/components/icons";
-import { useDevice } from "~/hooks/use-device";
+// import { useDevice } from "~/hooks/use-device";
 
 import { AddConnectionButton } from "./add-connection-button";
 
@@ -19,7 +18,6 @@ export default function SettingsAccountConnectionsPage(props: {
 }) {
 	// const { platform } = useDevice();
 	const [session, mutateSession] = useSession();
-	const { native } = useDevice();
 	const toasts = useToast();
 
 	if (!session) return null;
@@ -99,15 +97,6 @@ export default function SettingsAccountConnectionsPage(props: {
 									/>
 								)}
 							</FormField>
-							{native && (
-								<span className="col-span-2 select-none text-black-50 dark:text-white-50">
-									⚠️ Discord connections are not yet supported on mobile. Please
-									use your web browser to connect your Discord account.
-								</span>
-							)}
-							<span className="col-span-2 select-none text-black-50 dark:text-white-50">
-								{native ? "Tap" : "Click"} on a connection to remove it.
-							</span>
 							<FormButton className="col-span-2 mt-4">Update</FormButton>
 						</div>
 					)}

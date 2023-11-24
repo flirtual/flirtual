@@ -120,9 +120,7 @@ defmodule FlirtualWeb.PasskeyController do
     user = conn.assigns[:session].user
 
     with :ok <- Passkey.delete(user.id, passkey_id) do
-      conn
-      |> put_status(:ok)
-      |> json(%{})
+      conn |> json(%{deleted: true})
     end
   end
 
