@@ -4,12 +4,8 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
 
   import Ecto.Query
 
-  alias Flirtual.Repo
-  alias Flirtual.Talkjs
-  alias Flirtual.User
-  alias Flirtual.User.ChangeQueue
-  alias Flirtual.User.Profile.Block
-  alias Flirtual.User.Profile.LikesAndPasses
+  alias Flirtual.{ObanWorkers, Repo, Talkjs, User}
+  alias Flirtual.User.Profile.{Block, LikesAndPasses}
 
   schema "likes_and_passes" do
     belongs_to(:profile, Flirtual.User.Profile, references: :user_id, primary_key: true)
@@ -116,7 +112,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              |> where(profile_id: ^profile_id, type: :like)
              |> where([lap], lap.target_id in ^liked_users)
              |> Repo.delete_all(),
-           {:ok, _} <- ChangeQueue.add(profile_id) do
+           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :premium_reset]) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -130,7 +126,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              LikesAndPasses
              |> where(profile_id: ^profile_id, type: :pass)
              |> Repo.delete_all(),
-           {:ok, _} <- ChangeQueue.add(profile_id) do
+           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :premium_reset]) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -147,7 +143,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              |> Repo.delete_all(),
            {:ok, _} <-
              Talkjs.delete_participants(user_id: profile_id, target_id: target_id),
-           {:ok, _} <- ChangeQueue.add(profile_id) do
+           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :premium_reset]) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -163,7 +159,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              |> where(profile_id: ^profile_id)
              |> Repo.delete_all(),
            {:ok, _} <- Talkjs.delete_user_conversations(profile_id),
-           {:ok, _} <- ChangeQueue.add(profile_id) do
+           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :premium_reset]) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -191,6 +187,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
       opposite: opposite,
       match: not is_nil(opposite) and lap.type == :like and opposite.type == :like
     })
+    |> order_by([lap, opposite], desc: opposite.type == :like)
     |> then(
       &case Keyword.get(options, nil) do
         nil -> &1
