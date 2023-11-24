@@ -26,8 +26,8 @@ defmodule FlirtualWeb.MatchmakingController do
   end
 
   def reset_prospects(conn, _) do
-    with {:ok, count} <- Matchmaking.reset_prospects(conn.assigns[:session].user) do
-      conn |> json(%{count: count})
+    with :ok <- Matchmaking.reset_prospects(conn.assigns[:session].user) do
+      conn |> json(%{success: true})
     end
   end
 

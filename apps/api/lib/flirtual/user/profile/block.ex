@@ -4,12 +4,8 @@ defmodule Flirtual.User.Profile.Block do
   import Ecto.Query
   import Ecto.Changeset
 
-  alias Flirtual.User.Profile.Prospect
-  alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.User.Profile.Block
-  alias Flirtual.User.ChangeQueue
-  alias Flirtual.User
-  alias Flirtual.Repo
+  alias Flirtual.{ObanWorkers, Repo, User}
+  alias Flirtual.User.Profile.{Block, LikesAndPasses, Prospect}
 
   @derive {Jason.Encoder, only: [:profile_id, :target_id, :created_at]}
 
@@ -33,7 +29,7 @@ defmodule Flirtual.User.Profile.Block do
              |> Repo.insert(),
            {:ok, _} <- LikesAndPasses.delete_all(profile_id: user_id, target_id: target_id),
            {:ok, _} <- Prospect.delete_all(profile_id: user_id, target_id: target_id),
-           {:ok, _} <- ChangeQueue.add([user_id, target_id]) do
+           {:ok, _} <- ObanWorkers.update_user([user_id, target_id], [:elasticsearch, :talkjs]) do
         item
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -57,7 +53,8 @@ defmodule Flirtual.User.Profile.Block do
   def delete(%Block{} = item) do
     Repo.transaction(fn ->
       with {:ok, item} <- Repo.delete(item),
-           {:ok, _} <- ChangeQueue.add([item.profile_id, item.target_id]) do
+           {:ok, _} <-
+             ObanWorkers.update_user([item.profile_id, item.target_id], [:elasticsearch, :talkjs]) do
         item
       else
         {:error, reason} -> Repo.rollback(reason)

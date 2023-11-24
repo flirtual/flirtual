@@ -153,6 +153,7 @@ defmodule A do
         domsub
       ]) do
     id = ShortUUID.encode!(id)
+
     Repo.transaction(fn ->
       with user <- User.get(id),
            {:ok, _} <-
@@ -293,18 +294,30 @@ defmodule A do
                "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:TAGGED]->(i:interest {type: 'custom'}) RETURN i.name"
              ),
            {:ok, genders} <-
-             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:GENDER]->(g:gender) RETURN g.name"),
+             query(
+               conn,
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:GENDER]->(g:gender) RETURN g.name"
+             ),
            {:ok, sexualities} <-
              query(
                conn,
                "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:SEXUALITY]->(s:sexuality) RETURN s.name"
              ),
            {:ok, games} <-
-             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:PLAYS]->(g:game) RETURN g.name"),
+             query(
+               conn,
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:PLAYS]->(g:game) RETURN g.name"
+             ),
            {:ok, kinks} <-
-             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:KINK]->(k:kink) RETURN k.name"),
+             query(
+               conn,
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:KINK]->(k:kink) RETURN k.name"
+             ),
            {:ok, platforms} <-
-             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:USES]->(p:platform) RETURN p.name"),
+             query(
+               conn,
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:USES]->(p:platform) RETURN p.name"
+             ),
            {:ok, interests} <-
              query(
                conn,
@@ -427,7 +440,10 @@ defmodule A do
                }
              ),
            {:ok, gender_preferences} <-
-             query(conn, "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:LF]->(g:mgender) RETURN g.name"),
+             query(
+               conn,
+               "MATCH (u:user {id: '#{ShortUUID.decode!(user.id)}'})-[:LF]->(g:mgender) RETURN g.name"
+             ),
            {:ok, _} <-
              Ecto.build_assoc(profile, :preferences, %{
                agemin: agemin,
@@ -782,7 +798,7 @@ defmodule A do
 end
 
 defmodule Flirtual.Migrate do
-  alias Flirtual.User.ChangeQueue
+  alias Flirtual.ObanWorkers
 
   keys = [
     "u.id",
@@ -955,7 +971,8 @@ defmodule Flirtual.Migrate do
               reraise(exception, __STACKTRACE__)
           end
         end)
-        #|> ChangeQueue.add()
+
+        # |> ObanWorkers.update_user()
 
         IO.puts("RELATE\tSUCCESS\tCHUNK\t#{chunk_idx}")
       end)

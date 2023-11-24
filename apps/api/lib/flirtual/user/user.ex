@@ -10,20 +10,10 @@ defmodule Flirtual.User do
   import Flirtual.Utilities
 
   alias Ecto.Changeset
-  alias Flirtual.User.Relationship
 
-  alias Flirtual.Attribute
-  alias Flirtual.Discord
-  alias Flirtual.Languages
-  alias Flirtual.Repo
-  alias Flirtual.Report
-  alias Flirtual.Subscription
-  alias Flirtual.User
-  alias Flirtual.User.ChangeQueue
-  alias Flirtual.User.Profile.Block
-  alias Flirtual.User.Profile.Image
-  alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.User.Session
+  alias Flirtual.{Attribute, Discord, Languages, ObanWorkers, Repo, Report, Subscription, User}
+  alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
+  alias Flirtual.User.{Relationship, Session}
 
   @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp]
 
@@ -408,7 +398,7 @@ defmodule Flirtual.User do
              |> change(%{banned_at: now})
              |> Repo.update(),
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
-           {:ok, _} <- ChangeQueue.add(user.id),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
            {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message),
            :ok <-
@@ -432,7 +422,7 @@ defmodule Flirtual.User do
              user
              |> change(%{banned_at: nil, shadowbanned_at: nil})
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(user.id),
+           {:ok, _} <- ObanWorkers.update_user(user.id),
            :ok <-
              Discord.deliver_webhook(:unsuspended,
                user: user,
@@ -462,7 +452,11 @@ defmodule Flirtual.User do
                shadowbanned_at: if(shadowban, do: now, else: user.shadowbanned_at)
              })
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(if(shadowban, do: user.id, else: [])),
+           {:ok, _} <-
+             ObanWorkers.update_user(if(shadowban, do: user.id, else: []), [
+               :elasticsearch,
+               :talkjs
+             ]),
            :ok <-
              Discord.deliver_webhook(:warned,
                user: user,

@@ -1,5 +1,6 @@
 defmodule FlirtualWeb.UsersController do
   use FlirtualWeb, :controller
+
   require Logger
 
   import Plug.Conn
@@ -9,11 +10,9 @@ defmodule FlirtualWeb.UsersController do
   import FlirtualWeb.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
-  alias Flirtual.Repo
-  alias Flirtual.User.ChangeQueue
+  alias Flirtual.{ObanWorkers, Policy, Repo, User, Users}
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
-  alias Flirtual.{Policy, User, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -248,7 +247,7 @@ defmodule FlirtualWeb.UsersController do
 
   def confirm_email(conn, params) do
     with {:ok, user} <- Users.confirm_update_email(params),
-         {:ok, _} <- ChangeQueue.add(user.id) do
+         {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
       conn
       |> json(%{
         user_id: user.id,

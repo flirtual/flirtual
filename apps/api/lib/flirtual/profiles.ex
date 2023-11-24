@@ -4,10 +4,7 @@ defmodule Flirtual.Profiles do
 
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.Flag
-  alias Flirtual.Hash
-  alias Flirtual.Repo
-  alias Flirtual.User.ChangeQueue
+  alias Flirtual.{Flag, Hash, ObanWorkers, Repo}
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.Image
 
@@ -25,7 +22,7 @@ defmodule Flirtual.Profiles do
              profile
              |> Profile.update_personality_changeset(attrs)
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(profile.user_id) do
+           {:ok, _} <- ObanWorkers.update_user(profile.user_id, [:elasticsearch, :premium_reset]) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -199,7 +196,7 @@ defmodule Flirtual.Profiles do
              ),
            {:ok, profile} <-
              Update.transform(profile, attrs |> Map.from_struct()) |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(profile.user_id),
+           {:ok, _} <- ObanWorkers.update_user(profile.user_id),
            :ok <-
              Flag.check_flags(
                profile.user_id,
@@ -223,7 +220,8 @@ defmodule Flirtual.Profiles do
              preferences
              |> Profile.Preferences.changeset(attrs, options)
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(preferences.profile_id) do
+           {:ok, _} <-
+             ObanWorkers.update_user(preferences.profile_id, [:elasticsearch, :premium_reset]) do
         preferences
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -344,7 +342,8 @@ defmodule Flirtual.Profiles do
                end)
              end)
              |> Enum.filter(&(&1.order !== nil)),
-           {:ok, _} <- ChangeQueue.add(profile.user_id) do
+           {:ok, _} <-
+             ObanWorkers.update_user(profile.user_id, [:elasticsearch, :talkjs]) do
         images
       else
         {:error, reason} -> Repo.rollback(reason)

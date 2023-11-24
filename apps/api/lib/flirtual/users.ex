@@ -7,18 +7,22 @@ defmodule Flirtual.Users do
   import Flirtual.Flag, only: [validate_allowed_email: 2]
 
   alias Ecto.UUID
-  alias Flirtual.Discord
-  alias Flirtual.Elasticsearch
-  alias Flirtual.Hash
-  alias Flirtual.Jwt
-  alias Flirtual.Listmonk
-  alias Flirtual.RevenueCat
-  alias Flirtual.Stripe
-  alias Flirtual.Talkjs
-  alias Flirtual.Talkjs
-  alias Flirtual.User.ChangeQueue
+
+  alias Flirtual.{
+    Discord,
+    Elasticsearch,
+    Hash,
+    Jwt,
+    Listmonk,
+    ObanWorkers,
+    Repo,
+    RevenueCat,
+    Stripe,
+    Talkjs,
+    User
+  }
+
   alias Flirtual.User.Preferences
-  alias Flirtual.{Repo, User}
 
   def get(id)
       when is_binary(id) do
@@ -65,7 +69,7 @@ defmodule Flirtual.Users do
              user
              |> User.changeset(attrs, options)
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(user.id) do
+           {:ok, _} <- ObanWorkers.update_user(user.id) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -202,7 +206,7 @@ defmodule Flirtual.Users do
              |> User.update_email_changeset(attrs |> Map.from_struct())
              |> Repo.update(),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
-           {:ok, _} <- ChangeQueue.add(user.id),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
       else
@@ -241,7 +245,7 @@ defmodule Flirtual.Users do
            {:ok, user} <-
              User.confirm_email_changeset(attrs.user)
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(user.id) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -256,7 +260,7 @@ defmodule Flirtual.Users do
              preferences
              |> Preferences.update_changeset(attrs)
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(preferences.user_id) do
+           {:ok, _} <- ObanWorkers.update_user(preferences.user_id) do
         preferences
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -309,7 +313,7 @@ defmodule Flirtual.Users do
              user
              |> change(%{deactivated_at: now})
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(user.id) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :talkjs]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -324,7 +328,7 @@ defmodule Flirtual.Users do
              user
              |> change(%{deactivated_at: nil})
              |> Repo.update(),
-           {:ok, _} <- ChangeQueue.add(user.id) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :premium_reset, :talkjs]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)

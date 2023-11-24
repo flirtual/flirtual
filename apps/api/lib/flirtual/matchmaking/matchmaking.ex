@@ -171,10 +171,9 @@ defmodule Flirtual.Matchmaking do
   end
 
   def reset_prospects(%User{} = user) do
-    with {:ok, count} <- LikesAndPasses.delete_all(profile_id: user.id),
-         {:ok, _} <- compute_next_prospects(user, :love),
+    with {:ok, _} <- compute_next_prospects(user, :love),
          {:ok, _} <- compute_next_prospects(user, :friend) do
-      {:ok, count}
+      :ok
     end
   end
 

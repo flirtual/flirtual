@@ -11,10 +11,8 @@ defmodule Flirtual.Report do
   import Ecto.Query
   import Flirtual.Utilities.Changeset
 
+  alias Flirtual.{Attribute, Discord, ObanWorkers, Repo, Report, User}
   alias Flirtual.User.Profile.Block
-  alias Flirtual.Discord
-  alias Flirtual.{User, Attribute, Report, Repo}
-  alias Flirtual.User.ChangeQueue
 
   schema "reports" do
     field(:message, :string, default: "")
@@ -76,7 +74,7 @@ defmodule Flirtual.Report do
                  |> Repo.update()
              ),
            {_, _} <- Block.create(user: reporter, target: reported),
-           {:ok, _} <- ChangeQueue.add(reported.id),
+           {:ok, _} <- ObanWorkers.update_user(reported.id, [:elasticsearch, :talkjs]),
            :ok <-
              Discord.deliver_webhook(:report, %Report{report | user: reporter, target: reported}) do
         report
@@ -105,7 +103,7 @@ defmodule Flirtual.Report do
               |> change(%{shadowbanned_at: nil})
               |> Repo.update()
 
-            {:ok, _} = ChangeQueue.add(user.id)
+            {:ok, _} = ObanWorkers.update_user(user.id, [:elasticsearch, :talkjs])
 
             {:ok, true}
         end

@@ -6,18 +6,16 @@ defmodule Flirtual.User.Session do
   import Ecto.Changeset
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.User.ChangeQueue
-  alias Flirtual.Repo
-  alias Flirtual.User
+  alias Flirtual.{ObanWorkers, Repo, User}
   alias Flirtual.User.Session
 
   schema "sessions" do
-    belongs_to :user, User
-    belongs_to :sudoer, User
+    belongs_to(:user, User)
+    belongs_to(:sudoer, User)
 
-    field :token, :string, virtual: true, redact: true
-    field :hashed_token, :string, redact: true
-    field :expire_at, :utc_datetime
+    field(:token, :string, virtual: true, redact: true)
+    field(:hashed_token, :string, redact: true)
+    field(:expire_at, :utc_datetime)
 
     timestamps()
   end
@@ -159,7 +157,7 @@ defmodule Flirtual.User.Session do
                session
                |> change(%{expire_at: new_expire_at()})
                |> Repo.update(),
-             {:ok, _} <- ChangeQueue.add(user.id) do
+             {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch]) do
           Map.put(session, :user, user)
         else
           {:error, reason} -> Repo.rollback(reason)

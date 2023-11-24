@@ -12,6 +12,13 @@ if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
   config :flirtual, FlirtualWeb.Endpoint, server: true
 end
 
+config :flirtual, Flirtual.ObanWorkers,
+  enabled_workers:
+    if(config_env() == :prod,
+      do: [:elasticsearch, :listmonk, :premium_reset, :talkjs],
+      else: [:elasticsearch, :premium_reset]
+    )
+
 config :flirtual, Flirtual.Discord,
   client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
   client_secret: System.fetch_env!("DISCORD_CLIENT_SECRET"),

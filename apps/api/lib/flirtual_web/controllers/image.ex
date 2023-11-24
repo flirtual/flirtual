@@ -1,14 +1,11 @@
 defmodule FlirtualWeb.ImageController do
-  alias Flirtual.User.ChangeQueue
   use FlirtualWeb, :controller
 
   import FlirtualWeb.Utilities
 
-  alias Flirtual.User.Profile.Image.Moderation
-  alias Flirtual.Policy
+  alias Flirtual.{Discord, ObanWorkers, Policy, User}
   alias Flirtual.User.Profile.Image
-  alias Flirtual.User
-  alias Flirtual.Discord
+  alias Flirtual.User.Profile.Image.Moderation
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -62,7 +59,7 @@ defmodule FlirtualWeb.ImageController do
              else: :ok
            ),
          {:ok, _} <- Image.delete(image),
-         {:ok, _} <- ChangeQueue.add(image.profile_id) do
+         {:ok, _} <- ObanWorkers.update_user(image.profile_id, [:elasticsearch, :talkjs]) do
       conn |> json(%{deleted: true})
     else
       nil -> {:error, {:not_found, "Image not found", %{image_id: image_id}}}

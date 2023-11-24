@@ -4,10 +4,8 @@ defmodule Flirtual.User.Profile.Prospect do
   import Ecto.Query
   import Ecto.Changeset
 
-  alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.User.ChangeQueue
   alias Flirtual.Repo
-  alias Flirtual.User.Profile.Prospect
+  alias Flirtual.User.Profile.{LikesAndPasses, Prospect}
 
   @derive {Jason.Encoder, only: [:kind, :target, :created_at]}
 
@@ -85,8 +83,7 @@ defmodule Flirtual.User.Profile.Prospect do
       with {count, nil} <-
              Prospect
              |> where(profile_id: ^profile_id, target_id: ^target_id)
-             |> Repo.delete_all(),
-           {:ok, _} <- ChangeQueue.add(profile_id) do
+             |> Repo.delete_all() do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -100,8 +97,7 @@ defmodule Flirtual.User.Profile.Prospect do
       with {count, nil} <-
              Prospect
              |> where(profile_id: ^profile_id, kind: ^kind)
-             |> Repo.delete_all(),
-           {:ok, _} <- ChangeQueue.add(profile_id) do
+             |> Repo.delete_all() do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -115,8 +111,7 @@ defmodule Flirtual.User.Profile.Prospect do
       with {count, nil} <-
              Prospect
              |> where(target_id: ^target_id)
-             |> Repo.delete_all(),
-           {:ok, _} <- ChangeQueue.add(target_id) do
+             |> Repo.delete_all() do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
