@@ -117,7 +117,7 @@ defmodule FlirtualWeb.ConnectionController do
     |> put_resp_header(
       "location",
       Application.fetch_env!(:flirtual, :frontend_origin)
-      |> URI.merge(get_session(conn, :next) <> "?error=" <> message)
+      |> URI.merge(get_session(conn, :next) || "/login" <> "?error=" <> message)
       |> URI.to_string()
     )
     |> resp(if(redirect_type == "manual", do: 200, else: 307), "")
