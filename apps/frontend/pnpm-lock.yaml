@@ -51,8 +51,8 @@ dependencies:
     specifier: ^5.0.1
     version: 5.0.1(@capacitor/core@5.5.1)
   '@capgo/inappbrowser':
-    specifier: ^1.2.19
-    version: 1.2.19(@capacitor/core@5.5.1)
+    specifier: 1.2.13
+    version: 1.2.13(@capacitor/core@5.5.1)
   '@hcaptcha/react-hcaptcha':
     specifier: ^1.8.1
     version: 1.8.1(react-dom@18.2.0)(react@18.2.0)
@@ -513,8 +513,8 @@ packages:
       '@capacitor/core': 5.5.1
     dev: false
 
-  /@capgo/inappbrowser@1.2.19(@capacitor/core@5.5.1):
-    resolution: {integrity: sha512-Koyg3a7D2lpccZfW+CZ9JEKE5to5iGbi12DFgPN+TOmMuJLCVAYcWVsR9Q4nXIQCg5f4ExCz7XfBrHNKUBULrQ==}
+  /@capgo/inappbrowser@1.2.13(@capacitor/core@5.5.1):
+    resolution: {integrity: sha512-tx/g0jgv1CoKpc6wLTDjQXEbymmo95GpQ/8jDVSPvfReELhqbC4cc2q0jR435ZX6jsge/y+ds7G5RNQ4gz2+dw==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:

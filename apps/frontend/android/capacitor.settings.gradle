@@ -39,7 +39,7 @@ include ':capawesome-capacitor-app-update'
 project(':capawesome-capacitor-app-update').projectDir = new File('../node_modules/.pnpm/@capawesome+capacitor-app-update@5.0.1_@capacitor+core@5.5.1/node_modules/@capawesome/capacitor-app-update/android')
 
 include ':capgo-inappbrowser'
-project(':capgo-inappbrowser').projectDir = new File('../node_modules/.pnpm/@capgo+inappbrowser@1.2.19_@capacitor+core@5.5.1/node_modules/@capgo/inappbrowser/android')
+project(':capgo-inappbrowser').projectDir = new File('../node_modules/.pnpm/@capgo+inappbrowser@1.2.13_@capacitor+core@5.5.1/node_modules/@capgo/inappbrowser/android')
 
 include ':revenuecat-purchases-capacitor'
 project(':revenuecat-purchases-capacitor').projectDir = new File('../node_modules/.pnpm/@revenuecat+purchases-capacitor@7.0.0_@capacitor+core@5.5.1/node_modules/@revenuecat/purchases-capacitor/android')
