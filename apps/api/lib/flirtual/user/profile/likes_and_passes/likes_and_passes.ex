@@ -142,8 +142,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              |> where(profile_id: ^profile_id, target_id: ^target_id)
              |> Repo.delete_all(),
            {:ok, _} <-
-             Talkjs.delete_participants(user_id: profile_id, target_id: target_id),
-           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :premium_reset]) do
+             Talkjs.delete_participants(user_id: profile_id, target_id: target_id) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -158,8 +157,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              LikesAndPasses
              |> where(profile_id: ^profile_id)
              |> Repo.delete_all(),
-           {:ok, _} <- Talkjs.delete_user_conversations(profile_id),
-           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :premium_reset]) do
+           {:ok, _} <- Talkjs.delete_user_conversations(profile_id) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
