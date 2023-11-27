@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.PremiumReset do
-  use Oban.Worker
+  use Oban.Worker, unique: [period: :infinity, states: [:available, :scheduled]]
 
   alias Flirtual.{Matchmaking, Subscription, User}
 

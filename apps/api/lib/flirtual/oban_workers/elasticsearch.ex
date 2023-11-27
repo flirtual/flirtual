@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.Elasticsearch do
-  use Oban.Worker
+  use Oban.Worker, unique: [period: :infinity, states: [:available, :scheduled]]
 
   import Ecto.Query
 
