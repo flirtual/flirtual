@@ -57,7 +57,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 								api.user
 									.unsuspend(user.id)
 									.then(() => {
-										toasts.add("User unbanned successfully");
+										toasts.add("User unbanned");
 										return router.refresh();
 									})
 									.catch(toasts.addError);
@@ -103,7 +103,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 												await api.user
 													.adminDelete(user.id)
 													.then(() => {
-														toasts.add("User deleted successfully");
+														toasts.add("User deleted");
 														return router.refresh();
 													})
 													.catch(toasts.addError);

@@ -262,7 +262,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 																.resetLikes()
 																.then(() => {
 																	setLikesPending(false);
-																	toasts.add("Likes reset successfully");
+																	toasts.add("Likes reset");
 																	return router.refresh();
 																})
 																.catch(toasts.addError);
@@ -308,7 +308,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 																.resetPasses()
 																.then(() => {
 																	setPassesPending(false);
-																	toasts.add("Passes reset successfully");
+																	toasts.add("Passes reset");
 																	return router.refresh();
 																})
 																.catch(toasts.addError);

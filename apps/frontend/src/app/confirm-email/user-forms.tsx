@@ -57,7 +57,7 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 					await api.user
 						.updateEmail(user.id, { body })
 						.then(() => {
-							toasts.add("Email changed successfully");
+							toasts.add("Email changed");
 							return router.refresh();
 						})
 						.catch(toasts.addError);

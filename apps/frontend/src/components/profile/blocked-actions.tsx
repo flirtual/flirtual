@@ -26,7 +26,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 					await api.user
 						.unblock(user.id)
 						.then(() => {
-							toasts.add("User blocked successfully");
+							toasts.add("User unblocked");
 							return router.refresh();
 						})
 						.catch(toasts.addError);

@@ -108,7 +108,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 													await api.user
 														.block(user.id)
 														.then(() => {
-															toasts.add("User blocked successfully");
+															toasts.add("User blocked");
 															return router.refresh();
 														})
 														.catch(toasts.addError);
