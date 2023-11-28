@@ -4,6 +4,7 @@ defmodule Flirtual.Report.Policy do
       :id,
       :reason,
       :message,
+      :images,
       :reviewed_at,
       :user_id,
       :target_id,

@@ -12,6 +12,10 @@ import {
 	DialogTitle
 } from "~/components/dialog/dialog";
 import { Form, FormButton } from "~/components/forms";
+import {
+	ImageSetValue,
+	InputImageSet
+} from "~/components/forms/input-image-set";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import { useAttributeList } from "~/hooks/use-attribute-list";
@@ -38,16 +42,27 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 				</DialogHeader>
 				<Form
 					className="flex flex-col gap-8"
+					requireChange={false}
 					fields={{
 						targetId: user.id,
 						reasonId: reasons[0]?.id || null,
-						message: ""
+						message: "",
+						images: [] as Array<ImageSetValue>
 					}}
-					onSubmit={async ({ reasonId, targetId, message }) => {
+					onSubmit={async ({ reasonId, targetId, message, ...values }) => {
 						if (!reasonId) return;
-						await api.report.create({ body: { reasonId, targetId, message } });
+						await api.report.create({
+							body: {
+								reasonId,
+								targetId,
+								message,
+								images: values.images.map((image) => image.id).filter(Boolean)
+							}
+						});
 
-						toasts.add("Thank you for your report");
+						toasts.add(
+							"Thanks for keeping Flirtual safe! We'll review your report as soon as possible."
+						);
 						setOpen(false);
 
 						return router.refresh();
@@ -85,12 +100,26 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 							<FormField name="message">
 								{(field) => (
 									<>
-										<InputLabel {...field.labelProps}>Message</InputLabel>
+										<InputLabel {...field.labelProps}>Details</InputLabel>
 										<InputTextArea
 											{...field.props}
-											placeholder="Tell us a little more about this incident. If you'd like us to reach out for more details or further evidence, please include your contact info."
+											placeholder="Tell us a little more about this incident (optional)"
 											rows={6}
 										/>
+									</>
+								)}
+							</FormField>
+							<FormField name="images">
+								{(field) => (
+									<>
+										<InputLabel
+											{...field.labelProps}
+											inline
+											hint="Upload screenshots or other evidence (optional)"
+										>
+											Attachments
+										</InputLabel>
+										<InputImageSet type="report" {...field.props} />
 									</>
 								)}
 							</FormField>

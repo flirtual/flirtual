@@ -1,5 +1,7 @@
 import { Expand } from "~/utilities";
+import { urls } from "~/urls";
 
+import { upload as uploadFiles } from "./file";
 import { Attribute } from "./attributes";
 import { DatedModel, UuidModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
@@ -8,7 +10,8 @@ export type Report = Expand<
 	UuidModel &
 		DatedModel & {
 			reason: Pick<Attribute<"report-reason">, "id" | "name">;
-			message: string;
+			message?: string;
+			images?: Array<string>;
 			reviewedAt?: string;
 			userId?: string;
 			targetId: string;
@@ -26,10 +29,22 @@ export async function list(options: ListOptions): Promise<Array<Report>> {
 
 export async function create(
 	options: NarrowFetchOptions<
-		Pick<Report, "targetId"> & { reasonId: string; message: string }
+		Pick<Report, "targetId"> & {
+			reasonId: string;
+			message?: string;
+			images?: Array<string>;
+		}
 	>
 ): Promise<Report> {
 	return fetch<Report>("post", "reports", options);
+}
+
+export async function uploadImages({ body }: NarrowFetchOptions<Array<File>>) {
+	const response = await uploadFiles(body, { store: true });
+	return response.map((fileId) => ({
+		id: fileId,
+		url: urls.media(fileId)
+	}));
 }
 
 export async function clear(

@@ -16,6 +16,7 @@ defmodule Flirtual.Report do
 
   schema "reports" do
     field(:message, :string, default: "")
+    field(:images, {:array, :string}, default: [])
 
     belongs_to(:user, User)
     belongs_to(:target, User)
@@ -31,7 +32,7 @@ defmodule Flirtual.Report do
   end
 
   def changeset(%Report{} = report, attrs) do
-    cast(report, attrs, [:user_id, :target_id, :reason_id, :message])
+    cast(report, attrs, [:user_id, :target_id, :reason_id, :message, :images])
     |> validate_required(:user_id)
     |> validate_uid(:user_id)
     |> foreign_key_constraint(:user_id)
@@ -48,7 +49,7 @@ defmodule Flirtual.Report do
     )
     |> validate_required(:reason_id)
     |> validate_attribute(:reason_id, "report-reason")
-    |> validate_length(:message, max: 256)
+    |> validate_length(:message, max: 10_000)
   end
 
   def create(attrs) do
@@ -73,7 +74,11 @@ defmodule Flirtual.Report do
                  })
                  |> Repo.update()
              ),
-           {_, _} <- Block.create(user: reporter, target: reported),
+           {:ok, _} <-
+             if(Block.exists?(user: reporter, target: reported),
+               do: {:ok, nil},
+               else: Block.create(user: reporter, target: reported)
+             ),
            {:ok, _} <- ObanWorkers.update_user(reported.id, [:elasticsearch, :talkjs]),
            :ok <-
              Discord.deliver_webhook(:report, %Report{report | user: reporter, target: reported}) do
@@ -244,6 +249,7 @@ defimpl Jason.Encoder, for: Flirtual.Report do
       :target_id,
       :reason,
       :message,
+      :images,
       :reviewed_at,
       :created_at
     ]

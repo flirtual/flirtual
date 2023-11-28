@@ -18,6 +18,7 @@ import {
 	ExternalLink,
 	ShieldCheck
 } from "lucide-react";
+import Image from "next/image";
 
 import { api } from "~/api";
 import { displayName, User } from "~/api/user";
@@ -202,7 +203,28 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 										{report.user ? displayName(report.user) : "Unknown"}
 									</InlineLink>
 								</div>
-								<p className="whitespace-pre-wrap">{report.message}</p>
+								{report.message && (
+									<p className="whitespace-pre-wrap">{report.message}</p>
+								)}
+								{report.images && report.images.length > 0 && (
+									<div className="flex flex-wrap gap-2">
+										{report.images.map((image) => (
+											<Link
+												href={urls.media(image)}
+												key={image}
+												target="_blank"
+											>
+												<Image
+													alt="Report attachment"
+													className="rounded-md"
+													height={128}
+													src={urls.media(image)}
+													width={128}
+												/>
+											</Link>
+										))}
+									</div>
+								)}
 							</div>
 						))}
 					</div>

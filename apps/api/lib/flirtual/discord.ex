@@ -318,9 +318,28 @@ defmodule Flirtual.Discord do
                   value: report.message
                 },
                 else: nil
+              ),
+              if(report.images !== [],
+                do: %{
+                  name: "Attachments",
+                  value:
+                    report.images
+                    |> Enum.map(fn image ->
+                      "[📎 View image](https://media.flirtu.al/#{image}/)"
+                    end)
+                    |> Enum.join("\n")
+                },
+                else: nil
               )
             ]
             |> Enum.filter(&(!!&1)),
+          image:
+            if(report.images !== [],
+              do: %{
+                url: "https://media.flirtu.al/#{report.images |> List.first()}/"
+              },
+              else: nil
+            ),
           color: @default_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }

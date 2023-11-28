@@ -16,10 +16,11 @@ export interface InputImageSetProps {
 	value: Array<ImageSetValue>;
 	onChange: Dispatch<Array<ImageSetValue>>;
 	id: string;
+	type?: "profile" | "report";
 }
 
 export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
-	const { value, id, onChange } = props;
+	const { value, id, onChange, type = "profile" } = props;
 	const user = useSessionUser();
 
 	return (
@@ -53,9 +54,14 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 						}))
 					]);
 
-					const newImages = await api.user.profile.images.upload(user.id, {
-						body: files
-					});
+					const newImages =
+						type === "report"
+							? await api.report.uploadImages({
+									body: files
+							  })
+							: await api.user.profile.images.upload(user.id, {
+									body: files
+							  });
 
 					onChange([
 						...value.filter((image) => "id" in image),
