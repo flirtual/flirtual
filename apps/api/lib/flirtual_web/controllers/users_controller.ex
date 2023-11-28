@@ -402,7 +402,7 @@ defmodule FlirtualWeb.UsersController do
 
     def changeset(value, _, _) do
       value
-      |> validate_length(:message, min: 8)
+      |> validate_length(:message, min: 8, max: 10_000)
     end
   end
 
@@ -463,7 +463,7 @@ defmodule FlirtualWeb.UsersController do
 
     def changeset(value, _, _) do
       value
-      |> validate_length(:message, min: 0, max: 256)
+      |> validate_length(:message, min: 0, max: 10_000)
     end
   end
 

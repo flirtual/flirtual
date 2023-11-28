@@ -110,7 +110,7 @@ defmodule Flirtual.Profiles do
       value
       |> validate_required(required || [])
       |> validate_length(:display_name, min: 3, max: 32)
-      |> validate_length(:biography, min: 48, max: 8192)
+      |> validate_length(:biography, min: 48, max: 10_000)
       |> validate_length(:languages, min: 1, max: 5)
       |> validate_attributes(:gender_id, "gender")
       |> validate_length(:gender, min: 1, max: 4)
