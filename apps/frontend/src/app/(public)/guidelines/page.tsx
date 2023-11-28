@@ -154,13 +154,13 @@ export default function GuidelinesPage() {
 							<h2 className="text-xl font-semibold">No illegal activity</h2>
 							<p>
 								Do not do anything on Flirtual that breaks your local laws or
-								the laws of the United States, where Flirtual is hosted.
+								the laws of Canada, where Flirtual is hosted.
 							</p>
 						</div>
 
 						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">No underage users </h2>
-							<p>Flirtual is strictly 18+. </p>
+							<h2 className="text-xl font-semibold">No underage users</h2>
+							<p>Flirtual is strictly 18+.</p>
 						</div>
 
 						<div className="flex flex-col gap-1">
