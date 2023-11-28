@@ -260,13 +260,6 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								className="relative flex cursor-default flex-col overflow-hidden rounded-xl text-white-20"
 								onClick={(event) => event.stopPropagation()}
 							>
-								<button
-									className="absolute right-0 z-10 m-4 opacity-75 hover:opacity-100"
-									type="button"
-									onClick={() => setExpandedImage(false)}
-								>
-									<X className="h-6 w-6" />
-								</button>
 								<div className="relative aspect-square h-[100vw] max-h-[80vh] w-full">
 									{images.length > 1 && (
 										<div className="absolute z-10 flex h-full w-full">
@@ -292,6 +285,13 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 										image={currentImage}
 									/>
 								</div>
+								<button
+									className="absolute right-0 z-10 p-4 opacity-75 hover:opacity-100"
+									type="button"
+									onClick={() => setExpandedImage(false)}
+								>
+									<X className="h-6 w-6" />
+								</button>
 								{session?.user?.tags?.includes("moderator") && (
 									<ImageToolbar image={currentImage} />
 								)}
