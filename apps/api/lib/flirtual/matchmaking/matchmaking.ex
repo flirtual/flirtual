@@ -14,7 +14,7 @@ defmodule Flirtual.Matchmaking do
   alias Flirtual.User.Profile.Block
   alias Flirtual.User.Profile.LikesAndPasses
   alias Flirtual.User.Profile.Prospect
-  alias Flirtual.{Attribute, Mailer, Repo, User}
+  alias Flirtual.{Attribute, Repo, User}
 
   def next_reset_at() do
     now = DateTime.utc_now()
@@ -178,20 +178,20 @@ defmodule Flirtual.Matchmaking do
   end
 
   def deliver_match_email(user, target_user) do
-    action_url = User.url(target_user)
+    action_url = User.url(target_user) |> URI.to_string()
 
     if user.preferences.email_notifications.matches do
-      Mailer.send(
-        user,
-        subject: "It's a match!",
-        action_url: action_url,
-        body_text: """
+      %{
+        "user_id" => user.id,
+        "subject" => "It's a match!",
+        "action_url" => action_url,
+        "body_text" => """
         #{User.display_name(target_user)} liked you back—they want to meet you too!
 
         Check out their profile:
         #{action_url}
         """,
-        body_html: """
+        "body_html" => """
         <p>#{User.display_name(target_user)} liked you back&mdash;they want to meet you too!</p>
 
         <p><a href="#{action_url}" class="btn">Check out their profile</a></p>
@@ -214,7 +214,9 @@ defmodule Flirtual.Matchmaking do
         }
         </script>
         """
-      )
+      }
+      |> Flirtual.ObanWorkers.Email.new()
+      |> Oban.insert()
     else
       {:ok, :disabled}
     end

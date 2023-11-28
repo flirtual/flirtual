@@ -1,13 +1,12 @@
 defmodule Flirtual.User.Email do
-  alias Flirtual.Mailer
   alias Flirtual.User
 
   def deliver(%User{} = user, :suspended, message) do
-    Mailer.send(
-      user,
-      from: "moderation@flirtu.al",
-      subject: "Your account has been disabled",
-      body_text: """
+    %{
+      "user_id" => user.id,
+      "from" => "moderation@flirtu.al",
+      "subject" => "Your account has been disabled",
+      "body_text" => """
       Our moderation team has found your Flirtual account in violation of our rules.
 
       Reason: #{message}
@@ -16,7 +15,7 @@ defmodule Flirtual.User.Email do
 
       The Flirtual Team
       """,
-      body_html: """
+      "body_html" => """
       <p>Our moderation team has found your Flirtual account in violation of our rules.</p>
 
       <p>Reason: #{message}</p>
@@ -25,7 +24,9 @@ defmodule Flirtual.User.Email do
 
       <p>The Flirtual Team</p>
       """
-    )
+    }
+    |> Flirtual.ObanWorkers.Email.new()
+    |> Oban.insert()
   end
 
   def deliver(%User{} = user, :confirm_email, token) do
@@ -34,15 +35,15 @@ defmodule Flirtual.User.Email do
       |> URI.merge("/confirm-email?token=" <> token)
       |> URI.to_string()
 
-    Mailer.send(
-      user,
-      subject: "Confirm your email address",
-      action_url: action_url,
-      body_text: """
+    %{
+      "user_id" => user.id,
+      "subject" => "Confirm your email address",
+      "action_url" => action_url,
+      "body_text" => """
       Please confirm your email address:
       #{action_url}
       """,
-      body_html: """
+      "body_html" => """
       <p>Please click here to confirm your email:</p>
 
       <p><a href="#{action_url}" class="btn">Confirm</a></p>
@@ -65,7 +66,9 @@ defmodule Flirtual.User.Email do
       }
       </script>
       """
-    )
+    }
+    |> Flirtual.ObanWorkers.Email.new()
+    |> Oban.insert()
   end
 
   def deliver(%User{} = user, :reset_password, token) do
@@ -74,17 +77,17 @@ defmodule Flirtual.User.Email do
       |> URI.merge("/forgot/" <> token)
       |> URI.to_string()
 
-    Mailer.send(
-      user,
-      subject: "Password reset request",
-      action_url: action_url,
-      body_text: """
+    %{
+      "user_id" => user.id,
+      "subject" => "Password reset request",
+      "action_url" => action_url,
+      "body_text" => """
       Please confirm your email address:
       #{action_url}
 
       If you did not request this email, please ignore it.
       """,
-      body_html: """
+      "body_html" => """
       <p>Please click here to reset your Flirtual password:</p>
 
       <p><a href="#{action_url}" class="btn">Reset your password</a></p>
@@ -109,6 +112,8 @@ defmodule Flirtual.User.Email do
       }
       </script>
       """
-    )
+    }
+    |> Flirtual.ObanWorkers.Email.new()
+    |> Oban.insert()
   end
 end
