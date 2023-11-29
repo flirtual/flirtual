@@ -55,7 +55,7 @@ defmodule Flirtual.User.Email do
         "description": "Confirm your email",
         "potentialAction": {
           "@type": "ViewAction",
-          "url": "$confirm",
+          "url": "#{action_url}",
           "name": "Confirm"
         },
         "publisher": {
@@ -101,7 +101,7 @@ defmodule Flirtual.User.Email do
         "description": "Reset your password",
         "potentialAction": {
           "@type": "ViewAction",
-          "url": "$reset",
+          "url": "#{action_url}",
           "name": "Reset"
         },
         "publisher": {
