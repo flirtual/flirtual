@@ -14,7 +14,7 @@ defmodule Flirtual.ObanWorkers.Email do
           } = args
       }) do
     user = User.get(user_id)
-    from = Map.get(args, "from", nil)
+    from = Map.get(args, "from", "noreply@flirtu.al")
     action_url = Map.get(args, "action_url", nil)
 
     Mailer.send(
