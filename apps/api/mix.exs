@@ -44,6 +44,7 @@ defmodule Flirtual.MixProject do
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:oban, "~> 2.16"},
+      {:ex_rated, "~> 2.1"},
       {:paginator, "~> 1.2.0"},
       {:fly_postgres, "~> 0.3.4"},
       {:redisgraph, "~> 0.1.0"},

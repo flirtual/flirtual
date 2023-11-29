@@ -17,7 +17,8 @@ config :flirtual, Flirtual.ObanWorkers,
     if(config_env() == :prod,
       do: [:elasticsearch, :listmonk, :premium_reset, :talkjs],
       else: [:elasticsearch, :premium_reset]
-    )
+    ),
+  email_rate_limit: System.fetch_env!("EMAIL_RATE_LIMIT") |> String.to_integer()
 
 config :flirtual, Flirtual.Discord,
   client_id: System.fetch_env!("DISCORD_CLIENT_ID"),
