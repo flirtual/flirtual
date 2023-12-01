@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.Email do
-  use Oban.Worker, unique: [period: :infinity, states: [:available, :scheduled]]
+  use Oban.Worker, priority: 1, unique: [period: :infinity, states: [:available, :scheduled]]
 
   alias Flirtual.{Mailer, User}
 

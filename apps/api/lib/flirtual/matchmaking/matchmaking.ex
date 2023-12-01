@@ -7,7 +7,6 @@ defmodule Flirtual.Matchmaking do
 
   alias Flirtual.Conversation
   alias Flirtual.Elasticsearch
-  alias Flirtual.PushNotification
   alias Flirtual.Subscription
   alias Flirtual.Talkjs
   alias Flirtual.User.Profile
@@ -215,7 +214,7 @@ defmodule Flirtual.Matchmaking do
         </script>
         """
       }
-      |> Flirtual.ObanWorkers.Email.new()
+      |> Flirtual.ObanWorkers.Email.new(unique: [period: 60 * 60])
       |> Oban.insert()
     else
       {:ok, :disabled}
@@ -335,20 +334,24 @@ defmodule Flirtual.Matchmaking do
                      with true <- item.type === :like and opposite_item.type === :like,
                           {:ok, _} <- create_match_conversation(user, target, match_kind),
                           {:ok, _} <- deliver_match_email(target, user),
-                          :ok <-
-                            PushNotification.send(
-                              target,
-                              "It's a match!",
-                              if(match_kind == :love,
-                                do:
-                                  "#{User.display_name(user)} liked you back. Send them a message! 💞",
-                                else:
-                                  "#{User.display_name(user)} homied you back. Send them a message! ✌️"
-                              ),
-                              Application.fetch_env!(:flirtual, :frontend_origin)
-                              |> URI.merge("/" <> user.id)
-                              |> URI.to_string()
-                            ) do
+                          {:ok, _} <-
+                            %{
+                              "user_id" => target.id,
+                              "title" => "It's a match!",
+                              "message" =>
+                                if(match_kind == :love,
+                                  do:
+                                    "#{User.display_name(user)} liked you back. Send them a message! 💞",
+                                  else:
+                                    "#{User.display_name(user)} homied you back. Send them a message! ✌️"
+                                ),
+                              "url" =>
+                                Application.fetch_env!(:flirtual, :frontend_origin)
+                                |> URI.merge("/" <> user.id)
+                                |> URI.to_string()
+                            }
+                            |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60])
+                            |> Oban.insert() do
                        {:ok, opposite_item}
                      else
                        false -> {:ok, opposite_item}
