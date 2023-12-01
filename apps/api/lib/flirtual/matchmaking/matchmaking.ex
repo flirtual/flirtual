@@ -178,6 +178,7 @@ defmodule Flirtual.Matchmaking do
 
   def deliver_match_email(user, target_user) do
     action_url = User.url(target_user) |> URI.to_string()
+    thumbnail = target_user |> User.avatar_thumbnail_url()
 
     if user.preferences.email_notifications.matches do
       %{
@@ -193,7 +194,12 @@ defmodule Flirtual.Matchmaking do
         "body_html" => """
         <p>#{User.display_name(target_user)} liked you back&mdash;they want to meet you too!</p>
 
-        <p><a href="#{action_url}" class="btn">Check out their profile</a></p>
+        <p>
+          <a href="#{action_url}" class="btn" style="display: inline-block; padding: 12px 16px; font-size: 18px">
+            <img src="#{thumbnail}" style="margin-right: 10px; width: 38px; height: 38px; border-radius: 50%; vertical-align: middle" />
+            <span style="vertical-align: middle">Check out their profile</span>
+          </a>
+        </p>
 
         <script type="application/ld+json">
         {
