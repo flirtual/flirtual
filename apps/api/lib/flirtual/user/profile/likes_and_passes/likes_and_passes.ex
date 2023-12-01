@@ -95,6 +95,44 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> Repo.all()
   end
 
+  def list_unrequited(profile_id: profile_id, since: since) do
+    subquery =
+      from(lap in LikesAndPasses,
+        where:
+          lap.target_id == ^profile_id and
+            lap.type == :like and
+            lap.created_at >= ^since,
+        group_by: [lap.profile_id, lap.target_id],
+        select: %{
+          profile_id: lap.profile_id,
+          target_id: lap.target_id,
+          latest_created_at: max(lap.created_at)
+        }
+      )
+
+    query =
+      from(lap in subquery(subquery),
+        left_join: opposite in LikesAndPasses,
+        on:
+          lap.profile_id == opposite.target_id and
+            lap.target_id == opposite.profile_id,
+        left_join: block in Block,
+        on:
+          lap.profile_id == block.profile_id and
+            lap.target_id == block.target_id,
+        left_join: user in User,
+        on: lap.profile_id == user.id,
+        where:
+          is_nil(opposite) and
+            is_nil(block) and
+            user.visible,
+        select: lap.profile_id,
+        order_by: [desc: lap.latest_created_at]
+      )
+
+    Repo.all(query)
+  end
+
   def delete_unrequited_likes(profile_id: profile_id) do
     Repo.transaction(fn ->
       liked_users =

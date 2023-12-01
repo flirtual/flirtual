@@ -27,7 +27,11 @@ config :flirtual, Oban,
   repo: Flirtual.Repo,
   plugins: [
     {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 7},
-    {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)}
+    {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)},
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"0 18 * * SAT", Flirtual.ObanWorkers.Weekly}
+     ]}
   ],
   queues: [default: 1]
 
