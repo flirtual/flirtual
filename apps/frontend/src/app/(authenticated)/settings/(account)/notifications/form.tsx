@@ -51,12 +51,9 @@ export const NotificationsForm: React.FC = () => {
 									items={[
 										{ key: "matches", label: "Match notifications" },
 										{ key: "messages", label: "Message notifications" },
-										{ key: "likes", label: "Weekly profile like reminders" },
-										{
-											key: "newsletter",
-											label: "Product updates",
-											labelHint: "we won't spam you!"
-										}
+										{ key: "likes", label: "Weekly likes summary" },
+										{ key: "reminders", label: "Tips and reminders" },
+										{ key: "newsletter", label: "Product updates" }
 									]}
 								/>
 							</>

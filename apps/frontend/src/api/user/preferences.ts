@@ -19,6 +19,7 @@ export interface NotificationPreferences {
 	matches: boolean;
 	messages: boolean;
 	likes: boolean;
+	reminders: boolean;
 	newsletter: boolean;
 }
 
