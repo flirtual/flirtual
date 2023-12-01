@@ -10,24 +10,24 @@ defmodule Flirtual.Mailer do
   defp get_urls() do
     origin = get_origin()
 
-    twitter_url = "https://twitter.com/getflirtual"
+    x_url = "https://x.com/getflirtual"
     discord_url = origin |> URI.merge("/discord") |> URI.to_string()
     unsubscribe_url = origin |> URI.merge("/settings/notifications") |> URI.to_string()
 
-    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url}
+    %{x_url: x_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url}
   end
 
   @company "Flirtual"
-  @company_address "6D - 7398 Yonge St, #776 | Thornhill, ON | L4J 8J2 | Canada"
+  @company_address "6d - 7398 Yonge St, #776 | Thornhill, ON | L4J 8J2 | Canada"
 
   defp format_text_body(body_text) do
-    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
+    %{x_url: x_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
       get_urls()
 
     """
     #{body_text}
     ---
-    Twitter: #{twitter_url}
+    X: #{x_url}
     Discord: #{discord_url}
     Unsubscribe: #{unsubscribe_url}
 
@@ -37,248 +37,204 @@ defmodule Flirtual.Mailer do
   end
 
   defp format_html_body(body_html, subject, action_url) do
-    %{twitter_url: twitter_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
+    %{x_url: x_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
       get_urls()
 
     """
-    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths responsejs " style="" lang="en">
+    <!doctype html>
+    <html>
       <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=" utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="robots" content="noindex, nofollow">
         <title>[Flirtual] #{subject}</title>
-        <style>.btn { color: #e9658b }</style>
+        <meta http-equiv="Content-Type" content="text/html; charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <base target="_blank">
+        <style>
+          body {
+            background-color: #fffaf0;
+            font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;
+            font-size: 15px;
+            line-height: 26px;
+            margin: 0;
+            color: #444;
+          }
+
+          pre {
+            background: #f4f4f4f4;
+            padding: 2px;
+          }
+
+          table {
+            width: 100%;
+            border: 1px solid #ddd;
+          }
+          table td {
+            border-color: #ddd;
+            padding: 5px;
+          }
+
+          .wrap {
+            padding: 15px 30px;
+            max-width: 525px;
+            margin: 0 auto;
+            border-radius: 12px;
+          }
+
+          .button {
+            background: #0055d4;
+            border-radius: 3px;
+            text-decoration: none !important;
+            color: #fff !important;
+            font-weight: bold;
+            padding: 10px 30px;
+            display: inline-block;
+          }
+          .button:hover {
+            background: #111;
+          }
+
+          .main {
+            background-color: #f5f5f5;
+            max-width: 525px;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;
+          }
+
+          .footer {
+            padding: 8px;
+            text-align: center;
+            font-size: 10px;
+            text-transform: uppercase;
+          }
+          .footer p {
+            line-height: 18px;
+          }
+          .footer a {
+            color: #444;
+            margin-right: 5px;
+            text-decoration: underline;
+            font-weight: normal;
+          }
+
+          .gutter {
+            padding: 30px;
+          }
+
+          img {
+            max-width: 100%;
+            height: auto;
+          }
+
+          a {
+            color: #e9658b;
+            font-weight: bold;
+            text-decoration: none;
+          }
+          a:hover {
+            text-decoration: underline;
+          }
+
+          .btn {
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 12px;
+            background-color: #ff8975;
+            background-image: linear-gradient(to right, #ff8975, #e9658b);
+            color: #f5f5f5;
+            box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;
+          }
+          .btn:hover {
+            text-decoration: none;
+          }
+
+          p.action-link {
+            display: inline-block;
+            line-height: 14px;
+          }
+          p.action-link a {
+            text-transform: none;
+            word-break: break-all;
+          }
+
+          @media screen and (max-width: 600px) {
+            .wrap {
+              max-width: auto;
+            }
+            .gutter {
+              padding: 10px;
+            }
+          }
+
+          .ii a[href] {
+            color: #e9658b;
+          }
+
+          .footer .ii a[href] {
+            color: #888;
+          }
+
+          .gradient {
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            background-color: #ff8975;
+            background-image: linear-gradient(to right, #ff8975, #e9658b);
+          }
+
+          @media (prefers-color-scheme: dark) {
+            body {
+              background-color: #111;
+              color: #f5f5f5;
+            }
+
+            .main {
+              background-color: #1e1e1e;
+            }
+
+            a {
+              color: #e9658b;
+            }
+
+            .ii a[href] {
+              color: #e9658b;
+            }
+
+            .footer a {
+              color: #f5f5f5;
+            }
+
+            .gradient, .btn {
+              background-color: #b24592;
+              background-image: linear-gradient(to right, #b24592, #e9658b);
+            }
+          }
+        </style>
       </head>
-      <body style="margin: 0 !important;padding: 0 !important;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;height: 100% !important;width: 100% !important;-webkit-font-smoothing: antialiased !important;font-smoothing: antialiased !important;" class="ui-sortable">
-        <table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-          <tbody>
-            <tr>
-              <td width="100%" valign="top" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                <center>
-                  <table data-section-wrapper="1" width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-                    <tbody>
-                      <tr data-section="1">
-                        <td width="100%" valign="top" height="100%" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                          <!--[if (gte mso 9)|(IE)]>
-                          <table align="center" border="0" cellspacing="0" cellpadding="0" width="660">
-                            <tr>
-                              <td align="center" valign="top" width="660">
-                                <![endif]-->
-                                <div data-slot-container="1" class="ui-sortable">
-                                  <div data-slot="text">
-                                    <table align="center" bgcolor="#00bf9a" border="0" cellpadding="0" cellspacing="0&quot;" style="max-width: 660px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%">
-                                      <tbody>
-                                        <tr>
-                                          <td align="center" bgcolor="#e9658b" class="shrinker" height="124" style="background-repeat: no-repeat;background-size: 100%;background-color: #e9658b;background-image: linear-gradient(110deg, #ff8975 10%, #e9658b 90%); max-width: 660px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" valign="top">
-                                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="shrinker" style="width: 100%;max-width: 550px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%">
-                                              <tbody>
-                                                <tr>
-                                                  <td height="60" style="font-size: 60px;line-height: 60px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">&nbsp;</td>
-                                                </tr>
-                                                <tr>
-                                                  <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                                    <a href="#{get_origin() |> URI.to_string()}" style="text-decoration: none;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">
-                                                      &nbsp;<img src="#{get_origin() |> URI.merge("/images/brand/white.png") |> URI.to_string()}" style="padding: 0px;border: medium none;width: 335px;height: 91.249px;line-height: 100%;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" alt="Flirtual" class="fr-fil fr-dib" border="0" width="335" height="91.249">&nbsp;
-                                                    </a>
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td height="30" style="font-size: 30px;line-height: 30px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">&nbsp;<br><br></td>
-                                                </tr>
-                                              </tbody>
-                                            </table>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                            </tbody>
-                          </table>
-                          <table data-section-wrapper="1" width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-                            <tbody>
-                              <tr data-section="1">
-                                <td width="100%" valign="top" height="100%" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                  <!--[if (gte mso 9)|(IE)]>
-                                  <table align="center" border="0" cellspacing="0" cellpadding="0" width="660">
-                                    <tr>
-                                      <td align="center" valign="top" width="660">
-                                        <![endif]-->
-                                        <table style="max-width: 660px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#f0f0f0" align="center">
-                                          <tbody>
-                                            <tr>
-                                              <td style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;background: #f0f0f0;color: #212121;padding: 0 15px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" class="shrinker ui-sortable" data-slot-container="1" align="center">
-                                                <div data-slot="text">
-                                                  <table align="center" border="0" cellpadding="0" cellspacing="0" style="max-width: 550px;background: #ffffff;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%">
-                                                    <tbody>
-                                                      <tr>
-                                                        <td height="30" style="font-size: 30px;line-height: 30px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">&nbsp;<br></td>
-                                                      </tr>
-                                                      <tr>
-                                                        <td align="center" style="padding: 0 30px;text-align: left;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" valign="top">
-                                                          <h1 style="font-family: filicudi-solid, Roboto, Verdana, Arial, sans-serif;">#{subject}</h1>
-                                                          #{body_html}
-                                                        </td>
-                                                      </tr>
-                                                      <tr>
-                                                        <td style="font-size: 30px;line-height: 30px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" height="30">&nbsp;<br></td>
-                                                      </tr>
-                                                      <tr>
-                                                        <td style="padding: 0 30px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" valign="top" align="center">
-                                                          <table style="max-width: 550px;background: #ffffff;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
-                                                            <tbody>
-                                                              <tr>
-                                                                <td style="font-size: 0px;line-height: 0px;border-bottom: 1px solid #e8e8e8;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" height="0">&nbsp;<br></td>
-                                                              </tr>
-                                                            </tbody>
-                                                          </table>
-                                                        </td>
-                                                      </tr>
-                                                    </tbody>
-                                                  </table>
-                                                </div>
-                                              </td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                        <!--[if (gte mso 9)|(IE)]>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                  <![endif]-->
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          #{if action_url !== nil,
-      do: """
-      <table data-section-wrapper="1" width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-        <tbody>
-          <tr data-section="1">
-            <td width="100%" valign="top" height="100%" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-              <!--[if (gte mso 9)|(IE)]>
-              <table align="center" border="0" cellspacing="0" cellpadding="0" width="660">
-                <tr>
-                  <td align="center" valign="top" width="660">
-                    <![endif]-->
-                    <table style="max-width: 660px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#f0f0f0" align="center">
-                      <tbody>
-                        <tr>
-                          <td style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;color: #212121;text-transform: uppercase;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" data-slot-container="1" class="ui-sortable" align="center">
-                            <div data-slot="text">
-                              <p style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif; font-size:12px; line-height:18px; color:#212121; text-transform: uppercase; padding:0 1rem; margin:0;">
-                                <span style="font-size:9px;">
-                                  If the link above doesn't work, try copying this URL into your browser:
-                                  <br/>
-                                  <a href="#{action_url}" style="text-transform: none;word-break: break-all">#{action_url}</a>
-                                </span>
-                              </p>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <!--[if (gte mso 9)|(IE)]>
-                  </td>
-                </tr>
-              </table>
-              <![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      """,
-      else: ""}
-                          <table data-section-wrapper="1" width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-                            <tbody>
-                              <tr data-section="1">
-                                <td width="100%" valign="top" height="100%" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                  <!--[if (gte mso 9)|(IE)]>
-                                  <table align="center" border="0" cellspacing="0" cellpadding="0" width="660">
-                                    <tr>
-                                      <td align="center" valign="top" width="660">
-                                        <![endif]-->
-                                        <table style="max-width: 660px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#f0f0f0" align="center">
-                                          <tbody>
-                                            <tr>
-                                              <td style="font-size: 15px;line-height: 15px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" height="15">&nbsp;</td>
-                                            </tr>
-                                            <tr>
-                                              <td style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;color: #212121;text-transform: uppercase;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" data-slot-container="1" class="ui-sortable" align="center">
-                                                <div data-slot="text">
-                                                  <a href="#{twitter_url}" rel="noopener noreferrer" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Twitter</a>
-                                                  <span style="font-family:arial, sans-serif; font-size:10px; line-height:20px; color:#dddddd;">&nbsp;|&nbsp;</span>
-                                                  <a href="#{discord_url}" rel="noopener noreferrer" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Discord</a>
-                                                  <span style="font-family:arial, sans-serif; font-size:10px; line-height:20px; color:#dddddd;">&nbsp;|&nbsp;</span>
-                                                  <a href="#{unsubscribe_url}" style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;font-size: 10px;line-height: 20px;color: #212121;text-transform: uppercase;text-decoration: underline;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" target="_blank">Unsubscribe</a>
-                                                </div>
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                              <td style="font-size: 15px;line-height: 15px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" height="15">&nbsp;</td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                        <!--[if (gte mso 9)|(IE)]>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                  <![endif]-->
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          <table data-section-wrapper="1" width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-                            <tbody>
-                              <tr data-section="1">
-                                <td width="100%" valign="top" height="100%" align="center" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                  <!--[if (gte mso 9)|(IE)]>
-                                  <table align="center" border="0" cellspacing="0" cellpadding="0" width="660">
-                                    <tr>
-                                      <td align="center" valign="top" width="660">
-                                        <![endif]-->
-                                        <table style="max-width: 660px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#f0f0f0" align="center">
-                                          <tbody>
-                                            <tr>
-                                              <td style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif;color: #212121;text-transform: uppercase;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" data-slot-container="1" class="ui-sortable" align="center">
-                                                <div data-slot="text">
-                                                  <p style="font-family: brandon-grotesque, Roboto, Verdana, Arial, sans-serif; font-size:12px; line-height:18px; color:#212121; text-transform: uppercase; padding:0; margin:0;">
-                                                    <span style="font-size:9px;">© #{Date.utc_today().year} #{@company}</span>
-                                                    <br>
-                                                    <span style="font-size:9px;">#{@company_address}</span></p>
-                                                </div>
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                              <td style="font-size: 20px;line-height: 20px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" height="20">&nbsp;</td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                        <!--[if (gte mso 9)|(IE)]>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                  <![endif]-->
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        <!--[if (gte mso 9)|(IE)]>
-                        </td>
-                      </tr>
-                    </table>
-                    <![endif]-->
-                  </center>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="display:none; white-space:nowrap; font:15px courier; line-height:0;">
+      <body>
+        <div class="gutter">&nbsp;</div>
+        <div class="main">
+          <div class="gradient">
+            <a href="https://flirtu.al">
+              <img src="https://media.news.flirtu.al/flirtual-white.png" alt="Flirtual" />
+            </a>
           </div>
+          <div class="wrap">
+            <h1>#{subject}</h1>
+            #{body_html}
+          </div>
+        </div>
+        <div class="footer">
+          #{if action_url !== nil, do: "<p class=\"action-link\">If the link above doesn't work, try copying this URL into your browser:<br /><a href=\"#{action_url}\">#{action_url}</a></p>", else: ""}
+          <p>
+            <a href="#{x_url}">X</a>
+            <a href="#{discord_url}">Discord</a><br />
+            <a href="#{unsubscribe_url}">Unsubscribe</a>
+          </p>
+          <p>
+            &copy; #{Date.utc_today().year} #{@company}<br />
+            #{@company_address}
+          </p>
+        </div>
+        <div class="gutter">&nbsp;</div>
       </body>
     </html>
     """
