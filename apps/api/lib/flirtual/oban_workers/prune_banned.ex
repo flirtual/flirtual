@@ -1,5 +1,5 @@
 defmodule Flirtual.ObanWorkers.PruneBanned do
-  use Oban.Worker, unique: [period: 60 * 60 * 20]
+  use Oban.Worker, priority: 3, unique: [period: 60 * 60 * 20]
 
   alias Flirtual.{User, Users}
 
