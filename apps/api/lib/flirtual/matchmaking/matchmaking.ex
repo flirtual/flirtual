@@ -176,52 +176,87 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
-  def deliver_match_email(user, target_user) do
-    action_url = User.url(target_user) |> URI.to_string()
+  def deliver_match_notification(user, target_user, match_kind) do
+    conversation_id = Talkjs.new_conversation_id(user, target_user)
+
+    action_url =
+      Application.fetch_env!(:flirtual, :frontend_origin)
+      |> URI.merge("/matches/" <> conversation_id)
+      |> URI.to_string()
+
     thumbnail = target_user |> User.avatar_thumbnail_url()
+    pronouns = target_user |> User.pronouns()
 
-    if user.preferences.email_notifications.matches do
-      %{
-        "user_id" => user.id,
-        "subject" => "It's a match!",
-        "action_url" => action_url,
-        "body_text" => """
-        #{User.display_name(target_user)} liked you back—they want to meet you too!
+    if User.visible?(user) and User.visible?(target_user) and
+         (user.preferences.email_notifications.matches or not is_nil(user.apns_token) or
+            not is_nil(user.fcm_token)) do
+      if user.preferences.email_notifications.matches do
+        %{
+          "user_id" => user.id,
+          "subject" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
+          "action_url" => action_url,
+          "body_text" => """
+          #{if(match_kind == :love,
+          do: "#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!",
+          else: "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!")}
 
-        Check out their profile:
-        #{action_url}
-        """,
-        "body_html" => """
-        <p>#{User.display_name(target_user)} liked you back&mdash;they want to meet you too!</p>
+          Looking for date ideas? Check out the #date-worlds channel in our Discord server: https://discord.gg/flirtual
 
-        <p>
-          <a href="#{action_url}" class="btn" style="display: inline-block; padding: 12px 16px; font-size: 18px">
-            <img src="#{thumbnail}" style="margin-right: 10px; width: 38px; height: 38px; border-radius: 50%; vertical-align: middle" />
-            <span style="vertical-align: middle">Check out their profile</span>
-          </a>
-        </p>
+          #{action_url}
+          """,
+          "body_html" => """
+          #{if(match_kind == :love,
+          do: "<p>#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!</p>",
+          else: "<p>#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!</p>")}
 
-        <script type="application/ld+json">
-        {
-          "@context": "http://schema.org",
-          "@type": "EmailMessage",
-          "description": "Check out their profile",
-          "potentialAction": {
-            "@type": "ViewAction",
-            "url": "#{action_url}",
-            "name": "Profile"
-          },
-          "publisher": {
-            "@type": "Organization",
-            "name": "Flirtual",
-            "url": "https://flirtu.al/"
+          <p>Looking for date ideas? Check out the #date-worlds channel in our <a href="https://discord.gg/flirtual">Discord server</a>.</p>
+
+          <p>
+            <a href="#{action_url}" class="btn" style="display: inline-block; padding: 12px 16px; font-size: 18px">
+              <img src="#{thumbnail}" style="margin-right: 10px; width: 38px; height: 38px; border-radius: 50%; vertical-align: middle" />
+              <span style="vertical-align: middle">Message</span>
+            </a>
+          </p>
+
+          <script type="application/ld+json">
+          {
+            "@context": "http://schema.org",
+            "@type": "EmailMessage",
+            "description": "Send #{pronouns.objective} a message",
+            "potentialAction": {
+              "@type": "ViewAction",
+              "url": "#{action_url}",
+              "name": "Message"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Flirtual",
+              "url": "https://flirtu.al/"
+            }
           }
+          </script>
+          """
         }
-        </script>
-        """
-      }
-      |> Flirtual.ObanWorkers.Email.new(unique: [period: 60 * 60])
-      |> Oban.insert()
+        |> Flirtual.ObanWorkers.Email.new(unique: [period: 60 * 60])
+        |> Oban.insert()
+      end
+
+      if not is_nil(user.apns_token) or not is_nil(user.fcm_token) do
+        %{
+          "user_id" => user.id,
+          "title" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
+          "message" =>
+            if(match_kind == :love,
+              do:
+                "#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!",
+              else:
+                "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!"
+            ),
+          "url" => action_url
+        }
+        |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60])
+        |> Oban.insert()
+      end
     else
       {:ok, :disabled}
     end
@@ -338,26 +373,10 @@ defmodule Flirtual.Matchmaking do
                    do: {:ok, nil},
                    else:
                      with true <- item.type === :like and opposite_item.type === :like,
-                          {:ok, _} <- create_match_conversation(user, target, match_kind),
-                          {:ok, _} <- deliver_match_email(target, user),
                           {:ok, _} <-
-                            %{
-                              "user_id" => target.id,
-                              "title" => "It's a match!",
-                              "message" =>
-                                if(match_kind == :love,
-                                  do:
-                                    "#{User.display_name(user)} liked you back. Send them a message! 💞",
-                                  else:
-                                    "#{User.display_name(user)} homied you back. Send them a message! ✌️"
-                                ),
-                              "url" =>
-                                Application.fetch_env!(:flirtual, :frontend_origin)
-                                |> URI.merge("/" <> user.id)
-                                |> URI.to_string()
-                            }
-                            |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60])
-                            |> Oban.insert() do
+                            create_match_conversation(user, target, match_kind),
+                          {:ok, _} <-
+                            deliver_match_notification(target, user, match_kind) do
                        {:ok, opposite_item}
                      else
                        false -> {:ok, opposite_item}

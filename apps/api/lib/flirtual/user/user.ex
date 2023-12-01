@@ -103,6 +103,47 @@ defmodule Flirtual.User do
        |> String.slice(0..8))
   end
 
+  def pronouns(%User{} = user) do
+    masculine_genders = ["He/Him", "Man", "Cis Man", "Trans Man", "Transmasculine"]
+    feminine_genders = ["She/Her", "Woman", "Cis Woman", "Trans Woman", "Transfeminine"]
+
+    genders =
+      user.profile.attributes
+      |> filter_by(:type, "gender")
+      |> Enum.map(& &1.name)
+
+    cond do
+      Enum.all?(genders, fn gender -> gender in masculine_genders end) or
+          ("He/Him" in genders and not ("They/Them" in genders or "She/Her" in genders)) ->
+        %{
+          subjective: "he",
+          objective: "him",
+          possessive_adjective: "his",
+          possessive_pronoun: "his",
+          reflexive: "himself"
+        }
+
+      Enum.all?(genders, fn gender -> gender in feminine_genders end) or
+          ("She/Her" in genders and not ("They/Them" in genders or "He/Him" in genders)) ->
+        %{
+          subjective: "she",
+          objective: "her",
+          possessive_adjective: "her",
+          possessive_pronoun: "hers",
+          reflexive: "herself"
+        }
+
+      true ->
+        %{
+          subjective: "they",
+          objective: "them",
+          possessive_adjective: "their",
+          possessive_pronoun: "theirs",
+          reflexive: "themself"
+        }
+    end
+  end
+
   def visible?(%User{} = user) do
     case visible(user) do
       {:ok, _} -> true
