@@ -50,7 +50,7 @@ const ReportListContext = createContext<ReportListContext>({
 });
 
 interface ProfileReportViewProps {
-	reported: User;
+	reported?: User;
 	reports: Array<CompleteReport>;
 }
 
@@ -77,42 +77,44 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 					>
 						<CollapseIcon className="h-6 w-6" />
 						<span className="w-44 truncate font-montserrat text-xl font-semibold">
-							{displayName(reported)}
+							{reported ? displayName(reported) : "Deleted user"}
 						</span>
 					</button>
-					<div className="flex gap-4">
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<Link href={urls.profile(reported)}>
-									<ExternalLink className="h-6 w-6" />
-								</Link>
-							</TooltipTrigger>
-							<TooltipContent>View profile</TooltipContent>
-						</Tooltip>
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<button
-									className="h-fit"
-									type="button"
-									onClick={async () => {
-										await api.report
-											.clearAll({ query: { targetId: reported.id } })
-											.then(({ count }) =>
-												toasts.add(
-													`Cleared ${count} report${count === 1 ? "" : "s"}`
-												)
-											);
+					{reported && (
+						<div className="flex gap-4">
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<Link href={urls.profile(reported)}>
+										<ExternalLink className="h-6 w-6" />
+									</Link>
+								</TooltipTrigger>
+								<TooltipContent>View profile</TooltipContent>
+							</Tooltip>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<button
+										className="h-fit"
+										type="button"
+										onClick={async () => {
+											await api.report
+												.clearAll({ query: { targetId: reported.id } })
+												.then(({ count }) =>
+													toasts.add(
+														`Cleared ${count} report${count === 1 ? "" : "s"}`
+													)
+												);
 
-										await mutate();
-									}}
-								>
-									<ShieldCheck className="h-6 w-6 text-green-600" />
-								</button>
-							</TooltipTrigger>
-							<TooltipContent>Clear reports</TooltipContent>
-						</Tooltip>
-						<ProfileDropdown user={reported} />
-					</div>
+											await mutate();
+										}}
+									>
+										<ShieldCheck className="h-6 w-6 text-green-600" />
+									</button>
+								</TooltipTrigger>
+								<TooltipContent>Clear reports</TooltipContent>
+							</Tooltip>
+							<ProfileDropdown user={reported} />
+						</div>
+					)}
 				</div>
 				<div className="flex items-baseline justify-between gap-4 pl-10 sm:justify-start">
 					<span className="text-black-50 dark:text-white-50">
@@ -122,7 +124,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							: ""}{" "}
 						reports
 					</span>
-					{reported.shadowbannedAt && (
+					{reported && reported.shadowbannedAt && (
 						<span className="font-bold text-red-600">Shadowbanned</span>
 					)}
 				</div>
@@ -200,7 +202,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 												: urls.moderation.reports()
 										}
 									>
-										{report.user ? displayName(report.user) : "Unknown"}
+										{report.user ? displayName(report.user) : "Deleted user"}
 									</InlineLink>
 								</div>
 								{report.message && (

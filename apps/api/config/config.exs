@@ -30,6 +30,7 @@ config :flirtual, Oban,
     {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)},
     {Oban.Plugins.Cron,
      crontab: [
+       {"@daily", Flirtual.ObanWorkers.Daily},
        {"0 18 * * SAT", Flirtual.ObanWorkers.Weekly}
      ]}
   ],
