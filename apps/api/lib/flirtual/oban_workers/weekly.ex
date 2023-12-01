@@ -1,11 +1,10 @@
 defmodule Flirtual.ObanWorkers.Weekly do
-  # , unique: [period: 60 * 60 * 24 * 6]
-  use Oban.Worker
+  use Oban.Worker, unique: [period: 60 * 60 * 24 * 6]
 
   import Ecto.Query
 
   alias Flirtual.{Repo, User}
-  alias Flirtual.User.Profile.{LikesAndPasses, Block}
+  alias Flirtual.User.Profile.{Block, LikesAndPasses}
 
   @impl Oban.Worker
   def perform(%Oban.Job{}) do
