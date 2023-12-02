@@ -24,7 +24,6 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 		<ModelCard
 			className="sm:max-w-2xl"
 			title={deactivated ? "Reactivate account" : "Deactivate account"}
-			titleProps={{ className: "md:text-3xl" }}
 		>
 			<Form
 				className="flex flex-col gap-8"

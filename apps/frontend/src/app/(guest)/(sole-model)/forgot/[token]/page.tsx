@@ -15,7 +15,7 @@ export default function ResetPasswordPage({
 	if (!payload?.sub) return null;
 
 	return (
-		<ModelCard title="Reset Password">
+		<ModelCard title="Reset password">
 			<ResetPasswordForm email={payload.sub} token={token} />
 		</ModelCard>
 	);

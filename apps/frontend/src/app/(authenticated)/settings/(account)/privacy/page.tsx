@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountPrivacyPage() {
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Account Privacy">
+		<ModelCard className="sm:max-w-2xl" title="Privacy">
 			<PrivacyForm />
 		</ModelCard>
 	);

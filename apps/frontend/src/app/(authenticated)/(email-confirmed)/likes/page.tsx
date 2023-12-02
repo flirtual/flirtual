@@ -20,7 +20,7 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 
 export const metadata: Metadata = {
-	title: "Liked me"
+	title: "Likes you"
 };
 
 export default async function LikesPage() {
@@ -50,7 +50,7 @@ export default async function LikesPage() {
 			<ModelCard
 				className="sm:max-w-3xl"
 				containerProps={{ className: "p-0 sm:px-16 sm:py-10" }}
-				title="Likes You"
+				title="Likes you"
 			>
 				<div className="flex flex-col gap-8 py-8 sm:py-0">
 					<div className="px-4 sm:p-0">

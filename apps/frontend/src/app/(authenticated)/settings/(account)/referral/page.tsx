@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountReferralPage() {
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Refer a Friend">
+		<ModelCard className="sm:max-w-2xl" title="Refer a homie">
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-4">
 					<span className="select-none">
