@@ -195,72 +195,87 @@ defmodule Flirtual.Matchmaking do
 
     if User.visible?(user) and User.visible?(target_user) and
          (send_email or send_push) do
-      if send_email do
-        %{
-          "user_id" => user.id,
-          "subject" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
-          "action_url" => action_url,
-          "body_text" => """
-          #{if(match_kind == :love,
-          do: "#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!",
-          else: "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!")}
+      email_result =
+        if send_email do
+          %{
+            "user_id" => user.id,
+            "subject" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
+            "action_url" => action_url,
+            "body_text" => """
+            #{if(match_kind == :love,
+            do: "#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!",
+            else: "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!")}
 
-          Looking for date ideas? Check out the #date-worlds channel in our Discord server: https://discord.gg/flirtual
+            Looking for date ideas? Check out the #date-worlds channel in our Discord server: https://discord.gg/flirtual
 
-          #{action_url}
-          """,
-          "body_html" => """
-          #{if(match_kind == :love,
-          do: "<p>#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!</p>",
-          else: "<p>#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!</p>")}
+            #{action_url}
+            """,
+            "body_html" => """
+            #{if(match_kind == :love,
+            do: "<p>#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!</p>",
+            else: "<p>#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!</p>")}
 
-          <p>Looking for date ideas? Check out the #date-worlds channel in our <a href="https://discord.gg/flirtual">Discord server</a>.</p>
+            <p>Looking for date ideas? Check out the #date-worlds channel in our <a href="https://discord.gg/flirtual">Discord server</a>.</p>
 
-          <p>
-            <a href="#{action_url}" class="btn" style="display: inline-block; padding: 12px 16px; font-size: 18px">
-              <img src="#{thumbnail}" style="margin-right: 10px; width: 38px; height: 38px; border-radius: 50%; vertical-align: middle" />
-              <span style="vertical-align: middle">Message</span>
-            </a>
-          </p>
+            <p>
+              <a href="#{action_url}" class="btn" style="display: inline-block; padding: 12px 16px; font-size: 18px">
+                <img src="#{thumbnail}" style="margin-right: 10px; width: 38px; height: 38px; border-radius: 50%; vertical-align: middle" />
+                <span style="vertical-align: middle">Message</span>
+              </a>
+            </p>
 
-          <script type="application/ld+json">
-          {
-            "@context": "http://schema.org",
-            "@type": "EmailMessage",
-            "description": "Send #{pronouns.objective} a message",
-            "potentialAction": {
-              "@type": "ViewAction",
-              "url": "#{action_url}",
-              "name": "Message"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "Flirtual",
-              "url": "https://flirtu.al/"
+            <script type="application/ld+json">
+            {
+              "@context": "http://schema.org",
+              "@type": "EmailMessage",
+              "description": "Send #{pronouns.objective} a message",
+              "potentialAction": {
+                "@type": "ViewAction",
+                "url": "#{action_url}",
+                "name": "Message"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Flirtual",
+                "url": "https://flirtu.al/"
+              }
             }
+            </script>
+            """
           }
-          </script>
-          """
-        }
-        |> Flirtual.ObanWorkers.Email.new(unique: [period: 60 * 60])
-        |> Oban.insert()
-      end
+          |> Flirtual.ObanWorkers.Email.new(unique: [period: 60 * 60])
+          |> Oban.insert()
+        else
+          {:ok, :disabled}
+        end
 
-      if send_push do
-        %{
-          "user_id" => user.id,
-          "title" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
-          "message" =>
-            if(match_kind == :love,
-              do:
-                "#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!",
-              else:
-                "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!"
-            ),
-          "url" => action_url
-        }
-        |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60])
-        |> Oban.insert()
+      push_result =
+        if send_push do
+          %{
+            "user_id" => user.id,
+            "title" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
+            "message" =>
+              if(match_kind == :love,
+                do:
+                  "#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!",
+                else:
+                  "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!"
+              ),
+            "url" => action_url
+          }
+          |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60])
+          |> Oban.insert()
+        else
+          {:ok, :disabled}
+        end
+
+      case {email_result, push_result} do
+        {{:ok, :disabled}, {:ok, :disabled}} -> {:ok, :disabled}
+        {{:ok, _}, {:ok, :disabled}} -> {:ok, :email}
+        {{:ok, :disabled}, {:ok, _}} -> {:ok, :push}
+        {{:ok, _}, {:ok, _}} -> {:ok, :both}
+        {{:error, reason}, _} -> {:error, reason}
+        {_, {:error, reason}} -> {:error, reason}
       end
     else
       {:ok, :disabled}
