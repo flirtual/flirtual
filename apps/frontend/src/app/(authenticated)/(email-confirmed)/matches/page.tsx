@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { ConversationAside } from "./aside";
 
 export const metadata: Metadata = {
-	title: "Conversations"
+	title: "Matches"
 };
 
 export default async function ConversationListPage() {

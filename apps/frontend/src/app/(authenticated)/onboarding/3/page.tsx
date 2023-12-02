@@ -1,6 +1,12 @@
+import { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { Onboarding3Form } from "./form";
+
+export const metadata: Metadata = {
+	title: "Bio & pics"
+};
 
 export default function Onboarding3Page() {
 	return (

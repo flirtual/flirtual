@@ -12,9 +12,12 @@ interface BrowsePageProps {
 	searchParams: { kind?: string };
 }
 
-export const metadata: Metadata = {
-	title: "Browse"
-};
+export async function generateMetadata({ searchParams }: BrowsePageProps) {
+	const kind = (searchParams.kind ?? "love") as ProspectKind;
+	return {
+		title: kind === "friend" ? "Homie Mode" : "Browse"
+	};
+}
 
 export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 	const kind = (searchParams.kind ?? "love") as ProspectKind;

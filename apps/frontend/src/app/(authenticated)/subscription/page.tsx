@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react";
+import { Metadata } from "next";
 
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
@@ -15,6 +16,10 @@ import {
 	MatchSubscriptionPlatform,
 	PlatformMismatchMessage
 } from "./platform-mismatch";
+
+export const metadata: Metadata = {
+	title: "Premium"
+};
 
 export default async function SubscriptionPage() {
 	const { user } = await withSession();

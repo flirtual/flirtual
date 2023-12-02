@@ -1,5 +1,7 @@
 "use client";
 
+import { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 import { InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
@@ -10,6 +12,10 @@ import { VRChatIcon } from "~/components/icons";
 // import { useDevice } from "~/hooks/use-device";
 
 import { AddConnectionButton } from "./add-connection-button";
+
+export const metadata: Metadata = {
+	title: "Connections"
+};
 
 export default function SettingsAccountConnectionsPage(props: {
 	searchParams?: {

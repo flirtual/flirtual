@@ -1,7 +1,13 @@
+import { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 import { withAttributeList } from "~/api/attributes-server";
 
 import { Onboarding2Form } from "./form";
+
+export const metadata: Metadata = {
+	title: "Info & tags"
+};
 
 export default async function Onboarding2Page() {
 	const games = await withAttributeList("game");

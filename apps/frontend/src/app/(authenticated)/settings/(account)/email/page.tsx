@@ -5,7 +5,7 @@ import { ModelCard } from "~/components/model-card";
 import { EmailForm } from "./form";
 
 export const metadata: Metadata = {
-	title: "Change email"
+	title: "Email"
 };
 
 export default function SettingsAccountEmailPage() {
