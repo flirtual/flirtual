@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { Metadata } from "next";
 
 import { api } from "~/api";
 import { thruServerCookies } from "~/server-utilities";
