@@ -63,12 +63,19 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 
 		void (async () => {
 			await session.clearPushRegistrations();
-			await session.setPushRegistration({
-				provider: platform === "apple" ? "apns" : "fcm",
-				pushRegistrationId
-			});
+			authSession?.user.preferences?.pushNotifications.messages &&
+				(await session.setPushRegistration({
+					provider: platform === "apple" ? "apns" : "fcm",
+					pushRegistrationId
+				}));
 		})();
-	}, [session, pushRegistrationId, platform, router]);
+	}, [
+		session,
+		pushRegistrationId,
+		platform,
+		router,
+		authSession?.user.preferences?.pushNotifications.messages
+	]);
 
 	useEffect(() => {
 		setUnreadConversations([]);

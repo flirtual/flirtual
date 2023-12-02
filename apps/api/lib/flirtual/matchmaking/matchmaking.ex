@@ -187,10 +187,15 @@ defmodule Flirtual.Matchmaking do
     thumbnail = target_user |> User.avatar_thumbnail_url()
     pronouns = target_user |> User.pronouns()
 
+    send_email = user.preferences.email_notifications.matches
+
+    send_push =
+      user.preferences.push_notifications.matches and
+        (not is_nil(user.apns_token) or not is_nil(user.fcm_token))
+
     if User.visible?(user) and User.visible?(target_user) and
-         (user.preferences.email_notifications.matches or not is_nil(user.apns_token) or
-            not is_nil(user.fcm_token)) do
-      if user.preferences.email_notifications.matches do
+         (send_email or send_push) do
+      if send_email do
         %{
           "user_id" => user.id,
           "subject" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
@@ -241,7 +246,7 @@ defmodule Flirtual.Matchmaking do
         |> Oban.insert()
       end
 
-      if not is_nil(user.apns_token) or not is_nil(user.fcm_token) do
+      if send_push do
         %{
           "user_id" => user.id,
           "title" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),

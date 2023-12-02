@@ -40,14 +40,17 @@ defmodule Flirtual.ObanWorkers.Weekly do
         from(user in User,
           join: prefs in assoc(user, :preferences),
           join: email_notif in assoc(prefs, :email_notifications),
+          join: push_notif in assoc(prefs, :push_notifications),
           join: unrequited in subquery(subquery),
           on: unrequited.target_id == user.id,
           where:
             not is_nil(user.email_confirmed_at) and
               is_nil(user.banned_at) and
               is_nil(user.deactivated_at) and
-              (email_notif.likes == true or not is_nil(user.apns_token) or
-                 not is_nil(user.fcm_token)),
+              (email_notif.likes == true or
+                 (push_notif.likes == true and
+                    (not is_nil(user.apns_token) or
+                       not is_nil(user.fcm_token)))),
           select: user.id,
           distinct: true
         )

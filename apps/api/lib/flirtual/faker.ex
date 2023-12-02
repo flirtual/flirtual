@@ -175,7 +175,14 @@ defmodule Flirtual.Faker do
            {:ok, _} <-
              Users.update_notification_preferences(
                preferences.email_notifications,
-               [:personality, :connections, :sexuality, :country, :kinks]
+               [:matches, :messages, :likes, :reminders, :newsletter]
+               |> Enum.map(&{&1, [true, false] |> Enum.random()})
+               |> Map.new()
+             ),
+           {:ok, _} <-
+             Users.update_notification_preferences(
+               preferences.push_notifications,
+               [:matches, :messages, :likes, :reminders, :newsletter]
                |> Enum.map(&{&1, [true, false] |> Enum.random()})
                |> Map.new()
              ),

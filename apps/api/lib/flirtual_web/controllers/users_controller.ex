@@ -180,7 +180,10 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def update_notifications_preferences(conn, %{"user_id" => user_id} = params) do
+  def update_notifications_preferences(
+        conn,
+        %{"user_id" => user_id, "email" => email_preferences, "push" => push_preferences} = params
+      ) do
     user =
       if(conn.assigns[:session].user.id === user_id,
         do: conn.assigns[:session].user,
@@ -193,8 +196,16 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:forbidden, "Cannot update this user's notifications", %{user_id: user_id}}}
     else
       with {:ok, email_notifications} <-
-             Users.update_notification_preferences(preferences.email_notifications, params) do
-        conn |> json(email_notifications)
+             Users.update_notification_preferences(
+               preferences.email_notifications,
+               email_preferences
+             ),
+           {:ok, push_notifications} <-
+             Users.update_notification_preferences(
+               preferences.push_notifications,
+               push_preferences
+             ) do
+        conn |> json(%{"email" => email_notifications, "push" => push_notifications})
       end
     end
   end

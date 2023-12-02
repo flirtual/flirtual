@@ -305,6 +305,21 @@ defmodule Flirtual.Users do
     end
   end
 
+  def update_notification_preferences(
+        %Preferences.PushNotifications{} = notification_preferences,
+        attrs
+      ) do
+    with {:ok, notification_preferences} <-
+           notification_preferences
+           |> Preferences.PushNotifications.update_changeset(attrs)
+           |> Repo.update() do
+      {:ok, notification_preferences}
+    else
+      {:error, reason} -> Repo.rollback(reason)
+      reason -> Repo.rollback(reason)
+    end
+  end
+
   def deactivate(%User{} = user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
@@ -455,6 +470,11 @@ defmodule Flirtual.Users do
              |> Repo.insert(),
            {:ok, _} <-
              Ecto.build_assoc(preferences, :email_notifications, %{
+               newsletter: attrs[:notifications]
+             })
+             |> Repo.insert(),
+           {:ok, _} <-
+             Ecto.build_assoc(preferences, :push_notifications, %{
                newsletter: attrs[:notifications]
              })
              |> Repo.insert(),

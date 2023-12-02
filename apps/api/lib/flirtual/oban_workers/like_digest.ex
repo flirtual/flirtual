@@ -82,7 +82,8 @@ defmodule Flirtual.ObanWorkers.LikeDigest do
         |> Oban.insert()
       end
 
-      if not is_nil(user.apns_token) or not is_nil(user.fcm_token) do
+      if user.preferences.push_notifications.likes and
+           (not is_nil(user.apns_token) or not is_nil(user.fcm_token)) do
         %{
           "user_id" => user_id,
           "title" =>

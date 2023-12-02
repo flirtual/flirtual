@@ -27,6 +27,7 @@ export interface Preferences {
 	nsfw: boolean;
 	theme: PreferenceTheme;
 	emailNotifications: NotificationPreferences;
+	pushNotifications: NotificationPreferences;
 	privacy: PrivacyPreferences;
 }
 
@@ -50,11 +51,13 @@ export async function updatePrivacy(
 
 export async function updateNotifications(
 	userId: string,
-	options: NarrowFetchOptions<Partial<PrivacyPreferences>>
+	options: NarrowFetchOptions<{
+		email: Partial<NotificationPreferences>;
+		push: Partial<NotificationPreferences>;
+	}>
 ) {
-	return fetch<PrivacyPreferences>(
-		"post",
-		`users/${userId}/preferences/notifications`,
-		options
-	);
+	return fetch<{
+		email: NotificationPreferences;
+		push: NotificationPreferences;
+	}>("post", `users/${userId}/preferences/notifications`, options);
 }

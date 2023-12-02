@@ -6,24 +6,31 @@ defmodule Flirtual.User.Preferences do
 
   alias Flirtual.User
   alias Flirtual.User.Preferences
-  alias Flirtual.User.Preferences.{EmailNotifications, Privacy}
+  alias Flirtual.User.Preferences.{EmailNotifications, Privacy, PushNotifications}
 
   schema "preferences" do
-    belongs_to :user, User, primary_key: true
+    belongs_to(:user, User, primary_key: true)
 
-    field :nsfw, :boolean, default: false
-    field :theme, Ecto.Enum, values: [:light, :dark, :system], default: :light
+    field(:nsfw, :boolean, default: false)
+    field(:theme, Ecto.Enum, values: [:light, :dark, :system], default: :light)
 
-    has_one :email_notifications, EmailNotifications,
+    has_one(:email_notifications, EmailNotifications,
       references: :user_id,
       foreign_key: :preferences_id
+    )
 
-    has_one :privacy, Privacy, references: :user_id, foreign_key: :preferences_id
+    has_one(:push_notifications, PushNotifications,
+      references: :user_id,
+      foreign_key: :preferences_id
+    )
+
+    has_one(:privacy, Privacy, references: :user_id, foreign_key: :preferences_id)
   end
 
   def default_assoc do
     [
       :email_notifications,
+      :push_notifications,
       :privacy
     ]
   end
@@ -43,6 +50,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Preferences do
       :nsfw,
       :theme,
       :email_notifications,
+      :push_notifications,
       :privacy
     ]
 end
