@@ -489,10 +489,7 @@ defmodule Flirtual.Users do
              |> Repo.insert(),
            user <- Repo.preload(user, User.default_assoc()),
            :ok <-
-             Flag.check_flags(
-               user.id,
-               user.username <> " " <> user.email
-             ),
+             Flag.check_flags(user.id, user.username),
            :ok <- Hash.check_hash(user.id, "username", attrs[:username]),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, _} <- Talkjs.update_user(user),
