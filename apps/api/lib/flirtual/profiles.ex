@@ -136,7 +136,7 @@ defmodule Flirtual.Profiles do
           |> delete_change(:custom_interests)
         end
       end)
-      |> validate_length(:interest, min: 1, max: 7)
+      |> validate_length(:interest, min: 1, max: 8)
     end
 
     def transform_value(value, default) do

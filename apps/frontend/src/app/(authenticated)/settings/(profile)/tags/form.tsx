@@ -283,14 +283,14 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 					<FormField name="interest">
 						{(field) => (
 							<>
-								<InputLabel hint="(up to 7)">Personal interest tags</InputLabel>
+								<InputLabel hint="(up to 8)">Personal interest tags</InputLabel>
 								<InputLabelHint className="-mt-2">
-									You can add custom interests too!
+									You can type custom interests too!
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
 									supportArbitrary
-									limit={7}
+									limit={8}
 									placeholder="Select your personal interests..."
 									options={interests
 										.map((interest) => ({
