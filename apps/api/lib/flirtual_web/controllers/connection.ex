@@ -156,10 +156,7 @@ defmodule FlirtualWeb.ConnectionController do
               |> Repo.update()
             end
 
-            Flag.check_flags(
-              user.id,
-              profile.display_name <> " " <> profile.email
-            )
+            Flag.check_flags(user.id, profile.display_name)
 
             Hash.check_hash(user.id, "email", profile.email)
             Hash.check_hash(user.id, "#{Connection.provider_name!(type)} ID", profile.uid)
