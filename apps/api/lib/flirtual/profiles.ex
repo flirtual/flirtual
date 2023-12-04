@@ -200,7 +200,14 @@ defmodule Flirtual.Profiles do
            :ok <-
              Flag.check_flags(
                profile.user_id,
-               (profile.biography || "") <> " " <> Enum.join(profile.custom_interests || [], " ")
+               Enum.join(
+                 Enum.filter(
+                   [profile.display_name, profile.vrchat, profile.discord, profile.biography] ++
+                     (profile.custom_interests || []),
+                   & &1
+                 ),
+                 " "
+               )
              ),
            :ok <- Flag.check_openai_moderation(profile.user_id, profile.biography),
            :ok <- Hash.check_hash(profile.user_id, "display name", profile.display_name),

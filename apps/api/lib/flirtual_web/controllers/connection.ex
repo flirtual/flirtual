@@ -7,9 +7,7 @@ defmodule FlirtualWeb.ConnectionController do
   import Ecto.Changeset
   import Flirtual.Utilities
 
-  alias Flirtual.Connection
-  alias Flirtual.Repo
-  alias Flirtual.User
+  alias Flirtual.{Connection, Discord, Flag, Hash, Repo, User}
   alias FlirtualWeb.SessionController
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -117,7 +115,7 @@ defmodule FlirtualWeb.ConnectionController do
     |> put_resp_header(
       "location",
       Application.fetch_env!(:flirtual, :frontend_origin)
-      |> URI.merge(get_session(conn, :next) || "/login" <> "?error=" <> message)
+      |> URI.merge((get_session(conn, :next) || "/login") <> "?error=" <> message)
       |> URI.to_string()
     )
     |> resp(if(redirect_type == "manual", do: 200, else: 307), "")
@@ -158,12 +156,33 @@ defmodule FlirtualWeb.ConnectionController do
               |> Repo.update()
             end
 
+            Flag.check_flags(
+              user.id,
+              profile.display_name <> " " <> profile.email
+            )
+
+            Hash.check_hash(user.id, "email", profile.email)
+            Hash.check_hash(user.id, "#{Connection.provider_name!(type)} ID", profile.uid)
+
+            Hash.check_hash(
+              user.id,
+              "#{Connection.provider_name!(type)} username",
+              profile.display_name
+            )
+
             grant_next(conn, redirect_type)
 
           {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id == user.id ->
             grant_next(conn, redirect_type)
 
           {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id != user.id ->
+            Discord.deliver_webhook(:flagged_duplicate,
+              user: user,
+              duplicates: "https://flirtu.al/#{user_id}",
+              type: "#{Connection.provider_name!(type)} (connection blocked)",
+              text: "#{profile.display_name} (#{profile.uid})"
+            )
+
             grant_error(
               conn,
               redirect_type,

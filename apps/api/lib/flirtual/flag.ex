@@ -4,7 +4,7 @@ defmodule Flirtual.Flag do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Flag, Repo, Users}
+  alias Flirtual.{Discord, Flag, Repo, Users}
 
   schema "flags" do
     field(:type, :string)
@@ -42,29 +42,27 @@ defmodule Flirtual.Flag do
   def check_flags(user_id, text) do
     user = Users.get(user_id)
 
-    case Flag
-         |> where([flag], flag.type == "text")
-         |> where(
-           [flag],
-           fragment("? ~* ('(\\?<![[:alnum:]])' || ? || '(\\?![[:alnum:]])')", ^text, flag.flag)
-         )
-         |> Repo.all() do
-      [] ->
-        :ok
+    keyword_flags =
+      Flag
+      |> where([flag], flag.type == "text")
+      |> where(
+        [flag],
+        fragment("? ~* ('(\\?<![[:alnum:]])' || ? || '(\\?![[:alnum:]])')", ^text, flag.flag)
+      )
+      |> Repo.all()
+      |> Enum.map(& &1.flag)
 
-      flags when is_list(flags) ->
-        flags = flags |> Enum.map_join(", ", & &1.flag)
-        Flirtual.Discord.deliver_webhook(:flagged_text, user: user, flags: flags)
-        :ok
+    k12_flag =
+      Regex.scan(~r/@(.+\.k12\..+\.us)/, text)
+      |> Enum.map(fn [_, domain] -> domain end)
 
-      {:error, reason} ->
-        Flirtual.Discord.deliver_webhook(:flagged_text,
-          user: user,
-          flags: "error: #{inspect(reason)}"
-        )
+    flags = keyword_flags ++ k12_flag
 
-        :ok
+    if flags != [] do
+      Discord.deliver_webhook(:flagged_text, user: user, flags: Enum.join(flags, ", "))
     end
+
+    :ok
   end
 
   def check_openai_moderation(_, nil), do: :ok
@@ -87,13 +85,13 @@ defmodule Flirtual.Flag do
             end)
             |> Enum.join(", ")
 
-          Flirtual.Discord.deliver_webhook(:flagged_text, user: user, flags: flags)
+          Discord.deliver_webhook(:flagged_text, user: user, flags: flags)
         end
 
         :ok
 
       {:error, reason} ->
-        Flirtual.Discord.deliver_webhook(:flagged_text,
+        Discord.deliver_webhook(:flagged_text,
           user: user,
           flags: "error: #{inspect(reason)}"
         )

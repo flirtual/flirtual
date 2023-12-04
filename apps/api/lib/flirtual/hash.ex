@@ -4,7 +4,7 @@ defmodule Flirtual.Hash do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Hash, Repo, User, Users}
+  alias Flirtual.{Discord, Hash, Repo, User, Users}
 
   schema "hashes" do
     belongs_to(:user, User)
@@ -91,9 +91,9 @@ defmodule Flirtual.Hash do
           |> Enum.filter(fn user -> not is_nil(user.user_id) end)
           |> Enum.map_join(", ", fn user -> "https://flirtu.al/#{user.user_id}" end)
 
-        Flirtual.Discord.deliver_webhook(:flagged_duplicate,
+        Discord.deliver_webhook(:flagged_duplicate,
           user: Users.get(user_id),
-          duplicates: duplicates,
+          duplicates: if(duplicates == "", do: "Banned user", else: duplicates),
           type: type,
           text: text
         )

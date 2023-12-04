@@ -4,13 +4,13 @@ defmodule Flirtual.Users do
   import Flirtual.Utilities.Changeset
 
   import Flirtual.HCaptcha, only: [validate_captcha: 1]
-  import Flirtual.Flag, only: [validate_allowed_email: 2]
 
   alias Ecto.UUID
 
   alias Flirtual.{
     Discord,
     Elasticsearch,
+    Flag,
     Hash,
     Jwt,
     Listmonk,
@@ -183,7 +183,7 @@ defmodule Flirtual.Users do
       |> validate_predicate(:not_equal, {:email, {:value, user.email}},
         message: "New email cannot be the same as the old email"
       )
-      |> validate_allowed_email(:email)
+      |> Flag.validate_allowed_email(:email)
     end
   end
 
@@ -455,7 +455,7 @@ defmodule Flirtual.Users do
              |> cast(attrs, [:username, :email, :password])
              |> User.validate_unique_username()
              |> User.validate_unique_email()
-             |> validate_allowed_email(:email)
+             |> Flag.validate_allowed_email(:email)
              |> User.validate_password()
              |> User.put_password()
              |> Repo.insert(),
@@ -488,6 +488,11 @@ defmodule Flirtual.Users do
              Ecto.build_assoc(profile, :preferences)
              |> Repo.insert(),
            user <- Repo.preload(user, User.default_assoc()),
+           :ok <-
+             Flag.check_flags(
+               user.id,
+               user.username <> " " <> user.email
+             ),
            :ok <- Hash.check_hash(user.id, "username", attrs[:username]),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, _} <- Talkjs.update_user(user),
