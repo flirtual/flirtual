@@ -166,7 +166,7 @@ export function InputAutocomplete<K extends string>(
 						value={inputValue}
 						style={{
 							// eslint-disable-next-line unicorn/explicit-length-check
-							width: `${(inputValue.length || placeholder?.length || 1) + 1}em`
+							width: `${(inputValue.length || placeholder?.length || 1) + 2}em`
 						}}
 						onChange={onInputChange}
 						onKeyDown={(event) => {
