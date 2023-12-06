@@ -74,7 +74,7 @@ const ProfileColorEditor: FC = () => {
 					<Hash className="h-7 w-7" />
 				</div>
 				<HexColorInput
-					className="w-full border-none bg-transparent px-4 py-2 font-nunito caret-theme-2 placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50"
+					className="w-full border-none bg-transparent px-4 py-2 font-mono uppercase caret-theme-2 placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50"
 					color={selectedColor.props.value}
 					onChange={selectedColor.props.onChange}
 				/>
