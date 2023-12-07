@@ -1,3 +1,5 @@
+import { gitCommitSha } from "~/const";
+
 import { UuidModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
 
@@ -19,7 +21,11 @@ export interface AttributeMetadata {
 	};
 	language: undefined;
 	game: undefined;
-	interest: undefined;
+	interest: {
+		category: string;
+		strength?: number;
+		synonyms?: Array<string>;
+	};
 	platform: undefined;
 	country: {
 		flagUrl: string;
@@ -63,7 +69,11 @@ export async function list<T extends string>(
 	type: T,
 	options: NarrowFetchOptions = {}
 ): Promise<AttributeCollection<T>> {
-	return fetch<AttributeCollection<T>>("get", `attributes/${type}`, options);
+	return fetch<AttributeCollection<T>>(
+		"get",
+		`attributes/${type}?v=${gitCommitSha}`,
+		options
+	);
 }
 
 export async function get<T extends string>(

@@ -10,7 +10,6 @@ import {
 	InputAutocomplete,
 	InputDateSelect,
 	InputLabel,
-	InputLabelHint,
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
@@ -25,19 +24,18 @@ import { useToast } from "~/hooks/use-toast";
 import { filterBy, fromEntries } from "~/utilities";
 
 const AttributeKeys = [
-	...(["gender", "sexuality", "platform", "game", "interest"] as const)
+	...(["gender", "sexuality", "platform", "game"] as const)
 ];
 
-export interface TagsFormProps {
+export interface InfoFormProps {
 	games: AttributeCollection<"game">;
-	interests: AttributeCollection<"interest">;
 	platforms: AttributeCollection<"platform">;
 	sexualities: AttributeCollection<"sexuality">;
 	genders: AttributeCollection<"gender">;
 }
 
-export const TagsForm: FC<TagsFormProps> = (props) => {
-	const { games, genders, interests, platforms, sexualities } = props;
+export const InfoForm: FC<InfoFormProps> = (props) => {
+	const { games, genders, platforms, sexualities } = props;
 
 	const { native } = useDevice();
 	const [session, mutateSession] = useSession();
@@ -66,19 +64,9 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 								[]
 						] as const;
 					})
-				) as { [K in (typeof AttributeKeys)[number]]: Array<string> }),
-				interest: [
-					...filterBy(profile.attributes, "type", "interest").map(
-						({ id }) => id
-					),
-					...profile.customInterests
-				]
+				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
 			}}
-			onSubmit={async ({ bornAt, interest, gender, ...values }) => {
-				const customInterests = interest.filter(
-					(id) => !interests.some((interest) => interest.id === id)
-				);
-
+			onSubmit={async ({ bornAt, gender, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
 					api.user.update(user.id, {
 						body: {
@@ -93,24 +81,20 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 							country: values.country ?? "none",
 							languages: values.languages,
 							new: values.new,
-							customInterests,
 							...(fromEntries(
-								AttributeKeys.filter(
-									(key) => key !== "interest" && key !== "gender"
-								).map((type) => {
+								AttributeKeys.filter((key) => key !== "gender").map((type) => {
 									// @ts-expect-error: don't want to deal with this.
 									return [`${type}Id`, values[type]] as const;
 								})
 							) as {
 								[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
 							}),
-							genderId: gender.filter((id) => id !== "other"),
-							interestId: interest.filter((id) => !customInterests.includes(id))
+							genderId: gender.filter((id) => id !== "other")
 						}
 					})
 				]);
 
-				toasts.add("Saved profile tags");
+				toasts.add("Saved basic info");
 
 				await mutateSession({
 					...session,
@@ -277,31 +261,6 @@ export const TagsForm: FC<TagsFormProps> = (props) => {
 							<>
 								<InputLabel>Are you new to Virtual Reality?</InputLabel>
 								<InputSwitch {...field.props} />
-							</>
-						)}
-					</FormField>
-					<FormField name="interest">
-						{(field) => (
-							<>
-								<InputLabel hint="(up to 8)">Personal interest tags</InputLabel>
-								<InputLabelHint className="-mt-2">
-									You can type custom interests too!
-								</InputLabelHint>
-								<InputAutocomplete
-									{...field.props}
-									supportArbitrary
-									limit={8}
-									placeholder="Select your personal interests..."
-									options={interests
-										.map((interest) => ({
-											key: interest.id,
-											label: interest.name
-										}))
-										.sort((a, b) => {
-											if (a.label > b.label) return 1;
-											return -1;
-										})}
-								/>
 							</>
 						)}
 					</FormField>

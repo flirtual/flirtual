@@ -283,16 +283,18 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 					<FormField name="interest">
 						{(field) => (
 							<>
-								<InputLabel hint="(up to 8)">Personal interest tags</InputLabel>
+								<InputLabel hint="(up to 10)">Interests</InputLabel>
 								<InputLabelHint className="-mt-2">
-									You can type custom interests too!
+									You can add more interests later in your profile settings!
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
-									supportArbitrary
-									limit={8}
-									placeholder="Select your personal interests..."
+									limit={10}
+									placeholder="Select your interests..."
 									options={interests
+										.filter(
+											(interest) => interest.metadata.category === "Popular"
+										)
 										.map((interest) => ({
 											key: interest.id,
 											label: interest.name
@@ -305,7 +307,7 @@ export const Onboarding2Form: FC<Onboarding2Props> = (props) => {
 							</>
 						)}
 					</FormField>
-					<FormButton>Next page</FormButton>
+					<FormButton>Continue</FormButton>
 				</>
 			)}
 		</Form>

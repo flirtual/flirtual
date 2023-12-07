@@ -60,12 +60,12 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 			<PillAttributeList
 				activeIds={session.user.profile.languages}
 				attributes={attributes.language}
-				href={editable ? urls.settings.tags("language") : undefined}
+				href={editable ? urls.settings.info("language") : undefined}
 				user={user}
 			/>
 			<PillAttributeList
 				attributes={attributes.platform}
-				href={editable ? urls.settings.tags("platform") : undefined}
+				href={editable ? urls.settings.info("platform") : undefined}
 				user={user}
 			/>
 		</>

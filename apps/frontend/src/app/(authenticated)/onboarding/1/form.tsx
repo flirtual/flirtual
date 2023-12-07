@@ -175,7 +175,7 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 							</FormField>
 						)}
 					</div>
-					<FormButton>Next page</FormButton>
+					<FormButton>Continue</FormButton>
 				</>
 			)}
 		</Form>

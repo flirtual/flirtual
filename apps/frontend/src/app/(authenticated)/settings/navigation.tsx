@@ -7,6 +7,7 @@ import {
 	AtSign,
 	Bell,
 	Brain,
+	Contact,
 	EyeOff,
 	Flame,
 	KeyRound,
@@ -54,8 +55,11 @@ export const SettingsNavigation: FC = () => {
 					<NavigationLink href={urls.settings.bio} Icon={PenSquare}>
 						Bio & pics
 					</NavigationLink>
-					<NavigationLink href={urls.settings.tags()} Icon={Tag}>
-						Info & tags
+					<NavigationLink href={urls.settings.info()} Icon={Contact}>
+						Basic info
+					</NavigationLink>
+					<NavigationLink newBadge href={urls.settings.interests} Icon={Tag}>
+						Interests
 					</NavigationLink>
 					<NavigationLink href={urls.settings.personality} Icon={Brain}>
 						Personality
@@ -78,11 +82,7 @@ export const SettingsNavigation: FC = () => {
 					>
 						Connections
 					</NavigationLink>
-					<NavigationLink
-						newBadge
-						href={urls.settings.appearance}
-						Icon={Paintbrush}
-					>
+					<NavigationLink href={urls.settings.appearance} Icon={Paintbrush}>
 						Appearance
 					</NavigationLink>
 					<NavigationLink href={urls.settings.privacy} Icon={EyeOff}>

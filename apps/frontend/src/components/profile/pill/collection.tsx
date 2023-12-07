@@ -83,7 +83,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 			</div>
 			<PillAttributeList
 				attributes={attributes.sexuality}
-				href={editable ? urls.settings.tags("sexuality") : undefined}
+				href={editable ? urls.settings.info("sexuality") : undefined}
 				user={user}
 			/>
 			{personalityLabels.length > 0 && (
@@ -106,7 +106,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				{(attributes.interest ?? []).map(({ id, name }) => (
 					<Pill
 						active={session.user.id !== user.id && sessionAttributeIds.has(id)}
-						href={editable ? urls.settings.tags("interest") : undefined}
+						href={editable ? urls.settings.interests : undefined}
 						key={id}
 					>
 						{name}
@@ -114,7 +114,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				))}
 				{user.profile.customInterests.map((customInterest) => (
 					<Pill
-						href={editable ? urls.settings.tags("interest") : undefined}
+						href={editable ? urls.settings.interests : undefined}
 						key={customInterest}
 						active={
 							session.user.id !== user.id &&
@@ -133,7 +133,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 			</div>
 			<PillAttributeList
 				attributes={attributes.game}
-				href={editable ? urls.settings.tags("game") : undefined}
+				href={editable ? urls.settings.info("game") : undefined}
 				user={user}
 			/>
 			{user.profile.domsub && (

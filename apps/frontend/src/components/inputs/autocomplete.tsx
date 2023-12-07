@@ -23,6 +23,7 @@ export interface InputAutocompleteProps<K extends string = string> {
 	placeholder?: string;
 	limit?: number;
 	id?: string;
+	dropdown?: boolean;
 	supportArbitrary?: boolean;
 	onChange: React.Dispatch<Array<K>>;
 }
@@ -33,6 +34,7 @@ export function InputAutocomplete<K extends string>(
 	const {
 		value: values = [],
 		limit = Number.POSITIVE_INFINITY,
+		dropdown = true,
 		supportArbitrary = false,
 		onChange,
 		options,
@@ -213,7 +215,7 @@ export function InputAutocomplete<K extends string>(
 				</div>
 			</div>
 			<AnimatePresence>
-				{overlayVisible && (
+				{dropdown && overlayVisible && (
 					<motion.div
 						animate={{ height: "max-content" }}
 						className="absolute z-10 mt-4 flex w-full"

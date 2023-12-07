@@ -60,7 +60,7 @@ export const Onboarding4Form: React.FC<{ personality: ProfilePersonality }> = ({
 							)}
 						</FormField>
 					))}
-					<FormButton>Next page</FormButton>
+					<FormButton>Finish</FormButton>
 				</>
 			)}
 		</Form>

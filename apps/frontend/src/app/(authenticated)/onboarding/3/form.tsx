@@ -99,7 +99,7 @@ export const Onboarding3Form: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormButton>Next page</FormButton>
+					<FormButton>Continue</FormButton>
 				</>
 			)}
 		</Form>

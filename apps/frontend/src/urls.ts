@@ -110,8 +110,9 @@ export const urls = {
 		matchmaking: (returnTo?: string) =>
 			url("/settings/matchmaking", { return: returnTo }),
 		bio: "/settings/bio",
-		tags: (fragment?: string) =>
-			`/settings/tags${fragment ? `?af=${fragment}` : ""}`,
+		info: (fragment?: string) =>
+			`/settings/info${fragment ? `?af=${fragment}` : ""}`,
+		interests: "/settings/interests",
 		personality: "/settings/personality",
 		nsfw: "/settings/nsfw",
 
