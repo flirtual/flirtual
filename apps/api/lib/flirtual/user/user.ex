@@ -826,7 +826,7 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
             |> Enum.map(
               &(&1
                 |> String.downcase()
-                |> String.replace(~r/ |-/, "_"))
+                |> String.replace(~r/[^[:alnum:]]/u, ""))
             ),
           attributes: attributes,
           attributes_lf: attributes_lf,

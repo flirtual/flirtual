@@ -118,7 +118,13 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 						key={customInterest}
 						active={
 							session.user.id !== user.id &&
-							session.user.profile.customInterests.includes(customInterest)
+							session.user.profile.customInterests
+								.map((interest) =>
+									interest.toLowerCase().replaceAll(/[^\p{L}\p{N}]/gu, "")
+								)
+								.includes(
+									customInterest.toLowerCase().replaceAll(/[^\p{L}\p{N}]/gu, "")
+								)
 						}
 					>
 						{customInterest}

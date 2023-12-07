@@ -581,6 +581,7 @@ defmodule Flirtual.Matchmaking do
       [
         :likes,
         :interests,
+        :custom_interests,
         :games,
         :country,
         :monopoly,
@@ -662,20 +663,28 @@ defmodule Flirtual.Matchmaking do
             }
           }
         }
-      ),
-      # Which custom-input interests do $a and $b have in common?
-      Enum.map(
-        [],
-        &%{
-          "term" => %{
-            "attributes" => %{
-              "value" => &1.id,
-              "boost" => 25 * (Map.get(custom_weights, :custom_interests) || 1)
-            }
-          }
-        }
       )
     ])
+  end
+
+  def query(:custom_interests, %User{} = user) do
+    %{profile: %{custom_interests: custom_interests, custom_weights: custom_weights}} = user
+
+    # Which custom interests do $a and $b have in common?
+    Enum.map(
+      custom_interests,
+      &%{
+        "term" => %{
+          "custom_interests" => %{
+            "value" =>
+              &1
+              |> String.downcase()
+              |> String.replace(~r/[^[:alnum:]]/u, ""),
+            "boost" => 25 * (Map.get(custom_weights, :custom_interests) || 1)
+          }
+        }
+      }
+    )
   end
 
   def query(:games, %User{} = user) do
