@@ -182,7 +182,7 @@ defmodule FlirtualWeb.UsersController do
 
   def update_notifications_preferences(
         conn,
-        %{"user_id" => user_id, "email" => email_preferences, "push" => push_preferences} = params
+        %{"user_id" => user_id, "email" => email_preferences, "push" => push_preferences}
       ) do
     user =
       if(conn.assigns[:session].user.id === user_id,
