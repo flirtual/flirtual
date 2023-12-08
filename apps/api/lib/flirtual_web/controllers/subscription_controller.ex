@@ -5,14 +5,18 @@ defmodule FlirtualWeb.SubscriptionController do
   import FlirtualWeb.Utilities
   import Phoenix.Controller
 
-  alias Flirtual.Policy
   alias Flirtual.Plan
+  alias Flirtual.Policy
   alias Flirtual.Stripe
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   def list_plans(conn, _) do
-    conn |> json_with_etag(Policy.transform(conn, Plan.list()))
+    plans = Policy.transform(conn, Plan.list())
+
+    conn
+    |> put_resp_header("cache-control", "public, max-age=86400, immutable")
+    |> json_with_etag(plans)
   end
 
   def checkout(conn, %{"plan_id" => plan_id}) do

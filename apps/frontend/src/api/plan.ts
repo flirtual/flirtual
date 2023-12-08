@@ -1,3 +1,5 @@
+import { gitCommitSha } from "~/const";
+
 import { DatedModel, UuidModel } from "./common";
 import { fetch, NarrowFetchOptions } from "./exports";
 
@@ -19,5 +21,5 @@ export type Plan = UuidModel &
 export async function list(
 	options: NarrowFetchOptions = {}
 ): Promise<Array<Plan>> {
-	return fetch<Array<Plan>>("get", "plans", options);
+	return fetch<Array<Plan>>("get", `plans?v=${gitCommitSha}`, options);
 }
