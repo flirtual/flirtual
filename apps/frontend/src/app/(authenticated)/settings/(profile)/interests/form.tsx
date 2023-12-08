@@ -277,7 +277,7 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 								}deg, transparent 0deg)`
 							}}
 						>
-							<div className="flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white-20 text-sm font-extrabold text-theme-1">
+							<div className="flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white-20 text-sm font-extrabold text-theme-1 dark:bg-black-70">
 								{defaultCount + customCount}/10
 							</div>
 						</div>
