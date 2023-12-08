@@ -211,7 +211,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							key={image.id}
 							priority={imageIndex === 0}
 							className={twMerge(
-								"h-full w-full transition-opacity duration-500",
+								"h-full w-full transition-opacity duration-300",
 								image.id === imageId ? "opacity-100" : "absolute opacity-0"
 							)}
 						/>
@@ -227,18 +227,18 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 				{images.length > 1 && (
 					<div className="absolute flex h-full w-full">
 						<button
-							className="flex h-full grow items-center justify-start px-8 opacity-70 transition-opacity hover:opacity-100"
+							className="flex h-full grow items-center justify-start px-6 opacity-70 transition-opacity hover:opacity-100"
 							type="button"
 							onClick={() => set(-1)}
 						>
-							<ChevronLeft className="h-8 w-8 text-white-10 drop-shadow" />
+							<ChevronLeft className="h-10 w-10 text-white-10 drop-shadow" />
 						</button>
 						<button
-							className="flex h-full grow items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
+							className="flex h-full grow items-center justify-end px-6 opacity-70 transition-opacity hover:opacity-100"
 							type="button"
 							onClick={() => set(1)}
 						>
-							<ChevronRight className="h-8 w-8 text-white-10 drop-shadow" />
+							<ChevronRight className="h-10 w-10 text-white-10 drop-shadow" />
 						</button>
 					</div>
 				)}
@@ -268,14 +268,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 												type="button"
 												onClick={() => set(-1)}
 											>
-												<ChevronLeft className="h-8 w-8 text-white-10 drop-shadow" />
+												<ChevronLeft className="h-10 w-10 text-white-10 drop-shadow" />
 											</button>
 											<button
 												className="flex h-full grow items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
 												type="button"
 												onClick={() => set(1)}
 											>
-												<ChevronRight className="h-8 w-8 text-white-10 drop-shadow" />
+												<ChevronRight className="h-10 w-10 text-white-10 drop-shadow" />
 											</button>
 										</div>
 									)}
@@ -301,18 +301,24 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 				)}
 
 				{images.length > 1 && (
-					<div className="pointer-events-auto absolute top-0 flex w-full px-8 py-6 pt-[max(env(safe-area-inset-top),1.5rem)]">
-						<div className="flex grow items-center gap-2">
+					<div className="pointer-events-auto absolute top-0 flex w-full px-8">
+						<div className="-mx-1 flex grow items-center">
 							{images.map((image) => (
 								<button
+									className="group grow px-1 py-6 pt-[max(env(safe-area-inset-top),1.5rem)]"
 									key={image.id}
 									type="button"
-									className={twMerge(
-										"h-1.5 grow rounded-full",
-										image.id === imageId ? "bg-white-10/50" : "bg-black-70/50"
-									)}
 									onClick={() => set(0, image.id)}
-								/>
+								>
+									<div
+										className={twMerge(
+											"h-2 rounded-full transition-all duration-150 group-hover:bg-white-10/50 group-hover:shadow-brand-1",
+											image.id === imageId
+												? "bg-white-10/50 shadow-brand-1"
+												: "bg-black-70/50"
+										)}
+									/>
+								</button>
 							))}
 						</div>
 					</div>
