@@ -54,6 +54,7 @@ defmodule Flirtual.User.Profile.Policy do
   def authorize(_, _, _), do: false
 
   @personality_keys [:openness, :conscientiousness, :agreeableness]
+  @nsfw_keys [:domsub]
   @connection_keys [:vrchat, :discord]
 
   @own_property_keys [
@@ -63,7 +64,7 @@ defmodule Flirtual.User.Profile.Policy do
                        :queue_love_reset_at,
                        :queue_friend_reset_at,
                        :updated_at
-                     ] ++ @personality_keys ++ @connection_keys
+                     ] ++ @personality_keys ++ @nsfw_keys ++ @connection_keys
 
   def transform(
         key,
@@ -121,29 +122,8 @@ defmodule Flirtual.User.Profile.Policy do
         _,
         %Profile{
           user: %User{
-            preferences: %User.Preferences{
-              privacy: %User.Preferences.Privacy{
-                connections: :everyone
-              }
-            }
-          }
-        } = profile
-      )
-      when key in @connection_keys,
-      do: profile[key]
-
-  def transform(
-        key,
-        _,
-        %Profile{
-          user: %User{
             relationship: %User.Relationship{
               matched: true
-            },
-            preferences: %User.Preferences{
-              privacy: %User.Preferences.Privacy{
-                connections: :matches
-              }
             }
           }
         } = profile
@@ -214,20 +194,30 @@ defmodule Flirtual.User.Profile.Policy do
         },
         %Profile{
           user: %User{
+            relationship: %User.Relationship{
+              matched: matched
+            },
             preferences: %User.Preferences{} = preferences
           }
         } = profile
       ) do
     profile.attributes
-    |> then(&if(!me.preferences.nsfw, do: exclude_by(&1, :type, "kink"), else: &1))
+    |> then(&if(me.preferences.nsfw, do: &1, else: exclude_by(&1, :type, "kink")))
     |> then(
       &if(me.id !== profile.user_id,
         do:
           Enum.filter(&1, fn attribute ->
             case(attribute.type) do
-              "kink" -> preferences.privacy.kinks === :everyone
-              "sexuality" -> preferences.privacy.sexuality === :everyone
-              _ -> true
+              "kink" ->
+                preferences.privacy.kinks === :everyone or
+                  (preferences.privacy.kinks === :matches and matched)
+
+              "sexuality" ->
+                preferences.privacy.sexuality === :everyone or
+                  (preferences.privacy.kinks === :matches and matched)
+
+              _ ->
+                true
             end
           end),
         else: &1
@@ -236,10 +226,6 @@ defmodule Flirtual.User.Profile.Policy do
     |> Enum.map(&%{id: &1.id, type: &1.type})
   end
 
-  @nsfw_property_keys [
-    :domsub
-  ]
-
   def transform(
         key,
         %Plug.Conn{
@@ -247,42 +233,24 @@ defmodule Flirtual.User.Profile.Policy do
             session: %{
               user: %User{
                 preferences: %User.Preferences{
-                  nsfw: true,
-                  privacy: %User.Preferences.Privacy{
-                    kinks: :everyone
-                  }
+                  nsfw: true
                 }
               }
             }
           }
         },
-        %Profile{} = profile
-      )
-      when key in @nsfw_property_keys,
-      do: profile[key]
-
-  def transform(
-        key,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user: %User{
-                relationship: %User.Relationship{
-                  matched: true
-                },
-                preferences: %User.Preferences{
-                  nsfw: true,
-                  privacy: %User.Preferences.Privacy{
-                    kinks: :matches
-                  }
-                }
+        %Profile{
+          user: %User{
+            preferences: %User.Preferences{
+              nsfw: true,
+              privacy: %User.Preferences.Privacy{
+                kinks: :everyone
               }
             }
           }
-        },
-        %Profile{} = profile
+        } = profile
       )
-      when key in @nsfw_property_keys,
+      when key in @nsfw_keys,
       do: profile[key]
 
   def transform(
@@ -298,9 +266,21 @@ defmodule Flirtual.User.Profile.Policy do
             }
           }
         },
-        profile
+        %Profile{
+          user: %User{
+            relationship: %User.Relationship{
+              matched: true
+            },
+            preferences: %User.Preferences{
+              nsfw: true,
+              privacy: %User.Preferences.Privacy{
+                kinks: :matches
+              }
+            }
+          }
+        } = profile
       )
-      when key in @nsfw_property_keys,
+      when key in @nsfw_keys,
       do: profile[key]
 
   @admin_property_keys [
@@ -319,8 +299,6 @@ defmodule Flirtual.User.Profile.Policy do
       when key in @admin_property_keys do
     if :admin in session.user.tags, do: profile[key], else: nil
   end
-
-  def transform(key, _, _) when key in @nsfw_property_keys, do: nil
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
 end

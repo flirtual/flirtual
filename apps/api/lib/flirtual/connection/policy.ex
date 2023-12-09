@@ -1,22 +1,8 @@
 defmodule Flirtual.Connection.Policy do
   use Flirtual.Policy
 
-  alias Flirtual.User
   alias Flirtual.Connection
-
-  # Any user can view the other user's connection if
-  # their connections privacy setting is set to everyone.
-  def authorize(:read, _, %Connection{
-        user: %User{
-          preferences: %User.Preferences{
-            privacy: %User.Preferences.Privacy{
-              connections: :everyone
-            }
-          }
-        }
-      }) do
-    true
-  end
+  alias Flirtual.User
 
   # The currently logged in user can view their own connections.
   def authorize(
@@ -33,6 +19,29 @@ defmodule Flirtual.Connection.Policy do
         }
       ),
       do: true
+
+  # Any user can view the other user's connections if they have matched.
+  def authorize(:read, _, %Connection{
+        user: %User{
+          relationship: %User.Relationship{
+            matched: true
+          }
+        }
+      }) do
+    true
+  end
+
+  # Moderators can view any other user's connections.
+  def authorize(
+        :read,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        _
+      ),
+      do: :moderator in session.user.tags
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false

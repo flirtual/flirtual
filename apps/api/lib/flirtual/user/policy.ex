@@ -7,6 +7,13 @@ defmodule Flirtual.User.Policy do
   alias Flirtual.User
   alias Flirtual.User.Session
 
+  defp truncate_date(date) do
+    now = Date.utc_today()
+
+    Date.new!(now.year - get_years_since(date), now.month, now.day)
+    |> Date.add(-1)
+  end
+
   def authorize(
         _,
         %Plug.Conn{
@@ -137,6 +144,17 @@ defmodule Flirtual.User.Policy do
     |> User.with_relationship(user)
   end
 
+  def transform(
+        :connections,
+        _,
+        %User{
+          relationship: %User.Relationship{
+            matched: true
+          }
+        } = user
+      ),
+      do: user[:connections]
+
   @own_property_keys [
     :email,
     :language,
@@ -195,7 +213,8 @@ defmodule Flirtual.User.Policy do
     :banned_at,
     :deactivated_at,
     :email_confirmed_at,
-    :created_at
+    :created_at,
+    :connections
   ]
 
   def transform(
@@ -229,11 +248,19 @@ defmodule Flirtual.User.Policy do
   end
 
   # Truncate born at to year, to hide user's exact birthday.
-  def transform(:born_at, _, %User{born_at: born_at} = user) when not is_nil(born_at) do
-    now = Date.utc_today()
-
-    Date.new!(now.year - get_years_since(user.born_at), now.month, now.day)
-    |> Date.add(-1)
+  def transform(
+        :born_at,
+        %Plug.Conn{
+          assigns: %{
+            session: session
+          }
+        },
+        %User{born_at: born_at}
+      )
+      when not is_nil(born_at) do
+    if :admin in session.user.tags,
+      do: born_at,
+      else: truncate_date(born_at)
   end
 
   def transform(
