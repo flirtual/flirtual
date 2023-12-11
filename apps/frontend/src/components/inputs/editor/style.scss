@@ -9,7 +9,8 @@
     .ql-formats {
       @apply flex gap-0.5;
 
-      & > button, & > span {
+      &>button,
+      &>span {
         @apply p-1 rounded-lg focusable h-7 w-7 aspect-square shrink-0 flex items-center justify-center;
 
         &.ql-header::before {
@@ -52,7 +53,7 @@
 
         .ql-picker-options {
           @apply w-max absolute top-7 left-0 p-2 mt-2 z-40 rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70;
-          
+
           &[aria-hidden="true"] {
             display: none !important;
           }
@@ -98,7 +99,7 @@
     @apply relative;
 
     .ql-editor {
-      @apply h-64 overflow-y-auto bg-white-40 text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-none text-base;
+      @apply h-96 overflow-y-auto bg-white-40 text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-none text-base;
 
       tab-size: 4;
       -moz-tab-size: 4;
@@ -131,7 +132,7 @@
   padding: 0;
 }
 
-.ql-editor > * {
+.ql-editor>* {
   cursor: text;
 }
 
