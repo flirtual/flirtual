@@ -383,13 +383,13 @@ defmodule Flirtual.Users do
   def delete(%User{} = user, attrs) do
     Repo.transaction(fn ->
       with {:ok, attrs} <- Delete.apply(attrs, context: %{user: user}),
+           :ok <- Hash.delete(user.id),
            {:ok, user} <- Repo.delete(user),
            :ok <- Elasticsearch.delete(:users, user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Stripe.delete_customer(user),
            :ok <- RevenueCat.delete_customer(user),
-           :ok <- Hash.delete(user.id),
            :ok <-
              Discord.deliver_webhook(:exit_survey,
                user: user,
@@ -406,13 +406,13 @@ defmodule Flirtual.Users do
 
   def admin_delete(%User{} = user) do
     Repo.transaction(fn ->
-      with {:ok, user} <- Repo.delete(user),
+      with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id)),
+           {:ok, user} <- Repo.delete(user),
            :ok <- Elasticsearch.delete(:users, user.id),
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Stripe.delete_customer(user),
-           :ok <- RevenueCat.delete_customer(user),
-           :ok <- Hash.delete(user.id) do
+           :ok <- RevenueCat.delete_customer(user) do
         {:ok, user}
       else
         {:error, reason} -> Repo.rollback(reason)
