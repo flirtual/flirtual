@@ -29,7 +29,7 @@
 		<key>NSCameraUsageDescription</key>
 		<string>Your camera is used to capture and upload your profile picture.</string>
 		<key>NSHumanReadableCopyright</key>
-		<string>© 2023 Flirtual</string>
+		<string>© 2024 Flirtual</string>
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>remote-notification</string>
