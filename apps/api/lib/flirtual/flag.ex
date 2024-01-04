@@ -74,8 +74,8 @@ defmodule Flirtual.Flag do
       {:ok, %{results: [%{"categories" => categories, "category_scores" => scores}]}} ->
         flagged_categories =
           categories
-          |> Enum.reject(fn {category, _flagged} -> category == "sexual" end)
-          |> Enum.filter(fn {_category, flagged} -> flagged end)
+          |> Enum.reject(fn {category, _} -> category == "sexual" end)
+          |> Enum.filter(fn {category, _} -> scores[category] >= 0.5 end)
 
         if Enum.any?(flagged_categories) do
           flags =
