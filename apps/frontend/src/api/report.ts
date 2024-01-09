@@ -20,7 +20,12 @@ export type Report = Expand<
 
 export type ListOptions = NarrowFetchOptions<
 	undefined,
-	Partial<Pick<Report, "userId" | "targetId"> & { reviewed: boolean }>
+	Partial<
+		Pick<Report, "userId" | "targetId"> & {
+			reviewed: boolean;
+			indefShadowbanned: boolean;
+		}
+	>
 >;
 
 export async function list(options: ListOptions): Promise<Array<Report>> {

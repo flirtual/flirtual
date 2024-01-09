@@ -300,6 +300,9 @@ defmodule FlirtualWeb.Router do
             post("/suspend", UsersController, :suspend)
             delete("/suspend", UsersController, :unsuspend)
 
+            post("/indef-shadowban", UsersController, :indef_shadowban)
+            delete("/indef-shadowban", UsersController, :unindef_shadowban)
+
             scope "/warn" do
               post("/", UsersController, :warn)
               delete("/", UsersController, :revoke_warn)

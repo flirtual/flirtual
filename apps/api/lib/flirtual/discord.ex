@@ -211,6 +211,53 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:indef_shadowbanned,
+        user: %User{} = user,
+        moderator: %User{} = moderator
+      ) do
+    webhook(:moderation_actions, %{
+      content:
+        if(Subscription.active?(user.subscription), do: "<@&458465845887369243>", else: ""),
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "User indefinitely shadowbanned",
+          fields:
+            if(Subscription.active?(user.subscription),
+              do: [
+                %{
+                  name: "Active subscription",
+                  value:
+                    "[Cancel subscription](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})"
+                }
+              ],
+              else: []
+            ),
+          color: @destructive_color,
+          footer: webhook_author_footer(moderator),
+          timestamp: DateTime.to_iso8601(user.indef_shadowbanned_at)
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:unindef_shadowbanned,
+        user: %User{} = user,
+        moderator: %User{} = moderator
+      ) do
+    webhook(:moderation_actions, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "User unshadowbanned",
+          color: @success_color,
+          footer: webhook_author_footer(moderator),
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:warned,
         user: %User{} = user,
         moderator: %User{} = moderator,

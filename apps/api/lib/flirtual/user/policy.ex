@@ -54,6 +54,8 @@ defmodule Flirtual.User.Policy do
 
   @moderator_actions [
     :suspend,
+    :indef_shadowban,
+    :unindef_shadowban,
     :warn,
     :note,
     :search
@@ -210,6 +212,7 @@ defmodule Flirtual.User.Policy do
     :moderator_message,
     :moderator_note,
     :shadowbanned_at,
+    :indef_shadowbanned_at,
     :banned_at,
     :deactivated_at,
     :email_confirmed_at,

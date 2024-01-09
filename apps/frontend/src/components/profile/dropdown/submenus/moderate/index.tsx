@@ -1,4 +1,4 @@
-import { Scale, Trash2 } from "lucide-react";
+import { EyeOff, Scale, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC, PropsWithChildren } from "react";
 
@@ -46,6 +46,45 @@ export const ProfileDropdownModerateSubmenu: FC<
 				<DropdownMenuSeparator />
 				<SuspendAction user={user} />
 				<WarnAction user={user} />
+				{user.indefShadowbannedAt ? (
+					<DropdownMenuItem
+						asChild
+						className="text-red-500"
+						onClick={() => {
+							api.user
+								.unindefShadowban(user.id)
+								.then(() => {
+									toasts.add("User unshadowbanned");
+									return router.refresh();
+								})
+								.catch(toasts.addError);
+						}}
+					>
+						<button className="w-full gap-2" type="button">
+							<EyeOff className="h-5 w-5" />
+							Remove indef. shadowban
+						</button>
+					</DropdownMenuItem>
+				) : (
+					<DropdownMenuItem
+						asChild
+						className="text-red-500"
+						onClick={() => {
+							api.user
+								.indefShadowban(user.id)
+								.then(() => {
+									toasts.add("User indefinitely shadowbanned");
+									return router.refresh();
+								})
+								.catch(toasts.addError);
+						}}
+					>
+						<button className="w-full gap-2" type="button">
+							<EyeOff className="h-5 w-5" />
+							Indef. shadowban
+						</button>
+					</DropdownMenuItem>
+				)}
 				{session?.user.tags?.includes("admin") && (
 					<>
 						<DropdownMenuSeparator />

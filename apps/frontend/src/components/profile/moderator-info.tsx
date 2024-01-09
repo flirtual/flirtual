@@ -130,6 +130,19 @@ export const ProfileModeratorInfo: FC<{
 					)}
 				</span>
 				<span>
+					<span className="font-bold">Indef. shadowbanned:</span>{" "}
+					{user.indefShadowbannedAt ? (
+						<CopyClick value={user.indefShadowbannedAt}>
+							<DateTimeRelative
+								className="text-red-500"
+								value={user.indefShadowbannedAt}
+							/>
+						</CopyClick>
+					) : (
+						<span className="brightness-75 hover:brightness-100">No</span>
+					)}
+				</span>
+				<span>
 					<span className="font-bold">Deactivated:</span>{" "}
 					{user.deactivatedAt ? (
 						<CopyClick value={user.deactivatedAt}>

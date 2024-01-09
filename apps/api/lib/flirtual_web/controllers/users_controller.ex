@@ -403,6 +403,30 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def indef_shadowban(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :indef_shadowban, user) do
+      {:error, {:forbidden, "Cannot indefinitely shadowban this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- User.indef_shadowban(user, conn.assigns[:session].user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def unindef_shadowban(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :unindef_shadowban, user) do
+      {:error, {:forbidden, "Cannot unshadowban this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- User.unindef_shadowban(user, conn.assigns[:session].user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
   defmodule Warn do
     use Flirtual.EmbeddedSchema
 

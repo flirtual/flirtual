@@ -32,6 +32,7 @@ import { useToast } from "~/hooks/use-toast";
 import { TimeRelative } from "~/components/time-relative";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { ProfileDropdown } from "~/components/profile/dropdown";
+import { InputCheckbox, InputLabel } from "~/components/inputs";
 
 type CompleteReport = Report & { user?: User; target: User };
 
@@ -124,8 +125,15 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							: ""}{" "}
 						reports
 					</span>
-					{reported && reported.shadowbannedAt && (
-						<span className="font-bold text-red-600">Shadowbanned</span>
+					{reported && reported.indefShadowbannedAt ? (
+						<span className="font-bold text-red-600">
+							Indefinitely shadowbanned
+						</span>
+					) : (
+						reported &&
+						reported.shadowbannedAt && (
+							<span className="font-bold text-red-600">Shadowbanned</span>
+						)
 					)}
 				</div>
 			</div>
@@ -238,7 +246,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 
 export const ReportView: React.FC = () => {
 	const [listOptions, setListOptions] = useState<ListOptions>({
-		query: { reviewed: false }
+		query: { reviewed: false, indefShadowbanned: false }
 	});
 
 	const { data: reports = [], mutate } = useSWR(
@@ -285,6 +293,44 @@ export const ReportView: React.FC = () => {
 				containerProps={{ className: "gap-8 min-h-screen" }}
 				title="Reports"
 			>
+				<div className="flex gap-8">
+					<div className="flex items-center gap-4">
+						<InputCheckbox
+							id="reviewed"
+							value={listOptions.query.reviewed}
+							onChange={(value) => {
+								setListOptions((listOptions) => ({
+									...listOptions,
+									query: {
+										...listOptions.query,
+										reviewed: value
+									}
+								}));
+							}}
+						/>
+						<InputLabel inline htmlFor="reviewed">
+							Include reviewed
+						</InputLabel>
+					</div>
+					<div className="flex items-center gap-4">
+						<InputCheckbox
+							id="indefShadowbanned"
+							value={listOptions.query.indefShadowbanned}
+							onChange={(value) => {
+								setListOptions((listOptions) => ({
+									...listOptions,
+									query: {
+										...listOptions.query,
+										indefShadowbanned: value
+									}
+								}));
+							}}
+						/>
+						<InputLabel inline htmlFor="indefShadowbanned">
+							Include indef. shadowbanned
+						</InputLabel>
+					</div>
+				</div>
 				<div>
 					<span>{reports.length} reports</span>
 				</div>

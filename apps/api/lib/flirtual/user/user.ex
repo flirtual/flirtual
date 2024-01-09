@@ -48,6 +48,7 @@ defmodule Flirtual.User do
     field(:deactivated_at, :utc_datetime)
     field(:banned_at, :utc_datetime)
     field(:shadowbanned_at, :utc_datetime)
+    field(:indef_shadowbanned_at, :utc_datetime)
     field(:incognito_at, :utc_datetime)
     field(:active_at, :utc_datetime)
 
@@ -170,7 +171,7 @@ defmodule Flirtual.User do
       {
         # This validation should not be exposed to the end user,
         # We've temporarily disabled hiding it until we can find a better solution.
-        not is_nil(user.shadowbanned_at),
+        not is_nil(user.shadowbanned_at) or not is_nil(user.indef_shadowbanned_at),
         %{reason: "account shadow banned"}
       },
       # onboarding validations
@@ -461,11 +462,53 @@ defmodule Flirtual.User do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
-             |> change(%{banned_at: nil, shadowbanned_at: nil})
+             |> change(%{banned_at: nil, shadowbanned_at: nil, indef_shadowbanned_at: nil})
              |> Repo.update(),
            {:ok, _} <- ObanWorkers.update_user(user.id),
            :ok <-
              Discord.deliver_webhook(:unsuspended,
+               user: user,
+               moderator: moderator
+             ) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def indef_shadowban(%User{} = user, %User{} = moderator) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{indef_shadowbanned_at: now})
+             |> Repo.update(),
+           {:ok, _} <- ObanWorkers.update_user(user.id),
+           :ok <-
+             Discord.deliver_webhook(:indef_shadowbanned,
+               user: user,
+               moderator: moderator
+             ) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def unindef_shadowban(%User{} = user, %User{} = moderator) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{indef_shadowbanned_at: nil, shadowbanned_at: nil})
+             |> Repo.update(),
+           {:ok, _} <- ObanWorkers.update_user(user.id),
+           :ok <-
+             Discord.deliver_webhook(:unindef_shadowbanned,
                user: user,
                moderator: moderator
              ) do
@@ -872,6 +915,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :revenuecat_id,
       :banned_at,
       :shadowbanned_at,
+      :indef_shadowbanned_at,
       :email_confirmed_at,
       :deactivated_at,
       :active_at,

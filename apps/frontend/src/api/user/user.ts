@@ -62,6 +62,7 @@ export type User = UuidModel &
 		activeAt?: string;
 		emailConfirmedAt?: string;
 		shadowbannedAt?: string;
+		indefShadowbannedAt?: string;
 		bannedAt?: string;
 		deactivatedAt?: string;
 		preferences?: Preferences;
@@ -253,6 +254,20 @@ export async function unsuspend(
 	options: NarrowFetchOptions = {}
 ) {
 	return fetch<User>("delete", `users/${userId}/suspend`, options);
+}
+
+export async function indefShadowban(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("post", `users/${userId}/indef-shadowban`, options);
+}
+
+export async function unindefShadowban(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("delete", `users/${userId}/indef-shadowban`, options);
 }
 
 export async function warn(

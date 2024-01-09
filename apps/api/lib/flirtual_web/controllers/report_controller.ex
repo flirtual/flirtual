@@ -5,7 +5,7 @@ defmodule FlirtualWeb.ReportController do
   import Phoenix.Controller
   import FlirtualWeb.Utilities
 
-  alias Flirtual.{Report, Policy}
+  alias Flirtual.{Policy, Report}
 
   action_fallback(FlirtualWeb.FallbackController)
 

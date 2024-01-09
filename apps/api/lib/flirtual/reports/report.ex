@@ -176,6 +176,7 @@ defmodule Flirtual.Report do
       field(:target_id, :string)
       field(:user_id, :string)
       field(:reviewed, :boolean, default: false)
+      field(:indef_shadowbanned, :boolean, default: false)
     end
 
     def changeset(value, _, _) do
@@ -216,12 +217,15 @@ defmodule Flirtual.Report do
   def list(attrs) do
     with {:ok, attrs} <- List.apply(attrs) do
       include_reviewed = attrs[:reviewed] || false
+      include_indef_shadowbanned = attrs[:indef_shadowbanned] || false
 
       {:ok,
        from(report in Report,
          where: ^include_reviewed or is_nil(report.reviewed_at),
-         order_by: [desc: report.created_at],
          join: reason in assoc(report, :reason),
+         join: user in assoc(report, :target),
+         where: ^include_indef_shadowbanned or is_nil(user.indef_shadowbanned_at),
+         order_by: [desc: report.created_at],
          select_merge: %{
            reason: %{
              id: reason.id,
