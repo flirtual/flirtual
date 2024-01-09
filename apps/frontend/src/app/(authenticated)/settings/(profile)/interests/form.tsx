@@ -207,7 +207,7 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 														)
 															? field.props.value.filter(
 																	(id) => id !== interest.id
-															  )
+																)
 															: [...field.props.value, interest.id];
 														field.props.onChange(value);
 														setDefaultCount(value.length);

@@ -18,7 +18,6 @@ export type Quality = (typeof Quality)[UploadcareQuality];
 export function resolveImageQuality(quality?: number): UploadcareQuality {
 	if (!quality) return "smart";
 
-	// eslint-disable-next-line unicorn/no-array-reduce
 	return Object.keys(Quality).reduce((previous, key) => {
 		if (quality === Quality[key as UploadcareQuality]) return key;
 		return previous;
@@ -53,7 +52,6 @@ export type ImageOptions = Record<
 >;
 
 export function serializeImageOptions(options: ImageOptions = {}): string {
-	// eslint-disable-next-line unicorn/no-array-reduce
 	return Object.entries(options).reduce((previous, [key, value]) => {
 		if (!value) return previous;
 		return `${previous}-/${key}/${

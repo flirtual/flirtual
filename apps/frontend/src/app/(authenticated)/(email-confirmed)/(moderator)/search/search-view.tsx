@@ -187,7 +187,7 @@ const DataTable: FC<{ data: Array<User> }> = ({ data }) => {
 											: flexRender(
 													header.column.columnDef.header,
 													header.getContext()
-											  )}
+												)}
 									</TableHead>
 								);
 							})}

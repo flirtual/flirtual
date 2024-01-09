@@ -54,11 +54,7 @@ config :bodyguard,
 
 config :sentry,
   enable_source_code_context: true,
-  root_source_code_paths: [File.cwd!()],
-  included_environments: [
-    :production,
-    :staging
-  ]
+  root_source_code_paths: [File.cwd!()]
 
 config :logger, :console,
   backends: [:console, Sentry.LoggerBackend],

@@ -152,7 +152,7 @@ export const ConversationChatbox: React.FC<
 
 	useEffect(() => {
 		if (!chatbox || !conversation) return;
-		chatbox.select(conversation);
+		void chatbox.select(conversation);
 	}, [chatbox, conversation]);
 
 	useEffect(() => {

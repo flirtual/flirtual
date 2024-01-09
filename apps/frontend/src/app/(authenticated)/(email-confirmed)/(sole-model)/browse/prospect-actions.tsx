@@ -206,7 +206,7 @@ export const ProspectActions: FC<{
 						]
 					],
 					{}
-			  )
+				)
 			: null;
 
 		try {

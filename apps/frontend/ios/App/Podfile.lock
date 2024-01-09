@@ -32,12 +32,12 @@ PODS:
     - Capacitor
   - CordovaPlugins (5.5.1):
     - CapacitorCordova
-  - PurchasesHybridCommon (7.0.0):
-    - RevenueCat (= 4.27.0)
-  - RevenueCat (4.27.0)
-  - RevenuecatPurchasesCapacitor (7.0.0):
+  - PurchasesHybridCommon (8.1.0):
+    - RevenueCat (= 4.31.1)
+  - RevenueCat (4.31.1)
+  - RevenuecatPurchasesCapacitor (7.3.0):
     - Capacitor
-    - PurchasesHybridCommon (= 7.0.0)
+    - PurchasesHybridCommon (= 8.1.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@5.5.1_@capacitor+core@5.5.1/node_modules/@capacitor/ios`)"
@@ -57,7 +57,7 @@ DEPENDENCIES:
   - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@5.1.1_@capacitor+core@5.5.1/node_modules/@capawesome-team/capacitor-datetime-picker`)"
   - "CapgoInappbrowser (from `../../node_modules/.pnpm/@capgo+inappbrowser@1.2.13_@capacitor+core@5.5.1/node_modules/@capgo/inappbrowser`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
-  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@7.0.0_@capacitor+core@5.5.1/node_modules/@revenuecat/purchases-capacitor`)"
+  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@7.3.0_@capacitor+core@5.5.1/node_modules/@revenuecat/purchases-capacitor`)"
 
 SPEC REPOS:
   trunk:
@@ -100,7 +100,7 @@ EXTERNAL SOURCES:
   CordovaPlugins:
     :path: "../capacitor-cordova-ios-plugins"
   RevenuecatPurchasesCapacitor:
-    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@7.0.0_@capacitor+core@5.5.1/node_modules/@revenuecat/purchases-capacitor"
+    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@7.3.0_@capacitor+core@5.5.1/node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
@@ -120,10 +120,10 @@ SPEC CHECKSUMS:
   CapawesomeTeamCapacitorDatetimePicker: 4fa0b9bc6df016ab5af72b56008fa2dd33713b25
   CapgoInappbrowser: c085ccd68169a3a369a205eba6702125c6b22d17
   CordovaPlugins: d0f280d10ecc4819ff36b43185dfed24b24c2451
-  PurchasesHybridCommon: af3b2413f9cb999bc1fdca44770bdaf39dfb89fa
-  RevenueCat: 84fbe2eb9bbf63e1abf346ccd3ff9ee45d633e3b
-  RevenuecatPurchasesCapacitor: c0de310959a58b3217acd7ec5ce981175bb050b1
+  PurchasesHybridCommon: 8920b878fd7b5e2b358b24c6c37592259655657a
+  RevenueCat: 3d9d19d3564c101f7f25a0a4fc10da1a9b04ddbe
+  RevenuecatPurchasesCapacitor: 6b7857e131c2149643cf337c3e81b1d919460574
 
-PODFILE CHECKSUM: fca70ca5baf956eea6299f368279a7cce3ff07b1
+PODFILE CHECKSUM: edd5b34df41837e9befc232f3edce7d5ed9c1d34
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.3

@@ -56,7 +56,7 @@ export function InputAutocomplete<K extends string>(
 											definition: value,
 											definitionLink: value,
 											hidden: false
-									  }
+										}
 									: undefined);
 
 							return !option?.hidden && option;
@@ -90,7 +90,7 @@ export function InputAutocomplete<K extends string>(
 			inputValue
 				? fuzzySearch(inputValue, potentialOptions, {
 						keySelector: (option) => option.label
-				  })
+					})
 				: potentialOptions,
 		[inputValue, potentialOptions]
 	);

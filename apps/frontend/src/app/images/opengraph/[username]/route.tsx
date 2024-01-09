@@ -55,7 +55,7 @@ export async function GET(
 							boxShadow,
 							backgroundColor: user.dark ? "#1e1e1e" : "#EBEBEB",
 							color: user.dark ? "#F5F5F5" : "#1e1e1e"
-					  }
+						}
 			}
 		>
 			<span tw="text-2xl font-semibold">{name}</span>

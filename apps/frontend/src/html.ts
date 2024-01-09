@@ -10,7 +10,6 @@ export function toStyleProperties(
 	style: PropertiesHyphen,
 	initial: string = ""
 ): string {
-	// eslint-disable-next-line unicorn/no-array-reduce
 	return entries(style).reduce(
 		(previous, current) =>
 			current

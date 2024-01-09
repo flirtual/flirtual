@@ -22,10 +22,10 @@ export type GlobalEventSource = "document" | "window" | "body";
 export type GlobalEventMap<T extends GlobalEventSource> = T extends "document"
 	? DocumentEventMap
 	: T extends "window"
-	? WindowEventMap
-	: T extends "body"
-	? HTMLElementEventMap
-	: never;
+		? WindowEventMap
+		: T extends "body"
+			? HTMLElementEventMap
+			: never;
 
 export function useGlobalEventListener<
 	T extends GlobalEventSource,
@@ -46,8 +46,8 @@ export function useGlobalEventListener<
 			source === "document"
 				? document
 				: source === "window"
-				? window
-				: document.body;
+					? window
+					: document.body;
 		if (condition) element.addEventListener(name, function_);
 
 		return () => element.removeEventListener(name, function_);

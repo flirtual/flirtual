@@ -39,7 +39,7 @@ export function InputCheckboxList<T extends string>(
 											[item.key, ...value].filter(
 												(key) => !item.conflicts?.includes(key)
 											)
-									  )
+										)
 									: onChange(value.filter((otherKey) => otherKey !== item.key));
 							}}
 						/>

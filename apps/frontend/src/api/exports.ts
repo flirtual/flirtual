@@ -110,7 +110,7 @@ export async function fetch<T = unknown, O extends FetchOptions = FetchOptions>(
 				typeof options.body === "object"
 					? toSnakeObject(options.body)
 					: options.body
-		  );
+			);
 
 	const response = await globalThis.fetch(url, {
 		...options,

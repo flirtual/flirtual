@@ -44,8 +44,8 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 					{confirmSuccess === null
 						? "Just a sec..."
 						: confirmSuccess
-						? "Your email address has been confirmed successfully."
-						: "Sorry, we couldn't confirm your email address. Please try again."}
+							? "Your email address has been confirmed successfully."
+							: "Sorry, we couldn't confirm your email address. Please try again."}
 				</span>
 			</div>
 			{confirmSuccess && (

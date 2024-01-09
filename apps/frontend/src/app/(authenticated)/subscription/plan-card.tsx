@@ -55,9 +55,9 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const originalPrice =
 		currentPackage && basePackage
 			? (basePackage.product.price ?? 0) *
-			  Number.parseInt(
+				Number.parseInt(
 					currentPackage.product.subscriptionPeriod?.slice(1, 2) ?? "0"
-			  )
+				)
 			: originalStripePrice;
 	const discount =
 		originalDiscount ??

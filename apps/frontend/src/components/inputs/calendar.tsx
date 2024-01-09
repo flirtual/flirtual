@@ -354,8 +354,8 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 													const day = previousMonth
 														? lastMonthLength - (dayOffset - dayIndex) + 1
 														: nextMonth
-														? nthDay % monthLength
-														: nthDay;
+															? nthDay % monthLength
+															: nthDay;
 
 													const disabled = !(compare(date) === 0);
 													const active = dateEqual(props.value, date);

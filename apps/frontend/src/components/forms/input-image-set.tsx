@@ -58,10 +58,10 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 						type === "report"
 							? await api.report.uploadImages({
 									body: files
-							  })
+								})
 							: await api.user.profile.images.upload(user.id, {
 									body: files
-							  });
+								});
 
 					onChange([
 						...value.filter((image) => "id" in image),

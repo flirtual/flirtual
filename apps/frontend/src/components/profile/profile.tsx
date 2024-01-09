@@ -55,7 +55,7 @@ export const Profile: FC<ProfileProps> = (props) => {
 								user.profile.color_1,
 								user.profile.color_2
 							)
-					  } as CSSProperties)
+						} as CSSProperties)
 					: {}
 			}
 			{...elementProps}
