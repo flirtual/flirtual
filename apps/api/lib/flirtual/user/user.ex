@@ -49,7 +49,6 @@ defmodule Flirtual.User do
     field(:banned_at, :utc_datetime)
     field(:shadowbanned_at, :utc_datetime)
     field(:indef_shadowbanned_at, :utc_datetime)
-    field(:incognito_at, :utc_datetime)
     field(:active_at, :utc_datetime)
 
     has_many(:connections, Flirtual.Connection)
@@ -163,10 +162,6 @@ defmodule Flirtual.User do
       {
         not is_nil(user.deactivated_at),
         %{reason: "account deactivated", to: "/settings/deactivate"}
-      },
-      {
-        not is_nil(user.incognito_at),
-        %{reason: "account hidden"}
       },
       {
         # This validation should not be exposed to the end user,
