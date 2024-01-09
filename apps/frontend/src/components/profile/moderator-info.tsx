@@ -280,7 +280,7 @@ export const ProfileModeratorInfo: FC<{
 							<InlineLink
 								className="underline"
 								highlight={false}
-								href={`https://app.revenuecat.com/customers/${user.revenuecatId}`}
+								href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
 							>
 								{user.revenuecatId}
 							</InlineLink>

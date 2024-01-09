@@ -1,12 +1,12 @@
 import {
+	CircleUserRound,
 	ClipboardList,
 	FileJson,
 	Flag,
 	Gem,
 	Shield,
 	ShieldEllipsis,
-	Tags,
-	UserCircle2
+	Tags
 } from "lucide-react";
 import Link from "next/link";
 import { FC } from "react";
@@ -95,7 +95,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 						<DropdownMenuItem asChild>
 							<Link
 								className="gap-2"
-								href={`https://app.revenuecat.com/customers/${user.revenuecatId}`}
+								href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
 								target="_blank"
 							>
 								<Gem className="h-5 w-5" />
@@ -107,7 +107,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 				)}
 				<DropdownMenuItem asChild>
 					<Link className="gap-2" href={urls.profile(user)}>
-						<UserCircle2 className="h-5 w-5" />
+						<CircleUserRound className="h-5 w-5" />
 						View profile
 					</Link>
 				</DropdownMenuItem>
