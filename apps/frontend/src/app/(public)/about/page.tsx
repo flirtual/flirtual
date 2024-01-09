@@ -84,11 +84,6 @@ export default function AboutPage() {
 									name: "Staff",
 									members: [
 										{
-											name: "Aries",
-											role: "Software Developer",
-											url: "https://ariesclark.com"
-										},
-										{
 											name: "Katten!",
 											role: "Community Partner",
 											url: urls.profile("KattenRastyr")
@@ -135,6 +130,10 @@ export default function AboutPage() {
 								{
 									name: "Advisor",
 									members: [
+										{
+											name: "Aries",
+											url: "https://ariesclark.com"
+										},
 										{
 											name: "Syrmor",
 											url: "https://www.youtube.com/c/syrmor"
