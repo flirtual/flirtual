@@ -36,6 +36,15 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 		[kinks, session.user.profile.attributes]
 	);
 
+	if (
+		!user.profile.monopoly &&
+		!attributes.kink &&
+		!attributes.language &&
+		!attributes.platform
+	) {
+		return <div />;
+	}
+
 	return expanded ? (
 		<>
 			{user.profile.monopoly && (
@@ -68,6 +77,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 				href={editable ? urls.settings.info("platform") : undefined}
 				user={user}
 			/>
+			<div />
 		</>
 	) : (
 		<button type="button" onClick={() => setExpanded(true)}>

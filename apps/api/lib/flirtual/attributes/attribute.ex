@@ -10,8 +10,8 @@ defmodule Flirtual.Attribute do
 
   alias Flirtual.{Attribute, Repo}
 
-  alias Flirtual.Languages
   alias Flirtual.Countries
+  alias Flirtual.Languages
 
   @derive {Inspect, only: [:id, :type, :metadata]}
 

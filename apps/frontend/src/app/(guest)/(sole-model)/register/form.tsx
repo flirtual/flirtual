@@ -113,8 +113,9 @@ export const RegisterForm: React.FC = () => {
 									inline
 									hint={
 										<InputLabelHint className="max-w-[34ch]">
-											with new features, changes, and offers (we won&apos;t spam
-											you)
+											with new features, changes, and offers
+											<br />
+											(we won&apos;t spam you)
 										</InputLabelHint>
 									}
 								>
