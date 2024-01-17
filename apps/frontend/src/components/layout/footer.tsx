@@ -5,6 +5,7 @@ import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
 
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 import { FooterCannyLink } from "./canny-button";
+import { MadeWithLove } from "./made-with-love";
 
 type LinkOrButtonProps<T> = T &
 	(
@@ -114,7 +115,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 					</ul>
 				</div>
 				<div className="flex justify-between md:text-lg">
-					<span className="hidden sm:inline">Made with ♥︎ in VR</span>
+					<MadeWithLove />
 					<span>&copy; {new Date().getFullYear()} Flirtual</span>
 				</div>
 			</div>
