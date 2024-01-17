@@ -14,6 +14,10 @@ defmodule Flirtual.ObanWorkers.Push do
       }) do
     user = User.get(user_id)
 
-    PushNotification.send(user, title, message, url)
+    if is_nil(user.banned_at) and is_nil(user.deactivated_at) do
+      PushNotification.send(user, title, message, url)
+    else
+      :ok
+    end
   end
 end

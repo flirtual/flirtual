@@ -187,14 +187,15 @@ defmodule Flirtual.Matchmaking do
     thumbnail = target_user |> User.avatar_thumbnail_url()
     pronouns = target_user |> User.pronouns()
 
-    send_email = user.preferences.email_notifications.matches
+    send_email =
+      user.preferences.email_notifications.matches and is_nil(user.banned_at) and
+        is_nil(user.deactivated_at)
 
     send_push =
       user.preferences.push_notifications.matches and
         (not is_nil(user.apns_token) or not is_nil(user.fcm_token))
 
-    if User.visible?(user) and User.visible?(target_user) and
-         (send_email or send_push) do
+    if User.visible?(target_user) and (send_email or send_push) do
       email_result =
         if send_email do
           %{

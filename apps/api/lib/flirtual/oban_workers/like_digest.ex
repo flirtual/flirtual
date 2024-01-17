@@ -16,7 +16,7 @@ defmodule Flirtual.ObanWorkers.LikeDigest do
 
     like_count = likes |> length()
 
-    if like_count !== 0 do
+    if like_count !== 0 and is_nil(user.banned_at) and is_nil(user.deactivated_at) do
       is_premium = Subscription.active?(user.subscription)
 
       action_url =
