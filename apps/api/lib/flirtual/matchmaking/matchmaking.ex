@@ -176,6 +176,26 @@ defmodule Flirtual.Matchmaking do
     end
   end
 
+  def schedule_reset_notification(user, reset_at) do
+    if user.preferences.push_notifications.reminders and
+         (not is_nil(user.apns_token) or not is_nil(user.fcm_token)) do
+      %{
+        "user_id" => user.id,
+        "title" => "Your daily profiles are ready!",
+        "message" =>
+          "We've worked our matchmaking magic on a fresh batch of profiles just for you. Tap to check them out!",
+        "url" =>
+          Application.fetch_env!(:flirtual, :frontend_origin)
+          |> URI.merge("/browse")
+          |> URI.to_string()
+      }
+      |> Flirtual.ObanWorkers.Push.new(scheduled_at: reset_at, unique: [timestamp: :scheduled_at])
+      |> Oban.insert()
+    else
+      {:ok, :disabled}
+    end
+  end
+
   def deliver_match_notification(user, target_user, match_kind) do
     conversation_id = Talkjs.new_conversation_id(user, target_user)
 
@@ -342,9 +362,11 @@ defmodule Flirtual.Matchmaking do
 
     if type == :like and fields.likes >= fields.likes_limit and
          not Subscription.active?(user.subscription) do
+      schedule_reset_notification(user, fields.reset_at)
       {:error, :out_of_likes, fields.reset_at}
     else
       if fields.passes >= fields.passes_limit and not Subscription.active?(user.subscription) do
+        schedule_reset_notification(user, fields.reset_at)
         {:error, :out_of_passes, fields.reset_at}
       else
         Repo.transaction(fn repo ->
