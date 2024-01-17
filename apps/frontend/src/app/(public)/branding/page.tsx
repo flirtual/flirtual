@@ -88,6 +88,10 @@ export default async function BrandingPage() {
 							value="linear-gradient(to right, #FF8975, #E9658B)"
 						/>
 						<ColorBlock
+							name="Dark Mode"
+							value="linear-gradient(to right, #B24592, #E9658B)"
+						/>
+						<ColorBlock
 							name="Homie Mode"
 							value="linear-gradient(to right, #82BF72, #4D8888)"
 						/>
