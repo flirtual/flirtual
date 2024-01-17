@@ -92,8 +92,8 @@ defmodule Flirtual.Report do
 
   def maybe_resolve_shadowban(target_id) when is_uid(target_id) do
     case list_unresolved(target_id: target_id) do
-      [] ->
-        # No unresolved reports.
+      reports when length(reports) < 2 ->
+        # < 2 unresolved reports, resolve potential shadowban.
         case User
              |> where([user], user.id == ^target_id and not is_nil(user.shadowbanned_at))
              |> Repo.one() do
