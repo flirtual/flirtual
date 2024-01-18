@@ -381,6 +381,7 @@ defmodule Flirtual.User do
 
   # Order determines priority of similarity.
   @default_search_fields [
+    :id,
     {:profile, :display_name},
     :username,
     {:connections, :uid},
