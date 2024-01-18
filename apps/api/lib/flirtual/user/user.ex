@@ -333,10 +333,20 @@ defmodule Flirtual.User do
   end
 
   def ilike_with_similarity(query, key, value) when is_atom(key) do
-    from(q in query,
-      order_by: {:desc, fragment("similarity(?, ?)", field(q, ^key), ^value)},
-      or_where: field(q, ^key) == ^value or ilike(field(q, ^key), ^"%#{value}%")
-    )
+    if User.__schema__(:type, key) == Ecto.ShortUUID and is_uid(value) do
+      from(q in query,
+        or_where: field(q, ^key) == ^value
+      )
+    else
+      if User.__schema__(:type, key) != Ecto.ShortUUID do
+        from(q in query,
+          order_by: {:desc, fragment("similarity(?, ?)", field(q, ^key), ^value)},
+          or_where: field(q, ^key) == ^value or ilike(field(q, ^key), ^"%#{value}%")
+        )
+      else
+        query
+      end
+    end
   end
 
   defmodule Search do
@@ -373,10 +383,13 @@ defmodule Flirtual.User do
   @default_search_fields [
     {:profile, :display_name},
     :username,
+    {:connections, :uid},
+    {:connections, :display_name},
     {:profile, :vrchat},
     {:profile, :discord},
     :email,
     :stripe_id,
+    :revenuecat_id,
     {:profile, :biography}
   ]
 
@@ -391,18 +404,13 @@ defmodule Flirtual.User do
              User
              |> preload(^default_assoc())
              |> join(:left, [user], profile in assoc(user, :profile), as: :profile)
+             |> join(:left, [user], connections in assoc(user, :connections), as: :connections)
              |> then(
                &if(is_binary(value) and String.length(value) > 0,
                  do:
-                   if(is_uid(value),
-                     # if the value is a uid, search by id.
-                     do: or_where(&1, id: ^value),
-                     # loosely search by similarity.
-                     else:
-                       Enum.reduce(@default_search_fields, &1, fn field, query ->
-                         ilike_with_similarity(query, field, value)
-                       end)
-                   ),
+                   Enum.reduce(@default_search_fields, &1, fn field, query ->
+                     ilike_with_similarity(query, field, value)
+                   end),
                  else: &1
                )
              )
