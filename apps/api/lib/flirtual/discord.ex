@@ -181,7 +181,16 @@ defmodule Flirtual.Discord do
                   %{
                     name: "Active subscription",
                     value:
-                      "[Issue refund](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})"
+                      if(user.subscription.stripe_id,
+                        do:
+                          "[Issue refund](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})",
+                        else:
+                          if(user.subscription.google_id,
+                            do:
+                              "[Issue refund](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})",
+                            else: "[Send refund reminder](https://hello.flirtu.al/a/tickets/new)"
+                          )
+                      )
                   }
                 ],
                 else: []
@@ -228,7 +237,16 @@ defmodule Flirtual.Discord do
                 %{
                   name: "Active subscription",
                   value:
-                    "[Cancel subscription](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})"
+                    if(user.subscription.stripe_id,
+                      do:
+                        "[Cancel subscription](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})",
+                      else:
+                        if(user.subscription.google_id,
+                          do:
+                            "[Get transaction ID](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id}), [Cancel subscription](https://play.google.com/console/u/0/developers/orders)",
+                          else: "Apple subscription - cannot cancel"
+                        )
+                    )
                 }
               ],
               else: []
