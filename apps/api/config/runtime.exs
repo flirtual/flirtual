@@ -133,12 +133,10 @@ if config_env() == :prod do
 
   # Configuring the mailer
   config :flirtual, Flirtual.Mailer,
-    adapter: Swoosh.Adapters.SMTP,
-    relay: System.fetch_env!("SMTP_RELAY"),
-    username: System.fetch_env!("SMTP_USERNAME"),
-    password: System.fetch_env!("SMTP_PASSWORD"),
-    tls: :always,
-    port: 587
+    adapter: Swoosh.Adapters.AmazonSES,
+    region: System.fetch_env!("SES_REGION"),
+    access_key: System.fetch_env!("SES_ACCESS_KEY"),
+    secret: System.fetch_env!("SES_SECRET")
 
   config :swoosh, :api_client, Swoosh.ApiClient.Finch
 
