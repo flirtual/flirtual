@@ -61,7 +61,7 @@ defmodule Flirtual.MixProject do
       {:wax_, "~> 0.6.0"},
       {:httpoison, "~> 2.0", override: true},
       {:tls_certificate_check, "~> 1.20"},
-      {:finch, "~> 0.16.0"},
+      {:finch, "~> 0.17.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
