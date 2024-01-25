@@ -1,19 +1,26 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { App, URLOpenListenerEvent } from "@capacitor/app";
 
+async function removeCapacitorListeners() {
+	await App.removeAllListeners();
+}
+
 const AppUrlListener: React.FC = () => {
-	const history = useRouter();
-	useEffect(() => {
-		void App.addListener("appUrlOpen", async (event: URLOpenListenerEvent) => {
-			const slug = event.url.split(".app").pop();
-			if (slug) {
-				history.push(slug);
-			}
+	const addCapacitorListeners = useCallback(async function () {
+		await App.addListener("appUrlOpen", async (event: URLOpenListenerEvent) => {
+			const url = new URL(event.url);
+			const pathname = url.href.replace(url.origin, "");
+
+			location.href = pathname;
 		});
-	}, [history]);
+	}, []);
+
+	useEffect(() => {
+		void addCapacitorListeners();
+		return () => void removeCapacitorListeners();
+	}, [addCapacitorListeners]);
 
 	return null;
 };

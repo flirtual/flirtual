@@ -46,7 +46,7 @@ public class NotificationService extends FirebaseMessagingService {
       String name = senderObject.getString("name");
       String photoUrl = senderObject.getString("photoUrl");
       String message = messageObject.getString("text");
-      String url = "https://flirtu.al/matches/" + messageObject.getString("conversationId");
+      String url = "flirtual://matches/" + messageObject.getString("conversationId");
 
       new DownloadImageTask().execute(name, message, photoUrl, url);
     } catch (JSONException e) {

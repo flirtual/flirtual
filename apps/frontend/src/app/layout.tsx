@@ -89,6 +89,12 @@ export const viewport: Viewport = {
 	]
 };
 
+const platforms: Record<string, DevicePlatform> = {
+	android: "android",
+	ios: "apple",
+	"mac os": "apple"
+};
+
 export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
@@ -97,11 +103,6 @@ export default async function RootLayout({
 
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
 
-	const platforms: Record<string, DevicePlatform> = {
-		android: "android",
-		ios: "apple",
-		"mac os": "apple"
-	};
 	const platform: DevicePlatform =
 		platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";
 
@@ -131,6 +132,8 @@ export default async function RootLayout({
 								theme: resolveTheme("${theme}"),
 								themeStyle,
 							});
+
+							
 						`.trim()
 					}}
 				/>
@@ -150,14 +153,14 @@ export default async function RootLayout({
 					height={5}
 					showSpinner={false}
 				/>
-				<Suspense fallback={<LoadingIndicatorScreen />}>
-					<DeviceProvider
-						native={native}
-						platform={platform}
-						userAgent={userAgent}
-					>
-						<AppUpdater />
-						<ToastProvider>
+				<DeviceProvider
+					native={native}
+					platform={platform}
+					userAgent={userAgent}
+				>
+					<AppUpdater />
+					<ToastProvider>
+						<Suspense fallback={<LoadingIndicatorScreen />}>
 							<TooltipProvider>
 								<SessionProvider session={session}>
 									<NotificationProvider>
@@ -169,9 +172,9 @@ export default async function RootLayout({
 									</NotificationProvider>
 								</SessionProvider>
 							</TooltipProvider>
-						</ToastProvider>
-					</DeviceProvider>
-				</Suspense>
+						</Suspense>
+					</ToastProvider>
+				</DeviceProvider>
 			</body>
 		</html>
 	);
