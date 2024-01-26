@@ -116,7 +116,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<button type="button" onClick={() => reverseSearch(image.url)}>
-							<Search className="h-5 w-5" strokeWidth={2} />
+							<Search className="size-5" strokeWidth={2} />
 						</button>
 					</TooltipTrigger>
 					<TooltipContent>Search image</TooltipContent>
@@ -135,7 +135,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 									.catch(toasts.addError);
 							}}
 						>
-							<Trash2 className="h-5 w-5" />
+							<Trash2 className="size-5" />
 						</button>
 					</TooltipTrigger>
 					<TooltipContent>Remove image</TooltipContent>
@@ -224,28 +224,10 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						key={notFoundImage.id}
 					/>
 				)}
-				{images.length > 1 && (
-					<div className="absolute flex h-full w-full">
-						<button
-							className="flex h-full grow items-center justify-start px-6 opacity-70 transition-opacity hover:opacity-100"
-							type="button"
-							onClick={() => set(-1)}
-						>
-							<ChevronLeft className="h-10 w-10 text-white-10 drop-shadow" />
-						</button>
-						<button
-							className="flex h-full grow items-center justify-end px-6 opacity-70 transition-opacity hover:opacity-100"
-							type="button"
-							onClick={() => set(1)}
-						>
-							<ChevronRight className="h-10 w-10 text-white-10 drop-shadow" />
-						</button>
-					</div>
-				)}
 				{currentImage && (
-					<div className="pointer-events-none absolute flex h-full w-full items-center justify-center">
+					<div className="pointer-events-none absolute flex size-full items-center justify-center">
 						<button
-							className="pointer-events-auto h-full w-1/3"
+							className="pointer-events-auto size-full"
 							type="button"
 							onClick={() => setExpandedImage(true)}
 						/>
@@ -257,25 +239,25 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							onVisibilityChange={setExpandedImage}
 						>
 							<div
-								className="relative flex cursor-default flex-col overflow-hidden rounded-xl text-white-20"
+								className="relative flex cursor-default flex-col overflow-hidden rounded-xl text-white-20 shadow-brand-1"
 								onClick={(event) => event.stopPropagation()}
 							>
 								<div className="relative aspect-square h-[100vw] max-h-[80vh] w-full">
 									{images.length > 1 && (
-										<div className="absolute z-10 flex h-full w-full">
+										<div className="absolute z-10 flex size-full">
 											<button
-												className="flex h-full grow items-center justify-start px-8 opacity-70 transition-opacity hover:opacity-100"
+												className="flex h-full w-1/3 items-center justify-start px-8 opacity-70 transition-opacity hover:opacity-100"
 												type="button"
 												onClick={() => set(-1)}
 											>
-												<ChevronLeft className="h-10 w-10 text-white-10 drop-shadow" />
+												<ChevronLeft className="size-10 text-white-10 drop-shadow" />
 											</button>
 											<button
-												className="flex h-full grow items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
+												className="ml-auto flex h-full w-1/3 items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
 												type="button"
 												onClick={() => set(1)}
 											>
-												<ChevronRight className="h-10 w-10 text-white-10 drop-shadow" />
+												<ChevronRight className="size-10 text-white-10 drop-shadow" />
 											</button>
 										</div>
 									)}
@@ -290,7 +272,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									type="button"
 									onClick={() => setExpandedImage(false)}
 								>
-									<X className="h-6 w-6" />
+									<X className="size-6" />
 								</button>
 								{session?.user?.tags?.includes("moderator") && (
 									<ImageToolbar image={currentImage} />
@@ -299,29 +281,47 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						</ModalOuter>
 					</div>
 				)}
-
 				{images.length > 1 && (
-					<div className="pointer-events-auto absolute top-0 flex w-full px-8">
-						<div className="-mx-1 flex grow items-center">
-							{images.map((image) => (
-								<button
-									className="group grow px-1 py-6 pt-[max(env(safe-area-inset-top),1.5rem)]"
-									key={image.id}
-									type="button"
-									onClick={() => set(0, image.id)}
-								>
-									<div
-										className={twMerge(
-											"h-2 rounded-full transition-all duration-150 group-hover:bg-white-10/50 group-hover:shadow-brand-1",
-											image.id === imageId
-												? "bg-white-10/50 shadow-brand-1"
-												: "bg-black-70/50"
-										)}
-									/>
-								</button>
-							))}
+					<>
+						<div className="pointer-events-none absolute flex size-full">
+							<button
+								className="pointer-events-auto flex h-full w-1/3 items-center justify-start px-6 opacity-70 transition-opacity hover:opacity-100"
+								type="button"
+								onClick={() => set(-1)}
+							>
+								<ChevronLeft className="size-10 text-white-10 drop-shadow" />
+							</button>
+							<button
+								className="pointer-events-auto ml-auto flex h-full w-1/3 items-center justify-end px-6 opacity-70 transition-opacity hover:opacity-100"
+								type="button"
+								onClick={() => set(1)}
+							>
+								<ChevronRight className="size-10 text-white-10 drop-shadow" />
+							</button>
 						</div>
-					</div>
+
+						<div className="pointer-events-auto absolute top-0 flex w-full px-8">
+							<div className="-mx-1 flex grow items-center">
+								{images.map((image) => (
+									<button
+										className="group grow px-1 py-6 pt-[max(env(safe-area-inset-top),1.5rem)]"
+										key={image.id}
+										type="button"
+										onClick={() => set(0, image.id)}
+									>
+										<div
+											className={twMerge(
+												"h-2 rounded-full transition-all duration-150 group-hover:bg-white-10/50 group-hover:shadow-brand-1",
+												image.id === imageId
+													? "bg-white-10/50 shadow-brand-1"
+													: "bg-black-70/50"
+											)}
+										/>
+									</button>
+								))}
+							</div>
+						</div>
+					</>
 				)}
 				<div className="pointer-events-none absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent via-black-90/20 to-black-90/60">
 					{children}
