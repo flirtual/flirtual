@@ -46,7 +46,7 @@ export default async function SubscriptionPage() {
 						</h1>
 						<div className="flex select-none flex-col">
 							<div className="flex items-center gap-2">
-								<Sparkles className="inline h-5 w-5" />
+								<Sparkles className="inline size-5" />
 								<span>{subscription.plan.name}</span>
 							</div>
 							<span className="ml-5 pl-2 text-sm text-black-30 dark:text-white-50">
@@ -135,18 +135,25 @@ export default async function SubscriptionPage() {
 						<PlanList />
 					</MatchSubscriptionPlatform>{" "}
 				</div>
-				<p>
-					Flirtual is still in its early days: we have{" "}
-					<span className="font-semibold">
-						{Math.floor(totalUsers / 1000) * 1000} users
-					</span>{" "}
-					and growing, and we&apos;re always releasing new features and
-					improving the platform. Offering Premium helps us pay for development
-					and cover hosting costs.{" "}
-					{subscription
-						? "Thank you for supporting us!"
-						: "If you like what we're doing, consider supporting us by subscribing!"}
-				</p>
+				<div className="flex flex-col gap-4">
+					<p>
+						Flirtual is still in its early days: we have{" "}
+						<span className="font-semibold">
+							{(Math.floor(totalUsers / 1000) * 1000).toLocaleString()} users
+						</span>{" "}
+						and growing, and we&apos;re always releasing new features and
+						improving the platform. Offering Premium helps us pay for
+						development and cover hosting costs.{" "}
+						{subscription
+							? "Thank you for supporting us!"
+							: "If you like what we're doing, consider supporting us by subscribing!"}
+					</p>
+					<p>
+						You can modify or cancel your subscription at any time by{" "}
+						{!subscription?.active && <>coming back to this page and</>}{" "}
+						pressing the &quot;Manage&quot; button.
+					</p>
+				</div>
 			</ModelCard>
 		</SoleModelLayout>
 	);
