@@ -76,15 +76,15 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				highlight
 					? "bg-white-20 dark:bg-black-80"
 					: [containerClassName, "bg-white-25 dark:bg-black-80"],
-				duration === "Lifetime" && (description ? "gap-4" : "sm:flex-row")
+				duration === "lifetime" && (description ? "gap-4" : "sm:flex-row")
 			)}
 		>
 			<div className="flex flex-col">
 				<span
 					className={twMerge(
 						"font-montserrat text-sm font-semibold text-black-60 line-through dark:text-white-50",
-						duration === "Lifetime" && "hidden",
-						duration !== "Lifetime" &&
+						duration === "lifetime" && "hidden",
+						duration !== "lifetime" &&
 							price === originalPrice &&
 							"hidden sm:invisible sm:block"
 					)}
@@ -114,7 +114,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				{...props}
 				active={activePlan}
 				disabled={props.disabled}
-				lifetime={duration === "Lifetime"}
+				lifetime={duration === "lifetime"}
 			/>
 		</div>
 	);
