@@ -34,7 +34,8 @@ defmodule Flirtual.Listmonk do
   end
 
   def get_subscriber_lists(%User{} = user) do
-    if user.preferences.email_notifications.newsletter do
+    if user.preferences.email_notifications.newsletter and is_nil(user.banned_at) and
+         is_nil(user.deactivated_at) do
       [1, 3]
     else
       [3]

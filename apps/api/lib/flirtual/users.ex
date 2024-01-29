@@ -283,21 +283,8 @@ defmodule Flirtual.Users do
            notification_preferences
            |> Preferences.EmailNotifications.update_changeset(attrs)
            |> Repo.update(),
-         %User{listmonk_id: listmonk_id} <-
-           User
-           |> Ecto.Query.where(id: ^notification_preferences.preferences_id)
-           |> Ecto.Query.select([:listmonk_id])
-           |> Flirtual.Repo.one(),
          {:ok, _} <-
-           Listmonk.update_subscription(
-             listmonk_id,
-             if notification_preferences.newsletter do
-               :add
-             else
-               :remove
-             end,
-             1
-           ) do
+           ObanWorkers.update_user(notification_preferences.preferences_id, [:listmonk, :talkjs]) do
       {:ok, notification_preferences}
     else
       {:error, reason} -> Repo.rollback(reason)
@@ -328,7 +315,7 @@ defmodule Flirtual.Users do
              user
              |> change(%{deactivated_at: now})
              |> Repo.update(),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :talkjs]) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -343,7 +330,7 @@ defmodule Flirtual.Users do
              user
              |> change(%{deactivated_at: nil})
              |> Repo.update(),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :premium_reset, :talkjs]) do
+           {:ok, _} <- ObanWorkers.update_user(user.id) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
