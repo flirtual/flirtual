@@ -20,7 +20,7 @@ const TableHeader = React.forwardRef<
 	React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, reference) => (
 	<thead
-		className={twMerge("bg-brand-gradient", className)}
+		className={twMerge("bg-brand-gradient bg-fixed", className)}
 		ref={reference}
 		{...props}
 	/>
