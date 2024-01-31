@@ -5,7 +5,8 @@ const Table = React.forwardRef<
 	HTMLTableElement,
 	React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, reference) => (
-	<div className="w-full overflow-auto">
+	// eslint-disable-next-line tailwindcss/no-custom-classname
+	<div className="unhide-scrollbar w-full overflow-x-auto overflow-y-hidden rounded-xl shadow-brand-1">
 		<table
 			className={twMerge("w-full caption-bottom text-sm", className)}
 			ref={reference}

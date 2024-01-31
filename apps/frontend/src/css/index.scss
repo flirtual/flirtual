@@ -2,13 +2,17 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-*::-webkit-scrollbar {
-  @apply bg-transparent w-0
+* {
+  min-width: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-* {
+*:not(.unhide-scrollbar) {
   scrollbar-width: none;
-  -webkit-tap-highlight-color: transparent;
+}
+
+*:not(.unhide-scrollbar)::-webkit-scrollbar {
+  @apply bg-transparent w-0
 }
 
 *[data-nextjs-scroll-focus-boundary] {
