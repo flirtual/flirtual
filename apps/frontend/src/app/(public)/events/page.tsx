@@ -17,7 +17,7 @@ export default function EventsPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard
-				className="w-full sm:max-w-2xl"
+				className="w-full sm:max-w-3xl"
 				containerProps={{ className: "gap-8" }}
 				title="Events"
 			>
@@ -71,7 +71,7 @@ export default function EventsPage() {
 					<ButtonLink href="/speeddate">Flirtual Speed Dating</ButtonLink>
 					<Image
 						alt="The Flirtual Club"
-						className="w-full max-w-sm rounded-xl shadow-brand-1"
+						className="mt-4 w-full max-w-sm rounded-xl shadow-brand-1"
 						height={900}
 						src={urls.media("660c7e75-9634-45d1-a306-628eeef0a620")}
 						width={1200}
