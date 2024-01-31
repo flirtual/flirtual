@@ -89,6 +89,11 @@ module.exports = {
 				permanent: true
 			},
 			{
+				source: "/settings/tags",
+				destination: "/settings/info",
+				permanent: true
+			},
+			{
 				source: "/terms-20230605",
 				destination: "/terms",
 				permanent: true
