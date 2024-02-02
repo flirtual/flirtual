@@ -475,8 +475,8 @@ defmodule Flirtual.Users do
              Ecto.build_assoc(profile, :preferences)
              |> Repo.insert(),
            user <- Repo.preload(user, User.default_assoc()),
-           :ok <-
-             Flag.check_flags(user.id, user.username),
+           :ok <- Flag.check_flags(user.id, attrs[:username]),
+           :ok <- Flag.check_email_flags(user.id, attrs[:email]),
            :ok <- Hash.check_hash(user.id, "username", attrs[:username]),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, _} <- Talkjs.update_user(user),

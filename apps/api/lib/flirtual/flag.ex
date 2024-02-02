@@ -42,7 +42,7 @@ defmodule Flirtual.Flag do
   def check_flags(user_id, text) do
     user = Users.get(user_id)
 
-    keyword_flags =
+    flags =
       Flag
       |> where([flag], flag.type == "text")
       |> where(
@@ -52,11 +52,21 @@ defmodule Flirtual.Flag do
       |> Repo.all()
       |> Enum.map(& &1.flag)
 
-    k12_flag =
-      Regex.scan(~r/@(.+\.k12\..+\.us)/, text)
-      |> Enum.map(fn [_, domain] -> domain end)
+    if flags != [] do
+      Discord.deliver_webhook(:flagged_text, user: user, flags: Enum.join(flags, ", "))
+    end
 
-    flags = keyword_flags ++ k12_flag
+    :ok
+  end
+
+  def check_email_flags(_, nil), do: :ok
+
+  def check_email_flags(user_id, email) do
+    user = Users.get(user_id)
+
+    flags =
+      Regex.scan(~r/@(.+\.k12\..+\.us)/, email)
+      |> Enum.map(fn [_, domain] -> domain end)
 
     if flags != [] do
       Discord.deliver_webhook(:flagged_text, user: user, flags: Enum.join(flags, ", "))

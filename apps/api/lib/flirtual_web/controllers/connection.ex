@@ -157,6 +157,7 @@ defmodule FlirtualWeb.ConnectionController do
             end
 
             Flag.check_flags(user.id, profile.display_name)
+            Flag.check_email_flags(user.id, profile.email)
 
             Hash.check_hash(user.id, "email", profile.email)
             Hash.check_hash(user.id, "#{Connection.provider_name!(type)} ID", profile.uid)
