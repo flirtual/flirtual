@@ -189,7 +189,10 @@ defmodule Flirtual.Matchmaking do
           |> URI.merge("/browse")
           |> URI.to_string()
       }
-      |> Flirtual.ObanWorkers.Push.new(scheduled_at: reset_at, unique: [timestamp: :scheduled_at])
+      |> Flirtual.ObanWorkers.Push.new(
+        scheduled_at: DateTime.add(reset_at, 6 * 60 * 60),
+        unique: [timestamp: :scheduled_at]
+      )
       |> Oban.insert()
     else
       {:ok, :disabled}
