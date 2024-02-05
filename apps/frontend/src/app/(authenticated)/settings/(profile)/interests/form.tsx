@@ -101,9 +101,7 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 		{ name: "Love languages", icon: <HeartHandshake /> },
 		{ name: "Astrology", icon: <MoonStar /> },
 		{ name: "Personality types", icon: <Brain /> },
-		{ name: "Alignment", icon: <Dices /> },
-		{ name: "Politics", icon: <Scale /> },
-		{ name: "Religion", icon: <Church /> }
+		{ name: "Alignment", icon: <Dices /> }
 	];
 
 	const categorizedInterests: Record<
@@ -125,10 +123,7 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 		if (category.name !== "Games")
 			categorizedInterests[category.name] = sortInterests(
 				interests.filter(
-					(interest) =>
-						interest.metadata?.category === category.name &&
-						(interest.name !== "VRLFP OG" ||
-							(user.createdAt && user.createdAt < "2022-02-14"))
+					(interest) => interest.metadata?.category === category.name
 				)
 			);
 	}
