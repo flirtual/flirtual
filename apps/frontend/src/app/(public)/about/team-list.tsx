@@ -1,14 +1,14 @@
-import { TeamCategory } from "./team-category";
+import { TeamMember, TeamMemberProps } from "./team-member";
 
 export interface TeamListProps {
-	children: Array<TeamCategory>;
+	children: Array<TeamMemberProps>;
 }
 
 export const TeamList: React.FC<TeamListProps> = ({ children }) => {
 	return (
-		<div className="flex flex-col gap-4">
-			{children.map((category) => (
-				<TeamCategory category={category} key={category.name} />
+		<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+			{children.map((member) => (
+				<TeamMember key={member.name} {...member} />
 			))}
 		</div>
 	);
