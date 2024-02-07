@@ -78,13 +78,10 @@ export const urls = {
 
 		return `/${
 			typeof user === "string"
-				? user.toLowerCase()
-				: // HACK: This is a temporary fix because some users have usernames
-				// that are 22 characters long, which is the same length as a user id, and
-				// that causes a errors when resolving the route.
-				user.username.length === 22
-				? user.id
-				: user.username.toLowerCase()
+				? user
+				: user.username.length === 22
+					? user.id
+					: user.username
 		}`;
 	},
 	browse: (kind?: ProspectKind) =>
