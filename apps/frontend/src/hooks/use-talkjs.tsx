@@ -165,7 +165,7 @@ export const ConversationChatbox: React.FC<
 	return (
 		<div
 			data-sentry-block
-			className="w-full overflow-hidden md:max-h-[32rem] md:rounded-xl md:pt-0"
+			className="w-full overflow-hidden md:max-h-[32rem] md:rounded-b-xl md:pt-0"
 			style={
 				{
 					"--safe-area-inset-bottom": "env(safe-area-inset-bottom)",
