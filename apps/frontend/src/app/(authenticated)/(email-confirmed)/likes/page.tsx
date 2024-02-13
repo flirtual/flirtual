@@ -19,6 +19,8 @@ import { yearsAgo } from "~/date";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 
+export const maxDuration = 60;
+
 export const metadata: Metadata = {
 	title: "Likes you"
 };
