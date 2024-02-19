@@ -32,6 +32,7 @@ import { DateTimeRelative } from "~/components/datetime-relative";
 import { urls } from "~/urls";
 import { relativeTime } from "~/date";
 import { ProfileDropdown } from "~/components/profile/dropdown";
+import { useSessionUser } from "~/hooks/use-session";
 
 export const columns: Array<ColumnDef<User>> = [
 	{
@@ -46,10 +47,12 @@ export const columns: Array<ColumnDef<User>> = [
 					href={urls.profile(user)}
 				>
 					<UserThumbnail user={user} />
-					<div className="flex w-[8em] flex-col truncate">
-						<span>{name}</span>
+					<div className="flex flex-col">
+						<span className="truncate">{name}</span>
 						{name !== user.username && (
-							<span className="text-xs brightness-75">{user.username}</span>
+							<span className="truncate text-xs brightness-75">
+								{user.username}
+							</span>
 						)}
 					</div>
 				</Link>
@@ -167,29 +170,31 @@ export const columns: Array<ColumnDef<User>> = [
 	}
 ];
 
-const DataTable: FC<{ data: Array<User> }> = ({ data }) => {
+const DataTable: FC<{ data: Array<User>; admin: boolean }> = ({
+	data,
+	admin
+}) => {
 	const table = useReactTable({
 		data,
-		columns,
+		columns: columns.filter((column) => column.id !== "email" || admin),
 		getCoreRowModel: getCoreRowModel()
 	});
+
 	return (
 		<Table>
 			<TableHeader>
 				{table.getHeaderGroups().map((headerGroup) => (
 					<TableRow key={headerGroup.id}>
-						{headerGroup.headers.map((header) => {
-							return (
-								<TableHead key={header.id}>
-									{header.isPlaceholder
-										? null
-										: flexRender(
-												header.column.columnDef.header,
-												header.getContext()
-											)}
-								</TableHead>
-							);
-						})}
+						{headerGroup.headers.map((header) => (
+							<TableHead key={header.id}>
+								{header.isPlaceholder
+									? null
+									: flexRender(
+											header.column.columnDef.header,
+											header.getContext()
+										)}
+							</TableHead>
+						))}
 					</TableRow>
 				))}
 			</TableHeader>
@@ -220,6 +225,8 @@ const DataTable: FC<{ data: Array<User> }> = ({ data }) => {
 };
 
 export const SearchView: React.FC = () => {
+	const user = useSessionUser();
+
 	const [search, setSearch] = useState("");
 	const deferredSearch = useDeferredValue(search);
 
@@ -244,7 +251,7 @@ export const SearchView: React.FC = () => {
 
 	return (
 		<ModelCard
-			className="sm:max-w-4xl"
+			className="sm:max-w-5xl"
 			containerProps={{ className: "gap-8 min-h-screen" }}
 			title="Search"
 		>
@@ -257,7 +264,7 @@ export const SearchView: React.FC = () => {
 						onChange={setSearch}
 					/>
 				</div>
-				<DataTable data={data.entries} />
+				<DataTable admin={user?.tags?.includes("admin")} data={data.entries} />
 				<div className="flex items-center justify-end gap-2">
 					<div className="grow brightness-75">
 						<span>Page {page}</span>
