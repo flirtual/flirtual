@@ -406,15 +406,15 @@ defmodule Flirtual.User do
              |> preload(^default_assoc())
              |> join(:left, [user], profile in assoc(user, :profile), as: :profile)
              |> join(:left, [user], connections in assoc(user, :connections), as: :connections)
-             |> then(
-               &if(is_binary(value) and String.length(value) > 0,
-                 do:
-                   Enum.reduce(@default_search_fields, &1, fn field, query ->
-                     ilike_with_similarity(query, field, value)
-                   end),
-                 else: &1
-               )
-             )
+             |> then(fn query ->
+               if is_binary(value) and String.length(value) > 0 do
+                 Enum.reduce(@default_search_fields, query, fn field, query ->
+                   ilike_with_similarity(query, field, value)
+                 end)
+               else
+                 query |> order_by(desc: :created_at)
+               end
+             end)
              |> paginate(attrs.page, attrs.limit)
              |> Repo.all() do
         %{
