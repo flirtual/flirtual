@@ -264,7 +264,10 @@ export const SearchView: React.FC = () => {
 						onChange={setSearch}
 					/>
 				</div>
-				<DataTable admin={user?.tags?.includes("admin")} data={data.entries} />
+				<DataTable
+					admin={user?.tags?.includes("admin") ?? false}
+					data={data.entries}
+				/>
 				<div className="flex items-center justify-end gap-2">
 					<div className="grow brightness-75">
 						<span>Page {page}</span>
