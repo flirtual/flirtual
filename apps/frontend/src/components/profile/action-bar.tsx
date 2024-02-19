@@ -32,8 +32,6 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
 
-	// const [showExtraInformation, setShowExtraInformation] = useState(false);
-
 	if (
 		!session ||
 		(session.user.id === user.id &&
@@ -43,47 +41,25 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 		return null;
 
 	return (
-		<div className="flex flex-col gap-8 px-8 py-4 sm:pb-8">
+		<div className="flex flex-col gap-8 px-8 py-4 pt-0 sm:pb-8">
 			{session.user.tags?.includes("moderator") && (
-				<>
-					{/* {showExtraInformation ? ( */}
-					<ProfileModeratorInfo user={user} />
-					{/* ) : (
-						<button
-							className="hover:underline"
-							type="button"
-							onClick={() => setShowExtraInformation(true)}
-						>
-							Show extra information
-						</button>
-					)} */}
-				</>
+				<ProfileModeratorInfo user={user} />
 			)}
 			<div className="flex w-full gap-4">
 				{(session.user.tags?.includes("moderator") ||
 					session.user.tags?.includes("admin")) && (
 					<ProfileDropdown user={user} />
 				)}
-				<div className="ml-auto flex gap-4">
+				<div className="flex w-full justify-center gap-6">
 					{session.user.id !== user.id && (
 						<>
 							<AlertDialog>
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<AlertDialogTrigger asChild>
-											<button
-												className="h-6 w-6 shrink-0"
-												type="button"
-												onClick={async () => {
-													await api.user;
-												}}
-											>
-												<Ban className="h-full w-full" />
-											</button>
-										</AlertDialogTrigger>
-									</TooltipTrigger>
-									<TooltipContent>Block profile</TooltipContent>
-								</Tooltip>
+								<AlertDialogTrigger asChild>
+									<Button className="gap-2 p-0" kind="tertiary" size="sm">
+										<Ban className="size-full" />
+										Block
+									</Button>
+								</AlertDialogTrigger>
 								<AlertDialogContent>
 									<AlertDialogHeader>
 										<AlertDialogTitle>
@@ -120,18 +96,14 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 									</DialogFooter>
 								</AlertDialogContent>
 							</AlertDialog>
-							<Tooltip>
-								<ReportDialog user={user}>
-									<TooltipTrigger asChild>
-										<DialogTrigger asChild>
-											<button className="w-full gap-2" type="button">
-												<Flag className="h-6 w-6" />
-											</button>
-										</DialogTrigger>
-									</TooltipTrigger>
-								</ReportDialog>
-								<TooltipContent>Report profile</TooltipContent>
-							</Tooltip>
+							<ReportDialog user={user}>
+								<DialogTrigger asChild>
+									<Button className="gap-2 p-0" kind="tertiary" size="sm">
+										<Flag className="size-6" />
+										Report
+									</Button>
+								</DialogTrigger>
+							</ReportDialog>
 						</>
 					)}
 				</div>
