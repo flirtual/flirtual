@@ -45,4 +45,12 @@ defmodule FlirtualWeb.ConversationController do
     conversation_id = Talkjs.new_conversation_id(conn.assigns[:session].user.id, user_id)
     conn |> json_with_etag(Talkjs.list_messages(conversation_id))
   end
+
+  def mark_read(conn, _) do
+    user = conn.assigns[:session].user
+
+    with {:ok, _} <- Talkjs.mark_conversations_read(user.id) do
+      conn |> json(%{success: true})
+    end
+  end
 end

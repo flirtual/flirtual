@@ -14,6 +14,7 @@ export type Conversation = CreatedAtModel & {
 	id: string;
 	kind: ProspectKind;
 	lastMessage?: Message;
+	isUnread: boolean;
 	userId: string;
 };
 
@@ -48,4 +49,8 @@ export async function list(
 	options: NarrowFetchOptions<undefined, { cursor?: string }>
 ): Promise<ConversationList> {
 	return fetch<ConversationList>("get", "conversations", options);
+}
+
+export async function markRead(options: NarrowFetchOptions = {}) {
+	return fetch("delete", "conversations/unread", options);
 }

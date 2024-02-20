@@ -18,6 +18,7 @@ defmodule Flirtual.Conversation do
 
     field :participants, {:array, :binary_id}
     field :last_message, :map
+    field :is_unread, :boolean, virtual: false
 
     field :user_id, :binary_id, virtual: true
 
@@ -49,6 +50,7 @@ defmodule Flirtual.Conversation do
         |> Map.keys()
         |> Enum.map(&ShortUUID.encode!(&1)),
       last_message: data["lastMessage"] |> Message.decode(),
+      is_unread: data["isUnread"],
       created_at: DateTime.from_unix!(data["createdAt"], :millisecond)
     }
   end
@@ -213,6 +215,7 @@ defmodule Flirtual.Conversation do
         :kind,
         :user_id,
         :last_message,
+        :is_unread,
         :created_at
       ]
   end

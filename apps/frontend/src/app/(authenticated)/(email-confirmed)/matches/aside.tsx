@@ -4,10 +4,14 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { FC, Suspense, useLayoutEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { ChevronLeft, X } from "lucide-react";
+import { CheckCheck, ChevronLeft, X } from "lucide-react";
 
 import { urls } from "~/urls";
 import { useConversations } from "~/hooks/use-conversations";
+import { useUnreadConversations } from "~/hooks/use-talkjs";
+import { Button } from "~/components/button";
+import { api } from "~/api";
+import { useToast } from "~/hooks/use-toast";
 
 import {
 	ConversationListItem,
@@ -20,11 +24,15 @@ export interface ConversationAsideProps {
 }
 
 export const ConversationAside: FC<ConversationAsideProps> = (props) => {
+	const toasts = useToast();
+
 	const { activeConversationId } = props;
 	const HeaderIcon = activeConversationId ? ChevronLeft : X;
 
-	const { data, loadMore } = useConversations();
+	const { data, mutate, loadMore } = useConversations();
 	const [loadMoreReference, loadMoreInView] = useInView();
+
+	const unreadConversations = useUnreadConversations();
 
 	useLayoutEffect(() => {
 		if (!loadMoreInView) return;
@@ -51,6 +59,21 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 				)}
 			>
 				<LikesYouButton />
+				{unreadConversations.length > 0 && (
+					<Button
+						Icon={CheckCheck}
+						size="sm"
+						onClick={async () => {
+							await api.conversations
+								.markRead()
+								.then(async () => await mutate())
+								.catch(toasts.addError);
+							return;
+						}}
+					>
+						Mark all as read
+					</Button>
+				)}
 				<div className="flex flex-col gap-4">
 					{data.map(({ data: conversations, metadata }, dataIndex) => (
 						<div

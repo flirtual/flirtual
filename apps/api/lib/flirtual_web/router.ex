@@ -225,6 +225,7 @@ defmodule FlirtualWeb.Router do
 
           get("/", ConversationController, :list)
           get("/unread", ConversationController, :list_unread)
+          delete("/unread", ConversationController, :mark_read)
 
           scope "/:conversation_id" do
             get("/", ConversationController, :get)

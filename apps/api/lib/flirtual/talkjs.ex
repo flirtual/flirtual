@@ -48,6 +48,32 @@ defmodule Flirtual.Talkjs do
     ])
   end
 
+  def batch(operations) when length(operations) > 1 do
+    with true <-
+           Enum.all?(
+             operations
+             |> Enum.chunk_every(1)
+             |> Enum.map(fn chunk ->
+               %{"operations" => chunk}
+               |> Flirtual.ObanWorkers.TalkjsBatch.new()
+               |> Oban.insert()
+             end),
+             &match?({:ok, _}, &1)
+           ) do
+      {:ok, length(operations)}
+    else
+      _ ->
+        :error
+    end
+  end
+
+  def batch(operations) do
+    case fetch(:post, "batch", operations) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+    end
+  end
+
   def update_user(%User{banned_at: banned_at} = user) when not is_nil(banned_at) do
     list_conversations(user.id)
     |> Enum.map(&update_conversation(&1["id"], %{banned: "true"}))
@@ -172,6 +198,17 @@ defmodule Flirtual.Talkjs do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Poison.decode!(body)["data"]
     end
+  end
+
+  def mark_conversations_read(user_id) when is_uid(user_id) do
+    participant_id = ShortUUID.decode!(user_id)
+
+    list_conversations(user_id, %{"limit" => 100, "unreadsOnly" => true})
+    |> Enum.with_index()
+    |> Enum.map(fn {conversation, index} ->
+      [index, "POST", "/conversations/" <> conversation["id"] <> "/readBy/" <> participant_id]
+    end)
+    |> batch()
   end
 
   def list_messages(conversation_id, options \\ []) do
