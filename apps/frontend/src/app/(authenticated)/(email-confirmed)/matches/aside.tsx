@@ -58,22 +58,24 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 					activeConversationId && "hidden md:flex"
 				)}
 			>
-				<LikesYouButton />
-				{unreadConversations.length > 0 && (
-					<Button
-						Icon={CheckCheck}
-						size="sm"
-						onClick={async () => {
-							await api.conversations
-								.markRead()
-								.then(async () => await mutate())
-								.catch(toasts.addError);
-							return;
-						}}
-					>
-						Mark all as read
-					</Button>
-				)}
+				<div className="flex flex-col gap-2">
+					<LikesYouButton />
+					{unreadConversations.length > 0 && (
+						<Button
+							Icon={CheckCheck}
+							size="sm"
+							onClick={async () => {
+								await api.conversations
+									.markRead()
+									.then(async () => await mutate())
+									.catch(toasts.addError);
+								return;
+							}}
+						>
+							Mark all as read
+						</Button>
+					)}
+				</div>
 				<div className="flex flex-col gap-4">
 					{data.map(({ data: conversations, metadata }, dataIndex) => (
 						<div
