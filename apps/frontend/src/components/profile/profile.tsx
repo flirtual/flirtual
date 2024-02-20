@@ -162,7 +162,7 @@ export const Profile: FC<ProfileProps> = (props) => {
 					) : null}
 					<PillCollection user={user} />
 				</div>
-				<div className="pb-[env(safe-area-inset-bottom)] dark:bg-black-70">
+				<div className="pb-[env(safe-area-inset-bottom)] dark:bg-black-80 sm:dark:bg-black-70">
 					<ProfileActionBar user={user} />
 				</div>
 			</div>

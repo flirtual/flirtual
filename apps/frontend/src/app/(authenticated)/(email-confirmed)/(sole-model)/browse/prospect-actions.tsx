@@ -287,7 +287,7 @@ export const ProspectActions: FC<{
 
 	return (
 		<>
-			<div className="h-32 w-full dark:bg-black-70 sm:h-0">
+			<div className="h-32 w-full dark:bg-black-80 sm:h-0">
 				<div className="pointer-events-none fixed bottom-0 left-0 flex w-full flex-col items-center justify-center gap-3 bg-gradient-to-b from-transparent to-black-90/30 px-2 py-8 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
 					{/* <div className="pointer-events-auto flex items-center gap-3 overflow-hidden rounded-xl text-white-10">
 					<Tooltip>
