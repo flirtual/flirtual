@@ -48,11 +48,11 @@ defmodule Flirtual.Talkjs do
     ])
   end
 
-  def batch(operations) when length(operations) > 1 do
+  def batch(operations) when length(operations) > 10 do
     with true <-
            Enum.all?(
              operations
-             |> Enum.chunk_every(1)
+             |> Enum.chunk_every(10)
              |> Enum.map(fn chunk ->
                %{"operations" => chunk}
                |> Flirtual.ObanWorkers.TalkjsBatch.new()
