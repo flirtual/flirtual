@@ -110,7 +110,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 			const captcha =
 				withCaptcha && captchaRef.current
-					? (await captchaRef.current.execute({ async: true })).response
+					? await captchaRef.current.getResponsePromise()
 					: "";
 
 			setCaptcha(captcha);
@@ -131,7 +131,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					setErrors([reason.message]);
 				});
 
-			if (withCaptcha) captchaRef.current?.resetCaptcha();
+			if (withCaptcha) captchaRef.current?.reset();
 			setSubmitting(false);
 		}
 	};

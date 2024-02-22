@@ -1,8 +1,8 @@
-defmodule Flirtual.HCaptcha do
+defmodule Flirtual.Turnstile do
   import Ecto.Changeset, only: [validate_change: 3, validate_required: 2]
 
   defp config(key) do
-    Application.get_env(:flirtual, Flirtual.HCaptcha)[key]
+    Application.get_env(:flirtual, Flirtual.Turnstile)[key]
   end
 
   def validate(""), do: %{"success" => false}
@@ -11,11 +11,10 @@ defmodule Flirtual.HCaptcha do
   def validate(token) do
     with {:ok, response} <-
            HTTPoison.post(
-             "https://hcaptcha.com/siteverify",
+             "https://challenges.cloudflare.com/turnstile/v0/siteverify",
              URI.encode_query(%{
-               response: token,
                secret: config(:access_token),
-               sitekey: config(:app_id)
+               response: token
              }),
              [
                {"content-type", "application/x-www-form-urlencoded"}

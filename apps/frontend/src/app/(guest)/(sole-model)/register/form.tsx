@@ -138,7 +138,7 @@ export const RegisterForm: React.FC = () => {
 						/>
 						<div className="flex flex-col font-nunito text-lg">
 							<FormAlternativeActionLink href={urls.login()}>
-								Already have an account? Log in!
+								Already have an account? Log&nbsp;in!
 							</FormAlternativeActionLink>
 						</div>
 					</div>

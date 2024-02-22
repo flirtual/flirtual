@@ -53,15 +53,15 @@ dependencies:
   '@capgo/inappbrowser':
     specifier: 1.2.13
     version: 1.2.13(@capacitor/core@5.6.0)
-  '@hcaptcha/react-hcaptcha':
-    specifier: ^1.9.3
-    version: 1.9.3(react-dom@18.2.0)(react@18.2.0)
   '@heroicons/react':
     specifier: ^2.1.1
     version: 2.1.1(react@18.2.0)
   '@kfarwell/nextjs-toploader':
     specifier: ^1.4.5
     version: 1.4.5(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+  '@marsidev/react-turnstile':
+    specifier: ^0.5.3
+    version: 0.5.3(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-alert-dialog':
     specifier: ^1.0.5
     version: 1.0.5(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
@@ -226,9 +226,6 @@ devDependencies:
   '@capacitor/cli':
     specifier: ^5.6.0
     version: 5.6.0
-  '@hcaptcha/types':
-    specifier: ^1.0.3
-    version: 1.0.3
   '@tailwindcss/typography':
     specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.4.1)
@@ -617,26 +614,6 @@ packages:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
     dev: false
 
-  /@hcaptcha/loader@1.1.3:
-    resolution: {integrity: sha512-8rfydnMWQqNyz+6c1/8Wt3ktoc0JKVXGJdQ61FqcRJxkoBMxbkphoG3SGKXZelFwnhI9DeFvIHkT6YJhtcADIQ==}
-    dev: false
-
-  /@hcaptcha/react-hcaptcha@1.9.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-3aaXKT2tEXr317eWYNXm7JGC9z6FkhuDX46uLSFAevtVB3grxgwVxcVQuZy/Y5p6+TeQ6iDTAD0Ca2xwe4Muvw==}
-    peerDependencies:
-      react: '>= 16.3.0'
-      react-dom: '>= 16.3.0'
-    dependencies:
-      '@babel/runtime': 7.23.9
-      '@hcaptcha/loader': 1.1.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@hcaptcha/types@1.0.3:
-    resolution: {integrity: sha512-1mbU6eSGawRrqeahRrOzZo/SVLI6oZ5/azuBpSyVrRRR96CnS3fOVDWfzxpngfxKD0/I9Rwu6c/3ITqD8rXeTQ==}
-    dev: true
-
   /@heroicons/react@2.1.1(react@18.2.0):
     resolution: {integrity: sha512-JyyN9Lo66kirbCMuMMRPtJxtKJoIsXKS569ebHGGRKbl8s4CtUfLnyKJxteA+vIKySocO4s1SkTkGS4xtG/yEA==}
     peerDependencies:
@@ -1018,6 +995,16 @@ packages:
       next: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)
       nprogress: 0.2.0
       prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@marsidev/react-turnstile@0.5.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-lx3p2/56esPt8Ksr37K8uhPt/K4Mg8xaIfCV8MPKmE/1X4aHesRqZok1+L1ySQwsdWoEe5+KJOhBXka8lFBwNg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false

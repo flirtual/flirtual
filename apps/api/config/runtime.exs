@@ -47,9 +47,9 @@ config :flirtual, Flirtual.Talkjs,
   app_id: System.fetch_env!("TALKJS_APP_ID"),
   access_token: System.fetch_env!("TALKJS_ACCESS_TOKEN")
 
-config :flirtual, Flirtual.HCaptcha,
-  app_id: System.fetch_env!("HCAPTCHA_APP_ID"),
-  access_token: System.fetch_env!("HCAPTCHA_ACCESS_TOKEN")
+config :flirtual, Flirtual.Turnstile,
+  app_id: System.fetch_env!("TURNSTILE_APP_ID"),
+  access_token: System.fetch_env!("TURNSTILE_ACCESS_TOKEN")
 
 config :flirtual, Flirtual.Canny, access_token: System.fetch_env!("CANNY_SECRET")
 

@@ -3,7 +3,7 @@ defmodule Flirtual.Users do
   import Ecto.Changeset
   import Flirtual.Utilities.Changeset
 
-  import Flirtual.HCaptcha, only: [validate_captcha: 1]
+  import Flirtual.Turnstile, only: [validate_captcha: 1]
 
   alias Ecto.UUID
 
@@ -343,7 +343,7 @@ defmodule Flirtual.Users do
     use Flirtual.EmbeddedSchema
 
     import Flirtual.Attribute, only: [validate_attribute: 3]
-    import Flirtual.HCaptcha, only: [validate_captcha: 1]
+    import Flirtual.Turnstile, only: [validate_captcha: 1]
     import Flirtual.User, only: [validate_current_password: 2]
 
     @optional [:comment]
