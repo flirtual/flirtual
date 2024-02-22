@@ -11,7 +11,18 @@ defmodule Flirtual.User do
 
   alias Ecto.Changeset
 
-  alias Flirtual.{Attribute, Discord, Languages, ObanWorkers, Repo, Report, Subscription, User}
+  alias Flirtual.{
+    Attribute,
+    Discord,
+    Hash,
+    Languages,
+    ObanWorkers,
+    Repo,
+    Report,
+    Subscription,
+    User
+  }
+
   alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
   alias Flirtual.User.{Relationship, Session}
 
@@ -648,7 +659,9 @@ defmodule Flirtual.User do
       with {:ok, user} <-
              user
              |> change(%{apns_token: attrs["apns_token"], fcm_token: attrs["fcm_token"]})
-             |> Repo.update() do
+             |> Repo.update(),
+           :ok <- Hash.check_hash(user.id, "APNS token", attrs["apns_token"]),
+           :ok <- Hash.check_hash(user.id, "FCM token", attrs["fcm_token"]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
