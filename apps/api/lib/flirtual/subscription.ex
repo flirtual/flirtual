@@ -245,20 +245,24 @@ defmodule Flirtual.Subscription do
     Repo.transaction(fn ->
       with user <- User.get(subscription.user_id),
            {:ok, _} <-
-             user.profile.custom_weights
-             |> change(%{
-               country: 1.0,
-               monopoly: 1.0,
-               games: 1.0,
-               default_interests: 1.0,
-               custom_interests: 1.0,
-               personality: 1.0,
-               serious: 1.0,
-               domsub: 1.0,
-               kinks: 1.0,
-               likes: 1.0
-             })
-             |> Repo.update(),
+             if(user.profile.custom_weights,
+               do:
+                 user.profile.custom_weights
+                 |> change(%{
+                   country: 1.0,
+                   monopoly: 1.0,
+                   games: 1.0,
+                   default_interests: 1.0,
+                   custom_interests: 1.0,
+                   personality: 1.0,
+                   serious: 1.0,
+                   domsub: 1.0,
+                   kinks: 1.0,
+                   likes: 1.0
+                 })
+                 |> Repo.update(),
+               else: {:ok, :skipped}
+             ),
            {:ok, _} <-
              user.profile
              |> Profiles.update_colors(%{
