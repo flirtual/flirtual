@@ -10,7 +10,15 @@ defmodule Flirtual.User.Policy do
   defp truncate_date(date) do
     now = Date.utc_today()
 
-    Date.new!(now.year - get_years_since(date), now.month, now.day)
+    Date.new!(
+      now.year - get_years_since(date),
+      now.month,
+      if(
+        Date.leap_year?(now) and now.month == 2 and now.day == 29,
+        do: 28,
+        else: now.day
+      )
+    )
     |> Date.add(-1)
   end
 
