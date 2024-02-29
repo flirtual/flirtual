@@ -14,6 +14,7 @@ defmodule Flirtual.User do
   alias Flirtual.{
     Attribute,
     Discord,
+    Flag,
     Hash,
     Languages,
     ObanWorkers,
@@ -737,6 +738,7 @@ defmodule Flirtual.User do
     |> validate_username()
     |> unsafe_validate_unique(:username, Repo, query: from(User))
     |> unique_constraint(:username)
+    |> Flag.validate_allowed_username(:username)
   end
 
   def validate_email(changeset) do

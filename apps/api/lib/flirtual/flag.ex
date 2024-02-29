@@ -37,6 +37,21 @@ defmodule Flirtual.Flag do
     end
   end
 
+  def validate_allowed_username(%Ecto.Changeset{valid?: true} = changeset, field) do
+    username = get_field(changeset, field)
+    flag = get(username, "username")
+
+    if is_nil(flag) do
+      changeset
+    else
+      add_error(changeset, field, "has already been taken")
+    end
+  end
+
+  def validate_allowed_username(changeset, _) do
+    changeset
+  end
+
   def check_flags(_, nil), do: :ok
 
   def check_flags(user_id, text) do
