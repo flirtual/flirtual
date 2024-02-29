@@ -10,16 +10,7 @@ defmodule Flirtual.User.Policy do
   defp truncate_date(date) do
     now = Date.utc_today()
 
-    adjusted_date =
-      if Date.leap_year?(date.year) and date.month == 2 and date.day == 29 do
-        %Date{date | day: 28}
-      else
-        date
-      end
-
-    years_since = get_years_since(adjusted_date)
-
-    Date.new!(now.year - years_since, adjusted_date.month, adjusted_date.day)
+    Date.new!(now.year - get_years_since(date), now.month, now.day)
     |> Date.add(-1)
   end
 
