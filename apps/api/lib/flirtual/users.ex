@@ -393,7 +393,7 @@ defmodule Flirtual.Users do
 
   def admin_delete(%User{} = user) do
     Repo.transaction(fn ->
-      with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id)),
+      with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
            {:ok, user} <- Repo.delete(user),
            :ok <- Elasticsearch.delete(:users, user.id),
            {:ok, _} <- Talkjs.delete_user(user),
