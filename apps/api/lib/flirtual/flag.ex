@@ -64,12 +64,15 @@ defmodule Flirtual.Flag do
   def check_email_flags(user_id, email) do
     user = Users.get(user_id)
 
-    flags =
-      Regex.scan(~r/@(.+\.k12\..+\.us)/, email)
-      |> Enum.map(fn [_, domain] -> domain end)
+    keywords =
+      "(?:alumno|escola|escolas|escuela|escuelas|estudante|estudantes|estudiante|estudiantes|k12|school|schools|scoala|scuola|scuole|skola|skolas|stu|student|students)"
 
-    if flags != [] do
-      Discord.deliver_webhook(:flagged_text, user: user, flags: Enum.join(flags, ", "))
+    if Regex.match?(~r/@#{keywords}|@.*\.#{keywords}|@.*#{keywords}\./, email) and
+         not String.ends_with?(email, ".edu") do
+      Discord.deliver_webhook(:flagged_text,
+        user: user,
+        flags: email |> String.split("@") |> List.last()
+      )
     end
 
     :ok
