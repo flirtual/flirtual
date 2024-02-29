@@ -310,7 +310,18 @@ defmodule Flirtual.User do
     |> validate_change(:born_at, fn _, born_at ->
       now = Date.utc_today()
 
-      if Date.compare(born_at, Date.new!(now.year - 18, now.month, now.day)) === :gt do
+      if Date.compare(
+           born_at,
+           Date.new!(
+             now.year - 18,
+             now.month,
+             if(
+               Date.leap_year?(now) and now.month == 2 and now.day == 29,
+               do: 28,
+               else: now.day
+             )
+           )
+         ) === :gt do
         %{born_at: "must be at least 18 years old"}
       else
         if Date.compare(born_at, Date.new!(1900, 1, 1)) === :lt do
