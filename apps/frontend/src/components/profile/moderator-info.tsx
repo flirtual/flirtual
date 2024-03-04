@@ -54,6 +54,48 @@ export const ProfileModeratorInfo: FC<{
 		>
 			<div className="flex flex-col">
 				<span>
+					<span className="font-bold">Moderator Note (private):</span>{" "}
+					<span
+						className={twMerge(
+							"cursor-pointer brightness-75 hover:brightness-100",
+							user.moderatorNote && "text-yellow-500"
+						)}
+						onClick={async () => {
+							const { value, cancelled } = await Dialog.prompt({
+								message: "Moderator Note",
+								inputText: user.moderatorNote,
+								title: "Moderator Note"
+							});
+
+							if (cancelled) return;
+
+							if (!value && !!user.moderatorNote) {
+								await api.user
+									.deleteNote(user.id)
+									.then(() => {
+										toasts.add("Note deleted");
+										return router.refresh();
+									})
+									.catch(toasts.addError);
+
+								return;
+							}
+
+							await api.user
+								.note(user.id, { body: { message: value } })
+								.then(() => {
+									toasts.add("Note updated");
+									return router.refresh();
+								})
+								.catch(toasts.addError);
+						}}
+					>
+						{user.moderatorNote || "None"}
+					</span>
+				</span>
+			</div>
+			<div className="flex flex-col">
+				<span>
 					<span className="font-bold">ID:</span>{" "}
 					<CopyClick value={user.id}>
 						<span className="brightness-75 hover:brightness-100">
@@ -181,9 +223,7 @@ export const ProfileModeratorInfo: FC<{
 			</div>
 			<div className="flex flex-col">
 				<span>
-					<span className="font-bold">
-						Moderator Message (visible to user):
-					</span>{" "}
+					<span className="font-bold">Warning (visible to user):</span>{" "}
 					<span
 						className={twMerge(
 							user.moderatorMessage && "text-yellow-500",
@@ -191,43 +231,6 @@ export const ProfileModeratorInfo: FC<{
 						)}
 					>
 						{user.moderatorMessage ?? "None"}
-					</span>
-				</span>
-				<span>
-					<span className="font-bold">Moderator Note (private):</span>{" "}
-					<span
-						className="cursor-pointer brightness-75 hover:brightness-100"
-						onClick={async () => {
-							const { value, cancelled } = await Dialog.prompt({
-								message: "Moderator Note",
-								inputText: user.moderatorNote,
-								title: "Moderator Note"
-							});
-
-							if (cancelled) return;
-
-							if (!value && !!user.moderatorNote) {
-								await api.user
-									.deleteNote(user.id)
-									.then(() => {
-										toasts.add("Note deleted");
-										return router.refresh();
-									})
-									.catch(toasts.addError);
-
-								return;
-							}
-
-							await api.user
-								.note(user.id, { body: { message: value } })
-								.then(() => {
-									toasts.add("Note updated");
-									return router.refresh();
-								})
-								.catch(toasts.addError);
-						}}
-					>
-						{user.moderatorNote || "None"}
 					</span>
 				</span>
 			</div>
