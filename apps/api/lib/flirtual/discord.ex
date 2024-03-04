@@ -318,7 +318,7 @@ defmodule Flirtual.Discord do
         user: %User{} = user,
         at: warn_acknowledged_at
       ) do
-    webhook(:moderation_actions, %{
+    webhook(:moderation_acknowledgements, %{
       embeds: [
         %{
           author: webhook_author(user),

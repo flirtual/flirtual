@@ -33,6 +33,8 @@ config :flirtual, Flirtual.Discord,
   webhook_moderation_flags: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_FLAGS"),
   webhook_moderation_pics: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_PICS"),
   webhook_moderation_actions: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_ACTIONS"),
+  webhook_moderation_acknowledgements:
+    System.fetch_env!("DISCORD_WEBHOOK_MODERATION_ACKNOWLEDGEMENTS"),
   webhook_admin: System.fetch_env!("DISCORD_WEBHOOK_ADMIN")
 
 config :flirtual, Flirtual.Apple,
