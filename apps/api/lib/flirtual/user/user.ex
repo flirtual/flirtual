@@ -615,6 +615,7 @@ defmodule Flirtual.User do
 
   def acknowledge_warn(%User{} = user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
+    message = user.moderator_message
 
     Repo.transaction(fn ->
       with {:ok, user} <-
@@ -625,7 +626,8 @@ defmodule Flirtual.User do
            :ok <-
              Discord.deliver_webhook(:warn_acknowledged,
                user: user,
-               at: now
+               at: now,
+               message: message
              ) do
         user
       else
