@@ -299,15 +299,13 @@ defmodule Flirtual.Discord do
   def deliver_webhook(:warn_revoked,
         user: %User{} = user,
         moderator: %User{} = moderator,
-        at: warn_revoked_at,
-        message: message
+        at: warn_revoked_at
       ) do
     webhook(:moderation_actions, %{
       embeds: [
         %{
           author: webhook_author(user),
           title: "Warning revoked",
-          description: "Warning: " <> message,
           color: @success_color,
           footer: webhook_author_footer(moderator),
           timestamp: warn_revoked_at |> DateTime.to_iso8601()
@@ -318,13 +316,15 @@ defmodule Flirtual.Discord do
 
   def deliver_webhook(:warn_acknowledged,
         user: %User{} = user,
-        at: warn_acknowledged_at
+        at: warn_acknowledged_at,
+        message: message
       ) do
     webhook(:moderation_acknowledgements, %{
       embeds: [
         %{
           author: webhook_author(user),
           title: "Warning acknowledged",
+          description: "Warning: " <> message,
           color: @success_color,
           timestamp: warn_acknowledged_at |> DateTime.to_iso8601()
         }
