@@ -96,7 +96,7 @@ defmodule Flirtual.ObanWorkers.LikeDigest do
               do: "See who likes you and match.",
               else: "Browse profiles to see if it's a match."
             ),
-          "url" => action_url
+          "url" => if(is_premium, do: "flirtual://likes", else: "flirtual://browse")
         }
         |> Flirtual.ObanWorkers.Push.new(priority: 2, unique: [period: 60 * 60 * 24 * 6])
         |> Oban.insert()

@@ -184,10 +184,7 @@ defmodule Flirtual.Matchmaking do
         "title" => "Your daily profiles are ready!",
         "message" =>
           "We've worked our matchmaking magic on a fresh batch of profiles just for you. Tap to check them out!",
-        "url" =>
-          Application.fetch_env!(:flirtual, :frontend_origin)
-          |> URI.merge("/browse")
-          |> URI.to_string()
+        "url" => "flirtual://browse"
       }
       |> Flirtual.ObanWorkers.Push.new(
         scheduled_at: DateTime.add(reset_at, 6 * 60 * 60),
@@ -285,7 +282,7 @@ defmodule Flirtual.Matchmaking do
                 else:
                   "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!"
               ),
-            "url" => action_url
+            "url" => "flirtual://matches/" <> conversation_id
           }
           |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60])
           |> Oban.insert()
