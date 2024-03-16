@@ -61,7 +61,7 @@ export const Profile: FC<ProfileProps> = (props) => {
 			{...elementProps}
 			data-sentry-mask
 			className={twMerge(
-				"flex w-full bg-brand-gradient sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1",
+				"flex w-full bg-brand-gradient vision:bg-none sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1",
 				className
 			)}
 		>
