@@ -62,7 +62,15 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
 				elementProps.className
 			)}
 		>
-			{Icon && <Icon className={twMerge("h-6 shrink-0", iconClassName)} />}
+			{Icon && (
+				<Icon
+					className={twMerge(
+						"shrink-0",
+						size === "sm" ? "h-3" : "h-6",
+						iconClassName
+					)}
+				/>
+			)}
 			{elementProps.children}
 		</button>
 	);
@@ -97,7 +105,15 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 				if (elementProps.onClick) elementProps.onClick(event);
 			}}
 		>
-			{Icon && <Icon className={twMerge("h-6 shrink-0", iconClassName)} />}
+			{Icon && (
+				<Icon
+					className={twMerge(
+						"shrink-0",
+						size === "sm" ? "h-4" : "h-6",
+						iconClassName
+					)}
+				/>
+			)}
 			<span>{elementProps.children}</span>
 		</Link>
 	);

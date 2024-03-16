@@ -1,6 +1,7 @@
 export * from "./apple";
 export * from "./discord";
 export * from "./discord-outline";
+export * from "./facetime";
 export * from "./google";
 export * from "./google-play";
 export * from "./meta";

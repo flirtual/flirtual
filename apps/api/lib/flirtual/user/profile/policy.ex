@@ -55,7 +55,7 @@ defmodule Flirtual.User.Profile.Policy do
 
   @personality_keys [:openness, :conscientiousness, :agreeableness]
   @nsfw_keys [:domsub]
-  @connection_keys [:vrchat, :discord]
+  @connection_keys [:vrchat, :discord, :facetime]
 
   @own_property_keys [
                        :country,

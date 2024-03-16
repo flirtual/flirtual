@@ -109,12 +109,16 @@ export default async function RootLayout({
 	const native = userAgent.ua.includes("Flirtual-Native");
 	Sentry.setTag("native", native ? "yes" : "no");
 
+	const vision = userAgent.ua.includes("Flirtual-Vision");
+	Sentry.setTag("vision", vision ? "yes" : "no");
+
 	return (
 		<html
 			suppressHydrationWarning
 			data-native={native}
 			data-platform={platform}
 			data-theme={theme}
+			data-vision={vision}
 			lang="en"
 		>
 			<head suppressHydrationWarning>
@@ -157,6 +161,7 @@ export default async function RootLayout({
 					native={native}
 					platform={platform}
 					userAgent={userAgent}
+					vision={vision}
 				>
 					<AppUpdater />
 					<ToastProvider>

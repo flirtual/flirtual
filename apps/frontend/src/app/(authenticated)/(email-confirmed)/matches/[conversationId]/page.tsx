@@ -13,6 +13,8 @@ import { InlineLink } from "~/components/inline-link";
 import { getProfileUser } from "../../(sole-model)/[username]/profile-user";
 import { ConversationAside } from "../aside";
 
+import { FaceTimeButton } from "./facetime-button";
+
 export interface ConversationPageProps {
 	params: {
 		conversationId: string;
@@ -64,7 +66,7 @@ export default async function ConversationPage({
 							<span className="select-none font-montserrat text-xl font-semibold text-white-10">
 								{displayName(user)}
 							</span>
-						</InlineLink>
+					<FaceTimeButton user={user} />
 					</div>
 					<ConversationChatbox conversationId={conversation.id} />
 				</div>

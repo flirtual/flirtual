@@ -6,7 +6,7 @@ import { useSession } from "~/hooks/use-session";
 import { Form, FormButton } from "~/components/forms";
 import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
-import { VRChatIcon } from "~/components/icons";
+import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 // import { useDevice } from "~/hooks/use-device";
 
 import { AddConnectionButton } from "./add-connection-button";
@@ -41,13 +41,15 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 				<Form
 					className="flex flex-col gap-8"
 					fields={{
-						vrchat: user.profile.vrchat || ""
+						vrchat: user.profile.vrchat || "",
+						facetime: user.profile.facetime || ""
 					}}
-					onSubmit={async ({ vrchat }) => {
+					onSubmit={async ({ vrchat, facetime }) => {
 						const [profile] = await Promise.all([
 							await api.user.profile.update(user.id, {
 								body: {
-									vrchat: vrchat.trim() || null
+									vrchat: vrchat.trim() || null,
+									facetime: facetime.trim() || null
 								}
 							})
 						]);
@@ -92,6 +94,20 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 									/>
 								)}
 							</FormField>
+							{session.user.tags?.includes("debugger") && (
+								<FormField className="col-span-2 lg:col-span-1" name="facetime">
+									{(field) => (
+										<InputText
+											connection
+											Icon={FaceTimeIcon}
+											iconColor="#34da4f"
+											placeholder="FaceTime number"
+											type="number"
+											{...field.props}
+										/>
+									)}
+								</FormField>
+							)}
 							<FormButton className="col-span-2 mt-4">Update</FormButton>
 						</div>
 					)}

@@ -12,18 +12,20 @@ export interface DeviceContext {
 	userAgent: UserAgent;
 	platform: DevicePlatform;
 	native: boolean;
+	vision: boolean;
 }
 
 const DeviceContext = createContext<DeviceContext>({} as DeviceContext);
 
 export type DeviceProviderProps = React.PropsWithChildren<
-	Pick<DeviceContext, "userAgent" | "platform" | "native">
+	Pick<DeviceContext, "userAgent" | "platform" | "native" | "vision">
 >;
 
 export function DeviceProvider({ children, ...value }: DeviceProviderProps) {
 	useEffect(() => {
 		Sentry.setTag("native", value.native ? "yes" : "no");
-	}, [value.native]);
+		Sentry.setTag("vision", value.vision ? "yes" : "no");
+	}, [value.native, value.vision]);
 
 	return (
 		<DeviceContext.Provider value={value}>{children}</DeviceContext.Provider>
