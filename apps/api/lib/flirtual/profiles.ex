@@ -4,7 +4,7 @@ defmodule Flirtual.Profiles do
 
   import Flirtual.Utilities.Changeset
 
-  alias Flirtual.{Flag, Hash, ObanWorkers, Repo, User}
+  alias Flirtual.{Flag, Hash, ObanWorkers, Repo}
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.Image
 
@@ -65,11 +65,10 @@ defmodule Flirtual.Profiles do
                 :domsub,
                 :monopoly,
                 :country,
-                :relationships,
+                :serious,
                 :new,
                 :vrchat,
                 :discord,
-                :facetime,
                 :languages,
                 :custom_interests
               ] ++ @attribute_keys ++ @attribute_types
@@ -79,11 +78,10 @@ defmodule Flirtual.Profiles do
       field(:biography, :string)
       field(:vrchat, :string, default: "")
       field(:discord, :string, default: "")
-      field(:facetime, :string, default: "")
       field(:domsub, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :domsub)])
       field(:monopoly, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :monopoly)])
       field(:country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)])
-      field(:relationships, {:array, :string})
+      field(:serious, :boolean)
       field(:new, :boolean)
       field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
       field(:custom_interests, {:array, :string})
@@ -98,11 +96,10 @@ defmodule Flirtual.Profiles do
         biography: profile.biography,
         vrchat: profile.vrchat,
         discord: profile.discord,
-        facetime: profile.facetime,
         domsub: profile.domsub,
         monopoly: profile.monopoly,
         country: profile.country,
-        relationships: profile.relationships,
+        serious: profile.serious,
         new: profile.new,
         languages: if(profile.languages === [], do: nil, else: profile.languages),
         custom_interests: profile.custom_interests
@@ -112,9 +109,9 @@ defmodule Flirtual.Profiles do
     def changeset(value, _, %{required: required}) do
       value
       |> validate_required(required || [])
-      |> validate_length(:display_name, min: 1, max: 32)
-      |> validate_length(:biography, min: 45, max: 10_000)
-      |> validate_length(:languages, max: 5)
+      |> validate_length(:display_name, min: 3, max: 32)
+      |> validate_length(:biography, min: 48, max: 10_000)
+      |> validate_length(:languages, min: 1, max: 5)
       |> validate_attributes(:gender_id, "gender")
       |> validate_length(:gender, min: 1, max: 4)
       |> validate_attributes(:sexuality_id, "sexuality")
@@ -124,7 +121,7 @@ defmodule Flirtual.Profiles do
       |> validate_attributes(:game_id, "game")
       |> validate_length(:game, min: 1, max: 5)
       |> validate_attributes(:platform_id, "platform")
-      |> validate_length(:platform, max: 8)
+      |> validate_length(:platform, min: 1, max: 8)
       |> validate_attributes(:interest_id, "interest")
       |> then(fn changeset ->
         if not changed?(changeset, :interest_id) and not changed?(changeset, :custom_interests) do
@@ -159,10 +156,9 @@ defmodule Flirtual.Profiles do
       |> change(%{
         display_name: transform_value(attrs.display_name, profile.display_name),
         biography: transform_value(attrs.biography, profile.biography),
-        relationships: transform_value(attrs.relationships, profile.relationships),
+        serious: transform_value(attrs.serious, profile.serious),
         vrchat: transform_value(attrs.vrchat, profile.vrchat),
         discord: transform_value(attrs.discord, profile.discord),
-        facetime: transform_value(attrs.facetime, profile.facetime),
         new: transform_value(attrs.new, profile.new),
         country: transform_value(attrs.country, profile.country),
         domsub: transform_value(attrs.domsub, profile.domsub),
@@ -200,8 +196,6 @@ defmodule Flirtual.Profiles do
              ),
            {:ok, profile} <-
              Update.transform(profile, attrs |> Map.from_struct()) |> Repo.update(),
-           user = User.get(profile.user_id),
-           {:ok, _} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(profile.user_id),
            :ok <-
              Flag.check_flags(
@@ -218,8 +212,7 @@ defmodule Flirtual.Profiles do
            :ok <- Flag.check_openai_moderation(profile.user_id, profile.biography),
            :ok <- Hash.check_hash(profile.user_id, "display name", profile.display_name),
            :ok <- Hash.check_hash(profile.user_id, "VRChat", profile.vrchat),
-           :ok <- Hash.check_hash(profile.user_id, "Discord", profile.discord),
-           :ok <- Hash.check_hash(profile.user_id, "FaceTime", profile.facetime) do
+           :ok <- Hash.check_hash(profile.user_id, "Discord", profile.discord) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -234,8 +227,6 @@ defmodule Flirtual.Profiles do
              preferences
              |> Profile.Preferences.changeset(attrs, options)
              |> Repo.update(),
-           user = User.get(preferences.profile_id),
-           {:ok, _} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(preferences.profile_id, [:elasticsearch, :premium_reset]) do
         preferences
@@ -358,8 +349,6 @@ defmodule Flirtual.Profiles do
                end)
              end)
              |> Enum.filter(&(&1.order !== nil)),
-           user = User.get(profile.user_id),
-           {:ok, _} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(profile.user_id, [:elasticsearch, :talkjs]) do
         images

@@ -79,14 +79,13 @@ defmodule Flirtual.User.Profile do
     field(:conscientiousness, :integer, default: 0)
     field(:agreeableness, :integer, default: 1)
     Enum.map(@personality_questions, &field(&1, :boolean))
-    field(:relationships, {:array, :string})
+    field(:serious, :boolean)
     field(:new, :boolean)
     field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
     field(:custom_interests, {:array, :string})
 
     field(:vrchat, :string)
     field(:discord, :string)
-    field(:facetime, :string)
 
     field(:queue_love_reset_at, :utc_datetime)
     field(:queue_love_likes, :integer)
@@ -188,7 +187,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :domsub,
       :monopoly,
       :country,
-      :relationships,
+      :serious,
       :openness,
       :conscientiousness,
       :agreeableness,
@@ -201,7 +200,6 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :queue_friend_reset_at,
       :vrchat,
       :discord,
-      :facetime,
       :images,
       :color_1,
       :color_2,
