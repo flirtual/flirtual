@@ -50,8 +50,8 @@ export default async function ConversationPage({
 	return (
 		<>
 			<ConversationAside activeConversationId={conversation.id} />
-			<div className="flex h-full w-full flex-col items-center justify-center md:pl-8">
-				<div className="h-full w-full md:rounded-xl md:shadow-brand-1">
+			<div className="flex size-full flex-col items-center justify-center md:pl-8">
+				<div className="size-full md:rounded-xl md:shadow-brand-1">
 					<div className="mt-[max(calc(3.25rem+env(safe-area-inset-top)),3.75rem)] flex w-full bg-brand-gradient p-3 md:mt-0 md:rounded-t-xl">
 						<InlineLink
 							className="flex items-center gap-4 hocus:no-underline"
@@ -66,7 +66,8 @@ export default async function ConversationPage({
 							<span className="select-none font-montserrat text-xl font-semibold text-white-10">
 								{displayName(user)}
 							</span>
-					<FaceTimeButton user={user} />
+						</InlineLink>
+						<FaceTimeButton user={user} />
 					</div>
 					<ConversationChatbox conversationId={conversation.id} />
 				</div>
