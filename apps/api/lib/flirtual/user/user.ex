@@ -411,6 +411,7 @@ defmodule Flirtual.User do
     {:connections, :display_name},
     {:profile, :vrchat},
     {:profile, :discord},
+    {:profile, :facetime},
     :email,
     :stripe_id,
     :revenuecat_id,

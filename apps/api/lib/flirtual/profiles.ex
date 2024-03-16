@@ -69,6 +69,7 @@ defmodule Flirtual.Profiles do
                 :new,
                 :vrchat,
                 :discord,
+                :facetime,
                 :languages,
                 :custom_interests
               ] ++ @attribute_keys ++ @attribute_types
@@ -78,6 +79,7 @@ defmodule Flirtual.Profiles do
       field(:biography, :string)
       field(:vrchat, :string, default: "")
       field(:discord, :string, default: "")
+      field(:facetime, :string, default: "")
       field(:domsub, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :domsub)])
       field(:monopoly, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :monopoly)])
       field(:country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)])
@@ -96,6 +98,7 @@ defmodule Flirtual.Profiles do
         biography: profile.biography,
         vrchat: profile.vrchat,
         discord: profile.discord,
+        facetime: profile.facetime,
         domsub: profile.domsub,
         monopoly: profile.monopoly,
         country: profile.country,
@@ -159,6 +162,7 @@ defmodule Flirtual.Profiles do
         serious: transform_value(attrs.serious, profile.serious),
         vrchat: transform_value(attrs.vrchat, profile.vrchat),
         discord: transform_value(attrs.discord, profile.discord),
+        facetime: transform_value(attrs.facetime, profile.facetime),
         new: transform_value(attrs.new, profile.new),
         country: transform_value(attrs.country, profile.country),
         domsub: transform_value(attrs.domsub, profile.domsub),
@@ -212,7 +216,8 @@ defmodule Flirtual.Profiles do
            :ok <- Flag.check_openai_moderation(profile.user_id, profile.biography),
            :ok <- Hash.check_hash(profile.user_id, "display name", profile.display_name),
            :ok <- Hash.check_hash(profile.user_id, "VRChat", profile.vrchat),
-           :ok <- Hash.check_hash(profile.user_id, "Discord", profile.discord) do
+           :ok <- Hash.check_hash(profile.user_id, "Discord", profile.discord),
+           :ok <- Hash.check_hash(profile.user_id, "FaceTime", profile.facetime) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
