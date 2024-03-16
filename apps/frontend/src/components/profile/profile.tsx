@@ -65,7 +65,7 @@ export const Profile: FC<ProfileProps> = (props) => {
 				className
 			)}
 		>
-			<div className="flex w-full flex-col overflow-hidden bg-cream text-black-70 dark:bg-black-80 dark:text-white-20 sm:rounded-[1.25rem] sm:bg-white-20 sm:dark:bg-black-70">
+			<div className="flex w-full flex-col overflow-hidden bg-cream text-black-70 vision:bg-transparent dark:bg-black-80 dark:text-white-20 sm:rounded-[1.25rem] sm:bg-white-20 sm:dark:bg-black-70">
 				<ProfileImageDisplay images={user.profile.images}>
 					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">

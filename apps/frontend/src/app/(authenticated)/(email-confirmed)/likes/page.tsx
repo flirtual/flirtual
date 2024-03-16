@@ -77,7 +77,7 @@ export default async function LikesPage() {
 								const Icon = kind === "love" ? HeartIcon : PeaceIcon;
 								return (
 									<Link href={urls.profile(user)} key={id}>
-										<div className="flex items-center gap-4 bg-white-10 p-4 dark:bg-black-80 sm:rounded-xl sm:shadow-brand-1">
+										<div className="flex items-center gap-4 bg-white-10 p-4 vision:bg-white-10/30 dark:bg-black-80 sm:rounded-xl sm:shadow-brand-1">
 											<UserAvatar
 												className="aspect-square h-16 rounded-lg"
 												height={64}

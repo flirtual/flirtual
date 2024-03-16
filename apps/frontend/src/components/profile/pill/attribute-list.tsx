@@ -41,6 +41,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 						<TooltipTrigger asChild>
 							<div>
 								<Pill
+									className="vision:bg-white-30/70"
 									href={href}
 									active={
 										session.user.id !== user.id && attributeIds.includes(id)

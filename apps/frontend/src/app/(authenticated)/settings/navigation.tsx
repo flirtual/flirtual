@@ -41,7 +41,7 @@ export const SettingsNavigation: FC = () => {
 			<NavigationHeader {...{ navigationInner: layoutSegment }} />
 			<nav
 				className={twMerge(
-					"flex-col gap-8 py-8 pt-[calc(env(safe-area-inset-top)+5.75rem)] md:pt-8",
+					"flex-col gap-8 py-8 pt-[calc(env(safe-area-inset-top)+5.75rem)] vision:bg-transparent md:pt-8",
 					layoutSegment ? "hidden md:flex" : "flex"
 				)}
 			>
@@ -153,13 +153,13 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.resources.privacyPolicy}>
 							Privacy Policy
 						</NavigationLink>
-						<div className="px-6 py-2">
+						<div className="px-6 py-2 vision:text-white-20">
 							&copy; {new Date().getFullYear()} Flirtual
 						</div>
 					</NavigationCategory>
 				</div>
 				<InlineLink
-					className="px-6 text-black-10 no-underline"
+					className="px-6 text-black-10 no-underline vision:text-white-20"
 					href={urls.debugger.default}
 				>
 					Flirtual {gitCommitSha?.slice(0, 8)}

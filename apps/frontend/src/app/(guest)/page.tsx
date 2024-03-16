@@ -77,7 +77,7 @@ export default function RootIndexPage() {
 						<LandingButton href={urls.register} kind="secondary-cta">
 							Sign up
 						</LandingButton>
-						<div className="grid grid-cols-1 gap-4 gap-y-2 native:hidden md:grid-cols-2">
+						<div className="grid grid-cols-1 gap-4 gap-y-2 native:hidden vision:hidden md:grid-cols-2">
 							<MobileButton
 								href={urls.apps.apple}
 								Icon={AppleIcon}

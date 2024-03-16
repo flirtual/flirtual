@@ -10,9 +10,12 @@ export type HtmlProps = Omit<React.ComponentProps<"span">, "children"> & {
 export const Html: React.FC<HtmlProps> = ({ children, ...props }) => (
 	<span
 		data-sentry-mask
-		className={twMerge("prose dark:prose-invert", props.className)}
 		// "html" is a sanitization function, we explicitly declare
 		// allowed tags, properties, and other various attributes.
 		dangerouslySetInnerHTML={{ __html: html(children) }}
+		className={twMerge(
+			"prose vision:prose-invert dark:prose-invert",
+			props.className
+		)}
 	/>
 );

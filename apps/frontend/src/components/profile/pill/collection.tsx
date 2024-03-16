@@ -90,6 +90,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				<div className="flex w-full flex-wrap gap-2">
 					{personalityLabels.map((personalityLabel) => (
 						<Pill
+							className="vision:bg-white-30/70"
 							href={editable ? urls.settings.personality : undefined}
 							key={personalityLabel}
 							active={
@@ -106,6 +107,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				{(attributes.interest ?? []).map(({ id, name }) => (
 					<Pill
 						active={session.user.id !== user.id && sessionAttributeIds.has(id)}
+						className="vision:bg-white-30/70"
 						href={editable ? urls.settings.interests : undefined}
 						key={id}
 					>
@@ -114,6 +116,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				))}
 				{user.profile.customInterests.map((customInterest) => (
 					<Pill
+						className="vision:bg-white-30/70"
 						href={editable ? urls.settings.interests : undefined}
 						key={customInterest}
 						active={
@@ -139,6 +142,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 			{user.profile.domsub && (
 				<div className="flex w-full flex-wrap gap-2">
 					<Pill
+						className="vision:bg-white-30/70"
 						href={editable ? urls.settings.nsfw : undefined}
 						active={
 							session.user.id !== user.id &&

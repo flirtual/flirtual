@@ -152,6 +152,7 @@ module.exports = {
 		plugin(({ addVariant, addComponents }) => {
 			// Device specific variants
 			addVariant("native", `:is([data-native="true"] &)`);
+			addVariant("vision", `:is([data-vision="true"] &)`);
 
 			for (const platform of ["web", "android", "ios"]) {
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);

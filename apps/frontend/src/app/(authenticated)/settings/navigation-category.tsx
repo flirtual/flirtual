@@ -8,7 +8,7 @@ export const NavigationCategory: React.FC<NavigationCategoryProps> = ({
 	name
 }) => (
 	<div className="flex flex-col gap-4">
-		<h1 className="flex flex-col px-6 font-montserrat font-semibold text-black-80 dark:text-white-20">
+		<h1 className="flex flex-col px-6 font-montserrat font-semibold text-black-80 vision:text-white-20 dark:text-white-20">
 			{name}
 		</h1>
 		<div className="flex flex-col">{children}</div>

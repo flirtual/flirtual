@@ -30,11 +30,11 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 		>
 			{title}
 		</div>
-		<div className="h-full bg-brand-gradient sm:rounded-3xl sm:rounded-tl-none sm:p-1 sm:shadow-brand-1">
+		<div className="h-full bg-brand-gradient vision:bg-none sm:rounded-3xl sm:rounded-tl-none sm:p-1 sm:shadow-brand-1">
 			<div
 				{...containerProps}
 				className={twMerge(
-					"flex h-full w-full flex-col bg-white-20 px-8 py-10 pb-[calc(env(safe-area-inset-bottom)+2.5rem)] dark:bg-black-70 dark:text-white-20 sm:rounded-[1.25rem] sm:rounded-tl-none sm:px-16",
+					"flex h-full w-full flex-col bg-white-20 px-8 py-10 pb-[calc(env(safe-area-inset-bottom)+2.5rem)] vision:bg-transparent vision:text-white-20 dark:bg-black-70 dark:text-white-20 sm:rounded-[1.25rem] sm:rounded-tl-none sm:px-16",
 					containerProps.className
 				)}
 			>

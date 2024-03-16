@@ -20,7 +20,7 @@ export default async function SettingsLayout({
 	return (
 		<div
 			className={twMerge(
-				"flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 dark:bg-black-80 dark:text-white-20 sm:flex-col"
+				"flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 vision:bg-transparent dark:bg-black-80 dark:text-white-20 sm:flex-col"
 			)}
 		>
 			<Header />

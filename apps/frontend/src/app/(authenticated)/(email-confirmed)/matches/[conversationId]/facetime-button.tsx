@@ -14,10 +14,10 @@ export interface FaceTimeButtonProps {
 
 export const FaceTimeButton: FC<FaceTimeButtonProps> = (props) => {
 	const { user } = props;
-	const { platform } = useDevice();
+	const { platform, vision } = useDevice();
 	const [session] = useSession();
 
-	if (!session?.user.tags?.includes("debugger")) return null;
+	if (!vision && !session?.user.tags?.includes("debugger")) return null;
 
 	return (
 		<>

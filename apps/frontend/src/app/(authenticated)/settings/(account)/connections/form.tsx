@@ -7,12 +7,12 @@ import { Form, FormButton } from "~/components/forms";
 import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
-// import { useDevice } from "~/hooks/use-device";
+import { useDevice } from "~/hooks/use-device";
 
 import { AddConnectionButton } from "./add-connection-button";
 
 export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
-	// const { platform } = useDevice();
+	const { vision } = useDevice();
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
@@ -32,7 +32,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 					<span className="flex select-none text-xl">
 						Add accounts to your profile
 					</span>
-					<span className="select-none text-black-50 dark:text-white-50">
+					<span className="select-none text-black-50 vision:text-white-50 dark:text-white-50">
 						People can see your accounts after you match, to help you meet up.
 						You&apos;ll also be able to log into Flirtual with your Discord
 						account.
@@ -94,7 +94,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 									/>
 								)}
 							</FormField>
-							{session.user.tags?.includes("debugger") && (
+							{(vision || session.user.tags?.includes("debugger")) && (
 								<FormField className="col-span-2 lg:col-span-1" name="facetime">
 									{(field) => (
 										<InputText

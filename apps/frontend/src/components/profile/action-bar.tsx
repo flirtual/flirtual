@@ -50,7 +50,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 					session.user.tags?.includes("admin")) && (
 					<ProfileDropdown user={user} />
 				)}
-				<div className="flex w-full justify-center gap-6">
+				<div className="flex w-full justify-center gap-6 vision:text-white-20">
 					{session.user.id !== user.id && (
 						<>
 							<AlertDialog>

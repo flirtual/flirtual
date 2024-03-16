@@ -50,6 +50,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 			{user.profile.monopoly && (
 				<div className="flex w-full flex-wrap gap-2">
 					<Pill
+						className="vision:bg-white-30/70"
 						href={editable ? urls.settings.matchmaking() : undefined}
 						active={
 							session.user.id !== user.id &&
@@ -81,7 +82,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 		</>
 	) : (
 		<button type="button" onClick={() => setExpanded(true)}>
-			<MoreHorizontal className="h-8 w-8" />
+			<MoreHorizontal className="size-8 vision:text-white-20" />
 		</button>
 	);
 };

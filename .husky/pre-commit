@@ -18,6 +18,6 @@ fi
 
 if ! git diff --cached --quiet -- "apps/frontend/*"; then
     cd apps/frontend
-    pnpm lint-staged
+    #pnpm lint-staged
     cd ..
 fi

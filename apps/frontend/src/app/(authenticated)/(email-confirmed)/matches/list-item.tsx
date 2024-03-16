@@ -32,7 +32,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 				active && "bg-brand-gradient pb-1"
 			)}
 		>
-			<div className="flex rounded-xl bg-white-30 dark:bg-black-60">
+			<div className="flex rounded-xl bg-white-30 vision:bg-white-10/50 dark:bg-black-60">
 				<Link
 					className="shrink-0 before:absolute before:size-full"
 					href={urls.conversations.of(id)}
