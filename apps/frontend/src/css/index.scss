@@ -5,6 +5,7 @@
 * {
   min-width: 0;
   -webkit-tap-highlight-color: transparent;
+  @apply font-comic #{!important};
 }
 
 *:not(.unhide-scrollbar) {
