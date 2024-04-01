@@ -83,7 +83,7 @@ export const SwitchButton: FC<SwitchButtonProps> = ({ Icon, ...props }) => {
 				"group flex shrink-0 items-center gap-2 rounded-full p-2 transition-colors focus:outline-none",
 				active
 					? Icon === HeartIcon
-						? "bg-brand-gradient bg-cover bg-center text-white-20 shadow-brand-1 sm:bg-[url('https://media.flirtu.al/deeabe0a-dac2-4452-98f7-9778490acc92/')]"
+						? "bg-brand-gradient bg-cover bg-center text-white-20 shadow-brand-1 sm:bg-[url('https://media.flirtu.al/deeabe0a-dac2-4452-98f7-9778490acc92%2F')]"
 						: "bg-brand-gradient text-white-20 shadow-brand-1"
 					: "hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 			)}
