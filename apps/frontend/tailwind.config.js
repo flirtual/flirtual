@@ -48,8 +48,7 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				nunito: "var(--font-nunito)",
-				montserrat: "var(--font-montserrat)",
-				comic: "Comic Sans MS, Chalkboard SE, var(--font-comic_neue)"
+				montserrat: "var(--font-montserrat)"
 			},
 			colors: colors,
 			backgroundImage: {

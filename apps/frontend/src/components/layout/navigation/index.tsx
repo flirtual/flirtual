@@ -80,25 +80,13 @@ export const SwitchButton: FC<SwitchButtonProps> = ({ Icon, ...props }) => {
 		<Link
 			{...props}
 			className={twMerge(
-				"group flex shrink-0 items-center gap-2 rounded-full p-2 transition-colors focus:outline-none",
+				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none",
 				active
-					? Icon === HeartIcon
-						? "bg-brand-gradient bg-cover bg-center text-white-20 shadow-brand-1 sm:bg-[url('https://media.flirtu.al/deeabe0a-dac2-4452-98f7-9778490acc92%2F')]"
-						: "bg-brand-gradient text-white-20 shadow-brand-1"
+					? "bg-brand-gradient text-white-20 shadow-brand-1"
 					: "hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 			)}
 		>
 			<Icon className="aspect-square h-6 sm:h-8" gradient={!active} />
-			{(Icon === HeartIcon || Icon === PeaceIcon) && (
-				<span
-					className={twMerge(
-						"hidden pr-2 sm:block",
-						active ? "text-white-20" : "text-black-70 dark:text-white-20"
-					)}
-				>
-					{Icon === HeartIcon ? "Ranked" : "Casual"}
-				</span>
-			)}
 		</Link>
 	);
 };

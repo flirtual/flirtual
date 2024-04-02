@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-import { Montserrat, Nunito, Comic_Neue } from "next/font/google";
+import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Metadata, Viewport } from "next";
 import { Suspense } from "react";
@@ -33,11 +33,6 @@ const montserrat = Montserrat({
 	subsets: ["latin"]
 });
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
-const comic_neue = Comic_Neue({
-	weight: "700",
-	variable: "--font-comic_neue",
-	subsets: ["latin"]
-});
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteOrigin),
@@ -154,7 +149,6 @@ export default async function RootLayout({
 				className={twMerge(
 					montserrat.variable,
 					nunito.variable,
-					comic_neue.variable,
 					"overscroll-none"
 				)}
 			>
