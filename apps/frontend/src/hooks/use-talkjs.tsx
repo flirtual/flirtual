@@ -124,6 +124,7 @@ export const ConversationChatbox: React.FC<
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
 	const { sessionTheme } = useTheme();
+	const { native } = useDevice();
 
 	const chatbox = useMemo(() => {
 		if (!session) return null;
@@ -131,8 +132,11 @@ export const ConversationChatbox: React.FC<
 		const dark = resolveTheme(sessionTheme) === "dark";
 		const theme = dark ? "next-noheader-dark" : "next-noheader";
 
-		return session.createChatbox({ theme });
-	}, [session, sessionTheme]);
+		return session.createChatbox({
+			theme,
+			messageField: { spellcheck: true, enterSendsMessage: !native }
+		});
+	}, [session, sessionTheme, native]);
 
 	const conversation = useMemo(() => {
 		if (!session || !conversationId) return null;
