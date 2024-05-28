@@ -157,6 +157,7 @@ export const urls = {
 		communityGuidelines: "/guidelines",
 		termsOfService: "/terms",
 		privacyPolicy: "/privacy",
+		paymentTerms: "/payments",
 		contact: "https://hello.flirtu.al/",
 		contactDirect: "https://hello.flirtu.al/support/tickets/new",
 		feedback: "https://flirtual.canny.io",

@@ -154,6 +154,11 @@ export default async function SubscriptionPage() {
 						pressing the &quot;Manage&quot; button.
 					</p>
 				</div>
+				<div className="text-center">
+					<InlineLink href={urls.resources.paymentTerms}>
+						Payment Terms and Refund Policy
+					</InlineLink>
+				</div>
 			</ModelCard>
 		</SoleModelLayout>
 	);
