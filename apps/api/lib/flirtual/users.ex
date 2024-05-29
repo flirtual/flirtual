@@ -55,6 +55,14 @@ defmodule Flirtual.Users do
     if User.valid_password?(user, password), do: user
   end
 
+  def get_by_unsubscribe_token(token)
+      when is_binary(token) do
+    User
+    |> where([user], user.unsubscribe_token == ^token)
+    |> preload(^User.default_assoc())
+    |> Repo.one()
+  end
+
   def get_preferences_by_user_id(user_id)
       when is_binary(user_id) do
     Preferences
@@ -449,7 +457,8 @@ defmodule Flirtual.Users do
            {:ok, user} <-
              change(user, %{
                talkjs_signature: Talkjs.new_user_signature(user.id),
-               revenuecat_id: UUID.generate()
+               revenuecat_id: UUID.generate(),
+               unsubscribe_token: UUID.generate()
              })
              |> Repo.update(),
            {:ok, preferences} <-

@@ -76,7 +76,8 @@ defmodule Flirtual.ObanWorkers.LikeDigest do
             }
           }
           </script>
-          """
+          """,
+          "type" => "marketing"
         }
         |> Flirtual.ObanWorkers.Email.new(priority: 2, unique: [period: 60 * 60 * 24 * 6])
         |> Oban.insert()

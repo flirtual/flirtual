@@ -262,7 +262,8 @@ defmodule Flirtual.Matchmaking do
               }
             }
             </script>
-            """
+            """,
+            "type" => "marketing"
           }
           |> Flirtual.ObanWorkers.Email.new(unique: [period: 60 * 60])
           |> Oban.insert()

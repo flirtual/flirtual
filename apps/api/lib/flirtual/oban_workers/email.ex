@@ -10,7 +10,8 @@ defmodule Flirtual.ObanWorkers.Email do
             "user_id" => user_id,
             "subject" => subject,
             "body_text" => body_text,
-            "body_html" => body_html
+            "body_html" => body_html,
+            "type" => type
           } = args
       }) do
     case ExRated.check_rate(
@@ -28,6 +29,7 @@ defmodule Flirtual.ObanWorkers.Email do
           from: from,
           subject: subject,
           action_url: action_url,
+          unsubscribe_token: if(type === "marketing", do: user.unsubscribe_token, else: nil),
           body_text: body_text,
           body_html: body_html
         )

@@ -97,6 +97,11 @@ defmodule FlirtualWeb.Router do
         post("/", RevenueCatController, :webhook)
       end
 
+      scope "/unsubscribe" do
+        get("/", UnsubscribeController, :get)
+        post("/", UnsubscribeController, :post)
+      end
+
       get("/health", HealthController, :health)
     end
 

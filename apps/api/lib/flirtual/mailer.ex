@@ -26,6 +26,7 @@ defmodule Flirtual.Mailer do
 
     """
     #{body_text}
+
     ---
     X: #{x_url}
     Discord: #{discord_url}
@@ -245,6 +246,7 @@ defmodule Flirtual.Mailer do
     from = Keyword.get(options, :from, "noreply@flirtu.al")
     subject = Keyword.fetch!(options, :subject)
     action_url = Keyword.get(options, :action_url)
+    unsubscribe_token = Keyword.get(options, :unsubscribe_token)
 
     email =
       new()
@@ -262,6 +264,18 @@ defmodule Flirtual.Mailer do
           action_url
         )
       )
+
+    email =
+      if unsubscribe_token do
+        email
+        |> header(
+          "List-Unsubscribe",
+          "<https://api.flirtu.al/v1/unsubscribe?token=" <> unsubscribe_token <> ">"
+        )
+        |> header("List-Unsubscribe-Post", "List-Unsubscribe=One-Click")
+      else
+        email
+      end
 
     with {:ok, _metadata} <-
            deliver(email) do
