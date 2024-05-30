@@ -4,6 +4,8 @@ import { FC, useState } from "react";
 
 import { useSession } from "~/hooks/use-session";
 import { useDevice } from "~/hooks/use-device";
+import { InlineLink } from "~/components/inline-link";
+import { urls } from "~/urls";
 
 import { PlanCard } from "./plan-card";
 
@@ -16,6 +18,20 @@ export const PlanList: FC = () => {
 
 	const user = session.user;
 	const { subscription } = user;
+
+	if (!native) {
+		if (subscription?.active) return;
+
+		return (
+			<div className="font-bold">
+				Payments on our website are currently undergoing maintenance. To
+				purchase Premium, please download{" "}
+				<InlineLink href={urls.apps.apple}>our iOS app</InlineLink> or{" "}
+				<InlineLink href={urls.apps.google}>our Android app</InlineLink>. Thank
+				you for your understanding.
+			</div>
+		);
+	}
 
 	return (
 		<>
