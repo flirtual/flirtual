@@ -33,6 +33,7 @@
         .ql-stroke {
           @apply stroke-current fill-none;
           stroke-width: 1.5;
+          stroke-linecap: round;
 
           &.ql-thin {
             @apply stroke-1
