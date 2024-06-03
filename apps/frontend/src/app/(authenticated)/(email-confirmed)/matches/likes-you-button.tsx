@@ -48,7 +48,7 @@ export const LikesYouButton: FC = () => {
 						{likes.thumbnails?.map((thumbnail, index) => (
 							<Image
 								alt="Like preview"
-								className="rounded-full border-2 border-white-10 shadow-brand-1"
+								className="aspect-square rounded-full border-2 border-white-10 object-cover shadow-brand-1"
 								draggable={false}
 								height="34"
 								key={index}

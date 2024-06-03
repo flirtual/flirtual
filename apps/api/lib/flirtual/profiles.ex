@@ -2,6 +2,7 @@ defmodule Flirtual.Profiles do
   import Ecto.Query
   import Ecto.Changeset
 
+  import Flirtual.Utilities
   import Flirtual.Utilities.Changeset
 
   alias Flirtual.{Flag, Hash, ObanWorkers, Repo}
@@ -291,35 +292,59 @@ defmodule Flirtual.Profiles do
     end)
   end
 
-  def create_images(%Profile{} = profile, file_ids) do
+  def create_images(%Profile{} = profile, files) do
     Repo.transaction(fn ->
-      placeholders = %{
-        now: DateTime.truncate(DateTime.utc_now(), :second),
-        profile_id: profile.user_id
-      }
+      now = DateTime.truncate(DateTime.utc_now(), :second)
 
       image_count = Kernel.length(profile.images)
 
-      {_, images} =
-        Repo.insert_all(
-          Image,
-          file_ids
-          |> Enum.with_index()
-          |> Enum.map(fn {file_id, file_idx} ->
-            %{
-              id: Ecto.ShortUUID.generate(),
-              profile_id: {:placeholder, :profile_id},
-              external_id: file_id,
-              order: image_count + file_idx,
-              updated_at: {:placeholder, :now},
-              created_at: {:placeholder, :now}
-            }
-          end),
-          placeholders: placeholders,
-          returning: true
-        )
+      files
+      |> Enum.with_index()
+      |> Enum.map(fn {file, file_idx} ->
+        existing_complete_image =
+          if(is_shortuuid(file),
+            do:
+              Image
+              |> where(id: ^file)
+              |> Repo.one(),
+            else: nil
+          )
 
-      Enum.map(images, &%Image{&1 | profile: profile})
+        if is_nil(existing_complete_image) do
+          existing_incomplete_image =
+            Image
+            |> where(original_file: ^file)
+            |> order_by([image], desc: image.created_at)
+            |> Repo.one()
+
+          changeset =
+            if existing_incomplete_image do
+              Image.changeset(existing_incomplete_image, %{
+                profile_id: profile.user_id,
+                order: image_count + file_idx,
+                updated_at: now
+              })
+            else
+              %Image{}
+              |> Image.changeset(%{
+                id: Ecto.ShortUUID.generate(),
+                profile_id: profile.user_id,
+                original_file: file,
+                order: image_count + file_idx,
+                updated_at: now,
+                created_at: now
+              })
+            end
+
+          Repo.insert_or_update(changeset)
+        else
+          {:ok, existing_complete_image}
+        end
+      end)
+      |> Enum.map(fn
+        {:ok, image} -> %Image{image | profile: profile}
+        {:error, reason} -> Repo.rollback(reason)
+      end)
     end)
   end
 
@@ -332,8 +357,7 @@ defmodule Flirtual.Profiles do
                },
                %{images: image_ids}
              )
-             |> validate_uids(:images)
-             |> validate_length(:images, min: 1, max: 16)
+             |> validate_length(:images, min: 1, max: 15)
              |> apply_action(:update),
            images <-
              Enum.map(profile.images, fn image ->

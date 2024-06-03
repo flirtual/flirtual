@@ -24,7 +24,7 @@ export default async function PressPage() {
 					<ButtonLink
 						download
 						className="w-fit"
-						href={urls.media("b2c5b29f-cd31-4307-986c-7fda3a8af368")}
+						href={urls.media("presskit.zip", "files")}
 					>
 						Download
 					</ButtonLink>

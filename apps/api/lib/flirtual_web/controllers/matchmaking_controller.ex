@@ -144,16 +144,12 @@ defmodule FlirtualWeb.MatchmakingController do
       thumbnails =
         items
         |> Enum.take(3)
+        |> Enum.reverse()
         |> Enum.map(fn item ->
-          url =
-            item.profile_id
-            |> User.get()
-            |> User.avatar_thumbnail_url()
-
-          if not Subscription.active?(conn.assigns[:session].user.subscription) do
-            url <> "/-/blur/35/"
+          if Subscription.active?(conn.assigns[:session].user.subscription) do
+            item.profile_id |> User.get() |> User.avatar_url("icon")
           else
-            url
+            item.profile_id |> User.get() |> User.avatar_url("blur")
           end
         end)
 

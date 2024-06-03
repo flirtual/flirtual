@@ -1,4 +1,5 @@
-import { UCImage } from "~/components/uc-image";
+/* eslint-disable @next/next/no-img-element */
+import { urls } from "~/urls";
 
 import { SnapSection } from "./snap-section";
 
@@ -25,19 +26,19 @@ export const SectionTestimonial: React.FC<SectionTestimonialProps> = ({
 				<div className="grid min-w-max grid-cols-2 overflow-y-hidden">
 					<div className="flex animate-scroll-x-screen">
 						{images.map((source) => (
-							<UCImage
+							<img
 								className="h-full object-cover"
 								key={source}
-								src={source}
+								src={urls.media(source)}
 							/>
 						))}
 					</div>
 					<div className="flex animate-scroll-x-screen">
 						{images.map((source) => (
-							<UCImage
+							<img
 								className="h-full object-cover"
 								key={source}
-								src={source}
+								src={urls.media(source)}
 							/>
 						))}
 					</div>
@@ -45,7 +46,11 @@ export const SectionTestimonial: React.FC<SectionTestimonialProps> = ({
 			</div>
 			<div className="m-8 flex flex-wrap items-center justify-evenly gap-8 md:m-16 md:flex-nowrap">
 				{brands.map((source) => (
-					<UCImage className="w-24 md:w-full" key={source} src={source} />
+					<img
+						className="w-24 md:w-full"
+						key={source}
+						src={urls.media(source)}
+					/>
 				))}
 			</div>
 		</SnapSection>

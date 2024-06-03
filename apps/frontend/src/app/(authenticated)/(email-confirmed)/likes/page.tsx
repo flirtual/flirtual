@@ -82,6 +82,7 @@ export default async function LikesPage() {
 												className="aspect-square h-16 rounded-lg"
 												height={64}
 												user={user}
+												variant="thumb"
 												width={64}
 											/>
 											<div className="flex w-full grow flex-col">

@@ -50,9 +50,6 @@ defmodule Flirtual.User.Profile.Image.Policy do
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
-  def transform(:url, _, %Image{} = image),
-    do: Image.url(image)
-
   @own_property_keys [
     :created_at,
     :updated_at

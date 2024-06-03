@@ -41,6 +41,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						className="size-20 rounded-l-xl"
 						height={80}
 						user={user}
+						variant="thumb"
 						width={80}
 					/>
 				</Link>

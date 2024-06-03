@@ -10,6 +10,7 @@ import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
+import { urls } from "~/urls";
 
 import { UserImage } from "../user-avatar";
 import { TimeRelative } from "../time-relative";
@@ -81,12 +82,11 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 	return (
 		<UserImage
 			alt={"Profile image"}
-			className={className}
+			className={twMerge(className, large && "bg-black-90 object-contain")}
 			fill={large}
 			height={large ? undefined : 512}
-			options={{ quality: large ? "normal" : "smart" }}
 			priority={priority}
-			src={image.url}
+			src={urls.pfp(image, large ? "full" : "profile")}
 			width={large ? undefined : 512}
 		/>
 	);
@@ -115,7 +115,10 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 			<div className="flex gap-4 text-white-20">
 				<Tooltip>
 					<TooltipTrigger asChild>
-						<button type="button" onClick={() => reverseSearch(image.url)}>
+						<button
+							type="button"
+							onClick={() => reverseSearch(urls.pfp(image, "full"))}
+						>
 							<Search className="size-5" strokeWidth={2} />
 						</button>
 					</TooltipTrigger>
@@ -242,7 +245,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								className="relative flex cursor-default flex-col overflow-hidden rounded-xl text-white-20 shadow-brand-1"
 								onClick={(event) => event.stopPropagation()}
 							>
-								<div className="relative aspect-square h-[100vw] max-h-[80vh] w-full">
+								<div className="relative max-h-[80vh] w-full bg-black-90">
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">
 											<button
@@ -263,7 +266,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									)}
 									<SingleImage
 										large
-										className="touch-callout-default !relative object-cover"
+										className="touch-callout-default !relative mx-auto aspect-auto !size-auto max-h-[80vh] object-cover"
 										image={currentImage}
 									/>
 								</div>

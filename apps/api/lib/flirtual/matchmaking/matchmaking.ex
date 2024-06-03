@@ -204,7 +204,7 @@ defmodule Flirtual.Matchmaking do
       |> URI.merge("/matches/" <> conversation_id)
       |> URI.to_string()
 
-    thumbnail = target_user |> User.avatar_thumbnail_url()
+    thumbnail = target_user |> User.avatar_url("icon")
     pronouns = target_user |> User.pronouns()
 
     send_email =

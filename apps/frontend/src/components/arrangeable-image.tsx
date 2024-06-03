@@ -29,9 +29,12 @@ const ArrangeableImagePreview: React.FC<
 		<UserImage
 			{...props}
 			alt="Profile image"
-			className={twMerge("h-full w-full rounded-md", props.className)}
 			height={175}
 			width={175}
+			className={twMerge(
+				"h-full w-full rounded-md object-cover shadow-brand-1",
+				props.className
+			)}
 		/>
 	);
 };
@@ -84,7 +87,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 		<>
 			{fullPreview && (
 				<div
-					className="fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center bg-black-90/60 p-4 backdrop-blur-sm md:p-16"
+					className="fixed left-0 top-0 z-40 flex size-full items-center justify-center bg-black-90/60 p-4 backdrop-blur-sm md:p-16"
 					onClick={() => setFullPreview(false)}
 				>
 					<UserImage
@@ -102,7 +105,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 			>
 				{dragging && (
 					<div
-						className="pointer-events-none absolute left-0 top-0 z-50 w-full rounded-md shadow-brand-1"
+						className="pointer-events-none absolute left-0 top-0 z-50 w-full rounded-md"
 						style={{
 							transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)`
 						}}
@@ -121,7 +124,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 							"absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-black-90/50 p-2 backdrop-blur"
 						)}
 					>
-						<TailCircleIcon className="h-10 w-10" />
+						<TailCircleIcon className="size-10" />
 					</div>
 				) : (
 					<div
@@ -137,7 +140,7 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 									type="button"
 									onClick={onDelete}
 								>
-									<Trash className="h-4 w-4 text-white-20" />
+									<Trash className="size-4 text-white-20" />
 								</button>
 								<button
 									className="opacity-60 hocus:opacity-100"
@@ -146,11 +149,11 @@ export const ArrangeableImage: React.FC<ArrangeableImageProps> = ({
 										setFullPreview((fullPreview) => !fullPreview);
 									}}
 								>
-									<Expand className="h-4 w-4 text-white-20" />
+									<Expand className="size-4 text-white-20" />
 								</button>
 							</div>
 							<button className="opacity-60 hocus:opacity-100" type="button">
-								<MoreHorizontal className="h-4 w-4 text-white-20" />
+								<MoreHorizontal className="size-4 text-white-20" />
 							</button>
 						</div>
 					</div>

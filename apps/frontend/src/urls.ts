@@ -7,6 +7,7 @@ import { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/confi
 import { entries, fromEntries } from "./utilities";
 import { siteOrigin } from "./const";
 import { escapeVRChat } from "./vrchat";
+import { ProfileImage } from "./api/user/profile/images";
 
 export function ensureRelativeUrl(pathname: string) {
 	if (!isInternalHref(pathname))
@@ -56,10 +57,18 @@ export function isInternalHref(href: Url) {
 export const urls = {
 	// internal
 	api: process.env.NEXT_PUBLIC_API_URL as string,
-	media: (id: string) => `https://media.flirtu.al/${id}/`,
-	userAvatar: (user: User) =>
-		user.profile.images[0]?.url ??
-		urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
+	media: (id: string, bucket?: string, variant?: string) =>
+		`https://${bucket ?? "img"}.flirtu.al/${id}${variant ? `/${variant}` : ""}`,
+	pfp: (image: ProfileImage, variant: string = "profile") =>
+		image.externalId
+			? urls.media(image.externalId, "pfp", variant)
+			: image.originalFile
+				? urls.media(image.originalFile, "pfpup")
+				: urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
+	userAvatar: (user: User, variant?: string) =>
+		user.profile.images[0]
+			? urls.pfp(user.profile.images[0], variant)
+			: urls.media("8d120672-c717-49d2-b9f3-2d4479bbacf6"),
 	vrchat: (username: string) =>
 		`https://vrchat.com/home/search/${encodeURIComponent(
 			escapeVRChat(username)

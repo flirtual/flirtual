@@ -70,7 +70,21 @@ defmodule FlirtualWeb.ImageController do
   def authenticated?(conn) do
     String.match?(conn.assigns[:authorization_token_type], ~r/bearer/i) and
       conn.assigns[:authorization_token] ==
-        Application.fetch_env!(:flirtual, :scan_queue_access_token)
+        Application.fetch_env!(:flirtual, :image_access_token)
+  end
+
+  def update_variants(conn, %{
+        "original_file" => original_file,
+        "external_id" => external_id,
+        "blur_id" => blur_id
+      }) do
+    if authenticated?(conn) do
+      with {:ok, image} <- Image.update_variants(original_file, external_id, blur_id) do
+        conn |> json(image)
+      end
+    else
+      {:error, {:unauthorized, "Invalid access token"}}
+    end
   end
 
   def scan_queue(conn, %{"size" => size}) do

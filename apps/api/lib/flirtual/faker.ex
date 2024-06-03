@@ -81,7 +81,7 @@ defmodule Flirtual.Faker do
   def create_n_users(n, opts \\ []) do
     file_ids =
       if(Keyword.get(opts, :reuse_images, false)) do
-        Image |> Repo.all() |> Enum.map(& &1.external_id)
+        Image |> Repo.all() |> Enum.map(& &1.original_file)
       else
         List.duplicate(
           nil,

@@ -5,7 +5,6 @@ import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { Image } from "~/components/image";
-import { UCImage } from "~/components/uc-image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 
 import { TeamList } from "./team-list";
@@ -183,9 +182,12 @@ export default function AboutPage() {
 					<div className="flex flex-col gap-4">
 						<h1 className="text-2xl font-semibold">Timeline</h1>
 						<div className="grid auto-rows-min grid-cols-2 items-center gap-6">
-							<UCImage
+							<Image
+								alt="Flirtual in 2018"
 								className="rounded-md shadow-brand-1"
-								src="88bb9381-87ed-499d-9667-cd61eff96938"
+								height={461}
+								src={urls.media("88bb9381-87ed-499d-9667-cd61eff96938")}
+								width={810}
 							/>
 							<div className="flex flex-col px-4">
 								<span className="font-montserrat text-2xl font-bold">
@@ -202,13 +204,19 @@ export default function AboutPage() {
 									iDate&nbsp;Awards.
 								</span>
 							</div>
-							<UCImage
+							<Image
+								alt="Flirtual in 2019"
 								className="rounded-md shadow-brand-1"
-								src="c373b72d-16a0-479c-b834-ccb7041bc615"
+								height={461}
+								src={urls.media("c373b72d-16a0-479c-b834-ccb7041bc615")}
+								width={810}
 							/>
-							<UCImage
-								className="rounded-md bg-white-10 shadow-brand-1"
-								src="ead58fb3-e858-4e13-8acc-c9a5266a5b86"
+							<Image
+								alt="Flirtual in 2020"
+								className="rounded-md shadow-brand-1"
+								height={461}
+								src={urls.media("ead58fb3-e858-4e13-8acc-c9a5266a5b86")}
+								width={810}
 							/>
 							<div className="flex flex-col px-4">
 								<span className="font-montserrat text-2xl font-bold">
@@ -228,13 +236,19 @@ export default function AboutPage() {
 									groups. Its spirit lives on in Homie&nbsp;Mode.
 								</span>
 							</div>
-							<UCImage
+							<Image
+								alt="Flirtual in 2021"
 								className="rounded-md shadow-brand-1"
-								src="366e91ce-2e3d-4e00-88e3-42626ec6e42f"
+								height={461}
+								src={urls.media("366e91ce-2e3d-4e00-88e3-42626ec6e42f")}
+								width={810}
 							/>
-							<UCImage
+							<Image
+								alt="Flirtual in 2022"
 								className="rounded-md shadow-brand-1"
-								src="726f31b1-fb07-4dc8-af9f-f10985aee7be"
+								height={461}
+								src={urls.media("726f31b1-fb07-4dc8-af9f-f10985aee7be")}
+								width={810}
 							/>
 							<div className="flex flex-col px-4">
 								<span className="font-montserrat text-2xl font-bold">
@@ -254,9 +268,12 @@ export default function AboutPage() {
 									scenes.
 								</span>
 							</div>
-							<UCImage
+							<Image
+								alt="Flirtual in 2023"
 								className="rounded-md shadow-brand-1"
-								src="36446ecb-9103-4b6d-b221-7c657f17323d"
+								height={461}
+								src={urls.media("36446ecb-9103-4b6d-b221-7c657f17323d")}
+								width={810}
 							/>
 						</div>
 					</div>
@@ -265,7 +282,12 @@ export default function AboutPage() {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<InlineLink href="https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395">
-								<UCImage src="273de50f-7a03-4918-bd7c-331e11a00949" />
+								<Image
+									alt="Flirtual's 12-hour Valentine's 2022 launch party with Vanguard"
+									height={230}
+									src={urls.media("273de50f-7a03-4918-bd7c-331e11a00949")}
+									width={405}
+								/>
 							</InlineLink>
 						</TooltipTrigger>
 						<TooltipContent>
@@ -276,7 +298,12 @@ export default function AboutPage() {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<InlineLink href="https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539">
-								<UCImage src="d76791d0-bcdd-4a56-87c0-9b298e14a246" />
+								<Image
+									alt="Flirtual Speed Dating in VRChat"
+									height={230}
+									src={urls.media("d76791d0-bcdd-4a56-87c0-9b298e14a246")}
+									width={405}
+								/>
 							</InlineLink>
 						</TooltipTrigger>
 						<TooltipContent>Flirtual Speed Dating in VRChat</TooltipContent>
@@ -284,7 +311,12 @@ export default function AboutPage() {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<InlineLink href="https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4">
-								<UCImage src="0d6b9258-a330-47cd-9964-eb0143f34825" />
+								<Image
+									alt="Flirtual DJ Night in VRChat"
+									height={230}
+									src={urls.media("0d6b9258-a330-47cd-9964-eb0143f34825")}
+									width={405}
+								/>
 							</InlineLink>
 						</TooltipTrigger>
 						<TooltipContent>Flirtual DJ Night in VRChat</TooltipContent>
@@ -292,7 +324,12 @@ export default function AboutPage() {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<InlineLink href="https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c">
-								<UCImage src="2451ca85-8a4b-4c49-9d2b-d12a403271cb" />
+								<Image
+									alt="Flirtual at VRCon 2022"
+									height={230}
+									src={urls.media("2451ca85-8a4b-4c49-9d2b-d12a403271cb")}
+									width={405}
+								/>
 							</InlineLink>
 						</TooltipTrigger>
 						<TooltipContent>Flirtual at VRCon 2022</TooltipContent>
@@ -300,7 +337,12 @@ export default function AboutPage() {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<InlineLink href="https://www.youtube.com/watch?v=zwguAbPv7zg">
-								<UCImage src="7aa24041-91fb-4901-976e-a8b31b12e9a2" />
+								<Image
+									alt="Flirtual on the Today Show"
+									height={230}
+									src={urls.media("7aa24041-91fb-4901-976e-a8b31b12e9a2")}
+									width={405}
+								/>
 							</InlineLink>
 						</TooltipTrigger>
 						<TooltipContent>Flirtual on the Today Show</TooltipContent>
@@ -308,7 +350,12 @@ export default function AboutPage() {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<InlineLink href="https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788">
-								<UCImage src="c48bc92a-f0d3-4b29-877f-cdbedfadf0d5" />
+								<Image
+									alt="Flirtual at Vket 2023 Summer"
+									height={230}
+									src={urls.media("c48bc92a-f0d3-4b29-877f-cdbedfadf0d5")}
+									width={405}
+								/>
 							</InlineLink>
 						</TooltipTrigger>
 						<TooltipContent>Flirtual at Vket 2023 Summer</TooltipContent>

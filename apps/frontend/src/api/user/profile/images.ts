@@ -2,11 +2,11 @@ import { DatedModel, UuidModel } from "~/api/common";
 import { urls } from "~/urls";
 
 import { fetch, NarrowFetchOptions } from "../../exports";
-import { upload as uploadFiles } from "../../file";
 
 export type ProfileImage = UuidModel &
 	DatedModel & {
-		url: string;
+		originalFile?: string;
+		externalId?: string;
 		scanned?: boolean;
 	};
 
@@ -18,14 +18,6 @@ export const notFoundImage = {
 };
 
 export type ProfileImageList = Array<ProfileImage>;
-
-export async function upload(
-	userId: string,
-	{ body, ...options }: NarrowFetchOptions<Array<File>>
-) {
-	const fileIds = await uploadFiles(body, { store: true });
-	return create(userId, { ...options, body: fileIds });
-}
 
 export async function create(
 	userId: string,

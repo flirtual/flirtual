@@ -26,16 +26,16 @@ defmodule Flirtual.ObanWorkers.LikeDigest do
         thumbnails =
           likes
           |> Enum.take(3)
+          |> Enum.reverse()
           |> Enum.map(fn user_id ->
-            url =
+            if is_premium do
               user_id
               |> User.get()
-              |> User.avatar_thumbnail_url()
-
-            if is_premium do
-              url
+              |> User.avatar_url("icon")
             else
-              url <> "/-/blur/35/"
+              user_id
+              |> User.get()
+              |> User.avatar_url("blur")
             end
           end)
 

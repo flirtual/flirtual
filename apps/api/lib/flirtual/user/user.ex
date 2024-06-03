@@ -85,20 +85,12 @@ defmodule Flirtual.User do
     ]
   end
 
-  def avatar_url(%User{} = user), do: avatar_url(user, 1980)
+  def avatar_url(%User{} = user), do: avatar_url(user, "profile")
 
-  def avatar_url(%User{} = user, size) when is_integer(size) do
-    size = Integer.to_string(size)
-
+  def avatar_url(%User{} = user, variant) when is_binary(variant) do
     Enum.at(user.profile.images, 0)
-    |> Image.url(
-      scale_crop: ["#{size}x#{size}", :smart_faces_points],
-      format: :auto,
-      quality: :smart
-    )
+    |> Image.url(variant)
   end
-
-  def avatar_thumbnail_url(%User{} = user), do: avatar_url(user, 64)
 
   def url(%User{} = user) do
     Application.fetch_env!(:flirtual, :frontend_origin)
@@ -243,7 +235,7 @@ defmodule Flirtual.User do
       age: get_years_since(user.born_at),
       serious: user.profile.serious,
       dark: user.preferences.theme === :dark,
-      avatar_url: avatar_url(user, 384),
+      avatar_url: avatar_url(user, "profile"),
       attributes:
         [
           if(user.preferences.privacy.country === :everyone and user.profile.country,

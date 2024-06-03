@@ -38,7 +38,7 @@ export const BiographyForm: FC = () => {
 				images: profile.images.map((image) => ({
 					id: image.id,
 					file: null,
-					src: image.url
+					src: urls.pfp(image)
 				})) as Array<ImageSetValue>,
 				biography: user.profile.biography || ""
 			}}
@@ -54,7 +54,11 @@ export const BiographyForm: FC = () => {
 						}
 					}),
 					await api.user.profile.images.update(user.id, {
-						body: values.images.map((image) => image.id).filter(Boolean)
+						body: (
+							await api.user.profile.images.create(user.id, {
+								body: values.images.map((image) => image.id).filter(Boolean)
+							})
+						).map((image) => image.id)
 					})
 				]);
 

@@ -3,7 +3,7 @@
 import { FC } from "react";
 import NextImage from "next/image";
 
-import { ImageOptions, serializeImageOptions } from "~/image-loader";
+import { ImageOptions } from "~/image-loader";
 import { notFoundImage } from "~/api/user/profile/images";
 
 export type ImageProps = Omit<
@@ -14,13 +14,7 @@ export type ImageProps = Omit<
 	src: string;
 };
 
-export const Image: FC<ImageProps> = ({ options = {}, src, ...props }) => {
-	const { hostname, href } = new URL(src);
-
-	if (hostname === "media.flirtu.al") {
-		src = `${href}${serializeImageOptions(options)}`;
-	}
-
+export const Image: FC<ImageProps> = ({ src, ...props }) => {
 	return (
 		<NextImage
 			{...props}

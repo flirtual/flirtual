@@ -61,6 +61,7 @@ export default async function ConversationPage({
 								className="rounded-full"
 								height={40}
 								user={user}
+								variant="icon"
 								width={40}
 							/>
 							<span className="select-none font-montserrat text-xl font-semibold text-white-10">

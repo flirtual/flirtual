@@ -146,7 +146,6 @@ export * as connections from "./connections";
 export * as conversations from "./conversations";
 export * as debug from "./debug";
 export * as user from "./user";
-export * as file from "./file";
 export * as images from "./images";
 export * as matchmaking from "./matchmaking";
 export * as plan from "./plan";

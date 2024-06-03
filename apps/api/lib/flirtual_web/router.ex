@@ -79,6 +79,12 @@ defmodule FlirtualWeb.Router do
       end
 
       scope "/images" do
+        scope "/variants" do
+          pipe_through(:fetch_authorization_token)
+
+          post("/", ImageController, :update_variants)
+        end
+
         scope "/scan-queue" do
           pipe_through(:fetch_authorization_token)
 

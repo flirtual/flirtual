@@ -25,13 +25,10 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 		>
 			<Image
 				alt={`${name}'s avatar`}
-				className="w-12 rounded-full bg-black-70 shadow-brand-1"
+				className="aspect-square w-12 rounded-full bg-black-70 object-cover shadow-brand-1"
 				height="64"
 				src={urls.media(avatar)}
 				width="64"
-				options={{
-					scale_crop: ["64x64", "smart_faces_points"]
-				}}
 			/>
 			<div className="flex flex-col">
 				<InlineLink
@@ -48,7 +45,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 					{extra_url && (
 						<InlineLink className="text-pink" href={extra_url}>
 							{" "}
-							<ExternalLink className="inline h-4 w-4" />
+							<ExternalLink className="inline size-4" />
 						</InlineLink>
 					)}
 				</span>

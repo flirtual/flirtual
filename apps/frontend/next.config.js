@@ -2,9 +2,7 @@
 module.exports = {
 	reactStrictMode: true,
 	images: {
-		domains: ["media.flirtu.al"],
-		loader: "custom",
-		loaderFile: "./src/image-loader.ts"
+		unoptimized: true
 	},
 	modularizeImports: {
 		"@heroicons/react/24/outline": {

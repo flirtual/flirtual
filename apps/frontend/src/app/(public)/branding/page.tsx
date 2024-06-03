@@ -36,7 +36,7 @@ export default async function BrandingPage() {
 					<ImageList
 						items={[
 							{
-								name: "gradient",
+								name: "background",
 								kinds: ["svg", "png"]
 							},
 							{
@@ -61,11 +61,11 @@ export default async function BrandingPage() {
 						className="sm:grid-cols-4"
 						items={[
 							{
-								name: "mark/gradient",
+								name: "mark/background",
 								kinds: ["svg", "png"]
 							},
 							{
-								name: "mark/default",
+								name: "mark",
 								kinds: ["svg", "png"]
 							},
 							{
@@ -107,7 +107,7 @@ export default async function BrandingPage() {
 					<ButtonLink
 						download
 						className="w-fit"
-						href={urls.media("b2c5b29f-cd31-4307-986c-7fda3a8af368")}
+						href={urls.media("presskit.zip", "files")}
 					>
 						Download
 					</ButtonLink>

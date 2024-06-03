@@ -145,13 +145,13 @@ defmodule Flirtual.Discord do
     do: %{
       name: md_display_name(user, false),
       url: User.url(user) |> URI.to_string(),
-      icon_url: User.avatar_thumbnail_url(user)
+      icon_url: User.avatar_url(user, "icon")
     }
 
   def webhook_author_footer(%User{} = user),
     do: %{
       text: md_display_name(user, false),
-      icon_url: User.avatar_thumbnail_url(user)
+      icon_url: User.avatar_url(user, "icon")
     }
 
   def deliver_webhook(:suspended,
@@ -392,7 +392,7 @@ defmodule Flirtual.Discord do
                   value:
                     report.images
                     |> Enum.map(fn image ->
-                      "[📎 View image](https://media.flirtu.al/#{image}/)"
+                      "[📎 View file](https://pfpup.flirtu.al/#{image})"
                     end)
                     |> Enum.join("\n")
                 },
@@ -403,7 +403,7 @@ defmodule Flirtual.Discord do
           image:
             if(report.images !== [],
               do: %{
-                url: "https://media.flirtu.al/#{report.images |> List.first()}/"
+                url: "https://pfpup.flirtu.al/#{report.images |> List.first()}"
               },
               else: nil
             ),

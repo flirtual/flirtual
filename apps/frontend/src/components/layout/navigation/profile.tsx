@@ -90,10 +90,11 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 			>
 				<UserAvatar
 					priority
-					className="h-10 w-10 rounded-full transition-transform"
-					height={64}
+					className="size-10 rounded-full transition-transform"
+					height={40}
 					user={user}
-					width={64}
+					variant="icon"
+					width={40}
 				/>
 			</button>
 			<AnimatePresence>
@@ -111,9 +112,10 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 						>
 							<UserAvatar
 								className="mt-2 h-8 w-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 sm:mb-2 sm:mt-0"
-								height={128}
+								height={40}
 								user={user}
-								width={128}
+								variant="icon"
+								width={40}
 							/>
 							<span className="pb-1 pl-2 pt-2 font-montserrat text-lg font-semibold sm:pb-2 sm:pt-1">
 								Profile

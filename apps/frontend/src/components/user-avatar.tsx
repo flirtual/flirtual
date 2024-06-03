@@ -6,15 +6,22 @@ import { urls } from "~/urls";
 
 import { Image, ImageProps } from "./image";
 
-export type UserAvatarProps = Omit<ImageProps, "src" | "alt"> & { user: User };
+export type UserAvatarProps = Omit<ImageProps, "src" | "alt"> & {
+	user: User;
+	variant?: string;
+};
 
-export const UserAvatar: React.FC<UserAvatarProps> = ({ user, ...props }) => {
+export const UserAvatar: React.FC<UserAvatarProps> = ({
+	user,
+	variant = "profile",
+	...props
+}) => {
 	return (
 		<UserImage
 			{...props}
 			alt={`${displayName(user)}'s avatar`}
 			draggable={false}
-			src={urls.userAvatar(user)}
+			src={urls.userAvatar(user, variant)}
 		/>
 	);
 };
@@ -27,6 +34,7 @@ export const UserThumbnail: FC<UserThumbnailProps> = (props) => {
 			{...props}
 			className={twMerge("rounded-xl", props.className)}
 			height={32}
+			variant="icon"
 			width={32}
 		/>
 	);
@@ -34,20 +42,15 @@ export const UserThumbnail: FC<UserThumbnailProps> = (props) => {
 
 export type UserImageProps = Omit<ImageProps, "src"> & { src: string };
 
-export const UserImage: React.FC<UserImageProps> = ({
-	options,
-	src,
-	...props
-}) => {
+export const UserImage: React.FC<UserImageProps> = ({ src, ...props }) => {
 	return (
 		<Image
 			{...props}
-			className={twMerge("aspect-square shrink-0 select-none", props.className)}
 			src={src}
-			options={{
-				scale_crop: [`1980x1980`, "smart_faces_points"],
-				...options
-			}}
+			className={twMerge(
+				"aspect-square shrink-0 select-none object-cover",
+				props.className
+			)}
 		/>
 	);
 };

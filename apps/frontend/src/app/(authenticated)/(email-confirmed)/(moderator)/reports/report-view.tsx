@@ -220,17 +220,22 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 									<div className="flex flex-wrap gap-2">
 										{report.images.map((image) => (
 											<Link
-												href={urls.media(image)}
+												href={urls.media(image, "pfpup")}
 												key={image}
 												target="_blank"
 											>
-												<Image
-													alt="Report attachment"
-													className="rounded-md"
-													height={128}
-													src={urls.media(image)}
-													width={128}
-												/>
+												{!image.includes(".") ||
+												/\.(jpg|jpeg|png|gif|webm)$/i.test(image) ? (
+													<Image
+														alt="Report attachment"
+														className="rounded-md"
+														height={128}
+														src={urls.media(image, "pfpup")}
+														width={128}
+													/>
+												) : (
+													image.split("-").pop()
+												)}
 											</Link>
 										))}
 									</div>

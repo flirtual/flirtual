@@ -18,8 +18,6 @@ export const gitCommitUrl = gitCommitSha
 	? `https://github.com/${gitOrganization}/${gitRepository}/commit/${gitCommitSha}`
 	: null;
 
-export const uploadcarePublicKey = process.env
-	.NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY as string;
 export const turnstileSiteKey = process.env
 	.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 export const talkjsAppId = process.env.NEXT_PUBLIC_TALKJS_APP_ID as string;

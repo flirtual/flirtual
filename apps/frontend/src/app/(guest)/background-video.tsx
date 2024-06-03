@@ -1,4 +1,5 @@
-import { UCImage } from "~/components/uc-image";
+import { Image } from "~/components/image";
+import { urls } from "~/urls";
 
 export const BackgroundVideo: React.FC = () => (
 	<video
@@ -8,17 +9,18 @@ export const BackgroundVideo: React.FC = () => (
 		loop
 		muted
 		playsInline
-		className="absolute left-0 top-0 h-full w-full object-cover brightness-50"
-		poster="https://media.flirtu.al/6be390d0-4479-4a98-8c7a-10257ea5585a/-/format/auto/-/quality/smart/-/resize/1920x/"
+		className="absolute left-0 top-0 size-full object-cover brightness-50"
+		poster="https://img.flirtu.al/6be390d0-4479-4a98-8c7a-10257ea5585a"
 	>
 		<source
-			src="https://media.flirtu.al/300c30ee-6b22-48a7-8d40-dc0deaf673ed/video.webm"
+			src="https://img.flirtu.al/video.webm"
 			type="video/webm; codecs=vp9"
 		/>
-		<source
-			src="https://media.flirtu.al/e67df8d2-295c-4bc0-9ebf-33f477267edd/video.mp4"
-			type="video/mp4"
+		<source src="https://img.flirtu.al/video.mp4" type="video/mp4" />
+		<Image
+			fill
+			alt="Flirtual dates"
+			src={urls.media("6be390d0-4479-4a98-8c7a-10257ea5585a")}
 		/>
-		<UCImage src="6be390d0-4479-4a98-8c7a-10257ea5585a" />
 	</video>
 );

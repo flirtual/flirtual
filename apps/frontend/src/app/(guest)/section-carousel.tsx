@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useCallback, useState } from "react";
 
-import { UCImage } from "~/components/uc-image";
 import { useInterval } from "~/hooks/use-interval";
+import { urls } from "~/urls";
 
 import { SnapSection } from "./snap-section";
 
@@ -33,6 +34,7 @@ export const SectionCarousel: React.FC<SectionCarouselProps> = ({ values }) => {
 			<div className="flex">
 				{values.map(([source, label], index) => (
 					<button
+						// eslint-disable-next-line tailwindcss/enforces-shorthand
 						className="absolute flex h-screen w-screen shrink-0 snap-center snap-always transition-opacity duration-500"
 						key={source}
 						type="button"
@@ -45,14 +47,14 @@ export const SectionCarousel: React.FC<SectionCarouselProps> = ({ values }) => {
 							next();
 						}}
 					>
-						<div className="absolute z-10 flex h-full w-full select-none items-center justify-center p-16">
+						<div className="absolute z-10 flex size-full select-none items-center justify-center p-16">
 							<span className="font-nunito text-5xl font-bold [text-shadow:0_0_16px_#000] md:text-7xl">
 								{label}
 							</span>
 						</div>
-						<UCImage
-							className="h-full w-full shrink-0 object-cover brightness-75"
-							src={source}
+						<img
+							className="size-full shrink-0 object-cover brightness-75"
+							src={urls.media(source)}
 						/>
 					</button>
 				))}
