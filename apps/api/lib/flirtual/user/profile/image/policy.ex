@@ -51,6 +51,7 @@ defmodule Flirtual.User.Profile.Image.Policy do
   def authorize(_, _, _), do: false
 
   @own_property_keys [
+    :original_file,
     :created_at,
     :updated_at
   ]
@@ -72,6 +73,7 @@ defmodule Flirtual.User.Profile.Image.Policy do
       do: image[key]
 
   @moderator_property_keys [
+    :original_file,
     :scanned,
     :created_at,
     :updated_at
