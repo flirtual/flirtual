@@ -84,7 +84,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     |> where(scanned: false)
     |> order_by(asc: :created_at)
     |> limit(^size)
-    |> select([image], image.id)
+    |> select([image], %{id: image.id, file: image.original_file})
     |> Repo.all()
   end
 
