@@ -41,7 +41,7 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 						{user.email}
 					</span>
 					, for a confirmation link to activate your account. If you don&apos;t
-					see it in your inbox, please check your spam folder!
+					see it in your inbox, check your spam/junk/trash folders!
 				</span>
 				<FormButton>Resend confirmation email</FormButton>
 			</Form>
@@ -70,8 +70,8 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 								Wrong email address?
 							</h1>
 							<h2 className="text-lg">
-								If you provided the wrong address, or if you&apos;d like to try
-								a different email, you can enter a new address below:
+								If you entered the wrong email, or if you&apos;d like to try a
+								different email, you can enter a new one below:
 							</h2>
 						</div>
 						<FormField name="email">

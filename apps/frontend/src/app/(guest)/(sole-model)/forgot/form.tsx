@@ -35,8 +35,8 @@ export const ForgotPasswordForm: React.FC = () => {
 							with a link to reset your password.
 							<br />
 							<br />
-							If you don&apos;t see it, check your spam folder, and if you still
-							don&apos;t see it, contact us.
+							If you don&apos;t see it, check your spam/junk/trash folders, and
+							if you still don&apos;t see it, contact us.
 						</p>
 						<div className="flex gap-4">
 							<ButtonLink className="w-fit" href={urls.login()} size="sm">
