@@ -87,6 +87,7 @@ defmodule Flirtual.User.Profile do
     field(:vrchat, :string)
     field(:discord, :string)
     field(:facetime, :string)
+    field(:playlist, :string)
 
     field(:queue_love_reset_at, :utc_datetime)
     field(:queue_love_likes, :integer)
@@ -202,6 +203,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :vrchat,
       :discord,
       :facetime,
+      :playlist,
       :images,
       :color_1,
       :color_2,

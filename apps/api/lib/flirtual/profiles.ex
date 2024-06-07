@@ -71,6 +71,7 @@ defmodule Flirtual.Profiles do
                 :vrchat,
                 :discord,
                 :facetime,
+                :playlist,
                 :languages,
                 :custom_interests
               ] ++ @attribute_keys ++ @attribute_types
@@ -81,6 +82,7 @@ defmodule Flirtual.Profiles do
       field(:vrchat, :string, default: "")
       field(:discord, :string, default: "")
       field(:facetime, :string, default: "")
+      field(:playlist, :string, default: "")
       field(:domsub, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :domsub)])
       field(:monopoly, Ecto.Enum, values: [:none | Ecto.Enum.values(Profile, :monopoly)])
       field(:country, Ecto.Enum, values: [:none | Countries.list(:iso_3166_1)])
@@ -100,6 +102,7 @@ defmodule Flirtual.Profiles do
         vrchat: profile.vrchat,
         discord: profile.discord,
         facetime: profile.facetime,
+        playlist: profile.playlist,
         domsub: profile.domsub,
         monopoly: profile.monopoly,
         country: profile.country,
@@ -141,6 +144,25 @@ defmodule Flirtual.Profiles do
         end
       end)
       |> validate_length(:interest, min: 1, max: 10)
+      |> validate_playlist()
+    end
+
+    defp validate_playlist(changeset) do
+      validate_change(changeset, :playlist, fn :playlist, playlist ->
+        patterns = [
+          ~r/^https?:\/\/open\.spotify\.com\/playlist\/[\dA-Za-z]+/,
+          ~r/^https?:\/\/music\.apple\.com\/(?:[a-z]{2}\/)?playlist\/pl\.[\dA-Za-z-]+/,
+          ~r/^https?:\/\/(www\.|listen\.)?tidal\.com\/(browse\/)?playlist\/[\dA-Za-z-]+/,
+          ~r/^https?:\/\/music\.amazon\.[.a-z]+\/(user-)?playlists\/[\dA-Za-z]+/,
+          ~r/^https?:\/\/(www\.)?deezer\.com\/(?:[a-z]{2}\/)?playlist\/[\dA-Za-z-]+/,
+          ~r/^$/
+        ]
+
+        case Enum.any?(patterns, &Regex.match?(&1, playlist)) do
+          true -> []
+          false -> [{:playlist, "invalid playlist URL"}]
+        end
+      end)
     end
 
     def transform_value(value, default) do
@@ -164,6 +186,7 @@ defmodule Flirtual.Profiles do
         vrchat: transform_value(attrs.vrchat, profile.vrchat),
         discord: transform_value(attrs.discord, profile.discord),
         facetime: transform_value(attrs.facetime, profile.facetime),
+        playlist: transform_value(attrs.playlist, profile.playlist),
         new: transform_value(attrs.new, profile.new),
         country: transform_value(attrs.country, profile.country),
         domsub: transform_value(attrs.domsub, profile.domsub),

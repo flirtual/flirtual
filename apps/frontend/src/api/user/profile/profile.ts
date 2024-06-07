@@ -36,6 +36,7 @@ export type Profile = Partial<UpdatedAtModel> & {
 	vrchat?: string | null;
 	discord?: string | null;
 	facetime?: string | null;
+	playlist?: string | null;
 	openness?: number;
 	conscientiousness?: number;
 	agreeableness?: number;
@@ -75,6 +76,7 @@ export type UpdateProfileBody = Partial<
 		| "vrchat"
 		| "discord"
 		| "facetime"
+		| "playlist"
 	>
 > & {
 	[K in ProfileAttribute as `${K}Id`]?: Array<string>;

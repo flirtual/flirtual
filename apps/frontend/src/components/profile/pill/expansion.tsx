@@ -11,6 +11,8 @@ import { Attribute } from "~/api/attributes";
 import { filterBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 
+import { ProfilePlaylist } from "../playlist";
+
 import { PillAttributeList } from "./attribute-list";
 import { Pill } from "./pill";
 
@@ -78,6 +80,9 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 				href={editable ? urls.settings.info("platform") : undefined}
 				user={user}
 			/>
+			{user.profile.playlist && (
+				<ProfilePlaylist className="mt-4" playlist={user.profile.playlist} />
+			)}
 			<div />
 		</>
 	) : (
