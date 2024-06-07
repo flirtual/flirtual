@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { urls } from "~/urls";
+import { api } from "~/api";
 
 import { SnapSection } from "./snap-section";
 
@@ -8,10 +9,12 @@ export interface SectionTestimonialProps {
 	brands: Array<string>;
 }
 
-export const SectionTestimonial: React.FC<SectionTestimonialProps> = ({
+export const SectionTestimonial: React.FC<SectionTestimonialProps> = async ({
 	images,
 	brands
 }) => {
+	const totalUsers = await api.user.count();
+
 	return (
 		<SnapSection
 			className="grid h-screen grid-rows-[max-content,1fr,max-content] bg-brand-gradient"
@@ -19,7 +22,8 @@ export const SectionTestimonial: React.FC<SectionTestimonialProps> = ({
 		>
 			<div className="flex items-center justify-center p-8 md:p-16">
 				<span className="font-montserrat text-3xl font-extrabold md:text-5xl">
-					Match with 85,000+ users from all over the world!
+					Match with {(Math.floor(totalUsers / 5000) * 5000).toLocaleString()}+
+					users from all over the world!
 				</span>
 			</div>
 			<div className="flex overflow-x-hidden">
