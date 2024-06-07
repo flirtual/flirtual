@@ -53,20 +53,6 @@ const reverseSearchEngines = [
 			`https://www.bing.com/images/search?q=imgurl:${encodeURIComponent(
 				url
 			)}&view=detailv2&iss=sbi&FORM=IRSBIQ`
-	},
-	{
-		name: "Karmadecay",
-		url: (url: string) =>
-			`http://karmadecay.com/search?q=${encodeURIComponent(url)}`
-	},
-	{
-		name: "IQDB",
-		url: (url: string) => `https://iqdb.org/?url=${encodeURIComponent(url)}`
-	},
-	{
-		name: "ImgOps",
-		url: (url: string) =>
-			`https://imgops.com/start?url=${encodeURIComponent(url)}`
 	}
 ];
 
