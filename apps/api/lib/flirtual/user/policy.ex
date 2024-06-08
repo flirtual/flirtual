@@ -100,6 +100,7 @@ defmodule Flirtual.User.Policy do
   end
 
   @admin_actions [
+    :unsuspend,
     :payments_ban,
     :payments_unban,
     :sudo,
@@ -289,6 +290,7 @@ defmodule Flirtual.User.Policy do
   @admin_property_keys [
     :email,
     :born_at,
+    :chargebee_id,
     :stripe_id,
     :revenuecat_id
   ]

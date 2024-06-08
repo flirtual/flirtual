@@ -394,7 +394,7 @@ defmodule FlirtualWeb.UsersController do
   def unsuspend(conn, %{"user_id" => user_id}) do
     user = Users.get(user_id)
 
-    if is_nil(user) or Policy.cannot?(conn, :suspend, user) do
+    if is_nil(user) or Policy.cannot?(conn, :unsuspend, user) do
       {:error, {:forbidden, "Cannot unsuspend this user", %{user_id: user_id}}}
     else
       with {:ok, user} <- User.unsuspend(user, conn.assigns[:session].user) do
