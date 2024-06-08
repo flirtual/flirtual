@@ -1,0 +1,29 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "pfp-upload"
+main = "src/index.js"
+compatibility_date = "2024-05-24"
+compatibility_flags = [ "nodejs_compat" ]
+tail_consumers = [{service = "pfp-upload-tail"}]
+
+# Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
+# Docs:
+# - https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
+# Note: Use secrets to store sensitive data.
+# - https://developers.cloudflare.com/workers/configuration/secrets/
+[vars]
+BASE_URL = "flirtu.al"
+
+# Bind a Queue consumer. Queue Consumers can retrieve tasks scheduled by Producers to act on them.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#queues
+[[queues.consumers]]
+queue = "pfp-upload"
+
+# Bind an R2 Bucket. Use R2 to store arbitrarily large blobs of data, such as files.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#r2-buckets
+[[r2_buckets]]
+binding = "SOURCE_BUCKET"
+bucket_name = "pfpup"
+
+[[r2_buckets]]
+binding = "DESTINATION_BUCKET"
+bucket_name = "pfp"

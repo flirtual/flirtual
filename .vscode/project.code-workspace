@@ -1,19 +1,35 @@
 {
 	"folders": [
 		{
-			"name": "✨ flirtual",
+			"name": "💘 Flirtual",
 			"path": "../"
 		},
 		{
-			"name": "🚀 api.flirtu.al",
+			"name": "🧪 API",
 			"path": "../apps/api"
 		},
 		{
-			"name": "🚀 flirtu.al",
+			"name": "🖥️ Frontend",
 			"path": "../apps/frontend"
 		},
 		{
-			"name": "🚀 image classification",
+			"name": "🤖 Android",
+			"path": "../apps/frontend/android"
+		},
+		{
+			"name": "🍎 iOS",
+			"path": "../apps/frontend/ios"
+		},
+		{
+			"name": "🥽 visionOS",
+			"path": "../apps/frontend/visionos"
+		},
+		{
+			"name": "📸 Image Variants",
+			"path": "../apps/image-variants"
+		},
+		{
+			"name": "🛡️ Image Classification",
 			"path": "../apps/image-classification"
 		},
 	],

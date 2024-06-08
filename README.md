@@ -13,6 +13,8 @@ Flirtual is a monorepo, with the following applications:
 
 * [**API**](/apps/api/) - The backend service, written in Elixir, served using [Phoenix](https://phoenixframework.org/); Responsible for handling all user data, authentication, and communication between the frontend and other services.
 
+* [**Image Variants**](/apps/image-variants/) - The image variant generation service, written in JavaScript, using a Cloudflare Queue and Worker.
+
 * [**Image Classification**](/apps/image-classification/) - The image classification service, written in TypeScript; AI classification using [TensorFlow](https://www.tensorflow.org).
 
 ## Contributing
