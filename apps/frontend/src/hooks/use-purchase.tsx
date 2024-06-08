@@ -67,13 +67,19 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					: api.subscription.manageUrl().toString();
 			}
 
+			const { customerInfo } = await Purchases.getCustomerInfo();
+
+			if (!planId && customerInfo.managementURL) {
+				window.open(customerInfo.managementURL, "_blank");
+				return;
+			}
+
 			const plan = plans?.find((plan) => plan.id === planId);
 
 			if (!plan || !plan.googleId || !plan.appleId || !plan.revenuecatId)
 				throw new Error("Plan not available");
 
 			const productId = platform === "apple" ? plan.appleId : plan.googleId;
-			const { customerInfo } = await Purchases.getCustomerInfo();
 
 			if (
 				customerInfo.activeSubscriptions.includes(productId) &&

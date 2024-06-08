@@ -96,7 +96,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				</span>
 				<span className="mt-1 text-xl">{duration}</span>
 			</div>
-			{!!discount && (
+			{!!discount && duration !== "lifetime" && (
 				<div
 					className="absolute right-0 top-0 flex aspect-square items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
 					style={{
