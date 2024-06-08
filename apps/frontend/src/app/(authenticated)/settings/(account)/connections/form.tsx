@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { ModelCard } from "~/components/model-card";
 import { InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
@@ -16,6 +18,9 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
+	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
+		null
+	);
 
 	if (!session) return null;
 
@@ -36,6 +41,16 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 					playlist: user.profile.playlist || ""
 				}}
 				onSubmit={async ({ vrchat, facetime, playlist }) => {
+					if (/deezer\.page\.link/.test(playlist)) {
+						setPlaylistSubmitted("deezer.page.link");
+					} else if (/youtu\.?be/.test(playlist)) {
+						setPlaylistSubmitted("youtube");
+					} else if (playlist === "") {
+						setPlaylistSubmitted(null);
+					} else {
+						setPlaylistSubmitted("other");
+					}
+
 					const [profile] = await Promise.all([
 						await api.user.profile.update(user.id, {
 							body: {
@@ -136,6 +151,23 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 									/>
 								)}
 							</FormField>
+							{playlistSubmitted === "deezer.page.link" ? (
+								<span className="select-none italic text-red-600">
+									Sorry, deezer.page.link links are not supported. Please
+									provide a deezer.com link. You can find this by following your
+									link and copying the URL from your browser.
+								</span>
+							) : playlistSubmitted === "youtube" ? (
+								<span className="select-none italic text-red-600">
+									Sorry, YouTube Music playlists are not supported.
+								</span>
+							) : playlistSubmitted === "other" ? (
+								<span className="select-none italic text-black-50 vision:text-white-50 dark:text-white-50 vision:sm:text-black-50">
+									If your playlist doesn&apos;t appear below, ensure you have
+									provided a valid <strong>public playlist</strong> link. Songs,
+									albums, and private playlists are not supported.
+								</span>
+							) : null}
 							<span className="select-none italic text-black-50 vision:text-white-50 dark:text-white-50 vision:sm:text-black-50">
 								Be careful: if your real name or other personal information is
 								on your music streaming profile, it will be public.
