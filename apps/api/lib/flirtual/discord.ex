@@ -181,14 +181,20 @@ defmodule Flirtual.Discord do
                   %{
                     name: "Active subscription",
                     value:
-                      if(user.subscription.stripe_id,
+                      if(user.subscription.chargebee_id,
                         do:
-                          "[Issue refund](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})",
+                          "[Issue refund](https://flirtual.chargebee.com/d/subscriptions/#{user.subscription.chargebee_id})",
                         else:
-                          if(user.subscription.google_id,
+                          if(user.subscription.stripe_id,
                             do:
-                              "[Issue refund](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})",
-                            else: "[Send refund reminder](https://hello.flirtu.al/a/tickets/new)"
+                              "[Issue refund](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})",
+                            else:
+                              if(user.subscription.google_id,
+                                do:
+                                  "[Issue refund](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})",
+                                else:
+                                  "[Send refund reminder](https://hello.flirtu.al/a/tickets/new)"
+                              )
                           )
                       )
                   }
@@ -237,14 +243,19 @@ defmodule Flirtual.Discord do
                 %{
                   name: "Active subscription",
                   value:
-                    if(user.subscription.stripe_id,
+                    if(user.subscription.chargebee_id,
                       do:
-                        "[Cancel subscription](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})",
+                        "[Cancel subscription](https://flirtual.chargebee.com/d/subscriptions/#{user.subscription.chargebee_id})",
                       else:
-                        if(user.subscription.google_id,
+                        if(user.subscription.stripe_id,
                           do:
-                            "[Get transaction ID](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id}), [Cancel subscription](https://play.google.com/console/u/0/developers/orders)",
-                          else: "Apple subscription - cannot cancel"
+                            "[Cancel subscription](https://dashboard.stripe.com/subscriptions/#{user.subscription.stripe_id})",
+                          else:
+                            if(user.subscription.google_id,
+                              do:
+                                "[Get transaction ID](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id}), [Cancel subscription](https://play.google.com/console/u/0/developers/orders)",
+                              else: "Apple subscription - cannot cancel"
+                            )
                         )
                     )
                 }

@@ -80,6 +80,13 @@ config :stripity_stripe,
   signing_secret: System.fetch_env!("STRIPE_SIGNING_SECRET"),
   json_library: Poison
 
+config :chargebeex,
+  namespace: System.fetch_env!("CHARGEBEE_NAMESPACE"),
+  api_key: System.fetch_env!("CHARGEBEE_ACCESS_TOKEN")
+
+config :flirtual, FlirtualWeb.ChargebeeController,
+  signing_secret: System.fetch_env!("CHARGEBEE_SIGNING_SECRET")
+
 config :flirtual, FlirtualWeb.RevenueCatController,
   api_key: System.fetch_env!("REVENUECAT_ACCESS_TOKEN"),
   signing_secret: System.fetch_env!("REVENUECAT_SIGNING_SECRET")

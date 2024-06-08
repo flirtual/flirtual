@@ -22,7 +22,7 @@ import { usePlans } from "./use-plans";
 import { useToast } from "./use-toast";
 
 interface PurchaseContext {
-	purchase: (planId: string) => Promise<void>;
+	purchase: (planId?: string) => Promise<void | string>;
 	packages: Array<PurchasesPackage>;
 }
 
@@ -60,13 +60,11 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	}, [platform, native, user?.revenuecatId]);
 
 	const purchase = useCallback(
-		async (planId: string) => {
+		async (planId?: string) => {
 			if (!native) {
-				const url = user?.subscription?.active
-					? api.subscription.manageUrl().toString()
-					: api.subscription.checkoutUrl(planId).toString();
-
-				return router.push(url);
+				return planId
+					? api.subscription.checkoutUrl(planId).toString()
+					: api.subscription.manageUrl().toString();
 			}
 
 			const plan = plans?.find((plan) => plan.id === planId);
@@ -98,7 +96,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					toasts.addError(reason);
 				});
 		},
-		[router, toasts, plans, native, user?.subscription?.active, platform]
+		[native, plans, platform, router, toasts]
 	);
 
 	return (

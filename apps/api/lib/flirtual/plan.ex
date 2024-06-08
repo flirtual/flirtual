@@ -20,6 +20,7 @@ defmodule Flirtual.Plan do
     field(:price_id, :string)
     field(:google_id, :string)
     field(:apple_id, :string)
+    field(:chargebee_id, :string)
     field(:revenuecat_id, :string)
 
     timestamps(updated_at: false)
@@ -32,6 +33,10 @@ defmodule Flirtual.Plan do
   def get(product_id: product_id, price_id: price_id)
       when is_binary(product_id) and is_binary(price_id) do
     Plan |> where(product_id: ^product_id, price_id: ^price_id) |> Repo.one()
+  end
+
+  def get(chargebee_id: chargebee_id) when is_binary(chargebee_id) do
+    Plan |> where(chargebee_id: ^chargebee_id) |> Repo.one()
   end
 
   def get(revenuecat_id: revenuecat_id) when is_binary(revenuecat_id) do
@@ -52,9 +57,9 @@ defimpl Jason.Encoder, for: Flirtual.Plan do
       :name,
       :product_id,
       :price_id,
-      :price_id,
       :google_id,
       :apple_id,
+      :chargebee_id,
       :revenuecat_id,
       :created_at,
       :purchasable

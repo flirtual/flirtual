@@ -1,8 +1,13 @@
 import { DatedModel, UuidModel } from "./common";
-import { newUrl } from "./exports";
+import { NarrowFetchOptions, fetch, newUrl } from "./exports";
 import { Plan } from "./plan";
 
-type SubscriptionPlatform = "web" | "android" | "ios";
+type SubscriptionPlatform =
+	| "stripe"
+	| "chargebee"
+	| "android"
+	| "ios"
+	| "unknown";
 
 export type Subscription = UuidModel &
 	DatedModel & {
@@ -22,4 +27,8 @@ export function checkoutUrl(planId: string) {
 
 export function manageUrl() {
 	return newUrl("subscriptions/manage");
+}
+
+export async function cancel(options: NarrowFetchOptions = {}) {
+	return fetch("post", "subscriptions/cancel", options);
 }

@@ -97,6 +97,12 @@ defmodule FlirtualWeb.Router do
         end
       end
 
+      scope "/chargebee" do
+        pipe_through(:fetch_authorization_token)
+
+        post("/", ChargebeeController, :webhook)
+      end
+
       scope "/revenuecat" do
         pipe_through(:fetch_authorization_token)
 
@@ -217,6 +223,7 @@ defmodule FlirtualWeb.Router do
 
           get("/checkout", SubscriptionController, :checkout)
           get("/manage", SubscriptionController, :manage)
+          post("/cancel", SubscriptionController, :cancel)
         end
 
         scope "/reports" do
@@ -314,6 +321,9 @@ defmodule FlirtualWeb.Router do
 
             post("/indef-shadowban", UsersController, :indef_shadowban)
             delete("/indef-shadowban", UsersController, :unindef_shadowban)
+
+            post("/payments-ban", UsersController, :payments_ban)
+            delete("/payments-ban", UsersController, :payments_unban)
 
             scope "/warn" do
               post("/", UsersController, :warn)

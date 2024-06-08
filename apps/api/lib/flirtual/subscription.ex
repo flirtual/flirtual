@@ -8,12 +8,7 @@ defmodule Flirtual.Subscription do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.Plan
-  alias Flirtual.Profiles
-  alias Flirtual.Repo
-  alias Flirtual.Stripe
-  alias Flirtual.Subscription
-  alias Flirtual.User
+  alias Flirtual.{Plan, Profiles, Repo, Stripe, Subscription, User}
 
   schema "subscriptions" do
     belongs_to(:user, User)
@@ -23,6 +18,7 @@ defmodule Flirtual.Subscription do
     field(:platform, :string, virtual: true)
 
     field(:stripe_id, :string)
+    field(:chargebee_id, :string)
     field(:google_id, :string)
     field(:apple_id, :string)
     field(:cancelled_at, :utc_datetime)
@@ -47,31 +43,14 @@ defmodule Flirtual.Subscription do
 
   defp update_platform_id(platform_id, event_id) do
     case platform_id do
-      "APP_STORE" -> %{apple_id: event_id, google_id: nil, stripe_id: nil}
-      "MAC_APP_STORE" -> %{apple_id: event_id, google_id: nil, stripe_id: nil}
-      "PLAY_STORE" -> %{google_id: event_id, apple_id: nil, stripe_id: nil}
+      "CHARGEBEE" -> %{apple_id: nil, google_id: nil, stripe_id: nil, chargebee_id: event_id}
+      "APP_STORE" -> %{apple_id: event_id, google_id: nil, stripe_id: nil, chargebee_id: nil}
+      "MAC_APP_STORE" -> %{apple_id: event_id, google_id: nil, stripe_id: nil, chargebee_id: nil}
+      "PLAY_STORE" -> %{google_id: event_id, apple_id: nil, stripe_id: nil, chargebee_id: nil}
     end
   end
 
-  def apply(source, user, plan, stripe_id \\ nil)
-
-  # Stripe: Create subscription, since user doesn't have an existing one.
-  def apply(:stripe, %User{subscription: nil} = user, %Plan{} = plan, stripe_id)
-      when is_binary(stripe_id) do
-    Repo.transaction(fn ->
-      with {:ok, subscription} <-
-             %Subscription{}
-             |> change(%{user_id: user.id, plan_id: plan.id, stripe_id: stripe_id})
-             |> Repo.insert(),
-           {:ok, _} <-
-             reset_matchmaking_timer(user.profile) do
-        {:ok, subscription}
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
-  end
+  def apply(source, user, plan, _ \\ nil)
 
   # Stripe: Update subscription, stripe_id didn't change.
   def apply(
@@ -149,6 +128,49 @@ defmodule Flirtual.Subscription do
                google_id: nil,
                cancelled_at: nil
              })
+             |> Repo.update(),
+           {:ok, _} <- reset_matchmaking_timer(user.profile) do
+        {:ok, subscription}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  # Chargebee: Create subscription, since user doesn't have an existing one.
+  def apply(:chargebee, %User{subscription: nil} = user, %Plan{} = plan, chargebee_id) do
+    Repo.transaction(fn ->
+      with {:ok, subscription} <-
+             %Subscription{}
+             |> change(%{user_id: user.id, plan_id: plan.id, chargebee_id: chargebee_id})
+             |> Repo.insert(),
+           {:ok, _} <-
+             reset_matchmaking_timer(user.profile) do
+        {:ok, subscription}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  # Chargebee: Renew subscription, possibly updating plan.
+  def apply(
+        :chargebee,
+        %User{
+          subscription: %Subscription{} = subscription
+        } = user,
+        %Plan{} = plan,
+        chargebee_id
+      ) do
+    Repo.transaction(fn ->
+      with {:ok, subscription} <-
+             subscription
+             |> change(
+               %{plan_id: plan.id, cancelled_at: nil}
+               |> Map.merge(update_platform_id("CHARGEBEE", chargebee_id))
+             )
              |> Repo.update(),
            {:ok, _} <- reset_matchmaking_timer(user.profile) do
         {:ok, subscription}
@@ -239,7 +261,7 @@ defmodule Flirtual.Subscription do
     end)
   end
 
-  def cancel(%Subscription{} = subscription) do
+  def cancel(%Subscription{plan: %{recurring: true}} = subscription) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     Repo.transaction(fn ->
@@ -281,12 +303,28 @@ defmodule Flirtual.Subscription do
     end)
   end
 
+  def cancel(%Subscription{} = subscription), do: {:ok, subscription}
+  def cancel(_), do: {:error, nil}
+
   def get(user_id: user_id) when is_uid(user_id) do
-    Subscription |> where(user_id: ^user_id) |> Repo.one()
+    Subscription
+    |> where(user_id: ^user_id)
+    |> preload(^Subscription.default_assoc())
+    |> Repo.one()
   end
 
   def get(stripe_id: stripe_id) when is_binary(stripe_id) do
-    Subscription |> where(stripe_id: ^stripe_id) |> Repo.one()
+    Subscription
+    |> where(stripe_id: ^stripe_id)
+    |> preload(^Subscription.default_assoc())
+    |> Repo.one()
+  end
+
+  def get(chargebee_id: chargebee_id) when is_binary(chargebee_id) do
+    Subscription
+    |> where(chargebee_id: ^chargebee_id)
+    |> preload(^Subscription.default_assoc())
+    |> Repo.one()
   end
 
   def get(_), do: nil
@@ -326,6 +364,13 @@ defmodule Flirtual.Subscription.Policy do
   def transform(:platform, _, %Subscription{google_id: google_id}) when is_binary(google_id),
     do: :android
 
+  def transform(:platform, _, %Subscription{stripe_id: stripe_id}) when is_binary(stripe_id),
+    do: :stripe
+
+  def transform(:platform, _, %Subscription{chargebee_id: chargebee_id})
+      when is_binary(chargebee_id),
+      do: :chargebee
+
   def transform(:platform, _, _),
-    do: :web
+    do: :unknown
 end

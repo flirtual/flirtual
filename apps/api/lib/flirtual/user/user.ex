@@ -42,6 +42,7 @@ defmodule Flirtual.User do
     field(:push_count, :integer)
     field(:rating_prompts, :integer)
     field(:stripe_id, :string)
+    field(:chargebee_id, :string)
     field(:revenuecat_id, Ecto.ShortUUID)
     field(:language, :string, default: "en")
     field(:visible, :boolean)
@@ -62,6 +63,7 @@ defmodule Flirtual.User do
     field(:banned_at, :utc_datetime)
     field(:shadowbanned_at, :utc_datetime)
     field(:indef_shadowbanned_at, :utc_datetime)
+    field(:payments_banned_at, :utc_datetime)
     field(:active_at, :utc_datetime)
 
     has_many(:connections, Flirtual.Connection)
@@ -335,6 +337,10 @@ defmodule Flirtual.User do
     User |> where(stripe_id: ^stripe_id) |> preload(^default_assoc()) |> Repo.one()
   end
 
+  def get(chargebee_id: chargebee_id) when is_binary(chargebee_id) do
+    User |> where(chargebee_id: ^chargebee_id) |> preload(^default_assoc()) |> Repo.one()
+  end
+
   def get(revenuecat_id: revenuecat_id) when is_binary(revenuecat_id) do
     User |> where(revenuecat_id: ^revenuecat_id) |> preload(^default_assoc()) |> Repo.one()
   end
@@ -407,6 +413,7 @@ defmodule Flirtual.User do
     {:profile, :facetime},
     :email,
     :stripe_id,
+    :chargebee_id,
     :revenuecat_id,
     {:profile, :biography}
   ]
@@ -537,6 +544,36 @@ defmodule Flirtual.User do
                user: user,
                moderator: moderator
              ) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def payments_ban(%User{} = user) do
+    now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{payments_banned_at: now})
+             |> Repo.update() do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def payments_unban(%User{} = user) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{payments_banned_at: nil})
+             |> Repo.update() do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -942,10 +979,12 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :rating_prompts,
       :talkjs_id,
       :stripe_id,
+      :chargebee_id,
       :revenuecat_id,
       :banned_at,
       :shadowbanned_at,
       :indef_shadowbanned_at,
+      :payments_banned_at,
       :email_confirmed_at,
       :deactivated_at,
       :active_at,

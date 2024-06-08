@@ -42,13 +42,13 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 			<DropdownMenuTrigger asChild>
 				<button className="w-fit cursor-pointer outline-none" type="button">
 					<span className="sr-only">Open menu</span>
-					<ShieldEllipsis className="h-6 w-6" />
+					<ShieldEllipsis className="size-6" />
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="center" sideOffset={8}>
 				<ProfileDropdownCopySubmenu user={user}>
 					<DropdownMenuSubTrigger className="gap-2">
-						<ClipboardList className="h-5 w-5" />
+						<ClipboardList className="size-5" />
 						<span>Copy</span>
 					</DropdownMenuSubTrigger>
 				</ProfileDropdownCopySubmenu>
@@ -60,13 +60,13 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 								className="gap-2"
 								disabled={session.user.id === user.id}
 							>
-								<Shield className="h-5 w-5" />
+								<Shield className="size-5" />
 								<span>Moderate</span>
 							</DropdownMenuSubTrigger>
 						</ProfileDropdownModerateSubmenu>
 						<ProfileDropdownReportsSubmenu user={user}>
 							<DropdownMenuSubTrigger className="gap-2">
-								<Flag className="h-5 w-5" />
+								<Flag className="size-5" />
 								<span>Reports</span>
 							</DropdownMenuSubTrigger>
 						</ProfileDropdownReportsSubmenu>
@@ -77,18 +77,28 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 					<>
 						<ProfileDropdownTagsSubmenu user={user}>
 							<DropdownMenuSubTrigger className="gap-2">
-								<Tags className="h-5 w-5" />
+								<Tags className="size-5" />
 								<span>Tags</span>
 							</DropdownMenuSubTrigger>
 						</ProfileDropdownTagsSubmenu>
 						<ImpersonateAction user={user} />
+						<DropdownMenuItem asChild disabled={!user.chargebeeId}>
+							<Link
+								className="gap-2"
+								href={`https://flirtual.chargebee.com/d/customers/${user.chargebeeId}`}
+								target="_blank"
+							>
+								<Gem className="size-5" />
+								View Chargebee customer
+							</Link>
+						</DropdownMenuItem>
 						<DropdownMenuItem asChild disabled={!user.stripeId}>
 							<Link
 								className="gap-2"
 								href={`https://dashboard.stripe.com/customers/${user.stripeId}`}
 								target="_blank"
 							>
-								<Gem className="h-5 w-5" />
+								<Gem className="size-5" />
 								View Stripe customer
 							</Link>
 						</DropdownMenuItem>
@@ -98,7 +108,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 								href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
 								target="_blank"
 							>
-								<Gem className="h-5 w-5" />
+								<Gem className="size-5" />
 								View RevenueCat customer
 							</Link>
 						</DropdownMenuItem>
@@ -107,7 +117,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 				)}
 				<DropdownMenuItem asChild>
 					<Link className="gap-2" href={urls.profile(user)}>
-						<CircleUserRound className="h-5 w-5" />
+						<CircleUserRound className="size-5" />
 						View profile
 					</Link>
 				</DropdownMenuItem>
@@ -117,7 +127,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 						href={api.newUrl(`users/${user.id}`)}
 						target="_blank"
 					>
-						<FileJson className="h-5 w-5" />
+						<FileJson className="size-5" />
 						View raw object
 					</Link>
 				</DropdownMenuItem>

@@ -50,6 +50,7 @@ defmodule Flirtual.MixProject do
       {:redisgraph, "~> 0.1.0"},
       {:elasticsearch, "~> 1.1.0"},
       {:stripity_stripe, "~> 3.1.1"},
+      {:chargebeex, "~> 0.4.0"},
       {:phoenix_html, "~> 3.0"},
       {:faker, "~> 0.17"},
       {:recase, "~> 0.5"},

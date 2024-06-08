@@ -220,6 +220,19 @@ export const ProfileModeratorInfo: FC<{
 						<span className="brightness-75 hover:brightness-100">No</span>
 					)}
 				</span>
+				<span>
+					<span className="font-bold">Payments banned:</span>{" "}
+					{user.paymentsBannedAt ? (
+						<CopyClick value={user.paymentsBannedAt}>
+							<DateTimeRelative
+								className="text-red-500"
+								value={user.paymentsBannedAt}
+							/>
+						</CopyClick>
+					) : (
+						<span className="brightness-75 hover:brightness-100">No</span>
+					)}
+				</span>
 			</div>
 			<div className="flex flex-col">
 				<span>
@@ -267,6 +280,16 @@ export const ProfileModeratorInfo: FC<{
 									.filter(Boolean)
 									.join(", ")}
 							</span>
+						</span>
+						<span>
+							<span className="font-bold">Chargebee customer:</span>{" "}
+							<InlineLink
+								className="underline"
+								highlight={false}
+								href={`https://flirtual.chargebee.com/d/customers/${user.chargebeeId}`}
+							>
+								{user.chargebeeId}
+							</InlineLink>
 						</span>
 						<span>
 							<span className="font-bold">Stripe customer:</span>{" "}

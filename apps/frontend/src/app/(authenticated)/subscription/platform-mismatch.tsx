@@ -15,7 +15,9 @@ export const PlatformMismatchMessage: FC = () => {
 	if (
 		!subscription ||
 		!subscription.active ||
-		(subscription.platform === "web" && (platform === "web" || !native)) ||
+		subscription.platform === "unknown" ||
+		(["stripe", "chargebee"].includes(subscription.platform) &&
+			(platform === "web" || !native)) ||
 		(subscription.platform === "ios" && platform === "apple" && native) ||
 		(subscription.platform === "android" && platform === "android" && native)
 	)
@@ -68,8 +70,10 @@ export const MatchSubscriptionPlatform: FC<PropsWithChildren> = ({
 	if (
 		!subscription ||
 		!subscription.active ||
-		platform === subscription.platform ||
-		(!native && subscription.platform === "web")
+		(["stripe", "chargebee"].includes(subscription.platform) &&
+			(platform === "web" || !native)) ||
+		(subscription.platform === "ios" && platform === "apple" && native) ||
+		(subscription.platform === "android" && platform === "android" && native)
 	)
 		return children;
 

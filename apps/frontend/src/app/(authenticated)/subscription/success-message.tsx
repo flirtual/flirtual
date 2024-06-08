@@ -13,26 +13,33 @@ export const SuccessMessage: React.FC = () => {
 	if (!searchParameters.get("success")) return null;
 
 	return (
-		<div className="flex gap-4 overflow-hidden rounded-xl bg-brand-gradient px-1">
-			<div className="flex w-full flex-col gap-4 rounded-xl bg-white-25 p-6 dark:bg-black-80">
-				<div className="relative">
-					<h1 className="text-xl font-semibold">
-						We&apos;ve received your order.
-					</h1>
-					<Link
-						className="absolute right-0 top-0"
-						href={urls.subscription.default}
+		<div className="flex flex-col gap-4 rounded-xl bg-brand-gradient p-6 text-white-20 shadow-brand-1">
+			<div className="relative">
+				<h1 className="text-xl font-semibold">
+					We&apos;ve received your order.
+				</h1>
+				<Link
+					className="absolute right-0 top-0"
+					href={urls.subscription.default}
+				>
+					<X className="size-6" />
+				</Link>
+			</div>
+			<div className="flex flex-col">
+				<span>
+					Your subscription will be applied to your account momentarily.
+				</span>
+				<span>
+					If you need any help with your purchase, please{" "}
+					<InlineLink
+						className="underline"
+						highlight={false}
+						href={urls.resources.contact}
 					>
-						<X className="h-6 w-6" />
-					</Link>
-				</div>
-				<div className="flex flex-col">
-					<span>Your subscription should now be applied to your account.</span>
-					<span>
-						If your subscription is missing or you need any other help, please{" "}
-						<InlineLink href={urls.resources.contact}>contact us</InlineLink>.
-					</span>
-				</div>
+						contact us
+					</InlineLink>
+					.
+				</span>
 			</div>
 		</div>
 	);

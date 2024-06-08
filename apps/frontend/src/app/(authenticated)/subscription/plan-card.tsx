@@ -25,8 +25,8 @@ export interface PlanCardProps {
 export const PlanCard: FC<PlanCardProps> = (props) => {
 	const {
 		duration,
-		price: stripePrice,
-		originalPrice: originalStripePrice = stripePrice,
+		price: webPrice,
+		originalPrice: originalWebPrice = webPrice,
 		discount: originalDiscount,
 		highlight,
 		description
@@ -48,17 +48,17 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const user = session?.user;
 	if (!user) return null;
 
-	const price = currentPackage ? currentPackage.product.price : stripePrice;
+	const price = currentPackage ? currentPackage.product.price : webPrice;
 	const displayPrice = currentPackage
 		? currentPackage.product.priceString
-		: `$${stripePrice}`;
+		: `$${webPrice}`;
 	const originalPrice =
 		currentPackage && basePackage
 			? (basePackage.product.price ?? 0) *
 				Number.parseInt(
 					currentPackage.product.subscriptionPeriod?.slice(1, 2) ?? "0"
 				)
-			: originalStripePrice;
+			: originalWebPrice;
 	const discount =
 		originalDiscount ??
 		Math.round(((originalPrice - price) / originalPrice) * 100);

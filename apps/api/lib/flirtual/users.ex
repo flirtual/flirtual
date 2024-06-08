@@ -8,6 +8,7 @@ defmodule Flirtual.Users do
   alias Ecto.UUID
 
   alias Flirtual.{
+    Chargebee,
     Discord,
     Elasticsearch,
     Flag,
@@ -384,6 +385,7 @@ defmodule Flirtual.Users do
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Stripe.delete_customer(user),
+           {:ok, _} <- Chargebee.delete_customer(user),
            :ok <- RevenueCat.delete_customer(user),
            :ok <-
              Discord.deliver_webhook(:exit_survey,
@@ -407,6 +409,7 @@ defmodule Flirtual.Users do
            {:ok, _} <- Talkjs.delete_user(user),
            {:ok, _} <- Listmonk.delete_subscriber(user),
            {:ok, _} <- Stripe.delete_customer(user),
+           {:ok, _} <- Chargebee.delete_customer(user),
            :ok <- RevenueCat.delete_customer(user) do
         {:ok, user}
       else

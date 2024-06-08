@@ -51,7 +51,7 @@ export default async function SubscriptionPage() {
 							</div>
 							<span className="ml-5 pl-2 text-sm text-black-30 dark:text-white-50">
 								{subscription.cancelledAt
-									? `Cancelled on ${formatDate(subscription.cancelledAt)}`
+									? `Canceled on ${formatDate(subscription.cancelledAt)}`
 									: `Since ${formatDate(subscription.updatedAt)}`}
 							</span>
 						</div>
@@ -148,11 +148,18 @@ export default async function SubscriptionPage() {
 							? "Thank you for supporting us!"
 							: "If you like what we're doing, consider supporting us by subscribing!"}
 					</p>
-					<p>
-						You can modify or cancel your subscription at any time by{" "}
-						{!subscription?.active && <>coming back to this page and</>}{" "}
-						pressing the &quot;Manage&quot; button.
-					</p>
+					{subscription?.active && subscription.platform === "stripe" ? (
+						<p>
+							You can cancel your subscription at any time by pressing the
+							&quot;Cancel&quot; button above.
+						</p>
+					) : (
+						<p>
+							You can modify or cancel your subscription at any time by{" "}
+							{!subscription?.active && <>coming back to this page and</>}{" "}
+							pressing the &quot;Manage&quot; button.
+						</p>
+					)}
 				</div>
 				<div className="text-center">
 					<InlineLink href={urls.resources.paymentTerms}>

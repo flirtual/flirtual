@@ -15,6 +15,7 @@ export interface DrawerOrModalProps {
 	breakpoint?: ScreenBreakpoint;
 	visible: boolean;
 	onVisibilityChange?: Dispatch<boolean>;
+	className?: string;
 }
 
 export const DrawerOrModal: React.FC<DrawerOrModalProps> = (props) => {
@@ -35,7 +36,11 @@ export const DrawerOrModal: React.FC<DrawerOrModalProps> = (props) => {
 	return (
 		<>
 			{contentNode}
-			<Modal visible={visible} onVisibilityChange={onVisibilityChange}>
+			<Modal
+				className={props.className}
+				visible={visible}
+				onVisibilityChange={onVisibilityChange}
+			>
 				{overlayNode}
 			</Modal>
 		</>

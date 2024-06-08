@@ -23,9 +23,14 @@ export const FooterIconSupportLink: React.FC = () => {
 	);
 };
 
-export const HeaderSupportButton: React.FC = () => {
+export const SupportButton: React.FC<{ className?: string }> = ({
+	className
+}) => {
 	return (
-		<InlineButton onClick={useFreshworks().openFreshworks}>
+		<InlineButton
+			className={className}
+			onClick={useFreshworks().openFreshworks}
+		>
 			Contact us
 		</InlineButton>
 	);

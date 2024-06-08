@@ -11,6 +11,7 @@ export interface ModalProps {
 	children: React.ReactNode;
 	visible: boolean;
 	onVisibilityChange?: Dispatch<boolean>;
+	className?: string;
 }
 
 export const ModalOuter: React.FC<
@@ -50,7 +51,11 @@ export const ModalOuter: React.FC<
 	);
 };
 
-export const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
+export const Modal: React.FC<ModalProps> = ({
+	children,
+	className,
+	...props
+}) => {
 	return (
 		<ModalOuter {...props}>
 			<motion.div
@@ -63,7 +68,12 @@ export const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
 					event.stopPropagation();
 				}}
 			>
-				<div className="relative flex w-full flex-col justify-center gap-y-3 rounded-[1.25rem] bg-white-30 px-3 py-4 text-black-80 dark:bg-black-70 dark:text-white-20">
+				<div
+					className={twMerge(
+						"relative flex w-full flex-col justify-center gap-y-3 rounded-[1.25rem] bg-white-30 px-3 py-4 text-black-80 dark:bg-black-70 dark:text-white-20",
+						className
+					)}
+				>
 					<div className="h-full">{children}</div>
 				</div>
 			</motion.div>

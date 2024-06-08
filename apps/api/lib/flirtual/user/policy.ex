@@ -100,6 +100,8 @@ defmodule Flirtual.User.Policy do
   end
 
   @admin_actions [
+    :payments_ban,
+    :payments_unban,
     :sudo,
     :delete
   ]
@@ -173,6 +175,7 @@ defmodule Flirtual.User.Policy do
     :fcm_token,
     :push_count,
     :rating_prompts,
+    :subscription,
     :revenuecat_id,
     :moderator_message,
     :active_at,
@@ -221,11 +224,13 @@ defmodule Flirtual.User.Policy do
     :moderator_note,
     :shadowbanned_at,
     :indef_shadowbanned_at,
+    :payments_banned_at,
     :banned_at,
     :deactivated_at,
     :email_confirmed_at,
     :created_at,
-    :connections
+    :connections,
+    :subscription
   ]
 
   def transform(

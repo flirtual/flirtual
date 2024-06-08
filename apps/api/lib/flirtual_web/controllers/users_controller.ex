@@ -427,6 +427,30 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
+  def payments_ban(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :payments_ban, user) do
+      {:error, {:forbidden, "Cannot payments ban this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- User.payments_ban(user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
+  def payments_unban(conn, %{"user_id" => user_id}) do
+    user = Users.get(user_id)
+
+    if is_nil(user) or Policy.cannot?(conn, :payments_unban, user) do
+      {:error, {:forbidden, "Cannot payments unban this user", %{user_id: user_id}}}
+    else
+      with {:ok, user} <- User.payments_unban(user) do
+        conn |> json(Policy.transform(conn, user))
+      end
+    end
+  end
+
   defmodule Warn do
     use Flirtual.EmbeddedSchema
 

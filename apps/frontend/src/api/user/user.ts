@@ -52,6 +52,7 @@ export type User = UuidModel &
 		fcmToken?: string;
 		pushCount?: number;
 		ratingPrompts?: number;
+		chargebeeId?: string;
 		stripeId?: string;
 		revenuecatId?: string;
 		moderatorMessage?: string;
@@ -63,6 +64,7 @@ export type User = UuidModel &
 		emailConfirmedAt?: string;
 		shadowbannedAt?: string;
 		indefShadowbannedAt?: string;
+		paymentsBannedAt?: string;
 		bannedAt?: string;
 		deactivatedAt?: string;
 		preferences?: Preferences;
@@ -268,6 +270,20 @@ export async function unindefShadowban(
 	options: NarrowFetchOptions = {}
 ) {
 	return fetch<User>("delete", `users/${userId}/indef-shadowban`, options);
+}
+
+export async function paymentsBan(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("post", `users/${userId}/payments-ban`, options);
+}
+
+export async function paymentsUnban(
+	userId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch<User>("delete", `users/${userId}/payments-ban`, options);
 }
 
 export async function warn(

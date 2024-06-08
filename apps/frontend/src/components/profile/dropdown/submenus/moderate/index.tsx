@@ -1,4 +1,4 @@
-import { EyeOff, Scale, Trash2 } from "lucide-react";
+import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC, PropsWithChildren } from "react";
 
@@ -61,7 +61,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 						}}
 					>
 						<button className="w-full gap-2" type="button">
-							<EyeOff className="h-5 w-5" />
+							<EyeOff className="size-5" />
 							Remove indef. shadowban
 						</button>
 					</DropdownMenuItem>
@@ -80,7 +80,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 						}}
 					>
 						<button className="w-full gap-2" type="button">
-							<EyeOff className="h-5 w-5" />
+							<EyeOff className="size-5" />
 							Indef. shadowban
 						</button>
 					</DropdownMenuItem>
@@ -103,17 +103,56 @@ export const ProfileDropdownModerateSubmenu: FC<
 							}}
 						>
 							<button className="w-full gap-2" type="button">
-								<Scale className="h-5 w-5" />
+								<Scale className="size-5" />
 								Unban
 							</button>
 						</DropdownMenuItem>
+						{user.paymentsBannedAt ? (
+							<DropdownMenuItem
+								asChild
+								className="text-red-500"
+								onClick={() => {
+									api.user
+										.paymentsUnban(user.id)
+										.then(() => {
+											toasts.add("User payments unbanned");
+											return router.refresh();
+										})
+										.catch(toasts.addError);
+								}}
+							>
+								<button className="w-full gap-2" type="button">
+									<CreditCard className="size-5" />
+									Remove payments ban
+								</button>
+							</DropdownMenuItem>
+						) : (
+							<DropdownMenuItem
+								asChild
+								className="text-red-500"
+								onClick={() => {
+									api.user
+										.paymentsBan(user.id)
+										.then(() => {
+											toasts.add("User payments banned");
+											return router.refresh();
+										})
+										.catch(toasts.addError);
+								}}
+							>
+								<button className="w-full gap-2" type="button">
+									<CreditCard className="size-5" />
+									Payments ban
+								</button>
+							</DropdownMenuItem>
+						)}
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<DropdownMenuItem
 									className="w-full gap-2 text-red-500"
 									onSelect={(event) => event.preventDefault()}
 								>
-									<Trash2 className="h-5 w-5" />
+									<Trash2 className="size-5" />
 									Delete account
 								</DropdownMenuItem>
 							</AlertDialogTrigger>

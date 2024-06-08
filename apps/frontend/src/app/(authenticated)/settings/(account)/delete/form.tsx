@@ -12,7 +12,7 @@ import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
 import { InputTextArea } from "~/components/inputs/textarea";
 import { AttributeCollection } from "~/api/attributes";
-import { HeaderSupportButton } from "~/components/layout/support-button";
+import { SupportButton } from "~/components/layout/support-button";
 import { InlineLink } from "~/components/inline-link";
 import { useSession } from "~/hooks/use-session";
 
@@ -46,21 +46,22 @@ export const DeleteForm: FC<{
 		>
 			{({ FormField, fields }) => (
 				<>
-					{subscription?.active && subscription.platform !== "web" && (
-						<div className="rounded-lg bg-brand-gradient px-6 py-4">
-							<span className="font-montserrat text-white-10">
-								⚠️ Warning: You have an active subscription that will not be
-								canceled automatically if you delete your account.
-								<br />
-								<br />
-								Please cancel your subscription in{" "}
-								{subscription.platform === "ios"
-									? "the App Store"
-									: "Google Play"}{" "}
-								before deleting your account.
-							</span>
-						</div>
-					)}
+					{subscription?.active &&
+						["ios", "android"].includes(subscription.platform) && (
+							<div className="rounded-lg bg-brand-gradient px-6 py-4">
+								<span className="font-montserrat text-white-10">
+									⚠️ Warning: You have an active subscription that will not be
+									canceled automatically if you delete your account.
+									<br />
+									<br />
+									Please cancel your subscription in{" "}
+									{subscription.platform === "ios"
+										? "the App Store"
+										: "Google Play"}{" "}
+									before deleting your account.
+								</span>
+							</div>
+						)}
 					<span className="select-none">
 						We&apos;re sorry to see you go. Would you mind telling us why
 						you&apos;re deleting your account so we can improve?
@@ -92,7 +93,7 @@ export const DeleteForm: FC<{
 									</p>
 								) : field.props.value === "J3vVp9PWZQi5cEuk8G8wij" ? (
 									<p>
-										Need help? <HeaderSupportButton />.
+										Need help? <SupportButton />.
 									</p>
 								) : null}
 							</>

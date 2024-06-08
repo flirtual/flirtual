@@ -399,6 +399,19 @@ defmodule Flirtual.Stripe do
     end
   end
 
+  def cancel_subscription_at_period_end(%Subscription{stripe_id: stripe_id}) do
+    subscription = get_subscription(stripe_id)
+
+    with {:ok, %Stripe.Subscription{canceled_at: nil}} <- subscription,
+         {:ok, subscription} <- Stripe.Subscription.update(stripe_id, %{cancel_at_period_end: true}) do
+      {:ok, subscription}
+    else
+      {:error, %Stripe.Error{extra: %{http_status: 404}}} -> {:ok, subscription}
+      {:ok, %Stripe.Subscription{} = subscription} -> {:ok, subscription}
+      value -> value
+    end
+  end
+
   defp event_error(%Stripe.Event{} = event, value) do
     log(:error, [event.type, event.id], value)
     :error
