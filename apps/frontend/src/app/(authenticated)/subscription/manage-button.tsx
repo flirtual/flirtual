@@ -36,12 +36,11 @@ export const ManageButton: FC = () => {
 	const { subscription } = session.user;
 	if (
 		!subscription ||
-		(subscription.cancelledAt && !subscription.plan.purchasable) ||
-		(subscription.cancelledAt && subscription.platform === "stripe")
+		(subscription.cancelledAt && !subscription.plan.purchasable)
 	)
 		return null;
 
-	if (subscription.platform === "stripe") {
+	if (subscription.platform === "stripe" && subscription.active) {
 		return (
 			<>
 				<div>
@@ -134,7 +133,9 @@ export const ManageButton: FC = () => {
 					size="sm"
 					onClick={async () => {
 						startTransition(async () => {
-							const url = await purchase().catch(toasts.addError);
+							const url = await purchase(
+								subscription.active ? undefined : subscription.plan.id
+							).catch(toasts.addError);
 							setManageUrl(url || null);
 						});
 					}}
