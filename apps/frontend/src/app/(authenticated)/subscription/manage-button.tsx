@@ -119,7 +119,7 @@ export const ManageButton: FC = () => {
 				>
 					<iframe
 						className="max-h-[90vh] max-w-full"
-						height={500}
+						height={561}
 						src={manageUrl}
 						width={479}
 					/>
