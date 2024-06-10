@@ -205,7 +205,7 @@ defmodule Flirtual.User do
       },
       ## onboarding/3
       {
-        is_nil(profile.biography) or String.length(profile.biography) <= 48,
+        is_nil(profile.biography) or String.length(profile.biography) < 48,
         %{reason: "profile biography too short", to: "/onboarding/3"}
       },
       {
