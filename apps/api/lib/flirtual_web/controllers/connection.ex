@@ -177,15 +177,15 @@ defmodule FlirtualWeb.ConnectionController do
             Discord.deliver_webhook(:flagged_duplicate,
               user: user,
               duplicates: "https://flirtu.al/#{user_id}",
-              type: "#{Connection.provider_name!(type)} (connection blocked)",
+              type: "#{Connection.provider_name!(type)} (connection updated)",
               text: "#{profile.display_name} (#{profile.uid})"
             )
 
-            grant_error(
-              conn,
-              redirect_type,
-              "This #{Connection.provider_name!(type)} account is already connected to a different Flirtual account."
-            )
+            connection
+            |> change(%{user_id: user.id})
+            |> Repo.update!()
+
+            grant_next(conn, redirect_type)
 
           {nil, %Connection{user: %User{banned_at: nil} = login_user}} ->
             next = get_session(conn, :next)
