@@ -189,6 +189,34 @@ defmodule Flirtual.Chargebee do
         %{
           "event_type" => "payment_succeeded",
           "content" => %{
+            "subscription" => %{
+              "id" => subscription_chargebee_id,
+              "status" => "active",
+              "subscription_items" => [
+                %{"item_price_id" => price_chargebee_id}
+              ]
+            },
+            "customer" => %{
+              "id" => customer_chargebee_id
+            }
+          }
+        } = event
+      ) do
+    with %User{} = user <- User.get(chargebee_id: customer_chargebee_id),
+         %Plan{} = plan <- Plan.get(chargebee_id: price_chargebee_id),
+         {:ok, subscription} <-
+           Subscription.apply(:chargebee, user, plan, subscription_chargebee_id) do
+      log(:debug, [event["event_type"], event["id"]], subscription)
+      :ok
+    else
+      value -> event_error(event, value)
+    end
+  end
+
+  def handle_event(
+        %{
+          "event_type" => "payment_succeeded",
+          "content" => %{
             "invoice" => %{
               "line_items" => [
                 %{
@@ -248,15 +276,12 @@ defmodule Flirtual.Chargebee do
         } = event
       )
       when type in [
-             "subscription_created",
              "subscription_started",
              "subscription_renewed",
              "subscription_changed",
              "subscription_reactivated",
              "subscription_resumed"
            ] do
-    log(:info, [event["event_type"], event["id"]], event)
-
     with %User{} = user <- User.get(chargebee_id: customer_chargebee_id),
          %Plan{} = plan <- Plan.get(chargebee_id: price_chargebee_id),
          {:ok, subscription} <-
