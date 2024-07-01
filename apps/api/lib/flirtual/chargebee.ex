@@ -148,7 +148,10 @@ defmodule Flirtual.Chargebee do
   def delete_customer(%User{chargebee_id: nil}), do: {:ok, nil}
 
   def delete_customer(%User{chargebee_id: chargebee_id}) when is_binary(chargebee_id) do
-    Chargebeex.Customer.delete(chargebee_id)
+    case Chargebeex.Customer.delete(chargebee_id) do
+      {:ok, customer} -> {:ok, customer}
+      {:error, 404, _, _} -> {:ok, nil}
+    end
   end
 
   def get_customer(chargebee_id) when is_binary(chargebee_id) do
