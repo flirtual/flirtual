@@ -5,10 +5,7 @@ import { FC } from "react";
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import {
-	ImageSetValue,
-	InputImageSet
-} from "~/components/forms/input-image-set";
+import { InputImageSet } from "~/components/forms/input-image-set";
 import { InlineLink } from "~/components/inline-link";
 import {
 	InputEditor,
@@ -37,9 +34,9 @@ export const BiographyForm: FC = () => {
 				displayName: profile.displayName || user.username || "",
 				images: profile.images.map((image) => ({
 					id: image.id,
-					file: null,
-					src: urls.pfp(image)
-				})) as Array<ImageSetValue>,
+					src: urls.pfp(image),
+					fullSrc: urls.pfp(image, "full")
+				})),
 				biography: user.profile.biography || ""
 			}}
 			onSubmit={async ({ displayName, biography, ...values }) => {

@@ -1,13 +1,13 @@
 "use client";
 
-import { motion, AnimatePresence, HTMLMotionProps } from "framer-motion";
-import React, { Dispatch, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import React, { ComponentProps, Dispatch, useEffect } from "react";
 import { Portal } from "react-portal";
 import { twMerge } from "tailwind-merge";
 
 import { useScrollLock } from "~/hooks/use-scroll-lock";
 
-export interface ModalProps {
+export interface ModalProps extends ComponentProps<"div"> {
 	children: React.ReactNode;
 	visible: boolean;
 	onVisibilityChange?: Dispatch<boolean>;
@@ -15,7 +15,7 @@ export interface ModalProps {
 }
 
 export const ModalOuter: React.FC<
-	ModalProps & { modalOuterProps?: HTMLMotionProps<"div"> }
+	ModalProps & { modalOuterProps?: ComponentProps<"div"> }
 > = ({ modalOuterProps, ...props }) => {
 	const { children, visible, onVisibilityChange } = props;
 	const [, setScrollLock] = useScrollLock();
@@ -29,22 +29,24 @@ export const ModalOuter: React.FC<
 		<AnimatePresence>
 			{visible && (
 				<Portal>
-					<motion.div
+					<div
 						{...modalOuterProps}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						initial={{ opacity: 0 }}
-						transition={{ damping: 25 }}
+						// animate={{ opacity: 1 }}
+						// exit={{ opacity: 0 }}
+						// initial={{ opacity: 0 }}
+						// transition={{ damping: 25 }}
 						className={twMerge(
-							"fixed left-0 top-0 z-50 flex h-screen w-screen cursor-pointer items-center justify-center backdrop-blur backdrop-brightness-90",
+							"fixed left-0 top-0 z-50 flex h-screen w-screen cursor-pointer items-center justify-center backdrop-blur-sm backdrop-brightness-75",
 							modalOuterProps?.className
 						)}
-						onClick={() => {
+						{...(props as ComponentProps<"div">)}
+						onClick={(event) => {
+							props?.onClick?.(event);
 							onVisibilityChange?.(false);
 						}}
 					>
 						{children}
-					</motion.div>
+					</div>
 				</Portal>
 			)}
 		</AnimatePresence>

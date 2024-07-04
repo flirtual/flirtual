@@ -1,8 +1,6 @@
 "use client";
 
-import { Dispatch, useCallback, useEffect, useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Dispatch, FC, useCallback, useEffect, useState } from "react";
 import { ImagePlus } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import Uppy, { UppyFile } from "@uppy/core";
@@ -21,15 +19,27 @@ import "@uppy/status-bar/dist/style.min.css";
 
 import { useSessionUser } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
+import { groupBy } from "~/utilities";
+import { urls } from "~/urls";
 
-import { ArrangeableImage } from "../arrangeable-image";
+import {
+	ArrangeableImage,
+	ArrangeableImagePreview
+} from "../arrangeable-image";
 import { Button } from "../button";
 import { Modal } from "../modal";
 
+import {
+	SortableGrid,
+	SortableItem,
+	SortableItemOverlay,
+	useCurrentSortableItem
+} from "./sortable";
+
 export interface ImageSetValue {
-	id: string | null;
-	file: File | null;
+	id: string;
 	src: string;
+	fullSrc: string;
 }
 
 export interface InputImageSetProps {
@@ -50,7 +60,7 @@ type UploadedMultipartFile = MultipartFile & {
 	uploadURL: string;
 };
 
-export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
+export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile" } = props;
 	const user = useSessionUser();
 	const { theme } = useTheme();
@@ -66,8 +76,8 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 				...value,
 				...fileKeys.map((key) => ({
 					id: key,
-					file: null,
-					src: `https://pfpup.flirtu.al/${key}`
+					src: urls.media(key, "pfpup"),
+					fullSrc: urls.media(key, "pfpup")
 				}))
 			]);
 		},
@@ -143,29 +153,33 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 		setUppy(uppyInstance);
 	}, [user, handleUppyComplete, type]);
 
+	const sortableItems = value.map(({ id }, index) => id || index);
+
 	return (
-		<DndProvider backend={HTML5Backend}>
+		<SortableGrid
+			key={JSON.stringify(sortableItems)}
+			values={sortableItems}
+			onChange={(newSortableItems) => {
+				console.log(newSortableItems);
+
+				const keyedValue = groupBy(value, ({ id }) => id);
+				onChange(newSortableItems.map((id) => keyedValue[id][0]));
+			}}
+		>
 			<div className="grid grid-cols-3 gap-2">
 				{value.map((image, imageIndex) =>
 					type === "profile" ||
 					!image.id?.includes(".") ||
 					/\.(jpg|jpeg|png|gif|webm)$/i.test(image.id) ? (
-						<ArrangeableImage
-							{...image}
-							idx={imageIndex}
-							key={imageIndex}
-							uploading={image.file !== null}
-							moveImage={(targetIndex: number, sourceIndex: number) => {
-								const newValue = [...value];
-								const [movedImage] = newValue.splice(sourceIndex, 1);
-								newValue.splice(targetIndex, 0, movedImage);
-
-								onChange?.(newValue);
-							}}
-							onDelete={() => {
-								onChange?.(value.filter((_, index) => imageIndex !== index));
-							}}
-						/>
+						<SortableItem id={image.id} key={image.id}>
+							<ArrangeableImage
+								{...image}
+								id={image.id}
+								onDelete={() => {
+									onChange?.(value.filter((_, index) => imageIndex !== index));
+								}}
+							/>
+						</SortableItem>
 					) : (
 						<div className="m-auto" key={imageIndex}>
 							{image.id.split("-").pop()}
@@ -210,7 +224,21 @@ export const InputImageSet: React.FC<InputImageSetProps> = (props) => {
 					)
 				)}
 			</div>
+			<InputImageSetDragOverlay values={value} />
 			{type === "report" && uppy && <StatusBar uppy={uppy} />}
-		</DndProvider>
+		</SortableGrid>
+	);
+};
+
+const InputImageSetDragOverlay: FC<{ values: Array<ImageSetValue> }> = ({
+	values
+}) => {
+	const currentId = useCurrentSortableItem();
+	const current = values.find(({ id }) => id === currentId);
+
+	return (
+		<SortableItemOverlay>
+			{current && <ArrangeableImagePreview {...current} />}
+		</SortableItemOverlay>
 	);
 };

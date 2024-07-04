@@ -12,10 +12,7 @@ import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
-import {
-	ImageSetValue,
-	InputImageSet
-} from "~/components/forms/input-image-set";
+import { InputImageSet } from "~/components/forms/input-image-set";
 import { useSession } from "~/hooks/use-session";
 
 export const Onboarding3Form: React.FC = () => {
@@ -33,9 +30,9 @@ export const Onboarding3Form: React.FC = () => {
 				displayName: user.profile.displayName || user.username || "",
 				images: user.profile.images.map((image) => ({
 					id: image.id,
-					file: null,
-					src: urls.pfp(image)
-				})) as Array<ImageSetValue>,
+					src: urls.pfp(image),
+					fullSrc: urls.pfp(image, "full")
+				})),
 				biography: user.profile.biography || ""
 			}}
 			onSubmit={async (values) => {
