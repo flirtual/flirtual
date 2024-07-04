@@ -3,12 +3,17 @@ import { Classification } from "../classifiers";
 
 import { url } from ".";
 
+export interface Image {
+	id: string;
+	file: string;
+}
+
 export const list = (options: { size: number }) =>
 	fetch(url("/v1/images/scan-queue", options), {
 		headers: {
 			authorization: `Bearer ${accessToken}`
 		}
-	}).then((response) => response.json()) as Promise<Array<string>>;
+	}).then((response) => response.json()) as Promise<Array<Image>>;
 
 export const update = (data: Record<string, Classification>) => {
 	return fetch(url("/v1/images/scan-queue"), {

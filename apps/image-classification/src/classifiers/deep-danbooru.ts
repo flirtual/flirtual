@@ -9,7 +9,7 @@ import type { Classifier } from ".";
 
 export type Result = Record<string, number>;
 
-export const classify: Classifier<Result> = async (imageIds, groupFile) => {
+export const classify: Classifier<Result> = async (images, groupFile) => {
 	const map = new Map<string, Result>();
 
 	await new Promise((resolve, reject) => {
@@ -34,22 +34,25 @@ export const classify: Classifier<Result> = async (imageIds, groupFile) => {
 			log.error({ groupFile, classifierId: "deepDanbooru" }, data.toString())
 		);
 
-		process.on("error", reject);
+		process.on("error", (reason) => {
+			log.error({ groupFile, classifierId: "deepDanbooru", reason }, "Failed.");
+			reject(reason);
+		});
 		process.on("close", resolve);
 	});
 
 	// Deep Danbooru outputs a JSON file for each image.
 	// We read the files and parse them into a map.
 	await Promise.all(
-		imageIds.map(async (imageId) => {
+		images.map(async (image) => {
 			const content = await fs.readFile(
-				path.resolve(temporaryDirectory, groupFile, `${imageId}.json`),
+				path.resolve(temporaryDirectory, groupFile, `${image.file}.json`),
 				"utf8"
 			);
 			const data = JSON.parse(content) as Record<string, string>;
 
 			map.set(
-				imageId,
+				image.id,
 				Object.fromEntries(
 					Object.entries(data).map(([tag, probability]) => [
 						tag,

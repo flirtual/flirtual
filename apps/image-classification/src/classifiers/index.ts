@@ -3,13 +3,16 @@ import { log } from "../log";
 import * as deepDanbooru from "./deep-danbooru";
 import * as nsfwjs from "./nsfwjs";
 
-const classifiers = { deepDanbooru, nsfwjs };
+import type { Image } from "../api/scan-queue";
+
+// const classifiers = { deepDanbooru, nsfwjs };
+const classifiers = { deepDanbooru };
 
 export type Classifiers = typeof classifiers;
 export type ClassifierType = keyof Classifiers;
 
 export type Classifier<T> = (
-	imageIds: Array<string>,
+	images: Array<Image>,
 	fileGroup: string
 ) => Promise<Map<string, T>>;
 export type AnyClassifier = Classifier<Classification[ClassifierType]>;
@@ -22,11 +25,11 @@ export type Classification = {
 	[K in ClassifierType]: Awaited<
 		ReturnType<Classifiers[K]["classify"]>
 	> extends Map<unknown, infer Result>
-		? Result
-		: never;
+	? Result
+	: never;
 };
 
-export const classify = async (groupFile: string, imageIds: Array<string>) => {
+export const classify = async (groupFile: string, images: Array<Image>) => {
 	const map = new Map<string, Classification>();
 
 	(
@@ -37,7 +40,7 @@ export const classify = async (groupFile: string, imageIds: Array<string>) => {
 
 				return [
 					classifierId,
-					await classify(imageIds, groupFile),
+					await classify(images, groupFile),
 					child
 				] as const;
 			})

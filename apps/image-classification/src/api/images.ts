@@ -10,12 +10,7 @@ import { url } from ".";
 
 export const download = async (groupFile: string, imageId: string) => {
 	try {
-		const response = await fetch(
-			url(`/v1/images/${imageId}/view`, { format: "jpeg" }),
-			{
-				redirect: "follow"
-			}
-		);
+		const response = await fetch(`https://pfpup.flirtu.al/${imageId}`);
 
 		if (!response.ok) {
 			const body = await response.json().catch(() => null);

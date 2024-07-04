@@ -535,16 +535,16 @@ defmodule Flirtual.Discord do
                 |> Enum.map_join(", ", fn {k, v} ->
                   "``#{k} #{:erlang.float_to_binary(Float.parse(to_string(v)) |> elem(0), decimals: 2)}``"
                 end)
-            },
-            %{
-              name: "Categories",
-              value:
-                classifications["nsfwjs"]
-                |> Map.to_list()
-                |> Enum.concat([{to_string(type), 1}])
-                |> Enum.filter(fn {_, v} -> v >= 0.5 end)
-                |> Enum.map_join(", ", fn {k, _} -> k end)
-            }
+            }#,
+            # %{
+            #   name: "Categories",
+            #   value:
+            #     classifications["nsfwjs"]
+            #     |> Map.to_list()
+            #     |> Enum.concat([{to_string(type), 1}])
+            #     |> Enum.filter(fn {_, v} -> v >= 0.5 end)
+            #     |> Enum.map_join(", ", fn {k, _} -> k end)
+            # }
           ],
           color: @default_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
