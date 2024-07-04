@@ -3,7 +3,7 @@ import path from "node:path";
 import { randomBytes } from "node:crypto";
 
 import * as scanQueue from "./api/scan-queue";
-import * as images from "./api/images";
+import { download } from "./api/images";
 import { classify } from "./classifiers";
 import { temporaryDirectory } from "./consts";
 import { log } from "./log";
@@ -17,8 +17,8 @@ const execute = async (size: number) => {
 		fs.rm(group, { recursive: true, force: true }).catch(() => void 0);
 
 	try {
-		const imageIds = await scanQueue.list({ size });
-		if (imageIds.length === 0) {
+		const images = await scanQueue.list({ size });
+		if (images.length === 0) {
 			log.info({ groupFile }, "Zero queued images...");
 
 			// Wait for a minute before checking again.
@@ -26,14 +26,13 @@ const execute = async (size: number) => {
 			return;
 		}
 
-		log.info({ groupFile }, `Processing ${imageIds.length} images...`);
+		log.info({ groupFile }, `Processing ${images.length} images...`);
 		await fs.mkdir(groupFile, { recursive: true }).catch(() => void 0);
 
 		// Download available images that have not been scanned yet.
 		const downloadedImages = await Promise.all(
-			imageIds.map(
-				async (imageId) =>
-					[imageId, await images.download(groupFile, imageId)] as const
+			images.map(
+				async (image) => [image, await download(groupFile, image.file)] as const
 			)
 		);
 
@@ -69,7 +68,7 @@ const execute = async (size: number) => {
 			])
 		);
 
-		log.info({ groupFile }, `Updated ${imageIds.length} images.`);
+		log.info({ groupFile }, `Updated ${images.length} images.`);
 	} catch (reason) {
 		const error = reason instanceof Error ? reason.message : String(reason);
 		log.error({ groupFile, reason: error }, "Failed to process images.");
