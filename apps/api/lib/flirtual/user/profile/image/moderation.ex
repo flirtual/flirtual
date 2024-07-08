@@ -81,10 +81,10 @@ defmodule Flirtual.User.Profile.Image.Moderation do
 
   def list_scan_queue(size) do
     Image
-    |> where(scanned: false)
+    |> where([image], not image.scanned and not is_nil(image.external_id))
     |> order_by(asc: :created_at)
     |> limit(^size)
-    |> select([image], %{id: image.id, file: image.original_file})
+    |> select([image], %{id: image.id, file: image.external_id})
     |> Repo.all()
   end
 
