@@ -247,6 +247,21 @@ export const ProfileModeratorInfo: FC<{
 					</span>
 				</span>
 			</div>
+			<span>
+				<span className="font-bold">Looking for:</span>{" "}
+				<span className="brightness-75 hover:brightness-100">
+					{user.profile.preferences?.agemin ?? 18}-
+					{user.profile.preferences?.agemax ?? "99+"}{" "}
+					{filterBy(
+						user.profile.preferences?.attributes ?? [],
+						"type",
+						"gender"
+					)
+						.map(({ id }) => genders.find((gender) => gender.id === id)?.name)
+						.filter(Boolean)
+						.join(", ")}
+				</span>
+			</span>
 			{session.user.tags.includes("admin") && (
 				<>
 					<div className="flex flex-col">
@@ -262,23 +277,6 @@ export const ProfileModeratorInfo: FC<{
 							<span className="font-bold">Date of birth:</span>{" "}
 							<span className="brightness-75 hover:brightness-100">
 								{user.bornAt}
-							</span>
-						</span>
-						<span>
-							<span className="font-bold">Looking for:</span>{" "}
-							<span className="brightness-75 hover:brightness-100">
-								{user.profile.preferences?.agemin ?? 18}-
-								{user.profile.preferences?.agemax ?? "99+"}{" "}
-								{filterBy(
-									user.profile.preferences?.attributes ?? [],
-									"type",
-									"gender"
-								)
-									.map(
-										({ id }) => genders.find((gender) => gender.id === id)?.name
-									)
-									.filter(Boolean)
-									.join(", ")}
 							</span>
 						</span>
 						<span>
