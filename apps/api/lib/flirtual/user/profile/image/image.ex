@@ -19,6 +19,7 @@ defmodule Flirtual.User.Profile.Image do
     field(:external_id, :string)
     field(:blur_id, :string)
     field(:scanned, :boolean, default: false)
+    field(:failed, :boolean, default: false)
     field(:order, :integer)
 
     timestamps()
@@ -26,7 +27,7 @@ defmodule Flirtual.User.Profile.Image do
 
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:profile_id, :original_file, :external_id, :blur_id, :scanned, :order])
+    |> cast(attrs, [:profile_id, :original_file, :external_id, :blur_id, :scanned, :failed, :order])
     |> validate_required([:original_file])
     |> validate_uid(:profile_id)
     |> foreign_key_constraint(:profile_id)

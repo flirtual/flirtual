@@ -514,8 +514,8 @@ defmodule Flirtual.Discord do
   def deliver_webhook(:flagged_image,
         user: %User{} = user,
         image: %Image{} = image,
-        classifications: classifications,
-        type: type
+        classifications: classifications
+        # type: type
       ) do
     webhook(:moderation_pics, %{
       embeds: [

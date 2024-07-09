@@ -100,7 +100,7 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
-  def resolve_scan_queue(conn, %{"data" => data}) do
+  def resolve_scan_queue(conn, %{"success" => _, "failed" => _} = data) do
     if authenticated?(conn) do
       case Moderation.update_scan_queue(data) do
         {:ok, _} -> conn |> json(%{updated: true})

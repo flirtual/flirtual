@@ -85,7 +85,7 @@ defmodule Flirtual.User.Profile.Image.Moderation do
       [image],
       not image.scanned and not is_nil(image.external_id) and not is_nil(image.profile_id)
     )
-    |> order_by(asc: :created_at)
+    |> order_by(asc: :failed, asc: :created_at)
     |> limit(^size)
     |> select([image], %{id: image.id, file: image.external_id})
     |> Repo.all()
@@ -112,19 +112,33 @@ defmodule Flirtual.User.Profile.Image.Moderation do
     end
 
     image
-    |> change(%{scanned: true})
+    |> change(%{scanned: true, failed: false})
     |> Repo.update()
   end
 
-  def update_scan_queue(data) do
+  def update_scan_queue(%{"success" => success, "failed" => failed}) do
     Repo.transaction(fn ->
-      data
+      success
       |> Map.to_list()
       |> Enum.each(fn {id, classifications} ->
         Image.get(id)
         |> case do
           %Image{} = image ->
             classify_image(image, classifications)
+
+          _ ->
+            nil
+        end
+      end)
+
+      failed
+      |> Enum.each(fn id ->
+        Image.get(id)
+        |> case do
+          %Image{} = image ->
+            image
+            |> change(%{failed: true})
+            |> Repo.update()
 
           _ ->
             nil
