@@ -97,6 +97,14 @@ defmodule FlirtualWeb.Router do
         end
       end
 
+      scope "/feedback" do
+        pipe_through(:fetch_authorization_token)
+
+        scope "/:slug" do
+          get("/", FeedbackController, :feedback_profile)
+        end
+      end
+
       scope "/chargebee" do
         pipe_through(:fetch_authorization_token)
 

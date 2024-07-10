@@ -102,7 +102,8 @@ config :flirtual,
   frontend_origin: URI.parse(System.fetch_env!("FRONTEND_ORIGIN")),
   origin: origin,
   session_signing_salt: System.fetch_env!("SESSION_SIGNING_SALT"),
-  image_access_token: System.fetch_env!("IMAGE_ACCESS_TOKEN")
+  image_access_token: System.fetch_env!("IMAGE_ACCESS_TOKEN"),
+  feedback_access_token: System.fetch_env!("FEEDBACK_ACCESS_TOKEN")
 
 config :flirtual, FlirtualWeb.Endpoint,
   secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
