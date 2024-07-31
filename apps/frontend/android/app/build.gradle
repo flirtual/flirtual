@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "zone.homie.flirtual.pwa"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "zone.homie.flirtual.pwa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 19
-        versionName '1.2.6.0'
+        versionCode 20
+        versionName '1.2.7.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

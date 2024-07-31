@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
-import { App, URLOpenListenerEvent } from "@capacitor/app";
+import { App, type URLOpenListenerEvent } from "@capacitor/app";
 
 async function removeCapacitorListeners() {
 	await App.removeAllListeners();

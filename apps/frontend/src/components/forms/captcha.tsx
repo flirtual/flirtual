@@ -1,6 +1,6 @@
 "use client";
 
-import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { forwardRef, useState } from "react";
 
 import { turnstileSiteKey } from "~/const";

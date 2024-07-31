@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { Metadata } from "next";
 
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
@@ -8,6 +7,8 @@ import { urls } from "~/urls";
 
 import { UserForms } from "./user-forms";
 import { ConfirmTokenForm } from "./confirm-token-form";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Confirm email"

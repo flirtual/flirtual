@@ -1,8 +1,7 @@
-/* eslint-disable unicorn/prefer-code-point */
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FC, useEffect, useRef } from "react";
+import { type FC, useEffect, useRef } from "react";
 
 import { api } from "~/api";
 import { Form, FormButton } from "~/components/forms";
@@ -11,12 +10,12 @@ import { FormInputMessages } from "~/components/forms/input-messages";
 import { InputLabel, InputText } from "~/components/inputs";
 import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
-// import { useDevice } from "~/hooks/use-device";
+import { useDevice } from "~/hooks/use-device";
 
 import { LoginConnectionButton } from "./login-connection-button";
 
 export const LoginForm: FC<{ next?: string }> = ({ next }) => {
-	// const { platform } = useDevice();
+	const { platform, native } = useDevice();
 	const router = useRouter();
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
@@ -104,7 +103,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						<FormField name="login">
 							{({ props, labelProps }) => (
 								<>
-									<InputLabel {...labelProps}>Username (or email)</InputLabel>
+									<InputLabel {...labelProps}>Email address</InputLabel>
 									<InputText
 										{...props}
 										autoCapitalize="off"
@@ -145,14 +144,15 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					</>
 				)}
 			</Form>
-			<div className="flex flex-col gap-2">
-				<div className="inline-flex items-center justify-center">
-					<hr className="my-8 h-px w-full border-0 bg-white-40 dark:bg-black-40" />
-					<span className="absolute left-1/2 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold uppercase text-black-50 dark:bg-black-70 dark:text-white-50">
-						or
-					</span>
-				</div>
-				{/* {platform === "apple" ? (
+			{(!native || platform !== "android") && (
+				<div className="flex flex-col gap-2">
+					<div className="inline-flex items-center justify-center">
+						<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-40" />
+						<span className="absolute left-1/2 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold uppercase text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+							or
+						</span>
+					</div>
+					{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />
 							<LoginConnectionButton type="google" />
@@ -164,9 +164,10 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						</>
 					)}
 					<LoginConnectionButton type="meta" /> */}
-				<LoginConnectionButton type="discord" />
-				{/* <LoginConnectionButton type="vrchat" /> */}
-			</div>
+					<LoginConnectionButton type="discord" />
+					{/* <LoginConnectionButton type="vrchat" /> */}
+				</div>
+			)}
 		</>
 	);
 };

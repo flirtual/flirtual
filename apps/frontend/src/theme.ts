@@ -1,4 +1,4 @@
-import { PreferenceTheme } from "./api/user/preferences";
+import type { PreferenceTheme } from "./api/user/preferences";
 
 export type Theme = Exclude<PreferenceTheme, "system">;
 

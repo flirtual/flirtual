@@ -1,6 +1,4 @@
-import { FC, PropsWithChildren } from "react";
-
-import { User, userTagNames, userTags } from "~/api/user";
+import { type User, userTagNames, userTags } from "~/api/user";
 import {
 	DropdownMenuCheckboxItem,
 	DropdownMenuLabel,
@@ -9,6 +7,8 @@ import {
 	DropdownMenuSubContent
 } from "~/components/dropdown";
 import { useToast } from "~/hooks/use-toast";
+
+import type { FC, PropsWithChildren } from "react";
 
 export const ProfileDropdownTagsSubmenu: FC<
 	PropsWithChildren<{ user: User }>

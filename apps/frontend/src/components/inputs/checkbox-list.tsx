@@ -34,13 +34,13 @@ export function InputCheckboxList<T extends string>(
 							id={itemId}
 							value={value.includes(item.key)}
 							onChange={(itemValue) => {
-								itemValue
-									? onChange(
-											[item.key, ...value].filter(
-												(key) => !item.conflicts?.includes(key)
-											)
-										)
-									: onChange(value.filter((otherKey) => otherKey !== item.key));
+								onChange(
+									[item.key, ...value].filter((key) =>
+										itemValue
+											? !item.conflicts?.includes(key)
+											: key !== item.key
+									)
+								);
 							}}
 						/>
 						<InputLabel inline hint={item.labelHint} htmlFor={itemId}>

@@ -1,8 +1,9 @@
 import { useDebugValue } from "react";
-import useSWR, { SWRConfiguration } from "swr";
+import useSWR, { type SWRConfiguration } from "swr";
 
 import { api } from "~/api";
-import { AttributeCollection, AttributeMetadata } from "~/api/attributes";
+
+import type { AttributeCollection, AttributeMetadata } from "~/api/attributes";
 
 export function useAttributeList<T extends keyof AttributeMetadata>(
 	name: T,

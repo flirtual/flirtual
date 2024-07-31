@@ -1,8 +1,8 @@
 .quill {
-  @apply flex flex-col overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20;
+  @apply flex flex-col rounded-xl bg-white-40 vision:bg-white-40/70 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20;
 
   .ql-toolbar {
-    @apply shrink-0 flex p-2 gap-2 bg-brand-gradient text-white-20 flex-wrap;
+    @apply shrink-0 flex m-1 p-2 gap-2 rounded-[0.625rem] bg-brand-gradient text-white-20 flex-wrap shadow-brand-1;
     -ms-overflow-style: none;
     scrollbar-width: none;
 
@@ -100,7 +100,7 @@
     @apply relative;
 
     .ql-editor {
-      @apply h-96 overflow-y-auto bg-white-40 text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-none text-base;
+      @apply rounded-xl h-96 overflow-y-auto bg-white-40 vision:bg-transparent text-black-80 dark:text-white-20 dark:bg-black-60 p-4 font-nunito outline-none text-base;
 
       tab-size: 4;
       -moz-tab-size: 4;

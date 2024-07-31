@@ -1,7 +1,7 @@
-/* eslint-disable unicorn/prefer-code-point */
-import { DatedModel } from "./common";
-import { User } from "./user";
-import { fetch, NarrowFetchOptions } from "./exports";
+import { fetch, type NarrowFetchOptions } from "./exports";
+
+import type { DatedModel } from "./common";
+import type { User } from "./user";
 
 export type Session = DatedModel & {
 	sudoerId?: string;

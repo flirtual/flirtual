@@ -1,6 +1,7 @@
-import { DatedModel, UuidModel } from "./common";
-import { NarrowFetchOptions, fetch, newUrl } from "./exports";
-import { Plan } from "./plan";
+import { type NarrowFetchOptions, fetch, newUrl } from "./exports";
+
+import type { DatedModel, UuidModel } from "./common";
+import type { Plan } from "./plan";
 
 type SubscriptionPlatform =
 	| "stripe"

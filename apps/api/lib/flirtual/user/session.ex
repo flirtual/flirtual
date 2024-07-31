@@ -60,35 +60,43 @@ defmodule Flirtual.User.Session do
   end
 
   def sudo(%Session{} = session, %User{} = user) do
-    cast(
-      session,
-      %{
-        sudoer_id: session.sudoer_id || session.user_id,
-        user_id: user.id
-      },
-      [:sudoer_id, :user_id]
-    )
-    |> validate_uid(:sudoer_id)
-    |> validate_uid(:user_id)
-    |> then(
-      &if(get_field(&1, :user_id) === get_field(&1, :sudoer_id)) do
-        add_error(&1, :user_id, "cannot sudo yourself")
-      else
-        &1
-      end
-    )
-    |> Repo.update()
+    with {:ok, session} <-
+           cast(
+             session,
+             %{
+               sudoer_id: session.sudoer_id || session.user_id,
+               user_id: user.id
+             },
+             [:sudoer_id, :user_id]
+           )
+           |> validate_uid(:sudoer_id)
+           |> validate_uid(:user_id)
+           |> then(
+             &if(get_field(&1, :user_id) === get_field(&1, :sudoer_id)) do
+               add_error(&1, :user_id, "cannot sudo yourself")
+             else
+               &1
+             end
+           )
+           |> Repo.update(),
+         session <- Repo.preload(session, Session.default_assoc()) do
+      {:ok, session}
+    end
   end
 
   def sudo(%Session{sudoer_id: sudoer_id} = session, nil) when is_binary(sudoer_id) do
-    change(
-      session,
-      %{
-        sudoer_id: nil,
-        user_id: sudoer_id
-      }
-    )
-    |> Repo.update()
+    with {:ok, session} <-
+           change(
+             session,
+             %{
+               sudoer_id: nil,
+               user_id: sudoer_id
+             }
+           )
+           |> Repo.update(),
+         session <- Repo.preload(session, Session.default_assoc()) do
+      {:ok, session}
+    end
   end
 
   def sudo(%Session{} = session, nil) do

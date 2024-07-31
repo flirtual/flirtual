@@ -38,6 +38,14 @@ defmodule Flirtual.Users do
     |> Repo.one()
   end
 
+  def get_by_slug(slug)
+      when is_binary(slug) do
+    User
+    |> where([user], user.slug == ^slug)
+    |> preload(^User.default_assoc())
+    |> Repo.one()
+  end
+
   def by_ids(user_ids) do
     User
     |> where([user], user.id in ^user_ids)
@@ -74,10 +82,12 @@ defmodule Flirtual.Users do
 
   def update(%User{} = user, attrs, options \\ []) do
     Repo.transaction(fn ->
-      with {:ok, user} <-
+      with :ok <- Flag.check_user_slug(user, attrs["slug"]),
+           {:ok, user} <-
              user
              |> User.changeset(attrs, options)
              |> Repo.update(),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id) do
         user
       else
@@ -215,6 +225,7 @@ defmodule Flirtual.Users do
              |> User.update_email_changeset(attrs |> Map.from_struct())
              |> Repo.update(),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
@@ -254,6 +265,7 @@ defmodule Flirtual.Users do
            {:ok, user} <-
              User.confirm_email_changeset(attrs.user)
              |> Repo.update(),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
         user
       else
@@ -324,6 +336,7 @@ defmodule Flirtual.Users do
              user
              |> change(%{deactivated_at: now})
              |> Repo.update(),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]) do
         user
       else
@@ -339,6 +352,7 @@ defmodule Flirtual.Users do
              user
              |> change(%{deactivated_at: nil})
              |> Repo.update(),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id) do
         user
       else
@@ -419,22 +433,34 @@ defmodule Flirtual.Users do
     end)
   end
 
+  def dev_delete(%User{} = user) do
+    Repo.transaction(fn ->
+      with :ok <- if(is_nil(user.banned_at), do: Hash.delete(user.id), else: :ok),
+           {:ok, user} <- Repo.delete(user),
+           :ok <- Elasticsearch.delete(:users, user.id) do
+        {:ok, user}
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def create(attrs, options \\ []) do
     Repo.transaction(fn ->
       with {:ok, attrs} <-
              cast_arbitrary(
                %{
-                 username: :string,
                  email: :string,
                  password: :string,
                  service_agreement: :boolean,
                  notifications: :boolean,
-                 captcha: :string
+                 captcha: :string,
+                 url: :string
                },
                attrs
              )
              |> validate_required([
-               :username,
                :email,
                :password,
                :service_agreement,
@@ -450,8 +476,7 @@ defmodule Flirtual.Users do
              |> apply_action(:update),
            {:ok, user} <-
              %User{}
-             |> cast(attrs, [:username, :email, :password])
-             |> User.validate_unique_username()
+             |> cast(attrs, [:email, :password])
              |> User.validate_unique_email()
              |> Flag.validate_allowed_email(:email)
              |> User.validate_password()
@@ -459,6 +484,7 @@ defmodule Flirtual.Users do
              |> Repo.insert(),
            {:ok, user} <-
              change(user, %{
+               slug: String.downcase(user.id, :ascii) |> String.slice(0..19),
                talkjs_signature: Talkjs.new_user_signature(user.id),
                revenuecat_id: UUID.generate(),
                unsubscribe_token: UUID.generate()
@@ -487,9 +513,8 @@ defmodule Flirtual.Users do
              Ecto.build_assoc(profile, :preferences)
              |> Repo.insert(),
            user <- Repo.preload(user, User.default_assoc()),
-           :ok <- Flag.check_flags(user.id, attrs[:username]),
+           :ok <- Flag.check_honeypot(user.id, attrs[:url]),
            :ok <- Flag.check_email_flags(user.id, attrs[:email]),
-           :ok <- Hash.check_hash(user.id, "username", attrs[:username]),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
            {:ok, _} <- Talkjs.update_user(user),
            {:ok, _} <- Listmonk.create_subscriber(user),

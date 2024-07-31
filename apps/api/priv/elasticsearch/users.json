@@ -22,7 +22,7 @@
 			"conscientiousness": {
 				"type": "byte"
 			},
-			"agreeableness:": {
+			"agreeableness": {
 				"type": "byte"
 			},
 			"attributes": {
@@ -40,10 +40,13 @@
 			"monopoly": {
 				"type": "keyword"
 			},
-			"serious": {
-				"type": "boolean"
+			"relationships": {
+				"type": "keyword"
 			},
 			"domsub": {
+				"type": "keyword"
+			},
+			"languages": {
 				"type": "keyword"
 			},
 			"liked": {

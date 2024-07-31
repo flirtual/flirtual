@@ -1,6 +1,6 @@
-import { fetch, NarrowFetchOptions } from "../../exports";
+import { fetch, type NarrowFetchOptions } from "../../exports";
 
-import { Profile } from "./profile";
+import type { Profile } from "./profile";
 
 export const CustomWeightList = [
 	"country",
@@ -9,7 +9,8 @@ export const CustomWeightList = [
 	"defaultInterests",
 	"customInterests",
 	"personality",
-	"serious",
+	"relationships",
+	"languages",
 	"domsub",
 	"kinks",
 	"likes"

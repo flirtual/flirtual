@@ -1,7 +1,11 @@
 import { twMerge } from "tailwind-merge";
 
 import { urls } from "~/urls";
-import { IconComponent, DiscordIcon, TwitterIcon } from "~/components/icons";
+import {
+	type IconComponent,
+	DiscordIcon,
+	TwitterIcon
+} from "~/components/icons";
 
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 import { FooterCannyLink } from "./canny-button";
@@ -24,7 +28,7 @@ export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 			className="touch-callout-default cursor-pointer hover:brightness-90"
 			{...props}
 		>
-			<Icon className="h-6 w-6 sm:h-8 sm:w-8" />
+			<Icon className="size-6 desktop:size-8" />
 		</a>
 	) : (
 		<button
@@ -32,7 +36,7 @@ export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 			type="button"
 			{...props}
 		>
-			<Icon className="h-6 w-6 sm:h-8 sm:w-8" />
+			<Icon className="size-6 desktop:size-8" />
 		</button>
 	);
 
@@ -41,7 +45,7 @@ type FooterListLinkProps = LinkOrButtonProps<{
 }>;
 
 export const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
-	<li className="cursor-pointer hover:underline sm:text-lg md:text-xl">
+	<li className="cursor-pointer hover:underline desktop:text-xl">
 		{"href" in props ? (
 			<a {...props}>{props.label}</a>
 		) : (
@@ -61,13 +65,13 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 		<footer
 			{...props}
 			className={twMerge(
-				"w-full select-none justify-center bg-brand-gradient px-8 py-12 font-nunito text-white-20 sm:p-16",
-				desktopOnly ? "hidden sm:flex" : "flex",
+				"w-full select-none justify-center bg-brand-gradient px-8 py-12 font-nunito text-white-10 desktop:p-16",
+				desktopOnly ? "hidden desktop:flex" : "flex",
 				props.className
 			)}
 		>
-			<div className="flex w-full max-w-screen-lg flex-col gap-4 md:gap-8">
-				<div className="flex items-center gap-8 md:mx-auto md:justify-center">
+			<div className="max-w-screen-lg flex w-full flex-col gap-4 desktop:gap-8">
+				<div className="flex items-center gap-8 desktop:mx-auto desktop:justify-center">
 					<div className="flex gap-4">
 						<FooterIconSupportLink />
 						<FooterListIconLink
@@ -80,8 +84,8 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 						/>
 					</div>
 				</div>
-				<div className="flex max-w-screen-sm flex-col md:mx-auto">
-					<ul className="flex flex-wrap gap-x-4 md:justify-center">
+				<div className="max-w-screen-sm flex flex-col desktop:mx-auto">
+					<ul className="flex flex-wrap gap-x-4 desktop:justify-center">
 						<FooterListLink href={urls.resources.events} label="Events" />
 						<FooterSupportLink />
 						<FooterCannyLink />
@@ -90,7 +94,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 							label="Status"
 						/>
 					</ul>
-					<ul className="flex flex-wrap gap-x-4 md:justify-center">
+					<ul className="flex flex-wrap gap-x-4 desktop:justify-center">
 						<FooterListLink href={urls.resources.about} label="About" />
 						<FooterListLink href={urls.resources.press} label="Press" />
 						<FooterListLink href={urls.resources.branding} label="Branding" />
@@ -99,7 +103,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 							label="Developers"
 						/>
 					</ul>
-					<ul className="flex flex-wrap gap-x-4 md:justify-center">
+					<ul className="flex flex-wrap gap-x-4 desktop:justify-center">
 						<FooterListLink
 							href={urls.resources.communityGuidelines}
 							label="Community Guidelines"
@@ -114,7 +118,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 						/>
 					</ul>
 				</div>
-				<div className="flex justify-between md:text-lg">
+				<div className="flex justify-between desktop:text-lg">
 					<MadeWithLove />
 					<span>&copy; {new Date().getFullYear()} Flirtual</span>
 				</div>

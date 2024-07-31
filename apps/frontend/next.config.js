@@ -107,6 +107,9 @@ module.exports = {
 				permanent: false
 			}
 		];
+	},
+	experimental: {
+		instrumentationHooks: true
 	}
 };
 

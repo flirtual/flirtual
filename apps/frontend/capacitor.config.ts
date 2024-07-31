@@ -1,5 +1,6 @@
-import { CapacitorConfig } from "@capacitor/cli";
 import { config } from "dotenv";
+
+import type { CapacitorConfig } from "@capacitor/cli";
 
 config({ path: ".env.local" });
 const frontendUrl = new URL(process.env.NEXT_PUBLIC_ORIGIN!);
@@ -19,5 +20,9 @@ export default {
 		scheme: "Flirtual"
 	},
 	appendUserAgent: "Flirtual-Native",
-	plugins: {}
+	plugins: {
+		Keyboard: {
+			resizeOnFullScreen: true
+		}
+	}
 } satisfies CapacitorConfig;

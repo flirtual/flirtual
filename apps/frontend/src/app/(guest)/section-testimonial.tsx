@@ -1,8 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
+import { unstable_cache } from "next/cache";
+import { Suspense } from "react";
+
 import { urls } from "~/urls";
 import { api } from "~/api";
 
 import { SnapSection } from "./snap-section";
+import { UserTotal } from "./user-total";
 
 export interface SectionTestimonialProps {
 	images: Array<string>;
@@ -13,17 +16,26 @@ export const SectionTestimonial: React.FC<SectionTestimonialProps> = async ({
 	images,
 	brands
 }) => {
-	const totalUsers = await api.user.count();
+	const totalUsersPromise = unstable_cache(
+		() => {
+			return api.user.count();
+		},
+		["totalUsers"],
+		{ revalidate: 86400 }
+	)();
 
 	return (
 		<SnapSection
 			className="grid h-screen grid-rows-[max-content,1fr,max-content] bg-brand-gradient"
 			id="testimonial"
 		>
-			<div className="flex items-center justify-center p-8 md:p-16">
-				<span className="font-montserrat text-3xl font-extrabold md:text-5xl">
-					Match with {(Math.floor(totalUsers / 5000) * 5000).toLocaleString()}+
-					users from all over the world!
+			<div className="flex items-center justify-center p-8 desktop:p-16">
+				<span className="font-montserrat text-3xl font-extrabold desktop:text-5xl">
+					Match with{" "}
+					<Suspense fallback="0">
+						<UserTotal promise={totalUsersPromise} />
+					</Suspense>
+					+ users from all over the world!
 				</span>
 			</div>
 			<div className="flex overflow-x-hidden">
@@ -48,10 +60,10 @@ export const SectionTestimonial: React.FC<SectionTestimonialProps> = async ({
 					</div>
 				</div>
 			</div>
-			<div className="m-8 flex flex-wrap items-center justify-evenly gap-8 md:m-16 md:flex-nowrap">
+			<div className="m-8 flex flex-wrap items-center justify-evenly gap-8 desktop:m-16 desktop:flex-nowrap">
 				{brands.map((source) => (
 					<img
-						className="w-24 md:w-full"
+						className="w-24 desktop:w-full"
 						key={source}
 						src={urls.media(source)}
 					/>

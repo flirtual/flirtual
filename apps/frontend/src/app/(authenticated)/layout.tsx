@@ -1,6 +1,10 @@
-import { ModeratorMessageModal } from "~/components/modals/moderator-message";
+import * as swrInfinite from "swr/infinite";
+
+import { ModeratorMessageDialog } from "~/components/modals/moderator-message";
 import { TalkjsProvider } from "~/hooks/use-talkjs";
 import { withSession } from "~/server-utilities";
+import { getConversationsKey } from "~/hooks/use-conversations.shared";
+import { SWRConfig } from "~/components/swr";
 
 export default async function AuthenticatedLayout({
 	children
@@ -8,9 +12,17 @@ export default async function AuthenticatedLayout({
 	const session = await withSession();
 
 	return (
-		<TalkjsProvider>
-			{children}
-			{session?.user.moderatorMessage && <ModeratorMessageModal />}
-		</TalkjsProvider>
+		<SWRConfig
+			value={{
+				fallback: {
+					[swrInfinite.unstable_serialize(getConversationsKey)]: []
+				}
+			}}
+		>
+			<TalkjsProvider>
+				{children}
+				{session?.user.moderatorMessage && <ModeratorMessageDialog />}
+			</TalkjsProvider>
+		</SWRConfig>
 	);
 }

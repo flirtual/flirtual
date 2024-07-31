@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useCallback, useState } from "react";
@@ -26,15 +25,14 @@ export const SectionCarousel: React.FC<SectionCarouselProps> = ({ values }) => {
 
 	return (
 		<SnapSection className="relative" id="carousel">
-			<div className="absolute z-10 flex w-full justify-center px-8 py-16 md:px-16">
-				<span className="text-center font-montserrat text-2xl font-semibold [text-shadow:0_0_16px_#000] md:text-4xl">
+			<div className="absolute z-10 flex w-full justify-center px-8 py-16 desktop:px-16">
+				<span className="text-center font-montserrat text-2xl font-semibold [text-shadow:0_0_16px_#000] desktop:text-4xl">
 					Enjoy safe, magical dates together in Virtual Reality
 				</span>
 			</div>
 			<div className="flex">
 				{values.map(([source, label], index) => (
 					<button
-						// eslint-disable-next-line tailwindcss/enforces-shorthand
 						className="absolute flex h-screen w-screen shrink-0 snap-center snap-always transition-opacity duration-500"
 						key={source}
 						type="button"
@@ -48,7 +46,7 @@ export const SectionCarousel: React.FC<SectionCarouselProps> = ({ values }) => {
 						}}
 					>
 						<div className="absolute z-10 flex size-full select-none items-center justify-center p-16">
-							<span className="font-nunito text-5xl font-bold [text-shadow:0_0_16px_#000] md:text-7xl">
+							<span className="font-nunito text-5xl font-bold [text-shadow:0_0_16px_#000] desktop:text-7xl">
 								{label}
 							</span>
 						</div>

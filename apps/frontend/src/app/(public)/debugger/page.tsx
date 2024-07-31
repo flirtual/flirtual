@@ -7,7 +7,7 @@ export default async function DebuggerPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard
-				className="h-full sm:h-fit"
+				className="h-full desktop:h-fit"
 				containerProps={{ className: "gap-4" }}
 				title="Debug"
 			>

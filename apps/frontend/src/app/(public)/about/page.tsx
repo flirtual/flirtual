@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
@@ -9,6 +7,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 
 import { TeamList } from "./team-list";
 
+import type { Metadata } from "next";
+
 export const metadata: Metadata = {
 	title: "About us"
 };
@@ -17,7 +17,7 @@ export default function AboutPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard
-				className="w-full sm:max-w-2xl"
+				className="w-full desktop:max-w-2xl"
 				containerProps={{ className: "!p-0 overflow-hidden" }}
 				title="About us"
 			>
@@ -27,7 +27,7 @@ export default function AboutPage() {
 					src={urls.media("5337d467-579b-4718-baa5-489fcaa32066")}
 					width={1888}
 				/>
-				<div className="flex flex-col gap-12 px-8 py-10 sm:px-16">
+				<div className="flex flex-col gap-12 px-8 py-10 desktop:px-16">
 					<div className="flex flex-col gap-4">
 						<h1 className="text-2xl font-semibold">Our story</h1>
 						<p>

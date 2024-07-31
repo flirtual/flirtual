@@ -39,7 +39,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex gap-4">
-				{confirmSuccess !== null && <Icon className="h-8 w-8 shrink-0" />}
+				{confirmSuccess !== null && <Icon className="size-8 shrink-0" />}
 				<span className="text-xl">
 					{confirmSuccess === null
 						? "Confirming..."

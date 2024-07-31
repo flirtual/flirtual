@@ -1,9 +1,9 @@
 "use client";
 
-import { FC, PropsWithChildren } from "react";
-
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
+
+import type { FC, PropsWithChildren } from "react";
 
 export const PlatformMismatchMessage: FC = () => {
 	const { platform, native } = useDevice();

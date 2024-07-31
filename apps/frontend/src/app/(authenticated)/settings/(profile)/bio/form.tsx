@@ -1,12 +1,9 @@
 "use client";
 
-import { FC } from "react";
-
 import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputImageSet } from "~/components/forms/input-image-set";
-import { InlineLink } from "~/components/inline-link";
 import {
 	InputEditor,
 	InputLabel,
@@ -17,8 +14,15 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
 import { urls } from "~/urls";
+import { InputPrompts } from "~/components/forms/prompts";
+import { findBy } from "~/utilities";
 
-export const BiographyForm: FC = () => {
+import type { AttributeCollection } from "~/api/attributes";
+import type { FC } from "react";
+
+export const BiographyForm: FC<{ games: AttributeCollection<"game"> }> = ({
+	games
+}) => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
@@ -27,21 +31,27 @@ export const BiographyForm: FC = () => {
 	const { user } = session;
 	const { profile } = user;
 
+	const favoriteGame = user.profile.attributes
+		.map(({ id }) => findBy(games, "id", id))
+		.filter(Boolean)
+		.filter((game) => game.name !== "VRChat")[0].name;
+
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				displayName: profile.displayName || user.username || "",
+				displayName: api.user.displayName(user),
 				images: profile.images.map((image) => ({
 					id: image.id,
 					src: urls.pfp(image),
 					fullSrc: urls.pfp(image, "full")
 				})),
-				biography: user.profile.biography || ""
+				biography: user.profile.biography || "",
+				prompts: user.profile.prompts
 			}}
 			onSubmit={async ({ displayName, biography, ...values }) => {
-				const [profile, images] = await Promise.all([
-					await api.user.profile.update(user.id, {
+				const [profile, images, prompts] = await Promise.all([
+					api.user.profile.update(user.id, {
 						query: {
 							required: ["displayName", "biography"]
 						},
@@ -50,12 +60,20 @@ export const BiographyForm: FC = () => {
 							biography: html(biography)
 						}
 					}),
-					await api.user.profile.images.update(user.id, {
-						body: (
-							await api.user.profile.images.create(user.id, {
-								body: values.images.map((image) => image.id).filter(Boolean)
+					api.user.profile.images
+						.create(user.id, {
+							body: values.images.map((image) => image.id).filter(Boolean)
+						})
+						.then((images) =>
+							api.user.profile.images.update(user.id, {
+								body: images.map((image) => image.id)
 							})
-						).map((image) => image.id)
+						),
+					api.user.profile.prompts.update(user.id, {
+						body: values.prompts.map(({ prompt, response }) => ({
+							promptId: prompt.id,
+							response
+						}))
 					})
 				]);
 
@@ -67,7 +85,8 @@ export const BiographyForm: FC = () => {
 						...user,
 						profile: {
 							...profile,
-							images
+							images,
+							prompts
 						}
 					}
 				});
@@ -80,16 +99,6 @@ export const BiographyForm: FC = () => {
 							<>
 								<InputLabel {...field.labelProps}>Display name</InputLabel>
 								<InputText {...field.props} />
-								<InputLabelHint className="text-sm">
-									This is how you&apos;ll appear around Flirtual. Your display
-									name can contain special characters and doesn&apos;t need to
-									be unique. Your profile link (
-									<InlineLink className="font-mono" href={urls.profile(user)}>
-										flirtu.al/
-										{user.username}
-									</InlineLink>
-									) will still use your username.
-								</InputLabelHint>
 							</>
 						)}
 					</FormField>
@@ -99,7 +108,20 @@ export const BiographyForm: FC = () => {
 								<InputLabel
 									{...field.labelProps}
 									inline
-									hint="Upload your VR avatar pictures!"
+									hint={
+										<InputLabelHint>
+											Upload your avatar pictures from VRChat,{" "}
+											{favoriteGame ?? "Horizon Worlds"}, or another social VR
+											app. Aim for 3+ avatar pictures to get more matches.
+											<details>
+												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+													Guidelines
+												</summary>
+												Don't include nude/NSFW, disturbing, or off-topic
+												content, and don't use other people's pictures.
+											</details>
+										</InputLabelHint>
+									}
 								>
 									Profile pictures
 								</InputLabel>
@@ -110,9 +132,37 @@ export const BiographyForm: FC = () => {
 					<FormField name="biography">
 						{(field) => (
 							<>
-								<InputLabel {...field.labelProps}>Bio</InputLabel>
+								<InputLabel
+									inline
+									hint={
+										<InputLabelHint>
+											A great bio shows your personality and interests, maybe
+											your sense of humor and what you're looking for.
+											<details>
+												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
+													Guidelines
+												</summary>
+												Be respectful and don't include spam, soliciting,
+												excessive self-promotion, graphic NSFW descriptions,
+												hateful or controversial content.
+											</details>
+										</InputLabelHint>
+									}
+									{...field.labelProps}
+								>
+									Bio
+								</InputLabel>
 								<InputEditor {...field.props} />
 							</>
+						)}
+					</FormField>
+					<FormField name="prompts">
+						{(field) => (
+							<InputPrompts
+								newBadge
+								labelId={field.labelProps.htmlFor}
+								{...field.props}
+							/>
 						)}
 					</FormField>
 					<FormButton>Update</FormButton>

@@ -1,6 +1,6 @@
-import { Metadata } from "next";
-
 import { ConnectionsForm } from "./form";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Connections"

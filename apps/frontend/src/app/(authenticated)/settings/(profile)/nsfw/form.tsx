@@ -1,7 +1,6 @@
 "use client";
 
 import { api } from "~/api";
-import { AttributeCollection } from "~/api/attributes";
 import { ProfileDomsubList } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -15,6 +14,8 @@ import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy } from "~/utilities";
+
+import type { AttributeCollection } from "~/api/attributes";
 
 export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
 	kinks

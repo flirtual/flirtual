@@ -1,20 +1,20 @@
 import { snakeCase } from "change-case";
 
-import { DatedModel, UuidModel } from "../common";
 import {
 	fetch,
-	FetchOptions,
-	NarrowFetchOptions,
-	Paginate,
-	PaginateOptions
+	type FetchOptions,
+	type NarrowFetchOptions,
+	type Paginate,
+	type PaginateOptions
 } from "../exports";
-import { Subscription } from "../subscription";
-import { Attribute } from "../attributes";
-import { Connection } from "../connections";
 
-import { Profile } from "./profile/profile";
-import { Preferences } from "./preferences";
-import { Relationship } from "./relationship";
+import type { DatedModel, UuidModel } from "../common";
+import type { Subscription } from "../subscription";
+import type { Attribute } from "../attributes";
+import type { Connection } from "../connections";
+import type { Profile } from "./profile/profile";
+import type { Preferences } from "./preferences";
+import type { Relationship } from "./relationship";
 
 export const userTags = [
 	"admin",
@@ -44,7 +44,7 @@ export type UserPasskey = UuidModel &
 export type User = UuidModel &
 	Partial<DatedModel> & {
 		email: string;
-		username: string;
+		slug: string;
 		language?: string;
 		talkjsId: string;
 		talkjsSignature?: string;
@@ -57,7 +57,7 @@ export type User = UuidModel &
 		revenuecatId?: string;
 		moderatorMessage?: string;
 		moderatorNote?: string;
-		visible: boolean;
+		status: string;
 		relationship?: Relationship;
 		bornAt?: string;
 		activeAt?: string;
@@ -76,12 +76,11 @@ export type User = UuidModel &
 	};
 
 export function displayName(user: User) {
-	return user.profile.displayName || user.username;
+	return user.profile.displayName || user.slug;
 }
 
 export async function create(
 	options: NarrowFetchOptions<{
-		username: string;
 		email: string;
 		password: string;
 		notifications: boolean;
@@ -110,7 +109,6 @@ export interface UserPreview {
 	id: string;
 	name: string;
 	age: number;
-	serious: boolean;
 	dark: boolean;
 	attributes: Array<Attribute>;
 	avatarUrl: string;
@@ -137,29 +135,16 @@ export async function search(
 	});
 }
 
-export async function getByUsername(
-	username: string,
+export async function getBySlug(
+	slug: string,
 	options: NarrowFetchOptions = {}
 ) {
-	return fetch<User>("get", `users/${username}/username`, options);
+	return fetch<User>("get", `users/${slug}/name`, options);
 }
 
-export interface UserVisibility {
-	visible: boolean;
-	reasons: Array<{
-		reason: string;
-		to?: string;
-	}>;
-}
-
-export async function visible(
-	userId: string,
-	options: NarrowFetchOptions = {}
-) {
-	return fetch<UserVisibility>("get", `users/${userId}/visible`, options);
-}
-
-export type UpdateUserBody = Partial<Pick<User, "bornAt" | "language">>;
+export type UpdateUserBody = Partial<
+	Pick<User, "bornAt" | "language" | "slug">
+>;
 
 export async function update(
 	userId: string,

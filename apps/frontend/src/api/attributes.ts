@@ -1,7 +1,8 @@
 import { gitCommitSha } from "~/const";
 
-import { UuidModel } from "./common";
-import { fetch, NarrowFetchOptions } from "./exports";
+import { fetch, type NarrowFetchOptions } from "./exports";
+
+import type { UuidModel } from "./common";
 
 export type KinkAttributeKind = "dominant" | "submissive" | null;
 
@@ -19,6 +20,7 @@ export interface AttributeMetadata {
 		definition?: string;
 		definitionLink: string;
 	};
+	relationship: undefined;
 	language: undefined;
 	game: undefined;
 	interest: {
@@ -36,6 +38,7 @@ export interface AttributeMetadata {
 		definition?: string;
 		definitionLink: string;
 	};
+	prompt: undefined;
 	"report-reason": {
 		fallback?: boolean;
 	};

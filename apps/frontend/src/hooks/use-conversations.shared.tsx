@@ -1,4 +1,4 @@
-import { ConversationList } from "~/api/conversations";
+import type { ConversationList } from "~/api/conversations";
 
 export const getConversationsKey = (page: number, list: ConversationList) => {
 	if (list && list.data.length < list.metadata.cursor.self.limit) return null;

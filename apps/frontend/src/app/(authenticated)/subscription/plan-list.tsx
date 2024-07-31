@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 
 import { useSession } from "~/hooks/use-session";
 import { useDevice } from "~/hooks/use-device";
@@ -33,7 +33,7 @@ export const PlanList: FC = () => {
 	}
 
 	return (
-		<div className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-4">
+		<div className="grid grid-cols-1 gap-8 desktop:grid-cols-3 desktop:gap-4">
 			{[
 				{
 					id: "LVjvu5YE7PjUJxVrkfsnMi",

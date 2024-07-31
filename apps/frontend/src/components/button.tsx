@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import { forwardRef } from "react";
 
 import { isInternalHref } from "~/urls";
 
-import { IconComponent } from "./icons";
+import type { IconComponent } from "./icons";
 
 const defaultClassName = twMerge(
-	"focusable flex select-none items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
+	"group/button focusable flex shrink-0 select-none items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
 );
 
 const sizes = {
@@ -34,9 +35,11 @@ export interface ButtonProps {
 
 	iconClassName?: string;
 }
-export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
-	props
-) => {
+
+export const Button = forwardRef<
+	HTMLButtonElement,
+	React.ComponentProps<"button"> & ButtonProps
+>((props, reference) => {
 	const {
 		size = "base",
 		kind = "primary",
@@ -48,6 +51,7 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
 
 	return (
 		<button
+			ref={reference}
 			{...elementProps}
 			aria-disabled={disabled}
 			disabled={disabled}
@@ -66,7 +70,7 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
 				<Icon
 					className={twMerge(
 						"shrink-0",
-						size === "sm" ? "h-3" : "h-6",
+						size === "sm" ? "h-4" : "h-6",
 						iconClassName
 					)}
 				/>
@@ -74,7 +78,9 @@ export const Button: React.FC<React.ComponentProps<"button"> & ButtonProps> = (
 			{elementProps.children}
 		</button>
 	);
-};
+});
+
+Button.displayName = "Button";
 
 export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 	props
@@ -92,7 +98,7 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 		<Link
 			{...elementProps}
 			aria-disabled={disabled}
-			target={props.target ?? isInternalHref(props.href) ? "_self" : "_blank"}
+			target={(props.target ?? isInternalHref(props.href)) ? "_self" : "_blank"}
 			className={twMerge(
 				defaultClassName,
 				size && sizes[size],
@@ -114,7 +120,7 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 					)}
 				/>
 			)}
-			<span>{elementProps.children}</span>
+			{elementProps.children}
 		</Link>
 	);
 };

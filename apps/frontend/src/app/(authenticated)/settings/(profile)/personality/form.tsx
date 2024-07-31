@@ -1,10 +1,10 @@
 "use client";
 
-import { FC } from "react";
+import shuffle from "fast-shuffle";
 
 import { api } from "~/api";
 import {
-	ProfilePersonality,
+	type ProfilePersonality,
 	personalityQuestionLabels
 } from "~/api/user/profile";
 import { Form } from "~/components/forms";
@@ -14,6 +14,8 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { entries } from "~/utilities";
 
+import type { FC } from "react";
+
 export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 	personality
 }) => {
@@ -21,6 +23,7 @@ export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 	const toasts = useToast();
 
 	if (!session || !personality) return null;
+	const { user } = session;
 
 	return (
 		<Form
@@ -45,19 +48,19 @@ export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 		>
 			{({ FormField }) => (
 				<>
-					<InputLabel
-						inline
-						hint="Your answers are hidden from other users. You can skip this and come back later."
-					>
-						This helps us match you with compatible people, based on the Big 5
-						Personality Test.
+					<InputLabel>
+						This helps us match you with people you&apos;ll vibe with, based on
+						the Big 5 Personality Test.
 					</InputLabel>
-					{entries(personality).map(([name], questionIndex) => (
-						<FormField key={questionIndex} name={name}>
+					{shuffle(
+						Number.parseInt(user.talkjsId.slice(0, 8), 16),
+						entries(personality)
+					).map(([name]) => (
+						<FormField key={name} name={name}>
 							{(field) => (
-								<div className="flex justify-between gap-4">
+								<div className="flex items-center justify-between gap-4">
 									<InputLabel {...field.labelProps} inline>
-										{personalityQuestionLabels[questionIndex]}
+										{personalityQuestionLabels[Number.parseInt(name.slice(-1))]}
 									</InputLabel>
 									<InputSwitch {...field.props} />
 								</div>

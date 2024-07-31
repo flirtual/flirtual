@@ -68,7 +68,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 		else if (typeof window.Canny === "function") window.Canny("closeChangelog");
 	}, [loadChangelog, visible]);
 
-	const isDesktop = useScreenBreakpoint("md");
+	const isDesktop = useScreenBreakpoint("desktop");
 
 	if (!session) return null;
 	const { user } = session;
@@ -101,7 +101,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 				{visible && (
 					<motion.div
 						animate={{ opacity: 1 }}
-						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom)+0.5em)*-1)] z-10 flex w-44 select-none flex-col-reverse overflow-hidden rounded-3xl rounded-b-none bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom)+1.15rem)] pt-3 text-black-80 shadow-brand-1 sm:-top-2 sm:bottom-inherit sm:flex-col sm:rounded-3xl sm:pb-3 sm:pt-4"
+						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom)+0.65em)*-1)] z-10 flex w-44 select-none flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom)+1.2rem)] pt-2.5 text-black-80 shadow-brand-1 desktop:bottom-inherit desktop:top-[-0.4rem] desktop:flex-col desktop:rounded-2xl desktop:pb-3 desktop:pt-[0.9375rem]"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementReference}
@@ -111,50 +111,50 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							href={urls.user.me}
 						>
 							<UserAvatar
-								className="mt-2 h-8 w-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 sm:mb-2 sm:mt-0"
+								className="mt-1.5 size-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 desktop:mb-2 desktop:mt-0"
 								height={40}
 								user={user}
 								variant="icon"
 								width={40}
 							/>
-							<span className="pb-1 pl-2 pt-2 font-montserrat text-lg font-semibold sm:pb-2 sm:pt-1">
+							<span className="pb-1 pl-2 pt-2.5 font-montserrat text-lg font-semibold desktop:pb-2 desktop:pt-1">
 								Profile
 							</span>
 						</Link>
-						<div className="flex flex-col-reverse px-1 sm:flex-col">
+						<div className="flex flex-col-reverse px-1 pt-1 desktop:flex-col desktop:pt-0">
 							<ProfileNavigationItem
 								href={
 									isDesktop ? urls.settings.matchmaking() : urls.settings.list()
 								}
 							>
-								<Settings className="h-6 w-6" />
+								<Settings className="size-6" />
 								Settings
 							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.subscription.default}>
-								<Sparkles className="h-6 w-6" />
+								<Sparkles className="size-6" />
 								Premium
 							</ProfileNavigationItem>
 							<ProfileNavigationCannyButton />
 							<ProfileNavigationItem href={urls.socials.discord}>
-								<DiscordOutlineIcon className="h-6 w-6" />
+								<DiscordOutlineIcon className="size-6" />
 								Discord
 							</ProfileNavigationItem>
 							<ProfileNavigationItem
-								className="native:hidden"
+								className="native:hidden vision:hidden"
 								href={urls.resources.download}
 							>
-								<Download className="h-6 w-6" />
+								<Download className="size-6" />
 								Get app
 							</ProfileNavigationItem>
 							{user.tags?.includes("moderator") && (
 								<>
 									<hr className="my-2 w-full border-t-2 border-white-40" />
 									<ProfileNavigationItem href={urls.moderation.reports()}>
-										<ShieldAlert className="h-6 w-6" />
+										<ShieldAlert className="size-6" />
 										Reports
 									</ProfileNavigationItem>
 									<ProfileNavigationItem href={urls.moderation.search}>
-										<Search className="h-6 w-6" />
+										<Search className="size-6" />
 										Search
 									</ProfileNavigationItem>
 								</>
@@ -162,7 +162,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 							{user.tags?.includes("admin") && (
 								<>
 									<ProfileNavigationItem href={urls.admin.stats}>
-										<LineChart className="h-6 w-6" />
+										<LineChart className="size-6" />
 										Stats
 									</ProfileNavigationItem>
 								</>
@@ -174,7 +174,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 										await mutateSession(session);
 									}}
 								>
-									<VenetianMask className="h-6 w-6" />
+									<VenetianMask className="size-6" />
 									Unsudo
 								</ProfileNavigationItem>
 							)}

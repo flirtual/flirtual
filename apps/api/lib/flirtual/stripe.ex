@@ -334,7 +334,7 @@ defmodule Flirtual.Stripe do
   defp transform_user(%User{} = user) do
     %{
       email: user.email,
-      description: user.username
+      description: user.slug
     }
   end
 
@@ -403,7 +403,8 @@ defmodule Flirtual.Stripe do
     subscription = get_subscription(stripe_id)
 
     with {:ok, %Stripe.Subscription{canceled_at: nil}} <- subscription,
-         {:ok, subscription} <- Stripe.Subscription.update(stripe_id, %{cancel_at_period_end: true}) do
+         {:ok, subscription} <-
+           Stripe.Subscription.update(stripe_id, %{cancel_at_period_end: true}) do
       {:ok, subscription}
     else
       {:error, %Stripe.Error{extra: %{http_status: 404}}} -> {:ok, subscription}

@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-
 import { ModelCard } from "~/components/model-card";
 
 import { EmailForm } from "./form";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Email"
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountEmailPage() {
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Change email">
+		<ModelCard
+			className="desktop:w-[42rem] desktop:max-w-full"
+			title="Change email"
+		>
 			<EmailForm />
 		</ModelCard>
 	);

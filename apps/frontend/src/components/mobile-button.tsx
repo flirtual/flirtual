@@ -1,7 +1,7 @@
 import React from "react";
-import Link, { LinkProps } from "next/link";
+import Link, { type LinkProps } from "next/link";
 
-import { IconComponent } from "./icons";
+import type { IconComponent } from "./icons";
 
 export type MobileButtonProps = LinkProps & {
 	label: string;

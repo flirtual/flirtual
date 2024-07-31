@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
-import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import {
 	Form,
@@ -14,6 +13,8 @@ import { ModelCard } from "~/components/model-card";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
+import type { User } from "~/api/user";
+
 export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
@@ -22,7 +23,7 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 
 	return (
 		<ModelCard
-			className="sm:max-w-2xl"
+			className="desktop:max-w-2xl"
 			title={deactivated ? "Reactivate account" : "Deactivate account"}
 		>
 			<Form
@@ -30,9 +31,10 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 				fields={{}}
 				requireChange={false}
 				onSubmit={async () => {
-					await (deactivated
-						? api.user.reactivate(user.id)
-						: api.user.deactivate(user.id)
+					await (
+						deactivated
+							? api.user.reactivate(user.id)
+							: api.user.deactivate(user.id)
 					)
 						.then(() =>
 							toasts.add(

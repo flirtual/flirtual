@@ -4,7 +4,8 @@ defmodule Flirtual.Flag do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Discord, Flag, Repo, Users}
+  alias Flirtual.{Discord, Flag, Hash, Repo, User, Users}
+  alias Flirtual.User.Profile
 
   schema "flags" do
     field(:type, :string)
@@ -37,9 +38,9 @@ defmodule Flirtual.Flag do
     end
   end
 
-  def validate_allowed_username(%Ecto.Changeset{valid?: true} = changeset, field) do
-    username = get_field(changeset, field)
-    flag = get(username, "username")
+  def validate_allowed_slug(%Ecto.Changeset{valid?: true} = changeset, field) do
+    slug = get_field(changeset, field)
+    flag = get(slug, "username")
 
     if is_nil(flag) do
       changeset
@@ -48,8 +49,15 @@ defmodule Flirtual.Flag do
     end
   end
 
-  def validate_allowed_username(changeset, _) do
+  def validate_allowed_slug(changeset, _) do
     changeset
+  end
+
+  def check_honeypot(_, nil), do: :ok
+  def check_honeypot(_, ""), do: :ok
+
+  def check_honeypot(user_id, _) do
+    Discord.deliver_webhook(:honeypot, user: Users.get(user_id))
   end
 
   def check_flags(_, nil), do: :ok
@@ -72,6 +80,87 @@ defmodule Flirtual.Flag do
     end
 
     :ok
+  end
+
+  def check_user_slug(_, nil), do: :ok
+  def check_user_slug(%User{slug: slug}, slug), do: :ok
+
+  def check_user_slug(user, slug) do
+    with {:ok, _} <- check_flags(user.id, slug),
+         {:ok, _} <- Hash.check_hash(user.id, "username", slug) do
+      :ok
+    end
+  end
+
+  def check_profile_display_name(_, nil), do: :ok
+  def check_profile_display_name(%Profile{display_name: display_name}, display_name), do: :ok
+
+  def check_profile_display_name(profile, display_name) do
+    with {:ok, _} <- check_flags(profile.user_id, display_name),
+         {:ok, _} <- Hash.check_hash(profile.user_id, "display name", display_name) do
+      :ok
+    end
+  end
+
+  def check_profile_discord(_, nil), do: :ok
+
+  def check_profile_discord(profile, discord) do
+    with {:ok, _} <- check_flags(profile.user_id, discord),
+         {:ok, _} <- Hash.check_hash(profile.user_id, "Discord", discord) do
+      :ok
+    end
+  end
+
+  def check_profile_vrchat(_, nil), do: :ok
+
+  def check_profile_vrchat(profile, vrchat) do
+    with {:ok, _} <- check_flags(profile.user_id, vrchat),
+         {:ok, _} <- Hash.check_hash(profile.user_id, "VRChat", vrchat) do
+      :ok
+    end
+  end
+
+  def check_profile_facetime(_, nil), do: :ok
+
+  def check_profile_facetime(profile, facetime) do
+    with {:ok, _} <- check_flags(profile.user_id, facetime),
+         {:ok, _} <- Hash.check_hash(profile.user_id, "FaceTime", facetime) do
+      :ok
+    end
+  end
+
+  def check_profile_biography(_, nil), do: :ok
+  def check_profile_biography(%Profile{biography: biography}, biography), do: :ok
+
+  def check_profile_biography(profile, biography) do
+    with {:ok, _} <- check_flags(profile.user_id, biography),
+         {:ok, _} <- check_openai_moderation(profile.user_id, biography) do
+      :ok
+    end
+  end
+
+  def check_profile_custom_interests(_, nil), do: :ok
+  def check_profile_custom_interests(_, []), do: :ok
+
+  def check_profile_custom_interests(profile, custom_interests) do
+    with {:ok, _} <-
+           check_flags(
+             profile.user_id,
+             Enum.join(custom_interests, " ")
+           ) do
+      :ok
+    end
+  end
+
+  def check_profile_flags(profile, attrs) do
+    with :ok <- check_profile_display_name(profile, attrs.display_name),
+         :ok <- check_profile_discord(profile, attrs.discord),
+         :ok <- check_profile_vrchat(profile, attrs.vrchat),
+         :ok <- check_profile_facetime(profile, attrs.facetime),
+         :ok <- check_profile_biography(profile, attrs.biography),
+         :ok <- check_profile_custom_interests(profile, attrs.custom_interests) do
+      :ok
+    end
   end
 
   def check_email_flags(_, nil), do: :ok

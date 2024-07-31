@@ -1,13 +1,12 @@
-import { Url } from "next/dist/shared/lib/router/router";
-
-import { ProspectKind } from "~/api/matchmaking";
-
-import { User } from "./api/user";
-import { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/confirm-email/page";
 import { entries, fromEntries } from "./utilities";
 import { siteOrigin } from "./const";
 import { escapeVRChat } from "./vrchat";
-import { ProfileImage } from "./api/user/profile/images";
+
+import type { Url } from "next/dist/shared/lib/router/router";
+import type { ProspectKind } from "~/api/matchmaking";
+import type { User } from "./api/user";
+import type { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/confirm-email/page";
+import type { ProfileImage } from "./api/user/profile/images";
 
 export function ensureRelativeUrl(pathname: string) {
 	if (!isInternalHref(pathname))
@@ -54,6 +53,8 @@ export function isInternalHref(href: Url) {
 	return toAbsoluteUrl(href.toString()).origin === siteOrigin;
 }
 
+export type FinishPage = 1 | 2 | 3 | 4 | 5;
+
 export const urls = {
 	// internal
 	api: process.env.NEXT_PUBLIC_API_URL as string,
@@ -84,14 +85,7 @@ export const urls = {
 	},
 	profile: (user?: User | string) => {
 		if (!user) return "me";
-
-		return `/${
-			typeof user === "string"
-				? user
-				: user.username.length === 22
-					? user.id
-					: user.username
-		}`;
+		return `/${typeof user === "string" ? user : user.slug}`;
 	},
 	browse: (kind?: ProspectKind) =>
 		url("/browse", { kind: kind === "love" ? undefined : kind }),
@@ -100,8 +94,8 @@ export const urls = {
 		of: (conversationId: string) => `/matches/${conversationId}`
 	},
 	likes: "/likes",
-	onboarding: (onboardingIndex: 1 | 2 | 3 | 4) =>
-		`/onboarding/${onboardingIndex}`,
+	onboarding: (onboardingIndex: 1 | 2) => `/onboarding/${onboardingIndex}`,
+	finish: (finishIndex: FinishPage) => `/finish/${finishIndex}`,
 	subscription: {
 		default: "/subscription",
 		success: url("/subscription", { success: "yes" })
@@ -171,8 +165,11 @@ export const urls = {
 		contactDirect: "https://hello.flirtu.al/support/tickets/new",
 		feedback: "https://flirtual.canny.io",
 		vulnerabilityReport:
-			"https://github.com/flirtual/flirtual/security/advisories/new",
-		mentalHealth: "/mentalhealth"
+			"https://github.com/flirtual/flirtual/security/advisories/new"
+	},
+
+	guides: {
+		mentalHealth: "/guides/mental-health"
 	},
 
 	socials: {

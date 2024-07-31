@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-
 import { ModelCard } from "~/components/model-card";
 
 import { PrivacyForm } from "./form";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Privacy"
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountPrivacyPage() {
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Privacy">
+		<ModelCard className="desktop:w-[42rem] desktop:max-w-full" title="Privacy">
 			<PrivacyForm />
 		</ModelCard>
 	);

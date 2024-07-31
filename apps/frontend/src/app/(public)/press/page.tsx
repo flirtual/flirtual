@@ -1,11 +1,11 @@
-import { Metadata } from "next";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { ButtonLink } from "~/components/button";
 import { urls } from "~/urls";
 
 import { PressItem } from "./press-item";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Press"
@@ -15,7 +15,7 @@ export default async function PressPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard
-				className="w-full sm:max-w-2xl"
+				className="w-full desktop:max-w-2xl"
 				containerProps={{ className: "gap-8" }}
 				title="Press"
 			>
@@ -37,7 +37,7 @@ export default async function PressPage() {
 				</div>
 				<div className="flex flex-col gap-4">
 					<span className="text-2xl font-semibold">Newsroom</span>
-					<div className="flex flex-col gap-2">
+					<div className="flex flex-col gap-4">
 						{[
 							{
 								name: "‘Phantom Touch’ and the (Real) Pleasures of Virtual Dating",

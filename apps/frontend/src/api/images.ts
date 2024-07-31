@@ -1,5 +1,6 @@
-import { fetch, NarrowFetchOptions } from "./exports";
-import { ProfileImage } from "./user/profile/images";
+import { fetch, type NarrowFetchOptions } from "./exports";
+
+import type { ProfileImage } from "./user/profile/images";
 
 export async function get(
 	imageId: string,

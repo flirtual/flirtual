@@ -27,13 +27,7 @@ defmodule Flirtual.ObanWorkers.Elasticsearch do
 
     users
     |> Enum.each(fn user ->
-      visible = User.visible?(user)
-
-      User
-      |> where(id: ^user.id)
-      |> Repo.update_all(set: [visible: visible])
-
-      if not visible do
+      if user.status != "visible" do
         Prospect
         |> where([prospect], prospect.target_id == ^user.id)
         |> Repo.delete_all()
@@ -48,7 +42,7 @@ defmodule Flirtual.ObanWorkers.Elasticsearch do
         document_exists? = not is_nil(Enum.find(documents, &(&1["id"] === document_id)))
 
         type =
-          if(user.visible,
+          if(user.status == "visible",
             do: if(document_exists?, do: :update, else: :create),
             else: :delete
           )

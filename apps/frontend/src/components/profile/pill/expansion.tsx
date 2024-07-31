@@ -1,13 +1,10 @@
 "use client";
 
-import { FC, useMemo, useState } from "react";
+import { type FC, useMemo, useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 
-import { User } from "~/api/user";
-import { Session } from "~/api/auth";
 import { ProfileMonopolyLabel } from "~/api/user/profile";
 import { urls } from "~/urls";
-import { Attribute } from "~/api/attributes";
 import { filterBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 
@@ -15,6 +12,10 @@ import { ProfilePlaylist } from "../playlist";
 
 import { PillAttributeList } from "./attribute-list";
 import { Pill } from "./pill";
+
+import type { Attribute } from "~/api/attributes";
+import type { Session } from "~/api/auth";
+import type { User } from "~/api/user";
 
 export interface PillCollectionExpansionProps {
 	user: User;

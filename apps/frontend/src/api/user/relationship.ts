@@ -1,4 +1,4 @@
-import { ProspectKind, ProspectRespondType } from "../matchmaking";
+import type { ProspectKind, ProspectRespondType } from "../matchmaking";
 
 export type Relationship = {
 	blocked: boolean;

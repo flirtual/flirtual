@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-
 import { ModelCard } from "~/components/model-card";
 
 import { ReferralTicket } from "./referral-ticket";
 import { ReferralForm } from "./form";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Refer a homie"
@@ -11,7 +11,10 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountReferralPage() {
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Refer a homie">
+		<ModelCard
+			className="desktop:w-[42rem] desktop:max-w-full"
+			title="Refer a homie"
+		>
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-4">
 					<span className="select-none">

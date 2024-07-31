@@ -277,9 +277,10 @@ defmodule Flirtual.Subscription do
                    default_interests: 1.0,
                    custom_interests: 1.0,
                    personality: 1.0,
-                   serious: 1.0,
+                   relationships: 1.0,
                    domsub: 1.0,
                    kinks: 1.0,
+                   languages: 1.0,
                    likes: 1.0
                  })
                  |> Repo.update(),

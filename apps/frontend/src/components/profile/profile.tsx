@@ -1,18 +1,18 @@
 "use client";
 
-import { CSSProperties, ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { yearsAgo } from "~/date";
 import { filterBy } from "~/utilities";
 import { Html } from "~/components/html";
-import { displayName, User } from "~/api/user";
+import { displayName, type User } from "~/api/user";
 import { urls } from "~/urls";
 import { useSession } from "~/hooks/use-session";
 import { gradientTextColor } from "~/colors";
 
 import { InlineLink } from "../inline-link";
 import { VRChatOutlineIcon, DiscordIcon } from "../icons";
+import { CopyClick } from "../copy-click";
 
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfileVerificationBadge } from "./verification-badge";
@@ -24,6 +24,9 @@ import { GenderPills } from "./pill/genders";
 import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
 import { RelationActions } from "./relation-actions";
+import { ProfilePrompts } from "./prompts";
+
+import type { CSSProperties, ComponentProps, FC } from "react";
 
 export type ProfileProps = ComponentProps<"div"> & {
 	user: User;
@@ -31,7 +34,7 @@ export type ProfileProps = ComponentProps<"div"> & {
 };
 
 export const Profile: FC<ProfileProps> = (props) => {
-	const { user, direct = false, className, ...elementProps } = props;
+	const { user, direct = false, className, id, ...elementProps } = props;
 
 	const [session] = useSession();
 
@@ -46,6 +49,7 @@ export const Profile: FC<ProfileProps> = (props) => {
 
 	return (
 		<div
+			id={id}
 			style={
 				user.profile.color_1 && user.profile.color_2
 					? ({
@@ -61,12 +65,15 @@ export const Profile: FC<ProfileProps> = (props) => {
 			{...elementProps}
 			data-sentry-mask
 			className={twMerge(
-				"flex w-full bg-brand-gradient vision:bg-none sm:max-w-lg sm:rounded-3xl sm:p-1 sm:shadow-brand-1",
+				"flex w-full vision:bg-none desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
 				className
 			)}
 		>
-			<div className="flex w-full flex-col overflow-hidden bg-cream text-black-70 vision:bg-transparent dark:bg-black-80 dark:text-white-20 sm:rounded-[1.25rem] sm:bg-white-20 sm:dark:bg-black-70">
-				<ProfileImageDisplay images={user.profile.images}>
+			<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-[1.25rem] desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
+				<ProfileImageDisplay
+					images={user.profile.images}
+					current={id === "current-profile"}
+				>
 					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
 							<span className="text-shadow-brand text-4xl font-bold leading-none [word-break:break-all]">
@@ -100,25 +107,31 @@ export const Profile: FC<ProfileProps> = (props) => {
 						)}
 					</div>
 				</ProfileImageDisplay>
-				<div className="h-2 bg-brand-gradient sm:hidden" />
+				<div className="h-2 bg-brand-gradient desktop:hidden" />
 				<div className="flex h-full grow flex-col gap-6 break-words p-8 pb-4">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} user={user} />
 					{(discordConnection ||
 						user.profile.discord ||
 						user.profile.vrchat) && (
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2 vision:text-white-20">
 							{discordConnection ? (
 								<div className="flex items-center gap-2">
-									<DiscordIcon className="h-6 w-6" />
-									Discord: <span>{discordConnection.displayName}</span>
+									<DiscordIcon className="size-6" />
+									Discord:{" "}
+									<CopyClick value={discordConnection.displayName}>
+										<span>{discordConnection.displayName}</span>
+									</CopyClick>
 									<ProfileVerificationBadge tooltip="Discord verified" />
 								</div>
 							) : (
 								user.profile.discord && (
 									<div className="flex items-center gap-2">
-										<DiscordIcon className="h-6 w-6" />
-										Discord: <span>{user.profile.discord}</span>
+										<DiscordIcon className="size-6" />
+										Discord:{" "}
+										<CopyClick value={user.profile.discord}>
+											<span>{user.profile.discord}</span>
+										</CopyClick>
 									</div>
 								)
 							)}
@@ -129,7 +142,7 @@ export const Profile: FC<ProfileProps> = (props) => {
 									</div>
 									VRChat:{" "}
 									<InlineLink
-										className="w-full underline"
+										className="underline"
 										highlight={false}
 										href={urls.vrchat(user.profile.vrchat)}
 									>
@@ -160,11 +173,10 @@ export const Profile: FC<ProfileProps> = (props) => {
 							<InlineLink href={urls.settings.bio}>add a bio</InlineLink>!
 						</span>
 					) : null}
+					<ProfilePrompts prompts={user.profile.prompts} />
 					<PillCollection user={user} />
 				</div>
-				<div className="pb-[env(safe-area-inset-bottom)] dark:bg-black-80 sm:dark:bg-black-70">
-					<ProfileActionBar user={user} />
-				</div>
+				<ProfileActionBar user={user} />
 			</div>
 		</div>
 	);

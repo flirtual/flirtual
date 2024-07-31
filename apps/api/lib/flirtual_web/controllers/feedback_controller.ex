@@ -14,10 +14,10 @@ defmodule FlirtualWeb.FeedbackController do
 
   def feedback_profile(conn, %{"slug" => slug}) do
     if authenticated?(conn) do
-      user = Users.get_by_username(slug)
+      user = Users.get_by_slug(slug)
 
       case user do
-        %{visible: true, profile: profile} ->
+        %{status: "visible", profile: profile} ->
           response = %{
             "bio" => profile.biography,
             "interests" =>

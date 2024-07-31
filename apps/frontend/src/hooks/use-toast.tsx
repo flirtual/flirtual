@@ -5,7 +5,7 @@ import { Toast as NativeToast } from "@capacitor/toast";
 import { motion, AnimatePresence } from "framer-motion";
 import {
 	createContext,
-	PropsWithChildren,
+	type PropsWithChildren,
 	useCallback,
 	useContext,
 	useMemo,
@@ -66,7 +66,7 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 			)}
 			onClick={() => toast.remove()}
 		>
-			<Icon className="h-5 w-5 shrink-0" strokeWidth={2} />
+			<Icon className="size-5 shrink-0" strokeWidth={2} />
 			<span data-sentry-mask className="font-montserrat font-semibold">
 				{toast.children}
 			</span>
@@ -163,7 +163,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				// toasts are handled by the device itself.
 				<AnimatePresence>
 					{toasts.length > 0 && (
-						<div className="pointer-events-none fixed right-0 top-0 z-[999] flex flex-col-reverse gap-2 p-8 text-white-20 sm:top-16">
+						<div className="pointer-events-none fixed right-0 top-0 z-[999] flex flex-col-reverse gap-2 p-8 text-white-20 desktop:top-16">
 							{toasts.map((toast) => (
 								<ToastItem {...toast} key={toast.id} />
 							))}

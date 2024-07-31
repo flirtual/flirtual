@@ -121,7 +121,6 @@ defmodule A do
         lifetime_premium,
         agemin,
         agemax,
-        serious,
         monopoly,
         weight_likes,
         weight_default_interests,
@@ -129,7 +128,6 @@ defmodule A do
         weight_personality,
         weight_games,
         weight_country,
-        weight_serious,
         weight_monopoly,
         weight_domsub,
         weight_kinks,
@@ -361,7 +359,6 @@ defmodule A do
                question6: to_boolean(survey_7),
                question7: to_boolean(survey_8),
                question8: to_boolean(survey_9),
-               serious: to_boolean(serious),
                new: if(is_nil(new), do: nil, else: to_boolean(new)),
                languages:
                  languages
@@ -462,7 +459,6 @@ defmodule A do
                default_interests: weight_default_interests |> A.map_custom_weight(),
                custom_interests: weight_custom_interests |> A.map_custom_weight(),
                personality: weight_personality |> A.map_custom_weight(),
-               serious: weight_serious |> A.map_custom_weight(),
                domsub: weight_domsub |> A.map_custom_weight(),
                kinks: weight_kinks |> A.map_custom_weight(),
                likes: weight_likes |> A.map_custom_weight()
@@ -837,8 +833,6 @@ defmodule Flirtual.Migrate do
     "u.agemin",
     # 18 -> 125
     "u.agemax",
-    # boolean, open to serious dating
-    "u.serious",
     # "Monogamous" or "Non-monogamous"
     "u.monopoly",
     # 0 -> 2.004
@@ -853,8 +847,6 @@ defmodule Flirtual.Migrate do
     "u.weight_games",
     # 0 -> 2.004
     "u.weight_country",
-    # 0 -> 2.004
-    "u.weight_serious",
     # 0 -> 2.004
     "u.weight_monopoly",
     # 0 -> 2.004

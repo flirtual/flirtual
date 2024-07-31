@@ -12,7 +12,7 @@ export const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
 
 	return timeSince < twoWeeksInMillieseconds ? (
 		<div className="flex items-center gap-2">
-			<div className="h-4 w-4 rounded-full bg-green-500" />
+			<div className="size-4 rounded-full bg-green-500" />
 			<span className="text-shadow-brand select-none font-montserrat font-semibold">
 				{timeSince < oneDayInMiliiseconds ? "Active today" : "Active recently"}
 			</span>

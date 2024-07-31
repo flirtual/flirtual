@@ -1,13 +1,14 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { Dispatch, FC, SetStateAction } from "react";
 
 import { useSession } from "~/hooks/use-session";
 import { usePurchase } from "~/hooks/use-purchase";
 import { usePlans } from "~/hooks/use-plans";
 
 import { PlanButtonLink } from "./plan-button-link";
+
+import type { Dispatch, FC, SetStateAction } from "react";
 
 export interface PlanCardProps {
 	id: string;
@@ -72,11 +73,14 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const inner = (
 		<div
 			className={twMerge(
-				"relative flex select-none flex-col justify-between gap-16 rounded-xl p-6",
+				"relative flex select-none flex-col justify-between gap-16 rounded-xl p-6 vision:text-black-80",
 				highlight
-					? "bg-white-20 dark:bg-black-80"
-					: [containerClassName, "bg-white-25 dark:bg-black-80"],
-				duration === "lifetime" && (description ? "gap-4" : "sm:flex-row")
+					? "bg-white-20 shadow-brand-inset dark:bg-black-80"
+					: [
+							containerClassName,
+							"bg-white-25 vision:bg-white-25/70 dark:bg-black-80"
+						],
+				duration === "lifetime" && (description ? "gap-4" : "desktop:flex-row")
 			)}
 		>
 			<div className="flex flex-col">
@@ -86,7 +90,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 						duration === "lifetime" && "hidden",
 						duration !== "lifetime" &&
 							price === originalPrice &&
-							"hidden sm:invisible sm:block"
+							"hidden desktop:invisible desktop:block"
 					)}
 				>
 					{originalPrice}
@@ -122,7 +126,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	return highlight ? (
 		<div
 			className={twMerge(
-				"rounded-xl bg-brand-gradient p-1",
+				"rounded-2xl bg-brand-gradient p-1",
 				highlight && containerClassName
 			)}
 		>

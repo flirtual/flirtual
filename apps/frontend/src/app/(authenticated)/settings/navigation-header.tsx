@@ -20,14 +20,14 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 	);
 
 	return (
-		<div className="fixed z-10 flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top)+0.5rem),1rem)] text-white-20 sm:pt-4 md:static md:rounded-tr-2xl md:bg-brand-gradient">
+		<div className="fixed top-0 z-10 flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top)+0.5rem),1rem)] text-white-20 android:pt-[max(calc(var(--safe-area-inset-top)+0.5rem),1rem)] desktop:static desktop:bg-transparent desktop:pb-4 desktop:pt-[1.125rem] android:desktop:pt-[1.125rem]">
 			<Link
-				className="absolute left-4 flex shrink-0 vision:left-8 md:hidden"
+				className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
 				href={returnTo}
 			>
 				<Icon className="w-6" />
 			</Link>
-			<span className="font-montserrat text-xl font-semibold">Settings</span>
+			<span className="font-montserrat text-2xl font-extrabold">Settings</span>
 		</div>
 	);
 };

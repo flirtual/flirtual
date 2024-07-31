@@ -1,13 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FC } from "react";
 import { Ban, Flag } from "lucide-react";
 
-import { User, displayName } from "~/api/user";
+import { type User, displayName } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
-import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useToast } from "~/hooks/use-toast";
 import { DialogFooter, DialogTrigger } from "~/components/dialog/dialog";
 
@@ -27,6 +25,8 @@ import { ProfileModeratorInfo } from "./moderator-info";
 import { ProfileDropdown } from "./dropdown";
 import { ReportDialog } from "./dialogs/report";
 
+import type { FC } from "react";
+
 export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
 	const router = useRouter();
@@ -41,7 +41,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 		return null;
 
 	return (
-		<div className="flex flex-col gap-8 px-8 py-4 pt-0 sm:pb-8">
+		<div className="flex flex-col gap-8 px-8 py-4 pt-0 desktop:pb-8 desktop:dark:bg-black-70">
 			{session.user.tags?.includes("moderator") && (
 				<ProfileModeratorInfo user={user} />
 			)}
@@ -50,7 +50,7 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 					session.user.tags?.includes("admin")) && (
 					<ProfileDropdown user={user} />
 				)}
-				<div className="flex w-full justify-center gap-6 vision:text-white-20">
+				<div className="flex w-full justify-center gap-6 pb-4 vision:text-white-20 desktop:pb-0">
 					{session.user.id !== user.id && (
 						<>
 							<AlertDialog>

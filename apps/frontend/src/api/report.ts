@@ -1,19 +1,19 @@
-import { Expand } from "~/utilities";
+import { fetch, type NarrowFetchOptions } from "./exports";
 
-import { Attribute } from "./attributes";
-import { DatedModel, UuidModel } from "./common";
-import { fetch, NarrowFetchOptions } from "./exports";
+import type { Expand } from "~/utilities";
+import type { Attribute } from "./attributes";
+import type { DatedModel, UuidModel } from "./common";
 
 export type Report = Expand<
 	UuidModel &
-	DatedModel & {
-		reason: Pick<Attribute<"report-reason">, "id" | "name">;
-		message?: string;
-		images?: Array<string>;
-		reviewedAt?: string;
-		userId?: string;
-		targetId: string;
-	}
+		DatedModel & {
+			reason: Pick<Attribute<"report-reason">, "id" | "name">;
+			message?: string;
+			images?: Array<string>;
+			reviewedAt?: string;
+			userId?: string;
+			targetId: string;
+		}
 >;
 
 export type ListOptions = NarrowFetchOptions<

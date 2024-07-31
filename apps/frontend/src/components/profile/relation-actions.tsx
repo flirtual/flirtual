@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Sparkles } from "lucide-react";
 
-import { User, displayName } from "~/api/user";
+import { type User, displayName } from "~/api/user";
 import { urls } from "~/urls";
 import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
@@ -26,7 +26,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 			<>
 				<div className="flex gap-4">
 					<ButtonLink
-						className="w-full text-theme-overlay"
+						className="w-full shrink text-theme-overlay"
 						href={urls.conversations.of(relationship.conversationId)}
 						size="sm"
 					>
@@ -86,7 +86,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 	if (relationship.likedMe)
 		return (
 			<div className="flex items-center gap-3 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
-				<Sparkles className="h-6 w-6 shrink-0 text-theme-overlay" />
+				<Sparkles className="size-6 shrink-0 text-theme-overlay" />
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
 					{`${displayName(user)} ${
 						relationship.likedMe === "love" ? "liked" : "homied"

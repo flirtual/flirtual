@@ -7,8 +7,8 @@ import { useLanguage } from "~/hooks/use-language";
 
 import {
 	InputAutocomplete,
-	InputAutocompleteOption,
-	InputAutocompleteProps
+	type InputAutocompleteOption,
+	type InputAutocompleteProps
 } from "../autocomplete";
 
 export const InputLanguageAutocomplete: React.FC<

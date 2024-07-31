@@ -37,15 +37,15 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def get(conn, %{"username" => username}) do
+  def get(conn, %{"slug" => slug}) do
     user =
-      if(conn.assigns[:session].user.username === username,
+      if(conn.assigns[:session].user.slug === slug,
         do: conn.assigns[:session].user,
-        else: Users.get_by_username(username)
+        else: Users.get_by_slug(slug)
       )
 
     if is_nil(user) or Policy.cannot?(conn, :read, user) do
-      {:error, {:not_found, "User not found", %{username: username}}}
+      {:error, {:not_found, "User not found", %{slug: slug}}}
     else
       conn |> json_with_etag(Policy.transform(conn, user))
     end
@@ -84,29 +84,6 @@ defmodule FlirtualWeb.UsersController do
       )
       |> Enum.reject(&is_nil/1)
     )
-  end
-
-  def visible(conn, %{"user_id" => user_id}) do
-    user =
-      if(conn.assigns[:session].user.id === user_id,
-        do: conn.assigns[:session].user,
-        else: Users.get(user_id)
-      )
-
-    if is_nil(user) or Policy.cannot?(conn, :read, user) do
-      {:error, {:not_found, "User not found", %{user_id: user_id}}}
-    else
-      conn
-      |> json_with_etag(
-        case User.visible(user) do
-          {:error, errors} ->
-            %{visible: Enum.empty?(errors), reasons: errors |> Enum.filter(&(!&1[:silent]))}
-
-          {:ok, _} ->
-            %{visible: true, reasons: []}
-        end
-      )
-    end
   end
 
   def inspect(conn, %{"user_id" => user_id, "type" => "elasticsearch"}) do

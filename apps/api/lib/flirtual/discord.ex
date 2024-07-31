@@ -553,6 +553,19 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:honeypot, user: %User{} = user) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Registration honeypot tripped",
+          color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:exit_survey,
         user: %User{} = user,
         reason: %Attribute{type: "delete-reason"} = reason,

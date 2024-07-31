@@ -1,13 +1,13 @@
 import { twMerge } from "tailwind-merge";
-import { ComponentProps } from "react";
 
-import { Footer, FooterProps } from "./footer";
+import { Footer, type FooterProps } from "./footer";
 import { Header } from "./header";
-import { MobileBarNavigation } from "./navigation/mobile-bar";
+
+import type { ComponentProps } from "react";
 
 export type SoleModelLayoutProps = ComponentProps<"div"> & {
 	footer?: FooterProps;
-	mobileNavigation?: false;
+	navigation?: false;
 	containerProps?: React.ComponentProps<"div">;
 };
 
@@ -15,29 +15,34 @@ export function SoleModelLayout({
 	children,
 	footer = {},
 	containerProps = {},
-	mobileNavigation,
+	navigation,
 	...props
 }: SoleModelLayoutProps) {
 	return (
 		<div
+			vaul-drawer-wrapper=""
 			{...props}
 			className={twMerge(
-				"flex min-h-screen grow flex-col items-center overflow-x-hidden bg-cream font-nunito text-black-80 vision:bg-transparent dark:bg-black-80 dark:text-white-20 sm:flex-col",
+				"flex min-h-screen grow flex-col items-center bg-white-20 font-nunito text-black-80 vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:flex-col desktop:bg-cream desktop:dark:bg-black-80",
 				props.className
 			)}
 		>
-			<Header />
+			{navigation !== false && <Header className="hidden desktop:flex" />}
 			<div
 				{...containerProps}
 				className={twMerge(
-					"flex w-full max-w-screen-lg grow flex-col items-center sm:justify-center sm:py-16 md:px-8",
+					"max-w-screen-lg flex min-h-[calc(100svh-max(calc(env(safe-area-inset-bottom)+4.5rem),5rem))] w-full grow flex-col items-center desktop:p-8",
 					containerProps.className
 				)}
 			>
 				{children}
 			</div>
-			<Footer className="sm:pb-36 lg:pb-20" {...footer} />
-			{mobileNavigation !== false && <MobileBarNavigation />}
+			{navigation !== false && (
+				<>
+					<Footer className="desktop:pb-36 wide:pb-20" {...footer} />
+					<Header className="desktop:hidden" />
+				</>
+			)}
 		</div>
 	);
 }

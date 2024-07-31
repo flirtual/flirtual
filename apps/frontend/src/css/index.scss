@@ -54,7 +54,9 @@ iframe {
   user-select: none;
 }
 
-#canny-changelog-iframe {
+#canny-changelog-iframe,
+#freshworks-frame-wrapper>iframe {
+  @apply android:pt-[var(--safe-area-inset-top)];
   padding-top: env(safe-area-inset-top);
   padding-right: env(safe-area-inset-right);
   padding-bottom: env(safe-area-inset-bottom);
@@ -69,8 +71,6 @@ iframe {
 }
 
 #freshworks-frame-wrapper>iframe {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
   background-image: linear-gradient(to bottom, var(--light-theme-2) 50%, #fff 50%);
 }
 
@@ -83,6 +83,22 @@ iframe {
 .uppy-StatusBar,
 .uppy-StatusBar-actions {
   background-color: transparent !important;
+}
+
+.uppy-Dashboard-inner {
+  border: none !important;
+  max-height: calc(100svh - 10rem) !important;
+}
+
+.uppy-StatusBar,
+.uppy-DashboardContent-bar,
+.uppy-Dashboard-serviceMsg {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+.uppy-StatusBar:before {
+  background: none !important;
 }
 
 .uppy-Dashboard-AddFiles {

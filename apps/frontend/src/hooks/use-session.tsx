@@ -1,11 +1,12 @@
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import useSWR, { SWRConfiguration } from "swr";
+import useSWR, { type SWRConfiguration } from "swr";
 
 import { api } from "~/api";
-import { Session } from "~/api/auth";
-import { User } from "~/api/user";
 import { urls } from "~/urls";
+
+import type { Session } from "~/api/auth";
+import type { User } from "~/api/user";
 
 export type UseSessionOptions = Omit<
 	SWRConfiguration<Session | null>,

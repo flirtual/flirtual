@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FC, useEffect, useState } from "react";
-import { RateApp } from "capacitor-rate-app";
+import { type FC, useEffect, useState } from "react";
+import { InAppReview } from "@capacitor-community/in-app-review";
 
 import { api } from "~/api";
 import { Form } from "~/components/forms";
@@ -11,10 +11,11 @@ import { InputLabel, InputSelect, InputText } from "~/components/inputs";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
 import { InputTextArea } from "~/components/inputs/textarea";
-import { AttributeCollection } from "~/api/attributes";
 import { SupportButton } from "~/components/layout/support-button";
 import { InlineLink } from "~/components/inline-link";
 import { useSession } from "~/hooks/use-session";
+
+import type { AttributeCollection } from "~/api/attributes";
 
 export const DeleteForm: FC<{
 	deleteReasons: AttributeCollection<"delete-reason">;
@@ -23,7 +24,7 @@ export const DeleteForm: FC<{
 	const [requestRating, setRequestRating] = useState(false);
 
 	useEffect(() => {
-		if (requestRating) void RateApp.requestReview();
+		if (requestRating) void InAppReview.requestReview();
 	}, [requestRating]);
 
 	const [session] = useSession();

@@ -3,12 +3,13 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
 
-import { PreferenceTheme } from "~/api/user/preferences";
 import { Image } from "~/components/image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useTheme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
+
+import type { PreferenceTheme } from "~/api/user/preferences";
 
 const ThemeImage = {
 	light: "52f7a831-8f7d-46c3-aace-4a99d1f4792d",
@@ -37,13 +38,13 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 				>
 					<Image
 						alt={`${capitalize(theme)} theme preview`}
-						className="select-none rounded-xl"
+						className="select-none rounded-lg"
 						height={206}
 						src={urls.media(ThemeImage[theme])}
 						width={320}
 					/>
 					{active && (
-						<CheckCircleIcon className="absolute right-0.5 top-0.5 h-6 w-6 text-white-10" />
+						<CheckCircleIcon className="absolute right-0.5 top-0.5 size-6 text-white-10" />
 					)}
 				</button>
 			</TooltipTrigger>

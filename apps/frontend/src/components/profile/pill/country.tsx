@@ -1,12 +1,12 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
 import { twMerge } from "tailwind-merge";
-import { FC } from "react";
 
 import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { Pill } from "./pill";
+
+import type { FC } from "react";
 
 export interface CountryPillProps {
 	id: string;

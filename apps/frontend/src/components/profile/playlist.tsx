@@ -1,8 +1,9 @@
-import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useTheme } from "~/hooks/use-theme";
 import { resolveTheme } from "~/theme";
+
+import type { FC } from "react";
 
 const platforms = [
 	{

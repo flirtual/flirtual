@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
-	FormFieldsDefault,
-	InputFormField,
+	type FormFieldsDefault,
+	type InputFormField,
 	useFormContext
 } from "~/hooks/use-input-form";
 

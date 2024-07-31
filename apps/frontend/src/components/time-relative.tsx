@@ -1,8 +1,8 @@
 "use client";
 
-import { ComponentProps, FC, useMemo } from "react";
+import { type ComponentProps, type FC, useMemo } from "react";
 
-import { RelativeTimeOptions, relativeTime } from "~/date";
+import { type RelativeTimeOptions, relativeTime } from "~/date";
 
 import { RefreshInterval } from "./refresh-interval";
 

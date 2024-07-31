@@ -1,15 +1,18 @@
 "use client";
 
 import {
-	PropsWithChildren,
-	FC,
+	type PropsWithChildren,
+	type FC,
 	createContext,
 	useContext,
 	useEffect,
 	useCallback,
 	useState
 } from "react";
-import { Purchases, PurchasesPackage } from "@revenuecat/purchases-capacitor";
+import {
+	Purchases,
+	type PurchasesPackage
+} from "@revenuecat/purchases-capacitor";
 import { useRouter } from "next/navigation";
 
 import { rcAppleKey, rcGoogleKey } from "~/const";

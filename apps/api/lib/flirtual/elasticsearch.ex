@@ -74,7 +74,7 @@ defmodule Flirtual.Elasticsearch do
             "conscientiousness" => %{
               "type" => "byte"
             },
-            "agreeableness:" => %{
+            "agreeableness" => %{
               "type" => "byte"
             },
             "attributes" => %{
@@ -92,10 +92,13 @@ defmodule Flirtual.Elasticsearch do
             "monopoly" => %{
               "type" => "keyword"
             },
-            "serious" => %{
-              "type" => "boolean"
+            "relationships" => %{
+              "type" => "keyword"
             },
             "domsub" => %{
+              "type" => "keyword"
+            },
+            "languages" => %{
               "type" => "keyword"
             },
             "liked" => %{

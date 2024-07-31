@@ -5,7 +5,8 @@ import { useTheme } from "~/hooks/use-theme";
 import { resolveTheme } from "~/theme";
 
 import { InputText } from "./text";
-import { MinmaxDate } from "./calendar";
+
+import type { MinmaxDate } from "./calendar";
 
 interface InputDateSelectNativeProps {
 	value: Date;

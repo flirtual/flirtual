@@ -4,14 +4,14 @@ defmodule Flirtual.User.Profile.Attributes do
   import Ecto.Query
   import Ecto.Changeset
 
-  alias Flirtual.User.Profile.Attributes
-  alias Flirtual.Repo
   alias Flirtual.Attribute
+  alias Flirtual.Repo
   alias Flirtual.User.Profile
+  alias Flirtual.User.Profile.Attributes
 
   schema "profile_attributes" do
-    belongs_to :profile, Profile, references: :user_id, primary_key: true
-    belongs_to :attribute, Attribute, references: :id, primary_key: true
+    belongs_to(:profile, Profile, references: :user_id, primary_key: true)
+    belongs_to(:attribute, Attribute, references: :id, primary_key: true)
   end
 
   def list(type, order_by: :popularity) when is_binary(type) do

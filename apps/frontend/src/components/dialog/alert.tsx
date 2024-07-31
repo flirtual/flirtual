@@ -57,7 +57,7 @@ const AlertDialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
 		className={twMerge(
-			"flex flex-col gap-2 text-center sm:text-left",
+			"flex flex-col gap-2 text-center desktop:text-left",
 			className
 		)}
 		{...props}
@@ -107,7 +107,7 @@ const AlertDialogCancel = React.forwardRef<
 	React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
 >(({ className, ...props }, reference) => (
 	<AlertDialogPrimitive.Cancel
-		className={twMerge("mt-2 sm:mt-0", className)}
+		className={twMerge("mt-2 desktop:mt-0", className)}
 		ref={reference}
 		{...props}
 	/>

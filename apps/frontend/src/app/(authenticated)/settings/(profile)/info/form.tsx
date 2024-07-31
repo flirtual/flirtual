@@ -1,15 +1,13 @@
 "use client";
 
-import { FC } from "react";
-
 import { api } from "~/api";
-import { AttributeCollection } from "~/api/attributes";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
 	InputAutocomplete,
 	InputDateSelect,
 	InputLabel,
+	InputLabelHint,
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
@@ -18,10 +16,12 @@ import {
 	InputCountrySelect,
 	InputLanguageAutocomplete
 } from "~/components/inputs/specialized";
-import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy, fromEntries } from "~/utilities";
+
+import type { AttributeCollection } from "~/api/attributes";
+import type { FC } from "react";
 
 const AttributeKeys = [
 	...(["gender", "sexuality", "platform", "game"] as const)
@@ -37,7 +37,6 @@ export interface InfoFormProps {
 export const InfoForm: FC<InfoFormProps> = (props) => {
 	const { games, genders, platforms, sexualities } = props;
 
-	const { native } = useDevice();
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
@@ -81,9 +80,9 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 							country: values.country ?? "none",
 							languages: values.languages,
 							new: values.new,
+							// @ts-expect-error: don't want to deal with this.
 							...(fromEntries(
 								AttributeKeys.filter((key) => key !== "gender").map((type) => {
-									// @ts-expect-error: don't want to deal with this.
 									return [`${type}Id`, values[type]] as const;
 								})
 							) as {
@@ -114,25 +113,15 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 							<>
 								<InputLabel
 									{...field.labelProps}
-									className="flex-col sm:flex-row"
-									hint="(only your age will be visible)"
+									className="flex-col desktop:flex-row"
 								>
 									Date of birth
 								</InputLabel>
-								{native ? (
-									<InputDateSelectNative
-										max="now"
-										min={new Date("1900/01/01")}
-										value={field.props.value}
-										onChange={field.props.onChange}
-									/>
-								) : (
-									<InputDateSelect
-										{...field.props}
-										max="now"
-										min={new Date("1900/01/01")}
-									/>
-								)}
+								<InputDateSelect
+									{...field.props}
+									max="now"
+									min={new Date("1900/01/01")}
+								/>
 							</>
 						)}
 					</FormField>
@@ -193,7 +182,7 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 					<FormField name="sexuality">
 						{(field) => (
 							<>
-								<InputLabel hint="(optional)">Sexuality</InputLabel>
+								<InputLabel>Sexuality</InputLabel>
 								<InputAutocomplete
 									{...field.props}
 									limit={3}
@@ -211,7 +200,7 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 					<FormField name="country">
 						{(field) => (
 							<>
-								<InputLabel hint="(optional)">Location</InputLabel>
+								<InputLabel>Location</InputLabel>
 								<InputCountrySelect {...field.props} />
 							</>
 						)}
@@ -243,7 +232,11 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 					<FormField name="game">
 						{(field) => (
 							<>
-								<InputLabel hint="(up to 5)">Fav social VR games</InputLabel>
+								<InputLabel hint="(up to 5)">VR apps/games</InputLabel>
+								<InputLabelHint className="-mt-2">
+									After matching on Flirtual, you can meet up in any social app
+									or multiplayer game.
+								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
 									limit={5}

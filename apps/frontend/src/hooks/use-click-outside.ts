@@ -1,6 +1,6 @@
-import { RefObject } from "react";
-
 import { useGlobalEventListener } from "./use-event-listener";
+
+import type { RefObject } from "react";
 
 export function useClickOutside<T extends HTMLElement>(
 	reference: RefObject<T>,

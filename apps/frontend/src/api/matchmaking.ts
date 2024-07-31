@@ -1,6 +1,7 @@
-import { CreatedAtModel, UuidModel } from "./common";
-import { fetch, NarrowFetchOptions } from "./exports";
-import { User } from "./user";
+import { fetch, type NarrowFetchOptions } from "./exports";
+
+import type { CreatedAtModel, UuidModel } from "./common";
+import type { User } from "./user";
 
 export const ProspectKind = ["love", "friend"] as const;
 export type ProspectKind = (typeof ProspectKind)[number];

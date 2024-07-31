@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
@@ -9,6 +7,8 @@ import { urls } from "~/urls";
 import { ImageList } from "./image-list";
 import { ColorBlock } from "./color-block";
 
+import type { Metadata } from "next";
+
 export const metadata: Metadata = {
 	title: "Branding"
 };
@@ -17,7 +17,7 @@ export default async function BrandingPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard
-				className="w-full sm:max-w-xl"
+				className="w-full desktop:max-w-xl"
 				containerProps={{ className: "gap-8" }}
 				title="Branding"
 			>
@@ -58,7 +58,7 @@ export default async function BrandingPage() {
 						been well established elsewhere on the page or in the design.
 					</span>
 					<ImageList
-						className="sm:grid-cols-4"
+						className="desktop:grid-cols-4"
 						items={[
 							{
 								name: "mark/background",

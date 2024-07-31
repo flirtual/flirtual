@@ -10,7 +10,7 @@ defmodule Flirtual.User.Profile do
   alias Flirtual.Languages
   alias Flirtual.{Attribute, User}
   alias Flirtual.User.Profile
-  alias Flirtual.User.Profile.{CustomWeights, Image, Preferences}
+  alias Flirtual.User.Profile.{CustomWeights, Image, Preferences, Prompt}
 
   @personality_questions [
     :question0,
@@ -79,7 +79,7 @@ defmodule Flirtual.User.Profile do
     field(:conscientiousness, :integer, default: 0)
     field(:agreeableness, :integer, default: 1)
     Enum.map(@personality_questions, &field(&1, :boolean))
-    field(:serious, :boolean)
+    field(:relationships, {:array, :string})
     field(:new, :boolean)
     field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
     field(:custom_interests, {:array, :string})
@@ -110,6 +110,7 @@ defmodule Flirtual.User.Profile do
     )
 
     has_many(:images, Image, references: :user_id, foreign_key: :profile_id)
+    has_many(:prompts, Prompt, references: :user_id, foreign_key: :profile_id)
 
     many_to_many(:blocked, Profile,
       join_through: Profile.Block,
@@ -134,7 +135,8 @@ defmodule Flirtual.User.Profile do
       :custom_weights,
       attributes: from(attribute in Attribute, order_by: [attribute.type, attribute.id]),
       preferences: Preferences.default_assoc(),
-      images: from(image in Image, order_by: image.order)
+      images: from(image in Image, order_by: image.order),
+      prompts: Prompt.default_assoc()
     ]
   end
 
@@ -189,7 +191,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :domsub,
       :monopoly,
       :country,
-      :serious,
+      :relationships,
       :openness,
       :conscientiousness,
       :agreeableness,
@@ -205,6 +207,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :facetime,
       :playlist,
       :images,
+      :prompts,
       :color_1,
       :color_2,
       :updated_at

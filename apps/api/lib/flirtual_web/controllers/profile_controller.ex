@@ -126,4 +126,18 @@ defmodule FlirtualWeb.ProfileController do
       end
     end
   end
+
+  def update_prompts(conn, %{"user_id" => user_id, "_json" => prompts}) do
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
+
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, "Cannot update this profile's prompts", %{user_id: user_id}}}
+    else
+      with {:ok, prompts} <-
+             Profiles.update_prompts(profile, prompts) do
+        conn |> json(prompts)
+      end
+    end
+  end
 end

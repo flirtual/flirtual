@@ -1,12 +1,13 @@
 import { Gavel } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 
 import { api } from "~/api";
-import { User, displayName } from "~/api/user";
+import { type User, displayName } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
+	DialogBody,
 	DialogContent,
 	DialogFooter,
 	DialogHeader,
@@ -37,7 +38,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 					onSelect={(event) => event.preventDefault()}
 				>
 					<button className="w-full gap-2" type="button">
-						<Gavel className="h-5 w-5" />
+						<Gavel className="size-5" />
 						Ban
 					</button>
 				</DropdownMenuItem>
@@ -46,86 +47,88 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 				<DialogHeader>
 					<DialogTitle>Ban profile</DialogTitle>
 				</DialogHeader>
-				<Form
-					className="flex flex-col gap-8"
-					requireChange={false}
-					fields={{
-						targetId: user.id,
-						reasonId: reasons[0]?.id,
-						message: reasons[0]?.metadata.details
-					}}
-					onSubmit={async ({ targetId, ...body }) => {
-						await api.user.suspend(targetId, { body });
+				<DialogBody>
+					<Form
+						className="flex flex-col gap-8"
+						requireChange={false}
+						fields={{
+							targetId: user.id,
+							reasonId: reasons[0]?.id,
+							message: reasons[0]?.metadata.details
+						}}
+						onSubmit={async ({ targetId, ...body }) => {
+							await api.user.suspend(targetId, { body });
 
-						toasts.add("Account banned");
-						router.refresh();
+							toasts.add("Account banned");
+							router.refresh();
 
-						setOpen(false);
-					}}
-				>
-					{({ FormField, fields: { message } }) => (
-						<>
-							<FormField name="targetId">
-								{(field) => (
-									<>
-										<InputLabel {...field.labelProps}>Target</InputLabel>
-										<div className="flex items-center gap-4">
-											<UserThumbnail user={user} />
-											<div className="flex flex-col">
-												<span
-													data-sentry-mask
-													className="text-lg font-semibold leading-none"
-												>
-													{displayName(user)}
-												</span>
-												<span className="font-mono text-sm brightness-75">
-													{user.id}
-												</span>
+							setOpen(false);
+						}}
+					>
+						{({ FormField, fields: { message } }) => (
+							<>
+								<FormField name="targetId">
+									{(field) => (
+										<>
+											<InputLabel {...field.labelProps}>Target</InputLabel>
+											<div className="flex items-center gap-4">
+												<UserThumbnail user={user} />
+												<div className="flex flex-col">
+													<span
+														data-sentry-mask
+														className="text-lg font-semibold leading-none"
+													>
+														{displayName(user)}
+													</span>
+													<span className="font-mono text-sm brightness-75">
+														{user.id}
+													</span>
+												</div>
 											</div>
-										</div>
-									</>
-								)}
-							</FormField>
-							<FormField name="reasonId">
-								{({ props }) => (
-									<InputSelect
-										{...props}
-										options={reasons}
-										onChange={(value) => {
-											props.onChange(value);
-											message.props.onChange(
-												reasons.find((reason) => reason.id === value)?.metadata
-													.details || ""
-											);
-										}}
-									/>
-								)}
-							</FormField>
-							<FormField name="message">
-								{(field) => (
-									<>
-										<InputLabel {...field.labelProps}>Message</InputLabel>
-										<InputTextArea
-											{...field.props}
-											placeholder="Write a custom ban reason for the user."
-											rows={6}
+										</>
+									)}
+								</FormField>
+								<FormField name="reasonId">
+									{({ props }) => (
+										<InputSelect
+											{...props}
+											options={reasons}
+											onChange={(value) => {
+												props.onChange(value);
+												message.props.onChange(
+													reasons.find((reason) => reason.id === value)
+														?.metadata.details || ""
+												);
+											}}
 										/>
-									</>
-								)}
-							</FormField>
-							<DialogFooter>
-								<Button
-									kind="tertiary"
-									size="sm"
-									onClick={() => setOpen(false)}
-								>
-									Cancel
-								</Button>
-								<FormButton size="sm">Yonk</FormButton>
-							</DialogFooter>
-						</>
-					)}
-				</Form>
+									)}
+								</FormField>
+								<FormField name="message">
+									{(field) => (
+										<>
+											<InputLabel {...field.labelProps}>Message</InputLabel>
+											<InputTextArea
+												{...field.props}
+												placeholder="Write a custom ban reason for the user."
+												rows={6}
+											/>
+										</>
+									)}
+								</FormField>
+								<DialogFooter>
+									<Button
+										kind="tertiary"
+										size="sm"
+										onClick={() => setOpen(false)}
+									>
+										Cancel
+									</Button>
+									<FormButton size="sm">Yonk</FormButton>
+								</DialogFooter>
+							</>
+						)}
+					</Form>
+				</DialogBody>
 			</DialogContent>
 		</Dialog>
 	);

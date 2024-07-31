@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Privacy Policy"
@@ -17,7 +17,7 @@ export default function PrivacyPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard
-				className="w-full sm:max-w-2xl"
+				className="w-full desktop:max-w-2xl"
 				containerProps={{ className: "gap-4" }}
 				title="Privacy Policy"
 			>

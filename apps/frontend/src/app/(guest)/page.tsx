@@ -18,7 +18,7 @@ import { LandingButton } from "./landing-button";
 
 export default function RootIndexPage() {
 	return (
-		<div className="h-screen snap-y snap-mandatory overflow-x-hidden scroll-smooth bg-black-80 text-white-20 md:snap-none">
+		<div className="h-screen snap-y snap-mandatory overflow-x-hidden scroll-smooth bg-black-80 text-white-20 desktop:snap-none">
 			<SectionCallToAction />
 			<SectionAvatarProfiles
 				values={[
@@ -69,15 +69,15 @@ export default function RootIndexPage() {
 				]}
 			/>
 			<SnapSection className="flex flex-col bg-brand-gradient">
-				<div className="flex h-full grow items-center justify-center p-16 pb-0 md:pb-16">
-					<div className="flex flex-col items-center gap-8 md:gap-16">
-						<h1 className="font-montserrat text-4xl font-extrabold sm:text-7xl md:text-8xl">
+				<div className="flex h-full grow items-center justify-center p-16 pb-0 desktop:pb-16">
+					<div className="flex flex-col items-center gap-8 desktop:gap-16">
+						<h1 className="font-montserrat text-4xl font-extrabold desktop:text-8xl">
 							Get Flirtual
 						</h1>
 						<LandingButton href={urls.register} kind="secondary-cta">
 							Sign up
 						</LandingButton>
-						<div className="grid grid-cols-1 gap-4 gap-y-2 native:hidden vision:hidden md:grid-cols-2">
+						<div className="grid grid-cols-1 gap-4 gap-y-2 native:hidden vision:hidden desktop:grid-cols-2">
 							<MobileButton
 								href={urls.apps.apple}
 								Icon={AppleIcon}

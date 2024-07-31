@@ -2,14 +2,14 @@ import { useRef } from "react";
 
 import {
 	useInputForm,
-	UseInputForm,
+	type UseInputForm,
 	FormContext,
-	InputFormOptions,
-	FormFieldsDefault
+	type InputFormOptions,
+	type FormFieldsDefault
 } from "~/hooks/use-input-form";
 import { omit } from "~/utilities";
 
-import { FormCaptcha, FormCaptchaReference } from "./captcha";
+import { FormCaptcha, type FormCaptchaReference } from "./captcha";
 import { FormInputMessages } from "./input-messages";
 
 export type FormChildrenFunction<T extends FormFieldsDefault> = (

@@ -1,10 +1,10 @@
-import { FC, PropsWithChildren, useEffect, useRef } from "react";
+import { type FC, type PropsWithChildren, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
 
 import { capitalize } from "~/utilities";
 
-import { IconComponent } from "../icons";
+import type { IconComponent } from "../icons";
 
 export type FormMessageType = "error" | "warning" | "success" | "informative";
 export type FormMessageSize = "sm" | "md";
@@ -56,7 +56,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 				formMessageSize[size]
 			)}
 		>
-			<Icon className="mt-0.5 h-6 w-6 shrink-0" />
+			<Icon className="mt-0.5 size-6 shrink-0" />
 			<span>{children}</span>
 		</div>
 	);

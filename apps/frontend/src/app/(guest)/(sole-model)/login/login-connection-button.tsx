@@ -1,18 +1,19 @@
 "use client";
 
-import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { InAppBrowser } from "@capgo/inappbrowser";
 import { useRouter } from "next/navigation";
 
 import { api } from "~/api";
 import {
-	Connection,
+	type Connection,
 	ConnectionMetadata,
-	ConnectionType
+	type ConnectionType
 } from "~/api/connections";
 import { useLocation } from "~/hooks/use-location";
 import { useDevice } from "~/hooks/use-device";
+
+import type { FC } from "react";
 
 export interface AddConnectionButtonProps {
 	type: ConnectionType;
@@ -88,7 +89,7 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 				await InAppBrowser.open({ url: authorizeUrl });
 			}}
 		>
-			<Icon className={twMerge("h-6 w-6", iconClassName)} />
+			<Icon className={twMerge("size-6", iconClassName)} />
 			<span className="font-montserrat text-lg font-semibold">
 				Log in with {label[type]}
 			</span>

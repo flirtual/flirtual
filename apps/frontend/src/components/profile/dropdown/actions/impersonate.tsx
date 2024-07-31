@@ -1,11 +1,12 @@
 import { VenetianMask } from "lucide-react";
-import { FC } from "react";
 
 import { api } from "~/api";
-import { User, displayName } from "~/api/user";
+import { type User, displayName } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+
+import type { FC } from "react";
 
 export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 	const [session, mutateSession] = useSession();
@@ -40,7 +41,7 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 					await mutateSession(newSession);
 				}}
 			>
-				<VenetianMask className="h-5 w-5" />
+				<VenetianMask className="size-5" />
 				{session.sudoerId ? "Cancel Impersonation" : "Impersonate"}
 			</button>
 		</DropdownMenuItem>

@@ -1,15 +1,16 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { FC } from "react";
 
-import { PartialAttribute } from "~/api/attributes";
 import { findBy, sortBy } from "~/utilities";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { Pill } from "./pill";
+
+import type { PartialAttribute } from "~/api/attributes";
+import type { FC } from "react";
 
 export interface GenderPillsProps {
 	simple?: boolean;
@@ -36,7 +37,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 					? profileGenders
 							.map((gender) =>
 								gender.metadata.aliasOf
-									? findBy(genders, "id", gender.metadata.aliasOf) ?? gender
+									? (findBy(genders, "id", gender.metadata.aliasOf) ?? gender)
 									: gender
 							)
 							.filter((gender) => {
@@ -66,7 +67,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 								small={small}
 								className={twMerge(
 									className,
-									genderIndex !== 0 && small && simple && "hidden sm:flex"
+									genderIndex !== 0 && small && simple && "hidden desktop:flex"
 								)}
 							>
 								{gender.name}

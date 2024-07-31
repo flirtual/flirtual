@@ -22,6 +22,7 @@ import {
 	type FC,
 	type PropsWithChildren,
 	use,
+	useEffect,
 	useState
 } from "react";
 import { Portal } from "react-portal";
@@ -37,9 +38,12 @@ export const SortableGrid: FC<
 	PropsWithChildren<{
 		values: Array<UniqueIdentifier>;
 		onChange: Dispatch<Array<UniqueIdentifier>>;
+		disabled?: boolean;
 	}>
-> = ({ values, onChange, children }) => {
+> = ({ values, onChange, disabled = false, children }) => {
 	const [currentItem, setCurrentItem] = useState<UniqueIdentifier | null>(null);
+
+	useEffect(() => setCurrentItem(null), [values]);
 
 	const sensors = useSensors(
 		useSensor(MouseSensor, {}),
@@ -71,7 +75,12 @@ export const SortableGrid: FC<
 					setCurrentItem(active.id as string);
 				}}
 			>
-				<SortableContext items={values} strategy={rectSortingStrategy}>
+				<SortableContext
+					disabled={disabled}
+					items={values}
+					key={JSON.stringify(values)}
+					strategy={rectSortingStrategy}
+				>
 					{children}
 				</SortableContext>
 			</DndContext>
@@ -83,12 +92,19 @@ export const SortableItem: FC<PropsWithChildren<{ id: UniqueIdentifier }>> = ({
 	id,
 	children
 }) => {
-	const { transform, transition, setNodeRef, attributes, listeners } =
-		useSortable({ id });
+	const {
+		transform,
+		transition,
+		setNodeRef,
+		attributes,
+		listeners,
+		isDragging
+	} = useSortable({ id });
 
 	return (
 		<Slot
 			ref={setNodeRef}
+			data-dragging={isDragging ? "" : undefined}
 			style={
 				{
 					transition: transition,

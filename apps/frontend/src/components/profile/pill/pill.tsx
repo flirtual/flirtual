@@ -6,7 +6,7 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Pencil } from "lucide-react";
 
-import { IconComponent } from "../../icons";
+import type { IconComponent } from "../../icons";
 
 export interface PillProps {
 	Icon?: IconComponent;
@@ -37,10 +37,10 @@ export const Pill: React.FC<PillProps> = (props) => {
 				{...elementProps}
 				href={href!}
 				className={twMerge(
-					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 sm:text-base",
+					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 desktop:text-base",
 					hocusable && (active || (hocused && href))
 						? "bg-brand-gradient text-theme-overlay"
-						: "bg-white-30 text-black-70 dark:bg-black-70 dark:text-white-20 sm:dark:bg-black-60",
+						: "bg-white-30 text-black-70 dark:bg-black-60 dark:text-white-20",
 					small ? "px-3 py-1 text-sm" : " px-4 py-1",
 					props.className
 				)}
@@ -69,7 +69,7 @@ export const Pill: React.FC<PillProps> = (props) => {
 						initial={{ opacity: 0 }}
 						transition={{ type: "spring" }}
 					>
-						<Pencil className=" h-4 w-4" />
+						<Pencil className=" size-4" />
 					</motion.div>
 				)}
 			</Element>

@@ -1,6 +1,7 @@
-import { CreatedAtModel } from "./common";
-import { fetch, NarrowFetchOptions } from "./exports";
-import { ProspectKind } from "./matchmaking";
+import { fetch, type NarrowFetchOptions } from "./exports";
+
+import type { CreatedAtModel } from "./common";
+import type { ProspectKind } from "./matchmaking";
 
 export type Message = CreatedAtModel & {
 	id: string;

@@ -16,10 +16,10 @@ defmodule Flirtual.Attribute do
   @derive {Inspect, only: [:id, :type, :metadata]}
 
   schema "attributes" do
-    field :type, :string
-    field :name, :string
-    field :order, :integer
-    field :metadata, :map
+    field(:type, :string)
+    field(:name, :string)
+    field(:order, :integer)
+    field(:metadata, :map)
 
     timestamps(inserted_at: false)
   end
@@ -31,7 +31,7 @@ defmodule Flirtual.Attribute do
   end
 
   def get(attribute_id) when is_binary(attribute_id) do
-    (list(type: "country") ++ list(type: "language"))
+    (list(type: "country") ++ list(type: "language") ++ list(type: "relationship"))
     |> Enum.find(&(&1.id == attribute_id))
   end
 
@@ -91,6 +91,31 @@ defmodule Flirtual.Attribute do
         name: language[:name]
       }
     end)
+  end
+
+  def list(type: "relationship") do
+    [
+      %Attribute{
+        id: "serious",
+        type: "relationship",
+        name: "Serious dating"
+      },
+      %Attribute{
+        id: "vr",
+        type: "relationship",
+        name: "Casual dating"
+      },
+      %Attribute{
+        id: "hookups",
+        type: "relationship",
+        name: "Casual fun"
+      },
+      %Attribute{
+        id: "friends",
+        type: "relationship",
+        name: "New friends"
+      }
+    ]
   end
 
   def list(type: attribute_type) when is_binary(attribute_type) do

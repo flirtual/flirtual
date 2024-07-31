@@ -1,5 +1,4 @@
 import { Sparkles } from "lucide-react";
-import { Metadata } from "next";
 
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
@@ -17,6 +16,8 @@ import {
 	PlatformMismatchMessage
 } from "./platform-mismatch";
 
+import type { Metadata } from "next";
+
 export const metadata: Metadata = {
 	title: "Premium"
 };
@@ -33,7 +34,7 @@ export default async function SubscriptionPage() {
 			footer={{ desktopOnly: true }}
 		>
 			<ModelCard
-				className="sm:max-w-3xl"
+				className="desktop:max-w-3xl"
 				containerProps={{ className: "gap-8" }}
 				title="Flirtual Premium"
 			>
@@ -49,7 +50,7 @@ export default async function SubscriptionPage() {
 								<Sparkles className="inline size-5" />
 								<span>{subscription.plan.name}</span>
 							</div>
-							<span className="ml-5 pl-2 text-sm text-black-30 dark:text-white-50">
+							<span className="ml-5 pl-2 text-sm text-black-30 vision:text-white-50 dark:text-white-50">
 								{subscription.cancelledAt
 									? `Canceled on ${formatDate(subscription.cancelledAt)}`
 									: `Since ${formatDate(subscription.updatedAt)}`}
@@ -112,7 +113,7 @@ export default async function SubscriptionPage() {
 									Sometimes one size doesn&apos;t fit all. Customize your
 									algorithm to find exactly the right people for you.{" "}
 									<InlineLink href={urls.settings.matchmaking()}>
-										(Check it out)
+										(Check&nbsp;it&nbsp;out)
 									</InlineLink>
 								</span>
 							</li>
@@ -125,7 +126,7 @@ export default async function SubscriptionPage() {
 									profile to show off your style and make a memorable first
 									impression.{" "}
 									<InlineLink href={urls.settings.appearance}>
-										(Check it out)
+										(Check&nbsp;it&nbsp;out)
 									</InlineLink>
 								</span>
 							</li>

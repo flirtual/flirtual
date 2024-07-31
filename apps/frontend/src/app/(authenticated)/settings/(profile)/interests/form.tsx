@@ -1,17 +1,15 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import {
 	Brain,
-	Church,
 	Dices,
 	Gamepad2,
 	HeartHandshake,
 	MoonStar,
 	Music,
 	Pencil,
-	Scale,
 	Search,
 	Star,
 	Tags,
@@ -31,8 +29,10 @@ import {
 } from "~/components/inputs";
 import { filterBy } from "~/utilities";
 import { useSession } from "~/hooks/use-session";
-import { AttributeCollection } from "~/api/attributes";
 import { useToast } from "~/hooks/use-toast";
+import { useDevice } from "~/hooks/use-device";
+
+import type { AttributeCollection } from "~/api/attributes";
 
 export interface InterestsFormProps {
 	interests: AttributeCollection<"interest">;
@@ -41,6 +41,7 @@ export interface InterestsFormProps {
 export const InterestsForm: FC<InterestsFormProps> = (props) => {
 	const { interests } = props;
 
+	const { platform } = useDevice();
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
@@ -184,7 +185,7 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 														"cursor-pointer select-none rounded-xl px-3 py-1 shadow-brand-1",
 														field.props.value.includes(interest.id)
 															? "bg-brand-gradient text-white-10"
-															: "bg-white-30 text-black-70 hover:bg-white-40 dark:bg-black-60 dark:text-white-20 hover:dark:bg-black-50"
+															: "bg-white-30 text-black-70 hover:bg-white-40 vision:bg-white-30/70 dark:bg-black-60 dark:text-white-20 hover:dark:bg-black-50"
 													)}
 													onClick={() => {
 														if (
@@ -227,7 +228,8 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 									<Pencil /> Custom interests
 								</InputLabel>
 								<InputLabelHint className="-mt-2">
-									Press Enter <small>⏎</small> after each interest
+									Press {platform === "apple" ? "Return" : "Enter"}{" "}
+									<small>⏎</small> after each interest
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
@@ -265,14 +267,14 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 					<FormButton>Update</FormButton>
 					{defaultCount + customCount > 0 && (
 						<div
-							className="pointer-events-none fixed bottom-20 right-4 flex h-14 w-14 items-center justify-center rounded-full sm:bottom-4"
+							className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4"
 							style={{
 								backgroundImage: `conic-gradient(var(--theme-1) ${
 									((defaultCount + customCount) / 10) * 360
 								}deg, transparent 0deg)`
 							}}
 						>
-							<div className="flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white-20 text-sm font-extrabold text-theme-1 dark:bg-black-70">
+							<div className="flex size-12 flex-col items-center justify-center rounded-full bg-white-20 text-sm font-extrabold text-theme-1 dark:bg-black-70">
 								{defaultCount + customCount}/10
 							</div>
 						</div>

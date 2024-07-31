@@ -1,10 +1,11 @@
 "use client";
 
-import { FC } from "react";
 import NextImage from "next/image";
 
-import { ImageOptions } from "~/image-loader";
 import { notFoundImage } from "~/api/user/profile/images";
+
+import type { FC } from "react";
+import type { ImageOptions } from "~/image-loader";
 
 export type ImageProps = Omit<
 	Parameters<typeof NextImage>[0],

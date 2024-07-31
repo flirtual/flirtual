@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { IconComponentProps } from "..";
+import type { IconComponentProps } from "..";
 
 export const AppleIcon = forwardRef<SVGSVGElement, IconComponentProps>(
 	(props, reference) => (

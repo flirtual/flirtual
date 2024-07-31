@@ -5,13 +5,14 @@ import { Flag } from "lucide-react";
 
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
-import { User } from "~/api/user";
 
 import { Button } from "../button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { DialogTrigger } from "../dialog/dialog";
 
 import { ReportDialog } from "./dialogs/report";
+
+import type { User } from "~/api/user";
 
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
@@ -39,7 +40,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 					<TooltipTrigger asChild>
 						<DialogTrigger asChild>
 							<button className="w-fit gap-2" type="button">
-								<Flag className="h-5 w-5" />
+								<Flag className="size-5" />
 							</button>
 						</DialogTrigger>
 					</TooltipTrigger>

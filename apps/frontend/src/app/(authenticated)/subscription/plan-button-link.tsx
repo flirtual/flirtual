@@ -1,14 +1,15 @@
 "use client";
 
-import { FC, useState, useTransition } from "react";
+import { type FC, useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 import { Button } from "~/components/button";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useToast } from "~/hooks/use-toast";
-import { Modal } from "~/components/modal";
+import { Dialog, DialogContent } from "~/components/dialog/dialog";
 
-import { PlanCardProps } from "./plan-card";
+import type { PlanCardProps } from "./plan-card";
 
 export const PlanButtonLink: FC<
 	PlanCardProps & {
@@ -27,24 +28,25 @@ export const PlanButtonLink: FC<
 	return (
 		<>
 			{purchaseUrl && (
-				<Modal
-					visible
-					className="overflow-hidden p-0"
-					onVisibilityChange={(open) => {
+				<Dialog
+					open
+					onOpenChange={(open) => {
 						if (open) return;
 						setPurchaseUrl(null);
 					}}
 				>
-					<iframe
-						className="max-h-[90vh] max-w-full"
-						height={561}
-						src={purchaseUrl}
-						width={479}
-					/>
-				</Modal>
+					<DialogContent className="w-fit overflow-hidden p-0">
+						<iframe
+							className="max-h-[90vh] max-w-full rounded-[1.25rem] bg-[#f4f5f9]"
+							height={561}
+							src={purchaseUrl}
+							width={479}
+						/>
+					</DialogContent>
+				</Dialog>
 			)}
 			<Button
-				className="relative flex"
+				className={twMerge("relative flex", !highlight && "vision:bg-white-10")}
 				disabled={props.disabled || pending}
 				Icon={pending ? Loader2 : undefined}
 				iconClassName="animate-spin absolute left-2 h-5"

@@ -1,8 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
-import { Metadata, Viewport } from "next";
-import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
@@ -15,16 +13,18 @@ import { ToastProvider } from "~/hooks/use-toast";
 import { SessionProvider } from "~/components/session-provider";
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { ShepherdProvider } from "~/components/shepherd";
-import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 import { ThemeProvider } from "~/hooks/use-theme";
-import { DevicePlatform, DeviceProvider } from "~/hooks/use-device";
+import { type DevicePlatform, DeviceProvider } from "~/hooks/use-device";
 import { NotificationProvider } from "~/hooks/use-notifications";
 import { TooltipProvider } from "~/components/tooltip";
 import AppUrlListener from "~/components/app-url-listener";
-import AppUpdater from "~/components/app-updater";
+import NativeStartup from "~/components/native-startup";
 import { PurchaseProvider } from "~/hooks/use-purchase";
+import { InsetPreview } from "~/components/inset-preview";
 
 import { ClientScripts } from "./client-scripts";
+
+import type { Metadata, Viewport } from "next";
 
 import "~/css/index.scss";
 
@@ -99,7 +99,6 @@ export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
 	const session = await withOptionalSession();
-	const theme = session?.user.preferences?.theme ?? "light";
 
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
 
@@ -111,6 +110,10 @@ export default async function RootLayout({
 
 	const vision = userAgent.ua.includes("Flirtual-Vision");
 	Sentry.setTag("vision", vision ? "yes" : "no");
+
+	const theme = vision
+		? "light"
+		: (session?.user.preferences?.theme ?? "light");
 
 	return (
 		<html
@@ -136,8 +139,6 @@ export default async function RootLayout({
 								theme: resolveTheme("${theme}"),
 								themeStyle,
 							});
-
-							
 						`.trim()
 					}}
 				/>
@@ -152,6 +153,7 @@ export default async function RootLayout({
 					"overscroll-none"
 				)}
 			>
+				<InsetPreview />
 				<NextTopLoader
 					color={["#FF8975", "#E9658B"]}
 					height={5}
@@ -163,21 +165,19 @@ export default async function RootLayout({
 					userAgent={userAgent}
 					vision={vision}
 				>
-					<AppUpdater />
+					<NativeStartup />
 					<ToastProvider>
-						<Suspense fallback={<LoadingIndicatorScreen />}>
-							<TooltipProvider>
-								<SessionProvider session={session}>
-									<NotificationProvider>
-										<PurchaseProvider>
-											<ThemeProvider>
-												<ShepherdProvider>{children}</ShepherdProvider>
-											</ThemeProvider>
-										</PurchaseProvider>
-									</NotificationProvider>
-								</SessionProvider>
-							</TooltipProvider>
-						</Suspense>
+						<TooltipProvider>
+							<SessionProvider session={session}>
+								<NotificationProvider>
+									<PurchaseProvider>
+										<ThemeProvider>
+											<ShepherdProvider>{children}</ShepherdProvider>
+										</ThemeProvider>
+									</PurchaseProvider>
+								</NotificationProvider>
+							</SessionProvider>
+						</TooltipProvider>
 					</ToastProvider>
 				</DeviceProvider>
 			</body>

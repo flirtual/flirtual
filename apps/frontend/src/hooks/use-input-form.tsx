@@ -1,16 +1,12 @@
-import React, {
-	createContext,
-	RefObject,
-	useContext,
-	useId,
-	useMemo,
-	useState
-} from "react";
+import { createContext, useContext, useId, useMemo, useState } from "react";
 
-import { FormFieldFC, FormField } from "~/components/forms/field";
-import { FormCaptchaReference } from "~/components/forms/captcha";
+import { type FormFieldFC, FormField } from "~/components/forms/field";
 import { entries } from "~/utilities";
 import { ResponseChangesetError } from "~/api";
+
+import type { FormCaptchaReference } from "~/components/forms/captcha";
+import type { RefObject } from "react";
+import type React from "react";
 
 export interface FormFieldsDefault {
 	[s: string]: unknown;

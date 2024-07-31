@@ -1,13 +1,12 @@
 "use client";
 
-import { FC, useState, useTransition } from "react";
+import { type FC, useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 
 import { useSession } from "~/hooks/use-session";
 import { usePurchase } from "~/hooks/use-purchase";
 import { Button } from "~/components/button";
 import { useToast } from "~/hooks/use-toast";
-import { Modal } from "~/components/modal";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { api } from "~/api";
@@ -21,7 +20,11 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger
 } from "~/components/dialog/alert";
-import { DialogFooter } from "~/components/dialog/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogFooter
+} from "~/components/dialog/dialog";
 
 export const ManageButton: FC = () => {
 	const [session] = useSession();
@@ -109,21 +112,22 @@ export const ManageButton: FC = () => {
 	return (
 		<>
 			{manageUrl && (
-				<Modal
-					visible
-					className="overflow-hidden p-0"
-					onVisibilityChange={(open) => {
+				<Dialog
+					open
+					onOpenChange={(open) => {
 						if (open) return;
 						setManageUrl(null);
 					}}
 				>
-					<iframe
-						className="max-h-[90vh] max-w-full"
-						height={561}
-						src={manageUrl}
-						width={479}
-					/>
-				</Modal>
+					<DialogContent className="w-fit overflow-hidden p-0">
+						<iframe
+							className="max-h-[90vh] max-w-full rounded-[1.25rem] bg-[#f4f5f9]"
+							height={561}
+							src={manageUrl}
+							width={479}
+						/>
+					</DialogContent>
+				</Dialog>
 			)}
 			<div>
 				<Button

@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
-import React from "react";
 
 import { editorColors } from "~/html";
 
 import { EditorSkeleton } from "./skeleton";
+
+import type React from "react";
 
 import "./style.scss";
 
@@ -36,7 +37,7 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 	return (
 		<ReactQuill
 			data-sentry-mask
-			className="prose dark:prose-invert"
+			className="prose max-w-none dark:prose-invert"
 			value={value}
 			formats={[
 				"header",

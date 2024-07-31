@@ -10,7 +10,7 @@ const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
 			{...props}
 			type="radio"
 			className={twMerge(
-				"peer absolute h-full w-full rounded-none border-none bg-transparent checked:bg-brand-gradient focus:shadow-none focus:outline-none focus:ring-transparent focus:ring-offset-0",
+				"peer absolute size-full rounded-none border-none bg-transparent checked:bg-brand-gradient focus:shadow-none focus:outline-none focus:ring-transparent focus:ring-offset-0",
 				props.className
 			)}
 		/>
@@ -39,7 +39,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const value = invert && props.value !== null ? !props.value : props.value;
 
 	return (
-		<div className="focusable-within flex h-fit w-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 dark:bg-black-60">
+		<div className="focusable-within flex size-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60">
 			<SwitchInput
 				checked={value === null ? false : value}
 				label="Yes"

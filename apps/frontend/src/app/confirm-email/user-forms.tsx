@@ -3,10 +3,11 @@ import { useRouter } from "next/navigation";
 
 import { api } from "~/api/";
 import { Form, FormButton } from "~/components/forms";
-import { User } from "~/api/user";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useInterval } from "~/hooks/use-interval";
 import { useToast } from "~/hooks/use-toast";
+
+import type { User } from "~/api/user";
 
 export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 	const router = useRouter();
@@ -35,14 +36,19 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 						.catch(toasts.addError);
 				}}
 			>
-				<span className="text-xl">
-					Please check your email address,{" "}
-					<span data-sentry-mask className="font-semibold">
-						{user.email}
+				<div>
+					<h1 className="font-montserrat text-xl font-semibold">
+						Just one more step!
+					</h1>
+					<span className="text-lg">
+						Please check your email (
+						<span data-sentry-mask className="font-semibold">
+							{user.email}
+						</span>
+						) for a confirmation link to activate your account. If you
+						don&apos;t see it in your inbox, check your spam/junk/trash folders.
 					</span>
-					, for a confirmation link to activate your account. If you don&apos;t
-					see it in your inbox, check your spam/junk/trash folders!
-				</span>
+				</div>
 				<FormButton>Resend confirmation email</FormButton>
 			</Form>
 			<Form

@@ -1,18 +1,35 @@
 import { snakeCase } from "change-case";
 
-import { AttributeType, PartialAttributeCollection } from "~/api/attributes";
+import { fetch, type NarrowFetchOptions } from "../../exports";
 
-import { UpdatedAtModel } from "../../common";
-import { fetch, NarrowFetchOptions } from "../../exports";
-
-import { ProfileImage } from "./images";
-import { ProfileCustomWeights } from "./custom-weights";
+import type {
+	AttributeType,
+	PartialAttributeCollection
+} from "~/api/attributes";
+import type { UpdatedAtModel } from "../../common";
+import type { ProfileImage } from "./images";
+import type { ProfilePrompt } from "./prompts";
+import type { ProfileCustomWeights } from "./custom-weights";
 
 export type ProfilePreferences = UpdatedAtModel & {
 	agemin?: number;
 	agemax?: number;
 	attributes: PartialAttributeCollection;
 };
+
+export const ProfileRelationshipList = [
+	"serious",
+	"vr",
+	"hookups",
+	"friends"
+] as const;
+export const ProfileRelationshipLabel = {
+	serious: "Serious dating (meet in-person eventually)",
+	vr: "Casual dating (VR-only dating)",
+	hookups: "Casual fun",
+	friends: "New friends"
+};
+export type ProfileRelationship = (typeof ProfileRelationshipList)[number];
 
 export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;
 export type ProfileDomsub = (typeof ProfileDomsubList)[number];
@@ -22,14 +39,13 @@ export const ProfileMonopolyLabel = {
 	monogamous: "Monogamous",
 	nonmonogamous: "Non-monogamous"
 };
-
 export type ProfileMonopoly = (typeof ProfileMonopolyList)[number];
 
 export type Profile = Partial<UpdatedAtModel> & {
 	displayName?: string;
 	biography?: string;
 	new?: boolean;
-	serious?: boolean;
+	relationships: Array<ProfileRelationship>;
 	domsub?: ProfileDomsub;
 	monopoly?: ProfileMonopoly;
 	country?: string;
@@ -46,6 +62,7 @@ export type Profile = Partial<UpdatedAtModel> & {
 	preferences?: ProfilePreferences;
 	customWeights?: ProfileCustomWeights;
 	images: Array<ProfileImage>;
+	prompts: Array<ProfilePrompt>;
 	queueResetLoveAt?: string;
 	queueResetFriendAt?: string;
 	color_1?: string;
@@ -71,7 +88,7 @@ export type UpdateProfileBody = Partial<
 		| "new"
 		| "country"
 		| "languages"
-		| "serious"
+		| "relationships"
 		| "customInterests"
 		| "vrchat"
 		| "discord"
@@ -90,8 +107,8 @@ export async function update(
 	options: NarrowFetchOptions<
 		UpdateProfileBody,
 		| {
-				required?: Array<keyof UpdateProfileBody>;
-		  }
+			required?: Array<keyof UpdateProfileBody>;
+		}
 		| undefined
 	>
 ) {
@@ -175,9 +192,9 @@ export async function updatePreferences(
 			attributes?: Array<string>;
 		},
 		| {
-				required?: Array<"agemin" | "agemax">;
-				requiredAttributes?: Array<AttributeType>;
-		  }
+			required?: Array<"agemin" | "agemax">;
+			requiredAttributes?: Array<AttributeType>;
+		}
 		| undefined
 	>
 ) {

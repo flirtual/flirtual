@@ -10,12 +10,12 @@ Sentry.init({
 	enabled: environment !== "development",
 	dsn: sentryDsn,
 	sampleRate: 1,
-	tracesSampleRate: 0,
+	tracesSampleRate: 1,
 	enableTracing: false,
 	replaysOnErrorSampleRate: 1,
 	replaysSessionSampleRate: 0,
 	integrations: [
-		new Sentry.Replay({
+		Sentry.replayIntegration({
 			blockAllMedia: false,
 			maskAllText: false,
 			maskAllInputs: true,

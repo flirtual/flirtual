@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-import { GradientIconProps } from ".";
+import type { GradientIconProps } from ".";
 
 export const LoginIcon: React.FC<GradientIconProps> = ({
 	gradient = true,

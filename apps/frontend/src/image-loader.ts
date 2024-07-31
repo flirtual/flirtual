@@ -1,4 +1,4 @@
-import { ImageLoaderProps } from "next/image";
+import type { ImageLoaderProps } from "next/image";
 
 export type ImageOptions = Record<
 	string,

@@ -2,6 +2,7 @@ package zone.homie.flirtual.pwa;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -11,6 +12,11 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        }
         super.onCreate(savedInstanceState);
         createNotificationChannel();
     }

@@ -9,9 +9,7 @@ import {
 	Tags
 } from "lucide-react";
 import Link from "next/link";
-import { FC } from "react";
 
-import { User } from "~/api/user";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -30,6 +28,9 @@ import { ProfileDropdownModerateSubmenu } from "./submenus/moderate";
 import { ProfileDropdownTagsSubmenu } from "./submenus/tags";
 import { ImpersonateAction } from "./actions/impersonate";
 
+import type { User } from "~/api/user";
+import type { FC } from "react";
+
 export interface ProfileDropdownProps {
 	user: User;
 }
@@ -42,7 +43,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 			<DropdownMenuTrigger asChild>
 				<button className="w-fit cursor-pointer outline-none" type="button">
 					<span className="sr-only">Open menu</span>
-					<ShieldEllipsis className="size-6" />
+					<ShieldEllipsis className="size-6 vision:text-white-20" />
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="center" sideOffset={8}>

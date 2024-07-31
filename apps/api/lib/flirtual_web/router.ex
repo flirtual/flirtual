@@ -41,18 +41,12 @@ defmodule FlirtualWeb.Router do
   def require_valid_user(conn, _opts) do
     user = conn.assigns[:session].user
 
-    if user.email_confirmed_at === nil do
+    if user.deactivated_at !== nil do
       conn
-      |> put_error(:forbidden, "Email verification required")
+      |> put_error(:forbidden, "User account deactivated")
       |> halt()
     else
-      if user.deactivated_at !== nil do
-        conn
-        |> put_error(:forbidden, "User account deactivated")
-        |> halt()
-      else
-        conn
-      end
+      conn
     end
   end
 
@@ -301,7 +295,7 @@ defmodule FlirtualWeb.Router do
             post("/bulk", UsersController, :bulk)
           end
 
-          scope "/:username/username" do
+          scope "/:slug/name" do
             pipe_through([:require_authenticated_user, :require_valid_user])
 
             get("/", UsersController, :get)
@@ -315,7 +309,6 @@ defmodule FlirtualWeb.Router do
 
             delete("/", UsersController, :admin_delete)
 
-            get("/visible", UsersController, :visible)
             get("/inspect", UsersController, :inspect)
 
             post("/deactivate", UsersController, :deactivate)
@@ -377,6 +370,7 @@ defmodule FlirtualWeb.Router do
                 put("/", ProfileController, :create_images)
               end
 
+              post("/prompts", ProfileController, :update_prompts)
               post("/preferences", ProfileController, :update_preferences)
               post("/custom-weights", ProfileController, :update_custom_weights)
             end

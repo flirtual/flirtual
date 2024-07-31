@@ -7,8 +7,9 @@ import { redirect } from "next/navigation";
 
 import { api, ResponseError } from "./api";
 import { toAbsoluteUrl, urls } from "./urls";
-import { UserTags } from "./api/user";
 import { tryJsonParse } from "./utilities";
+
+import type { UserTags } from "./api/user";
 
 export function thruServerCookies() {
 	return {
@@ -45,19 +46,10 @@ export const withSession = cache(async (next?: string) => {
 	return session;
 });
 
-export const withVisibleUser = cache(async () => {
+export const withOnboardedUser = cache(async () => {
 	const { user } = await withSession();
 
-	if (!user.visible) {
-		const { visible, reasons } = await api.user
-			.visible(user.id, thruServerCookies())
-			.catch(() => ({ visible: false, reasons: [] }));
-
-		if (!visible) {
-			const reason = reasons[0];
-			if (reason && reason.to) return redirect(reason.to);
-		}
-	}
+	if (user.status === "registered") return redirect(urls.onboarding(1));
 
 	return user;
 });

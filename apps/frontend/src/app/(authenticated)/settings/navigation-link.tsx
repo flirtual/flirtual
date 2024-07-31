@@ -5,8 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
-import { IconComponent } from "~/components/icons";
 import { isInternalHref, toAbsoluteUrl } from "~/urls";
+
+import type { IconComponent } from "~/components/icons";
 
 export type NavigationLinkProps = {
 	children: string;
@@ -26,10 +27,10 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 			href={props.href}
 			target={isInternalHref(props.href) ? "_self" : "_blank"}
 			className={twMerge(
-				"flex justify-between gap-4 px-6 py-2 focus:outline-none hocus:shadow-brand-1",
+				"flex justify-between gap-4 px-6 py-2 transition-shadow focus:outline-none hocus:shadow-brand-inset",
 				toAbsoluteUrl(props.href).pathname === pathname
-					? "bg-brand-gradient text-white-20 shadow-brand-1"
-					: "text-black-80 hocus:bg-brand-gradient hocus:text-white-20 vision:text-white-20 dark:text-white-20 md:hocus:bg-white-30 md:hocus:bg-none md:hocus:text-black-80 dark:md:hocus:bg-white-20",
+					? "bg-brand-gradient text-white-20 shadow-brand-inset"
+					: "text-black-80 hocus:bg-brand-gradient hocus:text-white-20 vision:text-white-20 dark:text-white-20 desktop:hocus:bg-white-30 desktop:hocus:bg-none desktop:hocus:text-black-80 dark:desktop:hocus:bg-black-60 dark:desktop:hocus:text-white-20",
 				!isInternalHref(props.href) && "touch-callout-default"
 			)}
 		>
@@ -53,7 +54,7 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 		</Link>
 	) : (
 		<button
-			className="flex justify-between gap-2 px-6 py-2 text-left text-black-80 focus:outline-none hocus:bg-brand-gradient hocus:text-white-20 hocus:shadow-brand-1 vision:text-white-20 dark:text-white-20 md:hocus:bg-white-30 md:hocus:bg-none md:hocus:text-black-80 dark:md:hocus:bg-white-20"
+			className="flex justify-between gap-2 px-6 py-2 text-left text-black-80 transition-shadow focus:outline-none hocus:bg-brand-gradient hocus:text-white-20 hocus:shadow-brand-inset vision:text-white-20 dark:text-white-20 desktop:hocus:bg-white-30 desktop:hocus:bg-none desktop:hocus:text-black-80 dark:desktop:hocus:bg-black-60 dark:desktop:hocus:text-white-20"
 			type="button"
 			onClick={props.onClick}
 		>

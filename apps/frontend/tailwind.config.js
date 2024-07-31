@@ -52,7 +52,9 @@ module.exports = {
 			},
 			colors: colors,
 			backgroundImage: {
-				"brand-gradient": `linear-gradient(to right, var(--theme-1), var(--theme-2))`
+				"brand-gradient": `linear-gradient(to right, var(--theme-1), var(--theme-2))`,
+				"brand-gradient-pink": `linear-gradient(to right, var(--brand-theme-1), var(--brand-theme-2))`,
+				"brand-gradient-green": `linear-gradient(to right, var(--friend-theme-1), var(--friend-theme-2))`
 			},
 			borderRadius: {
 				half: "50%"
@@ -142,6 +144,10 @@ module.exports = {
 					}
 				}
 			}
+		},
+		screens: {
+			desktop: "768px",
+			wide: "1024px"
 		}
 	},
 	plugins: [

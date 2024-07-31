@@ -1,11 +1,11 @@
 "use client";
 
 import {
-	PermissionStatus,
+	type PermissionStatus,
 	PushNotifications
 } from "@capacitor/push-notifications";
 import {
-	PropsWithChildren,
+	type PropsWithChildren,
 	createContext,
 	use,
 	useCallback,
@@ -20,6 +20,8 @@ import { api } from "~/api";
 import { useDevice } from "./use-device";
 import { useToast } from "./use-toast";
 import { useSession } from "./use-session";
+
+import type { PluginListenerHandle } from "@capacitor/core";
 export interface NotificationContext {
 	status: PermissionStatus["receive"];
 	pushRegistrationId?: string;
@@ -69,45 +71,50 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 	useEffect(() => {
 		if (status !== "granted") return;
 
-		const registrationListener = PushNotifications.addListener(
-			"registration",
-			async (token) => {
-				setPushRegistrationId(token.value);
+		let registrationListener: PluginListenerHandle;
+		let errorListener: PluginListenerHandle;
 
-				if (!session) return;
-				if (platform === "apple" && token.value !== session.user.apnsToken)
-					await api.user.updatePushTokens(session.user.id, {
-						body: {
-							apnsToken: token.value,
-							fcmToken: session.user.fcmToken
-						}
-					});
-				else if (
-					platform === "android" &&
-					token.value !== session.user.fcmToken
-				)
-					await api.user.updatePushTokens(session.user.id, {
-						body: {
-							apnsToken: session.user.apnsToken,
-							fcmToken: token.value
-						}
-					});
-			}
-		);
+		void (async () => {
+			registrationListener = await PushNotifications.addListener(
+				"registration",
+				async (token) => {
+					setPushRegistrationId(token.value);
 
-		const errorListener = PushNotifications.addListener(
-			"registrationError",
-			({ error }) => {
-				console.error("Error on push notification registration:", error);
-				setPushRegistrationId(void 0);
-			}
-		);
+					if (!session) return;
+					if (platform === "apple" && token.value !== session.user.apnsToken)
+						await api.user.updatePushTokens(session.user.id, {
+							body: {
+								apnsToken: token.value,
+								fcmToken: session.user.fcmToken
+							}
+						});
+					else if (
+						platform === "android" &&
+						token.value !== session.user.fcmToken
+					)
+						await api.user.updatePushTokens(session.user.id, {
+							body: {
+								apnsToken: session.user.apnsToken,
+								fcmToken: token.value
+							}
+						});
+				}
+			);
 
-		void PushNotifications.register();
+			errorListener = await PushNotifications.addListener(
+				"registrationError",
+				({ error }) => {
+					console.error("Error on push notification registration:", error);
+					setPushRegistrationId(void 0);
+				}
+			);
+
+			void PushNotifications.register();
+		})();
 
 		return () => {
-			void registrationListener.remove();
-			void errorListener.remove();
+			void registrationListener?.remove();
+			void errorListener?.remove();
 		};
 	}, [platform, session, status, toasts.addError]);
 

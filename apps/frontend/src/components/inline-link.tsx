@@ -1,9 +1,10 @@
-import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 
 import { isInternalHref } from "~/urls";
+
+import type { Url } from "next/dist/shared/lib/router/router";
 
 type InlineLinkProps = Omit<Parameters<typeof Link>[0], "href"> & {
 	href: Url | null;

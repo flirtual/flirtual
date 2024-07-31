@@ -3,7 +3,7 @@ import { Share, Share2 } from "lucide-react";
 
 import { useDevice } from "~/hooks/use-device";
 
-import { IconComponentProps } from ".";
+import type { IconComponentProps } from ".";
 
 export const ShareIcon = forwardRef<SVGSVGElement, IconComponentProps>(
 	(props, reference) => {

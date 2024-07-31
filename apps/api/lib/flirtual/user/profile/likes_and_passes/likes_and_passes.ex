@@ -90,7 +90,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> with_opposite(nil: true)
     |> exclude_blocked()
     |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
-    |> where([_, _, _, user], user.visible)
+    |> where([_, _, _, user], user.status == "visible")
     |> order_by(desc: :created_at)
     |> Repo.all()
   end
@@ -125,7 +125,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         where:
           is_nil(opposite) and
             is_nil(block) and
-            user.visible,
+            user.status == "visible",
         select: lap.profile_id,
         order_by: [desc: lap.latest_created_at]
       )
@@ -181,21 +181,6 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              |> Repo.delete_all(),
            {:ok, _} <-
              Talkjs.delete_participants(user_id: profile_id, target_id: target_id) do
-        count
-      else
-        {:error, reason} -> Repo.rollback(reason)
-        reason -> Repo.rollback(reason)
-      end
-    end)
-  end
-
-  def delete_all(profile_id: profile_id) do
-    Repo.transaction(fn ->
-      with {count, nil} <-
-             LikesAndPasses
-             |> where(profile_id: ^profile_id)
-             |> Repo.delete_all(),
-           {:ok, _} <- Talkjs.delete_user_conversations(profile_id) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)

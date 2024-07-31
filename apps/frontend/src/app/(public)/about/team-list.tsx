@@ -1,4 +1,4 @@
-import { TeamMember, TeamMemberProps } from "./team-member";
+import { TeamMember, type TeamMemberProps } from "./team-member";
 
 export interface TeamListProps {
 	children: Array<TeamMemberProps>;
@@ -6,7 +6,7 @@ export interface TeamListProps {
 
 export const TeamList: React.FC<TeamListProps> = ({ children }) => {
 	return (
-		<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+		<div className="grid grid-cols-1 gap-4 desktop:grid-cols-2">
 			{children.map((member) => (
 				<TeamMember key={member.name} {...member} />
 			))}

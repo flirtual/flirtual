@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect, useMemo } from "react";
 import {
-	ShepherdOptionsWithType,
+	type ShepherdOptionsWithType,
 	ShepherdTourContext,
-	Tour
+	type Tour
 } from "react-shepherd";
 
 import "~/components/shepherd/style.scss";
@@ -16,7 +16,12 @@ export function useShepherd() {
 
 export function useTour(
 	name: string,
-	getSteps: (shepherd: Tour) => Array<ShepherdOptionsWithType>
+	getSteps: (shepherd: Tour) => Array<ShepherdOptionsWithType>,
+	{
+		defaultStart = false
+	}: {
+		defaultStart?: boolean;
+	}
 ) {
 	const shepherd = useShepherd();
 	const [, setScrollLocked] = useScrollLock();
@@ -36,7 +41,7 @@ export function useTour(
 						action: shepherd.back
 					},
 					{
-						classes: "primary",
+						classes: "primary shadow-brand-1",
 						text: "Continue",
 						action: shepherd.next
 					}
@@ -48,16 +53,14 @@ export function useTour(
 
 	const start = useCallback(
 		(onlyIfUncompleted: boolean = true) => {
-			const started = shepherd.steps.some((step) =>
-				steps.find(({ id }) => id === step.id)
-			);
+			shepherd.addSteps(steps);
+			const started = false;
 			if (started || completed === null || (onlyIfUncompleted && completed))
 				return;
 
 			setScrollLocked(true);
 
-			shepherd.addSteps(steps);
-			queueMicrotask(() => shepherd.start());
+			shepherd.start();
 		},
 		[completed, steps, shepherd, setScrollLocked]
 	);
@@ -66,6 +69,7 @@ export function useTour(
 		(completed: boolean = true) => {
 			if (completed) setCompleted(true);
 			shepherd.cancel();
+			shepherd.hide();
 		},
 		[shepherd, setCompleted]
 	);
@@ -78,6 +82,7 @@ export function useTour(
 
 		shepherd.on("complete", onComplete);
 		shepherd.on("cancel", onComplete);
+		if (defaultStart) start();
 
 		return () => {
 			shepherd.off("complete", onComplete);
@@ -86,7 +91,7 @@ export function useTour(
 			for (const { id } of steps) shepherd.removeStep(id);
 			shepherd.cancel();
 		};
-	}, [shepherd, steps, setCompleted, setScrollLocked]);
+	}, [shepherd, steps, setCompleted, setScrollLocked, defaultStart, start]);
 
 	return useMemo(
 		() => ({

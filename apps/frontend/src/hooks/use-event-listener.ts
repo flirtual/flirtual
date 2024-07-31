@@ -1,4 +1,4 @@
-import { RefObject, useDebugValue, useEffect } from "react";
+import { type RefObject, useDebugValue, useEffect } from "react";
 
 export function useEventListener<
 	T extends HTMLElement,

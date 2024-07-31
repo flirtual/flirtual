@@ -1,7 +1,7 @@
 "use client";
 
 import React, {
-	CSSProperties,
+	type CSSProperties,
 	createContext,
 	useContext,
 	useEffect,
@@ -63,11 +63,11 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 
 		void (async () => {
 			await session.clearPushRegistrations();
-			authSession?.user.preferences?.pushNotifications.messages &&
-				(await session.setPushRegistration({
+			if (authSession?.user.preferences?.pushNotifications.messages)
+				await session.setPushRegistration({
 					provider: platform === "apple" ? "apns" : "fcm",
 					pushRegistrationId
-				}));
+				});
 		})();
 	}, [
 		session,
@@ -124,13 +124,17 @@ export const ConversationChatbox: React.FC<
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
 	const { sessionTheme } = useTheme();
-	const { native } = useDevice();
+	const { platform, native, vision } = useDevice();
 
 	const chatbox = useMemo(() => {
 		if (!session) return null;
 
 		const dark = resolveTheme(sessionTheme) === "dark";
-		const theme = dark ? "next-noheader-dark" : "next-noheader";
+		const theme = vision
+			? "next-noheader-vision"
+			: dark
+				? "next-noheader-dark"
+				: "next-noheader";
 
 		return session.createChatbox({
 			theme,
@@ -145,14 +149,13 @@ export const ConversationChatbox: React.FC<
 
 	const height = useMemo(() => {
 		if (!element) return "0px";
-		const insetBottom = getComputedStyle(element).getPropertyValue(
-			"--safe-area-inset-bottom"
-		);
 		const unit = CSS.supports("height", "100dvh") ? "dvh" : "vh";
-		return insetBottom === "0px"
-			? `calc(100${unit} - 11.75rem)`
-			: `calc(100${unit} - 14.75rem - var(--safe-area-inset-bottom))`;
-	}, [element]);
+		return vision
+			? `calc(100${unit} - 8.125rem)`
+			: platform === "android"
+				? `calc(100${unit} - max(calc(var(--safe-area-inset-top) + 0.5rem), 1rem) - 11.625rem)`
+				: `calc(100${unit} - max(calc(env(safe-area-inset-top) + 0.5rem), 1rem) - max(calc(env(safe-area-inset-bottom) - 0.625rem), 0.5rem) - 11.125rem)`;
+	}, [element, platform]);
 
 	useEffect(() => {
 		if (!chatbox || !conversation) return;
@@ -169,10 +172,9 @@ export const ConversationChatbox: React.FC<
 	return (
 		<div
 			data-sentry-block
-			className="w-full overflow-hidden md:max-h-[32rem] md:rounded-b-xl md:pt-0"
+			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
 			style={
 				{
-					"--safe-area-inset-bottom": "env(safe-area-inset-bottom)",
 					height
 				} as CSSProperties
 			}

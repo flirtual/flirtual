@@ -26,17 +26,18 @@ export default function Error({
 	});
 
 	return (
-		<div className="flex min-h-screen w-full justify-center bg-brand-gradient px-8 py-16 text-white-10 sm:items-center">
-			<div className="flex flex-col justify-between gap-8 sm:justify-start">
+		<div className="flex min-h-screen w-full justify-center bg-brand-gradient px-8 py-16 text-white-10 desktop:items-center">
+			<div className="flex flex-col justify-between gap-8 desktop:justify-start">
 				<div className="flex flex-col gap-8">
 					<FlirtualLogo className="w-64" />
-					<h1 className="font-montserrat text-2xl font-semibold sm:text-3xl">
+					<h1 className="font-montserrat text-2xl font-semibold desktop:text-3xl">
 						Something went wrong!
 					</h1>
 					<div className="flex flex-col gap-4 font-nunito">
 						<p>
 							Sorry about that! There was an error processing your request.
-							<br className="hidden sm:block" /> If this issue persists, please{" "}
+							<br className="hidden desktop:block" /> If this issue persists,
+							please{" "}
 							<InlineLink
 								className="text-white-10 underline"
 								href={urls.resources.contact}
@@ -44,8 +45,8 @@ export default function Error({
 								contact us
 							</InlineLink>{" "}
 							or check back later.
-							<br className="hidden sm:block" /> Thank you for your patience
-							&lt;3
+							<br className="hidden desktop:block" /> Thank you for your
+							patience &lt;3
 						</p>
 					</div>
 				</div>

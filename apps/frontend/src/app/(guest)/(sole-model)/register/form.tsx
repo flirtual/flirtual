@@ -23,16 +23,15 @@ export const RegisterForm: React.FC = () => {
 			className="flex flex-col gap-8"
 			formErrorMessages={false}
 			fields={{
-				username: "",
 				email: "",
 				password: "",
+				url: "",
 				serviceAgreement: false,
 				notifications: true
 			}}
-			onSubmit={async ({ username, ...values }, { captcha }) => {
+			onSubmit={async ({ ...values }, { captcha }) => {
 				await api.user.create({
 					body: {
-						username: username.trim(),
 						...values,
 						captcha
 					}
@@ -44,14 +43,6 @@ export const RegisterForm: React.FC = () => {
 		>
 			{({ errors, FormField }) => (
 				<>
-					<FormField name="username">
-						{({ props, labelProps }) => (
-							<>
-								<InputLabel {...labelProps}>Username</InputLabel>
-								<InputText {...props} autoComplete="username" />
-							</>
-						)}
-					</FormField>
 					<FormField name="email">
 						{({ props, labelProps }) => (
 							<>
@@ -69,6 +60,18 @@ export const RegisterForm: React.FC = () => {
 									autoComplete="new-password"
 									type="password"
 								/>
+							</>
+						)}
+					</FormField>
+					<FormField
+						aria-hidden="true"
+						className="absolute left-[-9999px]"
+						name="url"
+					>
+						{({ props, labelProps }) => (
+							<>
+								<InputLabel {...labelProps}>URL</InputLabel>
+								<InputText {...props} autoComplete="nope" tabIndex={-1} />
 							</>
 						)}
 					</FormField>

@@ -1,39 +1,19 @@
 import { Dialog } from "@capacitor/dialog";
-import { FC, PropsWithChildren } from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { Clipboard } from "@capacitor/clipboard";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
-import { User } from "~/api/user";
 import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
-import { useUserVisibility } from "~/hooks/use-user-visiblity";
 
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
+import { CopyClick } from "../copy-click";
 
-const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({
-	value,
-	children
-}) => {
-	const toasts = useToast();
-
-	return (
-		<Slot
-			className="cursor-pointer"
-			onClick={async () => {
-				await Clipboard.write({ string: value });
-				toasts.add("Copied to clipboard");
-			}}
-		>
-			{children}
-		</Slot>
-	);
-};
+import type { User } from "~/api/user";
+import type { FC } from "react";
 
 export const ProfileModeratorInfo: FC<{
 	user: User;
@@ -43,14 +23,12 @@ export const ProfileModeratorInfo: FC<{
 	const router = useRouter();
 	const genders = useAttributeList("gender");
 
-	const { visible, reasons } = useUserVisibility(user.id);
-
 	if (!session || !session.user?.tags?.includes("moderator")) return null;
 
 	return (
 		<div
 			data-sentry-mask
-			className="-mx-4 flex flex-col gap-4 rounded-xl bg-white-30 px-4 py-3 font-mono dark:bg-black-90/80 dark:text-white-20"
+			className="-mx-4 flex flex-col gap-4 rounded-xl bg-white-30 px-4 py-3 font-mono shadow-brand-inset vision:bg-white-30/70 dark:bg-black-90/80 dark:text-white-20"
 		>
 			<div className="flex flex-col">
 				<span>
@@ -112,10 +90,10 @@ export const ProfileModeratorInfo: FC<{
 					</CopyClick>
 				</span>
 				<span>
-					<span className="font-bold">Username:</span>{" "}
-					<CopyClick value={user.username}>
+					<span className="font-bold">Profile link:</span>{" "}
+					<CopyClick value={user.slug}>
 						<span className="brightness-75 hover:brightness-100">
-							{user.username}
+							{user.slug}
 						</span>
 					</CopyClick>
 				</span>
@@ -198,17 +176,7 @@ export const ProfileModeratorInfo: FC<{
 					)}
 				</span>
 				<span>
-					<span className="font-bold">Visible:</span>{" "}
-					{visible ? (
-						<span className="brightness-75 hover:brightness-100">Yes</span>
-					) : (
-						<span className="text-red-500 brightness-75 hover:brightness-100">
-							No
-							{reasons.length > 0
-								? `, ${reasons.map(({ reason }) => reason).join(", ")}.`
-								: ""}
-						</span>
-					)}
+					<span className="font-bold">Status:</span> {user.status}
 				</span>
 				<span>
 					<span className="font-bold">Premium:</span>{" "}

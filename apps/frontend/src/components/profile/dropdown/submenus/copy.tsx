@@ -7,10 +7,9 @@ import {
 	Link2,
 	Share2
 } from "lucide-react";
-import { FC, PropsWithChildren } from "react";
 
-import { ConnectionType, ConnectionMetadata } from "~/api/connections";
-import { User, displayName } from "~/api/user";
+import { type ConnectionType, ConnectionMetadata } from "~/api/connections";
+import { type User, displayName } from "~/api/user";
 import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
@@ -21,6 +20,8 @@ import {
 } from "~/components/dropdown";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urls } from "~/urls";
+
+import type { FC, PropsWithChildren } from "react";
 
 export const ProfileDropdownCopySubmenu: FC<
 	PropsWithChildren<{ user: User }>
@@ -40,25 +41,24 @@ export const ProfileDropdownCopySubmenu: FC<
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
 					className="gap-2"
-					disabled={user.username === displayName(user)}
 					onClick={() => Clipboard.write({ string: displayName(user) })}
 				>
-					<CaseSensitive className="h-5 w-5" />
+					<CaseSensitive className="size-5" />
 					Display Name
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					className="gap-2"
-					onClick={() => Clipboard.write({ string: user.id })}
+					onClick={() => Clipboard.write({ string: user.slug })}
 				>
-					<CaseLower className="h-5 w-5" />
-					Username
+					<CaseLower className="size-5" />
+					Profile link
 				</DropdownMenuItem>
 				{session?.user.tags?.includes("admin") && (
 					<DropdownMenuItem
 						className="gap-2"
 						onClick={() => Clipboard.write({ string: user.email })}
 					>
-						<AtSign className="h-5 w-5" />
+						<AtSign className="size-5" />
 						Email address
 					</DropdownMenuItem>
 				)}
@@ -67,14 +67,14 @@ export const ProfileDropdownCopySubmenu: FC<
 					className="gap-2"
 					onClick={() => Clipboard.write({ string: user.id })}
 				>
-					<Fingerprint className="h-5 w-5" />
+					<Fingerprint className="size-5" />
 					User ID
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					className="gap-2"
 					onClick={() => Clipboard.write({ string: user.talkjsId })}
 				>
-					<Fingerprint className="h-5 w-5" />
+					<Fingerprint className="size-5" />
 					Legacy User ID
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
@@ -83,7 +83,7 @@ export const ProfileDropdownCopySubmenu: FC<
 						className="gap-2"
 						disabled={connections.every(({ value }) => !value)}
 					>
-						<Share2 className="h-5 w-5" />
+						<Share2 className="size-5" />
 						Connection
 					</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent>
@@ -108,7 +108,7 @@ export const ProfileDropdownCopySubmenu: FC<
 						})
 					}
 				>
-					<Link2 className="h-5 w-5" />
+					<Link2 className="size-5" />
 					URL
 				</DropdownMenuItem>
 			</DropdownMenuSubContent>

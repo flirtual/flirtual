@@ -14,7 +14,8 @@ defmodule Flirtual.User.Profile.CustomWeights do
              :default_interests,
              :custom_interests,
              :personality,
-             :serious,
+             :relationships,
+             :languages,
              :domsub,
              :kinks,
              :likes
@@ -29,7 +30,8 @@ defmodule Flirtual.User.Profile.CustomWeights do
     field(:default_interests, :float, default: 1.0)
     field(:custom_interests, :float, default: 1.0)
     field(:personality, :float, default: 1.0)
-    field(:serious, :float, default: 1.0)
+    field(:relationships, :float, default: 1.0)
+    field(:languages, :float, default: 1.0)
     field(:domsub, :float, default: 1.0)
     field(:kinks, :float, default: 1.0)
     field(:likes, :float, default: 1.0)
@@ -43,7 +45,8 @@ defmodule Flirtual.User.Profile.CustomWeights do
       :default_interests,
       :custom_interests,
       :personality,
-      :serious,
+      :relationships,
+      :languages,
       :domsub,
       :kinks,
       :likes
@@ -54,9 +57,10 @@ defmodule Flirtual.User.Profile.CustomWeights do
     |> validate(:default_interests)
     |> validate(:custom_interests)
     |> validate(:personality)
-    |> validate(:serious)
+    |> validate(:relationships)
     |> validate(:domsub)
     |> validate(:kinks)
+    |> validate(:languages)
     |> validate(:likes)
   end
 

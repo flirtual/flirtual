@@ -17,24 +17,24 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	<div
 		{...props}
 		className={twMerge(
-			"w-full shrink-0 sm:w-full sm:max-w-lg",
+			"w-full shrink-0 rounded-2xl desktop:w-full desktop:max-w-lg desktop:shadow-brand-1",
 			props.className
 		)}
 	>
 		<div
 			{...titleProps}
 			className={twMerge(
-				"w-full select-none bg-brand-gradient py-7 pt-[max(calc(env(safe-area-inset-top)+0.5rem),1.75rem)] text-center font-montserrat text-3xl font-extrabold text-white-10 shadow-brand-1 sm:w-fit sm:max-w-[calc(100%-1.5rem)] sm:rounded-t-[4rem] sm:px-16 sm:pb-4 sm:text-left md:text-4xl",
+				"w-full select-none bg-brand-gradient py-7 pt-[max(calc(env(safe-area-inset-top)+1rem),1.75rem)] text-center font-montserrat text-3xl font-extrabold text-white-20 android:pt-[max(calc(var(--safe-area-inset-top)+1rem),1.75rem)] desktop:w-full desktop:rounded-t-2xl desktop:px-8 desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
 				titleProps.className
 			)}
 		>
 			{title}
 		</div>
-		<div className="h-full bg-brand-gradient vision:bg-none sm:rounded-3xl sm:rounded-tl-none sm:p-1 sm:shadow-brand-1">
+		<div className="h-full vision:bg-none desktop:rounded-2xl desktop:rounded-t-none desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
 			<div
 				{...containerProps}
 				className={twMerge(
-					"flex h-full w-full flex-col bg-white-20 px-8 py-10 pb-[calc(env(safe-area-inset-bottom)+2.5rem)] vision:bg-transparent vision:text-white-20 dark:bg-black-70 dark:text-white-20 sm:rounded-[1.25rem] sm:rounded-tl-none sm:px-16",
+					"flex size-full flex-col px-8 py-10 pb-[max(env(safe-area-inset-bottom),2.5rem)] vision:bg-transparent vision:text-white-20 dark:bg-transparent dark:text-white-20 desktop:rounded-xl desktop:bg-white-20 desktop:px-16 desktop:shadow-brand-inset dark:desktop:bg-black-70",
 					containerProps.className
 				)}
 			>

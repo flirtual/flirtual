@@ -135,7 +135,10 @@ defmodule Flirtual.Matchmaking do
            prospects = Enum.map(resp["hits"]["hits"], &{&1["_id"], &1["_score"]}),
            prospects =
              User
-             |> where([user], user.id in ^Enum.map(prospects, &elem(&1, 0)) and user.visible)
+             |> where(
+               [user],
+               user.id in ^Enum.map(prospects, &elem(&1, 0)) and user.status == "visible"
+             )
              |> select([user], user.id)
              |> Repo.all()
              |> Enum.map(fn user_id ->
@@ -215,7 +218,7 @@ defmodule Flirtual.Matchmaking do
       user.preferences.push_notifications.matches and
         (not is_nil(user.apns_token) or not is_nil(user.fcm_token))
 
-    if User.visible?(target_user) and (send_email or send_push) do
+    if target_user.status == "visible" and (send_email or send_push) do
       email_result =
         if send_email do
           %{
@@ -609,8 +612,9 @@ defmodule Flirtual.Matchmaking do
         :games,
         :country,
         :monopoly,
-        :serious,
+        :relationships,
         :domsub,
+        :languages,
         :kinks,
         :personality,
         :active_at
@@ -763,20 +767,20 @@ defmodule Flirtual.Matchmaking do
     )
   end
 
-  def query(:serious, %User{} = user) do
-    %{profile: %{serious: serious, custom_weights: custom_weights}} = user
+  def query(:relationships, %User{} = user) do
+    %{profile: %{relationships: relationships, custom_weights: custom_weights}} = user
 
-    # Are $a and $b both looking for a serious relationship?
-    if(serious,
-      do: %{
+    # Are $a and $b both looking for the same types of relationships?
+    Enum.map(
+      relationships,
+      &%{
         "term" => %{
-          "serious" => %{
-            "value" => serious,
-            "boost" => 3 * (Map.get(custom_weights, :serious) || 1)
+          "relationships" => %{
+            "value" => &1,
+            "boost" => 2 * (Map.get(custom_weights, :relationships) || 1)
           }
         }
-      },
-      else: []
+      }
     )
   end
 
@@ -791,6 +795,22 @@ defmodule Flirtual.Matchmaking do
         }
       },
       else: []
+    )
+  end
+
+  def query(:languages, %User{} = user) do
+    %{profile: %{languages: languages, custom_weights: custom_weights}} = user
+
+    Enum.map(
+      languages,
+      &%{
+        "term" => %{
+          "languages" => %{
+            "value" => &1,
+            "boost" => 1 * (Map.get(custom_weights, :languages) || 1)
+          }
+        }
+      }
     )
   end
 

@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Payment Terms"
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function PaymentsPage() {
 	return (
 		<SoleModelLayout>
-			<ModelCard className="w-full sm:max-w-2xl" title="Payment Terms">
+			<ModelCard className="w-full desktop:max-w-2xl" title="Payment Terms">
 				<div className="flex flex-col gap-4">
 					<p>
 						California subscribers: you may cancel your subscription and request

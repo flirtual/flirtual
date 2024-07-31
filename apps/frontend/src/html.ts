@@ -1,10 +1,11 @@
-import { PropertiesHyphen, Property } from "csstype";
-import sanitizeHtml, { Attributes } from "sanitize-html";
+import sanitizeHtml, { type Attributes } from "sanitize-html";
 
 import { rgb } from "./colors";
 import { isInternalHref, toAbsoluteUrl } from "./urls";
 import { entries } from "./utilities";
 import { siteOrigin } from "./const";
+
+import type { PropertiesHyphen, Property } from "csstype";
 
 export function toStyleProperties(
 	style: PropertiesHyphen,

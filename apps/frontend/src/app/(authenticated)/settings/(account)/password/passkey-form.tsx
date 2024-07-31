@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-code-point */
 "use client";
 
 import { Plus } from "lucide-react";

@@ -1,25 +1,25 @@
-import { Share, ShareOptions } from "@capacitor/share";
-import { useCallback } from "react";
-import { Clipboard } from "@capacitor/clipboard";
+import { Share, type ShareOptions } from "@capacitor/share";
+import { useCallback, useEffect, useState } from "react";
 
 import { noop } from "~/utilities";
 
-import { useToast } from "./use-toast";
-
 export function useShare() {
-	const { add: addToast } = useToast();
+	const [canShare, setCanShare] = useState(false);
 
-	return useCallback(
+	useEffect(() => {
+		const checkCanShare = async () => {
+			const result = await Share.canShare();
+			setCanShare(result.value);
+		};
+		void checkCanShare();
+	}, []);
+
+	const share = useCallback(
 		async (options: ShareOptions) => {
-			await Clipboard.write(
-				options.url ? { url: options.url } : { string: options.text }
-			);
-
-			if (!(await Share.canShare()).value)
-				return addToast("Copied to clipboard");
-
-			await Share.share(options).catch(noop);
+			if (canShare) await Share.share(options).catch(noop);
 		},
-		[addToast]
+		[canShare]
 	);
+
+	return { share, canShare };
 }

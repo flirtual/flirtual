@@ -35,25 +35,41 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Content>,
-	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, reference) => (
-	<DialogPortal>
-		<DialogOverlay />
-		<ThemedBorder asChild>
+	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+		closable?: boolean;
+		border?: boolean;
+	}
+>(
+	(
+		{ className, children, closable = true, border = true, ...props },
+		reference
+	) => {
+		let content = (
 			<DialogPrimitive.Content
 				className={twMerge(dialogContentClassName, className)}
 				ref={reference}
+				aria-describedby={undefined}
 				{...props}
 			>
-				<div className={dialogContentInnerClassName}>{children}</div>
-				<DialogPrimitive.Close className="absolute right-5 top-5 rounded-sm text-white-10 opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none dark:text-white-20">
-					<X className="h-5 w-5" />
-					<span className="sr-only">Close</span>
-				</DialogPrimitive.Close>
+				{children}
+				{closable && (
+					<DialogPrimitive.Close className="absolute right-5 top-4 rounded-sm text-white-10 opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none dark:text-white-20">
+						<X className="size-5" />
+						<span className="sr-only">Close</span>
+					</DialogPrimitive.Close>
+				)}
 			</DialogPrimitive.Content>
-		</ThemedBorder>
-	</DialogPortal>
-));
+		);
+		if (border) {
+			content = <ThemedBorder asChild>{content}</ThemedBorder>;
+		}
+		return (
+			<DialogPortal>
+				<DialogOverlay>{content}</DialogOverlay>
+			</DialogPortal>
+		);
+	}
+);
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({
@@ -62,7 +78,7 @@ const DialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
 		className={twMerge(
-			"-mx-6 -my-4 mb-0 flex -translate-y-1 flex-col gap-2 rounded-t-3xl bg-brand-gradient px-6 py-4 text-center text-white-20 sm:text-left",
+			"flex h-12 flex-col gap-2 rounded-t-3xl bg-brand-gradient px-6 py-2 text-center text-white-20 group-data-[drawer]:bg-none group-data-[drawer]:p-2 group-data-[drawer]:text-left group-data-[drawer]:text-inherit desktop:text-left",
 			className
 		)}
 		{...props}
@@ -75,7 +91,7 @@ const DialogFooter = ({
 	...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
-		className={twMerge("flex sm:justify-end sm:gap-2", className)}
+		className={twMerge("flex desktop:justify-end desktop:gap-2", className)}
 		{...props}
 	/>
 );
@@ -105,6 +121,21 @@ const DialogDescription = React.forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
+const DialogBody = ({
+	className,
+	...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+	<div
+		className={twMerge(
+			dialogContentInnerClassName,
+			"group-data-[drawer]:overflow-visible group-data-[drawer]:rounded-none group-data-[drawer]:p-0 group-data-[drawer]:shadow-none",
+			className
+		)}
+		{...props}
+	/>
+);
+DialogBody.displayName = "DialogBody";
+
 export {
 	Dialog,
 	DialogTrigger,
@@ -112,5 +143,6 @@ export {
 	DialogHeader,
 	DialogFooter,
 	DialogTitle,
-	DialogDescription
+	DialogDescription,
+	DialogBody
 };

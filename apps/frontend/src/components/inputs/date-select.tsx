@@ -1,11 +1,19 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { DatetimePicker } from "@capawesome-team/capacitor-datetime-picker";
 
-import { DrawerOrPopover } from "../drawer-or-popover";
+import { useDevice } from "~/hooks/use-device";
+import { useTheme } from "~/hooks/use-theme";
+import { resolveTheme } from "~/theme";
+import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 
-import { InputCalendar, InputCalendarProps } from "./calendar";
+import { Popover } from "../popover";
+
+import { InputCalendar, type InputCalendarProps } from "./calendar";
 import { InputText } from "./text";
+
+import type { MinmaxDate } from "./calendar";
 
 function toDateString(value: Date): string {
 	const day = String(value.getDate()).padStart(2, "0"),
@@ -31,6 +39,8 @@ export type InputDateSelectProps = Pick<
 >;
 
 export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
+	const { native } = useDevice();
+
 	const [inputValue, setInputValue] = useState(toDateString(props.value));
 	const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -48,14 +58,13 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 		[props.value, props.onChange]
 	);
 
+	if (native) return <InputDateSelectNative {...props} />;
+
 	return (
-		<DrawerOrPopover
-			visible={drawerVisible}
-			onVisibilityChange={setDrawerVisible}
-		>
-			<div className="flex h-full w-full justify-center">
+		<Popover open={drawerVisible} onOpenChange={setDrawerVisible}>
+			<div className="flex size-full justify-center">
 				<InputCalendar
-					className="w-fit sm:shadow-brand-1"
+					className="w-fit desktop:shadow-brand-1"
 					{...props}
 					value={props.value}
 					onChange={(value) => {
@@ -134,6 +143,59 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 					}
 				}}
 			/>
-		</DrawerOrPopover>
+		</Popover>
 	);
 };
+
+interface InputDateSelectNativeProps {
+	value: Date;
+	onChange: (value: Date) => void;
+	min?: MinmaxDate;
+	max?: MinmaxDate;
+}
+
+const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
+	value,
+	onChange,
+	min,
+	max
+}) => {
+	const [selectedDate, setSelectedDate] = useState(value);
+	const { sessionTheme } = useTheme();
+
+	const openDatePicker = async () => {
+		try {
+			const date = await DatetimePicker.present({
+				mode: "date",
+				locale: "en-US",
+				value: selectedDate.toISOString(),
+				theme: resolveTheme(sessionTheme),
+				min:
+					min && (min === "now" ? new Date().toISOString() : min.toISOString()),
+				max:
+					max && (max === "now" ? new Date().toISOString() : max.toISOString())
+			});
+
+			if (date.value) {
+				const newDate = new Date(date.value);
+				setSelectedDate(newDate);
+				onChange(newDate);
+			}
+		} catch (reason) {
+			console.error("Failed to open date picker", reason);
+		}
+	};
+
+	return (
+		<InputText
+			readOnly
+			className="w-full"
+			type="date"
+			value={selectedDate.toLocaleDateString(undefined, { weekday: undefined })}
+			onClick={openDatePicker}
+			onFocus={openDatePicker}
+		/>
+	);
+};
+
+export default InputDateSelectNative;

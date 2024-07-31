@@ -1,12 +1,12 @@
 "use client";
 
-import { FC, useMemo } from "react";
+import { type FC, useMemo } from "react";
 import { SelectItemText } from "@radix-ui/react-select";
 import { useInView } from "react-intersection-observer";
 
 import { useAttributeList } from "~/hooks/use-attribute-list";
 
-import { InputSelect, InputSelectProps, SelectItem } from "../select";
+import { InputSelect, type InputSelectProps, SelectItem } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = (props) => {
 	const country = useAttributeList("country").find(
@@ -23,10 +23,7 @@ const CountrySelectItem: FC<{ value: string }> = (props) => {
 			value={country.id}
 		>
 			<div className="aspect-[4/3] h-fit w-7 shrink-0 overflow-hidden rounded-md bg-black-70">
-				{viewed && (
-					// eslint-disable-next-line @next/next/no-img-element
-					<img className="h-full w-full" src={country.metadata.flagUrl} />
-				)}
+				{viewed && <img className="size-full" src={country.metadata.flagUrl} />}
 			</div>
 			<SelectItemText>{country.name}</SelectItemText>
 		</SelectItem>

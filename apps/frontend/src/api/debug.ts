@@ -1,4 +1,4 @@
-import { fetch, NarrowFetchOptions } from "./exports";
+import { fetch, type NarrowFetchOptions } from "./exports";
 
 export async function evaluate(
 	options: NarrowFetchOptions<{ input: string; limit?: number }>

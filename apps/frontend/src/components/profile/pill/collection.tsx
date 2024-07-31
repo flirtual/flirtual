@@ -1,8 +1,5 @@
 "use client";
 
-import { FC } from "react";
-
-import { User } from "~/api/user";
 import { urls } from "~/urls";
 import { capitalize, groupBy } from "~/utilities";
 import { useSession } from "~/hooks/use-session";
@@ -11,6 +8,9 @@ import { useAttributeList } from "~/hooks/use-attribute-list";
 import { PillAttributeList } from "./attribute-list";
 import { PillCollectionExpansion } from "./expansion";
 import { Pill } from "./pill";
+
+import type { User } from "~/api/user";
+import type { FC } from "react";
 
 function getPersonalityLabels({
 	profile: { openness, conscientiousness, agreeableness }
@@ -43,7 +43,8 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 		...useAttributeList("interest"),
 		...useAttributeList("platform"),
 		...useAttributeList("kink"),
-		...useAttributeList("language")
+		...useAttributeList("language"),
+		...useAttributeList("relationship")
 	];
 
 	const profileAttributeIds = new Set(
@@ -64,23 +65,21 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const attributes = groupBy(
 		allAttributes.filter(
 			({ id }) =>
-				profileAttributeIds.has(id) || user.profile.languages.includes(id)
+				profileAttributeIds.has(id) ||
+				user.profile.languages.includes(id) ||
+				user.profile.relationships.includes(id)
 		),
 		({ type }) => type
 	);
 
 	return (
 		<div className="flex flex-wrap gap-4">
-			<div className="flex w-full">
-				{user.profile.serious && (
-					<Pill
-						active={session.user.id !== user.id && session.user.profile.serious}
-						href={editable ? urls.settings.matchmaking() : undefined}
-					>
-						Open to serious dating
-					</Pill>
-				)}
-			</div>
+			<PillAttributeList
+				activeIds={session.user.profile.relationships}
+				attributes={attributes.relationship}
+				href={editable ? urls.settings.matchmaking() : undefined}
+				user={user}
+			/>
 			<PillAttributeList
 				attributes={attributes.sexuality}
 				href={editable ? urls.settings.info("sexuality") : undefined}

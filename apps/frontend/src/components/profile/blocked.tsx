@@ -1,4 +1,4 @@
-import { User, displayName } from "~/api/user";
+import { type User, displayName } from "~/api/user";
 
 import { ModelCard } from "../model-card";
 

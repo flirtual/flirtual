@@ -29,9 +29,17 @@ defmodule Flirtual.User do
 
   @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp]
 
+  @derive {Inspect,
+           only: [
+             :id,
+             :slug,
+             :email
+           ]}
+
   schema "users" do
     field(:email, :string)
     field(:username, :string)
+    field(:slug, :string)
     field(:password_hash, :string, redact: true)
     field(:talkjs_id, :string, virtual: true)
     field(:talkjs_signature, :string, redact: true)
@@ -45,7 +53,7 @@ defmodule Flirtual.User do
     field(:chargebee_id, :string)
     field(:revenuecat_id, Ecto.ShortUUID)
     field(:language, :string, default: "en")
-    field(:visible, :boolean)
+    field(:status, :string, default: "registered")
     field(:moderator_message, :string)
     field(:moderator_note, :string)
 
@@ -96,11 +104,11 @@ defmodule Flirtual.User do
 
   def url(%User{} = user) do
     Application.fetch_env!(:flirtual, :frontend_origin)
-    |> URI.merge("/#{user.username}")
+    |> URI.merge("/#{user.slug}")
   end
 
   def display_name(%User{} = user) do
-    user.profile[:display_name] || user.username
+    user.profile[:display_name] || user.slug
   end
 
   def display_name(%User{id: user_id}, deleted: true) do
@@ -151,83 +159,51 @@ defmodule Flirtual.User do
     end
   end
 
-  def visible?(%User{} = user) do
-    case visible(user) do
-      {:ok, _} -> true
-      {:error, _} -> false
+  def update_status(%User{} = user) do
+    new_status = get_status(Repo.preload(user, User.default_assoc()))
+
+    user
+    |> change(%{status: new_status})
+    |> Repo.update()
+  end
+
+  def get_status(%User{} = user) do
+    cond do
+      visible?(user) -> "visible"
+      finished_profile?(user) -> "finished_profile"
+      onboarded?(user) -> "onboarded"
+      true -> "registered"
     end
   end
 
-  def visible(%User{} = user) do
+  def onboarded?(%User{} = user) do
     %{profile: profile} = user
 
-    [
-      {
-        not is_nil(user.banned_at),
-        %{reason: "account suspended"}
-      },
-      {
-        not is_nil(user.deactivated_at),
-        %{reason: "account deactivated", to: "/settings/deactivate"}
-      },
-      {
-        # This validation should not be exposed to the end user,
-        # We've temporarily disabled hiding it until we can find a better solution.
-        not is_nil(user.shadowbanned_at) or not is_nil(user.indef_shadowbanned_at),
-        %{reason: "account shadow banned"}
-      },
-      # onboarding validations
-      ## onboarding/1
-      {
-        Enum.empty?(filter_by(profile.preferences.attributes, :type, "gender")),
-        %{reason: "missing gender preferences", to: "/onboarding/1"}
-      },
-      ## onboarding/2
-      {
-        is_nil(user.born_at),
-        %{reason: "missing birthday", to: "/onboarding/2"}
-      },
-      {
-        Enum.empty?(filter_by(profile.attributes, :type, "gender")),
-        %{reason: "missing profile genders", to: "/onboarding/2"}
-      },
-      {
-        Enum.empty?(profile.languages),
-        %{reason: "missing profile languages", to: "/onboarding/2"}
-      },
-      {
-        Enum.empty?(filter_by(profile.attributes, :type, "platform")),
-        %{reason: "missing profile platforms", to: "/onboarding/2"}
-      },
-      {
-        Enum.empty?(filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests),
-        %{reason: "missing profile interests", to: "/onboarding/2"}
-      },
-      ## onboarding/3
-      {
-        is_nil(profile.biography) or String.length(profile.biography) < 48,
-        %{reason: "profile biography too short", to: "/onboarding/3"}
-      },
-      {
-        Enum.empty?(profile.images),
-        %{reason: "missing profile pictures", to: "/onboarding/3"}
-      },
-      # email verification
-      {
-        is_nil(user.email_confirmed_at),
-        %{reason: "email not verified", to: "/confirm-email"}
-      }
-    ]
-    |> Enum.map_reduce(true, fn {condition, value}, acc ->
-      if(condition and not Map.get(value, :silent, false),
-        do: {value, false},
-        else: {nil, if(acc, do: true, else: false)}
-      )
-    end)
-    |> then(fn {errors, visible} ->
-      errors = errors |> Enum.filter(&(not is_nil(&1)))
-      if(visible, do: {:ok, user}, else: {:error, errors})
-    end)
+    not is_nil(user.born_at) and
+      not Enum.empty?(filter_by(profile.attributes, :type, "gender")) and
+      not Enum.empty?(filter_by(profile.attributes, :type, "game")) and
+      not Enum.empty?(
+        filter_by(profile.attributes, :type, "interest") ++ profile.custom_interests
+      ) and
+      not Enum.empty?(filter_by(profile.preferences.attributes, :type, "gender"))
+  end
+
+  def finished_profile?(%User{} = user) do
+    %{profile: profile} = user
+
+    onboarded?(user) and
+      not is_nil(profile.display_name) and
+      not is_nil(profile.biography) and String.length(profile.biography) >= 48 and
+      not Enum.empty?(profile.images)
+  end
+
+  def visible?(%User{} = user) do
+    finished_profile?(user) and
+      not is_nil(user.email_confirmed_at) and
+      is_nil(user.banned_at) and
+      is_nil(user.shadowbanned_at) and
+      is_nil(user.indef_shadowbanned_at) and
+      is_nil(user.deactivated_at)
   end
 
   def preview(%User{} = user) do
@@ -235,7 +211,6 @@ defmodule Flirtual.User do
       id: user.id,
       name: display_name(user),
       age: get_years_since(user.born_at),
-      serious: user.profile.serious,
       dark: user.preferences.theme === :dark,
       avatar_url: avatar_url(user, "profile"),
       attributes:
@@ -297,7 +272,8 @@ defmodule Flirtual.User do
     user
     |> cast(attrs, [
       :language,
-      :born_at
+      :born_at,
+      :slug
     ])
     |> validate_required(Keyword.get(options, :required, []))
     |> validate_inclusion(:language, Languages.list(:bcp_47),
@@ -320,13 +296,14 @@ defmodule Flirtual.User do
          ) === :gt do
         %{born_at: "must be at least 18 years old"}
       else
-        if Date.compare(born_at, Date.new!(1900, 1, 1)) === :lt do
+        if Date.compare(born_at, Date.new!(1900, 1, 2)) === :lt do
           %{born_at: "please enter your real date of birth"}
         else
           %{}
         end
       end
     end)
+    |> validate_unique_slug()
   end
 
   def get(id) when is_uid(id) do
@@ -405,6 +382,7 @@ defmodule Flirtual.User do
   @default_search_fields [
     :id,
     {:profile, :display_name},
+    :slug,
     :username,
     {:connections, :uid},
     {:connections, :display_name},
@@ -472,6 +450,7 @@ defmodule Flirtual.User do
              |> change(%{banned_at: now})
              |> Repo.update(),
            {:ok, _} <- Report.list(target_id: user.id) |> Report.clear_all(moderator, true),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
            {_, _} <- Session.delete(user_id: user.id),
            User.Email.deliver(user, :suspended, message),
@@ -496,6 +475,7 @@ defmodule Flirtual.User do
              user
              |> change(%{banned_at: nil, shadowbanned_at: nil, indef_shadowbanned_at: nil})
              |> Repo.update(),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id),
            :ok <-
              Discord.deliver_webhook(:unsuspended,
@@ -518,6 +498,7 @@ defmodule Flirtual.User do
              user
              |> change(%{indef_shadowbanned_at: now})
              |> Repo.update(),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id),
            :ok <-
              Discord.deliver_webhook(:indef_shadowbanned,
@@ -538,6 +519,7 @@ defmodule Flirtual.User do
              user
              |> change(%{indef_shadowbanned_at: nil, shadowbanned_at: nil})
              |> Repo.update(),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <- ObanWorkers.update_user(user.id),
            :ok <-
              Discord.deliver_webhook(:unindef_shadowbanned,
@@ -598,6 +580,7 @@ defmodule Flirtual.User do
                shadowbanned_at: if(shadowban, do: now, else: user.shadowbanned_at)
              })
              |> Repo.update(),
+           {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(if(shadowban, do: user.id, else: []), [
                :elasticsearch,
@@ -757,21 +740,21 @@ defmodule Flirtual.User do
     end)
   end
 
-  def validate_username(changeset) do
+  def validate_slug(changeset) do
     changeset
-    |> validate_required([:username])
-    |> validate_format(:username, ~r/^[a-zA-Z0-9_]+$/,
+    |> validate_required([:slug])
+    |> validate_format(:slug, ~r/^[a-zA-Z0-9_]+$/,
       message: "must only contain letters, numbers, or underscores"
     )
-    |> validate_length(:username, min: 3, max: 32)
+    |> validate_length(:slug, min: 3, max: 20)
   end
 
-  def validate_unique_username(changeset) do
+  def validate_unique_slug(changeset) do
     changeset
-    |> validate_username()
-    |> unsafe_validate_unique(:username, Repo, query: from(User))
-    |> unique_constraint(:username)
-    |> Flag.validate_allowed_username(:username)
+    |> validate_slug()
+    |> unsafe_validate_unique(:slug, Repo, query: from(User))
+    |> unique_constraint(:slug)
+    |> Flag.validate_allowed_slug(:slug)
   end
 
   def validate_email(changeset) do
@@ -942,8 +925,9 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           attributes_lf: attributes_lf,
           country: profile.country,
           monopoly: profile.monopoly,
-          serious: profile.serious,
+          relationships: profile.relationships,
           nsfw: user.preferences.nsfw,
+          languages: profile.languages,
           liked:
             LikesAndPasses
             |> where(profile_id: ^profile.user_id, type: :like)
@@ -967,7 +951,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
     only: [
       :id,
       :email,
-      :username,
+      :slug,
       :language,
       :born_at,
       :moderator_message,
@@ -989,7 +973,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :deactivated_at,
       :active_at,
       :tags,
-      :visible,
+      :status,
       :relationship,
       :matched,
       :blocked,

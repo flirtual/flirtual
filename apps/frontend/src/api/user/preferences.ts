@@ -1,4 +1,4 @@
-import { fetch, NarrowFetchOptions } from "../exports";
+import { fetch, type NarrowFetchOptions } from "../exports";
 
 export const PrivacyPreferenceOptions = ["everyone", "matches", "me"] as const;
 export type PrivacyPreferenceOption = (typeof PrivacyPreferenceOptions)[number];

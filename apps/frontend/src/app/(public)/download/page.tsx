@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
@@ -11,6 +9,8 @@ import {
 	MicrosoftIcon
 } from "~/components/icons";
 
+import type { Metadata } from "next";
+
 export const metadata: Metadata = {
 	title: "Download"
 };
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
 export default function DownloadPage() {
 	return (
 		<SoleModelLayout>
-			<ModelCard className="w-full sm:max-w-2xl" title="Download app">
-				<div className="grid grid-cols-1 gap-4 gap-y-2 md:grid-cols-2">
+			<ModelCard className="w-full desktop:max-w-2xl" title="Download app">
+				<div className="grid grid-cols-1 gap-4 gap-y-2 desktop:grid-cols-2">
 					<MobileButton
 						href={urls.apps.apple}
 						Icon={AppleIcon}

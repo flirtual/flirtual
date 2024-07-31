@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
@@ -9,6 +7,8 @@ import { Image } from "~/components/image";
 
 import { DiscordEmbed } from "./discord-embed";
 
+import type { Metadata } from "next";
+
 export const metadata: Metadata = {
 	title: "Events"
 };
@@ -17,7 +17,7 @@ export default function EventsPage() {
 	return (
 		<SoleModelLayout>
 			<ModelCard
-				className="w-full sm:max-w-3xl"
+				className="w-full desktop:max-w-3xl"
 				containerProps={{ className: "gap-8" }}
 				title="Events"
 			>

@@ -1,5 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
-
 export const EditorSkeleton: React.FC = () => {
 	return (
 		<div className="quill">

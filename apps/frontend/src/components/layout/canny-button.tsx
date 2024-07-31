@@ -14,10 +14,10 @@ export const ProfileNavigationCannyButton: React.FC = () => {
 	return (
 		<button
 			data-canny-changelog
-			className="flex w-full gap-5 py-2 text-left font-montserrat text-lg font-semibold hover:text-theme-2"
+			className="flex w-full items-center gap-5 py-2 text-left font-montserrat text-lg font-semibold hover:text-theme-2"
 			type="button"
 		>
-			<Newspaper className="h-6 w-6" />
+			<Newspaper className="size-6" />
 			Updates
 		</button>
 	);

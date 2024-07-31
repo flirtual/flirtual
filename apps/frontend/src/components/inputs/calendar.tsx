@@ -10,13 +10,13 @@ import {
 	ChevronsRight
 } from "lucide-react";
 
-import { IconComponent } from "~/components/icons";
-
 import {
-	InputOptionEvent,
+	type InputOptionEvent,
 	InputOptionWindow,
-	InputSelectOption
+	type InputSelectOption
 } from "./option-window";
+
+import type { IconComponent } from "~/components/icons";
 
 const MonthNames = Object.freeze(
 	Array.from({ length: 12 })
@@ -56,7 +56,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 		{...props}
 		type="button"
 		className={twMerge(
-			"focusable flex h-7 w-7 items-center justify-center rounded-full bg-brand-gradient p-1 text-white-20 shadow-brand-1",
+			"focusable flex size-7 shrink-0 items-center justify-center rounded-full p-1 text-black-90 dark:text-white-20",
 			props.className
 		)}
 	>
@@ -92,7 +92,7 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				type="button"
 			>
 				<span className="w-12">{props.children}</span>
-				<ChevronDown className="h-4 w-4" strokeWidth={3} />
+				<ChevronDown className="size-4" strokeWidth={3} />
 			</button>
 			{visible && (
 				<InputOptionWindow
@@ -246,13 +246,13 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"focusable-within h-fit select-none rounded-3xl bg-white-20 p-4 font-nunito text-black-70 dark:bg-black-60 dark:text-white-20",
+				"focusable-within h-fit origin-top-left select-none rounded-3xl bg-white-20 p-4 font-nunito text-black-70 dark:bg-black-60 dark:text-white-20 [@media(width<800px)]:scale-75",
 				elementProps.className
 			)}
 		>
 			<div className="w-full">
 				<div className="mb-4 flex items-center justify-between">
-					<div className="flex gap-2">
+					<div className="flex shrink-0">
 						<CalendarButton
 							Icon={ChevronsLeft}
 							onClick={() => progressYear(-1)}
@@ -302,7 +302,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 							{displayDate.toLocaleDateString("en-CA", { year: "numeric" })}
 						</LabelSelect>
 					</div>
-					<div className="flex gap-2">
+					<div className="flex shrink-0">
 						<CalendarButton
 							Icon={ChevronRight}
 							onClick={() => progressMonth(1)}
@@ -320,7 +320,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 							<tr>
 								{["S", "M", "T", "W", "T", "F", "S"].map((name, index) => (
 									<th
-										className="h-10 w-10 select-none font-extrabold"
+										className="size-10 select-none font-extrabold"
 										key={index}
 									>
 										{name}
@@ -365,7 +365,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 															<button
 																type="button"
 																className={twMerge(
-																	"h-10 w-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
+																	"size-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
 																	disabled
 																		? ""
 																		: "focusable bg-white-25 dark:bg-black-50",

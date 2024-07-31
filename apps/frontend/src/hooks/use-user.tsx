@@ -1,7 +1,8 @@
 import useSWR from "swr";
 
 import { api } from "~/api";
-import { User } from "~/api/user";
+
+import type { User } from "~/api/user";
 
 export function useUser(userId: string): User | null {
 	const { data } = useSWR(

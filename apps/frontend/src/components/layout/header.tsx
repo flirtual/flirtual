@@ -1,28 +1,24 @@
+import { twMerge } from "tailwind-merge";
+
 import { withOptionalSession } from "~/server-utilities";
 
 import { NavigationInner } from "./navigation/inner";
+import { HeaderBanner } from "./header-banner";
 
-export async function Header() {
+export async function Header({ className }: { className?: string }) {
 	const session = await withOptionalSession();
 
 	return (
-		<div className="hidden w-full flex-col sm:flex sm:h-20">
-			<header className="fixed z-50 flex w-full flex-col text-white-20">
-				<div className="absolute top-0 h-full w-full flex-col bg-brand-gradient shadow-brand-1 md:ml-[-50vw] md:mt-[calc(-50vw+80px)] md:h-[50vw] md:w-[200vw] md:rounded-half" />
-				{/* <HeaderMessage className="hidden sm:flex">
-				Download the{" "}
-				<InlineLink
-					className="font-semibold before:absolute before:left-0 before:top-0 before:h-full before:w-full"
-					highlight={false}
-					href="/download"
-				>
-					{" "}
-					mobile app
-				</InlineLink>{" "}
-				for a better experience!
-			</HeaderMessage> */}
-				<div className="z-10 flex w-full flex-col items-center justify-center py-2">
-					<NavigationInner desktopView user={session?.user} />
+		<div
+			className={twMerge(
+				"sticky bottom-0 z-50 flex w-full flex-col desktop:bottom-auto desktop:top-0",
+				className
+			)}
+		>
+			<HeaderBanner />
+			<header className="relative flex w-screen flex-col text-white-20 vision:hidden">
+				<div className="z-10 flex w-full flex-col items-center justify-center bg-brand-gradient shadow-brand-1">
+					<NavigationInner user={session?.user} />
 				</div>
 			</header>
 		</div>

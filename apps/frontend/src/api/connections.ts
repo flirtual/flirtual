@@ -4,11 +4,12 @@ import {
 	MetaIcon,
 	GoogleIcon,
 	VRChatIcon,
-	IconComponent
+	type IconComponent
 } from "~/components/icons";
 
-import { UpdatedAtModel } from "./common";
-import { NarrowFetchOptions, fetch, newUrl } from "./exports";
+import { type NarrowFetchOptions, fetch, newUrl } from "./exports";
+
+import type { UpdatedAtModel } from "./common";
 
 export const ConnectionType = [
 	"google",

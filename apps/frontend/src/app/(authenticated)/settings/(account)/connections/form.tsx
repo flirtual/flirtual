@@ -11,8 +11,8 @@ import { useToast } from "~/hooks/use-toast";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { useDevice } from "~/hooks/use-device";
 import { ProfilePlaylist } from "~/components/profile/playlist";
-
-import { AddConnectionButton } from "./add-connection-button";
+import { NewBadge } from "~/components/badge";
+import { AddConnectionButton } from "~/components/forms/add-connection-button";
 
 export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
@@ -27,7 +27,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const { user } = session;
 
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Connections">
+		<ModelCard className="desktop:max-w-2xl" title="Connections">
 			{error && (
 				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
 					<span className="font-montserrat text-lg text-white-10">{error}</span>
@@ -77,17 +77,17 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 				{({ FormField }) => (
 					<>
 						<div className="flex flex-col gap-4">
-							<div>
+							<div className="flex flex-col gap-2">
 								<span className="flex select-none text-xl">
 									Add accounts to your profile
 								</span>
-								<span className="select-none text-black-50 vision:text-white-50 dark:text-white-50 vision:sm:text-black-50">
+								<span className="select-none text-black-50 vision:text-white-50 dark:text-white-50">
 									People can see your accounts after you match, to help you meet
 									up. You&apos;ll also be able to log in to Flirtual with your
 									Discord account.
 								</span>
 							</div>
-							<div className="grid gap-4 lg:grid-cols-2">
+							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
 								{/* <AddConnectionButton type="vrchat" />
 							{platform === "apple" ? (
@@ -102,7 +102,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 								</>
 							)}
 							<AddConnectionButton type="meta" /> */}
-								<FormField className="col-span-2 lg:col-span-1" name="vrchat">
+								<FormField className="col-span-2 wide:col-span-1" name="vrchat">
 									{(field) => (
 										<InputText
 											connection
@@ -113,9 +113,9 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 										/>
 									)}
 								</FormField>
-								{(vision || session.user.tags?.includes("debugger")) && (
+								{vision && session.user.tags?.includes("debugger") && (
 									<FormField
-										className="col-span-2 lg:col-span-1"
+										className="col-span-2 wide:col-span-1"
 										name="facetime"
 									>
 										{(field) => (
@@ -133,16 +133,19 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 							</div>
 						</div>
 						<div className="flex flex-col gap-4">
-							<div>
-								<span className="flex select-none text-xl">
-									Add a playlist to your profile
-								</span>
-								<span className="select-none text-black-50 vision:text-white-50 dark:text-white-50 vision:sm:text-black-50">
+							<div className="flex flex-col gap-2">
+								<div className="flex gap-2">
+									<span className="flex select-none text-xl">
+										Add a playlist to your profile
+									</span>
+									<NewBadge />
+								</div>
+								<span className="select-none text-black-50 vision:text-white-50 dark:text-white-50">
 									Share your favorite music on your profile by adding a Spotify,
 									Apple Music, Tidal, Amazon Music, or Deezer playlist.
 								</span>
 							</div>
-							<FormField className="col-span-2 lg:col-span-1" name="playlist">
+							<FormField className="col-span-2 wide:col-span-1" name="playlist">
 								{(field) => (
 									<InputText
 										iconColor="#095d6a"
@@ -162,13 +165,13 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 									Sorry, YouTube Music playlists are not supported.
 								</span>
 							) : playlistSubmitted === "other" ? (
-								<span className="select-none italic text-black-50 vision:text-white-50 dark:text-white-50 vision:sm:text-black-50">
+								<span className="select-none italic text-black-50 vision:text-white-50 dark:text-white-50">
 									If your playlist doesn&apos;t appear below, ensure you have
 									provided a valid <strong>public playlist</strong> link. Songs,
 									albums, and private playlists are not supported.
 								</span>
 							) : null}
-							<span className="select-none italic text-black-50 vision:text-white-50 dark:text-white-50 vision:sm:text-black-50">
+							<span className="select-none italic text-black-50 vision:text-white-50 dark:text-white-50">
 								Be careful: if your real name or other personal information is
 								on your music streaming profile, it will be public.
 							</span>

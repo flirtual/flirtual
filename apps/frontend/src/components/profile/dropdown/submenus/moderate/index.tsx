@@ -1,9 +1,8 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { FC, PropsWithChildren } from "react";
 
 import { api } from "~/api";
-import { User, displayName } from "~/api/user";
+import { type User, displayName } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	AlertDialog,
@@ -30,6 +29,8 @@ import { urls } from "~/urls";
 
 import { SuspendAction } from "./actions/suspend";
 import { WarnAction } from "./actions/warn";
+
+import type { FC, PropsWithChildren } from "react";
 
 export const ProfileDropdownModerateSubmenu: FC<
 	PropsWithChildren<{ user: User }>

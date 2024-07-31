@@ -1,10 +1,8 @@
 import { Search, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FC, PropsWithChildren } from "react";
 
 import { api } from "~/api";
-import { User } from "~/api/user";
 import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
@@ -15,6 +13,9 @@ import {
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
+
+import type { User } from "~/api/user";
+import type { FC, PropsWithChildren } from "react";
 
 export const ProfileDropdownReportsSubmenu: FC<
 	PropsWithChildren<{ user: User }>
@@ -35,7 +36,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 						className="gap-2"
 						href={urls.moderation.reports({ targetId: user.id })}
 					>
-						<Search className="h-5 w-5" />
+						<Search className="size-5" />
 						Created against user
 					</Link>
 				</DropdownMenuItem>
@@ -44,7 +45,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 						className="gap-2"
 						href={urls.moderation.reports({ userId: user.id })}
 					>
-						<Search className="h-5 w-5" />
+						<Search className="size-5" />
 						Created by user
 					</Link>
 				</DropdownMenuItem>
@@ -69,7 +70,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 								.catch(toasts.addError);
 						}}
 					>
-						<ShieldCheck className="h-5 w-5" />
+						<ShieldCheck className="size-5" />
 						Clear all
 					</button>
 				</DropdownMenuItem>

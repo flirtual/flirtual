@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-
 import { withSession } from "~/server-utilities";
 
 import { ActivationForm } from "./form";
+
+import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const session = await withSession();

@@ -79,6 +79,7 @@ defmodule Flirtual.Report do
                do: {:ok, nil},
                else: Block.create(user: reporter, target: reported)
              ),
+           {:ok, reported} <- User.update_status(reported),
            {:ok, _} <- ObanWorkers.update_user(reported.id, [:elasticsearch, :talkjs]),
            :ok <-
              Discord.deliver_webhook(:report, %Report{report | user: reporter, target: reported}) do
@@ -108,6 +109,7 @@ defmodule Flirtual.Report do
               |> change(%{shadowbanned_at: nil})
               |> Repo.update()
 
+            {:ok, _} = User.update_status(user)
             {:ok, _} = ObanWorkers.update_user(user.id, [:elasticsearch, :talkjs])
 
             {:ok, true}

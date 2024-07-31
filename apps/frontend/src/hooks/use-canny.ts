@@ -24,7 +24,7 @@ let loaded = false;
 export function useCanny() {
 	const user = useSessionUser();
 	const { sessionTheme } = useTheme();
-	const isMobile = !useScreenBreakpoint("sm");
+	const isMobile = !useScreenBreakpoint("desktop");
 
 	const loadCanny = useCallback(() => {
 		if (loaded) return;

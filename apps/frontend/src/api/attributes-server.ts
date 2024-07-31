@@ -5,12 +5,12 @@ import { cache } from "react";
 import { thruServerCookies } from "~/server-utilities";
 
 import {
-	AttributeType,
+	type AttributeType,
 	get,
 	list,
-	AttributeCollection,
-	Attribute,
-	AttributeMetadata
+	type AttributeCollection,
+	type Attribute,
+	type AttributeMetadata
 } from "./attributes";
 
 const _withAttributeList = cache((type: AttributeType) => {

@@ -194,7 +194,7 @@ defmodule Flirtual.Faker do
                    (Faker.Lorem.paragraphs(Enum.random(1..4))
                     |> Enum.join("<br/><br/>")) <>
                    "</p>",
-               serious: Enum.random([true, false, nil]),
+               relationships: random_n_of(0..4, ["serious", "vr", "hookups", "friends"]),
                new: Enum.random([true, false, nil]),
                country:
                  if(Enum.random(1..4) === 4,

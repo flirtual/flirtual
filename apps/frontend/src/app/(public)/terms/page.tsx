@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Terms of Service"
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
 	return (
 		<SoleModelLayout>
-			<ModelCard className="w-full sm:max-w-2xl" title="Terms of Service">
+			<ModelCard className="w-full desktop:max-w-2xl" title="Terms of Service">
 				<div className="flex flex-col gap-4">
 					<p>
 						This service (the &quot;Service&quot;) is operated by ROVR LABS

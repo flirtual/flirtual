@@ -1,11 +1,12 @@
 "use client";
 
-import { Dispatch, FC } from "react";
 import { twMerge } from "tailwind-merge";
-import { X, ChevronsUpDown } from "lucide-react";
+import { X, ChevronsUpDown, ChevronUp, ChevronDown } from "lucide-react";
 import { SelectItemText } from "@radix-ui/react-select";
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
+
+import type { Dispatch, FC } from "react";
 
 const Select = SelectPrimitive.Root;
 const SelectGroup = SelectPrimitive.Group;
@@ -19,20 +20,55 @@ const SelectTrigger = React.forwardRef<
 		asChild
 		ref={reference}
 		className={twMerge(
-			"focusable flex h-10 w-full items-center gap-4 overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 data-[state=open]:focused disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black-60 dark:text-white-20",
+			"focusable flex h-10 w-full items-center gap-4 overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 data-[state=open]:focused disabled:cursor-not-allowed disabled:opacity-50 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20",
 			className
 		)}
 		{...props}
 	>
 		<div className="relative cursor-pointer" tabIndex={0}>
 			<SelectPrimitive.Icon className="flex items-center justify-center bg-brand-gradient p-2">
-				<ChevronsUpDown className="h-6 w-6 text-white-20" />
+				<ChevronsUpDown className="size-6 text-white-20" />
 			</SelectPrimitive.Icon>
 			{children}
 		</div>
 	</SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
+
+const SelectScrollUpButton = React.forwardRef<
+	React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
+	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
+>(({ className, ...props }, ref) => (
+	<SelectPrimitive.ScrollUpButton
+		ref={ref}
+		className={twMerge(
+			"flex cursor-default items-center justify-center py-1",
+			className
+		)}
+		{...props}
+	>
+		<ChevronUp className="size-4" />
+	</SelectPrimitive.ScrollUpButton>
+));
+SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
+
+const SelectScrollDownButton = React.forwardRef<
+	React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
+	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
+>(({ className, ...props }, ref) => (
+	<SelectPrimitive.ScrollDownButton
+		ref={ref}
+		className={twMerge(
+			"flex cursor-default items-center justify-center py-1",
+			className
+		)}
+		{...props}
+	>
+		<ChevronDown className="size-4" />
+	</SelectPrimitive.ScrollDownButton>
+));
+SelectScrollDownButton.displayName =
+	SelectPrimitive.ScrollDownButton.displayName;
 
 const SelectContent = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Content>,
@@ -56,22 +92,23 @@ const SelectContent = React.forwardRef<
 				ref={reference}
 				sideOffset={sideOffset}
 				className={twMerge(
-					"focusable-within relative z-50 min-w-[8rem] overflow-hidden rounded-xl bg-white-20 font-nunito shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-black-60",
+					"focusable-within relative z-50 max-h-[min(var(--radix-select-content-available-height),theme(spacing.96))] min-w-32 overflow-hidden rounded-xl bg-white-20 font-nunito shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-black-60",
 					position === "popper" &&
 						"data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
 					className
 				)}
 				{...elementProps}
 			>
+				<SelectScrollUpButton />
 				<SelectPrimitive.Viewport
 					style={{
 						height: "var(--radix-select-trigger-height)",
-						width: "var(--radix-select-trigger-width)",
-						maxHeight: `min(calc(var(--radix-select-trigger-height) * ${rows}), var(--radix-select-content-available-height))`
+						width: "var(--radix-select-trigger-width)"
 					}}
 				>
 					{children}
 				</SelectPrimitive.Viewport>
+				<SelectScrollDownButton />
 			</SelectPrimitive.Content>
 		</SelectPrimitive.Portal>
 	);
@@ -164,11 +201,9 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 	return (
 		<Select value={(value || "") as string} onValueChange={onChange}>
 			<SelectTrigger>
-				<SelectValue asChild>
-					<span className={twMerge(!props.value && "brightness-90")}>
-						{activeOption?.name || placeholder}
-					</span>
-				</SelectValue>
+				<span className={twMerge("truncate", !activeOption && "opacity-75")}>
+					{activeOption?.name || placeholder}
+				</span>
 				{optional && props.value && (
 					<button
 						className="focusable pointer-events-auto absolute right-4 rounded-full brightness-90 hocus:brightness-100"
@@ -179,7 +214,7 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 							onChange("");
 						}}
 					>
-						<X className="h-5 w-5" />
+						<X className="size-5" />
 					</button>
 				)}
 			</SelectTrigger>

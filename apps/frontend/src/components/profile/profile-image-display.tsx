@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Search, Trash2, X } from "lucide-react";
 
-import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
+import { type ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
@@ -15,11 +15,12 @@ import { urls } from "~/urls";
 import { UserImage } from "../user-avatar";
 import { TimeRelative } from "../time-relative";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
-import { ModalOuter } from "../modal";
+import { Dialog, DialogContent } from "../dialog/dialog";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
 	children: React.ReactNode;
+	current: boolean;
 }
 
 interface SingleImageProps {
@@ -83,7 +84,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 	const router = useRouter();
 
 	return (
-		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4">
+		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 text-white-20">
 			<span>
 				Uploaded <TimeRelative value={image.createdAt} />
 				{image.scanned !== null && (
@@ -136,7 +137,8 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 
 export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	images,
-	children
+	children,
+	current
 }) => {
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
@@ -180,15 +182,17 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 		(event: KeyboardEvent) => {
 			if (event.key === "ArrowLeft") set(-1);
 			if (event.key === "ArrowRight") set(1);
+			if (event.key === "f") setExpandedImage(true);
 			if (event.key === "Escape") setExpandedImage(false);
 		},
 		[set]
 	);
 
 	useEffect(() => {
+		if (!current) return;
 		document.addEventListener("keydown", handleKeyDown);
 		return () => document.removeEventListener("keydown", handleKeyDown);
-	}, [handleKeyDown]);
+	}, [handleKeyDown, current]);
 
 	return (
 		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
@@ -200,7 +204,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							key={image.id}
 							priority={imageIndex === 0}
 							className={twMerge(
-								"h-full w-full transition-opacity duration-300",
+								"size-full transition-opacity duration-300",
 								image.id === imageId ? "opacity-100" : "absolute opacity-0"
 							)}
 						/>
@@ -208,7 +212,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 				) : (
 					<SingleImage
 						priority
-						className={twMerge("h-full w-full")}
+						className={twMerge("size-full")}
 						image={notFoundImage}
 						key={notFoundImage.id}
 					/>
@@ -220,16 +224,10 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							type="button"
 							onClick={() => setExpandedImage(true)}
 						/>
-						<ModalOuter
-							visible={expandedImage}
-							modalOuterProps={{
-								className: "p-8 sm:p-32"
-							}}
-							onVisibilityChange={setExpandedImage}
-						>
-							<div
-								className="relative flex cursor-default flex-col overflow-hidden rounded-xl text-white-20 shadow-brand-1"
-								onClick={(event) => event.stopPropagation()}
+						<Dialog open={expandedImage} onOpenChange={setExpandedImage}>
+							<DialogContent
+								border={false}
+								className="max-w-[95svw] overflow-hidden rounded-xl desktop:max-w-[95svw]"
 							>
 								<div className="relative max-h-[80vh] w-full bg-black-90">
 									{images.length > 1 && (
@@ -256,18 +254,11 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 										image={currentImage}
 									/>
 								</div>
-								<button
-									className="absolute right-0 z-10 p-4 opacity-75 hover:opacity-100"
-									type="button"
-									onClick={() => setExpandedImage(false)}
-								>
-									<X className="size-6" />
-								</button>
 								{session?.user?.tags?.includes("moderator") && (
 									<ImageToolbar image={currentImage} />
 								)}
-							</div>
-						</ModalOuter>
+							</DialogContent>
+						</Dialog>
 					</div>
 				)}
 				{images.length > 1 && (
@@ -293,7 +284,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							<div className="-mx-1 flex grow items-center">
 								{images.map((image) => (
 									<button
-										className="group grow px-1 py-6 pt-[max(env(safe-area-inset-top),1.5rem)]"
+										className="group grow px-1 py-6 pt-[max(env(safe-area-inset-top),1.5rem)] android:pt-[max(var(--safe-area-inset-top),1.5rem)]"
 										key={image.id}
 										type="button"
 										onClick={() => set(0, image.id)}

@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { urls } from "~/urls";
 import {
 	entries,
-	Expand,
+	type Expand,
 	fromEntries,
 	toCamelObject,
 	toSnakeObject

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, CSSProperties, useState } from "react";
+import { type FC, type CSSProperties, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
@@ -8,20 +8,21 @@ import { Hash } from "lucide-react";
 
 import { InputLabel } from "~/components/inputs";
 import { PreferenceThemes } from "~/api/user/preferences";
-import { PremiumBadge } from "~/components/premium-badge";
+import { PremiumBadge } from "~/components/badge";
 import { ThemedBorder } from "~/components/themed-border";
 import { Pill } from "~/components/profile/pill/pill";
 import { Form, FormButton } from "~/components/forms";
 import { useFormContext } from "~/hooks/use-input-form";
 import { useTheme } from "~/hooks/use-theme";
-import { Theme } from "~/theme";
 import { gradientTextColor } from "~/colors";
 import { useSession } from "~/hooks/use-session";
-import { ProfileColors } from "~/api/user/profile";
 import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
 
 import { ThemePreview } from "./theme-preview";
+
+import type { ProfileColors } from "~/api/user/profile";
+import type { Theme } from "~/theme";
 
 const DefaultProfileColors: Record<Theme, ProfileColors> = {
 	light: {
@@ -49,7 +50,7 @@ const ProfileColorEditor: FC = () => {
 					style={{ backgroundColor: color_1.props.value }}
 					type="button"
 					className={twMerge(
-						"focusable h-8 w-8 rounded-md",
+						"focusable size-8 rounded-md",
 						selectedColorIndex === 0 && "focused"
 					)}
 					onClick={() => setSelectedColorIndex(0)}
@@ -58,20 +59,20 @@ const ProfileColorEditor: FC = () => {
 					style={{ backgroundColor: color_2.props.value }}
 					type="button"
 					className={twMerge(
-						"focusable h-8 w-8 rounded-md",
+						"focusable size-8 rounded-md",
 						selectedColorIndex === 1 && "focused"
 					)}
 					onClick={() => setSelectedColorIndex(1)}
 				/>
 			</div>
 			<HexColorPicker
-				className="aspect-square rounded-lg shadow-brand-1 md:!h-auto md:!w-full"
+				className="aspect-square rounded-lg shadow-brand-1 desktop:!h-auto desktop:!w-full"
 				color={selectedColor.props.value}
 				onChange={selectedColor.props.onChange}
 			/>
 			<div className="focusable-within flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20">
 				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">
-					<Hash className="h-7 w-7" />
+					<Hash className="size-7" />
 				</div>
 				<HexColorInput
 					className="w-full border-none bg-transparent px-4 py-2 font-mono uppercase caret-theme-2 placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50"
@@ -101,7 +102,7 @@ const ProfileColorPreview: FC = () => {
 				} as CSSProperties
 			}
 		>
-			<div className="flex h-full w-full flex-col gap-4 rounded-[0.25rem] bg-cream px-3 py-2 text-black-70">
+			<div className="flex size-full flex-col gap-4 rounded bg-white-20 px-3 py-2 text-black-70">
 				<span>This is how your profile colors look in Light Mode!</span>
 				<div className="flex scale-75 flex-wrap gap-2 [transform-origin:top_left]">
 					<Pill active small>
@@ -110,13 +111,15 @@ const ProfileColorPreview: FC = () => {
 					<Pill active small>
 						Dancing
 					</Pill>
-					<Pill small>Anime</Pill>
+					<Pill small className="!bg-white-30 !text-black-70">
+						Anime
+					</Pill>
 					<Pill active small>
 						VRChat
 					</Pill>
 				</div>
 			</div>
-			<div className="flex h-full w-full flex-col gap-4 rounded-[0.25rem] bg-black-80 px-3 py-2 text-white-20">
+			<div className="flex size-full flex-col gap-4 rounded bg-black-70 px-3 py-2 text-white-20">
 				<span>This is how your profile colors look in Dark Mode!</span>
 				<div className="flex scale-75 flex-wrap gap-2 [transform-origin:top_left]">
 					<Pill active small>
@@ -125,7 +128,9 @@ const ProfileColorPreview: FC = () => {
 					<Pill active small>
 						Dancing
 					</Pill>
-					<Pill small>Anime</Pill>
+					<Pill small className="!bg-black-60 !text-white-30">
+						Anime
+					</Pill>
 					<Pill active small>
 						VRChat
 					</Pill>
@@ -226,7 +231,7 @@ const ReccommendedProfileThemes: FC = () => {
 	const defaultTheme = DefaultProfileColors[theme];
 
 	return (
-		<div className="grid w-full grid-cols-2 gap-2 md:grid-cols-4">
+		<div className="grid w-full grid-cols-2 gap-2 desktop:grid-cols-4">
 			<button
 				className="flex flex-col"
 				type="button"
@@ -237,7 +242,7 @@ const ReccommendedProfileThemes: FC = () => {
 			>
 				<span>
 					Flirtual{" "}
-					<span className="text-sm text-black-50 dark:text-white-40">
+					<span className="text-sm text-black-50 vision:text-white-40 dark:text-white-40">
 						default
 					</span>
 				</span>
@@ -325,7 +330,7 @@ export const AppearanceForm: FC = () => {
 				router.refresh();
 			}}
 		>
-			<div className="flex flex-col gap-2">
+			<div className="flex flex-col gap-2 vision:hidden">
 				<InputLabel>Theme</InputLabel>
 				<div className="grid grid-cols-3 gap-4">
 					{PreferenceThemes.map((theme) => (
@@ -334,7 +339,7 @@ export const AppearanceForm: FC = () => {
 				</div>
 			</div>
 			<div className="flex w-full flex-col gap-8">
-				<div className="flex w-full flex-col justify-between gap-8 lg:flex-row">
+				<div className="flex w-full flex-col justify-between gap-8 wide:flex-row">
 					<div className="flex shrink-0 flex-col gap-2">
 						<InputLabel className="flex items-center gap-2">
 							<span>Profile colors</span>

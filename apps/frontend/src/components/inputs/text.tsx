@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { CalendarDays, Eye, EyeOff } from "lucide-react";
 
 import { omit } from "~/utilities";
 
-import { IconComponent } from "../icons";
+import type { IconComponent } from "../icons";
+import type React from "react";
 
 export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
 	Icon?: IconComponent;
@@ -30,7 +31,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 
 	return (
 		<div
-			className="focusable-within flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20"
+			className="focusable-within flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20"
 			onClick={() => inputReference.current?.focus()}
 		>
 			{Icon && (
@@ -41,7 +42,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 						props.connection && "h-12 w-14"
 					)}
 				>
-					<Icon className="h-7 w-7" />
+					<Icon className="size-7" />
 				</div>
 			)}
 			<input
@@ -50,6 +51,8 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 				type={type}
 				className={twMerge(
 					"w-full border-none bg-transparent px-4 py-2 font-nunito caret-theme-2 placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50",
+					type === "number" &&
+						"[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
 					props.className
 				)}
 				onChange={(event) => {
@@ -63,7 +66,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					type="button"
 					onClick={() => setInputVisible((inputVisible) => !inputVisible)}
 				>
-					<InputVisibleIcon className="h-5 w-5" />
+					<InputVisibleIcon className="size-5" />
 				</button>
 			)}
 		</div>

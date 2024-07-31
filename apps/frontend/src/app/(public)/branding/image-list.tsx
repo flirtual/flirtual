@@ -32,7 +32,6 @@ async function ImageListItem(item: ImageListItemProps) {
 						: "repeating-conic-gradient(#fff 0% 25%, #eee 0% 50%) 50% / 30px 30px"
 				}}
 			>
-				{/* eslint-disable-next-line @next/next/no-img-element */}
 				<img className="h-fit w-full" src={getUrl(item.name, defaultKind)} />
 			</a>
 			<div className="flex gap-2">
@@ -58,7 +57,10 @@ export interface ImageListProps {
 export async function ImageList({ className, items }: ImageListProps) {
 	return (
 		<div
-			className={twMerge("grid grid-cols-1 gap-4 sm:grid-cols-3", className)}
+			className={twMerge(
+				"grid grid-cols-1 gap-4 desktop:grid-cols-3",
+				className
+			)}
 		>
 			{items.map((item) => {
 				return <ImageListItem key={item.name} {...item} />;

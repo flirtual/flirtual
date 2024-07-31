@@ -1,7 +1,8 @@
 "use client";
 
-import { FC, PropsWithChildren } from "react";
-import { ShepherdTour, Tour } from "react-shepherd";
+import { ShepherdTour, type Tour } from "react-shepherd";
+
+import type { FC, PropsWithChildren } from "react";
 
 const tourOptions = {
 	useModalOverlay: true,

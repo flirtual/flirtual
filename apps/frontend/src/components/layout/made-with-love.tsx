@@ -45,7 +45,7 @@ export const MadeWithLove: React.FC = () => {
 	}, []);
 
 	return (
-		<span className="group hidden sm:inline" onMouseEnter={updateHeart}>
+		<span className="group hidden desktop:inline" onMouseEnter={updateHeart}>
 			Made with{" "}
 			<span className="inline-block origin-center transition-transform duration-200 group-hover:scale-125">
 				{heart}

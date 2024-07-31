@@ -1,4 +1,4 @@
-import { IconComponent } from "./icons";
+import type { IconComponent } from "./icons";
 
 export const FlirtualMark: IconComponent = (props) => (
 	<svg

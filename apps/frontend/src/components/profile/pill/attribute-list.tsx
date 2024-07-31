@@ -1,14 +1,14 @@
 "use client";
 
-import { FC } from "react";
-
-import { Attribute } from "~/api/attributes";
-import { User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
 
 import { Pill } from "./pill";
+
+import type { Attribute } from "~/api/attributes";
+import type { User } from "~/api/user";
+import type { FC } from "react";
 
 interface PillAttributeListProps {
 	attributes?: Array<Attribute>;

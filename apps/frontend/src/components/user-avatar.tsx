@@ -1,10 +1,12 @@
-import React, { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { User, displayName } from "~/api/user/user";
+import { type User, displayName } from "~/api/user/user";
 import { urls } from "~/urls";
 
-import { Image, ImageProps } from "./image";
+import { Image, type ImageProps } from "./image";
+
+import type { FC } from "react";
+import type React from "react";
 
 export type UserAvatarProps = Omit<ImageProps, "src" | "alt"> & {
 	user: User;

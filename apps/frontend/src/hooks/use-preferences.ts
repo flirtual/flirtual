@@ -27,7 +27,6 @@ export function usePreferences<T>(key: string, defaultValue: T) {
 	const value = use(
 		useMemo(
 			() => getPreference(key, defaultValue),
-			// eslint-disable-next-line react-hooks/exhaustive-deps
 			[key, defaultValue, lastUpdated]
 		)
 	);

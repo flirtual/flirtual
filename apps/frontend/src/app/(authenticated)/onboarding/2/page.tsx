@@ -1,32 +1,22 @@
-import { Metadata } from "next";
-
 import { ModelCard } from "~/components/model-card";
 import { withAttributeList } from "~/api/attributes-server";
 
-import { Onboarding2Form } from "./form";
+import { Onboarding1Form } from "./form";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Info & tags"
+	title: "Who I'm looking for"
 };
 
-export default async function Onboarding2Page() {
-	const games = await withAttributeList("game");
-	const interests = await withAttributeList("interest");
-	const platforms = await withAttributeList("platform");
-	const sexualities = await withAttributeList("sexuality");
-	const genders = await withAttributeList("gender");
+export default async function Onboarding1Page() {
+	const genders = (await withAttributeList("gender")).filter(
+		({ metadata }) => metadata.simple || metadata.fallback
+	);
 
 	return (
-		<ModelCard className="shrink-0 sm:max-w-2xl" title="Info & tags">
-			<Onboarding2Form
-				{...{
-					games,
-					genders,
-					interests,
-					platforms,
-					sexualities
-				}}
-			/>
+		<ModelCard className="desktop:max-w-2xl" title="I want to meet...">
+			<Onboarding1Form genders={genders} />
 		</ModelCard>
 	);
 }

@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-import { IconComponent } from ".";
+import type { IconComponent } from ".";
 
 export const TailCircleIcon: IconComponent = (props) => {
 	const id = useId();

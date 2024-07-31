@@ -31,7 +31,8 @@
 	&[data-popper-placement^="top"] {
 		.shepherd-arrow {
 			@apply w-8 h-8 z-[9998] bottom-0 absolute;
-	
+			clip-path: inset(50% -100% -100% -100%);
+
 			&::before {
 				@apply bg-white-20 dark:bg-black-70 w-8 h-8 rotate-45 absolute;
 				content: "";

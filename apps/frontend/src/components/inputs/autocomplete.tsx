@@ -122,7 +122,7 @@ export function InputAutocomplete<K extends string>(
 				event.preventDefault();
 			}}
 		>
-			<div className="focusable-within flex rounded-xl bg-white-40 px-2 py-1 text-black-70 shadow-brand-1 dark:bg-black-60 dark:text-white-20">
+			<div className="focusable-within flex rounded-xl bg-white-40 px-2 py-1 text-black-70 shadow-brand-1 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20">
 				<div className="flex flex-wrap items-center gap-1.5">
 					{visibleValueOptions.map((option) => {
 						return (
@@ -167,7 +167,6 @@ export function InputAutocomplete<K extends string>(
 						type="text"
 						value={inputValue}
 						style={{
-							// eslint-disable-next-line unicorn/explicit-length-check
 							width: `${(inputValue.length || placeholder?.length || 1) + 2}em`
 						}}
 						onChange={onInputChange}

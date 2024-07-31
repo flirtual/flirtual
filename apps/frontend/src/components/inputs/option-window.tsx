@@ -1,12 +1,12 @@
 import {
-	ComponentProps,
-	EventHandler,
-	FC,
-	FocusEvent,
+	type ComponentProps,
+	type EventHandler,
+	type FC,
+	type FocusEvent,
 	forwardRef,
-	KeyboardEvent,
-	MouseEvent,
-	SyntheticEvent,
+	type KeyboardEvent,
+	type MouseEvent,
+	type SyntheticEvent,
 	useCallback,
 	useEffect,
 	useRef
@@ -177,7 +177,7 @@ export const InputOptionWindow = forwardRef<
 			ref={reference}
 			tabIndex={-1}
 			className={twMerge(
-				"focusable-within flex max-h-72 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70",
+				"focusable-within flex max-h-72 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-60",
 				elementProps.className
 			)}
 			onFocusCapture={(event) => {

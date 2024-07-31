@@ -1,11 +1,17 @@
 "use client";
 
-import { Dispatch, FC, useCallback, useEffect, useState } from "react";
+import {
+	type Dispatch,
+	type FC,
+	useCallback,
+	useEffect,
+	useState
+} from "react";
 import { ImagePlus } from "lucide-react";
 import { twMerge } from "tailwind-merge";
-import Uppy, { UppyFile } from "@uppy/core";
+import Uppy, { type UppyFile } from "@uppy/core";
 import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
-// import RemoteSources from "@uppy/remote-sources";
+import RemoteSources from "@uppy/remote-sources";
 import GoldenRetriever from "@uppy/golden-retriever";
 import ImageEditor from "@uppy/image-editor";
 import Compressor from "@uppy/compressor";
@@ -21,13 +27,21 @@ import { useSessionUser } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { groupBy } from "~/utilities";
 import { urls } from "~/urls";
+import { useDevice } from "~/hooks/use-device";
 
 import {
 	ArrangeableImage,
 	ArrangeableImagePreview
 } from "../arrangeable-image";
 import { Button } from "../button";
-import { Modal } from "../modal";
+import {
+	Dialog,
+	DialogBody,
+	DialogContent,
+	DialogHeader,
+	DialogTitle
+} from "../dialog/dialog";
+import { UserImage } from "../user-avatar";
 
 import {
 	SortableGrid,
@@ -49,7 +63,10 @@ export interface InputImageSetProps {
 	type?: "profile" | "report";
 }
 
-type MultipartFile = UppyFile & {
+type UppyfileMeta = Record<string, unknown>;
+type UppyfileData = Record<string, unknown>;
+
+type MultipartFile = UppyFile<UppyfileMeta, UppyfileData> & {
 	s3Multipart: {
 		key: string;
 		uploadId: string;
@@ -64,9 +81,15 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile" } = props;
 	const user = useSessionUser();
 	const { theme } = useTheme();
-	const [uppy, setUppy] = useState<Uppy | null>(null);
+	const { native } = useDevice();
+	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(
+		null
+	);
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
+	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
+
+	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
 	const handleUppyComplete = useCallback(
 		async (fileKeys: Array<string>) => {
@@ -87,7 +110,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	useEffect(() => {
 		if (!user) return;
 
-		const uppyInstance = new Uppy({
+		const uppyInstance = new Uppy<UppyfileMeta, UppyfileData>({
 			autoProceed: type === "report",
 			restrictions: {
 				maxNumberOfFiles: 15,
@@ -96,6 +119,22 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					type === "profile"
 						? ["image/jpeg", "image/png", "image/gif", "image/webp"]
 						: undefined
+			},
+			locale: {
+				strings: {
+					dropPasteFiles: native
+						? "%{browseFiles}"
+						: "Drop files here or %{browseFiles}",
+					dropPasteImportFiles: native
+						? ""
+						: "Drop files here, %{browseFiles}, or import from:",
+					browseFiles: native
+						? type === "report"
+							? "Select files..."
+							: "Select pictures..."
+						: "browse"
+				},
+				pluralize: (n) => n
 			}
 		})
 			.use(DropTarget, {
@@ -107,10 +146,12 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				onDragOver: () => setDragging(true),
 				onDragLeave: () => setDragging(false)
 			})
-			.use(Compressor)
-			.use(GoldenRetriever)
+			.use(Compressor, {
+				quality: 0.6
+			})
+			.use(GoldenRetriever, {})
 			.use(AwsS3, {
-				companionUrl: "https://upload.flirtu.al",
+				endpoint: "https://upload.flirtu.al",
 				shouldUseMultipart: true,
 				limit: 15
 			})
@@ -123,10 +164,10 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 		if (type === "profile") {
 			uppyInstance
-				// .use(RemoteSources, {
-				// 	companionUrl: "https://upload.flirtu.al",
-				// 	sources: ["Facebook", "Instagram", "GoogleDrive"]
-				// })
+				.use(RemoteSources, {
+					companionUrl: "https://upload.flirtu.al",
+					sources: user.tags?.includes("debugger") ? ["Facebook"] : []
+				})
 				.use(ImageEditor, {
 					actions: {
 						revert: false,
@@ -157,14 +198,12 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	return (
 		<SortableGrid
-			key={JSON.stringify(sortableItems)}
 			values={sortableItems}
 			onChange={(newSortableItems) => {
-				console.log(newSortableItems);
-
 				const keyedValue = groupBy(value, ({ id }) => id);
 				onChange(newSortableItems.map((id) => keyedValue[id][0]));
 			}}
+			disabled={!!fullPreviewId}
 		>
 			<div className="grid grid-cols-3 gap-2">
 				{value.map((image, imageIndex) =>
@@ -178,6 +217,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 								onDelete={() => {
 									onChange?.(value.filter((_, index) => imageIndex !== index));
 								}}
+								onFullscreen={() => setFullPreviewId(image.id)}
 							/>
 						</SortableItem>
 					) : (
@@ -186,20 +226,35 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 						</div>
 					)
 				)}
+				{fullPreviewImage && (
+					<ArrangeableImageDialog
+						image={fullPreviewImage}
+						onOpenChange={(visible) => {
+							if (!visible) setFullPreviewId(null);
+						}}
+					/>
+				)}
 				{type === "profile" ? (
 					<>
 						{uppy && (
-							<Modal
-								visible={uppyVisible}
-								onVisibilityChange={(visible) => setUppyVisible(visible)}
+							<Dialog
+								open={uppyVisible}
+								onOpenChange={(visible) => setUppyVisible(visible)}
 							>
-								<Dashboard
-									showProgressDetails
-									proudlyDisplayPoweredByUppy={false}
-									theme={theme}
-									uppy={uppy}
-								/>
-							</Modal>
+								<DialogContent>
+									<DialogHeader>
+										<DialogTitle>Upload pictures</DialogTitle>
+									</DialogHeader>
+									<DialogBody>
+										<Dashboard
+											showProgressDetails
+											proudlyDisplayPoweredByUppy={false}
+											theme={theme}
+											uppy={uppy}
+										/>
+									</DialogBody>
+								</DialogContent>
+							</Dialog>
 						)}
 						<Button
 							tabIndex={0}
@@ -216,6 +271,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					uppy && (
 						<DragDrop
 							uppy={uppy}
+							// @ts-expect-error: no
 							className={twMerge(
 								"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-md bg-brand-gradient shadow-brand-1",
 								dragging && "animate-pulse"
@@ -240,5 +296,23 @@ const InputImageSetDragOverlay: FC<{ values: Array<ImageSetValue> }> = ({
 		<SortableItemOverlay>
 			{current && <ArrangeableImagePreview {...current} />}
 		</SortableItemOverlay>
+	);
+};
+
+const ArrangeableImageDialog: React.FC<{
+	image: ImageSetValue;
+	onOpenChange: Dispatch<boolean>;
+}> = ({ image, onOpenChange }) => {
+	return (
+		<Dialog open onOpenChange={onOpenChange}>
+			<DialogContent className="pointer-events-none w-fit max-w-[95svw] overflow-hidden p-0 desktop:max-w-[95svw]">
+				<UserImage
+					fill
+					alt="Profile image"
+					className="!relative mx-auto aspect-auto !size-auto max-h-[80vh] rounded-[1.25rem] object-cover"
+					src={image.fullSrc}
+				/>
+			</DialogContent>
+		</Dialog>
 	);
 };

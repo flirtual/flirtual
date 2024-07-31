@@ -4,16 +4,21 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useDebugValue, useEffect, useMemo } from "react";
 
 import { api } from "~/api";
-import { PreferenceTheme } from "~/api/user/preferences";
 
 import { useMediaQuery } from "./use-media-query";
 import { useSession } from "./use-session";
+import { useDevice } from "./use-device";
+
+import type { PreferenceTheme } from "~/api/user/preferences";
 
 export function useTheme() {
 	const [session, mutateSession] = useSession();
+	const { vision } = useDevice();
 	const router = useRouter();
 
-	const sessionTheme = session?.user.preferences?.theme ?? "light";
+	const sessionTheme = vision
+		? "light"
+		: (session?.user.preferences?.theme ?? "light");
 	const browserTheme = useMediaQuery("(prefers-color-scheme: dark)")
 		? "dark"
 		: "light";

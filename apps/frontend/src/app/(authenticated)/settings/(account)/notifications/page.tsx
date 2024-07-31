@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-
 import { ModelCard } from "~/components/model-card";
 
 import { NotificationsForm } from "./form";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Notifications"
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 
 export default function SettingsAccountNotificationsPage() {
 	return (
-		<ModelCard className="sm:max-w-2xl" title="Notifications">
+		<ModelCard
+			className="desktop:w-[42rem] desktop:max-w-full"
+			title="Notifications"
+		>
 			<NotificationsForm />
 		</ModelCard>
 	);

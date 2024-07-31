@@ -55,7 +55,7 @@ export const DebugInfo: React.FC = async () => {
 						)}
 					>
 						{session
-							? `${displayName(session.user)} (${session.user.username})`
+							? `${displayName(session.user)} (${session.user.slug})`
 							: "Unavailable"}
 					</InlineLink>
 				</div>

@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Community Guidelines"
@@ -12,7 +12,10 @@ export const metadata: Metadata = {
 export default function GuidelinesPage() {
 	return (
 		<SoleModelLayout>
-			<ModelCard className="w-full sm:max-w-2xl" title="Community Guidelines">
+			<ModelCard
+				className="w-full desktop:max-w-2xl"
+				title="Community Guidelines"
+			>
 				<div className="flex flex-col gap-8">
 					<p>
 						We want Flirtual to be a positive, welcoming space for everyone.
@@ -139,7 +142,7 @@ export default function GuidelinesPage() {
 							<h2 className="text-xl font-semibold">No self-harm content</h2>
 							<p>
 								Self-harm content is not allowed on Flirtual. We have some{" "}
-								<InlineLink href={urls.resources.mentalHealth}>
+								<InlineLink href={urls.guides.mentalHealth}>
 									mental health resources
 								</InlineLink>{" "}
 								that may be helpful.
