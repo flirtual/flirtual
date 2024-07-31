@@ -40,6 +40,12 @@ export default async function PressPage() {
 					<div className="flex flex-col gap-2">
 						{[
 							{
+								name: "‘Phantom Touch’ and the (Real) Pleasures of Virtual Dating",
+								href: "https://www.nytimes.com/2022/08/18/style/virtual-dating-metaverse.html",
+								site: "The New York Times",
+								date: "18 August 2022"
+							},
+							{
 								name: "Looking For Love In The Metaverse",
 								href: "https://www.forbes.com/sites/davidwestenhaver/2022/08/07/looking-for-love-in-the-metaverse/",
 								site: "Forbes",
