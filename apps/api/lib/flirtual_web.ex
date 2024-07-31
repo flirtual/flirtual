@@ -42,15 +42,4 @@ defmodule FlirtualWeb do
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end
-
-  require Protocol
-
-  Protocol.derive(Inspect, Plug.Conn,
-    only: [
-      :method,
-      :params,
-      :request_path,
-      :assigns
-    ]
-  )
 end
