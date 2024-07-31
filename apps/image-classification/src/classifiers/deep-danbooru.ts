@@ -45,10 +45,17 @@ export const classify: Classifier<Result> = async (images, groupFile) => {
 	// We read the files and parse them into a map.
 	await Promise.all(
 		images.map(async (image) => {
-			const content = await fs.readFile(
-				path.resolve(temporaryDirectory, groupFile, `${image.file}.json`),
-				"utf8"
-			);
+			const content = await fs
+				.readFile(
+					path.resolve(temporaryDirectory, groupFile, `${image.file}.json`),
+					"utf8"
+				)
+				.catch((reason) =>
+					log.error({ groupFile, classifierId: "deepDanbooru" }, reason)
+				);
+
+			if (!content) return;
+
 			const data = JSON.parse(content) as Record<string, string>;
 
 			map.set(

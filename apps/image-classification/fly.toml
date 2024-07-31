@@ -5,3 +5,6 @@
 
 app = "image-classification"
 primary_region = "ord"
+
+[[restart]]
+policy = "always"

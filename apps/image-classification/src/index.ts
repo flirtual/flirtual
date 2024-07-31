@@ -12,9 +12,11 @@ const execute = async (size: number) => {
 	const group = randomBytes(16).toString("hex");
 	const groupFile = path.resolve(temporaryDirectory, group);
 
-	const cleanup = async (): Promise<void> =>
+	const cleanup = async (): Promise<void> => {
 		// Remove the group's directory and all its contents.
-		fs.rm(group, { recursive: true, force: true }).catch(() => void 0);
+		log.info({ groupFile }, "Cleaning up.");
+		await fs.rm(groupFile, { recursive: true, force: true });
+	};
 
 	try {
 		const images = await scanQueue.list({ size });
@@ -40,10 +42,6 @@ const execute = async (size: number) => {
 			([, downloaded]) => downloaded
 		);
 
-		const skippedImages = downloadedImages.filter(
-			([, downloaded]) => !downloaded
-		);
-
 		if (scannableImages.length === 0) {
 			// If no images were downloaded, we can skip the classification.
 			log.warn({ groupFile }, "Zero images downloaded.");
@@ -56,17 +54,21 @@ const execute = async (size: number) => {
 		// Classify the downloaded images.
 		const map = await classify(
 			groupFile,
-			scannableImages.map(([id]) => id)
+			scannableImages.map(([image]) => image)
 		);
-		await scanQueue.update(
-			Object.fromEntries([
-				...map.entries(),
-				// Mark all skipped images as scanned, since
-				// things break occasionally and we don't want
-				// to keep re-downloading the same images.
-				skippedImages.map(([id]) => [id, {}])
-			])
-		);
+
+		const failed = downloadedImages
+			.filter(([, downloaded]) => !downloaded)
+			.map(([{ id }]) => id);
+
+		for (const [image] of scannableImages) {
+			if (!map.has(image.id)) failed.push(image.id);
+		}
+
+		await scanQueue.update({
+			failed,
+			success: Object.fromEntries(map.entries())
+		});
 
 		log.info({ groupFile }, `Updated ${images.length} images.`);
 	} catch (reason) {
@@ -86,5 +88,5 @@ const execute = async (size: number) => {
 	})
 );
 
-const size = 10;
+const size = 100;
 void execute(size);

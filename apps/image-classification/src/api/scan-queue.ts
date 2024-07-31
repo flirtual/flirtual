@@ -15,13 +15,18 @@ export const list = (options: { size: number }) =>
 		}
 	}).then((response) => response.json()) as Promise<Array<Image>>;
 
-export const update = (data: Record<string, Classification>) => {
+export interface UpdateScanQueue {
+	success: Record<string, Classification>;
+	failed: Array<string>;
+}
+
+export const update = (data: UpdateScanQueue) => {
 	return fetch(url("/v1/images/scan-queue"), {
 		method: "post",
 		headers: {
 			authorization: `Bearer ${accessToken}`,
 			"content-type": "application/json"
 		},
-		body: JSON.stringify({ data })
+		body: JSON.stringify(data)
 	}).then((response) => response.json());
 };
