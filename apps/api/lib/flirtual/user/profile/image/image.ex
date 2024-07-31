@@ -27,7 +27,15 @@ defmodule Flirtual.User.Profile.Image do
 
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:profile_id, :original_file, :external_id, :blur_id, :scanned, :failed, :order])
+    |> cast(attrs, [
+      :profile_id,
+      :original_file,
+      :external_id,
+      :blur_id,
+      :scanned,
+      :failed,
+      :order
+    ])
     |> validate_required([:original_file])
     |> validate_uid(:profile_id)
     |> foreign_key_constraint(:profile_id)

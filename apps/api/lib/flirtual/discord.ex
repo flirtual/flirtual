@@ -535,7 +535,9 @@ defmodule Flirtual.Discord do
                 |> Enum.map_join(", ", fn {k, v} ->
                   "``#{k} #{:erlang.float_to_binary(Float.parse(to_string(v)) |> elem(0), decimals: 2)}``"
                 end)
-            }#,
+            }
+
+            # ,
             # %{
             #   name: "Categories",
             #   value:
