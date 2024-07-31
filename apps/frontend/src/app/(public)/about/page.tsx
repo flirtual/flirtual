@@ -31,11 +31,14 @@ export default function AboutPage() {
 					<div className="flex flex-col gap-4">
 						<h1 className="text-2xl font-semibold">Our story</h1>
 						<p>
-							Hey, I&apos;m Kyle. I&apos;ve been obsessed with VR since the
-							early days of Oculus, but it really changed my life when I joined
-							VRChat and met some of my best friends (like my wife!) there. So I
-							set out to help others meet awesome people around the world too,
-							and started VRLFP (Virtual Reality Looking For Partner).
+							Hey, we&apos;re Kyle and Tony, the creators of Flirtual. Kyle has
+							been obsessed with VR since the early days of Oculus, but it
+							really changed his life when he joined VRChat and met some of his
+							closest friends (including his wife!) there. Right before COVID
+							hit, Kyle brought his childhood best friend Tony along for the
+							journey, and VR also changed his life. We set out to help others
+							meet awesome people around the world too, starting with VRLFP
+							(Virtual Reality Looking For Partner).
 						</p>
 						<p>
 							Immersive presence in VR helps you form deep connections with
@@ -53,7 +56,7 @@ export default function AboutPage() {
 							find your perfect match.
 						</p>
 						<div className="flex flex-col items-start">
-							<p>&lt;3 kfarwell &amp; The Flirtual Team</p>
+							<p>&lt;3 kfarwell, Tony &amp; The Flirtual Team</p>
 							<InlineLink href={urls.socials.discord}>
 								Join our Discord
 							</InlineLink>
@@ -80,90 +83,120 @@ export default function AboutPage() {
 								{
 									name: "kfarwell",
 									role: "Lead Developer",
-									avatar: "07dfc6f1-46da-4138-b122-65995215cc9a",
+									avatar: "108161fa-6e0d-435c-a4fd-5bdd0909aec5",
 									url: urls.profile("DjkQHrZ3qjsBumHGBbEyS3")
 								},
 								{
 									name: "Tony",
 									role: "Partners, Design & Safety",
-									avatar: "d70ed015-6c96-4918-bcb0-953b9ca2c7d4",
+									avatar: "faa26662-298a-47f3-838d-c36f40ca20f8",
 									url: urls.profile("e3ZfMyZLq2ouAPRoLZHKrU")
 								},
 								{
-									name: "Solo!!",
-									role: "Moderator & Event Host",
-									avatar: "331d940d-8aba-406d-a21c-ec9728208165",
-									url: urls.profile("QWnJPkY2SYZYZCPtSFDu4N")
+									name: "Aries",
+									role: "Software Developer",
+									avatar: "957b0933-f010-447c-ab92-35e600367b70",
+									url: urls.profile("GumsFYN6GkXPMcAGog9pM4")
 								},
 								{
 									name: "Buramie",
 									role: "Moderator",
-									avatar: "8a05af9e-8bb2-4406-a8c8-141597debfa5",
+									avatar: "5a01f443-7270-4fdb-b903-73d909a6f0f6",
 									url: urls.profile("uQt9hi63LxYP6Cok6Znuz3")
 								},
 								{
 									name: "Kart²",
 									role: "Moderator",
-									avatar: "bb569362-6a7a-4fba-a2ac-720bb08b99d2",
+									avatar: "18263ba2-f2e6-45b3-9e12-1cabbf3a1556",
 									url: urls.profile("mMFE4M3CvbrvL4dP2LywHT")
 								},
 								{
 									name: "Krauser",
 									role: "Moderator",
-									avatar: "0f66df86-1e0b-4c63-b83b-9ef4f69437fd",
+									avatar: "ff780f16-133a-45fd-943c-ed2b86953d2a",
 									url: urls.profile("qX6FJu6fn2Ebpj4MFzzAbY")
 								},
 								{
 									name: "Reploidsham",
 									role: "Moderator",
-									avatar: "f2e896c5-42e1-4ccd-ab0b-97eddb681bc6",
+									avatar: "f93f2191-1dd4-4550-a348-b7634e3aff78",
 									url: urls.profile("ZxqVfAQWSmRH3r3RG6MkMf")
 								},
 								{
 									name: "Ryu",
 									role: "Moderator",
-									avatar: "395b3628-0da5-4145-8a0c-b83c40264133",
+									avatar: "c42d25de-953a-4330-b44c-6d6c35d39987",
 									url: urls.profile("A2eQGb9azTPVAznaviKLcT")
 								},
 								{
 									name: "Starh",
 									role: "Moderator",
-									avatar: "74118bd7-a5d9-4bb8-80b1-95bd49a14d65",
+									avatar: "57c46b77-862d-42a6-84b2-f97879bd6f23",
 									url: urls.profile("KKidURg3PuYzGGqErGAADC")
 								},
 								{
 									name: "Teru",
 									role: "Moderator",
-									avatar: "c5271481-ded6-4a4c-85fd-3e856ed8dd1b",
+									avatar: "84f5d8ce-e7df-499f-8e55-db7e94d134a9",
 									url: urls.profile("2azZQZEEQQSw5YMjKD5PHJ")
 								},
 								{
 									name: "The_Blarg",
 									role: "Moderator",
-									avatar: "4ed1b072-f90a-403b-8e42-4ec5d5fb33a8",
+									avatar: "e3793c96-e6df-4520-9ead-d4fc4b1f2d9f",
 									url: urls.profile("CtCeB3m7jSDTaKTu2GF6HN")
 								},
 								{
-									name: "Aries",
-									role: "Development Advisor",
-									avatar: "ea06c43a-7cd9-4790-bc78-61131a137c4e",
-									url: "https://ariesclark.com"
+									name: "Solo!!",
+									role: "Moderator & Event Host",
+									avatar: "c2d09814-db3b-49ba-a502-e5421e4816b3",
+									url: urls.profile("QWnJPkY2SYZYZCPtSFDu4N")
+								},
+								{
+									name: "Tip_The_Spartan",
+									role: "Event Host",
+									avatar: "4b7e5902-c19d-4c35-ac2e-e9d534a7f7bf",
+									url: urls.profile("BrKN6eEdeF9gUEgD6xf8uB")
+								},
+								{
+									name: "turtledude01",
+									role: "Event Host",
+									avatar: "e6587a59-b35c-47ef-9782-5c62f8ba9a73",
+									url: urls.profile("RKXrZ8wxFsc6BNR4Vqsw45")
+								},
+								{
+									name: "Antithalice",
+									role: "Socials",
+									avatar: "f7798643-968d-4a2f-8c1f-bae4f8342bf9",
+									url: urls.profile("djj7zNDxYPyCs3WmNJ5BBY")
+								},
+								{
+									name: "Fuugul",
+									role: "Socials",
+									avatar: "0ebe531d-cb90-4c42-8294-37145c49a49a",
+									url: urls.profile("iCMu3yfBx5d9Yhmst3pBc3")
+								},
+								{
+									name: "Soda",
+									role: "Socials",
+									avatar: "2456e7e3-d9c2-4053-8cc9-80fcd6bb34c9",
+									url: urls.profile("v3GGWajpcBNwhiZ5DdtBSk")
 								},
 								{
 									name: "Katten!",
 									role: "Community Advisor",
-									avatar: "75758df4-af5a-4699-9c37-294d3d558a28"
+									avatar: "09aea7c6-38b5-4898-8098-fd7952f115cc"
 								},
 								{
 									name: "Syrmor",
 									role: "Marketing Advisor",
-									avatar: "12781fa5-d7d3-4705-9e2a-a2edcf54f06a",
+									avatar: "52dc4f3a-00a9-42d7-8a88-09bfe01bfc1f",
 									url: "https://www.youtube.com/c/syrmor"
 								},
 								{
 									name: "Faxmashine",
 									role: "VRChat World Creator",
-									avatar: "1e86cf1f-74e2-4b60-a28e-69ced25df236",
+									avatar: "83977789-d464-49b5-b89e-955ffe8097c8",
 									url: "https://www.faxmashine.com/",
 									extra_url:
 										"https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
@@ -171,7 +204,7 @@ export default function AboutPage() {
 								{
 									name: "Juice",
 									role: "VRChat Avatar Creator",
-									avatar: "789592e9-31b0-4661-8593-b209385e5e7e",
+									avatar: "c2ec6685-04ff-42e7-be66-c0a58e5afb6d",
 									url: "https://info.mdcr.tv/",
 									extra_url:
 										"https://vrchat.com/home/avatar/avtr_75b9f5a5-def3-4620-b547-0bf88677f449"
