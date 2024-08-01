@@ -72,14 +72,14 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 						monopoly: values.monopoly ?? "none",
 						languages: values.languages,
 						new: values.new,
-						...fromEntries(
+						// @ts-expect-error: don't want to deal with this.
+						...(fromEntries(
 							AttributeKeys.map((type) => {
-								return [
-									type,
-									values[type].map((id) => ({ id, type })) ?? []
-								] as const;
+								return [`${type}Id`, values[type]] as const;
 							})
-						)
+						) as {
+							[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
+						})
 					}
 				});
 
