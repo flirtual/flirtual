@@ -64,7 +64,7 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 		<Popover open={drawerVisible} onOpenChange={setDrawerVisible}>
 			<div className="flex size-full justify-center">
 				<InputCalendar
-					className="w-fit desktop:shadow-brand-1"
+					className="w-fit shadow-brand-1"
 					{...props}
 					value={props.value}
 					onChange={(value) => {
