@@ -6,7 +6,6 @@ import { DatetimePicker } from "@capawesome-team/capacitor-datetime-picker";
 import { useDevice } from "~/hooks/use-device";
 import { useTheme } from "~/hooks/use-theme";
 import { resolveTheme } from "~/theme";
-import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 
 import { Popover } from "../popover";
 

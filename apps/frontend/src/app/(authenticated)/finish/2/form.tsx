@@ -24,7 +24,6 @@ import {
 } from "~/api/user/profile";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { ButtonLink } from "~/components/button";
-import { HeartIcon } from "~/components/icons/gradient/heart";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";

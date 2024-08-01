@@ -16,8 +16,6 @@ import { urls } from "~/urls";
 import { filterBy, fromEntries } from "~/utilities";
 import { InputCountrySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
-import { useDevice } from "~/hooks/use-device";
-import InputDateSelectNative from "~/components/inputs/date-select-native";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
@@ -34,7 +32,6 @@ export interface Onboarding1Props {
 export const Onboarding1Form: FC<Onboarding1Props> = (props) => {
 	const { games, genders, interests, ipcountry } = props;
 
-	const { native } = useDevice();
 	const [session, mutateSession] = useSession();
 	const router = useRouter();
 
@@ -56,8 +53,6 @@ export const Onboarding1Form: FC<Onboarding1Props> = (props) => {
 					(ipcountry !== null && ipcountry !== "XX" && ipcountry !== "T1"
 						? ipcountry?.toLowerCase()
 						: null),
-				new: profile.new ?? false,
-				languages: user.profile.languages ?? [],
 				...(fromEntries(
 					AttributeKeys.map((type) => {
 						return [
@@ -89,13 +84,8 @@ export const Onboarding1Form: FC<Onboarding1Props> = (props) => {
 						}
 					}),
 					api.user.profile.update(user.id, {
-						query: {
-							required: ["languages", "new"]
-						},
 						body: {
 							country: values.country ?? "none",
-							languages: values.languages,
-							new: values.new,
 							customInterests,
 							// @ts-expect-error: don't want to deal with this.
 							...(fromEntries(
@@ -135,20 +125,11 @@ export const Onboarding1Form: FC<Onboarding1Props> = (props) => {
 								>
 									Date of birth
 								</InputLabel>
-								{native ? (
-									<InputDateSelectNative
-										max="now"
-										min={new Date("1900/01/01")}
-										value={field.props.value}
-										onChange={field.props.onChange}
-									/>
-								) : (
-									<InputDateSelect
-										{...field.props}
-										max="now"
-										min={new Date("1900/01/01")}
-									/>
-								)}
+								<InputDateSelect
+									{...field.props}
+									max="now"
+									min={new Date("1900/01/01")}
+								/>
 							</>
 						)}
 					</FormField>

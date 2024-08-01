@@ -11,7 +11,6 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import InputDateSelectNative from "~/components/inputs/date-select-native";
 import {
 	InputCountrySelect,
 	InputLanguageAutocomplete
@@ -74,7 +73,7 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 					}),
 					api.user.profile.update(user.id, {
 						query: {
-							required: ["languages", "new"]
+							required: ["new"]
 						},
 						body: {
 							country: values.country ?? "none",
