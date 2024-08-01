@@ -1,12 +1,7 @@
 import { Dialog } from "@capacitor/dialog";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
-
-import { api } from "~/api";
-import { useSession } from "~/hooks/use-session";
-import { useToast } from "~/hooks/use-toast";
-import { filterBy } from "~/utilities";
-import { useAttributeList } from "~/hooks/use-attribute-list";
+import { Eye, EyeOff } from "lucide-react";
 
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
@@ -14,6 +9,12 @@ import { CopyClick } from "../copy-click";
 
 import type { User } from "~/api/user";
 import type { FC } from "react";
+
+import { api } from "~/api";
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
+import { capitalize, filterBy } from "~/utilities";
+import { useAttributeList } from "~/hooks/use-attribute-list";
 
 export const ProfileModeratorInfo: FC<{
 	user: User;
@@ -35,8 +36,8 @@ export const ProfileModeratorInfo: FC<{
 					<span className="font-bold">Moderator Note (private):</span>{" "}
 					<span
 						className={twMerge(
-							"cursor-pointer brightness-75 hover:brightness-100",
-							user.moderatorNote && "text-yellow-500"
+							"cursor-pointer hover:underline",
+							user.moderatorNote && "text-yellow-600"
 						)}
 						onClick={async () => {
 							const { value, cancelled } = await Dialog.prompt({
@@ -76,25 +77,19 @@ export const ProfileModeratorInfo: FC<{
 				<span>
 					<span className="font-bold">ID:</span>{" "}
 					<CopyClick value={user.id}>
-						<span className="brightness-75 hover:brightness-100">
-							{user.id}
-						</span>
+						<span className="hover:underline">{user.id}</span>
 					</CopyClick>
 				</span>
 				<span>
 					<span className="font-bold">Legacy ID:</span>{" "}
 					<CopyClick value={user.talkjsId}>
-						<span className="brightness-75 hover:brightness-100">
-							{user.talkjsId}
-						</span>
+						<span className="hover:underline">{user.talkjsId}</span>
 					</CopyClick>
 				</span>
 				<span>
 					<span className="font-bold">Profile link:</span>{" "}
 					<CopyClick value={user.slug}>
-						<span className="brightness-75 hover:brightness-100">
-							{user.slug}
-						</span>
+						<span className="hover:underline">{user.slug}</span>
 					</CopyClick>
 				</span>
 			</div>
@@ -104,7 +99,7 @@ export const ProfileModeratorInfo: FC<{
 						<span className="font-bold">Registered:</span>{" "}
 						<CopyClick value={user.createdAt}>
 							<DateTimeRelative
-								className="brightness-75 hover:brightness-100"
+								className="hover:underline"
 								value={user.createdAt}
 							/>
 						</CopyClick>
@@ -115,7 +110,7 @@ export const ProfileModeratorInfo: FC<{
 						<span className="font-bold">Last login:</span>{" "}
 						<CopyClick value={user.activeAt}>
 							<DateTimeRelative
-								className="brightness-75 hover:brightness-100"
+								className="hover:underline"
 								value={user.activeAt}
 							/>
 						</CopyClick>
@@ -124,16 +119,34 @@ export const ProfileModeratorInfo: FC<{
 			</div>
 			<div className="flex flex-col">
 				<span>
+					<span className="font-bold">Status:</span>{" "}
+					<span
+						className={twMerge(
+							"inline-flex gap-2",
+							user.status === "visible"
+								? "text-green-600"
+								: user.status === "finished_profile"
+									? "text-yellow-600"
+									: user.status === "onboarded"
+										? "text-orange-600"
+										: "text-red-600"
+						)}
+					>
+						{capitalize(user.status).replace("_", " ")}
+						{user.status === "visible" ? <Eye /> : <EyeOff />}
+					</span>
+				</span>
+				<span>
 					<span className="font-bold">Banned:</span>{" "}
 					{user.bannedAt ? (
 						<CopyClick value={user.bannedAt}>
 							<DateTimeRelative
-								className="text-red-500 brightness-75 hover:brightness-100"
+								className="text-red-600 hover:underline"
 								value={user.bannedAt}
 							/>
 						</CopyClick>
 					) : (
-						<span className="brightness-75 hover:brightness-100">No</span>
+						<span>No</span>
 					)}
 				</span>
 				<span>
@@ -141,12 +154,12 @@ export const ProfileModeratorInfo: FC<{
 					{user.shadowbannedAt ? (
 						<CopyClick value={user.shadowbannedAt}>
 							<DateTimeRelative
-								className="text-red-500"
+								className="text-red-600 hover:underline"
 								value={user.shadowbannedAt}
 							/>
 						</CopyClick>
 					) : (
-						<span className="brightness-75 hover:brightness-100">No</span>
+						<span>No</span>
 					)}
 				</span>
 				<span>
@@ -154,12 +167,12 @@ export const ProfileModeratorInfo: FC<{
 					{user.indefShadowbannedAt ? (
 						<CopyClick value={user.indefShadowbannedAt}>
 							<DateTimeRelative
-								className="text-red-500"
+								className="text-red-600 hover:underline"
 								value={user.indefShadowbannedAt}
 							/>
 						</CopyClick>
 					) : (
-						<span className="brightness-75 hover:brightness-100">No</span>
+						<span>No</span>
 					)}
 				</span>
 				<span>
@@ -167,25 +180,22 @@ export const ProfileModeratorInfo: FC<{
 					{user.deactivatedAt ? (
 						<CopyClick value={user.deactivatedAt}>
 							<DateTimeRelative
-								className="text-red-500"
+								className="text-red-600 hover:underline"
 								value={user.deactivatedAt}
 							/>
 						</CopyClick>
 					) : (
-						<span className="brightness-75 hover:brightness-100">No</span>
+						<span>No</span>
 					)}
-				</span>
-				<span>
-					<span className="font-bold">Status:</span> {user.status}
 				</span>
 				<span>
 					<span className="font-bold">Premium:</span>{" "}
 					{user.subscription?.active ? (
-						<span className="text-green-500 brightness-75 hover:brightness-100">
+						<span className="text-green-600">
 							{user.subscription.plan.name}
 						</span>
 					) : (
-						<span className="brightness-75 hover:brightness-100">No</span>
+						<span>No</span>
 					)}
 				</span>
 				<span>
@@ -193,31 +203,24 @@ export const ProfileModeratorInfo: FC<{
 					{user.paymentsBannedAt ? (
 						<CopyClick value={user.paymentsBannedAt}>
 							<DateTimeRelative
-								className="text-red-500"
+								className="text-red-600"
 								value={user.paymentsBannedAt}
 							/>
 						</CopyClick>
 					) : (
-						<span className="brightness-75 hover:brightness-100">No</span>
+						<span>No</span>
 					)}
 				</span>
 			</div>
-			<div className="flex flex-col">
-				<span>
-					<span className="font-bold">Warning (visible to user):</span>{" "}
-					<span
-						className={twMerge(
-							user.moderatorMessage && "text-yellow-500",
-							"cursor-pointer brightness-75 hover:brightness-100"
-						)}
-					>
-						{user.moderatorMessage ?? "None"}
-					</span>
+			<span>
+				<span className="font-bold">Warning (visible to user):</span>{" "}
+				<span className={user.moderatorMessage && "text-yellow-600"}>
+					{user.moderatorMessage ?? "None"}
 				</span>
-			</div>
+			</span>
 			<span>
 				<span className="font-bold">Looking for:</span>{" "}
-				<span className="brightness-75 hover:brightness-100">
+				<span>
 					{user.profile.preferences?.agemin ?? 18}-
 					{user.profile.preferences?.agemax ?? "99+"}{" "}
 					{filterBy(
@@ -236,16 +239,14 @@ export const ProfileModeratorInfo: FC<{
 						<span>
 							<span className="font-bold">Email:</span>{" "}
 							<CopyClick value={user.email}>
-								<span className="cursor-pointer brightness-75 hover:brightness-100">
+								<span className="cursor-pointer hover:underline">
 									{user.email}
 								</span>
 							</CopyClick>
 						</span>
 						<span>
 							<span className="font-bold">Date of birth:</span>{" "}
-							<span className="brightness-75 hover:brightness-100">
-								{user.bornAt}
-							</span>
+							<span>{user.bornAt}</span>
 						</span>
 						<span>
 							<span className="font-bold">Chargebee customer:</span>{" "}
@@ -279,7 +280,7 @@ export const ProfileModeratorInfo: FC<{
 						</span>
 						<span>
 							<span className="font-bold">Tags:</span>{" "}
-							<span className="brightness-75 hover:brightness-100">
+							<span>
 								{user.tags && user.tags.length > 0
 									? user.tags?.join(", ")
 									: "None"}
