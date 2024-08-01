@@ -12,3 +12,5 @@ certificates
 
 # eslint
 .eslintcache
+# Sentry Config File
+.env.sentry-build-plugin

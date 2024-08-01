@@ -120,20 +120,15 @@ module.exports = {
 
 const { withSentryConfig } = require("@sentry/nextjs");
 
-module.exports = withSentryConfig(
-	module.exports,
-	{
-		// For all available options, see:
-		// https://github.com/getsentry/sentry-webpack-plugin#options
-		silent: true
-	},
-	{
-		// For all available options, see:
-		// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-		widenClientFileUpload: true,
-		transpileClientSDK: true,
-		hideSourceMaps: false,
-		disableLogger: false,
-		tunnelRoute: "/api/sentry"
-	}
-);
+module.exports = withSentryConfig(module.exports, {
+	// For all available options, see:
+	// https://github.com/getsentry/sentry-webpack-plugin#options
+	org: "flirtual",
+	project: "flirtual",
+	silent: true,
+	widenClientFileUpload: true,
+	transpileClientSDK: true,
+	hideSourceMaps: true,
+	disableLogger: true,
+	tunnelRoute: "/monitoring"
+});
