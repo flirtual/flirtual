@@ -35,7 +35,7 @@ export const MadeWithLove: React.FC = () => {
 	];
 
 	const updateHeart = () => {
-		setHeart(hearts[Math.floor(Math.random() * hearts.length)]);
+		setHeart(hearts[Math.floor(Math.random() * hearts.length)]!);
 	};
 
 	useEffect(() => {

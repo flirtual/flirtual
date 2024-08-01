@@ -4,7 +4,7 @@ export function useLanguage() {
 	const [language, setLanguage] = useState<string | null>(null);
 
 	useEffect(() => {
-		setLanguage(navigator.language.split("-", 1)[0]);
+		setLanguage(navigator.language.split("-", 1)[0] ?? "en");
 	}, []);
 
 	return language;

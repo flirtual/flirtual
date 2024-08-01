@@ -166,7 +166,7 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 					/>
 					{categories.map((category) => {
 						const filteredInterests = filterInterests(
-							categorizedInterests[category.name]
+							categorizedInterests[category.name]!
 						);
 						if (filteredInterests.length === 0) return null;
 

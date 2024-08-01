@@ -111,7 +111,7 @@ export function html(value: string) {
 					let style = fromStyleProperties(attribs.style ?? "");
 
 					const alignMatch = attribs.class?.match(/ql-align-(\w+)/);
-					if (alignMatch) {
+					if (attribs.class && alignMatch) {
 						attribs.class = attribs.class.replace(alignMatch[0], "");
 						style = {
 							...style,
@@ -125,9 +125,9 @@ export function html(value: string) {
 							style = {
 								...style,
 								[key]: rgb.toHex(
-									Number.parseInt(match[1]),
-									Number.parseInt(match[2]),
-									Number.parseInt(match[3])
+									Number.parseInt(match[1]!),
+									Number.parseInt(match[2]!),
+									Number.parseInt(match[3]!)
 								)
 							};
 						}

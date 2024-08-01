@@ -26,9 +26,9 @@ function toDateString(value: Date): string {
 function fromDateString(value: string): globalThis.Date {
 	const values = value.split("/");
 
-	const month = Number.parseInt(values[0]) - 1,
-		day = Number.parseInt(values[1]),
-		year = Number.parseInt(values[2]);
+	const month = Number.parseInt(values[0]!) - 1,
+		day = Number.parseInt(values[1]!),
+		year = Number.parseInt(values[2]!);
 
 	return new Date(year, month, day);
 }

@@ -42,6 +42,6 @@ export function gradientTextColor(color1: string, color2: string) {
 		}
 		return Math.pow((col + 0.055) / 1.055, 2.4);
 	});
-	const L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+	const L = 0.2126 * c[0]! + 0.7152 * c[1]! + 0.0722 * c[2]!;
 	return L > threshold ? "#111111" : "#F5F5F5";
 }

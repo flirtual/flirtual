@@ -41,19 +41,22 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 			style={{ backgroundColor: color }}
 			type="button"
 			onClick={async () => {
+				const url = new URL(location.href);
+				url.search = "";
+
 				if (!native)
 					return router.push(
 						api.connections.authorizeUrl(
 							type,
 							"none",
-							location.href.split("?")[0]
+							url.href
 						).href
 					);
 
 				const { authorizeUrl, state } = await api.connections.authorize(
 					type,
 					"none",
-					location.href.split("?")[0]
+					url.href
 				);
 
 				await InAppBrowser.addListener("urlChangeEvent", async (event) => {

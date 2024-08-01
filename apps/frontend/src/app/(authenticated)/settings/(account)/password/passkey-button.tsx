@@ -8,8 +8,8 @@ import { useToast } from "~/hooks/use-toast";
 
 export interface PasskeyButtonProps {
 	id: string;
-	name: string;
-	icon: string;
+	name?: string;
+	icon?: string;
 	date: Date;
 }
 

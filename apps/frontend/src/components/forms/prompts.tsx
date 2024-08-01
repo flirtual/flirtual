@@ -128,7 +128,7 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 			<SortableGrid
 				onChange={(newOrder) => {
 					const keyedValue = groupBy(props.value, ({ prompt }) => prompt.id);
-					props.onChange(newOrder.map((id) => keyedValue[id][0]));
+					props.onChange(newOrder.map((id) => keyedValue[id]?.[0]).filter(Boolean));
 				}}
 				values={props.value.map(({ prompt }) => prompt.id)}
 			>

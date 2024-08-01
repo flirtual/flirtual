@@ -150,7 +150,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							.map(([reasonId, reports]) => (
 								<div className="flex gap-2" key={reasonId}>
 									<span>{`${reports.length}x`}</span>
-									<span>{reports[0].reason.name}</span>
+									{reports[0] && (<span>{reports[0].reason.name}</span>)}
 								</div>
 							))}
 					</button>
@@ -344,7 +344,7 @@ export const ReportView: React.FC = () => {
 					{entries(grouped).map(([targetId, reports]) => (
 						<ProfileReportView
 							key={targetId}
-							reported={reports[0].target}
+							reported={reports[0]?.target}
 							reports={reports}
 						/>
 					))}

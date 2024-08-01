@@ -151,8 +151,8 @@ export async function update(
 	options: NarrowFetchOptions<
 		UpdateUserBody,
 		| {
-				required?: Array<keyof UpdateUserBody>;
-		  }
+			required?: Array<keyof UpdateUserBody>;
+		}
 		| undefined
 	>
 ) {
@@ -229,8 +229,8 @@ export async function unblock(
 export async function suspend(
 	userId: string,
 	options: NarrowFetchOptions<{
-		reasonId: string;
-		message: string;
+		reasonId?: string;
+		message?: string;
 	}>
 ) {
 	return fetch<User>("post", `users/${userId}/suspend`, options);

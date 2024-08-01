@@ -25,14 +25,14 @@ async function ImageListItem(item: ImageListItemProps) {
 		<div className="flex flex-col gap-2">
 			<a
 				className="flex h-full items-center justify-center overflow-hidden rounded-lg"
-				href={getUrl(item.name, defaultKind)}
+				href={getUrl(item.name, defaultKind!)}
 				style={{
 					background: item.dark
 						? "repeating-conic-gradient(#333 0% 25%, #555 0% 50%) 50% / 30px 30px"
 						: "repeating-conic-gradient(#fff 0% 25%, #eee 0% 50%) 50% / 30px 30px"
 				}}
 			>
-				<img className="h-fit w-full" src={getUrl(item.name, defaultKind)} />
+				<img className="h-fit w-full" src={getUrl(item.name, defaultKind!)} />
 			</a>
 			<div className="flex gap-2">
 				{kinds.map(({ kind }) => (

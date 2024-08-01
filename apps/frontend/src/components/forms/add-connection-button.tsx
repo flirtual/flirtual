@@ -50,12 +50,15 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 				onClick={async () => {
 					if (connection) return;
 
+					const url = new URL(location.href);
+					url.search = "";
+
 					if (!native) {
 						return router.push(
 							api.connections.authorizeUrl(
 								type,
 								"consent",
-								location.href.split("?")[0]
+								url.href
 							).href
 						);
 					}
@@ -70,7 +73,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 					const { authorizeUrl, state } = await api.connections.authorize(
 						type,
 						"consent",
-						location.href.split("?")[0]
+						url.href
 					);
 
 					await InAppBrowser.addListener("urlChangeEvent", async (event) => {

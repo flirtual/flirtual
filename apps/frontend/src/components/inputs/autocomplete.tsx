@@ -183,11 +183,11 @@ export function InputAutocomplete<K extends string>(
 									exactMatchOption ||
 									// If there is only one suggestion and it's close enough to the input.
 									(suggestions.length === 1 &&
-										fuzzy(value, suggestions[0].key) > 0.7)
+										fuzzy(value, suggestions[0]!.key) > 0.7)
 								) {
 									props.onChange([
 										...values,
-										exactMatchOption?.key ?? suggestions[0].key
+										exactMatchOption?.key ?? suggestions[0]!.key
 									]);
 									setInputValue("");
 

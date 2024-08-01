@@ -42,8 +42,8 @@ export type DeepWriteable<T> = {
 export type Cast<X, Y> = X extends Y ? X : Y;
 export type FromEntries<T> =
 	T extends Array<[infer Key, any]>
-		? { [K in Cast<Key, string>]: Extract<ArrayElement<T>, [K, any]>[1] }
-		: { [key in string]: any };
+	? { [K in Cast<Key, string>]: Extract<ArrayElement<T>, [K, any]>[1] }
+	: { [key in string]: any };
 
 export function fromEntries<T extends Array<any>>(
 	value: T
@@ -114,11 +114,11 @@ export function toSnakeObject<T>(object: any): T {
 }
 
 export function capitalize<T extends string>(value: T): Capitalize<T> {
-	return `${value[0].toUpperCase()}${value.slice(1)}` as Capitalize<T>;
+	return `${value[0]?.toUpperCase()}${value.slice(1)}` as Capitalize<T>;
 }
 
 export function uncapitalize<T extends string>(value: T): Uncapitalize<T> {
-	return `${value[0].toLowerCase()}${value.slice(1)}` as Uncapitalize<T>;
+	return `${value[0]?.toLowerCase()}${value.slice(1)}` as Uncapitalize<T>;
 }
 
 export function lowercase<T extends string>(value: T): Lowercase<T> {
@@ -242,7 +242,7 @@ export function hashCode(value: string): number {
 export function tinySimpleHash(value: string): number {
 	let h = 9;
 
-	for (let index = 0; index < value.length; ) {
+	for (let index = 0; index < value.length;) {
 		h = Math.imul(h ^ (value.codePointAt(index++) || 1), 9 ** 9);
 	}
 

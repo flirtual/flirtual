@@ -165,7 +165,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 					images[
 						(newImageOffset < 0 ? images.length - 1 : newImageOffset) %
 							images.length
-					].id;
+					]?.id;
 				return newImageId;
 			});
 		},

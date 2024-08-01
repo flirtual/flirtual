@@ -169,7 +169,7 @@ export const Finish3Form: FC<Finish3FormProps> = (props) => {
 					/>
 					{categories.map((category) => {
 						const filteredInterests = filterInterests(
-							categorizedInterests[category.name]
+							categorizedInterests[category.name]!
 						);
 						if (filteredInterests.length === 0) return null;
 

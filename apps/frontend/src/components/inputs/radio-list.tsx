@@ -40,7 +40,7 @@ export function InputRadioList<T extends string>(
 				};
 			})}
 			onChange={(value) => {
-				props.onChange(value[0]);
+				props.onChange(value[0]!);
 			}}
 		/>
 	);

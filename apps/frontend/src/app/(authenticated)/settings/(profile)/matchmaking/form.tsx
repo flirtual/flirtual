@@ -337,7 +337,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 											disabled={
 												key === "country" ? false : !user.subscription?.active
 											}
-											onValueChange={(values) => onChange(values[0])}
+											onValueChange={(values) => onChange(values[0]!)}
 										/>
 									</>
 								)}

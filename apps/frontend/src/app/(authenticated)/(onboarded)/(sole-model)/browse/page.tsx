@@ -29,6 +29,8 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 		}
 	});
 
+	if (!prospects[0]) return;
+
 	return (
 		<>
 			<ProspectList

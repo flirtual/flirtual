@@ -34,7 +34,7 @@ export const BiographyForm: FC<{ games: AttributeCollection<"game"> }> = ({
 	const favoriteGame = user.profile.attributes
 		.map(({ id }) => findBy(games, "id", id))
 		.filter(Boolean)
-		.filter((game) => game.name !== "VRChat")[0].name;
+		.filter((game) => game.name !== "VRChat")[0]?.name;
 
 	return (
 		<Form
