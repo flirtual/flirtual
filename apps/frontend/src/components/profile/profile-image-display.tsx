@@ -6,16 +6,17 @@ import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Search, Trash2, X } from "lucide-react";
 
+import { UserImage } from "../user-avatar";
+import { TimeRelative } from "../time-relative";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { Dialog, DialogContent } from "../dialog/dialog";
+
 import { type ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
 import { urls } from "~/urls";
-
-import { UserImage } from "../user-avatar";
-import { TimeRelative } from "../time-relative";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
-import { Dialog, DialogContent } from "../dialog/dialog";
+import { useGlobalEventListener } from "~/hooks/use-event-listener";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
@@ -178,21 +179,26 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 		preventScrollOnSwipe: true
 	});
 
-	const handleKeyDown = useCallback(
-		(event: KeyboardEvent) => {
-			if (event.key === "ArrowLeft") set(-1);
-			if (event.key === "ArrowRight") set(1);
-			if (event.key === "f") setExpandedImage(true);
-			if (event.key === "Escape") setExpandedImage(false);
-		},
-		[set]
-	);
+	useGlobalEventListener(
+		"document",
+		"keydown",
+		useCallback(
+			(event) => {
+				if (
+					document.querySelector("[data-radix-focus-guard]") &&
+					!expandedImage
+				)
+					return;
 
-	useEffect(() => {
-		if (!current) return;
-		document.addEventListener("keydown", handleKeyDown);
-		return () => document.removeEventListener("keydown", handleKeyDown);
-	}, [handleKeyDown, current]);
+				if (event.key === "ArrowLeft") set(-1);
+				if (event.key === "ArrowRight") set(1);
+				if (event.key === "f") setExpandedImage(true);
+				if (event.key === "Escape") setExpandedImage(false);
+			},
+			[set, expandedImage]
+		),
+		current
+	);
 
 	return (
 		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
