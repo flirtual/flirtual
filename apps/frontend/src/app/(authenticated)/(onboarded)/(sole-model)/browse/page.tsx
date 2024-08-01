@@ -29,17 +29,13 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 		}
 	});
 
-	if (!prospects[0]) return;
-
 	return (
-		<>
-			<ProspectList
-				current={prospects[0]}
-				kind={kind}
-				likesLeft={prospects.length > 1 && likesLeft > 0}
-				next={prospects[1]}
-				passesLeft={prospects.length > 1 && passesLeft > 0}
-			/>
-		</>
+		<ProspectList
+			current={prospects[0]}
+			kind={kind}
+			likesLeft={prospects.length > 1 && likesLeft > 0}
+			next={prospects[1]}
+			passesLeft={prospects.length > 1 && passesLeft > 0}
+		/>
 	);
 }

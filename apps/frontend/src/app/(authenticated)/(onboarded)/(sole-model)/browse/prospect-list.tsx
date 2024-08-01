@@ -14,7 +14,7 @@ import type { User } from "~/api/user";
 import type { ProspectKind } from "~/api/matchmaking";
 
 export interface ProspectListProps {
-	current: User;
+	current?: User;
 	next?: User;
 	kind: ProspectKind;
 	likesLeft?: boolean;
