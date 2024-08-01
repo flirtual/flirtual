@@ -267,7 +267,7 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 					<FormButton>Update</FormButton>
 					{defaultCount + customCount > 0 && (
 						<div
-							className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4"
+							className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4"
 							style={{
 								backgroundImage: `conic-gradient(var(--theme-1) ${
 									((defaultCount + customCount) / 10) * 360

@@ -52,7 +52,7 @@ export default async function ConversationPage({
 		<>
 			<ConversationAside activeConversationId={conversation.id} />
 			<div className="size-full bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
-				<div className="mt-[max(calc(env(safe-area-inset-top)+1.75rem),2.25rem)] flex w-full items-center bg-brand-gradient p-3 pt-[0.5625rem] vision:bg-none android:mt-[max(calc(var(--safe-area-inset-top)+1.5rem),2rem)] desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
+				<div className="mt-[max(calc(env(safe-area-inset-top,0rem)+1.75rem),2.25rem)] flex w-full items-center bg-brand-gradient p-3 pt-[0.5625rem] vision:bg-none android:mt-[max(calc(var(--safe-area-inset-top,0rem)+1.5rem),2rem)] desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
 					<InlineLink
 						className="flex items-center gap-4 hocus:no-underline"
 						href={urls.profile(user)}

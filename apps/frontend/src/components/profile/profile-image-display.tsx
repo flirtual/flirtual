@@ -284,7 +284,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							<div className="-mx-1 flex grow items-center">
 								{images.map((image) => (
 									<button
-										className="group grow px-1 py-6 pt-[max(env(safe-area-inset-top),1.5rem)] android:pt-[max(var(--safe-area-inset-top),1.5rem)]"
+										className="group grow px-1 py-6 pt-[max(env(safe-area-inset-top,0rem),1.5rem)] android:pt-[max(var(--safe-area-inset-top,0rem),1.5rem)]"
 										key={image.id}
 										type="button"
 										onClick={() => set(0, image.id)}

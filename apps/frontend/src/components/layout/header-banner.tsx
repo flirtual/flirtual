@@ -25,7 +25,7 @@ export const HeaderBanner: FC = () => {
 
 	return (
 		<div className="fixed top-0 z-10 flex w-full justify-center bg-black-70 text-white-20 shadow-brand-1 desktop:relative desktop:shadow-none">
-			<div className="max-w-screen-lg relative flex w-full items-center justify-center px-8 py-4 pt-[max(calc(env(safe-area-inset-top)+0.5rem),1rem)]">
+			<div className="max-w-screen-lg relative flex w-full items-center justify-center px-8 py-4 pt-[max(calc(env(safe-area-inset-top,0rem)+0.5rem),1rem)]">
 				<div className="relative flex items-center gap-4 font-montserrat leading-none desktop:text-lg">
 					<MoveRight className="mt-[0.15rem] w-6 animate-bounce-x" />
 					<span>

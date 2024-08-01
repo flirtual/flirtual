@@ -43,7 +43,7 @@ export const SettingsNavigation: FC = () => {
 			<div className="vision:bg-none desktop:rounded-2xl desktop:rounded-t-none desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
 				<nav
 					className={twMerge(
-						"flex-col gap-8 pb-6 pt-[calc(env(safe-area-inset-top)+1.5rem)] vision:bg-transparent android:pt-[calc(var(--safe-area-inset-top)+1.5rem)] dark:bg-transparent desktop:rounded-xl desktop:bg-white-20 desktop:pb-4 desktop:pt-6 desktop:shadow-brand-inset android:desktop:pt-6 dark:desktop:bg-black-70",
+						"flex-col gap-8 pb-6 pt-[calc(env(safe-area-inset-top,0rem)+1.5rem)] vision:bg-transparent android:pt-[calc(var(--safe-area-inset-top,0rem)+1.5rem)] dark:bg-transparent desktop:rounded-xl desktop:bg-white-20 desktop:pb-4 desktop:pt-6 desktop:shadow-brand-inset android:desktop:pt-6 dark:desktop:bg-black-70",
 						layoutSegment ? "hidden desktop:flex" : "flex"
 					)}
 				>

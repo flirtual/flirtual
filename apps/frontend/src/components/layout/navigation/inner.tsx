@@ -18,7 +18,7 @@ export const NavigationInner: FC<NavigationInnerProps> = (props) => {
 		<div
 			{...elementProps}
 			className={twMerge(
-				"flex size-full items-center justify-evenly gap-4 px-5 pb-[max(calc(env(safe-area-inset-bottom)-0.625rem),0.5rem)] pt-2 font-nunito text-white-20 desktop:w-auto desktop:pb-2",
+				"flex size-full items-center justify-evenly gap-4 px-5 pb-[max(calc(env(safe-area-inset-bottom,0rem)-0.625rem),0.5rem)] pt-2 font-nunito text-white-20 desktop:w-auto desktop:pb-2",
 				props.className
 			)}
 		>

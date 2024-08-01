@@ -153,8 +153,8 @@ export const ConversationChatbox: React.FC<
 		return vision
 			? `calc(100${unit} - 8.125rem)`
 			: platform === "android"
-				? `calc(100${unit} - max(calc(var(--safe-area-inset-top) + 0.5rem), 1rem) - 11.625rem)`
-				: `calc(100${unit} - max(calc(env(safe-area-inset-top) + 0.5rem), 1rem) - max(calc(env(safe-area-inset-bottom) - 0.625rem), 0.5rem) - 11.125rem)`;
+				? `calc(100${unit} - max(calc(var(--safe-area-inset-top, 0rem) + 0.5rem), 1rem) - 11.625rem)`
+				: `calc(100${unit} - max(calc(env(safe-area-inset-top, 0rem) + 0.5rem), 1rem) - max(calc(env(safe-area-inset-bottom, 0rem) - 0.625rem), 0.5rem) - 11.125rem)`;
 	}, [element, platform]);
 
 	useEffect(() => {

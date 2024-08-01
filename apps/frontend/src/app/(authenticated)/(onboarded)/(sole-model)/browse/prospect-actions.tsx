@@ -319,7 +319,7 @@ export const _ProspectActions: FC<{
 	return (
 		<>
 			<div className="h-[5.5rem] w-full desktop:h-0">
-				<div className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom)+3.375rem),4.5rem)] left-0 flex w-full flex-col items-center justify-center gap-3 px-2 pb-4 vision:bottom-2 desktop:bottom-0 desktop:py-8">
+				<div className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+3.375rem),4.5rem)] left-0 flex w-full flex-col items-center justify-center gap-3 px-2 pb-4 vision:bottom-2 desktop:bottom-0 desktop:py-8">
 					<div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-xl py-2 text-white-10 desktop:gap-3">
 						<Tooltip>
 							<TooltipTrigger asChild>
