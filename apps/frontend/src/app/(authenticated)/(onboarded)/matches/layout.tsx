@@ -70,12 +70,12 @@ export default async function ConversationsLayout({
 			) : (
 				// eslint-disable-next-line tailwindcss/no-contradicting-classname
 				<div className="flex min-h-dvh min-h-screen grow flex-col items-center bg-white-20 font-nunito text-black-80 vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:flex-col desktop:bg-cream desktop:dark:bg-black-80">
-					<Header className="hidden desktop:flex" />
+					<Header />
 					<div className="flex w-full grow flex-col gap-8 desktop:flex-row desktop:justify-center desktop:p-8">
 						{children}
 					</div>
 					<Footer desktopOnly />
-					<Header className="desktop:hidden" />
+					<Header mobile />
 				</div>
 			)}
 		</SWRConfig>

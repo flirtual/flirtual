@@ -23,7 +23,7 @@ export default async function SettingsLayout({
 				"flex min-h-screen grow flex-col items-center bg-white-20 font-nunito text-black-80 vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:flex-col desktop:bg-cream"
 			)}
 		>
-			<Header className="hidden desktop:flex" />
+			<Header />
 			<div className="flex w-full grow flex-col pt-16 desktop:flex-row desktop:justify-center desktop:gap-8 desktop:py-8">
 				<SettingsNavigation />
 				<div
@@ -34,7 +34,7 @@ export default async function SettingsLayout({
 				</div>
 			</div>
 			<Footer desktopOnly />
-			<Header className="desktop:hidden" />
+			<Header mobile />
 		</div>
 	);
 }

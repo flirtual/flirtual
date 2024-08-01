@@ -32,6 +32,7 @@ import type {
 	ProspectRespondType,
 	RespondProspectBody
 } from "~/api/matchmaking";
+import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 
 const Key = (props: { label: string }) => {
 	return (
@@ -49,6 +50,7 @@ export const _ProspectActions: FC<{
 }> = ({ prospect, kind, likesLeft = false, passesLeft = false }) => {
 	const toasts = useToast();
 	const router = useRouter();
+	const mobile = !useScreenBreakpoint("desktop");
 
 	const [actionDialog, setActionDialog] = useState<{
 		message: string;
@@ -121,7 +123,7 @@ export const _ProspectActions: FC<{
 					id: "conversations",
 					title: "Shoot your shot!",
 					text: "View your matches here. Message them and meet up in VR!",
-					attachTo: { element: "#conversation-button", on: "top" },
+					attachTo: { element: `#conversation-button${mobile ? "-mobile" : ""}`, on: "top" },
 					modalOverlayOpeningRadius: 20,
 					modalOverlayOpeningPadding: 4
 				},
@@ -131,14 +133,14 @@ export const _ProspectActions: FC<{
 					text: `
 					Switch between <b>Date Mode</b> and <b>Homie Mode</b> (without matchmaking filters) to see more profiles.<br/><br/>
 					Each day, you can browse up to <b>30 profiles</b> and Like or Homie up to 15 of them in each mode.`,
-					attachTo: { element: "#browse-mode-switch", on: "top" },
-					modalOverlayOpeningRadius: 33
+					attachTo: { element: `#browse-mode-switch${mobile ? "-mobile" : ""}`, on: "top" },
+					modalOverlayOpeningRadius: mobile ? 28 : 33
 				},
 				{
 					id: "profile-dropdown",
 					title: "Customize your experience!",
 					text: "Here you can <b>update your profile</b>, or subscribe to Premium to browse unlimited profiles and see who likes you before you match.",
-					attachTo: { element: "#profile-dropdown-button", on: "top" },
+					attachTo: { element: `#profile-dropdown-button${mobile ? "-mobile" : ""}`, on: "top" },
 					modalOverlayOpeningRadius: 20,
 					modalOverlayOpeningPadding: 4
 				},
@@ -165,7 +167,7 @@ export const _ProspectActions: FC<{
 					]
 				}
 			],
-			[]
+			[mobile]
 		),
 		{
 			defaultStart: true

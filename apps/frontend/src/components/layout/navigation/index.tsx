@@ -43,13 +43,13 @@ const NavigationIconButton: FC<
 	);
 };
 
-export const ConversationListButton: FC = () => {
+export const ConversationListButton: FC<{ id?: string }> = ({ id }) => {
 	const conversationCount = clamp(useUnreadConversations().length, 0, 99);
 
 	return (
 		<NavigationIconButton
 			href={urls.conversations.list()}
-			id="conversation-button"
+			id={id}
 		>
 			<div className="relative">
 				<ChatBubbleLeftRightIcon
@@ -114,11 +114,11 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 	</div>
 );
 
-export const AuthenticatedNavigation: FC = () => {
+export const AuthenticatedNavigation: FC<{ mobile?: boolean }> = ({ mobile = false }) => {
 	return (
 		<>
-			<ProfileNavigation href={urls.user.me} />
-			<NavigationalSwitch id="browse-mode-switch">
+			<ProfileNavigation href={urls.user.me} id={`profile-dropdown-button${mobile ? "-mobile" : ""}`} />
+			<NavigationalSwitch id={`browse-mode-switch${mobile ? "-mobile" : ""}`}>
 				<SwitchButton
 					href={urls.browse()}
 					Icon={HeartIcon}
@@ -130,7 +130,7 @@ export const AuthenticatedNavigation: FC = () => {
 					className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
 				/>
 			</NavigationalSwitch>
-			<ConversationListButton />
+			<ConversationListButton id={`conversation-button${mobile ? "-mobile" : ""}`} />
 		</>
 	);
 };

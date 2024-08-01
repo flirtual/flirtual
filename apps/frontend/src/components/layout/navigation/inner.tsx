@@ -9,10 +9,11 @@ import type { User } from "~/api/user";
 
 export type NavigationInnerProps = ComponentProps<"div"> & {
 	user?: User;
+	mobile?: boolean;
 };
 
 export const NavigationInner: FC<NavigationInnerProps> = (props) => {
-	const { user, ...elementProps } = props;
+	const { user, mobile = false, ...elementProps } = props;
 
 	return (
 		<div
@@ -22,7 +23,7 @@ export const NavigationInner: FC<NavigationInnerProps> = (props) => {
 				props.className
 			)}
 		>
-			{user ? <AuthenticatedNavigation /> : <GuestNavigation />}
+			{user ? <AuthenticatedNavigation mobile={mobile} /> : <GuestNavigation />}
 		</div>
 	);
 };

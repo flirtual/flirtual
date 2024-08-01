@@ -27,7 +27,7 @@ export function SoleModelLayout({
 				props.className
 			)}
 		>
-			{navigation !== false && <Header className="hidden desktop:flex" />}
+			{navigation !== false && <Header />}
 			<div
 				{...containerProps}
 				className={twMerge(
@@ -40,7 +40,7 @@ export function SoleModelLayout({
 			{navigation !== false && (
 				<>
 					<Footer className="desktop:pb-36 wide:pb-20" {...footer} />
-					<Header className="desktop:hidden" />
+					<Header mobile />
 				</>
 			)}
 		</div>

@@ -47,7 +47,7 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 	);
 };
 
-export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
+export const ProfileNavigation: React.FC<{ href: string, id?: string }> = (props) => {
 	const [session, mutateSession] = useSession();
 	const [visible, setVisible] = useState(false);
 	const elementReference = useRef<HTMLDivElement>(null);
@@ -76,7 +76,7 @@ export const ProfileNavigation: React.FC<{ href: string }> = (props) => {
 	return (
 		<div className="relative aspect-square shrink-0 select-none">
 			<button
-				id="profile-dropdown-button"
+				id={props.id}
 				type="button"
 				className={twMerge(
 					"group rounded-full p-1 transition-all",
