@@ -7,6 +7,15 @@ import { type FC, useCallback, useEffect, useRef, useState } from "react";
 import { Undo2, X } from "lucide-react";
 import dynamic from "next/dynamic";
 
+import { Countdown } from "./countdown";
+
+import type { User } from "~/api/user";
+import type {
+	ProspectKind,
+	ProspectRespondType,
+	RespondProspectBody
+} from "~/api/matchmaking";
+
 import { api } from "~/api";
 import { Button } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
@@ -23,16 +32,8 @@ import {
 	DialogHeader,
 	DialogTitle
 } from "~/components/dialog/dialog";
-
-import { Countdown } from "./countdown";
-
-import type { User } from "~/api/user";
-import type {
-	ProspectKind,
-	ProspectRespondType,
-	RespondProspectBody
-} from "~/api/matchmaking";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+import { useGlobalEventListener } from "~/hooks/use-event-listener";
 
 const Key = (props: { label: string }) => {
 	return (
@@ -123,7 +124,10 @@ export const _ProspectActions: FC<{
 					id: "conversations",
 					title: "Shoot your shot!",
 					text: "View your matches here. Message them and meet up in VR!",
-					attachTo: { element: `#conversation-button${mobile ? "-mobile" : ""}`, on: "top" },
+					attachTo: {
+						element: `#conversation-button${mobile ? "-mobile" : ""}`,
+						on: "top"
+					},
 					modalOverlayOpeningRadius: 20,
 					modalOverlayOpeningPadding: 4
 				},
@@ -133,14 +137,20 @@ export const _ProspectActions: FC<{
 					text: `
 					Switch between <b>Date Mode</b> and <b>Homie Mode</b> (without matchmaking filters) to see more profiles.<br/><br/>
 					Each day, you can browse up to <b>30 profiles</b> and Like or Homie up to 15 of them in each mode.`,
-					attachTo: { element: `#browse-mode-switch${mobile ? "-mobile" : ""}`, on: "top" },
+					attachTo: {
+						element: `#browse-mode-switch${mobile ? "-mobile" : ""}`,
+						on: "top"
+					},
 					modalOverlayOpeningRadius: mobile ? 28 : 33
 				},
 				{
 					id: "profile-dropdown",
 					title: "Customize your experience!",
 					text: "Here you can <b>update your profile</b>, or subscribe to Premium to browse unlimited profiles and see who likes you before you match.",
-					attachTo: { element: `#profile-dropdown-button${mobile ? "-mobile" : ""}`, on: "top" },
+					attachTo: {
+						element: `#profile-dropdown-button${mobile ? "-mobile" : ""}`,
+						on: "top"
+					},
 					modalOverlayOpeningRadius: 20,
 					modalOverlayOpeningPadding: 4
 				},
@@ -303,20 +313,21 @@ export const _ProspectActions: FC<{
 		router.refresh();
 	}, [router]);
 
-	const handleKeyDown = useCallback(
-		(event: KeyboardEvent) => {
-			if (event.key === "h") void respondReverse();
-			if (event.key === "j") void respond("like", kind);
-			if (event.key === "k") void respond("like", "friend");
-			if (event.key === "l") void respond("pass", kind);
-		},
-		[kind, respond, respondReverse]
-	);
+	useGlobalEventListener(
+		"document",
+		"keydown",
+		useCallback(
+			(event) => {
+				if (document.querySelector("[data-radix-focus-guard]")) return;
 
-	useEffect(() => {
-		document.addEventListener("keydown", handleKeyDown);
-		return () => document.removeEventListener("keydown", handleKeyDown);
-	}, [handleKeyDown]);
+				if (event.key === "h") void respondReverse();
+				if (event.key === "j") void respond("like", kind);
+				if (event.key === "k") void respond("like", "friend");
+				if (event.key === "l") void respond("pass", kind);
+			},
+			[kind, respond, respondReverse]
+		)
+	);
 
 	return (
 		<>
