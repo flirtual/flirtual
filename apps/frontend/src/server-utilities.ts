@@ -50,6 +50,7 @@ export const withOnboardedUser = cache(async () => {
 	const { user } = await withSession();
 
 	if (user.status === "registered") return redirect(urls.onboarding(1));
+	if (user.deactivatedAt) return redirect(urls.settings.deactivateAccount);
 
 	return user;
 });
