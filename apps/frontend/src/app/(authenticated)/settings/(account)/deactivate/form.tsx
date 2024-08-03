@@ -65,8 +65,8 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 						)}
 						<span className="select-none">
 							{deactivated
-								? "This will make your profile visible to other users again."
-								: "This will temporarily remove you from matchmaking and hide your profile from other users until you come back here and reactivate your account."}
+								? "This will make your profile visible to other people again."
+								: "This will temporarily remove you from matchmaking and hide your profile from other people until you come back here and reactivate your account."}
 						</span>
 						<div className="flex flex-col gap-4">
 							<FormButton>

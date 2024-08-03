@@ -3,16 +3,15 @@
 import { useRouter } from "next/navigation";
 import { Flag } from "lucide-react";
 
-import { useToast } from "~/hooks/use-toast";
-import { api } from "~/api";
-
 import { Button } from "../button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { DialogTrigger } from "../dialog/dialog";
 
 import { ReportDialog } from "./dialogs/report";
 
-import type { User } from "~/api/user";
+import { api } from "~/api";
+import { useToast } from "~/hooks/use-toast";
+import { displayName, type User } from "~/api/user";
 
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
@@ -27,7 +26,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 					await api.user
 						.unblock(user.id)
 						.then(() => {
-							toasts.add("User unblocked");
+							toasts.add(`Unblocked ${displayName(user)}`);
 							return router.refresh();
 						})
 						.catch(toasts.addError);

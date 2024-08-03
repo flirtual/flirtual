@@ -35,7 +35,7 @@ export const SectionTestimonial: React.FC<SectionTestimonialProps> = async ({
 					<Suspense fallback="0">
 						<UserTotal promise={totalUsersPromise} />
 					</Suspense>
-					+ users from all over the world!
+					+ people from all over the world!
 				</span>
 			</div>
 			<div className="flex overflow-x-hidden">

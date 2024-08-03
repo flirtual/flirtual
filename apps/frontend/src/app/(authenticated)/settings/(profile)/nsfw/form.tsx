@@ -72,7 +72,7 @@ export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
 								<InputLabel
 									{...field.labelProps}
 									inline
-									hint="Choose whether to display NSFW tags on other users' profiles."
+									hint="Choose whether to display NSFW tags on other people's profiles."
 								>
 									Show NSFW tags on profiles?
 								</InputLabel>
