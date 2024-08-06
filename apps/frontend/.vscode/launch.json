@@ -1,0 +1,28 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "pnpm dev",
+			"type": "node",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"outFiles": [
+				"${workspaceFolder}/**/*.js",
+				"!**/node_modules/**"
+			],
+			"attachSimplePort": 9230,
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": [
+				"dev"
+			],
+			"env": {
+				// https://nodejs.org/api/tty.html#writestreamgetcolordepthenv
+				"FORCE_COLOR": "3",
+			},
+			"autoAttachChildProcesses": true,
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+		}
+	]
+}

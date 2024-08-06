@@ -1,5 +1,15 @@
+/* eslint-disable unicorn/numeric-separators-style */
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function assert(condition: any, message: string): asserts condition {
+	if (!condition) throw new Error(message);
+}
+
 export const siteOrigin = process.env.NEXT_PUBLIC_ORIGIN as string;
+assert(siteOrigin, "NEXT_PUBLIC_ORIGIN is required");
+
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
+assert(apiUrl, "NEXT_PUBLIC_API_URL is required");
 
 export const environment = (process.env.NEXT_PUBLIC_VERCEL_ENV ||
 	process.env.NODE_ENV) as string;
