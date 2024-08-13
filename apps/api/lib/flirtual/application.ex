@@ -2,6 +2,7 @@ defmodule Flirtual.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+  require Logger
 
   use Application
 
@@ -20,10 +21,14 @@ defmodule Flirtual.Application do
       # Start Oban
       {Oban, Application.fetch_env!(:flirtual, Oban)},
       # Start Elasticsearch
-      Flirtual.Elasticsearch,
+      Flirtual.Elasticsearch,9
       # Start the push notification dispatchers
-      Flirtual.APNS,
-      Flirtual.FCM,
+      if(Application.get_env(:flirtual, Flirtual.APNS)[:key] in [nil, ""],
+        do: Logger.warning("Flirtual.APNS not configured, excluding from supervision tree.") && nil,
+        else: Flirtual.APNS),
+      if(Application.get_env(:flirtual, Flirtual.FCM)[:key] in [nil, ""],
+        do: Logger.warning("Flirtual.FCM not configured, excluding from supervision tree.") && nil,
+        else: Flirtual.FCM),
       # Start the Telemetry supervisor
       FlirtualWeb.Telemetry,
       # Start the PubSub system
@@ -34,7 +39,7 @@ defmodule Flirtual.Application do
       # Start a worker by calling: Flirtual.Worker.start_link(arg)
       # {Flirtual.Worker, arg}
       Flirtual.AttributeOrderWorker
-    ]
+    ] |> Enum.reject(&is_nil/1)
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
