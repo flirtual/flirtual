@@ -21,7 +21,7 @@ defmodule Flirtual.Application do
       # Start Oban
       {Oban, Application.fetch_env!(:flirtual, Oban)},
       # Start Elasticsearch
-      Flirtual.Elasticsearch,9
+      Flirtual.Elasticsearch,
       # Start the push notification dispatchers
       if(Application.get_env(:flirtual, Flirtual.APNS)[:key] in [nil, ""],
         do: Logger.warning("Flirtual.APNS not configured, excluding from supervision tree.") && nil,
