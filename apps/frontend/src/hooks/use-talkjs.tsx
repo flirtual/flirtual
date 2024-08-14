@@ -59,7 +59,7 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 	}, [talkjsUserId, talkjsSignature, ready]);
 
 	useEffect(() => {
-		if (!session || !pushRegistrationId) return;
+		if (!session || !pushRegistrationId || authSession?.sudoerId) return;
 
 		void (async () => {
 			await session.clearPushRegistrations();

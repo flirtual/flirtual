@@ -78,9 +78,9 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			registrationListener = await PushNotifications.addListener(
 				"registration",
 				async (token) => {
-					setPushRegistrationId(token.value);
+					if (!session || session.sudoerId) return;
 
-					if (!session) return;
+					setPushRegistrationId(token.value);
 					if (platform === "apple" && token.value !== session.user.apnsToken)
 						await api.user.updatePushTokens(session.user.id, {
 							body: {

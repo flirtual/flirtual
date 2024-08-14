@@ -151,8 +151,9 @@ defmodule Flirtual.User.Session do
     # If the user was active in the last hour, don't update their last active at.
     # This is to prevent the user from being updated every time they make a request.
     if(
-      not is_nil(last_active_at) and
-        DateTime.compare(now, DateTime.add(last_active_at, @hour_in_seconds)) === :lt
+      (not is_nil(last_active_at) and
+         DateTime.compare(now, DateTime.add(last_active_at, @hour_in_seconds)) === :lt) or
+        not is_nil(session.sudoer_id)
     ) do
       {:ok, session}
     else
