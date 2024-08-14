@@ -244,7 +244,6 @@ defmodule FlirtualWeb.Router do
           pipe_through([:require_authenticated_user, :require_valid_user])
 
           get("/", ConversationController, :list)
-          get("/unread", ConversationController, :list_unread)
           delete("/unread", ConversationController, :mark_read)
 
           scope "/:conversation_id" do
@@ -343,8 +342,6 @@ defmodule FlirtualWeb.Router do
             end
 
             post("/password", UsersController, :update_password)
-
-            get("/connections", UsersController, :list_connections)
 
             post("/push-tokens", UsersController, :update_push_tokens)
             delete("/push-count", UsersController, :reset_push_count)
