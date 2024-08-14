@@ -5,9 +5,7 @@ defmodule FlirtualWeb.ConversationController do
   import FlirtualWeb.Utilities
   import Phoenix.Controller
 
-  alias Flirtual.Policy
-  alias Flirtual.Conversation
-  alias Flirtual.Talkjs
+  alias Flirtual.{Conversation, Policy, Report, Talkjs}
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -51,6 +49,43 @@ defmodule FlirtualWeb.ConversationController do
 
     with {:ok, _} <- Talkjs.mark_conversations_read(user.id) do
       conn |> json(%{success: true})
+    end
+  end
+
+  def observe(conn, %{"conversation_id" => conversation_id}) do
+    with user <- conn.assigns[:session].user,
+         {:ok, conversation} <- Conversation.get(conversation_id),
+         true <- :admin in user.tags,
+         true <-
+           (case conversation.participants do
+              [_, _ | _] ->
+                true
+
+              [user_id1, user_id2] ->
+                case Report.get(user_id1, user_id2) do
+                  {:ok, _} ->
+                    true
+
+                  _ ->
+                    case Report.get(user_id2, user_id1) do
+                      {:ok, _} -> true
+                      _ -> false
+                    end
+                end
+
+              _ ->
+                false
+            end),
+         {:ok, _} <-
+           %{"conversation_id" => conversation_id, "user_id" => user.id}
+           |> Flirtual.ObanWorkers.Unobserve.new(schedule_in: 300)
+           |> Oban.insert(),
+         {:ok, _} <- Talkjs.add_participant(conversation_id, user.id, true) do
+      conn |> json(%{success: true})
+    else
+      _ ->
+        {:error,
+         {:forbidden, "Cannot observe this conversation", %{conversation_id: conversation_id}}}
     end
   end
 end

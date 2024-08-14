@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
+import crypto from "crypto";
+
 import { camelCase, snakeCase } from "change-case";
 
 export type Expand<T> = T extends
@@ -267,4 +269,14 @@ export function uniqueLast<T>(
 	}
 
 	return [...seen.values()];
+}
+
+export function newConversationId(
+	userId: string,
+	targetUserId: string
+): string {
+	const sortedIds = [userId, targetUserId].sort();
+	const jsonString = JSON.stringify(sortedIds);
+	const hash = crypto.createHash("sha1").update(jsonString).digest("hex");
+	return hash.slice(0, 20);
 }

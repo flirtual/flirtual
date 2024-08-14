@@ -1,20 +1,21 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
 
-import { ConversationChatbox } from "~/hooks/use-talkjs";
-import { displayName } from "~/api/user";
-import { api } from "~/api";
-import { urls } from "~/urls";
-import { thruServerCookies } from "~/server-utilities";
-import { UserAvatar } from "~/components/user-avatar";
-import { InlineLink } from "~/components/inline-link";
-
 import { getProfileUser } from "../../(sole-model)/[slug]/profile-user";
 import { ConversationAside } from "../aside";
 
 import { FaceTimeButton } from "./facetime-button";
 
 import type { Metadata } from "next";
+
+import { ConversationChatbox } from "~/hooks/use-talkjs";
+import { displayName } from "~/api/user";
+import { api } from "~/api";
+import { urls } from "~/urls";
+import { thruServerCookies, withSession } from "~/server-utilities";
+import { UserAvatar } from "~/components/user-avatar";
+import { InlineLink } from "~/components/inline-link";
+import { Button } from "~/components/button";
 
 export interface ConversationPageProps {
 	params: {
@@ -42,10 +43,14 @@ export async function generateMetadata({
 export default async function ConversationPage({
 	params
 }: ConversationPageProps) {
+	const session = await withSession();
 	const conversation = await getConversation(params.conversationId);
 	const user = await getProfileUser(conversation.userId);
 
-	if (!user || !user.relationship?.matched)
+	if (
+		!user ||
+		(!user.relationship?.matched && !session.user.tags?.includes("admin"))
+	)
 		return redirect(urls.conversations.list());
 
 	return (

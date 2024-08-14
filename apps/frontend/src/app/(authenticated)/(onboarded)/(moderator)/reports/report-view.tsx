@@ -16,14 +16,18 @@ import {
 	ChevronDown,
 	ChevronRight,
 	ExternalLink,
+	MessagesSquare,
 	ShieldCheck
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+import type { ListOptions, Report } from "~/api/report";
 
 import { api } from "~/api";
 import { displayName, type User } from "~/api/user";
 import { ModelCard } from "~/components/model-card";
-import { entries, groupBy, sortBy } from "~/utilities";
+import { entries, groupBy, newConversationId, sortBy } from "~/utilities";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
@@ -32,8 +36,7 @@ import { TimeRelative } from "~/components/time-relative";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { InputCheckbox, InputLabel } from "~/components/inputs";
-
-import type { ListOptions, Report } from "~/api/report";
+import { useSession } from "~/hooks/use-session";
 
 type CompleteReport = Report & { user?: User; target: User };
 
@@ -63,6 +66,8 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	const [collapsed, setCollapsed] = useState(reports.length >= 2);
 	const { mutate } = useContext(ReportListContext);
 	const toasts = useToast();
+	const router = useRouter();
+	const [session] = useSession();
 
 	const CollapseIcon = collapsed ? ChevronRight : ChevronDown;
 
@@ -164,28 +169,42 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 									report.reviewedAt && "brightness-75"
 								)}
 							>
-								<div className="flex flex-col">
-									<span
-										suppressHydrationWarning
-										className="text-xs text-black-50 first-letter:capitalize dark:text-white-50"
-									>
-										<TimeRelative
-											approximate
-											suffix="since"
-											value={report.createdAt}
-										/>{" "}
-										<DateTimeRelative value={report.createdAt} />
-									</span>
-
-									<div className="flex items-center justify-between gap-4 pr-3">
+								<div className="flex justify-between gap-4">
+									<div className="flex flex-col">
+										<span
+											suppressHydrationWarning
+											className="text-xs text-black-50 first-letter:capitalize dark:text-white-50"
+										>
+											<TimeRelative
+												approximate
+												suffix="since"
+												value={report.createdAt}
+											/>{" "}
+											<DateTimeRelative value={report.createdAt} />
+										</span>
 										<span className="text-lg font-semibold">
 											{report.reason.name}
 										</span>
-										{!report.reviewedAt && (
+										<div className="flex items-baseline gap-1">
+											Reporter:
+											<InlineLink
+												href={
+													report.user
+														? urls.profile(report.user)
+														: urls.moderation.reports()
+												}
+											>
+												{report.user
+													? displayName(report.user)
+													: "Deleted user"}
+											</InlineLink>
+										</div>
+									</div>
+									{!report.reviewedAt && (
+										<div className="flex flex-col gap-4">
 											<Tooltip>
 												<TooltipTrigger asChild>
 													<button
-														className="h-fit"
 														type="button"
 														onClick={async () => {
 															await api.report.clear(report.id);
@@ -199,20 +218,35 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 												</TooltipTrigger>
 												<TooltipContent>Clear single report</TooltipContent>
 											</Tooltip>
-										)}
-									</div>
-								</div>
-								<div className="flex items-baseline gap-1">
-									Reporter:
-									<InlineLink
-										href={
-											report.user
-												? urls.profile(report.user)
-												: urls.moderation.reports()
-										}
-									>
-										{report.user ? displayName(report.user) : "Deleted user"}
-									</InlineLink>
+											{session?.user.tags?.includes("admin") &&
+												report.userId && (
+													<Tooltip>
+														<TooltipTrigger asChild>
+															<button
+																type="button"
+																onClick={async () => {
+																	const conversationId = newConversationId(
+																		report.userId!,
+																		report.targetId
+																	);
+																	await api.conversations.observe(
+																		conversationId
+																	);
+																	router.push(
+																		urls.conversations.of(conversationId)
+																	);
+																}}
+															>
+																<MessagesSquare className="size-5" />
+															</button>
+														</TooltipTrigger>
+														<TooltipContent>
+															Observe conversation
+														</TooltipContent>
+													</Tooltip>
+												)}
+										</div>
+									)}
 								</div>
 								{report.message && (
 									<p className="whitespace-pre-wrap">{report.message}</p>

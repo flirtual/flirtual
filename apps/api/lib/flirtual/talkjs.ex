@@ -138,6 +138,24 @@ defmodule Flirtual.Talkjs do
     end
   end
 
+  def add_participant(conversation_id, user_id, observer \\ false) do
+    case fetch(
+           :put,
+           "conversations/" <> conversation_id <> "/participants/" <> ShortUUID.decode!(user_id),
+           if observer do
+             %{
+               "access" => "Read",
+               "notify" => false
+             }
+           else
+             %{}
+           end
+         ) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+    end
+  end
+
   def delete_participants(user_id: user_id, target_id: target_id)
       when is_uid(user_id) and is_uid(target_id) do
     conversation_id = new_conversation_id(user_id, target_id)

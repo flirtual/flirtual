@@ -249,6 +249,7 @@ defmodule FlirtualWeb.Router do
 
           scope "/:conversation_id" do
             get("/", ConversationController, :get)
+            post("/observe", ConversationController, :observe)
           end
         end
 

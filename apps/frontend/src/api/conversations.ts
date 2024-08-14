@@ -55,3 +55,10 @@ export async function list(
 export async function markRead(options: NarrowFetchOptions = {}) {
 	return fetch("delete", "conversations/unread", options);
 }
+
+export async function observe(
+	conversationId: string,
+	options: NarrowFetchOptions = {}
+) {
+	return fetch("post", `conversations/${conversationId}/observe`, options);
+}

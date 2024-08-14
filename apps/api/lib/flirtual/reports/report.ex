@@ -168,6 +168,12 @@ defmodule Flirtual.Report do
     Report |> where(id: ^report_id) |> Repo.one()
   end
 
+  def get(user_id, target_id) when is_uid(user_id) and is_uid(target_id) do
+    Report
+    |> where(user_id: ^user_id, target_id: ^target_id)
+    |> Repo.one()
+  end
+
   defmodule List do
     use Flirtual.EmbeddedSchema
 
