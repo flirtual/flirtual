@@ -245,10 +245,10 @@ defmodule FlirtualWeb.Router do
 
           get("/", ConversationController, :list)
           delete("/unread", ConversationController, :mark_read)
+          post("/observe", ConversationController, :observe)
 
           scope "/:conversation_id" do
             get("/", ConversationController, :get)
-            post("/observe", ConversationController, :observe)
           end
         end
 

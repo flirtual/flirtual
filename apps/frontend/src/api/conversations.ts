@@ -57,8 +57,7 @@ export async function markRead(options: NarrowFetchOptions = {}) {
 }
 
 export async function observe(
-	conversationId: string,
-	options: NarrowFetchOptions = {}
+	options: NarrowFetchOptions<{ userId: string; targetId: string }>
 ) {
-	return fetch("post", `conversations/${conversationId}/observe`, options);
+	return fetch("post", "conversations/observe", options);
 }

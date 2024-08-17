@@ -52,30 +52,11 @@ defmodule FlirtualWeb.ConversationController do
     end
   end
 
-  def observe(conn, %{"conversation_id" => conversation_id}) do
+  def observe(conn, %{"user_id" => user_id, "target_id" => target_id}) do
     with user <- conn.assigns[:session].user,
-         {:ok, conversation} <- Conversation.get(conversation_id),
+         conversation_id <- Talkjs.new_conversation_id(user_id, target_id),
          true <- :admin in user.tags,
-         true <-
-           (case conversation.participants do
-              [_, _ | _] ->
-                true
-
-              [user_id1, user_id2] ->
-                case Report.get(user_id1, user_id2) do
-                  {:ok, _} ->
-                    true
-
-                  _ ->
-                    case Report.get(user_id2, user_id1) do
-                      {:ok, _} -> true
-                      _ -> false
-                    end
-                end
-
-              _ ->
-                false
-            end),
+         %Report{reviewed_at: nil} <- Report.get(user_id, target_id),
          {:ok, _} <-
            %{"conversation_id" => conversation_id, "user_id" => user.id}
            |> Flirtual.ObanWorkers.Unobserve.new(schedule_in: 300)
@@ -85,7 +66,8 @@ defmodule FlirtualWeb.ConversationController do
     else
       _ ->
         {:error,
-         {:forbidden, "Cannot observe this conversation", %{conversation_id: conversation_id}}}
+         {:forbidden, "Cannot observe this conversation",
+          %{user_id: user_id, target_id: target_id}}}
     end
   end
 end
