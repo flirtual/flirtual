@@ -24,15 +24,27 @@ defmodule Flirtual.Discord do
     "https://discord.com/api/" <> pathname
   end
 
-  def webhook_url(name),
-    do: url("webhooks/" <> config(String.to_existing_atom("webhook_#{name}")))
+  def webhook_token(name) do
+    config(String.to_existing_atom("webhook_#{name}"))
+  end
 
   def webhook(name, body) when is_atom(name) do
     log(:debug, [name], body)
 
+    case webhook_token(name) do
+      token when token in [nil, ""] ->
+        Logger.error("Discord webhook dropped for \"#{name}\" because it was not configured.")
+        :ok
+
+      token ->
+        deliver_webhook(name, body, token)
+    end
+  end
+
+  defp deliver_webhook(name, body, token) do
     with {:ok, %HTTPoison.Response{status_code: 204}} <-
            HTTPoison.post(
-             webhook_url(name),
+             url("webhooks/" <> token),
              Poison.encode!(body),
              [{"content-type", "application/json"}]
            ) do
