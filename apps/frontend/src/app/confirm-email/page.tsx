@@ -31,7 +31,7 @@ export default async function ConfirmEmailPage({
 
 	return (
 		<SoleModelLayout footer={{ desktopOnly: true }}>
-			<ModelCard title="Confirm email">
+			<ModelCard title="Confirm your email">
 				{searchParams?.token ? (
 					<ConfirmTokenForm token={searchParams.token} />
 				) : (

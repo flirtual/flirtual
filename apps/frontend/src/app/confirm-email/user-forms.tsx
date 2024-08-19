@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 
 import { api } from "~/api/";
@@ -36,20 +37,20 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 						.catch(toasts.addError);
 				}}
 			>
-				<div>
+				<div className="flex flex-col gap-2">
 					<h1 className="font-montserrat text-xl font-semibold">
 						Just one more step!
 					</h1>
 					<span className="text-lg">
-						Please check your email (
+						Check your email (
 						<span data-sentry-mask className="font-semibold">
 							{user.email}
 						</span>
-						) for a confirmation link to activate your account. If you
-						don&apos;t see it in your inbox, check your spam/junk/trash folders.
+						) for your account confirmation link. If you don&apos;t see it in
+						your inbox, check your spam/trash folders.
 					</span>
 				</div>
-				<FormButton>Resend confirmation email</FormButton>
+				<FormButton>Send again</FormButton>
 			</Form>
 			<Form
 				className="mt-8"
