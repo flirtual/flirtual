@@ -56,6 +56,7 @@ defmodule Flirtual.User do
     field(:status, :string, default: "registered")
     field(:moderator_message, :string)
     field(:moderator_note, :string)
+    field(:tns_discord_in_biography, :utc_datetime)
 
     field(:password, :string, virtual: true, redact: true)
     field(:relationship, :map, virtual: true)
@@ -273,7 +274,8 @@ defmodule Flirtual.User do
     |> cast(attrs, [
       :language,
       :born_at,
-      :slug
+      :slug,
+      :tns_discord_in_biography
     ])
     |> validate_required(Keyword.get(options, :required, []))
     |> validate_inclusion(:language, Languages.list(:bcp_47),
@@ -978,6 +980,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :matched,
       :blocked,
       :subscription,
+      :tns_discord_in_biography,
       :preferences,
       :profile,
       :connections,

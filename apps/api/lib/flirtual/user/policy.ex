@@ -184,6 +184,7 @@ defmodule Flirtual.User.Policy do
     :passkeys,
     :born_at,
     :email_confirmed_at,
+    :tns_discord_in_biography,
     :deactivated_at,
     :updated_at,
     :created_at

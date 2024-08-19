@@ -29,11 +29,16 @@ defmodule Flirtual.Discord do
   end
 
   def webhook(name, body) when is_atom(name) do
-    log(:debug, [name], body)
+    log(:debug, ["webhook", name], body)
 
     case webhook_token(name) do
       token when token in [nil, ""] ->
-        Logger.error("Discord webhook dropped for \"#{name}\" because it was not configured.")
+        log(
+          :warning,
+          ["webhook", name],
+          "Skipping webhook delivery due to missing or misconfigured token. If this is unintentional, make sure you have set the `DISCORD_WEBHOOK_#{name |> Atom.to_string() |> String.upcase()}` environment variable."
+        )
+
         :ok
 
       token ->
@@ -51,7 +56,7 @@ defmodule Flirtual.Discord do
       :ok
     else
       {:ok, %HTTPoison.Response{} = response} ->
-        log(:error, [name], response)
+        log(:error, ["webhook", name], response)
         {:error, :upstream}
 
       {:error, reason} ->

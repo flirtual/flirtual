@@ -71,6 +71,7 @@ export type User = UuidModel &
 		profile: Profile;
 		subscription?: Subscription;
 		tags?: Array<UserTags>;
+		tnsDiscordInBiography?: string;
 		connections?: Array<Connection>;
 		passkeys?: Array<UserPasskey>;
 	};
@@ -143,7 +144,7 @@ export async function getBySlug(
 }
 
 export type UpdateUserBody = Partial<
-	Pick<User, "bornAt" | "language" | "slug">
+	Pick<User, "bornAt" | "language" | "slug" | "tnsDiscordInBiography">
 >;
 
 export async function update(
@@ -151,8 +152,8 @@ export async function update(
 	options: NarrowFetchOptions<
 		UpdateUserBody,
 		| {
-			required?: Array<keyof UpdateUserBody>;
-		}
+				required?: Array<keyof UpdateUserBody>;
+		  }
 		| undefined
 	>
 ) {

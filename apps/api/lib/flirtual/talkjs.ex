@@ -4,6 +4,7 @@ defmodule Flirtual.Talkjs do
   require Flirtual.Utilities
   import Flirtual.Utilities
 
+  alias Flirtual.ObanWorkers
   alias Flirtual.User
 
   defp config(key) do
@@ -44,8 +45,10 @@ defmodule Flirtual.Talkjs do
 
     case {config(:access_token), config(:app_id)} do
       {access_token, app_id} when access_token in [nil, ""] or app_id in [nil, ""] ->
-        Logger.error(
-          "Talk.js was not properly configured, request dropped. To fix, set both the TALKJS_APP_ID and TALKJS_ACCESS_TOKEN environment variables."
+        log(
+          :warning,
+          [method, url],
+          "Requested dropped because Talk.js was not properly configured. If this is unintentional, set both the TALKJS_APP_ID and TALKJS_ACCESS_TOKEN environment variables."
         )
 
         {:error, :not_configured}
@@ -59,21 +62,18 @@ defmodule Flirtual.Talkjs do
   end
 
   def batch(operations) when length(operations) > 10 do
-    with true <-
-           Enum.all?(
-             operations
-             |> Enum.chunk_every(10)
-             |> Enum.map(fn chunk ->
-               %{"operations" => chunk}
-               |> Flirtual.ObanWorkers.TalkjsBatch.new()
-               |> Oban.insert()
-             end),
-             &match?({:ok, _}, &1)
-           ) do
-      {:ok, length(operations)}
-    else
-      _ ->
-        :error
+    case Enum.all?(
+           operations
+           |> Enum.chunk_every(10)
+           |> Enum.map(fn chunk ->
+             %{"operations" => chunk}
+             |> ObanWorkers.TalkjsBatch.new()
+             |> Oban.insert()
+           end),
+           &match?({:ok, _}, &1)
+         ) do
+      true -> {:ok, length(operations)}
+      false -> :error
     end
   end
 
