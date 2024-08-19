@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react";
+import { redirect } from "next/navigation";
 
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
@@ -27,6 +28,9 @@ export default async function SubscriptionPage() {
 	const { subscription } = user;
 
 	const totalUsers = await api.user.count();
+
+	if (!user.emailConfirmedAt)
+		redirect(urls.confirmEmail({ to: urls.subscription.default }));
 
 	return (
 		<SoleModelLayout
