@@ -106,17 +106,19 @@ defmodule Flirtual.Mailer do
             text-align: center;
             font-size: 10px;
             text-transform: uppercase;
+            max-width: 525px;
+            margin: 0 auto;
           }
+
           .footer p {
             line-height: 18px;
           }
+
           .footer a {
             color: #444;
             margin-right: 5px;
             text-decoration: underline;
             font-weight: normal;
-            max-width: 525px;
-            margin: 0 auto;
           }
 
           .gutter {
