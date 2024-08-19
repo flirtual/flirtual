@@ -44,7 +44,10 @@ defmodule Flirtual.Talkjs do
 
     case {config(:access_token), config(:app_id)} do
       {access_token, app_id} when access_token in [nil, ""] or app_id in [nil, ""] ->
-        Logger.error("Talk.js was not properly configured, request dropped. To fix, set both the TALKJS_APP_ID and TALKJS_ACCESS_TOKEN environment variables.")
+        Logger.error(
+          "Talk.js was not properly configured, request dropped. To fix, set both the TALKJS_APP_ID and TALKJS_ACCESS_TOKEN environment variables."
+        )
+
         {:error, :not_configured}
 
       {access_token, _} ->

@@ -203,11 +203,11 @@ defmodule Flirtual.Conversation do
 
       {:error, :not_configured} ->
         {:ok,
-        {[],
-         %{
-           cursor: Cursor.map(cursor, []),
-           total: 0
-         }}}
+         {[],
+          %{
+            cursor: Cursor.map(cursor, []),
+            total: 0
+          }}}
 
       reason ->
         log(:error, [:list], reason: reason)
