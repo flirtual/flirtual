@@ -115,6 +115,8 @@ defmodule Flirtual.Mailer do
             margin-right: 5px;
             text-decoration: underline;
             font-weight: normal;
+            max-width: 525px;
+            margin: 0 auto;
           }
 
           .gutter {
