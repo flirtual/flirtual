@@ -201,6 +201,14 @@ defmodule Flirtual.Conversation do
       %{"errorCode" => "LIMIT_OUT_OF_BOUNDS"} ->
         {:error, :invalid_limit}
 
+      {:error, :not_configured} ->
+        {:ok,
+        {[],
+         %{
+           cursor: Cursor.map(cursor, []),
+           total: 0
+         }}}
+
       reason ->
         log(:error, [:list], reason: reason)
         {:error, :upstream}

@@ -42,10 +42,17 @@ defmodule Flirtual.Talkjs do
 
     log(:debug, [method, url], body)
 
-    HTTPoison.request(method, url, raw_body, [
-      {"authorization", "Bearer " <> config(:access_token)},
-      {"content-type", "application/json"}
-    ])
+    case {config(:access_token), config(:app_id)} do
+      {access_token, app_id} when access_token in [nil, ""] or app_id in [nil, ""] ->
+        Logger.error("Talk.js was not properly configured, request dropped. To fix, set both the TALKJS_APP_ID and TALKJS_ACCESS_TOKEN environment variables.")
+        {:error, :not_configured}
+
+      {access_token, _} ->
+        HTTPoison.request(method, url, raw_body, [
+          {"authorization", "Bearer " <> access_token},
+          {"content-type", "application/json"}
+        ])
+    end
   end
 
   def batch(operations) when length(operations) > 10 do

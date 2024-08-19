@@ -30,6 +30,24 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 	children
 }) => {
+	if (!talkjsAppId) {
+		useEffect(
+			() =>
+				console.warn(
+					"Talk.js is not configured properly, conversations & related features are disabled. To enable them, set NEXT_PUBLIC_TALKJS_APP_ID in your environment."
+				),
+			[]
+		);
+
+		return (
+			<TalkjsContext.Provider value={null}>
+				<UnreadConversationContext.Provider value={[]}>
+					{children}
+				</UnreadConversationContext.Provider>
+			</TalkjsContext.Provider>
+		);
+	}
+
 	const { platform } = useDevice();
 
 	const [ready, setReady] = useState(false);
