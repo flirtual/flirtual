@@ -1,4 +1,5 @@
-import { LanguageProvider } from "@inlang/paraglide-next";
+import { getLocale, getMessages } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 import * as Sentry from "@sentry/nextjs";
 import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
@@ -6,13 +7,7 @@ import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
-import { initializeLanguage } from "@inlang/paraglide-next";
 
-import { ClientScripts } from "./client-scripts";
-
-import type { Metadata, Viewport } from "next";
-
-import { languageTag, setLanguageTag } from "~/paraglide/runtime.js";
 import { siteOrigin } from "~/const";
 import { withOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
@@ -31,9 +26,11 @@ import NativeStartup from "~/components/native-startup";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 import { InsetPreview } from "~/components/inset-preview";
 
-import "~/css/index.scss";
+import { ClientScripts } from "./client-scripts";
 
-initializeLanguage();
+import type { Metadata, Viewport } from "next";
+
+import "~/css/index.scss";
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat",
@@ -122,15 +119,18 @@ export default async function RootLayout({
 		? "light"
 		: (session?.user.preferences?.theme ?? "light");
 
+	const locale = await getLocale();
+	const messages = await getMessages();
+
 	return (
-		<LanguageProvider>
+		<NextIntlClientProvider messages={messages}>
 			<html
 				suppressHydrationWarning
 				data-native={native}
 				data-platform={platform}
 				data-theme={theme}
 				data-vision={vision}
-				lang={languageTag()}
+				lang={locale}
 			>
 				<head suppressHydrationWarning>
 					<meta name="darkreader-lock" />
@@ -196,6 +196,6 @@ export default async function RootLayout({
 					</DeviceProvider>
 				</body>
 			</html>
-		</LanguageProvider>
+		</NextIntlClientProvider>
 	);
 }
