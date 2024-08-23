@@ -1,4 +1,5 @@
-import { paraglide } from "@inlang/paraglide-next/plugin";
+import createNextIntlPlugin from "next-intl/plugin";
+
 import { withSentryConfig } from "@sentry/nextjs";
 
 /** @type {import("next").NextConfig */
@@ -121,13 +122,9 @@ let config = {
 	}
 };
 
-config = paraglide({
-	paraglide: {
-		project: "./project.inlang",
-		outdir: "./paraglide"
-	},
-	...config
-});
+const withNextIntl = createNextIntlPlugin();
+
+config = withNextIntl(config);
 
 export default withSentryConfig(config, {
 	// For all available options, see:

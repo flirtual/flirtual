@@ -31,6 +31,7 @@
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@heroicons/react": "^2.1.5",
+    "@inlang/paraglide-next": "0.5.2",
     "@kfarwell/nextjs-toploader": "^1.4.6",
     "@marsidev/react-turnstile": "^0.7.2",
     "@radix-ui/react-alert-dialog": "^1.1.1",
@@ -60,6 +61,7 @@
     "@uppy/remote-sources": "^2.0.0",
     "@uppy/status-bar": "^4.0.0",
     "@widgetbot/react-embed": "^1.9.0",
+    "accept-language": "^3.0.20",
     "change-case": "^5.4.4",
     "csstype": "^3.1.3",
     "dotenv": "^16.4.5",
@@ -70,6 +72,7 @@
     "lucide-react": "^0.416.0",
     "ms": "^2.1.3",
     "next": "^14.2.5",
+    "next-intl": "^3.17.6",
     "platform": "^1.3.6",
     "react": "^18.3.1",
     "react-colorful": "^5.6.1",
@@ -87,13 +90,13 @@
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "talkjs": "^0.23.1",
-    "vaul": "^0.9.1",
-    "@inlang/paraglide-next": "0.5.2"
+    "vaul": "^0.9.1"
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^2.0.1",
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.1.1",
+    "@inlang/paraglide-js": "1.11.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.13",
     "@types/jsonwebtoken": "^9.0.6",
@@ -109,7 +112,6 @@
     "postcss": "^8.4.40",
     "tailwindcss": "^3.4.7",
     "tailwindcss-hocus": "^0.0.7",
-    "typescript": "^5.5.4",
-    "@inlang/paraglide-js": "1.11.2"
+    "typescript": "^5.5.4"
   }
 }

@@ -1,7 +1,5 @@
 {
-    "$schema": "https://inlang.com/schema/inlang-message-format",
-    "neat_maroon_panther_empower": "初のVRデートアプリ",
-    "wide_flat_trout_snap": "サインアップ",
-    "heavy_aqua_gecko_list": "ログイン",
-    "red_curly_firefox_bump": "私たちの物語"
+    "about": {
+        "pink_every_crossbill_adapt": "会社概要"
+    }
 }

@@ -2,16 +2,14 @@
 
 import { ChevronDown } from "lucide-react";
 
+import { FlirtualLogo } from "~/components/logo";
+import { urls } from "~/urls";
+
 import { BackgroundVideo } from "./background-video";
 import { LandingButton } from "./landing-button";
 import { SnapSection } from "./snap-section";
 
-import { FlirtualLogo } from "~/components/logo";
-import { urls } from "~/urls";
-import * as m from "~/paraglide/messages.js";
-
 export const SectionCallToAction: React.FC = () => {
-	console.log(m.neat_maroon_panther_empower);
 	return (
 		<SnapSection
 			className="relative flex flex-col items-center justify-center font-montserrat"
@@ -20,14 +18,14 @@ export const SectionCallToAction: React.FC = () => {
 			<div className="z-10 flex flex-col items-center px-8 pb-12 desktop:px-16">
 				<FlirtualLogo className="text-[snow]" />
 				<h1 className="text-center text-2xl font-bold text-white-10 desktop:text-6xl">
-					{m.neat_maroon_panther_empower()}
+					The first VR dating app
 				</h1>
 				<div className="mt-8 flex flex-col gap-4 gap-y-8 desktop:flex-row">
 					<LandingButton href={urls.register} kind="primary">
-						{m.wide_flat_trout_snap()}
+						Sign up
 					</LandingButton>
 					<LandingButton href={urls.login()} kind="secondary">
-						{m.heavy_aqua_gecko_list()}
+						Login
 					</LandingButton>
 				</div>
 			</div>
