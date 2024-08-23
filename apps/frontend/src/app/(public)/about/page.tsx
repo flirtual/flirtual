@@ -1,13 +1,14 @@
+import { TeamList } from "./team-list";
+
+import type { Metadata } from "next";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
 import { Image } from "~/components/image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
-
-import { TeamList } from "./team-list";
-
-import type { Metadata } from "next";
+import * as m from "~/paraglide/messages.js";
 
 export const metadata: Metadata = {
 	title: "About us"
@@ -29,7 +30,9 @@ export default function AboutPage() {
 				/>
 				<div className="flex flex-col gap-12 px-8 py-10 desktop:px-16">
 					<div className="flex flex-col gap-4">
-						<h1 className="text-2xl font-semibold">Our story</h1>
+						<h1 className="text-2xl font-semibold">
+							{m.red_curly_firefox_bump()}
+						</h1>
 						<p>
 							Hey, we&apos;re Kyle and Tony, the creators of Flirtual. Kyle has
 							been obsessed with VR since the early days of Oculus, but it

@@ -1,5 +1,8 @@
+import { paraglide } from "@inlang/paraglide-next/plugin";
+import { withSentryConfig } from "@sentry/nextjs";
+
 /** @type {import("next").NextConfig */
-module.exports = {
+let config = {
 	reactStrictMode: true,
 	images: {
 		unoptimized: true
@@ -118,9 +121,15 @@ module.exports = {
 	}
 };
 
-const { withSentryConfig } = require("@sentry/nextjs");
+config = paraglide({
+	paraglide: {
+		project: "./project.inlang",
+		outdir: "./paraglide"
+	},
+	...config
+});
 
-module.exports = withSentryConfig(module.exports, {
+export default withSentryConfig(config, {
 	// For all available options, see:
 	// https://github.com/getsentry/sentry-webpack-plugin#options
 	org: "flirtual",

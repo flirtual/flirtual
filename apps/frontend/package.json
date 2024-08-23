@@ -87,7 +87,8 @@
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "talkjs": "^0.23.1",
-    "vaul": "^0.9.1"
+    "vaul": "^0.9.1",
+    "@inlang/paraglide-next": "0.5.2"
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^2.0.1",
@@ -108,6 +109,7 @@
     "postcss": "^8.4.40",
     "tailwindcss": "^3.4.7",
     "tailwindcss-hocus": "^0.0.7",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "@inlang/paraglide-js": "1.11.2"
   }
 }

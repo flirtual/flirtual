@@ -1,3 +1,4 @@
+import { LanguageProvider } from "@inlang/paraglide-next";
 import * as Sentry from "@sentry/nextjs";
 import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
@@ -5,7 +6,13 @@ import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
+import { initializeLanguage } from "@inlang/paraglide-next";
 
+import { ClientScripts } from "./client-scripts";
+
+import type { Metadata, Viewport } from "next";
+
+import { languageTag, setLanguageTag } from "~/paraglide/runtime.js";
 import { siteOrigin } from "~/const";
 import { withOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
@@ -24,11 +31,9 @@ import NativeStartup from "~/components/native-startup";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 import { InsetPreview } from "~/components/inset-preview";
 
-import { ClientScripts } from "./client-scripts";
-
-import type { Metadata, Viewport } from "next";
-
 import "~/css/index.scss";
+
+initializeLanguage();
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat",
@@ -118,20 +123,21 @@ export default async function RootLayout({
 		: (session?.user.preferences?.theme ?? "light");
 
 	return (
-		<html
-			suppressHydrationWarning
-			data-native={native}
-			data-platform={platform}
-			data-theme={theme}
-			data-vision={vision}
-			lang="en"
-		>
-			<head suppressHydrationWarning>
-				<meta name="darkreader-lock" />
-				<script
-					data-cfasync="false"
-					dangerouslySetInnerHTML={{
-						__html: `
+		<LanguageProvider>
+			<html
+				suppressHydrationWarning
+				data-native={native}
+				data-platform={platform}
+				data-theme={theme}
+				data-vision={vision}
+				lang={languageTag()}
+			>
+				<head suppressHydrationWarning>
+					<meta name="darkreader-lock" />
+					<script
+						data-cfasync="false"
+						dangerouslySetInnerHTML={{
+							__html: `
 							${resolveTheme.toString()}
 
 							const url = new URL(location);
@@ -142,49 +148,54 @@ export default async function RootLayout({
 								themeStyle,
 							});
 						`.trim()
-					}}
-				/>
-				<link color="#e9658b" href={SafariPinnedTabImage.src} rel="mask-icon" />
-				<ClientScripts />
-				<AppUrlListener />
-			</head>
-			<body
-				className={twMerge(
-					montserrat.variable,
-					nunito.variable,
-					"overscroll-none"
-				)}
-			>
-				<InsetPreview />
-				<NextTopLoader
-					color={["#FF8975", "#E9658B"]}
-					height={5}
-					showSpinner={false}
-				/>
-				<DeviceProvider
-					native={native}
-					platform={platform}
-					userAgent={userAgent}
-					vision={vision}
+						}}
+					/>
+					<link
+						color="#e9658b"
+						href={SafariPinnedTabImage.src}
+						rel="mask-icon"
+					/>
+					<ClientScripts />
+					<AppUrlListener />
+				</head>
+				<body
+					className={twMerge(
+						montserrat.variable,
+						nunito.variable,
+						"overscroll-none"
+					)}
 				>
-					<NativeStartup />
-					<ToastProvider>
-						<Suspense fallback={<LoadingIndicatorScreen />}>
-						<TooltipProvider>
-							<SessionProvider session={session}>
-								<NotificationProvider>
-									<PurchaseProvider>
-										<ThemeProvider>
-											<ShepherdProvider>{children}</ShepherdProvider>
-										</ThemeProvider>
-									</PurchaseProvider>
-								</NotificationProvider>
-							</SessionProvider>
-						</TooltipProvider>
-						</Suspense>
-					</ToastProvider>
-				</DeviceProvider>
-			</body>
-		</html>
+					<InsetPreview />
+					<NextTopLoader
+						color={["#FF8975", "#E9658B"]}
+						height={5}
+						showSpinner={false}
+					/>
+					<DeviceProvider
+						native={native}
+						platform={platform}
+						userAgent={userAgent}
+						vision={vision}
+					>
+						<NativeStartup />
+						<ToastProvider>
+							<Suspense fallback={<LoadingIndicatorScreen />}>
+								<TooltipProvider>
+									<SessionProvider session={session}>
+										<NotificationProvider>
+											<PurchaseProvider>
+												<ThemeProvider>
+													<ShepherdProvider>{children}</ShepherdProvider>
+												</ThemeProvider>
+											</PurchaseProvider>
+										</NotificationProvider>
+									</SessionProvider>
+								</TooltipProvider>
+							</Suspense>
+						</ToastProvider>
+					</DeviceProvider>
+				</body>
+			</html>
+		</LanguageProvider>
 	);
 }
