@@ -1,3 +1,6 @@
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
@@ -5,262 +8,182 @@ import { urls } from "~/urls";
 
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-	title: "Community Guidelines"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("guidelines");
+
+	return {
+		title: t("title")
+	};
+}
 
 export default function GuidelinesPage() {
+	const t = useTranslations("guidelines");
+
 	return (
 		<SoleModelLayout>
-			<ModelCard
-				className="w-full desktop:max-w-2xl"
-				title="Community Guidelines"
-			>
+			<ModelCard className="w-full desktop:max-w-2xl" title={t("title")}>
 				<div className="flex flex-col gap-8">
-					<p>
-						We want Flirtual to be a positive, welcoming space for everyone.
-						These community guidelines give more information on how we moderate
-						user profiles and behavior on Flirtual. Breaking these guidelines
-						will result in account moderation, such as a permanent ban from
-						Flirtual. We reserve the right to moderate accounts at our
-						discretion.
-					</p>
-
+					<p>{t("spry_sweet_maggot_charm")}</p>
 					<div className="flex flex-col gap-4">
-						<h1 className="text-2xl font-semibold">Respect each other</h1>
-
+						<h1 className="text-2xl font-semibold">
+							{t("late_lime_llama_kick")}
+						</h1>
 						<div className="flex flex-col gap-1">
 							<h2 className="text-xl font-semibold">
-								No hate speech or hateful actions against any group
+								{t("male_same_millipede_devour")}
 							</h2>
-							<p>
-								This includes racist, sexist, or otherwise hateful symbols and
-								content against certain groups in your Flirtual profile or
-								conversations.
-							</p>
+							<p>{t("this_zippy_orangutan_care")}</p>
 						</div>
-
-						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">No harassment</h2>
-							<p>
-								This includes bullying, unsolicited sexual content, direct or
-								indirect threats, doxxing, witch-hunts, stalking, or attacking
-								other users on your profile.
-							</p>
-						</div>
-
 						<div className="flex flex-col gap-1">
 							<h2 className="text-xl font-semibold">
-								No spam, trolling, impersonation, misrepresentation, or scams
+								{t("lost_best_shell_breathe")}
 							</h2>
-							<p>
-								Do not try and take advantage of other users on Flirtual. Do not
-								pretend that you are someone you are not.
-							</p>
+							<p>{t("round_aqua_lemur_dance")}</p>
 						</div>
-
-						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">No NSFW pictures</h2>
-							<p>
-								Full nudity is not allowed on Flirtual, for both in-person and
-								avatar pictures. This includes no &quot;pasties&quot;, highly
-								revealing clothing, or highly sexualized poses.
-							</p>
-						</div>
-
 						<div className="flex flex-col gap-1">
 							<h2 className="text-xl font-semibold">
-								Limited NSFW on a profile
+								{t("steep_tense_opossum_play")}
+							</h2>
+							<p>{t("jolly_loose_rook_offer")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("main_solid_jannes_blend")}
+							</h2>
+							<p>{t("spare_plain_piranha_catch")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("crisp_stale_worm_edit")}
+							</h2>
+							<p>{t("fancy_direct_cougar_bubble")}</p>
+						</div>
+					</div>
+					<div className="flex flex-col gap-4">
+						<h1 className="text-2xl font-semibold">
+							{t("solid_misty_shell_play")}
+						</h1>
+						<p className="italic">{t("dull_lost_cowfish_lock")}</p>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("dull_candid_elephant_love")}
+							</h2>
+							<p>{t("sunny_swift_lion_find")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("left_weird_mule_aim")}
+							</h2>
+							<p>{t("extra_quick_tern_radiate")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("each_actual_vulture_enjoy")}
+							</h2>
+							<p>{t("just_clean_mallard_bless")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("only_crisp_tiger_savor")}
+							</h2>
+							<p>{t("due_major_manatee_work")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("stock_sea_antelope_hack")}n
+							</h2>
+							<p>{t("aqua_less_chipmunk_startle")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("born_sharp_swan_pull")}
 							</h2>
 							<p>
-								Please avoid graphic NSFW text in your bio. The majority of your
-								bio should also be SFW, not NSFW. Please limit NSFW words or
-								phrases used in your profile. You are free to use the NSFW tags
-								and non-graphic custom interests.
+								{t.rich("curly_gross_tadpole_boost", {
+									"mental-health": (children) => (
+										<InlineLink href={urls.guides.mentalHealth}>
+											{children}
+										</InlineLink>
+									)
+								})}
 							</p>
 						</div>
 					</div>
-
 					<div className="flex flex-col gap-4">
-						<h1 className="text-2xl font-semibold">Stay on topic</h1>
-						<p className="italic">
-							Flirtual is a platform for dating and making friends. The main
-							purpose of your profile and behavior on Flirtual should follow
-							that.
-						</p>
-
-						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">No solicitation</h2>
-							<p>
-								Do not ask other users for money or post monetized social links
-								(e.g. PayPal). Do not advertise or market products or services
-								on Flirtual.
-							</p>
-						</div>
-
+						<h1 className="text-2xl font-semibold">
+							{t("fuzzy_sleek_javelina_boost")}
+						</h1>
 						<div className="flex flex-col gap-1">
 							<h2 className="text-xl font-semibold">
-								No controversial or highly political content
+								{t("keen_tense_jan_twist")}
 							</h2>
-							<p>
-								Please talk about politics/religion/controversial topics
-								somewhere else.
-							</p>
+							<p>{t("away_large_mammoth_exhale")}</p>
 						</div>
-
 						<div className="flex flex-col gap-1">
 							<h2 className="text-xl font-semibold">
-								No violent content or depictions of violence
+								{t("muddy_happy_weasel_earn")}
 							</h2>
-							<p>
-								Gore or violent pictures that shock people will be removed and
-								may lead to a ban.
-							</p>
+							<p>{t("deft_major_snake_feel")}</p>
 						</div>
-
 						<div className="flex flex-col gap-1">
 							<h2 className="text-xl font-semibold">
-								No pictures of children or minors
+								{t("stout_extra_worm_climb")}
+							</h2>
+							<p>{t("antsy_noble_mink_mend")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("main_moving_racoon_hike")}
+							</h2>
+							<p>{t("spare_direct_lark_grow")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("ideal_gray_snake_pause")}
+							</h2>
+							<p>{t("ornate_just_cuckoo_fond")}</p>
+						</div>
+						<div className="flex flex-col gap-1">
+							<h2 className="text-xl font-semibold">
+								{t("direct_next_worm_clap")}
 							</h2>
 							<p>
-								We do not tolerate content involving minors, such as real-life
-								pictures of children. This is for the safety of users and
-								children.
-							</p>
-						</div>
-
-						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">Limited self-promotion</h2>
-							<p>
-								You can link non-payment-related social links in your bio (such
-								as Instagram or Discord), but self-promotion or any promotion
-								cannot be the main purpose of your Flirtual profile or account.{" "}
-							</p>
-						</div>
-
-						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">No self-harm content</h2>
-							<p>
-								Self-harm content is not allowed on Flirtual. We have some{" "}
-								<InlineLink href={urls.guides.mentalHealth}>
-									mental health resources
-								</InlineLink>{" "}
-								that may be helpful.
+								{t.rich("major_wild_iguana_love", {
+									vulnerability: (children) => (
+										<InlineLink href={urls.resources.vulnerabilityReport}>
+											{children}
+										</InlineLink>
+									),
+									email: (children) => (
+										<InlineLink href={urls.resources.contactDirect}>
+											{children}
+										</InlineLink>
+									)
+								})}
 							</p>
 						</div>
 					</div>
-
 					<div className="flex flex-col gap-4">
-						<h1 className="text-2xl font-semibold">Respect Flirtual</h1>
-
+						<p className="italic">{t("swift_level_donkey_attend")}</p>
 						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">No illegal activity</h2>
-							<p>
-								Do not do anything on Flirtual that breaks your local laws or
-								the laws of Canada, where Flirtual is hosted.
-							</p>
+							<h3 className="font-semibold">{t("keen_these_cheetah_aid")}</h3>
+							<p>{t("gaudy_cozy_eagle_assure")}</p>
 						</div>
-
 						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">No underage users</h2>
-							<p>Flirtual is strictly 18+.</p>
+							<h3 className="font-semibold">{t("male_long_camel_pat")}</h3>
+							<p>{t("last_fair_polecat_animate")}</p>
 						</div>
-
 						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">No duplicate accounts</h2>
-							<p>
-								Duplicate accounts will be banned. Your most active account will
-								be kept.
-							</p>
-						</div>
-
-						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">
-								Breaking Flirtual Community Guidelines outside of Flirtual
-							</h2>
-							<p>
-								We can moderate users that break the Terms of Service or
-								Community Guidelines on Flirtual. However, if rule-breaking
-								happens on a different platform other than Flirtual, we may not
-								have the power to moderate. If you see a Flirtual user breaking
-								guidelines outside of Flirtual, feel free to report them on
-								Flirtual, but make sure to report them on that platform too
-								(e.g. Discord).
-							</p>
-						</div>
-
-						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">
-								No attacking other users on your profile
-							</h2>
-							<p>
-								Do not post the username or call out other Flirtual users in
-								your bio. We handle moderation ourselves while respecting user
-								privacy. You can flag a profile for our moderation team by
-								pressing the &quot;Report&quot; button at the bottom of their
-								profile.
-							</p>
-						</div>
-
-						<div className="flex flex-col gap-1">
-							<h2 className="text-xl font-semibold">
-								Do not abuse or damage Flirtual products
-							</h2>
-							<p>
-								Misusing Flirtual or attempts to maliciously exploit Flirtual
-								will be investigated. Good-faith vulnerability research in
-								accordance with our Terms of Service is welcome, and bugs can be
-								reported via{" "}
-								<InlineLink href={urls.resources.vulnerabilityReport}>
-									GitHub
-								</InlineLink>{" "}
-								or{" "}
-								<InlineLink href={urls.resources.contactDirect}>
-									email
-								</InlineLink>
-								.
-							</p>
-						</div>
-					</div>
-
-					<div className="flex flex-col gap-4">
-						<p className="italic">
-							If you see something against the rules or something that makes you
-							feel unsafe, please let us know.
-						</p>
-
-						<div className="flex flex-col gap-1">
-							<h3 className="font-semibold">Make a report</h3>
-							<p>
-								Press the &quot;Report&quot; button at the bottom of
-								someone&apos;s profile to flag it for our moderation team.
-								Please include any relevant information or evidence in your
-								report.
-							</p>
-						</div>
-
-						<div className="flex flex-col gap-1">
-							<h3 className="font-semibold">Moderation appeals</h3>
-							<p>
-								If your account has been banned, you will receive an email with
-								the reason for your ban. If you would like to appeal this
-								decision, please reply to the ban email. If you have not
-								received a response to your appeal within 30 days, it has been
-								reviewed and denied.
-							</p>
-						</div>
-
-						<div className="flex flex-col gap-1">
-							<h3 className="font-semibold">More info</h3>
+							<h3 className="font-semibold">{t("loved_lost_nils_adapt")}</h3>
 							<ul>
 								<li>
 									<InlineLink href={urls.resources.termsOfService}>
-										Terms of Service
+										{t("sound_strong_impala_breathe")}
 									</InlineLink>
 								</li>
 								<li>
 									<InlineLink href={urls.resources.privacyPolicy}>
-										Privacy Policy
+										{t("last_honest_rabbit_transform")}
 									</InlineLink>
 								</li>
 							</ul>
