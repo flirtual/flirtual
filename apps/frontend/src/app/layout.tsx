@@ -101,6 +101,7 @@ export default async function RootLayout({
 	const session = await withOptionalSession();
 
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
+	console.log(userAgent);
 
 	const platform: DevicePlatform =
 		platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";

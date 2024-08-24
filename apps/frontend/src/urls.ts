@@ -144,9 +144,7 @@ export const urls = {
 			`https://storage.cloud.google.com/flirtual-stats/${name}.svg`
 	},
 
-	debugger: {
-		default: "/debugger"
-	},
+	debugger: "/debugger",
 
 	resources: {
 		download: "/download",

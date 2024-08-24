@@ -1,6 +1,5 @@
 "use client";
 
-import { parse as parsePlatform } from "platform";
 import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
@@ -14,12 +13,19 @@ import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
 export const DebugInfo: React.FC = () => {
-	const { platform, native, userAgent } = useDevice();
+	const {
+		platform,
+		native,
+		vision,
+		userAgent: { browser, engine, os }
+	} = useDevice();
 	const [session] = useSession();
 	const isDebugger =
 		session && (session.user.tags?.includes("debugger") || session.sudoerId);
 
-	const { os, name, version, layout } = parsePlatform(userAgent);
+	const platformModifiers = Object.entries({ native, vision })
+		.filter(([, value]) => value)
+		.map(([key]) => key);
 
 	return (
 		<>
@@ -28,16 +34,21 @@ export const DebugInfo: React.FC = () => {
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">App platform: </span>
 					<span className="truncate font-mono text-sm">
-						{platform} ({native ? "native" : "web"})
+						{platform}
+						{platformModifiers.length > 0
+							? ` (${platformModifiers.join(", ")})`
+							: ""}
 					</span>
 				</div>
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">Browser: </span>
-					<span className="truncate font-mono">{`${name} ${version} (${layout})`}</span>
+					<span className="truncate font-mono">{`${browser.name} ${browser.version} (${engine.name}${browser.version === engine.version ? "" : ` ${engine.version}`})`}</span>
 				</div>
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">System: </span>
-					<span className="truncate font-mono text-sm">{os?.toString()}</span>
+					<span className="truncate font-mono text-sm">
+						{os.name} {os.version}
+					</span>
 				</div>
 			</div>
 			<div className="flex flex-col">

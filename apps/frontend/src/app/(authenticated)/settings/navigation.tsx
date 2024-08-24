@@ -163,7 +163,7 @@ export const SettingsNavigation: FC = () => {
 					</div>
 					<InlineLink
 						className="-mt-4 self-center text-black-10 no-underline vision:text-white-20"
-						href={urls.debugger.default}
+						href={urls.debugger}
 					>
 						Flirtual {gitCommitSha?.slice(0, 8)}
 					</InlineLink>

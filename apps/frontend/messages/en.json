@@ -69,5 +69,8 @@
 		"wise_great_crow_foster": "Need more?",
 		"ornate_upper_guppy_mend": "Download our full press kit for more graphics and information.",
 		"tired_extra_bear_forgive": "Download"
+	},
+	"debugger": {
+		"title": "Debug information"
 	}
 }
