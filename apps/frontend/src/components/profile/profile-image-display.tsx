@@ -185,8 +185,9 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 		useCallback(
 			(event) => {
 				if (
-					document.querySelector("[data-radix-focus-guard]") &&
-					!expandedImage
+					(document.querySelector("[data-radix-focus-guard]") &&
+					!expandedImage)
+					|| event.ctrlKey
 				)
 					return;
 

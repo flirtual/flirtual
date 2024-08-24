@@ -318,7 +318,7 @@ export const _ProspectActions: FC<{
 		"keydown",
 		useCallback(
 			(event) => {
-				if (document.querySelector("[data-radix-focus-guard]")) return;
+				if (document.querySelector("[data-radix-focus-guard]") || event.ctrlKey) return;
 
 				if (event.key === "h") void respondReverse();
 				if (event.key === "j") void respond("like", kind);
