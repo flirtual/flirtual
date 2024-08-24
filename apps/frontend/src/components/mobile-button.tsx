@@ -1,5 +1,6 @@
 import React from "react";
 import Link, { type LinkProps } from "next/link";
+import { useTranslations } from "next-intl";
 
 import type { IconComponent } from "./icons";
 
@@ -13,6 +14,8 @@ export const MobileButton: React.FC<MobileButtonProps> = ({
 	label,
 	...props
 }) => {
+	const t = useTranslations("download");
+
 	return (
 		<Link
 			{...props}
@@ -22,7 +25,7 @@ export const MobileButton: React.FC<MobileButtonProps> = ({
 			<Icon className="h-8" />
 			<div className="flex flex-col justify-center text-left">
 				<span className="font-montserrat text-xs font-bold uppercase">
-					Download on
+					{t("best_topical_mayfly_tap")}
 				</span>
 				<span className="font-nunito">{label}</span>
 			</div>
