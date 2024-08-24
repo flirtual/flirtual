@@ -1,23 +1,32 @@
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-	title: "Mental health"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("mentalhealth");
+
+	return {
+		title: t("title")
+	};
+}
 
 export default function MentalHealthPage() {
+	const t = useTranslations("mentalhealth");
+	// TODO: This page should be localized, as the content itself cannot be translated while being meaningful.
+
 	return (
 		<SoleModelLayout>
-			<ModelCard
-				className="w-full desktop:max-w-2xl"
-				title="Mental health resources"
-			>
+			<ModelCard className="w-full desktop:max-w-2xl" title={t("title_long")}>
 				<div className="flex flex-col gap-8">
 					<div className="flex flex-col gap-4">
-						<h1 className="text-2xl font-semibold">Crisis Hotlines</h1>
+						<h1 className="text-2xl font-semibold">
+							{t("early_lazy_squid_advise")}
+						</h1>
 						<ul>
 							<li>
 								🌐{" "}

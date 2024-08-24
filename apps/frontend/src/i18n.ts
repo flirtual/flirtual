@@ -3,6 +3,7 @@ import { getRequestConfig } from "next-intl/server";
 import { create as setupAcceptLanguage } from "accept-language";
 import { headers } from "next/headers";
 import { cache } from "react";
+import deepmerge from "deepmerge";
 
 import { withOptionalSession } from "./server-utilities";
 
@@ -46,8 +47,8 @@ export default getRequestConfig(async () => {
 
 	return {
 		locale: locale.current,
-		messages,
-		getMessageFallback({ error, namespace, key }) {
+		messages: deepmerge(fallback, messages)
+		/* getMessageFallback({ error, namespace, key }) {
 			if (error.code !== IntlErrorCode.MISSING_MESSAGE) throw error;
 
 			return [namespace, key]
@@ -58,6 +59,6 @@ export default getRequestConfig(async () => {
 					if (acc && key in acc) return acc[key];
 					throw error;
 				}, fallback);
-		}
+		} */
 	};
 });

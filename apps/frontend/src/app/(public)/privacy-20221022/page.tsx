@@ -1,15 +1,25 @@
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+import { SupersededPolicy } from "~/components/superseded-policy";
 
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-	title: "Privacy Policy"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("privacy");
+
+	return {
+		title: t("title_superseded")
+	};
+}
 
 export default function PrivacyPage() {
+	const t = useTranslations("privacy");
+
 	const privacySettingLink = (
 		<InlineLink href={urls.settings.privacy}>privacy settings</InlineLink>
 	);
@@ -19,14 +29,13 @@ export default function PrivacyPage() {
 			<ModelCard
 				className="w-full desktop:max-w-2xl"
 				containerProps={{ className: "gap-4" }}
-				title="Privacy Policy"
+				title={t("title_superseded")}
 			>
-				<p>
-					This policy was effective from 2022-10-22 to 2023-06-05.{" "}
-					<InlineLink href={urls.resources.privacyPolicy}>
-						Click here for our current Privacy Policy.
-					</InlineLink>
-				</p>
+				<SupersededPolicy
+					introduced={new Date("2022-10-22")}
+					superseded={new Date("2023-06-05")}
+					current={urls.resources.privacyPolicy}
+				/>
 				<p>
 					Your username, your display name, your profile pictures, your bio,
 					your age, your gender, your matchmaking preferences, your personal

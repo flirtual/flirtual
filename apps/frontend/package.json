@@ -64,6 +64,7 @@
     "accept-language": "^3.0.20",
     "change-case": "^5.4.4",
     "csstype": "^3.1.3",
+    "deepmerge": "^4.3.1",
     "dotenv": "^16.4.5",
     "fast-fuzzy": "^1.12.0",
     "fast-shuffle": "^6.1.0",

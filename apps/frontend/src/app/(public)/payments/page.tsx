@@ -1,19 +1,30 @@
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+import { MachineTranslatedLegal } from "~/components/machine-translated";
 
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-	title: "Payment Terms"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("payments");
+
+	return {
+		title: t("title")
+	};
+}
 
 export default function PaymentsPage() {
+	const t = useTranslations("payments");
+
 	return (
 		<SoleModelLayout>
-			<ModelCard className="w-full desktop:max-w-2xl" title="Payment Terms">
+			<ModelCard className="w-full desktop:max-w-2xl" title={t("title")}>
 				<div className="flex flex-col gap-4">
+					<MachineTranslatedLegal original="/payments?language=en" />
 					<p>
 						California subscribers: you may cancel your subscription and request
 						a refund at any time before midnight of the third business day

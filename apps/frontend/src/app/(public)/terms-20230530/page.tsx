@@ -1,25 +1,37 @@
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+import { SupersededPolicy } from "~/components/superseded-policy";
 
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-	title: "Terms of Service"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("terms");
+
+	return {
+		title: t("title_superseded")
+	};
+}
 
 export default function TermsPage() {
+	const t = useTranslations("terms");
+
 	return (
 		<SoleModelLayout>
-			<ModelCard className="w-full desktop:max-w-2xl" title="Terms of Service">
+			<ModelCard
+				className="w-full desktop:max-w-2xl"
+				title={t("title_superseded")}
+			>
 				<div className="flex flex-col gap-4">
-					<p>
-						These terms were effective from 2023-05-30 to 2023-10-11.{" "}
-						<InlineLink href={urls.resources.termsOfService}>
-							Click here for our current Terms of Service.
-						</InlineLink>
-					</p>
+					<SupersededPolicy
+						introduced={new Date("2023-05-30")}
+						superseded={new Date("2023-10-11")}
+						current={urls.resources.termsOfService}
+					/>
 					<p>
 						This website (the &quot;Website&quot;) is operated by STUDIO
 						PAPRIKA, INC. (&quot;us&quot;, &quot;we&quot;, or &quot;Studio
