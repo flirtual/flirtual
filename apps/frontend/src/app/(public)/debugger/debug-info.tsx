@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import { api } from "~/api";
@@ -13,6 +14,8 @@ import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
 export const DebugInfo: React.FC = () => {
+	const t = useTranslations("debugger");
+
 	const {
 		platform,
 		native,
@@ -30,9 +33,11 @@ export const DebugInfo: React.FC = () => {
 	return (
 		<>
 			<div className="flex flex-col">
-				<span className="font-montserrat text-lg font-bold">Device</span>
+				<span className="font-montserrat text-lg font-bold">
+					{t("spicy_pretty_tiger_pet")}
+				</span>
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">App platform: </span>
+					<span className="shrink-0">{t("lucky_sound_opossum_absorb")} </span>
 					<span className="truncate font-mono text-sm">
 						{platform}
 						{platformModifiers.length > 0
@@ -41,20 +46,22 @@ export const DebugInfo: React.FC = () => {
 					</span>
 				</div>
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">Browser: </span>
+					<span className="shrink-0">{t("vexed_yummy_tadpole_grow")} </span>
 					<span className="truncate font-mono">{`${browser.name} ${browser.version} (${engine.name}${browser.version === engine.version ? "" : ` ${engine.version}`})`}</span>
 				</div>
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">System: </span>
+					<span className="shrink-0">{t("known_spare_mantis_pet")} </span>
 					<span className="truncate font-mono text-sm">
 						{os.name} {os.version}
 					</span>
 				</div>
 			</div>
 			<div className="flex flex-col">
-				<span className="font-montserrat text-lg font-bold">Session</span>
+				<span className="font-montserrat text-lg font-bold">
+					{t("mushy_muddy_warthog_win")}
+				</span>
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">User profile: </span>
+					<span className="shrink-0">{t("wacky_spry_haddock_jump")} </span>
 					<InlineLink
 						highlight={false}
 						href={isDebugger ? urls.profile(session.user) : null}
@@ -65,11 +72,11 @@ export const DebugInfo: React.FC = () => {
 					>
 						{session
 							? `${displayName(session.user)} (${session.user.slug})`
-							: "Unavailable"}
+							: t("brief_neat_kestrel_ascend")}
 					</InlineLink>
 				</div>
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">User object: </span>
+					<span className="shrink-0">{t("spry_polite_elk_grace")} </span>
 					<InlineLink
 						highlight={false}
 						href={isDebugger ? api.newUrl(`users/${session.user.id}`) : null}
@@ -78,12 +85,12 @@ export const DebugInfo: React.FC = () => {
 							!isDebugger && "text-inherit hocus:no-underline"
 						)}
 					>
-						{session?.user.id ?? "Unavailable"}
+						{session?.user.id ?? t("brief_neat_kestrel_ascend")}
 					</InlineLink>
 				</div>
 				{session?.sudoerId && (
 					<div className="flex justify-between gap-8 text-sm">
-						<span className="shrink-0">Sudoer object: </span>
+						<span className="shrink-0">{t("flat_civil_goat_absorb")} </span>
 						<InlineLink
 							className="truncate font-mono text-sm"
 							highlight={false}
@@ -94,26 +101,28 @@ export const DebugInfo: React.FC = () => {
 					</div>
 				)}
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">Age: </span>
+					<span className="shrink-0">{t("north_crisp_fly_dart")} </span>
 					<span className="font-mono">
 						{session ? (
 							<TimeRelative value={session.createdAt} />
 						) : (
-							"Unavailable"
+							t("brief_neat_kestrel_ascend")
 						)}
 					</span>
 				</div>
 			</div>
 			<div className="flex flex-col">
-				<span className="font-montserrat text-lg font-bold">Build</span>
+				<span className="font-montserrat text-lg font-bold">
+					{t("dark_wild_mouse_roar")}
+				</span>
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">Environment: </span>
+					<span className="shrink-0">{t("swift_short_koala_fond")} </span>
 					<span className="truncate font-mono text-sm">
 						{capitalize(environment)}
 					</span>
 				</div>
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">Version: </span>
+					<span className="shrink-0">{t("each_zippy_millipede_pop")} </span>
 					<span className="truncate font-mono text-sm">{gitCommitSha}</span>
 				</div>
 			</div>
