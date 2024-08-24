@@ -13,14 +13,12 @@ import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
-export const DebugInfo: React.FC = async () => {
-	const { platform, native } = useDevice();
+export const DebugInfo: React.FC = () => {
+	const { platform, native, userAgent } = useDevice();
 	const [session] = useSession();
 	const isDebugger =
 		session && (session.user.tags?.includes("debugger") || session.sudoerId);
 
-	const userAgent =
-		typeof window === "undefined" ? "" : window.navigator.userAgent;
 	const { os, name, version, layout } = parsePlatform(userAgent);
 
 	return (

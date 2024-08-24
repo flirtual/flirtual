@@ -9,7 +9,7 @@ export default async function DebuggerPage() {
 			<ModelCard
 				className="h-full desktop:h-fit"
 				containerProps={{ className: "gap-4" }}
-				title="Debug"
+				title="Debug information"
 			>
 				<DebugInfo />
 			</ModelCard>
