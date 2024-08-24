@@ -1,3 +1,6 @@
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { SoleModelLayout } from "~/components/layout/sole-model";
@@ -9,86 +12,92 @@ import { DiscordEmbed } from "./discord-embed";
 
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-	title: "Events"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("events");
+
+	return {
+		title: t("title")
+	};
+}
 
 export default function EventsPage() {
+	const t = useTranslations("events");
+
 	return (
 		<SoleModelLayout>
 			<ModelCard
 				className="w-full desktop:max-w-3xl"
 				containerProps={{ className: "gap-8" }}
-				title="Events"
+				title={t("title")}
 			>
 				<div className="flex flex-col gap-4">
-					<h1 className="text-2xl font-semibold">VRChat invite</h1>
-					<p>If an event is happening now, this button will take you there!</p>
+					<h1 className="text-2xl font-semibold">
+						{t("gross_loose_stork_vent")}
+					</h1>
+					<p>{t("fun_still_clownfish_arrive")}</p>
 					<p>
-						Start VRChat first and then click &quot;invite me&quot; on the next
-						page. You&apos;ll get an invite from yourself in-game.{" "}
-						<InlineLink href="https://discord.com/channels/455219574036496404/829507992743444531/1018385627022106715">
-							Need help joining?
-						</InlineLink>
+						{t.rich("elegant_bald_parakeet_animate", {
+							joining: (children) => (
+								<InlineLink href="https://discord.com/channels/455219574036496404/829507992743444531/1018385627022106715">
+									{children}
+								</InlineLink>
+							)
+						})}
 					</p>
-					<ButtonLink href={urls.resources.invite}>Join event</ButtonLink>
+					<ButtonLink href={urls.resources.invite}>
+						{t("arable_nice_puma_comfort")}
+					</ButtonLink>
 				</div>
 				<div className="flex flex-col gap-4">
-					<h1 className="text-2xl font-semibold">Upcoming events</h1>
+					<h1 className="text-2xl font-semibold">{t("top_big_tern_twist")}</h1>
+					<p>{t("nimble_equal_loris_foster")}</p>
 					<p>
-						We host speed matching and DJ events every weekend in VRChat, and
-						you&apos;re invited!
-					</p>
-					<p>
-						For our event schedule and announcements,{" "}
-						<InlineLink href={urls.socials.discord}>
-							join our Discord server
-						</InlineLink>
-						.
+						{t.rich("flaky_early_shad_nourish", {
+							discord: (children) => (
+								<InlineLink href={urls.socials.discord}>{children}</InlineLink>
+							)
+						})}
 					</p>
 					<DiscordEmbed />
 				</div>
 				<div className="flex flex-col gap-4">
-					<h1 className="text-2xl font-semibold">VRChat worlds</h1>
-					<p>
-						Our weekly events are hosted in our VRChat worlds, but you can join
-						them anytime! Feel free to use them for your own events too.
-					</p>
+					<h1 className="text-2xl font-semibold">
+						{t("quiet_lazy_marten_amuse")}
+					</h1>
+					<p>{t("blue_calm_chipmunk_spark")}</p>
 					<Image
-						alt="Flirtual Speed Dating"
+						alt={t("tidy_wise_robin_urge")}
 						className="w-full max-w-sm rounded-xl shadow-brand-1"
 						height={900}
 						src={urls.media("b593e4e1-bef3-4ab8-b9ea-74628ebf694b")}
 						width={1200}
 					/>
-					<h2 className="text-xl font-semibold">Flirtual Speed Dating</h2>
-					<p>
-						Get to know people in 1-on-1 speed dating/friend-making rounds. Each
-						round is 3 minutes long (the host can choose a round length from 3-7
-						minutes). Conversation prompts, interest tags, and night mode
-						included.
-					</p>
-					<ButtonLink href="/speeddate">Flirtual Speed Dating</ButtonLink>
+					<h2 className="text-xl font-semibold">{t("tidy_wise_robin_urge")}</h2>
+					<p>{t("careful_wise_bumblebee_walk")}</p>
+					<ButtonLink href="/speeddate">{t("flat_ok_penguin_vent")}</ButtonLink>
 					<Image
-						alt="The Flirtual Club"
+						alt={t("inclusive_simple_alligator_zap")}
 						className="mt-4 w-full max-w-sm rounded-xl shadow-brand-1"
 						height={900}
 						src={urls.media("660c7e75-9634-45d1-a306-628eeef0a620")}
 						width={1200}
 					/>
-					<h2 className="text-xl font-semibold">The Flirtual Club</h2>
-					<p>Outdoor music festival with audiolink. Vibe on.</p>
-					<ButtonLink href="/club">The Flirtual Club</ButtonLink>
+					<h2 className="text-xl font-semibold">
+						{t("inclusive_simple_alligator_zap")}
+					</h2>
+					<p>{t("sweet_mellow_ant_hunt")}</p>
+					<ButtonLink href="/club">{t("fine_low_deer_propel")}</ButtonLink>
 					<p>
-						Created by{" "}
-						<InlineLink href="https://www.faxmashine.com/">
-							Faxmashine
-						</InlineLink>
-						, our worlds are compatible with PCVR, Quest, and Desktop. New to
-						VRChat?{" "}
-						<InlineLink href="https://vrchat.com/">
-							Sign up for free.
-						</InlineLink>
+						{t.rich("dry_inclusive_ox_trust", {
+							faxmashine: (children) => (
+								<InlineLink href="https://faxmashine.com/">
+									{children}
+								</InlineLink>
+							),
+							vrchat: (children) => (
+								<InlineLink href="https://vrchat.com/">{children}</InlineLink>
+							)
+						})}
 					</p>
 				</div>
 			</ModelCard>

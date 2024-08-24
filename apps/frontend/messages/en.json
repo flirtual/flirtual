@@ -93,5 +93,24 @@
 		"great_actual_bear_borrow": "Google Play",
 		"polite_sad_stork_race": "Microsoft Store",
 		"simple_awful_giraffe_snip": "SideQuest"
+	},
+	"events": {
+		"title": "Events",
+		"gross_loose_stork_vent": "VRChat invite",
+		"fun_still_clownfish_arrive": "If an event is happening now, this button will take you there!",
+		"elegant_bald_parakeet_animate": "Start VRChat first and then click &quot;invite me&quot; on the next page. You'll get an invite from yourself in-game. <joining>Need help joining?</joining>",
+		"arable_nice_puma_comfort": "Join event",
+		"top_big_tern_twist": "Upcoming events",
+		"nimble_equal_loris_foster": "We host speed matching and DJ events every weekend in VRChat, and you're invited!",
+		"flaky_early_shad_nourish": "For our event schedule and announcements, <discord>join our Discord server</discord>.",
+		"quiet_lazy_marten_amuse": "VRChat worlds",
+		"blue_calm_chipmunk_spark": "Our weekly events are hosted in our VRChat worlds, but you can join them anytime! Feel free to use them for your own events too.",
+		"tidy_wise_robin_urge": "Flirtual Speed Dating",
+		"careful_wise_bumblebee_walk": "Get to know people in 1-on-1 speed dating/friend-making rounds. Each round is 3 minutes long (the host can choose a round length from 3-7 minutes). Conversation prompts, interest tags, and night mode included.",
+		"flat_ok_penguin_vent": "Flirtual Speed Dating",
+		"inclusive_simple_alligator_zap": "The Flirtual Club",
+		"sweet_mellow_ant_hunt": "Outdoor music festival with audiolink. Vibe on.",
+		"fine_low_deer_propel": "The Flirtual Club",
+		"dry_inclusive_ox_trust": "Created by <faxmashine>Faxmashine</faxmashine>, our worlds are compatible with PCVR, Quest, and Desktop. New to VRChat? <vrchat>Sign up for free.</vrchat>"
 	}
 }

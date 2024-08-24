@@ -1,19 +1,14 @@
 "use client";
 
 import WidgetBot from "@widgetbot/react-embed";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 
 import { displayName } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
-export const DiscordEmbed: React.FC = () => {
-	const [clientSide, setClientSide] = useState(false);
-	useEffect(() => setClientSide(true), []);
-
+export const _DiscordEmbed: React.FC = () => {
 	const [session] = useSession();
-
-	if (!clientSide) return <div style={{ height: 600, width: "100%" }} />;
 
 	return (
 		<WidgetBot
@@ -26,3 +21,8 @@ export const DiscordEmbed: React.FC = () => {
 		/>
 	);
 };
+
+export const DiscordEmbed = dynamic(() => Promise.resolve(_DiscordEmbed), {
+	ssr: false,
+	loading: () => <div style={{ height: 600, width: "100%" }} />
+});
