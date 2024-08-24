@@ -1,12 +1,16 @@
+<div align="center">
+
 [![Flirtual](apps/frontend/public/images/brand/gradient.svg)](https://flirtu.al)
 
 [![AGPL-3.0](https://img.shields.io/github/license/flirtual/flirtual?color=663366&label=%C2%A9%202018-2024%20Flirtual&logo=gnu)](LICENSE)
 [![Discord](https://img.shields.io/discord/455219574036496404?color=5865f2&label=Discord&logo=discord&logoColor=5865f2&style=flat)](https://discord.gg/flirtual)
 [![Twitter](https://img.shields.io/static/v1?color=1da1f2&label=Twitter&message=%40getflirtual&logo=twitter&style=flat)](https://twitter.com/getflirtual)
 
+<sub>Translated with Weblate. [Contribute](https://hosted.weblate.org/engage/flirtual/)</sub>
+
 [![Translation status](https://hosted.weblate.org/widget/flirtual/flirtual/multi-auto.svg)](https://hosted.weblate.org/engage/flirtual/)
 
-<div style="text-align: center"><small>Translated with Weblate. <a href="https://hosted.weblate.org/engage/flirtual/">Contribute</a></small></div>
+</div>
 
 The first VR dating app.
 
