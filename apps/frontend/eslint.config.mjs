@@ -13,7 +13,8 @@ export default config({
 	rules: {
 		"@next/next/no-html-link-for-pages": "off",
 		"sort-keys/sort-keys-fix": "off",
-		"tailwindcss/no-custom-classname": "off"
+		"tailwindcss/no-custom-classname": "off",
+		"react/no-unstable-nested-components": "off"
 	},
 	ignores: [
 		"**/node_modules/**",

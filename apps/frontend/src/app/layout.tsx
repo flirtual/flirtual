@@ -1,7 +1,6 @@
-import { getLocale, getMessages } from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import * as Sentry from "@sentry/nextjs";
-import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
@@ -27,61 +26,58 @@ import { PurchaseProvider } from "~/hooks/use-purchase";
 import { InsetPreview } from "~/components/inset-preview";
 
 import { ClientScripts } from "./client-scripts";
+import { fontClassNames } from "./fonts";
 
 import type { Metadata, Viewport } from "next";
 
 import "~/css/index.scss";
 
-const montserrat = Montserrat({
-	variable: "--font-montserrat",
-	subsets: ["latin"]
-});
-const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("meta");
 
-export const metadata: Metadata = {
-	metadataBase: new URL(siteOrigin),
-	title: {
-		template: "%s - Flirtual",
-		default: "Flirtual"
-	},
-	description:
-		"Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat.",
-	manifest: "/manifest.json",
-	applicationName: "Flirtual",
-	appleWebApp: {
-		title: "Flirtual"
-	},
-	other: {
-		"msapplication-TileColor": "#e9658b"
-	},
-	twitter: {
-		site: `@${urls.socials.twitter.split("twitter.com/")[1]}`,
-		card: "summary"
-	},
-	openGraph: {
-		type: "website",
-		title: "Flirtual",
-		description:
-			"The first VR dating app. Join thousands for dates in VR apps like VRChat."
-	},
-	appLinks: {
-		ios: {
-			app_store_id: "6450485324",
-			url: urls.apps.apple
+	return {
+		metadataBase: new URL(siteOrigin),
+		title: {
+			template: t("title"),
+			default: t("name")
 		},
-		android: {
-			package: "zone.homie.flirtual.pwa",
-			url: urls.apps.google
+		description: t("knotty_direct_mongoose_bend"),
+		manifest: "/manifest.json",
+		applicationName: t("name"),
+		appleWebApp: {
+			title: t("name")
 		},
-		web: {
-			url: siteOrigin,
-			should_fallback: true
+		other: {
+			"msapplication-TileColor": "#e9658b"
+		},
+		twitter: {
+			site: `@${urls.socials.twitter.split("twitter.com/")[1]}`,
+			card: "summary"
+		},
+		openGraph: {
+			type: "website",
+			title: t("name"),
+			description: t("green_plain_mongoose_lend")
+		},
+		appLinks: {
+			ios: {
+				app_store_id: "6450485324",
+				url: urls.apps.apple
+			},
+			android: {
+				package: "zone.homie.flirtual.pwa",
+				url: urls.apps.google
+			},
+			web: {
+				url: siteOrigin,
+				should_fallback: true
+			}
+		},
+		itunes: {
+			appId: "6450485324"
 		}
-	},
-	itunes: {
-		appId: "6450485324"
-	}
-};
+	};
+}
 
 export const viewport: Viewport = {
 	width: "device-width",
@@ -158,13 +154,7 @@ export default async function RootLayout({
 					<ClientScripts />
 					<AppUrlListener />
 				</head>
-				<body
-					className={twMerge(
-						montserrat.variable,
-						nunito.variable,
-						"overscroll-none"
-					)}
-				>
+				<body className={twMerge(fontClassNames, "overscroll-none")}>
 					<InsetPreview />
 					<NextTopLoader
 						color={["#FF8975", "#E9658B"]}

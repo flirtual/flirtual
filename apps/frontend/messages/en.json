@@ -1,4 +1,10 @@
 {
+	"meta": {
+		"name": "Flirtual",
+		"title": "%s - Flirtual",
+		"knotty_direct_mongoose_bend": "Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat.",
+		"green_plain_mongoose_lend": "The first VR dating app. Join thousands for dates in VR apps like VRChat."
+	},
 	"about": {
 		"title": "About us",
 		"mild_salty_reindeer_sew": "P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <feedback>have any suggestions</feedback>!",
