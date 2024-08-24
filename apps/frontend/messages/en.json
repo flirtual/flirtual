@@ -1,6 +1,6 @@
 {
 	"about": {
-		"pink_every_crossbill_adapt": "About us",
+		"title": "About us",
 		"mild_salty_reindeer_sew": "P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <feedback>have any suggestions</feedback>!",
 		"pink_proof_insect_beam": "Our story",
 		"awake_orange_clownfish_feel": "Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).",
@@ -43,6 +43,8 @@
 		"quick_male_puffin_stab": "Flirtual on the Today Show",
 		"zesty_giant_bear_roar": "Flirtual on the Today Show",
 		"noble_real_husky_hug": "Flirtual at Vket 2023 Summer",
-		"tense_brief_sheep_greet": "Flirtual at Vket 2023 Summer"
+		"tense_brief_sheep_greet": "Flirtual at Vket 2023 Summer",
+		"jumpy_north_mare_burn": "Picture of the Flirtual Team in VRChat",
+		"plane_witty_guppy_cuddle": "{name}'s avatar"
 	}
 }

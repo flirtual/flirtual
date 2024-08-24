@@ -154,6 +154,7 @@ export const urls = {
 		invite: "/invite",
 		networkStatus: "http://status.flirtu.al",
 		press: "/press",
+		pressEmail: "mailto:press@flirtu.al",
 		branding: "/branding",
 		developers: "https://github.com/flirtual",
 		about: "/about",

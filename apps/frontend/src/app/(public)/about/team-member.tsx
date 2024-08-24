@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
@@ -14,6 +15,7 @@ export interface TeamMemberProps {
 }
 
 export const TeamMember: React.FC<TeamMemberProps> = (props) => {
+	const t = useTranslations("about");
 	const { name, role, avatar, url, extra_url } = props;
 
 	return (
@@ -24,7 +26,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 			)}
 		>
 			<Image
-				alt={`${name}'s avatar`}
+				alt={t("plane_witty_guppy_cuddle", { name })}
 				className="aspect-square w-12 rounded-full bg-black-70 object-cover shadow-brand-1"
 				height="64"
 				src={urls.media(avatar)}
