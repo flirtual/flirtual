@@ -15,12 +15,6 @@ function getUrl(name: string, kind: string) {
 async function ImageListItem(item: ImageListItemProps) {
 	const defaultKind = item.kinds[0];
 
-	const kinds = await Promise.all(
-		item.kinds.map(async (kind) => ({
-			kind
-		}))
-	);
-
 	return (
 		<div className="flex flex-col gap-2">
 			<a
@@ -35,7 +29,7 @@ async function ImageListItem(item: ImageListItemProps) {
 				<img className="h-fit w-full" src={getUrl(item.name, defaultKind!)} />
 			</a>
 			<div className="flex gap-2">
-				{kinds.map(({ kind }) => (
+				{item.kinds.map((kind) => (
 					<a
 						className="uppercase text-theme-2 hocus:underline hocus:outline-none"
 						href={getUrl(item.name, kind)}
@@ -62,9 +56,9 @@ export async function ImageList({ className, items }: ImageListProps) {
 				className
 			)}
 		>
-			{items.map((item) => {
-				return <ImageListItem key={item.name} {...item} />;
-			})}
+			{items.map((item) => (
+				<ImageListItem key={item.name} {...item} />
+			))}
 		</div>
 	);
 }

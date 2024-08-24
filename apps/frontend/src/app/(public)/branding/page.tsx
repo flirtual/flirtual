@@ -1,3 +1,6 @@
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+
 import { SoleModelLayout } from "~/components/layout/sole-model";
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
@@ -9,30 +12,38 @@ import { ColorBlock } from "./color-block";
 
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-	title: "Branding"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("branding");
 
-export default async function BrandingPage() {
+	return {
+		title: t("title")
+	};
+}
+
+export default function BrandingPage() {
+	const t = useTranslations("branding");
+
 	return (
 		<SoleModelLayout>
 			<ModelCard
 				className="w-full desktop:max-w-xl"
 				containerProps={{ className: "gap-8" }}
-				title="Branding"
+				title={t("title")}
 			>
 				<p>
-					Looking to use our art for something? Here it is. Please keep it
-					tasteful and{" "}
-					<InlineLink href="mailto:press@flirtu.al">contact us</InlineLink> for
-					approval.
+					{t.rich("lime_soft_shad_skip", {
+						contact: (children) => (
+							<InlineLink href={urls.resources.pressEmail}>
+								{children}
+							</InlineLink>
+						)
+					})}
 				</p>
 				<div className="flex flex-col gap-4">
-					<span className="text-2xl font-semibold">Our logo</span>
-					<span>
-						Please do not edit, change, distort, recolor, or reconfigure the
-						Flirtual logo.
+					<span className="text-2xl font-semibold">
+						{t("brave_early_weasel_arise")}
 					</span>
+					<span>{t("flaky_same_grizzly_snap")}</span>
 					<ImageList
 						items={[
 							{
@@ -52,11 +63,10 @@ export default async function BrandingPage() {
 					/>
 				</div>
 				<div className="flex flex-col gap-4">
-					<span className="text-2xl font-semibold">Mark only</span>
-					<span>
-						Use these only when the Flirtual brand is clearly visible or has
-						been well established elsewhere on the page or in the design.
+					<span className="text-2xl font-semibold">
+						{t("mild_spry_hamster_persist")}
 					</span>
+					<span>{t("such_pink_jan_spur")}</span>
 					<ImageList
 						className="desktop:grid-cols-4"
 						items={[
@@ -81,35 +91,41 @@ export default async function BrandingPage() {
 					/>
 				</div>
 				<div className="flex flex-col gap-4">
-					<span className="text-2xl font-semibold">Colors</span>
+					<span className="text-2xl font-semibold">
+						{t("tasty_last_pony_transform")}
+					</span>
 					<div className="flex flex-wrap gap-2 text-white-20">
 						<ColorBlock
-							name="Gradient"
+							name={t("gross_red_earthworm_reside")}
 							value="linear-gradient(to right, #FF8975, #E9658B)"
 						/>
 						<ColorBlock
-							name="Dark Mode"
+							name={t("fair_yummy_penguin_harbor")}
 							value="linear-gradient(to right, #B24592, #E9658B)"
 						/>
 						<ColorBlock
-							name="Homie Mode"
+							name={t("empty_sharp_sheep_list")}
 							value="linear-gradient(to right, #82BF72, #4D8888)"
 						/>
-						<ColorBlock name="Pink" value="#E9658B" />
-						<ColorBlock invert name="Cream" value="#FFFAF0" />
+						<ColorBlock name={t("whole_round_penguin_pet")} value="#E9658B" />
+						<ColorBlock
+							invert
+							name={t("known_trick_raven_sew")}
+							value="#FFFAF0"
+						/>
 					</div>
 				</div>
 				<div className="flex flex-col gap-4">
-					<span className="text-2xl font-semibold">Need more?</span>
-					<span>
-						Download our full press kit for more graphics and information.
+					<span className="text-2xl font-semibold">
+						{t("wise_great_crow_foster")}
 					</span>
+					<span>{t("ornate_upper_guppy_mend")}</span>
 					<ButtonLink
 						download
 						className="w-fit"
 						href={urls.media("presskit.zip", "files")}
 					>
-						Download
+						{t("tired_extra_bear_forgive")}
 					</ButtonLink>
 				</div>
 			</ModelCard>
