@@ -135,15 +135,17 @@ export default async function RootLayout({
 						data-cfasync="false"
 						dangerouslySetInnerHTML={{
 							__html: `
-							${resolveTheme.toString()}
+							(() => {
+								const resolveTheme = ${resolveTheme.toString()}
 
-							const url = new URL(location);
-							const themeStyle = url.pathname === "/browse" && url.searchParams.get("kind") === "friend" ? "friend" : "love";
-
-							Object.assign(document.documentElement.dataset, {
-								theme: resolveTheme("${theme}"),
-								themeStyle,
-							});
+								const url = new URL(location);
+								const themeStyle = url.pathname === "/browse" && url.searchParams.get("kind") === "friend" ? "friend" : "love";
+	
+								Object.assign(document.documentElement.dataset, {
+									theme: resolveTheme("${theme}"),
+									themeStyle,
+								});
+						  })())
 						`.trim()
 						}}
 					/>
