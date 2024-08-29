@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 import type { IconComponent } from "./icons";
 
 export const FlirtualLogo: IconComponent = (props) => (
@@ -5,6 +7,7 @@ export const FlirtualLogo: IconComponent = (props) => (
 		{...props}
 		viewBox="0 0 1040.4352 300"
 		xmlns="http://www.w3.org/2000/svg"
+		className={twMerge("text-[snow]", props.className)}
 		xmlSpace="preserve"
 	>
 		<defs>

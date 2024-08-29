@@ -9,7 +9,7 @@ export const SnapSection = forwardRef<
 		{...props}
 		ref={reference}
 		className={twMerge(
-			"min-h-screen w-full snap-start snap-always pb-[env(safe-area-inset-bottom,0rem)] pl-[env(safe-area-inset-left,0rem)] pr-[env(safe-area-inset-right,0rem)] pt-[env(safe-area-inset-top,0rem)] android:pt-[var(--safe-area-inset-top,0rem)]",
+			"h-screen min-h-screen w-screen min-w-[100vw] snap-start snap-always pb-[env(safe-area-inset-bottom,0rem)] pl-[env(safe-area-inset-left,0rem)] pr-[env(safe-area-inset-right,0rem)] pt-[env(safe-area-inset-top,0rem)] android:pt-[var(--safe-area-inset-top,0rem)]",
 			props.className
 		)}
 	>

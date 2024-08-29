@@ -118,7 +118,7 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 						/>
 					</ul>
 				</div>
-				<div className="flex justify-between desktop:text-lg">
+				<div className="flex justify-between gap-2 desktop:text-lg">
 					<MadeWithLove />
 					<span>&copy; {new Date().getFullYear()} Flirtual</span>
 				</div>

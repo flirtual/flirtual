@@ -2,54 +2,55 @@
 
 import { useEffect, useState } from "react";
 
+const hearts = [
+	"♥︎",
+	"🩷",
+	"❤️",
+	"🧡",
+	"💛",
+	"💚",
+	"🩵",
+	"💙",
+	"💜",
+	"🖤",
+	"🩶",
+	"🤍",
+	"🤎",
+	"❤️‍🔥",
+	"❤️‍🩹",
+	"❣️",
+	"💕",
+	"💞",
+	"💓",
+	"💗",
+	"💖",
+	"💘",
+	"💝",
+	"💟",
+	"♥️",
+	"💌",
+	"🫀",
+	"🫶"
+];
+
 export const MadeWithLove: React.FC = () => {
-	const [heart, setHeart] = useState("♥︎");
-	const hearts = [
-		"🩷",
-		"❤️",
-		"🧡",
-		"💛",
-		"💚",
-		"🩵",
-		"💙",
-		"💜",
-		"🖤",
-		"🩶",
-		"🤍",
-		"🤎",
-		"❤️‍🔥",
-		"❤️‍🩹",
-		"❣️",
-		"💕",
-		"💞",
-		"💓",
-		"💗",
-		"💖",
-		"💘",
-		"💝",
-		"💟",
-		"♥️",
-		"💌",
-		"🫀",
-		"🫶"
-	];
+	const [heart, setHeart] = useState(hearts[0]);
 
-	const updateHeart = () => {
+	const updateHeart = () =>
 		setHeart(hearts[Math.floor(Math.random() * hearts.length)]!);
-	};
 
-	useEffect(() => {
-		return () => {
-			setHeart("♥︎");
-		};
-	}, []);
+	useEffect(() => () => setHeart(hearts[0]), []);
 
 	return (
 		<span className="group hidden desktop:inline" onMouseEnter={updateHeart}>
 			Made with{" "}
-			<span className="inline-block origin-center transition-transform duration-200 group-hover:scale-125">
+			<button
+				type="button"
+				onClick={updateHeart}
+				className="inline-block w-[1.5em] origin-center transition-transform duration-200 group-hover:scale-125"
+			>
 				{heart}
-			</span>{" "}
+			</button>{" "}
 			in VR
 		</span>
 	);

@@ -160,7 +160,7 @@ module.exports = {
 			addVariant("native", `:is([data-native="true"] &)`);
 			addVariant("vision", `:is([data-vision="true"] &)`);
 
-			for (const platform of ["web", "android", "ios"]) {
+			for (const platform of ["web", "android", "apple"]) {
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);
 			}
 

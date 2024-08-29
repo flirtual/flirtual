@@ -77,6 +77,7 @@ export const urls = {
 
 	// pages
 	default: "/",
+	landing: "/home",
 	register: "/register",
 	login: (next?: string) => url("/login", { next }),
 	forgotPassword: "/forgot",

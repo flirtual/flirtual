@@ -2,7 +2,6 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import * as Sentry from "@sentry/nextjs";
 import { twMerge } from "tailwind-merge";
-import { Suspense } from "react";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
@@ -15,7 +14,6 @@ import { ToastProvider } from "~/hooks/use-toast";
 import { SessionProvider } from "~/components/session-provider";
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { ShepherdProvider } from "~/components/shepherd";
-import { LoadingIndicatorScreen } from "~/components/loading-indicator-screen";
 import { ThemeProvider } from "~/hooks/use-theme";
 import { type DevicePlatform, DeviceProvider } from "~/hooks/use-device";
 import { NotificationProvider } from "~/hooks/use-notifications";
@@ -172,19 +170,19 @@ export default async function RootLayout({
 					>
 						<NativeStartup />
 						<ToastProvider>
-							<Suspense fallback={<LoadingIndicatorScreen />}>
-								<TooltipProvider>
-									<SessionProvider session={session}>
-										<NotificationProvider>
-											<PurchaseProvider>
-												<ThemeProvider>
-													<ShepherdProvider>{children}</ShepherdProvider>
-												</ThemeProvider>
-											</PurchaseProvider>
-										</NotificationProvider>
-									</SessionProvider>
-								</TooltipProvider>
-							</Suspense>
+							{/* <Suspense fallback={<LoadingIndicatorScreen />}> */}
+							<TooltipProvider>
+								<SessionProvider session={session}>
+									<NotificationProvider>
+										<PurchaseProvider>
+											<ThemeProvider>
+												<ShepherdProvider>{children}</ShepherdProvider>
+											</ThemeProvider>
+										</PurchaseProvider>
+									</NotificationProvider>
+								</SessionProvider>
+							</TooltipProvider>
+							{/* </Suspense> */}
 						</ToastProvider>
 					</DeviceProvider>
 				</body>
