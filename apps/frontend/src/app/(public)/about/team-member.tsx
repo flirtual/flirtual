@@ -15,7 +15,7 @@ export interface TeamMemberProps {
 }
 
 export const TeamMember: React.FC<TeamMemberProps> = (props) => {
-	const t = useTranslations("about");
+	const t = useTranslations("about.team");
 	const { name, role, avatar, url, extra_url } = props;
 
 	return (
@@ -26,7 +26,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 			)}
 		>
 			<Image
-				alt={t("plane_witty_guppy_cuddle", { name })}
+				alt={t("image_alt", { name })}
 				className="aspect-square w-12 rounded-full bg-black-70 object-cover shadow-brand-1"
 				height="64"
 				src={urls.media(avatar)}
