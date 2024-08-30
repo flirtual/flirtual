@@ -95,6 +95,57 @@
     }
   },
   "branding": {
-    "title": "Marque"
+    "title": "Marque",
+    "lime_soft_shad_skip": "Vous souhaitez utiliser notre art? Le voici. Merci de le garder approprié et <contact>contactez-nous</contact> pour obtenir l’approbation.",
+    "brave_early_weasel_arise": "Notre logo",
+    "flaky_same_grizzly_snap": "Merci de ne pas éditer, changer, déformer, recolorer ou reconfigurer le logo de Flirtual.",
+    "mild_spry_hamster_persist": "Marque seule",
+    "such_pink_jan_spur": "Utilisez-les uniquement lorsque la marque Flirtual est clairement visible ou bien établie ailleurs sur la page ou dans le design.",
+    "tasty_last_pony_transform": "Couleurs",
+    "gross_red_earthworm_reside": "Gradient",
+    "fair_yummy_penguin_harbor": "Mode Sombre",
+    "empty_sharp_sheep_list": "Mode Copain",
+    "whole_round_penguin_pet": "Rose",
+    "known_trick_raven_sew": "Crème",
+    "wise_great_crow_foster": "Besoins de plus?",
+    "ornate_upper_guppy_mend": "Téléchargez notre kit complet de presse pour plus de graphiques et d'information.",
+    "tired_extra_bear_forgive": "Télécharger"
+  },
+  "debugger": {
+    "spicy_pretty_tiger_pet": "Appareil",
+    "lucky_sound_opossum_absorb": "Plateforme de l'application:",
+    "vexed_yummy_tadpole_grow": "Fureteur:",
+    "title": "Information de debug",
+    "known_spare_mantis_pet": "Système:",
+    "mushy_muddy_warthog_win": "Session",
+    "wacky_spry_haddock_jump": "Profil de l'utilisateur:",
+    "spry_polite_elk_grace": "Objet de l'utilisateur:",
+    "brief_neat_kestrel_ascend": "Non disponible",
+    "flat_civil_goat_absorb": "Objet du Sudoer:",
+    "north_crisp_fly_dart": "Âge:",
+    "dark_wild_mouse_roar": "Build",
+    "swift_short_koala_fond": "Environnement:",
+    "each_zippy_millipede_pop": "Version:"
+  },
+  "download": {
+    "title": "Télécharger",
+    "best_topical_mayfly_tap": "Télécharger sur",
+    "platform": {
+      "apple": "App Store",
+      "google": "Google Play",
+      "microsoft": "Microsoft Store",
+      "side_quest": "SideQuest"
+    }
+  },
+  "events": {
+    "title": "Événements",
+    "gross_loose_stork_vent": "Invitation VRChat",
+    "fun_still_clownfish_arrive": "SI un événement est en cours, ce bouton vous y conduira!",
+    "elegant_bald_parakeet_animate": "Lancez VRChat d'abord, puis cliquez sur \"invite-moi\" à la page suivante. Vous recevrez une invitation de votre part dans le jeu. <joining>Besoins d'aide pour rejoindre?</joining>",
+    "arable_nice_puma_comfort": "Rejoindre l'événement",
+    "top_big_tern_twist": "Événements à venir",
+    "nimble_equal_loris_foster": "Nous organisons des événements rencontres éclair et des soirées DJ chaque fin de semaine dans VRChat. Vous êtes invité!",
+    "flaky_early_shad_nourish": "Pour consulter notre calendrier des événements et les annonces, <discord>rejoignez notre serveur Discord</discord>.",
+    "quiet_lazy_marten_amuse": "Mondes VRChat"
   }
 }
