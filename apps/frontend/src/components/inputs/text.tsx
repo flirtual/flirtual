@@ -3,8 +3,11 @@
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { CalendarDays, Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { omit } from "~/utilities";
+
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 import type { IconComponent } from "../icons";
 import type React from "react";
@@ -19,6 +22,7 @@ export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
 export const InputText: React.FC<InputTextProps> = (props) => {
 	const inputReference = useRef<HTMLInputElement>(null);
 	const [inputVisible, setInputVisible] = useState(props.type !== "password");
+	const t = useTranslations("inputs.text");
 
 	const type = inputVisible
 		? props.type === "date" || props.type === "password"
@@ -61,13 +65,20 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 				}}
 			/>
 			{props.type === "password" && (
-				<button
-					className="pr-4"
-					type="button"
-					onClick={() => setInputVisible((inputVisible) => !inputVisible)}
-				>
-					<InputVisibleIcon className="size-5" />
-				</button>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<button
+							className="mr-4"
+							type="button"
+							onClick={() => setInputVisible((inputVisible) => !inputVisible)}
+						>
+							<InputVisibleIcon className="size-5" />
+						</button>
+					</TooltipTrigger>
+					<TooltipContent align="center">
+						{inputVisible ? t("hide") : t("show")}
+					</TooltipContent>
+				</Tooltip>
 			)}
 		</div>
 	);

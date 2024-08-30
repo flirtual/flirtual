@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useSession } from "~/hooks/use-session";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
@@ -24,6 +26,8 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	activeIds
 }) => {
 	const [session] = useSession();
+	const t = useTranslations();
+
 	if (!session || !attributes?.length) return null;
 	const attributeIds =
 		activeIds || session.user.profile.attributes.map(({ id }) => id);
@@ -60,7 +64,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 											className="pointer-events-auto"
 											href={meta.definitionLink}
 										>
-											Learn more
+											{t("learn_more")}
 										</InlineLink>
 									)}
 								</TooltipContent>

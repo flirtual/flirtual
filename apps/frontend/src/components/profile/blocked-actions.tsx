@@ -2,6 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { Flag } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+import { api } from "~/api";
+import { useToast } from "~/hooks/use-toast";
+import { displayName, type User } from "~/api/user";
 
 import { Button } from "../button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
@@ -9,11 +14,8 @@ import { DialogTrigger } from "../dialog/dialog";
 
 import { ReportDialog } from "./dialogs/report";
 
-import { api } from "~/api";
-import { useToast } from "~/hooks/use-toast";
-import { displayName, type User } from "~/api/user";
-
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
+	const t = useTranslations("profile");
 	const toasts = useToast();
 	const router = useRouter();
 
@@ -26,13 +28,15 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 					await api.user
 						.unblock(user.id)
 						.then(() => {
-							toasts.add(`Unblocked ${displayName(user)}`);
+							toasts.add(
+								t("top_sweet_macaw_pet", { displayName: displayName(user) })
+							);
 							return router.refresh();
 						})
 						.catch(toasts.addError);
 				}}
 			>
-				Unblock
+				{t("polite_spicy_hamster_create")}
 			</Button>
 			<Tooltip>
 				<ReportDialog user={user}>
@@ -44,7 +48,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 						</DialogTrigger>
 					</TooltipTrigger>
 				</ReportDialog>
-				<TooltipContent>Report profile</TooltipContent>
+				<TooltipContent>{t("neat_lower_shell_tend")}</TooltipContent>
 			</Tooltip>
 		</div>
 	);

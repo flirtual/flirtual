@@ -1,16 +1,23 @@
 "use client";
 
 import { Newspaper } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { useCanny } from "~/hooks/use-canny";
 
 import { FooterListLink } from "./footer";
 
 export const FooterCannyLink: React.FC = () => {
-	return <FooterListLink label="Feedback" onClick={useCanny().openFeedback} />;
+	const t = useTranslations("footer");
+
+	return (
+		<FooterListLink label={t("feedback")} onClick={useCanny().openFeedback} />
+	);
 };
 
 export const ProfileNavigationCannyButton: React.FC = () => {
+	const t = useTranslations("navigation");
+
 	return (
 		<button
 			data-canny-changelog
@@ -18,7 +25,7 @@ export const ProfileNavigationCannyButton: React.FC = () => {
 			type="button"
 		>
 			<Newspaper className="size-6" />
-			Updates
+			{t("updates")}
 		</button>
 	);
 };

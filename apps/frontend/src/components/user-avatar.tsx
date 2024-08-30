@@ -1,4 +1,5 @@
 import { twMerge } from "tailwind-merge";
+import { useTranslations } from "next-intl";
 
 import { type User, displayName } from "~/api/user/user";
 import { urls } from "~/urls";
@@ -18,10 +19,12 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 	variant = "profile",
 	...props
 }) => {
+	const t = useTranslations("profile");
+
 	return (
 		<UserImage
 			{...props}
-			alt={`${displayName(user)}'s avatar`}
+			alt={t("happy_yummy_otter_climb", { displayName: displayName(user) })}
 			draggable={false}
 			src={urls.userAvatar(user, variant)}
 		/>

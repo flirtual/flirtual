@@ -27,7 +27,8 @@ export const InlineLink: React.FC<InlineLinkProps> = ({
 			target={href && isInternalHref(href) ? "_self" : "_blank"}
 			className={twMerge(
 				"focus:outline-none hocus:underline",
-				highlight && "text-theme-2",
+				highlight &&
+					"bg-brand-gradient bg-clip-text font-bold text-transparent",
 				href && !isInternalHref(href) && "touch-callout-default",
 				props.className
 			)}

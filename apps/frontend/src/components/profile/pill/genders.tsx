@@ -1,6 +1,7 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
+import { useTranslations } from "next-intl";
 
 import { findBy, sortBy } from "~/utilities";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
@@ -26,6 +27,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 	small
 }) => {
 	const genders = useAttributeList("gender");
+	const t = useTranslations();
 
 	const profileGenders = attributes
 		.map(({ id }) => findBy(genders, "id", id))
@@ -81,7 +83,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 								className="pointer-events-auto"
 								href={gender.metadata.definitionLink}
 							>
-								Learn more
+								{t("learn_more")}
 							</InlineLink>
 						</TooltipContent>
 					)}

@@ -35,10 +35,7 @@ export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;
 export type ProfileDomsub = (typeof ProfileDomsubList)[number];
 
 export const ProfileMonopolyList = ["monogamous", "nonmonogamous"] as const;
-export const ProfileMonopolyLabel = {
-	monogamous: "Monogamous",
-	nonmonogamous: "Non-monogamous"
-};
+
 export type ProfileMonopoly = (typeof ProfileMonopolyList)[number];
 
 export type Profile = Partial<UpdatedAtModel> & {
@@ -107,8 +104,8 @@ export async function update(
 	options: NarrowFetchOptions<
 		UpdateProfileBody,
 		| {
-			required?: Array<keyof UpdateProfileBody>;
-		}
+				required?: Array<keyof UpdateProfileBody>;
+		  }
 		| undefined
 	>
 ) {
@@ -192,9 +189,9 @@ export async function updatePreferences(
 			attributes?: Array<string>;
 		},
 		| {
-			required?: Array<"agemin" | "agemax">;
-			requiredAttributes?: Array<AttributeType>;
-		}
+				required?: Array<"agemin" | "agemax">;
+				requiredAttributes?: Array<AttributeType>;
+		  }
 		| undefined
 	>
 ) {

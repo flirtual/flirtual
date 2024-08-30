@@ -2,8 +2,8 @@
 
 import { type FC, useMemo, useState } from "react";
 import { MoreHorizontal } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-import { ProfileMonopolyLabel } from "~/api/user/profile";
 import { urls } from "~/urls";
 import { filterBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
@@ -29,6 +29,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 ) => {
 	const { editable, user, attributes, session } = props;
 	const [expanded, setExpanded] = useState(false);
+	const t = useTranslations("profile");
 
 	const kinks = useAttributeList("kink");
 	const activeKinkIds = useMemo(
@@ -45,7 +46,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 		!attributes.language &&
 		!attributes.platform
 	) {
-		return <div />;
+		return null;
 	}
 
 	return expanded ? (
@@ -60,7 +61,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 							session.user.profile.monopoly === user.profile.monopoly
 						}
 					>
-						{ProfileMonopolyLabel[user.profile.monopoly]}
+						{t("brave_funny_vulture_sail", { value: user.profile.monopoly })}
 					</Pill>
 				</div>
 			)}

@@ -1,25 +1,21 @@
-import { Share, type ShareOptions } from "@capacitor/share";
-import { useCallback, useEffect, useState } from "react";
-
-import { noop } from "~/utilities";
+import { Share, type ShareOptions, type ShareResult } from "@capacitor/share";
+import { useCallback } from "react";
+import useSWR from "swr";
 
 export function useShare() {
-	const [canShare, setCanShare] = useState(false);
-
-	useEffect(() => {
-		const checkCanShare = async () => {
-			const result = await Share.canShare();
-			setCanShare(result.value);
-		};
-		void checkCanShare();
-	}, []);
-
-	const share = useCallback(
-		async (options: ShareOptions) => {
-			if (canShare) await Share.share(options).catch(noop);
-		},
-		[canShare]
+	const { data: canShare } = useSWR(
+		"canShare",
+		async () => (await Share.canShare()).value,
+		{ fallbackData: false }
 	);
 
-	return { share, canShare };
+	return {
+		canShare,
+		share: useCallback(
+			async (options: ShareOptions): Promise<ShareResult> => {
+				return Share.share(options);
+			},
+			[canShare]
+		)
+	};
 }

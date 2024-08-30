@@ -1,36 +1,25 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Ban, Flag } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-import { type User, displayName } from "~/api/user";
-import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
-import { useToast } from "~/hooks/use-toast";
-import { DialogFooter, DialogTrigger } from "~/components/dialog/dialog";
+import { DialogTrigger } from "~/components/dialog/dialog";
 
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger
-} from "../dialog/alert";
+import { AlertDialogTrigger } from "../dialog/alert";
 import { Button } from "../button";
 
 import { ProfileModeratorInfo } from "./moderator-info";
 import { ProfileDropdown } from "./dropdown";
 import { ReportDialog } from "./dialogs/report";
+import { BlockDialog } from "./dialogs/block";
 
+import type { User } from "~/api/user";
 import type { FC } from "react";
 
 export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
-	const router = useRouter();
-	const toasts = useToast();
+	const t = useTranslations("profile");
 
 	if (
 		!session ||
@@ -53,54 +42,19 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 				<div className="flex w-full justify-center gap-6 pb-4 vision:text-white-20 desktop:pb-0">
 					{session.user.id !== user.id && (
 						<>
-							<AlertDialog>
+							<BlockDialog user={user}>
 								<AlertDialogTrigger asChild>
 									<Button className="gap-2 p-0" kind="tertiary" size="sm">
 										<Ban className="size-full" />
-										Block
+										{t("teary_new_meerkat_scoop")}
 									</Button>
 								</AlertDialogTrigger>
-								<AlertDialogContent>
-									<AlertDialogHeader>
-										<AlertDialogTitle>
-											Block {displayName(user)}?
-										</AlertDialogTitle>
-									</AlertDialogHeader>
-									<AlertDialogDescription>
-										This will prevent you from seeing each other&apos;s profiles
-										and messaging each other. This action is permanent and
-										cannot be undone later.
-									</AlertDialogDescription>
-									<DialogFooter>
-										<AlertDialogCancel asChild>
-											<Button kind="tertiary" size="sm">
-												Cancel
-											</Button>
-										</AlertDialogCancel>
-										<AlertDialogAction asChild>
-											<Button
-												size="sm"
-												onClick={async () => {
-													await api.user
-														.block(user.id)
-														.then(() => {
-															toasts.add(`Blocked ${displayName(user)}`);
-															return router.refresh();
-														})
-														.catch(toasts.addError);
-												}}
-											>
-												Block
-											</Button>
-										</AlertDialogAction>
-									</DialogFooter>
-								</AlertDialogContent>
-							</AlertDialog>
+							</BlockDialog>
 							<ReportDialog user={user}>
 								<DialogTrigger asChild>
 									<Button className="gap-2 p-0" kind="tertiary" size="sm">
 										<Flag className="size-6" />
-										Report
+										{t("busy_tiny_hamster_support")}
 									</Button>
 								</DialogTrigger>
 							</ReportDialog>

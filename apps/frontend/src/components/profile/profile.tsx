@@ -1,6 +1,7 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
+import { useTranslations } from "next-intl";
 
 import { yearsAgo } from "~/date";
 import { filterBy } from "~/utilities";
@@ -36,6 +37,7 @@ export type ProfileProps = ComponentProps<"div"> & {
 export const Profile: FC<ProfileProps> = (props) => {
 	const { user, direct = false, className, id, ...elementProps } = props;
 
+	const t = useTranslations("profile");
 	const [session] = useSession();
 
 	if (!session) return null;
@@ -85,7 +87,9 @@ export const Profile: FC<ProfileProps> = (props) => {
 										{yearsAgo(new Date(user.bornAt))}
 									</span>
 									{user.tags?.includes("verified") && (
-										<ProfileVerificationBadge tooltip="Age verified" />
+										<ProfileVerificationBadge
+											tooltip={t("sound_whole_jaguar_charm")}
+										/>
 									)}
 								</div>
 							)}
@@ -115,39 +119,41 @@ export const Profile: FC<ProfileProps> = (props) => {
 						user.profile.discord ||
 						user.profile.vrchat) && (
 						<div className="flex flex-col gap-2 vision:text-white-20">
-							{discordConnection ? (
-								<div className="flex items-center gap-2">
-									<DiscordIcon className="size-6" />
-									Discord:{" "}
-									<CopyClick value={discordConnection.displayName}>
-										<span>{discordConnection.displayName}</span>
-									</CopyClick>
-									<ProfileVerificationBadge tooltip="Discord verified" />
-								</div>
-							) : (
-								user.profile.discord && (
-									<div className="flex items-center gap-2">
-										<DiscordIcon className="size-6" />
-										Discord:{" "}
-										<CopyClick value={user.profile.discord}>
-											<span>{user.profile.discord}</span>
+							<div className="flex items-center gap-2">
+								<DiscordIcon className="size-6 shrink-0" />
+								{t.rich("that_proud_butterfly_find", {
+									name: discordConnection?.displayName || user.profile.discord,
+									copy: (children) => (
+										<CopyClick
+											value={
+												discordConnection?.displayName || user.profile.discord!
+											}
+										>
+											<span>{children}</span>
 										</CopyClick>
-									</div>
-								)
-							)}
+									)
+								})}
+								{discordConnection && (
+									<ProfileVerificationBadge
+										tooltip={t("smart_just_scallop_reside")}
+									/>
+								)}
+							</div>
 							{user.profile.vrchat && (
 								<div className="flex items-center gap-2">
-									<div className="w-6">
-										<VRChatOutlineIcon className="h-6 text-black-90" />
-									</div>
-									VRChat:{" "}
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href={urls.vrchat(user.profile.vrchat)}
-									>
-										{user.profile.vrchat}
-									</InlineLink>
+									<VRChatOutlineIcon className="size-6 shrink-0 text-black-90" />
+									{t.rich("zany_salty_cheetah_lead", {
+										name: user.profile.vrchat,
+										copy: (children) => (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href={urls.vrchat(user.profile.vrchat!)}
+											>
+												{children}
+											</InlineLink>
+										)
+									})}
 								</div>
 							)}
 						</div>
@@ -155,11 +161,11 @@ export const Profile: FC<ProfileProps> = (props) => {
 					{user.profile.new && !myProfile ? (
 						session?.user.profile.new ? (
 							<span className="text-xl italic dark:text-white-20">
-								You&apos;re both new to VR. Explore it together!
+								{t("strong_home_bullock_taste")}
 							</span>
 						) : (
 							<span className="text-xl italic dark:text-white-20">
-								{displayName(user)} is new to VR. Why not show them around?
+								{t("fuzzy_calm_ant_nudge", { displayName: displayName(user) })}
 							</span>
 						)
 					) : null}
@@ -169,8 +175,11 @@ export const Profile: FC<ProfileProps> = (props) => {
 						</Html>
 					) : myProfile ? (
 						<span className="text-xl italic dark:text-white-20">
-							Don&apos;t forget to{" "}
-							<InlineLink href={urls.settings.bio}>add a bio</InlineLink>!
+							{t.rich("early_quiet_giraffe_dine", {
+								"settings-bio": (children) => (
+									<InlineLink href={urls.settings.bio}>{children}</InlineLink>
+								)
+							})}
 						</span>
 					) : null}
 					<ProfilePrompts prompts={user.profile.prompts} />

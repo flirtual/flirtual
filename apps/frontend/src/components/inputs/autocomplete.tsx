@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { search as fuzzySearch, fuzzy } from "fast-fuzzy";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { InlineLink } from "../inline-link";
@@ -41,6 +42,7 @@ export function InputAutocomplete<K extends string>(
 		...elementProps
 	} = props;
 
+	const t = useTranslations();
 	const visibleValueOptions = useMemo(
 		() =>
 			options.length === 0
@@ -150,7 +152,7 @@ export function InputAutocomplete<K extends string>(
 													className="pointer-events-auto"
 													href={option.definitionLink}
 												>
-													Learn more
+													{t("learn_more")}
 												</InlineLink>
 											)}
 										</TooltipContent>

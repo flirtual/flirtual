@@ -1,4 +1,3 @@
-import { IntlErrorCode } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
 import { create as setupAcceptLanguage } from "accept-language";
 import { headers } from "next/headers";
@@ -19,7 +18,17 @@ export const getInternationalization = cache(
 		const al = setupAcceptLanguage();
 		al.languages(languages);
 
-		const browser = al.get(headers().get("accept-language"));
+		const accept = headers().get("accept-language");
+
+		const ipCountry =
+			headers().get("cf-ipcountry") || headers().get("x-vercel-ip-country");
+		const country =
+			ipCountry !== "XX" && ipCountry !== "T1"
+				? (ipCountry?.toLowerCase() ?? null)
+				: null;
+
+		const browser = al.get(accept);
+
 		const locale = languageOverride || browser || sourceLanguageTag;
 
 		return {
@@ -28,6 +37,7 @@ export const getInternationalization = cache(
 				browser,
 				fallback: sourceLanguageTag
 			},
+			country,
 			languages
 		};
 	}
@@ -48,17 +58,5 @@ export default getRequestConfig(async () => {
 	return {
 		locale: locale.current,
 		messages: deepmerge(fallback, messages)
-		/* getMessageFallback({ error, namespace, key }) {
-			if (error.code !== IntlErrorCode.MISSING_MESSAGE) throw error;
-
-			return [namespace, key]
-				.filter(Boolean)
-				.join(".")
-				.split(".")
-				.reduce((acc, key) => {
-					if (acc && key in acc) return acc[key];
-					throw error;
-				}, fallback);
-		} */
 	};
 });

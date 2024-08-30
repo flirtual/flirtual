@@ -201,7 +201,9 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			values={sortableItems}
 			onChange={(newSortableItems) => {
 				const keyedValue = groupBy(value, ({ id }) => id);
-				onChange(newSortableItems.map((id) => keyedValue[id]?.[0]).filter(Boolean));
+				onChange(
+					newSortableItems.map((id) => keyedValue[id]?.[0]).filter(Boolean)
+				);
 			}}
 			disabled={!!fullPreviewId}
 		>

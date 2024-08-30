@@ -2,7 +2,7 @@
 
 import { Link, Pencil } from "lucide-react";
 import { useState } from "react";
-import { Clipboard } from "@capacitor/clipboard";
+import { useTranslations } from "next-intl";
 
 import { toAbsoluteUrl, urls } from "~/urls";
 import { useShare } from "~/hooks/use-share";
@@ -16,11 +16,13 @@ import { DrawerOrDialog } from "../drawer-or-dialog";
 import { InputText } from "../inputs";
 import { Form, FormButton } from "../forms";
 import { DialogBody, DialogHeader, DialogTitle } from "../dialog/dialog";
+import { CopyClick } from "../copy-click";
 
 import type { User } from "~/api/user";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
+	const t = useTranslations("profile");
 	const toasts = useToast();
 	const { share, canShare } = useShare();
 	const [shareVisible, setShareVisible] = useState(false);
@@ -36,12 +38,12 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				Icon={Pencil}
 				size="sm"
 			>
-				Edit
+				{t("crazy_large_hound_grace")}
 			</ButtonLink>
 			<DrawerOrDialog open={shareVisible} onOpenChange={setShareVisible}>
 				<>
 					<DialogHeader>
-						<DialogTitle>Share your profile link</DialogTitle>
+						<DialogTitle>{t("home_watery_koala_stop")}</DialogTitle>
 					</DialogHeader>
 					<DialogBody>
 						<div className="flex min-h-48 flex-col justify-between gap-8 px-2 desktop:max-w-sm">
@@ -57,7 +59,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 										})
 										.then(() => {
 											setProfileLink(link);
-											return toasts.add("Updated profile link");
+											return toasts.add(t("odd_mad_dog_nurture"));
 										})
 										.catch((reason) =>
 											toasts.add({
@@ -83,7 +85,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											</FormField>
 										</div>
 										<FormButton kind="secondary" size="sm">
-											Update
+											{t("sleek_simple_puma_find")}
 										</FormButton>
 									</div>
 								)}
@@ -95,29 +97,25 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 										size="sm"
 										onClick={async () => {
 											await share({
-												text: "Check out my Flirtual profile!",
+												text: t("icy_stock_herring_burn"),
 												url: toAbsoluteUrl(urls.profile(profileLink)).toString()
-											});
+											}).catch(toasts.addError);
 										}}
 									>
-										Share
+										{t("spare_short_tapir_dream")}
 									</Button>
 								)}
-								<Button
-									Icon={Link}
-									kind={canShare ? "secondary" : "primary"}
-									size="sm"
-									onClick={async () => {
-										await Clipboard.write({
-											string: toAbsoluteUrl(
-												urls.profile(profileLink)
-											).toString()
-										});
-										toasts.add("Copied to clipboard");
-									}}
+								<CopyClick
+									value={toAbsoluteUrl(urls.profile(profileLink)).toString()}
 								>
-									Copy link
-								</Button>
+									<Button
+										Icon={Link}
+										kind={canShare ? "secondary" : "primary"}
+										size="sm"
+									>
+										{t("mealy_any_javelina_hint")}
+									</Button>
+								</CopyClick>
 							</div>
 						</div>
 					</DialogBody>
@@ -129,7 +127,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				size="sm"
 				onClick={() => setShareVisible(true)}
 			>
-				Share
+				{t("spare_short_tapir_dream")}
 			</Button>
 		</div>
 	);

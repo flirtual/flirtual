@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-import { IconComponentProps } from "./icons";
+import type { IconComponentProps } from "./icons";
 
 export const LoadingIndicator: React.FC<IconComponentProps> = (props) => {
 	const id = useId();
@@ -48,7 +48,7 @@ export const LoadingIndicator: React.FC<IconComponentProps> = (props) => {
 };
 
 export const LoadingIndicatorScreen: React.FC = () => (
-	<div className="fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center bg-cream p-4 dark:bg-black-80 md:p-16">
+	<div className="md:p-16 fixed left-0 top-0 z-40 flex size-full items-center justify-center bg-cream p-4 dark:bg-black-80">
 		<LoadingIndicator className="w-16 grow-0 text-theme-2" />
 	</div>
 );

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { type User, displayName } from "~/api/user";
 import { urls } from "~/urls";
@@ -16,6 +17,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 }) => {
 	const { relationship } = user;
 
+	const t = useTranslations("profile");
 	const toasts = useToast();
 	const router = useRouter();
 
@@ -30,7 +32,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 						href={urls.conversations.of(relationship.conversationId)}
 						size="sm"
 					>
-						Message
+						{t("every_sleek_llama_feast")}
 					</ButtonLink>
 					<Button
 						className="w-fit"
@@ -41,13 +43,17 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 							void api.matchmaking
 								.unmatch({ query: { userId: user.id } })
 								.then(() => {
-									toasts.add(`Unmatched ${displayName(user)}`);
+									toasts.add(
+										t("weird_green_crab_peek", {
+											displayName: displayName(user)
+										})
+									);
 									return router.refresh();
 								})
 								.catch(toasts.addError);
 						}}
 					>
-						Unmatch
+						{t("neat_moving_ibex_nail")}
 					</Button>
 				</div>
 			</>
@@ -57,13 +63,15 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 		return (
 			<div className="flex w-full items-center justify-between gap-4 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
-					{`You ${
-						relationship.type === "like"
-							? relationship.kind === "love"
-								? "liked"
-								: "homied"
-							: "passed on"
-					} ${displayName(user)}.`}
+					{t(`relationship_status.to_other`, {
+						status:
+							relationship.type === "like"
+								? relationship.kind === "love"
+									? "liked"
+									: "homied"
+								: "passed",
+						displayName: displayName(user)
+					})}
 				</span>
 				<Button
 					className="shrink-0"
@@ -88,9 +96,10 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 			<div className="flex items-center gap-3 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
 				<Sparkles className="size-6 shrink-0 text-theme-overlay" />
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
-					{`${displayName(user)} ${
-						relationship.likedMe === "love" ? "liked" : "homied"
-					} you!`}
+					{t(`relationship_status.to_me`, {
+						status: relationship.likedMe === "love" ? "liked" : "homied",
+						displayName: displayName(user)
+					})}
 				</span>
 			</div>
 		);

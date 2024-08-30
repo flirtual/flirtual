@@ -4,12 +4,8 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, Search, Trash2, X } from "lucide-react";
-
-import { UserImage } from "../user-avatar";
-import { TimeRelative } from "../time-relative";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
-import { Dialog, DialogContent } from "../dialog/dialog";
+import { ChevronLeft, ChevronRight, Search, Trash2 } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 
 import { type ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
@@ -17,6 +13,10 @@ import { useToast } from "~/hooks/use-toast";
 import { api } from "~/api";
 import { urls } from "~/urls";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+
+import { Dialog, DialogContent } from "../dialog/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { UserImage } from "../user-avatar";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;
@@ -69,7 +69,7 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 
 	return (
 		<UserImage
-			alt={"Profile image"}
+			alt=""
 			className={twMerge(className, large && "bg-black-90 object-contain")}
 			fill={large}
 			height={large ? undefined : 512}
@@ -81,24 +81,20 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 };
 
 const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
+	const t = useTranslations("profile");
+	const formatter = useFormatter();
+
 	const toasts = useToast();
 	const router = useRouter();
 
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 text-white-20">
 			<span>
-				Uploaded <TimeRelative value={image.createdAt} />
-				{image.scanned !== null && (
-					<>
-						, and was{" "}
-						{image.scanned ? (
-							"scanned"
-						) : (
-							<span className="font-bold">not scanned</span>
-						)}
-					</>
-				)}
-				.
+				{t.rich("strong_trite_squid_grasp", {
+					uploaded: formatter.relativeTime(new Date(image.createdAt)),
+					scanned: image.scanned,
+					bold: (children) => <span className="font-bold">{children}</span>
+				})}
 			</span>
 			<div className="flex gap-4 text-white-20">
 				<Tooltip>
@@ -110,7 +106,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 							<Search className="size-5" strokeWidth={2} />
 						</button>
 					</TooltipTrigger>
-					<TooltipContent>Search image</TooltipContent>
+					<TooltipContent>{t("sea_proof_eel_fade")}</TooltipContent>
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -120,7 +116,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 								await api.images
 									.delete(image.id)
 									.then(() => {
-										toasts.add("Image removed");
+										toasts.add(t("super_quick_alpaca_empower"));
 										return router.refresh();
 									})
 									.catch(toasts.addError);
@@ -129,7 +125,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 							<Trash2 className="size-5" />
 						</button>
 					</TooltipTrigger>
-					<TooltipContent>Remove image</TooltipContent>
+					<TooltipContent>{t("still_due_tuna_dazzle")}</TooltipContent>
 				</Tooltip>
 			</div>
 		</div>
@@ -186,8 +182,8 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 			(event) => {
 				if (
 					(document.querySelector("[data-radix-focus-guard]") &&
-					!expandedImage)
-					|| event.ctrlKey
+						!expandedImage) ||
+					event.ctrlKey
 				)
 					return;
 

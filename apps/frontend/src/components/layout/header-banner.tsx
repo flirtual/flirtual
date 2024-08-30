@@ -1,16 +1,32 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { useSession } from "~/hooks/use-session";
 import { useLocation } from "~/hooks/use-location";
 
 import { InlineLink } from "../inline-link";
 
-import type { FC } from "react";
+import type { FC, PropsWithChildren } from "react";
+
+const BannerLink: FC<PropsWithChildren<{ href: string }>> = ({
+	href,
+	children
+}) => (
+	<InlineLink
+		className="font-semibold before:absolute before:left-0 before:top-0 before:size-full"
+		highlight={false}
+		href={href}
+	>
+		{children}
+	</InlineLink>
+);
 
 export const HeaderBanner: FC = () => {
 	const [session] = useSession();
+	const t = useTranslations("banners");
+
 	const location = useLocation();
 
 	let type: string | null = null;
@@ -31,46 +47,29 @@ export const HeaderBanner: FC = () => {
 					<span>
 						{
 							{
-								finish: (
-									<>
-										<InlineLink
-											className="font-semibold underline before:absolute before:left-0 before:top-0 before:size-full"
-											highlight={false}
+								finish: t.rich("finish_profile", {
+									link: (children) => (
+										<BannerLink
 											href={
 												session.user.status === "registered"
 													? "/onboarding/1"
 													: "/finish/1"
 											}
 										>
-											Complete your profile
-										</InlineLink>{" "}
-										so people can see you and match!
-									</>
-								),
-								confirm: (
-									<>
-										<InlineLink
-											className="font-semibold before:absolute before:left-0 before:top-0 before:size-full"
-											highlight={false}
-											href="/confirm-email"
-										>
-											Confirm your email
-										</InlineLink>{" "}
-										so people can see you and match!
-									</>
-								),
-								mobile: (
-									<>
-										<InlineLink
-											className="font-semibold before:absolute before:left-0 before:top-0 before:size-full"
-											highlight={false}
-											href="/download"
-										>
-											Download the mobile app
-										</InlineLink>{" "}
-										for a better experience!
-									</>
-								)
+											{children}
+										</BannerLink>
+									)
+								}),
+								confirm: t.rich("confirm_email", {
+									link: (children) => (
+										<BannerLink href="/confirm-email">{children}</BannerLink>
+									)
+								}),
+								mobile: t.rich("mobile", {
+									link: (children) => (
+										<BannerLink href="/download">{children}</BannerLink>
+									)
+								})
 							}[type as string]
 						}
 					</span>

@@ -9,19 +9,23 @@ import { urls } from "~/urls";
 export const CarouselGallery: FC = () => {
 	const {
 		landing: {
-			carousel: { images }
+			carousel: { images: _images }
 		}
 	} = useMessages() as unknown as {
 		landing: {
 			carousel: {
-				images: Array<{
-					title: string;
-					image: string;
-				}>;
+				images: Record<
+					number,
+					{
+						title: string;
+						image: string;
+					}
+				>;
 			};
 		};
 	};
 
+	const images = Object.values(_images);
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const next = useCallback(() => {

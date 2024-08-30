@@ -3,6 +3,7 @@
 import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 import { Expand, MoreHorizontal, Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { UserImage } from "./user-avatar";
 import { useCurrentSortableItem } from "./forms/sortable";
@@ -22,7 +23,7 @@ export const ArrangeableImagePreview: React.FC<
 	return (
 		<UserImage
 			{...props}
-			alt="Profile image"
+			alt=""
 			height={175}
 			width={175}
 			className={twMerge(
@@ -37,6 +38,7 @@ export const ArrangeableImage = forwardRef<
 	HTMLDivElement,
 	ArrangeableImageProps
 >(({ src, id, onDelete, onFullscreen, ...props }, reference) => {
+	const t = useTranslations("arrangeable_image");
 	const currentId = useCurrentSortableItem();
 	const dragging = currentId === id;
 
@@ -63,6 +65,7 @@ export const ArrangeableImage = forwardRef<
 							onClick={onDelete}
 						>
 							<Trash className="size-4 text-white-20" />
+							<span className="sr-only">{t("soft_curly_pony_advise")}</span>
 						</button>
 						<button
 							className="opacity-60 hocus:opacity-100"
@@ -70,6 +73,7 @@ export const ArrangeableImage = forwardRef<
 							onClick={onFullscreen}
 						>
 							<Expand className="size-4 text-white-20" />
+							<span className="sr-only">{t("glad_giant_mantis_win")}</span>
 						</button>
 					</div>
 					<button className="opacity-60 hocus:opacity-100" type="button">

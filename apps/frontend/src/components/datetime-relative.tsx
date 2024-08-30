@@ -1,25 +1,26 @@
 "use client";
 
+import { useFormatter, type DateTimeFormatOptions } from "next-intl";
 import { type ComponentProps, type FC, useMemo } from "react";
-
-import { useHydrated } from "~/hooks/use-hydrated";
 
 interface DateTimeRelativeProps {
 	value: string;
+	options?: DateTimeFormatOptions;
 }
 
 export const DateTimeRelative: FC<
 	DateTimeRelativeProps & ComponentProps<"span">
-> = (props) => {
-	const { value, ...elementProps } = props;
+> = ({ value, options, ...props }) => {
 	const date = useMemo(() => new Date(value), [value]);
-
-	const hydrated = useHydrated();
+	const formatter = useFormatter();
 
 	return (
-		<span {...elementProps}>
-			{/* After hydration, use the user's locale. */}
-			{date.toLocaleString(hydrated ? navigator.language : "en-US")}
+		<span {...props}>
+			{formatter.dateTime(date, {
+				dateStyle: "medium",
+				timeStyle: "short",
+				...options
+			})}
 		</span>
 	);
 };

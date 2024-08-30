@@ -1,4 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { type FC, forwardRef, type PropsWithChildren } from "react";
 
@@ -23,10 +24,19 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
 	}
 );
 
-export const PremiumBadge: FC = () => (
-	<Badge asChild>
-		<Link href={urls.subscription.default}>Premium</Link>
-	</Badge>
-);
+export const PremiumBadge: FC = () => {
+	const t = useTranslations();
 
-export const NewBadge: FC = () => <Badge>NEW</Badge>;
+	return (
+		<Badge asChild>
+			<Link href={urls.subscription.default}>
+				{t("nimble_solid_spider_fond")}
+			</Link>
+		</Badge>
+	);
+};
+
+export const NewBadge: FC = () => {
+	const t = useTranslations();
+	return <Badge>{t("home_seemly_larva_flip")}</Badge>;
+};

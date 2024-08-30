@@ -1,4 +1,5 @@
 import { twMerge } from "tailwind-merge";
+import { useTranslations } from "next-intl";
 
 import { urls } from "~/urls";
 import {
@@ -6,6 +7,10 @@ import {
 	DiscordIcon,
 	TwitterIcon
 } from "~/components/icons";
+import { gitCommitSha, gitCommitUrl } from "~/const";
+
+import { FlirtualLogo } from "../logo";
+import { InlineLink } from "../inline-link";
 
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 import { FooterCannyLink } from "./canny-button";
@@ -45,7 +50,7 @@ type FooterListLinkProps = LinkOrButtonProps<{
 }>;
 
 export const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
-	<li className="cursor-pointer hover:underline desktop:text-xl">
+	<li className="cursor-pointer hover:underline">
 		{"href" in props ? (
 			<a {...props}>{props.label}</a>
 		) : (
@@ -58,20 +63,30 @@ export const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
 
 export type FooterProps = React.ComponentProps<"footer"> & {
 	desktopOnly?: boolean;
+	background?: boolean;
 };
 
-export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
+export const Footer: React.FC<FooterProps> = ({
+	desktopOnly,
+	background = true,
+	...props
+}) => {
+	const t = useTranslations("footer");
+
 	return (
 		<footer
 			{...props}
 			className={twMerge(
-				"w-full select-none justify-center bg-brand-gradient px-8 py-12 font-nunito text-white-10 desktop:p-16",
+				"-mt-1 w-full select-none justify-center px-8 py-12 font-nunito",
 				desktopOnly ? "hidden desktop:flex" : "flex",
+				background &&
+					"border-t-4 border-theme-1 dark:text-white-20 desktop:bg-white-20 desktop:p-16 desktop:shadow-brand-inset dark:desktop:bg-black-70",
 				props.className
 			)}
 		>
-			<div className="max-w-screen-lg flex w-full flex-col gap-4 desktop:gap-8">
-				<div className="flex items-center gap-8 desktop:mx-auto desktop:justify-center">
+			<div className="flex w-full max-w-screen-wide flex-col gap-4 desktop:gap-8">
+				<div className="flex items-center gap-8">
+					<FlirtualLogo className="w-36 text-black-80 dark:text-[snow]" />
 					<div className="flex gap-4">
 						<FooterIconSupportLink />
 						<FooterListIconLink
@@ -84,43 +99,49 @@ export const Footer: React.FC<FooterProps> = ({ desktopOnly, ...props }) => {
 						/>
 					</div>
 				</div>
-				<div className="max-w-screen-sm flex flex-col desktop:mx-auto">
-					<ul className="flex flex-wrap gap-x-4 desktop:justify-center">
-						<FooterListLink href={urls.resources.events} label="Events" />
-						<FooterSupportLink />
-						<FooterCannyLink />
-						<FooterListLink
-							href={urls.resources.networkStatus}
-							label="Status"
-						/>
-					</ul>
-					<ul className="flex flex-wrap gap-x-4 desktop:justify-center">
-						<FooterListLink href={urls.resources.about} label="About" />
-						<FooterListLink href={urls.resources.press} label="Press" />
-						<FooterListLink href={urls.resources.branding} label="Branding" />
-						<FooterListLink
-							href={urls.resources.developers}
-							label="Developers"
-						/>
-					</ul>
-					<ul className="flex flex-wrap gap-x-4 desktop:justify-center">
-						<FooterListLink
-							href={urls.resources.communityGuidelines}
-							label="Community Guidelines"
-						/>
-						<FooterListLink
-							href={urls.resources.termsOfService}
-							label="Terms"
-						/>
-						<FooterListLink
-							href={urls.resources.privacyPolicy}
-							label="Privacy"
-						/>
-					</ul>
-				</div>
-				<div className="flex justify-between gap-2 desktop:text-lg">
+				<ul className="grid max-w-screen-wide grid-cols-4 gap-x-4 desktop:justify-center">
+					<FooterListLink href={urls.resources.events} label={t("events")} />
+					<FooterSupportLink />
+					<FooterCannyLink />
+					<FooterListLink
+						href={urls.resources.networkStatus}
+						label={t("status")}
+					/>
+					<FooterListLink href={urls.resources.about} label={t("about")} />
+					<FooterListLink href={urls.resources.press} label={t("press")} />
+					<FooterListLink
+						href={urls.resources.branding}
+						label={t("branding")}
+					/>
+					<FooterListLink
+						href={urls.resources.developers}
+						label={t("developers")}
+					/>
+					<FooterListLink
+						href={urls.resources.communityGuidelines}
+						label={t("guidelines")}
+					/>
+					<FooterListLink
+						href={urls.resources.termsOfService}
+						label={t("terms")}
+					/>
+					<FooterListLink
+						href={urls.resources.privacyPolicy}
+						label={t("privacy")}
+					/>
+				</ul>
+				<div className="flex justify-between gap-2">
 					<MadeWithLove />
-					<span>&copy; {new Date().getFullYear()} Flirtual</span>
+					<div className="flex flex-col items-end">
+						<span>{t("copyright", { year: new Date().getFullYear() })}</span>
+						<InlineLink
+							highlight={false}
+							href={gitCommitUrl}
+							className="text-sm opacity-75"
+						>
+							{gitCommitSha}
+						</InlineLink>
+					</div>
 				</div>
 			</div>
 		</footer>

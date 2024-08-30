@@ -1,7 +1,9 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { urls } from "~/urls";
-import { capitalize, groupBy } from "~/utilities";
+import { groupBy } from "~/utilities";
 import { useSession } from "~/hooks/use-session";
 import { useAttributeList } from "~/hooks/use-attribute-list";
 
@@ -11,18 +13,6 @@ import { Pill } from "./pill";
 
 import type { User } from "~/api/user";
 import type { FC } from "react";
-
-function getPersonalityLabels({
-	profile: { openness, conscientiousness, agreeableness }
-}: User) {
-	if (!openness || !conscientiousness || !agreeableness) return [];
-
-	return [
-		openness > 0 ? "Open-minded" : "Practical",
-		conscientiousness > 0 ? "Reliable" : "Free-spirited",
-		agreeableness > 0 ? "Friendly" : "Straightforward"
-	];
-}
 
 function isDomsubMatch(value1: string | undefined, value2: string | undefined) {
 	const a = new Set([value1, value2]);
@@ -36,6 +26,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const { user } = props;
 
 	const [session] = useSession();
+	const t = useTranslations("profile");
 
 	const allAttributes = [
 		...useAttributeList("sexuality"),
@@ -58,6 +49,24 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	);
 
 	const editable = session.user.id === user.id;
+
+	function getPersonalityLabels({
+		profile: { openness, conscientiousness, agreeableness }
+	}: User) {
+		if (!openness || !conscientiousness || !agreeableness) return [];
+
+		return [
+			t("personality.openness", {
+				value: openness > 0 ? "high" : "low"
+			}),
+			t("personality.conscientiousness", {
+				value: conscientiousness > 0 ? "high" : "low"
+			}),
+			t("personality.agreeableness", {
+				value: agreeableness > 0 ? "high" : "low"
+			})
+		];
+	}
 
 	const sessionPersonalityLabels = getPersonalityLabels(session.user);
 	const personalityLabels = getPersonalityLabels(user);
@@ -148,7 +157,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 							isDomsubMatch(user.profile.domsub, session.user.profile.domsub)
 						}
 					>
-						{capitalize(user.profile.domsub)}
+						{t("dark_level_goat_gulp", { value: user.profile.domsub })}
 					</Pill>
 				</div>
 			)}

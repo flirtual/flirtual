@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import {
 	type PrivacyPreferenceOption,
 	PrivacyPreferenceOptions
@@ -6,16 +8,16 @@ import { InputSelect, type InputSelectProps } from "~/components/inputs";
 
 export const InputPrivacySelect: React.FC<
 	Omit<InputSelectProps<PrivacyPreferenceOption>, "options">
-> = (props) => (
-	<InputSelect
-		{...props}
-		options={PrivacyPreferenceOptions.map((option) => ({
-			id: option,
-			name: {
-				everyone: "Anyone on Flirtual",
-				matches: "Matches only",
-				me: "Just me"
-			}[option]
-		}))}
-	/>
-);
+> = (props) => {
+	const t = useTranslations("inputs.privacy_select");
+
+	return (
+		<InputSelect
+			{...props}
+			options={PrivacyPreferenceOptions.map((option) => ({
+				id: option,
+				name: t(option)
+			}))}
+		/>
+	);
+};

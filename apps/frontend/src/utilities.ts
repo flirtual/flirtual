@@ -44,8 +44,8 @@ export type DeepWriteable<T> = {
 export type Cast<X, Y> = X extends Y ? X : Y;
 export type FromEntries<T> =
 	T extends Array<[infer Key, any]>
-	? { [K in Cast<Key, string>]: Extract<ArrayElement<T>, [K, any]>[1] }
-	: { [key in string]: any };
+		? { [K in Cast<Key, string>]: Extract<ArrayElement<T>, [K, any]>[1] }
+		: { [key in string]: any };
 
 export function fromEntries<T extends Array<any>>(
 	value: T
@@ -155,16 +155,6 @@ export function filterBy<T, K extends keyof T>(
 export function excludeBy<T, K extends keyof T>(
 	array: Array<T>,
 	key: K,
-	value: T[K]
-): Array<T>;
-export function excludeBy<T, K extends keyof T>(
-	array: Array<T>,
-	key: K,
-	values: Array<T[K]>
-): Array<T>;
-export function excludeBy<T, K extends keyof T>(
-	array: Array<T>,
-	key: K,
 	value: T[K] | Array<T[K]>
 ): Array<T> {
 	return array.filter((arrayValue) =>
@@ -244,7 +234,7 @@ export function hashCode(value: string): number {
 export function tinySimpleHash(value: string): number {
 	let h = 9;
 
-	for (let index = 0; index < value.length;) {
+	for (let index = 0; index < value.length; ) {
 		h = Math.imul(h ^ (value.codePointAt(index++) || 1), 9 ** 9);
 	}
 

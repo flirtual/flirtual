@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import ms from "ms";
+import { useTranslations } from "next-intl";
 
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
@@ -121,6 +122,7 @@ export const TrustAndSafetyDialog: FC<{
 	closable?: boolean;
 }> = ({ children, actions, closable = false, onAcknowledge, onOpenChange }) => {
 	const [session] = useSession();
+	const t = useTranslations("dialogs.trust_and_safety");
 
 	if (!session) return null;
 
@@ -130,16 +132,12 @@ export const TrustAndSafetyDialog: FC<{
 				<DialogHeader>
 					<DialogTitle className="flex h-full items-center gap-2">
 						<FlirtualLogo className="h-full" />
-						<span>Trust & Safety</span>
+						<span>{t("title")}</span>
 					</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
 					<div className="flex min-h-64 flex-col justify-between gap-4 px-2 desktop:max-w-lg">
 						<div className="flex flex-col gap-4">
-							{/* <h1 className="text-lg">
-								You&apos;ve received a message from the Flirtual moderation
-								team:
-							</h1> */}
 							<p data-sentry-mask className="whitespace-pre-wrap font-nunito">
 								{children}
 							</p>
@@ -147,15 +145,15 @@ export const TrustAndSafetyDialog: FC<{
 						<div className="flex flex-col gap-2">
 							{actions || (
 								<Button size="sm" onClick={onAcknowledge}>
-									Acknowledge
+									{t("acknowledge")}
 								</Button>
 							)}
 							<span className="flex max-w-sm flex-row justify-center gap-4 font-nunito text-xs">
 								<InlineLink href={urls.resources.communityGuidelines}>
-									Community guidelines
+									{t("lofty_day_snail_treasure")}
 								</InlineLink>
 								<InlineLink href={urls.resources.contactDirect}>
-									Contact us
+									{t("jolly_nimble_crow_taste")}
 								</InlineLink>
 							</span>
 						</div>

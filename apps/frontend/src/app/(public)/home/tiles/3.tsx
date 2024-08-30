@@ -24,19 +24,24 @@ export async function Testimonial({ id }: TileProps) {
 
 	const {
 		landing: {
-			testimonial: { images, brands }
+			testimonial: { images: _images, brands }
 		}
 	} = messages as unknown as {
 		landing: {
 			testimonial: {
-				images: Array<string>;
-				brands: Array<{
-					name: string;
-					image: string;
-				}>;
+				images: Record<number, string>;
+				brands: Record<
+					number,
+					{
+						name: string;
+						image: string;
+					}
+				>;
 			};
 		};
 	};
+
+	const images = Object.values(_images);
 
 	return (
 		<Tile className="flex flex-col" id={id}>
@@ -74,7 +79,7 @@ export async function Testimonial({ id }: TileProps) {
 				</div>
 			</div>
 			<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:p-16 desktop:before:bg-none">
-				{brands.map(({ name, image }, index) => (
+				{Object.values(brands).map(({ name, image }, index) => (
 					<Image
 						key={image}
 						alt={name}

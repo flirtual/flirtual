@@ -1,6 +1,7 @@
 "use client";
 
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
+import { useTranslations } from "next-intl";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
 
@@ -26,12 +27,14 @@ export const FooterIconSupportLink: React.FC = () => {
 export const SupportButton: React.FC<{ className?: string }> = ({
 	className
 }) => {
+	const t = useTranslations();
+
 	return (
 		<InlineButton
 			className={className}
 			onClick={useFreshworks().openFreshworks}
 		>
-			Contact us
+			{t("busy_direct_cockroach_hush")}
 		</InlineButton>
 	);
 };

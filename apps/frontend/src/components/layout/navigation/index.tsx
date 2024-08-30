@@ -3,6 +3,7 @@
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import { useFormatter } from "next-intl";
 
 import { useLocation } from "~/hooks/use-location";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
@@ -44,22 +45,20 @@ const NavigationIconButton: FC<
 };
 
 export const ConversationListButton: FC<{ id?: string }> = ({ id }) => {
+	const formatter = useFormatter();
 	const conversationCount = clamp(useUnreadConversations().length, 0, 99);
 
 	return (
-		<NavigationIconButton
-			href={urls.conversations.list()}
-			id={id}
-		>
+		<NavigationIconButton href={urls.conversations.list()} id={id}>
 			<div className="relative">
 				<ChatBubbleLeftRightIcon
 					className="aspect-square w-8"
 					strokeWidth={1.5}
 				/>
 				{conversationCount !== 0 && (
-					<div className="absolute -right-2 top-0 flex size-5 items-center justify-center rounded-full bg-brand-gradient opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:size-0 group-hocus:opacity-0">
-						<span className="select-none font-mono text-sm font-semibold leading-none text-white-20">
-							{conversationCount}
+					<div className="absolute left-5 top-0 flex h-5 w-fit items-center justify-center rounded-full bg-brand-gradient px-1 opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:scale-0 group-hocus:opacity-0">
+						<span className="select-none text-sm font-semibold leading-none text-white-20">
+							{formatter.number(conversationCount)}
 						</span>
 					</div>
 				)}
@@ -114,10 +113,15 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 	</div>
 );
 
-export const AuthenticatedNavigation: FC<{ mobile?: boolean }> = ({ mobile = false }) => {
+export const AuthenticatedNavigation: FC<{ mobile?: boolean }> = ({
+	mobile = false
+}) => {
 	return (
 		<>
-			<ProfileNavigation href={urls.user.me} id={`profile-dropdown-button${mobile ? "-mobile" : ""}`} />
+			<ProfileNavigation
+				href={urls.user.me}
+				id={`profile-dropdown-button${mobile ? "-mobile" : ""}`}
+			/>
 			<NavigationalSwitch id={`browse-mode-switch${mobile ? "-mobile" : ""}`}>
 				<SwitchButton
 					href={urls.browse()}
@@ -130,7 +134,9 @@ export const AuthenticatedNavigation: FC<{ mobile?: boolean }> = ({ mobile = fal
 					className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
 				/>
 			</NavigationalSwitch>
-			<ConversationListButton id={`conversation-button${mobile ? "-mobile" : ""}`} />
+			<ConversationListButton
+				id={`conversation-button${mobile ? "-mobile" : ""}`}
+			/>
 		</>
 	);
 };

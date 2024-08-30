@@ -22,6 +22,7 @@ import AppUrlListener from "~/components/app-url-listener";
 import NativeStartup from "~/components/native-startup";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 import { InsetPreview } from "~/components/inset-preview";
+import { getInternationalization } from "~/i18n";
 
 import { ClientScripts } from "./client-scripts";
 import { fontClassNames } from "./fonts";
@@ -114,6 +115,8 @@ export default async function RootLayout({
 		: (session?.user.preferences?.theme ?? "light");
 
 	const locale = await getLocale();
+	const { country } = await getInternationalization();
+
 	const messages = await getMessages();
 
 	return (
@@ -124,6 +127,7 @@ export default async function RootLayout({
 				data-platform={platform}
 				data-theme={theme}
 				data-vision={vision}
+				data-country={country}
 				lang={locale}
 			>
 				<head suppressHydrationWarning>
@@ -166,6 +170,7 @@ export default async function RootLayout({
 						platform={platform}
 						userAgent={userAgent}
 						vision={vision}
+						country={country}
 					>
 						<NativeStartup />
 						<ToastProvider>

@@ -13,12 +13,16 @@ export interface DeviceContext {
 	platform: DevicePlatform;
 	native: boolean;
 	vision: boolean;
+	country: string | null;
 }
 
 const DeviceContext = createContext<DeviceContext>({} as DeviceContext);
 
 export type DeviceProviderProps = React.PropsWithChildren<
-	Pick<DeviceContext, "userAgent" | "platform" | "native" | "vision">
+	Pick<
+		DeviceContext,
+		"userAgent" | "platform" | "native" | "vision" | "country"
+	>
 >;
 
 export function DeviceProvider({ children, ...value }: DeviceProviderProps) {

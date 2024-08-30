@@ -91,7 +91,10 @@ const DialogFooter = ({
 	...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
-		className={twMerge("flex desktop:justify-end desktop:gap-2", className)}
+		className={twMerge(
+			"flex flex-row-reverse justify-end gap-2 desktop:flex-row",
+			className
+		)}
 		{...props}
 	/>
 );

@@ -20,9 +20,10 @@ export const gitCommitSha =
 	process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || "local";
 export const gitCommitReference = process.env
 	.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF as string;
-export const gitCommitUrl = gitCommitSha
-	? `https://github.com/${gitOrganization}/${gitRepository}/commit/${gitCommitSha}`
-	: null;
+export const gitCommitUrl =
+	gitCommitSha !== "local"
+		? `https://github.com/${gitOrganization}/${gitRepository}/commit/${gitCommitSha}`
+		: null;
 
 export const turnstileSiteKey = process.env
 	.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;

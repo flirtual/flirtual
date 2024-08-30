@@ -12,6 +12,7 @@ import {
 	useRef
 } from "react";
 import { twMerge } from "tailwind-merge";
+import { useTranslations } from "next-intl";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { InlineLink } from "../inline-link";
@@ -87,6 +88,7 @@ export function focusElementByKeydown({
 
 export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	const { option, elementProps } = props;
+	const t = useTranslations();
 
 	return (
 		<Tooltip>
@@ -114,7 +116,7 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 							className="pointer-events-auto"
 							href={option.definitionLink}
 						>
-							Learn more
+							{t("learn_more")}
 						</InlineLink>
 					)}
 				</TooltipContent>

@@ -105,12 +105,8 @@ AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 const AlertDialogCancel = React.forwardRef<
 	React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
 	React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
->(({ className, ...props }, reference) => (
-	<AlertDialogPrimitive.Cancel
-		className={twMerge("mt-2 desktop:mt-0", className)}
-		ref={reference}
-		{...props}
-	/>
+>(({ ...props }, reference) => (
+	<AlertDialogPrimitive.Cancel ref={reference} {...props} />
 ));
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 

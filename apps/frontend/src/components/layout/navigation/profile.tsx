@@ -13,6 +13,7 @@ import {
 	Sparkles,
 	VenetianMask
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { api } from "~/api";
 import { DiscordOutlineIcon } from "~/components/icons";
@@ -47,8 +48,12 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 	);
 };
 
-export const ProfileNavigation: React.FC<{ href: string, id?: string }> = (props) => {
+export const ProfileNavigation: React.FC<{ href: string; id?: string }> = (
+	props
+) => {
 	const [session, mutateSession] = useSession();
+	const t = useTranslations("navigation");
+
 	const [visible, setVisible] = useState(false);
 	const elementReference = useRef<HTMLDivElement>(null);
 	const location = useLocation();
@@ -101,7 +106,7 @@ export const ProfileNavigation: React.FC<{ href: string, id?: string }> = (props
 				{visible && (
 					<motion.div
 						animate={{ opacity: 1 }}
-						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom,0rem)+0.65em)*-1)] z-10 flex w-44 select-none flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom,0rem)+1.2rem)] pt-2.5 text-black-80 shadow-brand-1 desktop:bottom-inherit desktop:top-[-0.4rem] desktop:flex-col desktop:rounded-2xl desktop:pb-3 desktop:pt-[0.9375rem]"
+						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom,0rem)+0.65em)*-1)] z-10 flex w-52 select-none flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom,0rem)+1.2rem)] pt-2.5 text-black-80 shadow-brand-1 desktop:bottom-inherit desktop:top-[-0.4rem] desktop:flex-col desktop:rounded-2xl desktop:pb-3 desktop:pt-[0.9375rem]"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementReference}
@@ -118,7 +123,7 @@ export const ProfileNavigation: React.FC<{ href: string, id?: string }> = (props
 								width={40}
 							/>
 							<span className="pb-1 pl-2 pt-2.5 font-montserrat text-lg font-semibold desktop:pb-2 desktop:pt-1">
-								Profile
+								{t("profile")}
 							</span>
 						</Link>
 						<div className="flex flex-col-reverse px-1 pt-1 desktop:flex-col desktop:pt-0">
@@ -128,34 +133,34 @@ export const ProfileNavigation: React.FC<{ href: string, id?: string }> = (props
 								}
 							>
 								<Settings className="size-6" />
-								Settings
+								{t("settings")}
 							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.subscription.default}>
 								<Sparkles className="size-6" />
-								Premium
+								{t("premium")}
 							</ProfileNavigationItem>
 							<ProfileNavigationCannyButton />
 							<ProfileNavigationItem href={urls.socials.discord}>
 								<DiscordOutlineIcon className="size-6" />
-								Discord
+								{t("discord")}
 							</ProfileNavigationItem>
 							<ProfileNavigationItem
 								className="native:hidden vision:hidden"
 								href={urls.resources.download}
 							>
 								<Download className="size-6" />
-								Get app
+								{t("get_app")}
 							</ProfileNavigationItem>
 							{user.tags?.includes("moderator") && (
 								<>
 									<hr className="my-2 w-full border-t-2 border-white-40" />
 									<ProfileNavigationItem href={urls.moderation.reports()}>
 										<ShieldAlert className="size-6" />
-										Reports
+										{t("reports")}
 									</ProfileNavigationItem>
 									<ProfileNavigationItem href={urls.moderation.search}>
 										<Search className="size-6" />
-										Search
+										{t("search")}
 									</ProfileNavigationItem>
 								</>
 							)}
@@ -163,7 +168,7 @@ export const ProfileNavigation: React.FC<{ href: string, id?: string }> = (props
 								<>
 									<ProfileNavigationItem href={urls.admin.stats}>
 										<LineChart className="size-6" />
-										Stats
+										{t("stats")}
 									</ProfileNavigationItem>
 								</>
 							)}
@@ -175,7 +180,7 @@ export const ProfileNavigation: React.FC<{ href: string, id?: string }> = (props
 									}}
 								>
 									<VenetianMask className="size-6" />
-									Unsudo
+									{t("unsudo")}
 								</ProfileNavigationItem>
 							)}
 						</div>

@@ -3,18 +3,18 @@ import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { Eye, EyeOff } from "lucide-react";
 
+import { api } from "~/api";
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
+import { capitalize, filterBy } from "~/utilities";
+import { useAttributeList } from "~/hooks/use-attribute-list";
+
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
 import { CopyClick } from "../copy-click";
 
 import type { User } from "~/api/user";
 import type { FC } from "react";
-
-import { api } from "~/api";
-import { useSession } from "~/hooks/use-session";
-import { useToast } from "~/hooks/use-toast";
-import { capitalize, filterBy } from "~/utilities";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 
 export const ProfileModeratorInfo: FC<{
 	user: User;

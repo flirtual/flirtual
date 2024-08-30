@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 type SwitchInputProps = React.ComponentProps<"input"> & { label: string };
@@ -36,20 +37,22 @@ export interface InputSwitchProps {
 
 export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const { name, invert = false } = props;
+	const t = useTranslations("inputs.switch");
+
 	const value = invert && props.value !== null ? !props.value : props.value;
 
 	return (
 		<div className="focusable-within flex size-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60">
 			<SwitchInput
 				checked={value === null ? false : value}
-				label="Yes"
+				label={t("yes")}
 				name={name}
 				value="yes"
 				onChange={() => props.onChange(invert ? false : true)}
 			/>
 			<SwitchInput
 				checked={value === null ? false : !value}
-				label="No"
+				label={t("no")}
 				name={name}
 				value="no"
 				onChange={() => props.onChange(invert ? true : false)}

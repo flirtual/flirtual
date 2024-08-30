@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { type FC, type PropsWithChildren, useState } from "react";
 
@@ -28,6 +29,8 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	children
 }) => {
 	const [session] = useSession();
+	const t = useTranslations("profile.dialogs.report");
+
 	const router = useRouter();
 	const toasts = useToast();
 
@@ -39,7 +42,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 			{children}
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Report profile</DialogTitle>
+					<DialogTitle>{t("title")}</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
 					<Form
@@ -62,9 +65,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 								}
 							});
 
-							toasts.add(
-								"Thanks for keeping Flirtual safe! We'll review your report as soon as possible."
-							);
+							toasts.add(t("day_front_cat_cry"));
 							setOpen(false);
 
 							return router.refresh();
@@ -102,10 +103,12 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 								<FormField name="message">
 									{(field) => (
 										<>
-											<InputLabel {...field.labelProps}>Details</InputLabel>
+											<InputLabel {...field.labelProps}>
+												{t("active_any_jannes_type")}
+											</InputLabel>
 											<InputTextArea
 												{...field.props}
-												placeholder="Tell us a little more about this incident (optional)"
+												placeholder={t("jolly_moving_stork_love")}
 												rows={6}
 											/>
 										</>
@@ -117,9 +120,9 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 											<InputLabel
 												{...field.labelProps}
 												inline
-												hint="Upload screenshots or other evidence (optional)"
+												hint={t("ok_gross_ostrich_work")}
 											>
-												Attachments
+												{t("formal_nimble_dog_reside")}
 											</InputLabel>
 											<InputImageSet type="report" {...field.props} />
 										</>
@@ -131,9 +134,9 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 										size="sm"
 										onClick={() => setOpen(false)}
 									>
-										Cancel
+										{t("cancel")}
 									</Button>
-									<FormButton size="sm">Report</FormButton>
+									<FormButton size="sm">{t("report")}</FormButton>
 								</DialogFooter>
 							</>
 						)}

@@ -16,6 +16,7 @@ import { urls } from "~/urls";
 import { filterBy, fromEntries } from "~/utilities";
 import { InputCountrySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
+import { useDevice } from "~/hooks/use-device";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
@@ -26,13 +27,13 @@ export interface Onboarding1Props {
 	games: AttributeCollection<"game">;
 	interests: AttributeCollection<"interest">;
 	genders: AttributeCollection<"gender">;
-	ipcountry: string | null;
 }
 
 export const Onboarding1Form: FC<Onboarding1Props> = (props) => {
-	const { games, genders, interests, ipcountry } = props;
+	const { games, genders, interests } = props;
 
 	const [session, mutateSession] = useSession();
+	const { country: systemCountry } = useDevice();
 	const router = useRouter();
 
 	if (!session) return null;
@@ -48,11 +49,7 @@ export const Onboarding1Form: FC<Onboarding1Props> = (props) => {
 				bornAt: user.bornAt
 					? new Date(user.bornAt.replaceAll("-", "/"))
 					: new Date(),
-				country:
-					user.profile.country ??
-					(ipcountry !== null && ipcountry !== "XX" && ipcountry !== "T1"
-						? ipcountry?.toLowerCase()
-						: null),
+				country: user.profile.country ?? systemCountry,
 				...(fromEntries(
 					AttributeKeys.map((type) => {
 						return [

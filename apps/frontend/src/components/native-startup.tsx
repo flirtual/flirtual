@@ -2,10 +2,13 @@
 
 import {
 	AppUpdate,
-	AppUpdateAvailability
+	AppUpdateAvailability,
+	type AppUpdateInfo
 } from "@capawesome/capacitor-app-update";
 import { StatusBar } from "@capacitor/status-bar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import useSWR from "swr";
+import { useTranslations } from "next-intl";
 
 import { useDevice } from "~/hooks/use-device";
 
@@ -22,68 +25,66 @@ import { DialogFooter } from "./dialog/dialog";
 import { Button } from "./button";
 
 const NativeStartup: React.FC = () => {
+	const t = useTranslations();
 	const { native } = useDevice();
-	const [updateAvailable, setUpdateAvailable] = useState(false);
+
+	const { data: updateInformation = null } = useSWR<AppUpdateInfo | null>(
+		"native-app-update",
+		() => AppUpdate.getAppUpdateInfo(),
+		{ fallbackData: null }
+	);
 
 	useEffect(() => {
-		async function startup() {
-			await StatusBar.setOverlaysWebView({ overlay: true });
+		if (
+			!updateInformation ||
+			updateInformation.updateAvailability !==
+				AppUpdateAvailability.UPDATE_AVAILABLE
+		)
+			return;
 
-			const { SafeAreaController } = await import(
-				"@aashu-dubey/capacitor-statusbar-safe-area"
-			);
-			await SafeAreaController.injectCSSVariables();
+		if (updateInformation.flexibleUpdateAllowed)
+			void AppUpdate.startFlexibleUpdate();
+	}, [updateInformation]);
 
-			const updateInfo = await AppUpdate.getAppUpdateInfo();
-			if (
-				updateInfo.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE
-			)
-				return;
+	useEffect(() => {
+		void StatusBar.setOverlaysWebView({ overlay: true }).catch(() => {});
+		void import("@aashu-dubey/capacitor-statusbar-safe-area")
+			.then(({ SafeAreaController }) => SafeAreaController.injectCSSVariables())
+			.catch(() => {});
+	}, []);
 
-			if (updateInfo.flexibleUpdateAllowed)
-				await AppUpdate.startFlexibleUpdate();
-			else setUpdateAvailable(true);
-		}
-
-		if (native) {
-			void startup();
-		}
-	}, [native]);
+	if (
+		!native ||
+		!updateInformation ||
+		updateInformation.updateAvailability !==
+			AppUpdateAvailability.UPDATE_AVAILABLE ||
+		updateInformation.flexibleUpdateAllowed
+	)
+		return null;
 
 	return (
-		<>
-			{updateAvailable && (
-				<AlertDialog defaultOpen>
-					<AlertDialogContent>
-						<AlertDialogHeader>
-							<AlertDialogTitle>Update Flirtual?</AlertDialogTitle>
-						</AlertDialogHeader>
-						<AlertDialogDescription>
-							We recommend updating to the latest version of Flirtual to get the
-							best experience. You may encounter bugs if you continue using this
-							version.
-						</AlertDialogDescription>
-						<DialogFooter>
-							<AlertDialogCancel asChild>
-								<Button kind="tertiary" size="sm">
-									No thanks
-								</Button>
-							</AlertDialogCancel>
-							<AlertDialogAction asChild>
-								<Button
-									size="sm"
-									onClick={async () => {
-										await AppUpdate.openAppStore();
-									}}
-								>
-									Update
-								</Button>
-							</AlertDialogAction>
-						</DialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
-			)}
-		</>
+		<AlertDialog defaultOpen>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>{t("early_north_alpaca_sail")}</AlertDialogTitle>
+				</AlertDialogHeader>
+				<AlertDialogDescription>
+					{t("icy_sound_emu_kiss")}
+				</AlertDialogDescription>
+				<DialogFooter>
+					<AlertDialogCancel asChild>
+						<Button kind="tertiary" size="sm">
+							{t("aware_such_leopard_fond")}
+						</Button>
+					</AlertDialogCancel>
+					<AlertDialogAction asChild>
+						<Button size="sm" onClick={() => AppUpdate.openAppStore()}>
+							{t("patient_gross_herring_grow")}
+						</Button>
+					</AlertDialogAction>
+				</DialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
 	);
 };
 

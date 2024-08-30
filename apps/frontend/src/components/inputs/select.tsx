@@ -5,6 +5,7 @@ import { X, ChevronsUpDown, ChevronUp, ChevronDown } from "lucide-react";
 import { SelectItemText } from "@radix-ui/react-select";
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import { useTranslations } from "next-intl";
 
 import type { Dispatch, FC } from "react";
 
@@ -47,7 +48,7 @@ const SelectScrollUpButton = React.forwardRef<
 		)}
 		{...props}
 	>
-		<ChevronUp className="size-4" />
+		<ChevronUp className="size-4 text-black-90 dark:text-white-10" />
 	</SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
@@ -64,7 +65,7 @@ const SelectScrollDownButton = React.forwardRef<
 		)}
 		{...props}
 	>
-		<ChevronDown className="size-4" />
+		<ChevronDown className="size-4 text-black-90 dark:text-white-10" />
 	</SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName =
@@ -80,7 +81,7 @@ const SelectContent = React.forwardRef<
 		className,
 		children,
 		position = "popper",
-		rows = 8,
+		// rows = 8,
 		sideOffset = 8,
 		...elementProps
 	} = props;
@@ -182,9 +183,11 @@ export interface InputSelectProps<T> {
 }
 
 export function InputSelect<K>(props: InputSelectProps<K>) {
+	const t = useTranslations("inputs.select");
+
 	const {
 		value,
-		placeholder = "Select an option",
+		placeholder = t("placeholder"),
 		optional = false,
 		options = []
 	} = props;

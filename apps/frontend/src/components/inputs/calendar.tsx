@@ -9,6 +9,7 @@ import {
 	ChevronsLeft,
 	ChevronsRight
 } from "lucide-react";
+import { useFormatter } from "next-intl";
 
 import {
 	type InputOptionEvent,
@@ -17,16 +18,6 @@ import {
 } from "./option-window";
 
 import type { IconComponent } from "~/components/icons";
-
-const MonthNames = Object.freeze(
-	Array.from({ length: 12 })
-		.fill(null)
-		.map((_, monthIndex) => {
-			return new Date(2022, monthIndex, 1).toLocaleDateString(undefined, {
-				month: "long"
-			});
-		})
-);
 
 export function getMonthLength(date: Date): number {
 	return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -91,12 +82,12 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				className="flex items-center gap-2 px-3 font-montserrat text-xl font-semibold focus:outline-none"
 				type="button"
 			>
-				<span className="w-12">{props.children}</span>
+				<span className="w-12 whitespace-nowrap">{props.children}</span>
 				<ChevronDown className="size-4" strokeWidth={3} />
 			</button>
 			{visible && (
 				<InputOptionWindow
-					className="absolute mt-4 flex w-fit"
+					className="absolute mt-4 flex"
 					options={props.options}
 					onOptionClick={(event) => {
 						props.onOptionAction(
@@ -150,6 +141,19 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	} = props;
 	const [displayDate, setDisplayDate] = useState(value);
 
+	const formatter = useFormatter();
+	const monthNames = useMemo(
+		() =>
+			Array.from({ length: 12 })
+				.fill(null)
+				.map((_, monthIndex) => {
+					return formatter.dateTime(new Date(2022, monthIndex, 1), {
+						month: "long"
+					});
+				}),
+		[formatter]
+	);
+
 	const min = useMemo(
 		() =>
 			(minDate === "now" ? new Date() : minDate) ||
@@ -198,6 +202,29 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			.filter(Boolean)
 			.reverse();
 	}, [offset, min, max]);
+
+	const yearNames = useMemo(
+		() =>
+			years.map((year) => {
+				return {
+					year,
+					name: formatter.dateTime(new Date(year, 0, 1), {
+						year: "numeric"
+					})
+				};
+			}),
+		[years, formatter]
+	);
+
+	const weekNames = useMemo(
+		() =>
+			[...Array(7).keys()].map((day) => {
+				return formatter.dateTime(new Date(2021, 5, day - 1), {
+					weekday: "narrow"
+				});
+			}),
+		[formatter]
+	);
 
 	const doChange = useCallback<typeof onChange>(
 		(value) => onChange(clamp(value)),
@@ -264,7 +291,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 					</div>
 					<div className="mx-4 flex w-full justify-center gap-2">
 						<LabelSelect
-							options={MonthNames.map((label, monthIndex) => ({
+							options={monthNames.map((label, monthIndex) => ({
 								key: monthIndex.toString(),
 								label,
 								active: monthIndex === value.getMonth()
@@ -280,12 +307,12 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								);
 							}}
 						>
-							{displayDate.toLocaleDateString("en-CA", { month: "short" })}
+							{formatter.dateTime(displayDate, { month: "short" })}
 						</LabelSelect>
 						<LabelSelect
-							options={years.map((year) => ({
+							options={yearNames.map(({ year, name }) => ({
 								key: year.toString(),
-								label: year.toString(),
+								label: name,
 								active: value.getFullYear() === year
 							}))}
 							onOptionAction={({ option }) => {
@@ -299,7 +326,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								);
 							}}
 						>
-							{displayDate.toLocaleDateString("en-CA", { year: "numeric" })}
+							{formatter.dateTime(displayDate, { year: "numeric" })}
 						</LabelSelect>
 					</div>
 					<div className="flex shrink-0">
@@ -313,12 +340,11 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 						/>
 					</div>
 				</div>
-
 				<div className="-mx-2">
 					<table className="w-full text-black-70 dark:text-white-10">
 						<thead>
 							<tr>
-								{["S", "M", "T", "W", "T", "F", "S"].map((name, index) => (
+								{weekNames.map((name, index) => (
 									<th
 										className="size-10 select-none font-extrabold"
 										key={index}
@@ -379,7 +405,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 																	onDateClick?.(event);
 																}}
 															>
-																{day.toLocaleString("en-US", {
+																{formatter.number(day, {
 																	minimumIntegerDigits: 2,
 																	useGrouping: false
 																})}

@@ -79,7 +79,11 @@ export function CallToAction({ id }: TileProps) {
 						</div>
 					</div>
 				</div>
-				<Footer className="mt-auto bg-transparent" desktopOnly />
+				<Footer
+					className="mt-auto bg-transparent"
+					background={false}
+					desktopOnly
+				/>
 			</div>
 		</Tile>
 	);
