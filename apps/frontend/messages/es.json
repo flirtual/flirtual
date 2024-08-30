@@ -20,7 +20,8 @@
                 "syrmor": "Asesor de marketing",
                 "faxmashine": "Creador de mundos VRChat",
                 "juice": "Creador de avatares de VRChat"
-            }
+            },
+            "image_alt": "Avatar de {name}"
         },
         "timeline": {
             "2018": {
@@ -72,9 +73,32 @@
                 "link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
             },
             "2": {
-                "image": "0d6b9258-a330-47cd-9964-eb0143f34825"
+                "image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+                "image_alt": "Noche de DJ Flirtual en VRChat",
+                "link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
+            },
+            "4": {
+                "image_alt": "Flirtual en el programa Today",
+                "link": "https://www.youtube.com/watch?v=zwguAbPv7zg",
+                "image": "7aa24041-91fb-4901-976e-a8b31b12e9a2"
+            },
+            "5": {
+                "image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+                "image_alt": "Flirtual en el Vket 2023 Summer",
+                "link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
+            },
+            "3": {
+                "image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+                "image_alt": "Flirtual en VRCon 2022",
+                "link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
             }
         },
         "content": "<section><h1>Nuestra historia</h1><p>Hola, somos Kyle y Tony, los creadores de Flirtual. Kyle ha estado obsesionado con la realidad virtual desde los primeros días de Oculus, pero realmente cambió su vida cuando se unió a VRChat y conoció a algunos de sus amigos más cercanos (¡incluida su esposa!) allí. Justo antes de que llegara la COVID, Kyle llevó a su mejor amigo de la infancia, Tony, para el viaje, y la realidad virtual también cambió su vida. Nos propusimos ayudar a otros a conocer personas increíbles en todo el mundo también, comenzando con VRLFP (Virtual Reality Looking For Partner).</p><p>La presencia inmersiva en realidad virtual te ayuda a formar conexiones profundas con personas en cualquier parte del mundo. Al reducir la distancia geográfica y priorizar la personalidad, nuestra misión es encontrar a las mejores personas para ti, donde sea que estén. ¡Y hacer que las citas sean más seguras y mágicas!</p><p>En 2022, VRLFP se convirtió en Flirtual. Reconstruido desde cero, hemos mejorado el emparejamiento, hemos agregado etiquetas de personalidad e intereses y hemos lanzado aplicaciones mejoradas. Ya sea que estés buscando una relación seria que se transforme en una relación en la vida real, algo más informal en realidad virtual o simplemente nuevos amigos, estamos listos para ayudarte a encontrar tu pareja perfecta.</p><group><p><3 kfarwell, Tony y el equipo de Flirtual</p><discord>Únete a nuestro Discord</discord></group><p><italic>PD: Hemos recorrido un largo camino desde los humildes comienzos de VRLFP, pero aún somos un equipo pequeño arraigado en la comunidad de realidad virtual. Agradecemos tu paciencia mientras trabajamos duro para hacer que Flirtual sea lo mejor posible. ¡Avísanos si <contact>encuentras algún error</contact> o si <feedback>tienes alguna sugerencia</feedback>!</italic></p></section><section><h1>El equipo</h1><team-list></team-list></section><section><h1>Cronología</h1><timeline></timeline></section>"
+    },
+    "branding": {
+        "title": "Branding",
+        "lime_soft_shad_skip": "¿Quieres utilizar nuestro arte para algo? Aquí lo tienes. Por favor, que sea de buen gusto <contact>contacta con nosotros</contact> para su aprobación.",
+        "brave_early_weasel_arise": "Nuestro logotipo",
+        "flaky_same_grizzly_snap": "Por favor no edites, cambies, distorsiones, cambies los colores, ni cambies el logotipo de Flirtual."
     }
 }
