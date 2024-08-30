@@ -1,8 +1,8 @@
-import { useInView } from "react-intersection-observer";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { ButtonLink } from "~/components/button";
-import { MobileButton } from "~/components/mobile-button";
+import { DownloadButton } from "~/components/download-button";
 import { urls } from "~/urls";
 import {
 	AppleIcon,
@@ -13,62 +13,53 @@ import {
 import { Footer } from "~/components/layout/footer";
 import { FlirtualLogo } from "~/components/logo";
 
-import { SnapSection } from "../snap-section";
+import { SignUpButton } from "../sign-up-button";
 
-import type { TileProps } from "../page";
+import { Tile, TileAnchor, type TileProps } from ".";
 
-export const CallToAction: React.FC<TileProps> = ({ id, onVisible }) => {
-	const [ref] = useInView({ onChange: (inView) => inView && onVisible() });
+export function CallToAction({ id }: TileProps) {
+	const t = useTranslations();
 
 	return (
-		<SnapSection data-tile={id}>
+		<Tile id={id}>
 			<div className="flex h-full grow flex-col items-center justify-center px-8 pb-8 pt-20 desktop:px-20">
 				<div className="-mt-32 flex flex-col items-center gap-16 desktop:mt-16">
 					<div className="flex flex-col items-center gap-4">
 						<FlirtualLogo className="w-56" />
-						<h1
-							ref={ref}
-							className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-8xl"
-						>
-							Finding your{" "}
-							<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent">
-								special someone
-							</span>{" "}
-							has never been easier
-						</h1>
+						<TileAnchor id={id}>
+							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-8xl">
+								{t.rich("landing.cta.few_grassy_hyena_adapt", {
+									highlight: (children) => (
+										<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent">
+											{children}
+										</span>
+									)
+								})}
+							</h1>
+						</TileAnchor>
 					</div>
 					<div className="hidden grid-cols-2 flex-col gap-2 desktop:grid">
-						<ButtonLink href={urls.register} kind="primary">
-							Sign up
-						</ButtonLink>
+						<SignUpButton />
 						<ButtonLink href={urls.login()} kind="secondary">
-							Log in
+							{t("landing.log_in")}
 						</ButtonLink>
 					</div>
 					<div className="flex flex-col items-center gap-4 native:hidden vision:hidden">
-						<div className="flex flex-wrap justify-center gap-4 gap-y-2 desktop:grid desktop:grid-cols-2">
-							<MobileButton
-								href={urls.apps.apple}
-								Icon={AppleIcon}
-								label="App Store"
+						<div className="flex w-fit flex-wrap justify-center gap-4 gap-y-2 desktop:grid desktop:grid-cols-2">
+							<DownloadButton
+								platform="apple"
 								className="hidden web:flex apple:flex"
 							/>
-							<MobileButton
-								href={urls.apps.google}
-								Icon={GooglePlayIcon}
-								label="Google Play"
+							<DownloadButton
+								platform="google"
 								className="hidden web:flex android:flex"
 							/>
-							<MobileButton
-								href={urls.apps.microsoft}
-								Icon={MicrosoftIcon}
-								label="Microsoft Store"
+							<DownloadButton
+								platform="microsoft"
 								className="hidden web:flex"
 							/>
-							<MobileButton
-								href={urls.apps.sideQuest}
-								Icon={MetaIcon}
-								label="SideQuest"
+							<DownloadButton
+								platform="side_quest"
 								className="hidden web:flex"
 							/>
 						</div>
@@ -90,6 +81,6 @@ export const CallToAction: React.FC<TileProps> = ({ id, onVisible }) => {
 				</div>
 				<Footer className="mt-auto bg-transparent" desktopOnly />
 			</div>
-		</SnapSection>
+		</Tile>
 	);
-};
+}

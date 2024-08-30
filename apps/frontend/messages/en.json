@@ -89,10 +89,12 @@
 	"download": {
 		"title": "Download",
 		"best_topical_mayfly_tap": "Download on",
-		"mad_that_anaconda_race": "App Store",
-		"great_actual_bear_borrow": "Google Play",
-		"polite_sad_stork_race": "Microsoft Store",
-		"simple_awful_giraffe_snip": "SideQuest"
+		"platform": {
+			"apple": "App Store",
+			"google": "Google Play",
+			"microsoft": "Microsoft Store",
+			"side_quest": "SideQuest"
+		}
 	},
 	"events": {
 		"title": "Events",
@@ -198,5 +200,120 @@
 		"title": "Terms of Service",
 		"content": "<p>This service (the 'Service') is operated by ROVR LABS INC., doing business as Flirtual ('us', 'we', or 'Flirtual').</p><section><h1>Rules</h1><p>In order to use this Service, you must:</p><ol><li>be at least 18 years of age;</li><li>be legally permitted to do so under Canadian and local laws</li><li>have never been convicted of a felony;</li><li>not be required to register as a sex offender on any government registry;</li><li>agree to be bound by these Terms of Service and our <privacy>Privacy Policy</privacy>.</li></ol><p>You agree not to:</p><ol><li>break local or Canadian law;</li><li>solicit money from or defraud other users;</li><li> impersonate any person or entity or post any images of another person without his or her permission;</li><li> post any abusive, racist, sexist, derogatory, defamatory, illegal, NSFW, or otherwise harmful content to the Service;</li><li>harass any of the users on this platform;</li><li> knowingly post malicious code, or links to malicious sites, that could harm other users;</li><li>post spam on profiles;</li><li>infringe on any copyright;</li><li>use this service in order to damage Flirtual or the Service.</li></ol><p>Please review our <guidelines>Community Guidelines</guidelines> for more information on how we moderate user profiles and behavior on the Service. Breaking these guidelines will result in account moderation, such as a permanent ban from the Service. We reserve the right to moderate accounts at our discretion.</p></section><section><h1>Safety</h1><p>We advise you to use caution when interacting with other users of the Service. We are not responsible for the behavior of users on or off of the Service or for your interactions with other users. We do not screen users.</p></section><section><h1>Privacy</h1><p>You authorize us to use and display certain information about you. Please see our <privacy>Privacy Policy</privacy> for more information.</p></section><section><h1>Third Party Services</h1><p>Flirtual is not responsible for third-party services.</p></section><section><h1>Rights</h1><p>You can close your account at any time in your <delete-account>account settings</delete-account>.</p><p>You will be given advance notice of any changes to these terms or any new features that affect privacy.</p><p>Moderation decisions will be made by our moderation team. You have the right to receive an explanation if your profile is modified or your account is cancelled for violation of these Terms of Use. You do not have the right to receive advance notice of these changes to your account.</p><p>If your account is cancelled for violation of these Terms of Use, your data will be kept for 30 days so that we can review moderation decisions and reverse them if necessary. Please <contact>contact us</contact> if you would like to appeal a moderation decision or have your data deleted early.</p><p>Your data will be backed up regularly.</p></section><section><h1>Security</h1><p>The Service runs on infrastructure provided by third parties. This infrastructure is protected by industry standard security efforts such as firewalls.</p><p>Your connection to the Service uses <ssltest>strong transport encryption</ssltest>.</p><p>Your password is stored securely hashed and salted.</p><p>You are responsible for keeping your account password safe. You are responsible for all activities that occur with your account credentials.</p><p>Despite best efforts, there is no such thing as perfect security online. We do not guarantee the absolute protection of your data.</p><p>We have not reviewed, and cannot review, all of the material, including computer software, made available through the websites and webpages to which the Service links, and that link to the Service. We do not have any control over those non-Flirtual websites, and are not responsible for their contents or their use. By linking to a non-Flirtual website, Flirtual does not represent or imply that it endorses such website. You are responsible for taking precautions as necessary to protect yourself and your computer systems from viruses, worms, Trojan horses, and other harmful or destructive content. Flirtual disclaims any responsibility for any harm resulting from your use of non-Flirtual websites and webpages.</p></section><section><h1>Disclaimers</h1><p>In no event will Flirtual, or its suppliers or licensors, be liable with respect to any subject matter of this Agreement under any contract, negligence, strict liability or other legal or equitable theory for: (i) any special, incidental or consequential damages; (ii) the cost of procurement for substitute products or services; (iii) for interruption of use or loss or corruption of data; or (iv) for any amounts that exceed the fees paid by you to Flirtual under this Agreement during the twelve (12) month period prior to the cause of action. Flirtual shall have no liability for any failure or delay due to matters beyond their reasonable control. The foregoing shall not apply to the extent prohibited by applicable law.</p></section>",
 		"title_superseded": "Terms of Service (outdated)"
+	},
+	"landing": {
+		"sign_up": "Sign up",
+		"log_in": "Log in",
+		"hero": {
+			"mellow_short_shark_propel": "Flirtual dates",
+			"calm_calm_alligator_taste": "The first VR dating app"
+		},
+		"profiles": {
+			"legal_big_finch_kiss": "Screenshot of a Flirtual profile",
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+			"stout_last_kudu_bend": "Your avatar, your choice",
+			"messages": [
+				"VR is a personality-first way of meeting new people.",
+				"Avatars help you express yourself, without feeling self-conscious.",
+				"After a VR date or two, go on a video call or meet in real life!"
+			]
+		},
+		"carousel": {
+			"spare_chunky_cougar_honor": "Enjoy safe, magical dates together in Virtual Reality",
+			"images": [
+				{
+					"title": "Feed some ducks",
+					"image": "b9326c15-c996-488f-8d68-d7ea4cb8649b"
+				},
+				{
+					"title": "Swim... with sharks",
+					"image": "738f3d22-6f38-4059-9dd3-7fdd672acccd"
+				},
+				{
+					"title": "Chill in a cozy cafe",
+					"image": "be840a83-86f9-4ba2-87ae-3cd93f73f099"
+				},
+				{
+					"title": "Observe a black hole",
+					"image": "107737a5-d694-43db-a082-0d71bdfc4105"
+				},
+				{
+					"title": "Touch grass",
+					"image": "30023b24-f08a-43d4-918a-aa8940cefb24"
+				},
+				{
+					"title": "Paint together",
+					"image": "09402677-a01e-4f6b-9171-f8c533ec774f"
+				},
+				{
+					"title": "Play some pool",
+					"image": "7e736467-63c4-4ff4-9989-54546b24cc6f"
+				}
+			]
+		},
+		"testimonial": {
+			"even_major_hare_believe": "Match with {userCount}+ people from all over the world!",
+			"images": [
+				"a68e9441-8430-4a33-a067-04313d4d260c",
+				"5e0d4116-2e60-4ae9-b865-3ce7d17c68ec",
+				"01db5707-2aac-45cd-a80c-223c6e1b93f2",
+				"b8ea7c5b-5110-46b7-8635-38728e8a77aa",
+				"eea60bde-de1a-4f43-9f02-a218fddf2a73",
+				"ad5cba2d-03ff-43eb-9cf3-e6986bb0be54",
+				"40122187-d831-4131-ab8e-ee0f5544ce73",
+				"17b87f45-0ef8-4dfa-80c4-c23450f09b30",
+				"28eaf327-e2bd-4fd2-a7f9-4dd6be153bfc",
+				"5bbf00fc-2c97-49b2-9f16-9d3c1a180ae8",
+				"f3b27da8-4f36-4c7f-bd65-094421d28f22",
+				"c0d8ad7f-a6df-4de8-a429-a8fa729bf447",
+				"9f2de017-6b5a-4ca9-b858-95057889fd64",
+				"b8b087b9-3ab3-4a05-b01a-166b502789f5"
+			],
+			"brands": [
+				{
+					"image": "dc248f6f-aee6-4318-b473-6fe2d6db07ee",
+					"name": "New York Times"
+				},
+				{
+					"image": "d34ee25e-31e6-47a7-952f-51820f1e1ce1",
+					"name": "Today"
+				},
+				{
+					"image": "257a7f46-a6c1-4bee-9a3e-5dbdfe9d2a66",
+					"name": "Forbes"
+				},
+				{
+					"image": "18e4a7ad-625a-42f6-b581-d14386ced012",
+					"name": "The New Yorker"
+				},
+				{
+					"image": "29a2f1bc-0b3e-469a-aa11-0de69b75b629",
+					"name": "Road To VR"
+				},
+				{
+					"image": "db2eb424-e837-4d64-85e0-e49409ae33a6",
+					"name": "Samsung"
+				},
+				{
+					"image": "54ffe640-1c54-4d8f-a754-4c7b7ca82456",
+					"name": "Future of Sex"
+				},
+				{
+					"image": "b779aa38-8592-48cd-8f9b-88228c5abc21",
+					"name": "Dazed"
+				},
+				{
+					"image": "7845a7d0-0461-41dd-934c-cb8439e90dc7",
+					"name": "Virtual Week-ality"
+				},
+				{
+					"image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
+					"name": "iDate Awards"
+				}
+			]
+		},
+		"cta": {
+			"few_grassy_hyena_adapt": "Finding your <highlight>special someone</highlight> has never been easier"
+		}
 	}
 }

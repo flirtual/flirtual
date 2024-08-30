@@ -1,0 +1,62 @@
+"use client";
+
+import { useMessages } from "next-intl";
+import { useCallback, useState, type FC } from "react";
+
+import { useInterval } from "~/hooks/use-interval";
+import { urls } from "~/urls";
+
+export const CarouselGallery: FC = () => {
+	const {
+		landing: {
+			carousel: { images }
+		}
+	} = useMessages() as unknown as {
+		landing: {
+			carousel: {
+				images: Array<{
+					title: string;
+					image: string;
+				}>;
+			};
+		};
+	};
+
+	const [activeIndex, setActiveIndex] = useState(0);
+
+	const next = useCallback(() => {
+		setActiveIndex((activeIndex) => (activeIndex + 1) % images.length);
+	}, [images.length]);
+
+	const { reset } = useInterval(
+		useCallback(() => next(), [next]),
+		5000
+	);
+
+	return (
+		<div className="flex">
+			{images.map(({ title, image }, index) => (
+				<button
+					className="pointer-events-none absolute flex h-screen w-screen shrink-0 snap-center snap-always opacity-0 transition-opacity duration-500 data-[active]:pointer-events-auto data-[active]:opacity-100"
+					key={image}
+					type="button"
+					data-active={activeIndex === index ? "" : undefined}
+					onClick={() => {
+						reset();
+						next();
+					}}
+				>
+					<div className="absolute z-10 flex size-full select-none items-center justify-center p-16">
+						<span className="font-nunito text-5xl font-bold [text-shadow:0_0_16px_#000] desktop:text-7xl">
+							{title}
+						</span>
+					</div>
+					<img
+						className="size-full shrink-0 object-cover brightness-75"
+						src={urls.media(image)}
+					/>
+				</button>
+			))}
+		</div>
+	);
+};

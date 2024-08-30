@@ -96,10 +96,9 @@ const platforms: Record<string, DevicePlatform> = {
 export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
-	const session = await withOptionalSession();
+	const session = await withOptionalSession().catch(() => null);
 
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
-	console.log(userAgent);
 
 	const platform: DevicePlatform =
 		platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";
