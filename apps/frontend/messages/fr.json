@@ -2,7 +2,7 @@
   "meta": {
     "name": "Flirtual",
     "title": "%s - Flirtual",
-    "knotty_direct_mongoose_bend": "Rencontrez de nouvelles personnes dans la Réalité Virtuelle! Flirtual vous aide à organiser des recontres en VR et dans VRChat.",
+    "knotty_direct_mongoose_bend": "Rencontrez de nouvelles personnes dans la Réalité Virtuelle ! Flirtual vous aide à organiser des recontres en VR et dans VRChat.",
     "green_plain_mongoose_lend": "La première appli de rencontre en VR. Rejoignez des milliers pour des rendez-vous dans les applis VR telles que VRChat."
   },
   "about": {
@@ -96,7 +96,7 @@
   },
   "branding": {
     "title": "Marque",
-    "lime_soft_shad_skip": "Vous souhaitez utiliser notre art? Le voici. Merci de le garder approprié et <contact>contactez-nous</contact> pour obtenir l’approbation.",
+    "lime_soft_shad_skip": "Vous souhaitez utiliser notre art ? Le voici. Merci de le garder approprié et <contact>contactez-nous</contact> pour obtenir l’approbation.",
     "brave_early_weasel_arise": "Notre logo",
     "flaky_same_grizzly_snap": "Merci de ne pas éditer, changer, déformer, recolorer ou reconfigurer le logo de Flirtual.",
     "mild_spry_hamster_persist": "Marque seule",
@@ -107,13 +107,13 @@
     "empty_sharp_sheep_list": "Mode Copain",
     "whole_round_penguin_pet": "Rose",
     "known_trick_raven_sew": "Crème",
-    "wise_great_crow_foster": "Besoins de plus?",
+    "wise_great_crow_foster": "Besoins de plus ?",
     "ornate_upper_guppy_mend": "Téléchargez notre kit complet de presse pour plus de graphiques et d'information.",
     "tired_extra_bear_forgive": "Télécharger"
   },
   "debugger": {
     "spicy_pretty_tiger_pet": "Appareil",
-    "lucky_sound_opossum_absorb": "Plateforme de l'application:",
+    "lucky_sound_opossum_absorb": "Plateforme de l'application :",
     "vexed_yummy_tadpole_grow": "Fureteur:",
     "title": "Information de debug",
     "known_spare_mantis_pet": "Système:",
@@ -125,7 +125,7 @@
     "north_crisp_fly_dart": "Âge:",
     "dark_wild_mouse_roar": "Build",
     "swift_short_koala_fond": "Environnement:",
-    "each_zippy_millipede_pop": "Version:"
+    "each_zippy_millipede_pop": "Version :"
   },
   "download": {
     "title": "Télécharger",
@@ -144,8 +144,16 @@
     "elegant_bald_parakeet_animate": "Lancez VRChat d'abord, puis cliquez sur \"invite-moi\" à la page suivante. Vous recevrez une invitation de votre part dans le jeu. <joining>Besoins d'aide pour rejoindre?</joining>",
     "arable_nice_puma_comfort": "Rejoindre l'événement",
     "top_big_tern_twist": "Événements à venir",
-    "nimble_equal_loris_foster": "Nous organisons des événements rencontres éclair et des soirées DJ chaque fin de semaine dans VRChat. Vous êtes invité!",
+    "nimble_equal_loris_foster": "Nous organisons des événements rencontres éclair et des soirées DJ chaque fin de semaine dans VRChat. Vous êtes invité !",
     "flaky_early_shad_nourish": "Pour consulter notre calendrier des événements et les annonces, <discord>rejoignez notre serveur Discord</discord>.",
-    "quiet_lazy_marten_amuse": "Mondes VRChat"
+    "quiet_lazy_marten_amuse": "Mondes VRChat",
+    "tidy_wise_robin_urge": "Rencontres Éclair Flirtual",
+    "careful_wise_bumblebee_walk": "Rencontrez des personnes lors de séances de rencontre éclair/création d’amitiés en tête-à-tête. Chaque séance dure 3 minutes (l’hôte peut choisir une durée de 3 à 7 minutes). Des sujets de conversation, des tags d'intérêt et un mode nocturne sont inclus.",
+    "flat_ok_penguin_vent": "Rencontres Éclair Flirtual",
+    "inclusive_simple_alligator_zap": "Le Flirtual Club",
+    "sweet_mellow_ant_hunt": "Un festival de musique en plein air avec audiolink. Faites la fête.",
+    "fine_low_deer_propel": "Le Flirtual Club",
+    "blue_calm_chipmunk_spark": "Nos événements hebdomadaires se déroulent dans nos mondes VRChat, mais vous pouvez les rejoindre à tout moment ! N'hésitez pas à les utiliser pour vos propres événements.",
+    "dry_inclusive_ox_trust": "Créé par <faxmashine>Faxmashine</faxmashine>, nos mondes sont compatibles avec PCVR, Quest et Desktop. Nouveau sur VRChat ? <vrchat>Inscrivez-vous gratuitement.</vrchat>"
   }
 }
