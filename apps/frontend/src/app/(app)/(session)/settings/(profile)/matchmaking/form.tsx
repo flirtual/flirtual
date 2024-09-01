@@ -4,12 +4,12 @@ import { Loader2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FC, startTransition, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { useTranslations } from "next-intl";
 
 import { api } from "~/api";
 import {
 	CustomWeightList,
 	DefaultProfileCustomWeights,
-	ProfileMonopolyLabel,
 	ProfileMonopolyList,
 	ProfileRelationshipLabel,
 	ProfileRelationshipList
@@ -47,6 +47,7 @@ export interface MatchmakingFormProps {
 
 export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 	const [session] = useSession();
+	const t = useTranslations("profile");
 	const router = useRouter();
 	const toasts = useToast();
 
@@ -206,9 +207,9 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 								<InputSelect
 									{...field.props}
 									optional
-									options={ProfileMonopolyList.map((item) => ({
-										id: item,
-										name: ProfileMonopolyLabel[item]
+									options={ProfileMonopolyList.map((value) => ({
+										id: value,
+										name: t("dark_level_goat_gulp", { value })
 									}))}
 								/>
 							</>

@@ -5,7 +5,7 @@ import { createContext, forwardRef, use, useCallback, useEffect } from "react";
 import { Slot } from "@radix-ui/react-slot";
 
 import { api } from "~/api";
-import { resolveTheme } from "~/theme";
+import { resolveTheme, type Theme } from "~/theme";
 
 import { useMediaQuery } from "./use-media-query";
 import { useSession } from "./use-session";
@@ -15,7 +15,7 @@ import type { PreferenceTheme } from "~/api/user/preferences";
 
 const Context = createContext(
 	{} as {
-		theme: PreferenceTheme;
+		theme: Theme;
 		sessionTheme: PreferenceTheme;
 		setTheme: (theme: PreferenceTheme) => void;
 	}

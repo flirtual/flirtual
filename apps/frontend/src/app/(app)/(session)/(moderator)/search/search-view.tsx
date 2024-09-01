@@ -81,7 +81,7 @@ export const columns: Array<ColumnDef<User>> = [
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<span className="whitespace-nowrap">
-							<TimeRelative capitalize value={user.createdAt} />
+							<TimeRelative value={user.createdAt} />
 						</span>
 					</TooltipTrigger>
 					<TooltipContent>
@@ -106,7 +106,7 @@ export const columns: Array<ColumnDef<User>> = [
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<span className="whitespace-nowrap">
-							<TimeRelative capitalize value={user.activeAt} />
+							<TimeRelative value={user.activeAt} />
 						</span>
 					</TooltipTrigger>
 					<TooltipContent>

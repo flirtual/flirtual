@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import { twMerge } from "tailwind-merge";
 import {
 	Download,
@@ -26,7 +26,7 @@ import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 import { useCanny } from "~/hooks/use-canny";
 
-import { ProfileNavigationCannyButton } from "../canny-button";
+import { ProfileNavigationCannyButton } from "../../components/layout/canny-button";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
 	{ className?: string } & (
@@ -48,16 +48,14 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 	);
 };
 
-export const ProfileNavigation: React.FC<{ href: string; id?: string }> = (
-	props
-) => {
+export const NavigationItemProfile: FC = () => {
 	const [session, mutateSession] = useSession();
 	const t = useTranslations("navigation");
 
 	const [visible, setVisible] = useState(false);
 	const elementReference = useRef<HTMLDivElement>(null);
 	const location = useLocation();
-	const active = urlEqual(toAbsoluteUrl(props.href), location);
+	const active = urlEqual(toAbsoluteUrl(urls.user.me), location);
 	const { loadChangelog } = useCanny();
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
@@ -81,7 +79,7 @@ export const ProfileNavigation: React.FC<{ href: string; id?: string }> = (
 	return (
 		<div className="relative aspect-square shrink-0 select-none">
 			<button
-				id={props.id}
+				id="profile-dropdown-button"
 				type="button"
 				className={twMerge(
 					"group rounded-full p-1 transition-all",

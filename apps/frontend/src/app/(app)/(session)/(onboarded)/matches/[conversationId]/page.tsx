@@ -1,13 +1,6 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
 
-import { getProfileUser } from "../../(sole-model)/[slug]/profile-user";
-import { ConversationAside } from "../aside";
-
-import { FaceTimeButton } from "./facetime-button";
-
-import type { Metadata } from "next";
-
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { displayName } from "~/api/user";
 import { api } from "~/api";
@@ -15,7 +8,13 @@ import { urls } from "~/urls";
 import { thruServerCookies, getSession } from "~/server-utilities";
 import { UserAvatar } from "~/components/user-avatar";
 import { InlineLink } from "~/components/inline-link";
-import { Button } from "~/components/button";
+
+import { ConversationAside } from "../aside";
+import { getProfile } from "../../(profile)/data";
+
+import { FaceTimeButton } from "./facetime-button";
+
+import type { Metadata } from "next";
 
 export interface ConversationPageProps {
 	params: {
@@ -33,7 +32,7 @@ export async function generateMetadata({
 	params
 }: ConversationPageProps): Promise<Metadata> {
 	const conversation = await getConversation(params.conversationId);
-	const user = await getProfileUser(conversation.userId);
+	const user = await getProfile(conversation.userId);
 
 	return {
 		title: displayName(user)
@@ -45,7 +44,7 @@ export default async function ConversationPage({
 }: ConversationPageProps) {
 	const session = await getSession();
 	const conversation = await getConversation(params.conversationId);
-	const user = await getProfileUser(conversation.userId);
+	const user = await getProfile(conversation.userId);
 
 	if (
 		!user ||

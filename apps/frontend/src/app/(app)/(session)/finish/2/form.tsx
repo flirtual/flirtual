@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { CheckCircle2, MoveLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { api } from "~/api";
 import { Form } from "~/components/forms";
@@ -17,7 +18,6 @@ import { filterBy, fromEntries } from "~/utilities";
 import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import {
-	ProfileMonopolyLabel,
 	ProfileMonopolyList,
 	ProfileRelationshipLabel,
 	ProfileRelationshipList
@@ -39,6 +39,7 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 	const { platforms, sexualities } = props;
 
 	const [session, mutateSession] = useSession();
+	const t = useTranslations("profile");
 	const router = useRouter();
 
 	if (!session) return null;
@@ -144,9 +145,9 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 								<InputSelect
 									{...field.props}
 									optional
-									options={ProfileMonopolyList.map((item) => ({
-										id: item,
-										name: ProfileMonopolyLabel[item]
+									options={ProfileMonopolyList.map((value) => ({
+										id: value,
+										name: t("dark_level_goat_gulp", { value })
 									}))}
 								/>
 							</>
