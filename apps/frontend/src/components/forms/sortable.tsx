@@ -112,7 +112,7 @@ export const SortableItem: FC<PropsWithChildren<{ id: UniqueIdentifier }>> = ({
 						transform ? `${Math.round(transform.x)}px` : 0
 					}, ${transform ? `${Math.round(transform.y)}px` : undefined}, 0)
     scaleX(${transform?.scaleX ?? 1}) scaleY(${transform?.scaleY ?? 1})`,
-					"transform-origin": "0 0"
+					transformOrigin: "0 0"
 				} as React.CSSProperties
 			}
 			{...attributes}

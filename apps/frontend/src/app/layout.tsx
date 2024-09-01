@@ -1,4 +1,4 @@
-import { getLocale, getMessages, getTranslations } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import * as Sentry from "@sentry/nextjs";
 import { twMerge } from "tailwind-merge";
@@ -7,7 +7,7 @@ import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
 
 import { siteOrigin } from "~/const";
-import { withOptionalSession } from "~/server-utilities";
+import { getOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
@@ -23,6 +23,8 @@ import NativeStartup from "~/components/native-startup";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 import { InsetPreview } from "~/components/inset-preview";
 import { getInternationalization } from "~/i18n";
+import { InternationalizationProvider } from "~/hooks/use-internalization";
+import { PreferenceThemes, type PreferenceTheme } from "~/api/user/preferences";
 
 import { ClientScripts } from "./client-scripts";
 import { fontClassNames } from "./fonts";
@@ -97,7 +99,7 @@ const platforms: Record<string, DevicePlatform> = {
 export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
-	const session = await withOptionalSession().catch(() => null);
+	const session = await getOptionalSession().catch(() => null);
 
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
 
@@ -110,87 +112,84 @@ export default async function RootLayout({
 	const vision = userAgent.ua.includes("Flirtual-Vision");
 	Sentry.setTag("vision", vision ? "yes" : "no");
 
-	const theme = vision
-		? "light"
-		: (session?.user.preferences?.theme ?? "light");
+	let themeOverride = headers().get("theme") as PreferenceTheme | null;
+	if (themeOverride && !PreferenceThemes.includes(themeOverride))
+		themeOverride = null;
 
-	const locale = await getLocale();
-	const { country } = await getInternationalization();
+	const theme =
+		themeOverride ||
+		(vision ? "light" : (session?.user.preferences?.theme ?? "light"));
+
+	const internationalization = await getInternationalization();
 
 	const messages = await getMessages();
 
 	return (
 		<NextIntlClientProvider messages={messages}>
-			<html
-				suppressHydrationWarning
-				data-native={native}
-				data-platform={platform}
-				data-theme={theme}
-				data-vision={vision}
-				data-country={country}
-				lang={locale}
-			>
-				<head suppressHydrationWarning>
-					<meta name="darkreader-lock" />
-					<script
-						data-cfasync="false"
-						dangerouslySetInnerHTML={{
-							__html: `
-							(() => {
-								const resolveTheme = ${resolveTheme.toString()}
+			<InternationalizationProvider value={internationalization}>
+				<DeviceProvider
+					native={native}
+					platform={platform}
+					userAgent={userAgent}
+					vision={vision}
+				>
+					<SessionProvider session={session}>
+						<ThemeProvider theme={theme}>
+							<html suppressHydrationWarning>
+								<head suppressHydrationWarning>
+									<meta name="darkreader-lock" />
+									{theme === "system" && (
+										<script
+											data-cfasync="false"
+											dangerouslySetInnerHTML={{
+												__html: `(() => {
+  const resolveTheme = ${resolveTheme.toString()};
 
-								const url = new URL(location);
-								const themeStyle = url.pathname === "/browse" && url.searchParams.get("kind") === "friend" ? "friend" : "love";
-	
-								Object.assign(document.documentElement.dataset, {
-									theme: resolveTheme("${theme}"),
-									themeStyle,
-								});
-						  })())
+  const url = new URL(location);
+  const themeStyle = url.pathname === "/browse" && url.searchParams.get("kind") === "friend" ? "friend" : "love";
+
+  Object.assign(document.documentElement.dataset, {
+    theme: resolveTheme("system"),
+    themeStyle,
+  });
+})()
 						`.trim()
-						}}
-					/>
-					<link
-						color="#e9658b"
-						href={SafariPinnedTabImage.src}
-						rel="mask-icon"
-					/>
-					<ClientScripts />
-					<AppUrlListener />
-				</head>
-				<body className={twMerge(fontClassNames, "overscroll-none")}>
-					<InsetPreview />
-					<NextTopLoader
-						color={["#FF8975", "#E9658B"]}
-						height={5}
-						showSpinner={false}
-					/>
-					<DeviceProvider
-						native={native}
-						platform={platform}
-						userAgent={userAgent}
-						vision={vision}
-						country={country}
-					>
-						<NativeStartup />
-						<ToastProvider>
-							{/* <Suspense fallback={<LoadingIndicatorScreen />}> */}
-							<TooltipProvider>
-								<SessionProvider session={session}>
-									<NotificationProvider>
-										<PurchaseProvider>
-											<ThemeProvider>
-												<ShepherdProvider>{children}</ShepherdProvider>
-											</ThemeProvider>
-										</PurchaseProvider>
-									</NotificationProvider>
-								</SessionProvider>
-							</TooltipProvider>
-							{/* </Suspense> */}
-						</ToastProvider>
-					</DeviceProvider>
-				</body>
-			</html>
+											}}
+										/>
+									)}
+									<link
+										color="#e9658b"
+										href={SafariPinnedTabImage.src}
+										rel="mask-icon"
+									/>
+									<ClientScripts />
+									<AppUrlListener />
+								</head>
+								<body className={twMerge(fontClassNames, "overscroll-none")}>
+									<InsetPreview />
+									<NextTopLoader
+										color={["#FF8975", "#E9658B"]}
+										height={5}
+										showSpinner={false}
+									/>
+									<NativeStartup />
+									<ToastProvider>
+										{/* <Suspense fallback={<LoadingIndicatorScreen />}> */}
+										<TooltipProvider>
+											<NotificationProvider>
+												<PurchaseProvider>
+													<ShepherdProvider>{children}</ShepherdProvider>
+												</PurchaseProvider>
+											</NotificationProvider>
+										</TooltipProvider>
+										{/* </Suspense> */}
+									</ToastProvider>
+								</body>
+							</html>
+						</ThemeProvider>
+					</SessionProvider>
+				</DeviceProvider>
+			</InternationalizationProvider>
 		</NextIntlClientProvider>
 	);
 }

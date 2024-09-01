@@ -2,14 +2,11 @@ import "server-only";
 
 import * as Sentry from "@sentry/nextjs";
 import { cache } from "react";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { api, ResponseError } from "./api";
-import { toAbsoluteUrl, urls } from "./urls";
-import { tryJsonParse } from "./utilities";
-
-import type { UserTags } from "./api/user";
+import { urls } from "./urls";
 
 export function thruServerCookies() {
 	return {
@@ -20,7 +17,7 @@ export function thruServerCookies() {
 	};
 }
 
-export const withOptionalSession = cache(async () => {
+export const getOptionalSession = cache(async () => {
 	const session = await api.auth
 		.session(thruServerCookies())
 		.catch((reason) => {
@@ -39,15 +36,15 @@ export const withOptionalSession = cache(async () => {
 	return session;
 });
 
-export const withSession = cache(async (next?: string) => {
-	const session = await withOptionalSession();
+export const getSession = cache(async (next?: string) => {
+	const session = await getOptionalSession();
 
 	if (!session) return redirect(urls.login(next));
 	return session;
 });
 
-export const withOnboardedUser = cache(async () => {
-	const { user } = await withSession();
+export const getOnboardedUser = cache(async () => {
+	const { user } = await getSession();
 
 	if (user.status === "registered") return redirect(urls.onboarding(1));
 	if (user.deactivatedAt) return redirect(urls.settings.deactivateAccount);
@@ -55,34 +52,7 @@ export const withOnboardedUser = cache(async () => {
 	return user;
 });
 
-export const withTaggedUser = cache(async (...tags: Array<UserTags>) => {
-	const { user } = await withSession();
-
-	if (!tags.every((tag) => user.tags?.includes(tag))) {
-		redirect(urls.default);
-	}
-
-	return user;
-});
-
-/**
- * This is a hack to get the current location from the server
- * It's not perfect, but it's the best we can do with Next.js currently.
- *
- * Known issues:
- * - This may return the location of the last request, not the current request,
- * since Next.js doesn't refetch on client navigation.
- */
-export const withLocation = cache(async () => {
-	const pathname = headers().get("x-invoke-path") ?? "/";
-
-	const query = tryJsonParse(
-		decodeURIComponent(headers().get("x-invoke-query") ?? "{}"),
-		{}
-	);
-	const queryString = new URLSearchParams(query).toString();
-
-	return toAbsoluteUrl(
-		`${pathname}${Object.keys(query).length > 0 ? `?${queryString}` : ""}`
-	);
+export const assertGuest = cache(async () => {
+	const session = await getOptionalSession();
+	if (session) return redirect(urls.default);
 });

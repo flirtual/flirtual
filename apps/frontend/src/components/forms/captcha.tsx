@@ -8,10 +8,23 @@ import { useTheme } from "~/hooks/use-theme";
 
 export type FormCaptchaReference = TurnstileInstance;
 
+let warned = false;
+
 export const FormCaptcha = forwardRef<TurnstileInstance, unknown>(
 	(props, reference) => {
 		const { theme } = useTheme();
 		const [isInteractive, setIsInteractive] = useState(false);
+
+		if (!turnstileSiteKey) {
+			if (!warned) {
+				console.error(
+					"Turnstile was not properly configured. If this is unintentional, set the NEXT_PUBLIC_TURNSTILE_SITE_KEY environment variable."
+				);
+				warned = true;
+			}
+
+			return null;
+		}
 
 		return (
 			<Turnstile

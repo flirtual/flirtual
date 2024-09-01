@@ -1,7 +1,8 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
-import { createContext, useContext, useEffect } from "react";
+import { createContext, forwardRef, useContext } from "react";
+import { Slot } from "@radix-ui/react-slot";
 
 import type { userAgentFromString } from "next/server";
 
@@ -13,28 +14,41 @@ export interface DeviceContext {
 	platform: DevicePlatform;
 	native: boolean;
 	vision: boolean;
-	country: string | null;
 }
 
 const DeviceContext = createContext<DeviceContext>({} as DeviceContext);
 
 export type DeviceProviderProps = React.PropsWithChildren<
-	Pick<
-		DeviceContext,
-		"userAgent" | "platform" | "native" | "vision" | "country"
-	>
+	Pick<DeviceContext, "userAgent" | "platform" | "native" | "vision">
 >;
 
-export function DeviceProvider({ children, ...value }: DeviceProviderProps) {
-	useEffect(() => {
-		Sentry.setTag("native", value.native ? "yes" : "no");
-		Sentry.setTag("vision", value.vision ? "yes" : "no");
-	}, [value.native, value.vision]);
+export const DeviceProvider = forwardRef<HTMLHtmlElement, DeviceProviderProps>(
+	({ children, native, platform, userAgent, vision, ...props }, ref) => {
+		Sentry.setTag("native", native ? "yes" : "no");
+		Sentry.setTag("vision", vision ? "yes" : "no");
 
-	return (
-		<DeviceContext.Provider value={value}>{children}</DeviceContext.Provider>
-	);
-}
+		return (
+			<DeviceContext.Provider
+				value={{
+					native,
+					platform,
+					userAgent,
+					vision
+				}}
+			>
+				<Slot
+					{...props}
+					ref={ref}
+					data-platform={platform}
+					data-native={native ? "" : undefined}
+					data-vision={vision ? "" : undefined}
+				>
+					{children}
+				</Slot>
+			</DeviceContext.Provider>
+		);
+	}
+);
 
 export function useDevice() {
 	return useContext(DeviceContext);

@@ -5,7 +5,7 @@ import { escapeVRChat } from "./vrchat";
 import type { Url } from "next/dist/shared/lib/router/router";
 import type { ProspectKind } from "~/api/matchmaking";
 import type { User } from "./api/user";
-import type { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/confirm-email/page";
+import type { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/(app)/(public)/confirm-email/page";
 import type { ProfileImage } from "./api/user/profile/images";
 
 export function ensureRelativeUrl(pathname: string) {

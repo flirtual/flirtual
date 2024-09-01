@@ -7,11 +7,11 @@ import { InlineLink } from "./inline-link";
 import type { FC } from "react";
 
 export const MachineTranslatedLegal: FC<{
-	original: string;
 	intended?: string;
-}> = ({ original, intended = "en" }) => {
-	const locale = useLocale();
+	original: string;
+}> = ({ intended = "en", original }) => {
 	const t = useTranslations("machine-translated");
+	const locale = useLocale();
 
 	if (intended === locale) return null;
 
@@ -20,7 +20,12 @@ export const MachineTranslatedLegal: FC<{
 			<span>
 				{t.rich("large_wild_tortoise_sing", {
 					original: (children) => (
-						<InlineLink highlight={false} className="underline" href={original}>
+						<InlineLink
+							highlight={false}
+							lang="en"
+							className="underline"
+							href={original}
+						>
 							{children}
 						</InlineLink>
 					)

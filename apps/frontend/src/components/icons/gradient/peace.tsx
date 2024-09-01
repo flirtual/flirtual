@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, type CSSProperties } from "react";
 
 import type { GradientIconProps } from ".";
 
@@ -10,8 +10,9 @@ export const PeaceIcon: React.FC<GradientIconProps> = ({
 
 	return (
 		<svg
+			style={{ "--fill": `url(#${id})` } as CSSProperties}
 			enableBackground="new 0 0 236.245 236.245"
-			fill={gradient ? `url(#${id})` : "currentColor"}
+			fill={gradient ? `var(--fill)` : "currentColor"}
 			version="1.1"
 			viewBox="0 0 236.24 236.24"
 			xmlns="http://www.w3.org/2000/svg"
