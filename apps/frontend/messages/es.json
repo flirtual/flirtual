@@ -93,12 +93,57 @@
         "link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
       }
     },
-    "content": "<section><h1>Nuestra historia</h1><p>Hola, somos Kyle y Tony, los creadores de Flirtual. Kyle ha estado obsesionado con la realidad virtual desde los primeros días de Oculus, pero realmente cambió su vida cuando se unió a VRChat y conoció a algunos de sus amigos más cercanos (¡incluida su esposa!) allí. Justo antes de que llegara la COVID, Kyle llevó a su mejor amigo de la infancia, Tony, para el viaje, y la realidad virtual también cambió su vida. Nos propusimos ayudar a otros a conocer personas increíbles en todo el mundo también, comenzando con VRLFP (Virtual Reality Looking For Partner).</p><p>La presencia inmersiva en realidad virtual te ayuda a formar conexiones profundas con personas en cualquier parte del mundo. Al reducir la distancia geográfica y priorizar la personalidad, nuestra misión es encontrar a las mejores personas para ti, donde sea que estén. ¡Y hacer que las citas sean más seguras y mágicas!</p><p>En 2022, VRLFP se convirtió en Flirtual. Reconstruido desde cero, hemos mejorado el emparejamiento, hemos agregado etiquetas de personalidad e intereses y hemos lanzado aplicaciones mejoradas. Ya sea que estés buscando una relación seria que se transforme en una relación en la vida real, algo más informal en realidad virtual o simplemente nuevos amigos, estamos listos para ayudarte a encontrar tu pareja perfecta.</p><group><p><3 kfarwell, Tony y el equipo de Flirtual</p><discord>Únete a nuestro Discord</discord></group><p><italic>PD: Hemos recorrido un largo camino desde los humildes comienzos de VRLFP, pero aún somos un equipo pequeño arraigado en la comunidad de realidad virtual. Agradecemos tu paciencia mientras trabajamos duro para hacer que Flirtual sea lo mejor posible. ¡Avísanos si <contact>encuentras algún error</contact> o si <feedback>tienes alguna sugerencia</feedback>!</italic></p></section><section><h1>El equipo</h1><team-list></team-list></section><section><h1>Cronología</h1><timeline></timeline></section>"
+    "content": "<section><h1>Nuestra historia</h1><p>Hola, somos Kyle y Tony, los creadores de Flirtual. Kyle ha estado obsesionado con la realidad virtual desde los primeros días de Oculus, pero realmente cambió su vida cuando se unió a VRChat y conoció a algunos de sus amigos más cercanos (¡incluida su esposa!) allí. Justo antes de que llegara la COVID, Kyle llevó a su mejor amigo de la infancia, Tony, para el viaje, y la realidad virtual también cambió su vida. Nos propusimos ayudar a otros a conocer personas increíbles en todo el mundo también, comenzando con VRLFP (Virtual Reality Looking For Partner).</p><p>La presencia inmersiva en realidad virtual te ayuda a formar conexiones profundas con personas en cualquier parte del mundo. Al reducir la distancia geográfica y priorizar la personalidad, nuestra misión es encontrar a las mejores personas para ti, donde sea que estén. ¡Y hacer que las citas sean más seguras y mágicas!</p><p>En 2022, VRLFP se convirtió en Flirtual. Reconstruido desde cero, hemos mejorado el emparejamiento, hemos agregado etiquetas de personalidad e intereses y hemos lanzado aplicaciones mejoradas. Ya sea que estés buscando una relación seria que se transforme en una relación en la vida real, algo más informal en realidad virtual o simplemente nuevos amigos, estamos listos para ayudarte a encontrar tu pareja perfecta.</p><group><p><3 kfarwell, Tony y el equipo de Flirtual</p><discord>Únete a nuestro Discord</discord></group><p><italic>PD: Hemos recorrido un largo camino desde los humildes comienzos de VRLFP, pero aún somos un equipo pequeño arraigado en la comunidad de realidad virtual. Agradecemos tu paciencia mientras trabajamos duro para hacer que Flirtual sea lo mejor posible. ¡Avísanos si <contact>encuentras algún error</contact> o si <feedback>tienes alguna sugerencia</feedback>!</italic></p></section><section><h1>El equipo</h1><team-list></team-list></section><section><h1>Cronología</h1><timeline></timeline></section>",
+    "image_alt": "Imagen del equipo de Flirtual en VRChat"
   },
   "branding": {
     "title": "Branding",
     "lime_soft_shad_skip": "¿Quieres utilizar nuestro arte para algo? Aquí lo tienes. Por favor, que sea de buen gusto <contact>contacta con nosotros</contact> para su aprobación.",
     "brave_early_weasel_arise": "Nuestro logotipo",
-    "flaky_same_grizzly_snap": "Por favor no edites, cambies, distorsiones, cambies los colores, ni cambies el logotipo de Flirtual."
+    "flaky_same_grizzly_snap": "Por favor no edites, cambies, distorsiones, cambies los colores, ni cambies el logotipo de Flirtual.",
+    "mild_spry_hamster_persist": "Marcar solamente",
+    "such_pink_jan_spur": "Úsalos sólo cuando la marca Flirtual sea claramente visible o esté bien establecida en otra parte de la página o en el diseño.",
+    "tasty_last_pony_transform": "Colores",
+    "gross_red_earthworm_reside": "Gradiente",
+    "fair_yummy_penguin_harbor": "Modo oscuro",
+    "empty_sharp_sheep_list": "Modo amigo",
+    "known_trick_raven_sew": "Crema",
+    "wise_great_crow_foster": "¿Necesitas más?",
+    "whole_round_penguin_pet": "Rosa",
+    "ornate_upper_guppy_mend": "Descarga nuestro kit de prensa completo para obtener más gráficos e información.",
+    "tired_extra_bear_forgive": "Descargar"
+  },
+  "debugger": {
+    "spry_polite_elk_grace": "Objeto del usuario:",
+    "brief_neat_kestrel_ascend": "No disponible",
+    "flat_civil_goat_absorb": "Objeto del Sudoer:",
+    "title": "Información de depuración",
+    "spicy_pretty_tiger_pet": "Dispositivo",
+    "lucky_sound_opossum_absorb": "Plataforma de aplicación:",
+    "vexed_yummy_tadpole_grow": "Navegador:",
+    "known_spare_mantis_pet": "Sistema:",
+    "loved_blue_blackbird_emerge": "País:",
+    "hour_odd_kudu_dine": "Idioma:",
+    "mushy_muddy_warthog_win": "Sesión",
+    "wacky_spry_haddock_jump": "Perfil de usuario:",
+    "north_crisp_fly_dart": "Edad:",
+    "dark_wild_mouse_roar": "Compilación",
+    "swift_short_koala_fond": "Ambiente:",
+    "each_zippy_millipede_pop": "Versión:"
+  },
+  "download": {
+    "title": "Descargar",
+    "best_topical_mayfly_tap": "Descargar en",
+    "platform": {
+      "apple": "App Store",
+      "google": "Google Play",
+      "microsoft": "Microsoft Store",
+      "side_quest": "SideQuest"
+    }
+  },
+  "events": {
+    "title": "Eventos",
+    "gross_loose_stork_vent": "Invitación a VRChat",
+    "fun_still_clownfish_arrive": "¡Sí hay un evento en curso, este botón te llevará a el!"
   }
 }
