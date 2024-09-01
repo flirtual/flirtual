@@ -77,7 +77,7 @@ export const Footer: React.FC<FooterProps> = ({
 		<footer
 			{...props}
 			className={twMerge(
-				"-mt-1 w-full select-none justify-center px-8 py-12 font-nunito",
+				"-mt-1 w-full select-none justify-center px-8 py-12 font-nunito desktop:pb-36 wide:pb-20",
 				desktopOnly ? "hidden desktop:flex" : "flex",
 				background &&
 					"border-t-4 border-theme-1 dark:text-white-20 desktop:bg-white-20 desktop:p-16 desktop:shadow-brand-inset dark:desktop:bg-black-70",
@@ -139,7 +139,7 @@ export const Footer: React.FC<FooterProps> = ({
 							href={gitCommitUrl}
 							className="text-sm opacity-75"
 						>
-							{gitCommitSha}
+							{gitCommitSha.slice(0, 8)}
 						</InlineLink>
 					</div>
 				</div>

@@ -28,6 +28,21 @@ let config = {
 	async redirects() {
 		return [
 			{
+				source: "/register",
+				destination: "/onboarding/0",
+				permanent: true
+			},
+			{
+				source: "/sign-up",
+				destination: "/onboarding/0",
+				permanent: true
+			},
+			{
+				source: "/signup",
+				destination: "/onboarding/0",
+				permanent: true
+			},
+			{
 				source: "/discord",
 				destination: "https://discord.gg/flirtual",
 				permanent: false

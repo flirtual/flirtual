@@ -157,8 +157,8 @@ module.exports = {
 		require("tailwindcss-animate"),
 		plugin(({ addVariant, addComponents }) => {
 			// Device specific variants
-			addVariant("native", `:is([data-native="true"] &)`);
-			addVariant("vision", `:is([data-vision="true"] &)`);
+			addVariant("native", `:is([data-native] &)`);
+			addVariant("vision", `:is([data-vision] &)`);
 
 			for (const platform of ["web", "android", "apple"]) {
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);

@@ -1,62 +1,96 @@
 import { getRequestConfig } from "next-intl/server";
 import { create as setupAcceptLanguage } from "accept-language";
-import { headers } from "next/headers";
+import { headers as getHeaders } from "next/headers";
 import { cache } from "react";
 import deepmerge from "deepmerge";
 
-import { withOptionalSession } from "./server-utilities";
+import { getOptionalSession } from "./server-utilities";
 
-export const getInternationalization = cache(
-	async (languageOverride?: string) => {
-		if (!languageOverride)
-			languageOverride = (await withOptionalSession())?.user.language;
+import type { AbstractIntlMessages } from "next-intl";
 
-		const { languageTags: languages, sourceLanguageTag } = await import(
-			"../project.inlang/settings.json"
-		);
+function getCountry(headers: Headers) {
+	const country =
+		headers.get("cf-ipcountry") || headers.get("x-vercel-ip-country");
 
-		const al = setupAcceptLanguage();
-		al.languages(languages);
+	return country !== "XX" && country !== "T1"
+		? (country?.toLowerCase() ?? null)
+		: null;
+}
 
-		const accept = headers().get("accept-language");
+export const getInternationalization = cache(async (override?: string) => {
+	const headers = getHeaders();
 
-		const ipCountry =
-			headers().get("cf-ipcountry") || headers().get("x-vercel-ip-country");
-		const country =
-			ipCountry !== "XX" && ipCountry !== "T1"
-				? (ipCountry?.toLowerCase() ?? null)
-				: null;
+	override ||= headers.get("language") ?? undefined;
 
-		const browser = al.get(accept);
+	const { languageTags: languages, sourceLanguageTag: fallback } = await import(
+		"../project.inlang/settings.json"
+	);
 
-		const locale = languageOverride || browser || sourceLanguageTag;
+	const al = setupAcceptLanguage();
+	al.languages(languages);
 
-		return {
-			locale: {
-				current: locale,
-				browser,
-				fallback: sourceLanguageTag
-			},
-			country,
-			languages
-		};
-	}
-);
+	const accept = headers.get("accept-language");
 
-export default getRequestConfig(async () => {
+	const browser = al.get(accept);
+	const preferred =
+		(await getOptionalSession())?.user.language || browser || fallback;
+
+	if (override === preferred) override = undefined;
+	const current = override || preferred;
+
+	const country = getCountry(headers);
+
+	return {
+		locale: {
+			current,
+			preferred,
+			browser,
+			fallback,
+			override
+		},
+		country,
+		languages
+	};
+});
+
+const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 	const { locale } = await getInternationalization();
 
 	const { default: fallback } = await import(
 		`../messages/${locale.fallback}.json`
 	);
 
-	const { default: messages } =
+	const { default: current } =
 		locale.current === locale.fallback
 			? { default: fallback }
 			: await import(`../messages/${locale.current}.json`);
 
+	const { default: preferred } =
+		locale.current === locale.preferred
+			? { default: current }
+			: await import(`../messages/${locale.preferred}.json`);
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const messages = deepmerge(fallback, current) as any;
+
+	return {
+		...messages,
+		// Some translations are shown when the current language is different from the preferred language.
+		// But we don't want to include all the translations, so we only include the ones that are relevant.
+		[`$${locale.preferred}`]: {
+			banners: {
+				language: preferred.banners?.language ?? messages.banners.language
+			}
+		}
+	};
+});
+
+export default getRequestConfig(async () => {
+	const { locale } = await getInternationalization();
+	const messages = await getMessages();
+
 	return {
 		locale: locale.current,
-		messages: deepmerge(fallback, messages)
+		messages
 	};
 });

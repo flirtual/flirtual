@@ -113,16 +113,11 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 	</div>
 );
 
-export const AuthenticatedNavigation: FC<{ mobile?: boolean }> = ({
-	mobile = false
-}) => {
+export const AuthenticatedNavigation: FC = () => {
 	return (
 		<>
-			<ProfileNavigation
-				href={urls.user.me}
-				id={`profile-dropdown-button${mobile ? "-mobile" : ""}`}
-			/>
-			<NavigationalSwitch id={`browse-mode-switch${mobile ? "-mobile" : ""}`}>
+			<ProfileNavigation href={urls.user.me} id="profile-dropdown-button" />
+			<NavigationalSwitch id="browse-mode-switch">
 				<SwitchButton
 					href={urls.browse()}
 					Icon={HeartIcon}
@@ -134,9 +129,7 @@ export const AuthenticatedNavigation: FC<{ mobile?: boolean }> = ({
 					className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
 				/>
 			</NavigationalSwitch>
-			<ConversationListButton
-				id={`conversation-button${mobile ? "-mobile" : ""}`}
-			/>
+			<ConversationListButton id="conversation-button" />
 		</>
 	);
 };

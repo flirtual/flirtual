@@ -6,14 +6,14 @@ import { useInView } from "react-intersection-observer";
 import { useTranslations } from "next-intl";
 
 import { useAttributeList } from "~/hooks/use-attribute-list";
-import { useDevice } from "~/hooks/use-device";
+import { useInternationalization } from "~/hooks/use-internalization";
 
 import { InputSelect, type InputSelectProps, SelectItem } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = (props) => {
 	const t = useTranslations("inputs.country_select");
 
-	let { country: systemCountry } = useDevice();
+	let { country: systemCountry } = useInternationalization();
 	if (!systemCountry) systemCountry = "us";
 
 	const country = useAttributeList("country").find(
@@ -50,7 +50,7 @@ export function InputCountrySelect(props: InputCountrySelectProps) {
 	const t = useTranslations("inputs.country_select");
 	const countries = useAttributeList("country");
 
-	let { country: systemCountry } = useDevice();
+	let { country: systemCountry } = useInternationalization();
 	if (!systemCountry) systemCountry = "us";
 
 	return (

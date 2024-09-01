@@ -214,7 +214,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					/\.(jpg|jpeg|png|gif|webm)$/i.test(image.id) ? (
 						<SortableItem id={image.id} key={image.id}>
 							<ArrangeableImage
-								{...image}
+								src={image.src}
 								id={image.id}
 								onDelete={() => {
 									onChange?.(value.filter((_, index) => imageIndex !== index));

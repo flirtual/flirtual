@@ -9,7 +9,7 @@ import { InlineLink } from "~/components/inline-link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
-import { DebugInfo } from "./(public)/debugger/debug-info";
+import { DebugInfo } from "./(app)/(public)/debugger/debug-info";
 
 export default function Error({
 	error,
