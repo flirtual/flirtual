@@ -1,1 +1,13 @@
-{}
+{
+  "about": {
+    "title": "Über uns",
+    "team": {
+      "image_alt": "Avatar von {name}",
+      "roles": {
+        "kfarwell": "Hauptentwickler",
+        "aries": "Softwareentwickler",
+        "moderator": "Moderator"
+      }
+    }
+  }
+}
