@@ -34,11 +34,15 @@ import {
 } from "~/components/table";
 import { Button } from "~/components/button";
 import { UserThumbnail } from "~/components/user-avatar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import {
+	MinimalTooltip,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger
+} from "~/components/tooltip";
 import { TimeRelative } from "~/components/time-relative";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { urls } from "~/urls";
-import { relativeTime } from "~/date";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { useSessionUser } from "~/hooks/use-session";
 import { capitalize } from "~/utilities";
@@ -72,14 +76,16 @@ export const columns: Array<ColumnDef<User>> = [
 		id: "email",
 		header: "Email",
 		cell: ({ row: { original: user } }) => (
-			<div
-				className={twMerge(
-					"w-[12em] truncate",
-					!user.emailConfirmedAt && "text-red-500"
-				)}
-			>
-				{user.email}
-			</div>
+			<MinimalTooltip content={user.email}>
+				<div
+					className={twMerge(
+						"w-[12em] truncate",
+						!user.emailConfirmedAt && "text-red-500"
+					)}
+				>
+					{user.email}
+				</div>
+			</MinimalTooltip>
 		)
 	},
 	{
@@ -87,24 +93,19 @@ export const columns: Array<ColumnDef<User>> = [
 		header: "Active",
 		cell: ({ row: { original: user } }) => {
 			if (!user.activeAt || !user.createdAt) return null;
-			const createdAt = relativeTime(new Date(user.createdAt));
-			const activeAt = relativeTime(new Date(user.activeAt));
+			const createdAt = new Date(user.createdAt);
+			const activeAt = new Date(user.activeAt);
 
 			// If the user was created and last active at the same time, then
 			// they have never been active, so we don't show a last active time.
-			if (createdAt === activeAt) return <span>-</span>;
+			if (createdAt.getTime() === activeAt.getTime()) return <span>-</span>;
 
 			return (
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<span className="whitespace-nowrap">
-							<TimeRelative value={user.activeAt} />
-						</span>
-					</TooltipTrigger>
-					<TooltipContent>
-						<DateTimeRelative value={user.activeAt} />
-					</TooltipContent>
-				</Tooltip>
+				<MinimalTooltip content={<DateTimeRelative value={user.activeAt} />}>
+					<span className="whitespace-nowrap">
+						<TimeRelative value={user.activeAt} />
+					</span>
+				</MinimalTooltip>
 			);
 		}
 	},
@@ -113,19 +114,13 @@ export const columns: Array<ColumnDef<User>> = [
 		header: "Created",
 		cell: ({ row: { original: user } }) =>
 			user.createdAt && (
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<span className="whitespace-nowrap">
-							<TimeRelative value={user.createdAt} />
-						</span>
-					</TooltipTrigger>
-					<TooltipContent>
-						<DateTimeRelative value={user.createdAt} />
-					</TooltipContent>
-				</Tooltip>
+				<MinimalTooltip content={<DateTimeRelative value={user.createdAt} />}>
+					<span className="whitespace-nowrap">
+						<TimeRelative value={user.createdAt} />
+					</span>
+				</MinimalTooltip>
 			)
 	},
-
 	{
 		id: "status",
 		header: "Status",
@@ -135,46 +130,40 @@ export const columns: Array<ColumnDef<User>> = [
 
 			return (
 				<div className="inline-flex gap-2">
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<VisibilityIcon
-								className={twMerge(
-									"size-5",
-									user.status === "visible"
-										? "text-green-500"
-										: user.status === "finished_profile"
-											? "text-yellow-500"
-											: user.status === "onboarded"
-												? "text-orange-500"
-												: "text-red-500"
-								)}
-							/>
-						</TooltipTrigger>
-						<TooltipContent>
-							{capitalize(user.status).replace("_", " ")}
-						</TooltipContent>
-					</Tooltip>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<Gem
-								className={twMerge(
-									"size-5",
-									user.subscription
-										? user.subscription.active
-											? "text-green-500"
-											: "text-yellow-500"
-										: "opacity-50"
-								)}
-							/>
-						</TooltipTrigger>
-						<TooltipContent>
-							{user.subscription
+					<MinimalTooltip content={capitalize(user.status).replace("_", " ")}>
+						<VisibilityIcon
+							className={twMerge(
+								"size-5",
+								user.status === "visible"
+									? "text-green-500"
+									: user.status === "finished_profile"
+										? "text-yellow-500"
+										: user.status === "onboarded"
+											? "text-orange-500"
+											: "text-red-500"
+							)}
+						/>
+					</MinimalTooltip>
+					<MinimalTooltip
+						content={
+							user.subscription
 								? user.subscription.active
 									? "Active"
 									: "Canceled"
-								: "No subscription"}
-						</TooltipContent>
-					</Tooltip>
+								: "No subscription"
+						}
+					>
+						<Gem
+							className={twMerge(
+								"size-5",
+								user.subscription
+									? user.subscription.active
+										? "text-green-500"
+										: "text-yellow-500"
+									: "opacity-50"
+							)}
+						/>
+					</MinimalTooltip>
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<Gavel

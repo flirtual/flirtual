@@ -30,12 +30,13 @@ export const getInternationalization = cache(async (override?: string) => {
 	al.languages(languages);
 
 	const accept = headers.get("accept-language");
-
 	const browser = al.get(accept);
+
 	const preferred =
 		(await getOptionalSession())?.user.language || browser || fallback;
 
-	if (override === preferred) override = undefined;
+	if (override === preferred || (override && !languages.includes(override)))
+		override = undefined;
 	const current = override || preferred;
 
 	const country = getCountry(headers);

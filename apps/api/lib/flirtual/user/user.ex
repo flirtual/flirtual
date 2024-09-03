@@ -499,7 +499,6 @@ defmodule Flirtual.User do
               end),
            entries when is_list(entries) <-
              query
-             |> IO.inspect(label: "query")
              |> order_by([user], ^order)
              |> paginate(attrs.page, attrs.limit)
              |> Repo.all() do

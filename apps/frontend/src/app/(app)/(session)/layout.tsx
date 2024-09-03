@@ -9,14 +9,9 @@ import { getSession } from "~/server-utilities";
 import { getConversationsKey } from "~/hooks/use-conversations.shared";
 import { SWRConfig } from "~/components/swr";
 
-import type { ReactNode } from "react";
-
 export default async function AuthenticatedLayout({
-	children,
-	debug
-}: React.PropsWithChildren<{
-	debug: ReactNode;
-}>) {
+	children
+}: React.PropsWithChildren) {
 	const { user } = await getSession();
 
 	return (
@@ -29,7 +24,6 @@ export default async function AuthenticatedLayout({
 		>
 			<TalkjsProvider>
 				{children}
-				{user.tags?.includes("debugger") && debug}
 				{user.moderatorMessage && <ModerationMessageDialog />}
 				{user.tnsDiscordInBiography &&
 					new Date(user.tnsDiscordInBiography).getTime() < Date.now() && (
