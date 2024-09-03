@@ -43,7 +43,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 			<DropdownMenuTrigger asChild>
 				<button className="w-fit cursor-pointer outline-none" type="button">
 					<span className="sr-only">Open menu</span>
-					<ShieldEllipsis className="size-6 vision:text-white-20" />
+					<ShieldEllipsis className="size-5 vision:text-white-20" />
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="center" sideOffset={8}>

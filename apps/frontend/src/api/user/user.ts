@@ -41,6 +41,15 @@ export type UserPasskey = UuidModel &
 		aaguid: string;
 	};
 
+export const UserStatuses = [
+	"registered",
+	"finished_profile",
+	"onboarded",
+	"visible"
+] as const;
+
+export type UserStatus = (typeof UserStatuses)[number];
+
 export type User = UuidModel &
 	Partial<DatedModel> & {
 		email: string;
@@ -57,7 +66,7 @@ export type User = UuidModel &
 		revenuecatId?: string;
 		moderatorMessage?: string;
 		moderatorNote?: string;
-		status: string;
+		status: UserStatus;
 		relationship?: Relationship;
 		bornAt?: string;
 		activeAt?: string;
@@ -126,8 +135,31 @@ export async function bulk(options: NarrowFetchOptions<Array<string>>) {
 	return fetch<Array<User>>("post", "users/bulk", options);
 }
 
+export const searchSortKeys = [
+	"similarity",
+	"created_at",
+	"active_at",
+	"born_at",
+	"email_confirmed_at",
+	"shadowbanned_at",
+	"indef_shadowbanned_at",
+	"payments_banned_at",
+	"banned_at",
+	"deactivated_at"
+] as const;
+
+export type SearchSortKeys = (typeof searchSortKeys)[number];
+
+export interface SearchOptions {
+	search?: string;
+	status?: UserStatus;
+	tags?: Array<UserTags>;
+	sort?: SearchSortKeys;
+	order?: "asc" | "desc";
+}
+
 export async function search(
-	query: PaginateOptions<{ search?: string }> = {},
+	query: PaginateOptions<SearchOptions> = {},
 	requestOptions: FetchOptions = {}
 ) {
 	return fetch<Paginate<User>>("get", "users", {

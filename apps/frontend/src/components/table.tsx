@@ -58,7 +58,7 @@ const TableRow = React.forwardRef<
 	<tr
 		ref={reference}
 		className={twMerge(
-			"transition-colors even:bg-white-20 data-[state=selected]:brightness-75 dark:even:bg-black-50",
+			"transition-colors even:bg-white-10/10 data-[state=selected]:brightness-75 dark:even:bg-black-90/5",
 			className
 		)}
 		{...props}

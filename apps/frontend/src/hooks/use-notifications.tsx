@@ -30,6 +30,8 @@ export interface NotificationContext {
 const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
+	// return <>{children}</>;
+
 	const [pushRegistrationId, setPushRegistrationId] = useState<string>();
 	const { platform, native } = useDevice();
 	const [session] = useSession();

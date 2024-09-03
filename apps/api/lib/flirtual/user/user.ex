@@ -29,6 +29,15 @@ defmodule Flirtual.User do
 
   @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp]
 
+  @statuses [
+    "visible",
+    "finished_profile",
+    "onboarded",
+    "registered"
+  ]
+
+  @status_atoms @statuses |> Enum.map(&String.to_atom/1)
+
   @derive {Inspect,
            only: [
              :id,
@@ -53,7 +62,7 @@ defmodule Flirtual.User do
     field(:chargebee_id, :string)
     field(:revenuecat_id, Ecto.ShortUUID)
     field(:language, :string, default: "en")
-    field(:status, :string, default: "registered")
+    field(:status, Ecto.Enum, values: @status_atoms, default: :registered)
     field(:moderator_message, :string)
     field(:moderator_note, :string)
     field(:tns_discord_in_biography, :utc_datetime)
@@ -170,10 +179,10 @@ defmodule Flirtual.User do
 
   def get_status(%User{} = user) do
     cond do
-      visible?(user) -> "visible"
-      finished_profile?(user) -> "finished_profile"
-      onboarded?(user) -> "onboarded"
-      true -> "registered"
+      visible?(user) -> :visible
+      finished_profile?(user) -> :finished_profile
+      onboarded?(user) -> :onboarded
+      true -> :registered
     end
   end
 
@@ -326,28 +335,42 @@ defmodule Flirtual.User do
 
   def get(_), do: nil
 
-  def ilike_with_similarity(query, {as, key}, value) when is_atom(as) and is_atom(key) do
-    from([{^as, q}] in query,
-      order_by: {:desc, fragment("similarity(?, ?)", field(q, ^key), ^value)},
-      or_where: field(q, ^key) == ^value or ilike(field(q, ^key), ^"%#{value}%")
-    )
+  def or_where_ilike(query, {as, key}, value, similarity_order)
+      when is_atom(as) and is_atom(key) do
+    query
+    |> or_where([{^as, q}], ilike(field(q, ^key), ^"%#{value}%"))
+    |> maybe_ilike_similarity({as, key}, value, similarity_order)
   end
 
-  def ilike_with_similarity(query, key, value) when is_atom(key) do
-    if User.__schema__(:type, key) == Ecto.ShortUUID and is_uid(value) do
-      from(q in query,
-        or_where: field(q, ^key) == ^value
-      )
-    else
-      if User.__schema__(:type, key) != Ecto.ShortUUID do
-        from(q in query,
-          order_by: {:desc, fragment("similarity(?, ?)", field(q, ^key), ^value)},
-          or_where: field(q, ^key) == ^value or ilike(field(q, ^key), ^"%#{value}%")
-        )
-      else
-        query
-      end
+  def or_where_ilike(query, key, value, similarity_order) when is_atom(key) do
+    case User.__schema__(:type, key) do
+      Ecto.ShortUUID ->
+        case is_uid(value) do
+          true -> or_where(query, [user], field(user, ^key) == ^value)
+          false -> query
+        end
+
+      _ ->
+        or_where(query, [user], ilike(field(user, ^key), ^"%#{value}%"))
+        |> maybe_ilike_similarity(key, value, similarity_order)
     end
+  end
+
+  defp maybe_ilike_similarity(query, _, _, nil), do: query
+
+  defp maybe_ilike_similarity(query, key, value, similarity_order),
+    do: ilike_similarity(query, key, value, similarity_order)
+
+  defp ilike_similarity(query, {as, key}, value, similarity_order) when is_atom(key) do
+    order_by(query, [{^as, q}], [
+      {^similarity_order, fragment("similarity(?, ?)", field(q, ^key), ^value)}
+    ])
+  end
+
+  defp ilike_similarity(query, key, value, similarity_order) when is_atom(key) do
+    order_by(query, [user], [
+      {^similarity_order, fragment("similarity(?, ?)", field(user, ^key), ^value)}
+    ])
   end
 
   defmodule Search do
@@ -355,6 +378,10 @@ defmodule Flirtual.User do
 
     @optional [
       :search,
+      :status,
+      :tags,
+      :sort,
+      :order,
       :limit,
       :before,
       :after
@@ -362,6 +389,11 @@ defmodule Flirtual.User do
 
     embedded_schema do
       field(:search, :string, default: "")
+      field(:status, :string)
+      field(:tags, {:array, :string})
+
+      field(:sort, :string, default: "created_at")
+      field(:order, :string, default: "desc")
 
       # Pagination options.
       field(:limit, :integer, default: 10)
@@ -399,26 +431,76 @@ defmodule Flirtual.User do
   ]
 
   def search(attrs) do
+    attrs =
+      Map.update(attrs, "tags", [], fn tags ->
+        case tags do
+          nil -> []
+          tags when is_binary(tags) -> String.split(tags, ",", trim: true)
+          tags when is_list(tags) -> tags
+          _ -> []
+        end
+      end)
+
     Repo.transaction(fn ->
       with {:ok, attrs} <- Search.apply(attrs),
            value when is_binary(value) <-
              attrs
              |> Map.get(:search, "")
              |> String.trim(),
-           entries when is_list(entries) <-
+           sort_order = if(attrs.order === "asc", do: :asc_nulls_first, else: :desc_nulls_last),
+           query <-
              User
              |> preload(^default_assoc())
              |> join(:left, [user], profile in assoc(user, :profile), as: :profile)
-             |> join(:left, [user], connections in assoc(user, :connections), as: :connections)
-             |> then(fn query ->
-               if is_binary(value) and String.length(value) > 0 do
-                 Enum.reduce(@default_search_fields, query, fn field, query ->
-                   ilike_with_similarity(query, field, value)
-                 end)
-               else
-                 query |> order_by(desc: :created_at)
-               end
-             end)
+             |> join(:left, [user], connections in assoc(user, :connections), as: :connections),
+           query <-
+             (case value do
+                "" ->
+                  query
+
+                value when is_binary(value) ->
+                  similarity_order = if(attrs.sort === "similarity", do: sort_order, else: nil)
+
+                  Enum.reduce(@default_search_fields, query, fn field, query ->
+                    or_where_ilike(
+                      query,
+                      field,
+                      value,
+                      similarity_order
+                    )
+                  end)
+              end),
+           query <-
+             (case attrs.status do
+                status when status in @statuses ->
+                  where(query, [user], user.status == ^attrs.status)
+
+                _ ->
+                  query
+              end),
+           query <-
+             (case attrs.tags do
+                tags when is_list(tags) ->
+                  Enum.reduce(attrs.tags, query, fn tag, query ->
+                    where(query, [user], ^tag in user.tags)
+                  end)
+
+                _ ->
+                  query
+              end),
+           order = [{:desc, :id}],
+           order =
+             (case attrs.sort do
+                "similarity" ->
+                  order
+
+                _ ->
+                  Keyword.put(order, sort_order, String.to_existing_atom(attrs.sort))
+              end),
+           entries when is_list(entries) <-
+             query
+             |> IO.inspect(label: "query")
+             |> order_by([user], ^order)
              |> paginate(attrs.page, attrs.limit)
              |> Repo.all() do
         %{

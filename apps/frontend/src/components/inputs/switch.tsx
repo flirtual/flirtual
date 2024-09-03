@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 type SwitchInputProps = React.ComponentProps<"input"> & { label: string };
 
 const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
-	<div className="relative flex h-10 w-14 items-center justify-center">
+	<div className="relative flex h-11 items-center justify-center">
 		<input
 			{...props}
 			type="radio"
@@ -17,8 +17,10 @@ const SwitchInput: React.FC<SwitchInputProps> = ({ label, ...props }) => (
 		/>
 		<label
 			className={twMerge(
-				"pointer-events-none absolute select-none",
-				props.checked ? "text-white-20" : "text-black-80 dark:text-white-20"
+				"pointer-events-none shrink-0 select-none px-4",
+				props.checked
+					? "z-10 text-white-20"
+					: "text-black-80 dark:text-white-20"
 			)}
 		>
 			{label}
@@ -33,26 +35,28 @@ export interface InputSwitchProps {
 	name: string;
 	onChange: React.Dispatch<boolean>;
 	invert?: boolean;
+	yes?: string;
+	no?: string;
 }
 
 export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
-	const { name, invert = false } = props;
+	const { name, invert = false, yes, no } = props;
 	const t = useTranslations("inputs.switch");
 
 	const value = invert && props.value !== null ? !props.value : props.value;
 
 	return (
-		<div className="focusable-within flex size-fit shrink-0 grow-0 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60">
+		<div className="focusable-within grid size-fit h-11 shrink-0 grow-0 grid-cols-2 overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60">
 			<SwitchInput
 				checked={value === null ? false : value}
-				label={t("yes")}
+				label={yes ?? t("yes")}
 				name={name}
 				value="yes"
 				onChange={() => props.onChange(invert ? false : true)}
 			/>
 			<SwitchInput
 				checked={value === null ? false : !value}
-				label={t("no")}
+				label={no ?? t("no")}
 				name={name}
 				value="no"
 				onChange={() => props.onChange(invert ? true : false)}

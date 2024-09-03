@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { twMerge } from "tailwind-merge";
 
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
@@ -8,6 +7,7 @@ import { Image } from "~/components/image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 
 import { TeamList } from "./team-list";
+import { TimelineItem } from "./timeline-item";
 
 import type { Metadata } from "next";
 
@@ -194,26 +194,7 @@ export default async function AboutPage() {
 					timeline: () => (
 						<div className="flex flex-col gap-6">
 							{[2018, 2019, 2020, 2021, 2022, 2023].map((year, index) => (
-								<div className="grid grid-cols-2 items-center gap-6">
-									<Image
-										alt={t(`timeline.${year}.image_alt`)}
-										className={twMerge("rounded-md shadow-brand-1")}
-										height={461}
-										src={urls.media(t(`timeline.${year}.image`))}
-										width={810}
-									/>
-									<div
-										className={twMerge(
-											"flex flex-col px-4",
-											index % 2 !== 0 ? "-order-1 text-right" : ""
-										)}
-									>
-										<span className="font-montserrat text-2xl font-bold">
-											{t(`timeline.${year}.title`)}
-										</span>
-										<span>{t(`timeline.${year}.description`)}</span>
-									</div>
-								</div>
+								<TimelineItem key={year} year={year} index={index} />
 							))}
 						</div>
 					)

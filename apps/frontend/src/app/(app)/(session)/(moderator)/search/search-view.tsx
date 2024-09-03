@@ -8,14 +8,22 @@ import {
 } from "@tanstack/react-table";
 import useSWR from "swr";
 import { type FC, useDeferredValue, useEffect, useState } from "react";
-import { Eye, EyeOff, Gem, Search } from "lucide-react";
+import { Eye, EyeOff, Gavel, Gem, Search } from "lucide-react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-import { type User, displayName } from "~/api/user";
+import {
+	type SearchOptions,
+	type User,
+	UserStatuses,
+	type UserTags,
+	displayName,
+	searchSortKeys,
+	userTags
+} from "~/api/user";
 import { ModelCard } from "~/components/model-card";
 import { api } from "~/api";
-import { InputText } from "~/components/inputs";
+import { InputSelect, InputSwitch, InputText } from "~/components/inputs";
 import {
 	Table,
 	TableBody,
@@ -33,6 +41,7 @@ import { urls } from "~/urls";
 import { relativeTime } from "~/date";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { useSessionUser } from "~/hooks/use-session";
+import { capitalize } from "~/utilities";
 
 export const columns: Array<ColumnDef<User>> = [
 	{
@@ -48,12 +57,12 @@ export const columns: Array<ColumnDef<User>> = [
 				>
 					<UserThumbnail user={user} />
 					<div className="flex flex-col">
-						<span className="truncate">{name}</span>
-						{name !== user.slug && (
-							<span className="truncate text-xs brightness-75">
-								{user.slug}
-							</span>
+						{name === user.slug ? (
+							"-"
+						) : (
+							<span className="truncate">{name}</span>
 						)}
+						<span className="truncate text-xs brightness-75">{user.slug}</span>
 					</div>
 				</Link>
 			);
@@ -74,25 +83,8 @@ export const columns: Array<ColumnDef<User>> = [
 		)
 	},
 	{
-		id: "createdAt",
-		header: "Created",
-		cell: ({ row: { original: user } }) =>
-			user.createdAt && (
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<span className="whitespace-nowrap">
-							<TimeRelative value={user.createdAt} />
-						</span>
-					</TooltipTrigger>
-					<TooltipContent>
-						<DateTimeRelative value={user.createdAt} />
-					</TooltipContent>
-				</Tooltip>
-			)
-	},
-	{
 		id: "activeAt",
-		header: "Last Active",
+		header: "Active",
 		cell: ({ row: { original: user } }) => {
 			if (!user.activeAt || !user.createdAt) return null;
 			const createdAt = relativeTime(new Date(user.createdAt));
@@ -117,6 +109,24 @@ export const columns: Array<ColumnDef<User>> = [
 		}
 	},
 	{
+		id: "createdAt",
+		header: "Created",
+		cell: ({ row: { original: user } }) =>
+			user.createdAt && (
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<span className="whitespace-nowrap">
+							<TimeRelative value={user.createdAt} />
+						</span>
+					</TooltipTrigger>
+					<TooltipContent>
+						<DateTimeRelative value={user.createdAt} />
+					</TooltipContent>
+				</Tooltip>
+			)
+	},
+
+	{
 		id: "status",
 		header: "Status",
 		enableHiding: false,
@@ -130,12 +140,18 @@ export const columns: Array<ColumnDef<User>> = [
 							<VisibilityIcon
 								className={twMerge(
 									"size-5",
-									user.status === "visible" ? "text-green-500" : "text-red-500"
+									user.status === "visible"
+										? "text-green-500"
+										: user.status === "finished_profile"
+											? "text-yellow-500"
+											: user.status === "onboarded"
+												? "text-orange-500"
+												: "text-red-500"
 								)}
 							/>
 						</TooltipTrigger>
 						<TooltipContent>
-							{user.status === "visible" ? "Visible" : "Hidden"}
+							{capitalize(user.status).replace("_", " ")}
 						</TooltipContent>
 					</Tooltip>
 					<Tooltip>
@@ -146,8 +162,8 @@ export const columns: Array<ColumnDef<User>> = [
 									user.subscription
 										? user.subscription.active
 											? "text-green-500"
-											: "text-yellow-400"
-										: "brightness-75"
+											: "text-yellow-500"
+										: "opacity-50"
 								)}
 							/>
 						</TooltipTrigger>
@@ -156,17 +172,56 @@ export const columns: Array<ColumnDef<User>> = [
 								? user.subscription.active
 									? "Active"
 									: "Canceled"
-								: "No Subscription"}
+								: "No subscription"}
 						</TooltipContent>
 					</Tooltip>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Gavel
+								className={twMerge(
+									"size-5",
+									user.bannedAt
+										? "text-red-500"
+										: user.indefShadowbannedAt
+											? "text-orange-500"
+											: user.paymentsBannedAt
+												? "text-violet-500"
+												: user.shadowbannedAt
+													? "text-yellow-500"
+													: "opacity-50"
+								)}
+							/>
+						</TooltipTrigger>
+						<TooltipContent className="flex flex-col gap-1">
+							{user.bannedAt ? (
+								<>
+									<span>Banned</span>
+									<DateTimeRelative value={user.bannedAt} />
+								</>
+							) : user.indefShadowbannedAt ? (
+								<>
+									<span>Indefinite Shadowban</span>
+									<DateTimeRelative value={user.indefShadowbannedAt} />
+								</>
+							) : user.paymentsBannedAt ? (
+								<>
+									<span>Payments Banned</span>
+									<DateTimeRelative value={user.paymentsBannedAt} />
+								</>
+							) : user.shadowbannedAt ? (
+								<>
+									<span>Shadowbanned</span>
+									<DateTimeRelative value={user.shadowbannedAt} />
+								</>
+							) : (
+								<>No bans</>
+							)}
+						</TooltipContent>
+					</Tooltip>
+					<ProfileDropdown user={user} />
 				</div>
 			);
 		}
-	},
-	{
-		id: "actions",
-		enableHiding: false,
-		cell: ({ row: { original: user } }) => <ProfileDropdown user={user} />
 	}
 ];
 
@@ -214,7 +269,10 @@ const DataTable: FC<{ data: Array<User>; admin: boolean }> = ({
 					))
 				) : (
 					<TableRow>
-						<TableCell className="h-24 text-center" colSpan={columns.length}>
+						<TableCell
+							className="h-[680px] text-center"
+							colSpan={columns.length}
+						>
 							No results.
 						</TableCell>
 					</TableRow>
@@ -227,42 +285,144 @@ const DataTable: FC<{ data: Array<User>; admin: boolean }> = ({
 export const SearchView: React.FC = () => {
 	const user = useSessionUser();
 
-	const [search, setSearch] = useState("");
-	const deferredSearch = useDeferredValue(search);
+	const [searchOptions, setSearchOptions] = useState({
+		search: "",
+		status: "" as const,
+		tags: [],
+		sort: "created_at",
+		order: "desc"
+	} as unknown as SearchOptions);
+
+	const deferredOptions = useDeferredValue(searchOptions);
 
 	const [page, setPage] = useState(1);
 	const deferredPage = useDeferredValue(page);
 
-	// Reset page when search changes.
-	useEffect(() => setPage(1), [search]);
+	// Reset page when the search options change.
+	useEffect(() => setPage(1), [deferredOptions]);
 
 	const { data } = useSWR(
-		["users/search", deferredSearch, { page: deferredPage }],
-		([, search, { page }]) => {
-			return api.user.search({
-				search,
-				page
-			});
+		["users/search", deferredOptions, { page: deferredPage }],
+		([, searchOptions, { page }]) => {
+			return api.user.search(
+				Object.fromEntries(
+					Object.entries({
+						...searchOptions,
+						tags: searchOptions.tags?.join(","),
+						page
+					}).filter(([, value]) => !!value)
+				)
+			);
 		},
 		{
-			suspense: true
+			suspense: true,
+			fallbackData: {
+				entries: [],
+				metadata: {
+					page: 1,
+					limit: 10,
+					total: 0
+				}
+			}
 		}
 	);
 
 	return (
 		<ModelCard
-			className="desktop:max-w-5xl"
+			className="desktop:max-w-7xl"
 			containerProps={{ className: "gap-8 min-h-screen" }}
 			title="Search"
 		>
 			<div className="flex flex-col gap-4">
-				<div className="w-96">
-					<InputText
-						Icon={Search}
-						placeholder="Search"
-						value={search}
-						onChange={setSearch}
-					/>
+				<div className="grid-col-1 grid gap-4 wide:grid-cols-2">
+					<div className="flex flex-col gap-2">
+						<span>Filter</span>
+						<div className="grid grid-cols-3 gap-2">
+							<div className="col-span-3">
+								<InputText
+									Icon={Search}
+									placeholder="Search"
+									value={searchOptions.search}
+									onChange={(value) =>
+										setSearchOptions((searchOptions) => {
+											return {
+												...searchOptions,
+												sort:
+													searchOptions.search === "" && value !== ""
+														? "similarity"
+														: value === "" &&
+															  searchOptions.sort === "similarity"
+															? "created_at"
+															: searchOptions.sort,
+												search: value
+											};
+										})
+									}
+								/>
+							</div>
+							<InputSelect
+								value={searchOptions.status}
+								placeholder="Any status"
+								options={UserStatuses.map((status) => ({
+									name: status.split("_").map(capitalize).join(" "),
+									id: status
+								}))}
+								optional
+								onChange={(value) =>
+									setSearchOptions({
+										...searchOptions,
+										status: value
+									})
+								}
+							></InputSelect>
+							<InputSelect
+								value={searchOptions.tags?.[0] || ""}
+								placeholder="Any tags"
+								options={userTags.map((tag) => ({
+									name: tag.split("_").map(capitalize).join(" "),
+									id: tag
+								}))}
+								optional
+								onChange={(value) =>
+									setSearchOptions({
+										...searchOptions,
+										tags: [value as UserTags]
+									})
+								}
+							></InputSelect>
+						</div>
+					</div>
+					<div className="flex flex-col gap-2">
+						<span>Sort</span>
+						<div className="flex items-center gap-2">
+							<InputSelect
+								value={searchOptions.sort}
+								options={searchSortKeys.map((sort) => ({
+									name: sort.split("_").map(capitalize).join(" "),
+									id: sort,
+									disabled: sort === "similarity" && searchOptions.search === ""
+								}))}
+								onChange={(value) =>
+									setSearchOptions({
+										...searchOptions,
+										sort: value
+									})
+								}
+							></InputSelect>
+							<InputSwitch
+								name="order"
+								value={searchOptions.order === "desc"}
+								yes="Descending"
+								no="Ascending"
+								onChange={(value) =>
+									setSearchOptions({
+										...searchOptions,
+										order: value ? "desc" : "asc"
+									})
+								}
+							/>
+						</div>
+					</div>
 				</div>
 				<DataTable
 					admin={user?.tags?.includes("admin") ?? false}

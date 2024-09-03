@@ -21,13 +21,13 @@ const SelectTrigger = React.forwardRef<
 		asChild
 		ref={reference}
 		className={twMerge(
-			"focusable flex h-10 w-full items-center gap-4 overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 data-[state=open]:focused disabled:cursor-not-allowed disabled:opacity-50 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20",
+			"focusable flex h-11 w-full items-center gap-4 overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 data-[state=open]:focused disabled:cursor-not-allowed disabled:opacity-50 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20",
 			className
 		)}
 		{...props}
 	>
 		<div className="relative cursor-pointer" tabIndex={0}>
-			<SelectPrimitive.Icon className="flex items-center justify-center bg-brand-gradient p-2">
+			<SelectPrimitive.Icon className="flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2">
 				<ChevronsUpDown className="size-6 text-white-20" />
 			</SelectPrimitive.Icon>
 			{children}
@@ -171,6 +171,7 @@ export {
 export interface InputSelectOption {
 	id: string;
 	name: string;
+	disabled?: boolean;
 }
 
 export interface InputSelectProps<T> {
@@ -180,6 +181,7 @@ export interface InputSelectProps<T> {
 	onChange: Dispatch<T>;
 	options: Array<InputSelectOption>;
 	Item?: FC<{ value: NonNullable<T> }>;
+	className?: string;
 }
 
 export function InputSelect<K>(props: InputSelectProps<K>) {
@@ -189,7 +191,8 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 		value,
 		placeholder = t("placeholder"),
 		optional = false,
-		options = []
+		options = [],
+		className
 	} = props;
 
 	const activeOption = options.find((option) => option.id === value);
@@ -203,8 +206,14 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 
 	return (
 		<Select value={(value || "") as string} onValueChange={onChange}>
-			<SelectTrigger>
-				<span className={twMerge("truncate", !activeOption && "opacity-75")}>
+			<SelectTrigger className={className}>
+				<span
+					className={twMerge(
+						"truncate",
+						!activeOption && "text-black-30 dark:text-white-50",
+						optional && props.value && "mr-8"
+					)}
+				>
 					{activeOption?.name || placeholder}
 				</span>
 				{optional && props.value && (
@@ -223,7 +232,11 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 			</SelectTrigger>
 			<SelectContent>
 				{options.map((option) => (
-					<Item key={option.id} value={option.id as K & string}>
+					<Item
+						key={option.id}
+						disabled={option.disabled}
+						value={option.id as K & string}
+					>
 						<SelectItemText>{option.name}</SelectItemText>
 					</Item>
 				))}
