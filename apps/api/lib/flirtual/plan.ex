@@ -69,35 +69,6 @@ end
 defmodule Flirtual.Plan.Policy do
   use Flirtual.Policy
 
-  alias Flirtual.Plan
-
   def authorize(:read, _, _), do: false
   def authorize(_, _, _), do: false
-
-  @admin_properties [
-    :product_id,
-    :price_id,
-    :created_at
-  ]
-
-  def transform(
-        key,
-        %Plug.Conn{
-          assigns: %{
-            session: session
-          }
-        },
-        %Plan{} = plan
-      )
-      when key in @admin_properties do
-    if :admin in session.user.tags do
-      plan[key]
-    else
-      nil
-    end
-  end
-
-  def transform(key, _, _)
-      when key in @admin_properties,
-      do: nil
 end

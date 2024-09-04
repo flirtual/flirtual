@@ -205,8 +205,6 @@ defmodule FlirtualWeb.Router do
         end
 
         scope "/plans" do
-          pipe_through(:require_authenticated_user)
-
           get("/", SubscriptionController, :list_plans)
         end
 
