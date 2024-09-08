@@ -1,37 +1,35 @@
-import { type PropsWithChildren, cache } from "react";
 import * as swrInfinite from "swr/infinite";
+import * as swr from "swr";
 
-import { thruServerCookies } from "~/server-utilities";
-import { api } from "~/api";
 import { fromEntries } from "~/utilities";
 import { SWRConfig } from "~/components/swr";
 import { getConversationsKey } from "~/hooks/use-conversations.shared";
 import { ModelCard } from "~/components/model-card";
 import { ButtonLink } from "~/components/button";
 import { urls } from "~/urls";
+import { Conversation } from "~/api/conversations";
+import { User } from "~/api/user";
 
 import { LikesYouButton } from "./likes-you-button";
-import { withConversations } from "./data.server";
 
-const withConversationUsers = cache(async (...userIds: Array<string>) => {
-	return (
-		await api.user.bulk({ ...thruServerCookies(), body: userIds })
-	).filter(Boolean);
-});
+import type { PropsWithChildren } from "react";
 
 export default async function ConversationsLayout({
 	children
 }: PropsWithChildren) {
-	const { data: conversations, metadata } = await withConversations();
-	const users = await withConversationUsers(
-		...conversations.map(({ userId }) => userId)
-	);
+	const { data: conversations, metadata } = await Conversation.list();
+	const users = await User.getMany(conversations.map(({ userId }) => userId));
 
 	return (
 		<SWRConfig
 			value={{
 				fallback: {
-					...fromEntries(users.map((user) => [`user/${user.id}`, user])),
+					...fromEntries(
+						users.map((user) => [
+							swr.unstable_serialize(["user", user.id]),
+							user
+						])
+					),
 					[swrInfinite.unstable_serialize(getConversationsKey)]: [
 						{ data: conversations, metadata }
 					]

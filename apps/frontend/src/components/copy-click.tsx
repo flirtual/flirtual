@@ -1,3 +1,5 @@
+"use client";
+
 import { Slot } from "@radix-ui/react-slot";
 import { Clipboard } from "@capacitor/clipboard";
 import { useTranslations } from "next-intl";

@@ -4,6 +4,33 @@ defmodule FlirtualWeb.ErrorHelpers do
 
   alias Plug.Conn.Status
 
+  defmodule Issue do
+    @derive Jason.Encoder
+    defstruct [:error, :details]
+
+    def to_snake_case(value) when is_atom(value), do: to_snake_case(to_string(value))
+
+    def to_snake_case(value) when is_binary(value) do
+      value
+      |> String.replace(~r/([A-Z])/, "_\\1")
+      |> String.replace(~r/[\s-]+/, "_")
+      |> String.trim("_")
+      |> String.downcase()
+    end
+
+    def new(message) when is_binary(message) do
+      new(%{error: message})
+    end
+
+    def new(attrs) when is_map(attrs) do
+      %Issue{
+        error: to_snake_case(attrs.error),
+        details: attrs.details
+      }
+      |> IO.inspect()
+    end
+  end
+
   def put_error(%Plug.Conn{} = conn, status) do
     status_code = Status.code(status)
     message = status_code |> Status.reason_phrase()
@@ -12,7 +39,7 @@ defmodule FlirtualWeb.ErrorHelpers do
 
     conn
     |> put_status(status_code)
-    |> json(new_error(message))
+    |> json(Issue.new(message))
   end
 
   def put_error(%Plug.Conn{} = conn, status, message \\ nil, details \\ %{}) do
@@ -22,43 +49,28 @@ defmodule FlirtualWeb.ErrorHelpers do
     if status_code > 499, do: Sentry.capture_message(message)
 
     conn
-    |> put_status(status)
-    |> json(new_error(message, details))
-  end
-
-  def new_error(message, details \\ %{}) do
-    %{error: Map.merge(details, %{message: message})}
+    |> put_status(status_code)
+    |> json(Issue.new(%{error: message, details: details}))
   end
 
   def transform_changeset_errors(%Ecto.Changeset{} = changeset) do
-    Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
-  end
+    changeset
+    |> Ecto.Changeset.traverse_errors(fn {msg, opts} ->
+      opts = Enum.into(opts, %{})
 
-  @doc """
-  Translates an error message using gettext.
-  """
-  def translate_error({msg, opts}) do
-    # When using gettext, we typically pass the strings we want
-    # to translate as a static argument:
-    #
-    #     # Translate "is invalid" in the "errors" domain
-    #     dgettext("errors", "is invalid")
-    #
-    #     # Translate the number of files with plural rules
-    #     dngettext("errors", "1 file", "%{count} files", count)
-    #
-    # Because the error messages we show in our forms and APIs
-    # are defined inside Ecto, we need to translate them dynamically.
-    # This requires us to call the Gettext module passing our gettext
-    # backend as first argument.
-    #
-    # Note we use the "errors" domain, which means translations
-    # should be written to the errors.po file. The :count option is
-    # set by Ecto and indicates we should also apply plural rules.
-    if count = opts[:count] do
-      Gettext.dngettext(FlirtualWeb.Gettext, "errors", msg, msg, count, opts)
-    else
-      Gettext.dgettext(FlirtualWeb.Gettext, "errors", msg, opts)
-    end
+      Issue.new(%{
+        error: msg |> String.replace(~r/%{(.+)}/, "{\\1}"),
+        details:
+          case opts do
+            %{type: {:parameterized, Ecto.Enum, %{mappings: mappings}}} = opts ->
+              opts
+              |> Map.put(:type, :enum)
+              |> Map.put(:values, Enum.into(mappings, [], fn {k, _} -> k end))
+
+            opts ->
+              opts
+          end
+      })
+    end)
   end
 end

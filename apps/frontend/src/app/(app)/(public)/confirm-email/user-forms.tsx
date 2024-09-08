@@ -2,14 +2,12 @@
 
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api/";
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useInterval } from "~/hooks/use-interval";
 import { useToast } from "~/hooks/use-toast";
 import { CopyClick } from "~/components/copy-click";
-
-import type { User } from "~/api/user";
+import { User } from "~/api/user";
 
 export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 	const router = useRouter();
@@ -29,8 +27,7 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 				fields={{}}
 				requireChange={false}
 				onSubmit={async () => {
-					await api.user
-						.resendConfirmEmail(user.id)
+					await User.resendConfirmEmail()
 						.then(() => {
 							toasts.add("Resent confirmation email");
 							return router.refresh();
@@ -64,8 +61,7 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 					currentPassword: ""
 				}}
 				onSubmit={async (body) => {
-					await api.user
-						.updateEmail(user.id, { body })
+					await User.updateEmail(user.id, body)
 						.then(() => {
 							toasts.add("Email changed");
 							return router.refresh();

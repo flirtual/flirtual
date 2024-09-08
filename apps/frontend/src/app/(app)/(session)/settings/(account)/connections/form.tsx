@@ -6,13 +6,13 @@ import { ModelCard } from "~/components/model-card";
 import { InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { Form, FormButton } from "~/components/forms";
-import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { useDevice } from "~/hooks/use-device";
 import { ProfilePlaylist } from "~/components/profile/playlist";
 import { NewBadge } from "~/components/badge";
 import { AddConnectionButton } from "~/components/forms/add-connection-button";
+import { Profile } from "~/api/user/profile";
 
 export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
@@ -54,15 +54,11 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 						setPlaylistSubmitted("other");
 					}
 
-					const [profile] = await Promise.all([
-						await api.user.profile.update(user.id, {
-							body: {
-								vrchat: vrchat.trim() || null,
-								facetime: facetime.trim() || null,
-								playlist: playlist.trim() || null
-							}
-						})
-					]);
+					const profile = await Profile.update(user.id, {
+						vrchat: vrchat.trim() || null,
+						facetime: facetime.trim() || null,
+						playlist: playlist.trim() || null
+					});
 
 					toasts.add("Saved connections");
 

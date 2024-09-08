@@ -1,4 +1,4 @@
-import { fetch, type NarrowFetchOptions } from "../exports";
+import { api } from "../common";
 
 export const PrivacyPreferenceOptions = ["everyone", "matches", "me"] as const;
 export type PrivacyPreferenceOption = (typeof PrivacyPreferenceOptions)[number];
@@ -31,33 +31,38 @@ export interface Preferences {
 	privacy: PrivacyPreferences;
 }
 
-export async function update(
-	userId: string,
-	options: NarrowFetchOptions<Partial<Pick<Preferences, "nsfw" | "theme">>>
-) {
-	return fetch<Preferences>("post", `users/${userId}/preferences`, options);
-}
-
-export async function updatePrivacy(
-	userId: string,
-	options: NarrowFetchOptions<Partial<PrivacyPreferences>>
-) {
-	return fetch<PrivacyPreferences>(
-		"post",
-		`users/${userId}/preferences/privacy`,
-		options
-	);
-}
-
-export async function updateNotifications(
-	userId: string,
-	options: NarrowFetchOptions<{
-		email: Partial<NotificationPreferences>;
-		push: Partial<NotificationPreferences>;
-	}>
-) {
-	return fetch<{
-		email: NotificationPreferences;
-		push: NotificationPreferences;
-	}>("post", `users/${userId}/preferences/notifications`, options);
-}
+export const Preferences = {
+	update(
+		userId: string,
+		options: Partial<Pick<Preferences, "nsfw" | "theme">>
+	) {
+		return api
+			.url(`users/${userId}/preferences`)
+			.json(options)
+			.post()
+			.json<Preferences>();
+	},
+	updatePrivacy(userId: string, options: Partial<PrivacyPreferences>) {
+		return api
+			.url(`users/${userId}/preferences/privacy`)
+			.json(options)
+			.post()
+			.json<PrivacyPreferences>();
+	},
+	updateNotifications(
+		userId: string,
+		options: {
+			email: Partial<NotificationPreferences>;
+			push: Partial<NotificationPreferences>;
+		}
+	) {
+		return api
+			.url(`users/${userId}/preferences/notifications`)
+			.json(options)
+			.post()
+			.json<{
+				email: NotificationPreferences;
+				push: NotificationPreferences;
+			}>();
+	}
+};

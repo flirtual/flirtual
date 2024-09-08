@@ -4,7 +4,7 @@ import { displayName } from "~/api/user";
 import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
 
-import { useSessionUser } from "./use-session";
+import { useCurrentUser } from "./use-session";
 import { useTheme } from "./use-theme";
 import { useScreenBreakpoint } from "./use-screen-breakpoint";
 
@@ -22,7 +22,7 @@ const appId = "640785c1023e50169ab5c94a";
 let loaded = false;
 
 export function useCanny() {
-	const user = useSessionUser();
+	const user = useCurrentUser();
 	const { sessionTheme } = useTheme();
 	const isMobile = !useScreenBreakpoint("desktop");
 

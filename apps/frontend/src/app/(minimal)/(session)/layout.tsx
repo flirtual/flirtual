@@ -1,4 +1,4 @@
-import { getSession } from "~/server-utilities";
+import { getSession } from "~/api/auth";
 
 export default async function MinimalSessionLayout({
 	children

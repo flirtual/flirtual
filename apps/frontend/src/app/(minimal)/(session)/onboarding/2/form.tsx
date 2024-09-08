@@ -3,7 +3,6 @@
 import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -13,6 +12,7 @@ import { Slider } from "~/components/inputs/slider";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { excludeBy, filterBy } from "~/utilities";
+import { Profile } from "~/api/user/profile";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
@@ -46,25 +46,17 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 			}}
 			onSubmit={async (values) => {
 				const [agemin, agemax] = values.age;
-				await Promise.all([
-					api.user.profile.updatePreferences(session.user.id, {
-						query: {
-							requiredAttributes: ["gender"]
-						},
-						body: {
-							agemin: agemin === absMinAge ? null : agemin,
-							agemax: agemax === absMaxAge ? null : agemax,
-							attributes: [
-								...excludeBy(
-									preferences?.attributes ?? [],
-									"type",
-									"gender"
-								).map(({ id }) => id),
-								...values.gender
-							]
-						}
-					})
-				]);
+				await Profile.updatePreferences(session.user.id, {
+					requiredAttributes: ["gender"],
+					agemin: agemin === absMinAge ? null : agemin,
+					agemax: agemax === absMaxAge ? null : agemax,
+					attributes: [
+						...excludeBy(preferences?.attributes ?? [], "type", "gender").map(
+							({ id }) => id
+						),
+						...values.gender
+					]
+				});
 
 				await mutateSession();
 				router.push(urls.browse());

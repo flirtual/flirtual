@@ -9,6 +9,7 @@ import { StatusBar } from "@capacitor/status-bar";
 import { useEffect } from "react";
 import useSWR from "swr";
 import { useTranslations } from "next-intl";
+import ms from "ms";
 
 import { useDevice } from "~/hooks/use-device";
 
@@ -29,9 +30,13 @@ const NativeStartup: React.FC = () => {
 	const { native } = useDevice();
 
 	const { data: updateInformation = null } = useSWR<AppUpdateInfo | null>(
-		"native-app-update",
+		native && "native-app-update",
 		() => AppUpdate.getAppUpdateInfo(),
-		{ fallbackData: null }
+		{
+			fallbackData: null,
+			refreshInterval: ms("1m"),
+			refreshWhenHidden: false
+		}
 	);
 
 	useEffect(() => {

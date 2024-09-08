@@ -21,7 +21,12 @@ defmodule FlirtualWeb.Endpoint do
   end
 
   plug(CORSPlug,
-    origin: &__MODULE__.get_origins/0
+    origin: &__MODULE__.get_origins/0,
+    headers: [
+      "content-type",
+      "idempotency-key",
+      "retry-count"
+    ]
   )
 
   plug(Plug.RequestId, http_header: "fly-request-id")

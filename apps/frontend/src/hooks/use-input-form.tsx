@@ -1,8 +1,10 @@
 import { createContext, useContext, useId, useMemo, useState } from "react";
+import { WretchError } from "wretch/resolver";
+import { useTranslations, type TranslationValues } from "next-intl";
 
 import { type FormFieldFC, FormField } from "~/components/forms/field";
 import { entries } from "~/utilities";
-import { ResponseChangesetError } from "~/api";
+import { isWretchError } from "~/api/common";
 
 import type { FormCaptchaReference } from "~/components/forms/captcha";
 import type { RefObject } from "react";
@@ -76,7 +78,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 ): UseInputForm<T> {
 	const {
 		onSubmit,
-		requireChange = true,
+		requireChange = false,
 		withCaptcha = false,
 		withGlobalId = false,
 		captchaRef
@@ -84,6 +86,9 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const reactId = useId();
 	const formId = withGlobalId ? "" : reactId;
+	const _t = useTranslations();
+	const t = (key: string, values?: TranslationValues) =>
+		`${key} ${JSON.stringify(values)} (${_t(key, values)})`;
 
 	const [initialValues, setInitialValues] = useState(options.fields);
 	const [values, setValues] = useState(initialValues);
@@ -119,9 +124,36 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					return;
 				})
 				.catch((reason) => {
-					if (reason instanceof ResponseChangesetError) {
-						setFieldErrors(reason.properties);
-						return setErrors([]);
+					if (isWretchError(reason, "invalid_properties")) {
+						const { details: properties } = reason.json;
+
+						setFieldErrors(
+							Object.fromEntries(
+								Object.entries(properties).map(
+									([key, issues]) =>
+										[
+											key,
+											issues.map(({ error, details }) =>
+												t(`errors.${error}`, details as TranslationValues)
+											)
+										] as const
+								)
+							) as FieldErrors<T>
+						);
+						return;
+					}
+
+					if (reason instanceof WretchError) {
+						const { error } = reason.json ?? {};
+
+						if (error === "invalid_properties") {
+							setFieldErrors(reason.json.errors);
+							setErrors([]);
+							return;
+						}
+
+						setErrors([error]);
+						return;
 					}
 
 					setErrors([reason.message]);

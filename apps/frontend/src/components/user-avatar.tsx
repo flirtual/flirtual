@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
 
-import { type User, displayName } from "~/api/user/user";
+import { type User, displayName } from "~/api/user";
 import { urls } from "~/urls";
 
 import { Image, type ImageProps } from "./image";

@@ -1,8 +1,7 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
-import { type User, displayName } from "~/api/user";
+import { User, displayName } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	AlertDialog,
@@ -52,8 +51,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 						asChild
 						className="text-red-500"
 						onClick={() => {
-							api.user
-								.unindefShadowban(user.id)
+							User.unindefShadowban(user.id)
 								.then(() => {
 									toasts.add("User unshadowbanned");
 									return router.refresh();
@@ -71,8 +69,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 						asChild
 						className="text-red-500"
 						onClick={() => {
-							api.user
-								.indefShadowban(user.id)
+							User.indefShadowban(user.id)
 								.then(() => {
 									toasts.add("User indefinitely shadowbanned");
 									return router.refresh();
@@ -94,8 +91,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 							className="text-green-500"
 							disabled={!user.bannedAt}
 							onClick={() => {
-								api.user
-									.unsuspend(user.id)
+								User.unsuspend(user.id)
 									.then(() => {
 										toasts.add("User unbanned");
 										return router.refresh();
@@ -113,8 +109,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 								asChild
 								className="text-red-500"
 								onClick={() => {
-									api.user
-										.paymentsUnban(user.id)
+									User.paymentsUnban(user.id)
 										.then(() => {
 											toasts.add("User payments unbanned");
 											return router.refresh();
@@ -132,8 +127,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 								asChild
 								className="text-red-500"
 								onClick={() => {
-									api.user
-										.paymentsBan(user.id)
+									User.paymentsBan(user.id)
 										.then(() => {
 											toasts.add("User payments banned");
 											return router.refresh();
@@ -179,8 +173,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 										<Button
 											size="sm"
 											onClick={async () => {
-												await api.user
-													.adminDelete(user.id)
+												await User.delete(user.id)
 													.then(() => {
 														toasts.add("User deleted");
 														return router.refresh();

@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "next build",
-    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_OPTIONS='--inspect' DEBUG=app* DEBUG_COLORS=1 next dev -H 0.0.0.0 --experimental-https",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_OPTIONS='--inspect' DEBUG=app* DEBUG_COLORS=1 next dev -H 0.0.0.0 --experimental-https --experimental-https-key ./certificates/localhost-key.pem --experimental-https-cert ./certificates/localhost.pem",
     "android-build": "cap sync android && cd ./android && ./gradlew build",
     "android-uninstall": "adb uninstall zone.homie.flirtual.pwa",
     "android-install": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk",
@@ -91,7 +91,8 @@
     "tailwindcss-animate": "^1.0.7",
     "talkjs": "^0.23.1",
     "ts-pattern": "^5.3.1",
-    "vaul": "^0.9.1"
+    "vaul": "^0.9.1",
+    "wretch": "^2.9.0"
   },
   "devDependencies": {
     "@ariesclark/eslint-config": "^2.0.1",

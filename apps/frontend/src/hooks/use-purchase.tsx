@@ -17,15 +17,15 @@ import { useRouter } from "next/navigation";
 
 import { rcAppleKey, rcGoogleKey } from "~/const";
 import { urls } from "~/urls";
-import { api } from "~/api";
+import { Subscription } from "~/api/subscription";
 
 import { useDevice } from "./use-device";
-import { useSessionUser } from "./use-session";
+import { useCurrentUser } from "./use-session";
 import { usePlans } from "./use-plans";
 import { useToast } from "./use-toast";
 
 interface PurchaseContext {
-	purchase: (planId?: string) => Promise<void | string>;
+	purchase: (planId?: string) => Promise<string | null>;
 	packages: Array<PurchasesPackage>;
 }
 
@@ -44,8 +44,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 	const [packages, setPackages] = useState<Array<PurchasesPackage>>([]);
 
-	const user = useSessionUser();
-
+	const user = useCurrentUser();
 	const plans = usePlans();
 
 	useEffect(() => {
@@ -63,18 +62,18 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	}, [platform, native, user?.revenuecatId]);
 
 	const purchase = useCallback(
-		async (planId?: string) => {
+		async (planId?: string): Promise<string | null> => {
 			if (!native) {
 				return planId
-					? api.subscription.checkoutUrl(planId).toString()
-					: api.subscription.manageUrl().toString();
+					? Subscription.checkoutUrl(planId)
+					: Subscription.manageUrl();
 			}
 
 			const { customerInfo } = await Purchases.getCustomerInfo();
 
 			if (!planId && customerInfo.managementURL) {
 				window.open(customerInfo.managementURL, "_blank");
-				return;
+				return null;
 			}
 
 			const plan = plans?.find((plan) => plan.id === planId);
@@ -89,7 +88,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 				customerInfo.managementURL
 			) {
 				window.open(customerInfo.managementURL, "_blank");
-				return;
+				return null;
 			}
 
 			const aPackage = await getPackage(plan.revenuecatId);
@@ -99,10 +98,12 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			return Purchases.purchasePackage({ aPackage })
 				.then(() => {
 					router.refresh();
-					return router.push(urls.subscription.success);
+					router.push(urls.subscription.success);
+					return null;
 				})
 				.catch((reason) => {
 					toasts.addError(reason);
+					return null;
 				});
 		},
 		[native, plans, platform, router, toasts]

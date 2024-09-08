@@ -3,17 +3,17 @@
 import { Mail, Smartphone } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
+import { Preferences } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
-import { useSessionUser } from "~/hooks/use-session";
+import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { fromEntries, keys } from "~/utilities";
 
 export const NotificationsForm: React.FC = () => {
-	const user = useSessionUser();
+	const user = useCurrentUser();
 	const toasts = useToast();
 	const router = useRouter();
 
@@ -32,21 +32,19 @@ export const NotificationsForm: React.FC = () => {
 				)
 			}}
 			onSubmit={async (values) => {
-				await api.user.preferences.updateNotifications(user.id, {
-					body: {
-						email: fromEntries(
-							keys(preferences.emailNotifications).map((key) => [
-								key,
-								values.email.includes(key)
-							])
-						),
-						push: fromEntries(
-							keys(preferences.pushNotifications).map((key) => [
-								key,
-								values.push.includes(key)
-							])
-						)
-					}
+				await Preferences.updateNotifications(user.id, {
+					email: fromEntries(
+						keys(preferences.emailNotifications).map((key) => [
+							key,
+							values.email.includes(key)
+						])
+					),
+					push: fromEntries(
+						keys(preferences.pushNotifications).map((key) => [
+							key,
+							values.push.includes(key)
+						])
+					)
 				});
 
 				toasts.add("Saved notification preferences");

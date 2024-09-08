@@ -9,7 +9,6 @@ import { Button } from "~/components/button";
 import { useToast } from "~/hooks/use-toast";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
-import { api } from "~/api";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -25,6 +24,7 @@ import {
 	DialogContent,
 	DialogFooter
 } from "~/components/dialog/dialog";
+import { cancelSubscription } from "~/api/subscription";
 
 export const ManageButton: FC = () => {
 	const [session] = useSession();
@@ -71,8 +71,7 @@ export const ManageButton: FC = () => {
 									<Button
 										size="sm"
 										onClick={async () => {
-											await api.subscription
-												.cancel()
+											await cancelSubscription()
 												.then(() => {
 													return toasts.add({
 														duration: "long",

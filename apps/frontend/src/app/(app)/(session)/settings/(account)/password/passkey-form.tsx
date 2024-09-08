@@ -4,11 +4,11 @@ import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { Authentication } from "~/api/auth";
 
 import { PasskeyButton } from "./passkey-button";
 
@@ -97,9 +97,8 @@ export const PasswordPasskeyForm: React.FC = () => {
 				Icon={Plus}
 				type="button"
 				onClick={async () => {
-					const challenge = await api.auth.passkeyRegistrationChallenge({
-						query: { platform: false }
-					});
+					const challenge =
+						await Authentication.passkey.registrationChallenge(false);
 
 					const credential = (await navigator.credentials
 						.create(challenge)
@@ -117,24 +116,22 @@ export const PasswordPasskeyForm: React.FC = () => {
 					const response =
 						credential.response as AuthenticatorAttestationResponse;
 
-					await api.auth
-						.createPasskey({
-							body: {
-								rawId: btoa(
-									String.fromCharCode(...new Uint8Array(credential.rawId))
-								),
-								response: {
-									attestationObject: btoa(
-										String.fromCharCode(
-											...new Uint8Array(response.attestationObject)
-										)
-									),
-									clientDataJSON: btoa(
-										String.fromCharCode(
-											...new Uint8Array(response.clientDataJSON)
-										)
+					await Authentication.passkey
+						.create({
+							rawId: btoa(
+								String.fromCharCode(...new Uint8Array(credential.rawId))
+							),
+							response: {
+								attestationObject: btoa(
+									String.fromCharCode(
+										...new Uint8Array(response.attestationObject)
 									)
-								}
+								),
+								clientDataJSON: btoa(
+									String.fromCharCode(
+										...new Uint8Array(response.clientDataJSON)
+									)
+								)
 							}
 						})
 						.then(() => {

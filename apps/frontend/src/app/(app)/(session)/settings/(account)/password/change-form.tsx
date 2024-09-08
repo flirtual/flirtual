@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
+import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
@@ -24,7 +24,7 @@ export const PasswordChangeForm: React.FC = () => {
 				currentPassword: ""
 			}}
 			onSubmit={async (body) => {
-				await api.user.updatePassword(session.user.id, { body });
+				await User.updatePassword(session.user.id, body);
 				router.refresh();
 			}}
 		>

@@ -3,7 +3,7 @@
 import { Key, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
+import { Authentication } from "~/api/auth";
 import { useToast } from "~/hooks/use-toast";
 
 export interface PasskeyButtonProps {
@@ -36,8 +36,8 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 			<div
 				className="ml-auto cursor-pointer self-center p-3 text-black-30 hover:text-red-600"
 				onClick={() => {
-					void api.auth
-						.deletePasskey({ query: { passkeyId: id } })
+					void Authentication.passkey
+						.delete(id)
 						.then(() => {
 							toasts.add(`Removed ${name || "passkey"}`);
 							return router.refresh();

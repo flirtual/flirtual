@@ -3,7 +3,7 @@ import { useCallback, useEffect } from "react";
 import { displayName } from "~/api/user";
 import { freshworksWidgetId } from "~/const";
 
-import { useSessionUser } from "./use-session";
+import { useCurrentUser } from "./use-session";
 
 declare global {
 	interface Window {
@@ -43,7 +43,7 @@ export function useFreshworks() {
 		window.fwSettings = { widget_id: freshworksWidgetId };
 	}, [loadFreshworks]);
 
-	const user = useSessionUser();
+	const user = useCurrentUser();
 
 	const openFreshworks = useCallback(() => {
 		window.FreshworksWidget("identify", "ticketForm", {

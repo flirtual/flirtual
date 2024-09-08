@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
 
-import { api } from "~/api";
 import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
@@ -11,6 +10,7 @@ import { InputLabel, InputText } from "~/components/inputs";
 import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
 import { useDevice } from "~/hooks/use-device";
+import { Authentication } from "~/api/auth";
 
 import { LoginConnectionButton } from "./login-connection-button";
 
@@ -32,7 +32,8 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 				const isCMA =
 					await PublicKeyCredential.isConditionalMediationAvailable();
 				if (isCMA) {
-					const challenge = await api.auth.passkeyAuthenticationChallenge();
+					const challenge =
+						await Authentication.passkey.authenticationChallenge();
 
 					const credential = (await navigator.credentials
 						.get({
@@ -45,28 +46,26 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					const response =
 						credential.response as AuthenticatorAssertionResponse;
 
-					await api.auth
-						.authenticatePasskey({
-							body: {
-								credentialId: credential.id,
-								rawId: btoa(
-									String.fromCharCode(...new Uint8Array(credential.rawId))
-								),
-								response: {
-									authenticatorData: btoa(
-										String.fromCharCode(
-											...new Uint8Array(response.authenticatorData)
-										)
-									),
-									clientDataJSON: btoa(
-										String.fromCharCode(
-											...new Uint8Array(response.clientDataJSON)
-										)
-									),
-									signature: btoa(
-										String.fromCharCode(...new Uint8Array(response.signature))
+					await Authentication.passkey
+						.authenticate({
+							credentialId: credential.id,
+							rawId: btoa(
+								String.fromCharCode(...new Uint8Array(credential.rawId))
+							),
+							response: {
+								authenticatorData: btoa(
+									String.fromCharCode(
+										...new Uint8Array(response.authenticatorData)
 									)
-								}
+								),
+								clientDataJSON: btoa(
+									String.fromCharCode(
+										...new Uint8Array(response.clientDataJSON)
+									)
+								),
+								signature: btoa(
+									String.fromCharCode(...new Uint8Array(response.signature))
+								)
 							}
 						})
 						.then(() => {
@@ -94,7 +93,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					rememberMe: false
 				}}
 				onSubmit={async (body) => {
-					await api.auth.login({ body });
+					await Authentication.login(body);
 
 					router.refresh();
 					router.push(next ?? urls.browse());

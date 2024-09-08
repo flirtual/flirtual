@@ -34,12 +34,12 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 			{session.user.tags?.includes("moderator") && (
 				<ProfileModeratorInfo user={user} />
 			)}
-			<div className="flex w-full gap-4">
+			<div className="flex w-full gap-4 pb-4 desktop:pb-0">
 				{(session.user.tags?.includes("moderator") ||
 					session.user.tags?.includes("admin")) && (
 					<ProfileDropdown user={user} />
 				)}
-				<div className="flex w-full justify-center gap-6 pb-4 vision:text-white-20 desktop:pb-0">
+				<div className="flex w-full justify-center gap-6 vision:text-white-20">
 					{session.user.id !== user.id && (
 						<>
 							<BlockDialog user={user}>

@@ -3,8 +3,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
-import { api } from "~/api";
-import { displayName, type User } from "~/api/user";
+import { displayName, User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
 
 import {
@@ -49,8 +48,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 						<Button
 							size="sm"
 							onClick={async () => {
-								await api.user
-									.block(user.id)
+								await User.block(user.id)
 									.then(() => {
 										toasts.add(
 											t("swift_loved_albatross_leap", {

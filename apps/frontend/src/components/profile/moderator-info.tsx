@@ -3,17 +3,16 @@ import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { Eye, EyeOff } from "lucide-react";
 
-import { api } from "~/api";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { capitalize, filterBy } from "~/utilities";
 import { useAttributeList } from "~/hooks/use-attribute-list";
+import { User } from "~/api/user";
 
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
 import { CopyClick } from "../copy-click";
 
-import type { User } from "~/api/user";
 import type { FC } from "react";
 
 export const ProfileModeratorInfo: FC<{
@@ -40,7 +39,7 @@ export const ProfileModeratorInfo: FC<{
 							user.moderatorNote && "text-yellow-600"
 						)}
 						onClick={async () => {
-							const { value, cancelled } = await Dialog.prompt({
+							const { value: message, cancelled } = await Dialog.prompt({
 								message: "Moderator Note",
 								inputText: user.moderatorNote,
 								title: "Moderator Note"
@@ -48,9 +47,8 @@ export const ProfileModeratorInfo: FC<{
 
 							if (cancelled) return;
 
-							if (!value && !!user.moderatorNote) {
-								await api.user
-									.deleteNote(user.id)
+							if (!message && !!user.moderatorNote) {
+								await User.deleteNote(user.id)
 									.then(() => {
 										toasts.add("Note deleted");
 										return router.refresh();
@@ -60,8 +58,7 @@ export const ProfileModeratorInfo: FC<{
 								return;
 							}
 
-							await api.user
-								.note(user.id, { body: { message: value } })
+							await User.note(user.id, { message })
 								.then(() => {
 									toasts.add("Note updated");
 									return router.refresh();

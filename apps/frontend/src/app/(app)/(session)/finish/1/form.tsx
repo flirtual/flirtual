@@ -9,7 +9,6 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
@@ -18,6 +17,7 @@ import { useSession } from "~/hooks/use-session";
 import { InputPrompts } from "~/components/forms/prompts";
 import { findBy } from "~/utilities";
 import { ButtonLink } from "~/components/button";
+import { Profile } from "~/api/user/profile";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
@@ -52,30 +52,27 @@ export const Finish1Form: FC<{ games: AttributeCollection<"game"> }> = ({
 			}}
 			onSubmit={async (values) => {
 				await Promise.all([
-					api.user.profile.update(user.id, {
-						query: {
-							required: ["biography", "displayName"]
-						},
-						body: {
-							biography: values.biography,
-							displayName: values.displayName
-						}
+					Profile.update(user.id, {
+						biography: values.biography,
+						displayName: values.displayName,
+						required: ["biography", "displayName"]
 					}),
-					api.user.profile.images
-						.create(user.id, {
-							body: values.images.map((image) => image.id).filter(Boolean)
-						})
-						.then((images) =>
-							api.user.profile.images.update(user.id, {
-								body: images.map((image) => image.id)
-							})
-						),
-					api.user.profile.prompts.update(user.id, {
-						body: values.prompts.map(({ prompt, response }) => ({
+					Profile.Image.create(
+						user.id,
+						values.images.map((image) => image.id).filter(Boolean)
+					).then((images) =>
+						Profile.Image.update(
+							user.id,
+							images.map((image) => image.id)
+						)
+					),
+					Profile.updatePrompts(
+						user.id,
+						values.prompts.map(({ prompt, response }) => ({
 							promptId: prompt.id,
 							response
 						}))
-					})
+					)
 				]);
 
 				router.push(urls.finish(2));

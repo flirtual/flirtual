@@ -1,4 +1,4 @@
-import { getSession } from "~/server-utilities";
+import { getSession } from "~/api/auth";
 
 import { ActivationForm } from "./form";
 

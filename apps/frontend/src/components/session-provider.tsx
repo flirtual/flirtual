@@ -17,7 +17,7 @@ export const SessionProvider = forwardRef<
 	HTMLHtmlElement,
 	SessionProviderProps
 >(({ children, session, ...props }, ref) => {
-	const [, mutateSession] = useSession();
+	/* const [, mutateSession] = useSession();
 
 	useEffect(() => {
 		if (!session?.user) return;
@@ -25,7 +25,7 @@ export const SessionProvider = forwardRef<
 
 		// Set the user context for Sentry depending on the user's privacy settings.
 		Sentry.setUser(preferences?.privacy.analytics ? { id } : null);
-	}, [session, mutateSession]);
+	}, [session, mutateSession]); */
 
 	return (
 		<SWRConfig

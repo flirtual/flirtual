@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
-import crypto from "crypto";
 
 import { camelCase, snakeCase } from "change-case";
 
@@ -261,12 +260,23 @@ export function uniqueLast<T>(
 	return [...seen.values()];
 }
 
-export function newConversationId(
+export async function newConversationId(
 	userId: string,
 	targetUserId: string
-): string {
+): Promise<string> {
 	const sortedIds = [userId, targetUserId].sort();
 	const jsonString = JSON.stringify(sortedIds);
-	const hash = crypto.createHash("sha1").update(jsonString).digest("hex");
-	return hash.slice(0, 20);
+	const hash = await crypto.subtle.digest(
+		"SHA-1",
+		new TextEncoder().encode(jsonString)
+	);
+	return Array.from(new Uint8Array(hash))
+		.map((b) => b.toString(16).padStart(2, "0"))
+		.join("");
+}
+
+export function newIdempotencyKey() {
+	return [Date.now(), ...Array.from(crypto.getRandomValues(new Uint8Array(16)))]
+		.map((byte) => byte.toString(16).padStart(2, "0"))
+		.join("");
 }

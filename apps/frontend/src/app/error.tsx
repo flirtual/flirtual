@@ -26,8 +26,8 @@ export default function Error({
 	});
 
 	return (
-		<div className="flex min-h-screen w-full justify-center bg-brand-gradient px-8 py-16 text-white-10 desktop:items-center">
-			<div className="flex flex-col justify-between gap-8 desktop:justify-start">
+		<div className="flex min-h-screen w-full justify-center bg-black-80 px-8 py-16 text-white-20 desktop:items-center">
+			<div className="flex flex-col gap-8 desktop:justify-start">
 				<div className="flex flex-col gap-8">
 					<FlirtualLogo className="w-64" />
 					<h1 className="font-montserrat text-2xl font-semibold desktop:text-3xl">
@@ -72,7 +72,7 @@ export default function Error({
 						Go back
 					</Button>
 				</div>
-				<div className="flex flex-col">
+				<div className="mt-auto flex flex-col">
 					<div>
 						<InlineLink highlight={false} href={urls.resources.networkStatus}>
 							Network Status

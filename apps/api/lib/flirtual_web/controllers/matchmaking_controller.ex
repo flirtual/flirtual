@@ -14,14 +14,8 @@ defmodule FlirtualWeb.MatchmakingController do
   def queue_information(conn, %{"kind" => kind}) do
     with {:ok, queue_information} <-
            Matchmaking.queue_information(conn.assigns[:session].user, to_atom(kind, :love)) do
-      prospects = Policy.filter(queue_information.prospects, conn, :read)
-
       conn
-      |> json_with_etag(
-        Map.merge(queue_information, %{
-          prospects: Policy.transform(conn, prospects)
-        })
-      )
+      |> json_with_etag(queue_information)
     end
   end
 

@@ -14,7 +14,7 @@ import { twMerge } from "tailwind-merge";
 
 import {
 	type SearchOptions,
-	type User,
+	User,
 	UserStatuses,
 	type UserTags,
 	displayName,
@@ -22,7 +22,6 @@ import {
 	userTags
 } from "~/api/user";
 import { ModelCard } from "~/components/model-card";
-import { api } from "~/api";
 import { InputSelect, InputSwitch, InputText } from "~/components/inputs";
 import {
 	Table,
@@ -44,7 +43,7 @@ import { TimeRelative } from "~/components/time-relative";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { urls } from "~/urls";
 import { ProfileDropdown } from "~/components/profile/dropdown";
-import { useSessionUser } from "~/hooks/use-session";
+import { useCurrentUser } from "~/hooks/use-session";
 import { capitalize } from "~/utilities";
 
 export const columns: Array<ColumnDef<User>> = [
@@ -272,7 +271,7 @@ const DataTable: FC<{ data: Array<User>; admin: boolean }> = ({
 };
 
 export const SearchView: React.FC = () => {
-	const user = useSessionUser();
+	const user = useCurrentUser();
 
 	const [searchOptions, setSearchOptions] = useState({
 		search: "",
@@ -293,7 +292,7 @@ export const SearchView: React.FC = () => {
 	const { data } = useSWR(
 		["users/search", deferredOptions, { page: deferredPage }],
 		([, searchOptions, { page }]) => {
-			return api.user.search(
+			return User.search(
 				Object.fromEntries(
 					Object.entries({
 						...searchOptions,

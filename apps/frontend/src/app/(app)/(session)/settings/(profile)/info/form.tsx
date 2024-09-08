@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -18,6 +17,8 @@ import {
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy, fromEntries } from "~/utilities";
+import { Profile } from "~/api/user/profile";
+import { User } from "~/api/user";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
@@ -66,29 +67,23 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 			}}
 			onSubmit={async ({ bornAt, gender, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
-					api.user.update(user.id, {
-						body: {
-							bornAt: bornAt.toISOString()
-						}
+					User.update(user.id, {
+						bornAt: bornAt.toISOString()
 					}),
-					api.user.profile.update(user.id, {
-						query: {
-							required: ["new"]
-						},
-						body: {
-							country: values.country ?? "none",
-							languages: values.languages,
-							new: values.new,
-							// @ts-expect-error: don't want to deal with this.
-							...(fromEntries(
-								AttributeKeys.filter((key) => key !== "gender").map((type) => {
-									return [`${type}Id`, values[type]] as const;
-								})
-							) as {
-								[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
-							}),
-							genderId: gender.filter((id) => id !== "other")
-						}
+					Profile.update(user.id, {
+						required: ["new"],
+						country: values.country ?? "none",
+						languages: values.languages,
+						new: values.new,
+						// @ts-expect-error: don't want to deal with this.
+						...(fromEntries(
+							AttributeKeys.filter((key) => key !== "gender").map((type) => {
+								return [`${type}Id`, values[type]] as const;
+							})
+						) as {
+							[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
+						}),
+						genderId: gender.filter((id) => id !== "other")
 					})
 				]);
 

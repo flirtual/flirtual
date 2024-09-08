@@ -16,12 +16,11 @@ import { useFormContext } from "~/hooks/use-input-form";
 import { useTheme } from "~/hooks/use-theme";
 import { gradientTextColor } from "~/colors";
 import { useSession } from "~/hooks/use-session";
-import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
+import { Profile, type ProfileColors } from "~/api/user/profile";
 
 import { ThemePreview } from "./theme-preview";
 
-import type { ProfileColors } from "~/api/user/profile";
 import type { Theme } from "~/theme";
 
 const DefaultProfileColors: Record<Theme, ProfileColors> = {
@@ -321,9 +320,7 @@ export const AppearanceForm: FC = () => {
 			}}
 			onSubmit={async (values) => {
 				if (session.user.subscription?.active) {
-					await api.user.profile.updateColors(session.user.id, {
-						body: values
-					});
+					await Profile.updateColors(session.user.id, values);
 				}
 
 				toasts.add("Saved appearance");

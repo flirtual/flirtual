@@ -1,22 +1,14 @@
 import Image from "next/image";
 import { getFormatter, getMessages, getTranslations } from "next-intl/server";
-import { unstable_cache } from "next/cache";
-import ms from "ms";
 
 import { urls } from "~/urls";
-import { api } from "~/api";
+import { User } from "~/api/user";
 
 import { Tile, TileAnchor, type TileProps } from ".";
 
-const getApproximateUserCount = unstable_cache(
-	() => api.user.count().then((count) => Math.floor(count / 5000) * 5000),
-	["userCount"],
-	{ revalidate: ms("1d") / 1000 }
-);
-
 export async function Testimonial({ id }: TileProps) {
 	const [userCount, messages, t, format] = await Promise.all([
-		getApproximateUserCount(),
+		User.getApproximateCount(),
 		getMessages(),
 		getTranslations("landing.testimonial"),
 		getFormatter()

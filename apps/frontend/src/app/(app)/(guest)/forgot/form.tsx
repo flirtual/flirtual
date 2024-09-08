@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { api } from "~/api";
+import { Authentication } from "~/api/auth";
 import { Button, ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -21,8 +21,8 @@ export const ForgotPasswordForm: React.FC = () => {
 			fields={{
 				email: ""
 			}}
-			onSubmit={async (body) => {
-				await api.auth.resetPassword({ body });
+			onSubmit={async ({ email }) => {
+				await Authentication.resetPassword(email);
 				setSuccess(true);
 			}}
 		>

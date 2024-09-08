@@ -6,8 +6,11 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { api } from "~/api";
-import { ConnectionMetadata, type ConnectionType } from "~/api/connections";
+import {
+	Connection,
+	ConnectionMetadata,
+	type ConnectionType
+} from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
@@ -55,11 +58,11 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 
 					if (!native) {
 						return router.push(
-							api.connections.authorizeUrl(
+							Connection.authorizeUrl({
 								type,
-								"consent",
-								url.href
-							).href
+								prompt: "consent",
+								next: url.href
+							})
 						);
 					}
 
@@ -70,11 +73,11 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 						return;
 					}
 
-					const { authorizeUrl, state } = await api.connections.authorize(
+					const { authorizeUrl, state } = await Connection.authorize({
 						type,
-						"consent",
-						url.href
-					);
+						prompt: "consent",
+						next: url.href
+					});
 
 					await InAppBrowser.addListener("urlChangeEvent", async (event) => {
 						const url = new URL(event.url);
@@ -90,8 +93,8 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 							}
 
 							setTimeout(async () => {
-								const response = await api.connections.grant({
-									query,
+								const response = await Connection.grant({
+									...query,
 									redirect: "manual"
 								});
 
@@ -125,14 +128,12 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 					<div
 						className="ml-auto cursor-pointer self-center p-3 text-black-30 hover:text-red-600"
 						onClick={async () => {
-							await api.connections
-								.delete({ query: { type } })
+							await Connection.delete(type)
 								.then(() => {
 									toasts.add("Removed connection");
 									return router.refresh();
 								})
 								.catch(toasts.addError);
-							return;
 						}}
 					>
 						<Trash2 />

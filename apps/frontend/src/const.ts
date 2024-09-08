@@ -10,7 +10,7 @@ export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
 assert(apiUrl, "NEXT_PUBLIC_API_URL is required");
 
 export const environment = (process.env.NEXT_PUBLIC_VERCEL_ENV ||
-	process.env.NODE_ENV) as string;
+	process.env.NODE_ENV) as "development" | "preview" | "production";
 
 export const gitOrganization = process.env
 	.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER as string;

@@ -102,7 +102,7 @@ defmodule Flirtual.Matchmaking do
 
     {:ok,
      %{
-       prospects: Enum.map(next_prospects, &User.get(&1)),
+       prospects: next_prospects,
        likes: fields.likes,
        likes_left:
          fields.likes_left

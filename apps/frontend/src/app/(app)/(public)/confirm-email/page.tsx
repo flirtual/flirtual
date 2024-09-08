@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
 import { ModelCard } from "~/components/model-card";
-import { getOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
+import { getOptionalSession } from "~/api/auth";
 
 import { UserForms } from "./user-forms";
 import { ConfirmTokenForm } from "./confirm-token-form";

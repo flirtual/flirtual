@@ -2,7 +2,7 @@ import { displayName } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { ProspectActions } from "~/app/(app)/(session)/(onboarded)/browse/prospect-actions";
 
-import { getProfile } from "../data";
+import { getProfile } from "./data";
 
 import type { Metadata } from "next";
 

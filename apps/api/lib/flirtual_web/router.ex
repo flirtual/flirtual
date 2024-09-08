@@ -184,8 +184,6 @@ defmodule FlirtualWeb.Router do
           end
         end
 
-        get("/error", DebugController, :error)
-
         scope "/vrchat" do
           pipe_through([:require_authenticated_user])
 

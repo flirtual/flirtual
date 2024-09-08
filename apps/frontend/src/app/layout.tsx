@@ -7,24 +7,21 @@ import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
 
 import { siteOrigin } from "~/const";
-import { getOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
 import { SessionProvider } from "~/components/session-provider";
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
-import { ShepherdProvider } from "~/components/shepherd";
 import { ThemeProvider } from "~/hooks/use-theme";
 import { type DevicePlatform, DeviceProvider } from "~/hooks/use-device";
-import { NotificationProvider } from "~/hooks/use-notifications";
 import { TooltipProvider } from "~/components/tooltip";
 import AppUrlListener from "~/components/app-url-listener";
 import NativeStartup from "~/components/native-startup";
-import { PurchaseProvider } from "~/hooks/use-purchase";
 import { InsetPreview } from "~/components/inset-preview";
 import { getInternationalization } from "~/i18n";
 import { InternationalizationProvider } from "~/hooks/use-internalization";
 import { PreferenceThemes, type PreferenceTheme } from "~/api/user/preferences";
+import { Authentication } from "~/api/auth";
 
 import { ClientScripts } from "./client-scripts";
 import { fontClassNames } from "./fonts";
@@ -99,7 +96,7 @@ const platforms: Record<string, DevicePlatform> = {
 export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
-	const session = await getOptionalSession().catch(() => null);
+	const session = await Authentication.getOptionalSession();
 
 	const userAgent = userAgentFromString(headers().get("user-agent")!);
 
@@ -175,13 +172,7 @@ export default async function RootLayout({
 									<NativeStartup />
 									<ToastProvider>
 										{/* <Suspense fallback={<LoadingIndicatorScreen />}> */}
-										<TooltipProvider>
-											<NotificationProvider>
-												<PurchaseProvider>
-													<ShepherdProvider>{children}</ShepherdProvider>
-												</PurchaseProvider>
-											</NotificationProvider>
-										</TooltipProvider>
+										<TooltipProvider>{children}</TooltipProvider>
 										{/* </Suspense> */}
 									</ToastProvider>
 								</body>

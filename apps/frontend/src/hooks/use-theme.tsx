@@ -4,14 +4,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, forwardRef, use, useCallback, useEffect } from "react";
 import { Slot } from "@radix-ui/react-slot";
 
-import { api } from "~/api";
 import { resolveTheme, type Theme } from "~/theme";
+import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
 
 import { useMediaQuery } from "./use-media-query";
 import { useSession } from "./use-session";
 import { useDevice } from "./use-device";
-
-import type { PreferenceTheme } from "~/api/user/preferences";
 
 const Context = createContext(
 	{} as {
@@ -63,10 +61,8 @@ export const ThemeProvider = forwardRef<
 				...session,
 				user: {
 					...session.user,
-					preferences: await api.user.preferences.update(session.user.id, {
-						body: {
-							theme
-						}
+					preferences: await Preferences.update(session.user.id, {
+						theme
 					})
 				}
 			});

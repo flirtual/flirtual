@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { type FC, type PropsWithChildren, useState } from "react";
 
-import { api } from "~/api";
+import { Report } from "~/api/report";
 import { type User, displayName } from "~/api/user";
 import { Button } from "~/components/button";
 import {
@@ -56,13 +56,11 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 						}}
 						onSubmit={async ({ reasonId, targetId, message, ...values }) => {
 							if (!reasonId) return;
-							await api.report.create({
-								body: {
-									reasonId,
-									targetId,
-									message,
-									images: values.images.map((image) => image.id).filter(Boolean)
-								}
+							await Report.create({
+								reasonId,
+								targetId,
+								message,
+								images: values.images.map((image) => image.id).filter(Boolean)
 							});
 
 							toasts.add(t("day_front_cat_cry"));

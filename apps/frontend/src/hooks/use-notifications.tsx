@@ -15,8 +15,6 @@ import {
 	useState
 } from "react";
 
-import { api } from "~/api";
-
 import { useDevice } from "./use-device";
 import { useToast } from "./use-toast";
 import { useSession } from "./use-session";
@@ -30,7 +28,7 @@ export interface NotificationContext {
 const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
-	// return <>{children}</>;
+	return <>{children}</>;
 
 	const [pushRegistrationId, setPushRegistrationId] = useState<string>();
 	const { platform, native } = useDevice();

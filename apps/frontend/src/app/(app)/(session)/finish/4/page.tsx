@@ -1,6 +1,6 @@
 import { ModelCard } from "~/components/model-card";
-import { thruServerCookies, getSession } from "~/server-utilities";
-import { api } from "~/api";
+import { Authentication } from "~/api/auth";
+import { Personality } from "~/api/user/profile/personality";
 
 import { FinishProgress } from "../progress";
 
@@ -13,11 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Finish4Page() {
-	const session = await getSession();
-	const personality = await api.user.profile.getPersonality(
-		session.user.id,
-		thruServerCookies()
-	);
+	const { user } = await Authentication.getSession();
+	const personality = await Personality.get(user.id);
 
 	return (
 		<>

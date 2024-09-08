@@ -23,7 +23,7 @@ import "@uppy/image-editor/dist/style.min.css";
 import "@uppy/drag-drop/dist/style.min.css";
 import "@uppy/status-bar/dist/style.min.css";
 
-import { useSessionUser } from "~/hooks/use-session";
+import { useCurrentUser } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { groupBy } from "~/utilities";
 import { urls } from "~/urls";
@@ -79,7 +79,7 @@ type UploadedMultipartFile = MultipartFile & {
 
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile" } = props;
-	const user = useSessionUser();
+	const user = useCurrentUser();
 	const { theme } = useTheme();
 	const { native } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(

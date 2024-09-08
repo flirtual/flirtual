@@ -2,8 +2,7 @@ import { Gavel } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FC, useState } from "react";
 
-import { api } from "~/api";
-import { type User, displayName } from "~/api/user";
+import { User, displayName } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -57,7 +56,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 							message: reasons[0]?.metadata.details
 						}}
 						onSubmit={async ({ targetId, ...body }) => {
-							await api.user.suspend(targetId, { body });
+							await User.suspend(targetId, body);
 
 							toasts.add("Account banned");
 							router.refresh();

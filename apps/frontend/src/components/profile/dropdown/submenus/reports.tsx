@@ -2,7 +2,6 @@ import { Search, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
@@ -13,6 +12,7 @@ import {
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
+import { Report } from "~/api/report";
 
 import type { User } from "~/api/user";
 import type { FC, PropsWithChildren } from "react";
@@ -59,8 +59,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 						className="inline-flex w-full gap-2"
 						type="button"
 						onClick={async () => {
-							await api.report
-								.clearAll({ query: { targetId: user.id } })
+							await Report.clearAll(user.id)
 								.then(({ count }) => {
 									toasts.add(
 										`Cleared ${count} report${count === 1 ? "" : "s"}`

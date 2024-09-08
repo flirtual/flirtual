@@ -1,8 +1,7 @@
 import { gitCommitSha } from "~/const";
+import { cache } from "~/cache";
 
-import { fetch, type NarrowFetchOptions } from "./exports";
-
-import type { UuidModel } from "./common";
+import { api, type UuidModel } from "./common";
 
 export type KinkAttributeKind = "dominant" | "submissive" | null;
 
@@ -68,21 +67,22 @@ export type AttributeCollection<T extends string> = Array<
 
 export type PartialAttributeCollection = Array<PartialAttribute>;
 
-export async function list<T extends string>(
-	type: T,
-	options: NarrowFetchOptions = {}
-): Promise<AttributeCollection<T>> {
-	return fetch<AttributeCollection<T>>(
-		"get",
-		`attributes/${type}?v=${gitCommitSha}`,
-		options
-	);
-}
-
-export async function get<T extends string>(
-	type: T,
-	id: string,
-	options: NarrowFetchOptions = {}
-): Promise<Attribute<T>> {
-	return fetch<Attribute<T>>("get", `attributes/${type}/${id}`, options);
-}
+export const Attribute = {
+	api: api.url("attributes"),
+	list<T extends AttributeType>(type: T) {
+		return cache.global(
+			() =>
+				this.api
+					.url(`/${type}`)
+					.query({ v: gitCommitSha })
+					.options({ credentials: "omit" })
+					.get()
+					.json<AttributeCollection<T>>(),
+			{ key: [type, gitCommitSha], revalidate: false }
+		);
+	},
+	async get<T extends AttributeType>(type: T, id: string) {
+		const values = await this.list(type);
+		return values.find((value) => value.id === id) ?? null;
+	}
+};

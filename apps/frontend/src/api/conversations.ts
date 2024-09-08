@@ -1,6 +1,5 @@
-import { fetch, type NarrowFetchOptions } from "./exports";
+import { api, type CreatedAtModel } from "./common";
 
-import type { CreatedAtModel } from "./common";
 import type { ProspectKind } from "./matchmaking";
 
 export type Message = CreatedAtModel & {
@@ -18,13 +17,6 @@ export type Conversation = CreatedAtModel & {
 	isUnread: boolean;
 	userId: string;
 };
-
-export async function get(
-	conversationId: string,
-	options: NarrowFetchOptions = {}
-): Promise<Conversation> {
-	return fetch<Conversation>("get", `conversations/${conversationId}`, options);
-}
 
 export interface PaginateMetadata {
 	total: number;
@@ -46,18 +38,22 @@ export interface Paginate<T> {
 
 export type ConversationList = Paginate<Conversation>;
 
-export async function list(
-	options: NarrowFetchOptions<undefined, { cursor?: string }>
-): Promise<ConversationList> {
-	return fetch<ConversationList>("get", "conversations", options);
-}
-
-export async function markRead(options: NarrowFetchOptions = {}) {
-	return fetch("delete", "conversations/unread", options);
-}
-
-export async function observe(
-	options: NarrowFetchOptions<{ userId: string; targetId: string }>
-) {
-	return fetch("post", "conversations/observe", options);
-}
+export const Conversation = {
+	api: api.url("conversations"),
+	get(conversationId: string) {
+		return this.api
+			.url(`/${conversationId}`)
+			.get()
+			.notFound(() => null)
+			.json<Conversation | null>();
+	},
+	list(cursor?: string) {
+		return this.api.query({ cursor }).get().json<ConversationList>();
+	},
+	markRead() {
+		return this.api.delete().res();
+	},
+	observe(options: { userId: string; targetId: string }) {
+		return this.api.url("/observe").json(options).post().res();
+	}
+};

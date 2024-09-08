@@ -1,12 +1,13 @@
 import { Sparkles } from "lucide-react";
 import { redirect } from "next/navigation";
+import { getFormatter } from "next-intl/server";
 
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 import { formatDate } from "~/date";
-import { getSession } from "~/server-utilities";
-import { api } from "~/api";
+import { getSession } from "~/api/auth";
+import { getApproximateUserCount } from "~/api/user";
 
 import { SuccessMessage } from "./success-message";
 import { PlanList } from "./plan-list";
@@ -23,12 +24,19 @@ export const metadata: Metadata = {
 };
 
 export default async function SubscriptionPage() {
-	const { user } = await getSession();
-	const { subscription } = user;
+	const [
+		{
+			user: { emailConfirmedAt, subscription }
+		},
+		userCount,
+		formatter
+	] = await Promise.all([
+		getSession(),
+		getApproximateUserCount(),
+		getFormatter()
+	]);
 
-	const totalUsers = await api.user.count();
-
-	if (!user.emailConfirmedAt)
+	if (!emailConfirmedAt)
 		redirect(urls.confirmEmail({ to: urls.subscription.default }));
 
 	return (
@@ -139,7 +147,7 @@ export default async function SubscriptionPage() {
 				<p>
 					Flirtual is still in its early days: we have{" "}
 					<span className="font-semibold">
-						{(Math.floor(totalUsers / 1000) * 1000).toLocaleString()} users
+						{formatter.number(userCount)} users
 					</span>{" "}
 					and growing, and we&apos;re always releasing new features and
 					improving the platform. Offering Premium helps us pay for development

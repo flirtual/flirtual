@@ -20,7 +20,7 @@ import {
 } from "~/components/dropdown";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
-import { api } from "~/api";
+import { api } from "~/api/common";
 
 import { ProfileDropdownCopySubmenu } from "./submenus/copy";
 import { ProfileDropdownReportsSubmenu } from "./submenus/reports";
@@ -125,7 +125,7 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
 				<DropdownMenuItem asChild>
 					<Link
 						className="gap-2"
-						href={api.newUrl(`users/${user.id}`)}
+						href={api.url(`users/${user.id}`)._url}
 						target="_blank"
 					>
 						<FileJson className="size-5" />

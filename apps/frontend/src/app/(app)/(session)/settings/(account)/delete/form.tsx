@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { type FC, useEffect, useState } from "react";
 import { InAppReview } from "@capacitor-community/in-app-review";
 
-import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { InputLabel, InputSelect, InputText } from "~/components/inputs";
@@ -14,6 +13,7 @@ import { InputTextArea } from "~/components/inputs/textarea";
 import { SupportButton } from "~/components/layout/support-button";
 import { InlineLink } from "~/components/inline-link";
 import { useSession } from "~/hooks/use-session";
+import { User } from "~/api/user";
 
 import type { AttributeCollection } from "~/api/attributes";
 
@@ -41,7 +41,7 @@ export const DeleteForm: FC<{
 				currentPassword: ""
 			}}
 			onSubmit={async (body, { captcha }) => {
-				await api.user.delete({ body: { ...body, captcha } });
+				await User.deleteSelf({ ...body, captcha });
 				router.refresh();
 			}}
 		>

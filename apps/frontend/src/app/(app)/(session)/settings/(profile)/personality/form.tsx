@@ -2,17 +2,17 @@
 
 import shuffle from "fast-shuffle";
 
-import { api } from "~/api";
-import {
-	type ProfilePersonality,
-	personalityQuestionLabels
-} from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { entries } from "~/utilities";
+import {
+	Personality,
+	personalityQuestionLabels,
+	type ProfilePersonality
+} from "~/api/user/profile/personality";
 
 import type { FC } from "react";
 
@@ -30,10 +30,7 @@ export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 			className="flex flex-col gap-8"
 			fields={personality}
 			onSubmit={async (body) => {
-				const newProfile = await api.user.profile.updatePersonality(
-					session.user.id,
-					{ body }
-				);
+				const newProfile = await Personality.update(user.id, body);
 
 				toasts.add("Saved personality settings");
 

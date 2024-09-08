@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 
-import { api } from "~/api";
+import { Authentication } from "~/api/auth";
 import { ExternalRedirect } from "~/components/external-redirect";
-import { thruServerCookies, getOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
 
 export interface CannyPageProps {
@@ -15,13 +14,13 @@ export default async function CannyPage({ searchParams }: CannyPageProps) {
 	if (!redirectURL || !redirectURL.startsWith("https://") || !companyID)
 		redirect(urls.default);
 
-	const session = await getOptionalSession();
+	const session = await Authentication.getOptionalSession();
 	if (!session)
 		redirect(
 			urls.login(`/sso/canny?companyID=${companyID}&redirect=${redirectURL}`)
 		);
 
-	const { token } = await api.auth.sso("canny", thruServerCookies());
+	const { token } = await Authentication.sso("canny");
 
 	return (
 		<ExternalRedirect

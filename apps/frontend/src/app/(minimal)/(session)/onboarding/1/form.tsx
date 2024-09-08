@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -17,6 +16,8 @@ import { filterBy, fromEntries } from "~/utilities";
 import { InputCountrySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useInternationalization } from "~/hooks/use-internalization";
+import { User } from "~/api/user";
+import { Profile } from "~/api/user/profile";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
@@ -72,31 +73,25 @@ export const Onboarding1Form: FC<Onboarding1Props> = (props) => {
 				);
 
 				const [newUser, newProfile] = await Promise.all([
-					api.user.update(user.id, {
-						query: {
-							required: ["bornAt"]
-						},
-						body: {
-							bornAt: bornAt.toISOString()
-						}
+					User.update(user.id, {
+						required: ["bornAt"],
+						bornAt: bornAt.toISOString()
 					}),
-					api.user.profile.update(user.id, {
-						body: {
-							country: values.country ?? "none",
-							customInterests,
-							// @ts-expect-error: don't want to deal with this.
-							...(fromEntries(
-								AttributeKeys.filter(
-									(key) => key !== "interest" && key !== "gender"
-								).map((type) => {
-									return [`${type}Id`, values[type]] as const;
-								})
-							) as {
-								[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
-							}),
-							genderId: gender.filter((id) => id !== "other"),
-							interestId: interest.filter((id) => !customInterests.includes(id))
-						}
+					Profile.update(user.id, {
+						country: values.country ?? "none",
+						customInterests,
+						// @ts-expect-error: don't want to deal with this.
+						...(fromEntries(
+							AttributeKeys.filter(
+								(key) => key !== "interest" && key !== "gender"
+							).map((type) => {
+								return [`${type}Id`, values[type]] as const;
+							})
+						) as {
+							[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
+						}),
+						genderId: gender.filter((id) => id !== "other"),
+						interestId: interest.filter((id) => !customInterests.includes(id))
 					})
 				]);
 

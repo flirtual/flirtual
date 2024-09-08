@@ -1,9 +1,7 @@
 import { ImageResponse } from "next/og";
-import { notFound } from "next/navigation";
 
 import { filterBy, findBy } from "~/utilities";
-import { thruServerCookies } from "~/server-utilities";
-import { api } from "~/api";
+import { User } from "~/api/user";
 
 import type { Attribute } from "~/api/attributes";
 
@@ -21,19 +19,14 @@ export interface ProfileOpenGraphImageContext {
 	};
 }
 
-async function getUser(userId: string) {
-	return api.user.preview(userId, thruServerCookies()).catch(() => notFound());
-}
-
 // Blocked by: https://github.com/vercel/next.js/issues/48081
 // const Montserrat = await fs.readFile("./public/fonts/montserrat.ttf");
-// const Nunito = await fs.readFile("./public/fonts/nunito.ttf");
 
 export async function GET(
 	request: Request,
 	{ params }: ProfileOpenGraphImageContext
 ) {
-	const user = await getUser(params.username);
+	const user = await User.preview(params.username);
 
 	const country = findBy(user.attributes, "type", "country") as
 		| Attribute<"country">
@@ -136,7 +129,6 @@ export async function GET(
 								)}
 							</div>
 						</div>
-						F
 					</div>
 				</div>
 			</div>

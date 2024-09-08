@@ -6,16 +6,16 @@ import { MoveLeft } from "lucide-react";
 
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { Form } from "~/components/forms";
-import { api } from "~/api";
 import { entries } from "~/utilities";
 import { FormButton } from "~/components/forms/button";
 import { urls } from "~/urls";
-import {
-	type ProfilePersonality,
-	personalityQuestionLabels
-} from "~/api/user/profile";
 import { useSession } from "~/hooks/use-session";
 import { ButtonLink } from "~/components/button";
+import {
+	personalityQuestionLabels,
+	type ProfilePersonality
+} from "~/api/user/profile/personality";
+import { Profile } from "~/api/user/profile";
 
 export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 	personality
@@ -33,9 +33,7 @@ export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 			fields={personality}
 			requireChange={false}
 			onSubmit={async (body) => {
-				await Promise.all([
-					api.user.profile.updatePersonality(user.id, { body })
-				]);
+				await Promise.all([Profile.Personality.update(user.id, body)]);
 
 				router.push(urls.finish(5));
 			}}

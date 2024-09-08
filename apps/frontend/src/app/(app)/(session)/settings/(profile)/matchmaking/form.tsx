@@ -6,14 +6,6 @@ import { type FC, startTransition, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
 
-import { api } from "~/api";
-import {
-	CustomWeightList,
-	DefaultProfileCustomWeights,
-	ProfileMonopolyList,
-	ProfileRelationshipLabel,
-	ProfileRelationshipList
-} from "~/api/user/profile";
 import { Button } from "~/components/button";
 import {
 	AlertDialog,
@@ -35,6 +27,15 @@ import { NewBadge, PremiumBadge } from "~/components/badge";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { capitalize, excludeBy, filterBy } from "~/utilities";
+import {
+	CustomWeightList,
+	DefaultProfileCustomWeights,
+	Profile,
+	ProfileMonopolyList,
+	ProfileRelationshipLabel,
+	ProfileRelationshipList
+} from "~/api/user/profile";
+import { Matchmaking } from "~/api/matchmaking";
 
 import type { AttributeCollection } from "~/api/attributes";
 
@@ -88,46 +89,34 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 				const [agemin, agemax] = values.age;
 
 				await Promise.all([
-					api.user.profile.update(user.id, {
-						query: {
-							required: ["relationships"]
-						},
-						body: {
-							relationships: values.relationships ?? [],
-							monopoly: values.monopoly ?? "none"
-						}
+					Profile.update(user.id, {
+						required: ["relationships"],
+						relationships: values.relationships ?? [],
+						monopoly: "aaa" //values.monopoly ?? "none"
 					}),
-					api.user.profile.updatePreferences(user.id, {
-						query: {
-							requiredAttributes: ["gender"]
-						},
-						body: {
-							agemin: agemin === absMinAge ? null : agemin,
-							agemax: agemax === absMaxAge ? null : agemax,
-							attributes: [
-								...excludeBy(
-									preferences?.attributes ?? [],
-									"type",
-									"gender"
-								).map(({ id }) => id),
-								...values.gender
-							]
-						}
+					Profile.updatePreferences(user.id, {
+						requiredAttributes: ["gender"],
+						agemin: agemin === absMinAge ? null : agemin,
+						agemax: agemax === absMaxAge ? null : agemax,
+						attributes: [
+							...excludeBy(preferences?.attributes ?? [], "type", "gender").map(
+								({ id }) => id
+							),
+							...values.gender
+						]
 					}),
-					api.user.profile.updateCustomWeights(user.id, {
-						body: {
-							country: values.weightCountry,
-							customInterests: values.weightCustomInterests,
-							defaultInterests: values.weightDefaultInterests,
-							domsub: values.weightDomsub,
-							games: values.weightGames,
-							kinks: values.weightKinks,
-							likes: values.weightLikes,
-							relationships: values.weightRelationships,
-							monopoly: values.weightMonopoly,
-							languages: values.weightLanguages,
-							personality: values.weightPersonality
-						}
+					Profile.updateCustomWeights(user.id, {
+						country: values.weightCountry,
+						customInterests: values.weightCustomInterests,
+						defaultInterests: values.weightDefaultInterests,
+						domsub: values.weightDomsub,
+						games: values.weightGames,
+						kinks: values.weightKinks,
+						likes: values.weightLikes,
+						relationships: values.weightRelationships,
+						monopoly: values.weightMonopoly,
+						languages: values.weightLanguages,
+						personality: values.weightPersonality
 					})
 				]);
 
@@ -209,7 +198,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 									optional
 									options={ProfileMonopolyList.map((value) => ({
 										id: value,
-										name: t("dark_level_goat_gulp", { value })
+										name: t("brave_funny_vulture_sail", { value })
 									}))}
 								/>
 							</>
@@ -244,8 +233,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 										size="sm"
 										onClick={async () => {
 											setPassesPending(true);
-											await api.matchmaking
-												.resetPasses()
+											await Matchmaking.resetPasses()
 												.then(() => {
 													setPassesPending(false);
 													toasts.add("Passes reset");

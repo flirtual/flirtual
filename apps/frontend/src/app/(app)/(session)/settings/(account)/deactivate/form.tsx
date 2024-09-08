@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import { ButtonLink } from "~/components/button";
 import {
 	Form,
@@ -12,8 +11,8 @@ import {
 import { ModelCard } from "~/components/model-card";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
-
-import type { User } from "~/api/user";
+import { User } from "~/api/user";
+import { Subscription } from "~/api/subscription";
 
 export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
@@ -32,9 +31,7 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 				requireChange={false}
 				onSubmit={async () => {
 					await (
-						deactivated
-							? api.user.reactivate(user.id)
-							: api.user.deactivate(user.id)
+						deactivated ? User.reactivate(user.id) : User.deactivate(user.id)
 					)
 						.then(() =>
 							toasts.add(
@@ -54,7 +51,7 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 									account is deactivated and will be renewed automatically.
 								</p>
 								<ButtonLink
-									href={api.subscription.manageUrl()}
+									href={Subscription.manageUrl()}
 									kind="secondary"
 									size="sm"
 									target="_self"

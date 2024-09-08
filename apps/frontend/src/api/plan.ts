@@ -1,8 +1,7 @@
 import { gitCommitSha } from "~/const";
+import { cache } from "~/cache";
 
-import { fetch, type NarrowFetchOptions } from "./exports";
-
-import type { DatedModel, UuidModel } from "./common";
+import { api, type DatedModel, type UuidModel } from "./common";
 
 export const SubscriptionFeatures = ["custom_weights"] as const;
 export type SubscriptionFeature = (typeof SubscriptionFeatures)[number];
@@ -19,8 +18,20 @@ export type Plan = UuidModel &
 		purchasable: boolean;
 	};
 
-export async function list(
-	options: NarrowFetchOptions = {}
-): Promise<Array<Plan>> {
-	return fetch<Array<Plan>>("get", `plans?v=${gitCommitSha}`, options);
-}
+export const Plan = {
+	api: api.url("plans"),
+	list() {
+		return cache.global(
+			() =>
+				this.api
+					.options({ credentials: "omit" })
+					.query({ v: gitCommitSha })
+					.get()
+					.json<Array<Plan>>(),
+			{
+				key: [gitCommitSha],
+				revalidate: false
+			}
+		);
+	}
+};

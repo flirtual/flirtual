@@ -1,12 +1,12 @@
 import { getTranslations } from "next-intl/server";
 import { match, P } from "ts-pattern";
 
-import { getSession } from "~/server-utilities";
+import { Authentication } from "~/api/auth";
 
 import { Banner, BannerLink } from "../banner";
 
 export default async function () {
-	const session = await getSession();
+	const session = await Authentication.getSession();
 	const t = await getTranslations("banners");
 
 	return match(session.user)

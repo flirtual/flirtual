@@ -4,9 +4,8 @@ import { useRouter } from "next/navigation";
 import { Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
-import { displayName, type User } from "~/api/user";
+import { displayName, User } from "~/api/user";
 
 import { Button } from "../button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
@@ -25,8 +24,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 				className="w-fit"
 				size="sm"
 				onClick={async () => {
-					await api.user
-						.unblock(user.id)
+					await User.unblock(user.id)
 						.then(() => {
 							toasts.add(
 								t("top_sweet_macaw_pet", { displayName: displayName(user) })

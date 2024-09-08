@@ -2,18 +2,18 @@
 
 import { HelpCircle } from "lucide-react";
 
-import { api } from "~/api";
+import { Preferences } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
-import { useSessionUser } from "~/hooks/use-session";
+import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 export const PrivacyForm: React.FC = () => {
-	const user = useSessionUser();
+	const user = useCurrentUser();
 	const toasts = useToast();
 
 	if (!user || !user.preferences) return null;
@@ -23,9 +23,7 @@ export const PrivacyForm: React.FC = () => {
 			className="flex flex-col gap-8"
 			fields={{ ...user.preferences.privacy }}
 			onSubmit={async (body, { reset }) => {
-				const privacy = await api.user.preferences.updatePrivacy(user.id, {
-					body
-				});
+				const privacy = await Preferences.updatePrivacy(user.id, body);
 				reset(privacy);
 
 				toasts.add("Saved privacy preferences");

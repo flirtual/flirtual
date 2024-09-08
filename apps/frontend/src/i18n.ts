@@ -4,7 +4,7 @@ import { headers as getHeaders } from "next/headers";
 import { cache } from "react";
 import deepmerge from "deepmerge";
 
-import { getOptionalSession } from "./server-utilities";
+import { Authentication } from "./api/auth";
 
 import type { AbstractIntlMessages } from "next-intl";
 
@@ -33,7 +33,9 @@ export const getInternationalization = cache(async (override?: string) => {
 	const browser = al.get(accept);
 
 	const preferred =
-		(await getOptionalSession())?.user.language || browser || fallback;
+		(await Authentication.getOptionalSession())?.user.language ||
+		browser ||
+		fallback;
 
 	if (override === preferred || (override && !languages.includes(override)))
 		override = undefined;

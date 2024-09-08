@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 import { Button } from "~/components/button";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useToast } from "~/hooks/use-toast";
-import { Dialog, DialogContent } from "~/components/dialog/dialog";
+import { Dialog, DialogContent, DialogTitle } from "~/components/dialog/dialog";
 
 import type { PlanCardProps } from "./plan-card";
 
@@ -35,6 +35,7 @@ export const PlanButtonLink: FC<
 						setPurchaseUrl(null);
 					}}
 				>
+					<DialogTitle className="sr-only">Purchase</DialogTitle>
 					<DialogContent className="w-fit overflow-hidden p-0">
 						<iframe
 							className="max-h-[90vh] max-w-full rounded-[1.25rem] bg-[#f4f5f9]"

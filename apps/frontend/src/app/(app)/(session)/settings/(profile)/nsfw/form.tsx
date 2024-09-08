@@ -1,7 +1,5 @@
 "use client";
 
-import { api } from "~/api";
-import { ProfileDomsubList } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -14,6 +12,8 @@ import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { filterBy } from "~/utilities";
+import { Profile, ProfileDomsubList } from "~/api/user/profile";
+import { Preferences } from "~/api/user/preferences";
 
 import type { AttributeCollection } from "~/api/attributes";
 
@@ -39,17 +39,15 @@ export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
 				kinksPrivacy: user.preferences?.privacy.kinks ?? "everyone"
 			}}
 			onSubmit={async ({ domsub, kinks, kinksPrivacy, nsfw }) => {
-				const [newProfile, , newPreferences] = await Promise.all([
-					api.user.profile.update(user.id, {
-						body: {
-							domsub: domsub ?? "none",
-							kinkId: kinks
-						}
+				const [newProfile, newPreferences] = await Promise.all([
+					Profile.update(user.id, {
+						domsub: domsub ?? "none",
+						kinkId: kinks
 					}),
-					api.user.preferences.updatePrivacy(user.id, {
-						body: { kinks: kinksPrivacy }
-					}),
-					api.user.preferences.update(user.id, { body: { nsfw } })
+					Preferences.update(user.id, { nsfw }),
+					Preferences.updatePrivacy(user.id, {
+						kinks: kinksPrivacy
+					})
 				]);
 
 				toasts.add("Saved NSFW preferences");

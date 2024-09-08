@@ -2,16 +2,15 @@ defmodule FlirtualWeb.ErrorView do
   use FlirtualWeb, :controller
   require Logger
 
-  import FlirtualWeb.ErrorHelpers
-  alias Flirtual.Crypto
   alias Plug.Conn
+  alias FlirtualWeb.ErrorHelpers.Issue
 
   def render(_, %{status: 404}) do
-    new_error(Conn.Status.reason_phrase(404))
+    Issue.new(Conn.Status.reason_phrase(404))
   end
 
   def render(_, %{status: 400}) do
-    new_error(Conn.Status.reason_phrase(400))
+    Issue.new(Conn.Status.reason_phrase(400))
   end
 
   def render(_, %{reason: reason, status: status}) do
@@ -19,9 +18,6 @@ defmodule FlirtualWeb.ErrorView do
       Conn.Status.code(status)
       |> Conn.Status.reason_phrase()
 
-    new_error(
-      message,
-      %{code: Crypto.encrypt(:error, reason)}
-    )
+    Issue.new(message)
   end
 end

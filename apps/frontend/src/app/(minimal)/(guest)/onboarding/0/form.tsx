@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { MoveRight } from "lucide-react";
 
-import { api } from "~/api";
 import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import {
@@ -14,6 +13,7 @@ import {
 } from "~/components/inputs";
 import { urls } from "~/urls";
 import { ButtonLink } from "~/components/button";
+import { User } from "~/api/user";
 
 import type { FC } from "react";
 
@@ -34,11 +34,9 @@ export const Onboarding0Form: FC = () => {
 				notifications: true
 			}}
 			onSubmit={async ({ ...values }, { captcha }) => {
-				await api.user.create({
-					body: {
-						...values,
-						captcha
-					}
+				await User.create({
+					...values,
+					captcha
 				});
 
 				router.refresh();

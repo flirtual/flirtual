@@ -1,10 +1,10 @@
 import { VenetianMask } from "lucide-react";
 
-import { api } from "~/api";
 import { type User, displayName } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { Authentication } from "~/api/auth";
 
 import type { FC } from "react";
 
@@ -26,16 +26,14 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 				type="button"
 				onClick={async () => {
 					if (session?.sudoerId) {
-						const newSession = await api.auth.revokeSudo();
+						const newSession = await Authentication.revokeImpersonate();
 
 						toasts.add(`No longer impersonating ${displayName(user)}`);
 						await mutateSession(newSession);
 						return;
 					}
 
-					const newSession = await api.auth.sudo({
-						body: { userId: user.id }
-					});
+					const newSession = await Authentication.impersonate(user.id);
 
 					toasts.add(`Impersonating ${displayName(user)}`);
 					await mutateSession(newSession);

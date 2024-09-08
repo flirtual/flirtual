@@ -1,6 +1,5 @@
-import { fetch, type NarrowFetchOptions } from "./exports";
+import { api, type CreatedAtModel, type UuidModel } from "./common";
 
-import type { CreatedAtModel, UuidModel } from "./common";
 import type { User } from "./user";
 
 export const ProspectKind = ["love", "friend"] as const;
@@ -18,18 +17,6 @@ export type LikeAndPassItem = UuidModel &
 		opposite?: LikeAndPassItem;
 	};
 
-export async function queue(
-	options: NarrowFetchOptions<undefined, { kind: ProspectKind }>
-) {
-	return fetch<{
-		prospects: Array<User>;
-		passes: number;
-		likes: number;
-		likesLeft: number;
-		passesLeft: number;
-	}>("get", "queue", options);
-}
-
 export interface RespondProspectBody {
 	type: ProspectRespondType;
 	kind: ProspectKind;
@@ -43,49 +30,54 @@ export interface RespondProspectResponse {
 	resetAt?: string;
 }
 
-export async function respondProspect(
-	options: NarrowFetchOptions<RespondProspectBody>
-): Promise<RespondProspectResponse> {
-	return fetch("post", `prospects/respond`, options);
-}
-
 export interface ReverseRespondProspectBody {
 	kind: ProspectKind;
 	userId: string;
 }
 
-export async function reverseRespondProspect(
-	options: NarrowFetchOptions<ReverseRespondProspectBody>
-) {
-	return fetch("delete", `prospects/respond`, options);
-}
-
-export async function unmatch(
-	options: NarrowFetchOptions<undefined, { userId: string }>
-) {
-	return fetch("delete", `matches`, options);
-}
-
-export async function resetProspect(options: NarrowFetchOptions = {}) {
-	return fetch("delete", `prospects`, options);
-}
-
-export async function resetLikes(options: NarrowFetchOptions = {}) {
-	return fetch("delete", `likes`, options);
-}
-
-export async function resetPasses(options: NarrowFetchOptions = {}) {
-	return fetch("delete", `passes`, options);
-}
-
-export async function listMatches(
-	options: NarrowFetchOptions<undefined, { unrequited?: boolean }>
-) {
-	return fetch<{
-		count: {
-			[K in ProspectKind]?: number;
-		};
-		items: Array<LikeAndPassItem>;
-		thumbnails?: Array<string>;
-	}>("get", `matches`, options);
-}
+export const Matchmaking = {
+	queue(kind: ProspectKind) {
+		return api.url("queue").query({ kind }).get().json<{
+			prospects: Array<string>;
+			passes: number;
+			likes: number;
+			likesLeft: number;
+			passesLeft: number;
+		}>();
+	},
+	respondProspect(body: RespondProspectBody) {
+		return api
+			.url("prospects/respond")
+			.json(body)
+			.post()
+			.json<RespondProspectResponse>();
+	},
+	reverseRespondProspect(body: ReverseRespondProspectBody) {
+		return api
+			.url("prospects/respond")
+			.json(body)
+			.delete()
+			.json<RespondProspectResponse>();
+	},
+	unmatch(userId: string) {
+		return api.url("matches").query({ userId }).delete().res();
+	},
+	resetProspect() {
+		return api.url("prospects").delete().res();
+	},
+	resetLikes() {
+		return api.url("likes").delete().res();
+	},
+	resetPasses() {
+		return api.url("passes").delete().res();
+	},
+	listMatches(unrequited?: boolean) {
+		return api.url("matches").query({ unrequited }).get().json<{
+			count: {
+				[K in ProspectKind]?: number;
+			};
+			items: Array<LikeAndPassItem>;
+			thumbnails?: Array<string>;
+		}>();
+	}
+};

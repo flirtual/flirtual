@@ -6,9 +6,9 @@ import { useTranslations } from "next-intl";
 
 import { toAbsoluteUrl, urls } from "~/urls";
 import { useShare } from "~/hooks/use-share";
-import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
 import { useSession } from "~/hooks/use-session";
+import { User } from "~/api/user";
 
 import { Button, ButtonLink } from "../button";
 import { ShareIcon } from "../icons/share";
@@ -17,8 +17,6 @@ import { InputText } from "../inputs";
 import { Form, FormButton } from "../forms";
 import { DialogBody, DialogHeader, DialogTitle } from "../dialog/dialog";
 import { CopyClick } from "../copy-click";
-
-import type { User } from "~/api/user";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
@@ -50,15 +48,14 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 							<Form
 								className="flex flex-col gap-4"
 								fields={{
-									link: profileLink
+									slug: profileLink
 								}}
-								onSubmit={async ({ link }) => {
-									await api.user
-										.update(user.id, {
-											body: { slug: link }
-										})
+								onSubmit={async ({ slug }) => {
+									await User.update(user.id, {
+										slug
+									})
 										.then(() => {
-											setProfileLink(link);
+											setProfileLink(slug);
 											return toasts.add(t("odd_mad_dog_nurture"));
 										})
 										.catch((reason) =>
@@ -73,7 +70,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 									<div className="flex flex-col gap-2">
 										<div className="flex flex-row items-center gap-1">
 											<span className="shrink-0 font-mono">flirtu.al/</span>
-											<FormField className="w-full" name="link">
+											<FormField className="w-full" name="slug">
 												{(field) => (
 													<InputText
 														{...field.props}

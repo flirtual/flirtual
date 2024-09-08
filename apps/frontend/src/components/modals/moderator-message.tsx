@@ -6,8 +6,8 @@ import { useTranslations } from "next-intl";
 
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
-import { acknowledgeWarn, update } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
+import { User } from "~/api/user";
 
 import { DrawerOrDialog } from "../drawer-or-dialog";
 import { Button } from "../button";
@@ -27,7 +27,7 @@ export const ModerationMessageDialog: FC = () => {
 	return (
 		<TrustAndSafetyDialog
 			onAcknowledge={() =>
-				acknowledgeWarn(session.user.id)
+				User.acknowledgeWarn(session.user.id)
 					.then(() => {
 						toasts.add("Message acknowledged");
 						return router.refresh();
@@ -48,10 +48,8 @@ export const DiscordSpamDialog: FC = () => {
 	const remindMeLater = async (quiet: boolean = false) => {
 		if (!session) return;
 
-		await update(session.user.id, {
-			body: {
-				tnsDiscordInBiography: new Date(Date.now() + ms("30d")).toISOString()
-			}
+		await User.update(session.user.id, {
+			tnsDiscordInBiography: new Date(Date.now() + ms("30d")).toISOString()
 		});
 
 		if (!quiet) toasts.add("You will be reminded in 30 days.");

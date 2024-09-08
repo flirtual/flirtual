@@ -7,9 +7,7 @@ import {
 	type IconComponent
 } from "~/components/icons";
 
-import { type NarrowFetchOptions, fetch, newUrl } from "./exports";
-
-import type { UpdatedAtModel } from "./common";
+import { api, type UpdatedAtModel } from "./common";
 
 export const ConnectionType = [
 	"google",
@@ -60,55 +58,44 @@ export type Connection = UpdatedAtModel & {
 	avatarUrl?: string;
 };
 
-export function authorizeUrl(
-	type: ConnectionType,
-	prompt: string,
-	next: string,
-	json: boolean = false
-) {
-	return newUrl("connections/authorize", {
-		type,
-		prompt,
-		next,
-		json: json ? "1" : undefined
-	});
+export interface ConnectionAuthorizeOptions {
+	type: ConnectionType;
+	prompt: string;
+	next: string;
+	json?: boolean;
 }
 
-export function authorize(
-	type: ConnectionType,
-	prompt: string,
-	next: string,
-	options: NarrowFetchOptions = {}
-) {
-	return fetch<{
-		state: string;
-		authorizeUrl: string;
-	}>("get", authorizeUrl(type, prompt, next, true).href, options);
+export interface ConnectionGrantOptions {
+	type: ConnectionType;
+	code: string;
+	state: string;
+	redirect?: string;
 }
 
-export function grant(
-	options: NarrowFetchOptions<
-		undefined,
-		{
-			type: ConnectionType;
-			code: string;
-			state: string;
-			redirect?: string;
-		}
-	>
-) {
-	return fetch("get", "connections/grant", { ...options, raw: true });
-}
-
-export { _delete as delete };
-export async function _delete(
-	options: NarrowFetchOptions<undefined, { type: ConnectionType }>
-) {
-	return fetch("delete", "connections", options);
-}
-
-export async function listAvailable(
-	options: NarrowFetchOptions = {}
-): Promise<Array<ConnectionType>> {
-	return fetch<Array<ConnectionType>>("get", "connections/available", options);
-}
+export const Connection = {
+	api: api.url("connections"),
+	authorizeUrl(options: ConnectionAuthorizeOptions) {
+		return this.api.url("/authorize").query({
+			...options,
+			json: options.json ? "1" : undefined
+		})._url;
+	},
+	authorize(options: Omit<ConnectionAuthorizeOptions, "json">) {
+		return api
+			.url(this.authorizeUrl({ ...options, json: true }), true)
+			.get()
+			.json<{
+				state: string;
+				authorizeUrl: string;
+			}>();
+	},
+	grant(options: ConnectionGrantOptions) {
+		return this.api.url("/grant").query(options).post().res();
+	},
+	delete(type: ConnectionType) {
+		return this.api.query({ type }).delete().res();
+	},
+	listAvailable() {
+		return this.api.url("/available").get().json<Array<ConnectionType>>();
+	}
+};

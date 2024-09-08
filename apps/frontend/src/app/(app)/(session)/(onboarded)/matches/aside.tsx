@@ -10,8 +10,8 @@ import { urls } from "~/urls";
 import { useConversations } from "~/hooks/use-conversations";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { Button } from "~/components/button";
-import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
+import { Conversation } from "~/api/conversations";
 
 import {
 	ConversationListItem,
@@ -71,8 +71,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 								Icon={CheckCheck}
 								size="sm"
 								onClick={async () => {
-									await api.conversations
-										.markRead()
+									await Conversation.markRead()
 										.then(async () => await mutate())
 										.catch(toasts.addError);
 								}}

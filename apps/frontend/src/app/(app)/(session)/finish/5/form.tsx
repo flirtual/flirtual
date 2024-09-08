@@ -6,12 +6,12 @@ import { MoveLeft } from "lucide-react";
 import { InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { Form, FormButton } from "~/components/forms";
-import { api } from "~/api";
 import { VRChatIcon, FaceTimeIcon } from "~/components/icons";
 import { urls } from "~/urls";
 import { ButtonLink } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { AddConnectionButton } from "~/components/forms/add-connection-button";
+import { Profile } from "~/api/user/profile";
 
 export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
@@ -48,11 +48,9 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 						facetime: user.profile.facetime || ""
 					}}
 					onSubmit={async ({ vrchat, facetime }) => {
-						await api.user.profile.update(user.id, {
-							body: {
-								vrchat: vrchat.trim() || null,
-								facetime: facetime.trim() || null
-							}
+						await Profile.update(user.id, {
+							vrchat: vrchat.trim() || null,
+							facetime: facetime.trim() || null
 						});
 
 						router.push(

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { getSession } from "~/server-utilities";
+import { getSession } from "~/api/auth";
 
 import type { PropsWithChildren } from "react";
 

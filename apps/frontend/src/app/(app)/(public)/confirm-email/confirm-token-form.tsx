@@ -3,7 +3,7 @@ import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { api } from "~/api/";
+import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -19,8 +19,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	useEffect(() => {
 		if (confirmSuccess) return;
 
-		void api.user
-			.confirmEmail({ body: { token } })
+		void User.confirmEmail(token)
 			.then(() => {
 				setConfirmSuccess(true);
 				return setTimeout(

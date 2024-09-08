@@ -1,22 +1,21 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { api } from "~/api";
-import { type User, displayName } from "~/api/user";
+import { User, displayName } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
 import { GenderPills } from "~/components/profile/pill/genders";
 import { CountryPill } from "~/components/profile/pill/country";
 import { UserAvatar } from "~/components/user-avatar";
-import { thruServerCookies, getSession } from "~/server-utilities";
 import { urls } from "~/urls";
 import { filterBy } from "~/utilities";
 import { Pill } from "~/components/profile/pill/pill";
 import { yearsAgo } from "~/date";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { Matchmaking, type LikeAndPassItem } from "~/api/matchmaking";
+import { Authentication } from "~/api/auth";
 
-import type { LikeAndPassItem } from "~/api/matchmaking";
 import type { Metadata } from "next";
 
 export const maxDuration = 120;
@@ -26,19 +25,12 @@ export const metadata: Metadata = {
 };
 
 export default async function LikesPage() {
-	const { user } = await getSession();
+	const { user } = await Authentication.getSession();
 
 	if (!user.subscription?.active) redirect(urls.subscription.default);
 
-	const result = await api.matchmaking.listMatches({
-		...thruServerCookies(),
-		query: { unrequited: true }
-	});
-
-	const users = await api.user.bulk({
-		...thruServerCookies(),
-		body: result.items.map((item) => item.profileId)
-	});
+	const result = await Matchmaking.listMatches(true);
+	const users = await User.getMany(result.items.map((item) => item.profileId));
 
 	const items = result.items
 		.map((item) => ({

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { api } from "~/api";
+import { Authentication } from "~/api/auth";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -30,7 +30,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 				passwordConfirmation: ""
 			}}
 			onSubmit={async (body) => {
-				await api.auth.confirmResetPassword({ body });
+				await Authentication.confirmResetPassword(body);
 				setSuccess(true);
 			}}
 		>

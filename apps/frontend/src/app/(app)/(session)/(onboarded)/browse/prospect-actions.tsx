@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import { type FC, useCallback, useEffect, useRef, useState } from "react";
 import { Undo2, X } from "lucide-react";
 import dynamic from "next/dynamic";
+import ms from "ms";
+import { InAppReview } from "@capacitor-community/in-app-review";
 
-import { api } from "~/api";
 import { Button } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
@@ -25,15 +26,16 @@ import {
 } from "~/components/dialog/dialog";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import {
+	Matchmaking,
+	type ProspectKind,
+	type ProspectRespondType,
+	type RespondProspectBody
+} from "~/api/matchmaking";
+import { User } from "~/api/user";
+import { useSession } from "~/hooks/use-session";
 
 import { Countdown } from "./countdown";
-
-import type { User } from "~/api/user";
-import type {
-	ProspectKind,
-	ProspectRespondType,
-	RespondProspectBody
-} from "~/api/matchmaking";
 
 const Key = (props: { label: string }) => {
 	return (
@@ -52,6 +54,7 @@ export const _ProspectActions: FC<{
 	const toasts = useToast();
 	const router = useRouter();
 	const mobile = !useScreenBreakpoint("desktop");
+	const [session] = useSession();
 
 	const [actionDialog, setActionDialog] = useState<{
 		message: string;
@@ -69,6 +72,26 @@ export const _ProspectActions: FC<{
 	useEffect(() => {
 		setActionDialog(null);
 	}, [location.href]);
+
+	useEffect(() => {
+		if (!session?.user.createdAt) return;
+
+		const ratingPrompts = session.user.ratingPrompts;
+		const monthsRegistered = Math.floor(
+			(Date.now() - new Date(session.user.createdAt).getTime()) / ms("30d")
+		);
+
+		if (
+			(monthsRegistered >= 1 && ratingPrompts === 0) ||
+			(monthsRegistered >= 3 && ratingPrompts === 1) ||
+			(monthsRegistered >= 6 && ratingPrompts === 2)
+		) {
+			void InAppReview.requestReview();
+			void User.updateRatingPrompts(session.user.id, {
+				ratingPrompts: monthsRegistered >= 6 ? 3 : monthsRegistered >= 3 ? 2 : 1
+			});
+		}
+	}, [session?.user.createdAt]);
 
 	useTour(
 		"browsing",
@@ -237,9 +260,7 @@ export const _ProspectActions: FC<{
 				: null;
 
 			try {
-				const respondResponse = await api.matchmaking.respondProspect({
-					body
-				});
+				const respondResponse = await Matchmaking.respondProspect(body);
 
 				if (respondResponse.success === false) {
 					switch (respondResponse.message) {
@@ -297,10 +318,7 @@ export const _ProspectActions: FC<{
 		if (!lastProfile) return;
 		const { userId, kind } = lastProfile;
 
-		await api.matchmaking
-			.reverseRespondProspect({
-				body: { userId, kind }
-			})
+		await Matchmaking.reverseRespondProspect({ userId, kind })
 			.catch(toasts.addError)
 			.finally(() => {
 				setLastProfile(null);
@@ -413,7 +431,6 @@ export const _ProspectActions: FC<{
 					</div>
 				</div>
 			</div>
-
 			{actionDialog && (
 				<DrawerOrDialog open>
 					<>

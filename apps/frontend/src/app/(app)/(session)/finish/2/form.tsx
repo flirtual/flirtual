@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { CheckCircle2, MoveLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -17,13 +16,14 @@ import { urls } from "~/urls";
 import { filterBy, fromEntries } from "~/utilities";
 import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
+import { InputCheckboxList } from "~/components/inputs/checkbox-list";
+import { ButtonLink } from "~/components/button";
 import {
+	Profile,
 	ProfileMonopolyList,
 	ProfileRelationshipLabel,
 	ProfileRelationshipList
 } from "~/api/user/profile";
-import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { ButtonLink } from "~/components/button";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
@@ -66,21 +66,19 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
 			}}
 			onSubmit={async ({ ...values }) => {
-				const newProfile = await api.user.profile.update(user.id, {
-					body: {
-						relationships: values.relationships ?? [],
-						monopoly: values.monopoly ?? "none",
-						languages: values.languages,
-						new: values.new,
-						// @ts-expect-error: don't want to deal with this.
-						...(fromEntries(
-							AttributeKeys.map((type) => {
-								return [`${type}Id`, values[type]] as const;
-							})
-						) as {
-							[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
+				const newProfile = await Profile.update(user.id, {
+					relationships: values.relationships ?? [],
+					monopoly: values.monopoly ?? "none",
+					languages: values.languages,
+					new: values.new,
+					// @ts-expect-error: don't want to deal with this.
+					...(fromEntries(
+						AttributeKeys.map((type) => {
+							return [`${type}Id`, values[type]] as const;
 						})
-					}
+					) as {
+						[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
+					})
 				});
 
 				await mutateSession({
@@ -147,7 +145,7 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 									optional
 									options={ProfileMonopolyList.map((value) => ({
 										id: value,
-										name: t("dark_level_goat_gulp", { value })
+										name: t("brave_funny_vulture_sail", { value })
 									}))}
 								/>
 							</>

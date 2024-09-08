@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputImageSet } from "~/components/forms/input-image-set";
@@ -16,6 +15,9 @@ import { html } from "~/html";
 import { urls } from "~/urls";
 import { InputPrompts } from "~/components/forms/prompts";
 import { findBy } from "~/utilities";
+import { displayName } from "~/api/user";
+import { Profile } from "~/api/user/profile";
+import { ProfileImage } from "~/api/user/profile/images";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
@@ -40,7 +42,7 @@ export const BiographyForm: FC<{ games: AttributeCollection<"game"> }> = ({
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				displayName: api.user.displayName(user),
+				displayName: displayName(user),
 				images: profile.images.map((image) => ({
 					id: image.id,
 					src: urls.pfp(image),
@@ -51,30 +53,27 @@ export const BiographyForm: FC<{ games: AttributeCollection<"game"> }> = ({
 			}}
 			onSubmit={async ({ displayName, biography, ...values }) => {
 				const [profile, images, prompts] = await Promise.all([
-					api.user.profile.update(user.id, {
-						query: {
-							required: ["displayName", "biography"]
-						},
-						body: {
-							displayName,
-							biography: html(biography)
-						}
+					Profile.update(user.id, {
+						displayName,
+						biography: html(biography),
+						required: ["displayName", "biography"]
 					}),
-					api.user.profile.images
-						.create(user.id, {
-							body: values.images.map((image) => image.id).filter(Boolean)
-						})
-						.then((images) =>
-							api.user.profile.images.update(user.id, {
-								body: images.map((image) => image.id)
-							})
-						),
-					api.user.profile.prompts.update(user.id, {
-						body: values.prompts.map(({ prompt, response }) => ({
+					ProfileImage.create(
+						user.id,
+						values.images.map((image) => image.id).filter(Boolean)
+					).then((images) =>
+						ProfileImage.update(
+							user.id,
+							images.map((image) => image.id)
+						)
+					),
+					Profile.updatePrompts(
+						user.id,
+						values.prompts.map(({ prompt, response }) => ({
 							promptId: prompt.id,
 							response
 						}))
-					})
+					)
 				]);
 
 				toasts.add("Saved bio & pics");

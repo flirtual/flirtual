@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
-import { api } from "~/api";
+import { api } from "~/api/common";
 import { displayName } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { TimeRelative } from "~/components/time-relative";
@@ -24,13 +24,10 @@ export const DebugInfo: React.FC = () => {
 		userAgent: { browser, engine, os }
 	} = useDevice();
 
-	const { country, locale } = useInternationalization();
+	const { locale } = useInternationalization();
 
 	const languageNames = new Intl.DisplayNames(locale.current, {
 		type: "language"
-	});
-	const countryNames = new Intl.DisplayNames(locale.current, {
-		type: "region"
 	});
 
 	const [session] = useSession();
@@ -65,14 +62,6 @@ export const DebugInfo: React.FC = () => {
 					</span>
 				</div>
 				<div className="flex justify-between gap-8 text-sm">
-					<span className="shrink-0">{t("loved_blue_blackbird_emerge")} </span>
-					<span className="truncate font-mono text-sm">
-						{country
-							? `${countryNames.of(country)} (${country})`
-							: t("brief_neat_kestrel_ascend")}
-					</span>
-				</div>
-				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">{t("hour_odd_kudu_dine")} </span>
 					<span className="truncate font-mono text-sm">
 						{languageNames.of(locale.current)} ({locale.current})
@@ -102,7 +91,7 @@ export const DebugInfo: React.FC = () => {
 					<span className="shrink-0">{t("spry_polite_elk_grace")} </span>
 					<InlineLink
 						highlight={false}
-						href={isDebugger ? api.newUrl(`users/${session.user.id}`) : null}
+						href={isDebugger ? api.url(`/users/${session.user.id}`)._url : null}
 						className={twMerge(
 							"truncate font-mono text-sm",
 							!isDebugger && "text-inherit hocus:no-underline"
@@ -117,7 +106,7 @@ export const DebugInfo: React.FC = () => {
 						<InlineLink
 							className="truncate font-mono text-sm"
 							highlight={false}
-							href={api.newUrl(`users/${session.sudoerId}`)}
+							href={api.url(`/users/${session.sudoerId}`)._url}
 						>
 							{session?.user.id}
 						</InlineLink>

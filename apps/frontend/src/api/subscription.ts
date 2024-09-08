@@ -1,6 +1,5 @@
-import { type NarrowFetchOptions, fetch, newUrl } from "./exports";
+import { api, type DatedModel, type UuidModel } from "./common";
 
-import type { DatedModel, UuidModel } from "./common";
 import type { Plan } from "./plan";
 
 type SubscriptionPlatform =
@@ -18,18 +17,15 @@ export type Subscription = UuidModel &
 		platform: SubscriptionPlatform;
 	};
 
-export interface SessionCheckout {
-	url: string;
-}
-
-export function checkoutUrl(planId: string) {
-	return newUrl("subscriptions/checkout", { planId });
-}
-
-export function manageUrl() {
-	return newUrl("subscriptions/manage");
-}
-
-export async function cancel(options: NarrowFetchOptions = {}) {
-	return fetch("post", "subscriptions/cancel", options);
-}
+export const Subscription = {
+	api: api.url("subscriptions"),
+	checkoutUrl(planId: string) {
+		return this.api.url("/checkout").query({ planId })._url;
+	},
+	manageUrl() {
+		return this.api.url("/manage")._url;
+	},
+	cancel() {
+		return this.api.post().res();
+	}
+};

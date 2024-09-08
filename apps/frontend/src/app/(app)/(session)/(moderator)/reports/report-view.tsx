@@ -21,8 +21,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-import { api } from "~/api";
-import { displayName, type User } from "~/api/user";
+import { displayName, User } from "~/api/user";
 import { ModelCard } from "~/components/model-card";
 import { entries, groupBy, newConversationId, sortBy } from "~/utilities";
 import { InlineLink } from "~/components/inline-link";
@@ -36,24 +35,19 @@ import { InputCheckbox, InputLabel } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { Dialog, DialogContent } from "~/components/dialog/dialog";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
-
-import type { ListOptions, Report } from "~/api/report";
+import { type ListReportOptions, Report } from "~/api/report";
+import { Conversation } from "~/api/conversations";
 
 type CompleteReport = Report & { user?: User; target: User };
 
 interface ReportListContext {
-	listOptions: ListOptions;
+	listOptions: ListReportOptions;
 	reports: Array<CompleteReport>;
-	setListOptions: Dispatch<SetStateAction<ListOptions>>;
+	setListOptions: Dispatch<SetStateAction<ListReportOptions>>;
 	mutate: KeyedMutator<Array<CompleteReport>>;
 }
 
-const ReportListContext = createContext<ReportListContext>({
-	listOptions: { query: {} },
-	reports: [],
-	setListOptions: () => void 0,
-	mutate: async () => void 0
-});
+const ReportListContext = createContext({} as ReportListContext);
 
 interface ProfileReportViewProps {
 	reported?: User;
@@ -119,17 +113,16 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 										<button
 											className="h-fit"
 											type="button"
-											onClick={async () => {
-												await api.report
-													.clearAll({ query: { targetId: reported.id } })
+											onClick={() =>
+												Report.clearAll(reported.id)
 													.then(({ count }) =>
 														toasts.add(
 															`Cleared ${count} report${count === 1 ? "" : "s"}`
 														)
-													);
-
-												await mutate();
-											}}
+													)
+													.catch(toasts.addError)
+													.finally(mutate)
+											}
 										>
 											<ShieldCheck className="size-6 text-green-600" />
 										</button>
@@ -220,7 +213,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 														<button
 															type="button"
 															onClick={async () => {
-																await api.report.clear(report.id);
+																await Report.clear(report.id);
 
 																toasts.add("Cleared single report");
 																await mutate();
@@ -238,16 +231,16 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 																<button
 																	type="button"
 																	onClick={async () => {
-																		await api.conversations.observe({
-																			body: {
-																				userId: report.userId!,
-																				targetId: report.targetId
-																			}
+																		await Conversation.observe({
+																			userId: report.userId!,
+																			targetId: report.targetId
 																		});
-																		const conversationId = newConversationId(
-																			report.userId!,
-																			report.targetId
-																		);
+
+																		const conversationId =
+																			await newConversationId(
+																				report.userId!,
+																				report.targetId
+																			);
 																		setObservedConversation(conversationId);
 																	}}
 																>
@@ -300,22 +293,23 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 };
 
 export const ReportView: React.FC = () => {
-	const [listOptions, setListOptions] = useState<ListOptions>({
-		query: { reviewed: false, indefShadowbanned: false }
+	const [listOptions, setListOptions] = useState<ListReportOptions>({
+		reviewed: false,
+		indefShadowbanned: false
 	});
 
 	const { data: reports = [], mutate } = useSWR(
 		["reports", listOptions],
 		async ([, listOptions]) => {
-			const reports = await api.report.list(listOptions);
-			const users = await api.user.bulk({
-				body: [
+			const reports = await Report.list(listOptions);
+			const users = await User.getMany(
+				[
 					...new Set([
 						...reports.map((report) => report.userId),
 						...reports.map((report) => report.targetId)
 					])
 				].filter(Boolean)
-			});
+			);
 
 			return reports.map((report) => ({
 				...report,
@@ -352,14 +346,11 @@ export const ReportView: React.FC = () => {
 					<div className="flex items-center gap-4">
 						<InputCheckbox
 							id="reviewed"
-							value={listOptions.query.reviewed}
+							value={listOptions.reviewed}
 							onChange={(value) => {
 								setListOptions((listOptions) => ({
 									...listOptions,
-									query: {
-										...listOptions.query,
-										reviewed: value
-									}
+									reviewed: value
 								}));
 							}}
 						/>
@@ -370,14 +361,11 @@ export const ReportView: React.FC = () => {
 					<div className="flex items-center gap-4">
 						<InputCheckbox
 							id="indefShadowbanned"
-							value={listOptions.query.indefShadowbanned}
+							value={listOptions.indefShadowbanned}
 							onChange={(value) => {
 								setListOptions((listOptions) => ({
 									...listOptions,
-									query: {
-										...listOptions.query,
-										indefShadowbanned: value
-									}
+									indefShadowbanned: value
 								}));
 							}}
 						/>

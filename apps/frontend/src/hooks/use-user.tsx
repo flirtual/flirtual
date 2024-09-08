@@ -1,17 +1,11 @@
 import useSWR from "swr";
 
-import { api } from "~/api";
-
-import type { User } from "~/api/user";
+import { User } from "~/api/user";
 
 export function useUser(userId: string): User | null {
-	const { data } = useSWR(
-		`user/${userId}`,
-		() => api.user.get(userId).catch(() => null),
-		{
-			suspense: true
-		}
-	);
+	const { data } = useSWR(["user", userId], ([, userId]) => User.get(userId), {
+		suspense: true
+	});
 
 	return data;
 }

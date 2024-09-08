@@ -1,11 +1,11 @@
 import { twMerge } from "tailwind-merge";
 
-import { getOptionalSession } from "~/server-utilities";
 import { urls } from "~/urls";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { HomeIcon } from "~/components/icons/gradient/home";
 import { LoginIcon } from "~/components/icons/gradient/login";
+import { Authentication } from "~/api/auth";
 
 import { NavigationItemProfile } from "./navigation-item-profile";
 import { NavigationItemMessage } from "./navigation-item-message";
@@ -29,7 +29,7 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 );
 
 export async function Navigation() {
-	const session = await getOptionalSession();
+	const session = await Authentication.getOptionalSession();
 
 	return (
 		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col text-white-20 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">

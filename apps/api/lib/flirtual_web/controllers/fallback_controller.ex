@@ -7,19 +7,11 @@ defmodule FlirtualWeb.FallbackController do
   def call(%Plug.Conn{} = conn, {:error, %Ecto.Changeset{} = changeset}) do
     properties = transform_changeset_errors(changeset)
 
-    message =
-      properties
-      |> Map.to_list()
-      |> List.first()
-      |> then(fn {key, value} -> "#{String.capitalize(key |> to_string())} #{value}" end)
-
     conn
     |> put_error(
       :bad_request,
-      message,
-      %{
-        properties: properties
-      }
+      :invalid_properties,
+      properties
     )
     |> halt()
   end

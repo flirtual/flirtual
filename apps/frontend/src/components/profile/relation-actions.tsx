@@ -6,8 +6,8 @@ import { useTranslations } from "next-intl";
 
 import { type User, displayName } from "~/api/user";
 import { urls } from "~/urls";
-import { api } from "~/api";
 import { useToast } from "~/hooks/use-toast";
+import { Matchmaking } from "~/api/matchmaking";
 
 import { Button, ButtonLink } from "../button";
 
@@ -40,8 +40,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 						size="sm"
 						type="button"
 						onClick={() => {
-							void api.matchmaking
-								.unmatch({ query: { userId: user.id } })
+							void Matchmaking.unmatch(user.id)
 								.then(() => {
 									toasts.add(
 										t("weird_green_crab_peek", {

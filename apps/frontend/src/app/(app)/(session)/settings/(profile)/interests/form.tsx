@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -31,6 +30,7 @@ import { filterBy } from "~/utilities";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useDevice } from "~/hooks/use-device";
+import { Profile } from "~/api/user/profile";
 
 import type { AttributeCollection } from "~/api/attributes";
 
@@ -139,13 +139,10 @@ export const InterestsForm: FC<InterestsFormProps> = (props) => {
 				customInterests: profile.customInterests
 			}}
 			onSubmit={async ({ defaultInterests, customInterests }) => {
-				await api.user.profile
-					.update(user.id, {
-						body: {
-							customInterests,
-							interestId: defaultInterests
-						}
-					})
+				await Profile.update(user.id, {
+					customInterests,
+					interestId: defaultInterests
+				})
 					.then(() => {
 						toasts.add("Saved interests");
 						return router.refresh();

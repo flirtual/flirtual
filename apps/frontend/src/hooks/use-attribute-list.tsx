@@ -1,29 +1,41 @@
 import { useDebugValue } from "react";
-import useSWR, { type SWRConfiguration } from "swr";
+import useSWR from "swr";
 
-import { api } from "~/api";
+import { Attribute, type AttributeMetadata } from "~/api/attributes";
 
-import type { AttributeCollection, AttributeMetadata } from "~/api/attributes";
-
-export function useAttributeList<T extends keyof AttributeMetadata>(
-	name: T,
-	options: Omit<
-		SWRConfiguration<AttributeCollection<T>>,
-		"fetcher" | "fallbackData"
-	> = {}
-) {
-	useDebugValue(name);
+export function useAttributeList<T extends keyof AttributeMetadata>(type: T) {
+	useDebugValue(type);
 
 	const { data: attributes = [] } = useSWR(
-		["attribute", name],
-		([, name]) => api.attributes.list<T>(name),
+		["attribute", type],
+		([, type]) => Attribute.list<T>(type),
 		{
-			fallbackData: [],
 			revalidateOnFocus: false,
+			revalidateIfStale: false,
 			keepPreviousData: true,
-			...options
+			suspense: true
 		}
 	);
 
 	return attributes;
+}
+
+export function useAttribute<T extends keyof AttributeMetadata>(
+	type: T,
+	id: string
+) {
+	useDebugValue(`${type} - ${id}`);
+
+	const { data: attribute } = useSWR(
+		["attribute", type, id],
+		([, type, id]) => Attribute.get<T>(type, id),
+		{
+			revalidateOnFocus: false,
+			revalidateIfStale: false,
+			keepPreviousData: true,
+			suspense: true
+		}
+	);
+
+	return attribute;
 }

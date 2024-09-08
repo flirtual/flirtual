@@ -19,6 +19,20 @@
   display: contents;
 }
 
+@layer components {
+  .pettable {
+    cursor: grab;
+    user-select: none;
+    transform-origin: bottom center;
+    @apply transition-transform;
+  }
+
+  .pettable:active {
+    cursor: grabbing;
+    @apply scale-y-90 scale-x-110;
+  }
+}
+
 :root {
   /* Theme variables */
   --light-theme-1: #ff8975;
@@ -49,6 +63,8 @@
     --theme-2: var(--friend-theme-2);
   }
 }
+
+
 
 iframe {
   user-select: none;

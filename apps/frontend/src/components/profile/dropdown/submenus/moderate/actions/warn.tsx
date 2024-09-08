@@ -2,8 +2,7 @@ import { MailWarning } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FC, useState } from "react";
 
-import { api } from "~/api";
-import { type User, displayName } from "~/api/user";
+import { User, displayName } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -55,7 +54,7 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 						}}
 						onSubmit={async ({ targetId, message, shadowban }) => {
 							if (!message) {
-								await api.user.deleteWarn(targetId);
+								await User.deleteWarn(targetId);
 
 								toasts.add("Account warning removed");
 								setOpen(false);
@@ -64,7 +63,7 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 								return;
 							}
 
-							await api.user.warn(targetId, { body: { message, shadowban } });
+							await User.warn(targetId, { message, shadowban });
 
 							toasts.add("Account warned");
 							setOpen(false);

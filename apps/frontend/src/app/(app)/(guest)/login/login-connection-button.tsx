@@ -4,10 +4,10 @@ import { twMerge } from "tailwind-merge";
 import { InAppBrowser } from "@capgo/inappbrowser";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import {
-	type Connection,
+	Connection,
 	ConnectionMetadata,
+	type ConnectionAuthorizeOptions,
 	type ConnectionType
 } from "~/api/connections";
 import { useLocation } from "~/hooks/use-location";
@@ -44,20 +44,17 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 				const url = new URL(location.href);
 				url.search = "";
 
-				if (!native)
-					return router.push(
-						api.connections.authorizeUrl(
-							type,
-							"none",
-							url.href
-						).href
-					);
-
-				const { authorizeUrl, state } = await api.connections.authorize(
+				const authorizeOptions: ConnectionAuthorizeOptions = {
 					type,
-					"none",
-					url.href
-				);
+					prompt: "none",
+					next: url.href
+				};
+
+				if (!native)
+					return router.push(Connection.authorizeUrl(authorizeOptions));
+
+				const { authorizeUrl, state } =
+					await Connection.authorize(authorizeOptions);
 
 				await InAppBrowser.addListener("urlChangeEvent", async (event) => {
 					const url = new URL(event.url);
@@ -73,8 +70,8 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 						}
 
 						setTimeout(async () => {
-							const response = await api.connections.grant({
-								query,
+							const response = await Connection.grant({
+								...query,
 								redirect: "manual"
 							});
 

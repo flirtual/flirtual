@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -34,6 +33,7 @@ import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 import { ButtonLink } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
+import { Profile } from "~/api/user/profile";
 
 import type { AttributeCollection } from "~/api/attributes";
 
@@ -143,13 +143,10 @@ export const Finish3Form: FC<Finish3FormProps> = (props) => {
 				customInterests: profile.customInterests
 			}}
 			onSubmit={async ({ defaultInterests, customInterests }) => {
-				await api.user.profile
-					.update(user.id, {
-						body: {
-							customInterests,
-							interestId: defaultInterests
-						}
-					})
+				await Profile.update(user.id, {
+					customInterests,
+					interestId: defaultInterests
+				})
 					.then(() => {
 						return router.push(urls.finish(4));
 					})

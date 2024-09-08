@@ -2,7 +2,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 import { withSentryConfig } from "@sentry/nextjs";
 
-/** @type {import("next").NextConfig */
+/** @type {import("next").NextConfig} */
 let config = {
 	reactStrictMode: true,
 	images: {
@@ -150,6 +150,6 @@ export default withSentryConfig(config, {
 	widenClientFileUpload: true,
 	transpileClientSDK: true,
 	hideSourceMaps: true,
-	disableLogger: true,
-	tunnelRoute: "/monitoring"
+	disableLogger: true
+	// tunnelRoute: "/monitoring"
 });

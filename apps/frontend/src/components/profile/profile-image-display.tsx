@@ -7,10 +7,9 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Search, Trash2 } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
-import { type ProfileImage, notFoundImage } from "~/api/user/profile/images";
+import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { api } from "~/api";
 import { urls } from "~/urls";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 
@@ -113,8 +112,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 						<button
 							type="button"
 							onClick={async () => {
-								await api.images
-									.delete(image.id)
+								await ProfileImage.delete(image.id)
 									.then(() => {
 										toasts.add(t("super_quick_alpaca_empower"));
 										return router.refresh();

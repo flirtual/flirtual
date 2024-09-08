@@ -119,7 +119,6 @@
     "lucky_sound_opossum_absorb": "App platform:",
     "vexed_yummy_tadpole_grow": "Browser:",
     "known_spare_mantis_pet": "System:",
-    "loved_blue_blackbird_emerge": "Country:",
     "hour_odd_kudu_dine": "Language:",
     "mushy_muddy_warthog_win": "Session",
     "wacky_spry_haddock_jump": "User profile:",
@@ -457,5 +456,8 @@
       "placeholder": "Select a country.",
       "system_highlight": "{country} 📌"
     }
+  },
+  "errors": {
+    "is_invalid": "{field} is invalid"
   }
 }

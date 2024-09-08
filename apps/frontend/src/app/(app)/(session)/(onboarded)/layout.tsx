@@ -1,8 +1,8 @@
-import { getOnboardedUser } from "~/server-utilities";
+import { Authentication } from "~/api/auth";
 
 import type { PropsWithChildren } from "react";
 
 export default async function OnboardedLayout({ children }: PropsWithChildren) {
-	await getOnboardedUser();
+	await Authentication.getOnboardedSession();
 	return <>{children}</>;
 }

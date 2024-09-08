@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
-import { api } from "~/api";
-import { thruServerCookies, getSession } from "~/server-utilities";
+import { Authentication } from "~/api/auth";
+import { User } from "~/api/user";
 import { urls } from "~/urls";
 import { isUid } from "~/utilities";
 
 export const getProfile = cache(async (username: string) => {
-	const session = await getSession();
+	const session = await Authentication.getSession();
 
 	if (username === "me") redirect(session.user.slug);
 
@@ -17,11 +17,7 @@ export const getProfile = cache(async (username: string) => {
 	}
 
 	if (isUid(username))
-		return api.user
-			.get(username, thruServerCookies())
-			.catch(() => redirect(urls.default));
+		return User.get(username).catch(() => redirect(urls.default));
 
-	return api.user
-		.getBySlug(username.slice(0, 20), thruServerCookies())
-		.catch(() => redirect(urls.default));
+	return User.getBySlug(username).catch(() => redirect(urls.default));
 });

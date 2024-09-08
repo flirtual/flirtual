@@ -1,6 +1,11 @@
-import { fetch, type NarrowFetchOptions } from "./exports";
+import * as Sentry from "@sentry/nextjs";
+import { redirect } from "next/navigation";
+import { cache } from "react";
 
-import type { DatedModel } from "./common";
+import { urls } from "~/urls";
+
+import { api, type DatedModel } from "./common";
+
 import type { User } from "./user";
 
 export type Session = DatedModel & {
@@ -8,57 +13,35 @@ export type Session = DatedModel & {
 	user: User;
 };
 
-export async function login(
-	options: NarrowFetchOptions<{
-		login: string;
-		password: string;
-		rememberMe: boolean;
-	}>
-) {
-	return fetch<Session>("post", "auth/session", options);
+export interface LoginOptions {
+	login: string;
+	password: string;
+	rememberMe: boolean;
 }
 
-export async function logout(options: NarrowFetchOptions = {}) {
-	return fetch("delete", "auth/session", { ...options, raw: true });
-}
-
-export async function sudo(options: NarrowFetchOptions<{ userId: string }>) {
-	return fetch<Session>("post", "auth/sudo", options);
-}
-
-export async function revokeSudo(options: NarrowFetchOptions = {}) {
-	return fetch<Session>("delete", "auth/sudo", options);
-}
-
-export async function session(options: NarrowFetchOptions = {}) {
-	return fetch<Session>("get", "auth/session", options);
-}
-
-export async function user(options: NarrowFetchOptions = {}) {
-	return fetch<User>("get", "auth/user", options);
-}
-
-export async function sso(signer: string, options: NarrowFetchOptions = {}) {
-	return fetch<{ token: string }>("get", `auth/sso/${signer}`, options);
-}
-
-export async function resetPassword(
-	options: NarrowFetchOptions<{ email: string }>
-) {
-	await fetch("delete", "auth/password", options);
-}
-
-export interface ConfirmResetPassword {
+export interface ConfirmResetPasswordOptions {
 	email: string;
 	password: string;
 	passwordConfirmation: string;
 	token: string;
 }
 
-export async function confirmResetPassword(
-	options: NarrowFetchOptions<ConfirmResetPassword>
-) {
-	await fetch("post", "auth/password/reset", options);
+export interface CreatePasskeyOptions {
+	rawId: string;
+	response: {
+		attestationObject: string;
+		clientDataJSON: string;
+	};
+}
+
+export interface AuthenticatePasskeyOptions {
+	credentialId: string;
+	rawId: string;
+	response: {
+		authenticatorData: string;
+		clientDataJSON: string;
+		signature: string;
+	};
 }
 
 interface PublicKeyCredentialCreationOptionsBase64
@@ -110,65 +93,100 @@ const convertPublicKey = (
 	};
 };
 
-export async function passkeyRegistrationChallenge(
-	options: NarrowFetchOptions<undefined, { platform?: boolean }>
-): Promise<CredentialCreationOptions> {
-	return fetch<{ publicKey: PublicKeyCredentialCreationOptionsBase64 }>(
-		"get",
-		"auth/passkey/registration-challenge",
-		options
-	).then((response) => {
-		return convertPublicKey(response.publicKey);
-	});
-}
+export const Authentication = {
+	api: api.url("auth"),
+	login(options: LoginOptions) {
+		return this.api.url("/session").json(options).post().json<Session>();
+	},
+	logout() {
+		return this.api.url("/session").delete().res();
+	},
+	async getOptionalSession() {
+		const session = await this.api
+			.url("/session")
+			.get()
+			.unauthorized(() => null)
+			.json<Session | null>();
 
-export async function passkeyAuthenticationChallenge(
-	options: NarrowFetchOptions = {}
-) {
-	return fetch<{ publicKey: PublicKeyCredentialRequestOptionsBase64 }>(
-		"get",
-		"auth/passkey/authentication-challenge",
-		options
-	).then((response) => {
-		return {
-			publicKey: {
-				...response.publicKey,
-				challenge: convertBase64ToArrayBuffer(response.publicKey.challenge)
-			}
-		};
-	});
-}
+		Sentry.setUser(
+			session?.user.preferences?.privacy.analytics
+				? { id: session?.user.id }
+				: null
+		);
 
-export interface CreatePasskey {
-	rawId: string;
-	response: {
-		attestationObject: string;
-		clientDataJSON: string;
-	};
-}
+		return session;
+	},
+	async getSession() {
+		const session = await this.getOptionalSession();
+		if (!session) return redirect(urls.login());
 
-export async function createPasskey(
-	options: NarrowFetchOptions<CreatePasskey>
-) {
-	return fetch("post", "auth/passkey", options);
-}
+		return session;
+	},
+	async getOnboardedSession() {
+		const session = await this.getSession();
 
-export async function deletePasskey(
-	options: NarrowFetchOptions<undefined, { passkeyId: string }>
-) {
-	return fetch("delete", "auth/passkey", options);
-}
+		if (session.user.status === "registered")
+			return redirect(urls.onboarding(1));
+		if (session.user.deactivatedAt)
+			return redirect(urls.settings.deactivateAccount);
 
-export async function authenticatePasskey(
-	options: NarrowFetchOptions<{
-		credentialId: string;
-		rawId: string;
-		response: {
-			authenticatorData: string;
-			clientDataJSON: string;
-			signature: string;
-		};
-	}>
-) {
-	return fetch("post", "auth/passkey/authenticate", options);
-}
+		return session;
+	},
+	async assertGuest() {
+		const session = await this.getOptionalSession();
+		if (session) return redirect(urls.default);
+	},
+	resetPassword(email: string) {
+		return this.api.url("/password").json({ email }).delete().res();
+	},
+	confirmResetPassword(options: ConfirmResetPasswordOptions) {
+		return this.api.url("/password/reset").json(options).post().res();
+	},
+	sso(signer: string) {
+		return this.api.url(`/sso/${signer}`).get().json<{ token: string }>();
+	},
+	passkey: {
+		api: api.url("auth/passkey"),
+		create(options: CreatePasskeyOptions) {
+			return this.api.json(options).post().res();
+		},
+		delete(passkeyId: string) {
+			return this.api.query({ passkeyId }).delete().res();
+		},
+		authenticate(options: AuthenticatePasskeyOptions) {
+			return this.api.json(options).post().res();
+		},
+		async registrationChallenge(platform?: boolean) {
+			const { publicKey } = await this.api
+				.url("/registration-challenge")
+				.query({ platform })
+				.get()
+				.json<{ publicKey: PublicKeyCredentialCreationOptionsBase64 }>();
+
+			return convertPublicKey(publicKey);
+		},
+		async authenticationChallenge() {
+			const { publicKey } = await this.api
+				.url("/authentication-challenge")
+				.get()
+				.json<{ publicKey: PublicKeyCredentialRequestOptionsBase64 }>();
+
+			return {
+				publicKey: {
+					...publicKey,
+					challenge: convertBase64ToArrayBuffer(publicKey.challenge)
+				}
+			};
+		}
+	},
+	impersonate(userId: string) {
+		return this.api.url("/sudo").json({ userId }).post().json<Session>();
+	},
+	revokeImpersonate() {
+		return this.api.url("/sudo").delete().json<Session>();
+	}
+};
+
+Authentication.getOptionalSession = cache(
+	Authentication.getOptionalSession.bind(Authentication)
+);

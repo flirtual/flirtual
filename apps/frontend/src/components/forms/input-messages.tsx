@@ -2,8 +2,6 @@ import { type FC, type PropsWithChildren, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
 
-import { capitalize } from "~/utilities";
-
 import type { IconComponent } from "../icons";
 
 export type FormMessageType = "error" | "warning" | "success" | "informative";
@@ -43,7 +41,11 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 
 	useEffect(() => {
 		if (reference.current) {
-			reference.current.scrollIntoView({ behavior: "smooth" });
+			reference.current.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+				inline: "center"
+			});
 		}
 	}, [children]);
 
@@ -70,12 +72,13 @@ export const FormInputMessages: React.FC<FormInputMessagesProps> = ({
 	messages
 }) => {
 	if (!messages || messages.length === 0) return null;
+	console.log(messages);
 
 	return (
 		<div className="flex flex-col gap-2">
 			{messages.map(({ value, ...message }, messageIndex) => (
 				<FormMessage key={messageIndex} {...message}>
-					{capitalize(value)}
+					{value}
 				</FormMessage>
 			))}
 		</div>

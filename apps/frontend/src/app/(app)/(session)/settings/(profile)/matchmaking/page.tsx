@@ -1,5 +1,5 @@
 import { ModelCard } from "~/components/model-card";
-import { withAttributeList } from "~/api/attributes-server";
+import { Attribute } from "~/api/attributes";
 
 import { MatchmakingForm } from "./form";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsProfileMatchmakingPage() {
-	const genders = (await withAttributeList("gender")).filter(
+	const genders = (await Attribute.list("gender")).filter(
 		({ metadata }) => metadata.simple || metadata.fallback
 	);
 

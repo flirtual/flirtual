@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { api } from "~/api";
 import { DiscordOutlineIcon } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
@@ -25,6 +24,7 @@ import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 import { useCanny } from "~/hooks/use-canny";
+import { Authentication } from "~/api/auth";
 
 import { ProfileNavigationCannyButton } from "../../components/layout/canny-button";
 
@@ -173,7 +173,7 @@ export const NavigationItemProfile: FC = () => {
 							{session.sudoerId && (
 								<ProfileNavigationItem
 									onClick={async () => {
-										const session = await api.auth.revokeSudo();
+										const session = await Authentication.revokeSudo();
 										await mutateSession(session);
 									}}
 								>

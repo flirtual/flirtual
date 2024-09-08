@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { api } from "~/api";
+import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
@@ -27,7 +27,7 @@ export const EmailForm: React.FC = () => {
 			onSubmit={async (body) => {
 				await mutateSession({
 					...session,
-					user: await api.user.updateEmail(user.id, { body })
+					user: await User.updateEmail(user.id, body)
 				});
 				router.push(urls.confirmEmail({ to: urls.settings.list() }));
 			}}

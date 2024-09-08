@@ -6,10 +6,10 @@ import { twMerge } from "tailwind-merge";
 import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { api } from "~/api";
 import { urls } from "~/urls";
 import { useSession } from "~/hooks/use-session";
 import { Image } from "~/components/image";
+import { Matchmaking } from "~/api/matchmaking";
 
 import type { FC } from "react";
 
@@ -18,11 +18,7 @@ export const LikesYouButton: FC = () => {
 	const { data: likes } = useSWR(
 		"likes",
 		() => {
-			return api.matchmaking.listMatches({
-				query: {
-					unrequited: true
-				}
-			});
+			return Matchmaking.listMatches(true);
 		},
 		{
 			suspense: true,
