@@ -17,6 +17,12 @@ export function middleware(request: NextRequest) {
 		request.headers.set("theme", searchParams.get("theme")!);
 	}
 
+	if (searchParams.has("translating")) {
+		// Support explicit translation opt-in via URL query parameter.
+		// for example: https://flirtu.al/browse?translating
+		request.headers.set("translating", "yes");
+	}
+
 	return NextResponse.next({
 		request
 	});

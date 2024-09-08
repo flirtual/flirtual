@@ -1,5 +1,8 @@
+import * as swr from "swr";
+
 import { ModelCard } from "~/components/model-card";
-import { withAttributeList } from "~/api/attributes-server";
+import { Attribute } from "~/api/attributes";
+import { SWRConfig } from "~/components/swr";
 
 import { InterestsForm } from "./form";
 
@@ -10,14 +13,27 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsProfileInterestsPage() {
-	const interests = await withAttributeList("interest");
+	const [interests, interestCategories] = await Promise.all([
+		Attribute.list("interest"),
+		Attribute.list("interest-category")
+	]);
 
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
 			title="Interests"
 		>
-			<InterestsForm interests={interests} />
+			<SWRConfig
+				value={{
+					fallback: {
+						[swr.unstable_serialize(["attribute", "interest"])]: interests,
+						[swr.unstable_serialize(["attribute", "interest-category"])]:
+							interestCategories
+					}
+				}}
+			>
+				<InterestsForm />
+			</SWRConfig>
 		</ModelCard>
 	);
 }

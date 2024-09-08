@@ -1,0 +1,94 @@
+{
+	"mosDhQUt8JGumiup4yQWbZ": {
+		"name": "She/Her"
+	},
+	"hv43aTXJZjMHfXRXvTcYiH": {
+		"name": "He/Him"
+	},
+	"pAzAxxF4UYr3qN6F4tPYec": {
+		"name": "They/Them"
+	},
+	"tpkW7r8PZ2RUuYGUSYi82N": {
+		"name": "Woman",
+		"plural": "Women"
+	},
+	"rhw3rcbheU7vc9vcSy6W6V": {
+		"name": "Man",
+		"plural": "Men"
+	},
+	"879KtanHc548synGhcNE7J": {
+		"name": "Agender",
+		"definition": "Someone who does not identify with or experience any gender."
+	},
+	"RdMpwqWGydDgk9X2u32BBW": {
+		"name": "Androgynous",
+		"definition": "Someone with a combination of masculine and feminine traits."
+	},
+	"YBkoUyfKJd6jJGwbekY3HN": {
+		"name": "Bigender",
+		"definition": "Someone who experiences two gender identities."
+	},
+	"2ETbJJJ3shADLphvncUwSL": {
+		"name": "Cis Woman",
+		"definition": "A woman whose gender identity matches her sex assigned at birth."
+	},
+	"GJitRtRoYWT6DfVasptK7N": {
+		"name": "Cis Man",
+		"definition": "A man whose gender identity matches his sex assigned at birth."
+	},
+	"aKEzfuPY6TaMkmnugQWLUd": {
+		"name": "Genderfluid",
+		"definition": "Someone whose gender varies over time."
+	},
+	"zMta3qtGyqW4hFdcDFUHik": {
+		"name": "Genderqueer",
+		"definition": "Someone whose gender falls outside of the traditional gender binary."
+	},
+	"fAPzVgy7VyGPgAPhkwSkSU": {
+		"name": "Gender Nonconforming",
+		"definition": "Someone who does not subscribe to societal gender expectations or norms."
+	},
+	"wJdnfUvuvACEWRSV4KBdzS": {
+		"name": "Hijra",
+		"definition": "A third gender in South Asian cultures."
+	},
+	"w3t9h2SyNhr2rBWouXim8c": {
+		"name": "Intersex",
+		"definition": "Someone born with sex characteristics that do not fit the typical definitions of male or female bodies."
+	},
+	"QwXvxjisosKeTP97ouczoZ": {
+		"name": "Non-binary",
+		"definition": "Someone whose gender falls outside the gender binary."
+	},
+	"PFEmTKdmxAoPuxttYPwFZb": {
+		"name": "Pangender",
+		"definition": "Someone who identifies with multiple or all genders."
+	},
+	"tyrdBY4Rbfitznr65hpRPR": {
+		"name": "Transgender",
+		"definition": "Someone whose gender identity does not match their sex assigned at birth."
+	},
+	"HWte4cB6TUzzXZoJeuxJuf": {
+		"name": "Trans Woman",
+		"definition": "A woman who was assigned male at birth."
+	},
+	"XTVsHQMWXiJGEc5xCf7RUb": {
+		"name": "Trans Man",
+		"definition": "A man who was assigned female at birth."
+	},
+	"rGFyY9WbvBBJSUAUpY5iUE": {
+		"name": "Transfeminine",
+		"definition": "Someone with a feminine gender identity who was assigned male at birth."
+	},
+	"CHkgoEoKzTSeVaLVByviBZ": {
+		"name": "Transmasculine",
+		"definition": "Someone with a masculine gender identity who was assigned female at birth."
+	},
+	"JL8AaDCJMVApbEuAfwG86Y": {
+		"name": "Two Spirit",
+		"definition": "A third gender in Indigenous North American cultures."
+	},
+	"jAL62ePbibxaG4FPu7S8LG": {
+		"name": "Other"
+	}
+}

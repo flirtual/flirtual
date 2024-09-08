@@ -5,6 +5,7 @@ import { cache } from "react";
 import deepmerge from "deepmerge";
 
 import { Authentication } from "./api/auth";
+import { attributeTypes } from "./api/attributes";
 
 import type { AbstractIntlMessages } from "next-intl";
 
@@ -32,10 +33,11 @@ export const getInternationalization = cache(async (override?: string) => {
 	const accept = headers.get("accept-language");
 	const browser = al.get(accept);
 
-	const preferred =
-		(await Authentication.getOptionalSession())?.user.language ||
-		browser ||
-		fallback;
+	const session = await Authentication.getOptionalSession();
+	const translating =
+		headers.has("translating") || session?.user.tags?.includes("translating");
+
+	const preferred = session?.user.language || browser || fallback;
 
 	if (override === preferred || (override && !languages.includes(override)))
 		override = undefined;
@@ -52,34 +54,60 @@ export const getInternationalization = cache(async (override?: string) => {
 			override
 		},
 		country,
-		languages
+		languages,
+		translating
 	};
 });
 
+async function getLanguageMessages(locale: string) {
+	const { default: messages } = await import(
+		`../messages/${locale}.json`
+	).catch(() => ({}));
+
+	return {
+		...messages,
+		attributes: Object.fromEntries(
+			(
+				await Promise.all(
+					attributeTypes.map(async (attributeType) => {
+						const { default: messages } = await import(
+							`../messages/attributes/${attributeType}/${locale}.json`
+						).catch(() => ({ default: {} }));
+						return Object.entries(messages);
+					})
+				)
+			).flat()
+		)
+	};
+}
+
 const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
-	const { locale } = await getInternationalization();
+	const { locale, translating } = await getInternationalization();
 
-	const { default: fallback } = await import(
-		`../messages/${locale.fallback}.json`
-	);
+	const fallback = await getLanguageMessages(locale.fallback);
 
-	const { default: current } =
+	const current =
 		locale.current === locale.fallback
-			? { default: fallback }
-			: await import(`../messages/${locale.current}.json`);
+			? fallback
+			: await getLanguageMessages(locale.current);
 
-	const { default: preferred } =
+	console.log(current);
+
+	const preferred =
 		locale.current === locale.preferred
-			? { default: current }
-			: await import(`../messages/${locale.preferred}.json`);
+			? current
+			: await getLanguageMessages(locale.preferred);
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const messages = deepmerge(fallback, current) as any;
 
 	return {
-		...messages,
-		// Some translations are shown when the current language is different from the preferred language.
-		// But we don't want to include all the translations, so we only include the ones that are relevant.
+		// If the user is translating, we will pretend that we don't have any messages.
+		// This will force all translations to be shown as their raw strings.
+		...(translating ? {} : messages),
+		banners: {
+			translating: messages.banners.translating
+		},
 		[`$${locale.preferred}`]: {
 			banners: {
 				language: preferred.banners?.language ?? messages.banners.language

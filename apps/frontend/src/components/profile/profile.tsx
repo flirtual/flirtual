@@ -3,7 +3,6 @@ import { twMerge } from "tailwind-merge";
 import { getTranslations } from "next-intl/server";
 
 import { yearsAgo } from "~/date";
-import { filterBy, groupBy } from "~/utilities";
 import { Html } from "~/components/html";
 import { displayName, type User } from "~/api/user";
 import { urls } from "~/urls";
@@ -39,7 +38,8 @@ const relevantAttributes: Array<AttributeType> = [
 	"country",
 	"kink",
 	"language",
-	"relationship"
+	"relationship",
+	"report-reason"
 ];
 
 export async function Profile(props: ProfileProps) {
@@ -51,7 +51,7 @@ export async function Profile(props: ProfileProps) {
 		Promise.all(
 			[
 				...new Set([
-					...Object.keys(groupBy(user.profile.attributes, ({ type }) => type)),
+					...Object.keys(user.profile.attributes),
 					...relevantAttributes
 				])
 			].map(
@@ -127,11 +127,7 @@ export async function Profile(props: ProfileProps) {
 							</div>
 							<div className="flex flex-wrap items-center gap-2 font-montserrat ">
 								<GenderPills
-									attributes={filterBy(
-										user.profile.attributes,
-										"type",
-										"gender"
-									)}
+									attributes={user.profile.attributes.gender}
 									className="!bg-opacity-70"
 								/>
 								{user.profile.country && (

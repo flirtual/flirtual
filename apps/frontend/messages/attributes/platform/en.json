@@ -1,0 +1,47 @@
+{
+	"RNaigbGdB7H4ZMw5c8ysbi": {
+		"name": "Meta Quest"
+	},
+	"UpyGwuCHANjYmM2P269dFm": {
+		"name": "Quest Link"
+	},
+	"qhAm6Z9kGRP5opGfnrVYda": {
+		"name": "Oculus Rift"
+	},
+	"d52VH6CyRaVPQvAwoStEoY": {
+		"name": "SteamVR"
+	},
+	"c255sGSiJpMNnm6NTUcvx6": {
+		"name": "Apple Vision"
+	},
+	"FEX8jjr4P9aeBurRUTLhU7": {
+		"name": "Pico"
+	},
+	"WQVnXwQzfThHr7yczTjm3C": {
+		"name": "Windows Mixed Reality"
+	},
+	"n6sSShVCXahjazwqEraKCG": {
+		"name": "PlayStation VR"
+	},
+	"fyBa2tUpgEgqBPda4BpXAE": {
+		"name": "Mobile VR"
+	},
+	"aNGgneQH5YX4HyWpNEUpmQ": {
+		"name": "Other VR"
+	},
+	"6BdtcWSEHNwX6ba9nzd2Yc": {
+		"name": "Desktop"
+	},
+	"MLWTjDZEuacyr2qwbXEw4K": {
+		"name": "Full-body tracking"
+	},
+	"m4S2N4Jn2f3WDbJm7bcbgQ": {
+		"name": "Eye/facial tracking"
+	},
+	"pzkBdEYqgAZiSEBZAcJMPZ": {
+		"name": "Haptic suit"
+	},
+	"x5T9enPhP8WpYwnoottGDL": {
+		"name": "Locomotion Treadmill"
+	}
+}

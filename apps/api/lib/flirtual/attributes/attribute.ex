@@ -17,7 +17,6 @@ defmodule Flirtual.Attribute do
 
   schema "attributes" do
     field(:type, :string)
-    field(:name, :string)
     field(:order, :integer)
     field(:metadata, :map)
 
@@ -61,36 +60,11 @@ defmodule Flirtual.Attribute do
   def list([]), do: []
 
   def list(type: "country") do
-    Countries.list()
-    |> Enum.map(fn country ->
-      id =
-        country[:iso_3166_1]
-        |> Atom.to_string()
-
-      %Attribute{
-        id: id,
-        type: "country",
-        name: country[:name],
-        metadata: %{
-          "flag_url" =>
-            "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/flags/4x3/" <>
-              id <> ".svg"
-        }
-      }
-    end)
+    Countries.list(:iso_3166_1) |> Enum.map(&%Attribute{id: &1, type: "country"})
   end
 
   def list(type: "language") do
-    Languages.list()
-    |> Enum.map(fn language ->
-      %Attribute{
-        id:
-          language[:bcp_47]
-          |> Atom.to_string(),
-        type: "language",
-        name: language[:name]
-      }
-    end)
+    Languages.list(:bcp_47) |> Enum.map(&%Attribute{id: &1, type: "language"})
   end
 
   def list(type: "relationship") do
@@ -98,37 +72,46 @@ defmodule Flirtual.Attribute do
       %Attribute{
         id: "serious",
         type: "relationship",
-        name: "Serious dating"
+        # name: "Serious dating"
       },
       %Attribute{
         id: "vr",
         type: "relationship",
-        name: "Casual dating"
+        # name: "Casual dating"
       },
       %Attribute{
         id: "hookups",
         type: "relationship",
-        name: "Casual fun"
+        # name: "Casual fun"
       },
       %Attribute{
         id: "friends",
         type: "relationship",
-        name: "New friends"
+        # name: "New friends"
       }
     ]
   end
 
+  def compress(attributes) when is_list(attributes), do: Enum.map(attributes, &compress/1)
+
+  def compress(%Attribute{id: id, metadata: metadata})
+      when is_nil(metadata) or map_size(metadata) == 0,
+      do: id
+
+  def compress(%Attribute{id: id, metadata: metadata}),
+    do:  Map.put((metadata || %{}), :id, id)
+
   def list(type: attribute_type) when is_binary(attribute_type) do
     Attribute
     |> where(type: ^attribute_type)
-    |> order_by([:order, :name])
+    |> order_by([:order])
     |> Repo.all()
   end
 
   def list(attribute_ids) when is_list(attribute_ids) do
     Attribute
     |> where([attribute], attribute.id in ^attribute_ids)
-    |> order_by([:order, :name])
+    |> order_by([:order])
     |> Repo.all()
   end
 
@@ -276,7 +259,6 @@ defimpl Jason.Encoder, for: Flirtual.Attribute do
     only: [
       :id,
       :type,
-      :name,
       :order,
       :metadata
     ]

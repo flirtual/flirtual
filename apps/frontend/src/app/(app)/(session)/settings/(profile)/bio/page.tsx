@@ -1,5 +1,5 @@
 import { ModelCard } from "~/components/model-card";
-import { withAttributeList } from "~/api/attributes-server";
+import { Attribute } from "~/api/attributes";
 
 import { BiographyForm } from "./form";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsProfileBiographyPage() {
-	const games = await withAttributeList("game");
+	const games = await Attribute.list("game");
 
 	return (
 		<ModelCard

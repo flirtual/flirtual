@@ -27,7 +27,7 @@ defmodule Flirtual.User do
   alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
   alias Flirtual.User.{Relationship, Session}
 
-  @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp]
+  @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp, :translating]
 
   @statuses [
     "visible",
@@ -129,44 +129,50 @@ defmodule Flirtual.User do
   end
 
   def pronouns(%User{} = user) do
-    masculine_genders = ["He/Him", "Man", "Cis Man", "Trans Man", "Transmasculine"]
-    feminine_genders = ["She/Her", "Woman", "Cis Woman", "Trans Woman", "Transfeminine"]
+    %{
+      subjective: "they",
+      objective: "them",
+      possessive_adjective: "their",
+      possessive_pronoun: "theirs",
+      reflexive: "themself"
+    }
 
-    genders =
-      user.profile.attributes
-      |> filter_by(:type, "gender")
-      |> Enum.map(& &1.name)
+    # masculine_genders = ["He/Him", "Man", "Cis Man", "Trans Man", "Transmasculine"]
+    # feminine_genders = ["She/Her", "Woman", "Cis Woman", "Trans Woman", "Transfeminine"]
 
-    cond do
-      Enum.all?(genders, fn gender -> gender in masculine_genders end) or
-          ("He/Him" in genders and not ("They/Them" in genders or "She/Her" in genders)) ->
-        %{
-          subjective: "he",
-          objective: "him",
-          possessive_adjective: "his",
-          possessive_pronoun: "his",
-          reflexive: "himself"
-        }
+    # genders =
+    #   user.profile.attributes
+    #   |> filter_by(:type, "gender")
+    #   |> Enum.map(& &1.name)
 
-      Enum.all?(genders, fn gender -> gender in feminine_genders end) or
-          ("She/Her" in genders and not ("They/Them" in genders or "He/Him" in genders)) ->
-        %{
-          subjective: "she",
-          objective: "her",
-          possessive_adjective: "her",
-          possessive_pronoun: "hers",
-          reflexive: "herself"
-        }
-
-      true ->
-        %{
-          subjective: "they",
-          objective: "them",
-          possessive_adjective: "their",
-          possessive_pronoun: "theirs",
-          reflexive: "themself"
-        }
-    end
+    # cond do
+    #   Enum.all?(genders, fn gender -> gender in masculine_genders end) or
+    #       ("He/Him" in genders and not ("They/Them" in genders or "She/Her" in genders)) ->
+    #     %{
+    #       subjective: "he",
+    #       objective: "him",
+    #       possessive_adjective: "his",
+    #       possessive_pronoun: "his",
+    #       reflexive: "himself"
+    #     }
+    #   Enum.all?(genders, fn gender -> gender in feminine_genders end) or
+    #       ("She/Her" in genders and not ("They/Them" in genders or "He/Him" in genders)) ->
+    #     %{
+    #       subjective: "she",
+    #       objective: "her",
+    #       possessive_adjective: "her",
+    #       possessive_pronoun: "hers",
+    #       reflexive: "herself"
+    #     }
+    #   true ->
+    #     %{
+    #       subjective: "they",
+    #       objective: "them",
+    #       possessive_adjective: "their",
+    #       possessive_pronoun: "theirs",
+    #       reflexive: "themself"
+    #     }
+    # end
   end
 
   def update_status(%User{} = user) do

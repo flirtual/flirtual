@@ -3,19 +3,21 @@
 import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
 
-import { findBy, sortBy } from "~/utilities";
+import { findBy } from "~/utilities";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
-import { useAttributeList } from "~/hooks/use-attribute-list";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
 import { Pill } from "./pill";
 
-import type { PartialAttribute } from "~/api/attributes";
 import type { FC } from "react";
 
 export interface GenderPillsProps {
 	simple?: boolean;
-	attributes: Array<PartialAttribute>;
+	attributes: Array<string>;
 	className?: string;
 	small?: boolean;
 }
@@ -29,41 +31,43 @@ export const GenderPills: FC<GenderPillsProps> = ({
 	const genders = useAttributeList("gender");
 	const t = useTranslations();
 
+	const tAttributes = useAttributeTranslation();
+
 	const profileGenders = attributes
-		.map(({ id }) => findBy(genders, "id", id))
+		.map((id) => findBy(genders, "id", id))
 		.filter(Boolean);
-	const visibleGenders = sortBy(
-		[
-			...new Set(
-				simple
-					? profileGenders
-							.map((gender) =>
-								gender.metadata.aliasOf
-									? (findBy(genders, "id", gender.metadata.aliasOf) ?? gender)
-									: gender
-							)
-							.filter((gender) => {
-								if (simple)
-									return gender.metadata.simple || gender.metadata.fallback;
-								return true;
-							})
-					: profileGenders
-			)
-		],
-		"order"
-	);
+
+	const visibleGenders = [
+		...new Set(
+			simple
+				? profileGenders
+						.map((gender) =>
+							gender.aliasOf
+								? (findBy(genders, "id", gender.aliasOf) ?? gender)
+								: gender
+						)
+						.filter((gender) => {
+							if (simple) return gender.simple || gender.fallback;
+							return true;
+						})
+				: profileGenders
+		)
+	];
 
 	if (visibleGenders.length === 0) {
-		const fallback = genders.find(({ metadata }) => metadata.fallback);
+		const fallback = genders.find(({ fallback }) => fallback);
 		if (fallback) visibleGenders.push(fallback);
 	}
 
 	return (
 		<>
-			{visibleGenders.map((gender, genderIndex) => (
-				<Tooltip key={gender.id}>
-					<TooltipTrigger asChild>
-						<div>
+			{visibleGenders.map((gender, genderIndex) => {
+				const { name, definition } = tAttributes[gender.id] ?? {};
+				if (!name) return null;
+
+				return (
+					<Tooltip key={gender.id}>
+						<TooltipTrigger asChild>
 							<Pill
 								hocusable={false}
 								small={small}
@@ -72,23 +76,23 @@ export const GenderPills: FC<GenderPillsProps> = ({
 									genderIndex !== 0 && small && simple && "hidden desktop:flex"
 								)}
 							>
-								{gender.name}
+								{name}
 							</Pill>
-						</div>
-					</TooltipTrigger>
-					{(gender.metadata.definition || gender.metadata.definitionLink) && (
-						<TooltipContent>
-							{gender.metadata.definition}{" "}
-							<InlineLink
-								className="pointer-events-auto"
-								href={gender.metadata.definitionLink}
-							>
-								{t("learn_more")}
-							</InlineLink>
-						</TooltipContent>
-					)}
-				</Tooltip>
-			))}
+						</TooltipTrigger>
+						{(definition || gender.definitionLink) && (
+							<TooltipContent>
+								{definition}{" "}
+								<InlineLink
+									className="pointer-events-auto"
+									href={gender.definitionLink}
+								>
+									{t("learn_more")}
+								</InlineLink>
+							</TooltipContent>
+						)}
+					</Tooltip>
+				);
+			})}
 		</>
 	);
 };

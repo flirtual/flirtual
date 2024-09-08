@@ -17,6 +17,8 @@ export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
 	iconColor?: string;
 	connection?: boolean;
 	onChange?: React.Dispatch<string>;
+	startContent?: React.ReactNode;
+	endContent?: React.ReactNode;
 };
 
 export const InputText: React.FC<InputTextProps> = (props) => {
@@ -49,8 +51,9 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					<Icon className="size-6" />
 				</div>
 			)}
+			{props.startContent}
 			<input
-				{...omit(props, ["type", "Icon"])}
+				{...omit(props, ["type", "Icon", "startContent", "endContent"])}
 				ref={inputReference}
 				type={type}
 				className={twMerge(
@@ -64,6 +67,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					props.onChange(event.target.value);
 				}}
 			/>
+			{props.endContent}
 			{props.type === "password" && (
 				<Tooltip>
 					<TooltipTrigger asChild>

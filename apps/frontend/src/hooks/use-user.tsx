@@ -9,3 +9,11 @@ export function useUser(userId: string): User | null {
 
 	return data;
 }
+
+export function useUserBySlug(slug: string): User | null {
+	const { data } = useSWR(["user", slug], ([, slug]) => User.getBySlug(slug), {
+		suspense: true
+	});
+
+	return data;
+}

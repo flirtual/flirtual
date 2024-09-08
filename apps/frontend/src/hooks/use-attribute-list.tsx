@@ -1,3 +1,4 @@
+import { useMessages } from "next-intl";
 import { useDebugValue } from "react";
 import useSWR from "swr";
 
@@ -38,4 +39,12 @@ export function useAttribute<T extends keyof AttributeMetadata>(
 	);
 
 	return attribute;
+}
+
+export function useAttributeTranslation() {
+	const { attributes: tAttributes } = useMessages() as {
+		attributes: Record<string, { name: string; definition?: string }>;
+	};
+
+	return tAttributes;
 }

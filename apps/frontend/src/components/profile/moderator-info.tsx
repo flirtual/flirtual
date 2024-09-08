@@ -2,11 +2,11 @@ import { Dialog } from "@capacitor/dialog";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { capitalize, filterBy } from "~/utilities";
-import { useAttributeList } from "~/hooks/use-attribute-list";
+import { capitalize } from "~/utilities";
 import { User } from "~/api/user";
 
 import { DateTimeRelative } from "../datetime-relative";
@@ -14,6 +14,7 @@ import { InlineLink } from "../inline-link";
 import { CopyClick } from "../copy-click";
 
 import type { FC } from "react";
+import { useAttributeTranslation } from "~/hooks/use-attribute-list";
 
 export const ProfileModeratorInfo: FC<{
 	user: User;
@@ -21,7 +22,8 @@ export const ProfileModeratorInfo: FC<{
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
-	const genders = useAttributeList("gender");
+	const t = useTranslations();
+	const tAttributes = useAttributeTranslation();
 
 	if (!session || !session.user?.tags?.includes("moderator")) return null;
 
@@ -220,13 +222,8 @@ export const ProfileModeratorInfo: FC<{
 				<span>
 					{user.profile.preferences?.agemin ?? 18}-
 					{user.profile.preferences?.agemax ?? "99+"}{" "}
-					{filterBy(
-						user.profile.preferences?.attributes ?? [],
-						"type",
-						"gender"
-					)
-						.map(({ id }) => genders.find((gender) => gender.id === id)?.name)
-						.filter(Boolean)
+					{user.profile.preferences?.attributes.gender
+						.map((id) => tAttributes[id]?.name ?? id)
 						.join(", ")}
 				</span>
 			</span>

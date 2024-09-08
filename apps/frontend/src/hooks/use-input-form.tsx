@@ -16,8 +16,8 @@ export interface FormFieldsDefault {
 
 export type InputFormSubmitFunction<T extends FormFieldsDefault> = (
 	values: T,
-	form: UseInputForm<T>,
-	event: React.FormEvent<HTMLFormElement>
+	form: UseInputForm<T>
+	//event: React.FormEvent<HTMLFormElement>
 ) => Promise<void>;
 
 export interface InputFormOptions<T extends FormFieldsDefault> {
@@ -61,6 +61,11 @@ export interface UseInputForm<T extends FormFieldsDefault> {
 	setFieldErrors: React.Dispatch<React.SetStateAction<FieldErrors<T>>>;
 	setSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	reset: (newValues: T | null) => void;
+	submit: () => Promise<{
+		errors: Array<string>;
+		fieldErrors: FieldErrors<T>;
+		fields: T;
+	}>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -86,9 +91,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const reactId = useId();
 	const formId = withGlobalId ? "" : reactId;
-	const _t = useTranslations();
-	const t = (key: string, values?: TranslationValues) =>
-		`${key} ${JSON.stringify(values)} (${_t(key, values)})`;
+	const t = useTranslations();
 
 	const [initialValues, setInitialValues] = useState(options.fields);
 	const [values, setValues] = useState(initialValues);
@@ -104,63 +107,68 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		setInitialValues(options.fields);
 	}, [options.fields]); */
 
+	const submit: UseInputForm<T>["submit"] = async () => {
+		setSubmitting(true);
+
+		const captcha =
+			withCaptcha && captchaRef.current
+				? await captchaRef.current.getResponsePromise()
+				: "";
+
+		setCaptcha(captcha);
+
+		const result = await onSubmit(values, { ...form, submit, captcha })
+			.then(() => {
+				setFieldErrors({});
+				setErrors([]);
+
+				setInitialValues(values);
+				return { errors: [], fieldErrors: {}, fields: values };
+			})
+			.catch((reason) => {
+				if (isWretchError(reason, "invalid_properties")) {
+					const { details: properties } = reason.json;
+
+					const fieldErrors = Object.fromEntries(
+						Object.entries(properties).map(
+							([key, issues]) =>
+								[
+									key,
+									issues.map(({ error, details }) =>
+										t(`errors.${error}`, details as TranslationValues)
+									)
+								] as const
+						)
+					) as FieldErrors<T>;
+					setFieldErrors(fieldErrors);
+
+					return { errors: [], fieldErrors, fields: values };
+				}
+
+				if (reason instanceof WretchError) {
+					const { error } = reason.json ?? {};
+
+					const errors = [
+						t(`errors.${error}`, reason.json.details as TranslationValues)
+					];
+					setErrors(errors);
+
+					return { errors, fieldErrors: {}, fields: values };
+				}
+
+				setErrors([reason.message]);
+				return { errors: [reason.message], fieldErrors: {}, fields: values };
+			});
+
+		if (withCaptcha) captchaRef.current?.reset();
+		setSubmitting(false);
+		return result;
+	};
+
 	const props: UseInputForm<T>["props"] = {
 		onSubmit: async (event) => {
 			event.preventDefault();
-			setSubmitting(true);
-
-			const captcha =
-				withCaptcha && captchaRef.current
-					? await captchaRef.current.getResponsePromise()
-					: "";
-
-			setCaptcha(captcha);
-			await onSubmit(values, { ...form, captcha }, event)
-				.then(() => {
-					setFieldErrors({});
-					setErrors([]);
-
-					setInitialValues(values);
-					return;
-				})
-				.catch((reason) => {
-					if (isWretchError(reason, "invalid_properties")) {
-						const { details: properties } = reason.json;
-
-						setFieldErrors(
-							Object.fromEntries(
-								Object.entries(properties).map(
-									([key, issues]) =>
-										[
-											key,
-											issues.map(({ error, details }) =>
-												t(`errors.${error}`, details as TranslationValues)
-											)
-										] as const
-								)
-							) as FieldErrors<T>
-						);
-						return;
-					}
-
-					if (reason instanceof WretchError) {
-						const { error } = reason.json ?? {};
-
-						if (error === "invalid_properties") {
-							setFieldErrors(reason.json.errors);
-							setErrors([]);
-							return;
-						}
-
-						setErrors([error]);
-						return;
-					}
-
-					setErrors([reason.message]);
-				});
-
-			if (withCaptcha) captchaRef.current?.reset();
-			setSubmitting(false);
+			return submit();
 		}
 	};
 
@@ -227,7 +235,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		FormField,
 		setFieldErrors,
 		setSubmitting,
-		reset
+		reset,
+		submit
 	};
 
 	return form;

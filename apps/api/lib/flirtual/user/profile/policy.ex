@@ -223,7 +223,9 @@ defmodule Flirtual.User.Profile.Policy do
         else: &1
       )
     )
-    |> Enum.map(&%{id: &1.id, type: &1.type})
+    |> Enum.reduce(%{}, fn %{id: id, type: type}, acc ->
+      Map.update(acc, type, [id], fn existing -> [id | existing] end)
+    end)
   end
 
   def transform(

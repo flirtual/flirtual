@@ -1,8 +1,7 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-
-import { useAttributeList } from "~/hooks/use-attribute-list";
+import { useLocale } from "next-intl";
 
 import { Pill } from "./pill";
 
@@ -19,10 +18,11 @@ export const CountryPill: FC<CountryPillProps> = ({
 	flagOnly = false,
 	className
 }) => {
-	const countries = useAttributeList("country");
-	const country = countries.find((country) => country.id === id);
+	const locale = useLocale();
+	const countryNames = new Intl.DisplayNames([locale], { type: "region" });
+	const countryName = countryNames.of(id);
 
-	if (!country) return null;
+	if (!countryName) return null;
 
 	return (
 		<Pill
@@ -35,13 +35,13 @@ export const CountryPill: FC<CountryPillProps> = ({
 			)}
 		>
 			<img
-				src={country.metadata.flagUrl}
+				src={`https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/flags/4x3/${id}.svg`}
 				className={twMerge(
 					"aspect-[4/3] h-8 w-max shrink-0",
 					flagOnly ? "" : "-ml-4 rounded-l-xl"
 				)}
 			/>
-			{!flagOnly && <span>{country.name}</span>}
+			{!flagOnly && <span suppressHydrationWarning>{countryName}</span>}
 		</Pill>
 	);
 };

@@ -8,26 +8,27 @@ defmodule FlirtualWeb.ErrorHelpers do
     @derive Jason.Encoder
     defstruct [:error, :details]
 
-    def to_snake_case(value) when is_atom(value), do: to_snake_case(to_string(value))
+    def normalize_error(value) when is_atom(value), do: normalize_error(to_string(value))
 
-    def to_snake_case(value) when is_binary(value) do
+    def normalize_error(value) when is_binary(value) do
       value
-      |> String.replace(~r/([A-Z])/, "_\\1")
+      |> String.replace(~r/(?<=[a-z])([A-Z])/, "_\\1")
       |> String.replace(~r/[\s-]+/, "_")
+      |> String.replace("'", "")
+      |> String.replace("\"", "")
       |> String.trim("_")
       |> String.downcase()
     end
 
-    def new(message) when is_binary(message) do
+    def new(message) when is_binary(message) or is_atom(message) do
       new(%{error: message})
     end
 
-    def new(attrs) when is_map(attrs) do
+    def new(attrs) do
       %Issue{
-        error: to_snake_case(attrs.error),
-        details: attrs.details
+        error: normalize_error(attrs.error),
+        details: attrs[:details]
       }
-      |> IO.inspect()
     end
   end
 
@@ -62,10 +63,15 @@ defmodule FlirtualWeb.ErrorHelpers do
         error: msg |> String.replace(~r/%{(.+)}/, "{\\1}"),
         details:
           case opts do
-            %{type: {:parameterized, Ecto.Enum, %{mappings: mappings}}} = opts ->
+            %{type: {:parameterized, Ecto.Enum, %{mappings: mappings}}} ->
               opts
               |> Map.put(:type, :enum)
               |> Map.put(:values, Enum.into(mappings, [], fn {k, _} -> k end))
+
+            %{type: {:array, array_type}} ->
+              opts
+              |> Map.put(:type, :array)
+              |> Map.put(:array_type, array_type)
 
             opts ->
               opts

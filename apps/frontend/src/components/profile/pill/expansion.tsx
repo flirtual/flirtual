@@ -13,14 +13,18 @@ import { ProfilePlaylist } from "../playlist";
 import { PillAttributeList } from "./attribute-list";
 import { Pill } from "./pill";
 
-import type { Attribute } from "~/api/attributes";
+import type {
+	Attribute,
+	AttributeType,
+	MinimalAttribute
+} from "~/api/attributes";
 import type { Session } from "~/api/auth";
 import type { User } from "~/api/user";
 
 export interface PillCollectionExpansionProps {
 	user: User;
 	editable: boolean;
-	attributes: Record<string, Array<Attribute>>;
+	attributes: Record<string, Array<MinimalAttribute<AttributeType>>>;
 	session: Session;
 }
 
@@ -32,13 +36,13 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 	const t = useTranslations("profile");
 
 	const kinks = useAttributeList("kink");
-	const activeKinkIds = useMemo(
-		() =>
-			filterBy(session.user.profile.attributes, "type", "kink")
-				.map(({ id }) => kinks.find((kink) => kink.id === id)?.metadata.pair)
-				.filter(Boolean),
-		[kinks, session.user.profile.attributes]
-	);
+	// const activeKinkIds = useMemo(
+	// 	() =>
+	// 		filterBy(session.user.profile.attributes, "type", "kink")
+	// 			.map(({ id }) => kinks.find((kink) => kink.id === id)?.metadata.pair)
+	// 			.filter(Boolean),
+	// 	[kinks, session.user.profile.attributes]
+	// );
 
 	if (
 		!user.profile.monopoly &&
@@ -66,7 +70,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 				</div>
 			)}
 			<PillAttributeList
-				activeIds={activeKinkIds}
+				// activeIds={activeKinkIds}
 				attributes={attributes.kink}
 				href={editable ? urls.settings.nsfw : undefined}
 				user={user}

@@ -7,7 +7,7 @@ defmodule FlirtualWeb.AttributeController do
 
   alias Flirtual.Attribute
 
-  action_fallback FlirtualWeb.FallbackController
+  action_fallback(FlirtualWeb.FallbackController)
 
   def get(conn, %{"attribute_type" => attribute_type, "attribute_id" => attribute_id}) do
     attributes = Attribute.get(attribute_id, attribute_type)
@@ -18,7 +18,7 @@ defmodule FlirtualWeb.AttributeController do
   end
 
   def list(conn, %{"attribute_type" => attribute_type}) do
-    attributes = Attribute.list(type: attribute_type)
+    attributes = Attribute.list(type: attribute_type) |> Attribute.compress()
 
     conn
     |> put_resp_header("cache-control", "public, max-age=86400, immutable")

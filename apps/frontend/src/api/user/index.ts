@@ -1,4 +1,8 @@
 import { snakeCase } from "change-case";
+import ms from "ms";
+
+import { isUid } from "~/utilities";
+import { cache } from "~/cache";
 
 import {
 	api,
@@ -15,7 +19,6 @@ import type { Attribute } from "../attributes";
 import type { Connection } from "../connections";
 import type { Profile } from "./profile";
 import type { Relationship } from "./relationship";
-import type { WretchOptions } from "wretch";
 
 export const userTags = [
 	"admin",
@@ -23,7 +26,8 @@ export const userTags = [
 	"beta_tester",
 	"debugger",
 	"verified",
-	"legacy_vrlfp"
+	"legacy_vrlfp",
+	"translating"
 ] as const;
 
 export const userTagNames: Record<UserTags, string> = {
@@ -32,7 +36,8 @@ export const userTagNames: Record<UserTags, string> = {
 	beta_tester: "Beta Tester",
 	debugger: "Debugger",
 	verified: "Verified",
-	legacy_vrlfp: "Legacy VRLFP"
+	legacy_vrlfp: "Legacy VRLFP",
+	translating: "Translating"
 };
 
 export type UserTags = (typeof userTags)[number];
@@ -155,23 +160,38 @@ export const User = {
 		// return this.api.url("/bulk").json(userIds).get().json<Array<User>>();
 	},
 	get(userId: string) {
-		return this.api.url(`/${userId}`).get().json<User>();
+		if (!isUid(userId)) return null;
+
+		return this.api
+			.url(`/${userId}`)
+			.get()
+			.badRequest(() => null)
+			.notFound(() => null)
+			.json<User | null>();
 	},
 	getBySlug(slug: string) {
+		if (slug.length < 3) return null;
+
 		return this.api
 			.url(`/${slug.slice(0, 20)}/name`)
 			.get()
-			.json<User>();
+			.badRequest(() => null)
+			.notFound(() => null)
+			.json<User | null>();
 	},
-	getCount(options: WretchOptions = {}) {
-		return this.api
-			.url("/count")
-			.options(options)
-			.get()
-			.json<{ count: number }>();
+	getCount() {
+		return cache.global(
+			() =>
+				this.api
+					.url("/count")
+					.options({ credentials: "omit" })
+					.get()
+					.json<{ count: number }>(),
+			{ revalidate: ms("1d") / 1000 }
+		);
 	},
 	async getApproximateCount() {
-		const { count } = await this.getCount({ cache: "force-cache" });
+		const { count } = await this.getCount();
 		return Math.floor(count / 5000) * 5000;
 	},
 	preview(userId: string) {

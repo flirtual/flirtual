@@ -9,13 +9,13 @@ import type {
 	Attribute,
 	AttributeMetadata,
 	AttributeType,
-	PartialAttributeCollection
+	GroupedAttributeCollection
 } from "~/api/attributes";
 
 export type ProfilePreferences = UpdatedAtModel & {
 	agemin?: number;
 	agemax?: number;
-	attributes: PartialAttributeCollection;
+	attributes: GroupedAttributeCollection;
 };
 
 export const ProfileRelationshipList = [
@@ -55,7 +55,7 @@ export type Profile = Partial<UpdatedAtModel> & {
 	conscientiousness?: number;
 	agreeableness?: number;
 	languages: Array<string>;
-	attributes: PartialAttributeCollection;
+	attributes: GroupedAttributeCollection;
 	customInterests: Array<string>;
 	preferences?: ProfilePreferences;
 	customWeights?: ProfileCustomWeights;
