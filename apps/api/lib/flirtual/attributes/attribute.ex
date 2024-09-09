@@ -71,35 +71,26 @@ defmodule Flirtual.Attribute do
     [
       %Attribute{
         id: "serious",
-        type: "relationship",
+        type: "relationship"
         # name: "Serious dating"
       },
       %Attribute{
         id: "vr",
-        type: "relationship",
+        type: "relationship"
         # name: "Casual dating"
       },
       %Attribute{
         id: "hookups",
-        type: "relationship",
+        type: "relationship"
         # name: "Casual fun"
       },
       %Attribute{
         id: "friends",
-        type: "relationship",
+        type: "relationship"
         # name: "New friends"
       }
     ]
   end
-
-  def compress(attributes) when is_list(attributes), do: Enum.map(attributes, &compress/1)
-
-  def compress(%Attribute{id: id, metadata: metadata})
-      when is_nil(metadata) or map_size(metadata) == 0,
-      do: id
-
-  def compress(%Attribute{id: id, metadata: metadata}),
-    do:  Map.put((metadata || %{}), :id, id)
 
   def list(type: attribute_type) when is_binary(attribute_type) do
     Attribute
@@ -116,6 +107,21 @@ defmodule Flirtual.Attribute do
   end
 
   def list(_), do: []
+
+  def compress(attributes) when is_list(attributes), do: Enum.map(attributes, &compress/1)
+
+  def compress(%Attribute{id: id, metadata: metadata})
+      when is_nil(metadata) or map_size(metadata) == 0,
+      do: id
+
+  def compress(%Attribute{id: id, metadata: metadata}),
+    do: Map.put(metadata || %{}, :id, id)
+
+  def group(attributes) do
+    Enum.reduce(attributes, %{}, fn %{id: id, type: type}, acc ->
+      Map.update(acc, type, [id], fn existing -> [id | existing] end)
+    end)
+  end
 
   def validate_attribute(changeset, id_key, attribute_type, options \\ []) do
     key =

@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { type FC, useEffect, useState } from "react";
 import { InAppReview } from "@capacitor-community/in-app-review";
 
 import { Form } from "~/components/forms";
@@ -14,21 +13,22 @@ import { SupportButton } from "~/components/layout/support-button";
 import { InlineLink } from "~/components/inline-link";
 import { useSession } from "~/hooks/use-session";
 import { User } from "~/api/user";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
-import type { AttributeCollection } from "~/api/attributes";
+import type { FC } from "react";
 
-export const DeleteForm: FC<{
-	deleteReasons: AttributeCollection<"delete-reason">;
-}> = ({ deleteReasons }) => {
+export const DeleteForm: FC = () => {
 	const router = useRouter();
-	const [requestRating, setRequestRating] = useState(false);
 
-	useEffect(() => {
-		if (requestRating) void InAppReview.requestReview();
-	}, [requestRating]);
+	const deleteReasons = useAttributeList("delete-reason");
+	const tAttribute = useAttributeTranslation();
 
 	const [session] = useSession();
 	if (!session) return null;
+
 	const { subscription } = session.user;
 
 	return (
@@ -74,13 +74,20 @@ export const DeleteForm: FC<{
 								<InputSelect
 									{...field.props}
 									placeholder="Select a reason"
-									options={deleteReasons.map((attribute) => ({
-										id: attribute.id,
-										name: attribute.name
-									}))}
+									options={deleteReasons.map((attribute) => {
+										const id =
+											typeof attribute === "object" ? attribute.id : attribute;
+										const { name } = tAttribute[id] ?? { name: id };
+
+										return {
+											id,
+											name
+										};
+									})}
 									onChange={(value) => {
 										field.props.onChange(value);
-										setRequestRating(value === "jrAqzBkasZwqfjSPAazNq3");
+										if (value === "jrAqzBkasZwqfjSPAazNq3")
+											void InAppReview.requestReview();
 									}}
 								/>
 								{field.props.value === "sQcEHRLCffbLfcgM4zAELf" ? (

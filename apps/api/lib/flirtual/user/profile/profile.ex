@@ -12,6 +12,12 @@ defmodule Flirtual.User.Profile do
   alias Flirtual.User.Profile
   alias Flirtual.User.Profile.{CustomWeights, Image, Preferences, Prompt}
 
+  @derive {Inspect,
+           only: [
+             :user_id,
+             :display_name
+           ]}
+
   @personality_questions [
     :question0,
     :question1,

@@ -16,29 +16,30 @@ import {
 } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { filterBy, fromEntries } from "~/utilities";
+import { fromEntries, pick } from "~/utilities";
 import { Profile } from "~/api/user/profile";
 import { User } from "~/api/user";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
-import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
 
 const AttributeKeys = [
 	...(["gender", "sexuality", "platform", "game"] as const)
 ];
 
-export interface InfoFormProps {
-	games: AttributeCollection<"game">;
-	platforms: AttributeCollection<"platform">;
-	sexualities: AttributeCollection<"sexuality">;
-	genders: AttributeCollection<"gender">;
-}
-
-export const InfoForm: FC<InfoFormProps> = (props) => {
-	const { games, genders, platforms, sexualities } = props;
-
+export const InfoForm: FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
+
+	const games = useAttributeList("game");
+	const platforms = useAttributeList("platform");
+	const sexualities = useAttributeList("sexuality");
+	const genders = useAttributeList("gender");
+
+	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
 	const { user } = session;
@@ -55,35 +56,28 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 				new: profile.new ?? false,
 				country: profile.country ?? null,
 				languages: profile.languages ?? [],
-				...(fromEntries(
-					AttributeKeys.map((type) => {
-						return [
-							type,
-							filterBy(profile.attributes, "type", type).map(({ id }) => id) ??
-								[]
-						] as const;
-					})
-				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
+				...pick(profile.attributes, AttributeKeys)
 			}}
-			onSubmit={async ({ bornAt, gender, ...values }) => {
+			onSubmit={async ({ bornAt, country, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
 					User.update(user.id, {
 						bornAt: bornAt.toISOString()
 					}),
 					Profile.update(user.id, {
 						required: ["new"],
-						country: values.country ?? "none",
+						country: country ?? "none",
 						languages: values.languages,
 						new: values.new,
-						// @ts-expect-error: don't want to deal with this.
-						...(fromEntries(
-							AttributeKeys.filter((key) => key !== "gender").map((type) => {
-								return [`${type}Id`, values[type]] as const;
+						...fromEntries(
+							AttributeKeys.map((type) => {
+								return [
+									`${type}Id`,
+									type === "gender"
+										? values[type].filter((id) => id !== "other")
+										: values[type]
+								] as const;
 							})
-						) as {
-							[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
-						}),
-						genderId: gender.filter((id) => id !== "other")
+						)
 					})
 				]);
 
@@ -121,9 +115,7 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 					</FormField>
 					<FormField name="gender">
 						{(field) => {
-							const simpleGenders = genders.filter(
-								(gender) => gender.metadata?.simple
-							);
+							const simpleGenders = genders.filter((gender) => gender.simple);
 							const simpleGenderIds = new Set(
 								simpleGenders.map((gender) => gender.id)
 							);
@@ -142,12 +134,8 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 										items={[
 											...simpleGenders.map((gender) => ({
 												key: gender.id,
-												label: gender.name,
-												conflicts:
-													gender.metadata &&
-													Array.isArray(gender.metadata.conflicts)
-														? gender.metadata.conflicts
-														: []
+												label: tAttribute[gender.id]?.name ?? gender.id,
+												conflicts: gender.conflicts ?? []
 											})),
 											{
 												key: "other",
@@ -160,13 +148,18 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 											{...field.props}
 											limit={4}
 											placeholder="Select your genders..."
-											options={genders.map((gender) => ({
-												key: gender.id,
-												label: gender.name,
-												definition: gender.metadata.definition,
-												definitionLink: gender.metadata.definitionLink,
-												hidden: simpleGenderIds.has(gender.id)
-											}))}
+											options={genders.map((gender) => {
+												const { name, definition } =
+													tAttribute[gender.id] ?? {};
+
+												return {
+													key: gender.id,
+													label: name ?? gender.id,
+													definition,
+													definitionLink: gender.definitionLink,
+													hidden: simpleGenderIds.has(gender.id)
+												};
+											})}
 										/>
 									)}
 								</>
@@ -181,12 +174,16 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 									{...field.props}
 									limit={3}
 									placeholder="Select your sexualities..."
-									options={sexualities.map((sexuality) => ({
-										key: sexuality.id,
-										label: sexuality.name,
-										definition: sexuality.metadata.definition,
-										definitionLink: sexuality.metadata.definitionLink
-									}))}
+									options={sexualities.map((sexuality) => {
+										const { name, definition } = tAttribute[sexuality.id] ?? {};
+
+										return {
+											key: sexuality.id,
+											label: name ?? sexuality.id,
+											definition,
+											definitionLink: sexuality.definitionLink
+										};
+									})}
 								/>
 							</>
 						)}
@@ -216,8 +213,8 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 									limit={8}
 									placeholder="Select the platforms you use..."
 									options={platforms.map((platform) => ({
-										key: platform.id,
-										label: platform.name
+										key: platform,
+										label: tAttribute[platform]?.name ?? platform
 									}))}
 								/>
 							</>
@@ -236,8 +233,8 @@ export const InfoForm: FC<InfoFormProps> = (props) => {
 									limit={5}
 									placeholder="Select your favorite games..."
 									options={games.map((game) => ({
-										key: game.id,
-										label: game.name
+										key: game,
+										label: tAttribute[game]?.name ?? game
 									}))}
 								/>
 							</>

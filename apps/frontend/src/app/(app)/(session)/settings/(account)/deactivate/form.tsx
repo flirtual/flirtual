@@ -32,13 +32,9 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 				onSubmit={async () => {
 					await (
 						deactivated ? User.reactivate(user.id) : User.deactivate(user.id)
-					)
-						.then(() =>
-							toasts.add(
-								`${deactivated ? "Reactivated" : "Deactivated"} account`
-							)
-						)
-						.catch(toasts.addError);
+					).then(() =>
+						toasts.add(`${deactivated ? "Reactivated" : "Deactivated"} account`)
+					);
 					router.refresh();
 				}}
 			>

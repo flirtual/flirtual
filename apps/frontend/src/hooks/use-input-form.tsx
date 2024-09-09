@@ -1,6 +1,7 @@
 import { createContext, useContext, useId, useMemo, useState } from "react";
 import { WretchError } from "wretch/resolver";
 import { useTranslations, type TranslationValues } from "next-intl";
+import { camelCase } from "change-case";
 
 import { type FormFieldFC, FormField } from "~/components/forms/field";
 import { entries } from "~/utilities";
@@ -133,7 +134,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 						Object.entries(properties).map(
 							([key, issues]) =>
 								[
-									key,
+									camelCase(key),
 									issues.map(({ error, details }) =>
 										t(`errors.${error}`, details as TranslationValues)
 									)

@@ -3,6 +3,7 @@ defmodule Flirtual.User.Profile.Policy do
 
   import Flirtual.Utilities
 
+  alias Flirtual.Attribute
   alias Flirtual.Subscription
   alias Flirtual.User
   alias Flirtual.User.Profile
@@ -223,10 +224,10 @@ defmodule Flirtual.User.Profile.Policy do
         else: &1
       )
     )
-    |> Enum.reduce(%{}, fn %{id: id, type: type}, acc ->
-      Map.update(acc, type, [id], fn existing -> [id | existing] end)
-    end) |> IO.inspect(label: "attributes")
+    |> Attribute.group()
   end
+
+  def transform(:attributes, _, profile), do: Attribute.group(profile.attributes)
 
   def transform(
         key,

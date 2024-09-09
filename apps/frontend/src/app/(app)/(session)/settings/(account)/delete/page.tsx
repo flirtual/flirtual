@@ -1,5 +1,8 @@
+import * as swr from "swr";
+
 import { ModelCard } from "~/components/model-card";
-import { withAttributeList } from "~/api/attributes-server";
+import { Attribute } from "~/api/attributes";
+import { SWRConfig } from "~/components/swr";
 
 import { DeleteForm } from "./form";
 
@@ -10,14 +13,23 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsAccountDeactivatePage() {
-	const deleteReasons = await withAttributeList("delete-reason");
+	const deleteReasons = await Attribute.list("delete-reason");
 
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
 			title="Delete account"
 		>
-			<DeleteForm deleteReasons={deleteReasons} />
+			<SWRConfig
+				value={{
+					fallback: {
+						[swr.unstable_serialize(["attributes", "delete-reason"])]:
+							deleteReasons
+					}
+				}}
+			>
+				<DeleteForm />
+			</SWRConfig>
 		</ModelCard>
 	);
 }

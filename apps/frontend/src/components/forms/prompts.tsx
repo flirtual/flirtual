@@ -3,15 +3,23 @@ import { type Dispatch, type FC, useEffect, useState } from "react";
 
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { Button } from "~/components/button";
-import { useAttributeList } from "~/hooks/use-attribute-list";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { SortableGrid, SortableItem } from "~/components/forms/sortable";
 import { groupBy, uniqueLast } from "~/utilities";
 
 import { NewBadge } from "../badge";
-import { DialogBody, DialogHeader, DialogTitle } from "../dialog/dialog";
+import {
+	DialogBody,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle
+} from "../dialog/dialog";
 
-import type { ProfilePrompt } from "~/api/user/profile/prompts";
+import type { ProfilePrompt } from "~/api/user/profile";
 
 const EditPromptDialog: FC<{
 	dialogOpen: boolean;
@@ -29,30 +37,35 @@ const EditPromptDialog: FC<{
 	const [value, setValue] = useState(initialValue);
 	useEffect(() => setValue(initialValue), [initialValue]);
 
-	const availablePrompts = useAttributeList("prompt").filter(
-		(prompt) => !excludedPrompts?.includes(prompt.id)
+	const filteredPrompts = useAttributeList("prompt").filter(
+		(promptId) => !excludedPrompts?.includes(promptId)
 	);
+	const tAttribute = useAttributeTranslation();
 
 	return (
 		<DrawerOrDialog open={dialogOpen} onOpenChange={onDialogOpen}>
 			<>
 				<DialogHeader>
 					<DialogTitle>{initialValue ? "Edit" : "Add a"} prompt</DialogTitle>
+					<DialogDescription className="sr-only"></DialogDescription>
 				</DialogHeader>
 				<DialogBody className="grid w-full gap-4">
 					<InputSelect
-						options={availablePrompts}
-						value={value?.prompt.id}
+						options={filteredPrompts.map((promptId) => ({
+							id: promptId,
+							name: tAttribute[promptId]?.name ?? promptId
+						}))}
+						value={value?.promptId}
 						placeholder="Select a prompt"
 						onChange={(id) => {
-							const prompt = availablePrompts.find(
-								(prompt) => prompt.id === id
+							const promptId = filteredPrompts.find(
+								(promptId) => promptId === id
 							);
-							if (!prompt) return;
+							if (!promptId) return;
 
 							setValue((value) => ({
 								...(value || { response: "" }),
-								prompt
+								promptId
 							}));
 						}}
 					/>
@@ -65,7 +78,7 @@ const EditPromptDialog: FC<{
 							setValue(
 								(value) =>
 									({
-										...(value || { prompt: { id: null } }),
+										...(value || { prompt: null }),
 										response
 										// eslint-disable-next-line @typescript-eslint/no-explicit-any
 									}) as any
@@ -73,11 +86,11 @@ const EditPromptDialog: FC<{
 						}
 					/>
 					<Button
-						disabled={!value || !value.prompt.id || !value.response}
+						disabled={!value || !value.promptId || !value.response}
 						size="sm"
 						className="ml-auto"
 						onClick={() => {
-							if (!value || !value.prompt.id || !value.response) return;
+							if (!value || !value.promptId || !value.response) return;
 
 							onDialogOpen(false);
 							onChange(value);
@@ -102,6 +115,7 @@ interface InputPromptsProps {
 export const InputPrompts: FC<InputPromptsProps> = (props) => {
 	const [promptDialogOpen, setPromptDialogOpen] = useState(false);
 	const [editingPrompt, setEditingPrompt] = useState<string | null>(null);
+	const tAttribute = useAttributeTranslation();
 
 	return (
 		<>
@@ -127,19 +141,21 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 			</InputLabel>
 			<SortableGrid
 				onChange={(newOrder) => {
-					const keyedValue = groupBy(props.value, ({ prompt }) => prompt.id);
-					props.onChange(newOrder.map((id) => keyedValue[id]?.[0]).filter(Boolean));
+					const keyedValue = groupBy(props.value, ({ promptId }) => promptId);
+					props.onChange(
+						newOrder.map((id) => keyedValue[id]?.[0]).filter(Boolean)
+					);
 				}}
-				values={props.value.map(({ prompt }) => prompt.id)}
+				values={props.value.map(({ promptId }) => promptId)}
 			>
 				<div className="mt-2 grid gap-4">
-					{props.value.map(({ prompt, response }) => {
+					{props.value.map(({ promptId, response }) => {
 						return (
-							<SortableItem key={prompt.id} id={prompt.id}>
+							<SortableItem key={promptId} id={promptId}>
 								<div className="flex select-none flex-col gap-2 rounded-xl bg-white-40 p-4 shadow-brand-1 vision:bg-white-40/70 vision:text-black-80 dark:bg-black-60">
 									<div className="flex justify-between">
 										<InputLabel className="text-base opacity-70">
-											{prompt.name}
+											{tAttribute[promptId]?.name ?? promptId}
 										</InputLabel>
 										<div
 											className="flex shrink-0 gap-2 px-2"
@@ -150,7 +166,7 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 												kind="tertiary"
 												size="sm"
 												onClick={() => {
-													setEditingPrompt(prompt.id);
+													setEditingPrompt(promptId);
 													setPromptDialogOpen(true);
 												}}
 												className="p-0 opacity-75 transition-all hocus:text-pink hocus:opacity-100"
@@ -163,7 +179,7 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 												onClick={() =>
 													props.onChange(
 														props.value.filter(
-															({ prompt: { id } }) => id !== prompt.id
+															(value) => value.promptId !== promptId
 														)
 													)
 												}
@@ -184,13 +200,13 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 			</SortableGrid>
 			<EditPromptDialog
 				excludedPrompts={props.value
-					.map(({ prompt }) => prompt.id)
+					.map(({ promptId }) => promptId)
 					.filter((id) => id !== editingPrompt)}
 				dialogOpen={promptDialogOpen}
 				onDialogOpen={setPromptDialogOpen}
 				value={
 					editingPrompt
-						? props.value.find(({ prompt }) => prompt.id === editingPrompt) ||
+						? props.value.find(({ promptId }) => promptId === editingPrompt) ||
 							null
 						: null
 				}
@@ -198,10 +214,10 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 					const newPrompts = uniqueLast(
 						editingPrompt
 							? props.value.map((prompt) =>
-									prompt.prompt.id === editingPrompt ? value : prompt
+									prompt.promptId === editingPrompt ? value : prompt
 								)
 							: [...props.value, value],
-						({ prompt }) => prompt.id
+						({ promptId }) => promptId
 					);
 					props.onChange(newPrompts);
 					setEditingPrompt(null);

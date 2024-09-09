@@ -6,8 +6,6 @@ import { Personality } from "./personality";
 import { ProfileImage } from "./images";
 
 import type {
-	Attribute,
-	AttributeMetadata,
 	AttributeType,
 	GroupedAttributeCollection
 } from "~/api/attributes";
@@ -133,7 +131,7 @@ export const DefaultProfileCustomWeights = Object.freeze<ProfileCustomWeights>(
 );
 
 export interface ProfilePrompt {
-	prompt: string;
+	promptId: string;
 	response: string;
 }
 

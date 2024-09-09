@@ -13,10 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsProfileBiographyPage() {
-	const [games, prompts] = await Promise.all([
-		Attribute.list("game"),
-		Attribute.list("prompt")
-	]);
+	const prompts = await Attribute.list("prompt");
 
 	return (
 		<ModelCard
@@ -26,7 +23,6 @@ export default async function SettingsProfileBiographyPage() {
 			<SWRConfig
 				value={{
 					fallback: {
-						[swr.unstable_serialize(["attribute", "game"])]: games,
 						[swr.unstable_serialize(["attribute", "prompt"])]: prompts
 					}
 				}}

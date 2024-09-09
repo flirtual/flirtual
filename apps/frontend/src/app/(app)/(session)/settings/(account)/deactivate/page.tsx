@@ -1,11 +1,11 @@
-import { getSession } from "~/api/auth";
+import { Authentication } from "~/api/auth";
 
 import { ActivationForm } from "./form";
 
 import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const session = await getSession();
+	const session = await Authentication.getSession();
 	const deactivated = !!session.user.deactivatedAt;
 
 	return {
@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SettingsAccountDeactivatePage() {
-	const session = await getSession();
+	const session = await Authentication.getSession();
 
 	return <ActivationForm user={session.user} />;
 }

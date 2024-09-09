@@ -14,16 +14,11 @@ import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
 import { urls } from "~/urls";
 import { InputPrompts } from "~/components/forms/prompts";
-import { findBy } from "~/utilities";
 import { displayName } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { ProfileImage } from "~/api/user/profile/images";
-import {
-	useAttributeList,
-	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+import { useAttributeTranslation } from "~/hooks/use-attribute-list";
 
-import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
 
 export const BiographyForm: FC = () => {
@@ -35,7 +30,6 @@ export const BiographyForm: FC = () => {
 	const { user } = session;
 	const { profile } = user;
 
-	const games = useAttributeList("game");
 	const tAttribute = useAttributeTranslation();
 
 	const favoriteGameId = user.profile.attributes.game.filter(
@@ -71,13 +65,7 @@ export const BiographyForm: FC = () => {
 							images.map((image) => image.id)
 						)
 					),
-					Profile.updatePrompts(
-						user.id,
-						values.prompts.map(({ prompt, response }) => ({
-							promptId: prompt.id,
-							response
-						}))
-					)
+					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
 				toasts.add("Saved bio & pics");
