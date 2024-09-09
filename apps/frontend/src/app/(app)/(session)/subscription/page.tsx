@@ -6,8 +6,8 @@ import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 import { formatDate } from "~/date";
-import { getSession } from "~/api/auth";
-import { getApproximateUserCount } from "~/api/user";
+import { Authentication } from "~/api/auth";
+import { User } from "~/api/user";
 
 import { SuccessMessage } from "./success-message";
 import { PlanList } from "./plan-list";
@@ -31,8 +31,8 @@ export default async function SubscriptionPage() {
 		userCount,
 		formatter
 	] = await Promise.all([
-		getSession(),
-		getApproximateUserCount(),
+		Authentication.getSession(),
+		User.getApproximateCount(),
 		getFormatter()
 	]);
 

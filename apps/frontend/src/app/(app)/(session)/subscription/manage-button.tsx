@@ -24,7 +24,7 @@ import {
 	DialogContent,
 	DialogFooter
 } from "~/components/dialog/dialog";
-import { cancelSubscription } from "~/api/subscription";
+import { Subscription } from "~/api/subscription";
 
 export const ManageButton: FC = () => {
 	const [session] = useSession();
@@ -71,7 +71,7 @@ export const ManageButton: FC = () => {
 									<Button
 										size="sm"
 										onClick={async () => {
-											await cancelSubscription()
+											await Subscription.cancel()
 												.then(() => {
 													return toasts.add({
 														duration: "long",

@@ -1,5 +1,8 @@
+import * as swr from "swr";
+
 import { ModelCard } from "~/components/model-card";
-import { withAttributeList } from "~/api/attributes-server";
+import { Attribute } from "~/api/attributes";
+import { SWRConfig } from "~/components/swr";
 
 import { NsfwForm } from "./form";
 
@@ -10,11 +13,19 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsProfileNsfwPage() {
-	const kinks = await withAttributeList("kink");
+	const kinks = await Attribute.list("kink");
 
 	return (
 		<ModelCard className="shrink desktop:w-full desktop:max-w-2xl" title="NSFW">
-			<NsfwForm kinks={kinks} />
+			<SWRConfig
+				value={{
+					fallback: {
+						[swr.unstable_serialize(["attribute", "kink"])]: kinks
+					}
+				}}
+			>
+				<NsfwForm />
+			</SWRConfig>
 		</ModelCard>
 	);
 }

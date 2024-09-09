@@ -11,17 +11,19 @@ import {
 import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { filterBy } from "~/utilities";
 import { Profile, ProfileDomsubList } from "~/api/user/profile";
 import { Preferences } from "~/api/user/preferences";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
-import type { AttributeCollection } from "~/api/attributes";
-
-export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
-	kinks
-}) => {
+export const NsfwForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
+
+	const kinks = useAttributeList("kink");
+	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
 	const { user } = session;
@@ -32,10 +34,7 @@ export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
 			fields={{
 				nsfw: user.preferences?.nsfw ?? false,
 				domsub: user.profile.domsub,
-				kinks:
-					filterBy(user.profile.attributes, "type", "kink").map(
-						({ id }) => id
-					) ?? [],
+				kinks: user.profile.attributes.kink ?? [],
 				kinksPrivacy: user.preferences?.privacy.kinks ?? "everyone"
 			}}
 			onSubmit={async ({ domsub, kinks, kinksPrivacy, nsfw }) => {
@@ -105,12 +104,18 @@ export const NsfwForm: React.FC<{ kinks: AttributeCollection<"kink"> }> = ({
 										<InputAutocomplete
 											{...field.props}
 											limit={8}
-											options={kinks.map((attribute) => ({
-												key: attribute.id,
-												label: attribute.name,
-												definition: attribute.metadata.definition,
-												definitionLink: attribute.metadata.definitionLink
-											}))}
+											options={kinks.map(({ id, definitionLink }) => {
+												const { name, definition } = tAttribute[id] ?? {
+													name: id
+												};
+
+												return {
+													key: id,
+													label: name,
+													definition,
+													definitionLink
+												};
+											})}
 										/>
 									</>
 								)}

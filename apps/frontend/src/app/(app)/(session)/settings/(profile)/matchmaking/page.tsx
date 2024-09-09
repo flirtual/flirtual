@@ -23,7 +23,7 @@ export default async function SettingsProfileMatchmakingPage() {
 			<SWRConfig
 				value={{
 					fallback: {
-						[swr.unstable_serialize(["attributes", "gender"])]: genders
+						[swr.unstable_serialize(["attribute", "gender"])]: genders
 					}
 				}}
 			>
