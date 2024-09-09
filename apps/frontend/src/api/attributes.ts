@@ -17,6 +17,9 @@ export const attributeTypes = [
 	"report-reason",
 	"prompt",
 	"platform",
+	"relationship",
+	"language",
+	"country",
 	"game",
 	"sexuality"
 ] as const;
@@ -27,14 +30,14 @@ export interface AttributeMetadata {
 	gender: {
 		simple?: boolean;
 		fallback?: boolean;
-		plural?: string;
+		// plural?: string;
 		conflicts?: Array<string>;
 		aliasOf?: string;
-		definition?: string;
+		// definition?: string;
 		definitionLink: string;
 	};
 	sexuality: {
-		definition?: string;
+		// definition?: string;
 		definitionLink: string;
 	};
 	relationship: undefined;
@@ -51,7 +54,7 @@ export interface AttributeMetadata {
 	kink: {
 		kind: KinkAttributeKind;
 		pair: string;
-		definition?: string;
+		// definition?: string;
 		definitionLink: string;
 	};
 	prompt: undefined;
@@ -59,7 +62,7 @@ export interface AttributeMetadata {
 		fallback?: boolean;
 	};
 	"ban-reason": {
-		details: string;
+		//details: string;
 		fallback?: boolean;
 	};
 	"delete-reason"?: {

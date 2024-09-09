@@ -60,6 +60,9 @@ defmodule Flirtual.User.Profile.Image do
   end
 
   def url(%Image{external_id: external_id}, variant) when is_binary(external_id) do
+    IO.inspect(external_id, label: "EXTERNAL ID")
+    IO.inspect(variant, label: "VARIANT")
+
     URI.new!("https://pfp.flirtu.al/")
     |> URI.merge(external_id <> "/" <> variant)
     |> URI.to_string()

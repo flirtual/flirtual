@@ -137,7 +137,7 @@ defmodule Flirtual.Matchmaking do
              User
              |> where(
                [user],
-               user.id in ^Enum.map(prospects, &elem(&1, 0)) and user.status == "visible"
+               user.id in ^Enum.map(prospects, &elem(&1, 0)) and user.status == :visible
              )
              |> select([user], user.id)
              |> Repo.all()
@@ -218,7 +218,7 @@ defmodule Flirtual.Matchmaking do
       user.preferences.push_notifications.matches and
         (not is_nil(user.apns_token) or not is_nil(user.fcm_token))
 
-    if target_user.status == "visible" and (send_email or send_push) do
+    if target_user.status == :visible and (send_email or send_push) do
       email_result =
         if send_email do
           %{

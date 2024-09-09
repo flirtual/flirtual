@@ -90,7 +90,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
     |> with_opposite(nil: true)
     |> exclude_blocked()
     |> join(:left, [lap, _, _], user in User, on: lap.profile_id == user.id)
-    |> where([_, _, _, user], user.status == "visible")
+    |> where([_, _, _, user], user.status == :visible)
     |> order_by(desc: :created_at)
     |> Repo.all()
   end
@@ -125,7 +125,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
         where:
           is_nil(opposite) and
             is_nil(block) and
-            user.status == "visible",
+            user.status == :visible,
         select: lap.profile_id,
         order_by: [desc: lap.latest_created_at]
       )

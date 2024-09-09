@@ -15,7 +15,6 @@ import type React from "react";
 export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
 	Icon?: IconComponent;
 	iconColor?: string;
-	connection?: boolean;
 	onChange?: React.Dispatch<string>;
 	startContent?: React.ReactNode;
 	endContent?: React.ReactNode;
@@ -44,8 +43,8 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 				<div
 					style={{ background: props.iconColor }}
 					className={twMerge(
-						"flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2 text-white-20",
-						props.connection && "h-12 w-14"
+						"flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2 text-white-20"
+						// props.connection && "h-12 w-14"
 					)}
 				>
 					<Icon className="size-6" />

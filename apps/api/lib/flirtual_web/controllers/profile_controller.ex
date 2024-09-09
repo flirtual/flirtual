@@ -22,7 +22,7 @@ defmodule FlirtualWeb.ProfileController do
                required: split_to_atom_list(params["required"]),
                required_attributes: split_to_atom_list(params["required_attributes"])
              ) do
-        conn |> json(Policy.transform(conn, profile))
+        conn |> json(Policy.transform(conn, profile) |> IO.inspect())
       end
     end
   end

@@ -91,8 +91,6 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 			? fallback
 			: await getLanguageMessages(locale.current);
 
-	console.log(current);
-
 	const preferred =
 		locale.current === locale.preferred
 			? current

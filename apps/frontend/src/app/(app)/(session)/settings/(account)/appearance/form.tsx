@@ -1,38 +1,24 @@
 "use client";
 
-import { type FC, type CSSProperties, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 import { Hash } from "lucide-react";
+import { type FC, useState } from "react";
 
 import { InputLabel } from "~/components/inputs";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { PremiumBadge } from "~/components/badge";
-import { ThemedBorder } from "~/components/themed-border";
-import { Pill } from "~/components/profile/pill/pill";
 import { Form, FormButton } from "~/components/forms";
 import { useFormContext } from "~/hooks/use-input-form";
 import { useTheme } from "~/hooks/use-theme";
-import { gradientTextColor } from "~/colors";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { Profile, type ProfileColors } from "~/api/user/profile";
 
 import { ThemePreview } from "./theme-preview";
-
-import type { Theme } from "~/theme";
-
-const DefaultProfileColors: Record<Theme, ProfileColors> = {
-	light: {
-		color_1: "#ff8975",
-		color_2: "#e9658b"
-	},
-	dark: {
-		color_1: "#b24592",
-		color_2: "#e9658b"
-	}
-};
+import { ProfileColorPreview } from "./profile-preview";
+import { defaultProfileColors, recommendedThemes } from "./themes";
 
 const ProfileColorEditor: FC = () => {
 	const [selectedColorIndex, setSelectedColorIndex] = useState(0);
@@ -83,151 +69,13 @@ const ProfileColorEditor: FC = () => {
 	);
 };
 
-const ProfileColorPreview: FC = () => {
-	const {
-		fields: { color_1, color_2 }
-	} = useFormContext<ProfileColors>();
-
-	const textColor = gradientTextColor(color_1.props.value, color_2.props.value);
-
-	return (
-		<ThemedBorder
-			className="flex flex-col gap-1 rounded-lg"
-			style={
-				{
-					"--theme-1": color_1.props.value,
-					"--theme-2": color_2.props.value,
-					"--theme-text": textColor
-				} as CSSProperties
-			}
-		>
-			<div className="flex size-full flex-col gap-4 rounded bg-white-20 px-3 py-2 text-black-70">
-				<span>This is how your profile colors look in Light Mode!</span>
-				<div className="flex scale-75 flex-wrap gap-2 [transform-origin:top_left]">
-					<Pill active small>
-						Friendly
-					</Pill>
-					<Pill active small>
-						Dancing
-					</Pill>
-					<Pill small className="!bg-white-30 !text-black-70">
-						Anime
-					</Pill>
-					<Pill active small>
-						VRChat
-					</Pill>
-				</div>
-			</div>
-			<div className="flex size-full flex-col gap-4 rounded bg-black-70 px-3 py-2 text-white-20">
-				<span>This is how your profile colors look in Dark Mode!</span>
-				<div className="flex scale-75 flex-wrap gap-2 [transform-origin:top_left]">
-					<Pill active small>
-						Friendly
-					</Pill>
-					<Pill active small>
-						Dancing
-					</Pill>
-					<Pill small className="!bg-black-60 !text-white-30">
-						Anime
-					</Pill>
-					<Pill active small>
-						VRChat
-					</Pill>
-				</div>
-			</div>
-		</ThemedBorder>
-	);
-};
-
-const recommendedThemes: Array<
-	{
-		name: string;
-	} & ProfileColors
-> = [
-	{
-		name: "Peachy Petal",
-		color_1: "#f9c58d",
-		color_2: "#f492f0"
-	},
-	{
-		name: "Minty Fresh",
-		color_1: "#00ff87",
-		color_2: "#60efff"
-	},
-	{
-		name: "3D Movie",
-		color_1: "#ff1b6b",
-		color_2: "#45caff"
-	},
-	{
-		name: "Rise and Shine",
-		color_1: "#ffa585",
-		color_2: "#ffeda0"
-	},
-	{
-		name: "Pretty in Pink",
-		color_1: "#ff00b4",
-		color_2: "#ff9abe"
-	},
-	{
-		name: "Aqua Depths",
-		color_1: "#6ff7e8",
-		color_2: "#1f7ea1"
-	},
-	{
-		name: "Galactic Glow",
-		color_1: "#fcb0f3",
-		color_2: "#3d05dd"
-	},
-	{
-		name: "Vaporwave",
-		color_1: "#fc4ecb",
-		color_2: "#2effcb"
-	},
-	{
-		name: "Fox Fire",
-		color_1: "#f46605",
-		color_2: "#ffb45d"
-	},
-	{
-		name: "Touch Grass",
-		color_1: "#743d17",
-		color_2: "#478f50"
-	},
-	{
-		name: "Lemon Lime",
-		color_1: "#fff82e",
-		color_2: "#4dff3d"
-	},
-	{
-		name: "Vampiric Vibe",
-		color_1: "#d80000",
-		color_2: "#650000"
-	},
-	{
-		name: "Trick or Treat",
-		color_1: "#ff8400",
-		color_2: "#b337fc"
-	},
-	{
-		name: "Serene Silver",
-		color_1: "#ebf4f5",
-		color_2: "#8694a9"
-	},
-	{
-		name: "Dark as My Soul",
-		color_1: "#000000",
-		color_2: "#000000"
-	}
-];
-
 const ReccommendedProfileThemes: FC = () => {
 	const {
 		fields: { color_1, color_2 }
 	} = useFormContext<ProfileColors>();
 	const { theme } = useTheme();
 
-	const defaultTheme = DefaultProfileColors[theme];
+	const defaultTheme = defaultProfileColors[theme];
 
 	return (
 		<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
@@ -304,7 +152,7 @@ const SaveButton: FC = () => {
 
 export const AppearanceForm: FC = () => {
 	const { theme } = useTheme();
-	const defaultTheme = DefaultProfileColors[theme];
+	const defaultTheme = defaultProfileColors[theme];
 
 	const toasts = useToast();
 	const router = useRouter();

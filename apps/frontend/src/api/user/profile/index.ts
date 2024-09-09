@@ -133,7 +133,7 @@ export const DefaultProfileCustomWeights = Object.freeze<ProfileCustomWeights>(
 );
 
 export interface ProfilePrompt {
-	prompt: Attribute<AttributeMetadata["prompt"]>;
+	prompt: string;
 	response: string;
 }
 

@@ -398,6 +398,13 @@ defmodule FlirtualWeb.Router do
   end
 
   @impl Plug.ErrorHandler
+  def handle_errors(conn, %{reason: %Phoenix.ActionClauseError{}}) do
+    conn
+    |> put_error(:bad_request)
+    |> halt()
+  end
+
+  @impl Plug.ErrorHandler
   def handle_errors(conn, %{reason: %Ecto.Query.CastError{}}) do
     conn
     |> put_error(:bad_request)

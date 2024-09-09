@@ -70,13 +70,13 @@ defmodule Flirtual.User.Profile.CustomWeights do
     changeset
     |> validate_number(name, greater_than_or_equal_to: 0, less_than_or_equal_to: 2)
     |> validate_number_divisible(name, 0.25)
-    # |> validate_change(name, fn _, _ ->
-    #   if name !== :country and not Subscription.active?(subscription) do
-    #     [{name, "Subscription required"}]
-    #   else
-    #     []
-    #   end
-    # end)
+    |> validate_change(name, fn _, _ ->
+      if name !== :country and not Subscription.active?(subscription) do
+        [{name, "Subscription required"}]
+      else
+        []
+      end
+    end)
   end
 
   defp validate_number_divisible(changeset, name, denominator) do

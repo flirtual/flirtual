@@ -2,9 +2,9 @@ import { useMessages } from "next-intl";
 import { useDebugValue } from "react";
 import useSWR from "swr";
 
-import { Attribute, type AttributeMetadata } from "~/api/attributes";
+import { Attribute, type AttributeType } from "~/api/attributes";
 
-export function useAttributeList<T extends keyof AttributeMetadata>(type: T) {
+export function useAttributeList<T extends AttributeType>(type: T) {
 	useDebugValue(type);
 
 	const { data: attributes = [] } = useSWR(
@@ -21,10 +21,7 @@ export function useAttributeList<T extends keyof AttributeMetadata>(type: T) {
 	return attributes;
 }
 
-export function useAttribute<T extends keyof AttributeMetadata>(
-	type: T,
-	id: string
-) {
+export function useAttribute<T extends AttributeType>(type: T, id: string) {
 	useDebugValue(`${type} - ${id}`);
 
 	const { data: attribute } = useSWR(
@@ -41,9 +38,22 @@ export function useAttribute<T extends keyof AttributeMetadata>(
 	return attribute;
 }
 
+export interface AttributeTranslationMetadata {
+	gender: {
+		plural?: string;
+		definition?: string;
+	};
+}
+
+export type AttributeTranslation<T extends AttributeType> = {
+	name: string;
+} & (T extends keyof AttributeTranslationMetadata
+	? AttributeTranslationMetadata[T]
+	: Record<string, never>);
+
 export function useAttributeTranslation() {
 	const { attributes: tAttributes } = useMessages() as {
-		attributes: Record<string, { name: string; definition?: string }>;
+		attributes: Record<string, AttributeTranslation<AttributeType>>;
 	};
 
 	return tAttributes;

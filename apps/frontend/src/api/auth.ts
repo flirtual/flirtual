@@ -180,7 +180,9 @@ export const Authentication = {
 		}
 	},
 	impersonate(userId: string) {
-		return this.api.url("/sudo").json({ userId }).post().json<Session>();
+		const a = this.api.url("/sudo");
+		console.log(a);
+		return a.json({ userId }).post().json<Session>();
 	},
 	revokeImpersonate() {
 		return this.api.url("/sudo").delete().json<Session>();

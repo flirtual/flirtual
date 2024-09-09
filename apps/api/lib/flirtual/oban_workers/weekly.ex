@@ -32,7 +32,7 @@ defmodule Flirtual.ObanWorkers.Weekly do
           where:
             is_nil(opposite) and
               is_nil(block) and
-              user.status == "visible",
+              user.status == :visible,
           select: lap.target_id
         )
 

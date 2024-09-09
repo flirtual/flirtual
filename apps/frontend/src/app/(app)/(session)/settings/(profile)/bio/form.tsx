@@ -18,13 +18,15 @@ import { findBy } from "~/utilities";
 import { displayName } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { ProfileImage } from "~/api/user/profile/images";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
 import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
 
-export const BiographyForm: FC<{ games: AttributeCollection<"game"> }> = ({
-	games
-}) => {
+export const BiographyForm: FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
@@ -33,10 +35,12 @@ export const BiographyForm: FC<{ games: AttributeCollection<"game"> }> = ({
 	const { user } = session;
 	const { profile } = user;
 
-	const favoriteGame = user.profile.attributes
-		.map(({ id }) => findBy(games, "id", id))
-		.filter(Boolean)
-		.filter((game) => game.name !== "VRChat")[0]?.name;
+	const games = useAttributeList("game");
+	const tAttribute = useAttributeTranslation();
+
+	const favoriteGameId = user.profile.attributes.game.filter(
+		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
+	)[0];
 
 	return (
 		<Form
@@ -110,8 +114,10 @@ export const BiographyForm: FC<{ games: AttributeCollection<"game"> }> = ({
 									hint={
 										<InputLabelHint>
 											Upload your avatar pictures from VRChat,{" "}
-											{favoriteGame ?? "Horizon Worlds"}, or another social VR
-											app. Aim for 3+ avatar pictures to get more matches.
+											{tAttribute[favoriteGameId || ""]?.name ??
+												"Horizon Worlds"}
+											, or another social VR app. Aim for 3+ avatar pictures to
+											get more matches.
 											<details>
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 													Guidelines

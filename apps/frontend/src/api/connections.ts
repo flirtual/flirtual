@@ -77,7 +77,7 @@ export const Connection = {
 	authorizeUrl(options: ConnectionAuthorizeOptions) {
 		return this.api.url("/authorize").query({
 			...options,
-			json: options.json ? "1" : undefined
+			...(options.json ? { json: "1" } : {})
 		})._url;
 	},
 	authorize(options: Omit<ConnectionAuthorizeOptions, "json">) {

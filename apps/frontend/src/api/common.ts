@@ -5,7 +5,7 @@ import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
 
 import { urls } from "~/urls";
-import { newIdempotencyKey, toCamelObject } from "~/utilities";
+import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 
 export interface UuidModel {
 	id: string;
@@ -130,11 +130,15 @@ export const api = wretch(urls.api)
 		].filter(Boolean)
 	)
 	.errorType("json")
-	.defer((wretch) =>
-		wretch.headers({
+	.defer((wretch, url, options) => {
+		const headers = new Headers(options.headers || {});
+		if (headers.get("content-type") === "application/json")
+			options.body = JSON.stringify(toSnakeObject(JSON.parse(options.body)));
+
+		return wretch.headers({
 			"idempotency-key": newIdempotencyKey()
-		})
-	)
+		});
+	})
 	.resolve((resolver) => {
 		const _json = resolver.json;
 		const json = (async (...args) => {

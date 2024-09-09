@@ -45,7 +45,7 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, ref) => {
 				type={onClick ? "button" : undefined}
 				className={twMerge(
 					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 transition-all vision:!bg-white-30/70 desktop:text-base",
-					hocusable && "cursor-pointer",
+					(href || onClick) && "cursor-pointer",
 					hocusable && (active || (hocused && (href || onClick)))
 						? "bg-brand-gradient text-theme-overlay"
 						: "bg-white-30 text-black-70 dark:bg-black-60 dark:text-white-20",

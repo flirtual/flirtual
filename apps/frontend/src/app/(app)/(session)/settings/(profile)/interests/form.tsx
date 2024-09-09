@@ -141,20 +141,26 @@ export const InterestsForm: FC = () => {
 							};
 							const categoryIcon = categoryIcons[categoryId];
 
-							const filteredInterests = categorizedInterests[
-								categoryId
-							]?.filter((interest) => {
-								if (!filter) return true;
+							const filteredInterests = categorizedInterests[categoryId]
+								?.filter((interest) => {
+									if (!filter) return true;
 
-								const interestName =
-									tAttribute[interest.id]?.name || interest.id;
-								return (
-									interestName.toLowerCase().includes(filter.toLowerCase()) ||
-									interest.synonyms?.some((synonym) =>
-										synonym.toLowerCase().includes(filter.toLowerCase())
-									)
-								);
-							});
+									const interestName =
+										tAttribute[interest.id]?.name || interest.id;
+									return (
+										interestName.toLowerCase().includes(filter.toLowerCase()) ||
+										interest.synonyms?.some((synonym) =>
+											synonym.toLowerCase().includes(filter.toLowerCase())
+										)
+									);
+								})
+								.sort(({ id: a }, { id: b }) => {
+									const aName = tAttribute[a]?.name || a;
+									const bName = tAttribute[b]?.name || b;
+
+									return aName.localeCompare(bName);
+								});
+
 							if (!filteredInterests || filteredInterests.length === 0)
 								return null;
 

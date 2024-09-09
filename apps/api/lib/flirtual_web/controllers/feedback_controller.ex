@@ -17,7 +17,7 @@ defmodule FlirtualWeb.FeedbackController do
       user = Users.get_by_slug(slug)
 
       case user do
-        %{status: "visible", profile: profile} ->
+        %{status: :visible, profile: profile} ->
           response = %{
             "bio" => profile.biography,
             "prompts" =>

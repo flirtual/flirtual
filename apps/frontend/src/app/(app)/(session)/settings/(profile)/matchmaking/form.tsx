@@ -26,7 +26,7 @@ import { Slider } from "~/components/inputs/slider";
 import { NewBadge, PremiumBadge } from "~/components/badge";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { capitalize, excludeBy, filterBy } from "~/utilities";
+import { capitalize } from "~/utilities";
 import {
 	CustomWeightList,
 	DefaultProfileCustomWeights,
@@ -36,21 +36,24 @@ import {
 	ProfileRelationshipList
 } from "~/api/user/profile";
 import { Matchmaking } from "~/api/matchmaking";
-
-import type { AttributeCollection } from "~/api/attributes";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
 const absMinAge = 18;
 const absMaxAge = 60;
 
-export interface MatchmakingFormProps {
-	genders: AttributeCollection<"gender">;
-}
-
-export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
+export const MatchmakingForm: FC = () => {
 	const [session] = useSession();
 	const t = useTranslations("profile");
 	const router = useRouter();
 	const toasts = useToast();
+
+	const genders = useAttributeList("gender").filter(
+		({ simple, fallback }) => simple || fallback
+	);
+	const tAttribute = useAttributeTranslation();
 
 	const [passesPending, setPassesPending] = useState(false);
 
@@ -63,9 +66,7 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 		<Form
 			className="flex flex-col gap-8"
 			fields={{
-				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(
-					({ id }) => id
-				),
+				gender: preferences?.attributes.gender || [],
 				age: [
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
@@ -87,21 +88,21 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 			}}
 			onSubmit={async (values) => {
 				const [agemin, agemax] = values.age;
+				const { gender: _, ...preferenceAttributes } =
+					preferences?.attributes ?? {};
 
 				await Promise.all([
 					Profile.update(user.id, {
 						required: ["relationships"],
 						relationships: values.relationships ?? [],
-						monopoly: "aaa" //values.monopoly ?? "none"
+						monopoly: values.monopoly ?? "none"
 					}),
 					Profile.updatePreferences(user.id, {
 						requiredAttributes: ["gender"],
 						agemin: agemin === absMinAge ? null : agemin,
 						agemax: agemax === absMaxAge ? null : agemax,
 						attributes: [
-							...excludeBy(preferences?.attributes ?? [], "type", "gender").map(
-								({ id }) => id
-							),
+							...Object.values(preferenceAttributes).flat(),
 							...values.gender
 						]
 					}),
@@ -132,13 +133,18 @@ export const MatchmakingForm: FC<MatchmakingFormProps> = ({ genders }) => {
 								<InputLabel {...field.labelProps}>I want to meet...</InputLabel>
 								<InputCheckboxList
 									{...field.props}
-									items={genders.map((gender) => ({
-										key: gender.id,
-										label:
-											gender.name === "Other"
+									items={genders.map((gender) => {
+										const { name, plural } = tAttribute[gender.id] ?? {
+											name: gender.id
+										};
+
+										return {
+											key: gender.id,
+											label: gender.fallback
 												? "Other genders"
-												: (gender.metadata?.plural ?? gender.name)
-									}))}
+												: (plural ?? name)
+										};
+									})}
 								/>
 							</>
 						)}

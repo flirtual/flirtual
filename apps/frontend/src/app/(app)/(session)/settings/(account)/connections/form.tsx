@@ -101,10 +101,9 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 								</>
 							)}
 							<AddConnectionButton type="meta" /> */}
-								<FormField className="col-span-2 wide:col-span-1" name="vrchat">
+								<FormField name="vrchat">
 									{(field) => (
 										<InputText
-											connection
 											Icon={VRChatIcon}
 											iconColor="#095d6a"
 											placeholder="VRChat"
@@ -113,13 +112,9 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 									)}
 								</FormField>
 								{vision && session.user.tags?.includes("debugger") && (
-									<FormField
-										className="col-span-2 wide:col-span-1"
-										name="facetime"
-									>
+									<FormField name="facetime">
 										{(field) => (
 											<InputText
-												connection
 												Icon={FaceTimeIcon}
 												iconColor="#34da4f"
 												placeholder="FaceTime number"

@@ -143,7 +143,7 @@ export async function Profile(props: ProfileProps) {
 						</div>
 					</ProfileImageDisplay>
 					<div className="h-2 bg-brand-gradient desktop:hidden" />
-					<div className="flex h-full grow flex-col gap-6 break-words p-8 pb-4">
+					<div className="flex h-full grow flex-col gap-6 break-words p-8">
 						{myProfile && <PersonalActions user={user} />}
 						<RelationActions direct={direct} user={user} />
 						{(discordConnection ||

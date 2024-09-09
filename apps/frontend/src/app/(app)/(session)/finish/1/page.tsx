@@ -1,12 +1,12 @@
 import { ModelCard } from "~/components/model-card";
-import { withAttributeList } from "~/api/attributes-server";
+import { Attribute } from "~/api/attributes";
 
 import { FinishProgress } from "../progress";
 
 import { Finish1Form } from "./form";
 
 export default async function Finish1Page() {
-	const games = await withAttributeList("game");
+	const games = await Attribute.list("game");
 
 	return (
 		<>

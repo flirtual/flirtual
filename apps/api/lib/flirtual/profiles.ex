@@ -353,7 +353,7 @@ defmodule Flirtual.Profiles do
         end
       end)
       |> Enum.map(fn
-        {:ok, image} -> %Image{image | profile: profile}
+        {:ok, image} -> image
         {:error, reason} -> Repo.rollback(reason)
       end)
     end)
