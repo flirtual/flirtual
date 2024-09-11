@@ -154,7 +154,7 @@ export const Authentication = {
 			return this.api.query({ passkeyId }).delete().res();
 		},
 		authenticate(options: AuthenticatePasskeyOptions) {
-			return this.api.json(options).post().res();
+			return this.api.url("/authenticate").json(options).post().res();
 		},
 		async registrationChallenge(platform?: boolean) {
 			const { publicKey } = await this.api
