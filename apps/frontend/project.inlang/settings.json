@@ -12,7 +12,7 @@
     "pt",
     "pt-BR",
     "ru",
-    "sv",
+    "sv"
   ],
   "modules": [
     "https://cdn.jsdelivr.net/npm/@inlang/plugin-next-intl@latest/dist/index.js"
