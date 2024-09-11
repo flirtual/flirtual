@@ -1,8 +1,8 @@
-import { getSession } from "~/api/auth";
+import { Authentication } from "~/api/auth";
 
 export default async function MinimalSessionLayout({
 	children
 }: React.PropsWithChildren) {
-	await getSession();
+	await Authentication.getSession();
 	return <>{children}</>;
 }

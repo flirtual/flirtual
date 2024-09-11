@@ -1,8 +1,8 @@
-import { assertGuest } from "~/api/auth";
+import { Authentication } from "~/api/auth";
 
 export default async function MinimalGuestLayout({
 	children
 }: React.PropsWithChildren) {
-	await assertGuest();
+	await Authentication.assertGuest();
 	return <>{children}</>;
 }

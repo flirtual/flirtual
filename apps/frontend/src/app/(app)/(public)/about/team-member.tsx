@@ -27,7 +27,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 		>
 			<Image
 				alt={t("image_alt", { name })}
-				className="aspect-square w-12 rounded-full bg-black-70 object-cover shadow-brand-1"
+				className="aspect-square w-12 shrink-0 rounded-full bg-black-70 object-cover shadow-brand-1"
 				height="64"
 				src={urls.media(avatar)}
 				width="64"

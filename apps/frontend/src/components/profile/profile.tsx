@@ -127,7 +127,7 @@ export async function Profile(props: ProfileProps) {
 							</div>
 							<div className="flex flex-wrap items-center gap-2 font-montserrat ">
 								<GenderPills
-									attributes={user.profile.attributes.gender}
+									attributes={user.profile.attributes.gender ?? []}
 									className="!bg-opacity-70"
 								/>
 								{user.profile.country && (

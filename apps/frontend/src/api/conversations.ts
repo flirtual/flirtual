@@ -48,7 +48,10 @@ export const Conversation = {
 			.json<Conversation | null>();
 	},
 	list(cursor?: string) {
-		return this.api.query({ cursor }).get().json<ConversationList>();
+		return this.api
+			.query(cursor ? { cursor } : {})
+			.get()
+			.json<ConversationList>();
 	},
 	markRead() {
 		return this.api.delete().res();
