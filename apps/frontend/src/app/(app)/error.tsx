@@ -35,12 +35,10 @@ export default function Error({
 			<div className="relative flex flex-col gap-8 desktop:flex-row">
 				<Image
 					className="pettable h-16 w-fit shrink-0 rotate-[10deg]"
-					src={
-						"https://cdn.discordapp.com/emojis/1115456900167893003.webp?size=128&quality=lossless"
-					}
+					src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 					alt=""
-					width={128}
-					height={107}
+					width={412}
+					height={345}
 				/>
 
 				<div className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80">
