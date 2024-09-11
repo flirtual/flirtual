@@ -64,20 +64,14 @@ async function getLanguageMessages(locale: string) {
 		`../messages/${locale}.json`
 	).catch(() => ({}));
 
+	const attributes = (await import(`../messages/attributes.${locale}.json`))
+		.default as Record<string, Record<string, unknown>>;
+
 	return {
 		...messages,
-		attributes: Object.fromEntries(
-			(
-				await Promise.all(
-					attributeTypes.map(async (attributeType) => {
-						const { default: messages } = await import(
-							`../messages/attributes/${attributeType}/${locale}.json`
-						).catch(() => ({ default: {} }));
-						return Object.entries(messages);
-					})
-				)
-			).flat()
-		)
+		attributes: Object.values(attributes).reduce((previous, current) => {
+			return { ...previous, ...current }
+		}, {})
 	};
 }
 
@@ -85,6 +79,7 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 	const { locale, translating } = await getInternationalization();
 
 	const fallback = await getLanguageMessages(locale.fallback);
+	console.log(fallback);
 
 	const current =
 		locale.current === locale.fallback
