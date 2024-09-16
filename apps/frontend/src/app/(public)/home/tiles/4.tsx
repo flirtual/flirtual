@@ -80,7 +80,7 @@ export function CallToAction({ id }: TileProps) {
 					</div>
 				</div>
 				<Footer
-					className="mt-auto bg-transparent pt-32"
+					className="mt-auto bg-transparent pt-32 desktop:pb-12"
 					background={false}
 					desktopOnly
 				/>
