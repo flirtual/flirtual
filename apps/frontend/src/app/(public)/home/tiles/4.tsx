@@ -22,7 +22,7 @@ export function CallToAction({ id }: TileProps) {
 
 	return (
 		<Tile className="h-auto !min-h-inherit content-center" id={id}>
-			<div className="-mt-16 flex grow flex-col items-center px-8 pb-8 pt-20 desktop:mt-0 desktop:px-24">
+			<div className="-mt-32 flex grow flex-col items-center px-8 pb-8 desktop:mt-0 desktop:px-24">
 				<div className="flex flex-col items-center gap-16 desktop:tall:mt-16">
 					<div className="flex flex-col items-center gap-4">
 						<FlirtualLogo className="w-56" />
