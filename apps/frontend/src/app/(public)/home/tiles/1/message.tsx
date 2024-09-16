@@ -13,7 +13,7 @@ export const ProfileMessage: FC = () => {
 	} = useMessages() as unknown as {
 		landing: {
 			profiles: {
-				messages: Array<string>;
+				messages: Record<string, string>;
 			};
 		};
 	};
@@ -22,7 +22,9 @@ export const ProfileMessage: FC = () => {
 
 	useInterval(
 		useCallback(() => {
-			setActiveIndex((activeIndex) => (activeIndex + 1) % messages.length);
+			setActiveIndex(
+				(activeIndex) => (activeIndex + 1) % Object.keys(messages).length
+			);
 		}, [messages.length]),
 		5000
 	);
