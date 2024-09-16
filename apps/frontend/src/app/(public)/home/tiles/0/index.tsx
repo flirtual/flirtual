@@ -22,7 +22,7 @@ export function Hero({ id }: TileProps) {
 			<div className="z-10 flex flex-col items-center px-8 pb-12 desktop:px-16">
 				<FlirtualLogo className="mb-4 w-56" />
 				<TileAnchor id={id}>
-					<h1 className="max-w-screen-desktop text-balance text-center text-6xl font-bold text-white-10 desktop:text-7xl desktop:[@media(min-height:600px)]:text-8xl">
+					<h1 className="max-w-screen-desktop text-balance text-center text-6xl font-bold text-white-10 desktop:text-7xl desktop:tall:text-8xl">
 						{t("hero.calm_calm_alligator_taste")}
 					</h1>
 				</TileAnchor>

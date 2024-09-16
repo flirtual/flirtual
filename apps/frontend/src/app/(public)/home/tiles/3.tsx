@@ -46,9 +46,9 @@ export async function Testimonial({ id }: TileProps) {
 					</span>
 				</TileAnchor>
 			</div>
-			<div className="flex h-[40vh] shrink-0 overflow-x-hidden desktop:[@media(min-height:600px)]:h-[50vh]">
+			<div className="flex h-[40vh] shrink-0 overflow-x-hidden desktop:tall:h-[50vh]">
 				<div className="grid min-w-max grid-cols-2 overflow-y-hidden">
-					<div className="flex h-[40vh] animate-scroll-x-screen desktop:[@media(min-height:600px)]:h-[50vh]">
+					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
 						{images.map((source, index) => (
 							<img
 								fetchPriority={index === 0 ? "high" : "low"}
@@ -58,7 +58,7 @@ export async function Testimonial({ id }: TileProps) {
 							/>
 						))}
 					</div>
-					<div className="flex h-[40vh] animate-scroll-x-screen desktop:[@media(min-height:600px)]:h-[50vh]">
+					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
 						{images.map((source, index) => (
 							<img
 								fetchPriority={index === 0 ? "high" : "low"}
@@ -70,14 +70,14 @@ export async function Testimonial({ id }: TileProps) {
 					</div>
 				</div>
 			</div>
-			<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:before:bg-none desktop:[@media(min-height:600px)]:max-w-screen-wide">
+			<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:tall:max-w-screen-wide desktop:tall:before:bg-none">
 				{Object.values(brands).map(({ name, image }, index) => (
 					<Image
 						key={image}
 						alt={name}
 						width={128}
 						height={128}
-						className="h-fit w-20 desktop:w-32"
+						className="h-fit w-20 desktop:tall:w-32"
 						style={{ transitionDuration: `${index * 10}ms` }}
 						src={urls.media(image)}
 					/>

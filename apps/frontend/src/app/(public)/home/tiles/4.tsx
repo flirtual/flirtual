@@ -21,13 +21,13 @@ export function CallToAction({ id }: TileProps) {
 	const t = useTranslations();
 
 	return (
-		<Tile className="h-auto min-h-inherit" id={id}>
-			<div className="flex h-full grow flex-col items-center px-8 pb-8 pt-20 desktop:px-24 [@media(min-height:600px)]:justify-center">
-				<div className="-mt-32 flex flex-col items-center gap-16 desktop:mt-16">
+		<Tile className="h-auto !min-h-inherit" id={id}>
+			<div className="flex grow flex-col items-center px-8 pb-8 pt-20 desktop:px-24">
+				<div className="-mt-32 flex flex-col items-center gap-16 desktop:mt-0 desktop:tall:mt-16">
 					<div className="flex flex-col items-center gap-4">
 						<FlirtualLogo className="w-56" />
 						<TileAnchor id={id}>
-							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-8xl">
+							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-5xl desktop:tall:text-8xl">
 								{t.rich("landing.cta.few_grassy_hyena_adapt", {
 									highlight: (children) => (
 										<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent">

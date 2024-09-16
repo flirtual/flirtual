@@ -50,7 +50,7 @@ export const CarouselGallery: FC = () => {
 						next();
 					}}
 				>
-					<div className="absolute z-10 flex size-full select-none items-center justify-center p-16">
+					<div className="absolute z-10 flex size-full select-none items-center justify-center px-28 py-16">
 						<span className="font-nunito text-5xl font-bold [text-shadow:0_0_16px_#000] desktop:text-7xl">
 							{title}
 						</span>
