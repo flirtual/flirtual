@@ -21,8 +21,8 @@ export function CallToAction({ id }: TileProps) {
 	const t = useTranslations();
 
 	return (
-		<Tile id={id}>
-			<div className="flex h-full grow flex-col items-center justify-center px-8 pb-8 pt-20 desktop:px-20">
+		<Tile className="h-auto min-h-inherit" id={id}>
+			<div className="flex h-full grow flex-col items-center px-8 pb-8 pt-20 desktop:px-24 [@media(min-height:600px)]:justify-center">
 				<div className="-mt-32 flex flex-col items-center gap-16 desktop:mt-16">
 					<div className="flex flex-col items-center gap-4">
 						<FlirtualLogo className="w-56" />
@@ -80,7 +80,7 @@ export function CallToAction({ id }: TileProps) {
 					</div>
 				</div>
 				<Footer
-					className="mt-auto bg-transparent"
+					className="mt-auto bg-transparent pt-32"
 					background={false}
 					desktopOnly
 				/>

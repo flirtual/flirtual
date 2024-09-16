@@ -36,19 +36,19 @@ export async function Testimonial({ id }: TileProps) {
 	const images = Object.values(_images);
 
 	return (
-		<Tile className="flex flex-col" id={id}>
-			<div className="flex justify-center p-8 desktop:p-16">
+		<Tile className="flex flex-col overflow-hidden" id={id}>
+			<div className="flex justify-center p-8 desktop:p-16 desktop:py-12">
 				<TileAnchor id={id}>
-					<span className="font-montserrat text-3xl font-extrabold desktop:text-5xl">
+					<span className="font-montserrat text-3xl font-extrabold desktop:text-4xl">
 						{t("even_major_hare_believe", {
 							userCount: format.number(userCount)
 						})}
 					</span>
 				</TileAnchor>
 			</div>
-			<div className="flex h-[40vh] shrink-0 overflow-x-hidden desktop:h-[50vh]">
+			<div className="flex h-[40vh] shrink-0 overflow-x-hidden desktop:[@media(min-height:600px)]:h-[50vh]">
 				<div className="grid min-w-max grid-cols-2 overflow-y-hidden">
-					<div className="flex h-[40vh] animate-scroll-x-screen desktop:h-[50vh]">
+					<div className="flex h-[40vh] animate-scroll-x-screen desktop:[@media(min-height:600px)]:h-[50vh]">
 						{images.map((source, index) => (
 							<img
 								fetchPriority={index === 0 ? "high" : "low"}
@@ -58,7 +58,7 @@ export async function Testimonial({ id }: TileProps) {
 							/>
 						))}
 					</div>
-					<div className="flex h-[40vh] animate-scroll-x-screen desktop:h-[50vh]">
+					<div className="flex h-[40vh] animate-scroll-x-screen desktop:[@media(min-height:600px)]:h-[50vh]">
 						{images.map((source, index) => (
 							<img
 								fetchPriority={index === 0 ? "high" : "low"}
@@ -70,7 +70,7 @@ export async function Testimonial({ id }: TileProps) {
 					</div>
 				</div>
 			</div>
-			<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:p-16 desktop:before:bg-none">
+			<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:before:bg-none desktop:[@media(min-height:600px)]:max-w-screen-wide">
 				{Object.values(brands).map(({ name, image }, index) => (
 					<Image
 						key={image}
