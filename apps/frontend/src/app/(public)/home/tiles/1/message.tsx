@@ -32,7 +32,7 @@ export const ProfileMessage: FC = () => {
 	const activeValue = messages[activeIndex];
 
 	return (
-		<span className="h-[8ch] max-w-4xl text-balance font-nunito text-[3vh] font-normal leading-snug desktop:h-[5ch] desktop:text-[5vh]">
+		<span className="h-[8ch] max-w-4xl text-balance font-nunito text-3xl font-normal leading-snug desktop:h-[5ch] desktop:text-4xl">
 			{activeValue}
 		</span>
 	);

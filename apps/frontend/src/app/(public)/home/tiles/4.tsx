@@ -23,7 +23,7 @@ export function CallToAction({ id }: TileProps) {
 	return (
 		<Tile className="h-auto !min-h-inherit" id={id}>
 			<div className="flex grow flex-col items-center px-8 pb-8 pt-20 desktop:px-24">
-				<div className="-mt-32 flex flex-col items-center gap-16 desktop:mt-0 desktop:tall:mt-16">
+				<div className="flex flex-col items-center gap-16 desktop:tall:mt-16">
 					<div className="flex flex-col items-center gap-4">
 						<FlirtualLogo className="w-56" />
 						<TileAnchor id={id}>
