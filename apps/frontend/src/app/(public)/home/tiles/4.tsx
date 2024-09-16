@@ -81,6 +81,7 @@ export function CallToAction({ id }: TileProps) {
 				</div>
 				<Footer
 					className="mt-auto bg-transparent pt-32 desktop:pb-12"
+					logoClassName="text-[snow]"
 					background={false}
 					desktopOnly
 				/>

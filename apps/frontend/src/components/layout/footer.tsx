@@ -64,11 +64,13 @@ export const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
 export type FooterProps = React.ComponentProps<"footer"> & {
 	desktopOnly?: boolean;
 	background?: boolean;
+	logoClassName?: string;
 };
 
 export const Footer: React.FC<FooterProps> = ({
 	desktopOnly,
 	background = true,
+	logoClassName,
 	...props
 }) => {
 	const t = useTranslations("footer");
@@ -86,7 +88,12 @@ export const Footer: React.FC<FooterProps> = ({
 		>
 			<div className="flex w-full max-w-screen-wide flex-col gap-4 desktop:gap-8">
 				<div className="flex items-center gap-8">
-					<FlirtualLogo className="w-36 text-black-80 dark:text-[snow]" />
+					<FlirtualLogo
+						className={twMerge(
+							"w-36 text-black-80 dark:text-[snow]",
+							logoClassName
+						)}
+					/>
 					<div className="flex gap-4">
 						<FooterIconSupportLink />
 						<FooterListIconLink
