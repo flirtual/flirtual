@@ -219,7 +219,7 @@ export const Onboarding1Form: FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormButton className="w-36" size="sm" />
+					<FormButton className="ml-auto w-36" size="sm" />
 				</>
 			)}
 		</Form>

@@ -1,7 +1,9 @@
 "use client";
 
-import { MoveRight } from "lucide-react";
+import { MoveLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+
+import type { FC } from "react";
 
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
@@ -11,22 +13,24 @@ import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
-import { excludeBy, filterBy } from "~/utilities";
 import { Profile } from "~/api/user/profile";
-
-import type { AttributeCollection } from "~/api/attributes";
-import type { FC } from "react";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
 const absMinAge = 18;
 const absMaxAge = 60;
 
-export interface Onboarding1FormProps {
-	genders: AttributeCollection<"gender">;
-}
-
-export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
+export const Onboarding2Form: FC = () => {
 	const [session, mutateSession] = useSession();
 	const router = useRouter();
+
+	const genders = useAttributeList("gender").filter(
+		({ simple, fallback }) => simple || fallback
+	);
+
+	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
 	const { preferences } = session.user.profile;
@@ -36,9 +40,7 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 			className="flex flex-col gap-8"
 			requireChange={false}
 			fields={{
-				gender: filterBy(preferences?.attributes ?? [], "type", "gender").map(
-					({ id }) => id
-				),
+				gender: preferences?.attributes.gender || [],
 				age: [
 					preferences?.agemin ?? absMinAge,
 					preferences?.agemax ?? absMaxAge
@@ -46,14 +48,15 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 			}}
 			onSubmit={async (values) => {
 				const [agemin, agemax] = values.age;
+				const { gender: _, ...preferenceAttributes } =
+					preferences?.attributes ?? {};
+
 				await Profile.updatePreferences(session.user.id, {
 					requiredAttributes: ["gender"],
 					agemin: agemin === absMinAge ? null : agemin,
 					agemax: agemax === absMaxAge ? null : agemax,
 					attributes: [
-						...excludeBy(preferences?.attributes ?? [], "type", "gender").map(
-							({ id }) => id
-						),
+						...Object.values(preferenceAttributes).flat().filter(Boolean),
 						...values.gender
 					]
 				});
@@ -69,13 +72,18 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 							<>
 								<InputCheckboxList
 									{...field.props}
-									items={genders.map((gender) => ({
-										key: gender.id,
-										label:
-											gender.name === "Other"
+									items={genders.map((gender) => {
+										const { name, plural } = tAttribute[gender.id] ?? {
+											name: gender.id
+										};
+
+										return {
+											key: gender.id,
+											label: gender.fallback
 												? "Other genders"
-												: (gender.metadata?.plural ?? gender.name)
-									}))}
+												: (plural ?? name)
+										};
+									})}
 								/>
 							</>
 						)}
@@ -109,19 +117,19 @@ export const Onboarding1Form: FC<Onboarding1FormProps> = ({ genders }) => {
 							);
 						}}
 					</FormField>
-					<div className="flex gap-2 desktop:flex-row-reverse">
-						<FormButton className="w-36" size="sm">
-							Finish
-						</FormButton>
+					<div className="ml-auto flex gap-2">
 						<ButtonLink
-							className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
+							className="flex w-fit flex-row gap-2 opacity-75"
 							href={urls.onboarding(1)}
 							kind="tertiary"
 							size="sm"
 						>
+							<MoveLeft className="size-5 shrink-0" />
 							<span>Back</span>
-							<MoveRight className="size-5 shrink-0 desktop:rotate-180" />
 						</ButtonLink>
+						<FormButton className="w-36" size="sm">
+							Finish
+						</FormButton>
 					</div>
 				</>
 			)}
