@@ -102,7 +102,7 @@ export const MatchmakingForm: FC = () => {
 						agemin: agemin === absMinAge ? null : agemin,
 						agemax: agemax === absMaxAge ? null : agemax,
 						attributes: [
-							...Object.values(preferenceAttributes).flat(),
+							...Object.values(preferenceAttributes).flat().filter(Boolean),
 							...values.gender
 						]
 					}),

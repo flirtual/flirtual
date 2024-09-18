@@ -4,7 +4,7 @@ defmodule Flirtual.Flag do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Flirtual.{Discord, Flag, Hash, Repo, User, Users}
+  alias Flirtual.{Connection, Discord, Flag, Hash, Repo, User, Users}
   alias Flirtual.User.Profile
 
   schema "flags" do
@@ -82,12 +82,40 @@ defmodule Flirtual.Flag do
     :ok
   end
 
+  def check_discord_in_biography(
+        %Profile{
+          user_id: user_id,
+          discord: discord
+        },
+        biography
+      ) do
+    biography_downcased = String.downcase(biography)
+    discord_connection = Connection.get(user_id, :discord)
+    discord_display_name = discord_connection[:display_name] || discord
+
+    if (discord_display_name !== nil &&
+          String.contains?(biography_downcased, discord_display_name)) ||
+         (discord_display_name === nil && String.contains?(biography_downcased, "discord")) do
+      now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+      User
+      |> where(id: ^user_id)
+      |> Repo.update_all(set: [tns_discord_in_biography: now])
+    else
+      User
+      |> where(id: ^user_id)
+      |> Repo.update_all(set: [tns_discord_in_biography: nil])
+    end
+
+    :ok
+  end
+
   def check_user_slug(_, nil), do: :ok
   def check_user_slug(%User{slug: slug}, slug), do: :ok
 
   def check_user_slug(user, slug) do
-    with {:ok, _} <- check_flags(user.id, slug),
-         {:ok, _} <- Hash.check_hash(user.id, "username", slug) do
+    with :ok <- check_flags(user.id, slug),
+         :ok <- Hash.check_hash(user.id, "username", slug) do
       :ok
     end
   end
@@ -96,8 +124,8 @@ defmodule Flirtual.Flag do
   def check_profile_display_name(%Profile{display_name: display_name}, display_name), do: :ok
 
   def check_profile_display_name(profile, display_name) do
-    with {:ok, _} <- check_flags(profile.user_id, display_name),
-         {:ok, _} <- Hash.check_hash(profile.user_id, "display name", display_name) do
+    with :ok <- check_flags(profile.user_id, display_name),
+         :ok <- Hash.check_hash(profile.user_id, "display name", display_name) do
       :ok
     end
   end
@@ -105,8 +133,8 @@ defmodule Flirtual.Flag do
   def check_profile_discord(_, nil), do: :ok
 
   def check_profile_discord(profile, discord) do
-    with {:ok, _} <- check_flags(profile.user_id, discord),
-         {:ok, _} <- Hash.check_hash(profile.user_id, "Discord", discord) do
+    with :ok <- check_flags(profile.user_id, discord),
+         :ok <- Hash.check_hash(profile.user_id, "Discord", discord) do
       :ok
     end
   end
@@ -114,8 +142,8 @@ defmodule Flirtual.Flag do
   def check_profile_vrchat(_, nil), do: :ok
 
   def check_profile_vrchat(profile, vrchat) do
-    with {:ok, _} <- check_flags(profile.user_id, vrchat),
-         {:ok, _} <- Hash.check_hash(profile.user_id, "VRChat", vrchat) do
+    with :ok <- check_flags(profile.user_id, vrchat),
+         :ok <- Hash.check_hash(profile.user_id, "VRChat", vrchat) do
       :ok
     end
   end
@@ -123,8 +151,8 @@ defmodule Flirtual.Flag do
   def check_profile_facetime(_, nil), do: :ok
 
   def check_profile_facetime(profile, facetime) do
-    with {:ok, _} <- check_flags(profile.user_id, facetime),
-         {:ok, _} <- Hash.check_hash(profile.user_id, "FaceTime", facetime) do
+    with :ok <- check_flags(profile.user_id, facetime),
+         :ok <- Hash.check_hash(profile.user_id, "FaceTime", facetime) do
       :ok
     end
   end
@@ -133,8 +161,9 @@ defmodule Flirtual.Flag do
   def check_profile_biography(%Profile{biography: biography}, biography), do: :ok
 
   def check_profile_biography(profile, biography) do
-    with {:ok, _} <- check_flags(profile.user_id, biography),
-         {:ok, _} <- check_openai_moderation(profile.user_id, biography) do
+    with :ok <- check_flags(profile.user_id, biography),
+         :ok <- check_openai_moderation(profile.user_id, biography),
+         :ok <- check_discord_in_biography(profile, biography) do
       :ok
     end
   end
@@ -143,7 +172,7 @@ defmodule Flirtual.Flag do
   def check_profile_custom_interests(_, []), do: :ok
 
   def check_profile_custom_interests(profile, custom_interests) do
-    with {:ok, _} <-
+    with :ok <-
            check_flags(
              profile.user_id,
              Enum.join(custom_interests, " ")

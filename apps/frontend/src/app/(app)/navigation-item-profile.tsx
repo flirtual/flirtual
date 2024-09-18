@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { ProfileNavigationCannyButton } from "../../components/layout/canny-button";
+
 import { DiscordOutlineIcon } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
@@ -25,8 +27,6 @@ import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 import { useCanny } from "~/hooks/use-canny";
 import { Authentication } from "~/api/auth";
-
-import { ProfileNavigationCannyButton } from "../../components/layout/canny-button";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
 	{ className?: string } & (
@@ -104,7 +104,7 @@ export const NavigationItemProfile: FC = () => {
 				{visible && (
 					<motion.div
 						animate={{ opacity: 1 }}
-						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom,0rem)+0.65em)*-1)] z-10 flex w-52 select-none flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom,0rem)+1.2rem)] pt-2.5 text-black-80 shadow-brand-1 desktop:bottom-inherit desktop:top-[-0.4rem] desktop:flex-col desktop:rounded-2xl desktop:pb-3 desktop:pt-[0.9375rem]"
+						className="absolute -left-2 bottom-[calc((env(safe-area-inset-bottom,0rem)+0.65em)*-1)] z-10 flex min-w-44 select-none flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pb-[calc(env(safe-area-inset-bottom,0rem)+1.2rem)] pt-2.5 text-black-80 shadow-brand-1 desktop:bottom-inherit desktop:top-[-0.4rem] desktop:flex-col desktop:rounded-2xl desktop:pb-3 desktop:pt-[0.9375rem]"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						ref={elementReference}
@@ -120,7 +120,7 @@ export const NavigationItemProfile: FC = () => {
 								variant="icon"
 								width={40}
 							/>
-							<span className="pb-1 pl-2 pt-2.5 font-montserrat text-lg font-semibold desktop:pb-2 desktop:pt-1">
+							<span className="whitespace-nowrap pb-1 pl-2 pt-2.5 font-montserrat text-lg font-semibold desktop:pb-2 desktop:pt-1">
 								{t("profile")}
 							</span>
 						</Link>
@@ -130,55 +130,55 @@ export const NavigationItemProfile: FC = () => {
 									isDesktop ? urls.settings.matchmaking() : urls.settings.list()
 								}
 							>
-								<Settings className="size-6" />
-								{t("settings")}
+								<Settings className="size-6 shrink-0" />
+								<span className="whitespace-nowrap">{t("settings")}</span>
 							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.subscription.default}>
-								<Sparkles className="size-6" />
-								{t("premium")}
+								<Sparkles className="size-6 shrink-0" />
+								<span className="whitespace-norap">{t("premium")}</span>
 							</ProfileNavigationItem>
 							<ProfileNavigationCannyButton />
 							<ProfileNavigationItem href={urls.socials.discord}>
-								<DiscordOutlineIcon className="size-6" />
-								{t("discord")}
+								<DiscordOutlineIcon className="size-6 shrink-0" />
+								<span className="whitespace-nowrap">{t("discord")}</span>
 							</ProfileNavigationItem>
 							<ProfileNavigationItem
 								className="native:hidden vision:hidden"
 								href={urls.resources.download}
 							>
-								<Download className="size-6" />
-								{t("get_app")}
+								<Download className="size-6 shrink-0" />
+								<span className="whitespace-nowrap">{t("get_app")}</span>
 							</ProfileNavigationItem>
 							{user.tags?.includes("moderator") && (
 								<>
 									<hr className="my-2 w-full border-t-2 border-white-40" />
 									<ProfileNavigationItem href={urls.moderation.reports()}>
-										<ShieldAlert className="size-6" />
-										{t("reports")}
+										<ShieldAlert className="size-6 shrink-0" />
+										<span className="whitespace-nowrap">{t("reports")}</span>
 									</ProfileNavigationItem>
 									<ProfileNavigationItem href={urls.moderation.search}>
-										<Search className="size-6" />
-										{t("search")}
+										<Search className="size-6 shrink-0" />
+										<span className="whitespace-nowrap">{t("search")}</span>
 									</ProfileNavigationItem>
 								</>
 							)}
 							{user.tags?.includes("admin") && (
 								<>
 									<ProfileNavigationItem href={urls.admin.stats}>
-										<LineChart className="size-6" />
-										{t("stats")}
+										<LineChart className="size-6 shrink-0" />
+										<span className="whitespace-nowrap">{t("stats")}</span>
 									</ProfileNavigationItem>
 								</>
 							)}
 							{session.sudoerId && (
 								<ProfileNavigationItem
 									onClick={async () => {
-										const session = await Authentication.revokeSudo();
+										const session = await Authentication.revokeImpersonate();
 										await mutateSession(session);
 									}}
 								>
-									<VenetianMask className="size-6" />
-									{t("unsudo")}
+									<VenetianMask className="size-6 shrink-0" />
+									<span className="whitespace-nowrap">{t("unsudo")}</span>
 								</ProfileNavigationItem>
 							)}
 						</div>

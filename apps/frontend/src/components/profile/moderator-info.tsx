@@ -1,19 +1,20 @@
+/* eslint-disable react/jsx-no-literals */
 import { Dialog } from "@capacitor/dialog";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { useSession } from "~/hooks/use-session";
-import { useToast } from "~/hooks/use-toast";
-import { capitalize } from "~/utilities";
-import { User } from "~/api/user";
-
 import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
 import { CopyClick } from "../copy-click";
 
 import type { FC } from "react";
+
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
+import { capitalize } from "~/utilities";
+import { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute-list";
 
 export const ProfileModeratorInfo: FC<{
@@ -132,7 +133,18 @@ export const ProfileModeratorInfo: FC<{
 						)}
 					>
 						{capitalize(user.status).replace("_", " ")}
-						{user.status === "visible" ? <Eye /> : <EyeOff />}
+						{user.status === "visible" ? (
+							<>
+								<Eye />
+								{user.tnsDiscordInBiography && (
+									<span className="text-red-600">
+										(hidden from non-visible users)
+									</span>
+								)}
+							</>
+						) : (
+							<EyeOff />
+						)}
 					</span>
 				</span>
 				<span>
@@ -210,6 +222,23 @@ export const ProfileModeratorInfo: FC<{
 						<span>No</span>
 					)}
 				</span>
+				<span>
+					<span className="font-bold">Discord in bio:</span>{" "}
+					{user.tnsDiscordInBiography ? (
+						<CopyClick value={user.tnsDiscordInBiography}>
+							<DateTimeRelative
+								className={
+									new Date(user.tnsDiscordInBiography).getTime() > Date.now()
+										? "text-orange-600"
+										: "text-red-600"
+								}
+								value={user.tnsDiscordInBiography}
+							/>
+						</CopyClick>
+					) : (
+						<span>No</span>
+					)}
+				</span>
 			</div>
 			<span>
 				<span className="font-bold">Warning (visible to user):</span>{" "}
@@ -223,7 +252,7 @@ export const ProfileModeratorInfo: FC<{
 					{user.profile.preferences?.agemin ?? 18}-
 					{user.profile.preferences?.agemax ?? "99+"}{" "}
 					{user.profile.preferences?.attributes.gender
-						.map((id) => tAttributes[id]?.name ?? id)
+						?.map((id) => tAttributes[id]?.name ?? id)
 						.join(", ")}
 				</span>
 			</span>

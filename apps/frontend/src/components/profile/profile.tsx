@@ -2,14 +2,6 @@ import * as swr from "swr";
 import { twMerge } from "tailwind-merge";
 import { getTranslations } from "next-intl/server";
 
-import { yearsAgo } from "~/date";
-import { Html } from "~/components/html";
-import { displayName, type User } from "~/api/user";
-import { urls } from "~/urls";
-import { gradientTextColor } from "~/colors";
-import { Authentication } from "~/api/auth";
-import { Attribute, type AttributeType } from "~/api/attributes";
-
 import { InlineLink } from "../inline-link";
 import { VRChatOutlineIcon, DiscordIcon } from "../icons";
 import { CopyClick } from "../copy-click";
@@ -29,12 +21,21 @@ import { ProfilePrompts } from "./prompts";
 
 import type { CSSProperties, ComponentProps } from "react";
 
+import { Attribute, type AttributeType } from "~/api/attributes";
+import { Authentication } from "~/api/auth";
+import { gradientTextColor } from "~/colors";
+import { urls } from "~/urls";
+import { displayName, type User } from "~/api/user";
+import { Html } from "~/components/html";
+import { yearsAgo } from "~/date";
+
 export type ProfileProps = ComponentProps<"div"> & {
 	user: User;
 	direct?: boolean;
 };
 
 const relevantAttributes: Array<AttributeType> = [
+	"gender",
 	"country",
 	"kink",
 	"language",
@@ -150,28 +151,30 @@ export async function Profile(props: ProfileProps) {
 							user.profile.discord ||
 							user.profile.vrchat) && (
 							<div className="flex flex-col gap-2 vision:text-white-20">
-								<div className="flex items-center gap-2">
-									<DiscordIcon className="size-6 shrink-0" />
-									{t.rich("that_proud_butterfly_find", {
-										name:
-											discordConnection?.displayName || user.profile.discord,
-										copy: (children) => (
-											<CopyClick
-												value={
-													discordConnection?.displayName ||
-													user.profile.discord!
-												}
-											>
-												<span>{children}</span>
-											</CopyClick>
-										)
-									})}
-									{discordConnection && (
-										<ProfileVerificationBadge
-											tooltip={t("smart_just_scallop_reside")}
-										/>
-									)}
-								</div>
+								{(discordConnection || user.profile.discord) && (
+									<div className="flex items-center gap-2">
+										<DiscordIcon className="size-6 shrink-0" />
+										{t.rich("that_proud_butterfly_find", {
+											name:
+												discordConnection?.displayName || user.profile.discord,
+											copy: (children) => (
+												<CopyClick
+													value={
+														discordConnection?.displayName ||
+														user.profile.discord!
+													}
+												>
+													<span>{children}</span>
+												</CopyClick>
+											)
+										})}
+										{discordConnection && (
+											<ProfileVerificationBadge
+												tooltip={t("smart_just_scallop_reside")}
+											/>
+										)}
+									</div>
+								)}
 								{user.profile.vrchat && (
 									<div className="flex items-center gap-2">
 										<VRChatOutlineIcon className="size-6 shrink-0 text-black-90" />

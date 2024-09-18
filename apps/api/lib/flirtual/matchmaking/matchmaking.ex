@@ -401,13 +401,17 @@ defmodule Flirtual.Matchmaking do
                    message: "already_responded"
                  )
                  |> Repo.insert(),
-               {:ok, _} <-
-                 profile
-                 |> change(
-                   %{}
-                   |> Map.put(queue_keys[types], profile[queue_keys[types]] + 1)
-                 )
-                 |> Repo.update(),
+               {1, nil} <-
+                 Profile
+                 |> where(user_id: ^user.id)
+                 |> Repo.update_all(inc: Keyword.put([], queue_keys[types], 1)),
+               {1, nil} <-
+                 User
+                 |> where(id: ^user.id)
+                 |> Repo.update_all(inc: Keyword.put([], (case (type) do
+                    :like -> :likes_count
+                    :pass -> :passes_count
+                  end), 1)),
                opposite_item <-
                  LikesAndPasses.get(
                    user_id: item.target_id,
@@ -470,39 +474,41 @@ defmodule Flirtual.Matchmaking do
         "function_score" => %{
           "query" => %{
             "bool" => %{
-              "must_not" => [
-                %{
-                  "ids" => %{
-                    "values" =>
-                      [
-                        # Exclude yourself.
-                        user.id,
-                        # Exclude users you've already liked or passed.
-                        LikesAndPasses
-                        |> where(profile_id: ^profile.user_id, type: :like)
-                        |> or_where(profile_id: ^profile.user_id, type: :pass, kind: :love)
-                        |> or_where(profile_id: ^profile.user_id, type: :pass, kind: ^kind)
-                        |> distinct(true)
-                        |> select([item], item.target_id)
-                        |> Repo.all(),
-                        # Exclude blocked users.
-                        Block
-                        |> where(profile_id: ^profile.user_id)
-                        |> distinct(true)
-                        |> select([item], item.target_id)
-                        |> Repo.all(),
-                        # Exclude users who blocked you.
-                        Block
-                        |> where(target_id: ^profile.user_id)
-                        |> distinct(true)
-                        |> select([item], item.target_id)
-                        |> Repo.all()
-                      ]
-                      |> List.flatten()
-                      |> Enum.uniq()
+              "must_not" =>
+                [
+                  %{
+                    "ids" => %{
+                      "values" =>
+                        [
+                          # Exclude yourself.
+                          user.id,
+                          # Exclude users you've already liked or passed.
+                          LikesAndPasses
+                          |> where(profile_id: ^profile.user_id, type: :like)
+                          |> or_where(profile_id: ^profile.user_id, type: :pass, kind: :love)
+                          |> or_where(profile_id: ^profile.user_id, type: :pass, kind: ^kind)
+                          |> distinct(true)
+                          |> select([item], item.target_id)
+                          |> Repo.all(),
+                          # Exclude blocked users.
+                          Block
+                          |> where(profile_id: ^profile.user_id)
+                          |> distinct(true)
+                          |> select([item], item.target_id)
+                          |> Repo.all(),
+                          # Exclude users who blocked you.
+                          Block
+                          |> where(target_id: ^profile.user_id)
+                          |> distinct(true)
+                          |> select([item], item.target_id)
+                          |> Repo.all()
+                        ]
+                        |> List.flatten()
+                        |> Enum.uniq()
+                    }
                   }
-                }
-              ],
+                ]
+                |> Enum.reject(&is_nil/1),
               "filter" => filters(user, kind),
               "should" => queries(user, kind),
               "minimum_should_match" => 0
@@ -525,11 +531,11 @@ defmodule Flirtual.Matchmaking do
   end
 
   def filters(%User{} = user, :love) do
-    Enum.map([:age, :gender], &filter(&1, user)) |> List.flatten()
+    Enum.map([:age, :gender, :hidden], &filter(&1, user)) |> List.flatten()
   end
 
-  def filters(_, :friend) do
-    []
+  def filters(%User{} = user, :friend) do
+    filter(:hidden, user)
   end
 
   def filter(:age, %User{} = user) do
@@ -601,6 +607,20 @@ defmodule Flirtual.Matchmaking do
         }
       }
     ]
+  end
+
+  def filter(:hidden, %User{status: :visible}) do
+    []
+  end
+
+  def filter(:hidden, _) do
+    %{
+      "term" => %{
+        "hidden_from_nonvisible" => %{
+          "value" => false
+        }
+      }
+    }
   end
 
   def queries(%User{} = user, :love) do

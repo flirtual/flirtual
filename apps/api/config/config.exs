@@ -19,9 +19,14 @@ config :flirtual, FlirtualWeb.Endpoint,
   ],
   render_errors: [
     view: FlirtualWeb.ErrorView,
-    formats: "json",
-    accepts: ~w(json)
+    accepts: ~w(json),
+    layout: false
   ]
+  # render_errors: [
+  #   view: FlirtualWeb.ErrorView,
+  #   formats: "json",
+  #   accepts: ~w(json)
+  # ]
 
 config :flirtual, Oban,
   repo: Flirtual.Repo,

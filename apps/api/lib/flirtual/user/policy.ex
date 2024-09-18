@@ -232,7 +232,8 @@ defmodule Flirtual.User.Policy do
     :email_confirmed_at,
     :created_at,
     :connections,
-    :subscription
+    :subscription,
+    :tns_discord_in_biography
   ]
 
   def transform(

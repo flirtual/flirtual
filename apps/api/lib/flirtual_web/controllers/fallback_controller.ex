@@ -16,15 +16,20 @@ defmodule FlirtualWeb.FallbackController do
     |> halt()
   end
 
-  def call(%Plug.Conn{} = conn, {:error, {status}}) do
+  @error_status_codes 400..599
+
+  def call(%Plug.Conn{} = conn, {:error, {status}})
+      when is_atom(status) or status in @error_status_codes do
     conn |> put_error(status) |> halt()
   end
 
-  def call(%Plug.Conn{} = conn, {:error, {status, message}}) do
+  def call(%Plug.Conn{} = conn, {:error, {status, message}})
+      when is_atom(status) or status in @error_status_codes do
     conn |> put_error(status, message) |> halt()
   end
 
-  def call(%Plug.Conn{} = conn, {:error, {status, message, details}}) do
+  def call(%Plug.Conn{} = conn, {:error, {status, message, details}})
+      when is_atom(status) or status in @error_status_codes do
     conn |> put_error(status, message, details) |> halt()
   end
 

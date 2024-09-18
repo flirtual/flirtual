@@ -66,6 +66,8 @@ defmodule Flirtual.User do
     field(:moderator_message, :string)
     field(:moderator_note, :string)
     field(:tns_discord_in_biography, :utc_datetime)
+    field(:likes_count, :integer, default: 0)
+    field(:passes_count, :integer, default: 0)
 
     field(:password, :string, virtual: true, redact: true)
     field(:relationship, :map, virtual: true)
@@ -1021,7 +1023,8 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
             LikesAndPasses
             |> where(profile_id: ^profile.user_id, type: :like)
             |> select([item], item.target_id)
-            |> Repo.all()
+            |> Repo.all(),
+          hidden_from_nonvisible: user.tns_discord_in_biography !== nil
         },
         if(user.preferences.nsfw,
           do: %{
