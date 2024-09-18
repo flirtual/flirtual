@@ -70,7 +70,7 @@ async function getLanguageMessages(locale: string) {
 	return {
 		...messages,
 		attributes: Object.values(attributes).reduce((previous, current) => {
-			return { ...previous, ...current }
+			return { ...previous, ...current };
 		}, {})
 	};
 }
@@ -79,7 +79,6 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 	const { locale, translating } = await getInternationalization();
 
 	const fallback = await getLanguageMessages(locale.fallback);
-	console.log(fallback);
 
 	const current =
 		locale.current === locale.fallback

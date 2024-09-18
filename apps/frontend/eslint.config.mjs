@@ -14,7 +14,8 @@ export default config({
 		"@next/next/no-html-link-for-pages": "off",
 		"sort-keys/sort-keys-fix": "off",
 		"tailwindcss/no-custom-classname": "off",
-		"react/no-unstable-nested-components": "off"
+		"react/no-unstable-nested-components": "off",
+		"react/jsx-no-literals": "warn"
 	},
 	ignores: [
 		"**/node_modules/**",

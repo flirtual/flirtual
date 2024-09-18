@@ -15,7 +15,7 @@ export const DateTimeRelative: FC<
 	const formatter = useFormatter();
 
 	return (
-		<span {...props}>
+		<span {...props} suppressHydrationWarning>
 			{formatter.dateTime(date, {
 				dateStyle: "medium",
 				timeStyle: "short",
