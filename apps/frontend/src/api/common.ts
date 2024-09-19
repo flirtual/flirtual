@@ -3,6 +3,7 @@ import QueryAddon from "wretch/addons/queryString";
 import AbortAddon from "wretch/addons/abort";
 import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
+import { unstable_noStore } from "next/cache";
 
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
@@ -64,6 +65,8 @@ export const api = wretch(urls.api)
 							)
 						);
 
+						unstable_noStore();
+
 						options.headers = {
 							...options.headers,
 							...relevantHeaders
@@ -107,11 +110,11 @@ export const api = wretch(urls.api)
 					const json = await response?.json().catch(() => null);
 					const message =
 						typeof json === "object" &&
-						json !== null &&
-						"error" in json &&
-						typeof json.error === "object" &&
-						json.error !== null &&
-						"message" in json.error
+							json !== null &&
+							"error" in json &&
+							typeof json.error === "object" &&
+							json.error !== null &&
+							"message" in json.error
 							? json.error.message
 							: (error?.message ?? response?.statusText);
 
@@ -149,8 +152,8 @@ export const api = wretch(urls.api)
 		return Object.assign(resolver, { json });
 	});
 
-export interface Issue {
-	error: string;
+export interface Issue<T extends string = string> {
+	error: T;
 	details?: Record<string, unknown>;
 }
 
@@ -163,6 +166,12 @@ export function isWretchError(
 	errorType: "invalid_properties"
 ): error is Omit<WretchError, "json"> & {
 	json: IssueWithProperties;
+};
+export function isWretchError(error: unknown): error is Omit<
+	WretchError,
+	"json"
+> & {
+	json: Issue;
 };
 export function isWretchError(
 	error: unknown,

@@ -65,7 +65,9 @@ export async function Navigation() {
 							/>
 							<NavigationalSwitchItem
 								href={urls.login()}
-								icon={<LoginIcon />}
+								icon={
+									<LoginIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
+								}
 								className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 							/>
 						</NavigationalSwitch>

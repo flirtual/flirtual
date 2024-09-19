@@ -76,7 +76,7 @@ export const TileGuide: FC<{ tileCount: number }> = ({ tileCount }) => {
 				<ButtonLink href={urls.register} size="sm">
 					{t("sign_up")}
 				</ButtonLink>
-				<ButtonLink href={urls.register} size="sm" kind="secondary">
+				<ButtonLink href={urls.login()} size="sm" kind="secondary">
 					{t("log_in")}
 				</ButtonLink>
 			</div>
