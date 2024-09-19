@@ -19,10 +19,10 @@ export function Hero({ id }: TileProps) {
 			className="relative flex flex-col items-center justify-center font-montserrat"
 			id={id}
 		>
-			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-16">
+			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-32">
 				<FlirtualLogo className="mb-4 w-56" />
 				<TileAnchor id={id}>
-					<h1 className="max-w-screen-desktop text-balance text-center text-6xl font-bold text-white-10 desktop:text-7xl desktop:tall:text-8xl">
+					<h1 className="max-w-4xl text-balance text-center text-6xl font-bold text-white-10 desktop:text-7xl desktop:tall:text-8xl">
 						{t("hero.calm_calm_alligator_taste")}
 					</h1>
 				</TileAnchor>

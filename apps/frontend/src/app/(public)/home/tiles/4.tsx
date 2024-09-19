@@ -30,7 +30,7 @@ export function CallToAction({ id }: TileProps) {
 							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-5xl desktop:tall:text-8xl">
 								{t.rich("landing.cta.few_grassy_hyena_adapt", {
 									highlight: (children) => (
-										<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent">
+										<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent wide:block">
 											{children}
 										</span>
 									)
