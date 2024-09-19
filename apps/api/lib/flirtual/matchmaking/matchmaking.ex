@@ -93,25 +93,39 @@ defmodule Flirtual.Matchmaking do
   def queue_information(%User{} = user, kind) do
     {:ok, existing_next_prospects} = next_prospects(user, kind)
     fields = get_queue_fields(user.profile, kind)
+    profiles_seen = user.likes_count + user.passes_count
 
-    {:ok, next_prospects} =
-      if(existing_next_prospects == [],
-        do: compute_next_prospects(user, kind),
-        else: {:ok, existing_next_prospects}
-      )
+    if(
+      profiles_seen >= 40 &&
+        (user.status in [:registered, :onboarded] ||
+           (user.status == :finished_profile && is_nil(user.email_confirmed_at)))
+    ) do
+      {:error,
+       {:forbidden,
+        case user.status do
+          :finished_profile -> :confirm_email
+          _ -> :finish_profile
+        end}}
+    else
+      {:ok, next_prospects} =
+        if(existing_next_prospects == [],
+          do: compute_next_prospects(user, kind),
+          else: {:ok, existing_next_prospects}
+        )
 
-    {:ok,
-     %{
-       prospects: next_prospects,
-       likes: fields.likes,
-       likes_left:
-         fields.likes_left
-         |> max(if Subscription.active?(user.subscription), do: 1, else: 0),
-       passes: fields.passes,
-       passes_left:
-         fields.passes_left
-         |> max(if Subscription.active?(user.subscription), do: 1, else: 0)
-     }}
+      {:ok,
+       %{
+         prospects: next_prospects,
+         likes: fields.likes,
+         likes_left:
+           fields.likes_left
+           |> max(if Subscription.active?(user.subscription), do: 1, else: 0),
+         passes: fields.passes,
+         passes_left:
+           fields.passes_left
+           |> max(if Subscription.active?(user.subscription), do: 1, else: 0)
+       }}
+    end
   end
 
   defp next_prospects(user, kind) do
@@ -408,10 +422,17 @@ defmodule Flirtual.Matchmaking do
                {1, nil} <-
                  User
                  |> where(id: ^user.id)
-                 |> Repo.update_all(inc: Keyword.put([], (case (type) do
-                    :like -> :likes_count
-                    :pass -> :passes_count
-                  end), 1)),
+                 |> Repo.update_all(
+                   inc:
+                     Keyword.put(
+                       [],
+                       case type do
+                         :like -> :likes_count
+                         :pass -> :passes_count
+                       end,
+                       1
+                     )
+                 ),
                opposite_item <-
                  LikesAndPasses.get(
                    user_id: item.target_id,

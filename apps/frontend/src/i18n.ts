@@ -98,6 +98,7 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 		// This will force all translations to be shown as their raw strings.
 		...(translating ? {} : messages),
 		banners: {
+			...(translating ? {} : messages.banners),
 			translating: messages.banners.translating
 		},
 		[`$${locale.preferred}`]: {

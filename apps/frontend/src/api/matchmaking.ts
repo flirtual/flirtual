@@ -1,4 +1,10 @@
-import { api, type CreatedAtModel, type UuidModel } from "./common";
+import {
+	api,
+	type Issue,
+	isWretchError,
+	type CreatedAtModel,
+	type UuidModel
+} from "./common";
 
 import type { User } from "./user";
 
@@ -37,13 +43,24 @@ export interface ReverseRespondProspectBody {
 
 export const Matchmaking = {
 	queue(kind: ProspectKind) {
-		return api.url("queue").query({ kind }).get().json<{
-			prospects: Array<string>;
-			passes: number;
-			likes: number;
-			likesLeft: number;
-			passesLeft: number;
-		}>();
+		return api
+			.url("queue")
+			.query({ kind })
+			.get()
+			.forbidden((reason) => {
+				if (isWretchError(reason)) return reason.json;
+			})
+			.json<
+				| {
+					prospects: Array<string>;
+					passes: number;
+					likes: number;
+					likesLeft: number;
+					passesLeft: number;
+				}
+				| Issue<"finish_profile">
+				| Issue<"confirm_email">
+			>();
 	},
 	respondProspect(body: RespondProspectBody) {
 		return api

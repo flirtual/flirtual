@@ -1,12 +1,16 @@
 import { redirect } from "next/navigation";
 
+import { ProspectActions } from "./prospect-actions";
+import {
+	ConfirmEmailError,
+	FinishProfileError,
+	OutOfProspectsError
+} from "./out-of-prospects";
+
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
 import { urls } from "~/urls";
 import { Profile } from "~/components/profile/profile";
 import { User } from "~/api/user";
-
-import { ProspectActions } from "./prospect-actions";
-import { OutOfProspects } from "./out-of-prospects";
 
 interface BrowsePageProps {
 	searchParams: { kind?: string };
@@ -23,11 +27,19 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 	const kind = (searchParams.kind ?? "love") as ProspectKind;
 	if (!ProspectKind.includes(kind)) return redirect(urls.browse());
 
+	const queue = await Matchmaking.queue(kind);
+	if ("error" in queue) {
+		if (queue.error === "finish_profile") return <FinishProfileError />;
+		if (queue.error === "confirm_email") return <ConfirmEmailError />;
+
+		return;
+	}
+
 	const {
 		prospects: prospectIds,
 		likesLeft: _likesLeft,
 		passesLeft: _passesLeft
-	} = await Matchmaking.queue(kind);
+	} = queue;
 
 	const users = await User.getMany(prospectIds);
 	const [current, next] = users;
@@ -63,7 +75,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 					/>
 				</>
 			) : (
-				<OutOfProspects mode={kind} />
+				<OutOfProspectsError mode={kind} />
 			)}
 		</>
 	);
