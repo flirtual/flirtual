@@ -1,5 +1,12 @@
 import { redirect } from "next/navigation";
 
+import { ConversationAside } from "../aside";
+import { getProfile } from "../../[slug]/data";
+
+import { FaceTimeButton } from "./facetime-button";
+
+import type { Metadata } from "next";
+
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { displayName } from "~/api/user";
 import { urls } from "~/urls";
@@ -7,13 +14,6 @@ import { UserAvatar } from "~/components/user-avatar";
 import { InlineLink } from "~/components/inline-link";
 import { Conversation } from "~/api/conversations";
 import { Authentication } from "~/api/auth";
-
-import { ConversationAside } from "../aside";
-import { getProfile } from "../../[slug]/data";
-
-import { FaceTimeButton } from "./facetime-button";
-
-import type { Metadata } from "next";
 
 export interface ConversationPageProps {
 	params: {
@@ -51,10 +51,10 @@ export default async function ConversationPage({
 		return redirect(urls.conversations.list());
 
 	return (
-		<>
+		<div className="flex w-full shrink-0 flex-col desktop:flex-row desktop:justify-center desktop:gap-4">
 			<ConversationAside activeConversationId={conversation.id} />
-			<div className="size-full bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
-				<div className="mt-[max(calc(env(safe-area-inset-top,0rem)+1.75rem),2.25rem)] flex w-full items-center bg-brand-gradient p-3 pt-[0.5625rem] vision:bg-none android:mt-[max(calc(var(--safe-area-inset-top,0rem)+1.5rem),2rem)] desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
+			<div className="mt-0 shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+				<div className="flex w-full items-center bg-brand-gradient p-3 vision:bg-none desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
 					<InlineLink
 						className="flex items-center gap-4 hocus:no-underline"
 						href={urls.profile(user)}
@@ -74,6 +74,6 @@ export default async function ConversationPage({
 				</div>
 				<ConversationChatbox conversationId={conversation.id} />
 			</div>
-		</>
+		</div>
 	);
 }

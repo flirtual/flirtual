@@ -6,18 +6,18 @@ import { type FC, Suspense, useLayoutEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { CheckCheck, ChevronLeft, X } from "lucide-react";
 
+import {
+	ConversationListItem,
+	ConversationListItemSkeleton
+} from "./list-item";
+import { LikesYouButton } from "./likes-you-button";
+
 import { urls } from "~/urls";
 import { useConversations } from "~/hooks/use-conversations";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { Button } from "~/components/button";
 import { useToast } from "~/hooks/use-toast";
 import { Conversation } from "~/api/conversations";
-
-import {
-	ConversationListItem,
-	ConversationListItemSkeleton
-} from "./list-item";
-import { LikesYouButton } from "./likes-you-button";
 
 export interface ConversationAsideProps {
 	activeConversationId?: string;
@@ -42,11 +42,11 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	return (
 		<div
 			className={twMerge(
-				"flex shrink-0 grow-0 select-none flex-col desktop:min-h-[calc(100vh-9rem)] desktop:w-96 desktop:rounded-2xl desktop:bg-brand-gradient desktop:shadow-brand-1",
+				"flex w-full shrink-0 grow-0 select-none flex-col desktop:min-h-[calc(100vh-9rem)] desktop:w-96 desktop:rounded-2xl desktop:bg-brand-gradient desktop:shadow-brand-1",
 				activeConversationId ? "w-full" : "desktop:mx-auto desktop:w-[28rem]"
 			)}
 		>
-			<div className="fixed z-10 flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top,0rem)+0.5rem),1rem)] text-white-20 android:pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] desktop:static desktop:bg-transparent desktop:pt-[1.125rem] android:desktop:pt-[1.125rem]">
+			<div className="flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top,0rem)+0.5rem),1rem)] text-white-20 android:pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] desktop:static desktop:bg-transparent desktop:pt-[1.125rem] android:desktop:pt-[1.125rem]">
 				<Link
 					className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
 					href={
