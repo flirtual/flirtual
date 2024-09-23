@@ -22,10 +22,10 @@ export const BannerLink: FC<PropsWithChildren<InlineLinkProps>> = ({
 export const Banner = forwardRef<
 	HTMLDivElement,
 	PropsWithChildren<{ className?: string }>
->(({ children, className }, ref) => {
+>(({ children, className }, reference) => {
 	return (
 		<div
-			ref={ref}
+			ref={reference}
 			className={twMerge(
 				"flex w-full justify-center bg-black-70 text-white-20",
 				className

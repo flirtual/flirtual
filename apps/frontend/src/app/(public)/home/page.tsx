@@ -12,7 +12,7 @@ export default async function RootIndexPage() {
 		<TileProvider>
 			<div className="flex h-screen snap-x snap-mandatory overflow-y-hidden scroll-smooth bg-black-80 text-white-20 desktop:snap-y desktop:flex-col desktop:overflow-x-hidden desktop:overflow-y-scroll">
 				{tiles.map((Tile, index) => (
-					<Tile key={index} id={index} />
+					<Tile id={index} key={index} />
 				))}
 				<TileGuide tileCount={tiles.length} />
 			</div>

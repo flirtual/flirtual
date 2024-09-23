@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
+
+import type React from "react";
 
 export type InputTextAreaProps = Omit<
 	React.ComponentProps<"textarea">,

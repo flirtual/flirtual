@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 
-import { Banner, BannerLink } from "../banner";
-
 import { Authentication } from "~/api/auth";
+
+import { Banner, BannerLink } from "../banner";
 
 export default async function () {
 	const session = await Authentication.getSession();

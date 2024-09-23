@@ -51,8 +51,8 @@ export async function Testimonial({ id }: TileProps) {
 					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
 						{images.map((source, index) => (
 							<img
-								fetchPriority={index === 0 ? "high" : "low"}
 								className="h-full object-cover"
+								fetchPriority={index === 0 ? "high" : "low"}
 								key={source}
 								src={urls.media(source)}
 							/>
@@ -61,8 +61,8 @@ export async function Testimonial({ id }: TileProps) {
 					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
 						{images.map((source, index) => (
 							<img
-								fetchPriority={index === 0 ? "high" : "low"}
 								className="h-full object-cover"
+								fetchPriority={index === 0 ? "high" : "low"}
 								key={source}
 								src={urls.media(source)}
 							/>
@@ -73,13 +73,13 @@ export async function Testimonial({ id }: TileProps) {
 			<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:tall:max-w-screen-wide desktop:tall:before:bg-none">
 				{Object.values(brands).map(({ name, image }, index) => (
 					<Image
-						key={image}
 						alt={name}
-						width={128}
-						height={128}
 						className="h-fit w-20 desktop:tall:w-32"
-						style={{ transitionDuration: `${index * 10}ms` }}
+						height={128}
+						key={image}
 						src={urls.media(image)}
+						style={{ transitionDuration: `${index * 10}ms` }}
+						width={128}
 					/>
 				))}
 			</div>

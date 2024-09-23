@@ -1,6 +1,6 @@
-import React from "react";
-
 import { type CheckboxListItem, InputCheckboxList } from "./checkbox-list";
+
+import type React from "react";
 
 export type RadioListItem<T extends string> = Omit<
 	CheckboxListItem<T>,

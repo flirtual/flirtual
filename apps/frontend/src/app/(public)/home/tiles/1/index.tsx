@@ -16,10 +16,10 @@ export function AvatarProfiles({ id }: TileProps) {
 				<Image
 					priority
 					alt={t("legal_big_finch_kiss")}
-					width={1600}
-					height={1302}
 					className="w-fit object-contain desktop:h-[50vh] wide:scale-100 tall:scale-125"
+					height={1302}
 					src={urls.media(t("quick_happy_lobster_hush"))}
+					width={1600}
 				/>
 				<div className="flex h-fit flex-col gap-4 text-center desktop:gap-8">
 					<TileAnchor id={id}>

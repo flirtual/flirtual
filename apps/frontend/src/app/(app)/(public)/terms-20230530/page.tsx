@@ -25,9 +25,9 @@ export default async function TermsPage() {
 		>
 			<div className="flex flex-col gap-4">
 				<SupersededPolicy
+					current={urls.resources.termsOfService}
 					introduced={new Date("2023-05-30")}
 					superseded={new Date("2023-10-11")}
-					current={urls.resources.termsOfService}
 				/>
 				<p>
 					This website (the &quot;Website&quot;) is operated by STUDIO PAPRIKA,

@@ -9,10 +9,12 @@ import { resolveTheme } from "~/theme";
 
 import { Popover } from "../popover";
 
-import { InputCalendar, type InputCalendarProps } from "./calendar";
+import {
+	InputCalendar,
+	type InputCalendarProps,
+	type MinmaxDate
+} from "./calendar";
 import { InputText } from "./text";
-
-import type { MinmaxDate } from "./calendar";
 
 /**
  * Both `toDateString` and `fromDateString` are horribly broken on different locale settings.

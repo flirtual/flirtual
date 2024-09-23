@@ -1,12 +1,5 @@
 import { redirect } from "next/navigation";
 
-import { ConversationAside } from "../aside";
-import { getProfile } from "../../[slug]/data";
-
-import { FaceTimeButton } from "./facetime-button";
-
-import type { Metadata } from "next";
-
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { displayName } from "~/api/user";
 import { urls } from "~/urls";
@@ -14,6 +7,13 @@ import { UserAvatar } from "~/components/user-avatar";
 import { InlineLink } from "~/components/inline-link";
 import { Conversation } from "~/api/conversations";
 import { Authentication } from "~/api/auth";
+
+import { getProfile } from "../../[slug]/data";
+import { ConversationAside } from "../aside";
+
+import { FaceTimeButton } from "./facetime-button";
+
+import type { Metadata } from "next";
 
 export interface ConversationPageProps {
 	params: {

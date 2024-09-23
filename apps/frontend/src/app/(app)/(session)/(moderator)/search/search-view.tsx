@@ -349,35 +349,35 @@ export const SearchView: React.FC = () => {
 								/>
 							</div>
 							<InputSelect
-								value={searchOptions.status}
+								optional
 								placeholder="Any status"
+								value={searchOptions.status}
 								options={UserStatuses.map((status) => ({
 									name: status.split("_").map(capitalize).join(" "),
 									id: status
 								}))}
-								optional
 								onChange={(value) =>
 									setSearchOptions({
 										...searchOptions,
 										status: value
 									})
 								}
-							></InputSelect>
+							/>
 							<InputSelect
-								value={searchOptions.tags?.[0] || ""}
+								optional
 								placeholder="Any tags"
+								value={searchOptions.tags?.[0] || ""}
 								options={userTags.map((tag) => ({
 									name: tag.split("_").map(capitalize).join(" "),
 									id: tag
 								}))}
-								optional
 								onChange={(value) =>
 									setSearchOptions({
 										...searchOptions,
 										tags: [value as UserTags]
 									})
 								}
-							></InputSelect>
+							/>
 						</div>
 					</div>
 					<div className="flex flex-col gap-2">
@@ -396,12 +396,12 @@ export const SearchView: React.FC = () => {
 										sort: value
 									})
 								}
-							></InputSelect>
+							/>
 							<InputSwitch
 								name="order"
+								no="Ascending"
 								value={searchOptions.order === "desc"}
 								yes="Descending"
-								no="Ascending"
 								onChange={(value) =>
 									setSearchOptions({
 										...searchOptions,

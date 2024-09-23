@@ -130,7 +130,7 @@ defmodule Flirtual.User do
        |> String.slice(0..8))
   end
 
-  def pronouns(%User{} = user) do
+  def pronouns(_) do
     %{
       subjective: "they",
       objective: "them",

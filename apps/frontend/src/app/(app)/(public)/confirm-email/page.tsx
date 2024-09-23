@@ -29,7 +29,7 @@ export default async function ConfirmEmailPage({
 		redirect(urls.login(searchParams?.to));
 
 	return (
-		<ModelCard title="Confirm your email" branded>
+		<ModelCard branded title="Confirm your email">
 			{searchParams?.token ? (
 				<ConfirmTokenForm token={searchParams.token} />
 			) : (

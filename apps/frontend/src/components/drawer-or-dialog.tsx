@@ -36,8 +36,8 @@ export const DrawerOrDialog: React.FC<DrawerOrDialogProps> = (props) => {
 		<>
 			{contentNode}
 			{drawer ? (
-				<Drawer open={open} onOpenChange={onOpenChange} dismissible={closable}>
-					<DrawerContent data-drawer="" className={twMerge("group", className)}>
+				<Drawer dismissible={closable} open={open} onOpenChange={onOpenChange}>
+					<DrawerContent className={twMerge("group", className)} data-drawer="">
 						{overlayNode}
 					</DrawerContent>
 				</Drawer>

@@ -39,9 +39,9 @@ SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 const SelectScrollUpButton = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
+>(({ className, ...props }, reference) => (
 	<SelectPrimitive.ScrollUpButton
-		ref={ref}
+		ref={reference}
 		className={twMerge(
 			"flex cursor-default items-center justify-center py-1",
 			className
@@ -56,9 +56,9 @@ SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 const SelectScrollDownButton = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
+>(({ className, ...props }, reference) => (
 	<SelectPrimitive.ScrollDownButton
-		ref={ref}
+		ref={reference}
 		className={twMerge(
 			"flex cursor-default items-center justify-center py-1",
 			className
@@ -233,8 +233,8 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 			<SelectContent>
 				{options.map((option) => (
 					<Item
-						key={option.id}
 						disabled={option.disabled}
+						key={option.id}
 						value={option.id as K & string}
 					>
 						<SelectItemText>{option.name}</SelectItemText>

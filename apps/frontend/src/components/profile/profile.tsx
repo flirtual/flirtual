@@ -2,6 +2,14 @@ import * as swr from "swr";
 import { twMerge } from "tailwind-merge";
 import { getTranslations } from "next-intl/server";
 
+import { Attribute, type AttributeType } from "~/api/attributes";
+import { Authentication } from "~/api/auth";
+import { gradientTextColor } from "~/colors";
+import { urls } from "~/urls";
+import { displayName, type User } from "~/api/user";
+import { Html } from "~/components/html";
+import { yearsAgo } from "~/date";
+
 import { InlineLink } from "../inline-link";
 import { VRChatOutlineIcon, DiscordIcon } from "../icons";
 import { CopyClick } from "../copy-click";
@@ -20,14 +28,6 @@ import { RelationActions } from "./relation-actions";
 import { ProfilePrompts } from "./prompts";
 
 import type { CSSProperties, ComponentProps } from "react";
-
-import { Attribute, type AttributeType } from "~/api/attributes";
-import { Authentication } from "~/api/auth";
-import { gradientTextColor } from "~/colors";
-import { urls } from "~/urls";
-import { displayName, type User } from "~/api/user";
-import { Html } from "~/components/html";
-import { yearsAgo } from "~/date";
 
 export type ProfileProps = ComponentProps<"div"> & {
 	user: User;
@@ -105,8 +105,8 @@ export async function Profile(props: ProfileProps) {
 			>
 				<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-[1.25rem] desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
 					<ProfileImageDisplay
-						images={user.profile.images}
 						current={id !== "next-profile"}
+						images={user.profile.images}
 					>
 						<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
 							<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">

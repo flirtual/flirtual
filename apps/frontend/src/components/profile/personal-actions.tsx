@@ -112,17 +112,17 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 												{(field) => (
 													<InputText
 														{...field.props}
-														startContent={
-															<span className="shrink-0 pl-4 font-mono">
-																flirtu.al/
-															</span>
-														}
+														className="pl-0 font-mono"
 														endContent={
 															field.changed && (
 																<Availability slug={field.props.value} />
 															)
 														}
-														className="pl-0 font-mono"
+														startContent={
+															<span className="shrink-0 pl-4 font-mono">
+																flirtu.al/
+															</span>
+														}
 													/>
 												)}
 											</FormField>

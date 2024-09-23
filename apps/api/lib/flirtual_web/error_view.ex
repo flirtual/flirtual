@@ -13,7 +13,7 @@ defmodule FlirtualWeb.ErrorView do
     Issue.new(Conn.Status.reason_phrase(400))
   end
 
-  def render(_, %{reason: reason, status: status}) do
+  def render(_, %{reason: _, status: status}) do
     message =
       Conn.Status.code(status)
       |> Conn.Status.reason_phrase()

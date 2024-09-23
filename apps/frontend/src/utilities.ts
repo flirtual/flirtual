@@ -186,10 +186,10 @@ export type GroupBy<T extends ReadonlyArray<unknown>, K extends PropertyKey> = {
 export function groupBy<T extends ReadonlyArray<object>, K extends PropertyKey>(
 	array: T,
 
-	fn: (value: T[number]) => K
+	function_: (value: T[number]) => K
 ): GroupBy<T, K> {
 	return array.reduce((previous: any, current) => {
-		const key = fn(current);
+		const key = function_(current);
 		const group = previous[key] || [];
 		group.push(current);
 		return { ...previous, [key]: group };

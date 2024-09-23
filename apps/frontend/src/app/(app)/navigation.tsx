@@ -40,18 +40,18 @@ export async function Navigation() {
 							<NavigationItemProfile />
 							<NavigationalSwitch id="browse-mode-switch">
 								<NavigationalSwitchItem
+									className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 									href={urls.browse()}
 									icon={
 										<HeartIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
 									}
-									className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 								/>
 								<NavigationalSwitchItem
+									className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
 									href={urls.browse("friend")}
 									icon={
 										<PeaceIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
 									}
-									className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
 								/>
 							</NavigationalSwitch>
 							<NavigationItemMessage />
@@ -59,16 +59,16 @@ export async function Navigation() {
 					) : (
 						<NavigationalSwitch>
 							<NavigationalSwitchItem
+								className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 								href={urls.default}
 								icon={<HomeIcon />}
-								className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 							/>
 							<NavigationalSwitchItem
+								className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 								href={urls.login()}
 								icon={
 									<LoginIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
 								}
-								className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 							/>
 						</NavigationalSwitch>
 					)}

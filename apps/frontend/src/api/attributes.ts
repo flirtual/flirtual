@@ -81,10 +81,10 @@ export type Attribute<T = unknown> = {
 
 export type MinimalAttribute<T extends AttributeType> =
 	AttributeMetadata[T] extends infer A
-	? A extends undefined
-	? string
-	: Expand<Omit<Attribute<AttributeMetadata[T]>, "type">>
-	: never;
+		? A extends undefined
+			? string
+			: Expand<Omit<Attribute<AttributeMetadata[T]>, "type">>
+		: never;
 
 export type AttributeCollection<T extends AttributeType> = Array<
 	MinimalAttribute<T>

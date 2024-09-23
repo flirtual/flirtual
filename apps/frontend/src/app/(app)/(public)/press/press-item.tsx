@@ -1,7 +1,8 @@
 import { useFormatter } from "next-intl";
-import React from "react";
 
 import { InlineLink } from "~/components/inline-link";
+
+import type React from "react";
 
 export interface PressItemProps {
 	name: string;

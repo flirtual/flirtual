@@ -28,17 +28,17 @@ export default function Error({
 		<ModelCard
 			branded
 			className="desktop:max-w-2xl"
+			containerProps={{ className: "flex flex-col gap-8" }}
 			title="Something went wrong!"
 			titleProps={{ className: "text-2xl" }}
-			containerProps={{ className: "flex flex-col gap-8" }}
 		>
 			<div className="relative flex flex-col gap-8 desktop:flex-row">
 				<Image
-					className="pettable h-16 w-fit shrink-0 rotate-[10deg]"
-					src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 					alt=""
-					width={412}
+					className="pettable h-16 w-fit shrink-0 rotate-[10deg]"
 					height={345}
+					src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
+					width={412}
 				/>
 
 				<div className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80">
@@ -54,8 +54,8 @@ export default function Error({
 					<p className="max-w-sm whitespace-pre-wrap font-mono text-xs">
 						{error.digest && <>ID: {error.digest} </>}
 						<button
-							type="button"
 							className="opacity-75 hover:opacity-100"
+							type="button"
 							onClick={() => setShowMore((showMore) => !showMore)}
 						>
 							(show {showMore ? "less" : "more"})

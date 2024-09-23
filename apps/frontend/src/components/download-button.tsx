@@ -1,4 +1,3 @@
-import React from "react";
 import Link, { type LinkProps } from "next/link";
 import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
@@ -6,6 +5,8 @@ import { twMerge } from "tailwind-merge";
 import { urls } from "~/urls";
 
 import { AppleIcon, GooglePlayIcon, MetaIcon, MicrosoftIcon } from "./icons";
+
+import type React from "react";
 
 export const platforms = {
 	apple: {
@@ -44,12 +45,12 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 	return (
 		<Link
 			{...props}
+			href={href}
+			target="_blank"
 			className={twMerge(
 				"flex w-56 select-none items-center gap-4 rounded-xl bg-white-10 px-6 py-4 text-black-70 shadow-brand-1",
 				className
 			)}
-			target="_blank"
-			href={href}
 		>
 			<Icon className="h-8" />
 			<div className="flex flex-col justify-center text-left">

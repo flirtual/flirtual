@@ -1,7 +1,9 @@
-import React, { useId } from "react";
+import { useId } from "react";
 
 import { InputCheckbox } from "./checkbox";
 import { InputLabel } from "./label";
+
+import type React from "react";
 
 export interface CheckboxListItem<K extends string> {
 	key: K;

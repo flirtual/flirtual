@@ -10,13 +10,13 @@ export interface BadgeProps extends PropsWithChildren {
 }
 
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
-	({ asChild = false, children }, ref) => {
+	({ asChild = false, children }, reference) => {
 		const Component = asChild ? Slot : "div";
 
 		return (
 			<Component
-				ref={ref}
 				className="focusable flex shrink-0 grow-0 gap-2 rounded-xl bg-brand-gradient px-3 py-1 text-sm font-bold uppercase text-white-10 shadow-brand-1"
+				ref={reference}
 			>
 				{children}
 			</Component>

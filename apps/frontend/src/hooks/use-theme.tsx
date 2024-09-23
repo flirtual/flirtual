@@ -29,7 +29,7 @@ export const ThemeProvider = forwardRef<
 		children: React.ReactNode;
 		theme: PreferenceTheme;
 	}
->(({ children, theme: sessionTheme, ...props }, ref) => {
+>(({ children, theme: sessionTheme, ...props }, reference) => {
 	const [session, mutateSession] = useSession();
 	const { vision } = useDevice();
 	const router = useRouter();
@@ -83,7 +83,7 @@ export const ThemeProvider = forwardRef<
 
 	return (
 		<Context.Provider value={{ theme, sessionTheme, setTheme }}>
-			<Slot {...props} ref={ref} data-theme={theme}>
+			<Slot {...props} data-theme={theme} ref={reference}>
 				{children}
 			</Slot>
 		</Context.Provider>

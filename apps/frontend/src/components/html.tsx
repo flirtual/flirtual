@@ -1,7 +1,8 @@
-import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { html } from "~/html";
+
+import type React from "react";
 
 export type HtmlProps = Omit<React.ComponentProps<"span">, "children"> & {
 	children: string;

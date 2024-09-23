@@ -1,5 +1,4 @@
 defmodule FlirtualWeb.Router do
-  alias FlirtualWeb.ErrorHelpers.Issue
   use FlirtualWeb, :router
   use Plug.ErrorHandler
   use Flirtual.Logger, :router

@@ -142,9 +142,9 @@ export const Footer: React.FC<FooterProps> = ({
 					<div className="flex flex-col items-end">
 						<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 						<InlineLink
+							className="text-sm opacity-75"
 							highlight={false}
 							href={gitCommitUrl}
-							className="text-sm opacity-75"
 						>
 							{gitCommitSha.slice(0, 8)}
 						</InlineLink>

@@ -47,9 +47,9 @@ export const MadeWithLove: React.FC = () => {
 				heart,
 				action: (children) => (
 					<button
+						className="inline-block w-[1.5em] origin-center transition-transform duration-200 group-hover:scale-125"
 						type="button"
 						onClick={updateHeart}
-						className="inline-block w-[1.5em] origin-center transition-transform duration-200 group-hover:scale-125"
 					>
 						{children}
 					</button>

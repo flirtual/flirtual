@@ -52,12 +52,12 @@ export const Matchmaking = {
 			})
 			.json<
 				| {
-					prospects: Array<string>;
-					passes: number;
-					likes: number;
-					likesLeft: number;
-					passesLeft: number;
-				}
+						prospects: Array<string>;
+						passes: number;
+						likes: number;
+						likesLeft: number;
+						passesLeft: number;
+				  }
 				| Issue<"finish_profile">
 				| Issue<"confirm_email">
 			>();

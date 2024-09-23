@@ -46,9 +46,9 @@ const DialogContent = React.forwardRef<
 	) => {
 		let content = (
 			<DialogPrimitive.Content
+				aria-describedby={undefined}
 				className={twMerge(dialogContentClassName, className)}
 				ref={reference}
-				aria-describedby={undefined}
 				{...props}
 			>
 				{children}

@@ -15,8 +15,6 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { ProfileNavigationCannyButton } from "../../components/layout/canny-button";
-
 import { DiscordOutlineIcon } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
 import { useClickOutside } from "~/hooks/use-click-outside";
@@ -27,6 +25,8 @@ import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 import { useCanny } from "~/hooks/use-canny";
 import { Authentication } from "~/api/auth";
+
+import { ProfileNavigationCannyButton } from "../../components/layout/canny-button";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
 	{ className?: string } & (

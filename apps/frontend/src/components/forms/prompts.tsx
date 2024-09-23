@@ -47,16 +47,16 @@ const EditPromptDialog: FC<{
 			<>
 				<DialogHeader>
 					<DialogTitle>{initialValue ? "Edit" : "Add a"} prompt</DialogTitle>
-					<DialogDescription className="sr-only"></DialogDescription>
+					<DialogDescription className="sr-only" />
 				</DialogHeader>
 				<DialogBody className="grid w-full gap-4">
 					<InputSelect
+						placeholder="Select a prompt"
+						value={value?.promptId}
 						options={filteredPrompts.map((promptId) => ({
 							id: promptId,
 							name: tAttribute[promptId]?.name ?? promptId
 						}))}
-						value={value?.promptId}
-						placeholder="Select a prompt"
 						onChange={(id) => {
 							const promptId = filteredPrompts.find(
 								(promptId) => promptId === id
@@ -86,9 +86,9 @@ const EditPromptDialog: FC<{
 						}
 					/>
 					<Button
+						className="ml-auto"
 						disabled={!value || !value.promptId || !value.response}
 						size="sm"
-						className="ml-auto"
 						onClick={() => {
 							if (!value || !value.promptId || !value.response) return;
 
@@ -124,9 +124,9 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 				htmlFor={props.labelId}
 				hint={
 					<Button
-						size="sm"
 						className="ml-auto gap-2"
 						disabled={props.value.length >= 5}
+						size="sm"
 						onClick={() => {
 							setEditingPrompt(null);
 							setPromptDialogOpen(true);
@@ -140,18 +140,18 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 				Prompts {props.newBadge && <NewBadge />}
 			</InputLabel>
 			<SortableGrid
+				values={props.value.map(({ promptId }) => promptId)}
 				onChange={(newOrder) => {
 					const keyedValue = groupBy(props.value, ({ promptId }) => promptId);
 					props.onChange(
 						newOrder.map((id) => keyedValue[id]?.[0]).filter(Boolean)
 					);
 				}}
-				values={props.value.map(({ promptId }) => promptId)}
 			>
 				<div className="mt-2 grid gap-4">
 					{props.value.map(({ promptId, response }) => {
 						return (
-							<SortableItem key={promptId} id={promptId}>
+							<SortableItem id={promptId} key={promptId}>
 								<div className="flex select-none flex-col gap-2 rounded-xl bg-white-40 p-4 shadow-brand-1 vision:bg-white-40/70 vision:text-black-80 dark:bg-black-60">
 									<div className="flex justify-between">
 										<InputLabel className="text-base opacity-70">
@@ -163,17 +163,18 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 											onTouchStart={(event) => event.stopPropagation()}
 										>
 											<Button
+												className="p-0 opacity-75 transition-all hocus:text-pink hocus:opacity-100"
 												kind="tertiary"
 												size="sm"
 												onClick={() => {
 													setEditingPrompt(promptId);
 													setPromptDialogOpen(true);
 												}}
-												className="p-0 opacity-75 transition-all hocus:text-pink hocus:opacity-100"
 											>
 												<Pencil className="size-5" />
 											</Button>
 											<Button
+												className="p-0 opacity-75 transition-all hocus:text-red-500 hocus:opacity-100"
 												kind="tertiary"
 												size="sm"
 												onClick={() =>
@@ -183,7 +184,6 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 														)
 													)
 												}
-												className="p-0 opacity-75 transition-all hocus:text-red-500 hocus:opacity-100"
 											>
 												<X className="size-5" />
 											</Button>
@@ -199,17 +199,17 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 				</div>
 			</SortableGrid>
 			<EditPromptDialog
+				dialogOpen={promptDialogOpen}
 				excludedPrompts={props.value
 					.map(({ promptId }) => promptId)
 					.filter((id) => id !== editingPrompt)}
-				dialogOpen={promptDialogOpen}
-				onDialogOpen={setPromptDialogOpen}
 				value={
 					editingPrompt
 						? props.value.find(({ promptId }) => promptId === editingPrompt) ||
 							null
 						: null
 				}
+				onDialogOpen={setPromptDialogOpen}
 				onChange={(value) => {
 					const newPrompts = uniqueLast(
 						editingPrompt

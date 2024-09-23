@@ -84,8 +84,8 @@ export function InputCountrySelect(props: InputCountrySelectProps) {
 			<InputSelect
 				{...props}
 				optional
-				placeholder={t("placeholder")}
 				Item={CountrySelectItem}
+				placeholder={t("placeholder")}
 				options={useMemo(
 					() =>
 						countries

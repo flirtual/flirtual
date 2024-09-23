@@ -17,14 +17,14 @@ export const InternationalizationContext = createContext(
 export const InternationalizationProvider = forwardRef<
 	HTMLHtmlElement,
 	PropsWithChildren<{ value: Internationalization }>
->(({ children, value, ...props }, ref) => {
+>(({ children, value, ...props }, reference) => {
 	return (
 		<InternationalizationContext.Provider value={value}>
 			<Slot
 				{...props}
-				ref={ref}
-				lang={value.locale.current}
 				data-country={value.country || "xx"}
+				lang={value.locale.current}
+				ref={reference}
 			>
 				{children}
 			</Slot>

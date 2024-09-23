@@ -10,9 +10,9 @@ export const PeaceIcon: React.FC<GradientIconProps> = ({
 
 	return (
 		<svg
-			style={{ "--fill": `url(#${id})` } as CSSProperties}
 			enableBackground="new 0 0 236.245 236.245"
 			fill={gradient ? `var(--fill)` : "currentColor"}
+			style={{ "--fill": `url(#${id})` } as CSSProperties}
 			version="1.1"
 			viewBox="0 0 236.24 236.24"
 			xmlns="http://www.w3.org/2000/svg"

@@ -1,11 +1,10 @@
-/* eslint-disable react/jsx-no-literals */
-import type { FC } from "react";
-import type { ProspectKind } from "~/api/matchmaking";
-
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
+
+import type { ProspectKind } from "~/api/matchmaking";
+import type { FC } from "react";
 
 export interface OutOfProspectsErrorProps {
 	mode: ProspectKind;

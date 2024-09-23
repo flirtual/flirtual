@@ -27,7 +27,11 @@ export function CallToAction({ id }: TileProps) {
 					<div className="flex flex-col items-center gap-4">
 						<FlirtualLogo className="w-56" />
 						<TileAnchor id={id}>
-							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-5xl desktop:tall:text-8xl">
+							<h1
+								a={1}
+								className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-5xl desktop:tall:text-8xl"
+								foo={1}
+							>
 								{t.rich("landing.cta.few_grassy_hyena_adapt", {
 									highlight: (children) => (
 										<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent wide:block">
@@ -47,20 +51,20 @@ export function CallToAction({ id }: TileProps) {
 					<div className="flex flex-col items-center gap-4 native:hidden vision:hidden">
 						<div className="flex w-fit flex-wrap justify-center gap-4 gap-y-2 desktop:grid desktop:grid-cols-2">
 							<DownloadButton
-								platform="apple"
 								className="hidden apple:flex desktop:flex"
+								platform="apple"
 							/>
 							<DownloadButton
-								platform="google"
 								className="hidden android:flex desktop:flex"
+								platform="google"
 							/>
 							<DownloadButton
+								className="hidden desktop:flex"
 								platform="microsoft"
-								className="hidden desktop:flex"
 							/>
 							<DownloadButton
-								platform="side_quest"
 								className="hidden desktop:flex"
+								platform="side_quest"
 							/>
 						</div>
 						<div className="flex gap-2 desktop:hidden">
@@ -80,10 +84,10 @@ export function CallToAction({ id }: TileProps) {
 					</div>
 				</div>
 				<Footer
+					desktopOnly
+					background={false}
 					className="mt-auto bg-transparent pt-32 desktop:pb-12"
 					logoClassName="text-[snow]"
-					background={false}
-					desktopOnly
 				/>
 			</div>
 		</Tile>

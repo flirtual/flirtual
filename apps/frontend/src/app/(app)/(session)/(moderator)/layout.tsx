@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 
-import type { PropsWithChildren } from "react";
-
 import { Authentication } from "~/api/auth";
+
+import type { PropsWithChildren } from "react";
 
 export default async function ({ children }: PropsWithChildren) {
 	const { user } = await Authentication.getSession();

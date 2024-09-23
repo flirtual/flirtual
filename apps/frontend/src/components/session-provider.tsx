@@ -16,7 +16,7 @@ export type SessionProviderProps = React.PropsWithChildren<{
 export const SessionProvider = forwardRef<
 	HTMLHtmlElement,
 	SessionProviderProps
->(({ children, session, ...props }, ref) => {
+>(({ children, session, ...props }, reference) => {
 	/* const [, mutateSession] = useSession();
 
 	useEffect(() => {
@@ -39,8 +39,8 @@ export const SessionProvider = forwardRef<
 		>
 			<Slot
 				{...props}
-				ref={ref}
 				data-user={session?.user?.id ? session.user.id : undefined}
+				ref={reference}
 			>
 				{children}
 			</Slot>

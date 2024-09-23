@@ -95,7 +95,7 @@
     "wretch": "^2.9.0"
   },
   "devDependencies": {
-    "@ariesclark/eslint-config": "^2.0.1",
+    "@ariesclark/eslint-config": "^2.1.0",
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.1.1",
     "@inlang/paraglide-js": "1.11.2",

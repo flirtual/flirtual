@@ -3,10 +3,11 @@
 import { X } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React from "react";
 
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
+
+import type React from "react";
 
 export const SuccessMessage: React.FC = () => {
 	const searchParameters = useSearchParams();

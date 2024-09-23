@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,8 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { Dialog, DialogContent } from "../dialog/dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { UserImage } from "../user-avatar";
+
+import type React from "react";
 
 export interface ProfileImageDisplayProps {
 	images: Array<ProfileImage>;

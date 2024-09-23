@@ -21,10 +21,10 @@ export const MachineTranslatedLegal: FC<{
 				{t.rich("large_wild_tortoise_sing", {
 					original: (children) => (
 						<InlineLink
-							highlight={false}
-							lang="en"
 							className="underline"
+							highlight={false}
 							href={original}
+							lang="en"
 						>
 							{children}
 						</InlineLink>
@@ -35,8 +35,8 @@ export const MachineTranslatedLegal: FC<{
 				{t.rich("active_frail_antelope_support", {
 					contact: (children) => (
 						<InlineLink
-							highlight={false}
 							className="underline"
+							highlight={false}
 							href={urls.resources.contact}
 						>
 							{children}

@@ -2,9 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-import type { AttributeCollection } from "~/api/attributes";
-import type { FC } from "react";
-
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -25,6 +22,9 @@ import {
 	useAttributeList,
 	useAttributeTranslation
 } from "~/hooks/use-attribute-list";
+
+import type { FC } from "react";
+import type { AttributeCollection } from "~/api/attributes";
 
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 
@@ -140,9 +140,9 @@ export const Onboarding1Form: FC = () => {
 									{checkboxValue?.includes("other") && (
 										<InputAutocomplete
 											{...field.props}
-											value={field.props.value || []}
 											limit={4}
 											placeholder="Select your gender(s)..."
+											value={field.props.value || []}
 											options={genders.map((gender) => {
 												const { name, definition } =
 													tAttribute[gender.id] ?? {};
@@ -179,9 +179,9 @@ export const Onboarding1Form: FC = () => {
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
-									value={field.props.value || []}
 									limit={5}
 									placeholder="Select your favorite games..."
+									value={field.props.value || []}
 									options={games.map((game) => ({
 										key: game,
 										label: tAttribute[game]?.name ?? game
@@ -199,9 +199,9 @@ export const Onboarding1Form: FC = () => {
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
-									value={field.props.value || []}
 									limit={10}
 									placeholder="Select your interests..."
+									value={field.props.value || []}
 									options={interests
 										.filter(
 											(interest) =>

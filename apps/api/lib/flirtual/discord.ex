@@ -189,7 +189,7 @@ defmodule Flirtual.Discord do
             [
               %{
                 name: "Reason",
-                value: reason.name,
+                value: reason.id,
                 inline: true
               }
             ] ++
@@ -598,7 +598,7 @@ defmodule Flirtual.Discord do
             [
               %{
                 name: "Reason",
-                value: reason.name
+                value: reason.id
               },
               if user.preferences.privacy.analytics do
                 [

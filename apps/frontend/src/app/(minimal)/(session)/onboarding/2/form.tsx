@@ -3,8 +3,6 @@
 import { MoveLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import type { FC } from "react";
-
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -18,6 +16,8 @@ import {
 	useAttributeList,
 	useAttributeTranslation
 } from "~/hooks/use-attribute-list";
+
+import type { FC } from "react";
 
 const absMinAge = 18;
 const absMaxAge = 60;

@@ -16,8 +16,8 @@ export default function AppLayout({
 				{banner}
 				<Navigation />
 				<div
-					vaul-drawer-wrapper=""
 					className="max-w-screen-lg flex min-h-[calc(100svh-max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5rem))] w-full grow flex-col items-center desktop:p-8"
+					vaul-drawer-wrapper=""
 				>
 					{children}
 				</div>

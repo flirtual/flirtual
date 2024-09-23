@@ -6,8 +6,7 @@ import { useTranslations } from "next-intl";
 
 import { useToast } from "~/hooks/use-toast";
 
-import type { PropsWithChildren } from "react";
-import type { FC } from "react";
+import type { PropsWithChildren, FC } from "react";
 
 export const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({
 	value,

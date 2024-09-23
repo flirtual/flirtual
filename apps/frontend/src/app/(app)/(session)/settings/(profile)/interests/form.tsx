@@ -180,10 +180,10 @@ export const InterestsForm: FC = () => {
 
 													return (
 														<Pill
-															key={interestId}
 															active={active}
-															hocusable={false}
 															className="hover:bg-white-40 data-[active]:bg-brand-gradient data-[active]:text-white-10 hover:dark:bg-black-50"
+															hocusable={false}
+															key={interestId}
 															onClick={() => {
 																if (defaultCount + customCount >= 10 && !active)
 																	return toasts.add({

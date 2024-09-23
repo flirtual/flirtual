@@ -198,6 +198,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	return (
 		<SortableGrid
+			disabled={!!fullPreviewId}
 			values={sortableItems}
 			onChange={(newSortableItems) => {
 				const keyedValue = groupBy(value, ({ id }) => id);
@@ -205,7 +206,6 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					newSortableItems.map((id) => keyedValue[id]?.[0]).filter(Boolean)
 				);
 			}}
-			disabled={!!fullPreviewId}
 		>
 			<div className="grid grid-cols-3 gap-2">
 				{value.map((image, imageIndex) =>
@@ -214,12 +214,12 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					/\.(jpg|jpeg|png|gif|webm)$/i.test(image.id) ? (
 						<SortableItem id={image.id} key={image.id}>
 							<ArrangeableImage
-								src={image.src}
 								id={image.id}
+								src={image.src}
+								onFullscreen={() => setFullPreviewId(image.id)}
 								onDelete={() => {
 									onChange?.(value.filter((_, index) => imageIndex !== index));
 								}}
-								onFullscreen={() => setFullPreviewId(image.id)}
 							/>
 						</SortableItem>
 					) : (

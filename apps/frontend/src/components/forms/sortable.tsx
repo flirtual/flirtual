@@ -103,8 +103,8 @@ export const SortableItem: FC<PropsWithChildren<{ id: UniqueIdentifier }>> = ({
 
 	return (
 		<Slot
-			ref={setNodeRef}
 			data-dragging={isDragging ? "" : undefined}
+			ref={setNodeRef}
 			style={
 				{
 					transition: transition,

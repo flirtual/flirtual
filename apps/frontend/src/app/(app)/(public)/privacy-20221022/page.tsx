@@ -29,9 +29,9 @@ export default async function PrivacyPage() {
 			title={t("title_superseded")}
 		>
 			<SupersededPolicy
+				current={urls.resources.privacyPolicy}
 				introduced={new Date("2022-10-22")}
 				superseded={new Date("2023-06-05")}
-				current={urls.resources.privacyPolicy}
 			/>
 			<p>
 				Your username, your display name, your profile pictures, your bio, your

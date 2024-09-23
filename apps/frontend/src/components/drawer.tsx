@@ -24,10 +24,10 @@ const DrawerClose = DrawerPrimitive.Close;
 const DrawerOverlay = React.forwardRef<
 	React.ElementRef<typeof DrawerPrimitive.Overlay>,
 	React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
->(({ className, ...props }, ref) => (
+>(({ className, ...props }, reference) => (
 	<DrawerPrimitive.Overlay
-		ref={ref}
 		className={twMerge("fixed inset-0 z-50 bg-black-80/80", className)}
+		ref={reference}
 		{...props}
 	/>
 ));
@@ -36,11 +36,11 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 const DrawerContent = React.forwardRef<
 	React.ElementRef<typeof DrawerPrimitive.Content>,
 	React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+>(({ className, children, ...props }, reference) => (
 	<DrawerPortal>
 		<DrawerOverlay />
 		<DrawerPrimitive.Content
-			ref={ref}
+			ref={reference}
 			className={twMerge(
 				"fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-3xl bg-white-30 p-4 font-nunito text-black-80 shadow-brand-1 dark:bg-black-70 dark:text-white-20",
 				className
@@ -82,9 +82,9 @@ DrawerFooter.displayName = "DrawerFooter";
 const DrawerTitle = React.forwardRef<
 	React.ElementRef<typeof DrawerPrimitive.Title>,
 	React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
->(({ className, ...props }, ref) => (
+>(({ className, ...props }, reference) => (
 	<DrawerPrimitive.Title
-		ref={ref}
+		ref={reference}
 		className={twMerge(
 			"text-lg font-semibold leading-none tracking-tight",
 			className
@@ -97,10 +97,10 @@ DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
 const DrawerDescription = React.forwardRef<
 	React.ElementRef<typeof DrawerPrimitive.Description>,
 	React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
->(({ className, ...props }, ref) => (
+>(({ className, ...props }, reference) => (
 	<DrawerPrimitive.Description
-		ref={ref}
 		className={twMerge("text-muted-foreground text-sm", className)}
+		ref={reference}
 		{...props}
 	/>
 ));

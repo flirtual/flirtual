@@ -1,7 +1,8 @@
-import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { FlirtualLogo } from "./logo";
+
+import type React from "react";
 
 export type ModelCardProps = React.ComponentProps<"div"> & {
 	title: React.ReactNode;

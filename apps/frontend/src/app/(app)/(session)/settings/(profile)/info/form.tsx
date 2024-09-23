@@ -149,9 +149,9 @@ export const InfoForm: FC = () => {
 									{checkboxValue?.includes("other") && (
 										<InputAutocomplete
 											{...field.props}
-											value={field.props.value || []}
 											limit={4}
 											placeholder="Select your genders..."
+											value={field.props.value || []}
 											options={genders.map((gender) => {
 												const { name, definition } =
 													tAttribute[gender.id] ?? {};
@@ -176,9 +176,9 @@ export const InfoForm: FC = () => {
 								<InputLabel>Sexuality</InputLabel>
 								<InputAutocomplete
 									{...field.props}
-									value={field.props.value || []}
 									limit={3}
 									placeholder="Select your sexualities..."
+									value={field.props.value || []}
 									options={sexualities.map((sexuality) => {
 										const { name, definition } = tAttribute[sexuality.id] ?? {};
 
@@ -215,9 +215,9 @@ export const InfoForm: FC = () => {
 								<InputLabel>VR setup</InputLabel>
 								<InputAutocomplete
 									{...field.props}
-									value={field.props.value || []}
 									limit={8}
 									placeholder="Select the platforms you use..."
+									value={field.props.value || []}
 									options={platforms.map((platform) => ({
 										key: platform,
 										label: tAttribute[platform]?.name ?? platform
@@ -236,9 +236,9 @@ export const InfoForm: FC = () => {
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
-									value={field.props.value || []}
 									limit={5}
 									placeholder="Select your favorite games..."
+									value={field.props.value || []}
 									options={games.map((game) => ({
 										key: game,
 										label: tAttribute[game]?.name ?? game

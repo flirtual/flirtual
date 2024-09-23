@@ -58,12 +58,6 @@ export const DiscordSpamDialog: FC = () => {
 	return (
 		<TrustAndSafetyDialog
 			closable
-			onOpenChange={async (open) => {
-				if (open) return;
-
-				await remindMeLater();
-				router.refresh();
-			}}
 			actions={
 				<div className="grid grid-cols-2 gap-2">
 					<Button
@@ -78,18 +72,24 @@ export const DiscordSpamDialog: FC = () => {
 						Edit biography
 					</Button>
 					<Button
-						size="sm"
+						className="text-sm"
 						kind="tertiary"
+						size="sm"
 						onClick={async () => {
 							await remindMeLater();
 							router.refresh();
 						}}
-						className="text-sm"
 					>
 						Remind me later
 					</Button>
 				</div>
 			}
+			onOpenChange={async (open) => {
+				if (open) return;
+
+				await remindMeLater();
+				router.refresh();
+			}}
 		>
 			To help prevent spam, we've hidden your account from recently created
 			Flirtual accounts because it looks like you've included your Discord

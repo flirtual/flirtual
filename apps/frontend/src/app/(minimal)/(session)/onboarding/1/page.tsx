@@ -1,12 +1,12 @@
 import * as swr from "swr";
 
-import { Onboarding1Form } from "./form";
-
-import type { Metadata } from "next";
-
 import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
 import { SWRConfig } from "~/components/swr";
+
+import { Onboarding1Form } from "./form";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "About me"

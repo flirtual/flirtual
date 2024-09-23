@@ -1,16 +1,16 @@
 import { redirect } from "next/navigation";
 
-import { ProspectActions } from "./prospect-actions";
+import { Matchmaking, ProspectKind } from "~/api/matchmaking";
+import { urls } from "~/urls";
+import { Profile } from "~/components/profile/profile";
+import { User } from "~/api/user";
+
 import {
 	ConfirmEmailError,
 	FinishProfileError,
 	OutOfProspectsError
 } from "./out-of-prospects";
-
-import { Matchmaking, ProspectKind } from "~/api/matchmaking";
-import { urls } from "~/urls";
-import { Profile } from "~/components/profile/profile";
-import { User } from "~/api/user";
+import { ProspectActions } from "./prospect-actions";
 
 interface BrowsePageProps {
 	searchParams: { kind?: string };

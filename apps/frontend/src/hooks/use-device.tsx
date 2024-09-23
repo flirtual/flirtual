@@ -23,7 +23,7 @@ export type DeviceProviderProps = React.PropsWithChildren<
 >;
 
 export const DeviceProvider = forwardRef<HTMLHtmlElement, DeviceProviderProps>(
-	({ children, native, platform, userAgent, vision, ...props }, ref) => {
+	({ children, native, platform, userAgent, vision, ...props }, reference) => {
 		Sentry.setTag("native", native ? "yes" : "no");
 		Sentry.setTag("vision", vision ? "yes" : "no");
 
@@ -38,10 +38,10 @@ export const DeviceProvider = forwardRef<HTMLHtmlElement, DeviceProviderProps>(
 			>
 				<Slot
 					{...props}
-					ref={ref}
-					data-platform={platform}
 					data-native={native ? "" : undefined}
+					data-platform={platform}
 					data-vision={vision ? "" : undefined}
+					ref={reference}
 				>
 					{children}
 				</Slot>

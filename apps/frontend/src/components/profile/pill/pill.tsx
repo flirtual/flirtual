@@ -19,7 +19,7 @@ export interface PillProps {
 	onClick?: MouseEventHandler<HTMLElement>;
 }
 
-export const Pill = forwardRef<HTMLElement, PillProps>((props, ref) => {
+export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 	const {
 		Icon,
 		active = false,
@@ -37,11 +37,10 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, ref) => {
 		<AnimatePresence>
 			<Element
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				ref={ref as any}
+				ref={reference as any}
 				{...elementProps}
-				href={href!}
-				onClick={onClick}
 				data-active={active ? "" : undefined}
+				href={href!}
 				type={onClick ? "button" : undefined}
 				className={twMerge(
 					"group pointer-events-auto relative flex h-8 select-none items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 transition-all vision:!bg-white-30/70 desktop:text-base",
@@ -53,6 +52,7 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, ref) => {
 					props.className
 				)}
 				onBlur={() => setHocused(false)}
+				onClick={onClick}
 				onFocus={() => hocusable && setHocused(true)}
 				onPointerEnter={() => hocusable && setHocused(true)}
 				onPointerLeave={() => setHocused(false)}

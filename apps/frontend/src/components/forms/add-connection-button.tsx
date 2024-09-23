@@ -124,8 +124,8 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			</div>
 			{connection && (
 				<button
-					type="button"
 					className="ml-auto mr-3 cursor-pointer self-center opacity-50 hover:text-red-400 hover:opacity-100"
+					type="button"
 					onClick={async () => {
 						await Connection.delete(type)
 							.then(() => {

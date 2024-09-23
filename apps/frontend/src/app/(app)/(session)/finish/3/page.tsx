@@ -1,11 +1,12 @@
 import { ModelCard } from "~/components/model-card";
-import { withAttributeList } from "~/api/attributes-server";
 
 import { FinishProgress } from "../progress";
 
 import { Finish3Form } from "./form";
 
 import type { Metadata } from "next";
+
+import { withAttributeList } from "~/api/attributes-server";
 
 export const metadata: Metadata = {
 	title: "Interests"

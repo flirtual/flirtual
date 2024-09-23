@@ -1,6 +1,6 @@
 "use client";
 
-import React, {
+import {
 	type CSSProperties,
 	createContext,
 	useContext,
@@ -21,6 +21,8 @@ import { useTheme } from "./use-theme";
 import { useNotifications } from "./use-notifications";
 import { useDevice } from "./use-device";
 import { getConversationsKey } from "./use-conversations.shared";
+
+import type React from "react";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(

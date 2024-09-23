@@ -1,21 +1,20 @@
-/* eslint-disable react/jsx-no-literals */
 import { Dialog } from "@capacitor/dialog";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { DateTimeRelative } from "../datetime-relative";
-import { InlineLink } from "../inline-link";
-import { CopyClick } from "../copy-click";
-
-import type { FC } from "react";
-
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { capitalize } from "~/utilities";
 import { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute-list";
+
+import { CopyClick } from "../copy-click";
+import { InlineLink } from "../inline-link";
+import { DateTimeRelative } from "../datetime-relative";
+
+import type { FC } from "react";
 
 export const ProfileModeratorInfo: FC<{
 	user: User;
@@ -227,12 +226,12 @@ export const ProfileModeratorInfo: FC<{
 					{user.tnsDiscordInBiography ? (
 						<CopyClick value={user.tnsDiscordInBiography}>
 							<DateTimeRelative
+								value={user.tnsDiscordInBiography}
 								className={
 									new Date(user.tnsDiscordInBiography).getTime() > Date.now()
 										? "text-orange-600"
 										: "text-red-600"
 								}
-								value={user.tnsDiscordInBiography}
 							/>
 						</CopyClick>
 					) : (
