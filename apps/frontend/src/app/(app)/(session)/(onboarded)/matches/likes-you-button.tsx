@@ -13,22 +13,23 @@ import { Matchmaking } from "~/api/matchmaking";
 
 import type { FC } from "react";
 
-export const LikesYouButton: FC = () => {
-	const [session] = useSession();
+function useLikes() {
 	const { data: likes } = useSWR(
 		"likes",
 		() => {
 			return Matchmaking.listMatches(true);
 		},
 		{
-			suspense: true,
-			fallbackData: {
-				count: {},
-				items: [],
-				thumbnails: []
-			}
+			suspense: true
 		}
 	);
+
+	return likes;
+}
+
+export const LikesYouButton: FC = () => {
+	const [session] = useSession();
+	const likes = useLikes();
 
 	if (!session) return null;
 	const { user } = session;

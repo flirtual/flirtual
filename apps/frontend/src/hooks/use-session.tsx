@@ -28,6 +28,7 @@ export function useSession() {
 	const logout = useCallback(async () => {
 		await Authentication.logout().catch(() => null);
 		router.push(urls.login());
+		router.refresh();
 	}, [router]);
 
 	return [session, update, logout] as const;

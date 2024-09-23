@@ -32,7 +32,7 @@ export const BiographyForm: FC = () => {
 
 	const tAttribute = useAttributeTranslation();
 
-	const favoriteGameId = user.profile.attributes.game.filter(
+	const favoriteGameId = (user.profile.attributes.game || []).filter(
 		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
 	)[0];
 
@@ -110,8 +110,9 @@ export const BiographyForm: FC = () => {
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 													Guidelines
 												</summary>
-												Don't include nude/NSFW, disturbing, or off-topic
-												content, and don't use other people's pictures.
+												Don&apos;t include nude/NSFW, disturbing, or off-topic
+												content, and don&apos;t use other people&apos;s
+												pictures.
 											</details>
 										</InputLabelHint>
 									}
@@ -130,12 +131,12 @@ export const BiographyForm: FC = () => {
 									hint={
 										<InputLabelHint>
 											A great bio shows your personality and interests, maybe
-											your sense of humor and what you're looking for.
+											your sense of humor and what you&apos;re looking for.
 											<details>
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 													Guidelines
 												</summary>
-												Be respectful and don't include spam, soliciting,
+												Be respectful and don&apos;t include spam, soliciting,
 												excessive self-promotion, graphic NSFW descriptions,
 												hateful or controversial content.
 											</details>

@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { type FC, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
+import Link from "next/link";
 
-import { displayName } from "~/api/user";
+import { displayName, type User } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { TimeRelative } from "~/components/time-relative";
-import { UserAvatar } from "~/components/user-avatar";
+import { UserAvatar, type UserAvatarProps } from "~/components/user-avatar";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -17,13 +17,28 @@ import type { Conversation } from "~/api/conversations";
 export type ConversationListItemProps = Conversation & {
 	active?: boolean;
 	lastItem?: boolean;
+	userOverride?: UserAvatarProps["user"];
+	example?: boolean;
 };
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
-	const { id, kind, active = false, userId, lastMessage, isUnread } = props;
+	const {
+		id,
+		kind,
+		active = false,
+		userId,
+		lastMessage,
+		isUnread,
+		userOverride,
+		example
+	} = props;
 
-	const user = useUser(userId);
-	if (!user || !user.relationship?.matched) return null;
+	let user = useUser(userId);
+	if (userOverride) user = userOverride as User;
+	if (!userOverride && (!user || !user.relationship?.matched)) return null;
+	if (!user) return null;
+
+	const LinkComponent = example ? "span" : Link;
 
 	return (
 		<div
@@ -39,7 +54,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 					active && "rounded-b-xl"
 				)}
 			>
-				<Link
+				<LinkComponent
 					className="shrink-0 before:absolute before:size-full"
 					href={urls.conversations.of(id)}
 				>
@@ -50,7 +65,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						variant="thumb"
 						width={80}
 					/>
-				</Link>
+				</LinkComponent>
 				{isUnread && !active && (
 					<div className="absolute -left-1 -top-1 flex size-5 items-center justify-center rounded-full bg-theme-2 shadow-brand-1">
 						<div className="size-4 animate-ping rounded-full bg-theme-1" />
@@ -116,3 +131,5 @@ export const ConversationListItemSkeleton = forwardRef<HTMLDivElement, unknown>(
 		);
 	}
 );
+
+ConversationListItemSkeleton.displayName = "ConversationListItemSkeleton";

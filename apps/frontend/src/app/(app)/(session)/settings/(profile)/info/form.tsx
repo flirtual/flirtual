@@ -16,7 +16,7 @@ import {
 } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { fromEntries, pick } from "~/utilities";
+import { fromEntries } from "~/utilities";
 import { Profile } from "~/api/user/profile";
 import { User } from "~/api/user";
 import {

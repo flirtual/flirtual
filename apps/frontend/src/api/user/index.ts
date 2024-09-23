@@ -100,7 +100,9 @@ export interface UserPreview {
 	avatarUrl: string;
 }
 
-export function displayName(user: User) {
+export function displayName(
+	user: Pick<User, "slug"> & { profile: Pick<Profile, "displayName"> }
+) {
 	return user.profile.displayName || user.slug;
 }
 

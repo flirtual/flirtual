@@ -95,8 +95,8 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 				onSubmit={async (body) => {
 					await Authentication.login(body);
 
-					router.refresh();
 					router.push(next ?? urls.browse());
+					router.refresh();
 				}}
 			>
 				{({ errors, FormField }) => (

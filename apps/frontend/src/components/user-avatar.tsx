@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
 
-import { type User, displayName } from "~/api/user";
+import { displayName } from "~/api/user";
 import { urls } from "~/urls";
 
 import { Image, type ImageProps } from "./image";
@@ -10,7 +10,8 @@ import type { FC } from "react";
 import type React from "react";
 
 export type UserAvatarProps = Omit<ImageProps, "src" | "alt"> & {
-	user: User;
+	user: Parameters<typeof displayName>[0] &
+		Parameters<typeof urls.userAvatar>[0];
 	variant?: string;
 };
 

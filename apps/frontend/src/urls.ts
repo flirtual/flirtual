@@ -7,6 +7,7 @@ import type { ProspectKind } from "~/api/matchmaking";
 import type { User } from "./api/user";
 import type { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/(app)/(public)/confirm-email/page";
 import type { ProfileImage } from "./api/user/profile/images";
+import type { Profile } from "./api/user/profile";
 
 export function ensureRelativeUrl(pathname: string) {
 	if (!isInternalHref(pathname))
@@ -66,7 +67,7 @@ export const urls = {
 			: image.originalFile
 				? urls.media(image.originalFile, "pfpup")
 				: urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
-	userAvatar: (user: User, variant?: string) =>
+	userAvatar: (user: { profile: Pick<Profile, "images"> }, variant?: string) =>
 		user.profile.images[0]
 			? urls.pfp(user.profile.images[0], variant)
 			: urls.media("8d120672-c717-49d2-b9f3-2d4479bbacf6"),

@@ -6,8 +6,6 @@ import {
 	type UuidModel
 } from "./common";
 
-import type { User } from "./user";
-
 export const ProspectKind = ["love", "friend"] as const;
 export type ProspectKind = (typeof ProspectKind)[number];
 

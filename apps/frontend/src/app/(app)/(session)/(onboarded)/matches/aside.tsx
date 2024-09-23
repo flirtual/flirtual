@@ -42,11 +42,12 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	return (
 		<div
 			className={twMerge(
-				"flex w-full shrink-0 grow-0 select-none flex-col desktop:min-h-[calc(100vh-9rem)] desktop:w-96 desktop:rounded-2xl desktop:bg-brand-gradient desktop:shadow-brand-1",
-				activeConversationId ? "w-full" : "desktop:mx-auto desktop:w-[28rem]"
+				"flex w-full shrink-0 grow-0 select-none flex-col desktop:w-96 desktop:rounded-2xl desktop:bg-brand-gradient desktop:shadow-brand-1",
+				!activeConversationId &&
+					"desktop:mx-auto desktop:w-full desktop:max-w-md"
 			)}
 		>
-			<div className="flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top,0rem)+0.5rem),1rem)] text-white-20 android:pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] desktop:static desktop:bg-transparent desktop:pt-[1.125rem] android:desktop:pt-[1.125rem]">
+			<div className="flex w-full items-center justify-center bg-black-70 p-4 text-white-20 desktop:static desktop:bg-transparent desktop:pt-[1.125rem] android:desktop:pt-[1.125rem]">
 				<Link
 					className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
 					href={
@@ -60,7 +61,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 			<div className="h-full desktop:p-1 desktop:pt-0">
 				<div
 					className={twMerge(
-						"flex h-full flex-col gap-4 px-4 pb-4 pt-[max(calc(env(safe-area-inset-top,0rem)+4.5rem),5rem)] vision:bg-transparent android:pt-[max(calc(var(--safe-area-inset-top,0rem)+4.5rem),5rem)] desktop:rounded-xl desktop:bg-white-20 desktop:pt-4 desktop:shadow-brand-inset android:desktop:pt-4 dark:desktop:bg-black-70",
+						"flex h-full flex-col gap-4 p-4 vision:bg-transparent desktop:rounded-xl desktop:bg-white-20 desktop:pt-4 desktop:shadow-brand-inset android:desktop:pt-4 dark:desktop:bg-black-70",
 						activeConversationId && "hidden desktop:flex"
 					)}
 				>
@@ -80,10 +81,10 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 							</Button>
 						)}
 					</div>
-					<div className="flex flex-col gap-4">
+					<div className="flex flex-col gap-2">
 						{data.map(({ data: conversations, metadata }, dataIndex) => (
 							<div
-								className="flex flex-col gap-4"
+								className="flex flex-col gap-2"
 								key={metadata.cursor.self.page}
 							>
 								{conversations.map((conversation, conversationIndex) => (

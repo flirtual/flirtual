@@ -8,7 +8,6 @@ import { GenderPills } from "~/components/profile/pill/genders";
 import { CountryPill } from "~/components/profile/pill/country";
 import { UserAvatar } from "~/components/user-avatar";
 import { urls } from "~/urls";
-import { filterBy } from "~/utilities";
 import { Pill } from "~/components/profile/pill/pill";
 import { yearsAgo } from "~/date";
 import { HeartIcon } from "~/components/icons/gradient/heart";
@@ -89,12 +88,8 @@ export default async function LikesPage() {
 												<GenderPills
 													simple
 													small
+													attributes={user.profile.attributes.gender || []}
 													className="vision:bg-white-30/70"
-													attributes={filterBy(
-														user.profile.attributes,
-														"type",
-														"gender"
-													)}
 												/>
 												{user.profile.country && (
 													<CountryPill flagOnly id={user.profile.country} />

@@ -28,6 +28,7 @@ export async function generateMetadata({
 	if (!conversation) return redirect(urls.conversations.list());
 
 	const user = await getProfile(conversation.userId);
+	if (!user) return redirect(urls.conversations.list());
 
 	return {
 		title: displayName(user)

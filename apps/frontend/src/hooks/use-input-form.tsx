@@ -27,6 +27,7 @@ export interface InputFormOptions<T extends FormFieldsDefault> {
 	withGlobalId?: boolean;
 	captchaRef: RefObject<FormCaptchaReference>;
 	onSubmit: InputFormSubmitFunction<T>;
+	submitOnChange?: boolean;
 	fields: T;
 }
 
@@ -62,7 +63,7 @@ export interface UseInputForm<T extends FormFieldsDefault> {
 	setFieldErrors: React.Dispatch<React.SetStateAction<FieldErrors<T>>>;
 	setSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	reset: (newValues: T | null) => void;
-	submit: () => Promise<{
+	submit: (values?: T) => Promise<{
 		errors: Array<string>;
 		fieldErrors: FieldErrors<T>;
 		fields: T;
@@ -87,6 +88,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		requireChange = false,
 		withCaptcha = false,
 		withGlobalId = false,
+		// submitOnChange = false,
 		captchaRef
 	} = options;
 
@@ -108,7 +110,9 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		setInitialValues(options.fields);
 	}, [options.fields]); */
 
-	const submit: UseInputForm<T>["submit"] = async () => {
+	// const deferredValues = useDeferredValue(values);
+
+	const submit: UseInputForm<T>["submit"] = async (_values: T = values) => {
 		setSubmitting(true);
 
 		const captcha =
@@ -118,13 +122,13 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 		setCaptcha(captcha);
 
-		const result = await onSubmit(values, { ...form, submit, captcha })
+		const result = await onSubmit(_values, { ...form, submit, captcha })
 			.then(() => {
 				setFieldErrors({});
 				setErrors([]);
 
-				setInitialValues(values);
-				return { errors: [], fieldErrors: {}, fields: values };
+				setInitialValues(_values);
+				return { errors: [], fieldErrors: {}, fields: _values };
 			})
 			.catch((reason) => {
 				if (isWretchError(reason, "invalid_properties")) {
@@ -143,7 +147,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					) as FieldErrors<T>;
 					setFieldErrors(fieldErrors);
 
-					return { errors: [], fieldErrors, fields: values };
+					return { errors: [], fieldErrors, fields: _values };
 				}
 
 				if (reason instanceof WretchError) {
@@ -154,17 +158,19 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					];
 					setErrors(errors);
 
-					return { errors, fieldErrors: {}, fields: values };
+					return { errors, fieldErrors: {}, fields: _values };
 				}
 
 				setErrors([reason.message]);
-				return { errors: [reason.message], fieldErrors: {}, fields: values };
+				return { errors: [reason.message], fieldErrors: {}, fields: _values };
 			});
 
 		if (withCaptcha) captchaRef.current?.reset();
 		setSubmitting(false);
 		return result;
 	};
+
+	// useEffect(() => void submit(deferredValues), [deferredValues]);
 
 	const props: UseInputForm<T>["props"] = {
 		onSubmit: async (event) => {
@@ -183,8 +189,11 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 						name: key,
 						value,
 						disabled: submitting,
-						onChange: (value) =>
-							setValues((values) => ({ ...values, [key]: value }))
+						onChange: (value) => {
+							const newValues = { ...values, [key]: value };
+							setValues(newValues);
+							// if (submitOnChange) void submit(newValues);
+						}
 					};
 
 					return [
