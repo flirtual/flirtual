@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
 
+import { LoginConnectionButton } from "./login-connection-button";
+
 import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
@@ -11,14 +13,15 @@ import { urls } from "~/urls";
 import { useToast } from "~/hooks/use-toast";
 import { useDevice } from "~/hooks/use-device";
 import { Authentication } from "~/api/auth";
-
-import { LoginConnectionButton } from "./login-connection-button";
+import { useTranslations } from "~/hooks/use-internationalization";
+import { InlineLink } from "~/components/inline-link";
 
 export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 	const { platform, native } = useDevice();
 	const router = useRouter();
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
+	const t = useTranslations();
 
 	useEffect(() => {
 		async function webAuthnAuthenticate() {
@@ -37,8 +40,8 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 
 					const credential = (await navigator.credentials
 						.get({
-							publicKey: challenge.publicKey,
-							mediation: "conditional"
+							mediation: "conditional",
+							publicKey: challenge.publicKey
 						})
 						.catch(() => null)) as PublicKeyCredential | null;
 					if (!credential) return;
@@ -93,7 +96,32 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					rememberMe: false
 				}}
 				onSubmit={async (body) => {
-					await Authentication.login(body);
+					const value = await Authentication.login(body);
+					if ("error" in value) {
+						if (value.error === "invalid_credentials")
+							throw t.rich("errors.invalid_credentials_complex", {
+								help: (children) => (
+									<InlineLink
+										highlight={false}
+										className="underline"
+										href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
+									>
+										{children}
+									</InlineLink>
+								),
+								reset: (children) => (
+									<InlineLink
+										highlight={false}
+										className="underline"
+										href={urls.forgotPassword}
+									>
+										{children}
+									</InlineLink>
+								)
+							});
+
+						return;
+					}
 
 					router.push(next ?? urls.browse());
 					router.refresh();

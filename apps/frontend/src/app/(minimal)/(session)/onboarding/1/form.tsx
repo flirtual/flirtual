@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 
+import type { FC } from "react";
+import type { AttributeCollection } from "~/api/attributes";
+
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -15,16 +18,13 @@ import { urls } from "~/urls";
 import { filterBy, fromEntries, pick } from "~/utilities";
 import { InputCountrySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
-import { useInternationalization } from "~/hooks/use-internalization";
+import { useInternationalization } from "~/hooks/use-internationalization";
 import { User } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import {
 	useAttributeList,
 	useAttributeTranslation
 } from "~/hooks/use-attribute-list";
-
-import type { FC } from "react";
-import type { AttributeCollection } from "~/api/attributes";
 
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 
@@ -52,15 +52,15 @@ export const Onboarding1Form: FC = () => {
 					? new Date(user.bornAt.replaceAll("-", "/"))
 					: new Date(),
 				country: user.profile.country ?? systemCountry,
-				gender: profile.attributes.gender || [],
 				game: profile.attributes.game || [],
+				gender: profile.attributes.gender || [],
 				interest: profile.attributes.interest || []
 			}}
 			onSubmit={async ({ bornAt, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
 					User.update(user.id, {
-						required: ["bornAt"],
-						bornAt: bornAt.toISOString()
+						bornAt: bornAt.toISOString(),
+						required: ["bornAt"]
 					}),
 					Profile.update(user.id, {
 						country: values.country ?? "none",
@@ -127,9 +127,9 @@ export const Onboarding1Form: FC = () => {
 										value={checkboxValue ?? []}
 										items={[
 											...simpleGenders.map((gender) => ({
+												conflicts: gender.conflicts ?? [],
 												key: gender.id,
-												label: tAttribute[gender.id]?.name ?? gender.id,
-												conflicts: gender.conflicts ?? []
+												label: tAttribute[gender.id]?.name ?? gender.id
 											})),
 											{
 												key: "other",
@@ -148,11 +148,11 @@ export const Onboarding1Form: FC = () => {
 													tAttribute[gender.id] ?? {};
 
 												return {
-													key: gender.id,
-													label: name ?? gender.id,
 													definition,
 													definitionLink: gender.definitionLink,
-													hidden: simpleGenderIds.has(gender.id)
+													hidden: simpleGenderIds.has(gender.id),
+													key: gender.id,
+													label: name ?? gender.id
 												};
 											})}
 										/>

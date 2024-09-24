@@ -16,7 +16,7 @@ defmodule FlirtualWeb.ConversationController do
       |> json_with_etag(conversation)
     else
       {:error, :not_found} ->
-        {:error, {:not_found, "Conversation not found"}}
+        {:error, {:not_found, :conversation_not_found}}
 
       reason ->
         reason
@@ -65,9 +65,7 @@ defmodule FlirtualWeb.ConversationController do
       conn |> json(%{success: true})
     else
       _ ->
-        {:error,
-         {:forbidden, "Cannot observe this conversation",
-          %{user_id: user_id, target_id: target_id}}}
+        {:error, {:forbidden, :missing_permission, %{user_id: user_id, target_id: target_id}}}
     end
   end
 end

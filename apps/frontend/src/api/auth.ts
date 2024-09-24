@@ -2,11 +2,11 @@ import * as Sentry from "@sentry/nextjs";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
-import { urls } from "~/urls";
-
-import { api, type DatedModel } from "./common";
+import { api, type Issue, type DatedModel, isWretchError } from "./common";
 
 import type { User } from "./user";
+
+import { urls } from "~/urls";
 
 export type Session = DatedModel & {
 	sudoerId?: string;
@@ -81,25 +81,36 @@ const convertPublicKey = (
 		publicKey: {
 			...options,
 			challenge: convertBase64ToArrayBuffer(challenge),
-			user: {
-				...user,
-				id: convertBase64ToArrayBuffer(user.id)
-			},
 			excludeCredentials: excludeCredentials.map((credential) => ({
 				...credential,
 				id: convertBase64ToArrayBuffer(credential.id)
-			}))
+			})),
+			user: {
+				...user,
+				id: convertBase64ToArrayBuffer(user.id)
+			}
 		}
 	};
 };
 
 export const Authentication = {
 	api: api.url("auth"),
-	login(options: LoginOptions) {
-		return this.api.url("/session").json(options).post().json<Session>();
+	async assertGuest() {
+		const session = await this.getOptionalSession();
+		if (session) return redirect(urls.default);
 	},
-	logout() {
-		return this.api.url("/session").delete().res();
+	confirmResetPassword(options: ConfirmResetPasswordOptions) {
+		return this.api.url("/password/reset").json(options).post().res();
+	},
+	async getOnboardedSession() {
+		const session = await this.getSession();
+
+		if (session.user.status === "registered")
+			return redirect(urls.onboarding(1));
+		if (session.user.deactivatedAt)
+			return redirect(urls.settings.deactivateAccount);
+
+		return session;
 	},
 	async getOptionalSession() {
 		const session = await this.api
@@ -122,48 +133,26 @@ export const Authentication = {
 
 		return session;
 	},
-	async getOnboardedSession() {
-		const session = await this.getSession();
-
-		if (session.user.status === "registered")
-			return redirect(urls.onboarding(1));
-		if (session.user.deactivatedAt)
-			return redirect(urls.settings.deactivateAccount);
-
-		return session;
+	impersonate(userId: string) {
+		return this.api.url("/sudo").json({ userId }).post().json<Session>();
 	},
-	async assertGuest() {
-		const session = await this.getOptionalSession();
-		if (session) return redirect(urls.default);
+	login(options: LoginOptions) {
+		return this.api
+			.url("/session")
+			.json(options)
+			.post()
+			.unauthorized((reason) => {
+				if (isWretchError(reason)) return reason.json;
+			})
+			.json<Session | Issue<"invalid_credentials"> | Issue<"account_banned">>();
 	},
-	resetPassword(email: string) {
-		return this.api.url("/password").json({ email }).delete().res();
-	},
-	confirmResetPassword(options: ConfirmResetPasswordOptions) {
-		return this.api.url("/password/reset").json(options).post().res();
-	},
-	sso(signer: string) {
-		return this.api.url(`/sso/${signer}`).get().json<{ token: string }>();
+	logout() {
+		return this.api.url("/session").delete().res();
 	},
 	passkey: {
 		api: api.url("auth/passkey"),
-		create(options: CreatePasskeyOptions) {
-			return this.api.json(options).post().res();
-		},
-		delete(passkeyId: string) {
-			return this.api.query({ passkeyId }).delete().res();
-		},
 		authenticate(options: AuthenticatePasskeyOptions) {
 			return this.api.url("/authenticate").json(options).post().res();
-		},
-		async registrationChallenge(platform?: boolean) {
-			const { publicKey } = await this.api
-				.url("/registration-challenge")
-				.query({ platform })
-				.get()
-				.json<{ publicKey: PublicKeyCredentialCreationOptionsBase64 }>();
-
-			return convertPublicKey(publicKey);
 		},
 		async authenticationChallenge() {
 			const { publicKey } = await this.api
@@ -177,15 +166,31 @@ export const Authentication = {
 					challenge: convertBase64ToArrayBuffer(publicKey.challenge)
 				}
 			};
+		},
+		create(options: CreatePasskeyOptions) {
+			return this.api.json(options).post().res();
+		},
+		delete(passkeyId: string) {
+			return this.api.query({ passkeyId }).delete().res();
+		},
+		async registrationChallenge(platform?: boolean) {
+			const { publicKey } = await this.api
+				.url("/registration-challenge")
+				.query({ platform })
+				.get()
+				.json<{ publicKey: PublicKeyCredentialCreationOptionsBase64 }>();
+
+			return convertPublicKey(publicKey);
 		}
 	},
-	impersonate(userId: string) {
-		const a = this.api.url("/sudo");
-		console.log(a);
-		return a.json({ userId }).post().json<Session>();
+	resetPassword(email: string) {
+		return this.api.url("/password").json({ email }).delete().res();
 	},
 	revokeImpersonate() {
 		return this.api.url("/sudo").delete().json<Session>();
+	},
+	sso(signer: string) {
+		return this.api.url(`/sso/${signer}`).get().json<{ token: string }>();
 	}
 };
 

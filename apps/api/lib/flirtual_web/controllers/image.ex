@@ -14,7 +14,7 @@ defmodule FlirtualWeb.ImageController do
          :ok <- Policy.can(conn, :read, image) do
       conn |> json_with_etag(Policy.transform(conn, image))
     else
-      nil -> {:error, {:not_found, "Image not found", %{image_id: image_id}}}
+      nil -> {:error, {:not_found, :image_not_found, %{image_id: image_id}}}
       value -> value
     end
   end
@@ -59,7 +59,7 @@ defmodule FlirtualWeb.ImageController do
          {:ok, _} <- ObanWorkers.update_user(image_owner.id, [:elasticsearch, :talkjs]) do
       conn |> json(%{deleted: true})
     else
-      nil -> {:error, {:not_found, "Image not found", %{image_id: image_id}}}
+      nil -> {:error, {:not_found, :image_not_found, %{image_id: image_id}}}
       value -> value
     end
   end
@@ -80,7 +80,7 @@ defmodule FlirtualWeb.ImageController do
         conn |> json(image)
       end
     else
-      {:error, {:unauthorized, "Invalid access token"}}
+      {:error, {:unauthorized, :invalid_access_token}}
     end
   end
 
@@ -93,7 +93,7 @@ defmodule FlirtualWeb.ImageController do
       conn
       |> json(images)
     else
-      {:error, {:unauthorized, "Invalid access token"}}
+      {:error, {:unauthorized, :invalid_access_token}}
     end
   end
 
@@ -101,10 +101,10 @@ defmodule FlirtualWeb.ImageController do
     if authenticated?(conn) do
       case Moderation.update_scan_queue(data) do
         {:ok, _} -> conn |> json(%{updated: true})
-        _ -> {:error, {:unprocessable_entity, "Unable to update scan queue"}}
+        _ -> {:error, {:unprocessable_entity, :update_failed}}
       end
     else
-      {:error, {:unauthorized, "Invalid access token"}}
+      {:error, {:unauthorized, :invalid_access_token}}
     end
   end
 end

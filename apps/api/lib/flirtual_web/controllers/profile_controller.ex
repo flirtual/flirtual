@@ -15,7 +15,7 @@ defmodule FlirtualWeb.ProfileController do
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
-      {:error, {:forbidden, "Cannot update this user's profile", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, profile} <-
              Profiles.update(profile, params,
@@ -32,7 +32,7 @@ defmodule FlirtualWeb.ProfileController do
     stub_profile = %Profile{user_id: user_id}
 
     if is_nil(personality) or Policy.cannot?(conn, :read, stub_profile) do
-      {:error, {:not_found, "User not found", Map.take(stub_profile, [:user_id])}}
+      {:error, {:not_found, :user_not_found, Map.take(stub_profile, [:user_id])}}
     else
       conn |> json_with_etag(personality)
     end
@@ -43,7 +43,7 @@ defmodule FlirtualWeb.ProfileController do
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
-      {:error, {:forbidden, "Cannot update this profile's personality", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, personality} <- Profiles.update_personality(profile, params) do
         conn |> json(personality)
@@ -56,7 +56,7 @@ defmodule FlirtualWeb.ProfileController do
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
-      {:error, {:forbidden, "Cannot update this profile's preferences", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, preferences} <-
              Profiles.update_preferences(profile.preferences, params,
@@ -73,7 +73,7 @@ defmodule FlirtualWeb.ProfileController do
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
-      {:error, {:forbidden, "Cannot update this profile's custom weights", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       custom_weights =
         (profile.custom_weights || %Profile.CustomWeights{})
@@ -93,7 +93,7 @@ defmodule FlirtualWeb.ProfileController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update_colors, user.profile) do
-      {:error, {:forbidden, "Cannot update this user's profile colors", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, profile} <- Profiles.update_colors(user.profile, params) do
         conn |> json(Policy.transform(conn, profile))
@@ -106,7 +106,7 @@ defmodule FlirtualWeb.ProfileController do
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
-      {:error, {:forbidden, "Cannot add images to this profile", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, images} <- Profiles.create_images(profile, file_ids) do
         conn |> json(Policy.transform(conn, images))
@@ -119,7 +119,7 @@ defmodule FlirtualWeb.ProfileController do
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
-      {:error, {:forbidden, "Cannot update this profile's images", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, images} <- Profiles.update_images(profile, image_ids) do
         conn |> json(Policy.transform(conn, images))
@@ -132,7 +132,7 @@ defmodule FlirtualWeb.ProfileController do
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
-      {:error, {:forbidden, "Cannot update this profile's prompts", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, prompts} <-
              Profiles.update_prompts(profile, prompts) do

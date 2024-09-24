@@ -154,11 +154,11 @@ defmodule FlirtualWeb.PasskeyController do
     else
       %User{} ->
         {:error,
-         {:unauthorized, "Your account has been banned, please check your email for details."}}
+         {:unauthorized, :account_banned}}
 
       _ ->
         {:error,
-         {:unauthorized, "Passkey login failed, please try again or use a different method."}}
+         {:unauthorized, :passkey_login_failed}}
     end
   end
 end

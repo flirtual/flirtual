@@ -31,7 +31,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :read, user) do
-      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
       conn |> json_with_etag(Policy.transform(conn, user))
     end
@@ -45,7 +45,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :read, user) do
-      {:error, {:not_found, "User not found", %{name: slug}}}
+      {:error, {:not_found, :user_not_found, %{name: slug}}}
     else
       conn |> json_with_etag(Policy.transform(conn, user))
     end
@@ -55,7 +55,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) do
-      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
       conn |> json_with_etag(User.preview(user))
     end
@@ -63,7 +63,7 @@ defmodule FlirtualWeb.UsersController do
 
   def search(conn, params) do
     if Policy.cannot?(conn, :search, conn.assigns[:session].user) do
-      {:error, {:forbidden, "Forbidden"}}
+      {:error, {:forbidden, :missing_permission}}
     else
       with {:ok, page} <- User.search(params) do
         page = %{page | entries: Policy.transform(conn, page.entries)}
@@ -94,14 +94,14 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :inspect, user) do
-      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
       conn |> json_with_etag(Elasticsearch.Document.encode(user))
     end
   end
 
   def inspect(_, _) do
-    {:error, {:bad_request, "Unknown inspect type"}}
+    {:error, {:bad_request, :unknown_inspect_type}}
   end
 
   def update(conn, %{"user_id" => user_id} = params) do
@@ -112,7 +112,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot update this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <-
              Users.update(user, params, required: split_to_atom_list(params["required"])) do
@@ -131,7 +131,7 @@ defmodule FlirtualWeb.UsersController do
     preferences = %User.Preferences{user.preferences | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
-      {:error, {:forbidden, "Cannot update this user's preferences", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, privacy} <- Users.update_privacy_preferences(preferences.privacy, params) do
         conn |> json(privacy)
@@ -149,7 +149,7 @@ defmodule FlirtualWeb.UsersController do
     preferences = %User.Preferences{user.preferences | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
-      {:error, {:forbidden, "Cannot update this user's preferences", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, privacy} <- Users.update_preferences(preferences, params) do
         conn |> json(privacy)
@@ -170,7 +170,7 @@ defmodule FlirtualWeb.UsersController do
     preferences = %User.Preferences{user.preferences | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, user.profile) do
-      {:error, {:forbidden, "Cannot update this user's notifications", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, email_notifications} <-
              Users.update_notification_preferences(
@@ -195,7 +195,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot update this user's password", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.update_password(user, params) do
         conn |> SessionController.logout() |> json(Policy.transform(conn, user))
@@ -225,7 +225,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot update this user's email address", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.update_email(user, params) do
         conn |> json(Policy.transform(conn, user))
@@ -258,7 +258,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot deactivate this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.deactivate(user) do
         conn |> json(Policy.transform(conn, user))
@@ -274,7 +274,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot reactivate this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- Users.reactivate(user) do
         conn |> json(Policy.transform(conn, user))
@@ -283,13 +283,13 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def block(%{assigns: %{session: %{user_id: user_id}}}, %{"user_id" => user_id}),
-    do: {:error, {:bad_request, "Cannot block yourself", %{user_id: user_id}}}
+    do: {:error, {:bad_request, :missing_permission, %{user_id: user_id}}}
 
   def block(conn, %{"user_id" => user_id}) do
     target = Users.get(user_id)
 
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
-      {:error, {:forbidden, "Cannot block this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :cannot_block_user, %{user_id: user_id}}}
     else
       Repo.transaction(fn ->
         options = [user: conn.assigns[:session].user, target: target]
@@ -315,7 +315,7 @@ defmodule FlirtualWeb.UsersController do
     target = Users.get(user_id)
 
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
-      {:error, {:forbidden, "Cannot unblock this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :cannot_unblock_user, %{user_id: user_id}}}
     else
       Repo.transaction(fn ->
         with %Block{} = item <-
@@ -326,7 +326,7 @@ defmodule FlirtualWeb.UsersController do
              {:ok, item} <- Block.delete(item) do
           conn |> json(item)
         else
-          nil -> {:error, {:bad_request, "Profile not blocked", %{user_id: user_id}}}
+          nil -> {:error, {:bad_request, :profile_not_blocked, %{user_id: user_id}}}
           {:error, reason} -> Repo.rollback(reason)
           reason -> Repo.rollback(reason)
         end
@@ -352,13 +352,13 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def suspend(%{assigns: %{session: %{user_id: user_id}}}, %{"user_id" => user_id}),
-    do: {:error, {:bad_request, "Cannot suspend yourself", %{user_id: user_id}}}
+    do: {:error, {:bad_request, :missing_permission, %{user_id: user_id}}}
 
   def suspend(conn, %{"user_id" => user_id} = attrs) do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :suspend, user) do
-      {:error, {:forbidden, "Cannot suspend this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, attrs} <- Suspend.apply(attrs),
            {:ok, user} <-
@@ -372,7 +372,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :unsuspend, user) do
-      {:error, {:forbidden, "Cannot unsuspend this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- User.unsuspend(user, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
@@ -384,7 +384,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :indef_shadowban, user) do
-      {:error, {:forbidden, "Cannot indefinitely shadowban this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- User.indef_shadowban(user, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
@@ -396,7 +396,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :unindef_shadowban, user) do
-      {:error, {:forbidden, "Cannot unshadowban this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- User.unindef_shadowban(user, conn.assigns[:session].user) do
         conn |> json(Policy.transform(conn, user))
@@ -408,7 +408,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :payments_ban, user) do
-      {:error, {:forbidden, "Cannot payments ban this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- User.payments_ban(user) do
         conn |> json(Policy.transform(conn, user))
@@ -420,7 +420,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :payments_unban, user) do
-      {:error, {:forbidden, "Cannot payments unban this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- User.payments_unban(user) do
         conn |> json(Policy.transform(conn, user))
@@ -443,13 +443,13 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def warn(%{assigns: %{session: %{user_id: user_id}}}, %{"user_id" => user_id}),
-    do: {:error, {:bad_request, "Cannot warn yourself", %{user_id: user_id}}}
+    do: {:error, {:bad_request, :missing_permission, %{user_id: user_id}}}
 
   def warn(conn, %{"user_id" => user_id} = attrs) do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :warn, user) do
-      {:error, {:forbidden, "Cannot warn this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, attrs} <- Warn.apply(attrs),
            {:ok, user} <-
@@ -463,7 +463,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :warn, user) do
-      {:error, {:forbidden, "Cannot revoke warning for this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <-
              User.revoke_warn(user, conn.assigns[:session].user) do
@@ -507,7 +507,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :note, user) do
-      {:error, {:forbidden, "Cannot note this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, attrs} <- Note.apply(attrs),
            {:ok, user} <-
@@ -521,7 +521,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :note, user) do
-      {:error, {:forbidden, "Cannot remove note for this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <-
              User.remove_note(user) do
@@ -538,7 +538,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot update this user's push tokens", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- User.update_push_tokens(user, params) do
         conn |> json(Policy.transform(conn, user))
@@ -554,7 +554,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot reset this user's push count", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- User.reset_push_count(user) do
         conn |> json(Policy.transform(conn, user))
@@ -570,7 +570,7 @@ defmodule FlirtualWeb.UsersController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
-      {:error, {:forbidden, "Cannot update this user's rating status", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, user} <- User.update_rating_prompts(user, params) do
         conn |> json(Policy.transform(conn, user))
@@ -582,7 +582,7 @@ defmodule FlirtualWeb.UsersController do
     user = Users.get(user_id)
 
     if is_nil(user) or Policy.cannot?(conn, :delete, user) do
-      {:error, {:forbidden, "Cannot delete this user", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, _} <-
              Users.admin_delete(user) do

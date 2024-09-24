@@ -46,15 +46,15 @@ export const getInternationalization = cache(async (override?: string) => {
 	const country = getCountry(headers);
 
 	return {
-		locale: {
-			current,
-			preferred,
-			browser,
-			fallback,
-			override
-		},
 		country,
 		languages,
+		locale: {
+			browser,
+			current,
+			fallback,
+			override,
+			preferred
+		},
 		translating
 	};
 });
@@ -64,8 +64,11 @@ async function getLanguageMessages(locale: string) {
 		`../messages/${locale}.json`
 	).catch(() => ({}));
 
-	const attributes = (await import(`../messages/attributes.${locale}.json`))
-		.default as Record<string, Record<string, unknown>>;
+	const attributes = (
+		await import(`../messages/attributes.${locale}.json`).catch(() => ({
+			default: {}
+		}))
+	).default as Record<string, Record<string, unknown>>;
 
 	return {
 		...messages,

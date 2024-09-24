@@ -5,13 +5,13 @@ import { SelectItemText } from "@radix-ui/react-select";
 import { useInView } from "react-intersection-observer";
 import { useLocale, useTranslations } from "next-intl";
 
+import { InputSelect, type InputSelectProps, SelectItem } from "../select";
+
 import {
 	useAttributeList,
 	useAttributeTranslation
 } from "~/hooks/use-attribute-list";
-import { useInternationalization } from "~/hooks/use-internalization";
-
-import { InputSelect, type InputSelectProps, SelectItem } from "../select";
+import { useInternationalization } from "~/hooks/use-internationalization";
 
 const Context = createContext(
 	{} as {

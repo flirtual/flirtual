@@ -45,10 +45,10 @@ defmodule FlirtualWeb.SessionController do
     else
       %User{} ->
         {:error,
-         {:unauthorized, "Your account has been banned, please check your email for details."}}
+         {:unauthorized, :account_banned}}
 
       _ ->
-        {:error, {:unauthorized, "Invalid credentials"}}
+        {:error, {:unauthorized, :invalid_credentials}}
     end
   end
 
@@ -62,7 +62,7 @@ defmodule FlirtualWeb.SessionController do
       )
 
     if is_nil(user) or Policy.cannot?(conn, :sudo, user) do
-      {:error, {:forbidden, "Missing permissions", %{user_id: user_id}}}
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
       with {:ok, session} <-
              session |> Session.sudo(user) do
@@ -76,7 +76,7 @@ defmodule FlirtualWeb.SessionController do
     session = conn.assigns[:session]
 
     if is_nil(session.sudoer_id) do
-      {:error, {:bad_request, "Bad request"}}
+      {:error, {:bad_request, :missing_permission}}
     else
       with {:ok, session} <-
              session |> Session.sudo(nil) do

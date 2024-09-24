@@ -57,7 +57,7 @@ defmodule FlirtualWeb.FeedbackController do
           |> json(%{success: false})
       end
     else
-      {:error, {:unauthorized, "Invalid access token"}}
+      {:error, {:unauthorized, :invalid_access_token}}
     end
   end
 end

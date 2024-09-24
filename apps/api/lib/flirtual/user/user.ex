@@ -873,7 +873,7 @@ defmodule Flirtual.User do
   end
 
   def validate_password_confirmation(changeset, options \\ []) do
-    message = Keyword.get(options, :message, "Password doesn't match")
+    message = Keyword.get(options, :message, :password_does_not_match)
     changeset |> validate_confirmation(:password, message: message)
   end
 
@@ -947,7 +947,7 @@ defmodule Flirtual.User do
     if valid_password?(user, get_field(changeset, field)) do
       changeset
     else
-      add_error(changeset, field, "Invalid password")
+      add_error(changeset, field, "invalid_password")
     end
   end
 end

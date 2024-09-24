@@ -29,7 +29,7 @@ defmodule FlirtualWeb.ReportController do
          {:ok, report} <- Report.clear(report, conn.assigns[:session].user) do
       conn |> json(Policy.transform(conn, report))
     else
-      nil -> {:error, {:not_found, "Report not found"}}
+      nil -> {:error, {:not_found, :report_not_found}}
       value -> value
     end
   end

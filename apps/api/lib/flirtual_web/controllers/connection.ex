@@ -18,7 +18,7 @@ defmodule FlirtualWeb.ConnectionController do
 
   defp validate_state(conn, state) do
     if get_session(conn, :state) !== state do
-      {:error, {:bad_request, "State mismatch"}}
+      {:error, {:bad_request, :state_mismatch}}
     else
       {:ok, conn}
     end
@@ -49,10 +49,10 @@ defmodule FlirtualWeb.ConnectionController do
       })
     else
       {:error, :provider_not_found} ->
-        {:error, {:not_found, "Provider not found", %{type: type}}}
+        {:error, {:not_found, :provider_not_found, %{type: type}}}
 
       {:error, :not_supported} ->
-        {:error, {:bad_request, "Authorize not supported", %{type: type}}}
+        {:error, {:bad_request, :authorize_not_supported, %{type: type}}}
 
       reason ->
         reason
@@ -74,10 +74,10 @@ defmodule FlirtualWeb.ConnectionController do
       |> redirect(external: authorize_url |> URI.to_string())
     else
       {:error, :provider_not_found} ->
-        {:error, {:not_found, "Provider not found", %{type: type}}}
+        {:error, {:not_found, :provider_not_found, %{type: type}}}
 
       {:error, :not_supported} ->
-        {:error, {:bad_request, "Authorize not supported", %{type: type}}}
+        {:error, {:bad_request, :authorize_not_supported, %{type: type}}}
 
       reason ->
         reason

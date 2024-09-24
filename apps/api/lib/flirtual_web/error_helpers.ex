@@ -32,6 +32,14 @@ defmodule FlirtualWeb.ErrorHelpers do
     end
   end
 
+  def normalize_changeset_error(value) when is_atom(value) do
+    value
+  end
+
+  def normalize_changeset_error(value) when is_binary(value) do
+    String.replace(value, ~r/%{(.+)}/, "{\\1}")
+  end
+
   def put_error(%Plug.Conn{} = conn, status) do
     status_code = Status.code(status)
     message = status_code |> Status.reason_phrase()
@@ -60,7 +68,7 @@ defmodule FlirtualWeb.ErrorHelpers do
       opts = Enum.into(opts, %{})
 
       Issue.new(%{
-        error: msg |> String.replace(~r/%{(.+)}/, "{\\1}"),
+        error: normalize_changeset_error(msg),
         details:
           case opts do
             %{type: {:parameterized, Ecto.Enum, %{mappings: mappings}}} ->

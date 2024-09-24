@@ -6,6 +6,11 @@ import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
 
+import { ClientScripts } from "./client-scripts";
+import { fontClassNames } from "./fonts";
+
+import type { Metadata, Viewport } from "next";
+
 import { siteOrigin } from "~/const";
 import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
@@ -19,14 +24,9 @@ import AppUrlListener from "~/components/app-url-listener";
 import NativeStartup from "~/components/native-startup";
 import { InsetPreview } from "~/components/inset-preview";
 import { getInternationalization } from "~/i18n";
-import { InternationalizationProvider } from "~/hooks/use-internalization";
+import { InternationalizationProvider } from "~/hooks/use-internationalization";
 import { PreferenceThemes, type PreferenceTheme } from "~/api/user/preferences";
 import { Authentication } from "~/api/auth";
-
-import { ClientScripts } from "./client-scripts";
-import { fontClassNames } from "./fonts";
-
-import type { Metadata, Viewport } from "next";
 
 import "~/css/index.scss";
 
@@ -34,57 +34,57 @@ export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("meta");
 
 	return {
-		metadataBase: new URL(siteOrigin),
-		title: {
-			template: t("title"),
-			default: t("name")
-		},
-		description: t("knotty_direct_mongoose_bend"),
-		manifest: "/manifest.json",
-		applicationName: t("name"),
-		appleWebApp: {
-			title: t("name")
-		},
-		other: {
-			"msapplication-TileColor": "#e9658b"
-		},
-		twitter: {
-			site: `@${urls.socials.twitter.split("twitter.com/")[1]}`,
-			card: "summary"
-		},
-		openGraph: {
-			type: "website",
-			title: t("name"),
-			description: t("green_plain_mongoose_lend")
-		},
 		appLinks: {
-			ios: {
-				app_store_id: "6450485324",
-				url: urls.apps.apple
-			},
 			android: {
 				package: "zone.homie.flirtual.pwa",
 				url: urls.apps.google
 			},
+			ios: {
+				app_store_id: "6450485324",
+				url: urls.apps.apple
+			},
 			web: {
-				url: siteOrigin,
-				should_fallback: true
+				should_fallback: true,
+				url: siteOrigin
 			}
 		},
+		appleWebApp: {
+			title: t("name")
+		},
+		applicationName: t("name"),
+		description: t("knotty_direct_mongoose_bend"),
 		itunes: {
 			appId: "6450485324"
+		},
+		manifest: "/manifest.json",
+		metadataBase: new URL(siteOrigin),
+		openGraph: {
+			description: t("green_plain_mongoose_lend"),
+			title: t("name"),
+			type: "website"
+		},
+		other: {
+			"msapplication-TileColor": "#e9658b"
+		},
+		title: {
+			default: t("name"),
+			template: t("title")
+		},
+		twitter: {
+			card: "summary",
+			site: `@${urls.socials.twitter.split("twitter.com/")[1]}`
 		}
 	};
 }
 
 export const viewport: Viewport = {
-	width: "device-width",
 	initialScale: 1,
-	viewportFit: "cover",
 	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
-		{ media: "(prefers-color-scheme: dark)", color: "#111111" }
-	]
+		{ color: "#ffffff", media: "(prefers-color-scheme: light)" },
+		{ color: "#111111", media: "(prefers-color-scheme: dark)" }
+	],
+	viewportFit: "cover",
+	width: "device-width"
 };
 
 const platforms: Record<string, DevicePlatform> = {

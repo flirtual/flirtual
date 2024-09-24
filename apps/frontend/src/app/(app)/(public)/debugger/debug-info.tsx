@@ -9,7 +9,7 @@ import { InlineLink } from "~/components/inline-link";
 import { TimeRelative } from "~/components/time-relative";
 import { environment, gitCommitSha } from "~/const";
 import { useDevice } from "~/hooks/use-device";
-import { useInternationalization } from "~/hooks/use-internalization";
+import { useInternationalization } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";

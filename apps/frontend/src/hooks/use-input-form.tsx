@@ -3,13 +3,13 @@ import { WretchError } from "wretch/resolver";
 import { useTranslations, type TranslationValues } from "next-intl";
 import { camelCase } from "change-case";
 
+import type { FormCaptchaReference } from "~/components/forms/captcha";
+import type { ReactNode, RefObject } from "react";
+import type React from "react";
+
 import { type FormFieldFC, FormField } from "~/components/forms/field";
 import { entries } from "~/utilities";
 import { isWretchError } from "~/api/common";
-
-import type { FormCaptchaReference } from "~/components/forms/captcha";
-import type { RefObject } from "react";
-import type React from "react";
 
 export interface FormFieldsDefault {
 	[s: string]: unknown;
@@ -122,7 +122,10 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 		setCaptcha(captcha);
 
-		const result = await onSubmit(_values, { ...form, submit, captcha })
+		setFieldErrors({});
+		setErrors([]);
+
+		const result = await onSubmit(_values, { ...form, captcha, submit })
 			.then(() => {
 				setFieldErrors({});
 				setErrors([]);
@@ -161,8 +164,12 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					return { errors, fieldErrors: {}, fields: _values };
 				}
 
-				setErrors([reason.message]);
-				return { errors: [reason.message], fieldErrors: {}, fields: _values };
+				const errors = Array.isArray(reason)
+					? [<span>{reason as ReactNode}</span>]
+					: [reason.message];
+
+				setErrors(errors);
+				return { errors, fieldErrors: {}, fields: _values };
 			});
 
 		if (withCaptcha) captchaRef.current?.reset();
@@ -185,24 +192,24 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 				entries(values).map(([key, value]) => {
 					const id = `${formId}${String(key)}`;
 					const props: InputProps<unknown, unknown> = {
+						disabled: submitting,
 						id,
 						name: key,
-						value,
-						disabled: submitting,
 						onChange: (value) => {
 							const newValues = { ...values, [key]: value };
 							setValues(newValues);
 							// if (submitOnChange) void submit(newValues);
-						}
+						},
+						value
 					};
 
 					return [
 						key,
 						{
-							props,
 							changed: value !== initialValues[key],
+							errors: fieldErrors[key] ?? [],
 							labelProps: { htmlFor: id },
-							errors: fieldErrors[key] ?? []
+							props
 						}
 					];
 				})
@@ -235,18 +242,18 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 	};
 
 	const form = {
-		fields,
-		captcha,
-		errors,
-		props,
-		buttonProps,
-		submitting,
-		changes,
 		FormField,
+		buttonProps,
+		captcha,
+		changes,
+		errors,
+		fields,
+		props,
+		reset,
 		setFieldErrors,
 		setSubmitting,
-		reset,
-		submit
+		submit,
+		submitting
 	};
 
 	return form;

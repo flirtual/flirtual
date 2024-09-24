@@ -55,7 +55,7 @@ defmodule FlirtualWeb.MatchmakingController do
     target = Users.get(user_id)
 
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
-      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
       with {:ok, result} <-
              Matchmaking.respond_profile(
@@ -105,14 +105,14 @@ defmodule FlirtualWeb.MatchmakingController do
     target = Users.get(user_id)
 
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
-      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
       with %Prospect{} = prospect <-
              Prospect.get(profile_id: user.id, target_id: target.id),
            {:ok, _} <- Prospect.reverse(prospect) do
         conn |> json(%{success: true})
       else
-        nil -> {:error, {:not_found, "Prospect not found", %{user_id: user_id}}}
+        nil -> {:error, {:not_found, :prospect_not_found, %{user_id: user_id}}}
         reason -> reason
       end
     end
@@ -123,7 +123,7 @@ defmodule FlirtualWeb.MatchmakingController do
     target = Users.get(user_id)
 
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
-      {:error, {:not_found, "User not found", %{user_id: user_id}}}
+      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
       with {:ok, _} <- LikesAndPasses.delete_all(profile_id: user.id, target_id: target.id) do
         conn |> json(%{success: true})
