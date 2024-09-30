@@ -16,21 +16,24 @@ jobs:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v4
         name: Install pnpm
+        working-directory: "./apps/frontend/"
         with:
           version: 9
           run_install: false
 
       - name: Install Node.js
         uses: actions/setup-node@v4
+        working-directory: "./apps/frontend/"
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
+        working-directory: "./apps/frontend/"
         run: pnpm install
 
       - name: ESLint
         uses: CatChen/eslint-suggestion-action@v2
+        working-directory: "./apps/frontend/"
         with:
           fail-check: true
-          directory: './apps/frontend/'
