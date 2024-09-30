@@ -4,8 +4,8 @@ import { headers as getHeaders } from "next/headers";
 import { cache } from "react";
 import deepmerge from "deepmerge";
 
-import { Authentication } from "./api/auth";
 import { attributeTypes } from "./api/attributes";
+import { Authentication } from "./api/auth";
 
 import type { AbstractIntlMessages } from "next-intl";
 
