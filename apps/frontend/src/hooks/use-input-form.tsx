@@ -3,13 +3,13 @@ import { WretchError } from "wretch/resolver";
 import { useTranslations, type TranslationValues } from "next-intl";
 import { camelCase } from "change-case";
 
-import type { FormCaptchaReference } from "~/components/forms/captcha";
-import type { ReactNode, RefObject } from "react";
-import type React from "react";
-
 import { type FormFieldFC, FormField } from "~/components/forms/field";
 import { entries } from "~/utilities";
 import { isWretchError } from "~/api/common";
+
+import type { FormCaptchaReference } from "~/components/forms/captcha";
+import type { ReactNode, RefObject } from "react";
+import type React from "react";
 
 export interface FormFieldsDefault {
 	[s: string]: unknown;
@@ -165,7 +165,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 				}
 
 				const errors = Array.isArray(reason)
-					? [<span>{reason as ReactNode}</span>]
+					? [<span key={0}>{reason as ReactNode}</span>]
 					: [reason.message];
 
 				setErrors(errors);

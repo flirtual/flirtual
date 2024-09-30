@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "next build",
+    "build": "next build --no-lint",
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_OPTIONS='--inspect' DEBUG=app* DEBUG_COLORS=1 next dev -H 0.0.0.0 --experimental-https --experimental-https-key ./certificates/localhost-key.pem --experimental-https-cert ./certificates/localhost.pem",
     "android-build": "cap sync android && cd ./android && ./gradlew build",
     "android-uninstall": "adb uninstall zone.homie.flirtual.pwa",

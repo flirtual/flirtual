@@ -20,6 +20,7 @@ function getCountry(headers: Headers) {
 
 export const getInternationalization = cache(async (override?: string) => {
 	const headers = getHeaders();
+	console.log("a");
 
 	override ||= headers.get("language") ?? undefined;
 

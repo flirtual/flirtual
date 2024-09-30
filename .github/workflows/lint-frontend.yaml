@@ -1,0 +1,36 @@
+name: ESLint
+
+on:
+  push:
+    branches: [main]
+    paths: [ "apps/frontend/**", ".github/workflows/lint-frontend.yaml" ]
+  pull_request:
+    branches: [main]
+    paths: [ "apps/frontend/**", ".github/workflows/lint-frontend.yaml" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: ESLint
+        uses: CatChen/eslint-suggestion-action@v2
+        with:
+          fail-check: true
+          directory: './apps/frontend/'

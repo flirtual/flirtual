@@ -17,7 +17,7 @@ defmodule FlirtualWeb.Router do
     if conn.assigns[:session] do
       conn
     else
-      conn |> put_error(:unauthorized, "Missing credentials") |> halt()
+      conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
     end
   end
 
@@ -33,7 +33,7 @@ defmodule FlirtualWeb.Router do
     else
       _ ->
         conn
-        |> put_error(:unauthorized, "Missing credentials")
+        |> put_error(:unauthorized, :invalid_credentials)
         |> halt()
     end
   end
@@ -43,7 +43,7 @@ defmodule FlirtualWeb.Router do
 
     if user.deactivated_at !== nil do
       conn
-      |> put_error(:forbidden, "User account deactivated")
+      |> put_error(:forbidden, :account_deactivated)
       |> halt()
     else
       conn
