@@ -19,6 +19,7 @@ jobs:
         working-directory: apps/frontend
 
     steps:
+      - run: echo "::add-matcher::.github/annotations.json"
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -36,8 +37,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: echo "::add-matcher::.github/eslint-stylish.json"
-
       - name: ESLint
         run: ./node_modules/.bin/eslint -f stylish
+        continue-on-error: true
+
+      - name: TypeScript
+        run: ./node_modules/.bin/tsc --noEmit
         continue-on-error: true

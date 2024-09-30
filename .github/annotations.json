@@ -1,7 +1,7 @@
 {
 	"problemMatcher": [
 		{
-			"owner": "eslint-stylish",
+			"owner": "eslint",
 			"pattern": [
 				{
 					"regexp": "^([^\\s].*)$",
@@ -15,6 +15,20 @@
 					"message": 4,
 					"code": 5,
 					"loop": true
+				}
+			]
+		},
+		{
+			"owner": "typescript",
+			"pattern": [
+				{
+					"regexp": "^([^\\s].*):(\\d+):(\\d+)\\s+-\\s+(error|warning|info)\\s(TS\\d+):\\s(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"severity": 4,
+					"code": 5,
+					"message": 6
 				}
 			]
 		}
