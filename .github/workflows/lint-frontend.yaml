@@ -34,7 +34,13 @@ jobs:
         run: pnpm install
 
       - name: ESLint
-        uses: CatChen/eslint-suggestion-action@v2
+        run: eslint -f json --output-file eslint-report.json
+        continue-on-error: true
+
+      - name: Annotate issues
+        uses: ataylorme/eslint-annotate-action@v3
         with:
-          fail-check: true
-          directory: apps/frontend/
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          report-json: "eslint-report.json"
+          only-pr-files: false
+          fail-on-warning: true
