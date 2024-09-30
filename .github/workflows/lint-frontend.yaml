@@ -42,6 +42,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           report-json: "apps/frontend/eslint-report.json"
-          check-name: eslint-report
+          check-name: eslint
           only-pr-files: false
           fail-on-warning: true
