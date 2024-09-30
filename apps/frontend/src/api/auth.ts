@@ -8,6 +8,8 @@ import type { User } from "./user";
 
 import { urls } from "~/urls";
 
+
+
 export type Session = DatedModel & {
 	sudoerId?: string;
 	user: User;
