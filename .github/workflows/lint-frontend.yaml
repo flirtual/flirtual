@@ -49,5 +49,5 @@ jobs:
         with:
           only-changed-in-pr: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          eslint-report: apps/frontend/eslint-report.json
+          eslint-report: apps/frontend/report-eslint.json
           typescript-log: apps/frontend/report-typescript.log

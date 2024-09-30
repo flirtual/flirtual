@@ -19,9 +19,8 @@ export interface LoginOptions {
 	rememberMe: boolean;
 }
 
-const a = 1;
-
 const b = 2;
+const a = 1;
 
 
 export interface ConfirmResetPasswordOptions {
