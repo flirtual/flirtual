@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: echo "::add-matcher::../../.github/eslint-stylish.json"
+      - run: echo "::add-matcher::.github/eslint-stylish.json"
 
       - name: ESLint
         run: ./node_modules/.bin/eslint -f stylish
