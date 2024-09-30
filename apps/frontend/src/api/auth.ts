@@ -21,6 +21,7 @@ export interface LoginOptions {
 
 const b = 2;
 const a = 1;
+a = 2;
 
 
 const c = 3;
