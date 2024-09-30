@@ -14,9 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
       - uses: pnpm/action-setup@v4
         name: Install pnpm
-        working-directory: "./apps/frontend/"
         with:
           version: 9
           run_install: false
