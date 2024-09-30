@@ -36,18 +36,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - run: echo "::add-matcher::../../.github/eslint-stylish.json"
+
       - name: ESLint
-        run: ./node_modules/.bin/eslint -f json --output-file report-eslint.json
+        run: ./node_modules/.bin/eslint -f stylish
         continue-on-error: true
-
-      - name: Type check
-        run: ./node_modules/.bin/tsc --noEmit > report-typescript.log
-        continue-on-error: true
-
-      - name: Annotate issues
-        uses: DerLev/eslint-annotations@v2
-        with:
-          only-changed-in-pr: false
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          eslint-report: apps/frontend/report-eslint.json
-          typescript-log: apps/frontend/report-typescript.log
