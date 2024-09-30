@@ -19,8 +19,8 @@ jobs:
         working-directory: apps/frontend
 
     steps:
-      - run: echo "::add-matcher::.github/annotations.json"
       - uses: actions/checkout@v3
+      - run: echo "::add-matcher::.github/annotations.json"
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
