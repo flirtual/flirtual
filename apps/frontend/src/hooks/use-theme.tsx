@@ -89,3 +89,5 @@ export const ThemeProvider = forwardRef<
 		</Context.Provider>
 	);
 });
+
+ThemeProvider.displayName = "ThemeProvider";

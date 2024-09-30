@@ -4,7 +4,7 @@ import { Authentication } from "~/api/auth";
 
 import { Banner, BannerLink } from "../banner";
 
-export default async function () {
+export default async function BrowseBanner() {
 	const session = await Authentication.getSession();
 	const t = await getTranslations("banners");
 

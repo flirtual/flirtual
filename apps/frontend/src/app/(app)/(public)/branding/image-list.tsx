@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { twMerge } from "tailwind-merge";
 
 import { urls } from "~/urls";

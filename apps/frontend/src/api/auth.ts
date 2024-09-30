@@ -19,14 +19,6 @@ export interface LoginOptions {
 	rememberMe: boolean;
 }
 
-const b = 2;
-const a = 1;
-a = 2;
-
-
-const c = 3;
-const d = 3;
-
 export interface ConfirmResetPasswordOptions {
 	email: string;
 	password: string;

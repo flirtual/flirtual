@@ -84,3 +84,5 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 		</AnimatePresence>
 	);
 });
+
+Pill.displayName = "Pill";

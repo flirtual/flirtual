@@ -3,12 +3,8 @@
 import { useMessages, useTranslations } from "next-intl";
 
 import { urls } from "~/urls";
-import { groupBy } from "~/utilities";
 import { useSession } from "~/hooks/use-session";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 
-import { PillAttributeList } from "./attribute-list";
-import { PillCollectionExpansion } from "./expansion";
 import { Pill } from "./pill";
 
 import type { User } from "~/api/user";
@@ -40,9 +36,9 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const sessionAttributeIds = new Set(
 		...Object.values(session.user.profile.attributes)
 	);
-	const profileAttributeIds = new Set(
-		...Object.values(user.profile.attributes)
-	);
+	// const profileAttributeIds = new Set(
+	// 	...Object.values(user.profile.attributes)
+	// );
 
 	const editable = session.user.id === user.id;
 

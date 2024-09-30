@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { createContext, type FC, use, useMemo } from "react";
@@ -5,13 +6,13 @@ import { SelectItemText } from "@radix-ui/react-select";
 import { useInView } from "react-intersection-observer";
 import { useLocale, useTranslations } from "next-intl";
 
-import { InputSelect, type InputSelectProps, SelectItem } from "../select";
-
 import {
 	useAttributeList,
 	useAttributeTranslation
 } from "~/hooks/use-attribute-list";
 import { useInternationalization } from "~/hooks/use-internationalization";
+
+import { InputSelect, type InputSelectProps, SelectItem } from "../select";
 
 const Context = createContext(
 	{} as {

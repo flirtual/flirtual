@@ -2,9 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-import type { FC } from "react";
-import type { AttributeCollection } from "~/api/attributes";
-
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -15,7 +12,7 @@ import {
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { urls } from "~/urls";
-import { filterBy, fromEntries, pick } from "~/utilities";
+import { fromEntries } from "~/utilities";
 import { InputCountrySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useInternationalization } from "~/hooks/use-internationalization";
@@ -25,6 +22,8 @@ import {
 	useAttributeList,
 	useAttributeTranslation
 } from "~/hooks/use-attribute-list";
+
+import type { FC } from "react";
 
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 

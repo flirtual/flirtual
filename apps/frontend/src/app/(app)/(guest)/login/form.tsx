@@ -3,8 +3,6 @@
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
 
-import { LoginConnectionButton } from "./login-connection-button";
-
 import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
@@ -15,6 +13,8 @@ import { useDevice } from "~/hooks/use-device";
 import { Authentication } from "~/api/auth";
 import { useTranslations } from "~/hooks/use-internationalization";
 import { InlineLink } from "~/components/inline-link";
+
+import { LoginConnectionButton } from "./login-connection-button";
 
 export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 	const { platform, native } = useDevice();
@@ -102,8 +102,8 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 							throw t.rich("errors.invalid_credentials_complex", {
 								help: (children) => (
 									<InlineLink
-										highlight={false}
 										className="underline"
+										highlight={false}
 										href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
 									>
 										{children}
@@ -111,8 +111,8 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 								),
 								reset: (children) => (
 									<InlineLink
-										highlight={false}
 										className="underline"
+										highlight={false}
 										href={urls.forgotPassword}
 									>
 										{children}

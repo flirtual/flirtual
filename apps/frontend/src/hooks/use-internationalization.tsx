@@ -32,6 +32,8 @@ export const InternationalizationProvider = forwardRef<
 	);
 });
 
+InternationalizationProvider.displayName = "InternationalizationProvider";
+
 export const useInternationalization = () => {
 	const internationalization = use(InternationalizationContext);
 

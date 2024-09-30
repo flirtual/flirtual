@@ -23,7 +23,7 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 						love: (
 							<>
 								<div className="flex flex-col gap-4">
-									<p>You've seen everyone that matches your preferences.</p>
+									<p>You&apos;ve seen everyone that match your preferences.</p>
 									<p>
 										To see more people, try expanding your{" "}
 										<InlineLink href={urls.settings.matchmaking()}>
@@ -57,7 +57,7 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 						friend: (
 							<>
 								<div className="flex flex-col gap-4">
-									<p>You've seen everyone that matches your preferences.</p>
+									<p>You&apos;ve seen everyone that match your preferences.</p>
 									<p>
 										Come back later! Each week hundreds of new Flirtual profiles
 										are created. Invite your friends to try Flirtual!
@@ -86,9 +86,9 @@ export const FinishProfileError: React.FC = () => {
 		>
 			<div className="flex flex-col gap-4">
 				<p>
-					You've went through quite a few profiles already, let's finish setting
-					up your account before you continue. We'll need you to finish your
-					profile then you'll be back in the action.
+					You&apos;ve went through quite a few profiles already, let&apos;s
+					finish setting up your account before you continue. We&apos;ll need
+					you to finish your profile then you&apos;ll be back in the action.
 				</p>
 				<div className="flex gap-4">
 					<ButtonLink href={urls.finish(1)} size="sm">
@@ -109,9 +109,9 @@ export const ConfirmEmailError: React.FC = () => {
 		>
 			<div className="flex flex-col gap-4">
 				<p>
-					You've checked out a lot of profiles so far! Before you continue,
-					let's wrap up your account setup. Please confirm your email to make
-					your profile visible to others and get back in action.
+					You&apos;ve checked out a lot of profiles so far! Before you continue,
+					let&apos;s wrap up your account setup. Please confirm your email to
+					make your profile visible to others and get back in action.
 				</p>
 				<div className="flex gap-4">
 					<ButtonLink href={urls.confirmEmail()} size="sm">

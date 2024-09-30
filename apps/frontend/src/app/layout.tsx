@@ -6,11 +6,6 @@ import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
 
-import { ClientScripts } from "./client-scripts";
-import { fontClassNames } from "./fonts";
-
-import type { Metadata, Viewport } from "next";
-
 import { siteOrigin } from "~/const";
 import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
@@ -27,6 +22,11 @@ import { getInternationalization } from "~/i18n";
 import { InternationalizationProvider } from "~/hooks/use-internationalization";
 import { PreferenceThemes, type PreferenceTheme } from "~/api/user/preferences";
 import { Authentication } from "~/api/auth";
+
+import { fontClassNames } from "./fonts";
+import { ClientScripts } from "./client-scripts";
+
+import type { Metadata, Viewport } from "next";
 
 import "~/css/index.scss";
 

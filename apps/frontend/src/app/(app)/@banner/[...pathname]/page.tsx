@@ -7,7 +7,7 @@ import { Banner } from "../banner";
 
 import { SelfLink } from "./self-link";
 
-export default async function () {
+export default async function FallbackBanner() {
 	const { locale, translating } = await getInternationalization();
 
 	const t = await getTranslations("banners");
