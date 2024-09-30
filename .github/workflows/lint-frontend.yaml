@@ -20,7 +20,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: echo "::add-matcher::.github/annotations.json"
+      - run: echo "::add-matcher::.github/annotation-eslint.json"
+      - run: echo "::add-matcher::.github/annotation-typescript.json"
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -37,10 +38,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: ESLint
-        run: ./node_modules/.bin/eslint -f stylish
-        continue-on-error: true
-
       - name: TypeScript
         run: ./node_modules/.bin/tsc --noEmit
+        continue-on-error: true
+
+      - name: ESLint
+        run: ./node_modules/.bin/eslint -f stylish
         continue-on-error: true
