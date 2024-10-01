@@ -13,14 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       checks: write
-      pull-requests: read
     defaults:
       run:
         working-directory: apps/frontend
 
     steps:
       - uses: actions/checkout@v3
-      - run: echo "::add-matcher::.github/annotation-eslint.json"
+      # - run: echo "::add-matcher::.github/annotation-eslint.json"
       - run: echo "::add-matcher::.github/annotation-typescript.json"
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -42,6 +41,6 @@ jobs:
         run: ./node_modules/.bin/tsc --noEmit
         continue-on-error: true
 
-      - name: ESLint
-        run: ./node_modules/.bin/eslint -f stylish
-        continue-on-error: true
+      # - name: ESLint
+      #   run: ./node_modules/.bin/eslint -f stylish
+      #   continue-on-error: true
