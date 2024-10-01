@@ -16,8 +16,10 @@ export const getProfile = cache(async (username: string) => {
 		return session.user;
 	}
 
-	if (isUid(username))
-		return User.get(username).catch(() => redirect(urls.default));
+	const user = isUid(username)
+		? await User.get(username)
+		: await User.getBySlug(username);
 
-	return User.getBySlug(username).catch(() => redirect(urls.default));
+	if (!user) redirect(urls.default);
+	return user;
 });

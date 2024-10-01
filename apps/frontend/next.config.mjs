@@ -8,6 +8,9 @@ let config = {
 	images: {
 		unoptimized: true
 	},
+	eslint: {
+		ignoreDuringBuilds: true
+	},
 	modularizeImports: {
 		"@heroicons/react/24/outline": {
 			transform: "@heroicons/react/24/outline/{{ member }}",

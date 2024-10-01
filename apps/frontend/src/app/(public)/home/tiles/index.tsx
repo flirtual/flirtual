@@ -56,6 +56,8 @@ export const Tile = forwardRef<
 	);
 });
 
+Tile.displayName = "Tile";
+
 export const TileAnchor: FC<PropsWithChildren<TileProps>> = ({
 	id,
 	children

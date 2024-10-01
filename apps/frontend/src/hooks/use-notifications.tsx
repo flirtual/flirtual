@@ -15,6 +15,8 @@ import {
 	useState
 } from "react";
 
+import { User } from "~/api/user";
+
 import { useDevice } from "./use-device";
 import { useToast } from "./use-toast";
 import { useSession } from "./use-session";
@@ -28,8 +30,6 @@ export interface NotificationContext {
 const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
-	return <>{children}</>;
-
 	const [pushRegistrationId, setPushRegistrationId] = useState<string>();
 	const { platform, native } = useDevice();
 	const [session] = useSession();
@@ -58,7 +58,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		)
 			return;
 
-		void api.user.resetPushCount(session.user.id);
+		void User.resetPushCount(session.user.id);
 	}, [session?.user.id, session?.user.pushCount]);
 
 	useEffect(() => {
@@ -82,21 +82,17 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 
 					setPushRegistrationId(token.value);
 					if (platform === "apple" && token.value !== session.user.apnsToken)
-						await api.user.updatePushTokens(session.user.id, {
-							body: {
-								apnsToken: token.value,
-								fcmToken: session.user.fcmToken
-							}
+						await User.updatePushTokens(session.user.id, {
+							apnsToken: token.value,
+							fcmToken: session.user.fcmToken
 						});
 					else if (
 						platform === "android" &&
 						token.value !== session.user.fcmToken
 					)
-						await api.user.updatePushTokens(session.user.id, {
-							body: {
-								apnsToken: session.user.apnsToken,
-								fcmToken: token.value
-							}
+						await User.updatePushTokens(session.user.id, {
+							apnsToken: session.user.apnsToken,
+							fcmToken: token.value
 						});
 				}
 			);

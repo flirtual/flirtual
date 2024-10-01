@@ -5,12 +5,18 @@ import { twMerge } from "tailwind-merge";
 import { urls } from "~/urls";
 
 import type { FC } from "react";
+import type { MessageKeys } from "~/i18n";
 
-export const TimelineItem: FC<{ year: number; index: number }> = ({
+export type TimelineItemYear = {
+	[K in MessageKeys]: K extends `about.timeline.${infer T}` ? T : never;
+}[MessageKeys];
+
+export const TimelineItem: FC<{ year: TimelineItemYear; index: number }> = ({
 	year,
 	index
 }) => {
 	const t = useTranslations(`about.timeline.${year}`);
+	useTranslations("about.timeline.2018");
 
 	return (
 		<div className="grid grid-cols-2 items-center gap-6">

@@ -43,6 +43,12 @@ export interface AttributeTranslationMetadata {
 		plural?: string;
 		definition?: string;
 	};
+	sexuality: {
+		definition: string;
+	};
+	"ban-reason": {
+		details: string;
+	};
 }
 
 export type AttributeTranslation<T extends AttributeType> = {
@@ -51,9 +57,12 @@ export type AttributeTranslation<T extends AttributeType> = {
 	? AttributeTranslationMetadata[T]
 	: Record<string, never>);
 
-export function useAttributeTranslation() {
+export function useAttributeTranslation<
+	T extends AttributeType = AttributeType
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+>(type?: T): Record<string, AttributeTranslation<T>> {
 	const { attributes: tAttributes } = useMessages() as {
-		attributes: Record<string, AttributeTranslation<AttributeType>>;
+		attributes: Record<string, AttributeTranslation<T>>;
 	};
 
 	return tAttributes;

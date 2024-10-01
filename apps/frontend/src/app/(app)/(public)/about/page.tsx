@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 
 import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
@@ -21,6 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutPage() {
 	const t = await getTranslations("about");
+	const {
+		about: { images }
+	} = (await getMessages()) as unknown as IntlMessages;
 
 	return (
 		<ModelCard
@@ -193,27 +196,29 @@ export default async function AboutPage() {
 					),
 					timeline: () => (
 						<div className="flex flex-col gap-6">
-							{[2018, 2019, 2020, 2021, 2022, 2023].map((year, index) => (
-								<TimelineItem index={index} key={year} year={year} />
-							))}
+							{(["2018", "2019", "2020", "2021", "2022", "2023"] as const).map(
+								(year, index) => (
+									<TimelineItem index={index} key={year} year={year} />
+								)
+							)}
 						</div>
 					)
 				})}
 			</div>
 			<div className="grid grid-cols-3">
-				{Array.from({ length: 6 }, (_, index) => (
+				{Object.entries(images).map(([index, { image, image_alt, link }]) => (
 					<Tooltip key={index}>
 						<TooltipTrigger asChild>
-							<InlineLink href={t(`images.${index}.link`)}>
+							<InlineLink href={link}>
 								<Image
-									alt={t(`images.${index}.image_alt`)}
+									alt={image_alt}
 									height={230}
-									src={urls.media(t(`images.${index}.image`))}
+									src={urls.media(image)}
 									width={405}
 								/>
 							</InlineLink>
 						</TooltipTrigger>
-						<TooltipContent>{t(`images.${index}.image_alt`)}</TooltipContent>
+						<TooltipContent>{image_alt}</TooltipContent>
 					</Tooltip>
 				))}
 			</div>

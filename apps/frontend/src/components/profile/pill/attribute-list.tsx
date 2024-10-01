@@ -1,6 +1,6 @@
 "use client";
 
-import { useMessages, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 import { useSession } from "~/hooks/use-session";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
@@ -22,7 +22,7 @@ interface PillAttributeListProps {
 
 export const PillAttributeList: FC<PillAttributeListProps> = ({
 	user,
-	attributes: attributeIds,
+	attributes,
 	href,
 	activeIds
 }) => {
@@ -30,9 +30,11 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 
-	if (!attributeIds?.length) return null;
+	if (!attributes?.length) return null;
 	if (!activeIds)
-		activeIds = Object.values(session?.user.profile.attributes || {}).flat();
+		activeIds = Object.values(session?.user.profile.attributes || {})
+			.flat()
+			.filter(Boolean);
 
 	return (
 		<div className="flex w-full flex-wrap gap-2">
@@ -53,7 +55,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 									href={href}
 									active={
 										session
-											? session.user.id !== user.id && attributeIds.includes(id)
+											? session.user.id !== user.id && activeIds.includes(id)
 											: false
 									}
 								>

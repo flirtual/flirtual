@@ -21,7 +21,8 @@ import { Profile } from "~/api/user/profile";
 import { User } from "~/api/user";
 import {
 	useAttributeList,
-	useAttributeTranslation
+	useAttributeTranslation,
+	type AttributeTranslation
 } from "~/hooks/use-attribute-list";
 
 import type { FC } from "react";
@@ -154,7 +155,9 @@ export const InfoForm: FC = () => {
 											value={field.props.value || []}
 											options={genders.map((gender) => {
 												const { name, definition } =
-													tAttribute[gender.id] ?? {};
+													(tAttribute[
+														gender.id
+													] as AttributeTranslation<"gender">) ?? {};
 
 												return {
 													key: gender.id,
@@ -180,7 +183,10 @@ export const InfoForm: FC = () => {
 									placeholder="Select your sexualities..."
 									value={field.props.value || []}
 									options={sexualities.map((sexuality) => {
-										const { name, definition } = tAttribute[sexuality.id] ?? {};
+										const { name, definition } =
+											(tAttribute[
+												sexuality.id
+											] as AttributeTranslation<"sexuality">) ?? {};
 
 										return {
 											key: sexuality.id,

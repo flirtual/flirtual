@@ -94,7 +94,7 @@ export const InterestsForm: FC = () => {
 			className="flex flex-col gap-8"
 			fields={{
 				filter: "",
-				defaultInterests: profile.attributes.interest,
+				defaultInterests: profile.attributes.interest || [],
 				customInterests: profile.customInterests
 			}}
 			onSubmit={async ({ defaultInterests, customInterests }) => {

@@ -17,7 +17,10 @@ import { DropdownMenuItem } from "~/components/dropdown";
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
-import { useAttributeList } from "~/hooks/use-attribute-list";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 import { useToast } from "~/hooks/use-toast";
 
 export const SuspendAction: FC<{ user: User }> = ({ user }) => {
@@ -25,6 +28,9 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
 
 	const reasons = useAttributeList("ban-reason");
+	const defaultReason = reasons[0]!;
+	const tAttribute = useAttributeTranslation("ban-reason");
+
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -52,8 +58,8 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 						requireChange={false}
 						fields={{
 							targetId: user.id,
-							reasonId: reasons[0]?.id,
-							message: reasons[0]?.metadata.details
+							reasonId: defaultReason.id,
+							message: tAttribute[defaultReason.id]!.details
 						}}
 						onSubmit={async ({ targetId, ...body }) => {
 							await User.suspend(targetId, body);
@@ -91,12 +97,14 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 									{({ props }) => (
 										<InputSelect
 											{...props}
-											options={reasons}
+											options={reasons.map(({ id }) => ({
+												id,
+												name: tAttribute[id]?.name || id
+											}))}
 											onChange={(value) => {
 												props.onChange(value);
 												message.props.onChange(
-													reasons.find((reason) => reason.id === value)
-														?.metadata.details || ""
+													tAttribute[value]?.details || value
 												);
 											}}
 										/>

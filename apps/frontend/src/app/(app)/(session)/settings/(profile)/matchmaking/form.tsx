@@ -38,7 +38,8 @@ import {
 import { Matchmaking } from "~/api/matchmaking";
 import {
 	useAttributeList,
-	useAttributeTranslation
+	useAttributeTranslation,
+	type AttributeTranslation
 } from "~/hooks/use-attribute-list";
 
 const absMinAge = 18;
@@ -134,7 +135,9 @@ export const MatchmakingForm: FC = () => {
 								<InputCheckboxList
 									{...field.props}
 									items={genders.map((gender) => {
-										const { name, plural } = tAttribute[gender.id] ?? {
+										const { name, plural } = (tAttribute[
+											gender.id
+										] as AttributeTranslation<"gender">) ?? {
 											name: gender.id
 										};
 

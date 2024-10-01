@@ -20,7 +20,10 @@ import {
 } from "~/components/forms/input-image-set";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
-import { useAttributeList } from "~/hooks/use-attribute-list";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -30,11 +33,14 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 }) => {
 	const [session] = useSession();
 	const t = useTranslations("profile.dialogs.report");
+	const tAttributes = useAttributeTranslation();
 
 	const router = useRouter();
 	const toasts = useToast();
 
 	const reasons = useAttributeList("report-reason");
+	const defaultReason = reasons[0]!;
+
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -50,7 +56,10 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 						requireChange={false}
 						fields={{
 							targetId: user.id,
-							reasonId: reasons[0]?.id || null,
+							reasonId:
+								typeof defaultReason === "object"
+									? defaultReason.id
+									: defaultReason,
 							message: "",
 							images: [] as Array<ImageSetValue>
 						}}
@@ -94,7 +103,18 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 								<FormField name="reasonId">
 									{(field) => (
 										<>
-											<InputSelect {...field.props} options={reasons} />
+											<InputSelect
+												{...field.props}
+												options={reasons.map((reason) => {
+													const id =
+														typeof reason === "object" ? reason.id : reason;
+
+													return {
+														id,
+														name: tAttributes[id]?.name || id
+													};
+												})}
+											/>
 										</>
 									)}
 								</FormField>

@@ -143,7 +143,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 								[
 									camelCase(key),
 									issues.map(({ error, details }) =>
-										t(`errors.${error}`, details as TranslationValues)
+										// eslint-disable-next-line @typescript-eslint/no-explicit-any
+										t(`errors.${error}` as any, details as TranslationValues)
 									)
 								] as const
 						)
@@ -157,7 +158,11 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					const { error } = reason.json ?? {};
 
 					const errors = [
-						t(`errors.${error}`, reason.json.details as TranslationValues)
+						t(
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							`errors.${error}` as any,
+							reason.json.details as TranslationValues
+						)
 					];
 					setErrors(errors);
 

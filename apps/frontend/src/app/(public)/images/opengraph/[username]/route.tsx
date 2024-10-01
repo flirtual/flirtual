@@ -1,18 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
-import { ImageResponse } from "next/og";
-
-import { filterBy, findBy } from "~/utilities";
-import { User } from "~/api/user";
-
-import type { Attribute } from "~/api/attributes";
-
-const boxShadow =
-	"0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)";
-
-interface PillProps {
-	name: string;
-	active?: boolean;
-}
+// interface PillProps {
+// 	name: string;
+// 	active?: boolean;
+// }
 
 export interface ProfileOpenGraphImageContext {
 	params: {
@@ -23,11 +12,10 @@ export interface ProfileOpenGraphImageContext {
 // Blocked by: https://github.com/vercel/next.js/issues/48081
 // const Montserrat = await fs.readFile("./public/fonts/montserrat.ttf");
 
-export async function GET(
-	request: Request,
-	{ params }: ProfileOpenGraphImageContext
-) {
-	const user = await User.preview(params.username);
+export async function GET() {
+	// request: Request,
+	// { params }: ProfileOpenGraphImageContext
+	/* const user = await User.preview(params.username);
 
 	const country = findBy(user.attributes, "type", "country") as
 		| Attribute<"country">
@@ -138,5 +126,5 @@ export async function GET(
 			debug: false,
 			emoji: "twemoji"
 		}
-	);
+	); */
 }

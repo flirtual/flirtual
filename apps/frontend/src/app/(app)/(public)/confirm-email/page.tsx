@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
-import { getOptionalSession } from "~/api/auth";
+import { Authentication } from "~/api/auth";
 
 import { UserForms } from "./user-forms";
 import { ConfirmTokenForm } from "./confirm-token-form";
@@ -20,7 +20,7 @@ export interface ConfirmEmailPageProps {
 export default async function ConfirmEmailPage({
 	searchParams
 }: ConfirmEmailPageProps) {
-	const session = await getOptionalSession();
+	const session = await Authentication.getOptionalSession();
 
 	if (session?.user.emailConfirmedAt && !searchParams?.token)
 		redirect(searchParams?.to ?? urls.browse());

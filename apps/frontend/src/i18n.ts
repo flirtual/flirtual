@@ -4,10 +4,23 @@ import { headers as getHeaders } from "next/headers";
 import { cache } from "react";
 import deepmerge from "deepmerge";
 
-import { attributeTypes } from "./api/attributes";
+import {
+	languageTags as languages,
+	sourceLanguageTag
+} from "../project.inlang/settings.json";
+
 import { Authentication } from "./api/auth";
 
-import type { AbstractIntlMessages } from "next-intl";
+import type {
+	AbstractIntlMessages,
+	NamespaceKeys,
+	NestedKeyOf
+} from "next-intl";
+
+export type MessageKeys = NamespaceKeys<
+	IntlMessages,
+	NestedKeyOf<IntlMessages>
+>;
 
 function getCountry(headers: Headers) {
 	const country =
@@ -20,13 +33,8 @@ function getCountry(headers: Headers) {
 
 export const getInternationalization = cache(async (override?: string) => {
 	const headers = getHeaders();
-	console.log("b");
 
 	override ||= headers.get("language") ?? undefined;
-
-	const { languageTags: languages, sourceLanguageTag: fallback } = await import(
-		"../project.inlang/settings.json"
-	);
 
 	const al = setupAcceptLanguage();
 	al.languages(languages);
@@ -38,7 +46,7 @@ export const getInternationalization = cache(async (override?: string) => {
 	const translating =
 		headers.has("translating") || session?.user.tags?.includes("translating");
 
-	const preferred = session?.user.language || browser || fallback;
+	const preferred = session?.user.language || browser || sourceLanguageTag;
 
 	if (override === preferred || (override && !languages.includes(override)))
 		override = undefined;
@@ -52,7 +60,7 @@ export const getInternationalization = cache(async (override?: string) => {
 		locale: {
 			browser,
 			current,
-			fallback,
+			fallback: sourceLanguageTag,
 			override,
 			preferred
 		},
@@ -105,7 +113,7 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 			...(translating ? {} : messages.banners),
 			translating: messages.banners.translating
 		},
-		[`$${locale.preferred}`]: {
+		_preferred: {
 			banners: {
 				language: preferred.banners?.language ?? messages.banners.language
 			}

@@ -1,12 +1,11 @@
 import { api, type DatedModel, type UuidModel } from "./common";
 
 import type { Expand } from "~/utilities";
-import type { Attribute } from "./attributes";
 
 export type Report = Expand<
 	UuidModel &
 		DatedModel & {
-			reason: Pick<Attribute<"report-reason">, "id" | "name">;
+			reasonId: string;
 			message?: string;
 			images?: Array<string>;
 			reviewedAt?: string;
@@ -35,6 +34,9 @@ export const Report = {
 	},
 	list(options: ListReportOptions) {
 		return this.api.query(options).get().json<Array<Report>>();
+	},
+	get(reportId: string) {
+		return this.api.url(`/${reportId}`).get().json<Report>();
 	},
 	clear(reportId: string) {
 		return this.api.url(`/${reportId}`).delete().json<Report>();

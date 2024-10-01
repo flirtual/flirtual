@@ -157,7 +157,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 							isDomsubMatch(user.profile.domsub, session.user.profile.domsub)
 						}
 					>
-						{t("dark_level_goat_gulp", { value: user.profile.domsub })}
+						{t("profile.dark_level_goat_gulp", { value: user.profile.domsub })}
 					</Pill>
 				</div>
 			)}

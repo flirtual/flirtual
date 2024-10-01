@@ -31,7 +31,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 	const genders = useAttributeList("gender");
 	const t = useTranslations();
 
-	const tAttributes = useAttributeTranslation();
+	const tAttributes = useAttributeTranslation("gender");
 
 	const profileGenders = attributes
 		.map((id) => findBy(genders, "id", id))

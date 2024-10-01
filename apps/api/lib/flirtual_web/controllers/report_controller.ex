@@ -23,6 +23,16 @@ defmodule FlirtualWeb.ReportController do
     end
   end
 
+  def get(conn, %{"report_id" => report_id}) do
+    with %Report{} = report <- Report.get(report_id),
+         :ok <- Policy.can(conn, :read, report) do
+      conn |> json(Policy.transform(conn, report))
+    else
+      nil -> {:error, {:not_found, :report_not_found}}
+      value -> value
+    end
+  end
+
   def delete(conn, %{"report_id" => report_id}) do
     with %Report{} = report <- Report.get(report_id),
          :ok <- Policy.can(conn, :delete, report),

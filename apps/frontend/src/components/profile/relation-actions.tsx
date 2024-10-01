@@ -77,8 +77,7 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 					kind="secondary"
 					size="sm"
 					onClick={() =>
-						api.matchmaking
-							.unmatch({ query: { userId: user.id } })
+						Matchmaking.unmatch(user.id)
 							.then(() => {
 								return router.refresh();
 							})

@@ -27,11 +27,7 @@ export function CallToAction({ id }: TileProps) {
 					<div className="flex flex-col items-center gap-4">
 						<FlirtualLogo className="w-56" />
 						<TileAnchor id={id}>
-							<h1
-								a={1}
-								className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-5xl desktop:tall:text-8xl"
-								foo={1}
-							>
+							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-5xl desktop:tall:text-8xl">
 								{t.rich("landing.cta.few_grassy_hyena_adapt", {
 									highlight: (children) => (
 										<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent wide:block">

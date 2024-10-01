@@ -11,7 +11,7 @@ export default async function FallbackBanner() {
 	const { locale, translating } = await getInternationalization();
 
 	const t = await getTranslations("banners");
-	const tPreferred = await getTranslations(`$${locale.preferred}.banners`);
+	const tPreferred = await getTranslations("_preferred.banners");
 
 	const languageNames = new Intl.DisplayNames(locale.preferred, {
 		type: "language"

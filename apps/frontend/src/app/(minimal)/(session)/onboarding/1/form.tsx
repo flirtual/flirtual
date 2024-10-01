@@ -20,7 +20,8 @@ import { User } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import {
 	useAttributeList,
-	useAttributeTranslation
+	useAttributeTranslation,
+	type AttributeTranslation
 } from "~/hooks/use-attribute-list";
 
 import type { FC } from "react";
@@ -144,7 +145,9 @@ export const Onboarding1Form: FC = () => {
 											value={field.props.value || []}
 											options={genders.map((gender) => {
 												const { name, definition } =
-													tAttribute[gender.id] ?? {};
+													(tAttribute[
+														gender.id
+													] as AttributeTranslation<"gender">) ?? {};
 
 												return {
 													definition,

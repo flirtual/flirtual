@@ -230,16 +230,9 @@ defmodule Flirtual.Report do
       {:ok,
        from(report in Report,
          where: ^include_reviewed or is_nil(report.reviewed_at),
-         join: reason in assoc(report, :reason),
          join: user in assoc(report, :target),
          where: ^include_indef_shadowbanned or is_nil(user.indef_shadowbanned_at),
-         order_by: [desc: report.created_at],
-         select_merge: %{
-           reason: %{
-             id: reason.id,
-             name: reason.name
-           }
-         }
+         order_by: [desc: report.created_at]
        )
        |> Repo.all()}
     end
@@ -259,7 +252,7 @@ defimpl Jason.Encoder, for: Flirtual.Report do
       :id,
       :user_id,
       :target_id,
-      :reason,
+      :reason_id,
       :message,
       :images,
       :reviewed_at,

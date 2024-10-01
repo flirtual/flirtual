@@ -37,6 +37,7 @@ import { Dialog, DialogContent } from "~/components/dialog/dialog";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { type ListReportOptions, Report } from "~/api/report";
 import { Conversation } from "~/api/conversations";
+import { useAttributeTranslation } from "~/hooks/use-attribute-list";
 
 type CompleteReport = Report & { user?: User; target: User };
 
@@ -65,6 +66,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	const { mutate } = useContext(ReportListContext);
 	const toasts = useToast();
 	const [session] = useSession();
+	const tAttributes = useAttributeTranslation();
 
 	const CollapseIcon = collapsed ? ChevronRight : ChevronDown;
 
@@ -160,14 +162,16 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							type="button"
 							onClick={() => setCollapsed(false)}
 						>
-							{entries(groupBy(activeReports, (report) => report.reason.id))
+							{entries(groupBy(activeReports, (report) => report.reasonId))
 								.sort()
-								.map(([reasonId, reports]) => (
-									<div className="flex gap-2" key={reasonId}>
-										<span>{`${reports.length}x`}</span>
-										{reports[0] && <span>{reports[0].reason.name}</span>}
-									</div>
-								))}
+								.map(([reasonId, reports]) => {
+									return (
+										<div className="flex gap-2" key={reasonId}>
+											<span>{`${reports.length}x`}</span>
+											<span>{tAttributes[reasonId]?.name || reasonId}</span>
+										</div>
+									);
+								})}
 						</button>
 					) : (
 						<div className="flex flex-col gap-2">
@@ -189,7 +193,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 												<DateTimeRelative value={report.createdAt} />
 											</span>
 											<span className="text-lg font-semibold">
-												{report.reason.name}
+												{tAttributes[report.reasonId]?.name || report.reasonId}
 											</span>
 											<div className="flex items-baseline gap-1">
 												Reporter:
@@ -313,8 +317,8 @@ export const ReportView: React.FC = () => {
 
 			return reports.map((report) => ({
 				...report,
-				user: users.find((user) => user.id === report.userId),
-				target: users.find((user) => user.id === report.targetId)!
+				user: users.find((user) => user?.id === report.userId) || undefined,
+				target: users.find((user) => user?.id === report.targetId)!
 			}));
 		}
 	);

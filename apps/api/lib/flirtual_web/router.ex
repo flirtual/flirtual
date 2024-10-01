@@ -232,6 +232,7 @@ defmodule FlirtualWeb.Router do
           delete("/", ReportController, :delete)
 
           scope "/:report_id" do
+            get("/", ReportController, :get)
             delete("/", ReportController, :delete)
           end
         end

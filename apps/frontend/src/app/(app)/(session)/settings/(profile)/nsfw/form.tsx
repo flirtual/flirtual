@@ -15,7 +15,8 @@ import { Profile, ProfileDomsubList } from "~/api/user/profile";
 import { Preferences } from "~/api/user/preferences";
 import {
 	useAttributeList,
-	useAttributeTranslation
+	useAttributeTranslation,
+	type AttributeTranslation
 } from "~/hooks/use-attribute-list";
 
 export const NsfwForm: React.FC = () => {
@@ -105,7 +106,9 @@ export const NsfwForm: React.FC = () => {
 											{...field.props}
 											limit={8}
 											options={kinks.map(({ id, definitionLink }) => {
-												const { name, definition } = tAttribute[id] ?? {
+												const { name, definition } = (tAttribute[
+													id
+												] as AttributeTranslation<"kink">) ?? {
 													name: id
 												};
 
