@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
@@ -18,8 +17,6 @@ export default function GlobalError({
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
-	const router = useRouter();
-
 	useEffect(() => {
 		Sentry.captureException(error);
 	}, [error]);
@@ -58,7 +55,7 @@ export default function GlobalError({
 								className="w-fit"
 								kind="secondary"
 								size="sm"
-								onClick={() => router.reload()}
+								onClick={() => location.reload()}
 							>
 								Refresh
 							</Button>
@@ -66,7 +63,7 @@ export default function GlobalError({
 								className="w-fit"
 								kind="secondary"
 								size="sm"
-								onClick={() => router.back()}
+								onClick={() => history.back()}
 							>
 								Go back
 							</Button>
