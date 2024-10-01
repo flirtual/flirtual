@@ -13,7 +13,6 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { urls } from "~/urls";
-import { filterBy, fromEntries } from "~/utilities";
 import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
@@ -24,22 +23,21 @@ import {
 	ProfileRelationshipLabel,
 	ProfileRelationshipList
 } from "~/api/user/profile";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
-import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
 
-const AttributeKeys = [...(["sexuality", "platform"] as const)];
-
-export interface Finish2Props {
-	platforms: AttributeCollection<"platform">;
-	sexualities: AttributeCollection<"sexuality">;
-}
-
-export const Finish2Form: FC<Finish2Props> = (props) => {
-	const { platforms, sexualities } = props;
+export const Finish2Form: FC = () => {
+	const platforms = useAttributeList("platform");
+	const sexualities = useAttributeList("sexuality");
 
 	const [session, mutateSession] = useSession();
 	const t = useTranslations("profile");
+	const tAttribute = useAttributeTranslation();
+
 	const router = useRouter();
 
 	if (!session) return null;
@@ -55,30 +53,16 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 				monopoly: profile.monopoly,
 				new: profile.new ?? false,
 				languages: user.profile.languages ?? [],
-				...(fromEntries(
-					AttributeKeys.map((type) => {
-						return [
-							type,
-							filterBy(profile.attributes, "type", type).map(({ id }) => id) ??
-								[]
-						] as const;
-					})
-				) as { [K in (typeof AttributeKeys)[number]]: Array<string> })
+				platformId: user.profile.attributes.platform || [],
+				sexualityId: user.profile.attributes.sexuality || []
 			}}
 			onSubmit={async ({ ...values }) => {
 				const newProfile = await Profile.update(user.id, {
+					...values,
 					relationships: values.relationships ?? [],
 					monopoly: values.monopoly ?? "none",
 					languages: values.languages,
-					new: values.new,
-					// @ts-expect-error: don't want to deal with this.
-					...(fromEntries(
-						AttributeKeys.map((type) => {
-							return [`${type}Id`, values[type]] as const;
-						})
-					) as {
-						[K in (typeof AttributeKeys)[number] as `${K}Ids`]: Array<string>;
-					})
+					new: values.new
 				});
 
 				await mutateSession({
@@ -120,7 +104,7 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 							</>
 						)}
 					</FormField>
-					<FormField name="sexuality">
+					<FormField name="sexualityId">
 						{(field) => (
 							<>
 								<InputLabel>Sexuality</InputLabel>
@@ -130,7 +114,7 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 									placeholder="Select your sexualities..."
 									options={sexualities.map((sexuality) => ({
 										key: sexuality.id,
-										label: sexuality.name
+										label: tAttribute[sexuality.id]?.name || sexuality.id
 									}))}
 								/>
 							</>
@@ -159,7 +143,7 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 							</>
 						)}
 					</FormField>
-					<FormField name="platform">
+					<FormField name="platformId">
 						{(field) => (
 							<>
 								<InputLabel>VR setup</InputLabel>
@@ -167,9 +151,9 @@ export const Finish2Form: FC<Finish2Props> = (props) => {
 									{...field.props}
 									limit={8}
 									placeholder="Select the platforms you use..."
-									options={platforms.map((platform) => ({
-										key: platform.id,
-										label: platform.name
+									options={platforms.map((platformId) => ({
+										key: platformId,
+										label: tAttribute[platformId]?.name || platformId
 									}))}
 								/>
 							</>

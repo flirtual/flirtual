@@ -4,10 +4,8 @@ import { headers as getHeaders } from "next/headers";
 import { cache } from "react";
 import deepmerge from "deepmerge";
 
-import {
-	languageTags as languages,
-	sourceLanguageTag
-} from "../project.inlang/settings.json";
+import settings from "../project.inlang/settings.json";
+const { languageTags: languages, sourceLanguageTag } = settings;
 
 import { Authentication } from "./api/auth";
 

@@ -16,7 +16,6 @@ export const TimelineItem: FC<{ year: TimelineItemYear; index: number }> = ({
 	index
 }) => {
 	const t = useTranslations(`about.timeline.${year}`);
-	useTranslations("about.timeline.2018");
 
 	return (
 		<div className="grid grid-cols-2 items-center gap-6">

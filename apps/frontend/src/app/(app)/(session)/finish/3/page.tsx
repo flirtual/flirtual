@@ -1,4 +1,5 @@
 import { ModelCard } from "~/components/model-card";
+import { Attribute } from "~/api/attributes";
 
 import { FinishProgress } from "../progress";
 
@@ -6,14 +7,12 @@ import { Finish3Form } from "./form";
 
 import type { Metadata } from "next";
 
-import { withAttributeList } from "~/api/attributes-server";
-
 export const metadata: Metadata = {
 	title: "Interests"
 };
 
 export default async function Finish3Page() {
-	const interests = await withAttributeList("interest");
+	const interests = await Attribute.list("interest");
 
 	return (
 		<>
@@ -22,7 +21,7 @@ export default async function Finish3Page() {
 				className="shrink-0 pb-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),6rem)] desktop:max-w-2xl desktop:pb-0"
 				title="Interests"
 			>
-				<Finish3Form interests={interests} />
+				<Finish3Form />
 			</ModelCard>
 		</>
 	);

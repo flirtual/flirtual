@@ -35,7 +35,7 @@ import {
 } from "~/hooks/use-attribute-list";
 import { Pill } from "~/components/profile/pill/pill";
 
-import type { FC } from "react";
+import type { Dispatch, FC } from "react";
 
 const categoryIcons: Record<string, React.ReactNode> = {
 	iiCe39JvGQAAtsrTqnLddb: <Star />,
@@ -71,6 +71,95 @@ const HighlightedText: FC<{ children: string; snippet: string }> = ({
 		</span>
 	);
 };
+
+const InterestSelectList: FC<{
+	filter: string;
+	selected: Array<string>;
+	onSelected: Dispatch<Array<string>>;
+}> = ({ filter, selected, onSelected }) => {
+	const interestCategories = useAttributeList("interest-category");
+	const interests = useAttributeList("interest");
+
+	const categorizedInterests = groupBy(interests, ({ category }) => category);
+
+	const tAttribute = useAttributeTranslation();
+
+	return (
+		<div className="flex flex-col gap-8">
+			{interestCategories.map((categoryId) => {
+				const { name: categoryName } = tAttribute[categoryId] || {
+					name: categoryId
+				};
+				const categoryIcon = categoryIcons[categoryId];
+
+				const filteredInterests = categorizedInterests[categoryId]
+					?.filter((interest) => {
+						if (!filter) return true;
+
+						const interestName = tAttribute[interest.id]?.name || interest.id;
+						return (
+							interestName.toLowerCase().includes(filter.toLowerCase()) ||
+							interest.synonyms?.some((synonym) =>
+								synonym.toLowerCase().includes(filter.toLowerCase())
+							)
+						);
+					})
+					.sort(({ id: a }, { id: b }) => {
+						const aName = tAttribute[a]?.name || a;
+						const bName = tAttribute[b]?.name || b;
+
+						return aName.localeCompare(bName);
+					});
+
+				if (!filteredInterests || filteredInterests.length === 0) return null;
+
+				return (
+					<div className="flex flex-col gap-4" key={categoryId}>
+						<InputLabel className="flex flex-row items-center gap-2">
+							{categoryIcon} {categoryName}
+						</InputLabel>
+						<div className="flex flex-wrap gap-2">
+							{filteredInterests.map(({ id: interestId }) => {
+								const { name: interestName } = tAttribute[interestId] || {
+									name: interestId
+								};
+								const active = selected.includes(interestId);
+
+								return (
+									<Pill
+										active={active}
+										className="hover:bg-white-40 data-[active]:bg-brand-gradient data-[active]:text-white-10 hover:dark:bg-black-50"
+										hocusable={false}
+										key={interestId}
+										onClick={() => {
+											// if (defaultCount + customCount >= 10 && !active)
+											// 	return toasts.add({
+											// 		type: "warning",
+											// 		value: "You've reached the maximum of 10 interests"
+											// 	});
+
+											onSelected(
+												active
+													? selected.filter((id) => id !== interestId)
+													: [...selected, interestId]
+											);
+										}}
+									>
+										<HighlightedText snippet={filter}>
+											{interestName}
+										</HighlightedText>
+									</Pill>
+								);
+							})}
+						</div>
+					</div>
+				);
+			})}
+		</div>
+	);
+};
+
+export const InterestSelect;
 
 export const InterestsForm: FC = () => {
 	const { platform } = useDevice();
@@ -135,83 +224,15 @@ export const InterestsForm: FC = () => {
 								/>
 							)}
 						</FormField>
-						{interestCategories.map((categoryId) => {
-							const { name: categoryName } = tAttribute[categoryId] || {
-								name: categoryId
-							};
-							const categoryIcon = categoryIcons[categoryId];
-
-							const filteredInterests = categorizedInterests[categoryId]
-								?.filter((interest) => {
-									if (!filter) return true;
-
-									const interestName =
-										tAttribute[interest.id]?.name || interest.id;
-									return (
-										interestName.toLowerCase().includes(filter.toLowerCase()) ||
-										interest.synonyms?.some((synonym) =>
-											synonym.toLowerCase().includes(filter.toLowerCase())
-										)
-									);
-								})
-								.sort(({ id: a }, { id: b }) => {
-									const aName = tAttribute[a]?.name || a;
-									const bName = tAttribute[b]?.name || b;
-
-									return aName.localeCompare(bName);
-								});
-
-							if (!filteredInterests || filteredInterests.length === 0)
-								return null;
-
-							return (
-								<FormField key={categoryId} name="defaultInterests">
-									{(field) => (
-										<>
-											<InputLabel className="flex flex-row items-center gap-2">
-												{categoryIcon} {categoryName}
-											</InputLabel>
-											<div className="flex flex-wrap gap-2">
-												{filteredInterests.map(({ id: interestId }) => {
-													const { name: interestName } = tAttribute[
-														interestId
-													] || { name: interestId };
-													const active = field.props.value.includes(interestId);
-
-													return (
-														<Pill
-															active={active}
-															className="hover:bg-white-40 data-[active]:bg-brand-gradient data-[active]:text-white-10 hover:dark:bg-black-50"
-															hocusable={false}
-															key={interestId}
-															onClick={() => {
-																if (defaultCount + customCount >= 10 && !active)
-																	return toasts.add({
-																		type: "warning",
-																		value:
-																			"You've reached the maximum of 10 interests"
-																	});
-
-																const value = active
-																	? field.props.value.filter(
-																			(id) => id !== interestId
-																		)
-																	: [...field.props.value, interestId];
-																field.props.onChange(value);
-															}}
-														>
-															<HighlightedText snippet={filter}>
-																{interestName}
-															</HighlightedText>
-														</Pill>
-													);
-												})}
-											</div>
-										</>
-									)}
-								</FormField>
-							);
-						})}
+						<FormField name="defaultInterests">
+							{({ props: { value, onChange } }) => (
+								<InterestSelectList
+									filter={filter}
+									selected={value}
+									onSelected={onChange}
+								/>
+							)}
+						</FormField>
 						<FormField name="customInterests">
 							{(field) => (
 								<>

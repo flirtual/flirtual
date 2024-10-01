@@ -15,26 +15,24 @@ import { urls } from "~/urls";
 import { InputImageSet } from "~/components/forms/input-image-set";
 import { useSession } from "~/hooks/use-session";
 import { InputPrompts } from "~/components/forms/prompts";
-import { findBy } from "~/utilities";
 import { ButtonLink } from "~/components/button";
 import { Profile } from "~/api/user/profile";
+import { useAttributeTranslation } from "~/hooks/use-attribute-list";
 
-import type { AttributeCollection } from "~/api/attributes";
 import type { FC } from "react";
 
-export const Finish1Form: FC<{ games: AttributeCollection<"game"> }> = ({
-	games
-}) => {
+export const Finish1Form: FC = () => {
 	const [session] = useSession();
 	const router = useRouter();
+
+	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
 	const { user } = session;
 
-	const favoriteGame = user.profile.attributes
-		.map(({ id }) => findBy(games, "id", id))
-		.filter(Boolean)
-		.filter((game) => game.name !== "VRChat")[0]?.name;
+	const favoriteGameId = (user.profile.attributes.game || []).filter(
+		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
+	)[0];
 
 	return (
 		<Form
@@ -66,13 +64,7 @@ export const Finish1Form: FC<{ games: AttributeCollection<"game"> }> = ({
 							images.map((image) => image.id)
 						)
 					),
-					Profile.updatePrompts(
-						user.id,
-						values.prompts.map(({ prompt, response }) => ({
-							promptId: prompt.id,
-							response
-						}))
-					)
+					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
 				router.push(urls.finish(2));
@@ -97,16 +89,18 @@ export const Finish1Form: FC<{ games: AttributeCollection<"game"> }> = ({
 									hint={
 										<InputLabelHint>
 											Upload your avatar pictures from VRChat,{" "}
-											{favoriteGame ?? "Horizon Worlds"}, or another social VR
-											app. Aim for 3+ avatar pictures to get more matches. Don't
-											have any handy? You can go back to browsing and come back
-											later.
+											{tAttribute[favoriteGameId || ""]?.name ??
+												"Horizon Worlds"}
+											, or another social VR app. Aim for 3+ avatar pictures to
+											get more matches. Don&apos;t have any handy? You can go
+											back to browsing and come back later.
 											<details>
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 													Guidelines
 												</summary>
-												Don't include nude/NSFW, disturbing, or off-topic
-												content, and don't use other people's pictures.
+												Don&apos;t include nude/NSFW, disturbing, or off-topic
+												content, and don&apos;t use other people&apos;s
+												pictures.
 											</details>
 										</InputLabelHint>
 									}
@@ -126,12 +120,12 @@ export const Finish1Form: FC<{ games: AttributeCollection<"game"> }> = ({
 									hint={
 										<InputLabelHint>
 											A great bio shows your personality and interests, maybe
-											your sense of humor and what you're looking for.
+											your sense of humor and what you&apos;re looking for.
 											<details>
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 													Guidelines
 												</summary>
-												Be respectful and don't include spam, soliciting,
+												Be respectful and don&apos;t include spam, soliciting,
 												excessive self-promotion, graphic NSFW descriptions,
 												hateful or controversial content.
 											</details>

@@ -27,130 +27,52 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { filterBy } from "~/utilities";
+import { filterBy, groupBy } from "~/utilities";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 import { ButtonLink } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { Profile } from "~/api/user/profile";
+import {
+	useAttributeList,
+	useAttributeTranslation
+} from "~/hooks/use-attribute-list";
 
-import type { AttributeCollection } from "~/api/attributes";
-
-export interface Finish3FormProps {
-	interests: AttributeCollection<"interest">;
-}
-
-export const Finish3Form: FC<Finish3FormProps> = (props) => {
-	const { interests } = props;
-
+export const Finish3Form: FC = (props) => {
 	const { platform } = useDevice();
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
 
-	const [searchTerm, setSearchTerm] = useState("");
-	const [defaultCount, setDefaultCount] = useState(0);
-	const [customCount, setCustomCount] = useState(0);
+	const interestCategories = useAttributeList("interest-category");
+	const interests = useAttributeList("interest");
 
-	useEffect(() => {
-		if (!session) return;
-		setDefaultCount(
-			filterBy(session?.user.profile.attributes, "type", "interest").length
-		);
-		setCustomCount(session?.user.profile.customInterests.length ?? 0);
-	}, [session]);
+	const categorizedInterests = groupBy(interests, ({ category }) => category);
+
+	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
 	const { user } = session;
 	const { profile } = user;
-
-	const sortInterests = (interests: AttributeCollection<"interest">) => {
-		return interests.sort((a, b) =>
-			a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
-		);
-	};
-
-	const filterInterests = (interests: AttributeCollection<"interest">) => {
-		return interests.filter(
-			(interest) =>
-				interest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				interest.metadata.synonyms?.some((synonym) =>
-					synonym.toLowerCase().includes(searchTerm.toLowerCase())
-				)
-		);
-	};
-
-	const highlightMatch = (text: string) => {
-		if (!searchTerm) return text;
-		const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
-		return parts.map((part, index) =>
-			part.toLowerCase() === searchTerm.toLowerCase() ? (
-				<span className="text-pink" key={index}>
-					{part}
-				</span>
-			) : (
-				part
-			)
-		);
-	};
-
-	const categories = [
-		{ name: "Popular", icon: <Star /> },
-		{ name: "General", icon: <Tags /> },
-		{ name: "Identity", icon: <User /> },
-		{ name: "Games", icon: <Gamepad2 /> },
-		{ name: "Music", icon: <Music /> },
-		{ name: "Sports", icon: <Trophy /> },
-		{ name: "Love languages", icon: <HeartHandshake /> },
-		{ name: "Astrology", icon: <MoonStar /> },
-		{ name: "Personality types", icon: <Brain /> },
-		{ name: "Alignment", icon: <Dices /> }
-	];
-
-	const categorizedInterests: Record<
-		string,
-		AttributeCollection<"interest">
-	> = {};
-
-	const gameGenres = sortInterests(
-		interests.filter(
-			(interest) => interest.metadata?.category === "Game genres"
-		)
-	);
-	const games = sortInterests(
-		interests.filter((interest) => interest.metadata?.category === "Games")
-	);
-	categorizedInterests["Games"] = [...gameGenres, ...games];
-
-	for (const category of categories) {
-		if (category.name !== "Games")
-			categorizedInterests[category.name] = sortInterests(
-				interests.filter(
-					(interest) => interest.metadata?.category === category.name
-				)
-			);
-	}
 
 	return (
 		<Form
 			className="flex flex-col gap-8"
 			requireChange={false}
 			fields={{
-				defaultInterests: filterBy(profile.attributes, "type", "interest").map(
-					({ id }) => id
-				),
+				filter: "",
+				defaultInterests: profile.attributes.interest || [],
 				customInterests: profile.customInterests
 			}}
 			onSubmit={async ({ defaultInterests, customInterests }) => {
 				await Profile.update(user.id, {
 					customInterests,
 					interestId: defaultInterests
-				})
-					.then(() => {
-						return router.push(urls.finish(4));
-					})
-					.catch(toasts.addError);
+				}).then(() => {
+					toasts.add("Saved interests");
+					return router.refresh();
+				});
 			}}
 		>
 			{({ FormField }) => (
