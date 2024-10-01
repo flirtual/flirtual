@@ -1,4 +1,4 @@
-name: ESLint
+name: Frontend CI
 
 on:
   push:
