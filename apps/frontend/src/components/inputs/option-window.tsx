@@ -231,3 +231,5 @@ export const InputOptionWindow = forwardRef<
 		</div>
 	);
 });
+
+InputOptionWindow.displayName = "InputOptionWindow";

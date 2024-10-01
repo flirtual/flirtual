@@ -40,3 +40,5 @@ export const Banner = forwardRef<
 		</div>
 	);
 });
+
+Banner.displayName = "Banner";

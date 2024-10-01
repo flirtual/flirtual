@@ -1,23 +1,17 @@
 "use client";
 
-import { type FC, useMemo, useState } from "react";
+import { type FC, useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { urls } from "~/urls";
-import { filterBy } from "~/utilities";
-import { useAttributeList } from "~/hooks/use-attribute-list";
 
 import { ProfilePlaylist } from "../playlist";
 
 import { PillAttributeList } from "./attribute-list";
 import { Pill } from "./pill";
 
-import type {
-	Attribute,
-	AttributeType,
-	MinimalAttribute
-} from "~/api/attributes";
+import type { AttributeType, MinimalAttribute } from "~/api/attributes";
 import type { Session } from "~/api/auth";
 import type { User } from "~/api/user";
 
@@ -35,7 +29,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 	const [expanded, setExpanded] = useState(false);
 	const t = useTranslations("profile");
 
-	const kinks = useAttributeList("kink");
+	// const kinks = useAttributeList("kink");
 	// const activeKinkIds = useMemo(
 	// 	() =>
 	// 		filterBy(session.user.profile.attributes, "type", "kink")

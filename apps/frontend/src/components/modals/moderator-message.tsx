@@ -91,8 +91,8 @@ export const DiscordSpamDialog: FC = () => {
 				router.refresh();
 			}}
 		>
-			To help prevent spam, we've hidden your account from recently created
-			Flirtual accounts because it looks like you've included your Discord
+			To help prevent spam, we&apos;ve hidden your account from recently created
+			Flirtual accounts because it looks like you&apos;ve included your Discord
 			username in your biography.
 			<br />
 			<br />

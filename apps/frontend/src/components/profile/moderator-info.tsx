@@ -2,7 +2,6 @@ import { Dialog } from "@capacitor/dialog";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { Eye, EyeOff } from "lucide-react";
-import { useTranslations } from "next-intl";
 
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -22,7 +21,6 @@ export const ProfileModeratorInfo: FC<{
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
-	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 
 	if (!session || !session.user?.tags?.includes("moderator")) return null;

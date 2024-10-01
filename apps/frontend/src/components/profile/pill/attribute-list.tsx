@@ -5,6 +5,7 @@ import { useMessages, useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
+import { useAttributeTranslation } from "~/hooks/use-attribute-list";
 
 import { Pill } from "./pill";
 
@@ -27,9 +28,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 }) => {
 	const [session] = useSession();
 	const t = useTranslations();
-	const { attributes: tAttributes } = useMessages() as {
-		attributes: Record<string, { name: string; definition?: string }>;
-	};
+	const tAttributes = useAttributeTranslation();
 
 	if (!attributeIds?.length) return null;
 	if (!activeIds)
@@ -58,7 +57,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 											: false
 									}
 								>
-									{t(`attributes.${id}.name`)}
+									{tAttributes[id]?.name || id}
 								</Pill>
 							</div>
 						</TooltipTrigger>

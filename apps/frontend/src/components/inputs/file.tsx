@@ -24,3 +24,5 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
 		/>
 	)
 );
+
+InputFile.displayName = "InputFile";

@@ -1,12 +1,12 @@
 import * as Sentry from "@sentry/nextjs";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-import type { User } from "./user";
 
 import { urls } from "~/urls";
 
 import { api, type Issue, type DatedModel, isWretchError } from "./common";
 
+import type { User } from "./user";
 
 export type Session = DatedModel & {
 	sudoerId?: string;
@@ -18,10 +18,6 @@ export interface LoginOptions {
 	password: string;
 	rememberMe: boolean;
 }
-
-const b = 2;
-const a = 1;
-
 
 export interface ConfirmResetPasswordOptions {
 	email: string;

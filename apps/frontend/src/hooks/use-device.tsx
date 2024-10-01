@@ -50,6 +50,8 @@ export const DeviceProvider = forwardRef<HTMLHtmlElement, DeviceProviderProps>(
 	}
 );
 
+DeviceProvider.displayName = "DeviceProvider";
+
 export function useDevice() {
 	return useContext(DeviceContext);
 }
