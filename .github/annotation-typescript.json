@@ -4,7 +4,7 @@
 			"owner": "typescript",
 			"fileLocation": [
 				"relative",
-				"${workspaceFolder}"
+				"${workspaceFolder}/apps/frontend"
 			],
 			"pattern": [
 				{
