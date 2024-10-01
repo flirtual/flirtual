@@ -2,6 +2,10 @@
 	"problemMatcher": [
 		{
 			"owner": "typescript",
+			"fileLocation": [
+				"relative",
+				"${workspaceFolder}"
+			],
 			"pattern": [
 				{
 					"regexp": "^([^\\s].*)\\((\\d+),(\\d+)\\):\\s+(error|warning|info)\\s(TS\\d+):\\s(.*)$",
