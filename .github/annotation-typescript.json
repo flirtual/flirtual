@@ -2,10 +2,6 @@
 	"problemMatcher": [
 		{
 			"owner": "typescript",
-			"fileLocation": [
-				"relative",
-				"${GITHUB_WORKSPACE}/apps/frontend"
-			],
 			"pattern": [
 				{
 					"regexp": "^([^\\s].*)\\((\\d+),(\\d+)\\):\\s+(error|warning|info)\\s(TS\\d+):\\s(.*)$",

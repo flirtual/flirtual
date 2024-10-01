@@ -38,7 +38,7 @@ jobs:
         run: pnpm install
 
       - name: TypeScript
-        run: ./node_modules/.bin/tsc --noEmit
+        run: "./node_modules/.bin/tsc --pretty false --noEmit | sed -E \"s#^.+\(.+\): error TS.+\$#$PWD/\0#\""
         continue-on-error: true
 
       # - name: ESLint
