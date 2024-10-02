@@ -42,7 +42,8 @@
 		"cSpell.words": [
 			"flirtual"
 		],
-		"java.configuration.updateBuildConfiguration": "automatic"
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"typescript.tsdk": "🖥️ Frontend/node_modules/typescript/lib"
 	},
 	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"eslint.format.enable": true,
