@@ -129,7 +129,7 @@ defmodule Flirtual.Matchmaking do
   end
 
   defp next_prospects(user, kind) do
-    prospect =
+    prospects =
       Prospect
       |> where(profile_id: ^user.id, kind: ^kind, completed: false)
       |> order_by(desc: :score, desc: :target_id)
@@ -137,8 +137,8 @@ defmodule Flirtual.Matchmaking do
       |> limit(2)
       |> Repo.all()
 
-    log(:info, ["existing", user.id, kind], prospect)
-    {:ok, prospect}
+    log(:info, ["existing", user.id, kind], prospects)
+    {:ok, prospects}
   end
 
   defp compute_next_prospects(user, kind) do
