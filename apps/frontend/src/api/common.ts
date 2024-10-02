@@ -110,11 +110,11 @@ export const api = wretch(urls.api)
 					const json = await response?.json().catch(() => null);
 					const message =
 						typeof json === "object" &&
-						json !== null &&
-						"error" in json &&
-						typeof json.error === "object" &&
-						json.error !== null &&
-						"message" in json.error
+							json !== null &&
+							"error" in json &&
+							typeof json.error === "object" &&
+							json.error !== null &&
+							"message" in json.error
 							? json.error.message
 							: (error?.message ?? response?.statusText);
 
@@ -133,14 +133,21 @@ export const api = wretch(urls.api)
 		].filter(Boolean)
 	)
 	.errorType("json")
-	.defer((wretch, url, options) => {
+	.defer((wretch, _url, options) => {
 		const headers = new Headers(options.headers || {});
 		if (headers.get("content-type") === "application/json")
 			options.body = JSON.stringify(toSnakeObject(JSON.parse(options.body)));
 
-		return wretch.headers({
-			"idempotency-key": newIdempotencyKey()
-		});
+		const url = new URL(_url);
+
+		return wretch
+			.query(
+				toSnakeObject(Object.fromEntries(url.searchParams.entries())),
+				true
+			)
+			.headers({
+				"idempotency-key": newIdempotencyKey()
+			});
 	})
 	.resolve((resolver) => {
 		const _json = resolver.json;
