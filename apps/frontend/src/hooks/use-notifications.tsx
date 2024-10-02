@@ -30,6 +30,16 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 	const [session] = useSession();
 	const router = useRouter();
 
+	useSWR("notifications-reset-count", () => {
+		if (
+			!session?.user.id ||
+			document.visibilityState === "hidden" ||
+			!session.user.pushCount
+		)
+			return;
+		return User.resetPushCount(session?.user.id);
+	});
+
 	const { data: status = "denied" } = useSWR(
 		native && "notification-permissions",
 		async () => {
@@ -48,24 +58,15 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		(platform === "android" && session?.user.fcmToken) ||
 		undefined;
 
-	useSWR("notifications-reset-count", () => {
-		if (
-			!session?.user.id ||
-			document.visibilityState === "hidden" ||
-			!session.user.pushCount
-		)
-			return;
-		return User.resetPushCount(session?.user.id);
-	});
+	console.log({ pushRegistrationId });
 
 	useSWR(
-		native &&
-			session && [
-				"notifications-listeners",
-				{ userId: session.user.id, status, pushRegistrationId }
-			],
+		native && [
+			"notifications-listeners",
+			{ userId: session?.user.id, status, pushRegistrationId }
+		],
 		async ([, { status, pushRegistrationId }]) => {
-			if (status !== "granted") return;
+			// if (status !== "granted") return;
 
 			await PushNotifications.addListener(
 				"registration",
