@@ -59,18 +59,15 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		(platform === "android" && session?.user.fcmToken) ||
 		undefined;
 
-	console.log("status", status);
-	console.log("pushRegistrationId", pushRegistrationId);
-
 	useSWR(
 		native && [
 			"notifications-listeners",
 			{ userId: session?.user.id, status, pushRegistrationId }
 		],
 		async ([, { status, pushRegistrationId }]) => {
-			// if (status !== "granted") return;
+			if (status !== "granted") return;
 
-			await PushNotifications.addListener(
+			const registrationListener = await PushNotifications.addListener(
 				"registration",
 				async ({ value: newPushRegistrationId }) => {
 					console.log("PushNotifications.addListener(registration)", {
@@ -86,6 +83,11 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 						pushRegistrationId === newPushRegistrationId
 					)
 						return;
+
+					await Promise.all([
+						registrationListener.remove(),
+						registrationErrorListener.remove()
+					]);
 
 					await User.updatePushTokens(
 						session.user.id,
@@ -103,7 +105,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 				}
 			);
 
-			await PushNotifications.addListener(
+			const registrationErrorListener = await PushNotifications.addListener(
 				"registrationError",
 				async ({ error }) => {
 					console.log("PushNotifications.addListener(registrationError)", {
@@ -111,6 +113,11 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 						pushRegistrationId,
 						error
 					});
+
+					await Promise.all([
+						registrationListener.remove(),
+						registrationErrorListener.remove()
+					]);
 				}
 			);
 
