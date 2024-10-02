@@ -12,6 +12,7 @@ export default function SettingsAccountAppearancePage() {
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
+			inset={false}
 			title="Appearance"
 		>
 			<AppearanceForm />

@@ -26,6 +26,7 @@ export default async function SettingsProfileInfoPage() {
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
+			inset={false}
 			title="Basic info"
 		>
 			<SWRConfig

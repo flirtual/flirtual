@@ -13,6 +13,7 @@ export default function SettingsAccountPasswordPage() {
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
+			inset={false}
 			title="Password & passkeys"
 		>
 			<div className="flex flex-col gap-8">

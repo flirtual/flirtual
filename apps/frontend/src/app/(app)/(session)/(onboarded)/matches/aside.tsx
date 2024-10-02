@@ -47,7 +47,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 					"desktop:mx-auto desktop:w-full desktop:max-w-md"
 			)}
 		>
-			<div className="flex w-full items-center justify-center bg-black-70 p-4 text-white-20 desktop:static desktop:bg-transparent desktop:pt-[1.125rem] android:desktop:pt-[1.125rem]">
+			<div className="flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top,0rem)+0.5rem),1rem)] text-white-20 android:pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] desktop:static desktop:bg-transparent desktop:pt-[1.125rem] android:desktop:pt-[1.125rem]">
 				<Link
 					className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
 					href={

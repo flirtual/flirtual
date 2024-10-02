@@ -12,6 +12,7 @@ export default function SettingsAccountEmailPage() {
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
+			inset={false}
 			title="Change email"
 		>
 			<EmailForm />

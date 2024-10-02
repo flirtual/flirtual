@@ -13,6 +13,7 @@ export default function SettingsAccountReferralPage() {
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
+			inset={false}
 			title="Refer a homie"
 		>
 			<div className="flex flex-col gap-8">

@@ -16,7 +16,11 @@ export default async function SettingsProfileNsfwPage() {
 	const kinks = await Attribute.list("kink");
 
 	return (
-		<ModelCard className="shrink desktop:w-full desktop:max-w-2xl" title="NSFW">
+		<ModelCard
+			className="shrink desktop:w-full desktop:max-w-2xl"
+			inset={false}
+			title="NSFW"
+		>
 			<SWRConfig
 				value={{
 					fallback: {

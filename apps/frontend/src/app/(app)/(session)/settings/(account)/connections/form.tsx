@@ -29,6 +29,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
+			inset={false}
 			title="Connections"
 		>
 			{error && (
