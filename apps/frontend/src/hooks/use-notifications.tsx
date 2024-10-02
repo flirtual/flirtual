@@ -7,21 +7,17 @@ import {
 import {
 	type PropsWithChildren,
 	createContext,
-	use,
-	useCallback,
 	useContext,
-	useEffect,
-	useMemo,
-	useState
+	useMemo
 } from "react";
+import useSWR from "swr";
+import { useRouter } from "next/navigation";
 
 import { User } from "~/api/user";
 
 import { useDevice } from "./use-device";
-import { useToast } from "./use-toast";
 import { useSession } from "./use-session";
 
-import type { PluginListenerHandle } from "@capacitor/core";
 export interface NotificationContext {
 	status: PermissionStatus["receive"];
 	pushRegistrationId?: string;
@@ -30,16 +26,13 @@ export interface NotificationContext {
 const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
-	const [pushRegistrationId, setPushRegistrationId] = useState<string>();
 	const { platform, native } = useDevice();
 	const [session] = useSession();
-	const toasts = useToast();
+	const router = useRouter();
 
-	const status = use(
-		useMemo(async () => {
-			// We can't use push notifications in the browser or on the server.
-			if (!native || typeof window === "undefined") return "denied";
-
+	const { data: status = "denied" } = useSWR(
+		native && "notification-permissions",
+		async () => {
 			const { receive } = await PushNotifications.checkPermissions();
 			if (receive === "prompt" || receive === "prompt-with-rationale") {
 				const { receive } = await PushNotifications.requestPermissions();
@@ -47,83 +40,68 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			}
 
 			return receive;
-		}, [native])
+		}
 	);
 
-	const resetPushCount = useCallback(() => {
+	const pushRegistrationId =
+		(platform === "apple" && session?.user.apnsToken) ||
+		(platform === "android" && session?.user.fcmToken) ||
+		undefined;
+
+	useSWR("notifications-reset-count", () => {
 		if (
+			!session?.user.id ||
 			document.visibilityState === "hidden" ||
-			!session?.user.pushCount ||
-			session.user.pushCount === 0
+			!session.user.pushCount
 		)
 			return;
-
-		void User.resetPushCount(session.user.id);
-	}, [session?.user.id, session?.user.pushCount]);
-
-	useEffect(() => {
-		resetPushCount();
-		document.addEventListener("visibilitychange", resetPushCount);
-		return () =>
-			document.removeEventListener("visibilitychange", resetPushCount);
+		return User.resetPushCount(session?.user.id);
 	});
 
-	useEffect(() => {
-		if (status !== "granted") return;
+	useSWR(
+		native && ["notifications-listeners", { status, pushRegistrationId }],
+		async ([, { status, pushRegistrationId }]) => {
+			if (status !== "granted") return;
 
-		let registrationListener: PluginListenerHandle;
-		let errorListener: PluginListenerHandle;
-
-		void (async () => {
-			registrationListener = await PushNotifications.addListener(
+			await PushNotifications.addListener(
 				"registration",
-				async (token) => {
-					if (!session || session.sudoerId) return;
-
-					setPushRegistrationId(token.value);
-					if (platform === "apple" && token.value !== session.user.apnsToken)
-						await User.updatePushTokens(session.user.id, {
-							apnsToken: token.value,
-							fcmToken: session.user.fcmToken
-						});
-					else if (
-						platform === "android" &&
-						token.value !== session.user.fcmToken
+				async ({ value: newPushRegistrationId }) => {
+					if (
+						!session ||
+						session.sudoerId ||
+						platform === "web" ||
+						pushRegistrationId === newPushRegistrationId
 					)
-						await User.updatePushTokens(session.user.id, {
-							apnsToken: session.user.apnsToken,
-							fcmToken: token.value
-						});
+						return;
+
+					await User.updatePushTokens(
+						session.user.id,
+						platform === "apple"
+							? {
+									apnsToken: newPushRegistrationId,
+									fcmToken: session.user.fcmToken
+								}
+							: {
+									apnsToken: session.user.apnsToken,
+									fcmToken: newPushRegistrationId
+								}
+					);
+					router.refresh();
 				}
 			);
-
-			errorListener = await PushNotifications.addListener(
-				"registrationError",
-				({ error }) => {
-					console.error("Error on push notification registration:", error);
-					setPushRegistrationId(void 0);
-				}
-			);
-
-			void PushNotifications.register();
-		})();
-
-		return () => {
-			void registrationListener?.remove();
-			void errorListener?.remove();
-		};
-	}, [platform, session, status, toasts.addError]);
-
-	const value = useMemo<NotificationContext>(
-		() => ({
-			status,
-			pushRegistrationId
-		}),
-		[status, pushRegistrationId]
+		}
 	);
 
 	return (
-		<NotificationContext.Provider value={value}>
+		<NotificationContext.Provider
+			value={useMemo<NotificationContext>(
+				() => ({
+					status,
+					pushRegistrationId
+				}),
+				[status, pushRegistrationId]
+			)}
+		>
 			{children}
 		</NotificationContext.Provider>
 	);

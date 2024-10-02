@@ -1,4 +1,3 @@
-import * as swrInfinite from "swr/infinite";
 import * as swr from "swr";
 
 import {
@@ -6,7 +5,6 @@ import {
 	ModerationMessageDialog
 } from "~/components/modals/moderator-message";
 import { TalkjsProvider } from "~/hooks/use-talkjs";
-import { getConversationsKey } from "~/hooks/use-conversations.shared";
 import { SWRConfig } from "~/components/swr";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 import { ShepherdProvider } from "~/components/shepherd";
@@ -26,7 +24,6 @@ export default async function AuthenticatedLayout({
 		<SWRConfig
 			value={{
 				fallback: {
-					[swrInfinite.unstable_serialize(getConversationsKey)]: [],
 					[swr.unstable_serialize("plans")]: plans
 				}
 			}}
