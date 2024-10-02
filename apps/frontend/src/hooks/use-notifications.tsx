@@ -58,7 +58,8 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		(platform === "android" && session?.user.fcmToken) ||
 		undefined;
 
-	console.log({ pushRegistrationId });
+	console.log("status", status);
+	console.log("pushRegistrationId", pushRegistrationId);
 
 	useSWR(
 		native && [
