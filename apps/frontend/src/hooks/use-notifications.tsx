@@ -70,6 +70,12 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			await PushNotifications.addListener(
 				"registration",
 				async ({ value: newPushRegistrationId }) => {
+					console.log("PushNotifications.addListener(registration)", {
+						platform,
+						pushRegistrationId,
+						newPushRegistrationId
+					});
+
 					if (
 						!session ||
 						session.sudoerId ||
@@ -91,6 +97,17 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 								}
 					);
 					router.refresh();
+				}
+			);
+
+			await PushNotifications.addListener(
+				"registrationError",
+				async ({ error }) => {
+					console.log("PushNotifications.addListener(registrationError)", {
+						platform,
+						pushRegistrationId,
+						error
+					});
 				}
 			);
 		}
