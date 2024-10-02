@@ -59,7 +59,11 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 	});
 
 	useSWR(
-		native && ["notifications-listeners", { status, pushRegistrationId }],
+		native &&
+			session && [
+				"notifications-listeners",
+				{ userId: session.user.id, status, pushRegistrationId }
+			],
 		async ([, { status, pushRegistrationId }]) => {
 			if (status !== "granted") return;
 
