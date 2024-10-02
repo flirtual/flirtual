@@ -8,6 +8,7 @@ import {
 	type PropsWithChildren,
 	createContext,
 	useContext,
+	useEffect,
 	useMemo
 } from "react";
 import useSWR from "swr";
@@ -112,6 +113,8 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 					});
 				}
 			);
+
+			await PushNotifications.register();
 		}
 	);
 
