@@ -15,6 +15,7 @@ import {
 	User
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -76,7 +77,8 @@ const InterestSelectList: FC<{
 	filter: string;
 	selected: Array<string>;
 	onSelected: Dispatch<Array<string>>;
-}> = ({ filter, selected, onSelected }) => {
+	maximum: number;
+}> = ({ filter, selected, onSelected, maximum }) => {
 	const interestCategories = useAttributeList("interest-category");
 	const interests = useAttributeList("interest");
 
@@ -128,22 +130,21 @@ const InterestSelectList: FC<{
 								return (
 									<Pill
 										active={active}
-										className="hover:bg-white-40 data-[active]:bg-brand-gradient data-[active]:text-white-10 hover:dark:bg-black-50"
 										hocusable={false}
 										key={interestId}
-										onClick={() => {
-											// if (defaultCount + customCount >= 10 && !active)
-											// 	return toasts.add({
-											// 		type: "warning",
-											// 		value: "You've reached the maximum of 10 interests"
-											// 	});
-
+										className={twMerge(
+											"data-[active]:bg-brand-gradient",
+											!active && selected.length >= maximum
+												? "cursor-default opacity-50"
+												: "hover:bg-white-40 data-[active]:text-white-10 hover:dark:bg-black-50"
+										)}
+										onClick={() =>
 											onSelected(
 												active
 													? selected.filter((id) => id !== interestId)
 													: [...selected, interestId]
-											);
-										}}
+											)
+										}
 									>
 										<HighlightedText snippet={filter}>
 											{interestName}
@@ -159,20 +160,78 @@ const InterestSelectList: FC<{
 	);
 };
 
-export const InterestSelect;
+export const InterestSelectCustomInput: FC<{
+	value: Array<string>;
+	onChange: Dispatch<Array<string>>;
+}> = ({ value, onChange }) => {
+	const { platform } = useDevice();
+
+	return (
+		<>
+			<InputLabel
+				className="flex flex-row items-center gap-2"
+				hint="(optional)"
+			>
+				<Pencil /> Custom interests
+			</InputLabel>
+			<InputLabelHint className="-mt-2">
+				Press {platform === "apple" ? "Return" : "Enter"} <small>⏎</small> after
+				each interest
+			</InputLabelHint>
+			<InputAutocomplete
+				supportArbitrary
+				dropdown={false}
+				limit={10}
+				placeholder="Type your custom interests..."
+				value={value}
+				options={value.map((interest) => ({
+					key: interest,
+					label: interest
+				}))}
+				onChange={(value) =>
+					onChange(
+						value
+							.map((interest) => interest.trim())
+							.filter(
+								(v, index, a) =>
+									a.findIndex((t) => t.toLowerCase() === v.toLowerCase()) ===
+									index
+							)
+					)
+				}
+			/>
+		</>
+	);
+};
+
+export const InterestSelectCount: FC<{ current: number; maximum: number }> = ({
+	current,
+	maximum
+}) => {
+	if (current === 0) return null;
+
+	return (
+		<div
+			className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4"
+			style={{
+				backgroundImage: `conic-gradient(var(--theme-1) ${
+					(current / maximum) * 360
+				}deg, transparent 0deg)`
+			}}
+		>
+			<div className="flex size-12 flex-col items-center justify-center rounded-full bg-white-20 text-sm font-extrabold text-theme-1 dark:bg-black-70">
+				{current}/{maximum}
+			</div>
+		</div>
+	);
+};
+
+export const maximumInterests = 10;
 
 export const InterestsForm: FC = () => {
-	const { platform } = useDevice();
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
-
-	const interestCategories = useAttributeList("interest-category");
-	const interests = useAttributeList("interest");
-
-	const categorizedInterests = groupBy(interests, ({ category }) => category);
-
-	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
 	const { user } = session;
@@ -206,8 +265,9 @@ export const InterestsForm: FC = () => {
 					customInterests
 				}
 			}) => {
-				const defaultCount = defaultInterests.props.value.length;
-				const customCount = customInterests.props.value.length;
+				const totalInterests =
+					defaultInterests.props.value.length +
+					customInterests.props.value.length;
 
 				return (
 					<>
@@ -229,70 +289,48 @@ export const InterestsForm: FC = () => {
 								<InterestSelectList
 									filter={filter}
 									selected={value}
-									onSelected={onChange}
+									maximum={
+										maximumInterests - customInterests.props.value.length
+									}
+									onSelected={(newValues) => {
+										if (
+											totalInterests >= maximumInterests &&
+											newValues.length >= value.length
+										)
+											return toasts.add({
+												type: "warning",
+												value: "You've reached the maximum of 10 interests"
+											});
+
+										onChange(newValues);
+									}}
 								/>
 							)}
 						</FormField>
 						<FormField name="customInterests">
-							{(field) => (
-								<>
-									<InputLabel
-										className="flex flex-row items-center gap-2"
-										hint="(optional)"
-									>
-										<Pencil /> Custom interests
-									</InputLabel>
-									<InputLabelHint className="-mt-2">
-										Press {platform === "apple" ? "Return" : "Enter"}{" "}
-										<small>⏎</small> after each interest
-									</InputLabelHint>
-									<InputAutocomplete
-										{...field.props}
-										supportArbitrary
-										dropdown={false}
-										limit={10}
-										placeholder="Type your custom interests..."
-										options={field.props.value.map((interest) => ({
-											key: interest,
-											label: interest
-										}))}
-										onChange={(value) => {
-											if (defaultCount + value.length > 10)
-												return toasts.add({
-													type: "warning",
-													value: "You've reached the maximum of 10 interests"
-												});
+							{({ props: { value, onChange } }) => (
+								<InterestSelectCustomInput
+									value={value}
+									onChange={(newValues) => {
+										if (
+											totalInterests >= maximumInterests &&
+											newValues.length >= value.length
+										)
+											return toasts.add({
+												type: "warning",
+												value: "You've reached the maximum of 10 interests"
+											});
 
-											value = value
-												.map((interest) => interest.trim())
-												.filter(
-													(v, index, a) =>
-														a.findIndex(
-															(t) => t.toLowerCase() === v.toLowerCase()
-														) === index
-												);
-
-											field.props.onChange(value);
-										}}
-									/>
-								</>
+										onChange(newValues);
+									}}
+								/>
 							)}
 						</FormField>
 						<FormButton>Update</FormButton>
-						{defaultCount + customCount > 0 && (
-							<div
-								className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4"
-								style={{
-									backgroundImage: `conic-gradient(var(--theme-1) ${
-										((defaultCount + customCount) / 10) * 360
-									}deg, transparent 0deg)`
-								}}
-							>
-								<div className="flex size-12 flex-col items-center justify-center rounded-full bg-white-20 text-sm font-extrabold text-theme-1 dark:bg-black-70">
-									{defaultCount + customCount}/10
-								</div>
-							</div>
-						)}
+						<InterestSelectCount
+							current={totalInterests}
+							maximum={maximumInterests}
+						/>
 					</>
 				);
 			}}
