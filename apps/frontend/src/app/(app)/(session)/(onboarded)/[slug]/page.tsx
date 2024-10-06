@@ -1,10 +1,14 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
+import { unstable_serialize } from "swr";
 
 import { displayName } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { ProspectActions } from "~/app/(app)/(session)/(onboarded)/browse/prospect-actions";
+import { SWRConfig } from "~/components/swr";
+import { Attribute } from "~/api/attributes";
+import { urls } from "~/urls";
 
-import { getProfile } from "./data";
+import { getProfile, profileRequiredAttributes } from "./data";
 
 import type { Metadata } from "next";
 
@@ -16,7 +20,7 @@ export async function generateMetadata({
 	params
 }: ProfilePageProps): Promise<Metadata> {
 	const user = await getProfile(params.slug);
-	if (!user) return {};
+	if (!user) return redirect(urls.default);
 
 	return {
 		title: displayName(user)
@@ -24,18 +28,37 @@ export async function generateMetadata({
 }
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
-	const user = await getProfile(params.slug);
-	if (!user) notFound();
+	const [user, attributes] = await Promise.all([
+		getProfile(params.slug),
+		Promise.all(
+			profileRequiredAttributes.map(
+				async (type) => [type, await Attribute.list(type)] as const
+			)
+		)
+	]);
+	if (!user) redirect(urls.default);
 
 	return (
-		<>
-			<Profile direct user={user} />
+		<SWRConfig
+			value={{
+				fallback: {
+					[unstable_serialize(["user", user.id])]: user,
+					...Object.fromEntries(
+						attributes.map(([type, attribute]) => [
+							unstable_serialize(["attribute", type]),
+							attribute
+						])
+					)
+				}
+			}}
+		>
+			<Profile direct userId={user.id} />
 			{!user.bannedAt &&
 				user.relationship &&
 				!user.relationship?.blocked &&
 				!user.relationship?.kind && (
 					<ProspectActions kind="love" prospect={user} />
 				)}
-		</>
+		</SWRConfig>
 	);
 }

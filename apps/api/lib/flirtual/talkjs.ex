@@ -186,6 +186,9 @@ defmodule Flirtual.Talkjs do
 
       {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
         {:ok, Poison.decode!(body)}
+
+      {:error, :not_configured} ->
+        {:ok, nil}
     end
   end
 

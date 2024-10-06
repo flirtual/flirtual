@@ -6,6 +6,8 @@ import { User } from "~/api/user";
 import { urls } from "~/urls";
 import { isUid } from "~/utilities";
 
+import type { AttributeType } from "~/api/attributes";
+
 export const getProfile = cache(async (username: string) => {
 	const session = await Authentication.getSession();
 
@@ -23,3 +25,12 @@ export const getProfile = cache(async (username: string) => {
 	if (!user) redirect(urls.default);
 	return user;
 });
+
+export const profileRequiredAttributes: Array<AttributeType> = [
+	"gender",
+	"country",
+	"kink",
+	"language",
+	"relationship",
+	"report-reason"
+];

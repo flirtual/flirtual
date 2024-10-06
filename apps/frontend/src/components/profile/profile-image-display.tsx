@@ -13,7 +13,7 @@ import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 
-import { Dialog, DialogContent } from "../dialog/dialog";
+import { Dialog, DialogContent, DialogTitle } from "../dialog/dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { UserImage } from "../user-avatar";
 
@@ -232,6 +232,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								border={false}
 								className="max-w-[95svw] overflow-hidden rounded-xl desktop:max-w-[95svw]"
 							>
+								<DialogTitle className="sr-only">View image</DialogTitle>
 								<div className="relative max-h-[80vh] w-full bg-black-90">
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">

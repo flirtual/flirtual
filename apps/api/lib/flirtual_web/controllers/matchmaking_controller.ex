@@ -68,27 +68,13 @@ defmodule FlirtualWeb.MatchmakingController do
         conn |> json(result)
       else
         {:error, :out_of_likes, reset_at} ->
-          conn
-          |> json(%{
-            success: false,
-            message: "out_of_likes",
-            reset_at: reset_at
-          })
+          {:error, {:bad_request, :out_of_likes, %{reset_at: reset_at}}}
 
         {:error, :out_of_passes, reset_at} ->
-          conn
-          |> json(%{
-            success: false,
-            message: "out_of_passes",
-            reset_at: reset_at
-          })
+          {:error, {:bad_request, :out_of_passes, %{reset_at: reset_at}}}
 
         {:error, %Ecto.Changeset{errors: [user_id: {"already_responded", _}]}} ->
-          conn
-          |> json(%{
-            success: false,
-            message: "already_responded"
-          })
+          {:error, {:bad_request, :already_responded}}
 
         reason ->
           reason

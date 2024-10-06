@@ -1,9 +1,13 @@
+"use client";
+
 import { redirect } from "next/navigation";
+import useSWR from "swr";
+import ms from "ms";
 
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
 import { urls } from "~/urls";
 import { Profile } from "~/components/profile/profile";
-import { User } from "~/api/user";
+import { useQueue } from "~/hooks/use-queue";
 
 import {
 	ConfirmEmailError,
@@ -16,18 +20,19 @@ interface BrowsePageProps {
 	searchParams: { kind?: string };
 }
 
-export async function generateMetadata({ searchParams }: BrowsePageProps) {
-	const kind = (searchParams.kind ?? "love") as ProspectKind;
-	return {
-		title: kind === "friend" ? "Homie Mode" : "Browse"
-	};
-}
+// export async function generateMetadata({ searchParams }: BrowsePageProps) {
+// 	const kind = (searchParams.kind ?? "love") as ProspectKind;
+// 	return {
+// 		title: kind === "friend" ? "Homie Mode" : "Browse"
+// 	};
+// }
 
-export default async function BrowsePage({ searchParams }: BrowsePageProps) {
+export default function BrowsePage({ searchParams }: BrowsePageProps) {
 	const kind = (searchParams.kind ?? "love") as ProspectKind;
 	if (!ProspectKind.includes(kind)) return redirect(urls.browse());
 
-	const queue = await Matchmaking.queue(kind);
+	const { data: queue } = useQueue(kind);
+
 	if ("error" in queue) {
 		if (queue.error === "finish_profile") return <FinishProfileError />;
 		if (queue.error === "confirm_email") return <ConfirmEmailError />;
@@ -36,16 +41,36 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 	}
 
 	const {
-		prospects: prospectIds,
+		prospects: [currentId, nextId],
 		likesLeft: _likesLeft,
 		passesLeft: _passesLeft
 	} = queue;
 
-	const users = await User.getMany(prospectIds);
-	const [current, next] = users;
+	const likesLeft = !!nextId && _likesLeft > 0;
+	const passesLeft = !!nextId && _passesLeft > 0;
 
-	const likesLeft = users.length > 1 && _likesLeft > 0;
-	const passesLeft = users.length > 1 && _passesLeft > 0;
+	if (!currentId) return <OutOfProspectsError mode={kind} />;
+
+	return (
+		<>
+			<div className="relative max-w-full" key={currentId}>
+				<Profile id="current-profile" userId={currentId} />
+				{nextId && (
+					<Profile
+						className="absolute hidden"
+						id="next-profile"
+						userId={nextId}
+					/>
+				)}
+			</div>
+			<ProspectActions
+				kind={kind}
+				likesLeft={likesLeft}
+				passesLeft={passesLeft}
+				userId={currentId}
+			/>
+		</>
+	);
 
 	return (
 		<>
