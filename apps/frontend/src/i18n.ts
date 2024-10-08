@@ -52,6 +52,9 @@ export const getInternationalization = cache(async (override?: string) => {
 
 	const country = getCountry(headers);
 
+	await import("@formatjs/intl-displaynames/polyfill-force");
+	await import(`@formatjs/intl-displaynames/locale-data/${current}`);
+
 	return {
 		country,
 		languages,
