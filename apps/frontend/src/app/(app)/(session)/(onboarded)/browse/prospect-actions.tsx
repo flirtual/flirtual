@@ -1,12 +1,13 @@
 "use client";
 
-import { type FC, useCallback, useEffect } from "react";
+import { type FC, use, useCallback, useEffect, useMemo } from "react";
 import { Undo2, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import ms from "ms";
 import { InAppReview } from "@capacitor-community/in-app-review";
 import useMutation from "swr/mutation";
 import { match, P } from "ts-pattern";
+import { useRouter } from "next/navigation";
 
 import { Button, ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
@@ -34,6 +35,7 @@ import { useSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { queueKey, useQueue } from "~/hooks/use-queue";
 import { UserAvatar } from "~/components/user-avatar";
+import { newConversationId } from "~/utilities";
 
 import { Countdown } from "./countdown";
 
@@ -351,6 +353,7 @@ const MatchDialog: FC<{
 	kind: ProspectKind;
 	onClose: () => void;
 }> = ({ userId, kind, onClose }) => {
+	const router = useRouter();
 	const [session] = useSession();
 	const user = useUser(userId);
 	if (!session || !user) return null;
@@ -396,9 +399,18 @@ const MatchDialog: FC<{
 							/>
 						</div>
 						<div className="flex flex-col gap-2">
-							<ButtonLink href={urls.subscription.default} size="sm">
+							<Button
+								size="sm"
+								onClick={async () =>
+									router.push(
+										urls.conversations.of(
+											await newConversationId(session.user.id, user.id)
+										)
+									)
+								}
+							>
 								Send a message
-							</ButtonLink>
+							</Button>
 							<Button kind="tertiary" size="sm" onClick={onClose}>
 								Continue browsing
 							</Button>
