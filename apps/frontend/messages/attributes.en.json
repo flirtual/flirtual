@@ -2148,5 +2148,52 @@
       "name": "Experimenting in VR",
       "definition": "Someone who is exploring their sexual orientation in VR or whose sexuality differs in VR and in person."
     }
+  },
+  "language": {
+    "ase": {
+      "name": "American Sign Language"
+    },
+    "bzs": {
+      "name": "Brazilian Sign Language"
+    },
+    "bfi": {
+      "name": "British Sign Language"
+    },
+    "csl": {
+      "name": "Chinese Sign Language"
+    },
+    "dse": {
+      "name": "Dutch Sign Language"
+    },
+    "fsl": {
+      "name": "French Sign Language"
+    },
+    "gsg": {
+      "name": "German Sign Language"
+    },
+    "ins": {
+      "name": "Indo-Pakistani Sign Language"
+    },
+    "inl": {
+      "name": "Indonesian Sign Language"
+    },
+    "jsl": {
+      "name": "Japanese Sign Language"
+    },
+    "kvk": {
+      "name": "Korean Sign Language"
+    },
+    "mfs": {
+      "name": "Mexican Sign Language"
+    },
+    "psr": {
+      "name": "Portuguese Sign Language"
+    },
+    "rsl": {
+      "name": "Russian Sign Language"
+    },
+    "ssp": {
+      "name": "Spanish Sign Language"
+    }
   }
 }
