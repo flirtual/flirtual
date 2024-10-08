@@ -46,7 +46,7 @@ const Key = (props: { label: string }) => {
 };
 
 export const _ProspectActions: FC<{
-	userId: string;
+	userId: string | null;
 	kind: ProspectKind;
 	likesLeft?: boolean;
 	passesLeft?: boolean;
@@ -89,6 +89,7 @@ export const _ProspectActions: FC<{
 				};
 			}
 		) => {
+			if (!userId) return;
 			window.scrollTo({ top: 0, behavior: "smooth" });
 
 			if (type === "undo") {
@@ -108,7 +109,7 @@ export const _ProspectActions: FC<{
 			throwOnError: false,
 			revalidate: false,
 			populateCache: (value) => {
-				if ("queue" in value) return value.queue;
+				if (value && "queue" in value) return value.queue;
 			}
 		}
 	);

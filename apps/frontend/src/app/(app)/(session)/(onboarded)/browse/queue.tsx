@@ -36,12 +36,8 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	}
 
 	const [previous, current, next] = queue;
-	if (!current) return <OutOfProspectsError mode={kind} />;
 
-	useEffect(() => {
-		void (previous && preload(userKey(previous), userFetcher));
-		void (next && preload(userKey(next), userFetcher));
-	}, [previous, next]);
+	// if (!current) return <OutOfProspectsError mode={kind} />;
 
 	return (
 		<>
@@ -60,7 +56,11 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 						/>
 					</Suspense>
 				)}
-				<Profile className="isolate z-10" userId={current} />
+				{current ? (
+					<Profile className="isolate z-10" userId={current} />
+				) : (
+					<OutOfProspectsError mode={kind} />
+				)}
 			</div>
 			<ProspectActions key={kind} kind={kind} userId={current} />
 		</>
