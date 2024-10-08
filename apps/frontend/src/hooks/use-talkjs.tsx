@@ -11,10 +11,10 @@ import {
 import Talk from "talkjs";
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
+import { unstable_serialize } from "swr/infinite";
 
 import { talkjsAppId } from "~/const";
 import { resolveTheme } from "~/theme";
-import { unstableInfiniteSerialize } from "~/components/swr";
 
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
@@ -102,7 +102,7 @@ export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
 		if (!session) return;
 
 		const messageSubscription = session.onMessage(async () => {
-			await mutate(unstableInfiniteSerialize(getConversationsKey));
+			await mutate(unstable_serialize(getConversationsKey));
 			router.refresh();
 		});
 
