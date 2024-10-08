@@ -272,7 +272,8 @@ export async function newConversationId(
 	);
 	return Array.from(new Uint8Array(hash))
 		.map((b) => b.toString(16).padStart(2, "0"))
-		.join("");
+		.join("")
+		.slice(0, 20);
 }
 
 export function newIdempotencyKey() {
