@@ -23,7 +23,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 }) => (
 	<>
 		{branded && (
-			<FlirtualLogo className="mb-8 hidden h-20 text-black-80 dark:text-[snow] desktop:flex" />
+			<FlirtualLogo className="text-black-80 desktop:flex mx-auto mb-8 hidden h-20 dark:text-[snow]" />
 		)}
 		<div
 			{...props}
