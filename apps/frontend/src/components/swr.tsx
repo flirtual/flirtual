@@ -3,11 +3,7 @@
 "use client";
 
 import * as swr from "swr";
-import * as swrInfinite from "swr/infinite";
 
 export const SWRConfig = ((props) => {
 	return <swr.SWRConfig {...props}>{props.children}</swr.SWRConfig>;
 }) as typeof swr.SWRConfig;
-
-export const unstableSerialize = swr.unstable_serialize;
-export const unstableInfiniteSerialize = swrInfinite.unstable_serialize;

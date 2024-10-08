@@ -18,16 +18,16 @@ import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 import { useToast } from "~/hooks/use-toast";
 
 export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
 
-	const reasons = useAttributeList("ban-reason");
+	const reasons = useAttributes("ban-reason");
 	const defaultReason = reasons[0]!;
 	const tAttribute = useAttributeTranslation("ban-reason");
 

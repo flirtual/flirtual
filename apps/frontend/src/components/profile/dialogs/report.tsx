@@ -21,9 +21,9 @@ import {
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -38,7 +38,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	const router = useRouter();
 	const toasts = useToast();
 
-	const reasons = useAttributeList("report-reason");
+	const reasons = useAttributes("report-reason");
 	const defaultReason = reasons[0]!;
 
 	const [open, setOpen] = useState(false);

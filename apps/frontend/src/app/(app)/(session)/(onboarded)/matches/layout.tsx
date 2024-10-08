@@ -1,5 +1,5 @@
-import * as swrInfinite from "swr/infinite";
-import * as swr from "swr";
+import { unstable_serialize } from "swr";
+import { unstable_serialize as unstable_serialize_infinite } from "swr/infinite";
 
 import { fromEntries } from "~/utilities";
 import { SWRConfig } from "~/components/swr";
@@ -10,6 +10,7 @@ import { Matchmaking } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { urls } from "~/urls";
 import { ModelCard } from "~/components/model-card";
+import { userKey } from "~/hooks/use-user";
 
 import { ConversationListItem } from "./list-item";
 
@@ -34,13 +35,10 @@ export default async function ConversationsLayout({
 			value={{
 				fallback: {
 					...fromEntries(
-						users.map((user) => [
-							swr.unstable_serialize(["user", user.id]),
-							user
-						])
+						users.map((user) => [unstable_serialize(userKey(user.id)), user])
 					),
-					[swr.unstable_serialize("likes")]: likes,
-					[swrInfinite.unstable_serialize(getConversationsKey)]: [
+					[unstable_serialize("likes")]: likes,
+					[unstable_serialize_infinite(getConversationsKey)]: [
 						{ data: conversations, metadata }
 					]
 				}

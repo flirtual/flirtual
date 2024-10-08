@@ -4,9 +4,13 @@ import AbortAddon from "wretch/addons/abort";
 import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
 import { unstable_noStore } from "next/cache";
+// import ms from "ms";
 
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
+import { environment } from "~/const";
+import ms from "ms";
+// import { environment } from "~/const";
 
 export interface UuidModel {
 	id: string;
@@ -52,6 +56,12 @@ export const api = wretch(urls.api)
 				return async (url, options) => {
 					options.headers ??= {};
 
+					if (environment === "development")
+						// Artificially slow requests in development, ensuring we can see loading/pending states.
+						await new Promise((resolve) =>
+							setTimeout(resolve, options.method === "GET" ? 100 : 200)
+						);
+
 					if (
 						typeof window === "undefined" &&
 						// We can't use `headers` with `unstable_cache` which caches across requests,
@@ -76,10 +86,15 @@ export const api = wretch(urls.api)
 					const headers = new Headers(options.headers);
 					options.headers = headers;
 
-					console.log(options.method, url);
+					const { origin } = new URL(url);
+					console.debug(options.method, url.replace(origin, ""));
 					const response = await next(url, options);
 
-					console.log(options.method, url, response.status);
+					console.debug(
+						options.method,
+						url.replace(origin, ""),
+						response.status
+					);
 
 					return response;
 				};
@@ -96,6 +111,13 @@ export const api = wretch(urls.api)
 							response.status >= 500)
 					)
 						return true;
+
+					const retryAfter = Number.parseInt(
+						response?.headers.get("retry-after") || ""
+					);
+
+					// If the server tells us to wait more than 10 seconds, we won't retry.
+					if (!Number.isNaN(retryAfter) && retryAfter > 10) return true;
 
 					return response?.ok ?? false;
 				},
@@ -118,9 +140,12 @@ export const api = wretch(urls.api)
 							? json.error.message
 							: (error?.message ?? response?.statusText);
 
-					console.log(
+					const { origin } = new URL(url);
+
+					console.debug(
+						"(retry)",
 						options.method,
-						url,
+						url.replace(origin, ""),
 						`x${retryCount + 1}`,
 						response?.status,
 						message
@@ -159,20 +184,21 @@ export const api = wretch(urls.api)
 		return Object.assign(resolver, { json });
 	});
 
-export interface Issue<T extends string = string> {
+export interface Issue<T extends string = string, D = Record<string, unknown>> {
 	error: T;
-	details?: Record<string, unknown>;
+	details: D;
 }
 
-export interface IssueWithProperties extends Omit<Issue, "details"> {
-	details: Record<string, Array<Issue>>;
-}
+export type InvalidPropertiesIssue = Issue<
+	"invalid_properties",
+	Record<string, Array<Issue>>
+>;
 
 export function isWretchError(
 	error: unknown,
 	errorType: "invalid_properties"
 ): error is Omit<WretchError, "json"> & {
-	json: IssueWithProperties;
+	json: InvalidPropertiesIssue;
 };
 export function isWretchError(error: unknown): error is Omit<
 	WretchError,

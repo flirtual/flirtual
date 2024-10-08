@@ -7,9 +7,9 @@ import { findBy } from "~/utilities";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 import { Pill } from "./pill";
 
@@ -28,7 +28,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 	className,
 	small
 }) => {
-	const genders = useAttributeList("gender");
+	const genders = useAttributes("gender");
 	const t = useTranslations();
 
 	const tAttributes = useAttributeTranslation("gender");

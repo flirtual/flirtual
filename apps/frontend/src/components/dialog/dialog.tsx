@@ -78,7 +78,7 @@ const DialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
 		className={twMerge(
-			"flex h-12 flex-col gap-2 rounded-t-3xl bg-brand-gradient px-6 py-2 text-center text-white-20 group-data-[drawer]:bg-none group-data-[drawer]:p-2 group-data-[drawer]:text-left group-data-[drawer]:text-inherit desktop:text-left",
+			"flex h-12 flex-col gap-2 rounded-t-3xl bg-brand-gradient px-6 py-2 text-center text-white-20 group-data-[drawer]:bg-none group-data-[drawer]:px-0 group-data-[drawer]:py-2 group-data-[drawer]:text-left group-data-[drawer]:text-inherit desktop:text-left",
 			className
 		)}
 		{...props}

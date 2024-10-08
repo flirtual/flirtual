@@ -37,10 +37,10 @@ import {
 } from "~/api/user/profile";
 import { Matchmaking } from "~/api/matchmaking";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation,
 	type AttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 const absMinAge = 18;
 const absMaxAge = 60;
@@ -51,7 +51,7 @@ export const MatchmakingForm: FC = () => {
 	const router = useRouter();
 	const toasts = useToast();
 
-	const genders = useAttributeList("gender").filter(
+	const genders = useAttributes("gender").filter(
 		({ simple, fallback }) => simple || fallback
 	);
 	const tAttribute = useAttributeTranslation();

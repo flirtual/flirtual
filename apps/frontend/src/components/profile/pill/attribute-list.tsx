@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { InlineLink } from "~/components/inline-link";
-import { useAttributeTranslation } from "~/hooks/use-attribute-list";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 import { Pill } from "./pill";
 

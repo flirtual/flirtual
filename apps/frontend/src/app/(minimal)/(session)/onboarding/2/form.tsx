@@ -13,10 +13,10 @@ import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { Profile } from "~/api/user/profile";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation,
 	type AttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 
@@ -27,7 +27,7 @@ export const Onboarding2Form: FC = () => {
 	const [session, mutateSession] = useSession();
 	const router = useRouter();
 
-	const genders = useAttributeList("gender").filter(
+	const genders = useAttributes("gender").filter(
 		({ simple, fallback }) => simple || fallback
 	);
 

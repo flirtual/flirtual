@@ -4,9 +4,9 @@ import { type Dispatch, type FC, useEffect, useState } from "react";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { Button } from "~/components/button";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { SortableGrid, SortableItem } from "~/components/forms/sortable";
 import { groupBy, uniqueLast } from "~/utilities";
@@ -37,7 +37,7 @@ const EditPromptDialog: FC<{
 	const [value, setValue] = useState(initialValue);
 	useEffect(() => setValue(initialValue), [initialValue]);
 
-	const filteredPrompts = useAttributeList("prompt").filter(
+	const filteredPrompts = useAttributes("prompt").filter(
 		(promptId) => !excludedPrompts?.includes(promptId)
 	);
 	const tAttribute = useAttributeTranslation();

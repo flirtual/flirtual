@@ -28,16 +28,31 @@ export interface RespondProspectBody {
 	userId: string;
 }
 
-export interface RespondProspectResponse {
-	success: boolean;
-	message?: string;
-	resetAt?: string;
+export interface RespondProspect {
+	match: boolean;
+	matchKind: ProspectKind;
+	userId: string;
+	queue: Queue;
 }
 
+export type RespondProspectResponse =
+	| RespondProspect
+	| Issue<"out_of_likes" | "out_of_passes", { resetAt: string }>
+	| Issue<"already_responded">
+	| QueueIssues;
+
 export interface ReverseRespondProspectBody {
-	kind: ProspectKind;
-	userId: string;
+	mode: ProspectKind;
 }
+
+export type Queue = [
+	previous: string | null,
+	current: string | null,
+	next: string | null
+];
+
+export type QueueIssues = Issue<"finish_profile" | "confirm_email">;
+export type QueueResponse = Queue | QueueIssues;
 
 export const Matchmaking = {
 	queue(kind: ProspectKind) {
@@ -48,30 +63,35 @@ export const Matchmaking = {
 			.forbidden((reason) => {
 				if (isWretchError(reason)) return reason.json;
 			})
-			.json<
-				| {
-						prospects: Array<string>;
-						passes: number;
-						likes: number;
-						likesLeft: number;
-						passesLeft: number;
-				  }
-				| Issue<"finish_profile">
-				| Issue<"confirm_email">
-			>();
+			.json<QueueResponse>();
 	},
-	respondProspect(body: RespondProspectBody) {
+	queueAction(body: RespondProspectBody) {
 		return api
-			.url("prospects/respond")
+			.url("queue")
 			.json(body)
 			.post()
+			.error(429, (reason) => {
+				if (isWretchError(reason)) return reason.json;
+			})
+			.error(409, (reason) => {
+				if (isWretchError(reason)) return reason.json;
+			})
 			.json<RespondProspectResponse>();
 	},
-	reverseRespondProspect(body: ReverseRespondProspectBody) {
+	like(userId: string, kind: ProspectKind) {
+		return this.queueAction({ type: "like", kind, userId });
+	},
+	pass(userId: string, kind: ProspectKind) {
+		return this.queueAction({ type: "pass", kind, userId });
+	},
+	undo(body: ReverseRespondProspectBody) {
 		return api
-			.url("prospects/respond")
+			.url("queue")
 			.json(body)
 			.delete()
+			.error(429, (reason) => {
+				if (isWretchError(reason)) return reason.json;
+			})
 			.json<RespondProspectResponse>();
 	},
 	unmatch(userId: string) {

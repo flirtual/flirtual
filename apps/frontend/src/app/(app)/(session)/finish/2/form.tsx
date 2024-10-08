@@ -24,15 +24,15 @@ import {
 	ProfileRelationshipList
 } from "~/api/user/profile";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 
 export const Finish2Form: FC = () => {
-	const platforms = useAttributeList("platform");
-	const sexualities = useAttributeList("sexuality");
+	const platforms = useAttributes("platform");
+	const sexualities = useAttributes("sexuality");
 
 	const [session, mutateSession] = useSession();
 	const t = useTranslations("profile");

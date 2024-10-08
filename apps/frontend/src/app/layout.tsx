@@ -5,8 +5,9 @@ import { twMerge } from "tailwind-merge";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
+import { preconnect } from "react-dom";
 
-import { siteOrigin } from "~/const";
+import { apiOrigin, apiUrl, siteOrigin } from "~/const";
 import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
@@ -96,6 +97,10 @@ const platforms: Record<string, DevicePlatform> = {
 export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
+	preconnect(apiOrigin);
+	preconnect("https://pfp.flirtu.al");
+	preconnect("https://pfpup.flirtu.al");
+
 	const session = await Authentication.getOptionalSession();
 
 	const userAgent = userAgentFromString(headers().get("user-agent")!);

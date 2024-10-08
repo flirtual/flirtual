@@ -252,18 +252,18 @@ defmodule FlirtualWeb.Router do
         scope "/queue" do
           pipe_through([:require_authenticated_user, :require_valid_user])
           get("/", MatchmakingController, :queue_information)
+
+          post("/", MatchmakingController, :response)
+          delete("/", MatchmakingController, :undo_response)
         end
 
-        scope "/prospects" do
-          pipe_through([:require_authenticated_user, :require_valid_user])
-
-          delete("/", MatchmakingController, :reset_prospects)
-
-          get("/inspect", MatchmakingController, :inspect_query)
-
-          post("/respond", MatchmakingController, :respond)
-          delete("/respond", MatchmakingController, :reverse_respond)
-        end
+        # scope "/prospects" do
+        #   pipe_through([:require_authenticated_user, :require_valid_user])
+        #   delete("/", MatchmakingController, :reset_prospects)
+        #   get("/inspect", MatchmakingController, :inspect_query)
+        #   post("/respond", MatchmakingController, :respond)
+        #   delete("/respond", MatchmakingController, :reverse_respond)
+        # end
 
         scope "/matches" do
           pipe_through([:require_authenticated_user, :require_valid_user])

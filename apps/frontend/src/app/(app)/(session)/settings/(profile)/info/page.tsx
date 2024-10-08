@@ -1,8 +1,9 @@
-import * as swr from "swr";
+import { unstable_serialize } from "swr";
 
 import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
 import { SWRConfig } from "~/components/swr";
+import { attributeKey } from "~/hooks/use-attribute";
 
 import { InfoForm } from "./form";
 
@@ -32,12 +33,12 @@ export default async function SettingsProfileInfoPage() {
 			<SWRConfig
 				value={{
 					fallback: {
-						[swr.unstable_serialize(["attribute", "game"])]: games,
-						[swr.unstable_serialize(["attribute", "platform"])]: platforms,
-						[swr.unstable_serialize(["attribute", "sexuality"])]: sexualities,
-						[swr.unstable_serialize(["attribute", "gender"])]: genders,
-						[swr.unstable_serialize(["attribute", "language"])]: languages,
-						[swr.unstable_serialize(["attribute", "country"])]: countries
+						[unstable_serialize(attributeKey("game"))]: games,
+						[unstable_serialize(attributeKey("platform"))]: platforms,
+						[unstable_serialize(attributeKey("sexuality"))]: sexualities,
+						[unstable_serialize(attributeKey("gender"))]: genders,
+						[unstable_serialize(attributeKey("language"))]: languages,
+						[unstable_serialize(attributeKey("country"))]: countries
 					}
 				}}
 			>

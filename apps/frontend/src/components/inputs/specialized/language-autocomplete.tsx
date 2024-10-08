@@ -4,9 +4,9 @@ import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 import {
 	InputAutocomplete,
@@ -20,7 +20,7 @@ export const InputLanguageAutocomplete: React.FC<
 	const t = useTranslations("inputs.language_autocomplete");
 	const tAttribute = useAttributeTranslation();
 
-	const languages = useAttributeList("language");
+	const languages = useAttributes("language");
 	const systemLanguage = useLocale();
 
 	const languageNames = useMemo(

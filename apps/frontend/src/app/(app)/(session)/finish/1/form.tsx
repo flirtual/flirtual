@@ -17,7 +17,7 @@ import { useSession } from "~/hooks/use-session";
 import { InputPrompts } from "~/components/forms/prompts";
 import { ButtonLink } from "~/components/button";
 import { Profile } from "~/api/user/profile";
-import { useAttributeTranslation } from "~/hooks/use-attribute-list";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 

@@ -50,31 +50,47 @@ defmodule FlirtualWeb.MatchmakingController do
     )
   end
 
-  def respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => mode}) do
+  def response(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => mode}) do
     user = conn.assigns[:session].user
     target = Users.get(user_id)
 
     if is_nil(target) or Policy.cannot?(conn, :read, target) do
       {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
-      with {:ok, result} <-
+      with {:ok, value} <-
              Matchmaking.respond_profile(
                user: user,
                target: target,
                type: to_atom(type, :like),
                kind: to_atom(kind, :love),
                mode: to_atom(mode, :love)
-             ) do
-        conn |> json(result)
+             ),
+           {:ok, queue} <-
+             Matchmaking.queue_information(user, to_atom(mode, :love)) do
+        conn |> json(value |> Map.put(:queue, queue))
       else
         {:error, :out_of_likes, reset_at} ->
-          {:error, {:bad_request, :out_of_likes, %{reset_at: reset_at}}}
+          {:error,
+           {:too_many_requests, :out_of_likes,
+            %{
+              reset_at: reset_at,
+              headers: [
+                {"retry-after", DateTime.diff(reset_at, DateTime.utc_now())}
+              ]
+            }}}
 
         {:error, :out_of_passes, reset_at} ->
-          {:error, {:bad_request, :out_of_passes, %{reset_at: reset_at}}}
+          {:error,
+           {:too_many_requests, :out_of_passes,
+            %{
+              reset_at: reset_at,
+              headers: %{
+                {"retry-after", DateTime.diff(reset_at, DateTime.utc_now())}
+              }
+            }}}
 
         {:error, %Ecto.Changeset{errors: [user_id: {"already_responded", _}]}} ->
-          {:error, {:bad_request, :already_responded}}
+          {:error, {:conflict, :already_responded}}
 
         reason ->
           reason
@@ -82,25 +98,19 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
-  def respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind}) do
-    respond(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => kind})
-  end
+  def response(conn, %{"user_id" => user_id, "type" => type, "kind" => kind}),
+    do: response(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => kind})
 
-  def reverse_respond(conn, %{"user_id" => user_id}) do
+  def undo_response(conn, %{"mode" => mode}) do
     user = conn.assigns[:session].user
-    target = Users.get(user_id)
+    kind = to_atom(mode, :love)
 
-    if is_nil(target) or Policy.cannot?(conn, :read, target) do
-      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
-    else
-      with %Prospect{} = prospect <-
-             Prospect.get(profile_id: user.id, target_id: target.id),
-           {:ok, _} <- Prospect.reverse(prospect) do
-        conn |> json(%{success: true})
-      else
-        nil -> {:error, {:not_found, :prospect_not_found, %{user_id: user_id}}}
-        reason -> reason
-      end
+    with {:ok, _} <- Matchmaking.undo(user, kind),
+         {:ok, queue} <- Matchmaking.queue_information(user, kind) do
+      conn
+      |> json(%{
+        queue: queue
+      })
     end
   end
 

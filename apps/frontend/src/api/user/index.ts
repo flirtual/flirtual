@@ -161,8 +161,8 @@ export const User = {
 		return Promise.all(userIds.map((userId) => this.get(userId)));
 		// return this.api.url("/bulk").json(userIds).get().json<Array<User>>();
 	},
-	get(userId: string) {
-		if (!isUid(userId)) return null;
+	get(userId: string | null) {
+		if (!userId || !isUid(userId)) return Promise.resolve(null);
 
 		return this.api
 			.url(`/${userId}`)

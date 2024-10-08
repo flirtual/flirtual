@@ -1,4 +1,4 @@
-import * as swr from "swr";
+import { unstable_serialize } from "swr";
 
 import {
 	DiscordSpamDialog,
@@ -24,7 +24,7 @@ export default async function AuthenticatedLayout({
 		<SWRConfig
 			value={{
 				fallback: {
-					[swr.unstable_serialize("plans")]: plans
+					[unstable_serialize("plans")]: plans
 				}
 			}}
 		>

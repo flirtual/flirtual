@@ -19,10 +19,10 @@ import { useInternationalization } from "~/hooks/use-internationalization";
 import { User } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation,
 	type AttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 
@@ -33,9 +33,9 @@ export const Onboarding1Form: FC = () => {
 	const { country: systemCountry } = useInternationalization();
 	const router = useRouter();
 
-	const games = useAttributeList("game");
-	const genders = useAttributeList("gender");
-	const interests = useAttributeList("interest");
+	const games = useAttributes("game");
+	const genders = useAttributes("gender");
+	const interests = useAttributes("interest");
 
 	const tAttribute = useAttributeTranslation();
 

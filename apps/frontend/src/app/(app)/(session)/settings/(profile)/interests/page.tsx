@@ -1,8 +1,9 @@
-import * as swr from "swr";
+import { unstable_serialize } from "swr";
 
 import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
 import { SWRConfig } from "~/components/swr";
+import { attributeKey } from "~/hooks/use-attribute";
 
 import { InterestsForm } from "./form";
 
@@ -27,8 +28,8 @@ export default async function SettingsProfileInterestsPage() {
 			<SWRConfig
 				value={{
 					fallback: {
-						[swr.unstable_serialize(["attribute", "interest"])]: interests,
-						[swr.unstable_serialize(["attribute", "interest-category"])]:
+						[unstable_serialize(attributeKey("interest"))]: interests,
+						[unstable_serialize(attributeKey("interest-category"))]:
 							interestCategories
 					}
 				}}

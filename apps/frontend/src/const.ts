@@ -8,6 +8,7 @@ assert(siteOrigin, "NEXT_PUBLIC_ORIGIN is required");
 
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
 assert(apiUrl, "NEXT_PUBLIC_API_URL is required");
+export const apiOrigin = new URL(apiUrl).origin;
 
 export const environment = (process.env.NEXT_PUBLIC_VERCEL_ENV ||
 	process.env.NODE_ENV) as "development" | "preview" | "production";

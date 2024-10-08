@@ -17,7 +17,7 @@ import { InputPrompts } from "~/components/forms/prompts";
 import { displayName } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { ProfileImage } from "~/api/user/profile/images";
-import { useAttributeTranslation } from "~/hooks/use-attribute-list";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 

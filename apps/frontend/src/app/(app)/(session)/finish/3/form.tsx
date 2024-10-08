@@ -35,9 +35,9 @@ import { ButtonLink } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { Profile } from "~/api/user/profile";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 export const Finish3Form: FC = (props) => {
 	const { platform } = useDevice();
@@ -45,8 +45,8 @@ export const Finish3Form: FC = (props) => {
 	const toasts = useToast();
 	const router = useRouter();
 
-	const interestCategories = useAttributeList("interest-category");
-	const interests = useAttributeList("interest");
+	const interestCategories = useAttributes("interest-category");
+	const interests = useAttributes("interest");
 
 	const categorizedInterests = groupBy(interests, ({ category }) => category);
 

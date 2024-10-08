@@ -14,16 +14,16 @@ import { useToast } from "~/hooks/use-toast";
 import { Profile, ProfileDomsubList } from "~/api/user/profile";
 import { Preferences } from "~/api/user/preferences";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation,
 	type AttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 export const NsfwForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
-	const kinks = useAttributeList("kink");
+	const kinks = useAttributes("kink");
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;

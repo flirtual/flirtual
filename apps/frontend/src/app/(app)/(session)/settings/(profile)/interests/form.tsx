@@ -31,9 +31,9 @@ import { useToast } from "~/hooks/use-toast";
 import { useDevice } from "~/hooks/use-device";
 import { Profile } from "~/api/user/profile";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 import { Pill } from "~/components/profile/pill/pill";
 
 import type { Dispatch, FC } from "react";
@@ -79,8 +79,8 @@ const InterestSelectList: FC<{
 	onSelected: Dispatch<Array<string>>;
 	maximum: number;
 }> = ({ filter, selected, onSelected, maximum }) => {
-	const interestCategories = useAttributeList("interest-category");
-	const interests = useAttributeList("interest");
+	const interestCategories = useAttributes("interest-category");
+	const interests = useAttributes("interest");
 
 	const categorizedInterests = groupBy(interests, ({ category }) => category);
 

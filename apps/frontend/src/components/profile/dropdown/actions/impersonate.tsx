@@ -1,4 +1,5 @@
 import { VenetianMask } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { type User, displayName } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
@@ -9,7 +10,8 @@ import { Authentication } from "~/api/auth";
 import type { FC } from "react";
 
 export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
-	const [session, mutateSession] = useSession();
+	const [session] = useSession();
+	const router = useRouter();
 	const toasts = useToast();
 
 	if (!session || !session.user.tags?.includes("admin")) return null;
@@ -26,17 +28,17 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 				type="button"
 				onClick={async () => {
 					if (session?.sudoerId) {
-						const newSession = await Authentication.revokeImpersonate();
+						await Authentication.revokeImpersonate();
 
 						toasts.add(`No longer impersonating ${displayName(user)}`);
-						await mutateSession(newSession);
+						router.refresh();
 						return;
 					}
 
-					const newSession = await Authentication.impersonate(user.id);
+					await Authentication.impersonate(user.id);
 
 					toasts.add(`Impersonating ${displayName(user)}`);
-					await mutateSession(newSession);
+					router.refresh();
 				}}
 			>
 				<VenetianMask className="size-5" />

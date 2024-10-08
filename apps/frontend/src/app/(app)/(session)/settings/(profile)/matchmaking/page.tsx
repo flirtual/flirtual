@@ -1,4 +1,4 @@
-import * as swr from "swr";
+import { unstable_serialize } from "swr";
 
 import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
@@ -24,7 +24,7 @@ export default async function SettingsProfileMatchmakingPage() {
 			<SWRConfig
 				value={{
 					fallback: {
-						[swr.unstable_serialize(["attribute", "gender"])]: genders
+						[unstable_serialize(attributeKey("gender"))]: genders
 					}
 				}}
 			>

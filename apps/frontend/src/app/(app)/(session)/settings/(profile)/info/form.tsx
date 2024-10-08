@@ -20,10 +20,10 @@ import { fromEntries } from "~/utilities";
 import { Profile } from "~/api/user/profile";
 import { User } from "~/api/user";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation,
 	type AttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 
@@ -35,10 +35,10 @@ export const InfoForm: FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
-	const games = useAttributeList("game");
-	const platforms = useAttributeList("platform");
-	const sexualities = useAttributeList("sexuality");
-	const genders = useAttributeList("gender");
+	const games = useAttributes("game");
+	const platforms = useAttributes("platform");
+	const sexualities = useAttributes("sexuality");
+	const genders = useAttributes("gender");
 
 	const tAttribute = useAttributeTranslation();
 

@@ -37,7 +37,7 @@ import { Dialog, DialogContent } from "~/components/dialog/dialog";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { type ListReportOptions, Report } from "~/api/report";
 import { Conversation } from "~/api/conversations";
-import { useAttributeTranslation } from "~/hooks/use-attribute-list";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 type CompleteReport = Report & { user?: User; target: User };
 

@@ -1,8 +1,9 @@
-import * as swr from "swr";
+import { unstable_serialize } from "swr";
 
 import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
 import { SWRConfig } from "~/components/swr";
+import { attributeKey } from "~/hooks/use-attribute";
 
 import { NsfwForm } from "./form";
 
@@ -24,7 +25,7 @@ export default async function SettingsProfileNsfwPage() {
 			<SWRConfig
 				value={{
 					fallback: {
-						[swr.unstable_serialize(["attribute", "kink"])]: kinks
+						[unstable_serialize(attributeKey("kink"))]: kinks
 					}
 				}}
 			>

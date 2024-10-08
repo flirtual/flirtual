@@ -7,7 +7,7 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { capitalize } from "~/utilities";
 import { User } from "~/api/user";
-import { useAttributeTranslation } from "~/hooks/use-attribute-list";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 import { CopyClick } from "../copy-click";
 import { InlineLink } from "../inline-link";

@@ -29,7 +29,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 	const [expanded, setExpanded] = useState(false);
 	const t = useTranslations("profile");
 
-	// const kinks = useAttributeList("kink");
+	// const kinks = useAttributes("kink");
 	// const activeKinkIds = useMemo(
 	// 	() =>
 	// 		filterBy(session.user.profile.attributes, "type", "kink")

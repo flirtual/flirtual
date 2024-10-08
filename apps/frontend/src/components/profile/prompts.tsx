@@ -1,4 +1,4 @@
-import { useAttributeTranslation } from "~/hooks/use-attribute-list";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 import type { ProfilePrompt } from "~/api/user/profile";

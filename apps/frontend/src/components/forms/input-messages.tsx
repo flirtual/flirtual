@@ -72,7 +72,6 @@ export const FormInputMessages: React.FC<FormInputMessagesProps> = ({
 	messages
 }) => {
 	if (!messages || messages.length === 0) return null;
-	console.log(messages);
 
 	return (
 		<div className="flex flex-col gap-2">

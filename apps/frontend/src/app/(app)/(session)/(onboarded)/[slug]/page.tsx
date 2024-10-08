@@ -7,10 +7,13 @@ import { ProspectActions } from "~/app/(app)/(session)/(onboarded)/browse/prospe
 import { SWRConfig } from "~/components/swr";
 import { Attribute } from "~/api/attributes";
 import { urls } from "~/urls";
+import { userKey } from "~/hooks/use-user";
 
 import { getProfile, profileRequiredAttributes } from "./data";
 
 import type { Metadata } from "next";
+
+import { attributeKey } from "~/hooks/use-attribute";
 
 export interface ProfilePageProps {
 	params: { slug: string };
@@ -42,10 +45,10 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 		<SWRConfig
 			value={{
 				fallback: {
-					[unstable_serialize(["user", user.id])]: user,
+					[unstable_serialize(userKey(user.id))]: user,
 					...Object.fromEntries(
 						attributes.map(([type, attribute]) => [
-							unstable_serialize(["attribute", type]),
+							unstable_serialize(attributeKey(type)),
 							attribute
 						])
 					)

@@ -7,9 +7,9 @@ import { useInView } from "react-intersection-observer";
 import { useLocale, useTranslations } from "next-intl";
 
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 import { useInternationalization } from "~/hooks/use-internationalization";
 
 import { InputSelect, type InputSelectProps, SelectItem } from "../select";
@@ -68,7 +68,7 @@ export type InputCountrySelectProps = Omit<
 
 export function InputCountrySelect(props: InputCountrySelectProps) {
 	const t = useTranslations("inputs.country_select");
-	const countries = useAttributeList("country");
+	const countries = useAttributes("country");
 	const tAttribute = useAttributeTranslation();
 
 	let { country: systemCountry } = useInternationalization();

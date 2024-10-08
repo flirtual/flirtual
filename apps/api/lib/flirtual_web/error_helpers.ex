@@ -57,10 +57,21 @@ defmodule FlirtualWeb.ErrorHelpers do
 
     if status_code > 499, do: Sentry.capture_message(message)
 
+    {conn, details} = maybe_put_headers(conn, details)
+
     conn
     |> put_status(status_code)
     |> json(Issue.new(%{error: message, details: details}))
   end
+
+  defp maybe_put_headers(conn, %{headers: headers} = details) do
+    {
+      Enum.reduce(headers, conn, fn {key, value}, conn -> put_resp_header(conn, key, value |> to_string()) end),
+      Map.delete(details, :headers)
+    }
+  end
+
+  defp maybe_put_headers(conn, details), do: {conn, details}
 
   def transform_changeset_errors(%Ecto.Changeset{} = changeset) do
     changeset

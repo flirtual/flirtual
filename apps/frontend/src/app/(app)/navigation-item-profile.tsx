@@ -14,6 +14,7 @@ import {
 	VenetianMask
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 import { DiscordOutlineIcon } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
@@ -49,8 +50,9 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 };
 
 export const NavigationItemProfile: FC = () => {
-	const [session, mutateSession] = useSession();
+	const [session] = useSession();
 	const t = useTranslations("navigation");
+	const router = useRouter();
 
 	const [visible, setVisible] = useState(false);
 	const elementReference = useRef<HTMLDivElement>(null);
@@ -173,8 +175,8 @@ export const NavigationItemProfile: FC = () => {
 							{session.sudoerId && (
 								<ProfileNavigationItem
 									onClick={async () => {
-										const session = await Authentication.revokeImpersonate();
-										await mutateSession(session);
+										await Authentication.revokeImpersonate();
+										router.refresh();
 									}}
 								>
 									<VenetianMask className="size-6 shrink-0" />

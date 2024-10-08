@@ -156,6 +156,7 @@ module.exports = {
 		require("@tailwindcss/typography"),
 		require("tailwindcss-hocus"),
 		require("tailwindcss-animate"),
+		require("tailwindcss-motion"),
 		plugin(({ addVariant, addComponents }) => {
 			// Device specific variants
 			addVariant("native", `:is([data-native] &)`);

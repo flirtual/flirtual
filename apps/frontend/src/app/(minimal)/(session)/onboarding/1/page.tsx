@@ -1,8 +1,9 @@
-import * as swr from "swr";
+import { unstable_serialize } from "swr";
 
 import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
 import { SWRConfig } from "~/components/swr";
+import { attributeKey } from "~/hooks/use-attribute";
 
 import { Onboarding1Form } from "./form";
 
@@ -24,9 +25,9 @@ export default async function Onboarding1Page() {
 			<SWRConfig
 				value={{
 					fallback: {
-						[swr.unstable_serialize(["attribute", "game"])]: games,
-						[swr.unstable_serialize(["attribute", "gender"])]: genders,
-						[swr.unstable_serialize(["attribute", "interest"])]: interests
+						[unstable_serialize(attributeKey("game"))]: games,
+						[unstable_serialize(attributeKey("gender"))]: genders,
+						[unstable_serialize(attributeKey("interest"))]: interests
 					}
 				}}
 			>

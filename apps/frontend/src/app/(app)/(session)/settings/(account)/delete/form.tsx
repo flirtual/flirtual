@@ -14,16 +14,16 @@ import { InlineLink } from "~/components/inline-link";
 import { useSession } from "~/hooks/use-session";
 import { User } from "~/api/user";
 import {
-	useAttributeList,
+	useAttributes,
 	useAttributeTranslation
-} from "~/hooks/use-attribute-list";
+} from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 
 export const DeleteForm: FC = () => {
 	const router = useRouter();
 
-	const deleteReasons = useAttributeList("delete-reason");
+	const deleteReasons = useAttributes("delete-reason");
 	const tAttribute = useAttributeTranslation();
 
 	const [session] = useSession();

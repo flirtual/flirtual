@@ -107,25 +107,34 @@ defmodule Flirtual.Matchmaking do
           _ -> :finish_profile
         end}}
     else
-      {:ok, next_prospects} =
+      {:ok, prospect_ids} =
         if(existing_next_prospects == [],
           do: compute_next_prospects(user, kind),
           else: {:ok, existing_next_prospects}
         )
 
+      {:ok, previous} = previous_prospect(user, kind)
+
       {:ok,
-       %{
-         prospects: next_prospects,
-         likes: fields.likes,
-         likes_left:
-           fields.likes_left
-           |> max(if Subscription.active?(user.subscription), do: 1, else: 0),
-         passes: fields.passes,
-         passes_left:
-           fields.passes_left
-           |> max(if Subscription.active?(user.subscription), do: 1, else: 0)
-       }}
+       [
+         previous[:target_id],
+         Enum.at(prospect_ids, 0),
+         Enum.at(prospect_ids, 1)
+       ]}
     end
+  end
+
+  defp previous_prospect(user, kind) do
+    prospect =
+      Prospect
+      |> where(profile_id: ^user.id, kind: ^kind, completed: true)
+      |> order_by(asc: :score)
+      # |> select([prospect], prospect.target_id)
+      |> limit(1)
+      |> Repo.one()
+
+    log(:info, ["previous", user.id, kind], prospect)
+    {:ok, prospect}
   end
 
   defp next_prospects(user, kind) do
@@ -456,12 +465,14 @@ defmodule Flirtual.Matchmaking do
                      end
                  ) do
             %{
-              matched:
+              match:
                 if not is_nil(opposite_item) do
                   item.type === :like and opposite_item.type === :like
                 else
                   false
-                end
+                end,
+              match_kind: match_kind,
+              user_id: target.id
             }
           else
             {:error, reason} -> Repo.rollback(reason)
@@ -470,6 +481,15 @@ defmodule Flirtual.Matchmaking do
         end)
       end
     end
+  end
+
+  def undo(user, kind) do
+    Repo.transaction(fn ->
+      with {:ok, prospect} <- previous_prospect(user, kind),
+           {:ok, _} <- Prospect.reverse(prospect) do
+        prospect
+      end
+    end)
   end
 
   def generate_query(%User{} = user, kind) do

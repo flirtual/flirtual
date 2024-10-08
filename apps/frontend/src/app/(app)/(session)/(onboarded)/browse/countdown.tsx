@@ -1,48 +1,64 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
-function useCountdown(date: string, onFinish: () => void): string {
-	const [timeRemaining, setTimeRemaining] = useState("⏳");
+import { useInterval } from "~/hooks/use-interval";
 
-	useEffect(() => {
-		const updateTimer = () => {
-			const now = Date.now();
-			const target = new Date(date).getTime();
-			const distance = target - now;
+function timeTill(date: Date) {
+	const now = Date.now();
+	const target = date.getTime();
+	const distance = target - now;
 
-			if (distance > 0) {
-				const hours = Math.floor(distance / (1000 * 60 * 60));
-				const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-				const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	if (distance <= 0) return { hours: 0, minutes: 0, seconds: 0 };
 
-				setTimeRemaining(
-					`${hours.toString().padStart(2, "0")}:${minutes
-						.toString()
-						.padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-				);
-			} else {
-				setTimeRemaining("00:00:00");
-				onFinish();
+	const hours = Math.floor(distance / (1000 * 60 * 60));
+	const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+	return { hours, minutes, seconds };
+}
+
+function useCountdown(date: string, onComplete: () => void) {
+	const [value, setValue] = useState(() => timeTill(new Date(date)));
+
+	const { clear } = useInterval(
+		useCallback(() => {
+			const value = timeTill(new Date(date));
+			setValue(value);
+
+			if (value.hours === 0 && value.minutes === 0 && value.seconds === 0) {
+				onComplete();
+				clear();
 			}
-		};
+		}, []),
+		500
+	);
 
-		updateTimer();
-		const interval = setInterval(updateTimer, 1);
-
-		return () => clearInterval(interval);
-	}, [onFinish, date]);
-
-	return timeRemaining;
+	return value;
 }
 
 interface CountdownProps {
 	date: string;
-	onFinish: () => void;
+	onComplete: () => void;
 }
 
-export const Countdown: React.FC<CountdownProps> = ({ date, onFinish }) => {
-	const countdown = useCountdown(date, onFinish);
+export const Countdown: React.FC<CountdownProps> = ({ date, onComplete }) => {
+	const { hours, minutes, seconds } = useCountdown(date, onComplete);
 
-	return <span>{countdown}</span>;
+	return (
+		<div className="grid grid-cols-3 overflow-hidden rounded-xl text-black-80">
+			<div className="flex w-full flex-col border-r-2 border-dashed border-black-80/10 bg-white-20 p-4">
+				<span className="opacity-75">hours</span>
+				<span className="text-2xl tabular-nums">{hours}</span>
+			</div>
+			<div className="flex w-full flex-col border-r-2 border-dashed border-black-80/10 bg-white-20 p-4">
+				<span className="opacity-75">minutes</span>
+				<span className="text-2xl tabular-nums">{minutes}</span>
+			</div>
+			<div className="flex w-full flex-col bg-white-20 p-4">
+				<span className="opacity-75">seconds</span>
+				<span className="text-2xl tabular-nums">{seconds}</span>
+			</div>
+		</div>
+	);
 };

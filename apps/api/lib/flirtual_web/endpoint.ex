@@ -26,6 +26,9 @@ defmodule FlirtualWeb.Endpoint do
       "content-type",
       "idempotency-key",
       "retry-count"
+    ],
+    expose: [
+      "retry-after"
     ]
   )
 
