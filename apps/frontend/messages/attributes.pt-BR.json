@@ -35,6 +35,48 @@
     "dWDkcjmXQEQRVoXmNkutAB": {
       "name": "Assédio",
       "details": "Assédio. Se você gostaria de apelar seu banimento, por favor responda este email. Por favor note que não podemos compartilhar detalhes de denúncias de moderação, caso alguma tenha sido feita."
+    },
+    "KfFVwKB4DYMXx7foyqGUZM": {
+      "details": "Conteúdo Violento/Perturbante. Seu perfil aparenta conter conteúdo violento ou perturbante. Se você quiser apelar este banimento, por favor responde este email.",
+      "name": "Conteúdo Violento/Perturbante"
+    },
+    "YLsXz4iHn9yNLLLmuMHLCT": {
+      "details": "Automutilação. Seu perfil ou atividade foi marcado como contendo referências a automutilação que pode ser perturbante para outros usuários, Nós temos alguns recursos em https://flirtu.al/mentalhealth que podem ser úteis. Por favor se cuide. Se você quiser apelar este banimento, porfavor responda este email.",
+      "name": "Automutilação"
+    },
+    "HmF9W5yHfH3nLRYnt6F2cc": {
+      "name": "Conteúdo ilegal",
+      "details": "Conteúdo ilegal. Seu perfil ou atividade aparenta violar as leis Canadenses ou locais. Se você acredita ter sido banido por erro, responda este email para apelar."
+    },
+    "Lfb829DEo36f54Uu3H3ybj": {
+      "details": "Golpe, malware, ou links maliciosos. Seu perfil aparenta conter links ou atividade maliciosa. Se você acredita ter sido banido por erro, poderá apelar respondendo este email",
+      "name": "Golpe, malware, ou links maliciosos"
+    },
+    "8P2pi5232LTpzGTDWkBprc": {
+      "name": "Outro"
+    }
+  },
+  "delete-reason": {
+    "jrAqzBkasZwqfjSPAazNq3": {
+      "name": "Eu encontrei um relacionamento no Flirtual"
+    },
+    "BMEJteBnvo8vrUrPh7j634": {
+      "name": "Eu encontrei um relacionamento em outro lugar"
+    },
+    "jgc6z6qpeYmTAwHmid6n8X": {
+      "name": "Prefiro outros aplicativos de namoro de RV"
+    },
+    "kTXr4okVAGLovjKBiwSgnF": {
+      "name": "Sem pares suficientes"
+    },
+    "TaqMV38Taxdz7ZNxEG4oEU": {
+      "name": "Sem \"dates\" suficientes"
+    },
+    "3fm9o3onrqPiwKhceexRMZ": {
+      "name": "Experiência ruim com matches"
+    },
+    "EkWwgZavkCxJhRgKJF3yRn": {
+      "name": "Prefiro outros aplicativos de namoro em pessoa"
     }
   }
 }
