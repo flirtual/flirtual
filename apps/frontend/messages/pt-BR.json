@@ -156,6 +156,76 @@
   },
   "privacy": {
     "title": "Política de Privacidade",
-    "title_superseded": "Política de Privacidade (Desatualizado)"
+    "title_superseded": "Política de Privacidade (Desatualizado)",
+    "content": "<p>Seu nome de usuário, nome de exibição, fotos de perfil, biografia, idade, gênero, suas preferências de matchmaking, seus interesses pessoais, suas seleções de aplicativos de RV/jogos, e se você é ou não novo na RV será visível à outros usuários. Sua informação adicional de perfil (incluindo sua sexualidade, Rótulos adultos, país, contas conectadas, etc). serão visíveis ou ocultas dependendo das suas <settings-privacy>configurações de privacidade</settings-privacy>, que podem ser alteradas livremente. Seus traços de personalidade (que são identificados baseados nas suas respostas do questionário de personalidade) serão visíveis ou ocultos para outros usuários baseados nas suas <settings-privacy>configurações de privacidade</settings-privacy>, mas suas respostas ao questionário serão ocultas.</p><p>Nós usamos análises de dados locais e próprias. Nós podemos compartilhar estatísticas anônimas sobre Firtual (por exemplo, o número de usuários que usam um aplicativo ou jogo específico). Você pode optar sair dessas estatísticas nas suas <settings-privacy>configurações de privacidade</settings-privacy>.</p><p>Suas mensagens e histórico de mensagens com outros usuários são hospedados e compartilhados com TalkJS, mas não serão compartilhados com terceiros.</p><p>O email da sua conta não será mostrado para outros usuários. Seu email pode ser acessado por terceiros para entrega de mensagens transacionais, de marketing e de suporte de acordo com suas preferências. Você pode optar sair das <settings-notifications>email de notificação de mensagem</settings-notifications>, que removerá seu email do registro do TalkJS.</p><p>Caso você suspeite que sua conta foi comprometida, por favor <settings-password> troque sua senha</settings-password> imediatamente e <contact>reporte o problema</contact> com a palavra 'URGENT' na linha de título. Na mensagem, inclua seu usuário, a última vez que acessou o site, e qualquer detalhe que te fez suspeitar de uma invasão.</p><p>Sua senha é salva com métodos hashed e salted.</p><p>Nós usamos terceiros confiáveis que proporcionam serviços para Flirtual. Nós podemos compartilar dados pessoais com estes terceiros, mas apenas com a finalidade de fornecer seus serviços. Para mais informações e exemplos, veja abaixo.</p><p><strong>Serviços de Hospedagem em Nuvem:</strong> para disponibilizar uma infraestrutura confiável e segura para gerenciar e operar nossa plataforma (por exemplo, Fly.io e Vercel).</p><p><strong>Serviços de Funcionalidade no Aplicativo:</strong> para facilitar os principais recursos como mensagens, hospedagem de imagens otimizado dento do nosso aplicativo (por exemplo, TalkJS).</p><p><strong>Serviços de Cobrança:</strong> para gerenciar pagamentos e inscrições (por exemplo, Stripe).</p><p><strong>Serviços de Redes Sociais:</strong> para permitir usuários conectares suas contas a nossa plataforma e facilitar interações sociais (por exemplo Discord).</p><p><strong>Serviços de Segurança e Desempenho:</strong> para proteger nossa plataforma, usuários, e melhorar o desempenho em geral (por exemplo, Cloudflare).</p><p><strong>Serviços de Pesquisa e Melhoria:</strong> para juntar opiniões de usuários e fazer análises para melhoria contínua da nossa plataforma(por exemplo, Canny).</p><p><strong>Serviços de Comunicação:</strong> para ajudar a enviar comunicações transacionais e marketing para usuários(por exemplo, Amazon Web Services).</p><p><strong>Serviços de Moderação:</strong> para certificar conduta apropriada dentro do aplicativo e manter os padrões da comunidade (por exemplo, Google Cloud).</p><p><strong>Serviços de TI:</strong> para ajudar em várias operações dos nossos negócios, como quando um usuário interage com nossos serviços de suporte, que podem envolver processar dados pessoais do usuário(por exemplo, Freshworks).</p><p>Nós revisamos terceiros e nos comprometemos em ter certeza que a proteção de dados adequada e informações de segurança estão em vigor. Nós tomamos medidas para proteger e anonimizar dados compartilhados com terceiros, conforme apropriado, dada a natureza dos serviços prestados. Fornecemos apenas a terceiros de confiança os dados pessoais necessários para o serviço que prestam.</p><p>Caso tenha encontrado alguma vúlnerabilidade ou vazamento de privacidade, por favor reporte para nós discretamente via <vulnerability>GitHub</vulnerability> ou <contact>email</contact>.</p><p>Você pode revisar dados que temos arquivados nas suas <settings>configurações de conta</settings>, e nas suas mensagens. Você pode requisitar todos seus dados que temos arquivados nos enviando um email, e as receberá dentro de 30 dias.</p>"
+  },
+  "superseded_policy": {
+    "fancy_noisy_grizzly_hint": "Essa politica estava em efeito {range} e não está mais ativa. Porfavor veja a <current>última iteração dessa política</current>."
+  },
+  "machine-translated": {
+    "large_wild_tortoise_sing": "Essa página foi traduzida automaticamente e pode conter imprecisões. Essa tradução foi providênciada apenas para sua conveniência. A <original>versão inglês</original> deste documento é a versão oficial e deve ser referênciada em caso de discrepâncias.",
+    "active_frail_antelope_support": "Porfavor <contact>contate-nos</contact> se você tiver qualquer dúvida."
+  },
+  "landing": {
+    "carousel": {
+      "spare_chunky_cougar_honor": "Aproveite encontros seguros e mágicos dentro da Realidade Virtual",
+      "images": {
+        "4": {
+          "title": "Toque em grama"
+        },
+        "6": {
+          "title": "Jogue sinuca"
+        },
+        "0": {
+          "title": "Alimente patos"
+        },
+        "1": {
+          "title": "Nade... com tubarões"
+        },
+        "2": {
+          "title": "Relaxe em um café aconchegante"
+        },
+        "3": {
+          "title": "Observe um buraco negro"
+        },
+        "5": {
+          "title": "Pintem juntos"
+        }
+      }
+    },
+    "sign_up": "Registre-se",
+    "log_in": "Log in",
+    "hero": {
+      "mellow_short_shark_propel": "Encontros no Flirtual",
+      "calm_calm_alligator_taste": "Encontros virtuais, conexões reais"
+    },
+    "profiles": {
+      "legal_big_finch_kiss": "Foto de um perfil do Flirtual",
+      "stout_last_kudu_bend": "Seu avatar, sua escolha",
+      "messages": {
+        "0": "RV é uma maneira que prioriza a personalidade ao conhecer pessoas novas.",
+        "1": "Avatares te ajudam a se expressar, sem se sentir auto-consciente.",
+        "2": "Após um ou dois encontros na RV, faça uma video chamada ou se encontre na vida real!"
+      }
+    },
+    "testimonial": {
+      "even_major_hare_believe": "Dê Match com mais de {userCount}+ pessoas de todo o mundo!",
+      "brands": {
+        "1": {
+          "name": ""
+        }
+      }
+    }
+  },
+  "press": {
+    "title": "Imprensa",
+    "wide_stock_bulldog_tend": "Kit de Imprensa",
+    "mellow_level_butterfly_emerge": "Baixar",
+    "hour_smug_giraffe_lend": "Contate-nos",
+    "heavy_fancy_butterfly_glow": "Notícias"
+  },
+  "terms": {
+    "title": "Termos de Serviço",
+    "title_superseded": "Termos de Serviço (Desatualizado)"
   }
 }
