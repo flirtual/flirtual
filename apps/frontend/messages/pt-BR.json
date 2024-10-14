@@ -209,12 +209,7 @@
       }
     },
     "testimonial": {
-      "even_major_hare_believe": "Dê Match com mais de {userCount}+ pessoas de todo o mundo!",
-      "brands": {
-        "1": {
-          "name": ""
-        }
-      }
+      "even_major_hare_believe": "Dê Match com mais de {userCount}+ pessoas de todo o mundo!"
     }
   },
   "press": {
