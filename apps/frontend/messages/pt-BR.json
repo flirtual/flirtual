@@ -214,6 +214,9 @@
     },
     "testimonial": {
       "even_major_hare_believe": "Dê Match com mais de {userCount}+ pessoas de todo o mundo!"
+    },
+    "cta": {
+      "few_grassy_hyena_adapt": "Apaixone-se em uma <highlight>dimensão completamente nova</highlight>"
     }
   },
   "press": {
@@ -226,5 +229,18 @@
   "terms": {
     "title": "Termos de Serviço",
     "title_superseded": "Termos de Serviço (Desatualizado)"
+  },
+  "profile": {
+    "that_proud_butterfly_find": "Discord: <copy>{name}</copy>",
+    "zany_salty_cheetah_lead": "VRChat: <copy>{name}</copy>",
+    "happy_yummy_otter_climb": "avatar de {displayName}",
+    "sound_whole_jaguar_charm": "Idade verificada",
+    "neat_moving_ibex_nail": "Unmatch",
+    "every_sleek_llama_feast": "Enviar Mensagem",
+    "weird_green_crab_peek": "Deu unmatch em {displayName}",
+    "strong_home_bullock_taste": "Ambos são novos na RV. Explorem juntos!",
+    "fuzzy_calm_ant_nudge": "{displayName} é novo na RV. Oque acha de ajudar a explorar?",
+    "early_quiet_giraffe_dine": "Não se esqueça de <settings-bio>adicionar biografia</settings-bio>!",
+    "smart_just_scallop_reside": "Discord verificado"
   }
 }
