@@ -28,7 +28,8 @@
       "2022": {
         "description": "VRLFP se torna Flirtual. Talvez agora as pessoas se lembrarão como soletrar nosso nome.",
         "title": "2022 😻",
-        "image_alt": "Flirtual em 2022"
+        "image_alt": "Flirtual em 2022",
+        "image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
       },
       "2023": {
         "description": "Novo design, aplicativos móveis, e muitas melhorias atrás das cenas",
@@ -136,7 +137,10 @@
   },
   "download": {
     "title": "Baixar",
-    "best_topical_mayfly_tap": "Baixar ligado"
+    "best_topical_mayfly_tap": "Baixar ligado",
+    "platform": {
+      "side_quest": "SideQuest"
+    }
   },
   "guidelines": {
     "title": "Regras da Comunidade",
