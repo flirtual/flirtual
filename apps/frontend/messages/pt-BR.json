@@ -132,7 +132,28 @@
   },
   "inputs": {
     "privacy_select": {
-      "matches": "Apenas Matches"
+      "matches": "Apenas Matches",
+      "everyone": "Qualquer um no Flirtual",
+      "me": "Apenas eu"
+    },
+    "language_autocomplete": {
+      "placeholder": "Selecionar línguagem.",
+      "system_highlight": "{language} 📌"
+    },
+    "text": {
+      "hide": "Ocultar",
+      "show": "Mostrar"
+    },
+    "switch": {
+      "yes": "Sim",
+      "no": "Não"
+    },
+    "select": {
+      "placeholder": "Selecione uma opção"
+    },
+    "country_select": {
+      "placeholder": "Selecionar país.",
+      "system_highlight": "{country} 📌"
     }
   },
   "download": {
@@ -241,6 +262,134 @@
     "strong_home_bullock_taste": "Ambos são novos na RV. Explorem juntos!",
     "fuzzy_calm_ant_nudge": "{displayName} é novo na RV. Oque acha de ajudar a explorar?",
     "early_quiet_giraffe_dine": "Não se esqueça de <settings-bio>adicionar biografia</settings-bio>!",
-    "smart_just_scallop_reside": "Discord verificado"
+    "smart_just_scallop_reside": "Discord verificado",
+    "spare_short_tapir_dream": "Compartilhar",
+    "merry_yummy_bulldog_quell": "Conta bloqueada",
+    "mealy_any_javelina_hint": "Copiar Link",
+    "polite_spicy_hamster_create": "Desbloquear",
+    "top_sweet_macaw_pet": "Desbloqueou {displayName}",
+    "neat_lower_shell_tend": "Reportar Perfil",
+    "brief_lower_crow_hug": "Ativo hoje",
+    "flat_cool_larva_roar": "Recentemente ativo",
+    "teary_new_meerkat_scoop": "Bloquear",
+    "dialogs": {
+      "block": {
+        "title": "Bloquear {displayName}?",
+        "description": "Isso vai evitar que vocês vejam o perfil ou enviem mensagens um para o outro. Essa ação é permanente e não poderá ser desfeita depois.",
+        "cancel": "Cancelar",
+        "block": "Bloquear",
+        "swift_loved_albatross_leap": "Bloqueou {displayName}"
+      },
+      "report": {
+        "title": "Reportar Perfil",
+        "day_front_cat_cry": "Obrigado por ajudar a manter o Flirtual seguro! Revisaremos sua denúncia assim que possível.",
+        "active_any_jannes_type": "Detalhes",
+        "jolly_moving_stork_love": "Nos conte um pouco sobre este incidente (opicional)",
+        "ok_gross_ostrich_work": "Envie fotos ou outra evidência (opcional)",
+        "formal_nimble_dog_reside": "Anexos",
+        "cancel": "Cancelar",
+        "report": "Reportar"
+      }
+    },
+    "busy_tiny_hamster_support": "Reportar",
+    "icy_stock_herring_burn": "Veja meu perfil do Flirtual!",
+    "giant_strong_thrush_startle": "Você bloqueou <highlight>{displayName}</highlight>, você não poderá mais ver o perfil dele(a), e ele(a) não verá o seu também."
+  },
+  "navigation": {
+    "updates": "Atualizações",
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "premium": "Premium",
+    "discord": "Discord",
+    "reports": "Reportes",
+    "search": "Buscar",
+    "stats": "Estatísticas",
+    "unsudo": "Unsudo",
+    "get_app": "Baixar Aplicativo"
+  },
+  "errors": {
+    "must_be_greater_than_or_equal_to_{number}": "Não pode ser menos de {number}.",
+    "prospect_not_found": "Erro desfazendo, perdão!",
+    "must_be_less_than_{number}": "Deve ser menor que {number}.",
+    "user_not_found": "Usuário não encontrado (blocked, disabled account or suspended).",
+    "image_not_found": "Imagem não encontrada",
+    "state_mismatch": "Não foi possível conectar, tente novamente.",
+    "passkey_login_failed": "Login com chave de passe falhou, por favor tente novamente ou use outro método.",
+    "password_does_not_match": "Nova senha não corresponde, porfavor confira sua senha e tente denovo.",
+    "is_still_associated_with_this_entry": "Ainda associado com essa entrada.",
+    "are_still_associated_with_this_entry": "Ainda associado com essa entrada.",
+    "should_be_{count}_character(s)": "Deve ser {count, plural, =0 {empty}, =1 {um caractere mais} other {# caracteres mais}}.",
+    "should_have_{count}_item(s)": "{count, plural, =0 {Deve ser vazio}, =1 {Porfavor selecione um item}, other {Porfavor selecione # items}}.",
+    "should_be_at_least_{count}_character(s)": "{count, plural, =0 {Obrigatório}, =1 {Obrigatório}, other {Deve possuir ao menos # caracteres}}.",
+    "should_have_at_least_{count}_item(s)": "{count, plural, =0 {Obrigatório}, =1 {Obrigatório}, other {Porfavor selecione ao menos # items}}.",
+    "should_be_at_most_{count}_character(s)": "{count, plural, =0 {Deve ser vazio}, =1 {Não pode ter mais de 1 caracter}, other {Não pode ter mais de # caracteres}}.",
+    "should_have_at_most_{count}_item(s)": "{count, plural, =0 {Deve ser vazio}, =1 {Não pode ter mais de 1 item}, other {Não pode ter mais de # items}}.",
+    "must_be_greater_than_{number}": "Deve ser maior que {number}.",
+    "must_be_less_than_or_equal_to_{number}": "Não pode ser mais de {number}.",
+    "must_be_equal_to_{number}": "Precisa ser {number}.",
+    "invalid_credentials": "Email ou senha incorretos, Porfavor tente resetar sua senha.",
+    "invalid_credentials_complex": "Email ou senha incorretos, porfavor tente <reset>resetar sua senha</reset> ou <help>checar error comuns</help>.",
+    "invalid_password": "Senha incorreta, porfavor tente novamente ou deslogue e reinicie sua senha.",
+    "account_banned": "Você foi suspenso, por favor cheque seu email para detalhes e instruções de apelo.",
+    "provider_not_found": "Não foi possivel conectar conta (unknown provider).",
+    "authorize_not_supported": "Não foi possível conectar conta (unsupported provider).",
+    "conversation_not_found": "Conversa não encontrada (user unmatched, blocked, disabled account or suspended).",
+    "missing_permission": "Você não possui permissão para fazer essa ação.",
+    "report_not_found": "Reporte não encontrado.",
+    "subscription_not_found": "Erro cancelando inscrição, por favor nos contate para assistência.",
+    "cannot_block_user": "Erro bloqueando usuário (disabled account or suspended).",
+    "cannot_unblock_user": "Erro desbloqueando usuário (disabled account or suspended).",
+    "profile_not_blocked": "Erro desbloqueando usuário (already unblocked).",
+    "cant_be_blank": "Não pode ser vazio.",
+    "has_already_been_taken": "Já em relacionamento com outro usuário.",
+    "is_invalid": "Inválido.",
+    "must_be_accepted": "Obrigatório.",
+    "has_invalid_format": "Formato inválido.",
+    "has_an_invalid_entry": "Entrada inválida.",
+    "is_reserved": "Reservado.",
+    "does_not_match_confirmation": "Não corresponde."
+  },
+  "early_north_alpaca_sail": "Atualizar Flirtual?",
+  "arrangeable_image": {
+    "glad_giant_mantis_win": "Deletar imagem",
+    "soft_curly_pony_advise": "Mover imagem"
+  },
+  "icy_sound_emu_kiss": "Recomendamos sempre atualizar para a última versão do Flirtual para uma melhor experiência. Você pode encontrar bugs se continuar usando esta versão.",
+  "aware_such_leopard_fond": "Não obrigado",
+  "dialogs": {
+    "trust_and_safety": {
+      "jolly_nimble_crow_taste": "Contate-nos",
+      "title": "Confiança & Segurança",
+      "acknowledge": "Concordo",
+      "lofty_day_snail_treasure": "Regras da Comunidade"
+    }
+  },
+  "busy_direct_cockroach_hush": "Contate-nos",
+  "footer": {
+    "support": "Suporte",
+    "guidelines": "Regras da Comunidade",
+    "events": "Eventos",
+    "feedback": "Feedback",
+    "status": "Status",
+    "about": "Sobre",
+    "press": "Imprensa",
+    "branding": "Branding",
+    "terms": "Termos de Serviço",
+    "privacy": "Política de Privacidade",
+    "developers": "Desenvolvedores",
+    "copyright": "© {year} Flirtual"
+  },
+  "patient_gross_herring_grow": "Atualizar",
+  "loose_fancy_marlin_zip": "Copiado para área de transferência",
+  "nimble_solid_spider_fond": "Premium",
+  "home_seemly_larva_flip": "NOVO",
+  "learn_more": "Saiba mais",
+  "deft_raw_cod_fond": "Feito com <action>{heart}</action> na RV",
+  "banners": {
+    "finish_profile": "<link>Complete seu perfil</link> para as pessoas te verem e darem match!",
+    "confirm_email": "<link>Confirme seu email</link> para as pessoas te verem e darem match!",
+    "mobile": "<link>Baixar aplicativo móvel</link>",
+    "language": "Línguagem atual é {current}, mas sua língua de preferência é <link>{preferred}</link>.",
+    "translating": "Você ativou as teclas de tradução, conteúdo pode ser incompreensível até você  <link>desativa-las</link>."
   }
 }
