@@ -3,5 +3,38 @@
     "ase": {
       "name": "Língua Americana de Sinais"
     }
+  },
+  "ban-reason": {
+    "tUaxdXYAcyeb3G4Qc7gNLh": {
+      "details": "Perfil de spam. O conteúdo do seu perfil foi marcado como spam. Você pode responder esse email para apelar seu banimento e ter sua conta desbanida. Podemos pedir que você atualize seu perfil com mais informação."
+    },
+    "nupwCrjodUd4ZvPizEBc8L": {
+      "details": "Solicitando. Você não pode solicitar dinheiro no Flirtual. Você pode responder este email para apelar seu banimento e remover qualquer solicitação do seu perfil para desbanir sua conta.",
+      "name": "Solicitando dinheiro"
+    },
+    "VgQw2st96dZKZotsnYUEaN": {
+      "details": "Evasão de Ban. Pareçe que você criou uma nova conta ou ignorou um banimento anterior. Se você gostaria de apelar seu ban anterior e ter sua conta desbanida, responda ao email do ban original.",
+      "name": "Evasão de Ban"
+    },
+    "muXMqNjneKnwqxT8nqcy4d": {
+      "details": "Menor de idade. Você deve ter no mínimo 18 anos para usar Flirtual. Se você acredita que foi banido por erro, você pode responder este email para apelar seu ban e enviaremos um link seguro para verificar sua idade através de um documento para desbanir sua conta.",
+      "name": "Menor de idade"
+    },
+    "hLwvdpKQiofFTCDHox75SY": {
+      "details": "Conteúdo odioso. Mensagens e conteúdo de ódio não são bem-vindos no Flirtual. Se você acredita que este ban foi um erro responda este email para apelar e ter sua conta desbanida.",
+      "name": "Conteúdo Odioso"
+    },
+    "EVU7hHnv5u6eQwRBTW8aYU": {
+      "details": "Nudez ou conteúdo adulto. Imagens de conteúdo adulto ou texto excessivamente obsceno não são permitidos no Flirtual. Você pode responder este email para apelar seu ban e atualizar seu perfil para desbanir sua conta.",
+      "name": "Conteúdo Adulto"
+    },
+    "WSD2yPcs64FB27qpb4AGuT": {
+      "details": "Identidade Falsa. Seu perfil aparenta estar se passando por outra pessoa. Se você acredita ter sido banido por erro responda este email para apelar e ter sua conta desbanida.",
+      "name": "Identidade Falsa"
+    },
+    "dWDkcjmXQEQRVoXmNkutAB": {
+      "name": "Assédio",
+      "details": "Assédio. Se você gostaria de apelar seu banimento, por favor responda este email. Por favor note que não podemos compartilhar detalhes de denúncias de moderação, caso alguma tenha sido feita."
+    }
   }
 }
