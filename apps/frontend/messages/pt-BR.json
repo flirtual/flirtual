@@ -1,1 +1,22 @@
-{}
+{
+  "meta": {
+    "green_plain_mongoose_lend": "O primeiro applicativo de encontros do VR. Junte-se a milhares de encontros no VR em applicativos como VRChat.",
+    "knotty_direct_mongoose_bend": "Encontre novas pessoas na Realidade Virtual! Flirtual te ajuda ir à encontros no VR e VRChat."
+  },
+  "about": {
+    "image_alt": "Foto do time do Flirtual no VRChat",
+    "team": {
+      "roles": {
+        "moderator": "Moderador",
+        "event_host": "Hospedeiro de Eventos",
+        "social": "Sociais",
+        "community_advisor": "Conselheiro de Comunidade",
+        "katten": "Conselheiro de Comunidade",
+        "syrmor": "Conselheiro de Marketing",
+        "faxmashine": "Criador de Mundos do VRChat",
+        "juice": "Criador de Avatares de VRChat"
+      }
+    },
+    "title": "Sobre nós"
+  }
+}
