@@ -6,7 +6,8 @@
   },
   "ban-reason": {
     "tUaxdXYAcyeb3G4Qc7gNLh": {
-      "details": "Perfil de spam. O conteúdo do seu perfil foi marcado como spam. Você pode responder esse email para apelar seu banimento e ter sua conta desbanida. Podemos pedir que você atualize seu perfil com mais informação."
+      "details": "Perfil de spam. O conteúdo do seu perfil foi marcado como spam. Você pode responder esse email para apelar seu banimento e ter sua conta desbanida. Podemos pedir que você atualize seu perfil com mais informação.",
+      "name": "Spam"
     },
     "nupwCrjodUd4ZvPizEBc8L": {
       "details": "Solicitando. Você não pode solicitar dinheiro no Flirtual. Você pode responder este email para apelar seu banimento e remover qualquer solicitação do seu perfil para desbanir sua conta.",
@@ -49,11 +50,14 @@
       "details": "Conteúdo ilegal. Seu perfil ou atividade aparenta violar as leis Canadenses ou locais. Se você acredita ter sido banido por erro, responda este email para apelar."
     },
     "Lfb829DEo36f54Uu3H3ybj": {
-      "details": "Golpe, malware, ou links maliciosos. Seu perfil aparenta conter links ou atividade maliciosa. Se você acredita ter sido banido por erro, poderá apelar respondendo este email",
+      "details": "Golpe, malware, ou links maliciosos. Seu perfil aparenta conter links ou atividade maliciosa. Se você acredita ter sido banido por erro, poderá apelar respondendo este email.",
       "name": "Golpe, malware, ou links maliciosos"
     },
     "8P2pi5232LTpzGTDWkBprc": {
       "name": "Outro"
+    },
+    "jBVZ29YcQ2dDXbURb6AxXk": {
+      "name": "Anúnciando"
     }
   },
   "delete-reason": {
