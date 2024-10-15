@@ -341,5 +341,137 @@
     "FDiw6WUePpHDckmVG5coKF": {
       "name": "Experimentalista"
     }
+  },
+  "gender": {
+    "2ETbJJJ3shADLphvncUwSL": {
+      "name": "Mulher Cis",
+      "definition": "Uma mulher que se identifica com o gênero definido no nascimento."
+    },
+    "879KtanHc548synGhcNE7J": {
+      "definition": "Alguém que não se identifica ou vivencia nenhum gênero.",
+      "name": "Agênero"
+    },
+    "CHkgoEoKzTSeVaLVByviBZ": {
+      "definition": "Alguém de gênero masculino que foi designado como mulher no nascimento.",
+      "name": "Transmasculino"
+    },
+    "fAPzVgy7VyGPgAPhkwSkSU": {
+      "definition": "Alguém que não concorda com as expectativas ou normas sociais de gênero.",
+      "name": "Inconformidade de Gênero"
+    },
+    "GJitRtRoYWT6DfVasptK7N": {
+      "definition": "Um homem cujo gênero corresponde ao sexo definido no nascimento.",
+      "name": "Homem Cis"
+    },
+    "hv43aTXJZjMHfXRXvTcYiH": {
+      "name": "Ele/Dele"
+    },
+    "PFEmTKdmxAoPuxttYPwFZb": {
+      "definition": "Alguém que se identifica com múltiplos ou todos os gêneros.",
+      "name": "Pangênero"
+    },
+    "QwXvxjisosKeTP97ouczoZ": {
+      "definition": "Alguém cujo gênero está fora do binário de gêneros.",
+      "name": "Não-binário"
+    },
+    "tpkW7r8PZ2RUuYGUSYi82N": {
+      "name": "Mulher",
+      "plural": "Mulheres"
+    },
+    "w3t9h2SyNhr2rBWouXim8c": {
+      "name": "Intersexo",
+      "definition": "Alguém que nasce com características sexuais que não se enquadram nas definições típicas de corpo masculino ou feminino."
+    },
+    "XTVsHQMWXiJGEc5xCf7RUb": {
+      "definition": "Um homem que foi designado como mulher no nascimento.",
+      "name": "Homem Trans"
+    },
+    "YBkoUyfKJd6jJGwbekY3HN": {
+      "name": "Bigênero",
+      "definition": "Alguém que vivencia duas identidades de gênero."
+    },
+    "zMta3qtGyqW4hFdcDFUHik": {
+      "definition": "Alguém cujo gênero está fora do binário tradicional de gêneros.",
+      "name": "Gêneroqueer"
+    },
+    "aKEzfuPY6TaMkmnugQWLUd": {
+      "name": "Gênero Fluido",
+      "definition": "Alguém cujo gênero varia ao longo do tempo."
+    },
+    "mosDhQUt8JGumiup4yQWbZ": {
+      "name": "Ela/Dela"
+    },
+    "pAzAxxF4UYr3qN6F4tPYec": {
+      "name": "Elu/Delu"
+    },
+    "rhw3rcbheU7vc9vcSy6W6V": {
+      "plural": "Homens",
+      "name": "Homem"
+    },
+    "RdMpwqWGydDgk9X2u32BBW": {
+      "name": "Andrógine",
+      "definition": "Alguém com uma combinação de traços masculinos e femininos."
+    },
+    "wJdnfUvuvACEWRSV4KBdzS": {
+      "name": "Hijra",
+      "definition": "Um terceiro gênero nas culturas do sul da Ásia."
+    },
+    "tyrdBY4Rbfitznr65hpRPR": {
+      "name": "Transgênero",
+      "definition": "Alguém que se identifica com gênero que não corresponde ao sexo atribuído no nascimento."
+    },
+    "HWte4cB6TUzzXZoJeuxJuf": {
+      "definition": "Uma mulher que foi designada como homem no nascimento.",
+      "name": "Mulher Trans"
+    },
+    "rGFyY9WbvBBJSUAUpY5iUE": {
+      "definition": "Alguém com identidade de gênero feminina que foi designada homem no nascimento.",
+      "name": "Transfeminino"
+    },
+    "JL8AaDCJMVApbEuAfwG86Y": {
+      "definition": "Um terceiro gênero nas culturas indígenas norte-americanas.",
+      "name": "Dois Espíritos"
+    },
+    "jAL62ePbibxaG4FPu7S8LG": {
+      "name": "Outro"
+    }
+  },
+  "interest": {
+    "2gBkrkuQN6PjTEeexms7nf": {
+      "name": "Programação ⌨️"
+    },
+    "2oxVb7fbNxvorrXZk7bgv3": {
+      "name": "Neutral good"
+    },
+    "5XrzAmQSCM2onKyJBjbr6j": {
+      "name": "Corrida 🏃"
+    },
+    "6PobkXZnqFst2ZAZQWeS2D": {
+      "name": "Natureza 🌲"
+    },
+    "5FcuhkdAngzscEJK4DiWPo": {
+      "name": "Natação 🏊"
+    },
+    "4THEgH4BLaftoQWAhYaFoM": {
+      "name": "Simuladores de Direção 🏎️"
+    },
+    "4q9oopWm8XNXoX7z4RnQE8": {
+      "name": "ESTP (Empreendedor)"
+    },
+    "4UEEGvGvhyBTRWKUjVAMMe": {
+      "name": "Explorar mundos 🗺️"
+    },
+    "4CgRETn3q2iwk3h8fzWzSQ": {
+      "name": "INFP (Mediador)"
+    },
+    "2Wz4xFdHgY8PZf2mkqWpwa": {
+      "name": "Filosofia"
+    },
+    "47vHoxVTRx5ZuV7aJmxm5N": {
+      "name": "Teatro 🎭"
+    },
+    "658ffCwnSFxaY3hQSDvkGW": {
+      "name": "Certificado para usar empilhadeiras 🦺"
+    }
   }
 }
