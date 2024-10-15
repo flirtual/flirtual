@@ -30,8 +30,8 @@
       "name": "Conteúdo Adulto"
     },
     "WSD2yPcs64FB27qpb4AGuT": {
-      "details": "Identidade Falsa. Seu perfil aparenta estar se passando por outra pessoa. Se você acredita ter sido banido por erro responda este email para apelar e ter sua conta desbanida.",
-      "name": "Identidade Falsa"
+      "details": "Personificação. Seu perfil aparenta estar se passando por outra pessoa. Se você acredita ter sido banido por erro responda este email para apelar e ter sua conta desbanida.",
+      "name": "Personificação"
     },
     "dWDkcjmXQEQRVoXmNkutAB": {
       "name": "Assédio",
@@ -57,7 +57,12 @@
       "name": "Outro"
     },
     "jBVZ29YcQ2dDXbURb6AxXk": {
-      "name": "Anúnciando"
+      "name": "Anúnciando",
+      "details": "Anúnciando. Seu perfil aparenta ser focado em promover uma conta ou serviço externo. Você é livre para mencionar suas redes sociais ou trabalho no seu perfil, mas o propósito principal do seu perfil deve ser encontrar amigos ou pares. Você pode responder esse email para apelar seu ban e atualizar seu perfil para desbanir sua conta."
+    },
+    "5H9nMhQacZBD9Zomu7Tbt9": {
+      "details": "Conta duplicada. Criar múltiplas contas no Flirtual não é permitido. Essa conta foi desativada mas você ainda pode usar sua outra conta. Se você acredita ter sido banido por erro, ou gostaria de ter a outra conta desativada ao invés desta, porfavor responda esse email.",
+      "name": "Conta duplicada"
     }
   },
   "delete-reason": {
@@ -74,13 +79,267 @@
       "name": "Sem pares suficientes"
     },
     "TaqMV38Taxdz7ZNxEG4oEU": {
-      "name": "Sem \"dates\" suficientes"
+      "name": "Sem encontros suficientes"
     },
     "3fm9o3onrqPiwKhceexRMZ": {
       "name": "Experiência ruim com matches"
     },
     "EkWwgZavkCxJhRgKJF3yRn": {
       "name": "Prefiro outros aplicativos de namoro em pessoa"
+    },
+    "6R764W55PvotuTz3BBRHXD": {
+      "name": "Baixa taxa de matches/qualidade de perfis"
+    },
+    "J3vVp9PWZQi5cEuk8G8wij": {
+      "name": "Erros técnicos"
+    },
+    "sQcEHRLCffbLfcgM4zAELf": {
+      "name": "Estou tomando uma pausa"
+    },
+    "g4hPG9psXVxzKa4Tr9GjDN": {
+      "name": "Outra"
+    }
+  },
+  "game": {
+    "JSyJfiSSzqm232nKidEDog": {
+      "name": "Beat Saber"
+    },
+    "LuMaVcT8Xveqhbt4ZRPe8Q": {
+      "name": "Rec Room"
+    },
+    "eo2DSet8HVzi8RAHQSZooF": {
+      "name": "Pavlov"
+    },
+    "7EuDksBCySX5vnxzQLKx3e": {
+      "name": "ChilloutVR"
+    },
+    "HF4tppeRywmq9oWsR2GyMg": {
+      "name": "POPULATION: ONE"
+    },
+    "ffrwQHFv2kN4uRRJCLYqVb": {
+      "name": "Contractors"
+    },
+    "T65Eophn8t8ukfig9S3JdD": {
+      "name": "Neos"
+    },
+    "zk8azbDyuxAXKmB7n78CC3": {
+      "name": "STAR WARS: Squadrons"
+    },
+    "pMVwYrn8byRREG5zGxHfVC": {
+      "name": "Elite Dangerous"
+    },
+    "gNZZfj4cpvTBD2wyMKisDQ": {
+      "name": "War Thunder"
+    },
+    "vKBHWZMpiBHjcwGyjKDm88": {
+      "name": "Gun Raiders"
+    },
+    "KtMvXwxoazna8HPayXUqMA": {
+      "name": "Walkabout Mini Golf"
+    },
+    "yJeA9FYJmykkceZPnZKdET": {
+      "name": "Zero Caliber VR"
+    },
+    "atanSTGZ9KMUtfkneQCrWa": {
+      "name": "iRacing"
+    },
+    "6XHd53DTXKRJejTLkZCkES": {
+      "name": "PokerVR"
+    },
+    "GhScLf7QXNJa2GrZjWVk49": {
+      "name": "Bigscreen"
+    },
+    "3nzcXDoMySRrPn6jHC8n3o": {
+      "name": "VRChat"
+    },
+    "MhWAgbFzmusLJyAdtSXfXV": {
+      "name": "Phasmophobia"
+    },
+    "d3ZV6rendJA86ejpCSaHBK": {
+      "name": "Minecraft VR"
+    },
+    "tEFPjkby9U6ZiTBkNeAqwA": {
+      "name": "Roblox"
+    },
+    "oMVF6HtJ9NM39TgtduA36W": {
+      "name": "The Forest"
+    },
+    "G9qwehfhnKZx2pE3WFwQw2": {
+      "name": "Zenith: Nexus"
+    },
+    "uZMiTn4iySMVugZPDiK5LR": {
+      "name": "Onward"
+    },
+    "bHF6sv68wCUEQ6VNEYEvGQ": {
+      "name": "Gorilla Tag"
+    },
+    "9NttFgjqMQMCvxiRTNz99W": {
+      "name": "Among Us VR"
+    },
+    "mHF6zQZ3tbVe9iYjGuzAPK": {
+      "name": "PAYDAY 2"
+    },
+    "b3YVqwSVNMcsh2xUPSd9hU": {
+      "name": "PokerStars VR"
+    },
+    "YChvDcFrBL2FjUYRs8Kn5E": {
+      "name": "Tabletop Simulator"
+    },
+    "mkyAHUgKDWFiqkZcgZD6pS": {
+      "name": "Horizon Worlds"
+    },
+    "6DjtoKvDStyCEJBWdjDnva": {
+      "name": "A Township Tale"
+    },
+    "ACUnhMdbAtXCVPJmEsfqMY": {
+      "name": "Assetto Corsa"
+    },
+    "tNGaLaE29HH3jTDa9PTvJE": {
+      "name": "Arizona Sunshine"
+    },
+    "yf4g49maWEZTnBAKwsEFSX": {
+      "name": "Pavlov Shack"
+    },
+    "GeUXPSsyL2sxwjrBfWUaHf": {
+      "name": "Real VR Fishing"
+    },
+    "esVH3qS2SfDBjrkwr7gkN9": {
+      "name": "Inside the Backrooms"
+    },
+    "Uzpbh2WhLAdc7pGGLMNHnU": {
+      "name": "Cook-Out"
+    },
+    "SGRV8jPo3rPqMcHZYhjEJf": {
+      "name": "Multiverse"
+    },
+    "hDwNqLH89jVE5SeeHKQpXR": {
+      "name": "SCP: Labrat"
+    },
+    "p5YpamzGR5NfmvWWESpL6S": {
+      "name": "Demeo"
+    },
+    "bys8eVjiZjsuD3oBGeQ5Bb": {
+      "name": "DEVOUR"
+    },
+    "ny8xSj6mJUGz7zwJREHvod": {
+      "name": "Escape the Backrooms"
+    },
+    "o3SZXkUK5EZ4vECSriB4U7": {
+      "name": "vTime"
+    },
+    "ibNMSB3mTjSqA4yVh424BG": {
+      "name": "Drunkn Bar Fight"
+    },
+    "bgxJhCTVuYKkmxMYwx4MSF": {
+      "name": "Ghosts of Tabor"
+    }
+  },
+  "prompt": {
+    "WZygBQGJYXzez6K66JYcuE": {
+      "name": "Meu medo mais irracional"
+    },
+    "mLL9t4DgPHTNRsa8aVNbsR": {
+      "name": "Se eu tivesse que comer apensa uma coisa o resto da vida, seria"
+    },
+    "HHrtwjS3BUvdGoyQMJeZvh": {
+      "name": "Meu mundo favorito do VRChat"
+    },
+    "x5XHpp7uDA4Y3aws7v4WGK": {
+      "name": "Eu penso muito sobre"
+    },
+    "g8KyzzfF9ijBSCoPJuvHX2": {
+      "name": "Eu sou obcecado em"
+    },
+    "tEUfrkPqK47zjhcJKoRvhh": {
+      "name": "O segredo para me conhecer é"
+    },
+    "c9ztgC7hXX47zNRLNMZHca": {
+      "name": "Eu quero alguém que"
+    },
+    "rnQjiqXivKanoxFtGi6RS8": {
+      "name": "Juntos poderíamos"
+    },
+    "JyC9xq83f47wfDTVEh77yC": {
+      "name": "Estou procurando por"
+    },
+    "JgCFt5P7ZvSt8Tor9NbkMB": {
+      "name": "Minha coisa favorita de se fazer no VR"
+    },
+    "aqXFM7oU7FsXhFnJ2AaVsg": {
+      "name": "Meu jogo favorito"
+    },
+    "VW97RnUAmtUQTzEhCJbxC8": {
+      "name": "Eu acabei de descobrir que"
+    },
+    "esvDHHBdB4wow5YofJT9pJ": {
+      "name": "Eu escuto esse albúm no repetir"
+    },
+    "DcowtBMp6ZU5jHPWt3rhNe": {
+      "name": "Meu filme favorito é"
+    },
+    "JLiCKV2g295AG5GYuH5vQM": {
+      "name": "Meu personagem fictício favorito"
+    },
+    "NEGzuX2TMdtxqVkb4xrvDm": {
+      "name": "Opnião impopular, mas"
+    },
+    "s5U6p73oVaym6ujZq3doy4": {
+      "name": "Eu não vou parar de falar sobre"
+    },
+    "CxdN69Xv6M9BPsDXJGTCHA": {
+      "name": "Eu nunca"
+    }
+  },
+  "platform": {
+    "6BdtcWSEHNwX6ba9nzd2Yc": {
+      "name": "Desktop"
+    },
+    "n6sSShVCXahjazwqEraKCG": {
+      "name": "PlayStation VR"
+    },
+    "aNGgneQH5YX4HyWpNEUpmQ": {
+      "name": "Outro VR"
+    },
+    "UpyGwuCHANjYmM2P269dFm": {
+      "name": "Quest Link"
+    },
+    "RNaigbGdB7H4ZMw5c8ysbi": {
+      "name": "Meta Quest"
+    },
+    "pzkBdEYqgAZiSEBZAcJMPZ": {
+      "name": "Haptic suit"
+    },
+    "c255sGSiJpMNnm6NTUcvx6": {
+      "name": "Apple Vision"
+    },
+    "d52VH6CyRaVPQvAwoStEoY": {
+      "name": "SteamVR"
+    },
+    "MLWTjDZEuacyr2qwbXEw4K": {
+      "name": "Full-body tracking"
+    },
+    "fyBa2tUpgEgqBPda4BpXAE": {
+      "name": "VR de Celular"
+    },
+    "WQVnXwQzfThHr7yczTjm3C": {
+      "name": "Windows Mixed Reality"
+    },
+    "qhAm6Z9kGRP5opGfnrVYda": {
+      "name": "Oculus Rift"
+    },
+    "x5T9enPhP8WpYwnoottGDL": {
+      "name": "Esteira de Locomoção"
+    },
+    "m4S2N4Jn2f3WDbJm7bcbgQ": {
+      "name": "Tracking facial/olhos"
+    },
+    "FEX8jjr4P9aeBurRUTLhU7": {
+      "name": "Pico"
+    }
+  },
+  "kink": {
+    "FDiw6WUePpHDckmVG5coKF": {
+      "name": "Experimentalista"
     }
   }
 }
