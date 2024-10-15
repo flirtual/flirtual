@@ -1,7 +1,49 @@
 {
   "language": {
     "ase": {
-      "name": "Língua Americana de Sinais"
+      "name": "Línguagem de sinais Americana"
+    },
+    "bfi": {
+      "name": "Linguagem de sinais Britânica"
+    },
+    "fsl": {
+      "name": "Linguagem de sinais Francesa"
+    },
+    "csl": {
+      "name": "Linguagem de sinais Chinesa"
+    },
+    "gsg": {
+      "name": "Linguagem de sinais Alemã"
+    },
+    "dse": {
+      "name": "Linguagem de sinais Holandesa"
+    },
+    "inl": {
+      "name": "Linguagem de sinais Indonésia"
+    },
+    "kvk": {
+      "name": "Línguagem de sinais Coreana"
+    },
+    "mfs": {
+      "name": "Línguagem de sinais Mexicana"
+    },
+    "psr": {
+      "name": "Línguagem de sinais Portuguesa"
+    },
+    "bzs": {
+      "name": "Linguagem de sinais Brasileira"
+    },
+    "ins": {
+      "name": "Línguagem de sinais Indo-Paquistanesa"
+    },
+    "ssp": {
+      "name": "Línguagem de sinais Espanhola"
+    },
+    "rsl": {
+      "name": "Línguagem de sinais Russa"
+    },
+    "jsl": {
+      "name": "Línguagem de sinais Japonesa"
     }
   },
   "ban-reason": {
@@ -288,6 +330,12 @@
     },
     "CxdN69Xv6M9BPsDXJGTCHA": {
       "name": "Eu nunca"
+    },
+    "VaCimF6SdZQxj2nAUDAiRY": {
+      "name": "Aposto que não consegue"
+    },
+    "Hbemf67DabFCSCxGVMBxzg": {
+      "name": "Um objetivo de vida meu é"
     }
   },
   "platform": {
@@ -331,7 +379,7 @@
       "name": "Esteira de Locomoção"
     },
     "m4S2N4Jn2f3WDbJm7bcbgQ": {
-      "name": "Tracking facial/olhos"
+      "name": "Tracking de olhos/facial"
     },
     "FEX8jjr4P9aeBurRUTLhU7": {
       "name": "Pico"
@@ -340,6 +388,33 @@
   "kink": {
     "FDiw6WUePpHDckmVG5coKF": {
       "name": "Experimentalista"
+    },
+    "ANgPHfEKZqZZUspmgfKjdf": {
+      "name": "Exibicionista"
+    },
+    "9civt22SpMr7z4nuPcuL3V": {
+      "name": "Sádico"
+    },
+    "7WBnwThpTkEHyQHDZTbw47": {
+      "name": "Presa"
+    },
+    "nSPurHtFp8dpHKvW4Ux9Q9": {
+      "name": "Caçador"
+    },
+    "yamRiwkspejx4mnzbtMdxN": {
+      "name": "Garoto/Garota"
+    },
+    "HEPqnrrPsMqx9nQvDk5rHT": {
+      "name": "Masoquista"
+    },
+    "pnebwXNPvGr56PEZwSRbHi": {
+      "name": "Escravo"
+    },
+    "9mbQ4hxFEMBL4bHVYomPz3": {
+      "name": ""
+    },
+    "cKzdEwXmCY3naeYdHuowJ7": {
+      "name": ""
     }
   },
   "gender": {
@@ -441,7 +516,7 @@
       "name": "Programação ⌨️"
     },
     "2oxVb7fbNxvorrXZk7bgv3": {
-      "name": "Neutral good"
+      "name": ""
     },
     "5XrzAmQSCM2onKyJBjbr6j": {
       "name": "Corrida 🏃"
@@ -472,6 +547,615 @@
     },
     "658ffCwnSFxaY3hQSDvkGW": {
       "name": "Certificado para usar empilhadeiras 🦺"
+    },
+    "7MxTQSH57TKECXfFJXjVea": {
+      "name": "Alma velha"
+    },
+    "7N7jNvobkTyCBG9PWvcRUm": {
+      "name": "Tempo de qualidade ⏳"
+    },
+    "9zSDJJgBFsgxjHGYCcEQ43": {
+      "name": "Comida 🍕"
+    },
+    "BmuNHSVwKnyyVMUqEMqpYg": {
+      "name": "Piloto de Mechas 🤖"
+    },
+    "bSH9xxw4iBP736fUjxeMrX": {
+      "name": "Criador de Mundos 🛠️"
+    },
+    "b65XzJUEmhkGcs4X6HtQvD": {
+      "name": "Ser DJ 🎧"
+    },
+    "BMkKqLcXLZ7g77u47mHnza": {
+      "name": "Literalmente só vibando"
+    },
+    "fEnnW4XeNnNbqReCryY58R": {
+      "name": "Música 🎵"
+    },
+    "g4VXtqWN8TKiCTxzBcWeRU": {
+      "name": "Explorador da mente 🧠"
+    },
+    "gD4Tp9YNXnyTctMQwGaijR": {
+      "name": "Animais"
+    },
+    "gjdYnF6jWBxtweAB3YmcLU": {
+      "name": "Clássico 🎻"
+    },
+    "GzLxoRQCmGWBjABNrCZWiD": {
+      "name": "Jogos de esporte ⚽️"
+    },
+    "bz9jVSncDmgYzdBdg98NV3": {
+      "name": "Militar"
+    },
+    "crtnnE8akbJwwA9BdqUFRc": {
+      "name": "Jogos Retrô 👾"
+    },
+    "dQAeMiAqHwxcVbjHYkC6dC": {
+      "name": "Espiritual"
+    },
+    "JAsmfUmdh2uL6ZLZTWp8dF": {
+      "name": "Procurando Grupo 🎮"
+    },
+    "mpS9oivuYqhZk99Vca5dHn": {
+      "name": "Zen pra caramba 🪷"
+    },
+    "kYABzgDPzJeaU9TJez4JKc": {
+      "name": "Cancer ♋️"
+    },
+    "NMCLsa8AfCkuZBTqYSzEQm": {
+      "name": "Aprender línguas"
+    },
+    "rDDDYYEjrdUWFjgaE4NSDM": {
+      "name": "Libra ♎️"
+    },
+    "qDsrBajn8sdumFdSHNr4e2": {
+      "name": "Política"
+    },
+    "Qec82XHyZh6r2HpREWULv2": {
+      "name": "Vegano 🌱"
+    },
+    "uwhn9iPM4kntT2Bq2WDXKN": {
+      "name": "Motos 🏍️"
+    },
+    "y53Q79KXYjdqCJps7Nzn8e": {
+      "name": "Futebol americano 🏈"
+    },
+    "ZgUBUVj26rHvpPyoF6TF8c": {
+      "name": "Ciência 🔬"
+    },
+    "znH7NHT6ysUrRHzVcqxNYQ": {
+      "name": "Roleplay 🎭"
+    },
+    "ZNXNaLMr85qQbKmX2TsrGQ": {
+      "name": "Arte 🎨"
+    },
+    "zqjTVmpmDLmnWs2PhXYFoG": {
+      "name": "Psicologia"
+    },
+    "PPeutfrRpwTs2v2CVNT6TR": {
+      "name": "ESTJ (Executivo)"
+    },
+    "AGheroLVRTz6DvXnDdMJh3": {
+      "name": "Buscando um terceiro"
+    },
+    "9HPT7wgAd7HJajQkAXMbrQ": {
+      "name": "Cozinhar 🍳"
+    },
+    "cqaodBdFdfeegFVzxuA3QB": {
+      "name": "Modelagem 3D"
+    },
+    "eTSWVwrcAF6tzHDPDLvJAd": {
+      "name": "Impressão 3D 🖨️"
+    },
+    "NpxR4mSbkKEo2ru79eboyS": {
+      "name": "Atos de serviço 🤝"
+    },
+    "NZjaoEMBizfYF2ScZbYAuG": {
+      "name": "Amigável à verdinha 🍁"
+    },
+    "vHGjkMhPppZ5bhh8uded4G": {
+      "name": "E s t é t i c a ✨"
+    },
+    "eGP3EZe6r5NUwfpgFc9Mv6": {
+      "name": "Sempre no modo escuro 🌚"
+    },
+    "iPWiK6ULojrRgUsMcQArYY": {
+      "name": "Alternativo 🎸"
+    },
+    "siBAM5nerfTqbBT6JCa6wf": {
+      "name": "Aventureiro"
+    },
+    "qmthjNQK6U6zxeUHWQWFEY": {
+      "name": "Aquário ♒️"
+    },
+    "8VvHQ63mBuCLdtc5bXcAdb": {
+      "name": "Cafeinado ☕️"
+    },
+    "ba58TDSPbjG9jtZixoneUn": {
+      "name": "Jogos de tabuleiro 🎲"
+    },
+    "R9vN8EaDE7xTuUFMXA4bkP": {
+      "name": "Avatares do Booth"
+    },
+    "ufVyJtRHU6RpqVjnFdsRU9": {
+      "name": "Ciclismo 🚲"
+    },
+    "wS9AhkYmx7jSgtoqwUw8oL": {
+      "name": "Basquete 🏀"
+    },
+    "7nnemBz5mR5iHZNjw8E4aB": {
+      "name": "Acampar 🏕️"
+    },
+    "Eu7WzNKBxcQKXhPWgAWAYW": {
+      "name": "Carros 🚗"
+    },
+    "F96TUKJtBt8UtbHEeDss8M": {
+      "name": "Capricórnio ♑️"
+    },
+    "nzy5prmodZfCQmkr6nMP5m": {
+      "name": "Desenhos"
+    },
+    "m9K2k5wXQrVdehe3KN9ZaY": {
+      "name": "Gatos 🐈"
+    },
+    "Hacqj4nYnvzcbCD8vxPniH": {
+      "name": "Festas 🪩"
+    },
+    "Qf69ZcHcgzrGyW8tVUSvkk": {
+      "name": "Comédia"
+    },
+    "CrvLT7p3UtXCe3ZmG8dZt7": {
+      "name": "Criador de conteúdo"
+    },
+    "GcPbtTWyfDWqVeiNLzsV7c": {
+      "name": "Concertos"
+    },
+    "cEfjsZtYLiWDSMSeg7q8V5": {
+      "name": "Dança 💃"
+    },
+    "EXYCJJeyc6JP5yKhkt2GoX": {
+      "name": "Piadas de pai"
+    },
+    "Hge2bJA39qY7XSnqqrrY9Y": {
+      "name": "Surdo"
+    },
+    "BB9qTGoqRiniinjxcy7jzn": {
+      "name": "Documentários"
+    },
+    "RjqdzibeHN5ovVcvNuneSB": {
+      "name": "Desenhar 🖋️"
+    },
+    "xXDcmmB7yrZEMWi4ZLg6z3": {
+      "name": "Cachorros 🐶"
+    },
+    "aWrMMCsArXZAbRqYqyXL8g": {
+      "name": "ESFJ (Cônsul)"
+    },
+    "BkTRV57GEQdMUuYonoo3g4": {
+      "name": "ENTJ (Comandante)"
+    },
+    "PkuUGAJvgsGnkfeMcGg56J": {
+      "name": "ENFP (Ativista)"
+    },
+    "Upgh5qK8AzorVt6rgiWTR7": {
+      "name": "ESFP (Animador)"
+    },
+    "YBGsznRconrCoTa5YbQsBW": {
+      "name": "ENTP (Inovador)"
+    },
+    "ETXYWLwrk2BQD3mpvjXaN6": {
+      "name": "Amigo de suporte emocional"
+    },
+    "FjZaJeuY5TD2KhzNB67Y5T": {
+      "name": "Eletrônico 🎛️"
+    },
+    "bR2veGptTAE4VHitxqZxJV": {
+      "name": "Jogos de luta 🥊"
+    },
+    "fZEB4pAAHbst5B5dwnCFbS": {
+      "name": "Fantasia 🐉"
+    },
+    "La4WBQ9zBc7k6VCLJgEuDD": {
+      "name": "Moda"
+    },
+    "7PSViCMY8iKswNUxAjDwiY": {
+      "name": "Gótico 🕷️"
+    },
+    "BJwi9ji9dCqrX6YwqVLb2X": {
+      "name": "Cafunés"
+    },
+    "ftwVayAr6jTqmUw8A4RWMg": {
+      "name": "Armas"
+    },
+    "Ka3JLErYVPJWHLLzQBT2WE": {
+      "name": "Caminhadas 🥾"
+    },
+    "QSS6J4qhxDDiyWrbVoHxyY": {
+      "name": "Desenvolvedor de jogos"
+    },
+    "daTRTaC6weg6cu9j6K5XZV": {
+      "name": "INFJ (Apoiador)"
+    },
+    "gAQLfYHHAQu7hhdBdBN35b": {
+      "name": "Caçar 🦌"
+    },
+    "HVQvfazU9oX6qSeM8kXvaM": {
+      "name": "Terror 👻"
+    },
+    "xY4UQxjZP8Qb4ybKTvAka9": {
+      "name": "História 📜"
+    },
+    "EMiJ5kbdhDp6QtCr3P7pBV": {
+      "name": "ISFP (Aventureiro)"
+    },
+    "K9piJDTQhCoabBZR4k6TzB": {
+      "name": "ISFJ (Defensor)"
+    },
+    "rD5R2Aqg5yVnK5QfF22R3Z": {
+      "name": "INTP (Lógico)"
+    },
+    "WN28HaENtrSDwSgKxX8Xv7": {
+      "name": "INTJ (Arquiteto)"
+    },
+    "dzBoXKdvDJ77aoh9GLnusi": {
+      "name": "ISTJ (Prático)"
+    },
+    "jaJkU3XRMqRmxGZia74XB8": {
+      "name": "ISTP (Virtuoso)"
+    },
+    "yZAPLKAMizp9ha78cErdkF": {
+      "name": "Jogos indies 🕹️"
+    },
+    "fcHJKqULdrBvrAmPF4vuV9": {
+      "name": "Leão ♌️"
+    },
+    "r9YDRMbRwSsoFybfDo6jdG": {
+      "name": "Longas caminhadas na praia 🏖️"
+    },
+    "tYzVk2i9uhMzVXuPXcXe2b": {
+      "name": "Vive no VR 🥽"
+    },
+    "fAgh4qEey9okWzNjooerLG": {
+      "name": "Meditação 🧘"
+    },
+    "J9HbxPqPYnCFPKHUyg8ece": {
+      "name": "Artes marciais 🥋"
+    },
+    "8kbF5HwfJBoBC4q324xHJT": {
+      "name": "Produção de música 🎧"
+    },
+    "Amq7oATgh6UcQx4SoeJdkD": {
+      "name": "Filmes 🍿"
+    },
+    "acyqyBz7FZQFSp8iHYWB5A": {
+      "name": "Parceiro em crime"
+    },
+    "bsKcuRDVC99WuWnBUiSEDN": {
+      "name": "Baladeiro 🎉"
+    },
+    "bTWW3iSkRQD8V3uQ9viWvN": {
+      "name": "Investigador paranormal 👻"
+    },
+    "zoEgxZ7KoBNRCrgA3XbdDA": {
+      "name": "Phantom sense"
+    },
+    "mmkY4XtSERJYxeEfdmY68D": {
+      "name": "Toque físico 🫂"
+    },
+    "PzXGL29kYUR8Tja6WQDDKT": {
+      "name": "Fotografia 📸"
+    },
+    "qUavCrMx6HrR2v5wf7stFN": {
+      "name": "Peixes ♓️"
+    },
+    "gHSLGNxhyjKKkarcNq9nBa": {
+      "name": "Sinuca🎱"
+    },
+    "is5SeEgzo3ZAH6GPTCX7ma": {
+      "name": "Religioso"
+    },
+    "M9FwNtCEQT3xUNV4EsnQ3d": {
+      "name": "Jogos de Ritmo 🎼"
+    },
+    "TuaoosdiDnHXC7FHVArkdW": {
+      "name": "Quebra-cabeças 🧩"
+    },
+    "XJUTFqrF2avzVtHMA7AGzk": {
+      "name": "Ler 📖"
+    },
+    "jEf5ZYAU7SMbteXJbQydZJ": {
+      "name": "Sagitário ♐️"
+    },
+    "Dr4VrjyyvH8kbdrozsMMFd": {
+      "name": "Cantar 🎤"
+    },
+    "EkGzXrWW5fEnC9HdJ9okWc": {
+      "name": "Linguagem de sinais"
+    },
+    "f2BCBxugmR8H3dGdrJRmpV": {
+      "name": "Tímido 🙈"
+    },
+    "k53DpziykEgW7M6engXhem": {
+      "name": "Esquiar ⛸️"
+    },
+    "o4MbotEvh3dhz2Symgvtbj": {
+      "name": "Escorpião ♏️"
+    },
+    "yNrG4wB8Et3kGTaofec3Be": {
+      "name": "Andar de skate🛹"
+    },
+    "8NWGrqWSzC5KQ6QDanNwgf": {
+      "name": "Tênis 👟"
+    },
+    "dBCYhmt2vTLfw7DNgNmP53": {
+      "name": "Dorme no VR"
+    },
+    "ibrUnfQBwhrzBdFPhxisp2": {
+      "name": "Dormir em chamada"
+    },
+    "MDRvcQGDrY6VMbaGtPk89m": {
+      "name": "Futebol ⚽️"
+    },
+    "8ioURqcYyxmHCkcyKFiub2": {
+      "name": "Jogos sociais 💬"
+    },
+    "AyaSxEYUdjX4maBsTuhxS5": {
+      "name": "Socialmente desajeitado"
+    },
+    "svS7TMjzrzjmsh2X3Qe23e": {
+      "name": "Espaço 🪐"
+    },
+    "UkC6H5qf7xGFtpueRQQWxS": {
+      "name": "Borboleta social 🦋"
+    },
+    "xLnre8baC2zsrWJog4ypjm": {
+      "name": "Fazer speedruns"
+    },
+    "gUm9n5xfnMzCVtxA9rCnLV": {
+      "name": "Estudante 🎓"
+    },
+    "NrsAVMm65UFBPsqEPkWgZT": {
+      "name": "Jogos de estratégia ♟️"
+    },
+    "VuojdaCuJQEAsPaxq26jmK": {
+      "name": "Jogos de sobrevivência 🏕️"
+    },
+    "wZBbZRUrr68X5CjVXmruKL": {
+      "name": "Esportes"
+    },
+    "Y65RLPXEzBHsnZphF84Gnc": {
+      "name": "Streamar 🎥"
+    },
+    "7mfqhCUsniXPWXa6EK7Qqh": {
+      "name": "Técnologia 💾"
+    },
+    "fe2ysuwBXcZfCbbGNhbe3L": {
+      "name": "Viajar 🧳"
+    },
+    "iXKfPBmMRxKGzNZA38g3iS": {
+      "name": "Tatuagens"
+    },
+    "j6ZmBCoKutQZ2ABFjJvZoK": {
+      "name": "Doces 🍰"
+    },
+    "UCTar6EEZJDhncJtQtAjVC": {
+      "name": "Viajante do tempo ⏳"
+    },
+    "usxHtsoFwppLo787TfBvLF": {
+      "name": "Televisão 📺"
+    },
+    "vJsJJUXQXc4c9jaaTyzmBZ": {
+      "name": "Touro ♉️"
+    },
+    "WPUHPKAHLmHw2kcbzfA9tb": {
+      "name": "Tênis 🎾"
+    },
+    "QpsRiXnBWQMG5ZYtZd8BoR": {
+      "name": "Videografia 🎥"
+    },
+    "6vPzqeBurT9AtnQcxG3knW": {
+      "name": "Voluntario🤝"
+    },
+    "Qm4yoeSbfnL9AoDZHwotWX": {
+      "name": "Nômade virtual"
+    },
+    "Uv5MM3vocd3asfdE2VErQk": {
+      "name": "Vôlei 🏐"
+    },
+    "XyLtoquzjjLdYyGHtojCo5": {
+      "name": "Dublagem 🎙️"
+    },
+    "zp25zogqt2XWNG9v2wi4ET": {
+      "name": "Virgem ♍️"
+    },
+    "nZfksPK35VkxjtjBG5De7f": {
+      "name": "Bruxaria 🧙‍♀️"
+    },
+    "uiFv8roivUuL7LFjXoPkiY": {
+      "name": "Palavras de afirmação 💬"
+    },
+    "WTw73CaXZ4AWmbiQpooJiQ": {
+      "name": "Escrever ✍️"
+    },
+    "XRjfs5BAZhgeKnofywDX8d": {
+      "name": "eSports"
+    },
+    "yfQMpqdsbfNqCKjzrJT4wR": {
+      "name": "Criador de avatares 🛠️"
+    },
+    "g2fAPyAgPKt7WaoVZYxPm2": {
+      "name": "Aviação ✈️"
+    },
+    "UPLtrF5xLGLpnfWkfv8WDg": {
+      "name": "Baseball ⚾️"
+    },
+    "Tc4uFhvgWvKjVssZhGAQuj": {
+      "name": "Ruim com direções 🧭"
+    },
+    "JTnaqV7ZtSm7ecGmk9JbUN": {
+      "name": "Xadrez ♟️"
+    },
+    "pJfikJmWtJZnfKJbNXZqnE": {
+      "name": "Relaxando igual vilão 😎"
+    },
+    "fM4o5U2ebgVDFEvsD66hEe": {
+      "name": "Parceiro de bebidas 🍻"
+    },
+    "mTwcM4tfp49ronrVRbPvVK": {
+      "name": "ENFJ (Protagonista)"
+    },
+    "BrKGJW7c8TvnQh7zxbJNuQ": {
+      "name": "Pescar 🎣"
+    },
+    "rG2FKKUdai8Gsn9U6cQp2T": {
+      "name": "Em forma 💪"
+    },
+    "jQD3WHErNsMnhtMeDgE6SE": {
+      "name": "Simuladores de avião ✈️"
+    },
+    "P8E5xJTRAgxycZMErjVMYa": {
+      "name": "Jardinagem 🪴"
+    },
+    "PAepdb7ewc4GVEnpWDCbcK": {
+      "name": "Jogar 🎮"
+    },
+    "MneeWkir8YLxVNH2BxDtKR": {
+      "name": "Gêmeos ♊️"
+    },
+    "NxJszSBMm3vkbRaZmPd2gh": {
+      "name": "Presentes 🎁"
+    },
+    "JGwyrqtUfCC7HVNZ2ot8LV": {
+      "name": "Guitarra 🎸"
+    },
+    "K9MHU3GP3kVfW8yck8ZPdg": {
+      "name": "Karaokê 🎤"
+    },
+    "jxfxsraaBHshyVCEHhk2Qg": {
+      "name": "Mistério 🔎"
+    },
+    "qjjjMrjxZHuqVMuC9ADyiZ": {
+      "name": "Mudo"
+    }
+  },
+  "interest-category": {
+    "43i5J3VsKCvU4HGRJHjehn": {
+      "name": "Tipos de personalidades"
+    },
+    "9os9Yxxr6zGR4k7kh5BKrB": {
+      "name": "Linguagem de amor"
+    },
+    "DAweztCvdXBa5cKvhgNsPY": {
+      "name": "Esportes"
+    },
+    "fQK3RUCYFW4WeSfLkzVP42": {
+      "name": "Música"
+    },
+    "hR3X5w26ba6M98fVB2kVxX": {
+      "name": "Alinhamento"
+    },
+    "TgrEr2C6DAcp69Winej5Q4": {
+      "name": "Geral"
+    },
+    "59oWHt4bZSdQ6tj8f4CWs9": {
+      "name": "Jogos"
+    },
+    "aSCFm5P7awrqNKnknWuChQ": {
+      "name": "Identidade"
+    },
+    "nFiqbX3n6aiEdKe3JbynBL": {
+      "name": "Astrologia"
+    },
+    "tmQbiXNw7d9Ys2DG9Ddg28": {
+      "name": "Gêneros de jogo"
+    }
+  },
+  "report-reason": {
+    "BtJvp62cJ5vm6CeuCPTP5H": {
+      "name": "Conteúdo ilegal"
+    },
+    "MyexHAyY8gzQjBQ6agCSx3": {
+      "name": "Golpe, malware, ou links maliciosos"
+    },
+    "9iwmQ8huhkngyY9BgLDE9W": {
+      "name": "Outro"
+    },
+    "AFe9ijRg9MYGubm2Efi4Ki": {
+      "name": "Assédio"
+    },
+    "Ec5fqqgVo5X3s4QCeFUJ6D": {
+      "name": "Personificando a mim ou outra pessoa"
+    },
+    "ymWd4JdTqpnBLmGSLmJRvY": {
+      "name": "Fotos nuas ou impróprias"
+    },
+    "L6FRU2xjUiZwHUbegAcWTa": {
+      "name": "Anúnciando ou solicitando"
+    },
+    "vTzgZw4Eexx7fehzCM9PQY": {
+      "name": "Conteúdo de automultilação"
+    },
+    "zu6HcxQxmJDDq4rmvJazkf": {
+      "name": "Usuário menor de idade"
+    },
+    "Ur6iAuTDCktZe3zZQGqtZ2": {
+      "name": "Conta de spam ou troll"
+    },
+    "Wf4t9FT7Lmvnn73KqpZGPG": {
+      "name": "Conteúdo violento ou perturbador"
+    },
+    "wFkctcaaf5B4Ef5i3ggY3G": {
+      "name": "Conteúdo odioso"
+    }
+  },
+  "sexuality": {
+    "3cWT9ob4r7Zpikkd9kVPEg": {
+      "name": "Queer",
+      "definition": "Alguém com orientação sexual não normativa."
+    },
+    "a29qas632KmMpQ8T6arLxa": {
+      "definition": "Alguém atraído por vários gêneros.",
+      "name": "Bisexual"
+    },
+    "4yJadhjWkDN6WSxbDcp33G": {
+      "definition": "Alguém que está explorando sua orientação sexual no VR ou cuja sexualidade difere no VR e pessoalmente.",
+      "name": "Experimentando no VR"
+    },
+    "gkKfqSoBJ7dUHtaKJ5Cfmk": {
+      "definition": "Alguém atraído por outras mulheres ou pessoas femininas.",
+      "name": "Lésbica"
+    },
+    "NC5wiUcxGavten9E8gw64n": {
+      "definition": "Alguém atraído por outras pessoas, independentemente do sexo.",
+      "name": "Pansexual"
+    },
+    "ndxSn4BdATmm5droBw6iQG": {
+      "name": "Homoflexível",
+      "definition": "Alguém que se sente predominantemente atraído pelo mesmo sexo, mas às vezes sente atração pelo sexo oposto."
+    },
+    "vu2pJzRmKRroA3GPZRsLxM": {
+      "definition": "Alguém que se sente predominantemente atraído pelo sexo oposto, mas às vezes sente atração pelo mesmo sexo.",
+      "name": "Heteroflexível"
+    },
+    "rN7DERN6NdNQzNQ99pQUN4": {
+      "name": "Questionando",
+      "definition": "Alguém que está examinando sua orientação sexual."
+    },
+    "t5hhQahW7HQVKnhQX7xRqn": {
+      "definition": "Alguém atraído pelo sexo oposto.",
+      "name": "Hétero"
+    },
+    "wPATvG4t9CJhW2goGmBznU": {
+      "definition": "Alguém que só sente atração sexual depois de formar um vínculo emocional com alguém.",
+      "name": "Demisexual"
+    },
+    "UxY3zSKrwKpts6cfZ3wYjM": {
+      "definition": "Alguém atraído por outras pessoas do mesmo sexo.",
+      "name": "Gay"
+    },
+    "neMSEFPb9zvFRhoZLUobW9": {
+      "definition": "Alguém que sente pouca ou nenhuma atração sexual.",
+      "name": "Asexual"
     }
   }
 }
