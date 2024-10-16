@@ -3,5 +3,13 @@
     "ase": {
       "name": "Amerikanische Gebärdensprache"
     }
+  },
+  "ban-reason": {
+    "jBVZ29YcQ2dDXbURb6AxXk": {
+      "name": "Werbung"
+    },
+    "tUaxdXYAcyeb3G4Qc7gNLh": {
+      "name": "Spam"
+    }
   }
 }
