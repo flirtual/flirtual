@@ -4,7 +4,7 @@
 #
 
 app = "flirtual"
-primary_region = "ord"
+primary_region = "iad"
 kill_signal = "SIGTERM"
 kill_timeout = 5
 

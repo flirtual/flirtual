@@ -4,7 +4,7 @@
 #
 
 app = "image-classification"
-primary_region = "ord"
+primary_region = "iad"
 
 [[restart]]
 policy = "always"
