@@ -25,7 +25,6 @@ export interface RespondProspectBody {
 	type: ProspectRespondType;
 	kind: ProspectKind;
 	mode?: ProspectKind;
-	userId: string;
 }
 
 export interface RespondProspect {
@@ -35,11 +34,10 @@ export interface RespondProspect {
 	queue: Queue;
 }
 
-export type RespondProspectResponse =
-	| RespondProspect
-	| Issue<"out_of_likes" | "out_of_passes", { resetAt: string }>
+export type QueueActionIssue =
+	| Issue<"out_of_likes" | "out_of_passes", { reset_at: string }>
 	| Issue<"already_responded">
-	| QueueIssues;
+	| QueueIssue;
 
 export interface ReverseRespondProspectBody {
 	mode: ProspectKind;
@@ -51,8 +49,8 @@ export type Queue = [
 	next: string | null
 ];
 
-export type QueueIssues = Issue<"finish_profile" | "confirm_email">;
-export type QueueResponse = Queue | QueueIssues;
+export type QueueIssue = Issue<"finish_profile" | "confirm_email">;
+export type QueueResponse = Queue | QueueIssue;
 
 export const Matchmaking = {
 	queue(kind: ProspectKind) {
@@ -66,33 +64,16 @@ export const Matchmaking = {
 			.json<QueueResponse>();
 	},
 	queueAction(body: RespondProspectBody) {
-		return api
-			.url("queue")
-			.json(body)
-			.post()
-			.error(429, (reason) => {
-				if (isWretchError(reason)) return reason.json;
-			})
-			.error(409, (reason) => {
-				if (isWretchError(reason)) return reason.json;
-			})
-			.json<RespondProspectResponse>();
+		return api.url("queue").json(body).post().json<RespondProspect>();
 	},
-	like(userId: string, kind: ProspectKind) {
-		return this.queueAction({ type: "like", kind, userId });
+	like(kind: ProspectKind = "love") {
+		return this.queueAction({ type: "like", kind });
 	},
-	pass(userId: string, kind: ProspectKind) {
-		return this.queueAction({ type: "pass", kind, userId });
+	pass(kind: ProspectKind = "love") {
+		return this.queueAction({ type: "pass", kind });
 	},
 	undo(body: ReverseRespondProspectBody) {
-		return api
-			.url("queue")
-			.json(body)
-			.delete()
-			.error(429, (reason) => {
-				if (isWretchError(reason)) return reason.json;
-			})
-			.json<RespondProspectResponse>();
+		return api.url("queue").json(body).delete().json<RespondProspect>();
 	},
 	unmatch(userId: string) {
 		return api.url("matches").query({ userId }).delete().res();

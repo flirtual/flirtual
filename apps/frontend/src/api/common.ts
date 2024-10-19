@@ -4,13 +4,10 @@ import AbortAddon from "wretch/addons/abort";
 import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
 import { unstable_noStore } from "next/cache";
-// import ms from "ms";
 
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 import { environment } from "~/const";
-import ms from "ms";
-// import { environment } from "~/const";
 
 export interface UuidModel {
 	id: string;
@@ -57,7 +54,8 @@ export const api = wretch(urls.api)
 					options.headers ??= {};
 
 					if (environment === "development")
-						// Artificially slow requests in development, ensuring we can see loading/pending states.
+						// Artificially slow requests in development, ensuring we can see
+						// loading/pending states.
 						await new Promise((resolve) =>
 							setTimeout(resolve, options.method === "GET" ? 100 : 200)
 						);
@@ -194,26 +192,31 @@ export type InvalidPropertiesIssue = Issue<
 	Record<string, Array<Issue>>
 >;
 
+export type WretchIssue<T extends Issue = Issue> = Omit<WretchError, "json"> & {
+	json: T;
+};
+
 export function isWretchError(
 	error: unknown,
 	errorType: "invalid_properties"
-): error is Omit<WretchError, "json"> & {
-	json: InvalidPropertiesIssue;
-};
-export function isWretchError(error: unknown): error is Omit<
-	WretchError,
-	"json"
-> & {
-	json: Issue;
-};
+): error is WretchIssue<InvalidPropertiesIssue>;
+export function isWretchError(error: unknown): error is WretchIssue;
+export function isWretchError(
+	error: unknown,
+	// eslint-disable-next-line @typescript-eslint/unified-signatures
+	errorType?: string
+): error is WretchIssue;
 export function isWretchError(
 	error: unknown,
 	errorType?: string
-): error is Omit<WretchError, "json"> & {
-	json: Issue;
-} {
+): error is WretchIssue {
 	return (
 		error instanceof WretchError &&
 		(errorType === undefined || error.json?.error === errorType)
 	);
+}
+
+if (environment === "development") {
+	// @ts-expect-error
+	globalThis.api = api;
 }

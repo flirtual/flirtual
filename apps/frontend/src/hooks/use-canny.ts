@@ -1,95 +1,89 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
-import { displayName } from "~/api/user";
+import { displayName, type User } from "~/api/user";
 import { urls } from "~/urls";
 import { resolveTheme } from "~/theme";
+import { cannyAppId } from "~/const";
 
 import { useCurrentUser } from "./use-session";
 import { useTheme } from "./use-theme";
 import { useScreenBreakpoint } from "./use-screen-breakpoint";
 
 declare global {
-	interface Window {
-		Canny: {
-			(...arguments_: Array<unknown>): void;
-			q: Array<unknown>;
-		};
-	}
+	// eslint-disable-next-line no-var
+	var Canny: {
+		(...arguments_: Array<unknown>): void;
+		q: Array<unknown>;
+	};
 }
 
-const appId = "640785c1023e50169ab5c94a";
+if (typeof globalThis.Canny !== "function") {
+	globalThis.Canny = Object.assign(
+		function () {
+			// eslint-disable-next-line prefer-rest-params
+			globalThis.Canny.q.push(arguments);
+		},
+		{ q: [] }
+	);
+}
 
-let loaded = false;
-
-export function useCanny() {
-	const user = useCurrentUser();
-	const { sessionTheme } = useTheme();
-	const isMobile = !useScreenBreakpoint("desktop");
-
-	const loadCanny = useCallback(() => {
-		if (loaded) return;
+const load = () =>
+	new Promise<void>((resolve, reject) => {
+		if (document.querySelector("#canny-jssdk")) return resolve(undefined);
 
 		const script = document.createElement("script");
 		script.src = "https://canny.io/sdk.js";
 		script.id = "canny-jssdk";
 		script.async = true;
 
+		script.addEventListener("load", () => resolve(undefined));
+		script.addEventListener("error", reject);
+
 		document.body.append(script);
-		loaded = true;
-	}, []);
+	});
 
-	useEffect(() => {
-		if (typeof window.Canny !== "function") {
-			window.Canny = Object.assign(
-				function () {
-					// eslint-disable-next-line prefer-rest-params
-					window.Canny.q.push(arguments);
-				},
-				{ q: [] }
-			);
-		}
-	}, []);
-
-	const identifyUser = useCallback(
-		(callback?: () => void) => {
-			if (user) {
-				window.Canny(
-					"identify",
-					{
-						appID: appId,
-						user: {
-							email: user.email,
-							name: displayName(user),
-							id: user.id,
-							avatarURL: urls.userAvatar(user)
-						}
-					},
-					callback
-				);
-			} else if (callback) {
-				callback();
-			}
-		},
-		[user]
+const identify = (user: User) =>
+	new Promise<void>((resolve) =>
+		Canny(
+			"identify",
+			{
+				appID: cannyAppId,
+				user: {
+					email: user.email,
+					name: displayName(user),
+					id: user.id,
+					avatarURL: urls.userAvatar(user)
+				}
+			},
+			resolve
+		)
 	);
 
-	const openFeedback = useCallback(() => {
-		loadCanny();
-		identifyUser(() => {
-			window.location.href = urls.resources.feedback;
-		});
-	}, [identifyUser, loadCanny]);
+const closeChangelog = () => Canny("closeChangelog");
 
-	const loadChangelog = useCallback(() => {
-		loadCanny();
-		identifyUser();
-		window.Canny("initChangelog", {
-			appID: appId,
+export function useCanny() {
+	const user = useCurrentUser();
+	const { sessionTheme } = useTheme();
+	const isMobile = !useScreenBreakpoint("desktop");
+
+	const openFeedback = useCallback(async () => {
+		await load();
+		if (user) await identify(user);
+
+		location.href = urls.resources.feedback;
+	}, [user]);
+
+	const openChangelog = useCallback(async () => {
+		await load();
+		if (user) await identify(user);
+
+		Canny("initChangelog", {
+			appID: cannyAppId,
 			position: isMobile ? "top" : "bottom",
 			align: "left",
 			theme: resolveTheme(sessionTheme)
 		});
-	}, [identifyUser, isMobile, loadCanny, sessionTheme]);
+	}, [user, isMobile, sessionTheme]);
 
-	return { openFeedback, loadChangelog };
+	return { openFeedback, openChangelog, closeChangelog };
 }

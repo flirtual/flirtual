@@ -58,7 +58,7 @@ export const NavigationItemProfile: FC = () => {
 	const elementReference = useRef<HTMLDivElement>(null);
 	const location = useLocation();
 	const active = urlEqual(toAbsoluteUrl(urls.user.me), location);
-	const { loadChangelog } = useCanny();
+	const { openChangelog, closeChangelog } = useCanny();
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
 	useGlobalEventListener(
@@ -69,9 +69,9 @@ export const NavigationItemProfile: FC = () => {
 	);
 
 	useEffect(() => {
-		if (visible) loadChangelog();
-		else if (typeof window.Canny === "function") window.Canny("closeChangelog");
-	}, [loadChangelog, visible]);
+		if (visible) return void openChangelog();
+		closeChangelog();
+	}, [openChangelog, closeChangelog, visible]);
 
 	const isDesktop = useScreenBreakpoint("desktop");
 

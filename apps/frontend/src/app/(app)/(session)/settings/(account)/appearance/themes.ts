@@ -15,6 +15,7 @@ export const defaultProfileColors: Record<Theme, ProfileColors> = {
 export const recommendedThemes: Array<
 	{
 		name: string;
+		description?: string;
 	} & ProfileColors
 > = [
 	{

@@ -3,17 +3,16 @@ import { unstable_serialize } from "swr";
 
 import { displayName } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
-import { ProspectActions } from "~/app/(app)/(session)/(onboarded)/browse/prospect-actions";
+import { ProspectActions } from "~/app/(app)/(session)/(onboarded)/browse/queue-actions";
 import { SWRConfig } from "~/components/swr";
 import { Attribute } from "~/api/attributes";
 import { urls } from "~/urls";
 import { userKey } from "~/hooks/use-user";
+import { attributeKey } from "~/hooks/use-attribute";
 
 import { getProfile, profileRequiredAttributes } from "./data";
 
 import type { Metadata } from "next";
-
-import { attributeKey } from "~/hooks/use-attribute";
 
 export interface ProfilePageProps {
 	params: { slug: string };
@@ -59,9 +58,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 			{!user.bannedAt &&
 				user.relationship &&
 				!user.relationship?.blocked &&
-				!user.relationship?.kind && (
-					<ProspectActions kind="love" prospect={user} />
-				)}
+				!user.relationship?.kind && <ProspectActions kind="love" />}
 		</SWRConfig>
 	);
 }

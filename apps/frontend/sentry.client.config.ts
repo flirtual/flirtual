@@ -6,6 +6,8 @@ import * as Sentry from "@sentry/nextjs";
 
 import { sentryDsn, apiUrl, siteOrigin, environment } from "~/const";
 
+console.log("Sentry DSN:", sentryDsn);
+
 Sentry.init({
 	enabled: environment !== "development",
 	dsn: sentryDsn,
@@ -24,6 +26,9 @@ Sentry.init({
 				new URL(siteOrigin).origin,
 				new URL(apiUrl).origin
 			]
+		}),
+		Sentry.feedbackIntegration({
+			autoInject: false
 		})
 	]
 });

@@ -201,8 +201,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 						id,
 						name: key,
 						onChange: (value) => {
-							const newValues = { ...values, [key]: value };
-							setValues(newValues);
+							setValues((values) => ({ ...values, [key]: value }));
 							// if (submitOnChange) void submit(newValues);
 						},
 						value

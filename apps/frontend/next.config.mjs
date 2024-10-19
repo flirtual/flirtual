@@ -25,6 +25,49 @@ let config = {
 			preventFullImport: true
 		}
 	},
+	async headers() {
+		return [
+			{
+				source: "/(.*)",
+				headers: [
+					{
+						key: "X-DNS-Prefetch-Control",
+						value: "on"
+					},
+					{
+						key: "Strict-Transport-Security",
+						value: "max-age=63072000; includeSubDomains; preload"
+					},
+					{
+						key: "X-Content-Type-Options",
+						value: "nosniff"
+					},
+					{
+						key: "Referrer-Policy",
+						value: "strict-origin-when-cross-origin"
+					},
+					{
+						key: "Permissions-Policy",
+						value: Object.entries({
+							autoplay: ["self"],
+							fullscreen: ["self"],
+							"idle-detection": ["self"],
+							"picture-in-picture": ["self"],
+							"publickey-credentials-create": ["self"],
+							"publickey-credentials-get": ["self"],
+							"web-share": ["self"],
+							camera: [],
+							microphone: [],
+							geolocation: [],
+							"browsing-topics": []
+						})
+							.map(([key, value]) => `${key}=(${value.join(" ")})`)
+							.join(", ")
+					}
+				]
+			}
+		];
+	},
 	async rewrites() {
 		return [];
 	},
@@ -136,7 +179,8 @@ let config = {
 		];
 	},
 	experimental: {
-		instrumentationHooks: true
+		instrumentationHooks: true,
+		taint: true
 	}
 };
 

@@ -2,104 +2,223 @@
 
 import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 import { Button } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
-import { ModelCard } from "~/components/model-card";
-import { environment } from "~/const";
+import { environment, gitCommitSha } from "~/const";
+import { useSession } from "~/hooks/use-session";
+import { displayName } from "~/api/user";
+import { DrawerOrDialog } from "~/components/drawer-or-dialog";
+import {
+	DialogBody,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle
+} from "~/components/dialog/dialog";
+import { InputLabel, InputTextArea } from "~/components/inputs";
+import { Form, FormButton } from "~/components/forms";
+import { FlirtualLogo } from "~/components/logo";
+import { CopyClick } from "~/components/copy-click";
 
-import { DebugInfo } from "./(public)/debugger/debug-info";
+type ErrorWithDigest = Error & { digest?: string };
 
 export default function Error({
 	error,
 	reset
 }: {
-	error: Error & { digest?: string };
+	error: ErrorWithDigest;
 	reset: () => void;
 }) {
 	const router = useRouter();
-	const [showMore, setShowMore] = useState(environment === "development");
-	useEffect(() => void Sentry.captureException(error), [error]);
+	const [session] = useSession();
+	const [addDetails, setAddDetails] = useState(false);
+
+	const eventId = useMemo(() => Sentry.captureException(error), [error]);
+	error.digest ??= "000000000";
 
 	return (
-		<ModelCard
-			branded
-			className="desktop:max-w-2xl"
-			containerProps={{ className: "flex flex-col gap-8" }}
-			title="Something went wrong!"
-			titleProps={{ className: "text-2xl" }}
-		>
-			<div className="relative flex flex-col gap-8 desktop:flex-row">
-				<Image
-					alt=""
-					className="pettable h-16 w-fit shrink-0 rotate-[10deg]"
-					height={345}
-					src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
-					width={412}
-				/>
-
-				<div className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80">
-					<div
-						className="absolute -top-5 left-9 size-5 rotate-90 bg-white-10 desktop:-left-5 desktop:top-7 desktop:rotate-0"
-						style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
-					/>
-					<p>
-						Pawdon the interruption! I must've knocked the server over and got
-						things tangled. I'm on the case with my trusty hardhat.
-					</p>
-					<p>Give us a moment to sort this out!</p>
-					<p className="max-w-sm whitespace-pre-wrap font-mono text-xs">
-						{error.digest && <>ID: {error.digest} </>}
-						<button
-							className="opacity-75 hover:opacity-100"
-							type="button"
-							onClick={() => setShowMore((showMore) => !showMore)}
-						>
-							(show {showMore ? "less" : "more"})
-						</button>
-					</p>
-				</div>
+		<>
+			<div className="flex min-h-screen w-full items-center justify-center opacity-75">
+				<FlirtualLogo className="w-1/2 max-w-lg animate-pulse" />
 			</div>
-			{showMore && (
-				<div className="flex flex-col gap-4">
-					<span className="whitespace-pre-wrap break-all font-mono text-xs">
-						{error.message}
-					</span>
-					<DebugInfo />
-				</div>
-			)}
-			<div className="flex gap-2">
-				<Button className="w-fit" size="sm" onClick={reset}>
-					Try again
-				</Button>
-				<Button
-					className="w-fit"
-					kind="secondary"
-					size="sm"
-					onClick={() => router.back()}
-				>
-					Go back
-				</Button>
-			</div>
-			<div className="mt-auto flex flex-col">
-				<div className="flex gap-2">
-					<InlineLink highlight={false} href={urls.resources.networkStatus}>
-						Network Status
-					</InlineLink>
-					{" • "}
-					<InlineLink highlight={false} href={urls.socials.discord}>
-						Discord
-					</InlineLink>
-					{" • "}
-					<InlineLink highlight={false} href={urls.socials.twitter}>
-						Twitter
-					</InlineLink>
-				</div>
-				<footer>© {new Date().getFullYear()} Flirtual</footer>
-			</div>
-		</ModelCard>
+			<DrawerOrDialog
+				open
+				className="desktop:max-w-lg"
+				onOpenChange={(open) => {
+					if (open) return;
+					reset();
+				}}
+			>
+				<>
+					<DialogHeader>
+						<DialogTitle>It looks like we&apos;re having issues</DialogTitle>
+						<DialogDescription className="sr-only" />
+					</DialogHeader>
+					<DialogBody className="flex flex-col">
+						{addDetails ? (
+							<>
+								<p>Add some details to help us fix the issue faster.</p>
+								<div className="flex flex-col whitespace-pre-wrap font-mono text-xs">
+									<span className="mb-2 font-bold">Error details</span>
+									{error.digest && (
+										<span>
+											<span className="font-bold">Digest</span>: {error.digest}
+										</span>
+									)}
+									{eventId && (
+										<span>
+											<span className="font-bold">Event</span>: {eventId}
+										</span>
+									)}
+									<span className="mt-2">{error.message}</span>
+								</div>
+								<Form
+									className="flex flex-col gap-4"
+									fields={{ message: "" }}
+									onSubmit={async ({ message }) => {
+										console.log("Sending feedback", { message, eventId });
+										console.log(
+											"Sentry.captureFeedback",
+											Sentry.captureFeedback(
+												{
+													message,
+													associatedEventId: eventId,
+													...(session
+														? {
+																// We aren't respecting the user's privacy opt-out, because the user
+																// is explicitly opting in to provide feedback.
+																email: session?.user?.email,
+																name: displayName(session?.user)
+															}
+														: {})
+												},
+												{
+													includeReplay: true,
+													originalException: error
+												}
+											)
+										);
+									}}
+								>
+									{({ FormField }) => (
+										<>
+											<FormField name="message">
+												{({ props, labelProps }) => (
+													<>
+														<InputLabel {...labelProps}>
+															What happened?
+														</InputLabel>
+														<InputTextArea rows={5} {...props} />
+													</>
+												)}
+											</FormField>
+											<div className="flex gap-2">
+												<FormButton
+													className="w-fit"
+													kind="secondary"
+													size="sm"
+												>
+													Submit
+												</FormButton>
+												<Button
+													className="w-fit px-2"
+													kind="tertiary"
+													size="sm"
+													onClick={() => setAddDetails(false)}
+												>
+													View issue
+												</Button>
+											</div>
+										</>
+									)}
+								</Form>
+							</>
+						) : (
+							<>
+								<CopyClick value={eventId}>{eventId}</CopyClick>
+								<div className="relative flex flex-col gap-8 desktop:flex-row">
+									<Image
+										priority
+										alt=""
+										className="pettable h-16 w-fit shrink-0 rotate-[10deg]"
+										height={345}
+										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
+										width={412}
+									/>
+									<motion.div
+										animate={{ scale: 1, opacity: 1 }}
+										className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80"
+										initial={{ scale: 0.8, opacity: 0.5 }}
+									>
+										<div
+											className="absolute -top-5 left-9 size-5 rotate-90 bg-white-10 desktop:-left-5 desktop:top-7 desktop:rotate-0"
+											style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
+										/>
+										<p>
+											You found a bug! We&apos;re sorry for the inconvenience.
+											Our team has been notified and will fix it as soon as
+											possible.
+										</p>
+										<div className="flex max-w-sm flex-col whitespace-pre-wrap font-mono text-xs">
+											{error.digest && <span>Digest: {error.digest}</span>}
+											{eventId && <span>Event: {eventId}</span>}
+										</div>
+									</motion.div>
+								</div>
+								<div className="flex gap-2">
+									<Button className="w-fit" size="sm" onClick={reset}>
+										Try again
+									</Button>
+									<Button
+										className="w-fit"
+										kind="secondary"
+										size="sm"
+										onClick={() => router.back()}
+									>
+										Go back
+									</Button>
+									<Button
+										className="w-fit px-2"
+										kind="tertiary"
+										size="sm"
+										onClick={() => setAddDetails((addDetails) => !addDetails)}
+									>
+										Add details
+									</Button>
+								</div>
+							</>
+						)}
+						<div className="mt-auto flex flex-col">
+							<div className="flex gap-2">
+								<InlineLink
+									highlight={false}
+									href={urls.resources.networkStatus}
+								>
+									Network Status
+								</InlineLink>
+								{" • "}
+								<InlineLink highlight={false} href={urls.socials.discord}>
+									Discord
+								</InlineLink>
+								{" • "}
+								<InlineLink highlight={false} href={urls.socials.twitter}>
+									Twitter
+								</InlineLink>
+							</div>
+							<footer>
+								© {new Date().getFullYear()} Flirtual{" "}
+								<span className="text-sm opacity-75">
+									{gitCommitSha?.slice(0, 6)} ({environment})
+								</span>
+							</footer>
+						</div>
+					</DialogBody>
+				</>
+			</DrawerOrDialog>
+		</>
 	);
 }

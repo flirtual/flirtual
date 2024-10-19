@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 import { Hash } from "lucide-react";
 import { type FC, useState } from "react";
+import { flushSync } from "react-dom";
 
 import { InputLabel } from "~/components/inputs";
 import { PreferenceThemes } from "~/api/user/preferences";
@@ -79,43 +80,29 @@ const ReccommendedProfileThemes: FC = () => {
 
 	return (
 		<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
-			<button
-				className="flex flex-col"
-				type="button"
-				onClick={() => {
-					color_1.props.onChange(defaultTheme.color_1);
-					color_2.props.onChange(defaultTheme.color_2);
-				}}
-			>
-				<span>
-					Flirtual{" "}
-					<span className="text-sm text-black-50 vision:text-white-40 dark:text-white-40">
-						default
-					</span>
-				</span>
-				<div
-					className={twMerge(
-						"h-8 w-full rounded-md",
-						color_1.props.value === defaultTheme.color_1 &&
-							color_2.props.value === defaultTheme.color_2 &&
-							"focused border-2"
-					)}
-					style={{
-						backgroundImage: `linear-gradient(to right, ${defaultTheme.color_1}, ${defaultTheme.color_2})`
-					}}
-				/>
-			</button>
-			{recommendedThemes.map((theme) => (
+			{[
+				{ name: "Flirtual", description: "default", ...defaultTheme },
+				...recommendedThemes
+			].map((theme) => (
 				<button
 					className="flex flex-col"
 					key={theme.name}
 					type="button"
 					onClick={() => {
-						color_1.props.onChange(theme.color_1);
-						color_2.props.onChange(theme.color_2);
+						flushSync(() => {
+							color_1.props.onChange(theme.color_1);
+							color_2.props.onChange(theme.color_2);
+						});
 					}}
 				>
-					<span>{theme.name}</span>
+					<div className="flex w-fit items-baseline gap-2">
+						<span>{theme.name}</span>
+						{theme.description && (
+							<span className="text-sm text-black-50 vision:text-white-40 dark:text-white-40">
+								{theme.description}
+							</span>
+						)}
+					</div>
 					<div
 						className={twMerge(
 							"h-8 w-full rounded-md",

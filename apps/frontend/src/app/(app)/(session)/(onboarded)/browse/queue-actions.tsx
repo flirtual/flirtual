@@ -1,6 +1,12 @@
 "use client";
 
-import { type FC, use, useCallback, useEffect, useMemo } from "react";
+import {
+	type Dispatch,
+	type FC,
+	type SetStateAction,
+	useCallback,
+	useEffect
+} from "react";
 import { Undo2, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import ms from "ms";
@@ -8,6 +14,7 @@ import { InAppReview } from "@capacitor-community/in-app-review";
 import useMutation from "swr/mutation";
 import { match, P } from "ts-pattern";
 import { useRouter } from "next/navigation";
+import { flushSync } from "react-dom";
 
 import { Button, ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
@@ -28,7 +35,9 @@ import {
 	Matchmaking,
 	type ProspectKind,
 	type ProspectRespondType,
-	type RespondProspectResponse
+	type Queue,
+	type QueueActionIssue,
+	type RespondProspect
 } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
@@ -39,6 +48,10 @@ import { newConversationId } from "~/utilities";
 
 import { Countdown } from "./countdown";
 
+import type { WretchIssue } from "~/api/common";
+import type { Key } from "swr";
+import type { QueueAnimationDirection } from "./queue";
+
 const Key = (props: { label: string }) => {
 	return (
 		<kbd className="mb-0.5 inline-block size-7 rounded-md bg-white-20 pt-0.5 text-center font-nunito font-bold text-black-60 shadow-[0_1px_1px_2px_rgba(255,255,255,0.75)] dark:bg-black-60 dark:text-white-20 dark:shadow-[0_1px_1px_2px_rgba(0,0,0,0.65)]">
@@ -47,12 +60,10 @@ const Key = (props: { label: string }) => {
 	);
 };
 
-export const _ProspectActions: FC<{
-	userId: string | null;
+export const _QueueActions: FC<{
 	kind: ProspectKind;
-	likesLeft?: boolean;
-	passesLeft?: boolean;
-}> = ({ userId, kind: mode }) => {
+	setAnimationDirection?: Dispatch<SetStateAction<QueueAnimationDirection>>;
+}> = ({ kind: mode, setAnimationDirection }) => {
 	const [session] = useSession();
 
 	useEffect(() => {
@@ -78,22 +89,18 @@ export const _ProspectActions: FC<{
 	useDefaultTour();
 
 	const { data: queue } = useQueue(mode);
-	const { trigger, reset, data } = useMutation(
+	const { trigger, reset, data, error } = useMutation<
+		RespondProspect | undefined,
+		WretchIssue<QueueActionIssue>,
+		ReturnType<typeof queueKey>,
+		{
+			type: ProspectRespondType | "undo";
+			kind: ProspectKind;
+		},
+		Queue | undefined
+	>(
 		queueKey(mode),
-		async (
-			_,
-			{
-				arg: { type, kind }
-			}: {
-				arg: {
-					type: ProspectRespondType | "undo";
-					kind: ProspectKind;
-				};
-			}
-		) => {
-			if (!userId) return;
-			window.scrollTo({ top: 0, behavior: "smooth" });
-
+		async (_, { arg: { type, kind } }) => {
 			if (type === "undo") {
 				return Matchmaking.undo({
 					mode
@@ -101,7 +108,6 @@ export const _ProspectActions: FC<{
 			}
 
 			return Matchmaking.queueAction({
-				userId,
 				kind,
 				mode,
 				type
@@ -111,60 +117,42 @@ export const _ProspectActions: FC<{
 			throwOnError: false,
 			revalidate: false,
 			populateCache: (value) => {
+				console.log("populateCache", value);
 				if (value && "queue" in value) return value.queue;
 			}
 		}
 	);
 
+	const optimisticMove = (direction: QueueAnimationDirection) => {
+		return (value?: Queue): Queue => {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+			if (setAnimationDirection)
+				flushSync(() => setAnimationDirection(direction));
+
+			if (!value) return [null, null, null];
+
+			return direction === "backward"
+				? [null, value[0], value[1]]
+				: [value[1], value[2], null];
+		};
+	};
+
 	const like = (kind: ProspectKind = "love") =>
 		trigger(
 			{ type: "like", kind },
-			{
-				optimisticData: (_value) => {
-					const value = _value as unknown as RespondProspectResponse;
-
-					if (value && Array.isArray(value)) {
-						const newValue = [value[1], value[2], null];
-						return newValue as unknown as RespondProspectResponse;
-					}
-
-					return value;
-				}
-			}
+			{ optimisticData: optimisticMove("forward") }
 		);
 
 	const pass = () =>
 		trigger(
 			{ type: "pass", kind: mode },
-			{
-				optimisticData: (_value) => {
-					const value = _value as unknown as RespondProspectResponse;
-
-					if (value && Array.isArray(value)) {
-						const newValue = [value[1], value[2], null];
-						return newValue as unknown as RespondProspectResponse;
-					}
-
-					return value;
-				}
-			}
+			{ optimisticData: optimisticMove("forward") }
 		);
 
 	const undo = () =>
 		trigger(
 			{ type: "undo", kind: mode },
-			{
-				optimisticData: (_value) => {
-					const value = _value as unknown as RespondProspectResponse;
-
-					if (value && Array.isArray(value)) {
-						const newValue = [null, value[0], value[1]];
-						return newValue as unknown as RespondProspectResponse;
-					}
-
-					return value;
-				}
-			}
+			{ optimisticData: optimisticMove("backward") }
 		);
 
 	useGlobalEventListener(
@@ -185,15 +173,30 @@ export const _ProspectActions: FC<{
 		)
 	);
 
+	console.log(error?.json);
+
 	return (
 		<>
-			{match(data)
-				.with({ match: true }, ({ matchKind, userId }) => (
+			{match({ data, error })
+				.with({ data: { match: true } }, ({ data: { matchKind, userId } }) => (
 					<MatchDialog kind={matchKind} userId={userId} onClose={reset} />
 				))
 				.with(
-					{ error: P.union("out_of_likes", "out_of_passes") },
-					({ error, details: { resetAt } }) => (
+					{
+						error: {
+							json: {
+								error: P.union("out_of_likes", "out_of_passes")
+							}
+						}
+					},
+					({
+						error: {
+							json: {
+								error,
+								details: { reset_at }
+							}
+						}
+					}) => (
 						<DrawerOrDialog
 							open
 							onOpenChange={(open) => {
@@ -232,7 +235,7 @@ export const _ProspectActions: FC<{
 													</p>
 												)}
 												<p className="font-semibold">New profiles in</p>
-												<Countdown date={resetAt} onComplete={reset} />
+												<Countdown date={reset_at} onComplete={reset} />
 											</div>
 										</div>
 										<div className="flex flex-col gap-2">
@@ -258,95 +261,96 @@ export const _ProspectActions: FC<{
 					)
 				)
 				.otherwise(() => null)}
-			<div className="h-[5.5rem] w-full desktop:h-0">
-				<div className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+3.375rem),4.5rem)] left-0 flex w-full flex-col items-center justify-center gap-3 px-2 pb-4 vision:bottom-2 desktop:bottom-0 desktop:py-8">
-					<div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-xl py-2 text-white-10 desktop:gap-3">
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<button
-									className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1"
-									disabled={!Array.isArray(queue) || !queue[0]}
-									id="undo-button"
-									type="button"
-									onClick={undo}
-								>
-									<Undo2 className="size-7" strokeWidth={3} />
-								</button>
-							</TooltipTrigger>
-							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-								<span className="pt-1">Undo</span>
-								<Key label="H" />
-							</TooltipContent>
-						</Tooltip>
-						<div className="flex flex-row items-center gap-1.5 desktop:gap-3">
-							{mode === "love" && (
+			{Array.isArray(queue) && (
+				<div className="h-[5.5rem] w-full desktop:h-0">
+					<div className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+3.375rem),4.5rem)] left-0 z-20 flex w-full flex-col items-center justify-center gap-3 px-2 pb-4 vision:bottom-2 desktop:bottom-0 desktop:py-8">
+						<div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-xl py-2 text-white-10 desktop:gap-3">
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<button
+										className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:brightness-50"
+										disabled={!Array.isArray(queue) || !queue[0]}
+										id="undo-button"
+										type="button"
+										onClick={undo}
+									>
+										<Undo2 className="size-7" strokeWidth={3} />
+									</button>
+								</TooltipTrigger>
+								<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+									<span className="pt-1">Undo</span>
+									<Key label="H" />
+								</TooltipContent>
+							</Tooltip>
+							<div className="flex flex-row items-center gap-1.5 desktop:gap-3">
+								{mode === "love" && (
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<button
+												className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-50"
+												id="like-button"
+												type="button"
+												onClick={() => like()}
+											>
+												<HeartIcon
+													className="w-[2.125rem] shrink-0"
+													gradient={false}
+												/>
+											</button>
+										</TooltipTrigger>
+										<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+											<span className="pt-1">Like</span>
+											<Key label="J" />
+										</TooltipContent>
+									</Tooltip>
+								)}
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<button
-											className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-50"
-											id="like-button"
+											className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-50"
+											id="friend-button"
 											type="button"
-											onClick={() => like()}
+											onClick={() => like("friend")}
 										>
-											<HeartIcon
+											<PeaceIcon
 												className="w-[2.125rem] shrink-0"
 												gradient={false}
 											/>
 										</button>
 									</TooltipTrigger>
 									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-										<span className="pt-1">Like</span>
-										<Key label="J" />
+										<span className="pt-1">Homie</span>
+										<Key label={mode === "love" ? "K" : "J"} />
 									</TooltipContent>
 								</Tooltip>
-							)}
+							</div>
 							<Tooltip>
 								<TooltipTrigger asChild>
 									<button
-										className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-50"
-										id="friend-button"
+										className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:brightness-50"
+										id="pass-button"
 										type="button"
-										onClick={() => like("friend")}
+										onClick={pass}
 									>
-										<PeaceIcon
-											className="w-[2.125rem] shrink-0"
-											gradient={false}
-										/>
+										<X className="size-7" strokeWidth={3} />
 									</button>
 								</TooltipTrigger>
 								<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-									<span className="pt-1">Homie</span>
-									<Key label={mode === "love" ? "K" : "J"} />
+									<span className="pt-1">Pass</span>
+									<Key label="L" />
 								</TooltipContent>
 							</Tooltip>
 						</div>
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<button
-									className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:brightness-50"
-									id="pass-button"
-									type="button"
-									onClick={pass}
-								>
-									<X className="size-7" strokeWidth={3} />
-								</button>
-							</TooltipTrigger>
-							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-								<span className="pt-1">Pass</span>
-								<Key label="L" />
-							</TooltipContent>
-						</Tooltip>
 					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 };
 
-export const ProspectActions = dynamic(
-	() => Promise.resolve(_ProspectActions),
-	{ ssr: false }
-);
+export const QueueActions = dynamic(() => Promise.resolve(_QueueActions), {
+	ssr: false
+});
 
 const MatchDialog: FC<{
 	userId: string;

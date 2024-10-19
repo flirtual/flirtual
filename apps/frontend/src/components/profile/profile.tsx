@@ -113,7 +113,7 @@ export function Profile(props: ProfileProps) {
 						)}
 					</div>
 				</ProfileImageDisplay>
-				<div className="h-2 bg-brand-gradient desktop:hidden" />
+				<div className="h-1 shrink-0 bg-brand-gradient desktop:hidden" />
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} user={user} />
@@ -179,7 +179,10 @@ export function Profile(props: ProfileProps) {
 					) : null}
 					{user.profile.biography ? (
 						<Html className="text-xl">
-							{user.profile.biography.replaceAll(/(<p><br \/><\/p>){2,}?/g, "")}
+							{user.profile.biography.replaceAll(
+								/(<p>(<br\s?\/?>)+<\/p>){2,}?/g,
+								""
+							)}
 						</Html>
 					) : myProfile ? (
 						<span className="text-xl italic dark:text-white-20">

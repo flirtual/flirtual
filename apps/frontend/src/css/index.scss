@@ -5,6 +5,8 @@
 * {
   min-width: 0;
   -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  user-drag: none;
 }
 
 *:not(.unhide-scrollbar) {

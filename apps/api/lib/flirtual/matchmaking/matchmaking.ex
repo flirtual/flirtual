@@ -90,9 +90,9 @@ defmodule Flirtual.Matchmaking do
       DateTime.compare(reset_at, DateTime.utc_now()) == :lt
   end
 
-  def queue_information(%User{} = user, kind) do
-    {:ok, existing_next_prospects} = next_prospects(user, kind)
-    fields = get_queue_fields(user.profile, kind)
+  def queue_information(%User{} = user, mode) do
+    {:ok, existing_next_prospects} = next_prospects(user, mode)
+    fields = get_queue_fields(user.profile, mode)
     profiles_seen = user.likes_count + user.passes_count
 
     if(
@@ -109,11 +109,11 @@ defmodule Flirtual.Matchmaking do
     else
       {:ok, prospect_ids} =
         if(existing_next_prospects == [],
-          do: compute_next_prospects(user, kind),
+          do: compute_next_prospects(user, mode),
           else: {:ok, existing_next_prospects}
         )
 
-      {:ok, previous} = previous_prospect(user, kind)
+      {:ok, previous} = previous_prospect(user, mode)
 
       {:ok,
        [
@@ -129,11 +129,9 @@ defmodule Flirtual.Matchmaking do
       Prospect
       |> where(profile_id: ^user.id, kind: ^kind, completed: true)
       |> order_by(asc: :score)
-      # |> select([prospect], prospect.target_id)
       |> limit(1)
       |> Repo.one()
 
-    log(:info, ["previous", user.id, kind], prospect)
     {:ok, prospect}
   end
 
@@ -146,7 +144,6 @@ defmodule Flirtual.Matchmaking do
       |> limit(2)
       |> Repo.all()
 
-    log(:info, ["existing", user.id, kind], prospects)
     {:ok, prospects}
   end
 
@@ -357,15 +354,18 @@ defmodule Flirtual.Matchmaking do
   def reduce_kind(a, b) when a === :friend or b === :friend, do: :friend
   def reduce_kind(_, _), do: :love
 
-  def respond_profile(opts \\ []) do
+  def respond(opts \\ []) do
     user = Keyword.fetch!(opts, :user)
-    target = Keyword.fetch!(opts, :target)
 
     type = Keyword.fetch!(opts, :type)
     types = if type == :like, do: :likes, else: :passes
 
     kind = Keyword.get(opts, :kind, :love)
-    mode = Keyword.get(opts, :mode, :love)
+    mode = Keyword.get(opts, :mode, kind)
+
+    {:ok, next} = next_prospects(user, mode)
+    target_id = Keyword.get(opts, :target_id) || Enum.at(next, 0)
+    target = Keyword.get(opts, :target) || User.get(target_id)
 
     queue_keys = queue_fields(mode)
     existing_fields = get_queue_fields(user.profile, mode)
@@ -397,7 +397,8 @@ defmodule Flirtual.Matchmaking do
         {:error, :out_of_passes, fields.reset_at}
       else
         Repo.transaction(fn repo ->
-          with {_, _} <-
+          with %User{} <- target,
+               {_, _} <-
                  Prospect
                  |> where(profile_id: ^user.id, target_id: ^target.id)
                  |> Repo.update_all(set: [completed: true]),

@@ -8,12 +8,11 @@ import { SWRConfig } from "~/components/swr";
 import { User } from "~/api/user";
 import { userKey } from "~/hooks/use-user";
 import { Attribute } from "~/api/attributes";
+import { attributeKey } from "~/hooks/use-attribute";
 
 import { profileRequiredAttributes } from "../[slug]/data";
 
 import { Queue } from "./queue";
-
-import { attributeKey } from "~/hooks/use-attribute";
 
 interface BrowsePageProps {
 	searchParams: { kind?: string };

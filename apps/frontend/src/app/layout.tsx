@@ -6,9 +6,10 @@ import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
 import { headers } from "next/headers";
 import { preconnect } from "react-dom";
+import { Montserrat, Nunito } from "next/font/google";
 
-import { apiOrigin, apiUrl, siteOrigin } from "~/const";
-import { urls } from "~/urls";
+import { apiOrigin, siteOrigin } from "~/const";
+import { imageOrigins, urls } from "~/urls";
 import { resolveTheme } from "~/theme";
 import { ToastProvider } from "~/hooks/use-toast";
 import { SessionProvider } from "~/components/session-provider";
@@ -24,7 +25,6 @@ import { InternationalizationProvider } from "~/hooks/use-internationalization";
 import { PreferenceThemes, type PreferenceTheme } from "~/api/user/preferences";
 import { Authentication } from "~/api/auth";
 
-import { fontClassNames } from "./fonts";
 import { ClientScripts } from "./client-scripts";
 
 import type { Metadata, Viewport } from "next";
@@ -94,12 +94,19 @@ const platforms: Record<string, DevicePlatform> = {
 	"mac os": "apple"
 };
 
+const montserrat = Montserrat({
+	variable: "--font-montserrat",
+	subsets: ["latin"]
+});
+const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
+
+const fontClassNames = twMerge(montserrat.variable, nunito.variable);
+
 export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
 	preconnect(apiOrigin);
-	preconnect("https://pfp.flirtu.al");
-	preconnect("https://pfpup.flirtu.al");
+	imageOrigins.map((origin) => preconnect(origin));
 
 	const session = await Authentication.getOptionalSession();
 

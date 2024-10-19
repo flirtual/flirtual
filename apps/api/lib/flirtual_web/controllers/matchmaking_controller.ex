@@ -50,56 +50,59 @@ defmodule FlirtualWeb.MatchmakingController do
     )
   end
 
-  def response(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => mode}) do
+  def response(conn, params) do
     user = conn.assigns[:session].user
-    target = Users.get(user_id)
 
-    if is_nil(target) or Policy.cannot?(conn, :read, target) do
-      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
+    # %{"type" => type, "kind" => kind, "mode" => mode}
+    type = Map.get(params, "type", "like")
+    kind = Map.get(params, "kind", "love")
+    mode = Map.get(params, "mode", kind)
+
+    target_id = Map.get(params, "user_id")
+    target = if(is_nil(target_id), do: nil, else: Users.get(target_id))
+
+    with {:ok, value} <-
+           Matchmaking.respond(
+             user: user,
+             target: target,
+             type: to_atom(type, :like),
+             kind: to_atom(kind, :love),
+             mode: to_atom(mode, :love)
+           ),
+         {:ok, queue} <-
+           Matchmaking.queue_information(user, to_atom(mode, :love)) do
+      conn |> json(value |> Map.put(:queue, queue))
     else
-      with {:ok, value} <-
-             Matchmaking.respond_profile(
-               user: user,
-               target: target,
-               type: to_atom(type, :like),
-               kind: to_atom(kind, :love),
-               mode: to_atom(mode, :love)
-             ),
-           {:ok, queue} <-
-             Matchmaking.queue_information(user, to_atom(mode, :love)) do
-        conn |> json(value |> Map.put(:queue, queue))
-      else
-        {:error, :out_of_likes, reset_at} ->
-          {:error,
-           {:too_many_requests, :out_of_likes,
-            %{
-              reset_at: reset_at,
-              headers: [
-                {"retry-after", DateTime.diff(reset_at, DateTime.utc_now())}
-              ]
-            }}}
+      {:error, :out_of_likes, reset_at} ->
+        {:error,
+         {:too_many_requests, :out_of_likes,
+          %{
+            reset_at: reset_at,
+            headers: [
+              {"retry-after", DateTime.diff(reset_at, DateTime.utc_now())}
+            ]
+          }}}
 
-        {:error, :out_of_passes, reset_at} ->
-          {:error,
-           {:too_many_requests, :out_of_passes,
-            %{
-              reset_at: reset_at,
-              headers: %{
-                {"retry-after", DateTime.diff(reset_at, DateTime.utc_now())}
-              }
-            }}}
+      {:error, :out_of_passes, reset_at} ->
+        {:error,
+         {:too_many_requests, :out_of_passes,
+          %{
+            reset_at: reset_at,
+            headers: %{
+              {"retry-after", DateTime.diff(reset_at, DateTime.utc_now())}
+            }
+          }}}
 
-        {:error, %Ecto.Changeset{errors: [user_id: {"already_responded", _}]}} ->
-          {:error, {:conflict, :already_responded}}
+      {:error, %Ecto.Changeset{errors: [user_id: {"already_responded", _}]}} ->
+        {:error, {:conflict, :already_responded}}
 
-        reason ->
-          reason
-      end
+      reason ->
+        reason
     end
   end
 
-  def response(conn, %{"user_id" => user_id, "type" => type, "kind" => kind}),
-    do: response(conn, %{"user_id" => user_id, "type" => type, "kind" => kind, "mode" => kind})
+  def response(conn, %{"type" => type, "kind" => kind}),
+    do: response(conn, %{"type" => type, "kind" => kind, "mode" => kind})
 
   def undo_response(conn, %{"mode" => mode}) do
     user = conn.assigns[:session].user

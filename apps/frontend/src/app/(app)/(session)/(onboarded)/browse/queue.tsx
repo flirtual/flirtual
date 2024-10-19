@@ -1,30 +1,29 @@
 "use client";
 
-import * as ReactDOM from "react-dom";
 import { preload } from "swr";
-import { Suspense, useEffect, type FC } from "react";
+import { Suspense, useState, type FC } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { Profile } from "~/components/profile/profile";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
-import { Button } from "~/components/button";
-import { displayName, User } from "~/api/user";
-import { userFetcher, userKey } from "~/hooks/use-user";
-import { apiUrl } from "~/const";
-import { urls } from "~/urls";
 
 import {
 	ConfirmEmailError,
 	FinishProfileError,
 	OutOfProspectsError
 } from "./out-of-prospects";
-import { ProspectActions } from "./prospect-actions";
+import { ProspectActions } from "./queue-actions";
 
 import type { ProspectKind } from "~/api/matchmaking";
+
+export type QueueAnimationDirection = "forward" | "backward";
 
 export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const [session] = useSession();
 	const { data: queue } = useQueue(kind);
+	const [animationDirection, setAnimationDirection] =
+		useState<QueueAnimationDirection>("forward");
 
 	if (!session) return null;
 
@@ -37,32 +36,55 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	const [previous, current, next] = queue;
 
-	// if (!current) return <OutOfProspectsError mode={kind} />;
-
 	return (
 		<>
 			<div className="relative max-w-full gap-4">
-				{/* {previous && (
-					<Suspense fallback="previous?">
-						previous
-						<Profile userId={previous} />
-					</Suspense>
-				)} */}
-				{next && (
-					<Suspense>
-						<Profile
-							className="absolute -right-48 top-16 isolate max-h-[64rem] origin-top rotate-12 scale-90 blur"
-							userId={next}
-						/>
-					</Suspense>
-				)}
 				{current ? (
-					<Profile className="isolate z-10" userId={current} />
+					<AnimatePresence initial={false}>
+						<Suspense key={current}>
+							<motion.div
+								animate={{ opacity: 1 }}
+								className="relative top-0 z-10"
+								exit={{ opacity: 0 }}
+								initial={{ opacity: 0 }}
+							>
+								<Profile userId={current} />
+							</motion.div>
+						</Suspense>
+						{previous && (
+							<Suspense key={`${previous}-previous`}>
+								<motion.div
+									animate={{ opacity: 0 }}
+									className="absolute -left-48 top-0"
+									exit={{ opacity: animationDirection === "backward" ? 1 : 0 }}
+									initial={{ opacity: 0 }}
+								>
+									<Profile userId={previous} />
+								</motion.div>
+							</Suspense>
+						)}
+						{next && (
+							<Suspense key={`${next}-next`}>
+								<motion.div
+									animate={{ opacity: 0 }}
+									className="absolute -right-48 top-0"
+									exit={{ opacity: animationDirection === "forward" ? 1 : 0 }}
+									initial={{ opacity: 0 }}
+								>
+									<Profile userId={next} />
+								</motion.div>
+							</Suspense>
+						)}
+					</AnimatePresence>
 				) : (
 					<OutOfProspectsError mode={kind} />
 				)}
 			</div>
-			<ProspectActions key={kind} kind={kind} userId={current} />
+			<ProspectActions
+				key={kind}
+				kind={kind}
+				setAnimationDirection={setAnimationDirection}
+			/>
 		</>
 	);
 };

@@ -12,11 +12,7 @@ import { urls } from "~/urls";
 import { ModelCard } from "~/components/model-card";
 import { userKey } from "~/hooks/use-user";
 
-import { ConversationListItem } from "./list-item";
-
 import type { PropsWithChildren } from "react";
-
-const exampleDate = new Date("September 10 2024");
 
 export default async function ConversationsLayout({
 	children
@@ -25,6 +21,26 @@ export default async function ConversationsLayout({
 		Conversation.list(),
 		Matchmaking.listMatches(true)
 	]);
+
+	if (conversations.length === 0)
+		return (
+			<ModelCard
+				branded
+				containerProps={{ className: "flex flex-col gap-4" }}
+				title="You're new"
+			>
+				<p>You haven&apos;t matched with anyone yet.</p>
+				<p>
+					We prioritize showing you people that have liked or homied you, and
+					showing your profile to people you have liked or homied, so you can
+					match.
+				</p>
+				<p>Until then, you can always:</p>
+				<ButtonLink href={urls.browse()} size="sm">
+					Browse profiles
+				</ButtonLink>
+			</ModelCard>
+		);
 
 	const users = (
 		await User.getMany(conversations.map(({ userId }) => userId))
@@ -44,55 +60,7 @@ export default async function ConversationsLayout({
 				}
 			}}
 		>
-			{conversations.length !== 0 ? (
-				children
-			) : (
-				<ModelCard
-					containerProps={{ className: "flex flex-col gap-2" }}
-					title="Matches"
-				>
-					<p className="font-bold">
-						Matches will appear here once you&apos;ve made some.
-					</p>
-					<p>
-						When you and another person both like or “homie” each other
-						(it&apos;s mutual), you&apos;ll get matched! Once matched, you can
-						start messaging each other on Flirtual and plan to meet up in VR.
-					</p>
-					<span>Here&apos;s what one would look like:</span>
-					<ConversationListItem
-						example
-						isUnread
-						createdAt={exampleDate.toISOString()}
-						id=""
-						kind="love"
-						userId=""
-						userOverride={{
-							slug: "val",
-							profile: {
-								displayName: "Val (example)",
-								images: [
-									{
-										createdAt: exampleDate.toISOString(),
-										id: "",
-										updatedAt: exampleDate.toISOString(),
-										externalId: "d795c89b-8c22-4c0e-ac4c-af6aa2ba4c6b"
-									}
-								]
-							}
-						}}
-					/>
-					<p>
-						We prioritize showing you people that have liked or homied you, and
-						showing your profile to people you have liked or homied, so you can
-						match.
-					</p>
-					<p>Until then, you can always:</p>
-					<ButtonLink href={urls.browse()} size="sm">
-						Browse profiles
-					</ButtonLink>
-				</ModelCard>
-			)}
+			{children}
 		</SWRConfig>
 	);
 }
