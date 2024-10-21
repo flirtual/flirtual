@@ -80,27 +80,25 @@ export default function Error({
 									className="flex flex-col gap-4"
 									fields={{ message: "" }}
 									onSubmit={async ({ message }) => {
-										console.log("Sending feedback", { message, eventId });
-										console.log(
-											"Sentry.captureFeedback",
-											Sentry.captureFeedback(
-												{
-													message,
-													associatedEventId: eventId,
-													...(session
-														? {
-																// We aren't respecting the user's privacy opt-out, because the user
-																// is explicitly opting in to provide feedback.
-																email: session?.user?.email,
-																name: displayName(session?.user)
-															}
-														: {})
-												},
-												{
-													includeReplay: true,
-													originalException: error
-												}
-											)
+										if (session) Sentry.setUser({ id: session.user.id });
+
+										Sentry.captureFeedback(
+											{
+												message,
+												associatedEventId: eventId,
+												...(session
+													? {
+															// We aren't respecting the user's privacy opt-out, because the user
+															// is explicitly opting in to provide feedback.
+															email: session?.user?.email,
+															name: displayName(session?.user)
+														}
+													: {})
+											},
+											{
+												includeReplay: true,
+												originalException: error
+											}
 										);
 									}}
 								>

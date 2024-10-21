@@ -92,7 +92,7 @@ defmodule Flirtual.Matchmaking do
 
   def queue_information(%User{} = user, mode) do
     {:ok, existing_next_prospects} = next_prospects(user, mode)
-    fields = get_queue_fields(user.profile, mode)
+    # fields = get_queue_fields(user.profile, mode)
     profiles_seen = user.likes_count + user.passes_count
 
     if(

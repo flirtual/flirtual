@@ -1,6 +1,5 @@
 import { getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import * as Sentry from "@sentry/nextjs";
 import { twMerge } from "tailwind-merge";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
@@ -116,10 +115,7 @@ export default async function RootLayout({
 		platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";
 
 	const native = userAgent.ua.includes("Flirtual-Native");
-	Sentry.setTag("native", native ? "yes" : "no");
-
 	const vision = userAgent.ua.includes("Flirtual-Vision");
-	Sentry.setTag("vision", vision ? "yes" : "no");
 
 	let themeOverride = headers().get("theme") as PreferenceTheme | null;
 	if (themeOverride && !PreferenceThemes.includes(themeOverride))

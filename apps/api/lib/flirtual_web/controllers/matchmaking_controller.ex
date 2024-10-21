@@ -6,7 +6,6 @@ defmodule FlirtualWeb.MatchmakingController do
 
   alias Flirtual.Matchmaking
   alias Flirtual.User.Profile.LikesAndPasses
-  alias Flirtual.User.Profile.Prospect
   alias Flirtual.{Policy, Subscription, User, Users}
 
   action_fallback(FlirtualWeb.FallbackController)
@@ -100,9 +99,6 @@ defmodule FlirtualWeb.MatchmakingController do
         reason
     end
   end
-
-  def response(conn, %{"type" => type, "kind" => kind}),
-    do: response(conn, %{"type" => type, "kind" => kind, "mode" => kind})
 
   def undo_response(conn, %{"mode" => mode}) do
     user = conn.assigns[:session].user

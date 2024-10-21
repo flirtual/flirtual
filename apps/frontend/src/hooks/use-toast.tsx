@@ -74,6 +74,10 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 	);
 };
 
+export interface AddErrorOptions {
+	expected?: boolean;
+}
+
 export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const [toasts, setToasts] = useState<Array<Toast>>([]);
 	const { native } = useDevice();
@@ -125,7 +129,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	);
 
 	const addError = useCallback(
-		(reason: unknown) => {
+		(reason: unknown, { expected = false }: AddErrorOptions = {}) => {
 			const message =
 				(typeof reason === "object" &&
 					reason !== null &&
@@ -134,8 +138,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					reason.message) ||
 				"Unknown request error";
 
-			console.error(reason);
-			Sentry.captureException(reason);
+			if (!expected) Sentry.captureException(reason);
 
 			return add({
 				type: "error",

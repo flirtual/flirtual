@@ -6,8 +6,6 @@ import * as Sentry from "@sentry/nextjs";
 
 import { sentryDsn, apiUrl, siteOrigin, environment } from "~/const";
 
-console.log("Sentry DSN:", sentryDsn);
-
 Sentry.init({
 	enabled: environment !== "development",
 	dsn: sentryDsn,
