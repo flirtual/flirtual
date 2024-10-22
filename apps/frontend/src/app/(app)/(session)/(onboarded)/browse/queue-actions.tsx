@@ -87,7 +87,7 @@ export const _QueueActions: FC<{
 		}
 	}, [session?.user.createdAt]);
 
-	useDefaultTour();
+	useDefaultTour(!session?.user.moderatorMessage);
 
 	const { data: queue } = useQueue(mode);
 	const { trigger, reset, data, error } = useMutation<
