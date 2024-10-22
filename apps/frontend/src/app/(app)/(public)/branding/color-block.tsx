@@ -12,7 +12,7 @@ export const ColorBlock: React.FC<ColorBlockProps> = ({
 	invert
 }) => (
 	<div
-		className={twMerge("grow rounded-lg border p-4", invert && "text-black-80")}
+		className={twMerge("grow rounded-lg p-4", invert && "text-black-80")}
 		style={{ background: value }}
 	>
 		<span className="text-lg font-semibold">{name}</span>
