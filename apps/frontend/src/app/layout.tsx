@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import { userAgentFromString } from "next/server";
-import { headers } from "next/headers";
+import { headers as getHeaders } from "next/headers";
 import { preconnect } from "react-dom";
 import { Montserrat, Nunito } from "next/font/google";
 
@@ -28,7 +28,7 @@ import { ClientScripts } from "./client-scripts";
 
 import type { Metadata, Viewport } from "next";
 
-import "~/css/index.scss";
+import "~/css/index.css";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("meta");
@@ -108,8 +108,9 @@ export default async function RootLayout({
 	imageOrigins.map((origin) => preconnect(origin));
 
 	const session = await Authentication.getOptionalSession();
+	const headers = await getHeaders();
 
-	const userAgent = userAgentFromString(headers().get("user-agent")!);
+	const userAgent = userAgentFromString(headers.get("user-agent")!);
 
 	const platform: DevicePlatform =
 		platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";
@@ -117,7 +118,7 @@ export default async function RootLayout({
 	const native = userAgent.ua.includes("Flirtual-Native");
 	const vision = userAgent.ua.includes("Flirtual-Vision");
 
-	let themeOverride = headers().get("theme") as PreferenceTheme | null;
+	let themeOverride = headers.get("theme") as PreferenceTheme | null;
 	if (themeOverride && !PreferenceThemes.includes(themeOverride))
 		themeOverride = null;
 

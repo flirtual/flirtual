@@ -42,9 +42,10 @@ import {
 import { displayName, User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
-import { queueKey, useQueue } from "~/hooks/use-queue";
+import { useQueue } from "~/hooks/use-queue";
 import { UserAvatar } from "~/components/user-avatar";
 import { newConversationId } from "~/utilities";
+import { queueKey } from "~/swr";
 
 import { Countdown } from "./countdown";
 

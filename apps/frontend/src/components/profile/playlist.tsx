@@ -5,7 +5,7 @@ import { resolveTheme } from "~/theme";
 
 import type { FC } from "react";
 
-const platforms = [
+export const playlistPlatforms = [
 	{
 		pattern: /^https?:\/\/open\.spotify\.com\/playlist\/([\dA-Za-z]+)/,
 		embed: (id: string) => `https://open.spotify.com/embed/playlist/${id}`
@@ -41,7 +41,7 @@ export const ProfilePlaylist: FC<{
 }> = ({ playlist, className }) => {
 	const { sessionTheme } = useTheme();
 
-	const matchedPlatform = platforms.find(({ pattern }) =>
+	const matchedPlatform = playlistPlatforms.find(({ pattern }) =>
 		pattern.test(playlist)
 	);
 	const match = matchedPlatform?.pattern.exec(playlist);

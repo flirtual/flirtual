@@ -1,13 +1,8 @@
 import { getRequestConfig } from "next-intl/server";
-import { create as setupAcceptLanguage } from "accept-language";
-import { headers as getHeaders } from "next/headers";
 import { cache } from "react";
 import deepmerge from "deepmerge";
 
-import settings from "../project.inlang/settings.json";
-const { languageTags: languages, sourceLanguageTag } = settings;
-
-import { Authentication } from "./api/auth";
+import { getInternationalization } from ".";
 
 import type {
 	AbstractIntlMessages,
@@ -20,62 +15,13 @@ export type MessageKeys = NamespaceKeys<
 	NestedKeyOf<IntlMessages>
 >;
 
-function getCountry(headers: Headers) {
-	const country =
-		headers.get("cf-ipcountry") || headers.get("x-vercel-ip-country");
-
-	return country !== "XX" && country !== "T1"
-		? (country?.toLowerCase() ?? null)
-		: null;
-}
-
-export const getInternationalization = cache(async (override?: string) => {
-	const headers = getHeaders();
-
-	override ||= headers.get("language") ?? undefined;
-
-	const al = setupAcceptLanguage();
-	al.languages(languages);
-
-	const accept = headers.get("accept-language");
-	const browser = al.get(accept);
-
-	const session = await Authentication.getOptionalSession();
-	const translating =
-		headers.has("translating") || session?.user.tags?.includes("translating");
-
-	const preferred = session?.user.language || browser || sourceLanguageTag;
-
-	if (override === preferred || (override && !languages.includes(override)))
-		override = undefined;
-	const current = override || preferred;
-
-	const country = getCountry(headers);
-
-	await import("@formatjs/intl-displaynames/polyfill-force");
-	await import(`@formatjs/intl-displaynames/locale-data/${current}`);
-
-	return {
-		country,
-		languages,
-		locale: {
-			browser,
-			current,
-			fallback: sourceLanguageTag,
-			override,
-			preferred
-		},
-		translating
-	};
-});
-
 async function getLanguageMessages(locale: string) {
 	const { default: messages } = await import(
-		`../messages/${locale}.json`
+		`../../messages/${locale}.json`
 	).catch(() => ({}));
 
 	const attributes = (
-		await import(`../messages/attributes.${locale}.json`).catch(() => ({
+		await import(`../../messages/attributes.${locale}.json`).catch(() => ({
 			default: {}
 		}))
 	).default as Record<string, Record<string, unknown>>;

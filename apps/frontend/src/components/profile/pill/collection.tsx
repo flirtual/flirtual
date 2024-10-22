@@ -6,6 +6,7 @@ import { urls } from "~/urls";
 import { useSession } from "~/hooks/use-session";
 
 import { Pill } from "./pill";
+import { PillCollectionExpansion } from "./expansion";
 
 import type { User } from "~/api/user";
 import type { FC, PropsWithChildren } from "react";
@@ -161,12 +162,12 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 					</Pill>
 				</div>
 			)}
-			{/* <PillCollectionExpansion
+			<PillCollectionExpansion
 				attributes={{}}
 				editable={editable}
 				session={session}
 				user={user}
-			/> */}
+			/>
 		</div>
 	);
 };

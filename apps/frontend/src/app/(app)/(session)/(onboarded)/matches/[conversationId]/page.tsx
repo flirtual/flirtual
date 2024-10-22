@@ -16,15 +16,16 @@ import { FaceTimeButton } from "./facetime-button";
 import type { Metadata } from "next";
 
 export interface ConversationPageProps {
-	params: {
+	params: Promise<{
 		conversationId: string;
-	};
+	}>;
 }
 
-export async function generateMetadata({
-	params
-}: ConversationPageProps): Promise<Metadata> {
-	const conversation = await Conversation.get(params.conversationId);
+export async function generateMetadata(
+	props: ConversationPageProps
+): Promise<Metadata> {
+	const { conversationId } = (await props.params) || {};
+	const conversation = await Conversation.get(conversationId);
 	if (!conversation) return redirect(urls.conversations.list());
 
 	const user = await getProfile(conversation.userId);
@@ -35,12 +36,11 @@ export async function generateMetadata({
 	};
 }
 
-export default async function ConversationPage({
-	params
-}: ConversationPageProps) {
+export default async function ConversationPage(props: ConversationPageProps) {
+	const { conversationId } = (await props.params) || {};
 	const session = await Authentication.getSession();
 
-	const conversation = await Conversation.get(params.conversationId);
+	const conversation = await Conversation.get(conversationId);
 	if (!conversation) return redirect(urls.conversations.list());
 
 	const user = await getProfile(conversation.userId);

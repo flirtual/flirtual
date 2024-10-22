@@ -1,11 +1,11 @@
+"use client";
+
 import { useMessages } from "next-intl";
 import { useDebugValue } from "react";
 import useSWR from "swr";
 
 import { Attribute, type AttributeType } from "~/api/attributes";
-
-export const attributeKey = <T extends AttributeType>(type: T) =>
-	["attribute", type] as const;
+import { attributeKey } from "~/swr";
 
 export function useAttributes<T extends AttributeType>(type: T) {
 	useDebugValue(type);

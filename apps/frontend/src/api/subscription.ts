@@ -20,7 +20,7 @@ export type Subscription = UuidModel &
 export const Subscription = {
 	api: api.url("subscriptions"),
 	checkoutUrl(planId: string) {
-		return this.api.url("/checkout").query({ planId })._url;
+		return this.api.url("/checkout").query({ plan_id: planId })._url;
 	},
 	manageUrl() {
 		return this.api.url("/manage")._url;

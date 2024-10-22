@@ -29,7 +29,8 @@ export const gitCommitUrl =
 export const turnstileSiteKey = process.env
 	.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 export const talkjsAppId = process.env.NEXT_PUBLIC_TALKJS_APP_ID as string;
-export const freshworksWidgetId = 73000002566;
+export const freshworksWidgetId = process.env
+	.NEXT_PUBLIC_FRESHWORKS_WIDGET_ID as string;
 export const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN as string;
 export const cannyAppId = process.env.NEXT_PUBLIC_CANNY_APP_ID as string;
 export const rcAppleKey = process.env.NEXT_PUBLIC_RC_APPL_PUBLIC_KEY as string;

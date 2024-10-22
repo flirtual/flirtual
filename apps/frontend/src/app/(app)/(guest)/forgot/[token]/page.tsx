@@ -5,12 +5,12 @@ import { ModelCard } from "~/components/model-card";
 import { ResetPasswordForm } from "./form";
 
 export interface ResetPasswordPageProps {
-	params: { token: string };
+	params: Promise<{ token: string }>;
 }
 
-export default function ResetPasswordPage({
-	params: { token }
-}: ResetPasswordPageProps) {
+export default async function ResetPasswordPage(props: ResetPasswordPageProps) {
+	const { token } = await props.params;
+
 	const payload = decode(token, { json: true });
 	if (!payload?.sub) return null;
 

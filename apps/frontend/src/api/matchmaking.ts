@@ -25,6 +25,7 @@ export interface RespondProspectBody {
 	type: ProspectRespondType;
 	kind: ProspectKind;
 	mode?: ProspectKind;
+	userId?: string;
 }
 
 export interface RespondProspect {

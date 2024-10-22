@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 };
 
 export interface LoginPageProps {
-	searchParams?: {
+	searchParams?: Promise<{
 		next?: string;
 		error?: string;
-	};
+	}>;
 }
 
-export default function LoginPage(props: LoginPageProps) {
-	const error = props.searchParams?.error;
+export default async function LoginPage(props: LoginPageProps) {
+	const { error, next } = (await props.searchParams) || {};
 
 	return (
 		<ModelCard className="gap-4 desktop:w-full desktop:max-w-lg" title="Log in">
@@ -25,7 +25,7 @@ export default function LoginPage(props: LoginPageProps) {
 					<span className="font-montserrat text-lg text-white-10">{error}</span>
 				</div>
 			)}
-			<LoginForm next={props.searchParams?.next} />
+			<LoginForm next={next} />
 		</ModelCard>
 	);
 }

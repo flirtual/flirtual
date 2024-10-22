@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { urls } from "~/urls";
 
 import type { FC } from "react";
-import type { MessageKeys } from "~/i18n";
+import type { MessageKeys } from "~/i18n/request";
 
 export type TimelineItemYear = {
 	[K in MessageKeys]: K extends `about.timeline.${infer T}` ? T : never;

@@ -22,7 +22,8 @@ import {
 import {
 	Dialog,
 	DialogContent,
-	DialogFooter
+	DialogFooter,
+	DialogTitle
 } from "~/components/dialog/dialog";
 import { Subscription } from "~/api/subscription";
 
@@ -33,7 +34,6 @@ export const ManageButton: FC = () => {
 	const [pending, startTransition] = useTransition();
 
 	const [manageUrl, setManageUrl] = useState<string | null>(null);
-
 	if (!session) return null;
 
 	const { subscription } = session.user;
@@ -118,6 +118,7 @@ export const ManageButton: FC = () => {
 						setManageUrl(null);
 					}}
 				>
+					<DialogTitle className="sr-only">Manage subscription</DialogTitle>
 					<DialogContent className="w-fit overflow-hidden p-0">
 						<iframe
 							className="max-h-[90vh] max-w-full rounded-[1.25rem] bg-[#f4f5f9]"

@@ -3,10 +3,7 @@ import { type Dispatch, type FC, useEffect, useState } from "react";
 
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { Button } from "~/components/button";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { SortableGrid, SortableItem } from "~/components/forms/sortable";
 import { groupBy, uniqueLast } from "~/utilities";
@@ -79,6 +76,7 @@ const EditPromptDialog: FC<{
 								(value) =>
 									({
 										...(value || { prompt: null }),
+
 										response
 										// eslint-disable-next-line @typescript-eslint/no-explicit-any
 									}) as any

@@ -3,7 +3,7 @@ import { unstable_serialize } from "swr";
 import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
 import { SWRConfig } from "~/components/swr";
-import { attributeKey } from "~/hooks/use-attribute";
+import { attributeKey } from "~/swr";
 
 import { InterestsForm } from "./form";
 

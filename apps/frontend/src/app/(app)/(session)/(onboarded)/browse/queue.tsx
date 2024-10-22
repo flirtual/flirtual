@@ -1,6 +1,5 @@
 "use client";
 
-import { preload } from "swr";
 import { Suspense, useState, type FC } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -13,7 +12,7 @@ import {
 	FinishProfileError,
 	OutOfProspectsError
 } from "./out-of-prospects";
-import { ProspectActions } from "./queue-actions";
+import { QueueActions } from "./queue-actions";
 
 import type { ProspectKind } from "~/api/matchmaking";
 
@@ -38,7 +37,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	return (
 		<>
-			<div className="relative max-w-full gap-4">
+			<div className="relative max-w-full gap-4 overflow-hidden">
 				{current ? (
 					<AnimatePresence initial={false}>
 						<Suspense key={current}>
@@ -55,7 +54,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 							<Suspense key={`${previous}-previous`}>
 								<motion.div
 									animate={{ opacity: 0 }}
-									className="absolute -left-48 top-0"
+									className="absolute top-0"
 									exit={{ opacity: animationDirection === "backward" ? 1 : 0 }}
 									initial={{ opacity: 0 }}
 								>
@@ -67,7 +66,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 							<Suspense key={`${next}-next`}>
 								<motion.div
 									animate={{ opacity: 0 }}
-									className="absolute -right-48 top-0"
+									className="absolute top-0"
 									exit={{ opacity: animationDirection === "forward" ? 1 : 0 }}
 									initial={{ opacity: 0 }}
 								>
@@ -80,7 +79,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 					<OutOfProspectsError mode={kind} />
 				)}
 			</div>
-			<ProspectActions
+			<QueueActions
 				key={kind}
 				kind={kind}
 				setAnimationDirection={setAnimationDirection}

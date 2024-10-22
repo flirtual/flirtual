@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { imageOrigins } from "./urls";
 import { apiOrigin, environment, sentryDsn } from "./const";
+import { playlistPlatforms } from "./components/profile/playlist";
 
 import type { NextRequest } from "next/server";
 
@@ -11,15 +12,27 @@ function getContentSecurityPolicy() {
 	const value = {
 		"default-src": ["'self'"],
 		"script-src": [
-			`'nonce-${nonce}'`,
-			"'strict-dynamic'",
-			environment === "development" && "'unsafe-eval'"
+			environment === "development"
+				? ["'self'", "'unsafe-eval'", "'unsafe-inline'"]
+				: ["'strict-dynamic'", `'nonce-${nonce}'`],
+			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
+			"https://*.talkjs.com",
+			// https://developers.canny.io/
+			"https://canny.io",
+			// https://developers.freshdesk.com/widget-api/
+			"https://*.freshworks.com",
+			"https://*.freshdesk.com",
+			// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
+			"https://challenges.cloudflare.com"
 		],
 		"style-src": [
 			"'self'",
 			// `'nonce-${nonce}'`,
 			// TODO: Work towards removing this directive.
-			"'unsafe-inline'"
+			"'unsafe-inline'",
+			// https://developers.freshdesk.com/widget-api/
+			"https://*.freshworks.com",
+			"https://*.freshdesk.com"
 		],
 		"img-src": [
 			"'self'",
@@ -45,6 +58,9 @@ function getContentSecurityPolicy() {
 			"wss://*.talkjs.com",
 			// https://developers.canny.io/
 			"https://api.canny.io",
+			// https://developers.freshdesk.com/widget-api/
+			"https://*.freshworks.com",
+			"https://*.freshdesk.com",
 			// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
 			new URL(sentryDsn).origin
 		],
@@ -54,8 +70,18 @@ function getContentSecurityPolicy() {
 		"form-action": ["'self'"],
 		"frame-ancestors": ["'none'"],
 		"frame-src": [
+			apiOrigin,
+			...playlistPlatforms.map(
+				({ embed }) => new URL(embed("example", "light")).origin
+			),
+			// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
+			"https://challenges.cloudflare.com",
 			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
-			"https://*.talkjs.com"
+			"https://*.talkjs.com",
+			// https://developers.canny.io/
+			"https://*.canny.io",
+			// https://www.chargebee.com/docs/2.0/embedded-checkout.html
+			"https://*.chargebee.com"
 		],
 		"upgrade-insecure-requests": []
 	};
@@ -65,7 +91,7 @@ function getContentSecurityPolicy() {
 		value: Object.entries(value)
 			.map(
 				([directive, sources]) =>
-					`${directive} ${sources.filter(Boolean).join(" ")}`
+					`${directive} ${sources.flat().filter(Boolean).join(" ")}`
 			)
 			.join("; ")
 	};

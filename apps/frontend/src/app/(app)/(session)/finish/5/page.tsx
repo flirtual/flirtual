@@ -10,12 +10,13 @@ export const metadata: Metadata = {
 	title: "Connections"
 };
 
-export default function Finish5Page(props: {
-	searchParams?: {
+export default async function Finish5Page(props: {
+	searchParams?: Promise<{
 		error?: string;
-	};
+	}>;
 }) {
-	const error = props.searchParams?.error;
+	const { error } = (await props.searchParams) || {};
+
 	return (
 		<>
 			<FinishProgress page={5} />

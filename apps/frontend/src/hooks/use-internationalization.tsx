@@ -3,7 +3,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import { createContext, forwardRef, use, type PropsWithChildren } from "react";
 
-import type { getInternationalization } from "~/i18n";
+import type { getInternationalization } from "~/i18n/request";
 export { useTranslations } from "next-intl";
 
 export type Internationalization = Awaited<

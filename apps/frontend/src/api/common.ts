@@ -68,7 +68,7 @@ export const api = wretch(urls.api)
 					) {
 						const { headers } = await import("next/headers");
 						const relevantHeaders = Object.fromEntries(
-							[...headers().entries()].filter(([key]) =>
+							[...(await headers()).entries()].filter(([key]) =>
 								releventHeaders.includes(key)
 							)
 						);

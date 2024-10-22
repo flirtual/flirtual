@@ -1,10 +1,9 @@
+"use client";
+
 import useSWR from "swr";
 
 import { User } from "~/api/user";
-
-export const userKey = (userId: string) => ["user", userId] as const;
-export const userFetcher = ([, userId]: readonly [never, string]) =>
-	User.get(userId);
+import { userFetcher, userKey } from "~/swr";
 
 export function useUser(userId: string): User | null {
 	const { data } = useSWR(userKey(userId), userFetcher, {

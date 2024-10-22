@@ -89,9 +89,7 @@ export const NavigationItemProfile: FC = () => {
 						? "bg-white-20 shadow-brand-1"
 						: "bg-transparent hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				)}
-				onClick={() => {
-					setVisible(true);
-				}}
+				onClick={() => setVisible(true)}
 			>
 				<UserAvatar
 					priority

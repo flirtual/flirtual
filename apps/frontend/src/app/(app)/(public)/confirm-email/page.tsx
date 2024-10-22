@@ -14,24 +14,21 @@ export const metadata: Metadata = {
 };
 
 export interface ConfirmEmailPageProps {
-	searchParams?: { to?: string; token?: string };
+	searchParams?: Promise<{ to?: string; token?: string }>;
 }
 
-export default async function ConfirmEmailPage({
-	searchParams
-}: ConfirmEmailPageProps) {
+export default async function ConfirmEmailPage(props: ConfirmEmailPageProps) {
+	const { to, token } = (await props.searchParams) || {};
 	const session = await Authentication.getOptionalSession();
 
-	if (session?.user.emailConfirmedAt && !searchParams?.token)
-		redirect(searchParams?.to ?? urls.browse());
+	if (session?.user.emailConfirmedAt && !token) redirect(to ?? urls.browse());
 
-	if (!session?.user && !searchParams?.token)
-		redirect(urls.login(searchParams?.to));
+	if (!session?.user && !token) redirect(urls.login(to));
 
 	return (
 		<ModelCard branded title="Confirm your email">
-			{searchParams?.token ? (
-				<ConfirmTokenForm token={searchParams.token} />
+			{token ? (
+				<ConfirmTokenForm token={token} />
 			) : (
 				<UserForms user={session?.user} />
 			)}

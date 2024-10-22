@@ -3,23 +3,21 @@ import { unstable_serialize } from "swr";
 
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
 import { urls } from "~/urls";
-import { queueKey } from "~/hooks/use-queue";
 import { SWRConfig } from "~/components/swr";
 import { User } from "~/api/user";
-import { userKey } from "~/hooks/use-user";
 import { Attribute } from "~/api/attributes";
-import { attributeKey } from "~/hooks/use-attribute";
+import { attributeKey, queueKey, userKey } from "~/swr";
 
 import { profileRequiredAttributes } from "../[slug]/data";
 
 import { Queue } from "./queue";
 
 interface BrowsePageProps {
-	searchParams: { kind?: string };
+	searchParams: Promise<{ kind?: ProspectKind }>;
 }
 
-export async function generateMetadata({ searchParams }: BrowsePageProps) {
-	const kind = (searchParams.kind ?? "love") as ProspectKind;
+export async function generateMetadata(props: BrowsePageProps) {
+	const { kind = "love" } = (await props.searchParams) || {};
 	if (!ProspectKind.includes(kind)) return redirect(urls.browse());
 
 	return {
@@ -27,8 +25,8 @@ export async function generateMetadata({ searchParams }: BrowsePageProps) {
 	};
 }
 
-export default async function BrowsePage({ searchParams }: BrowsePageProps) {
-	const kind = (searchParams.kind ?? "love") as ProspectKind;
+export default async function BrowsePage(props: BrowsePageProps) {
+	const { kind = "love" } = (await props.searchParams) || {};
 	if (!ProspectKind.includes(kind)) return redirect(urls.browse());
 
 	const [queue, attributes] = await Promise.all([

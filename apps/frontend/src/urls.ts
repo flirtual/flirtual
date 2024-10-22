@@ -57,6 +57,7 @@ export function isInternalHref(href: Url) {
 export type FinishPage = 1 | 2 | 3 | 4 | 5;
 
 export const imageOrigins = [
+	"https://files.flirtu.al",
 	"https://img.flirtu.al",
 	"https://pfp.flirtu.al",
 	"https://pfpup.flirtu.al"
@@ -108,8 +109,9 @@ export const urls = {
 		default: "/subscription",
 		success: url("/subscription", { success: "yes" })
 	},
-	confirmEmail: (query: ConfirmEmailPageProperties["searchParams"] = {}) =>
-		url("/confirm-email", query),
+	confirmEmail: (
+		query: Awaited<ConfirmEmailPageProperties["searchParams"]> = {}
+	) => url("/confirm-email", query),
 
 	settings: {
 		list: (returnTo?: string) => url("/settings", { return: returnTo }),
