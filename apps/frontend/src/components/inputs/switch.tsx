@@ -38,8 +38,12 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 					damping: 30
 				}}
 			/>
-			<span className="z-10 px-4">{yes ?? t("yes")}</span>
-			<span className="z-10 px-4">{no ?? t("no")}</span>
+			<span className="z-10 px-4 group-aria-checked/switch:text-white-10">
+				{yes ?? t("yes")}
+			</span>
+			<span className="z-10 px-4 group-aria-checked/switch:text-white-10">
+				{no ?? t("no")}
+			</span>
 		</label>
 	);
 };
