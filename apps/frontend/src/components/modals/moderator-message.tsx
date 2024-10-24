@@ -132,14 +132,14 @@ export const TrustAndSafetyDialog: FC<{
 					<DialogTitle className="flex h-full items-center gap-2">
 						<Image
 							alt={t("meta.name")}
-							className="hidden h-full w-fit dark:block desktop:block"
+							className="hidden h-fit w-24 dark:block desktop:block"
 							height={1000}
 							src={urls.media("flirtual-white.svg", "files")}
 							width={3468}
 						/>
 						<Image
 							alt={t("meta.name")}
-							className="block h-full w-fit dark:hidden desktop:hidden"
+							className="block h-fit w-24 dark:hidden desktop:hidden"
 							height={1000}
 							src={urls.media("flirtual-black.svg", "files")}
 							width={3468}
