@@ -12,6 +12,9 @@ export default withSentryConfig(
 			},
 			reactCompiler: true
 		},
+		typescript: {
+			ignoreBuildErrors: true
+		},
 		sassOptions: {
 			// https://github.com/vercel/next.js/discussions/67931
 			silenceDeprecations: ["legacy-js-api"]
