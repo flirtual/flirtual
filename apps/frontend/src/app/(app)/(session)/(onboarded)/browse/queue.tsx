@@ -79,11 +79,13 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 					<OutOfProspectsError mode={kind} />
 				)}
 			</div>
-			<QueueActions
-				key={kind}
-				kind={kind}
-				setAnimationDirection={setAnimationDirection}
-			/>
+			{current && (
+				<QueueActions
+					key={kind}
+					kind={kind}
+					setAnimationDirection={setAnimationDirection}
+				/>
+			)}
 		</>
 	);
 };

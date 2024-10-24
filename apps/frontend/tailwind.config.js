@@ -168,15 +168,15 @@ module.exports = {
 
 			addComponents({
 				".focused": {
-					"@apply outline-none ring-2 ring-theme-1 ring-offset-2 dark:ring-offset-black-50":
+					"@apply outline-none ring-2 ring-theme-1 ring-offset-2 dark:ring-offset-black-70":
 						{}
 				},
 				".focusable": {
-					"@apply focus:outline-none focus:ring-2 focus:ring-theme-1 focus:ring-offset-2 focus:dark:ring-offset-black-50":
+					"@apply focus:outline-none focus:ring-2 focus:ring-theme-1 focus:ring-offset-2 focus:dark:ring-offset-black-70":
 						{}
 				},
 				".focusable-within": {
-					"@apply focus:outline-none focus-within:ring-2 focus-within:ring-theme-1 focus-within:ring-offset-2 focus-within:dark:ring-offset-black-50":
+					"@apply focus:outline-none focus-within:ring-2 focus-within:ring-theme-1 focus-within:ring-offset-2 focus-within:dark:ring-offset-black-70":
 						{}
 				},
 				".text-shadow-brand": {

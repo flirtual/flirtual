@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
 
 import { twMerge } from "tailwind-merge";
 import { useLocale } from "next-intl";
@@ -7,6 +6,17 @@ import { useLocale } from "next-intl";
 import { Pill } from "./pill";
 
 import type { FC } from "react";
+
+export function getCountryImage(countryId: string) {
+	return `https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/flags/4x3/${countryId}.svg`;
+}
+
+const _countryNames: Record<string, Intl.DisplayNames> = {};
+
+export function getCountryName(locale: string, countryId: string) {
+	_countryNames[locale] ??= new Intl.DisplayNames([locale], { type: "region" });
+	return _countryNames[locale].of(countryId);
+}
 
 export interface CountryPillProps {
 	id: string;
@@ -20,10 +30,7 @@ export const CountryPill: FC<CountryPillProps> = ({
 	className
 }) => {
 	const locale = useLocale();
-	const countryNames = new Intl.DisplayNames([locale], { type: "region" });
-	const countryName = countryNames.of(id);
-
-	if (!countryName) return null;
+	const countryName = getCountryName(locale, id) ?? id;
 
 	return (
 		<Pill
@@ -36,13 +43,13 @@ export const CountryPill: FC<CountryPillProps> = ({
 			)}
 		>
 			<img
-				src={`https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/flags/4x3/${id}.svg`}
+				src={getCountryImage(id)}
 				className={twMerge(
 					"aspect-[4/3] h-8 w-max shrink-0",
 					flagOnly ? "" : "-ml-4 rounded-l-xl"
 				)}
 			/>
-			{!flagOnly && <span suppressHydrationWarning>{countryName}</span>}
+			{!flagOnly && <span>{countryName}</span>}
 		</Pill>
 	);
 };

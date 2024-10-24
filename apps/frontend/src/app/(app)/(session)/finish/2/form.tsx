@@ -23,10 +23,7 @@ import {
 	ProfileRelationshipLabel,
 	ProfileRelationshipList
 } from "~/api/user/profile";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 

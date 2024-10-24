@@ -40,7 +40,7 @@ function getContentSecurityPolicy() {
 			"data:",
 			...imageOrigins,
 			// Country flag icons.
-			"https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/flags/4x3/"
+			"https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/flags/4x3/"
 		],
 		"media-src": [
 			"'self'",
