@@ -64,7 +64,7 @@ export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 							)}
 						</FormField>
 					))}
-					<FormButton />
+					<FormButton>Update</FormButton>
 				</>
 			)}
 		</Form>
