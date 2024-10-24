@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import ms from "ms";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
@@ -120,7 +121,7 @@ export const TrustAndSafetyDialog: FC<{
 	closable?: boolean;
 }> = ({ children, actions, closable = false, onAcknowledge, onOpenChange }) => {
 	const [session] = useSession();
-	const t = useTranslations("dialogs.trust_and_safety");
+	const t = useTranslations();
 
 	if (!session) return null;
 
@@ -129,8 +130,21 @@ export const TrustAndSafetyDialog: FC<{
 			<>
 				<DialogHeader>
 					<DialogTitle className="flex h-full items-center gap-2">
-						<FlirtualLogo className="h-full" />
-						<span>{t("title")}</span>
+						<Image
+							alt={t("meta.name")}
+							className="hidden h-full w-fit dark:block desktop:block"
+							height={1000}
+							src={urls.media("flirtual-white.svg", "files")}
+							width={3468}
+						/>
+						<Image
+							alt={t("meta.name")}
+							className="block h-full w-fit dark:hidden desktop:hidden"
+							height={1000}
+							src={urls.media("flirtual-black.svg", "files")}
+							width={3468}
+						/>
+						<span>{t("dialogs.trust_and_safety.title")}</span>
 					</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
@@ -143,15 +157,15 @@ export const TrustAndSafetyDialog: FC<{
 						<div className="flex flex-col gap-2">
 							{actions || (
 								<Button size="sm" onClick={onAcknowledge}>
-									{t("acknowledge")}
+									{t("dialogs.trust_and_safety.acknowledge")}
 								</Button>
 							)}
-							<span className="flex max-w-sm flex-row justify-center gap-4 font-nunito text-xs">
+							<span className="flex flex-row justify-center gap-4 font-nunito text-xs">
 								<InlineLink href={urls.resources.communityGuidelines}>
-									{t("lofty_day_snail_treasure")}
+									{t("dialogs.trust_and_safety.lofty_day_snail_treasure")}
 								</InlineLink>
 								<InlineLink href={urls.resources.contactDirect}>
-									{t("jolly_nimble_crow_taste")}
+									{t("dialogs.trust_and_safety.jolly_nimble_crow_taste")}
 								</InlineLink>
 							</span>
 						</div>
