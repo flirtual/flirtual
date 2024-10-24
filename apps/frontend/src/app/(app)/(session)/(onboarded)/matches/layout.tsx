@@ -10,7 +10,7 @@ import { Matchmaking } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { urls } from "~/urls";
 import { ModelCard } from "~/components/model-card";
-import { userKey } from "~/hooks/use-user";
+import { userKey } from "~/swr";
 
 import type { PropsWithChildren } from "react";
 
