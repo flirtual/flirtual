@@ -31,7 +31,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 			/>
 			<motion.div
 				layout
-				className="absolute right-0 h-full w-1/2 rounded-xl bg-brand-gradient group-aria-checked/switch:left-0"
+				className="absolute right-0 h-full w-1/2 rounded-xl bg-brand-gradient group-aria-checked/switch:left-0 group-aria-checked/switch:right-[unset]"
 				transition={{
 					type: "spring",
 					stiffness: 700,
