@@ -41,7 +41,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 			<span className="z-10 px-4 group-aria-checked/switch:text-white-10">
 				{yes ?? t("yes")}
 			</span>
-			<span className="z-10 px-4 group-aria-checked/switch:text-white-10">
+			<span className="z-10 px-4 text-white-10 group-aria-checked/switch:text-black-80 dark:group-aria-checked/switch:text-white-10">
 				{no ?? t("no")}
 			</span>
 		</label>
