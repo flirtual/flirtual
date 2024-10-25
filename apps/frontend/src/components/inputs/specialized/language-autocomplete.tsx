@@ -3,10 +3,7 @@
 import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 
 import {
 	InputAutocomplete,
@@ -22,6 +19,7 @@ export const InputLanguageAutocomplete: React.FC<
 
 	const languages = useAttributes("language");
 	const systemLanguage = useLocale();
+	const pinnedLanguage = systemLanguage.split("-")[0];
 
 	const languageNames = useMemo(
 		() => new Intl.DisplayNames(systemLanguage, { type: "language" }),
@@ -39,20 +37,15 @@ export const InputLanguageAutocomplete: React.FC<
 
 					return {
 						key: languageId,
-						label:
-							languageId === systemLanguage
-								? t("system_highlight", {
-										language: label
-									})
-								: label
+						label
 					};
 				})
 				.sort((a, b) => {
-					if (a.key === systemLanguage) return -1;
-					if (b.key === systemLanguage) return 1;
+					if (a.key === pinnedLanguage) return -1;
+					if (b.key === pinnedLanguage) return 1;
 					return a.label.localeCompare(b.label, systemLanguage);
 				}),
-		[languages, systemLanguage, languageNames]
+		[languages, systemLanguage, pinnedLanguage, languageNames]
 	);
 
 	return (

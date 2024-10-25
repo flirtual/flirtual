@@ -44,9 +44,7 @@ const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 				)}
 			</div>
 			<SelectItemText className="[content-visibility:auto]">
-				{countryId === systemCountry
-					? t("system_highlight", { country: countryName })
-					: countryName}
+				{countryName}
 			</SelectItemText>
 		</SelectItem>
 	);

@@ -450,12 +450,10 @@
       "me": "Just me"
     },
     "language_autocomplete": {
-      "placeholder": "Select a language.",
-      "system_highlight": "{language} 📌"
+      "placeholder": "Select a language."
     },
     "country_select": {
-      "placeholder": "Select a country.",
-      "system_highlight": "{country} 📌"
+      "placeholder": "Select a country."
     }
   },
   "errors": {
