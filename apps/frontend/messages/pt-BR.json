@@ -156,8 +156,7 @@
       "me": "Apenas eu"
     },
     "language_autocomplete": {
-      "placeholder": "Selecionar línguagem.",
-      "system_highlight": "{language} 📌"
+      "placeholder": "Selecionar línguagem."
     },
     "text": {
       "hide": "Ocultar",
@@ -171,8 +170,7 @@
       "placeholder": "Selecione uma opção"
     },
     "country_select": {
-      "placeholder": "Selecionar país.",
-      "system_highlight": "{country} 📌"
+      "placeholder": "Selecionar país."
     }
   },
   "download": {
