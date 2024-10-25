@@ -398,7 +398,6 @@ export const SearchView: React.FC = () => {
 								}
 							/>
 							<InputSwitch
-								name="order"
 								no="Ascending"
 								value={searchOptions.order === "desc"}
 								yes="Descending"

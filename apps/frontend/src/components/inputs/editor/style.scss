@@ -41,6 +41,12 @@
         }
       }
 
+      .ql-header {
+        svg {
+          display: none;
+        }
+      }
+
       .ql-bold .ql-stroke {
         stroke-width: 2;
       }
@@ -72,7 +78,7 @@
 
                 &::before {
                   content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0idy02IGgtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNiAxOEwxOCA2TTYgNmwxMiAxMiIgLz4KPC9zdmc+Cg==);
-                  @apply flex shrink-0 w-4 h-4 aspect-square;
+                  @apply flex shrink-0 w-4 h-4 aspect-square dark:invert;
                 }
               }
             }

@@ -12,12 +12,13 @@ import "./style.scss";
 // so we lazily import it, which only renders when needed on client.
 const ReactQuill = dynamic(
 	async () => {
-		const ReactQuill = (await import("react-quill")).default;
+		const ReactQuill = (await import("react-quill-new")).default;
 		const { Quill } = ReactQuill;
 
 		// Use inline styles instead of Quill's classnames,
 		// which are not available in other pages.
 		const AlignStyle = Quill.import("attributors/style/align");
+		// @ts-expect-error: Broken types in migration to v3.
 		Quill.register(AlignStyle);
 
 		return ReactQuill;
@@ -37,7 +38,7 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 	return (
 		<ReactQuill
 			data-sentry-mask
-			className="prose max-w-none dark:prose-invert"
+			className="prose max-w-none dark:prose-invert [&_*]:!select-auto"
 			value={value}
 			formats={[
 				"header",
@@ -49,21 +50,14 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 				"background",
 				"list",
 				"blockquote",
-				"code-block",
-				"align",
-				"code",
-				"script",
-				"indent",
-				"direction",
-				"link",
-				"clean"
+				"align"
 			]}
 			modules={{
 				toolbar: [
 					[{ header: 3 }],
 					["bold", "italic", "underline"],
 					[{ color: editorColors }, { background: editorColors }],
-					[{ list: "ordered" }, { list: "bullet" }],
+					[{ list: "ordered" } /* , { list: "bullet" } */],
 					["blockquote"],
 					[{ align: [] }]
 				]

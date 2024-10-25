@@ -54,6 +54,7 @@ export const SortableGrid: FC<
 	return (
 		<CurrentSortableContext.Provider value={{ currentItem }}>
 			<DndContext
+				accessibility={{}}
 				autoScroll={false}
 				collisionDetection={closestCenter}
 				sensors={sensors}
@@ -103,6 +104,7 @@ export const SortableItem: FC<PropsWithChildren<{ id: UniqueIdentifier }>> = ({
 
 	return (
 		<Slot
+			suppressHydrationWarning
 			data-dragging={isDragging ? "" : undefined}
 			ref={setNodeRef}
 			style={

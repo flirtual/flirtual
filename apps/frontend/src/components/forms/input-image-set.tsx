@@ -17,6 +17,7 @@ import ImageEditor from "@uppy/image-editor";
 import Compressor from "@uppy/compressor";
 import DropTarget from "@uppy/drop-target";
 import AwsS3 from "@uppy/aws-s3";
+
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import "@uppy/image-editor/dist/style.min.css";

@@ -33,7 +33,7 @@ export function fromStyleProperties(value: string): PropertiesHyphen {
 	) as PropertiesHyphen;
 }
 
-export const allowedTags: Array<keyof JSX.IntrinsicElements> = [
+export const allowedTags: Array<keyof React.JSX.IntrinsicElements> = [
 	"a",
 	"b",
 	"blockquote",
