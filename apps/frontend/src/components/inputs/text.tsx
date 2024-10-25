@@ -52,7 +52,13 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 			)}
 			{props.startContent}
 			<input
-				{...omit(props, ["type", "Icon", "startContent", "endContent"])}
+				{...omit(props, [
+					"type",
+					"Icon",
+					"startContent",
+					"endContent",
+					"iconColor"
+				])}
 				ref={inputReference}
 				type={type}
 				className={twMerge(
