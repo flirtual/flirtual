@@ -22,6 +22,7 @@ import { useNotifications } from "./use-notifications";
 import { useDevice } from "./use-device";
 import { getConversationsKey } from "./use-conversations.shared";
 
+import type { ChatboxOptions } from "talkjs/types/talk.types";
 import type React from "react";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
@@ -135,6 +136,36 @@ export function useUnreadConversations() {
 	return useContext(UnreadConversationContext);
 }
 
+const emojis: Array<{ name: string; type: "png" | "gif"; hidden?: boolean }> = [
+	{ name: "bonk", type: "gif" },
+	{ name: "chad", type: "png" },
+	{ name: "cool", type: "png" },
+	{ name: "cupid", type: "png" },
+	{ name: "developer", type: "png" },
+	{ name: "dj", type: "png" },
+	{ name: "etto", type: "png" },
+	{ name: "ew", type: "png" },
+	{ name: "flirtual", type: "png" },
+	{ name: "headphones", type: "gif" },
+	{ name: "long", type: "png" },
+	{ name: "nerd", type: "png" },
+	{ name: "pat", type: "gif" },
+	{ name: "patient", type: "png" },
+	{ name: "pride", type: "png" },
+	{ name: "rose", type: "png" },
+	{ name: "think", type: "png" }
+];
+
+const customEmojis = Object.fromEntries(
+	emojis.map(({ name, type, hidden = false }) => [
+		`:${name}:`,
+		{
+			url: `https://img.flirtu.al/emoji/${name}.${type}`,
+			hidden
+		}
+	])
+);
+
 export const ConversationChatbox: React.FC<
 	React.ComponentProps<"div"> & {
 		conversationId: string | null;
@@ -158,8 +189,9 @@ export const ConversationChatbox: React.FC<
 
 		return session.createChatbox({
 			theme,
-			messageField: { spellcheck: true, enterSendsMessage: !native }
-		});
+			messageField: { spellcheck: true, enterSendsMessage: !native },
+			customEmojis
+		} as ChatboxOptions);
 	}, [session, sessionTheme, native]);
 
 	const conversation = useMemo(() => {
