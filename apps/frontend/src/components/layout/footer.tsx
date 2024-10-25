@@ -106,37 +106,43 @@ export const Footer: React.FC<FooterProps> = ({
 						/>
 					</div>
 				</div>
-				<ul className="grid max-w-screen-wide grid-cols-4 gap-x-4 desktop:justify-center">
-					<FooterListLink href={urls.resources.events} label={t("events")} />
-					<FooterSupportLink />
-					<FooterCannyLink />
-					<FooterListLink
-						href={urls.resources.networkStatus}
-						label={t("status")}
-					/>
-					<FooterListLink href={urls.resources.about} label={t("about")} />
-					<FooterListLink href={urls.resources.press} label={t("press")} />
-					<FooterListLink
-						href={urls.resources.branding}
-						label={t("branding")}
-					/>
-					<FooterListLink
-						href={urls.resources.developers}
-						label={t("developers")}
-					/>
-					<FooterListLink
-						href={urls.resources.communityGuidelines}
-						label={t("guidelines")}
-					/>
-					<FooterListLink
-						href={urls.resources.termsOfService}
-						label={t("terms")}
-					/>
-					<FooterListLink
-						href={urls.resources.privacyPolicy}
-						label={t("privacy")}
-					/>
-				</ul>
+				<div className="grid max-w-screen-desktop grid-cols-3 gap-x-4 desktop:justify-center">
+					<ul>
+						<FooterListLink href={urls.resources.events} label={t("events")} />
+						<FooterSupportLink />
+						<FooterCannyLink />
+						<FooterListLink
+							href={urls.resources.networkStatus}
+							label={t("status")}
+						/>
+					</ul>
+					<ul>
+						<FooterListLink href={urls.resources.about} label={t("about")} />
+						<FooterListLink href={urls.resources.press} label={t("press")} />
+						<FooterListLink
+							href={urls.resources.branding}
+							label={t("branding")}
+						/>
+						<FooterListLink
+							href={urls.resources.developers}
+							label={t("developers")}
+						/>
+					</ul>
+					<ul>
+						<FooterListLink
+							href={urls.resources.communityGuidelines}
+							label={t("guidelines")}
+						/>
+						<FooterListLink
+							href={urls.resources.termsOfService}
+							label={t("terms")}
+						/>
+						<FooterListLink
+							href={urls.resources.privacyPolicy}
+							label={t("privacy")}
+						/>
+					</ul>
+				</div>
 				<div className="flex justify-between gap-2">
 					<MadeWithLove />
 					<div className="flex flex-col items-end">
