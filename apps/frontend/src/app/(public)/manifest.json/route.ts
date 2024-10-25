@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { siteOrigin } from "~/const";
 import { urls } from "~/urls";
 
+export const dynamic = "force-static";
+
 export async function GET() {
 	return NextResponse.json({
 		id: "flirtual",
