@@ -14,6 +14,7 @@ defmodule FlirtualWeb.SubscriptionController do
 
     conn
     |> put_resp_header("cache-control", "public, max-age=86400, immutable")
+    |> put_resp_header("cdn-cache-control", "public, max-age=86400, immutable")
     |> json_with_etag(plans)
   end
 
