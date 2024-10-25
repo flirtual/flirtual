@@ -65,7 +65,7 @@ function getContentSecurityPolicy() {
 			new URL(sentryDsn).origin
 		],
 		"font-src": ["'self'"],
-		"object-src": ["'none'"],
+		"object-src": ["'self'", "data:"],
 		"base-uri": ["'self'"],
 		"form-action": ["'self'"],
 		"frame-ancestors": ["'none'"],
