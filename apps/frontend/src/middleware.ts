@@ -56,6 +56,7 @@ function getContentSecurityPolicy() {
 			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 			"https://*.talkjs.com",
 			"wss://*.talkjs.com",
+			"https://capture.trackjs.com",
 			// https://developers.canny.io/
 			"https://api.canny.io",
 			// https://developers.freshdesk.com/widget-api/
