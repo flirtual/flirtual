@@ -97,7 +97,13 @@ export const BiographyForm: FC<{ games: AttributeCollection<"game"> }> = ({
 					<FormField name="displayName">
 						{(field) => (
 							<>
-								<InputLabel {...field.labelProps}>Display name</InputLabel>
+								<InputLabel
+									inline
+									hint="For your privacy, please do not put your Discord username here (or any other usernames that you use). This helps you avoid unwanted messages on other platforms!"
+									{...field.labelProps}
+								>
+									Display name
+								</InputLabel>
 								<InputText {...field.props} />
 							</>
 						)}
