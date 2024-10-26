@@ -153,7 +153,8 @@ const emojis: Array<{ name: string; type: "png" | "gif"; hidden?: boolean }> = [
 	{ name: "patient", type: "png" },
 	{ name: "pride", type: "png" },
 	{ name: "rose", type: "png" },
-	{ name: "think", type: "png" }
+	{ name: "think", type: "png" },
+	{ name: "yonk", type: "png" }
 ];
 
 const customEmojis = Object.fromEntries(
