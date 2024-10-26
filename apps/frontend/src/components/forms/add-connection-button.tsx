@@ -118,7 +118,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 			>
 				<Icon className={twMerge("size-6", iconClassName)} />
 			</button>
-			<div className="flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
+			<div className="pointer-events-none flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
 				<span className="text-sm leading-none opacity-75">{label}</span>
 				{text}
 			</div>
