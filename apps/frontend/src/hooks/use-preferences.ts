@@ -1,15 +1,12 @@
 "use client";
 
-import { use, useCallback, useDebugValue, useState, useMemo } from "react";
+import { useCallback, useDebugValue } from "react";
 import { Preferences } from "@capacitor/preferences";
+import useSWR from "swr";
 
-export async function getPreference<T>(key: string, defaultValue: T) {
-	return (
-		typeof window === "undefined"
-			? Promise.resolve({ value: null })
-			: Preferences.get({ key })
-	).then(({ value: localValue }) =>
-		localValue ? (JSON.parse(localValue) as T) : defaultValue
+export async function getPreference<T>(key: string) {
+	return Preferences.get({ key }).then(({ value: localValue }) =>
+		localValue ? (JSON.parse(localValue) as T) : null
 	);
 }
 
@@ -22,25 +19,22 @@ export async function getPreference<T>(key: string, defaultValue: T) {
  * @see [Capacitor.js Preferences Plugin](https://capacitorjs.com/docs/apis/preferences)
  */
 export function usePreferences<T>(key: string, defaultValue: T) {
-	const [lastUpdated, setLastUpdated] = useState(Date.now());
-
-	const value = use(
-		useMemo(
-			() => getPreference(key, defaultValue),
-			[key, defaultValue, lastUpdated]
-		)
+	const { data, mutate } = useSWR(
+		["preferences", key] as const,
+		([, key]) => getPreference<T>(key),
+		{ suspense: true }
 	);
 
 	useDebugValue(key);
 
 	const set = useCallback(
-		(newValue: T) => {
-			void Preferences.set({ key, value: JSON.stringify(newValue) }).then(() =>
-				setLastUpdated(Date.now())
-			);
+		async (newValue: T) => {
+			await Preferences.set({ key, value: JSON.stringify(newValue) });
+			await mutate(newValue);
 		},
 		[key]
 	);
 
+	const value = data === null ? defaultValue : data;
 	return [value, set] as const;
 }

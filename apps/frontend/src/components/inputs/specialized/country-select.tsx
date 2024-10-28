@@ -16,7 +16,6 @@ import {
 import { InputSelect, type InputSelectProps, SelectItem } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
-	const t = useTranslations("inputs.country_select");
 	const tAttribute = useAttributeTranslation();
 	const locale = useLocale();
 
@@ -65,32 +64,34 @@ export function InputCountrySelect(props: InputCountrySelectProps) {
 
 	const locale = useLocale();
 
+	const options = useMemo(
+		() =>
+			countries
+				.map((countryId) => {
+					return {
+						id: countryId,
+						name:
+							tAttribute[countryId]?.name ??
+							getCountryName(locale, countryId) ??
+							countryId
+					};
+				})
+				.sort((a, b) => {
+					if (a.id === systemCountry) return -1;
+					if (b.id === systemCountry) return 1;
+
+					return a.name.localeCompare(b.name, locale);
+				}),
+		[countries]
+	);
+
 	return (
 		<InputSelect
 			{...props}
 			optional
 			Item={CountrySelectItem}
+			options={options}
 			placeholder={t("placeholder")}
-			options={useMemo(
-				() =>
-					countries
-						.map((countryId) => {
-							return {
-								id: countryId,
-								name:
-									tAttribute[countryId]?.name ??
-									getCountryName(locale, countryId) ??
-									countryId
-							};
-						})
-						.sort((a, b) => {
-							if (a.id === systemCountry) return -1;
-							if (b.id === systemCountry) return 1;
-
-							return a.name.localeCompare(b.name, locale);
-						}),
-				[countries]
-			)}
 		/>
 	);
 }

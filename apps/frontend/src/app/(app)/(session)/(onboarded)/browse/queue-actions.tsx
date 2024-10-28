@@ -4,6 +4,7 @@ import {
 	type Dispatch,
 	type FC,
 	type SetStateAction,
+	Suspense,
 	useCallback,
 	useEffect
 } from "react";
@@ -61,6 +62,13 @@ const Key = (props: { label: string }) => {
 	);
 };
 
+function DefaultTour() {
+	const [session] = useSession();
+	useDefaultTour(!session?.user.moderatorMessage);
+
+	return null;
+}
+
 export const _QueueActions: FC<{
 	kind: ProspectKind;
 	setAnimationDirection?: Dispatch<SetStateAction<QueueAnimationDirection>>;
@@ -86,8 +94,6 @@ export const _QueueActions: FC<{
 			});
 		}
 	}, [session?.user.createdAt]);
-
-	useDefaultTour(!session?.user.moderatorMessage);
 
 	const { data: queue } = useQueue(mode);
 	const { trigger, reset, data, error } = useMutation<
@@ -177,7 +183,8 @@ export const _QueueActions: FC<{
 	console.log(error?.json);
 
 	return (
-		<>
+		<Suspense>
+			<DefaultTour />
 			{match({ data, error })
 				.with({ data: { match: true } }, ({ data: { matchKind, userId } }) => (
 					<MatchDialog kind={matchKind} userId={userId} onClose={reset} />
@@ -345,12 +352,13 @@ export const _QueueActions: FC<{
 					</div>
 				</div>
 			)}
-		</>
+		</Suspense>
 	);
 };
 
 export const QueueActions = dynamic(() => Promise.resolve(_QueueActions), {
-	ssr: false
+	ssr: false,
+	loading: () => null
 });
 
 const MatchDialog: FC<{

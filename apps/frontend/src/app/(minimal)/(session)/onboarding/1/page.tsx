@@ -14,10 +14,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Onboarding1Page() {
-	const [games, interests, genders] = await Promise.all([
+	const [games, interests, genders, countries] = await Promise.all([
 		Attribute.list("game"),
 		Attribute.list("interest"),
-		Attribute.list("gender")
+		Attribute.list("gender"),
+		Attribute.list("country")
 	]);
 
 	return (
@@ -27,7 +28,8 @@ export default async function Onboarding1Page() {
 					fallback: {
 						[unstable_serialize(attributeKey("game"))]: games,
 						[unstable_serialize(attributeKey("gender"))]: genders,
-						[unstable_serialize(attributeKey("interest"))]: interests
+						[unstable_serialize(attributeKey("interest"))]: interests,
+						[unstable_serialize(attributeKey("country"))]: countries
 					}
 				}}
 			>
