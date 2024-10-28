@@ -13,15 +13,17 @@ export interface NavigationalSwitchItemProps {
 	href: string;
 	icon: ReactNode; // FC<IconComponentProps & { gradient?: boolean }>;
 	className?: string;
+	strict?: boolean;
 }
 
 export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	icon,
 	className,
+	strict,
 	...props
 }) => {
 	const location = useLocation();
-	const active = urlEqual(toAbsoluteUrl(props.href), location, false);
+	const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
 
 	return (
 		<Link
