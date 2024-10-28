@@ -21,7 +21,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	...props
 }) => {
 	const location = useLocation();
-	const active = urlEqual(toAbsoluteUrl(props.href), location);
+	const active = urlEqual(toAbsoluteUrl(props.href), location, false);
 
 	return (
 		<Link

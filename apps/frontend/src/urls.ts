@@ -23,9 +23,11 @@ export function toRelativeUrl(url: { href: string; origin: string }) {
 	return url.href.slice(url.origin.length);
 }
 
-export function urlEqual(a: URL, b: URL) {
+export function urlEqual(a: URL, b: URL, strict: boolean = true) {
 	return (
-		a.origin === b.origin && a.pathname === b.pathname && a.search === b.search
+		a.origin === b.origin &&
+		a.pathname === b.pathname &&
+		(strict ? a.search === b.search : true)
 	);
 }
 
