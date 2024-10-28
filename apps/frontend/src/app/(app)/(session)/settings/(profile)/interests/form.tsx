@@ -30,10 +30,7 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useDevice } from "~/hooks/use-device";
 import { Profile } from "~/api/user/profile";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { Pill } from "~/components/profile/pill/pill";
 
 import type { Dispatch, FC } from "react";
@@ -73,7 +70,7 @@ const HighlightedText: FC<{ children: string; snippet: string }> = ({
 	);
 };
 
-const InterestSelectList: FC<{
+export const InterestSelectList: FC<{
 	filter: string;
 	selected: Array<string>;
 	onSelected: Dispatch<Array<string>>;

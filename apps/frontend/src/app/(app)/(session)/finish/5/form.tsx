@@ -78,7 +78,6 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 								<FormField className="col-span-2 wide:col-span-1" name="vrchat">
 									{(field) => (
 										<InputText
-											connection
 											Icon={VRChatIcon}
 											iconColor="#095d6a"
 											placeholder="VRChat"
@@ -93,7 +92,6 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 									>
 										{(field) => (
 											<InputText
-												connection
 												Icon={FaceTimeIcon}
 												iconColor="#34da4f"
 												placeholder="FaceTime number"

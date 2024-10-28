@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 
 import { imageOrigins } from "./urls";
-import { apiOrigin, environment, sentryDsn } from "./const";
+import {
+	apiOrigin,
+	environment,
+	sentryDsn,
+	uppyBucketOrigin,
+	uppyCompanionUrl
+} from "./const";
 import { playlistPlatforms } from "./components/profile/playlist";
 
 import type { NextRequest } from "next/server";
@@ -52,7 +58,10 @@ function getContentSecurityPolicy() {
 		],
 		"connect-src": [
 			"'self'",
+			"blob:",
 			apiOrigin,
+			uppyCompanionUrl,
+			uppyBucketOrigin,
 			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 			"https://*.talkjs.com",
 			"wss://*.talkjs.com",

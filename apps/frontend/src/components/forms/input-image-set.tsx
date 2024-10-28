@@ -29,6 +29,7 @@ import { useTheme } from "~/hooks/use-theme";
 import { groupBy } from "~/utilities";
 import { urls } from "~/urls";
 import { useDevice } from "~/hooks/use-device";
+import { uppyCompanionUrl } from "~/const";
 
 import {
 	ArrangeableImage,
@@ -152,7 +153,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			})
 			.use(GoldenRetriever, {})
 			.use(AwsS3, {
-				endpoint: "https://upload.flirtu.al",
+				endpoint: uppyCompanionUrl,
 				shouldUseMultipart: true,
 				limit: 15
 			})
@@ -166,7 +167,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		if (type === "profile") {
 			uppyInstance
 				.use(RemoteSources, {
-					companionUrl: "https://upload.flirtu.al",
+					companionUrl: uppyCompanionUrl,
 					sources: user.tags?.includes("debugger") ? ["Facebook"] : []
 				})
 				.use(ImageEditor, {
