@@ -1,6 +1,6 @@
 "use client";
 
-import { InAppBrowser } from "@capgo/inappbrowser";
+import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -27,7 +27,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const [session] = useSession();
 	const router = useRouter();
 	const toasts = useToast();
-	const { platform, native } = useDevice();
+	const { native } = useDevice();
 
 	const connection = useMemo(() => {
 		return session
@@ -70,14 +70,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 						);
 					}
 
-					if (platform === "android") {
-						toasts.add(
-							"Sorry, Discord connection is currently only available on our website."
-						);
-						return;
-					}
-
-					const { authorizeUrl, state } = await Connection.authorize({
+					const { authorizeUrl } = await Connection.authorize({
 						type,
 						prompt: "consent",
 						next: url.href
@@ -88,14 +81,11 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						const query: any = Object.fromEntries(url.searchParams.entries());
 
-						if ("code" in query && "state" in query) {
-							if (query.state !== state) {
-								await InAppBrowser.removeAllListeners();
-								await InAppBrowser.close();
-
-								return;
-							}
-
+						if ("error" in query) {
+							await InAppBrowser.removeAllListeners();
+							await InAppBrowser.close();
+						}
+						if ("code" in query) {
 							setTimeout(async () => {
 								const response = await Connection.grant({
 									...query,
@@ -113,7 +103,10 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 						}
 					});
 
-					await InAppBrowser.open({ url: authorizeUrl });
+					await InAppBrowser.openWebView({
+						url: authorizeUrl,
+						toolbarType: ToolBarType.BLANK
+					});
 				}}
 			>
 				<Icon className={twMerge("size-6", iconClassName)} />

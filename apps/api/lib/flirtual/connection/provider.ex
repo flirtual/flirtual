@@ -19,20 +19,30 @@ defmodule Flirtual.Connection.Provider do
         {:error, :not_supported}
       end
 
-      def redirect_url() do
+      def redirect_url(options \\ []) do
         {:ok,
          Application.get_env(:flirtual, :origin)
-         |> URI.merge("/v1/connections/grant?" <> URI.encode_query(%{type: @provider_name}))}
+         |> URI.merge(
+           "/v1/connections/grant?" <>
+             URI.encode_query(
+               %{
+                 type: @provider_name
+               }
+               |> Map.merge(
+                 if(Keyword.get(options, :redirect, true), do: %{}, else: %{redirect: "off"})
+               )
+             )
+         )}
       end
 
-      def redirect_url!() do
-        case redirect_url() do
+      def redirect_url!(options \\ []) do
+        case redirect_url(options) do
           {:ok, url} -> url
           {:error, reason} -> raise reason
         end
       end
 
-      def exchange_code(_) do
+      def exchange_code(_, _) do
         {:error, :not_supported}
       end
     end

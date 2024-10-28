@@ -90,7 +90,7 @@ export const Connection = {
 			}>();
 	},
 	grant(options: ConnectionGrantOptions) {
-		return this.api.url("/grant").query(options).post().res();
+		return this.api.url("/grant").query(options).get().res();
 	},
 	delete(type: ConnectionType) {
 		return this.api.query({ type }).delete().res();

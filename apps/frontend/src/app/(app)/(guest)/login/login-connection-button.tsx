@@ -1,13 +1,12 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { InAppBrowser } from "@capgo/inappbrowser";
+import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { useRouter } from "next/navigation";
 
 import {
 	Connection,
 	ConnectionMetadata,
-	type ConnectionAuthorizeOptions,
 	type ConnectionType
 } from "~/api/connections";
 import { useLocation } from "~/hooks/use-location";
@@ -44,31 +43,32 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 				const url = new URL(location.href);
 				url.search = "";
 
-				const authorizeOptions: ConnectionAuthorizeOptions = {
+				if (!native) {
+					return router.push(
+						Connection.authorizeUrl({
+							type,
+							prompt: "consent",
+							next: url.href
+						})
+					);
+				}
+
+				const { authorizeUrl } = await Connection.authorize({
 					type,
-					prompt: "none",
+					prompt: "consent",
 					next: url.href
-				};
-
-				if (!native)
-					return router.push(Connection.authorizeUrl(authorizeOptions));
-
-				const { authorizeUrl, state } =
-					await Connection.authorize(authorizeOptions);
+				});
 
 				await InAppBrowser.addListener("urlChangeEvent", async (event) => {
 					const url = new URL(event.url);
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					const query: any = Object.fromEntries(url.searchParams.entries());
 
-					if ("code" in query && "state" in query) {
-						if (query.state !== state) {
-							await InAppBrowser.removeAllListeners();
-							await InAppBrowser.close();
-
-							return;
-						}
-
+					if ("error" in query) {
+						await InAppBrowser.removeAllListeners();
+						await InAppBrowser.close();
+					}
+					if ("code" in query) {
 						setTimeout(async () => {
 							const response = await Connection.grant({
 								...query,
@@ -86,7 +86,10 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 					}
 				});
 
-				await InAppBrowser.open({ url: authorizeUrl });
+				await InAppBrowser.openWebView({
+					url: authorizeUrl,
+					toolbarType: ToolBarType.BLANK
+				});
 			}}
 		>
 			<Icon className={twMerge("size-6", iconClassName)} />

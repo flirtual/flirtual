@@ -67,13 +67,12 @@ defmodule Flirtual.Discord do
     end
   end
 
-  def authorize_url(_, %{state: state, prompt: prompt}) do
+  def authorize_url(_, %{prompt: prompt} = options) do
     URI.new(
       "https://discord.com/api/oauth2/authorize?" <>
         URI.encode_query(%{
           client_id: config(:client_id),
-          redirect_uri: redirect_url!(),
-          state: state,
+          redirect_uri: redirect_url!(redirect: Map.get(options, :redirect, true)),
           response_type: "code",
           scope: "identify email",
           prompt: prompt
@@ -81,7 +80,7 @@ defmodule Flirtual.Discord do
     )
   end
 
-  def exchange_code(code) when is_binary(code) do
+  def exchange_code(code, options \\ []) when is_binary(code) do
     with {:ok, %HTTPoison.Response{body: body}} <-
            HTTPoison.post(
              url("oauth2/token"),
@@ -89,7 +88,7 @@ defmodule Flirtual.Discord do
                client_id: config(:client_id),
                client_secret: config(:client_secret),
                grant_type: "authorization_code",
-               redirect_uri: redirect_url!(),
+               redirect_uri: redirect_url!(redirect: Keyword.get(options, :redirect, true)),
                code: code
              }),
              [{"content-type", "application/x-www-form-urlencoded"}]

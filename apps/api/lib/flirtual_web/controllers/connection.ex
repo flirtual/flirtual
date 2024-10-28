@@ -12,18 +12,6 @@ defmodule FlirtualWeb.ConnectionController do
 
   action_fallback(FlirtualWeb.FallbackController)
 
-  defp assign_state(conn, state) do
-    conn |> put_session(:state, state)
-  end
-
-  defp validate_state(conn, state) do
-    if get_session(conn, :state) !== state do
-      {:error, {:bad_request, :state_mismatch}}
-    else
-      {:ok, conn}
-    end
-  end
-
   def list_available(conn, _) do
     conn
     |> json(Connection.list_available(conn.assigns[:session].user))
@@ -33,19 +21,13 @@ defmodule FlirtualWeb.ConnectionController do
       when not is_nil(json) do
     type = to_atom(type)
 
-    state =
-      :crypto.strong_rand_bytes(8)
-      |> Base.encode16(case: :lower)
-
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, authorize_url} <- provider.authorize_url(conn, %{state: state, prompt: prompt}) do
+         {:ok, authorize_url} <-
+           provider.authorize_url(conn, %{prompt: prompt, redirect: false}) do
       conn
-      |> assign_state(state)
-      |> put_session(:manual_grant, true)
       |> put_session(:next, next)
       |> json(%{
-        authorize_url: authorize_url |> URI.to_string(),
-        state: state
+        authorize_url: authorize_url |> URI.to_string()
       })
     else
       {:error, :provider_not_found} ->
@@ -62,14 +44,9 @@ defmodule FlirtualWeb.ConnectionController do
   def authorize(conn, %{"type" => type, "prompt" => prompt, "next" => next}) do
     type = to_atom(type)
 
-    state =
-      :crypto.strong_rand_bytes(8)
-      |> Base.encode16(case: :lower)
-
     with {:ok, provider} <- Connection.provider(type),
-         {:ok, authorize_url} <- provider.authorize_url(conn, %{state: state, prompt: prompt}) do
+         {:ok, authorize_url} <- provider.authorize_url(conn, %{prompt: prompt}) do
       conn
-      |> assign_state(state)
       |> put_session(:next, next)
       |> redirect(external: authorize_url |> URI.to_string())
     else
@@ -96,7 +73,6 @@ defmodule FlirtualWeb.ConnectionController do
     next = if(next, do: next, else: get_session(conn, :next))
 
     conn
-    |> delete_session(:state)
     |> delete_session(:next)
     |> put_resp_header("access-control-expose-headers", "location")
     |> put_resp_header(
@@ -109,7 +85,6 @@ defmodule FlirtualWeb.ConnectionController do
 
   defp grant_error(conn, redirect_type, message) do
     conn
-    |> delete_session(:state)
     |> delete_session(:next)
     |> put_resp_header("access-control-expose-headers", "location")
     |> put_resp_header(
@@ -122,117 +97,118 @@ defmodule FlirtualWeb.ConnectionController do
     |> halt()
   end
 
-  def grant(conn, params = %{"type" => type, "code" => code, "state" => state}) do
+  def grant(conn, params = %{"redirect" => "off"}) do
+    conn |> resp(200, "") |> halt()
+  end
+
+  def grant(conn, %{"error" => error}) do
+    grant_error(conn, "auto", error)
+  end
+
+  def grant(conn, params = %{"type" => type, "code" => code}) do
     type = to_atom(type)
 
     redirect_type = params["redirect"] || "auto"
 
-    if(get_session(conn, :manual_grant)) do
-      conn
-      |> delete_session(:manual_grant)
-      |> resp(200, "")
-      |> halt()
-    else
-      with {:ok, provider} <- Connection.provider(type),
-           {:ok, conn} <- validate_state(conn, state),
-           {:ok, authorization} <- provider.exchange_code(code),
-           {:ok, profile} <- provider.get_profile(authorization),
-           connection <- Connection.get(uid: profile.uid, type: type) do
-        user = conn.assigns[:session] && conn.assigns[:session].user
+    with {:ok, provider} <- Connection.provider(type),
+         {:ok, authorization} <-
+           provider.exchange_code(code, redirect: redirect_type !== "manual"),
+         {:ok, profile} <- provider.get_profile(authorization),
+         connection <- Connection.get(uid: profile.uid, type: type) do
+      user = conn.assigns[:session] && conn.assigns[:session].user
 
-        case {user, connection} do
-          {%User{} = user, nil} ->
-            %Connection{}
-            |> Connection.changeset(profile)
-            |> change(%{user_id: user.id, type: type})
-            |> Repo.insert!()
+      case {user, connection} do
+        {%User{} = user, nil} ->
+          %Connection{}
+          |> Connection.changeset(profile)
+          |> change(%{user_id: user.id, type: type})
+          |> Repo.insert!()
 
-            # remove legacy connections
-            if type == :discord do
-              user.profile
-              |> change(%{
-                discord: nil
-              })
-              |> Repo.update()
-            end
+          # remove legacy connections
+          if type == :discord do
+            user.profile
+            |> change(%{
+              discord: nil
+            })
+            |> Repo.update()
+          end
 
-            Flag.check_flags(user.id, profile.display_name)
-            Flag.check_email_flags(user.id, profile.email)
+          Flag.check_flags(user.id, profile.display_name)
+          Flag.check_email_flags(user.id, profile.email)
 
-            Hash.check_hash(user.id, "email", profile.email)
-            Hash.check_hash(user.id, "#{Connection.provider_name!(type)} ID", profile.uid)
+          Hash.check_hash(user.id, "email", profile.email)
+          Hash.check_hash(user.id, "#{Connection.provider_name!(type)} ID", profile.uid)
 
-            Hash.check_hash(
-              user.id,
-              "#{Connection.provider_name!(type)} username",
-              profile.display_name
-            )
+          Hash.check_hash(
+            user.id,
+            "#{Connection.provider_name!(type)} username",
+            profile.display_name
+          )
 
-            grant_next(conn, redirect_type)
+          grant_next(conn, redirect_type)
 
-          {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id == user.id ->
-            grant_next(conn, redirect_type)
+        {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id == user.id ->
+          grant_next(conn, redirect_type)
 
-          {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id != user.id ->
-            Discord.deliver_webhook(:flagged_duplicate,
-              user: user,
-              duplicates: "https://flirtu.al/#{user_id}",
-              type: "#{Connection.provider_name!(type)} (connection updated)",
-              text: "#{profile.display_name} (#{profile.uid})"
-            )
+        {%User{} = user, %Connection{user: %User{id: user_id}}} when user_id != user.id ->
+          Discord.deliver_webhook(:flagged_duplicate,
+            user: user,
+            duplicates: "https://flirtu.al/#{user_id}",
+            type: "#{Connection.provider_name!(type)} (connection updated)",
+            text: "#{profile.display_name} (#{profile.uid})"
+          )
 
-            connection
-            |> change(%{user_id: user.id})
-            |> Repo.update!()
+          connection
+          |> change(%{user_id: user.id})
+          |> Repo.update!()
 
-            grant_next(conn, redirect_type)
+          grant_next(conn, redirect_type)
 
-          {nil, %Connection{user: %User{banned_at: nil} = login_user}} ->
-            next = get_session(conn, :next)
-            {_, conn} = SessionController.create(conn, login_user)
-            grant_next(conn, redirect_type, next)
+        {nil, %Connection{user: %User{banned_at: nil} = login_user}} ->
+          next = get_session(conn, :next)
+          {_, conn} = SessionController.create(conn, login_user)
+          grant_next(conn, redirect_type, next)
 
-          {nil, %Connection{user: %User{}}} ->
-            grant_error(
-              conn,
-              redirect_type,
-              "Your account has been banned, please check your email for details."
-            )
-
-          {nil, nil} ->
-            grant_error(
-              conn,
-              redirect_type,
-              "No Flirtual account found for this #{Connection.provider_name!(type)} user. Ensure you are logged into the correct #{Connection.provider_name!(type)} account. If you haven't linked your #{Connection.provider_name!(type)} account, log in with your email and password first, then add your #{Connection.provider_name!(type)} account in the Connections settings."
-            )
-        end
-      else
-        {:error, :unverified_email} ->
+        {nil, %Connection{user: %User{}}} ->
           grant_error(
             conn,
             redirect_type,
-            "Please verify your email with #{Connection.provider_name!(type)} and try again."
+            "Your account has been banned, please check your email for details."
           )
 
-        {:error, :provider_not_found} ->
-          grant_error(conn, redirect_type, "Provider not found.")
-
-        {:error, :not_supported} ->
-          grant_error(conn, redirect_type, "Grant not supported.")
-
-        {:error, :invalid_grant} ->
-          grant_error(conn, redirect_type, "Invalid grant.")
-
-        {:error, :upstream} ->
-          grant_error(conn, redirect_type, "Upstream error.")
-
-        {:error, {status, message}} when is_atom(status) and is_binary(message) ->
-          grant_error(conn, redirect_type, message)
-
-        reason ->
-          log(:error, [:grant], reason: reason)
-          grant_error(conn, redirect_type, "Internal Server Error.")
+        {nil, nil} ->
+          grant_error(
+            conn,
+            redirect_type,
+            "No Flirtual account found for this #{Connection.provider_name!(type)} user. Ensure you are logged into the correct #{Connection.provider_name!(type)} account. If you haven't linked your #{Connection.provider_name!(type)} account, log in with your email and password first, then add your #{Connection.provider_name!(type)} account in the Connections settings."
+          )
       end
+    else
+      {:error, :unverified_email} ->
+        grant_error(
+          conn,
+          redirect_type,
+          "Please verify your email with #{Connection.provider_name!(type)} and try again."
+        )
+
+      {:error, :provider_not_found} ->
+        grant_error(conn, redirect_type, "Provider not found.")
+
+      {:error, :not_supported} ->
+        grant_error(conn, redirect_type, "Grant not supported.")
+
+      {:error, :invalid_grant} ->
+        grant_error(conn, redirect_type, "Invalid grant.")
+
+      {:error, :upstream} ->
+        grant_error(conn, redirect_type, "Upstream error.")
+
+      {:error, {status, message}} when is_atom(status) and is_binary(message) ->
+        grant_error(conn, redirect_type, message)
+
+      reason ->
+        log(:error, [:grant], reason: reason)
+        grant_error(conn, redirect_type, "Internal Server Error.")
     end
   end
 end
