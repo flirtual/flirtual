@@ -13,7 +13,7 @@ export const MachineTranslatedLegal: FC<{
 	const t = useTranslations("machine-translated");
 	const locale = useLocale();
 
-	if (intended === locale) return null;
+	if (intended === locale.split("-")[0]) return null;
 
 	return (
 		<div className="flex flex-col gap-2 rounded-lg bg-brand-gradient px-6 py-4 font-montserrat text-white-10">
