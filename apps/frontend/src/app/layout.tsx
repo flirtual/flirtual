@@ -171,7 +171,7 @@ export default async function RootLayout({
 									<ClientScripts />
 									<AppUrlListener />
 								</head>
-								<body className={twMerge(fontClassNames, "overscroll-none")}>
+								<body className={fontClassNames}>
 									<InsetPreview />
 									<NextTopLoader
 										color={["#FF8975", "#E9658B"]}
