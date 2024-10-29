@@ -1,6 +1,6 @@
 "use client";
 
-import { Key, Trash2 } from "lucide-react";
+import { Key, X } from "lucide-react";
 import { useFormatter } from "next-intl";
 import { useRouter } from "next/navigation";
 
@@ -37,7 +37,7 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 				</span>
 			</div>
 			<div
-				className="ml-auto cursor-pointer self-center p-3 text-black-30 hover:text-red-600"
+				className="ml-auto cursor-pointer self-center p-3 opacity-50 hover:text-red-400 hover:opacity-100"
 				onClick={() => {
 					void Authentication.passkey
 						.delete(id)
@@ -48,7 +48,7 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 						.catch(toasts.addError);
 				}}
 			>
-				<Trash2 />
+				<X />
 			</div>
 		</div>
 	);
