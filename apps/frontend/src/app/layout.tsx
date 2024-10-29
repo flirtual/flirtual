@@ -1,33 +1,32 @@
-import { getMessages, getTranslations } from "next-intl/server";
-import { NextIntlClientProvider } from "next-intl";
-import { twMerge } from "tailwind-merge";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
-import { userAgentFromString } from "next/server";
-import { headers as getHeaders } from "next/headers";
-import { preconnect } from "react-dom";
-import { Montserrat, Nunito } from "next/font/google";
-import Script from "next/script";
-
-import { apiOrigin, siteOrigin } from "~/const";
-import { imageOrigins, urls } from "~/urls";
-import { resolveTheme } from "~/theme";
-import { ToastProvider } from "~/hooks/use-toast";
-import { SessionProvider } from "~/components/session-provider";
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
-import { ThemeProvider } from "~/hooks/use-theme";
-import { type DevicePlatform, DeviceProvider } from "~/hooks/use-device";
-import { TooltipProvider } from "~/components/tooltip";
-import AppUrlListener from "~/components/app-url-listener";
-import NativeStartup from "~/components/native-startup";
-import { InsetPreview } from "~/components/inset-preview";
-import { getInternationalization } from "~/i18n";
-import { InternationalizationProvider } from "~/hooks/use-internationalization";
-import { PreferenceThemes, type PreferenceTheme } from "~/api/user/preferences";
+import type { Metadata, Viewport } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations } from "next-intl/server";
+import { Montserrat, Nunito } from "next/font/google";
+import { headers as getHeaders } from "next/headers";
+import Script from "next/script";
+import { userAgentFromString } from "next/server";
+import { preconnect } from "react-dom";
+import { twMerge } from "tailwind-merge";
+
 import { Authentication } from "~/api/auth";
+import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
+import AppUrlListener from "~/components/app-url-listener";
+import { InsetPreview } from "~/components/inset-preview";
+import NativeStartup from "~/components/native-startup";
+import { SessionProvider } from "~/components/session-provider";
+import { TooltipProvider } from "~/components/tooltip";
+import { apiOrigin, siteOrigin } from "~/const";
+import { type DevicePlatform, DeviceProvider } from "~/hooks/use-device";
+import { InternationalizationProvider } from "~/hooks/use-internationalization";
+import { ThemeProvider } from "~/hooks/use-theme";
+import { ToastProvider } from "~/hooks/use-toast";
+import { getInternationalization } from "~/i18n";
+import { resolveTheme } from "~/theme";
+import { imageOrigins, urls } from "~/urls";
 
 import { ClientScripts } from "./client-scripts";
-
-import type { Metadata, Viewport } from "next";
 
 import "~/css/index.css";
 
@@ -113,8 +112,8 @@ export default async function RootLayout({
 
 	const userAgent = userAgentFromString(headers.get("user-agent")!);
 
-	const platform: DevicePlatform =
-		platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";
+	const platform: DevicePlatform
+		= platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";
 
 	const native = userAgent.ua.includes("Flirtual-Native");
 	const vision = userAgent.ua.includes("Flirtual-Vision");
@@ -123,9 +122,9 @@ export default async function RootLayout({
 	if (themeOverride && !PreferenceThemes.includes(themeOverride))
 		themeOverride = null;
 
-	const theme =
-		themeOverride ||
-		(vision ? "light" : (session?.user.preferences?.theme ?? "light"));
+	const theme
+		= themeOverride
+		|| (vision ? "light" : (session?.user.preferences?.theme ?? "light"));
 
 	const internationalization = await getInternationalization();
 
@@ -146,8 +145,8 @@ export default async function RootLayout({
 								<head suppressHydrationWarning>
 									<meta name="darkreader-lock" />
 									{theme === "system" && (
+										// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
 										<script
-											data-cfasync="false"
 											dangerouslySetInnerHTML={{
 												__html: `(() => {
   const resolveTheme = ${resolveTheme.toString()};
@@ -162,6 +161,7 @@ export default async function RootLayout({
 })()
 						`.trim()
 											}}
+											data-cfasync="false"
 										/>
 									)}
 									<link
@@ -170,7 +170,7 @@ export default async function RootLayout({
 										rel="mask-icon"
 									/>
 									<Script
-										src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill.js?version=4.8.0&features=Intl.DisplayNames,Intl.DisplayNames.~locale.${internationalization.locale.current}&flags=always`}
+										src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=Intl.DisplayNames,Intl.DisplayNames.~locale.${internationalization.locale.current}&flags=always`}
 									/>
 									<ClientScripts />
 									<AppUrlListener />

@@ -4,15 +4,15 @@ import {
 	type PermissionStatus,
 	PushNotifications
 } from "@capacitor/push-notifications";
+import { useRouter } from "next/navigation";
 import {
-	type PropsWithChildren,
 	createContext,
+	type PropsWithChildren,
 	useContext,
 	useEffect,
 	useMemo
 } from "react";
 import useSWR from "swr";
-import { useRouter } from "next/navigation";
 
 import { User } from "~/api/user";
 
@@ -33,9 +33,9 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 
 	useSWR("notifications-reset-count", () => {
 		if (
-			!session?.user.id ||
-			document.visibilityState === "hidden" ||
-			!session.user.pushCount
+			!session?.user.id
+			|| document.visibilityState === "hidden"
+			|| !session.user.pushCount
 		)
 			return;
 		return User.resetPushCount(session?.user.id);
@@ -54,10 +54,10 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		}
 	);
 
-	const pushRegistrationId =
-		(platform === "apple" && session?.user.apnsToken) ||
-		(platform === "android" && session?.user.fcmToken) ||
-		undefined;
+	const pushRegistrationId
+		= (platform === "apple" && session?.user.apnsToken)
+		|| (platform === "android" && session?.user.fcmToken)
+		|| undefined;
 
 	useSWR(
 		native && [
@@ -77,10 +77,10 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 					});
 
 					if (
-						!session ||
-						session.sudoerId ||
-						platform === "web" ||
-						pushRegistrationId === newPushRegistrationId
+						!session
+						|| session.sudoerId
+						|| platform === "web"
+						|| pushRegistrationId === newPushRegistrationId
 					)
 						return;
 
