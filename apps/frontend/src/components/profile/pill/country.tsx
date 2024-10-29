@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { twMerge } from "tailwind-merge";
 import { useLocale } from "next-intl";
+import type { FC } from "react";
+import { twMerge } from "tailwind-merge";
+
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 import { Pill } from "./pill";
-
-import type { FC } from "react";
 
 export function getCountryImage(countryId: string) {
 	return `https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/flags/4x3/${countryId}.svg`;
@@ -15,7 +16,7 @@ const _countryNames: Record<string, Intl.DisplayNames> = {};
 
 export function getCountryName(locale: string, countryId: string) {
 	_countryNames[locale] ??= new Intl.DisplayNames([locale], { type: "region" });
-	return _countryNames[locale].of(countryId);
+	return _countryNames[locale].of(countryId.toUpperCase());
 }
 
 export interface CountryPillProps {
@@ -29,25 +30,26 @@ export const CountryPill: FC<CountryPillProps> = ({
 	flagOnly = false,
 	className
 }) => {
+	const tAttribute = useAttributeTranslation();
 	const locale = useLocale();
-	const countryName = getCountryName(locale, id) ?? id;
+	const countryName = tAttribute[id.toUpperCase()]?.name ?? getCountryName(locale, id) ?? id;
 
 	return (
 		<Pill
-			hocusable={false}
-			small={true}
+			small
 			className={twMerge(
 				"shrink-0",
 				flagOnly && "overflow-hidden p-0",
 				className
 			)}
+			hocusable={false}
 		>
 			<img
-				src={getCountryImage(id)}
 				className={twMerge(
 					"aspect-[4/3] h-8 w-max shrink-0",
 					flagOnly ? "" : "-ml-4 rounded-l-xl"
 				)}
+				src={getCountryImage(id)}
 			/>
 			{!flagOnly && <span>{countryName}</span>}
 		</Pill>
