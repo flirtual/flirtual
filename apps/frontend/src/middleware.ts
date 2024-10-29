@@ -91,7 +91,9 @@ function getContentSecurityPolicy() {
 			// https://developers.canny.io/
 			"https://*.canny.io",
 			// https://www.chargebee.com/docs/2.0/embedded-checkout.html
-			"https://*.chargebee.com"
+			"https://*.chargebee.com",
+			// https://docs.widgetbot.io/
+			"https://e.widgetbot.io"
 		],
 		"upgrade-insecure-requests": []
 	};
