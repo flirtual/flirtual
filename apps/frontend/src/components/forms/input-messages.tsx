@@ -53,7 +53,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 		<div
 			ref={reference}
 			className={twMerge(
-				"flex gap-2 font-nunito",
+				"select-children flex gap-2 font-nunito",
 				formMessageStyle[type],
 				formMessageSize[size]
 			)}
