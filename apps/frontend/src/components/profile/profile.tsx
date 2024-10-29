@@ -2,6 +2,7 @@
 
 import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
+import { Copy } from "lucide-react";
 
 import { gradientTextColor } from "~/colors";
 import { urls } from "~/urls";
@@ -85,7 +86,7 @@ export function Profile(props: ProfileProps) {
 							</span>
 							{user.bornAt && (
 								<div className="flex h-fit items-center gap-2">
-									<span className="text-shadow-brand select-none text-3xl leading-none">
+									<span className="text-shadow-brand text-3xl leading-none">
 										{yearsAgo(new Date(user.bornAt))}
 									</span>
 									{user.tags?.includes("verified") && (
@@ -130,11 +131,15 @@ export function Profile(props: ProfileProps) {
 										copy: (children) => (
 											<CopyClick
 												value={
-													discordConnection?.displayName ||
-													user.profile.discord!
+													user.status === "visible"
+														? discordConnection?.displayName ||
+															user.profile.discord!
+														: null
 												}
 											>
-												<span>{children}</span>
+												<span className="data-[copy-click]:hover:underline">
+													{children}
+												</span>
 											</CopyClick>
 										)
 									})}
@@ -151,13 +156,25 @@ export function Profile(props: ProfileProps) {
 									{t.rich("zany_salty_cheetah_lead", {
 										name: user.profile.vrchat,
 										copy: (children) => (
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href={urls.vrchat(user.profile.vrchat!)}
-											>
-												{children}
-											</InlineLink>
+											<div className="group flex items-center justify-center gap-1">
+												<InlineLink
+													className="underline"
+													highlight={false}
+													href={urls.vrchat(user.profile.vrchat!)}
+												>
+													{children}
+												</InlineLink>
+												{user.status === "visible" && (
+													<CopyClick value={user.profile.vrchat!}>
+														<button
+															className="p-2 opacity-0 transition-opacity group-hover:opacity-100"
+															type="button"
+														>
+															<Copy className="size-4 shrink-0" />
+														</button>
+													</CopyClick>
+												)}
+											</div>
 										)
 									})}
 								</div>
@@ -178,7 +195,12 @@ export function Profile(props: ProfileProps) {
 						)
 					) : null}
 					{user.profile.biography ? (
-						<Html className="text-xl">
+						<Html
+							className={twMerge(
+								"text-xl",
+								user.status === "visible" && "select-children"
+							)}
+						>
 							{user.profile.biography.replaceAll(
 								/(<p>(<br\s?\/?>)+<\/p>){2,}?/g,
 								""
