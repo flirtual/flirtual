@@ -61,6 +61,7 @@ export interface UseInputForm<T extends FormFieldsDefault> {
 	changes: Array<keyof T>;
 	FormField: FormFieldFC<T>;
 	setFieldErrors: React.Dispatch<React.SetStateAction<FieldErrors<T>>>;
+	setErrors: React.Dispatch<React.SetStateAction<Array<string>>>;
 	setSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 	reset: (newValues: T | null) => void;
 	submit: (values?: T) => Promise<{
@@ -255,6 +256,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		props,
 		reset,
 		setFieldErrors,
+		setErrors,
 		setSubmitting,
 		submit,
 		submitting

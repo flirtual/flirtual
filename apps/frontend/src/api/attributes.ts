@@ -1,9 +1,8 @@
-import { gitCommitSha } from "~/const";
 import { cache } from "~/cache";
+import { gitCommitSha } from "~/const";
+import type { Expand } from "~/utilities";
 
 import { api } from "./common";
-
-import type { Expand } from "~/utilities";
 
 export type KinkAttributeKind = "dominant" | "submissive" | null;
 
@@ -61,8 +60,7 @@ export interface AttributeMetadata {
 	"report-reason"?: {
 		fallback?: boolean;
 	};
-	"ban-reason": {
-		//details: string;
+	"ban-reason"?: {
 		fallback?: boolean;
 	};
 	"delete-reason"?: {
@@ -81,10 +79,10 @@ export type Attribute<T = unknown> = {
 
 export type MinimalAttribute<T extends AttributeType> =
 	AttributeMetadata[T] extends infer A
-		? A extends undefined
-			? string
-			: Expand<Omit<Attribute<AttributeMetadata[T]>, "type">>
-		: never;
+	? A extends undefined
+	? string
+	: Expand<Omit<Attribute<AttributeMetadata[T]>, "type">>
+	: never;
 
 export type AttributeCollection<T extends AttributeType> = Array<
 	MinimalAttribute<T>

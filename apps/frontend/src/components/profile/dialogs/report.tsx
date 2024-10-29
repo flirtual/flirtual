@@ -1,9 +1,10 @@
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { type FC, type PropsWithChildren, useState } from "react";
+import { mutate } from "swr";
 
 import { Report } from "~/api/report";
-import { type User, displayName } from "~/api/user";
+import { displayName, type User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -26,6 +27,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { userKey } from "~/swr";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
@@ -52,8 +54,6 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 				</DialogHeader>
 				<DialogBody>
 					<Form
-						className="flex flex-col gap-8"
-						requireChange={false}
 						fields={{
 							targetId: user.id,
 							reasonId:
@@ -63,6 +63,8 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 							message: "",
 							images: [] as Array<ImageSetValue>
 						}}
+						className="flex flex-col gap-8"
+						requireChange={false}
 						onSubmit={async ({ reasonId, targetId, message, ...values }) => {
 							if (!reasonId) return;
 							await Report.create({
@@ -71,11 +73,10 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 								message,
 								images: values.images.map((image) => image.id).filter(Boolean)
 							});
+							mutate(userKey(user.id));
 
 							toasts.add(t("day_front_cat_cry"));
 							setOpen(false);
-
-							return router.refresh();
 						}}
 					>
 						{({ FormField }) => (
@@ -106,8 +107,8 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 											<InputSelect
 												{...field.props}
 												options={reasons.map((reason) => {
-													const id =
-														typeof reason === "object" ? reason.id : reason;
+													const id
+														= typeof reason === "object" ? reason.id : reason;
 
 													return {
 														id,

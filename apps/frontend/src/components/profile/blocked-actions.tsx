@@ -1,22 +1,22 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { mutate } from "swr";
+import useMutation from "swr/mutation";
 
-import { useToast } from "~/hooks/use-toast";
 import { displayName, User } from "~/api/user";
+import { useToast } from "~/hooks/use-toast";
+import { userKey } from "~/swr";
 
 import { Button } from "../button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { DialogTrigger } from "../dialog/dialog";
-
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { ReportDialog } from "./dialogs/report";
 
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 	const t = useTranslations("profile");
 	const toasts = useToast();
-	const router = useRouter();
 
 	return (
 		<div className="flex gap-4">
@@ -24,14 +24,12 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 				className="w-fit"
 				size="sm"
 				onClick={async () => {
-					await User.unblock(user.id)
-						.then(() => {
-							toasts.add(
-								t("top_sweet_macaw_pet", { displayName: displayName(user) })
-							);
-							return router.refresh();
-						})
-						.catch(toasts.addError);
+					await User.unblock(user.id).catch(toasts.addError);
+					mutate(userKey(user.id));
+
+					toasts.add(
+						t("top_sweet_macaw_pet", { displayName: displayName(user) })
+					);
 				}}
 			>
 				{t("polite_spicy_hamster_create")}

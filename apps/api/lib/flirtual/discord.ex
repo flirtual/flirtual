@@ -188,7 +188,7 @@ defmodule Flirtual.Discord do
             [
               %{
                 name: "Reason",
-                value: reason.id,
+                value: Map.get(Attribute.ban_reasons(), reason.id),
                 inline: true
               }
             ] ++
@@ -380,20 +380,6 @@ defmodule Flirtual.Discord do
     })
   end
 
-  @report_reasons %{ # TODO: Use translations
-    "Ur6iAuTDCktZe3zZQGqtZ2" => "Spam or troll account",
-    "wFkctcaaf5B4Ef5i3ggY3G" => "Hateful content",
-    "Wf4t9FT7Lmvnn73KqpZGPG" => "Violent or disturbing content",
-    "ymWd4JdTqpnBLmGSLmJRvY" => "Nude or NSFW pictures",
-    "AFe9ijRg9MYGubm2Efi4Ki" => "Harassment",
-    "Ec5fqqgVo5X3s4QCeFUJ6D" => "Impersonating me or someone else",
-    "MyexHAyY8gzQjBQ6agCSx3" => "Scam, malware, or harmful links",
-    "L6FRU2xjUiZwHUbegAcWTa" => "Advertising or solicitation",
-    "zu6HcxQxmJDDq4rmvJazkf" => "Underage user",
-    "BtJvp62cJ5vm6CeuCPTP5H" => "Illegal content",
-    "vTzgZw4Eexx7fehzCM9PQY" => "Self-harm content",
-    "9iwmQ8huhkngyY9BgLDE9W" => "Other"
-  }
   def deliver_webhook(:report, %Report{} = report) do
     webhook(:moderation_reports, %{
       embeds: [
@@ -409,7 +395,7 @@ defmodule Flirtual.Discord do
               },
               %{
                 name: "Reason",
-                value: Map.get(@report_reasons, report.reason.id),
+                value: Map.get(Attribute.report_reasons(), report.reason.id),
                 inline: true
               },
               if(not is_nil(report.target.shadowbanned_at),

@@ -258,6 +258,41 @@ defmodule Flirtual.Attribute do
     |> Enum.uniq_by(& &1.id)
     |> Enum.sort_by(& &1.order)
   end
+
+  # region [todo: replace with translations]
+  def report_reasons(), do: %{
+    "Ur6iAuTDCktZe3zZQGqtZ2" => "Spam or troll account",
+    "wFkctcaaf5B4Ef5i3ggY3G" => "Hateful content",
+    "Wf4t9FT7Lmvnn73KqpZGPG" => "Violent or disturbing content",
+    "ymWd4JdTqpnBLmGSLmJRvY" => "Nude or NSFW pictures",
+    "AFe9ijRg9MYGubm2Efi4Ki" => "Harassment",
+    "Ec5fqqgVo5X3s4QCeFUJ6D" => "Impersonating me or someone else",
+    "MyexHAyY8gzQjBQ6agCSx3" => "Scam, malware, or harmful links",
+    "L6FRU2xjUiZwHUbegAcWTa" => "Advertising or solicitation",
+    "zu6HcxQxmJDDq4rmvJazkf" => "Underage user",
+    "BtJvp62cJ5vm6CeuCPTP5H" => "Illegal content",
+    "vTzgZw4Eexx7fehzCM9PQY" => "Self-harm content",
+    "9iwmQ8huhkngyY9BgLDE9W" => "Other"
+  }
+
+  def ban_reasons(), do: %{
+    "tUaxdXYAcyeb3G4Qc7gNLh" => "Spam",
+    "WSD2yPcs64FB27qpb4AGuT" => "Impersonation",
+    "nupwCrjodUd4ZvPizEBc8L" => "Soliciting money",
+    "jBVZ29YcQ2dDXbURb6AxXk" => "Advertising",
+    "5H9nMhQacZBD9Zomu7Tbt9" => "Duplicate account",
+    "VgQw2st96dZKZotsnYUEaN" => "Ban evasion",
+    "muXMqNjneKnwqxT8nqcy4d" => "Underaged",
+    "dWDkcjmXQEQRVoXmNkutAB" => "Harassment",
+    "hLwvdpKQiofFTCDHox75SY" => "Hateful content",
+    "EVU7hHnv5u6eQwRBTW8aYU" => "NSFW content",
+    "KfFVwKB4DYMXx7foyqGUZM" => "Violent/disturbing content",
+    "YLsXz4iHn9yNLLLmuMHLCT" => "Self-harm content",
+    "Lfb829DEo36f54Uu3H3ybj" => "Scam, malware, or harmful links",
+    "HmF9W5yHfH3nLRYnt6F2cc" => "Illegal content",
+    "8P2pi5232LTpzGTDWkBprc" => "Other"
+  }
+  # endregion [todo: replace with translations]
 end
 
 defimpl Jason.Encoder, for: Flirtual.Attribute do

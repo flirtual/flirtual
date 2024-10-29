@@ -1,10 +1,13 @@
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import type { FC, PropsWithChildren } from "react";
+import { mutate } from "swr";
 
+import { displayName, User } from "~/api/user";
 import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
-import { displayName, User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
+import { userKey } from "~/swr";
 
 import {
 	AlertDialog,
@@ -15,8 +18,6 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle
 } from "../../dialog/alert";
-
-import type { FC, PropsWithChildren } from "react";
 
 export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
@@ -48,16 +49,14 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 						<Button
 							size="sm"
 							onClick={async () => {
-								await User.block(user.id)
-									.then(() => {
-										toasts.add(
-											t("swift_loved_albatross_leap", {
-												displayName: displayName(user)
-											})
-										);
-										return router.refresh();
+								await User.block(user.id).catch(toasts.addError);
+								mutate(userKey(user.id));
+
+								toasts.add(
+									t("swift_loved_albatross_leap", {
+										displayName: displayName(user)
 									})
-									.catch(toasts.addError);
+								);
 							}}
 						>
 							{t("block")}
