@@ -6,6 +6,7 @@ import { userAgentFromString } from "next/server";
 import { headers as getHeaders } from "next/headers";
 import { preconnect } from "react-dom";
 import { Montserrat, Nunito } from "next/font/google";
+import Script from "next/script";
 
 import { apiOrigin, siteOrigin } from "~/const";
 import { imageOrigins, urls } from "~/urls";
@@ -167,6 +168,9 @@ export default async function RootLayout({
 										color="#e9658b"
 										href={SafariPinnedTabImage.src}
 										rel="mask-icon"
+									/>
+									<Script
+										src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill.js?version=4.8.0&features=Intl.DisplayNames,Intl.DisplayNames.~locale.${internationalization.locale.current}&flags=always`}
 									/>
 									<ClientScripts />
 									<AppUrlListener />

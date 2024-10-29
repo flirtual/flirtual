@@ -5,6 +5,8 @@ import { headers as getHeaders } from "next/headers";
 import settings from "../../project.inlang/settings.json";
 import { Authentication } from "../api/auth";
 
+import { polyfill } from "./polyfill";
+
 const { languageTags: languages, sourceLanguageTag } = settings;
 
 function getCountry(headers: Headers) {
@@ -36,11 +38,9 @@ export const getInternationalization = cache(async (override?: string) => {
 	if (override === preferred || (override && !languages.includes(override)))
 		override = undefined;
 	const current = override || preferred;
+	await polyfill(current);
 
 	const country = getCountry(headers);
-
-	await import("@formatjs/intl-displaynames/polyfill-force");
-	await import(`@formatjs/intl-displaynames/locale-data/${current}`);
 
 	return {
 		country,
