@@ -11,7 +11,7 @@ export const Slider = React.forwardRef<
 	<SliderPrimitive.Root
 		ref={reference}
 		className={twMerge(
-			"relative flex w-full touch-none select-none items-center",
+			"relative flex w-full touch-none items-center",
 			className
 		)}
 		{...props}

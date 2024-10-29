@@ -45,10 +45,10 @@ export default async function AboutPage() {
 					h1: (children) => (
 						<h1 className="text-2xl font-semibold">{children}</h1>
 					),
-					p: (children) => <p>{children}</p>,
+					p: (children) => <p className="select-children">{children}</p>,
 					italic: (children) => <i>{children}</i>,
 					group: (children) => (
-						<div className="fflex flex-col items-start">{children}</div>
+						<div className="flex flex-col items-start">{children}</div>
 					),
 					contact: (children) => (
 						<InlineLink href={urls.resources.contact}>{children}</InlineLink>
@@ -57,7 +57,9 @@ export default async function AboutPage() {
 						<InlineLink href={urls.resources.feedback}>{children}</InlineLink>
 					),
 					discord: (children) => (
-						<InlineLink href={urls.socials.discord}>{children}</InlineLink>
+						<InlineLink className="select-text" href={urls.socials.discord}>
+							{children}
+						</InlineLink>
 					),
 					"team-list": () => (
 						<TeamList>

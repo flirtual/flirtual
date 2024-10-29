@@ -103,9 +103,7 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 							: "text-black-70 focus:outline-none hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20"
 					)}
 				>
-					<span className="select-none font-nunito text-lg">
-						{option.label}
-					</span>
+					<span className="font-nunito text-lg">{option.label}</span>
 				</button>
 			</TooltipTrigger>
 			{(option.definition || option.definitionLink) && (

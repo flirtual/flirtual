@@ -150,7 +150,7 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 					{props.value.map(({ promptId, response }) => {
 						return (
 							<SortableItem id={promptId} key={promptId}>
-								<div className="flex select-none flex-col gap-2 rounded-xl bg-white-40 p-4 shadow-brand-1 vision:bg-white-40/70 vision:text-black-80 dark:bg-black-60">
+								<div className="flex flex-col gap-2 rounded-xl bg-white-40 p-4 shadow-brand-1 vision:bg-white-40/70 vision:text-black-80 dark:bg-black-60">
 									<div className="flex justify-between">
 										<InputLabel className="text-base opacity-70">
 											{tAttribute[promptId]?.name ?? promptId}

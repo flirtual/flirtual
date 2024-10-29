@@ -26,7 +26,7 @@ export default async function PrivacyPage() {
 		>
 			<MachineTranslatedLegal original={urls.resources.privacyPolicy} />
 			{t.rich("content", {
-				p: (children) => <p>{children}</p>,
+				p: (children) => <p className="select-children">{children}</p>,
 				strong: (children) => <strong>{children}</strong>,
 				"settings-privacy": (children) => (
 					<InlineLink href={urls.settings.privacy}>{children}</InlineLink>

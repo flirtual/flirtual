@@ -24,7 +24,7 @@ export default async function MentalHealthPage() {
 					<h1 className="text-2xl font-semibold">
 						{t("early_lazy_squid_advise")}
 					</h1>
-					<ul>
+					<ul className="select-children">
 						<li>
 							🌐{" "}
 							<InlineLink href="https://wikipedia.org/wiki/List_of_suicide_crisis_lines">
@@ -75,7 +75,7 @@ export default async function MentalHealthPage() {
 				</div>
 				<div className="flex flex-col gap-4">
 					<h1 className="text-2xl font-semibold">Discord</h1>
-					<p>
+					<p className="select-children">
 						<InlineLink href="https://discord.gg/advice">
 							Chill & Advice
 						</InlineLink>
@@ -85,7 +85,7 @@ export default async function MentalHealthPage() {
 				</div>
 				<div className="flex flex-col gap-4">
 					<h1 className="text-2xl font-semibold">VR/PC/iOS</h1>
-					<p>
+					<p className="select-children">
 						<InlineLink href="https://www.inner.world/">Innerworld</InlineLink>:
 						Peer support mental health groups in VR.
 					</p>

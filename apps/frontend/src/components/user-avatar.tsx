@@ -54,7 +54,7 @@ export const UserImage: React.FC<UserImageProps> = ({ src, ...props }) => {
 			{...props}
 			src={src}
 			className={twMerge(
-				"aspect-square shrink-0 select-none object-cover",
+				"aspect-square shrink-0 object-cover",
 				props.className
 			)}
 		/>

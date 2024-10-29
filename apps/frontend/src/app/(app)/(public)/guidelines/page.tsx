@@ -21,9 +21,11 @@ export default async function GuidelinesPage() {
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("title")}>
 			<div className="flex flex-col gap-8">
 				{t.rich("content", {
-					p: (children) => <p>{children}</p>,
+					p: (children) => <p className="select-text">{children}</p>,
 					section: (children) => (
-						<section className="flex flex-col gap-4">{children}</section>
+						<section className="select-children flex flex-col gap-4">
+							{children}
+						</section>
 					),
 					group: (children) => (
 						<div className="flex flex-col gap-1">{children}</div>

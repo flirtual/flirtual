@@ -42,7 +42,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	return (
 		<div
 			className={twMerge(
-				"flex w-full shrink-0 grow-0 select-none flex-col desktop:w-96 desktop:rounded-2xl desktop:bg-brand-gradient desktop:shadow-brand-1",
+				"flex w-full shrink-0 grow-0 flex-col desktop:w-96 desktop:rounded-2xl desktop:bg-brand-gradient desktop:shadow-brand-1",
 				!activeConversationId &&
 					"desktop:mx-auto desktop:w-full desktop:max-w-md"
 			)}

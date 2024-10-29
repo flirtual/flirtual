@@ -26,7 +26,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
 	<DropdownMenuPrimitive.SubTrigger
 		ref={reference}
 		className={twMerge(
-			"flex cursor-default select-none items-center rounded-md px-3 py-1.5 text-sm outline-none focus:bg-white-30 data-[state=open]:bg-white-30 data-[disabled]:opacity-50 dark:focus:bg-black-50 dark:data-[state=open]:bg-black-50",
+			"flex cursor-default items-center rounded-md px-3 py-1.5 text-sm outline-none focus:bg-white-30 data-[state=open]:bg-white-30 data-[disabled]:opacity-50 dark:focus:bg-black-50 dark:data-[state=open]:bg-black-50",
 			inset && "pl-8",
 			className
 		)}
@@ -82,7 +82,7 @@ const DropdownMenuItem = React.forwardRef<
 	<DropdownMenuPrimitive.Item
 		ref={reference}
 		className={twMerge(
-			"relative flex cursor-pointer select-none items-center rounded-md px-3 py-1.5 text-sm outline-none transition-colors focus:bg-white-30 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-black-50",
+			"relative flex cursor-pointer items-center rounded-md px-3 py-1.5 text-sm outline-none transition-colors focus:bg-white-30 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-black-50",
 			inset && "pl-8",
 			className
 		)}
@@ -99,7 +99,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
 		checked={checked}
 		ref={reference}
 		className={twMerge(
-			"relative flex cursor-pointer select-none items-center rounded-md px-3 py-1.5 pl-8 text-sm outline-none transition-colors focus:bg-white-30 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-black-50",
+			"relative flex cursor-pointer items-center rounded-md px-3 py-1.5 pl-8 text-sm outline-none transition-colors focus:bg-white-30 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-black-50",
 			className
 		)}
 		{...props}
@@ -122,7 +122,7 @@ const DropdownMenuRadioItem = React.forwardRef<
 	<DropdownMenuPrimitive.RadioItem
 		ref={reference}
 		className={twMerge(
-			"relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+			"relative flex cursor-default items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
 			className
 		)}
 		{...props}

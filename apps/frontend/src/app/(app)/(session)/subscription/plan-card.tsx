@@ -73,7 +73,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const inner = (
 		<div
 			className={twMerge(
-				"relative flex select-none flex-col justify-between gap-16 rounded-xl p-6 vision:text-black-80",
+				"relative flex flex-col justify-between gap-16 rounded-xl p-6 vision:text-black-80",
 				highlight
 					? "bg-white-20 shadow-brand-inset dark:bg-black-80"
 					: [

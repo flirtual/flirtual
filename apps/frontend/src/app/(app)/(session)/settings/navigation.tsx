@@ -38,7 +38,7 @@ export const SettingsNavigation: FC = () => {
 	const [, , logout] = useSession();
 
 	return (
-		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 select-none flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
+		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
 			<NavigationHeader {...{ navigationInner: layoutSegment }} />
 			<div className="vision:bg-none desktop:rounded-2xl desktop:rounded-t-none desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
 				<nav

@@ -49,10 +49,10 @@ export default async function SubscriptionPage() {
 			<PlatformMismatchMessage />
 			{subscription && (
 				<div data-sentry-mask className="flex flex-col gap-4">
-					<h1 className="select-none text-2xl font-semibold">
+					<h1 className="text-2xl font-semibold">
 						{subscription.active ? "Active" : "Inactive"} Subscription
 					</h1>
-					<div className="flex select-none flex-col">
+					<div className="flex flex-col">
 						<div className="flex items-center gap-2">
 							<Sparkles className="inline size-5" />
 							<span>{subscription.plan.name}</span>
@@ -70,7 +70,7 @@ export default async function SubscriptionPage() {
 			</MatchSubscriptionPlatform>
 			<div className="flex flex-col gap-8">
 				{subscription?.active ? (
-					<ul className="select-none text-lg">
+					<ul className="text-lg">
 						<li>
 							👀{" "}
 							<InlineLink href={urls.likes}>
@@ -97,7 +97,7 @@ export default async function SubscriptionPage() {
 						</li>
 					</ul>
 				) : (
-					<ul className="flex select-none flex-col gap-4">
+					<ul className="flex flex-col gap-4">
 						<li className="flex flex-col">
 							<span className="text-lg font-semibold">
 								👀 See who likes you before you match

@@ -139,7 +139,7 @@ export function InputAutocomplete<K extends string>(
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<div>
-											<span className="pointer-events-none select-none font-nunito text-lg text-white-20">
+											<span className="pointer-events-none font-nunito text-lg text-white-20">
 												{option.label}
 											</span>
 										</div>

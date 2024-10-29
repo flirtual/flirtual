@@ -24,7 +24,7 @@ export const NavigationItemMessage: FC = () => {
 				/>
 				{conversationCount !== 0 && (
 					<div className="absolute left-5 top-0 flex h-5 w-fit items-center justify-center rounded-full bg-brand-gradient px-1 opacity-100 ring-[2.5px] ring-white-20 transition-all group-hocus:scale-0 group-hocus:opacity-0">
-						<span className="select-none text-sm font-semibold leading-none text-white-20">
+						<span className="text-sm font-semibold leading-none text-white-20">
 							{formatter.number(conversationCount)}
 						</span>
 					</div>

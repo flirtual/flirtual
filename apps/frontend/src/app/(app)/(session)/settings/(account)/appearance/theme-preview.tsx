@@ -38,7 +38,7 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 				>
 					<Image
 						alt={`${capitalize(theme)} theme preview`}
-						className="select-none rounded-lg"
+						className="rounded-lg"
 						height={206}
 						src={urls.media(ThemeImage[theme])}
 						width={320}

@@ -27,7 +27,7 @@ export const ReferralTicket: React.FC<{ code: string }> = ({ code }) => {
 				>
 					<div className="flex justify-center gap-1.5 text-white-10">
 						<ShareIcon className="mt-0.5 h-6" />
-						<span className="select-none font-montserrat text-lg font-semibold uppercase">
+						<span className="font-montserrat text-lg font-semibold uppercase">
 							Share
 						</span>
 					</div>

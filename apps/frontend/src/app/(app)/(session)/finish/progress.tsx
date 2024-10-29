@@ -16,7 +16,7 @@ const ProgressLink: React.FC<{
 		<InlineLink
 			href={urls.finish(page)}
 			className={twMerge(
-				"z-10 hidden h-fit select-none justify-center px-3 hocus:no-underline desktop:flex",
+				"z-10 hidden h-fit justify-center px-3 hocus:no-underline desktop:flex",
 				active ? "text-white-10" : "text-black-70 dark:text-white-10"
 			)}
 		>

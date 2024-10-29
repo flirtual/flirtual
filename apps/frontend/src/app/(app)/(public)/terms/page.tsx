@@ -27,12 +27,14 @@ export default async function TermsPage() {
 				/>
 				{t.rich("content", {
 					section: (children: ReactNode) => (
-						<section className="flex flex-col gap-2">{children}</section>
+						<section className="select-children flex flex-col gap-2">
+							{children}
+						</section>
 					),
 					h1: (children: ReactNode) => (
 						<h1 className="text-2xl font-semibold">{children}</h1>
 					),
-					p: (children: ReactNode) => <p>{children}</p>,
+					p: (children: ReactNode) => <p className="select-text">{children}</p>,
 					ol: (children: ReactNode) => (
 						<ol className="list-decimal pl-4">{children}</ol>
 					),

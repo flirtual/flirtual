@@ -13,10 +13,7 @@ import { SupportButton } from "~/components/layout/support-button";
 import { InlineLink } from "~/components/inline-link";
 import { useSession } from "~/hooks/use-session";
 import { User } from "~/api/user";
-import {
-	useAttributes,
-	useAttributeTranslation
-} from "~/hooks/use-attribute";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 
 import type { FC } from "react";
 
@@ -63,7 +60,7 @@ export const DeleteForm: FC = () => {
 								</span>
 							</div>
 						)}
-					<span className="select-none">
+					<span>
 						We&apos;re sorry to see you go. Would you mind telling us why
 						you&apos;re deleting your account so we can improve?
 					</span>
@@ -91,7 +88,7 @@ export const DeleteForm: FC = () => {
 									}}
 								/>
 								{field.props.value === "sQcEHRLCffbLfcgM4zAELf" ? (
-									<p className="select-none">
+									<p>
 										Taking a break? You can{" "}
 										<InlineLink href={urls.settings.deactivateAccount}>
 											temporarily deactivate your account
@@ -136,7 +133,7 @@ export const DeleteForm: FC = () => {
 						)}
 					</FormField>
 					<div className="flex flex-col gap-4">
-						<span className="select-none">
+						<span>
 							Are you sure you want to delete your account?{" "}
 							<span className="font-semibold">This action is irreversible</span>
 							.

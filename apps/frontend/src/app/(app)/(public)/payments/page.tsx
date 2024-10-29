@@ -20,7 +20,7 @@ export default async function PaymentsPage() {
 
 	return (
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("title")}>
-			<div className="flex flex-col gap-4">
+			<div className="select-children flex flex-col gap-4">
 				<MachineTranslatedLegal original="/payments?language=en" />
 				<p>
 					California subscribers: you may cancel your subscription and request a

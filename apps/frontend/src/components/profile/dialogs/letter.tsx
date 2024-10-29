@@ -24,7 +24,7 @@ export const LetterDialog: FC<PropsWithChildren> = ({ children }) => {
 					<DialogTitle>Send a letter</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
-					<span className="select-none">
+					<span>
 						Skip the line and stand out with a letter. This will use one of your
 						0 envelopes. <InlineLink href={null}>Get more</InlineLink>
 					</span>

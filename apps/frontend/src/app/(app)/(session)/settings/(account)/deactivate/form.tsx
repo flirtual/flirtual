@@ -57,7 +57,7 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 								</ButtonLink>
 							</div>
 						)}
-						<span className="select-none">
+						<span>
 							{deactivated
 								? "This will make your profile visible to other people again."
 								: "This will temporarily remove you from matchmaking and hide your profile from other people until you come back here and reactivate your account."}

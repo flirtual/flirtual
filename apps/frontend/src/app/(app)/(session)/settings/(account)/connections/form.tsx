@@ -78,10 +78,10 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 					<>
 						<div className="flex flex-col gap-4">
 							<div className="flex flex-col gap-2">
-								<span className="flex select-none text-xl">
+								<span className="flex text-xl">
 									Add accounts to your profile
 								</span>
-								<span className="select-none text-black-50 vision:text-white-50 dark:text-white-50">
+								<span className="text-black-50 vision:text-white-50 dark:text-white-50">
 									People can see your accounts after you match, to help you meet
 									up. You&apos;ll also be able to log in to Flirtual with your
 									Discord account.
@@ -130,12 +130,12 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 						<div className="flex flex-col gap-4">
 							<div className="flex flex-col gap-2">
 								<div className="flex gap-2">
-									<span className="flex select-none text-xl">
+									<span className="flex text-xl">
 										Add a playlist to your profile
 									</span>
 									<NewBadge />
 								</div>
-								<span className="select-none text-black-50 vision:text-white-50 dark:text-white-50">
+								<span className="text-black-50 vision:text-white-50 dark:text-white-50">
 									Share your favorite music on your profile by adding a Spotify,
 									Apple Music, Tidal, Amazon Music, or Deezer playlist.
 								</span>
@@ -150,23 +150,23 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 								)}
 							</FormField>
 							{playlistSubmitted === "deezer.page.link" ? (
-								<span className="select-none italic text-red-600">
+								<span className="italic text-red-600">
 									Sorry, deezer.page.link links are not supported. Please
 									provide a deezer.com link. You can find this by following your
 									link and copying the URL from your browser.
 								</span>
 							) : playlistSubmitted === "youtube" ? (
-								<span className="select-none italic text-red-600">
+								<span className="italic text-red-600">
 									Sorry, YouTube Music playlists are not supported.
 								</span>
 							) : playlistSubmitted === "other" ? (
-								<span className="select-none italic text-black-50 vision:text-white-50 dark:text-white-50">
+								<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
 									If your playlist doesn&apos;t appear below, ensure you have
 									provided a valid <strong>public playlist</strong> link. Songs,
 									albums, and private playlists are not supported.
 								</span>
 							) : null}
-							<span className="select-none italic text-black-50 vision:text-white-50 dark:text-white-50">
+							<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
 								Be careful: if your real name or other personal information is
 								on your music streaming profile, it will be public.
 							</span>

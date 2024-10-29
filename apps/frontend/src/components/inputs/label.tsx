@@ -12,7 +12,7 @@ export const InputLabelHint: React.FC<React.ComponentProps<"span">> = (
 		<span
 			{...props}
 			className={twMerge(
-				"select-none text-base text-black-50 vision:text-white-50 dark:text-white-50",
+				"text-base text-black-50 vision:text-white-50 dark:text-white-50",
 				props.className
 			)}
 		/>
@@ -26,7 +26,7 @@ export const InputLabel: React.FC<InputLabelProps> = (props) => {
 		<label
 			{...elementProps}
 			className={twMerge(
-				"flex select-none items-baseline gap-x-2 font-nunito text-xl",
+				"flex items-baseline gap-x-2 font-nunito text-xl",
 				inline && "flex-col",
 				props.className
 			)}

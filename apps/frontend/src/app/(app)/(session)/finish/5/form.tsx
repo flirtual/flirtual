@@ -31,10 +31,8 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 			)}
 			<div className="flex flex-col gap-4">
 				<div>
-					<span className="flex select-none text-xl">
-						Add accounts to your profile
-					</span>
-					<span className="select-none text-black-50 vision:text-white-50 dark:text-white-50">
+					<span className="flex text-xl">Add accounts to your profile</span>
+					<span className="text-black-50 vision:text-white-50 dark:text-white-50">
 						People can see your accounts after you match, to help you meet up.
 						You&apos;ll also be able to log in to Flirtual with your Discord
 						account.

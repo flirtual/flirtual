@@ -15,7 +15,7 @@ export const PressItem: React.FC<PressItemProps> = (props) => {
 	const { dateTime } = useFormatter();
 
 	return (
-		<div className="flex flex-col text-xl">
+		<div className="select-children flex flex-col text-xl">
 			<InlineLink className="font-semibold" href={props.href}>
 				{props.name}
 			</InlineLink>

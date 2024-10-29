@@ -135,7 +135,7 @@ const SelectItem = React.forwardRef<
 	<SelectPrimitive.Item
 		ref={reference}
 		className={twMerge(
-			"relative flex w-full cursor-pointer select-none items-center px-4 py-2 text-left font-nunito text-black-70 focus:outline-none data-[disabled]:pointer-events-none data-[state=checked]:bg-brand-gradient data-[state=checked]:text-white-10 data-[disabled]:opacity-50 hocus:bg-white-40 hocus:outline-none dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20",
+			"relative flex w-full cursor-pointer items-center px-4 py-2 text-left font-nunito text-black-70 focus:outline-none data-[disabled]:pointer-events-none data-[state=checked]:bg-brand-gradient data-[state=checked]:text-white-10 data-[disabled]:opacity-50 hocus:bg-white-40 hocus:outline-none dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20",
 			className
 		)}
 		{...props}

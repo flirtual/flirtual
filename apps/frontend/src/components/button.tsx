@@ -9,7 +9,7 @@ import { isInternalHref } from "~/urls";
 import type { IconComponent } from "./icons";
 
 const defaultClassName = twMerge(
-	"group/button focusable flex shrink-0 select-none items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
+	"group/button focusable flex shrink-0 items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
 );
 
 const sizes = {

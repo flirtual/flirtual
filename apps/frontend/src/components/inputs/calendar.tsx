@@ -273,7 +273,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			{...elementProps}
 			tabIndex={-1}
 			className={twMerge(
-				"focusable-within h-fit origin-top-left select-none rounded-3xl bg-white-20 p-4 font-nunito text-black-70 dark:bg-black-60 dark:text-white-20 [@media(width<800px)]:scale-75",
+				"focusable-within h-fit origin-top-left rounded-3xl bg-white-20 p-4 font-nunito text-black-70 dark:bg-black-60 dark:text-white-20 [@media(width<800px)]:scale-75",
 				elementProps.className
 			)}
 		>
@@ -345,10 +345,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 						<thead>
 							<tr>
 								{weekNames.map((name, index) => (
-									<th
-										className="size-10 select-none font-extrabold"
-										key={index}
-									>
+									<th className="size-10 font-extrabold" key={index}>
 										{name}
 									</th>
 								))}

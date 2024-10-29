@@ -1,5 +1,7 @@
 import { twMerge } from "tailwind-merge";
 
+import { CopyClick } from "~/components/copy-click";
+
 export interface ColorBlockProps {
 	name: string;
 	value: string;
@@ -16,6 +18,8 @@ export const ColorBlock: React.FC<ColorBlockProps> = ({
 		style={{ background: value }}
 	>
 		<span className="text-lg font-semibold">{name}</span>
-		<pre className="[white-space:break-spaces]">{value}</pre>
+		<CopyClick value={value}>
+			<pre className="select-text [white-space:break-spaces]">{value}</pre>
+		</CopyClick>
 	</div>
 );

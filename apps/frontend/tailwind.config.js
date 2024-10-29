@@ -188,6 +188,9 @@ module.exports = {
 				},
 				".touch-callout-none": {
 					"-webkit-touch-callout": "none"
+				},
+				".select-children": {
+					"@apply [&_*]:select-text select-text": {}
 				}
 			});
 		})

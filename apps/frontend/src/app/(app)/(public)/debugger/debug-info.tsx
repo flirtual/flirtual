@@ -40,7 +40,7 @@ export const DebugInfo: React.FC = () => {
 
 	return (
 		<>
-			<div className="flex flex-col">
+			<div className="select-children flex flex-col">
 				<span className="text-lg font-bold">{t("spicy_pretty_tiger_pet")}</span>
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">{t("lucky_sound_opossum_absorb")} </span>
@@ -68,7 +68,7 @@ export const DebugInfo: React.FC = () => {
 					</span>
 				</div>
 			</div>
-			<div className="flex flex-col">
+			<div className="select-children flex flex-col">
 				<span className="text-lg font-bold">
 					{t("mushy_muddy_warthog_win")}
 				</span>
@@ -123,7 +123,7 @@ export const DebugInfo: React.FC = () => {
 					</span>
 				</div>
 			</div>
-			<div className="flex flex-col">
+			<div className="select-children flex flex-col">
 				<span className="text-lg font-bold">{t("dark_wild_mouse_roar")}</span>
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">{t("swift_short_koala_fond")} </span>
