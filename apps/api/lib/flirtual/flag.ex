@@ -110,6 +110,32 @@ defmodule Flirtual.Flag do
     :ok
   end
 
+  def check_discord_in_display_name(
+        %Profile{
+          user_id: user_id,
+          discord: discord
+        },
+        display_name
+      ) do
+    display_name_downcased = String.downcase(display_name)
+    discord_connection = Connection.get(user_id, :discord)
+    discord_display_name = discord_connection[:display_name] || discord
+
+    if discord_display_name == display_name_downcased do
+      now = DateTime.utc_now() |> DateTime.truncate(:second)
+
+      User
+      |> where(id: ^user_id)
+      |> Repo.update_all(set: [tns_discord_in_biography: now])
+    else
+      User
+      |> where(id: ^user_id)
+      |> Repo.update_all(set: [tns_discord_in_biography: nil])
+    end
+
+    :ok
+  end
+
   def check_user_slug(_, nil), do: :ok
   def check_user_slug(%User{slug: slug}, slug), do: :ok
 
@@ -125,6 +151,7 @@ defmodule Flirtual.Flag do
 
   def check_profile_display_name(profile, display_name) do
     with :ok <- check_flags(profile.user_id, display_name),
+         :ok <- check_discord_in_display_name(profile, display_name),
          :ok <- Hash.check_hash(profile.user_id, "display name", display_name) do
       :ok
     end
