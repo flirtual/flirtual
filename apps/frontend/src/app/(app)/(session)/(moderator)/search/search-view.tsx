@@ -1,4 +1,5 @@
 "use client";
+"use no memo";
 
 import {
 	type ColumnDef,
@@ -6,23 +7,26 @@ import {
 	getCoreRowModel,
 	useReactTable
 } from "@tanstack/react-table";
-import useSWR from "swr";
-import { type FC, useDeferredValue, useEffect, useState } from "react";
 import { Eye, EyeOff, Gavel, Gem, Search } from "lucide-react";
 import Link from "next/link";
+import { type FC, useDeferredValue, useEffect, useState } from "react";
+import useSWR from "swr";
 import { twMerge } from "tailwind-merge";
 
 import {
+	displayName,
 	type SearchOptions,
+	searchSortKeys,
 	User,
 	UserStatuses,
 	type UserTags,
-	displayName,
-	searchSortKeys,
 	userTags
 } from "~/api/user";
-import { ModelCard } from "~/components/model-card";
+import { Button } from "~/components/button";
+import { DateTimeRelative } from "~/components/datetime-relative";
 import { InputSelect, InputSwitch, InputText } from "~/components/inputs";
+import { ModelCard } from "~/components/model-card";
+import { ProfileDropdown } from "~/components/profile/dropdown";
 import {
 	Table,
 	TableBody,
@@ -31,19 +35,16 @@ import {
 	TableHeader,
 	TableRow
 } from "~/components/table";
-import { Button } from "~/components/button";
-import { UserThumbnail } from "~/components/user-avatar";
+import { TimeRelative } from "~/components/time-relative";
 import {
 	MinimalTooltip,
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger
 } from "~/components/tooltip";
-import { TimeRelative } from "~/components/time-relative";
-import { DateTimeRelative } from "~/components/datetime-relative";
-import { urls } from "~/urls";
-import { ProfileDropdown } from "~/components/profile/dropdown";
+import { UserThumbnail } from "~/components/user-avatar";
 import { useCurrentUser } from "~/hooks/use-session";
+import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
 export const columns: Array<ColumnDef<User>> = [
@@ -60,11 +61,13 @@ export const columns: Array<ColumnDef<User>> = [
 				>
 					<UserThumbnail user={user} />
 					<div className="flex flex-col">
-						{name === user.slug ? (
-							"-"
-						) : (
-							<span className="truncate">{name}</span>
-						)}
+						{name === user.slug
+							? (
+									"-"
+								)
+							: (
+									<span className="truncate">{name}</span>
+								)}
 						<span className="truncate text-xs brightness-75">{user.slug}</span>
 					</div>
 				</Link>
@@ -181,29 +184,37 @@ export const columns: Array<ColumnDef<User>> = [
 							/>
 						</TooltipTrigger>
 						<TooltipContent className="flex flex-col gap-1">
-							{user.bannedAt ? (
-								<>
-									<span>Banned</span>
-									<DateTimeRelative value={user.bannedAt} />
-								</>
-							) : user.indefShadowbannedAt ? (
-								<>
-									<span>Indefinite Shadowban</span>
-									<DateTimeRelative value={user.indefShadowbannedAt} />
-								</>
-							) : user.paymentsBannedAt ? (
-								<>
-									<span>Payments Banned</span>
-									<DateTimeRelative value={user.paymentsBannedAt} />
-								</>
-							) : user.shadowbannedAt ? (
-								<>
-									<span>Shadowbanned</span>
-									<DateTimeRelative value={user.shadowbannedAt} />
-								</>
-							) : (
-								<>No bans</>
-							)}
+							{user.bannedAt
+								? (
+										<>
+											<span>Banned</span>
+											<DateTimeRelative value={user.bannedAt} />
+										</>
+									)
+								: user.indefShadowbannedAt
+									? (
+											<>
+												<span>Indefinite Shadowban</span>
+												<DateTimeRelative value={user.indefShadowbannedAt} />
+											</>
+										)
+									: user.paymentsBannedAt
+										? (
+												<>
+													<span>Payments Banned</span>
+													<DateTimeRelative value={user.paymentsBannedAt} />
+												</>
+											)
+										: user.shadowbannedAt
+											? (
+													<>
+														<span>Shadowbanned</span>
+														<DateTimeRelative value={user.shadowbannedAt} />
+													</>
+												)
+											: (
+													<>No bans</>
+												)}
 						</TooltipContent>
 					</Tooltip>
 					<ProfileDropdown user={user} />
@@ -233,38 +244,40 @@ const DataTable: FC<{ data: Array<User>; admin: boolean }> = ({
 								{header.isPlaceholder
 									? null
 									: flexRender(
-											header.column.columnDef.header,
-											header.getContext()
-										)}
+										header.column.columnDef.header,
+										header.getContext()
+									)}
 							</TableHead>
 						))}
 					</TableRow>
 				))}
 			</TableHeader>
 			<TableBody>
-				{table.getRowModel().rows?.length ? (
-					table.getRowModel().rows.map((row) => (
-						<TableRow
-							data-state={row.getIsSelected() && "selected"}
-							key={row.id}
-						>
-							{row.getVisibleCells().map((cell) => (
-								<TableCell key={cell.id}>
-									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+				{table.getRowModel().rows?.length
+					? (
+							table.getRowModel().rows.map((row) => (
+								<TableRow
+									data-state={row.getIsSelected() && "selected"}
+									key={row.id}
+								>
+									{row.getVisibleCells().map((cell) => (
+										<TableCell key={cell.id}>
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
+										</TableCell>
+									))}
+								</TableRow>
+							))
+						)
+					: (
+							<TableRow>
+								<TableCell
+									className="h-[680px] text-center"
+									colSpan={columns.length}
+								>
+									No results.
 								</TableCell>
-							))}
-						</TableRow>
-					))
-				) : (
-					<TableRow>
-						<TableCell
-							className="h-[680px] text-center"
-							colSpan={columns.length}
-						>
-							No results.
-						</TableCell>
-					</TableRow>
-				)}
+							</TableRow>
+						)}
 			</TableBody>
 		</Table>
 	);
@@ -338,45 +351,42 @@ export const SearchView: React.FC = () => {
 												sort:
 													searchOptions.search === "" && value !== ""
 														? "similarity"
-														: value === "" &&
-															  searchOptions.sort === "similarity"
+														: value === ""
+															&& searchOptions.sort === "similarity"
 															? "created_at"
 															: searchOptions.sort,
 												search: value
 											};
-										})
-									}
+										})}
 								/>
 							</div>
 							<InputSelect
 								optional
-								placeholder="Any status"
-								value={searchOptions.status}
 								options={UserStatuses.map((status) => ({
 									name: status.split("_").map(capitalize).join(" "),
 									id: status
 								}))}
+								placeholder="Any status"
+								value={searchOptions.status}
 								onChange={(value) =>
 									setSearchOptions({
 										...searchOptions,
 										status: value
-									})
-								}
+									})}
 							/>
 							<InputSelect
 								optional
-								placeholder="Any tags"
-								value={searchOptions.tags?.[0] || ""}
 								options={userTags.map((tag) => ({
 									name: tag.split("_").map(capitalize).join(" "),
 									id: tag
 								}))}
+								placeholder="Any tags"
+								value={searchOptions.tags?.[0] || ""}
 								onChange={(value) =>
 									setSearchOptions({
 										...searchOptions,
 										tags: [value as UserTags]
-									})
-								}
+									})}
 							/>
 						</div>
 					</div>
@@ -384,18 +394,17 @@ export const SearchView: React.FC = () => {
 						<span>Sort</span>
 						<div className="flex items-center gap-2">
 							<InputSelect
-								value={searchOptions.sort}
 								options={searchSortKeys.map((sort) => ({
 									name: sort.split("_").map(capitalize).join(" "),
 									id: sort,
 									disabled: sort === "similarity" && searchOptions.search === ""
 								}))}
+								value={searchOptions.sort}
 								onChange={(value) =>
 									setSearchOptions({
 										...searchOptions,
 										sort: value
-									})
-								}
+									})}
 							/>
 							<InputSwitch
 								no="Ascending"
@@ -405,8 +414,7 @@ export const SearchView: React.FC = () => {
 									setSearchOptions({
 										...searchOptions,
 										order: value ? "desc" : "asc"
-									})
-								}
+									})}
 							/>
 						</div>
 					</div>
@@ -417,7 +425,11 @@ export const SearchView: React.FC = () => {
 				/>
 				<div className="flex items-center justify-end gap-2">
 					<div className="grow brightness-75">
-						<span>Page {page}</span>
+						<span>
+							Page
+							{" "}
+							{page}
+						</span>
 					</div>
 					<Button
 						disabled={page <= 1}
