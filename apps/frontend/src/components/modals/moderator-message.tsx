@@ -1,22 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import ms from "ms";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-
-import { useSession } from "~/hooks/use-session";
-import { urls } from "~/urls";
-import { useToast } from "~/hooks/use-toast";
-import { User } from "~/api/user";
-
-import { DrawerOrDialog } from "../drawer-or-dialog";
-import { Button } from "../button";
-import { InlineLink } from "../inline-link";
-import { DialogBody, DialogHeader, DialogTitle } from "../dialog/dialog";
-import { FlirtualLogo } from "../logo";
-
+import { useRouter } from "next/navigation";
 import type { Dispatch, FC, ReactNode } from "react";
+
+import { User } from "~/api/user";
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
+import { urls } from "~/urls";
+
+import { Button } from "../button";
+import { DialogBody, DialogHeader, DialogTitle } from "../dialog/dialog";
+import { DrawerOrDialog } from "../drawer-or-dialog";
+import { InlineLink } from "../inline-link";
+import { FlirtualLogo } from "../logo";
 
 export const ModerationMessageDialog: FC = () => {
 	const [session] = useSession();
@@ -33,8 +32,7 @@ export const ModerationMessageDialog: FC = () => {
 						toasts.add("Message acknowledged");
 						return router.refresh();
 					})
-					.catch(toasts.addError)
-			}
+					.catch(toasts.addError)}
 		>
 			{session.user.moderatorMessage}
 		</TrustAndSafetyDialog>
@@ -59,7 +57,7 @@ export const DiscordSpamDialog: FC = () => {
 	return (
 		<TrustAndSafetyDialog
 			closable
-			actions={
+			actions={(
 				<div className="grid grid-cols-2 gap-2">
 					<Button
 						size="sm"
@@ -70,7 +68,7 @@ export const DiscordSpamDialog: FC = () => {
 							router.refresh();
 						}}
 					>
-						Edit biography
+						Edit profile
 					</Button>
 					<Button
 						className="text-sm"
@@ -84,7 +82,7 @@ export const DiscordSpamDialog: FC = () => {
 						Remind me later
 					</Button>
 				</div>
-			}
+			)}
 			onOpenChange={async (open) => {
 				if (open) return;
 
@@ -92,23 +90,16 @@ export const DiscordSpamDialog: FC = () => {
 				router.refresh();
 			}}
 		>
-			To help prevent spam, we&apos;ve hidden your account from recently created
-			Flirtual accounts because it looks like you&apos;ve included your Discord
-			username in your biography.
-			<br />
-			<br />
-			We recommend removing{" "}
-			<span className="font-semibold">any references</span> to Discord from your
-			biography and instead{" "}
+			It looks like you&apos;ve mentioned your Discord username on your profile. For your privacy, we strongly recommend removing your Discord from your profile and
+			{" "}
 			<InlineLink href={urls.settings.connections}>
-				connect your Discord account
-			</InlineLink>{" "}
-			directly through your settings.
+				connecting your Discord account
+			</InlineLink>
+			{" "}
+			instead.
 			<br />
 			<br />
-			This way, your Discord will only be visible to people you match with or as
-			per your customized{" "}
-			<InlineLink href={urls.settings.privacy}>privacy settings</InlineLink>.
+			This helps protect you from spam and unwanted messages by only sharing your Discord with your matches.
 		</TrustAndSafetyDialog>
 	);
 };

@@ -14,7 +14,7 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 	return (
 		<ModelCard
 			branded
-			title="That's everyone!"
+			title="Out of profiles"
 			titleProps={{ className: "desktop:text-3xl" }}
 		>
 			<div className="flex flex-col gap-8">
@@ -23,7 +23,7 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 						love: (
 							<>
 								<div className="flex flex-col gap-4">
-									<p>You&apos;ve seen everyone that match your preferences.</p>
+									<p>You&apos;ve seen everyone that matches your preferences.</p>
 									<p>
 										To see more people, try expanding your
 										{" "}
@@ -59,7 +59,7 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 						friend: (
 							<>
 								<div className="flex flex-col gap-4">
-									<p>You&apos;ve seen everyone that match your preferences.</p>
+									<p>You&apos;ve seen everyone.</p>
 									<p>
 										Come back later! Each week hundreds of new Flirtual profiles
 										are created. Invite your friends to try Flirtual!
