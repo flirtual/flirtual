@@ -52,13 +52,11 @@ export const ProfileDropdownModerateSubmenu: FC<
 							<DropdownMenuItem
 								asChild
 								className="text-red-500"
-								onClick={() => {
-									User.unindefShadowban(user.id)
-										.then(() => {
-											toasts.add("User unshadowbanned");
-											return router.refresh();
-										})
-										.catch(toasts.addError);
+								onClick={async () => {
+									await User.unindefShadowban(user.id).catch(toasts.addError);
+									mutate(userKey(user.id));
+
+									toasts.add("User unshadowbanned");
 								}}
 							>
 								<button className="w-full gap-2" type="button">
@@ -71,13 +69,11 @@ export const ProfileDropdownModerateSubmenu: FC<
 							<DropdownMenuItem
 								asChild
 								className="text-red-500"
-								onClick={() => {
-									User.indefShadowban(user.id)
-										.then(() => {
-											toasts.add("User indefinitely shadowbanned");
-											return router.refresh();
-										})
-										.catch(toasts.addError);
+								onClick={async () => {
+									await User.indefShadowban(user.id).catch(toasts.addError);
+									mutate(userKey(user.id));
+
+									toasts.add("User indefinitely shadowbanned");
 								}}
 							>
 								<button className="w-full gap-2" type="button">
@@ -174,12 +170,8 @@ export const ProfileDropdownModerateSubmenu: FC<
 										<Button
 											size="sm"
 											onClick={async () => {
-												await User.delete(user.id)
-													.then(() => {
-														toasts.add("User deleted");
-														return router.refresh();
-													})
-													.catch(toasts.addError);
+												await User.delete(user.id).catch(toasts.addError);
+												toasts.add("User deleted");
 											}}
 										>
 											Delete account
