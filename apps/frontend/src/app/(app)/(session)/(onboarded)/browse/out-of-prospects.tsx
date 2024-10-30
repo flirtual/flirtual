@@ -1,10 +1,10 @@
+import type { FC } from "react";
+
+import type { ProspectKind } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
-
-import type { ProspectKind } from "~/api/matchmaking";
-import type { FC } from "react";
 
 export interface OutOfProspectsErrorProps {
 	mode: ProspectKind;
@@ -25,7 +25,8 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 								<div className="flex flex-col gap-4">
 									<p>You&apos;ve seen everyone that match your preferences.</p>
 									<p>
-										To see more people, try expanding your{" "}
+										To see more people, try expanding your
+										{" "}
 										<InlineLink href={urls.settings.matchmaking()}>
 											matchmaking filters
 										</InlineLink>
@@ -36,7 +37,8 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 										profiles are created. Invite your friends to try Flirtual!
 									</p>
 									<p>
-										You can also continue in{" "}
+										You can also continue in
+										{" "}
 										<InlineLink href={urls.browse("friend")}>
 											Homie Mode
 										</InlineLink>
@@ -85,11 +87,7 @@ export const FinishProfileError: React.FC = () => {
 			titleProps={{ className: "desktop:text-3xl" }}
 		>
 			<div className="flex flex-col gap-4">
-				<p>
-					You&apos;ve went through quite a few profiles already, let&apos;s
-					finish setting up your account before you continue. We&apos;ll need
-					you to finish your profile then you&apos;ll be back in the action.
-				</p>
+				<p>Your profile is currently hidden. Finish setting up your profile so that you can match with other users!</p>
 				<div className="flex gap-4">
 					<ButtonLink href={urls.finish(1)} size="sm">
 						Finish profile
@@ -104,14 +102,12 @@ export const ConfirmEmailError: React.FC = () => {
 	return (
 		<ModelCard
 			branded
-			title="You're invisible!"
+			title="Confirm your email"
 			titleProps={{ className: "desktop:text-3xl" }}
 		>
 			<div className="flex flex-col gap-4">
 				<p>
-					You&apos;ve checked out a lot of profiles so far! Before you continue,
-					let&apos;s wrap up your account setup. Please confirm your email to
-					make your profile visible to others and get back in action.
+					Your profile is currently hidden. Confirm your email to secure your account and continue using Flirtual.
 				</p>
 				<div className="flex gap-4">
 					<ButtonLink href={urls.confirmEmail()} size="sm">
