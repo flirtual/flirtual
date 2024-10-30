@@ -90,7 +90,7 @@ export const DiscordSpamDialog: FC = () => {
 				router.refresh();
 			}}
 		>
-			It looks like you&apos;ve mentioned your Discord username on your profile. For your privacy, we strongly recommend removing your Discord from your profile and
+			It looks like you&apos;ve mentioned your Discord username on your profile. For your privacy, we strongly recommend removing your Discord from your bio or display name and
 			{" "}
 			<InlineLink href={urls.settings.connections}>
 				connecting your Discord account
