@@ -71,6 +71,8 @@ function getContentSecurityPolicy() {
 			// https://developers.freshdesk.com/widget-api/
 			"https://*.freshworks.com",
 			"https://*.freshdesk.com",
+			// https://github.com/passkeydeveloper/passkey-authenticator-aaguids
+			"https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json",
 			// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
 			new URL(sentryDsn).origin
 		],

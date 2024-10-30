@@ -1,39 +1,37 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
-import { useTranslations } from "next-intl";
 import { Copy } from "lucide-react";
+import { useTranslations } from "next-intl";
+import type { ComponentProps, CSSProperties } from "react";
+import { twMerge } from "tailwind-merge";
 
-import { gradientTextColor } from "~/colors";
-import { urls } from "~/urls";
 import { displayName } from "~/api/user";
+import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
 import { yearsAgo } from "~/date";
-import { useUser } from "~/hooks/use-user";
 import { useSession } from "~/hooks/use-session";
+import { useUser } from "~/hooks/use-user";
+import { urls } from "~/urls";
 
-import { InlineLink } from "../inline-link";
-import { VRChatOutlineIcon, DiscordIcon } from "../icons";
 import { CopyClick } from "../copy-click";
-
-import { ProfileImageDisplay } from "./profile-image-display";
-import { ProfileVerificationBadge } from "./verification-badge";
-import { PillCollection } from "./pill/collection";
-import { ActivityIndicator } from "./activity-indicator";
-import { CountryPill } from "./pill/country";
+import { DiscordIcon, VRChatOutlineIcon } from "../icons";
+import { InlineLink } from "../inline-link";
 import { ProfileActionBar } from "./action-bar";
-import { GenderPills } from "./pill/genders";
+import { ActivityIndicator } from "./activity-indicator";
 import { BlockedProfile } from "./blocked";
 import { PersonalActions } from "./personal-actions";
-import { RelationActions } from "./relation-actions";
+import { PillCollection } from "./pill/collection";
+import { CountryPill } from "./pill/country";
+import { GenderPills } from "./pill/genders";
+import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfilePrompts } from "./prompts";
+import { RelationActions } from "./relation-actions";
+import { ProfileVerificationBadge } from "./verification-badge";
 
-import type { CSSProperties, ComponentProps } from "react";
-
-export type ProfileProps = ComponentProps<"div"> & {
+export type ProfileProps = {
 	userId: string;
 	direct?: boolean;
-};
+} & ComponentProps<"div">;
 
 export function Profile(props: ProfileProps) {
 	const { userId, direct = false, className, id, ...elementProps } = props;
@@ -54,7 +52,6 @@ export function Profile(props: ProfileProps) {
 
 	return (
 		<div
-			id={id}
 			style={
 				user.profile.color_1 && user.profile.color_2
 					? ({
@@ -67,6 +64,7 @@ export function Profile(props: ProfileProps) {
 						} as CSSProperties)
 					: {}
 			}
+			id={id}
 			{...elementProps}
 			data-sentry-mask
 			className={twMerge(
@@ -77,7 +75,7 @@ export function Profile(props: ProfileProps) {
 			<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-[1.25rem] desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
 				<ProfileImageDisplay
 					current={id !== "next-profile"}
-					images={user.profile.images}
+					user={user}
 				>
 					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
@@ -118,9 +116,9 @@ export function Profile(props: ProfileProps) {
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} user={user} />
-					{(discordConnection ||
-						user.profile.discord ||
-						user.profile.vrchat) && (
+					{(discordConnection
+						|| user.profile.discord
+						|| user.profile.vrchat) && (
 						<div className="flex flex-col gap-2 vision:text-white-20">
 							{(discordConnection || user.profile.discord) && (
 								<div className="flex items-center gap-2">
@@ -132,8 +130,8 @@ export function Profile(props: ProfileProps) {
 											<CopyClick
 												value={
 													user.status === "visible"
-														? discordConnection?.displayName ||
-															user.profile.discord!
+														? discordConnection?.displayName
+														|| user.profile.discord!
 														: null
 												}
 											>
@@ -181,40 +179,48 @@ export function Profile(props: ProfileProps) {
 							)}
 						</div>
 					)}
-					{user.profile.new && !myProfile ? (
-						session?.user.profile.new ? (
-							<span className="text-xl italic dark:text-white-20">
-								{t("strong_home_bullock_taste")}
-							</span>
-						) : (
-							<span className="text-xl italic dark:text-white-20">
-								{t("fuzzy_calm_ant_nudge", {
-									displayName: displayName(user)
-								})}
-							</span>
-						)
-					) : null}
-					{user.profile.biography ? (
-						<Html
-							className={twMerge(
-								"text-xl",
-								user.status === "visible" && "select-children"
-							)}
-						>
-							{user.profile.biography.replaceAll(
-								/(<p>(<br\s?\/?>)+<\/p>){2,}?/g,
-								""
-							)}
-						</Html>
-					) : myProfile ? (
-						<span className="text-xl italic dark:text-white-20">
-							{t.rich("early_quiet_giraffe_dine", {
-								"settings-bio": (children) => (
-									<InlineLink href={urls.settings.bio}>{children}</InlineLink>
+					{user.profile.new && !myProfile
+						? (
+								session?.user.profile.new
+									? (
+											<span className="text-xl italic dark:text-white-20">
+												{t("strong_home_bullock_taste")}
+											</span>
+										)
+									: (
+											<span className="text-xl italic dark:text-white-20">
+												{t("fuzzy_calm_ant_nudge", {
+													displayName: displayName(user)
+												})}
+											</span>
+										)
+							)
+						: null}
+					{user.profile.biography
+						? (
+								<Html
+									className={twMerge(
+										"text-xl",
+										user.status === "visible" && "select-children"
+									)}
+								>
+									{user.profile.biography.replaceAll(
+										/(<p>(<br\s?\/?>)+<\/p>){2,}?/g,
+										""
+									)}
+								</Html>
+							)
+						: myProfile
+							? (
+									<span className="text-xl italic dark:text-white-20">
+										{t.rich("early_quiet_giraffe_dine", {
+											"settings-bio": (children) => (
+												<InlineLink href={urls.settings.bio}>{children}</InlineLink>
+											)
+										})}
+									</span>
 								)
-							})}
-						</span>
-					) : null}
+							: null}
 					<ProfilePrompts prompts={user.profile.prompts} />
 					<PillCollection user={user} />
 				</div>

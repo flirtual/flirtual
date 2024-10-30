@@ -90,7 +90,7 @@ defmodule FlirtualWeb.ConnectionController do
     |> put_resp_header(
       "location",
       Application.fetch_env!(:flirtual, :frontend_origin)
-      |> URI.merge((get_session(conn, :next) || "/login") <> "?error=" <> message)
+      |> URI.merge((get_session(conn, :next) || "/login") <> "?error=" <> Atom.to_string(message))
       |> URI.to_string()
     )
     |> resp(if(redirect_type == "manual", do: 200, else: 307), "")
@@ -173,14 +173,14 @@ defmodule FlirtualWeb.ConnectionController do
           grant_error(
             conn,
             redirect_type,
-            "Your account has been banned, please check your email for details."
+            :account_banned
           )
 
         {nil, nil} ->
           grant_error(
             conn,
             redirect_type,
-            "No Flirtual account found for this #{Connection.provider_name!(type)} user. Ensure you are logged into the correct #{Connection.provider_name!(type)} account. If you haven't linked your #{Connection.provider_name!(type)} account, log in with your email and password first, then add your #{Connection.provider_name!(type)} account in the Connections settings."
+            :connection_account_not_found
           )
       end
     else
@@ -188,27 +188,27 @@ defmodule FlirtualWeb.ConnectionController do
         grant_error(
           conn,
           redirect_type,
-          "Please verify your email with #{Connection.provider_name!(type)} and try again."
+          :connection_verify_email
         )
 
       {:error, :provider_not_found} ->
-        grant_error(conn, redirect_type, "Provider not found.")
+        grant_error(conn, redirect_type, :provider_not_found)
 
       {:error, :not_supported} ->
-        grant_error(conn, redirect_type, "Grant not supported.")
+        grant_error(conn, redirect_type, :authorize_not_supported)
 
       {:error, :invalid_grant} ->
-        grant_error(conn, redirect_type, "Invalid grant.")
+        grant_error(conn, redirect_type, :invalid_grant)
 
       {:error, :upstream} ->
-        grant_error(conn, redirect_type, "Upstream error.")
+        grant_error(conn, redirect_type, :upstream_error)
 
       {:error, {status, message}} when is_atom(status) and is_binary(message) ->
         grant_error(conn, redirect_type, message)
 
       reason ->
         log(:error, [:grant], reason: reason)
-        grant_error(conn, redirect_type, "Internal Server Error.")
+        grant_error(conn, redirect_type, :internal_server_error)
     end
   end
 end

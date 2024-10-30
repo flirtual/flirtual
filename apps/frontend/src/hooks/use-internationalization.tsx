@@ -1,9 +1,10 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import { createContext, forwardRef, use, type PropsWithChildren } from "react";
+import { createContext, forwardRef, type PropsWithChildren, use, useEffect } from "react";
 
-import type { getInternationalization } from "~/i18n/request";
+import type { getInternationalization } from "~/i18n";
+
 export { useTranslations } from "next-intl";
 
 export type Internationalization = Awaited<
@@ -34,8 +35,8 @@ export const InternationalizationProvider = forwardRef<
 
 InternationalizationProvider.displayName = "InternationalizationProvider";
 
-export const useInternationalization = () => {
+export function useInternationalization() {
 	const internationalization = use(InternationalizationContext);
 
 	return internationalization;
-};
+}

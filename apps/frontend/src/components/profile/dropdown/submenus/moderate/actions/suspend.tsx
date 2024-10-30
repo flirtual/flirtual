@@ -1,8 +1,9 @@
 import { Gavel } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FC, useState } from "react";
+import { mutate } from "swr";
 
-import { User, displayName } from "~/api/user";
+import { displayName, User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -22,13 +23,14 @@ import {
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
 import { useToast } from "~/hooks/use-toast";
+import { userKey } from "~/swr";
 
 export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
 
 	const reasons = useAttributes("ban-reason");
-	const defaultReason = reasons[0]!;
+	const defaultReason = reasons[0] as string;
 	const tAttribute = useAttributeTranslation("ban-reason");
 
 	const [open, setOpen] = useState(false);
@@ -54,19 +56,18 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 				</DialogHeader>
 				<DialogBody>
 					<Form
-						className="flex flex-col gap-8"
-						requireChange={false}
 						fields={{
 							targetId: user.id,
-							reasonId: defaultReason.id,
-							message: tAttribute[defaultReason.id]!.details
+							reasonId: defaultReason,
+							message: tAttribute[defaultReason]!.details
 						}}
+						className="flex flex-col gap-8"
+						requireChange={false}
 						onSubmit={async ({ targetId, ...body }) => {
 							await User.suspend(targetId, body);
+							mutate(userKey(user.id));
 
 							toasts.add("Account banned");
-							router.refresh();
-
 							setOpen(false);
 						}}
 					>
@@ -97,10 +98,14 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 									{({ props }) => (
 										<InputSelect
 											{...props}
-											options={reasons.map(({ id }) => ({
-												id,
-												name: tAttribute[id]?.name || id
-											}))}
+											options={reasons.map((reason) => {
+												const id = typeof reason === "string" ? reason : reason.id;
+
+												return ({
+													id,
+													name: tAttribute[id]?.name || id
+												});
+											})}
 											onChange={(value) => {
 												props.onChange(value);
 												message.props.onChange(

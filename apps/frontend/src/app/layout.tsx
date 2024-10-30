@@ -169,9 +169,6 @@ export default async function RootLayout({
 										href={SafariPinnedTabImage.src}
 										rel="mask-icon"
 									/>
-									<Script
-										src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=Intl.DisplayNames,Intl.DisplayNames.~locale.${internationalization.locale.current}&flags=always`}
-									/>
 									<ClientScripts />
 									<AppUrlListener />
 								</head>

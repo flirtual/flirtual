@@ -67,6 +67,10 @@
   }
 }
 
+nextjs-portal {
+  @apply select-children;
+}
+
 
 
 iframe {

@@ -1,17 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { type FC, useMemo } from "react";
 import { SelectItemText } from "@radix-ui/react-select";
-import { useInView } from "react-intersection-observer";
 import { useLocale, useTranslations } from "next-intl";
+import { type FC, useMemo } from "react";
+import { useInView } from "react-intersection-observer";
 
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { useInternationalization } from "~/hooks/use-internationalization";
 import {
 	getCountryImage,
 	getCountryName
 } from "~/components/profile/pill/country";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useInternationalization } from "~/hooks/use-internationalization";
 
 import { InputSelect, type InputSelectProps, SelectItem } from "../select";
 
@@ -24,10 +24,10 @@ const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 
 	const [reference, viewed] = useInView({ triggerOnce: true });
 
-	const countryName =
-		tAttribute[countryId]?.name ??
-		getCountryName(locale, countryId) ??
-		countryId;
+	const countryName
+		= tAttribute[countryId.toUpperCase()]?.name
+		?? getCountryName(locale, countryId)
+		?? countryId;
 
 	if (!countryId) return null;
 
@@ -51,7 +51,7 @@ const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 
 export type InputCountrySelectProps = Omit<
 	InputSelectProps<string | null>,
-	"options" | "Item"
+	"Item" | "options"
 >;
 
 export function InputCountrySelect(props: InputCountrySelectProps) {
@@ -71,9 +71,9 @@ export function InputCountrySelect(props: InputCountrySelectProps) {
 					return {
 						id: countryId,
 						name:
-							tAttribute[countryId]?.name ??
-							getCountryName(locale, countryId) ??
-							countryId
+							tAttribute[countryId.toUpperCase()]?.name
+							?? getCountryName(locale, countryId)
+							?? countryId
 					};
 				})
 				.sort((a, b) => {
@@ -82,7 +82,7 @@ export function InputCountrySelect(props: InputCountrySelectProps) {
 
 					return a.name.localeCompare(b.name, locale);
 				}),
-		[countries]
+		[countries, locale, systemCountry, tAttribute]
 	);
 
 	return (

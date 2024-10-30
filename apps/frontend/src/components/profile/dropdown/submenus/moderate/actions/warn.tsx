@@ -1,8 +1,9 @@
 import { MailWarning } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FC, useState } from "react";
+import { mutate } from "swr";
 
-import { User, displayName } from "~/api/user";
+import { displayName, User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -18,6 +19,7 @@ import { Form, FormButton, FormMessage } from "~/components/forms";
 import { InputCheckbox, InputLabel, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import { useToast } from "~/hooks/use-toast";
+import { userKey } from "~/swr";
 
 export const WarnAction: FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
@@ -45,30 +47,28 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 				</DialogHeader>
 				<DialogBody>
 					<Form
-						className="flex flex-col gap-8"
-						requireChange={false}
 						fields={{
 							targetId: user.id,
 							message: user.moderatorMessage ?? "",
 							shadowban: false
 						}}
+						className="flex flex-col gap-8"
+						requireChange={false}
 						onSubmit={async ({ targetId, message, shadowban }) => {
 							if (!message) {
 								await User.deleteWarn(targetId);
+								mutate(userKey(user.id));
 
 								toasts.add("Account warning removed");
 								setOpen(false);
-
-								router.refresh();
 								return;
 							}
 
 							await User.warn(targetId, { message, shadowban });
+							mutate(userKey(user.id));
 
 							toasts.add("Account warned");
 							setOpen(false);
-
-							router.refresh();
 						}}
 					>
 						{({ FormField, fields: { message } }) => (
@@ -117,9 +117,16 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 										size="sm"
 										type={message.props.value ? "informative" : "warning"}
 									>
-										{displayName(user)} still has an{" "}
-										<strong>unacknowledged warning</strong>, you&apos;ll be{" "}
-										{message.props.value ? "overwriting" : "removing"} it.
+										{displayName(user)}
+										{" "}
+										still has an
+										{" "}
+										<strong>unacknowledged warning</strong>
+										, you&apos;ll be
+										{" "}
+										{message.props.value ? "overwriting" : "removing"}
+										{" "}
+										it.
 									</FormMessage>
 								)}
 								<DialogFooter>

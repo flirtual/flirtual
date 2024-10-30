@@ -46,7 +46,7 @@ defmodule FlirtualWeb.ReportController do
 
   def delete(conn, %{"target_id" => target_id}) do
     with reports <-
-           Report.list(target_id: target_id)
+           Report.list_unresolved(target_id: target_id)
            |> Enum.filter(&Policy.can?(conn, :delete, &1)),
          {:ok, count} <- Report.clear_all(reports, conn.assigns[:session].user) do
       conn |> json(%{count: count})

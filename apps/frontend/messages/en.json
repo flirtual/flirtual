@@ -1,501 +1,506 @@
 {
-  "meta": {
-    "name": "Flirtual",
-    "title": "%s - Flirtual",
-    "knotty_direct_mongoose_bend": "Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat.",
-    "green_plain_mongoose_lend": "The first VR dating app. Join thousands for dates in VR apps like VRChat."
-  },
-  "about": {
-    "title": "About us",
-    "image_alt": "Picture of the Flirtual Team in VRChat",
-    "content": "<section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><p><3 kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <feedback>have any suggestions</feedback>!</italic></p></section><section><h1>The team</h1><team-list></team-list></section><section><h1>Timeline</h1><timeline></timeline></section>",
-    "team": {
-      "image_alt": "{name}'s avatar",
-      "roles": {
-        "kfarwell": "Lead Developer",
-        "existony": "Partners, Design & Safety",
-        "aries": "Software Developer",
-        "moderator": "Moderator",
-        "event_host": "Event Host",
-        "social": "Socials",
-        "community_advisor": "Community Advisor",
-        "katten": "Community Advisor",
-        "syrmor": "Marketing Advisor",
-        "faxmashine": "VRChat World Creator",
-        "juice": "VRChat Avatar Creator"
-      }
-    },
-    "timeline": {
-      "2018": {
-        "title": "2018 🐣",
-        "description": "The first VR dating app is born.",
-        "image": "88bb9381-87ed-499d-9667-cd61eff96938",
-        "image_alt": "Flirtual in 2018"
-      },
-      "2019": {
-        "title": "🏆 2019",
-        "description": "VRLFP is named the best new technology at the iDate Awards.",
-        "image": "c373b72d-16a0-479c-b834-ccb7041bc615",
-        "image_alt": "Flirtual in 2019"
-      },
-      "2020": {
-        "title": "2020 🧪",
-        "description": "Some wacky concepts that eventually became the Flirtual you know and love today. Thanks for letting us cook.",
-        "image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
-        "image_alt": "Flirtual in 2020"
-      },
-      "2021": {
-        "title": "✌️ 2021",
-        "description": "ROVR is launched, a social matchmaking app for VR friends and groups. Its spirit lives on in Homie Mode.",
-        "image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
-        "image_alt": "Flirtual in 2021"
-      },
-      "2022": {
-        "title": "2022 😻",
-        "description": "VRLFP becomes Flirtual. Maybe people will remember how to spell our name now.",
-        "image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
-        "image_alt": "Flirtual in 2022"
-      },
-      "2023": {
-        "title": "✨ 2023",
-        "description": "New design, mobile apps, and big improvements behind the scenes.",
-        "image": "36446ecb-9103-4b6d-b221-7c657f17323d",
-        "image_alt": "Flirtual in 2023"
-      }
-    },
-    "images": {
-      "0": {
-        "image": "273de50f-7a03-4918-bd7c-331e11a00949",
-        "image_alt": "Flirtual's 12-hour Valentine's 2022 launch party with Vanguard",
-        "link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
-      },
-      "1": {
-        "image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
-        "image_alt": "Flirtual Speed Dating in VRChat",
-        "link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
-      },
-      "2": {
-        "image": "0d6b9258-a330-47cd-9964-eb0143f34825",
-        "image_alt": "Flirtual DJ Night in VRChat",
-        "link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
-      },
-      "3": {
-        "image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
-        "image_alt": "Flirtual at VRCon 2022",
-        "link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
-      },
-      "4": {
-        "image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
-        "image_alt": "Flirtual on the Today Show",
-        "link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
-      },
-      "5": {
-        "image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
-        "image_alt": "Flirtual at Vket 2023 Summer",
-        "link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
-      }
-    }
-  },
-  "branding": {
-    "title": "Branding",
-    "lime_soft_shad_skip": "Looking to use our art for something? Here it is. Please keep it tasteful and <contact>contact us</contact> for approval.",
-    "brave_early_weasel_arise": "Our logo",
-    "flaky_same_grizzly_snap": "Please do not edit, change, distort, recolor, or reconfigure the Flirtual logo.",
-    "mild_spry_hamster_persist": "Mark only",
-    "such_pink_jan_spur": "Use these only when the Flirtual brand is clearly visible or has been well established elsewhere on the page or in the design.",
-    "tasty_last_pony_transform": "Colors",
-    "gross_red_earthworm_reside": "Gradient",
-    "fair_yummy_penguin_harbor": "Dark Mode",
-    "empty_sharp_sheep_list": "Homie Mode",
-    "whole_round_penguin_pet": "Pink",
-    "known_trick_raven_sew": "Cream",
-    "wise_great_crow_foster": "Need more?",
-    "ornate_upper_guppy_mend": "Download our full press kit for more graphics and information.",
-    "tired_extra_bear_forgive": "Download"
-  },
-  "debugger": {
-    "title": "Debug information",
-    "spicy_pretty_tiger_pet": "Device",
-    "lucky_sound_opossum_absorb": "App platform:",
-    "vexed_yummy_tadpole_grow": "Browser:",
-    "known_spare_mantis_pet": "System:",
-    "hour_odd_kudu_dine": "Language:",
-    "mushy_muddy_warthog_win": "Session",
-    "wacky_spry_haddock_jump": "User profile:",
-    "spry_polite_elk_grace": "User object:",
-    "brief_neat_kestrel_ascend": "Unavailable",
-    "flat_civil_goat_absorb": "Sudoer object:",
-    "north_crisp_fly_dart": "Age:",
-    "dark_wild_mouse_roar": "Build",
-    "swift_short_koala_fond": "Environment:",
-    "each_zippy_millipede_pop": "Version:"
-  },
-  "download": {
-    "title": "Download",
-    "best_topical_mayfly_tap": "Download on",
-    "platform": {
-      "apple": "App Store",
-      "google": "Google Play",
-      "microsoft": "Microsoft Store",
-      "side_quest": "SideQuest"
-    }
-  },
-  "events": {
-    "title": "Events",
-    "gross_loose_stork_vent": "VRChat invite",
-    "fun_still_clownfish_arrive": "If an event is happening now, this button will take you there!",
-    "elegant_bald_parakeet_animate": "Start VRChat first and then click \"invite me\" on the next page. You'll get an invite from yourself in-game. <joining>Need help joining?</joining>",
-    "arable_nice_puma_comfort": "Join event",
-    "top_big_tern_twist": "Upcoming events",
-    "nimble_equal_loris_foster": "We host speed matching and DJ events every weekend in VRChat, and you're invited!",
-    "flaky_early_shad_nourish": "For our event schedule and announcements, <discord>join our Discord server</discord>.",
-    "quiet_lazy_marten_amuse": "VRChat worlds",
-    "blue_calm_chipmunk_spark": "Our weekly events are hosted in our VRChat worlds, but you can join them anytime! Feel free to use them for your own events too.",
-    "tidy_wise_robin_urge": "Flirtual Speed Dating",
-    "careful_wise_bumblebee_walk": "Get to know people in 1-on-1 speed dating/friend-making rounds. Each round is 3 minutes long (the host can choose a round length from 3-7 minutes). Conversation prompts, interest tags, and night mode included.",
-    "flat_ok_penguin_vent": "Flirtual Speed Dating",
-    "inclusive_simple_alligator_zap": "The Flirtual Club",
-    "sweet_mellow_ant_hunt": "Outdoor music festival with audiolink. Vibe on.",
-    "fine_low_deer_propel": "The Flirtual Club",
-    "dry_inclusive_ox_trust": "Created by <faxmashine>Faxmashine</faxmashine>, our worlds are compatible with PCVR, Quest, and Desktop. New to VRChat? <vrchat>Sign up for free.</vrchat>"
-  },
-  "guidelines": {
-    "title": "Community Guidelines",
-    "content": "<p>We want Flirtual to be a positive, welcoming space for everyone. These community guidelines give more information on how we moderate user profiles and behavior on Flirtual. Breaking these guidelines will result in account moderation, such as a permanent ban from Flirtual. We reserve the right to moderate accounts at our discretion.</p><section><h1>Respect each other</h1><group><h2>No hate speech or hateful actions against any group</h2><p>This includes racist, sexist, or otherwise hateful symbols and contentagainst certain groups in your Flirtual profile or conversations.</p></group><group><h2>No harassment</h2><p>This includes bullying, unsolicited sexual content, direct or indirect threats, doxxing, witch-hunts, stalking, or attacking other users onyour profile.</p></group><group><h2>No spam, trolling, impersonation, misrepresentation, or scams</h2><p>Do not try and take advantage of other users on Flirtual. Do not pretend that you are someone you are not.</p></group><group><h2>No NSFW pictures</h2><p>Full nudity is not allowed on Flirtual, for both in-person and avatar pictures. This includes no \"pasties\", highly revealing clothing, or highly sexualized poses.</p></group><group><h2>Limited NSFW on a profile</h2><p>Please avoid graphic NSFW text in your bio. The majority of your bio should also be SFW, not NSFW. Please limit NSFW words or phrases used in your profile. You are free to use the NSFW tags and non-graphic custom interests.</p></group></section><section><h1>Stay on topic</h1><p>Flirtual is a platform for dating and making friends. The main purpose ofyour profile and behavior on Flirtual should follow that.</p><group><h2>No solicitation</h2><p>Do not ask other users for money or post monetized social links (e.g.PayPal). Do not advertise or market products or services on Flirtual.</p></group><group><h2>No controversial or highly political content</h2><p>Please talk about politics/religion/controversial topics somewhere else.</p></group><group><h2>No violent content or depictions of violence</h2><p>Gore or violent pictures that shock people will be removed and may lead to a ban.</p></group><group><h1>No pictures of children or minors</h1><p>We do not tolerate content involving minors, such as real-life pictures of children. This is for the safety of users and children.</p></group><group><h2>Limited self-promotion</h2><p>You can link non-payment-related social links in your bio (such as Instagram or Discord), but self-promotion or any promotion cannot be the main purpose of your Flirtual profile or account.</p></group><group><h2>No self-harm content</h2><p>Self-harm content is not allowed on Flirtual. We have some <mental-health>mental health resources</mental-health> that may be helpful.</p></group></section><section><h1>Respect Flirtual</h1><group><h2>No illegal activity</h2><p>Do not do anything on Flirtual that breaks your local laws or the laws of Canada, where Flirtual is hosted.</p></group><group><h2>No underage users</h2><p>Flirtual is strictly 18+.</p></group><group><h2>No duplicate accounts</h2><p>Duplicate accounts will be banned. Your most active account will bekept.</p></group><group><h2>Breaking Flirtual Community Guidelines outside of Flirtual</h2><p>We can moderate users that break the <terms>Terms of Service</terms> or Community Guidelines on Flirtual. However, if rule-breaking happens on a different platform other than Flirtual, we may not have the power to moderate. If you see a Flirtual user breaking guidelines outside of Flirtual, feel free to report them on Flirtual, but make sure to report them on that platform too (e.g. Discord).</p></group><group><h2>No attacking other users on your profile</h2><p>Do not post the username or call out other Flirtual users in your bio. We handle moderation ourselves while respecting user privacy. You can flag a profile for our moderation team by pressing the \"Report\" buttonat the bottom of their profile.</p></group><group><h2>No abuse or damage Flirtual products</h2><p>Misusing Flirtual or attempts to maliciously exploit Flirtual will be investigated. Good-faith vulnerability research in accordance with our <terms>Terms of Service</terms> is welcome, and bugs can be reported via <vulnerability>GitHub</vulnerability> or <email>email</email>.</p></group><p>If you see something against the rules or something that makes you feel unsafe, please let us know.</p><group><h3>Make a report</h3><p>Press the \"Report\" button at the bottom of someone's profile to flag it for our moderation team. Please include any relevant information or evidence in your report.</p></group><group><h3>Moderation appeals</h3><p>If your account has been banned, you will receive an email with the reason for your ban. If you would like to appeal this decision, please reply to the ban email. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.</p></group><group><h3>More information</h3><terms>Terms of Service</terms><privacy>Privacy Policy</privacy></group></section>"
-  },
-  "mentalhealth": {
-    "title": "Mental health",
-    "title_long": "Mental health resources",
-    "early_lazy_squid_advise": "Crisis Hotlines"
-  },
-  "guides": {
-    "title": "Guides",
-    "ago_patchy_chipmunk_find": "Mental health resources"
-  },
-  "payments": {
-    "title": "Payments Terms"
-  },
-  "privacy": {
-    "title": "Privacy Policy",
-    "title_superseded": "Privacy Policy (outdated)",
-    "content": "<p>Your username, your display name, your profile pictures, your bio, your age, your gender, your matchmaking preferences, your personal interest tags, your selected VR apps/games, and whether or not you are new to VR will be visible to other users. Your additional profile information (including your sexuality, NSFW tags, country, linked accounts, etc.) will be visible or hidden to other users depending on your <settings-privacy>privacy settings</settings-privacy>, which you can modify at any time. Your personality traits (which we identify based on your answers to our personality questionnaire) will be visible or hidden to other users depending on your <settings-privacy>privacy settings</settings-privacy>, but your specific questionnaire answers will not be visible.</p><p>We use first-party, on-premises data analytics. We may share anonymized statistics about Flirtual (for example, the number of users that use a particular Social VR app or game). You can opt out of these statistics in your <settings-privacy>privacy settings</settings-privacy>.</p><p>Your messages and message history with other users are hosted by and shared with TalkJS, but will not be shared with other third-parties.</p><p>Your account email will not be shown to other users. Your account email may be accessed by third parties in order to deliver transactional, marketing, and support messages according to your preferences. You may opt out of <settings-notifications>message email notifications</settings-notifications>, which will remove your email address from TalkJS' records.</p><p>If you suspect your account has been compromised, please <settings-password> change your password</settings-password> immediately and <contact>report the issue</contact> with the word 'URGENT' in the subject line. In the message, include your username, the last time you accessed the site, and any details that led you to suspect a break-in.</p><p>Your password is stored hashed and salted.</p><p>We use certain trusted third parties that provide services to Flirtual. We may share user personal data with these third parties, but only for the purpose of providing their services. For more information and examples, see below.</p><p><strong>Cloud Hosting Services:</strong> to provide reliable and secure infrastructure for managing and operating our platform (for example, Fly.io and Vercel).</p><p><strong>In-App Functionality Services:</strong> to facilitate key features such as messaging and optimized image hosting within our app (for example, TalkJS).</p><p><strong>Billing Services:</strong> to manage payments and subscriptions (for example, Stripe).</p><p><strong>Social Media Services:</strong> to allow users to connect their accounts with our platform and facilitate social interactions (for example, Discord).</p><p><strong>Security and Performance Services:</strong> to safeguard our platform, protect our users, and enhance overall performance (for example, Cloudflare).</p><p><strong>Insight and Improvement Services:</strong> to gather user feedback and perform analytics for continual improvement of our platform (for example, Canny).</p><p><strong>Communication Services:</strong> to assist with sending transactional and marketing communications to users (for example, Amazon Web Services).</p><p><strong>Moderation Services:</strong> to ensure appropriate conduct within the app and maintain community standards (for example, Google Cloud).</p><p><strong>IT Services:</strong> to assist in various operations of our business, such as when a user interacts with our support services, which may involve processing users' personal data (for example, Freshworks).</p><p>We review third parties we engage with to ensure they have adequate data protection and information security measures in place. We take measures to protect and anonymize data shared with third parties, as appropriate given the nature of the services provided. We only provide trusted third parties with the personal data necessary for the service they are providing.</p><p>If you find a vulnerability or privacy leak, please report it to us discreetly via <vulnerability>GitHub</vulnerability> or <contact>email</contact>.</p><p>You can review data that we have on file in your <settings>account settings</settings>, and in your messages. You can request all of your data that we have on file by emailing us, and will receive it within 30 days.</p>"
-  },
-  "superseded_policy": {
-    "fancy_noisy_grizzly_hint": "This policy was in effect {range} and is no longer active. Please view the <current>latest iteration of this policy</current>."
-  },
-  "machine-translated": {
-    "large_wild_tortoise_sing": "This page was machine-translated and may contain inaccuracies. This translation is provided for your convenience only. The <original>English version</original> of this document is the official version and should be referenced in case of any discrepancies.",
-    "active_frail_antelope_support": "Please <contact>contact us</contact> if you have any questions."
-  },
-  "press": {
-    "title": "Press",
-    "wide_stock_bulldog_tend": "Press kit",
-    "mellow_level_butterfly_emerge": "Download",
-    "hour_smug_giraffe_lend": "Contact us",
-    "heavy_fancy_butterfly_glow": "Newsroom"
-  },
-  "terms": {
-    "title": "Terms of Service",
-    "content": "<p>This service (the 'Service') is operated by ROVR LABS INC., doing business as Flirtual ('us', 'we', or 'Flirtual').</p><section><h1>Rules</h1><p>In order to use this Service, you must:</p><ol><li>be at least 18 years of age;</li><li>be legally permitted to do so under Canadian and local laws</li><li>have never been convicted of a felony;</li><li>not be required to register as a sex offender on any government registry;</li><li>agree to be bound by these Terms of Service and our <privacy>Privacy Policy</privacy>.</li></ol><p>You agree not to:</p><ol><li>break local or Canadian law;</li><li>solicit money from or defraud other users;</li><li> impersonate any person or entity or post any images of another person without his or her permission;</li><li> post any abusive, racist, sexist, derogatory, defamatory, illegal, NSFW, or otherwise harmful content to the Service;</li><li>harass any of the users on this platform;</li><li> knowingly post malicious code, or links to malicious sites, that could harm other users;</li><li>post spam on profiles;</li><li>infringe on any copyright;</li><li>use this service in order to damage Flirtual or the Service.</li></ol><p>Please review our <guidelines>Community Guidelines</guidelines> for more information on how we moderate user profiles and behavior on the Service. Breaking these guidelines will result in account moderation, such as a permanent ban from the Service. We reserve the right to moderate accounts at our discretion.</p></section><section><h1>Safety</h1><p>We advise you to use caution when interacting with other users of the Service. We are not responsible for the behavior of users on or off of the Service or for your interactions with other users. We do not screen users.</p></section><section><h1>Privacy</h1><p>You authorize us to use and display certain information about you. Please see our <privacy>Privacy Policy</privacy> for more information.</p></section><section><h1>Third Party Services</h1><p>Flirtual is not responsible for third-party services.</p></section><section><h1>Rights</h1><p>You can close your account at any time in your <delete-account>account settings</delete-account>.</p><p>You will be given advance notice of any changes to these terms or any new features that affect privacy.</p><p>Moderation decisions will be made by our moderation team. You have the right to receive an explanation if your profile is modified or your account is cancelled for violation of these Terms of Use. You do not have the right to receive advance notice of these changes to your account.</p><p>If your account is cancelled for violation of these Terms of Use, your data will be kept for 30 days so that we can review moderation decisions and reverse them if necessary. Please <contact>contact us</contact> if you would like to appeal a moderation decision or have your data deleted early.</p><p>Your data will be backed up regularly.</p></section><section><h1>Security</h1><p>The Service runs on infrastructure provided by third parties. This infrastructure is protected by industry standard security efforts such as firewalls.</p><p>Your connection to the Service uses <ssltest>strong transport encryption</ssltest>.</p><p>Your password is stored securely hashed and salted.</p><p>You are responsible for keeping your account password safe. You are responsible for all activities that occur with your account credentials.</p><p>Despite best efforts, there is no such thing as perfect security online. We do not guarantee the absolute protection of your data.</p><p>We have not reviewed, and cannot review, all of the material, including computer software, made available through the websites and webpages to which the Service links, and that link to the Service. We do not have any control over those non-Flirtual websites, and are not responsible for their contents or their use. By linking to a non-Flirtual website, Flirtual does not represent or imply that it endorses such website. You are responsible for taking precautions as necessary to protect yourself and your computer systems from viruses, worms, Trojan horses, and other harmful or destructive content. Flirtual disclaims any responsibility for any harm resulting from your use of non-Flirtual websites and webpages.</p></section><section><h1>Disclaimers</h1><p>In no event will Flirtual, or its suppliers or licensors, be liable with respect to any subject matter of this Agreement under any contract, negligence, strict liability or other legal or equitable theory for: (i) any special, incidental or consequential damages; (ii) the cost of procurement for substitute products or services; (iii) for interruption of use or loss or corruption of data; or (iv) for any amounts that exceed the fees paid by you to Flirtual under this Agreement during the twelve (12) month period prior to the cause of action. Flirtual shall have no liability for any failure or delay due to matters beyond their reasonable control. The foregoing shall not apply to the extent prohibited by applicable law.</p></section>",
-    "title_superseded": "Terms of Service (outdated)"
-  },
-  "landing": {
-    "sign_up": "Sign up",
-    "log_in": "Log in",
-    "hero": {
-      "mellow_short_shark_propel": "Flirtual dates",
-      "calm_calm_alligator_taste": "Virtual dates, real connections"
-    },
-    "profiles": {
-      "legal_big_finch_kiss": "Screenshot of a Flirtual profile",
-      "quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
-      "stout_last_kudu_bend": "Your avatar, your choice",
-      "messages": {
-        "0": "VR is a personality-first way of meeting new people.",
-        "1": "Avatars help you express yourself, without feeling self-conscious.",
-        "2": "After a VR date or two, go on a video call or meet in real life!"
-      }
-    },
-    "carousel": {
-      "spare_chunky_cougar_honor": "Enjoy safe, magical dates together in Virtual Reality",
-      "images": {
-        "0": {
-          "title": "Feed some ducks",
-          "image": "b9326c15-c996-488f-8d68-d7ea4cb8649b"
-        },
-        "1": {
-          "title": "Swim... with sharks",
-          "image": "738f3d22-6f38-4059-9dd3-7fdd672acccd"
-        },
-        "2": {
-          "title": "Chill in a cozy cafe",
-          "image": "be840a83-86f9-4ba2-87ae-3cd93f73f099"
-        },
-        "3": {
-          "title": "Observe a black hole",
-          "image": "107737a5-d694-43db-a082-0d71bdfc4105"
-        },
-        "4": {
-          "title": "Touch grass",
-          "image": "30023b24-f08a-43d4-918a-aa8940cefb24"
-        },
-        "5": {
-          "title": "Paint together",
-          "image": "09402677-a01e-4f6b-9171-f8c533ec774f"
-        },
-        "6": {
-          "title": "Play some pool",
-          "image": "7e736467-63c4-4ff4-9989-54546b24cc6f"
-        }
-      }
-    },
-    "testimonial": {
-      "even_major_hare_believe": "Match with {userCount}+ people from all over the world!",
-      "images": {
-        "0": "a68e9441-8430-4a33-a067-04313d4d260c",
-        "1": "5e0d4116-2e60-4ae9-b865-3ce7d17c68ec",
-        "2": "01db5707-2aac-45cd-a80c-223c6e1b93f2",
-        "3": "b8ea7c5b-5110-46b7-8635-38728e8a77aa",
-        "4": "eea60bde-de1a-4f43-9f02-a218fddf2a73",
-        "5": "ad5cba2d-03ff-43eb-9cf3-e6986bb0be54",
-        "6": "40122187-d831-4131-ab8e-ee0f5544ce73",
-        "7": "17b87f45-0ef8-4dfa-80c4-c23450f09b30",
-        "8": "28eaf327-e2bd-4fd2-a7f9-4dd6be153bfc",
-        "9": "5bbf00fc-2c97-49b2-9f16-9d3c1a180ae8",
-        "10": "f3b27da8-4f36-4c7f-bd65-094421d28f22",
-        "11": "c0d8ad7f-a6df-4de8-a429-a8fa729bf447",
-        "12": "9f2de017-6b5a-4ca9-b858-95057889fd64",
-        "13": "b8b087b9-3ab3-4a05-b01a-166b502789f5"
-      },
-      "brands": {
-        "0": {
-          "image": "dc248f6f-aee6-4318-b473-6fe2d6db07ee",
-          "name": "New York Times"
-        },
-        "1": {
-          "image": "d34ee25e-31e6-47a7-952f-51820f1e1ce1",
-          "name": "Today"
-        },
-        "2": {
-          "image": "257a7f46-a6c1-4bee-9a3e-5dbdfe9d2a66",
-          "name": "Forbes"
-        },
-        "3": {
-          "image": "18e4a7ad-625a-42f6-b581-d14386ced012",
-          "name": "The New Yorker"
-        },
-        "4": {
-          "image": "29a2f1bc-0b3e-469a-aa11-0de69b75b629",
-          "name": "Road To VR"
-        },
-        "5": {
-          "image": "db2eb424-e837-4d64-85e0-e49409ae33a6",
-          "name": "Samsung"
-        },
-        "6": {
-          "image": "54ffe640-1c54-4d8f-a754-4c7b7ca82456",
-          "name": "Future of Sex"
-        },
-        "7": {
-          "image": "b779aa38-8592-48cd-8f9b-88228c5abc21",
-          "name": "Dazed"
-        },
-        "8": {
-          "image": "7845a7d0-0461-41dd-934c-cb8439e90dc7",
-          "name": "Virtual Week-ality"
-        },
-        "9": {
-          "image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
-          "name": "iDate Awards"
-        }
-      }
-    },
-    "cta": {
-      "few_grassy_hyena_adapt": "Fall in love in a <highlight>whole new dimension</highlight>"
-    }
-  },
-  "profile": {
-    "happy_yummy_otter_climb": "{displayName}'s avatar",
-    "neat_moving_ibex_nail": "Unmatch",
-    "every_sleek_llama_feast": "Message",
-    "weird_green_crab_peek": "Unmatched {displayName}",
-    "strong_home_bullock_taste": "You're both new to VR. Explore it together!",
-    "fuzzy_calm_ant_nudge": "{displayName} is new to VR. Why not show them around?",
-    "early_quiet_giraffe_dine": "Don't forget to <settings-bio>add a bio</settings-bio>!",
-    "sound_whole_jaguar_charm": "Age verified",
-    "that_proud_butterfly_find": "Discord: <copy>{name}</copy>",
-    "smart_just_scallop_reside": "Discord verified",
-    "zany_salty_cheetah_lead": "VRChat: <copy>{name}</copy>",
-    "relationship_status": {
-      "to_other": "You {status, select, liked {liked} homied {homied} other {passed}} {displayName}.",
-      "to_me": "{displayName} {status, select, liked {liked} other {homied}} you."
-    },
-    "strong_trite_squid_grasp": "Uploaded {uploaded}{scanned, select, true {, and was scanned} false {, and was <bold>not scanned</bold>} other {}}.",
-    "sea_proof_eel_fade": "Search image",
-    "still_due_tuna_dazzle": "Remove image",
-    "super_quick_alpaca_empower": "Image removed",
-    "crazy_large_hound_grace": "Edit",
-    "home_watery_koala_stop": "Share your profile link",
-    "odd_mad_dog_nurture": "Updated profile link",
-    "sleek_simple_puma_find": "Update",
-    "spare_short_tapir_dream": "Share",
-    "mealy_any_javelina_hint": "Copy link",
-    "icy_stock_herring_burn": "Check out my Flirtual profile!",
-    "merry_yummy_bulldog_quell": "Account blocked",
-    "giant_strong_thrush_startle": "You've blocked <highlight>{displayName}</highlight>, so you can't see their profile, and they can't see yours either.",
-    "polite_spicy_hamster_create": "Unblock",
-    "top_sweet_macaw_pet": "Unblocked {displayName}",
-    "neat_lower_shell_tend": "Report profile",
-    "brief_lower_crow_hug": "Active today",
-    "flat_cool_larva_roar": "Active recently",
-    "teary_new_meerkat_scoop": "Block",
-    "dialogs": {
-      "block": {
-        "title": "Block {displayName}?",
-        "description": "This will prevent you from seeing each other's profiles and messaging each other. This action is permanent cannot be undone later.",
-        "cancel": "Cancel",
-        "block": "Block",
-        "swift_loved_albatross_leap": "Blocked {displayName}"
-      },
-      "report": {
-        "title": "Report profile",
-        "day_front_cat_cry": "Thanks for keeping Flirtual safe! We'll review your report as soon as possible.",
-        "active_any_jannes_type": "Details",
-        "jolly_moving_stork_love": "Tell us a little more about this incident (optional)",
-        "ok_gross_ostrich_work": "Upload screenshots or other evidence (optional)",
-        "formal_nimble_dog_reside": "Attachments",
-        "cancel": "Cancel",
-        "report": "Report"
-      }
-    },
-    "busy_tiny_hamster_support": "Report",
-    "personality": {
-      "openness": "{value, select, high {Open-minded} low {Practical} other {?}}",
-      "conscientiousness": "{value, select, high {Reliable} low {Free-spirited} other {?}}",
-      "agreeableness": "{value, select, high {Friendly} low {Straightforward} other {?}}"
-    },
-    "dark_level_goat_gulp": "{value, select, dominant {Dominant} submissive {Submissive} switch {Switch} other {?}}",
-    "brave_funny_vulture_sail": "{value, select, monogamous {Monogamous} nonmonogamous {Non-monogamous} other {?}}"
-  },
-  "early_north_alpaca_sail": "Update Flirtual?",
-  "icy_sound_emu_kiss": "We recommend updating to the latest version of Flirtual to get the best experience. You may encounter bugs if you continue using this version.",
-  "aware_such_leopard_fond": "No thanks",
-  "patient_gross_herring_grow": "Update",
-  "loose_fancy_marlin_zip": "Copied to clipboard",
-  "nimble_solid_spider_fond": "Premium",
-  "home_seemly_larva_flip": "NEW",
-  "learn_more": "Learn more",
-  "arrangeable_image": {
-    "soft_curly_pony_advise": "Move image",
-    "glad_giant_mantis_win": "Delete image"
-  },
-  "dialogs": {
-    "trust_and_safety": {
-      "title": "Trust & Safety",
-      "acknowledge": "I acknowledge",
-      "lofty_day_snail_treasure": "Community Guidelines",
-      "jolly_nimble_crow_taste": "Contact us"
-    }
-  },
-  "busy_direct_cockroach_hush": "Contact us",
-  "deft_raw_cod_fond": "Made with <action>{heart}</action> in in VR",
-  "banners": {
-    "finish_profile": "<link>Complete your profile</link> so people can see you and match!",
-    "confirm_email": "<link>Confirm your email</link> so people can see you and match!",
-    "mobile": "<link>Download the mobile app</link>",
-    "language": "Current language is {current}, but your preferred language is <link>{preferred}</link>.",
-    "translating": "You've turned on translation keys, content may be incomprehensible until you <link>turn them off</link>."
-  },
-  "footer": {
-    "events": "Events",
-    "support": "Support",
-    "feedback": "Feedback",
-    "status": "Status",
-    "about": "About",
-    "press": "Press",
-    "branding": "Branding",
-    "guidelines": "Community Guidelines",
-    "terms": "Terms of Service",
-    "privacy": "Privacy Policy",
-    "developers": "Developers",
-    "copyright": "© {year} Flirtual"
-  },
-  "navigation": {
-    "updates": "Updates",
-    "profile": "Profile",
-    "settings": "Settings",
-    "premium": "Premium",
-    "discord": "Discord",
-    "get_app": "Get app",
-    "reports": "Reports",
-    "search": "Search",
-    "stats": "Stats",
-    "unsudo": "Unsudo"
-  },
-  "inputs": {
-    "text": {
-      "hide": "Hide",
-      "show": "Show"
-    },
-    "switch": {
-      "yes": "Yes",
-      "no": "No"
-    },
-    "select": {
-      "placeholder": "Select an option"
-    },
-    "privacy_select": {
-      "everyone": "Anyone on Flirtual",
-      "matches": "Matches only",
-      "me": "Just me"
-    },
-    "language_autocomplete": {
-      "placeholder": "Select a language."
-    },
-    "country_select": {
-      "placeholder": "Select a country."
-    }
-  },
-  "errors": {
-    "cant_be_blank": "Cannot be empty.",
-    "has_already_been_taken": "Already taken by another user.",
-    "is_invalid": "Invalid input.",
-    "must_be_accepted": "Required.",
-    "has_invalid_format": "Invalid format.",
-    "has_an_invalid_entry": "Invalid entry.",
-    "is_reserved": "Reserved.",
-    "does_not_match_confirmation": "Does not match.",
-    "password_does_not_match": "New passwords do not match, please check the spelling and try again.",
-    "is_still_associated_with_this_entry": "Still associated with this entry.",
-    "are_still_associated_with_this_entry": "Still associated with this entry.",
-    "should_be_{count}_character(s)": "Must be {count, plural, =0 {empty}, =1 {one character long} other {# characters long}}.",
-    "should_have_{count}_item(s)": "{count, plural, =0 {Must be empty}, =1 {Please select one item}, other {Please select # items}}.",
-    "should_be_at_least_{count}_character(s)": "{count, plural, =0 {Required}, =1 {Required}, other {Must be at least # characters long}}.",
-    "should_have_at_least_{count}_item(s)": "{count, plural, =0 {Required}, =1 {Required}, other {Please select at least # items}}.",
-    "should_be_at_most_{count}_character(s)": "{count, plural, =0 {Must be empty}, =1 {Cannot be more than 1 character long}, other {Cannot be more than # characters long}}.",
-    "should_have_at_most_{count}_item(s)": "{count, plural, =0 {Must be empty}, =1 {Cannot have more than 1 item}, other {Cannot have more than # items}}.",
-    "must_be_less_than_{number}": "Must be less than {number}.",
-    "must_be_greater_than_{number}": "Must be more than {number}.",
-    "must_be_less_than_or_equal_to_{number}": "Cannot be more than {number}.",
-    "must_be_greater_than_or_equal_to_{number}": "Cannot be less than {number}.",
-    "must_be_equal_to_{number}": "Must be {number}.",
-    "invalid_credentials": "Incorrect email or password, please try resetting your password.",
-    "invalid_credentials_complex": "Incorrect email or password, please try <reset>resetting your password</reset> or <help>check common issues</help>.",
-    "invalid_password": "Incorrect password, please try again or log out and reset your password.",
-    "account_banned": "You have been suspended, please check your account email for details and appeal instructions.",
-    "image_not_found": "Image not found",
-    "state_mismatch": "Couldn't connect account, try again.",
-    "provider_not_found": "Couldn't connect account (unknown provider).",
-    "authorize_not_supported": "Couldn't connect account (unsupported provider).",
-    "conversation_not_found": "Conversation not found (user unmatched, blocked, disabled account or suspended).",
-    "user_not_found": "User not found (blocked, disabled account or suspended).",
-    "prospect_not_found": "Error undoing, sorry!",
-    "missing_permission": "You don't have permission to perform this action.",
-    "report_not_found": "Report not found.",
-    "subscription_not_found": "Error canceling subscription, please contact us for assistance.",
-    "cannot_block_user": "Error blocking user (disabled account or suspended).",
-    "cannot_unblock_user": "Error unblocking user (disabled account or suspended).",
-    "profile_not_blocked": "Error unblocking user (already unblocked).",
-    "passkey_login_failed": "Passkey login failed, please try again or use a different method."
-  }
+	"meta": {
+		"name": "Flirtual",
+		"title": "%s - Flirtual",
+		"knotty_direct_mongoose_bend": "Meet new people in Virtual Reality! Flirtual helps you go on dates in VR and VRChat.",
+		"green_plain_mongoose_lend": "The first VR dating app. Join thousands for dates in VR apps like VRChat."
+	},
+	"about": {
+		"title": "About us",
+		"image_alt": "Picture of the Flirtual Team in VRChat",
+		"content": "<section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><p><3 kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <feedback>have any suggestions</feedback>!</italic></p></section><section><h1>The team</h1><team-list></team-list></section><section><h1>Timeline</h1><timeline></timeline></section>",
+		"team": {
+			"image_alt": "{name}'s avatar",
+			"roles": {
+				"kfarwell": "Lead Developer",
+				"existony": "Partners, Design & Safety",
+				"aries": "Software Developer",
+				"moderator": "Moderator",
+				"event_host": "Event Host",
+				"social": "Socials",
+				"community_advisor": "Community Advisor",
+				"katten": "Community Advisor",
+				"syrmor": "Marketing Advisor",
+				"faxmashine": "VRChat World Creator",
+				"juice": "VRChat Avatar Creator"
+			}
+		},
+		"timeline": {
+			"2018": {
+				"title": "2018 🐣",
+				"description": "The first VR dating app is born.",
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938",
+				"image_alt": "Flirtual in 2018"
+			},
+			"2019": {
+				"title": "🏆 2019",
+				"description": "VRLFP is named the best new technology at the iDate Awards.",
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
+				"image_alt": "Flirtual in 2019"
+			},
+			"2020": {
+				"title": "2020 🧪",
+				"description": "Some wacky concepts that eventually became the Flirtual you know and love today. Thanks for letting us cook.",
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
+				"image_alt": "Flirtual in 2020"
+			},
+			"2021": {
+				"title": "✌️ 2021",
+				"description": "ROVR is launched, a social matchmaking app for VR friends and groups. Its spirit lives on in Homie Mode.",
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
+				"image_alt": "Flirtual in 2021"
+			},
+			"2022": {
+				"title": "2022 😻",
+				"description": "VRLFP becomes Flirtual. Maybe people will remember how to spell our name now.",
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
+				"image_alt": "Flirtual in 2022"
+			},
+			"2023": {
+				"title": "✨ 2023",
+				"description": "New design, mobile apps, and big improvements behind the scenes.",
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
+				"image_alt": "Flirtual in 2023"
+			}
+		},
+		"images": {
+			"0": {
+				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+				"image_alt": "Flirtual's 12-hour Valentine's 2022 launch party with Vanguard",
+				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
+			},
+			"1": {
+				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
+				"image_alt": "Flirtual Speed Dating in VRChat",
+				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
+			},
+			"2": {
+				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+				"image_alt": "Flirtual DJ Night in VRChat",
+				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
+			},
+			"3": {
+				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+				"image_alt": "Flirtual at VRCon 2022",
+				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
+			},
+			"4": {
+				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+				"image_alt": "Flirtual on the Today Show",
+				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
+			},
+			"5": {
+				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+				"image_alt": "Flirtual at Vket 2023 Summer",
+				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
+			}
+		}
+	},
+	"branding": {
+		"title": "Branding",
+		"lime_soft_shad_skip": "Looking to use our art for something? Here it is. Please keep it tasteful and <contact>contact us</contact> for approval.",
+		"brave_early_weasel_arise": "Our logo",
+		"flaky_same_grizzly_snap": "Please do not edit, change, distort, recolor, or reconfigure the Flirtual logo.",
+		"mild_spry_hamster_persist": "Mark only",
+		"such_pink_jan_spur": "Use these only when the Flirtual brand is clearly visible or has been well established elsewhere on the page or in the design.",
+		"tasty_last_pony_transform": "Colors",
+		"gross_red_earthworm_reside": "Gradient",
+		"fair_yummy_penguin_harbor": "Dark Mode",
+		"empty_sharp_sheep_list": "Homie Mode",
+		"whole_round_penguin_pet": "Pink",
+		"known_trick_raven_sew": "Cream",
+		"wise_great_crow_foster": "Need more?",
+		"ornate_upper_guppy_mend": "Download our full press kit for more graphics and information.",
+		"tired_extra_bear_forgive": "Download"
+	},
+	"debugger": {
+		"title": "Debug information",
+		"spicy_pretty_tiger_pet": "Device",
+		"lucky_sound_opossum_absorb": "App platform:",
+		"vexed_yummy_tadpole_grow": "Browser:",
+		"known_spare_mantis_pet": "System:",
+		"hour_odd_kudu_dine": "Language:",
+		"mushy_muddy_warthog_win": "Session",
+		"wacky_spry_haddock_jump": "User profile:",
+		"spry_polite_elk_grace": "User object:",
+		"brief_neat_kestrel_ascend": "Unavailable",
+		"flat_civil_goat_absorb": "Sudoer object:",
+		"north_crisp_fly_dart": "Age:",
+		"dark_wild_mouse_roar": "Build",
+		"swift_short_koala_fond": "Environment:",
+		"each_zippy_millipede_pop": "Version:"
+	},
+	"download": {
+		"title": "Download",
+		"best_topical_mayfly_tap": "Download on",
+		"platform": {
+			"apple": "App Store",
+			"google": "Google Play",
+			"microsoft": "Microsoft Store",
+			"side_quest": "SideQuest"
+		}
+	},
+	"events": {
+		"title": "Events",
+		"gross_loose_stork_vent": "VRChat invite",
+		"fun_still_clownfish_arrive": "If an event is happening now, this button will take you there!",
+		"elegant_bald_parakeet_animate": "Start VRChat first and then click \"invite me\" on the next page. You'll get an invite from yourself in-game. <joining>Need help joining?</joining>",
+		"arable_nice_puma_comfort": "Join event",
+		"top_big_tern_twist": "Upcoming events",
+		"nimble_equal_loris_foster": "We host speed matching and DJ events every weekend in VRChat, and you're invited!",
+		"flaky_early_shad_nourish": "For our event schedule and announcements, <discord>join our Discord server</discord>.",
+		"quiet_lazy_marten_amuse": "VRChat worlds",
+		"blue_calm_chipmunk_spark": "Our weekly events are hosted in our VRChat worlds, but you can join them anytime! Feel free to use them for your own events too.",
+		"tidy_wise_robin_urge": "Flirtual Speed Dating",
+		"careful_wise_bumblebee_walk": "Get to know people in 1-on-1 speed dating/friend-making rounds. Each round is 3 minutes long (the host can choose a round length from 3-7 minutes). Conversation prompts, interest tags, and night mode included.",
+		"flat_ok_penguin_vent": "Flirtual Speed Dating",
+		"inclusive_simple_alligator_zap": "The Flirtual Club",
+		"sweet_mellow_ant_hunt": "Outdoor music festival with audiolink. Vibe on.",
+		"fine_low_deer_propel": "The Flirtual Club",
+		"dry_inclusive_ox_trust": "Created by <faxmashine>Faxmashine</faxmashine>, our worlds are compatible with PCVR, Quest, and Desktop. New to VRChat? <vrchat>Sign up for free.</vrchat>"
+	},
+	"guidelines": {
+		"title": "Community Guidelines",
+		"content": "<p>We want Flirtual to be a positive, welcoming space for everyone. These community guidelines give more information on how we moderate user profiles and behavior on Flirtual. Breaking these guidelines will result in account moderation, such as a permanent ban from Flirtual. We reserve the right to moderate accounts at our discretion.</p><section><h1>Respect each other</h1><group><h2>No hate speech or hateful actions against any group</h2><p>This includes racist, sexist, or otherwise hateful symbols and contentagainst certain groups in your Flirtual profile or conversations.</p></group><group><h2>No harassment</h2><p>This includes bullying, unsolicited sexual content, direct or indirect threats, doxxing, witch-hunts, stalking, or attacking other users onyour profile.</p></group><group><h2>No spam, trolling, impersonation, misrepresentation, or scams</h2><p>Do not try and take advantage of other users on Flirtual. Do not pretend that you are someone you are not.</p></group><group><h2>No NSFW pictures</h2><p>Full nudity is not allowed on Flirtual, for both in-person and avatar pictures. This includes no \"pasties\", highly revealing clothing, or highly sexualized poses.</p></group><group><h2>Limited NSFW on a profile</h2><p>Please avoid graphic NSFW text in your bio. The majority of your bio should also be SFW, not NSFW. Please limit NSFW words or phrases used in your profile. You are free to use the NSFW tags and non-graphic custom interests.</p></group></section><section><h1>Stay on topic</h1><p>Flirtual is a platform for dating and making friends. The main purpose ofyour profile and behavior on Flirtual should follow that.</p><group><h2>No solicitation</h2><p>Do not ask other users for money or post monetized social links (e.g.PayPal). Do not advertise or market products or services on Flirtual.</p></group><group><h2>No controversial or highly political content</h2><p>Please talk about politics/religion/controversial topics somewhere else.</p></group><group><h2>No violent content or depictions of violence</h2><p>Gore or violent pictures that shock people will be removed and may lead to a ban.</p></group><group><h1>No pictures of children or minors</h1><p>We do not tolerate content involving minors, such as real-life pictures of children. This is for the safety of users and children.</p></group><group><h2>Limited self-promotion</h2><p>You can link non-payment-related social links in your bio (such as Instagram or Discord), but self-promotion or any promotion cannot be the main purpose of your Flirtual profile or account.</p></group><group><h2>No self-harm content</h2><p>Self-harm content is not allowed on Flirtual. We have some <mental-health>mental health resources</mental-health> that may be helpful.</p></group></section><section><h1>Respect Flirtual</h1><group><h2>No illegal activity</h2><p>Do not do anything on Flirtual that breaks your local laws or the laws of Canada, where Flirtual is hosted.</p></group><group><h2>No underage users</h2><p>Flirtual is strictly 18+.</p></group><group><h2>No duplicate accounts</h2><p>Duplicate accounts will be banned. Your most active account will bekept.</p></group><group><h2>Breaking Flirtual Community Guidelines outside of Flirtual</h2><p>We can moderate users that break the <terms>Terms of Service</terms> or Community Guidelines on Flirtual. However, if rule-breaking happens on a different platform other than Flirtual, we may not have the power to moderate. If you see a Flirtual user breaking guidelines outside of Flirtual, feel free to report them on Flirtual, but make sure to report them on that platform too (e.g. Discord).</p></group><group><h2>No attacking other users on your profile</h2><p>Do not post the username or call out other Flirtual users in your bio. We handle moderation ourselves while respecting user privacy. You can flag a profile for our moderation team by pressing the \"Report\" buttonat the bottom of their profile.</p></group><group><h2>No abuse or damage Flirtual products</h2><p>Misusing Flirtual or attempts to maliciously exploit Flirtual will be investigated. Good-faith vulnerability research in accordance with our <terms>Terms of Service</terms> is welcome, and bugs can be reported via <vulnerability>GitHub</vulnerability> or <email>email</email>.</p></group><p>If you see something against the rules or something that makes you feel unsafe, please let us know.</p><group><h3>Make a report</h3><p>Press the \"Report\" button at the bottom of someone's profile to flag it for our moderation team. Please include any relevant information or evidence in your report.</p></group><group><h3>Moderation appeals</h3><p>If your account has been banned, you will receive an email with the reason for your ban. If you would like to appeal this decision, please reply to the ban email. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.</p></group><group><h3>More information</h3><terms>Terms of Service</terms><privacy>Privacy Policy</privacy></group></section>"
+	},
+	"mentalhealth": {
+		"title": "Mental health",
+		"title_long": "Mental health resources",
+		"early_lazy_squid_advise": "Crisis Hotlines"
+	},
+	"guides": {
+		"title": "Guides",
+		"ago_patchy_chipmunk_find": "Mental health resources"
+	},
+	"payments": {
+		"title": "Payments Terms"
+	},
+	"privacy": {
+		"title": "Privacy Policy",
+		"title_superseded": "Privacy Policy (outdated)",
+		"content": "<p>Your username, your display name, your profile pictures, your bio, your age, your gender, your matchmaking preferences, your personal interest tags, your selected VR apps/games, and whether or not you are new to VR will be visible to other users. Your additional profile information (including your sexuality, NSFW tags, country, linked accounts, etc.) will be visible or hidden to other users depending on your <settings-privacy>privacy settings</settings-privacy>, which you can modify at any time. Your personality traits (which we identify based on your answers to our personality questionnaire) will be visible or hidden to other users depending on your <settings-privacy>privacy settings</settings-privacy>, but your specific questionnaire answers will not be visible.</p><p>We use first-party, on-premises data analytics. We may share anonymized statistics about Flirtual (for example, the number of users that use a particular Social VR app or game). You can opt out of these statistics in your <settings-privacy>privacy settings</settings-privacy>.</p><p>Your messages and message history with other users are hosted by and shared with TalkJS, but will not be shared with other third-parties.</p><p>Your account email will not be shown to other users. Your account email may be accessed by third parties in order to deliver transactional, marketing, and support messages according to your preferences. You may opt out of <settings-notifications>message email notifications</settings-notifications>, which will remove your email address from TalkJS' records.</p><p>If you suspect your account has been compromised, please <settings-password> change your password</settings-password> immediately and <contact>report the issue</contact> with the word 'URGENT' in the subject line. In the message, include your username, the last time you accessed the site, and any details that led you to suspect a break-in.</p><p>Your password is stored hashed and salted.</p><p>We use certain trusted third parties that provide services to Flirtual. We may share user personal data with these third parties, but only for the purpose of providing their services. For more information and examples, see below.</p><p><strong>Cloud Hosting Services:</strong> to provide reliable and secure infrastructure for managing and operating our platform (for example, Fly.io and Vercel).</p><p><strong>In-App Functionality Services:</strong> to facilitate key features such as messaging and optimized image hosting within our app (for example, TalkJS).</p><p><strong>Billing Services:</strong> to manage payments and subscriptions (for example, Stripe).</p><p><strong>Social Media Services:</strong> to allow users to connect their accounts with our platform and facilitate social interactions (for example, Discord).</p><p><strong>Security and Performance Services:</strong> to safeguard our platform, protect our users, and enhance overall performance (for example, Cloudflare).</p><p><strong>Insight and Improvement Services:</strong> to gather user feedback and perform analytics for continual improvement of our platform (for example, Canny).</p><p><strong>Communication Services:</strong> to assist with sending transactional and marketing communications to users (for example, Amazon Web Services).</p><p><strong>Moderation Services:</strong> to ensure appropriate conduct within the app and maintain community standards (for example, Google Cloud).</p><p><strong>IT Services:</strong> to assist in various operations of our business, such as when a user interacts with our support services, which may involve processing users' personal data (for example, Freshworks).</p><p>We review third parties we engage with to ensure they have adequate data protection and information security measures in place. We take measures to protect and anonymize data shared with third parties, as appropriate given the nature of the services provided. We only provide trusted third parties with the personal data necessary for the service they are providing.</p><p>If you find a vulnerability or privacy leak, please report it to us discreetly via <vulnerability>GitHub</vulnerability> or <contact>email</contact>.</p><p>You can review data that we have on file in your <settings>account settings</settings>, and in your messages. You can request all of your data that we have on file by emailing us, and will receive it within 30 days.</p>"
+	},
+	"superseded_policy": {
+		"fancy_noisy_grizzly_hint": "This policy was in effect {range} and is no longer active. Please view the <current>latest iteration of this policy</current>."
+	},
+	"machine-translated": {
+		"large_wild_tortoise_sing": "This page was machine-translated and may contain inaccuracies. This translation is provided for your convenience only. The <original>English version</original> of this document is the official version and should be referenced in case of any discrepancies.",
+		"active_frail_antelope_support": "Please <contact>contact us</contact> if you have any questions."
+	},
+	"press": {
+		"title": "Press",
+		"wide_stock_bulldog_tend": "Press kit",
+		"mellow_level_butterfly_emerge": "Download",
+		"hour_smug_giraffe_lend": "Contact us",
+		"heavy_fancy_butterfly_glow": "Newsroom"
+	},
+	"terms": {
+		"title": "Terms of Service",
+		"content": "<p>This service (the 'Service') is operated by ROVR LABS INC., doing business as Flirtual ('us', 'we', or 'Flirtual').</p><section><h1>Rules</h1><p>In order to use this Service, you must:</p><ol><li>be at least 18 years of age;</li><li>be legally permitted to do so under Canadian and local laws</li><li>have never been convicted of a felony;</li><li>not be required to register as a sex offender on any government registry;</li><li>agree to be bound by these Terms of Service and our <privacy>Privacy Policy</privacy>.</li></ol><p>You agree not to:</p><ol><li>break local or Canadian law;</li><li>solicit money from or defraud other users;</li><li> impersonate any person or entity or post any images of another person without his or her permission;</li><li> post any abusive, racist, sexist, derogatory, defamatory, illegal, NSFW, or otherwise harmful content to the Service;</li><li>harass any of the users on this platform;</li><li> knowingly post malicious code, or links to malicious sites, that could harm other users;</li><li>post spam on profiles;</li><li>infringe on any copyright;</li><li>use this service in order to damage Flirtual or the Service.</li></ol><p>Please review our <guidelines>Community Guidelines</guidelines> for more information on how we moderate user profiles and behavior on the Service. Breaking these guidelines will result in account moderation, such as a permanent ban from the Service. We reserve the right to moderate accounts at our discretion.</p></section><section><h1>Safety</h1><p>We advise you to use caution when interacting with other users of the Service. We are not responsible for the behavior of users on or off of the Service or for your interactions with other users. We do not screen users.</p></section><section><h1>Privacy</h1><p>You authorize us to use and display certain information about you. Please see our <privacy>Privacy Policy</privacy> for more information.</p></section><section><h1>Third Party Services</h1><p>Flirtual is not responsible for third-party services.</p></section><section><h1>Rights</h1><p>You can close your account at any time in your <delete-account>account settings</delete-account>.</p><p>You will be given advance notice of any changes to these terms or any new features that affect privacy.</p><p>Moderation decisions will be made by our moderation team. You have the right to receive an explanation if your profile is modified or your account is cancelled for violation of these Terms of Use. You do not have the right to receive advance notice of these changes to your account.</p><p>If your account is cancelled for violation of these Terms of Use, your data will be kept for 30 days so that we can review moderation decisions and reverse them if necessary. Please <contact>contact us</contact> if you would like to appeal a moderation decision or have your data deleted early.</p><p>Your data will be backed up regularly.</p></section><section><h1>Security</h1><p>The Service runs on infrastructure provided by third parties. This infrastructure is protected by industry standard security efforts such as firewalls.</p><p>Your connection to the Service uses <ssltest>strong transport encryption</ssltest>.</p><p>Your password is stored securely hashed and salted.</p><p>You are responsible for keeping your account password safe. You are responsible for all activities that occur with your account credentials.</p><p>Despite best efforts, there is no such thing as perfect security online. We do not guarantee the absolute protection of your data.</p><p>We have not reviewed, and cannot review, all of the material, including computer software, made available through the websites and webpages to which the Service links, and that link to the Service. We do not have any control over those non-Flirtual websites, and are not responsible for their contents or their use. By linking to a non-Flirtual website, Flirtual does not represent or imply that it endorses such website. You are responsible for taking precautions as necessary to protect yourself and your computer systems from viruses, worms, Trojan horses, and other harmful or destructive content. Flirtual disclaims any responsibility for any harm resulting from your use of non-Flirtual websites and webpages.</p></section><section><h1>Disclaimers</h1><p>In no event will Flirtual, or its suppliers or licensors, be liable with respect to any subject matter of this Agreement under any contract, negligence, strict liability or other legal or equitable theory for: (i) any special, incidental or consequential damages; (ii) the cost of procurement for substitute products or services; (iii) for interruption of use or loss or corruption of data; or (iv) for any amounts that exceed the fees paid by you to Flirtual under this Agreement during the twelve (12) month period prior to the cause of action. Flirtual shall have no liability for any failure or delay due to matters beyond their reasonable control. The foregoing shall not apply to the extent prohibited by applicable law.</p></section>",
+		"title_superseded": "Terms of Service (outdated)"
+	},
+	"landing": {
+		"sign_up": "Sign up",
+		"log_in": "Log in",
+		"hero": {
+			"mellow_short_shark_propel": "Flirtual dates",
+			"calm_calm_alligator_taste": "Virtual dates, real connections"
+		},
+		"profiles": {
+			"legal_big_finch_kiss": "Screenshot of a Flirtual profile",
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+			"stout_last_kudu_bend": "Your avatar, your choice",
+			"messages": {
+				"0": "VR is a personality-first way of meeting new people.",
+				"1": "Avatars help you express yourself, without feeling self-conscious.",
+				"2": "After a VR date or two, go on a video call or meet in real life!"
+			}
+		},
+		"carousel": {
+			"spare_chunky_cougar_honor": "Enjoy safe, magical dates together in Virtual Reality",
+			"images": {
+				"0": {
+					"title": "Feed some ducks",
+					"image": "b9326c15-c996-488f-8d68-d7ea4cb8649b"
+				},
+				"1": {
+					"title": "Swim... with sharks",
+					"image": "738f3d22-6f38-4059-9dd3-7fdd672acccd"
+				},
+				"2": {
+					"title": "Chill in a cozy cafe",
+					"image": "be840a83-86f9-4ba2-87ae-3cd93f73f099"
+				},
+				"3": {
+					"title": "Observe a black hole",
+					"image": "107737a5-d694-43db-a082-0d71bdfc4105"
+				},
+				"4": {
+					"title": "Touch grass",
+					"image": "30023b24-f08a-43d4-918a-aa8940cefb24"
+				},
+				"5": {
+					"title": "Paint together",
+					"image": "09402677-a01e-4f6b-9171-f8c533ec774f"
+				},
+				"6": {
+					"title": "Play some pool",
+					"image": "7e736467-63c4-4ff4-9989-54546b24cc6f"
+				}
+			}
+		},
+		"testimonial": {
+			"even_major_hare_believe": "Match with {userCount}+ people from all over the world!",
+			"images": {
+				"0": "a68e9441-8430-4a33-a067-04313d4d260c",
+				"1": "5e0d4116-2e60-4ae9-b865-3ce7d17c68ec",
+				"2": "01db5707-2aac-45cd-a80c-223c6e1b93f2",
+				"3": "b8ea7c5b-5110-46b7-8635-38728e8a77aa",
+				"4": "eea60bde-de1a-4f43-9f02-a218fddf2a73",
+				"5": "ad5cba2d-03ff-43eb-9cf3-e6986bb0be54",
+				"6": "40122187-d831-4131-ab8e-ee0f5544ce73",
+				"7": "17b87f45-0ef8-4dfa-80c4-c23450f09b30",
+				"8": "28eaf327-e2bd-4fd2-a7f9-4dd6be153bfc",
+				"9": "5bbf00fc-2c97-49b2-9f16-9d3c1a180ae8",
+				"10": "f3b27da8-4f36-4c7f-bd65-094421d28f22",
+				"11": "c0d8ad7f-a6df-4de8-a429-a8fa729bf447",
+				"12": "9f2de017-6b5a-4ca9-b858-95057889fd64",
+				"13": "b8b087b9-3ab3-4a05-b01a-166b502789f5"
+			},
+			"brands": {
+				"0": {
+					"image": "dc248f6f-aee6-4318-b473-6fe2d6db07ee",
+					"name": "New York Times"
+				},
+				"1": {
+					"image": "d34ee25e-31e6-47a7-952f-51820f1e1ce1",
+					"name": "Today"
+				},
+				"2": {
+					"image": "257a7f46-a6c1-4bee-9a3e-5dbdfe9d2a66",
+					"name": "Forbes"
+				},
+				"3": {
+					"image": "18e4a7ad-625a-42f6-b581-d14386ced012",
+					"name": "The New Yorker"
+				},
+				"4": {
+					"image": "29a2f1bc-0b3e-469a-aa11-0de69b75b629",
+					"name": "Road To VR"
+				},
+				"5": {
+					"image": "db2eb424-e837-4d64-85e0-e49409ae33a6",
+					"name": "Samsung"
+				},
+				"6": {
+					"image": "54ffe640-1c54-4d8f-a754-4c7b7ca82456",
+					"name": "Future of Sex"
+				},
+				"7": {
+					"image": "b779aa38-8592-48cd-8f9b-88228c5abc21",
+					"name": "Dazed"
+				},
+				"8": {
+					"image": "7845a7d0-0461-41dd-934c-cb8439e90dc7",
+					"name": "Virtual Week-ality"
+				},
+				"9": {
+					"image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
+					"name": "iDate Awards"
+				}
+			}
+		},
+		"cta": {
+			"few_grassy_hyena_adapt": "Fall in love in a <highlight>whole new dimension</highlight>"
+		}
+	},
+	"profile": {
+		"happy_yummy_otter_climb": "{displayName}'s avatar",
+		"neat_moving_ibex_nail": "Unmatch",
+		"every_sleek_llama_feast": "Message",
+		"weird_green_crab_peek": "Unmatched {displayName}",
+		"strong_home_bullock_taste": "You're both new to VR. Explore it together!",
+		"fuzzy_calm_ant_nudge": "{displayName} is new to VR. Why not show them around?",
+		"early_quiet_giraffe_dine": "Don't forget to <settings-bio>add a bio</settings-bio>!",
+		"sound_whole_jaguar_charm": "Age verified",
+		"that_proud_butterfly_find": "Discord: <copy>{name}</copy>",
+		"smart_just_scallop_reside": "Discord verified",
+		"zany_salty_cheetah_lead": "VRChat: <copy>{name}</copy>",
+		"relationship_status": {
+			"to_other": "You {status, select, liked {liked} homied {homied} other {passed}} {displayName}.",
+			"to_me": "{displayName} {status, select, liked {liked} other {homied}} you."
+		},
+		"strong_trite_squid_grasp": "Uploaded {uploaded}{scanned, select, true {, and was scanned} false {, and was <bold>not scanned</bold>} other {}}.",
+		"sea_proof_eel_fade": "Search image",
+		"still_due_tuna_dazzle": "Remove image",
+		"super_quick_alpaca_empower": "Image removed",
+		"crazy_large_hound_grace": "Edit",
+		"home_watery_koala_stop": "Share your profile link",
+		"odd_mad_dog_nurture": "Updated profile link",
+		"sleek_simple_puma_find": "Update",
+		"spare_short_tapir_dream": "Share",
+		"mealy_any_javelina_hint": "Copy link",
+		"icy_stock_herring_burn": "Check out my Flirtual profile!",
+		"merry_yummy_bulldog_quell": "Account blocked",
+		"giant_strong_thrush_startle": "You've blocked <highlight>{displayName}</highlight>, so you can't see their profile, and they can't see yours either.",
+		"polite_spicy_hamster_create": "Unblock",
+		"top_sweet_macaw_pet": "Unblocked {displayName}",
+		"neat_lower_shell_tend": "Report profile",
+		"brief_lower_crow_hug": "Active today",
+		"flat_cool_larva_roar": "Active recently",
+		"teary_new_meerkat_scoop": "Block",
+		"dialogs": {
+			"block": {
+				"title": "Block {displayName}?",
+				"description": "This will prevent you from seeing each other's profiles and messaging each other. This action is permanent cannot be undone later.",
+				"cancel": "Cancel",
+				"block": "Block",
+				"swift_loved_albatross_leap": "Blocked {displayName}"
+			},
+			"report": {
+				"title": "Report profile",
+				"day_front_cat_cry": "Thanks for keeping Flirtual safe! We'll review your report as soon as possible.",
+				"active_any_jannes_type": "Details",
+				"jolly_moving_stork_love": "Tell us a little more about this incident (optional)",
+				"ok_gross_ostrich_work": "Upload screenshots or other evidence (optional)",
+				"formal_nimble_dog_reside": "Attachments",
+				"cancel": "Cancel",
+				"report": "Report"
+			}
+		},
+		"busy_tiny_hamster_support": "Report",
+		"personality": {
+			"openness": "{value, select, high {Open-minded} low {Practical} other {?}}",
+			"conscientiousness": "{value, select, high {Reliable} low {Free-spirited} other {?}}",
+			"agreeableness": "{value, select, high {Friendly} low {Straightforward} other {?}}"
+		},
+		"dark_level_goat_gulp": "{value, select, dominant {Dominant} submissive {Submissive} switch {Switch} other {?}}",
+		"brave_funny_vulture_sail": "{value, select, monogamous {Monogamous} nonmonogamous {Non-monogamous} other {?}}"
+	},
+	"early_north_alpaca_sail": "Update Flirtual?",
+	"icy_sound_emu_kiss": "We recommend updating to the latest version of Flirtual to get the best experience. You may encounter bugs if you continue using this version.",
+	"aware_such_leopard_fond": "No thanks",
+	"patient_gross_herring_grow": "Update",
+	"loose_fancy_marlin_zip": "Copied to clipboard",
+	"nimble_solid_spider_fond": "Premium",
+	"home_seemly_larva_flip": "NEW",
+	"learn_more": "Learn more",
+	"arrangeable_image": {
+		"soft_curly_pony_advise": "Move image",
+		"glad_giant_mantis_win": "Delete image"
+	},
+	"dialogs": {
+		"trust_and_safety": {
+			"title": "Trust & Safety",
+			"acknowledge": "I acknowledge",
+			"lofty_day_snail_treasure": "Community Guidelines",
+			"jolly_nimble_crow_taste": "Contact us"
+		}
+	},
+	"busy_direct_cockroach_hush": "Contact us",
+	"deft_raw_cod_fond": "Made with <action>{heart}</action> in in VR",
+	"banners": {
+		"finish_profile": "<link>Complete your profile</link> so people can see you and match!",
+		"confirm_email": "<link>Confirm your email</link> so people can see you and match!",
+		"mobile": "<link>Download the mobile app</link>",
+		"language": "Current language is {current}, but your preferred language is <link>{preferred}</link>.",
+		"translating": "You've turned on translation keys, content may be incomprehensible until you <link>turn them off</link>."
+	},
+	"footer": {
+		"events": "Events",
+		"support": "Support",
+		"feedback": "Feedback",
+		"status": "Status",
+		"about": "About",
+		"press": "Press",
+		"branding": "Branding",
+		"guidelines": "Community Guidelines",
+		"terms": "Terms of Service",
+		"privacy": "Privacy Policy",
+		"developers": "Developers",
+		"copyright": "© {year} Flirtual"
+	},
+	"navigation": {
+		"updates": "Updates",
+		"profile": "Profile",
+		"settings": "Settings",
+		"premium": "Premium",
+		"discord": "Discord",
+		"get_app": "Get app",
+		"reports": "Reports",
+		"search": "Search",
+		"stats": "Stats",
+		"unsudo": "Unsudo"
+	},
+	"inputs": {
+		"text": {
+			"hide": "Hide",
+			"show": "Show"
+		},
+		"switch": {
+			"yes": "Yes",
+			"no": "No"
+		},
+		"select": {
+			"placeholder": "Select an option"
+		},
+		"privacy_select": {
+			"everyone": "Anyone on Flirtual",
+			"matches": "Matches only",
+			"me": "Just me"
+		},
+		"language_autocomplete": {
+			"placeholder": "Select a language."
+		},
+		"country_select": {
+			"placeholder": "Select a country."
+		}
+	},
+	"errors": {
+		"internal_server_error": "Sorry, something went wrong! Please try again later.",
+		"cant_be_blank": "Cannot be empty.",
+		"has_already_been_taken": "Already taken by another user.",
+		"is_invalid": "Invalid input.",
+		"must_be_accepted": "Required.",
+		"has_invalid_format": "Invalid format.",
+		"has_an_invalid_entry": "Invalid entry.",
+		"is_reserved": "Reserved.",
+		"does_not_match_confirmation": "Does not match.",
+		"password_does_not_match": "New passwords do not match, please check the spelling and try again.",
+		"is_still_associated_with_this_entry": "Still associated with this entry.",
+		"are_still_associated_with_this_entry": "Still associated with this entry.",
+		"should_be_{count}_character(s)": "Must be {count, plural, =0 {empty} =1 {one character long} other {# characters long}}.",
+		"should_have_{count}_item(s)": "{count, plural, =0 {Must be empty} =1 {Please select one item} other {Please select # items}}.",
+		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Required} =1 {Required} other {Must be at least # characters long}}.",
+		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Required} =1 {Required} other {Please select at least # items}}.",
+		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Must be empty} =1 {Cannot be more than 1 character long} other {Cannot be more than # characters long}}.",
+		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {Must be empty} =1 {Cannot have more than 1 item} other {Cannot have more than # items}}.",
+		"must_be_less_than_{number}": "Must be less than {number}.",
+		"must_be_greater_than_{number}": "Must be more than {number}.",
+		"must_be_less_than_or_equal_to_{number}": "Cannot be more than {number}.",
+		"must_be_greater_than_or_equal_to_{number}": "Cannot be less than {number}.",
+		"must_be_equal_to_{number}": "Must be {number}.",
+		"invalid_credentials": "Incorrect email or password, please try resetting your password.",
+		"invalid_credentials_complex": "Incorrect email or password, please try <reset>resetting your password</reset> or <help>check common issues</help>.",
+		"invalid_password": "Incorrect password, please try again or log out and reset your password.",
+		"account_banned": "You have been suspended, please check your account email for details and appeal instructions.",
+		"connection_account_not_found": "No Flirtual account found for this Discord user. Ensure you are logged into the correct Discord account. If you haven't linked your Discord account, log in with your email and password first, then add your Discord account in the Connections settings.",
+		"connection_verify_email": "Please verify your email with Discord and try again.",
+		"invalid_grant": "Couldn't connect account, please try again later. (invalid grant)",
+		"upstream_error": "Couldn't connect account, please try again later. (upstream error)",
+		"state_mismatch": "Couldn't connect account, please try again later (state mismatch)",
+		"provider_not_found": "Couldn't connect account, please try again later. (unknown provider)",
+		"authorize_not_supported": "Couldn't connect account, please try again later. (unsupported provider)",
+		"image_not_found": "Image not found",
+		"conversation_not_found": "Conversation not found (user unmatched, blocked, disabled account or suspended).",
+		"user_not_found": "User not found (blocked, disabled account or suspended).",
+		"prospect_not_found": "Error undoing, sorry!",
+		"missing_permission": "You don't have permission to perform this action.",
+		"report_not_found": "Report not found.",
+		"subscription_not_found": "Error canceling subscription, please contact us for assistance.",
+		"cannot_block_user": "Error blocking user (disabled account or suspended).",
+		"cannot_unblock_user": "Error unblocking user (disabled account or suspended).",
+		"profile_not_blocked": "Error unblocking user (already unblocked).",
+		"passkey_login_failed": "Passkey login failed, please try again or use a different method."
+	}
 }

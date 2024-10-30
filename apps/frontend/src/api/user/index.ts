@@ -243,10 +243,10 @@ export const User = {
 		return this.api.url(`/${userId}/deactivate`).delete().json<User>();
 	},
 	block(userId: string) {
-		return this.api.url(`/${userId}/block`).post().json<User>();
+		return this.api.url(`/${userId}/block`).post().json<unknown>();
 	},
 	unblock(userId: string) {
-		return this.api.url(`/${userId}/block`).delete().json<User>();
+		return this.api.url(`/${userId}/block`).delete().json<unknown>();
 	},
 	suspend(
 		userId: string,

@@ -1,26 +1,27 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSwipeable } from "react-swipeable";
-import { twMerge } from "tailwind-merge";
-import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Search, Trash2 } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type React from "react";
+import { useSwipeable } from "react-swipeable";
+import { mutate } from "swr";
+import { twMerge } from "tailwind-merge";
 
-import { ProfileImage, notFoundImage } from "~/api/user/profile/images";
+import type { User } from "~/api/user";
+import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
+import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { userKey } from "~/swr";
 import { urls } from "~/urls";
-import { useGlobalEventListener } from "~/hooks/use-event-listener";
 
 import { Dialog, DialogContent, DialogTitle } from "../dialog/dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { UserImage } from "../user-avatar";
 
-import type React from "react";
-
 export interface ProfileImageDisplayProps {
-	images: Array<ProfileImage>;
+	user: User;
 	children: React.ReactNode;
 	current: boolean;
 }
@@ -81,12 +82,11 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 	);
 };
 
-const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
+const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
 	const t = useTranslations("profile");
 	const formatter = useFormatter();
 
 	const toasts = useToast();
-	const router = useRouter();
 
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 text-white-20">
@@ -114,12 +114,10 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 						<button
 							type="button"
 							onClick={async () => {
-								await ProfileImage.delete(image.id)
-									.then(() => {
-										toasts.add(t("super_quick_alpaca_empower"));
-										return router.refresh();
-									})
-									.catch(toasts.addError);
+								await ProfileImage.delete(image.id).catch(toasts.addError);
+								mutate(userKey(user.id));
+
+								toasts.add(t("super_quick_alpaca_empower"));
 							}}
 						>
 							<Trash2 className="size-5" />
@@ -133,16 +131,21 @@ const ImageToolbar: React.FC<{ image: ProfileImage }> = ({ image }) => {
 };
 
 export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
-	images,
+	user,
 	children,
 	current
 }) => {
+	const { images } = user.profile;
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
 	const [session] = useSession();
 
 	const [imageId, setImageId] = useState(firstImageId);
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
+
+	useEffect(() => {
+		setExpandedImage(false);
+	}, [images]);
 
 	const currentImage = useMemo(
 		() => images.find((image) => image.id === imageId) ?? null,
@@ -154,14 +157,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 			setImageId((currentImageId) => {
 				if (imageId !== undefined) return imageId;
 
-				const currentImageIndex =
-					images.findIndex((image) => image.id === currentImageId) ?? 0;
+				const currentImageIndex
+					= images.findIndex((image) => image.id === currentImageId) ?? 0;
 
 				const newImageOffset = currentImageIndex + direction;
-				const newImageId =
-					images[
-						(newImageOffset < 0 ? images.length - 1 : newImageOffset) %
-							images.length
+				const newImageId
+					= images[
+						(newImageOffset < 0 ? images.length - 1 : newImageOffset)
+						% images.length
 					]?.id;
 				return newImageId;
 			});
@@ -181,9 +184,9 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 		useCallback(
 			(event) => {
 				if (
-					(document.querySelector("[data-radix-focus-guard]") &&
-						!expandedImage) ||
-					event.ctrlKey
+					(document.querySelector("[data-radix-focus-guard]")
+						&& !expandedImage)
+						|| event.ctrlKey
 				)
 					return;
 
@@ -200,26 +203,28 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	return (
 		<div className="relative shrink-0 overflow-hidden" {...swipeHandlers}>
 			<div className="relative flex aspect-square shrink-0 bg-black-70">
-				{currentImage ? (
-					images.map((image, imageIndex) => (
-						<SingleImage
-							image={image}
-							key={image.id}
-							priority={imageIndex === 0}
-							className={twMerge(
-								"size-full transition-opacity duration-300",
-								image.id === imageId ? "opacity-100" : "absolute opacity-0"
-							)}
-						/>
-					))
-				) : (
-					<SingleImage
-						priority
-						className={twMerge("size-full")}
-						image={notFoundImage}
-						key={notFoundImage.id}
-					/>
-				)}
+				{currentImage
+					? (
+							images.map((image, imageIndex) => (
+								<SingleImage
+									className={twMerge(
+										"size-full transition-opacity duration-300",
+										image.id === imageId ? "opacity-100" : "absolute opacity-0"
+									)}
+									image={image}
+									key={image.id}
+									priority={imageIndex === 0}
+								/>
+							))
+						)
+					: (
+							<SingleImage
+								priority
+								className={twMerge("size-full")}
+								image={notFoundImage}
+								key={notFoundImage.id}
+							/>
+						)}
 				{currentImage && (
 					<div className="pointer-events-none absolute flex size-full items-center justify-center">
 						<button
@@ -259,7 +264,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									/>
 								</div>
 								{session?.user?.tags?.includes("moderator") && (
-									<ImageToolbar image={currentImage} />
+									<ImageToolbar image={currentImage} user={user} />
 								)}
 							</DialogContent>
 						</Dialog>

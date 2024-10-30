@@ -1,30 +1,31 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-
-import { useSession } from "~/hooks/use-session";
-import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
-import { InlineLink } from "~/components/inline-link";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
-
-import { Pill } from "./pill";
+import type { FC } from "react";
 
 import type { AttributeType, MinimalAttribute } from "~/api/attributes";
 import type { User } from "~/api/user";
-import type { FC } from "react";
+import { InlineLink } from "~/components/inline-link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useSession } from "~/hooks/use-session";
+
+import { Pill } from "./pill";
 
 interface PillAttributeListProps {
 	attributes?: Array<MinimalAttribute<AttributeType>>;
 	user: User;
 	href?: string;
 	activeIds?: Array<string>;
+	getName?: (id: string) => string;
 }
 
 export const PillAttributeList: FC<PillAttributeListProps> = ({
 	user,
 	attributes,
 	href,
-	activeIds
+	activeIds,
+	getName
 }) => {
 	const [session] = useSession();
 	const t = useTranslations();
@@ -39,8 +40,8 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	return (
 		<div className="flex w-full flex-wrap gap-2">
 			{attributes.map((attribute) => {
-				const { id, ...metadata } =
-					typeof attribute === "object" ? attribute : { id: attribute };
+				const { id, ...metadata }
+					= typeof attribute === "object" ? attribute : { id: attribute };
 				const meta = metadata as {
 					definition?: string;
 					definitionLink?: string;
@@ -51,32 +52,33 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 						<TooltipTrigger asChild>
 							<div>
 								<Pill
-									className="vision:bg-white-30/70"
-									href={href}
 									active={
 										session
 											? session.user.id !== user.id && activeIds.includes(id)
 											: false
 									}
+									className="vision:bg-white-30/70"
+									href={href}
 								>
-									{tAttributes[id]?.name || id}
+									{getName?.(id) || tAttributes[id]?.name || id}
 								</Pill>
 							</div>
 						</TooltipTrigger>
-						{metadata !== undefined &&
-							(meta.definition || meta.definitionLink) && (
-								<TooltipContent>
-									{meta.definition}{" "}
-									{meta.definitionLink && (
-										<InlineLink
-											className="pointer-events-auto"
-											href={meta.definitionLink}
-										>
-											{t("learn_more")}
-										</InlineLink>
-									)}
-								</TooltipContent>
-							)}
+						{metadata !== undefined
+						&& (meta.definition || meta.definitionLink) && (
+							<TooltipContent>
+								{meta.definition}
+								{" "}
+								{meta.definitionLink && (
+									<InlineLink
+										className="pointer-events-auto"
+										href={meta.definitionLink}
+									>
+										{t("learn_more")}
+									</InlineLink>
+								)}
+							</TooltipContent>
+						)}
 					</Tooltip>
 				);
 			})}

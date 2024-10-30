@@ -188,7 +188,7 @@ defmodule Flirtual.Discord do
             [
               %{
                 name: "Reason",
-                value: reason.id,
+                value: Map.get(Attribute.ban_reasons(), reason.id),
                 inline: true
               }
             ] ++
@@ -395,7 +395,7 @@ defmodule Flirtual.Discord do
               },
               %{
                 name: "Reason",
-                value: report.reason.name,
+                value: Map.get(Attribute.report_reasons(), report.reason.id),
                 inline: true
               },
               if(not is_nil(report.target.shadowbanned_at),

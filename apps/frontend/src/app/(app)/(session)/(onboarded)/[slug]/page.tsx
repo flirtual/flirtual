@@ -1,16 +1,16 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { unstable_serialize } from "swr";
 
+import { Attribute } from "~/api/attributes";
 import { displayName } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { SWRConfig } from "~/components/swr";
-import { Attribute } from "~/api/attributes";
-import { urls } from "~/urls";
 import { attributeKey, userKey } from "~/swr";
+import { urls } from "~/urls";
 
+import { QueueActions } from "../browse/queue-actions";
 import { getProfile, profileRequiredAttributes } from "./data";
-
-import type { Metadata } from "next";
 
 export interface ProfilePageProps {
 	params: Promise<{ slug: string }>;
@@ -55,10 +55,15 @@ export default async function ProfilePage(props: ProfilePageProps) {
 			}}
 		>
 			<Profile direct userId={user.id} />
-			{/* {!user.bannedAt &&
-				user.relationship &&
-				!user.relationship?.blocked &&
-				!user.relationship?.kind && <ProspectActions kind="love" />} */}
+			{!user.bannedAt
+			&& user.relationship
+			&& !user.relationship?.blocked
+			&& !user.relationship?.kind && (
+				<QueueActions
+					explicitUserId={user.id}
+					kind="love"
+				/>
+			)}
 		</SWRConfig>
 	);
 }

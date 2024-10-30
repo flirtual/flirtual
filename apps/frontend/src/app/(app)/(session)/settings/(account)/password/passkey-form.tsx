@@ -1,14 +1,15 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
 
+import { Authentication } from "~/api/auth";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { Authentication } from "~/api/auth";
 
 import { PasskeyButton } from "./passkey-button";
 
@@ -22,8 +23,8 @@ interface AAGUIDData {
 	[key: string]: AAGUUIDInfo;
 }
 
-const AAGUID_DATABASE =
-	"https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json";
+const AAGUID_DATABASE
+	= "https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json";
 
 export const PasswordPasskeyForm: React.FC = () => {
 	const [session] = useSession();
@@ -31,14 +32,18 @@ export const PasswordPasskeyForm: React.FC = () => {
 	const router = useRouter();
 	const toasts = useToast();
 	const [passkeysAvailable, setPasskeysAvailable] = useState(false);
-	const [aaguidData, setAAGUIDData] = useState<AAGUIDData>({});
+	const { data: aaguidData = {} } = useSWR("aaguid", async () => {
+		const response = await fetch(AAGUID_DATABASE);
+		const data = (await response.json()) as AAGUIDData;
+		return data;
+	});
 
 	useEffect(() => {
 		if (
-			session &&
-			window.PublicKeyCredential &&
-			PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable &&
-			PublicKeyCredential.isConditionalMediationAvailable
+			session
+			&& window.PublicKeyCredential
+			&& PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable
+			&& PublicKeyCredential.isConditionalMediationAvailable
 		) {
 			void Promise.all([
 				PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable(),
@@ -46,20 +51,8 @@ export const PasswordPasskeyForm: React.FC = () => {
 			]).then((results) => {
 				return setPasskeysAvailable(results.every((r) => r === true));
 			});
-		} else {
-			return;
 		}
-	});
-
-	useEffect(() => {
-		const fetchAAGUIDData = async () => {
-			const response = await fetch(AAGUID_DATABASE);
-			const data = (await response.json()) as AAGUIDData;
-			setAAGUIDData(data);
-		};
-
-		if (session?.user.passkeys) void fetchAAGUIDData();
-	}, [session?.user.passkeys]);
+	}, [session]);
 
 	if (!session) return null;
 
@@ -83,7 +76,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 					{session.user.passkeys.map((passkey) => (
 						<PasskeyButton
 							date={new Date(passkey.createdAt)}
-							icon={aaguidData[passkey.aaguid]?.icon_light}
+							icon={aaguidData[passkey.aaguid]?.icon_dark}
 							id={passkey.id}
 							key={passkey.id}
 							name={aaguidData[passkey.aaguid]?.name}
@@ -97,8 +90,8 @@ export const PasswordPasskeyForm: React.FC = () => {
 				Icon={Plus}
 				type="button"
 				onClick={async () => {
-					const challenge =
-						await Authentication.passkey.registrationChallenge(false);
+					const challenge
+						= await Authentication.passkey.registrationChallenge(false);
 
 					const credential = (await navigator.credentials
 						.create(challenge)
@@ -109,12 +102,11 @@ export const PasswordPasskeyForm: React.FC = () => {
 									value: "You've already added this passkey."
 								});
 							}
-							return;
 						})) as PublicKeyCredential;
 					if (!credential) return;
 
-					const response =
-						credential.response as AuthenticatorAttestationResponse;
+					const response
+						= credential.response as AuthenticatorAttestationResponse;
 
 					await Authentication.passkey
 						.create({
@@ -140,8 +132,8 @@ export const PasswordPasskeyForm: React.FC = () => {
 				}}
 			>
 				Add passkey
-				{!passkeysAvailable &&
-					(native ? " (unsupported device)" : " (unsupported browser)")}
+				{!passkeysAvailable
+				&& (native ? " (unsupported device)" : " (unsupported browser)")}
 			</Button>
 		</>
 	);

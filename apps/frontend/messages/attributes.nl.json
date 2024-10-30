@@ -1,7 +1,619 @@
 {
-  "language": {
-    "ase": {
-      "name": "Amerikaanse Gebarentaal"
-    }
-  }
+	"language": {
+		"ab": {
+			"name": "Abchazisch"
+		},
+		"aa": {
+			"name": "Afar"
+		},
+		"af": {
+			"name": "Afrikaans"
+		},
+		"ak": {
+			"name": "Akan"
+		},
+		"sq": {
+			"name": "Albanees"
+		},
+		"am": {
+			"name": "Amhaars"
+		},
+		"ar": {
+			"name": "Arabisch"
+		},
+		"an": {
+			"name": "Aragonees"
+		},
+		"hy": {
+			"name": "Armeens"
+		},
+		"as": {
+			"name": "Assamees"
+		},
+		"av": {
+			"name": "Avarisch"
+		},
+		"ae": {
+			"name": "Avestisch"
+		},
+		"ay": {
+			"name": "Aymara"
+		},
+		"az": {
+			"name": "Azerbeidzjaans"
+		},
+		"bm": {
+			"name": "Bambara"
+		},
+		"ba": {
+			"name": "Basjkiers"
+		},
+		"eu": {
+			"name": "Baskisch"
+		},
+		"be": {
+			"name": "Belarussisch"
+		},
+		"bn": {
+			"name": "Bengaals"
+		},
+		"bi": {
+			"name": "Bislama"
+		},
+		"bs": {
+			"name": "Bosnisch"
+		},
+		"br": {
+			"name": "Bretons"
+		},
+		"bg": {
+			"name": "Bulgaars"
+		},
+		"my": {
+			"name": "Birmaans"
+		},
+		"ca": {
+			"name": "Catalaans"
+		},
+		"ch": {
+			"name": "Chamorro"
+		},
+		"ce": {
+			"name": "Tsjetsjeens"
+		},
+		"ny": {
+			"name": "Nyanja"
+		},
+		"zh": {
+			"name": "Chinees"
+		},
+		"cu": {
+			"name": "Kerkslavisch"
+		},
+		"cv": {
+			"name": "Tsjoevasjisch"
+		},
+		"kw": {
+			"name": "Cornish"
+		},
+		"co": {
+			"name": "Corsicaans"
+		},
+		"cr": {
+			"name": "Cree"
+		},
+		"hr": {
+			"name": "Kroatisch"
+		},
+		"cs": {
+			"name": "Tsjechisch"
+		},
+		"da": {
+			"name": "Deens"
+		},
+		"dv": {
+			"name": "Divehi"
+		},
+		"nl": {
+			"name": "Nederlands"
+		},
+		"dz": {
+			"name": "Dzongkha"
+		},
+		"en": {
+			"name": "Engels"
+		},
+		"eo": {
+			"name": "Esperanto"
+		},
+		"et": {
+			"name": "Estisch"
+		},
+		"ee": {
+			"name": "Ewe"
+		},
+		"fo": {
+			"name": "Faeröers"
+		},
+		"fj": {
+			"name": "Fijisch"
+		},
+		"fi": {
+			"name": "Fins"
+		},
+		"fr": {
+			"name": "Frans"
+		},
+		"ff": {
+			"name": "Fulah"
+		},
+		"gd": {
+			"name": "Schots-Gaelisch"
+		},
+		"gl": {
+			"name": "Galicisch"
+		},
+		"lg": {
+			"name": "Luganda"
+		},
+		"ka": {
+			"name": "Georgisch"
+		},
+		"de": {
+			"name": "Duits"
+		},
+		"el": {
+			"name": "Grieks"
+		},
+		"gn": {
+			"name": "Guaraní"
+		},
+		"gu": {
+			"name": "Gujarati"
+		},
+		"ht": {
+			"name": "Haïtiaans Creools"
+		},
+		"ha": {
+			"name": "Hausa"
+		},
+		"he": {
+			"name": "Hebreeuws"
+		},
+		"hz": {
+			"name": "Herero"
+		},
+		"hi": {
+			"name": "Hindi"
+		},
+		"ho": {
+			"name": "Hiri Motu"
+		},
+		"hu": {
+			"name": "Hongaars"
+		},
+		"is": {
+			"name": "IJslands"
+		},
+		"io": {
+			"name": "Ido"
+		},
+		"ig": {
+			"name": "Igbo"
+		},
+		"id": {
+			"name": "Indonesisch"
+		},
+		"ia": {
+			"name": "Interlingua"
+		},
+		"ie": {
+			"name": "Interlingue"
+		},
+		"iu": {
+			"name": "Inuktitut"
+		},
+		"ik": {
+			"name": "Inupiaq"
+		},
+		"ga": {
+			"name": "Iers"
+		},
+		"it": {
+			"name": "Italiaans"
+		},
+		"ja": {
+			"name": "Japans"
+		},
+		"jv": {
+			"name": "Javaans"
+		},
+		"kl": {
+			"name": "Groenlands"
+		},
+		"kn": {
+			"name": "Kannada"
+		},
+		"kr": {
+			"name": "Kanuri"
+		},
+		"ks": {
+			"name": "Kasjmiri"
+		},
+		"kk": {
+			"name": "Kazachs"
+		},
+		"km": {
+			"name": "Khmer"
+		},
+		"ki": {
+			"name": "Gikuyu"
+		},
+		"rw": {
+			"name": "Kinyarwanda"
+		},
+		"rn": {
+			"name": "Kirundi"
+		},
+		"kv": {
+			"name": "Komi"
+		},
+		"kg": {
+			"name": "Kongo"
+		},
+		"ko": {
+			"name": "Koreaans"
+		},
+		"ku": {
+			"name": "Koerdisch"
+		},
+		"kj": {
+			"name": "Kuanyama"
+		},
+		"ky": {
+			"name": "Kirgizisch"
+		},
+		"lo": {
+			"name": "Laotiaans"
+		},
+		"la": {
+			"name": "Latijn"
+		},
+		"lv": {
+			"name": "Lets"
+		},
+		"li": {
+			"name": "Limburgs"
+		},
+		"ln": {
+			"name": "Lingala"
+		},
+		"lt": {
+			"name": "Litouws"
+		},
+		"lu": {
+			"name": "Luba-Katanga"
+		},
+		"lb": {
+			"name": "Luxemburgs"
+		},
+		"mk": {
+			"name": "Macedonisch"
+		},
+		"mg": {
+			"name": "Malagassisch"
+		},
+		"ms": {
+			"name": "Maleis"
+		},
+		"ml": {
+			"name": "Malayalam"
+		},
+		"mt": {
+			"name": "Maltees"
+		},
+		"gv": {
+			"name": "Manx"
+		},
+		"mi": {
+			"name": "Maori"
+		},
+		"mr": {
+			"name": "Marathi"
+		},
+		"mh": {
+			"name": "Marshallees"
+		},
+		"mn": {
+			"name": "Mongools"
+		},
+		"na": {
+			"name": "Nauruaans"
+		},
+		"nv": {
+			"name": "Navajo"
+		},
+		"ng": {
+			"name": "Ndonga"
+		},
+		"ne": {
+			"name": "Nepalees"
+		},
+		"nd": {
+			"name": "Noord-Ndebele"
+		},
+		"se": {
+			"name": "Noord-Samisch"
+		},
+		"nb": {
+			"name": "Noors - Bokmål"
+		},
+		"nn": {
+			"name": "Noors - Nynorsk"
+		},
+		"no": {
+			"name": "Noors"
+		},
+		"ii": {
+			"name": "Yi"
+		},
+		"oc": {
+			"name": "Occitaans"
+		},
+		"oj": {
+			"name": "Ojibwa"
+		},
+		"or": {
+			"name": "Odia"
+		},
+		"om": {
+			"name": "Afaan Oromo"
+		},
+		"os": {
+			"name": "Ossetisch"
+		},
+		"pi": {
+			"name": "Pali"
+		},
+		"pa": {
+			"name": "Punjabi"
+		},
+		"ps": {
+			"name": "Pasjtoe"
+		},
+		"fa": {
+			"name": "Perzisch"
+		},
+		"pl": {
+			"name": "Pools"
+		},
+		"pt": {
+			"name": "Portugees"
+		},
+		"qu": {
+			"name": "Quechua"
+		},
+		"ro": {
+			"name": "Roemeens"
+		},
+		"rm": {
+			"name": "Reto-Romaans"
+		},
+		"ru": {
+			"name": "Russisch"
+		},
+		"sm": {
+			"name": "Samoaans"
+		},
+		"sg": {
+			"name": "Sango"
+		},
+		"sa": {
+			"name": "Sanskriet"
+		},
+		"sc": {
+			"name": "Sardijns"
+		},
+		"sr": {
+			"name": "Servisch"
+		},
+		"sn": {
+			"name": "Shona"
+		},
+		"sd": {
+			"name": "Sindhi"
+		},
+		"si": {
+			"name": "Singalees"
+		},
+		"sk": {
+			"name": "Slowaaks"
+		},
+		"sl": {
+			"name": "Sloveens"
+		},
+		"so": {
+			"name": "Somalisch"
+		},
+		"nr": {
+			"name": "Zuid-Ndbele"
+		},
+		"st": {
+			"name": "Zuid-Sotho"
+		},
+		"es": {
+			"name": "Spaans"
+		},
+		"su": {
+			"name": "Soendanees"
+		},
+		"sw": {
+			"name": "Swahili"
+		},
+		"ss": {
+			"name": "Swazi"
+		},
+		"sv": {
+			"name": "Zweeds"
+		},
+		"tl": {
+			"name": "Tagalog"
+		},
+		"ty": {
+			"name": "Tahitiaans"
+		},
+		"tg": {
+			"name": "Tadzjieks"
+		},
+		"ta": {
+			"name": "Tamil"
+		},
+		"tt": {
+			"name": "Tataars"
+		},
+		"te": {
+			"name": "Telugu"
+		},
+		"th": {
+			"name": "Thai"
+		},
+		"bo": {
+			"name": "Tibetaans"
+		},
+		"ti": {
+			"name": "Tigrinya"
+		},
+		"to": {
+			"name": "Tongaans"
+		},
+		"ts": {
+			"name": "Tsonga"
+		},
+		"tn": {
+			"name": "Tswana"
+		},
+		"tr": {
+			"name": "Turks"
+		},
+		"tk": {
+			"name": "Turkmeens"
+		},
+		"tw": {
+			"name": "Twi"
+		},
+		"uk": {
+			"name": "Oekraïens"
+		},
+		"ur": {
+			"name": "Urdu"
+		},
+		"ug": {
+			"name": "Oeigoers"
+		},
+		"uz": {
+			"name": "Oezbeeks"
+		},
+		"ve": {
+			"name": "Venda"
+		},
+		"vi": {
+			"name": "Vietnamees"
+		},
+		"vo": {
+			"name": "Volapük"
+		},
+		"wa": {
+			"name": "Waals"
+		},
+		"cy": {
+			"name": "Welsh"
+		},
+		"fy": {
+			"name": "Fries"
+		},
+		"wo": {
+			"name": "Wolof"
+		},
+		"xh": {
+			"name": "Xhosa"
+		},
+		"yi": {
+			"name": "Jiddisch"
+		},
+		"yo": {
+			"name": "Yoruba"
+		},
+		"za": {
+			"name": "Zhuang"
+		},
+		"zu": {
+			"name": "Zoeloe"
+		},
+		"arn": {
+			"name": "Mapudungun"
+		},
+		"ary": {
+			"name": "Marokkaans Arabisch"
+		},
+		"ckb": {
+			"name": "Soranî"
+		},
+		"dsb": {
+			"name": "Nedersorbisch"
+		},
+		"fil": {
+			"name": "Filipijns"
+		},
+		"gil": {
+			"name": "Gilbertees"
+		},
+		"gsw": {
+			"name": "Zwitserduits"
+		},
+		"hrv": {
+			"name": "Servo-Kroatisch"
+		},
+		"hsb": {
+			"name": "Oppersorbisch"
+		},
+		"kok": {
+			"name": "Konkani"
+		},
+		"moh": {
+			"name": "Mohawk"
+		},
+		"pap": {
+			"name": "Papiaments"
+		},
+		"prs": {
+			"name": "Dari"
+		},
+		"quc": {
+			"name": "K’iche’"
+		},
+		"sah": {
+			"name": "Jakoets"
+		},
+		"sma": {
+			"name": "Zuid-Samisch"
+		},
+		"smj": {
+			"name": "Lule-Samisch"
+		},
+		"smn": {
+			"name": "Inari-Samisch"
+		},
+		"sms": {
+			"name": "Skolt-Samisch"
+		},
+		"syc": {
+			"name": "Klassiek Syrisch"
+		},
+		"tzm": {
+			"name": "Tamazight (Centraal-Marokko)"
+		},
+		"ase": {
+			"name": "Amerikaanse Gebarentaal"
+		}
+	}
 }

@@ -2,17 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
+import { WretchError } from "wretch/resolver";
 
+import { Authentication } from "~/api/auth";
+import { isWretchError } from "~/api/common";
 import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
-import { InputLabel, InputText } from "~/components/inputs";
-import { urls } from "~/urls";
-import { useToast } from "~/hooks/use-toast";
-import { useDevice } from "~/hooks/use-device";
-import { Authentication } from "~/api/auth";
-import { useTranslations } from "~/hooks/use-internationalization";
 import { InlineLink } from "~/components/inline-link";
+import { InputLabel, InputText } from "~/components/inputs";
+import { useDevice } from "~/hooks/use-device";
+import { useTranslations } from "~/hooks/use-internationalization";
+import { useToast } from "~/hooks/use-toast";
+import { urls } from "~/urls";
 
 import { LoginConnectionButton } from "./login-connection-button";
 
@@ -26,17 +28,17 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 	useEffect(() => {
 		async function webAuthnAuthenticate() {
 			if (
-				!challengeGenerated.current &&
-				window.PublicKeyCredential &&
-				PublicKeyCredential.isConditionalMediationAvailable
+				!challengeGenerated.current
+				&& window.PublicKeyCredential
+				&& PublicKeyCredential.isConditionalMediationAvailable
 			) {
 				challengeGenerated.current = true;
 
-				const isCMA =
-					await PublicKeyCredential.isConditionalMediationAvailable();
+				const isCMA
+					= await PublicKeyCredential.isConditionalMediationAvailable();
 				if (isCMA) {
-					const challenge =
-						await Authentication.passkey.authenticationChallenge();
+					const challenge
+						= await Authentication.passkey.authenticationChallenge();
 
 					const credential = (await navigator.credentials
 						.get({
@@ -46,8 +48,8 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						.catch(() => null)) as PublicKeyCredential | null;
 					if (!credential) return;
 
-					const response =
-						credential.response as AuthenticatorAssertionResponse;
+					const response
+						= credential.response as AuthenticatorAssertionResponse;
 
 					await Authentication.passkey
 						.authenticate({
@@ -72,11 +74,16 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 							}
 						})
 						.then(() => {
-							router.refresh();
-							return router.push(next ?? urls.browse());
+							router.push(next ?? urls.browse());
+							return router.refresh();
 						})
 						.catch((reason) => {
-							toasts.addError(reason);
+							if (isWretchError(reason)) {
+								toasts.addError(t(`errors.${reason.json.error}` as any));
+							}
+							else {
+								toasts.addError(reason);
+							}
 							challengeGenerated.current = false;
 						});
 				}
@@ -88,17 +95,17 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 	return (
 		<>
 			<Form
-				className="flex flex-col gap-8"
-				formErrorMessages={false}
 				fields={{
 					login: "",
 					password: "",
 					rememberMe: false
 				}}
+				className="flex flex-col gap-8"
+				formErrorMessages={false}
 				onSubmit={async (body) => {
 					const value = await Authentication.login(body);
 					if ("error" in value) {
-						if (value.error === "invalid_credentials")
+						if (value.error === "invalid_credentials") {
 							throw t.rich("errors.invalid_credentials_complex", {
 								help: (children) => (
 									<InlineLink
@@ -119,8 +126,10 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 									</InlineLink>
 								)
 							});
+						}
 
-						return;
+						// eslint-disable-next-line no-throw-literal
+						throw [t(`errors.${value.error}`)];
 					}
 
 					router.push(next ?? urls.browse());
