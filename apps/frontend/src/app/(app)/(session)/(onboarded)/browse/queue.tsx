@@ -36,7 +36,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	return (
 		<>
-			<div className="relative max-w-full gap-4">
+			<div className="relative max-w-full gap-4 overflow-hidden">
 				{current
 					? (
 							<AnimatePresence presenceAffectsLayout initial={false}>
@@ -50,7 +50,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 										<Profile userId={current} />
 									</motion.div>
 								</Suspense>
-								{previous && (
+								{/* {previous && (
 									<Suspense key={`${previous}-previous`}>
 										<motion.div
 											animate={{ opacity: 0 }}
@@ -73,7 +73,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 											<Profile userId={next} />
 										</motion.div>
 									</Suspense>
-								)}
+								)} */}
 							</AnimatePresence>
 						)
 					: (

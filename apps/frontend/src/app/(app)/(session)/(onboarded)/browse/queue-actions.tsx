@@ -149,8 +149,8 @@ export const QueueActions_: FC<{
 			if (!value) return [null, null, null];
 
 			return direction === "backward"
-				? [null, value[0], value[1]]
-				: [value[1], value[2], null];
+				? value[0] ? [null, value[0], value[1]] : value
+				: value[2] ? [value[1], value[2], null] : value;
 		};
 	};
 
