@@ -11,5 +11,9 @@ export async function polyfill(
 	if (!shouldPolyfill(locale) && !force) return;
 
 	await import("@formatjs/intl-displaynames/polyfill-force");
-	await import(`@formatjs/intl-displaynames/locale-data/${locale}`);
+	await import(`@formatjs/intl-displaynames/locale-data/${locale}`).catch(() => {
+		return import(`@formatjs/intl-displaynames/locale-data/${locale.split("-")[0]}`).catch(() => {
+			return import("@formatjs/intl-displaynames/locale-data/en");
+		});
+	});
 }
