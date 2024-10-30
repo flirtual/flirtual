@@ -36,15 +36,15 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	return (
 		<>
-			<div className="relative max-w-full gap-4 overflow-hidden">
+			<div className="relative max-w-full gap-4">
 				{current
 					? (
-							<AnimatePresence initial={false}>
+							<AnimatePresence presenceAffectsLayout initial={false}>
 								<Suspense key={current}>
 									<motion.div
 										animate={{ opacity: 1 }}
 										className="relative top-0 z-10"
-										exit={{ opacity: 0 }}
+										exit={{ opacity: 0, position: "absolute" }}
 										initial={{ opacity: 0 }}
 									>
 										<Profile userId={current} />

@@ -43,7 +43,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { UserAvatar } from "~/components/user-avatar";
 import { useDevice } from "~/hooks/use-device";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
@@ -131,13 +130,11 @@ export const QueueActions_: FC<{
 				if (value && "queue" in value) return value.queue;
 			},
 			onSuccess: (data) => {
-				if (data?.userId) {
+				if (data?.userId)
 					mutate(userKey(data?.userId));
-				}
 
-				if (Array.isArray(data?.queue)) {
+				if (Array.isArray(data?.queue))
 					data.queue.filter(Boolean).map((userId) => mutate(userKey(userId)));
-				}
 			}
 		}
 	);
@@ -145,6 +142,7 @@ export const QueueActions_: FC<{
 	const optimisticMove = (direction: QueueAnimationDirection) => {
 		return (value?: Queue): Queue => {
 			window.scrollTo({ top: 0, behavior: "smooth" });
+
 			if (setAnimationDirection)
 				flushSync(() => setAnimationDirection(direction));
 
