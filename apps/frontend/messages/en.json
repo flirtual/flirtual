@@ -480,6 +480,8 @@
 		"must_be_less_than_or_equal_to_{number}": "Cannot be more than {number}.",
 		"must_be_greater_than_or_equal_to_{number}": "Cannot be less than {number}.",
 		"must_be_equal_to_{number}": "Must be {number}.",
+		"too_young": "You must be at least 18 years of age to use Flirtual.",
+		"too_old": "Please enter your real date of birth.",
 		"invalid_credentials": "Incorrect email or password, please try resetting your password.",
 		"invalid_credentials_complex": "Incorrect email or password, please try <reset>resetting your password</reset> or <help>check common issues</help>.",
 		"invalid_password": "Incorrect password, please try again or log out and reset your password.",

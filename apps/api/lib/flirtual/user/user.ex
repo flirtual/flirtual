@@ -313,10 +313,10 @@ defmodule Flirtual.User do
              )
            )
          ) === :gt do
-        %{born_at: "must be at least 18 years old"}
+        %{born_at: "too_young"}
       else
         if Date.compare(born_at, Date.new!(1900, 1, 2)) === :lt do
-          %{born_at: "please enter your real date of birth"}
+          %{born_at: "too_old"}
         else
           %{}
         end
