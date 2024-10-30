@@ -16,9 +16,12 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const { yes, no, value, onChange } = props;
 	const t = useTranslations("inputs.switch");
 
+	const ariaChecked = value === null ? "mixed" : value;
+
 	return (
 		<label
-			aria-checked={value === null ? "mixed" : value}
+			aria-checked={ariaChecked}
+			data-checked={ariaChecked}
 			className="group/switch focusable-within relative isolate grid size-fit h-11 shrink-0 grow-0 cursor-pointer grid-cols-2 items-center overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60"
 			role="checkbox"
 			tabIndex={0}
@@ -31,7 +34,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 			/>
 			<motion.div
 				layout
-				className="absolute right-0 h-full w-1/2 rounded-xl bg-brand-gradient group-aria-checked/switch:left-0 group-aria-checked/switch:right-[unset]"
+				className="absolute right-0 h-full w-1/2 rounded-xl bg-brand-gradient group-aria-checked/switch:left-0 group-aria-checked/switch:right-[unset] group-data-[checked=mixed]/switch:right-1/4 group-data-[checked=mixed]/switch:opacity-0"
 				transition={{
 					type: "spring",
 					stiffness: 700,
