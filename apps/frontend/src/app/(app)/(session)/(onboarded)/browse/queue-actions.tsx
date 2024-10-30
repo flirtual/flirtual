@@ -210,7 +210,6 @@ export const QueueActions_: FC<{
 					({
 						error: {
 							json: {
-								error,
 								details: { reset_at }
 							}
 						}
@@ -224,9 +223,7 @@ export const QueueActions_: FC<{
 							<>
 								<DialogHeader>
 									<DialogTitle>
-										{error === "out_of_likes"
-											? "Out of likes"
-											: "Out of passes"}
+										Come back tomorrow!
 									</DialogTitle>
 									<DialogDescription className="sr-only" />
 								</DialogHeader>
@@ -261,7 +258,7 @@ export const QueueActions_: FC<{
 														matchmaking filters).
 													</p>
 												)}
-												<p className="font-semibold">New profiles in</p>
+												<p className="font-semibold">New profiles in:</p>
 												<Countdown date={reset_at} onComplete={reset} />
 											</div>
 										</div>
