@@ -1,4 +1,12 @@
 {
+  "ban-reason": {
+    "jBVZ29YcQ2dDXbURb6AxXk": {
+      "name": "Werbung"
+    },
+    "tUaxdXYAcyeb3G4Qc7gNLh": {
+      "name": "Spam"
+    }
+  },
 	"language": {
 		"ab": {
 			"name": "Abchasisch"
@@ -612,8 +620,8 @@
 		"tzm": {
 			"name": "Zentralatlas-Tamazight"
 		},
-		"ase": {
-			"name": "Amerikanische Gebärdensprache"
-		}
+    "ase": {
+      "name": "Amerikanische Gebärdensprache"
+    }
 	}
 }
