@@ -19,7 +19,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const ariaChecked = value === null ? "mixed" : value;
 
 	return (
-		<label
+		<div
 			aria-checked={ariaChecked}
 			data-checked={ariaChecked}
 			className="group/switch focusable-within relative isolate grid size-fit h-11 shrink-0 grow-0 cursor-pointer grid-cols-2 items-center overflow-hidden rounded-xl bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60"
@@ -41,12 +41,12 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 					damping: 30
 				}}
 			/>
-			<span className="z-10 px-4 group-aria-checked/switch:text-white-10">
-				{yes ?? t("yes")}
-			</span>
-			<span className="z-10 px-4 text-white-10 group-aria-checked/switch:text-black-80 dark:group-aria-checked/switch:text-white-10 group-data-[checked=mixed]/switch:text-black-80 dark:group-data-[checked=mixed]/switch:text-white-10">
-				{no ?? t("no")}
-			</span>
-		</label>
+			<div onClick={() => onChange(value === null ? true : !value)} className="z-10 px-4 flex h-full items-center justify-center group-aria-checked/switch:text-white-10">
+				<span>{yes ?? t("yes")}</span>
+			</div>
+			<div className="z-10 h-full flex items-center justify-center px-4 text-white-10 group-aria-checked/switch:text-black-80 dark:group-aria-checked/switch:text-white-10 group-data-[checked=mixed]/switch:text-black-80 dark:group-data-[checked=mixed]/switch:text-white-10" onClick={() => onChange(value === null ? false : !value)}>
+				<span>{no ?? t("no")}</span>
+			</div>
+		</div>
 	);
 };
