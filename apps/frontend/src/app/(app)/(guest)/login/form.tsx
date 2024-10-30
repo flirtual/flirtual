@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
+import { WretchError } from "wretch/resolver";
 
 import { Authentication } from "~/api/auth";
+import { isWretchError } from "~/api/common";
 import { Form, FormButton } from "~/components/forms";
 import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
@@ -72,11 +74,16 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 							}
 						})
 						.then(() => {
-							router.refresh();
-							return router.push(next ?? urls.browse());
+							router.push(next ?? urls.browse());
+							return router.refresh();
 						})
 						.catch((reason) => {
-							toasts.addError(reason);
+							if (isWretchError(reason)) {
+								toasts.addError(t(`errors.${reason.json.error}` as any));
+							}
+							else {
+								toasts.addError(reason);
+							}
 							challengeGenerated.current = false;
 						});
 				}

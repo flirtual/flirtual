@@ -130,13 +130,14 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
 	const addError = useCallback(
 		(reason: unknown, { expected = false }: AddErrorOptions = {}) => {
-			const message =
-				(typeof reason === "object" &&
-					reason !== null &&
-					"message" in reason &&
-					typeof reason.message === "string" &&
-					reason.message) ||
-				"Unknown request error";
+			const message
+				= (typeof reason === "object"
+					&& reason !== null
+					&& "message" in reason
+					&& typeof reason.message === "string"
+					&& reason.message)
+					|| (typeof reason === "string" && reason)
+					|| "Unknown request error";
 
 			if (!expected) Sentry.captureException(reason);
 
