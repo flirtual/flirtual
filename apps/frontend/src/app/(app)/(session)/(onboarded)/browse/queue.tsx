@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { type FC, Suspense, useState } from "react";
+import { type FC, Suspense, useEffect, useState } from "react";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { Profile } from "~/components/profile/profile";
@@ -14,6 +14,9 @@ import {
 	OutOfProspectsError
 } from "./out-of-prospects";
 import { QueueActions } from "./queue-actions";
+import { preload } from "swr";
+import { userKey } from "~/swr";
+import { User } from "~/api/user";
 
 export type QueueAnimationDirection = "backward" | "forward";
 
@@ -22,6 +25,15 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const { data: queue } = useQueue(kind);
 	const [animationDirection, setAnimationDirection]
 		= useState<QueueAnimationDirection>("forward");
+
+		useEffect(() => {
+			if (!Array.isArray(queue)) return;
+			
+			// Optimistically preload the next and previous profiles.
+			queue.filter(Boolean).map((userId) => {
+				preload(userKey(userId), ([, userId]) => User.get(userId));
+			})
+		}, [queue])
 
 	if (!session) return null;
 
@@ -32,16 +44,17 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 		return null;
 	}
 
-	const [previous, current, next] = queue;
+	const [, current] = queue;
+
 
 	return (
 		<>
 			<div className="relative max-w-full gap-4 overflow-hidden">
 				{current
 					? (
-							<AnimatePresence presenceAffectsLayout initial={false}>
-								<Suspense key={current}>
+							<AnimatePresence initial={false}>
 									<motion.div
+									key={current}
 										animate={{ opacity: 1 }}
 										className="relative top-0 z-10"
 										exit={{ opacity: 0, position: "absolute" }}
@@ -49,7 +62,6 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 									>
 										<Profile userId={current} />
 									</motion.div>
-								</Suspense>
 								{/* {previous && (
 									<Suspense key={`${previous}-previous`}>
 										<motion.div
