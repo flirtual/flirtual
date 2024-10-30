@@ -78,7 +78,7 @@ export const PrivacyForm: React.FC = () => {
 							<>
 								<InputLabel
 									inline
-									hint={
+									hint={(
 										<InputLabelHint>
 											<InlineLink
 												className="flex w-fit items-center gap-2"
@@ -88,11 +88,11 @@ export const PrivacyForm: React.FC = () => {
 												<span>Learn more</span>
 											</InlineLink>
 										</InputLabelHint>
-									}
+									)}
 								>
 									Opt-out of anonymous statistics?
 								</InputLabel>
-								<InputSwitch {...field.props} invert />
+								<InputSwitch {...field.props} value={!field.props.value} onChange={(value) => field.props.onChange(!value)} />
 							</>
 						)}
 					</FormField>
