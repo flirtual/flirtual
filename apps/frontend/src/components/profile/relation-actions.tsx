@@ -1,13 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { mutate } from "swr";
 
-import { type User, displayName } from "~/api/user";
-import { urls } from "~/urls";
-import { useToast } from "~/hooks/use-toast";
 import { Matchmaking } from "~/api/matchmaking";
+import { displayName, type User } from "~/api/user";
+import { useToast } from "~/hooks/use-toast";
+import { userKey } from "~/swr";
+import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
 
@@ -25,37 +27,34 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 
 	if (relationship.matched)
 		return (
-			<>
-				<div className="flex gap-4">
-					<ButtonLink
-						className="w-full shrink text-theme-overlay"
-						href={urls.conversations.of(relationship.conversationId)}
-						size="sm"
-					>
-						{t("every_sleek_llama_feast")}
-					</ButtonLink>
-					<Button
-						className="w-fit"
-						kind="secondary"
-						size="sm"
-						type="button"
-						onClick={() => {
-							void Matchmaking.unmatch(user.id)
-								.then(() => {
-									toasts.add(
-										t("weird_green_crab_peek", {
-											displayName: displayName(user)
-										})
-									);
-									return router.refresh();
-								})
-								.catch(toasts.addError);
-						}}
-					>
-						{t("neat_moving_ibex_nail")}
-					</Button>
-				</div>
-			</>
+			<div className="flex gap-4">
+				<ButtonLink
+					className="w-full shrink text-theme-overlay"
+					href={urls.conversations.of(relationship.conversationId)}
+					size="sm"
+				>
+					{t("every_sleek_llama_feast")}
+				</ButtonLink>
+				<Button
+					className="w-fit"
+					kind="secondary"
+					size="sm"
+					type="button"
+					onClick={async () => {
+						await Matchmaking.unmatch(user.id).catch(toasts.addError);
+						mutate(userKey(user.id));
+
+						toasts.add(
+							t("weird_green_crab_peek", {
+								displayName: displayName(user)
+							})
+						);
+						router.refresh();
+					}}
+				>
+					{t("neat_moving_ibex_nail")}
+				</Button>
+			</div>
 		);
 
 	if (direct && relationship.type && relationship.kind)
@@ -76,13 +75,11 @@ export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
 					className="shrink-0"
 					kind="secondary"
 					size="sm"
-					onClick={() =>
-						Matchmaking.unmatch(user.id)
-							.then(() => {
-								return router.refresh();
-							})
-							.catch(toasts.addError)
-					}
+					onClick={async () => {
+						await Matchmaking.unmatch(user.id).catch(toasts.addError);
+						mutate(userKey(user.id));
+						router.refresh();
+					}}
 				>
 					Undo
 				</Button>

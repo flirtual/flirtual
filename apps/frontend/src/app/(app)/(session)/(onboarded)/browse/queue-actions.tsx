@@ -1,5 +1,10 @@
 "use client";
 
+import { InAppReview } from "@capacitor-community/in-app-review";
+import { Undo2, X } from "lucide-react";
+import ms from "ms";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import {
 	type Dispatch,
 	type FC,
@@ -8,30 +13,12 @@ import {
 	useCallback,
 	useEffect
 } from "react";
-import { Undo2, X } from "lucide-react";
-import dynamic from "next/dynamic";
-import ms from "ms";
-import { InAppReview } from "@capacitor-community/in-app-review";
+import { flushSync } from "react-dom";
+import { type Key, mutate } from "swr";
 import useMutation from "swr/mutation";
 import { match, P } from "ts-pattern";
-import { useRouter } from "next/navigation";
-import { flushSync } from "react-dom";
 
-import { Button, ButtonLink } from "~/components/button";
-import { HeartIcon } from "~/components/icons/gradient/heart";
-import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { InlineLink } from "~/components/inline-link";
-import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
-import { urls } from "~/urls";
-import { useDefaultTour } from "~/hooks/use-tour";
-import { DrawerOrDialog } from "~/components/drawer-or-dialog";
-import {
-	DialogBody,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle
-} from "~/components/dialog/dialog";
-import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import type { WretchIssue } from "~/api/common";
 import {
 	Matchmaking,
 	type ProspectKind,
@@ -41,26 +28,39 @@ import {
 	type RespondProspect
 } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
-import { useSession } from "~/hooks/use-session";
-import { useUser } from "~/hooks/use-user";
-import { useQueue } from "~/hooks/use-queue";
+import { Button, ButtonLink } from "~/components/button";
+import {
+	DialogBody,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle
+} from "~/components/dialog/dialog";
+import { DrawerOrDialog } from "~/components/drawer-or-dialog";
+import { HeartIcon } from "~/components/icons/gradient/heart";
+import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { InlineLink } from "~/components/inline-link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { UserAvatar } from "~/components/user-avatar";
+import { useDevice } from "~/hooks/use-device";
+import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useQueue } from "~/hooks/use-queue";
+import { useSession } from "~/hooks/use-session";
+import { useDefaultTour } from "~/hooks/use-tour";
+import { useUser } from "~/hooks/use-user";
+import { queueKey, userKey } from "~/swr";
+import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";
-import { queueKey } from "~/swr";
 
 import { Countdown } from "./countdown";
-
-import type { WretchIssue } from "~/api/common";
-import type { Key } from "swr";
 import type { QueueAnimationDirection } from "./queue";
 
-const Key = (props: { label: string }) => {
+function Key(props: { label: string }) {
 	return (
 		<kbd className="mb-0.5 inline-block size-7 rounded-md bg-white-20 pt-0.5 text-center font-nunito font-bold text-black-60 shadow-[0_1px_1px_2px_rgba(255,255,255,0.75)] dark:bg-black-60 dark:text-white-20 dark:shadow-[0_1px_1px_2px_rgba(0,0,0,0.65)]">
 			{props.label}
 		</kbd>
 	);
-};
+}
 
 function DefaultTour() {
 	const [session] = useSession();
@@ -69,14 +69,17 @@ function DefaultTour() {
 	return null;
 }
 
-export const _QueueActions: FC<{
+export const QueueActions_: FC<{
+	queue?: Queue;
+	explicitUserId?: string;
 	kind: ProspectKind;
 	setAnimationDirection?: Dispatch<SetStateAction<QueueAnimationDirection>>;
-}> = ({ kind: mode, setAnimationDirection }) => {
+}> = ({ queue, explicitUserId, kind: mode, setAnimationDirection }) => {
 	const [session] = useSession();
+	const { native } = useDevice();
 
 	useEffect(() => {
-		if (!session?.user.createdAt) return;
+		if (!session?.user.createdAt || !native) return;
 
 		const ratingPrompts = session.user.ratingPrompts;
 		const monthsRegistered = Math.floor(
@@ -84,30 +87,30 @@ export const _QueueActions: FC<{
 		);
 
 		if (
-			(monthsRegistered >= 1 && ratingPrompts === 0) ||
-			(monthsRegistered >= 3 && ratingPrompts === 1) ||
-			(monthsRegistered >= 6 && ratingPrompts === 2)
+			(monthsRegistered >= 1 && ratingPrompts === 0)
+			|| (monthsRegistered >= 3 && ratingPrompts === 1)
+			|| (monthsRegistered >= 6 && ratingPrompts === 2)
 		) {
 			void InAppReview.requestReview();
 			void User.updateRatingPrompts(session.user.id, {
 				ratingPrompts: monthsRegistered >= 6 ? 3 : monthsRegistered >= 3 ? 2 : 1
 			});
 		}
-	}, [session?.user.createdAt]);
+	}, [native, session]);
 
-	const { data: queue } = useQueue(mode);
 	const { trigger, reset, data, error } = useMutation<
 		RespondProspect | undefined,
 		WretchIssue<QueueActionIssue>,
 		ReturnType<typeof queueKey>,
 		{
-			type: ProspectRespondType | "undo";
+			type: "undo" | ProspectRespondType;
 			kind: ProspectKind;
+			userId?: string;
 		},
 		Queue | undefined
 	>(
 		queueKey(mode),
-		async (_, { arg: { type, kind } }) => {
+		async (_, { arg: { type, kind, userId } }) => {
 			if (type === "undo") {
 				return Matchmaking.undo({
 					mode
@@ -115,17 +118,26 @@ export const _QueueActions: FC<{
 			}
 
 			return Matchmaking.queueAction({
+				userId,
 				kind,
 				mode,
-				type
+				type,
 			});
 		},
 		{
 			throwOnError: false,
 			revalidate: false,
 			populateCache: (value) => {
-				console.log("populateCache", value);
 				if (value && "queue" in value) return value.queue;
+			},
+			onSuccess: (data) => {
+				if (data?.userId) {
+					mutate(userKey(data?.userId));
+				}
+
+				if (Array.isArray(data?.queue)) {
+					data.queue.filter(Boolean).map((userId) => mutate(userKey(userId)));
+				}
 			}
 		}
 	);
@@ -146,13 +158,13 @@ export const _QueueActions: FC<{
 
 	const like = (kind: ProspectKind = "love") =>
 		trigger(
-			{ type: "like", kind },
+			{ type: "like", kind, userId: explicitUserId },
 			{ optimisticData: optimisticMove("forward") }
 		);
 
 	const pass = () =>
 		trigger(
-			{ type: "pass", kind: mode },
+			{ type: "pass", kind: mode, userId: explicitUserId },
 			{ optimisticData: optimisticMove("forward") }
 		);
 
@@ -179,8 +191,6 @@ export const _QueueActions: FC<{
 			[mode]
 		)
 	);
-
-	console.log(error?.json);
 
 	return (
 		<Suspense>
@@ -225,16 +235,25 @@ export const _QueueActions: FC<{
 										<div className="flex flex-col gap-4">
 											<div className="flex max-w-md flex-col gap-4 font-nunito">
 												<p>
-													You can{" "}
+													You can
+													{" "}
 													<InlineLink href={urls.subscription.default}>
 														upgrade to Premium
-													</InlineLink>{" "}
-													to <em>browse unlimited profiles</em> and{" "}
-													<em>see who&apos;s already liked you</em>.
+													</InlineLink>
+													{" "}
+													to
+													{" "}
+													<em>browse unlimited profiles</em>
+													{" "}
+													and
+													{" "}
+													<em>see who&apos;s already liked you</em>
+													.
 												</p>
 												{mode === "love" && (
 													<p>
-														You can also continue in{" "}
+														You can also continue in
+														{" "}
 														<InlineLink href={urls.browse("friend")}>
 															Homie Mode
 														</InlineLink>
@@ -251,13 +270,13 @@ export const _QueueActions: FC<{
 												Get Premium
 											</ButtonLink>
 											<ButtonLink
-												kind="tertiary"
-												size="sm"
 												href={
 													mode === "love"
 														? urls.browse("friend")
 														: urls.browse()
 												}
+												kind="tertiary"
+												size="sm"
 											>
 												{mode === "love" ? "Homie Mode" : "Leave Homie Mode"}
 											</ButtonLink>
@@ -269,27 +288,29 @@ export const _QueueActions: FC<{
 					)
 				)
 				.otherwise(() => null)}
-			{Array.isArray(queue) && (
+			{(Array.isArray(queue) || explicitUserId) && (
 				<div className="h-[5.5rem] w-full desktop:h-0">
 					<div className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+3.375rem),4.5rem)] left-0 z-20 flex w-full flex-col items-center justify-center gap-3 px-2 pb-4 vision:bottom-2 desktop:bottom-0 desktop:py-8">
 						<div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-xl py-2 text-white-10 desktop:gap-3">
-							<Tooltip>
-								<TooltipTrigger asChild>
-									<button
-										className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:brightness-50"
-										disabled={!Array.isArray(queue) || !queue[0]}
-										id="undo-button"
-										type="button"
-										onClick={undo}
-									>
-										<Undo2 className="size-7" strokeWidth={3} />
-									</button>
-								</TooltipTrigger>
-								<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-									<span className="pt-1">Undo</span>
-									<Key label="H" />
-								</TooltipContent>
-							</Tooltip>
+							{!explicitUserId && (
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<button
+											className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:brightness-50"
+											disabled={!Array.isArray(queue) || !queue[0]}
+											id="undo-button"
+											type="button"
+											onClick={undo}
+										>
+											<Undo2 className="size-7" strokeWidth={3} />
+										</button>
+									</TooltipTrigger>
+									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+										<span className="pt-1">Undo</span>
+										<Key label="H" />
+									</TooltipContent>
+								</Tooltip>
+							)}
 							<div className="flex flex-row items-center gap-1.5 desktop:gap-3">
 								{mode === "love" && (
 									<Tooltip>
@@ -356,7 +377,7 @@ export const _QueueActions: FC<{
 	);
 };
 
-export const QueueActions = dynamic(() => Promise.resolve(_QueueActions), {
+export const QueueActions = dynamic(() => Promise.resolve(QueueActions_), {
 	ssr: false,
 	loading: () => null
 });
@@ -388,10 +409,12 @@ const MatchDialog: FC<{
 				<DialogBody>
 					<div className="flex flex-col justify-between gap-4">
 						<span>
-							You and{" "}
+							You and
+							{" "}
 							<InlineLink data-sentry-block href={urls.profile(user)}>
 								{displayName(user)}
-							</InlineLink>{" "}
+							</InlineLink>
+							{" "}
 							liked each other!
 						</span>
 						<div className="flex items-center justify-center gap-4">
@@ -419,8 +442,7 @@ const MatchDialog: FC<{
 										urls.conversations.of(
 											await newConversationId(session.user.id, user.id)
 										)
-									)
-								}
+									)}
 							>
 								Send a message
 							</Button>
