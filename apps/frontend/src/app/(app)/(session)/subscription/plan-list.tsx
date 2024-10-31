@@ -2,17 +2,17 @@
 
 import { type FC, useState } from "react";
 
-import { useSession } from "~/hooks/use-session";
 import { useDevice } from "~/hooks/use-device";
+import { useSession } from "~/hooks/use-session";
 
 import { PlanCard } from "./plan-card";
 
 export const PlanList: FC = () => {
-	const { native } = useDevice();
+	const { native, vision } = useDevice();
 	const [session] = useSession();
 	const [purchasePending, setPurchasePending] = useState(false);
 
-	if (!session) return null;
+	if (!session || vision) return null;
 
 	const user = session.user;
 	const { subscription } = user;
@@ -22,10 +22,10 @@ export const PlanList: FC = () => {
 	}
 
 	if (
-		subscription &&
-		[
-			"Di7Sypboma4ryhy6MUagyS",
+		subscription
+		&& [
 			"CJv2NQ7AiEimvDoZJ3uQTe",
+			"Di7Sypboma4ryhy6MUagyS",
 			"QQd364odDmzV69gsaKTYwm"
 		].includes(subscription.plan.id)
 	) {
