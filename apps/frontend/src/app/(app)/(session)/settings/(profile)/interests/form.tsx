@@ -15,8 +15,10 @@ import {
 	User
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import type { Dispatch, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -25,15 +27,12 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { groupBy } from "~/utilities";
+import { Pill } from "~/components/profile/pill/pill";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useDevice } from "~/hooks/use-device";
-import { Profile } from "~/api/user/profile";
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { Pill } from "~/components/profile/pill/pill";
-
-import type { Dispatch, FC } from "react";
+import { groupBy } from "~/utilities";
 
 const categoryIcons: Record<string, React.ReactNode> = {
 	iiCe39JvGQAAtsrTqnLddb: <Star />,
@@ -97,8 +96,8 @@ export const InterestSelectList: FC<{
 
 						const interestName = tAttribute[interest.id]?.name || interest.id;
 						return (
-							interestName.toLowerCase().includes(filter.toLowerCase()) ||
-							interest.synonyms?.some((synonym) =>
+							interestName.toLowerCase().includes(filter.toLowerCase())
+							|| interest.synonyms?.some((synonym) =>
 								synonym.toLowerCase().includes(filter.toLowerCase())
 							)
 						);
@@ -115,7 +114,9 @@ export const InterestSelectList: FC<{
 				return (
 					<div className="flex flex-col gap-4" key={categoryId}>
 						<InputLabel className="flex flex-row items-center gap-2">
-							{categoryIcon} {categoryName}
+							{categoryIcon}
+							{" "}
+							{categoryName}
 						</InputLabel>
 						<div className="flex flex-wrap gap-2">
 							{filteredInterests.map(({ id: interestId }) => {
@@ -126,22 +127,21 @@ export const InterestSelectList: FC<{
 
 								return (
 									<Pill
-										active={active}
-										hocusable={false}
-										key={interestId}
 										className={twMerge(
 											"data-[active]:bg-brand-gradient",
 											!active && selected.length >= maximum
 												? "cursor-default opacity-50"
 												: "hover:bg-white-40 data-[active]:text-white-10 hover:dark:bg-black-50"
 										)}
+										active={active}
+										hocusable={false}
+										key={interestId}
 										onClick={() =>
 											onSelected(
 												active
 													? selected.filter((id) => id !== interestId)
 													: [...selected, interestId]
-											)
-										}
+											)}
 									>
 										<HighlightedText snippet={filter}>
 											{interestName}
@@ -169,55 +169,65 @@ export const InterestSelectCustomInput: FC<{
 				className="flex flex-row items-center gap-2"
 				hint="(optional)"
 			>
-				<Pencil /> Custom interests
+				<Pencil />
+				{" "}
+				Custom interests
 			</InputLabel>
 			<InputLabelHint className="-mt-2">
-				Press {platform === "apple" ? "Return" : "Enter"} <small>⏎</small> after
+				Press
+				{" "}
+				{platform === "apple" ? "Return" : "Enter"}
+				{" "}
+				<small>⏎</small>
+				{" "}
+				after
 				each interest
 			</InputLabelHint>
 			<InputAutocomplete
 				supportArbitrary
-				dropdown={false}
-				limit={10}
-				placeholder="Type your custom interests..."
-				value={value}
 				options={value.map((interest) => ({
 					key: interest,
 					label: interest
 				}))}
+				dropdown={false}
+				limit={10}
+				placeholder="Type your custom interests..."
+				value={value}
 				onChange={(value) =>
 					onChange(
 						value
 							.map((interest) => interest.trim())
 							.filter(
 								(v, index, a) =>
-									a.findIndex((t) => t.toLowerCase() === v.toLowerCase()) ===
-									index
+									a.findIndex((t) => t.toLowerCase() === v.toLowerCase())
+									=== index
 							)
-					)
-				}
+					)}
 			/>
 		</>
 	);
 };
 
-export const InterestSelectCount: FC<{ current: number; maximum: number }> = ({
+export const InterestSelectCount: FC<{ current: number; maximum: number; className?: string }> = ({
 	current,
-	maximum
+	maximum,
+	className
 }) => {
 	if (current === 0) return null;
 
 	return (
 		<div
-			className="pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4"
 			style={{
 				backgroundImage: `conic-gradient(var(--theme-1) ${
 					(current / maximum) * 360
 				}deg, transparent 0deg)`
 			}}
+			className={twMerge("pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4", className)}
 		>
 			<div className="flex size-12 flex-col items-center justify-center rounded-full bg-white-20 text-sm font-extrabold text-theme-1 dark:bg-black-70">
-				{current}/{maximum}
+				{current}
+				/
+				{maximum}
 			</div>
 		</div>
 	);
@@ -236,12 +246,12 @@ export const InterestsForm: FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
 			fields={{
 				filter: "",
 				defaultInterests: profile.attributes.interest || [],
 				customInterests: profile.customInterests
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async ({ defaultInterests, customInterests }) => {
 				await Profile.update(user.id, {
 					customInterests,
@@ -262,9 +272,9 @@ export const InterestsForm: FC = () => {
 					customInterests
 				}
 			}) => {
-				const totalInterests =
-					defaultInterests.props.value.length +
-					customInterests.props.value.length;
+				const totalInterests
+					= defaultInterests.props.value.length
+					+ customInterests.props.value.length;
 
 				return (
 					<>
@@ -284,15 +294,15 @@ export const InterestsForm: FC = () => {
 						<FormField name="defaultInterests">
 							{({ props: { value, onChange } }) => (
 								<InterestSelectList
-									filter={filter}
-									selected={value}
 									maximum={
 										maximumInterests - customInterests.props.value.length
 									}
+									filter={filter}
+									selected={value}
 									onSelected={(newValues) => {
 										if (
-											totalInterests >= maximumInterests &&
-											newValues.length >= value.length
+											totalInterests >= maximumInterests
+											&& newValues.length >= value.length
 										)
 											return toasts.add({
 												type: "warning",
@@ -310,8 +320,8 @@ export const InterestsForm: FC = () => {
 									value={value}
 									onChange={(newValues) => {
 										if (
-											totalInterests >= maximumInterests &&
-											newValues.length >= value.length
+											totalInterests >= maximumInterests
+											&& newValues.length >= value.length
 										)
 											return toasts.add({
 												type: "warning",

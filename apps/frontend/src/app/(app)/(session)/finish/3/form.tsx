@@ -2,14 +2,15 @@
 
 import { MoveLeft, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
+import type { FC } from "react";
 
+import { Profile } from "~/api/user/profile";
+import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { Profile } from "~/api/user/profile";
-import { ButtonLink } from "~/components/button";
 import { urls } from "~/urls";
 
 import {
@@ -18,8 +19,6 @@ import {
 	InterestSelectList,
 	maximumInterests
 } from "../../settings/(profile)/interests/form";
-
-import type { FC } from "react";
 
 export const Finish3Form: FC = () => {
 	const [session] = useSession();
@@ -32,13 +31,13 @@ export const Finish3Form: FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
-			requireChange={false}
 			fields={{
 				filter: "",
 				defaultInterests: profile.attributes.interest || [],
 				customInterests: profile.customInterests
 			}}
+			className="flex flex-col gap-8"
+			requireChange={false}
 			onSubmit={async ({ defaultInterests, customInterests }) => {
 				await Profile.update(user.id, {
 					customInterests,
@@ -60,9 +59,9 @@ export const Finish3Form: FC = () => {
 					customInterests
 				}
 			}) => {
-				const totalInterests =
-					defaultInterests.props.value.length +
-					customInterests.props.value.length;
+				const totalInterests
+					= defaultInterests.props.value.length
+					+ customInterests.props.value.length;
 
 				return (
 					<>
@@ -82,15 +81,15 @@ export const Finish3Form: FC = () => {
 						<FormField name="defaultInterests">
 							{({ props: { value, onChange } }) => (
 								<InterestSelectList
-									filter={filter}
-									selected={value}
 									maximum={
 										maximumInterests - customInterests.props.value.length
 									}
+									filter={filter}
+									selected={value}
 									onSelected={(newValues) => {
 										if (
-											totalInterests >= maximumInterests &&
-											newValues.length >= value.length
+											totalInterests >= maximumInterests
+											&& newValues.length >= value.length
 										)
 											return toasts.add({
 												type: "warning",
@@ -108,8 +107,8 @@ export const Finish3Form: FC = () => {
 									value={value}
 									onChange={(newValues) => {
 										if (
-											totalInterests >= maximumInterests &&
-											newValues.length >= value.length
+											totalInterests >= maximumInterests
+											&& newValues.length >= value.length
 										)
 											return toasts.add({
 												type: "warning",
@@ -134,6 +133,7 @@ export const Finish3Form: FC = () => {
 							<FormButton className="w-36" size="sm" />
 						</div>
 						<InterestSelectCount
+							className="mb-11 desktop:mb-0"
 							current={totalInterests}
 							maximum={maximumInterests}
 						/>

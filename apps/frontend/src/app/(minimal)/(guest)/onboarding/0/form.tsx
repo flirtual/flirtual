@@ -1,8 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { MoveRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import type { FC } from "react";
 
+import { User } from "~/api/user";
+import { ButtonLink } from "~/components/button";
 import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import {
@@ -12,10 +15,6 @@ import {
 	InputText
 } from "~/components/inputs";
 import { urls } from "~/urls";
-import { ButtonLink } from "~/components/button";
-import { User } from "~/api/user";
-
-import type { FC } from "react";
 
 export const Onboarding0Form: FC = () => {
 	const router = useRouter();
@@ -23,9 +22,6 @@ export const Onboarding0Form: FC = () => {
 	return (
 		<Form
 			withCaptcha
-			className="flex flex-col gap-8"
-			formErrorMessages={false}
-			requireChange={false}
 			fields={{
 				email: "",
 				password: "",
@@ -33,6 +29,9 @@ export const Onboarding0Form: FC = () => {
 				serviceAgreement: false,
 				notifications: true
 			}}
+			className="flex flex-col gap-8"
+			formErrorMessages={false}
+			requireChange={false}
 			onSubmit={async ({ ...values }, { captcha }) => {
 				await User.create({
 					...values,
@@ -84,25 +83,29 @@ export const Onboarding0Form: FC = () => {
 								<InputLabel
 									{...labelProps}
 									inline
-									hint={
+									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											to the{" "}
+											to the
+											{" "}
 											<a
 												className="underline"
 												href={urls.resources.termsOfService}
 											>
 												Terms of Service
-											</a>{" "}
-											&{" "}
+											</a>
+											{" "}
+											&
+											{" "}
 											<a
 												className="underline"
 												href={urls.resources.privacyPolicy}
 											>
 												Privacy Policy
-											</a>{" "}
+											</a>
+											{" "}
 											and I&apos;m at least 18 years of age
 										</InputLabelHint>
-									}
+									)}
 								>
 									I agree
 								</InputLabel>
@@ -116,13 +119,13 @@ export const Onboarding0Form: FC = () => {
 								<InputLabel
 									{...labelProps}
 									inline
-									hint={
+									hint={(
 										<InputLabelHint className="max-w-[34ch]">
 											with new features, changes, and offers
 											<br />
 											(we won&apos;t spam you)
 										</InputLabelHint>
-									}
+									)}
 								>
 									Get Flirtual updates
 								</InputLabel>
@@ -140,7 +143,7 @@ export const Onboarding0Form: FC = () => {
 								kind="tertiary"
 								size="sm"
 							>
-								<span>Login instead?</span>
+								<span>or login</span>
 								<MoveRight className="size-5 desktop:rotate-180" />
 							</ButtonLink>
 						</div>
