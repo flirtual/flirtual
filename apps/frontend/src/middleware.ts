@@ -143,7 +143,7 @@ export function middleware(request: NextRequest) {
 		request
 	});
 
-	response.headers.set("Content-Security-Policy", contentSecurityPolicy);
+	response.headers.set("Content-Security-Policy-Report-Only", contentSecurityPolicy);
 	return response;
 }
 
