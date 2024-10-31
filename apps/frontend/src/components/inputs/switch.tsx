@@ -41,7 +41,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 				}}
 				className="absolute right-0 h-full w-1/2 rounded-xl bg-brand-gradient shadow-brand-1 group-aria-checked/switch:left-0 group-aria-checked/switch:right-[unset] group-data-[checked=mixed]/switch:right-1/4 group-data-[checked=mixed]/switch:opacity-0"
 			/>
-			<div className="z-10 flex h-full items-center justify-center px-4 group-aria-checked/switch:text-white-10" onClick={() => onChange(value === null ? true : !value)}>
+			<div className="z-10 flex h-full items-center justify-center px-4 group-aria-checked/switch:text-white-10 vision:text-black-80" onClick={() => onChange(value === null ? true : !value)}>
 				<span>{yes ?? t("yes")}</span>
 			</div>
 			<div className="z-10 flex h-full items-center justify-center px-4 text-white-10 group-aria-checked/switch:text-black-80 group-data-[checked=mixed]/switch:text-black-80 dark:group-aria-checked/switch:text-white-10 dark:group-data-[checked=mixed]/switch:text-white-10" onClick={() => onChange(value === null ? false : !value)}>
