@@ -50,7 +50,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 		>
 			<div
 				className={twMerge(
-					"flex rounded-lg bg-white-30 vision:bg-white-10/50 vision:hover:bg-white-20/50 dark:bg-black-60",
+					"flex rounded-xl bg-white-30 vision:bg-white-10/50 vision:hover:bg-white-20/50 dark:bg-black-60",
 					active && "rounded-b-xl"
 				)}
 			>
