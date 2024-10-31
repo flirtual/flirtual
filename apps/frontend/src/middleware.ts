@@ -6,6 +6,7 @@ import {
 	apiOrigin,
 	environment,
 	sentryDsn,
+	siteOrigin,
 	uppyBucketOrigin,
 	uppyCompanionUrl
 } from "./const";
@@ -17,6 +18,7 @@ function getContentSecurityPolicy() {
 	const value = {
 		"default-src": ["'self'"],
 		"script-src": [
+			siteOrigin,
 			environment === "development"
 				? ["'self'", "'unsafe-eval'", "'unsafe-inline'"]
 				: ["'strict-dynamic'", `'nonce-${nonce}'`],
