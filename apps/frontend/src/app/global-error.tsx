@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
@@ -18,8 +17,6 @@ export default function GlobalError({
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
-	const router = useRouter();
-
 	useEffect(() => {
 		Sentry.captureException(error);
 	}, [error]);
@@ -32,11 +29,11 @@ export default function GlobalError({
 						<div className="flex flex-col gap-8">
 							<FlirtualLogo className="w-64" />
 							<h1 className="font-montserrat text-2xl font-semibold desktop:text-3xl">
-								Scheduled maintenance
+								<span className="line-through">Scheduled</span> maintenance
 							</h1>
 							<div className="flex flex-col gap-4 font-nunito">
 								<p>
-									We&apos;re currently performing scheduled maintenance.
+									We&apos;re currently performing <span className="line-through">scheduled</span> maintenance.
 									<br className="hidden desktop:block" />
 									Apologies for the interruption, we&apos;ll be back shortly!
 									<br className="hidden desktop:block" /> If this issue
@@ -58,7 +55,7 @@ export default function GlobalError({
 								className="w-fit"
 								kind="secondary"
 								size="sm"
-								onClick={() => router.reload()}
+								onClick={() => location.reload()}
 							>
 								Refresh
 							</Button>
@@ -66,7 +63,7 @@ export default function GlobalError({
 								className="w-fit"
 								kind="secondary"
 								size="sm"
-								onClick={() => router.back()}
+								onClick={() => history.back()}
 							>
 								Go back
 							</Button>
