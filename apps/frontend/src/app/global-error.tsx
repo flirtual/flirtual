@@ -10,6 +10,18 @@ import { Button } from "~/components/button";
 
 import type Error from "next/error";
 
+import "~/css/index.css";
+import { Montserrat, Nunito } from "next/font/google";
+import { twMerge } from "tailwind-merge";
+
+const montserrat = Montserrat({
+	variable: "--font-montserrat",
+	subsets: ["latin"]
+});
+const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
+
+const fontClassNames = twMerge(montserrat.variable, nunito.variable);
+
 export default function GlobalError({
 	error,
 	reset
@@ -23,7 +35,7 @@ export default function GlobalError({
 
 	return (
 		<html>
-			<body>
+			<body className={fontClassNames}>
 				<div className="flex min-h-screen w-full justify-center bg-black-80 px-8 py-16 text-white-20 desktop:items-center">
 					<div className="flex flex-col gap-8 desktop:justify-start">
 						<div className="flex flex-col gap-8">
