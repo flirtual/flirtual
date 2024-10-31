@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -13,14 +13,14 @@ import { FormInputMessages } from "./input-messages";
 export type FormFieldProps<
 	K extends keyof T,
 	T extends FormFieldsDefault
-> = Omit<React.ComponentProps<"div">, "children"> & {
+> = {
 	name: K;
 	children: (field: InputFormField<T, K>) => React.ReactNode;
-};
+} & Omit<React.ComponentProps<"div">, "children">;
 
 export type FormFieldFC<T extends FormFieldsDefault> = <K extends keyof T>(
 	props: FormFieldProps<K, T>
-) => JSX.Element;
+) => React.JSX.Element;
 
 export function FormField<K extends keyof T, T extends FormFieldsDefault>({
 	name,

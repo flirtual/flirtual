@@ -1,11 +1,11 @@
 import { useRef } from "react";
 
 import {
-	useInputForm,
-	type UseInputForm,
 	FormContext,
+	type FormFieldsDefault,
 	type InputFormOptions,
-	type FormFieldsDefault
+	useInputForm,
+	type UseInputForm
 } from "~/hooks/use-input-form";
 import { omit } from "~/utilities";
 
@@ -17,17 +17,17 @@ export type FormChildrenFunction<T extends FormFieldsDefault> = (
 ) => React.ReactNode;
 
 export type FormChildren<T extends FormFieldsDefault> =
-	| FormChildrenFunction<T>
-	| Array<React.ReactNode>;
+	| Array<React.ReactNode>
+	| FormChildrenFunction<T>;
 
-export type FormProps<T extends FormFieldsDefault> = Omit<
+export type FormProps<T extends FormFieldsDefault> = {
+	children: FormChildren<T>;
+	formErrorMessages?: boolean;
+} &
+Omit<InputFormOptions<T>, "captchaRef"> & Omit<
 	React.ComponentProps<"form">,
 	"children" | "onSubmit"
-> &
-	Omit<InputFormOptions<T>, "captchaRef"> & {
-		children: FormChildren<T>;
-		formErrorMessages?: boolean;
-	};
+>;
 
 export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 	const captchaReference = useRef<FormCaptchaReference>(null);
@@ -35,8 +35,8 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 	props = Object.assign({ formErrorMessages: true }, props);
 	const form = useInputForm({ ...props, captchaRef: captchaReference });
 
-	const children =
-		typeof props.children === "function"
+	const children
+		= typeof props.children === "function"
 			? props.children(form)
 			: props.children;
 

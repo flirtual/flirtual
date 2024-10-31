@@ -1,15 +1,14 @@
-import { createContext, useContext, useId, useMemo, useState } from "react";
-import { WretchError } from "wretch/resolver";
-import { useTranslations, type TranslationValues } from "next-intl";
 import { camelCase } from "change-case";
-
-import { type FormFieldFC, FormField } from "~/components/forms/field";
-import { entries } from "~/utilities";
-import { isWretchError } from "~/api/common";
-
-import type { FormCaptchaReference } from "~/components/forms/captcha";
+import { type TranslationValues, useTranslations } from "next-intl";
+import { createContext, useContext, useId, useMemo, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 import type React from "react";
+import { WretchError } from "wretch/resolver";
+
+import { isWretchError } from "~/api/common";
+import type { FormCaptchaReference } from "~/components/forms/captcha";
+import { FormField, type FormFieldFC } from "~/components/forms/field";
+import { entries } from "~/utilities";
 
 export interface FormFieldsDefault {
 	[s: string]: unknown;
@@ -18,14 +17,14 @@ export interface FormFieldsDefault {
 export type InputFormSubmitFunction<T extends FormFieldsDefault> = (
 	values: T,
 	form: UseInputForm<T>
-	//event: React.FormEvent<HTMLFormElement>
+	// event: React.FormEvent<HTMLFormElement>
 ) => Promise<void>;
 
 export interface InputFormOptions<T extends FormFieldsDefault> {
-	requireChange?: boolean | Array<keyof T>;
+	requireChange?: Array<keyof T> | boolean;
 	withCaptcha?: boolean;
 	withGlobalId?: boolean;
-	captchaRef: RefObject<FormCaptchaReference>;
+	captchaRef: RefObject<FormCaptchaReference | null>;
 	onSubmit: InputFormSubmitFunction<T>;
 	submitOnChange?: boolean;
 	fields: T;
@@ -116,17 +115,17 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 	const submit: UseInputForm<T>["submit"] = async (_values: T = values) => {
 		setSubmitting(true);
 
-		const captcha =
-			withCaptcha && captchaRef.current
+		const captcha
+			= withCaptcha && captchaRef.current
 				? await captchaRef.current.getResponsePromise()
 				: "";
 
-		setCaptcha(captcha);
+		setCaptcha(captcha || "");
 
 		setFieldErrors({});
 		setErrors([]);
 
-		const result = await onSubmit(_values, { ...form, captcha, submit })
+		const result = await onSubmit(_values, { ...form, captcha: captcha || "", submit })
 			.then(() => {
 				setFieldErrors({});
 				setErrors([]);
@@ -228,8 +227,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const buttonProps: UseInputForm<T>["buttonProps"] = {
 		disabled:
-			submitting ||
-			(requireChange
+			submitting
+			|| (requireChange
 				? requireChange === true
 					? changes.length === 0
 					: requireChange.some((k) => !changes.includes(k))
