@@ -63,7 +63,8 @@ function Key(props: { label: string }) {
 
 function DefaultTour() {
 	const [session] = useSession();
-	useDefaultTour(!session?.user.moderatorMessage);
+	const { vision } = useDevice();
+	useDefaultTour(!session?.user.moderatorMessage && !vision);
 
 	return null;
 }
