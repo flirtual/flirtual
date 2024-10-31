@@ -19,7 +19,7 @@ import {
 	type ImageSetValue,
 	InputImageSet
 } from "~/components/forms/input-image-set";
-import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
+import { InputLabel, InputLabelHint, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import {
 	useAttributes,
@@ -139,7 +139,12 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 											<InputLabel
 												{...field.labelProps}
 												inline
-												hint={t("ok_gross_ostrich_work")}
+												hint={(
+													<InputLabelHint className="vision:text-black-50">
+														{t("ok_gross_ostrich_work")}
+													</InputLabelHint>
+												)}
+
 											>
 												{t("formal_nimble_dog_reside")}
 											</InputLabel>

@@ -60,7 +60,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 		<>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">Passkeys</span>
-				<span className="text-black-50 dark:text-white-50">
+				<span className="text-black-50 vision:text-white-50 dark:text-white-50">
 					Passkeys let you log in conveniently and securely with your
 					fingerprint, face, device PIN or security key instead of your
 					password. Only add passkeys on trusted devices.

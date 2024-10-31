@@ -183,12 +183,12 @@ export function Profile(props: ProfileProps) {
 						? (
 								session?.user.profile.new
 									? (
-											<span className="text-xl italic dark:text-white-20">
+											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
 												{t("strong_home_bullock_taste")}
 											</span>
 										)
 									: (
-											<span className="text-xl italic dark:text-white-20">
+											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
 												{t("fuzzy_calm_ant_nudge", {
 													displayName: displayName(user)
 												})}

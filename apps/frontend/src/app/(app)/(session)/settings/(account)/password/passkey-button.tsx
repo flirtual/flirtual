@@ -30,14 +30,16 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 					<Key className="size-7" />
 				)}
 			</div>
-			<div className="flex flex-col overflow-hidden whitespace-nowrap p-2 text-left font-nunito leading-none">
+			<div className="flex flex-col overflow-hidden whitespace-nowrap p-2 text-left font-nunito leading-none vision:text-black-80">
 				{name || "Passkey"}
 				<span className="text-sm leading-none text-black-60 dark:text-white-40">
-					Added {formatter.dateTime(date)}
+					Added
+					{" "}
+					{formatter.dateTime(date)}
 				</span>
 			</div>
 			<div
-				className="ml-auto cursor-pointer self-center p-3 opacity-50 hover:text-red-400 hover:opacity-100"
+				className="ml-auto cursor-pointer self-center p-3 opacity-50 hover:text-red-400 hover:opacity-100 vision:text-black-80"
 				onClick={() => {
 					void Authentication.passkey
 						.delete(id)
