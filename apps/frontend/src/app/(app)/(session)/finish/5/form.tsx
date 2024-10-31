@@ -1,17 +1,17 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { MoveLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-import { InputText } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
-import { Form, FormButton } from "~/components/forms";
-import { VRChatIcon, FaceTimeIcon } from "~/components/icons";
-import { urls } from "~/urls";
-import { ButtonLink } from "~/components/button";
-import { useDevice } from "~/hooks/use-device";
-import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { Profile } from "~/api/user/profile";
+import { ButtonLink } from "~/components/button";
+import { Form, FormButton } from "~/components/forms";
+import { AddConnectionButton } from "~/components/forms/add-connection-button";
+import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
+import { InputText } from "~/components/inputs";
+import { useDevice } from "~/hooks/use-device";
+import { useSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
 export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
@@ -39,12 +39,12 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 					</span>
 				</div>
 				<Form
-					className="flex flex-col gap-8"
-					requireChange={false}
 					fields={{
 						vrchat: user.profile.vrchat || "",
 						facetime: user.profile.facetime || ""
 					}}
+					className="flex flex-col gap-8"
+					requireChange={false}
 					onSubmit={async ({ vrchat, facetime }) => {
 						await Profile.update(user.id, {
 							vrchat: vrchat.trim() || null,
@@ -73,7 +73,7 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 								</>
 							)}
 							<AddConnectionButton type="meta" /> */}
-								<FormField className="col-span-2 wide:col-span-1" name="vrchat">
+								<FormField name="vrchat">
 									{(field) => (
 										<InputText
 											Icon={VRChatIcon}
@@ -85,7 +85,6 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 								</FormField>
 								{vision && session.user.tags?.includes("debugger") && (
 									<FormField
-										className="col-span-2 wide:col-span-1"
 										name="facetime"
 									>
 										{(field) => (
