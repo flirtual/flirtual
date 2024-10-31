@@ -1,7 +1,5 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
-import { useSelectedLayoutSegment } from "next/navigation";
 import {
 	AtSign,
 	Bell,
@@ -10,32 +8,44 @@ import {
 	EyeOff,
 	Flame,
 	KeyRound,
+	LineChart,
 	LogOut,
 	Paintbrush,
 	PenSquare,
+	Search,
+	ShieldAlert,
 	Skull,
 	SlidersHorizontal,
 	Sparkles,
 	Tag,
-	Users
+	Users,
+	VenetianMask
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import type { FC } from "react";
+import { twMerge } from "tailwind-merge";
 
-import { useFreshworks } from "~/hooks/use-freshworks";
-import { urls } from "~/urls";
-import { useSession } from "~/hooks/use-session";
-import { gitCommitSha } from "~/const";
+import { Authentication } from "~/api/auth";
 import { InlineLink } from "~/components/inline-link";
+import { gitCommitSha } from "~/const";
+import { useCanny } from "~/hooks/use-canny";
+import { useDevice } from "~/hooks/use-device";
+import { useFreshworks } from "~/hooks/use-freshworks";
+import { useSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
 import { NavigationHeader } from "./navigation-header";
 import { NavigationLink } from "./navigation-link";
 
-import type { FC } from "react";
-
 export const SettingsNavigation: FC = () => {
 	const layoutSegment = useSelectedLayoutSegment();
 	const { openFreshworks } = useFreshworks();
-	const [, , logout] = useSession();
+	const [session, , logout] = useSession();
+	const { vision } = useDevice();
+	const router = useRouter();
+	const t = useTranslations();
 
 	return (
 		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
@@ -47,6 +57,36 @@ export const SettingsNavigation: FC = () => {
 						layoutSegment ? "hidden desktop:flex" : "flex"
 					)}
 				>
+					{vision && (session?.user.tags?.includes("moderator") || session?.user.tags?.includes("admin") || session?.sudoerId) && (
+						<NavigationCategory name="Staff">
+							{session?.user.tags?.includes("moderator") && (
+								<>
+									<NavigationLink href={urls.moderation.reports()} Icon={ShieldAlert}>
+										{t("navigation.reports")}
+									</NavigationLink>
+									<NavigationLink href={urls.moderation.search} Icon={Search}>
+										{t("navigation.search")}
+									</NavigationLink>
+								</>
+							)}
+							{session?.user.tags?.includes("admin") && (
+								<NavigationLink href={urls.admin.stats} Icon={LineChart}>
+									{t("navigation.stats")}
+								</NavigationLink>
+							)}
+							{session?.sudoerId && (
+								<NavigationLink
+									Icon={VenetianMask}
+									onClick={async () => {
+										await Authentication.revokeImpersonate();
+										router.refresh();
+									}}
+								>
+									{t("navigation.unsudo")}
+								</NavigationLink>
+							)}
+						</NavigationCategory>
+					)}
 					<NavigationCategory name="Profile">
 						<NavigationLink
 							newBadge
@@ -126,15 +166,18 @@ export const SettingsNavigation: FC = () => {
 					<div className="desktop:hidden">
 						<NavigationCategory name="Help">
 							<NavigationLink onClick={openFreshworks}>Support</NavigationLink>
+							<NavigationLink onClick={useCanny().openFeedback}>
+								Feedback
+							</NavigationLink>
 							<NavigationLink href={urls.resources.networkStatus}>
-								Network Status
+								Status
 							</NavigationLink>
 						</NavigationCategory>
 					</div>
 					<div className="desktop:hidden">
 						<NavigationCategory name="Info">
 							<NavigationLink href={urls.resources.about}>
-								About Us
+								About
 							</NavigationLink>
 							<NavigationLink href={urls.resources.press}>Press</NavigationLink>
 							<NavigationLink href={urls.resources.branding}>
@@ -157,7 +200,11 @@ export const SettingsNavigation: FC = () => {
 								Privacy Policy
 							</NavigationLink>
 							<div className="px-6 py-2 vision:text-white-20">
-								&copy; {new Date().getFullYear()} Flirtual
+								&copy;
+								{" "}
+								{new Date().getFullYear()}
+								{" "}
+								Flirtual
 							</div>
 						</NavigationCategory>
 					</div>
@@ -165,7 +212,9 @@ export const SettingsNavigation: FC = () => {
 						className="-mt-4 self-center text-black-10 no-underline vision:text-white-20"
 						href={urls.debugger}
 					>
-						Flirtual {gitCommitSha?.slice(0, 8)}
+						Flirtual
+						{" "}
+						{gitCommitSha?.slice(0, 8)}
 					</InlineLink>
 				</nav>
 			</div>
