@@ -1,14 +1,14 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { ButtonLink } from "~/components/button";
+import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
-import { Image } from "~/components/image";
 
 import { DiscordEmbed } from "./discord-embed";
-
-import type { Metadata } from "next";
+import { Livestream } from "./livestream";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("events");
@@ -27,6 +27,7 @@ export default async function EventsPage() {
 			containerProps={{ className: "gap-8" }}
 			title={t("title")}
 		>
+			<Livestream />
 			<div className="flex flex-col gap-4">
 				<h1 className="text-2xl font-semibold">
 					{t("gross_loose_stork_vent")}

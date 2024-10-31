@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-import { imageOrigins } from "./urls";
+import { playlistPlatforms } from "./components/profile/playlist";
 import {
 	apiOrigin,
 	environment,
@@ -8,9 +9,7 @@ import {
 	uppyBucketOrigin,
 	uppyCompanionUrl
 } from "./const";
-import { playlistPlatforms } from "./components/profile/playlist";
-
-import type { NextRequest } from "next/server";
+import { imageOrigins } from "./urls";
 
 function getContentSecurityPolicy() {
 	const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
@@ -54,7 +53,9 @@ function getContentSecurityPolicy() {
 			"data:",
 			...imageOrigins,
 			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
-			"https://*.talkjs.com"
+			"https://*.talkjs.com",
+			// https://vrcdn.live/
+			"https://stream.vrcdn.live"
 		],
 		"connect-src": [
 			"'self'",
