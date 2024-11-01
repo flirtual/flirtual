@@ -163,11 +163,13 @@ export default async function RootLayout({
 											}}
 										/>
 									)}
-									{session?.user.preferences?.privacy.analytics && <Script 
-										defer
-										src="https://static.cloudflareinsights.com/beacon.min.js"
-										data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}
-									/>}
+									{session?.user.preferences?.privacy.analytics && (
+										<Script
+											defer
+											data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}
+											src="https://static.cloudflareinsights.com/beacon.min.js"
+										/>
+									)}
 									<link
 										color="#e9658b"
 										href={SafariPinnedTabImage.src}
