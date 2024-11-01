@@ -84,6 +84,7 @@ export const Finish2Form: FC = () => {
 								{user.emailConfirmedAt ? "now visible" : "good to go"}
 								! The rest
 								is
+								{" "}
 								<strong>optional</strong>
 								, but helps us find the best people
 								for you. You can always add more later in your Profile Settings.
