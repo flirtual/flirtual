@@ -1,30 +1,30 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
 
-import { Button } from "~/components/button";
-import { InlineLink } from "~/components/inline-link";
-import { urls } from "~/urls";
-import { environment, gitCommitSha } from "~/const";
-import { useSession } from "~/hooks/use-session";
 import { displayName } from "~/api/user";
-import { DrawerOrDialog } from "~/components/drawer-or-dialog";
+import { Button } from "~/components/button";
+import { CopyClick } from "~/components/copy-click";
 import {
 	DialogBody,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle
 } from "~/components/dialog/dialog";
-import { InputLabel, InputTextArea } from "~/components/inputs";
+import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Form, FormButton } from "~/components/forms";
+import { InlineLink } from "~/components/inline-link";
+import { InputLabel, InputTextArea } from "~/components/inputs";
 import { FlirtualLogo } from "~/components/logo";
-import { CopyClick } from "~/components/copy-click";
+import { environment, gitCommitSha } from "~/const";
+import { useSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
-type ErrorWithDigest = Error & { digest?: string };
+type ErrorWithDigest = { digest?: string } & Error;
 
 export default function Error({
 	error,
@@ -62,16 +62,20 @@ export default function Error({
 						{addDetails ? (
 							<>
 								<p>Add some details to help us fix the issue faster.</p>
-								<div className="flex flex-col whitespace-pre-wrap font-mono text-xs">
+								<div className="select-children flex flex-col whitespace-pre-wrap font-mono text-xs">
 									<span className="mb-2 font-bold">Error details</span>
 									{error.digest && (
 										<span>
-											<span className="font-bold">Digest</span>: {error.digest}
+											<span className="font-bold">Digest</span>
+											:
+											{error.digest}
 										</span>
 									)}
 									{eventId && (
 										<span>
-											<span className="font-bold">Event</span>: {eventId}
+											<span className="font-bold">Event</span>
+											:
+											{eventId}
 										</span>
 									)}
 									<span className="mt-2">{error.message}</span>
@@ -161,9 +165,19 @@ export default function Error({
 											Our team has been notified and will fix it as soon as
 											possible.
 										</p>
-										<div className="flex max-w-sm flex-col whitespace-pre-wrap font-mono text-xs">
-											{error.digest && <span>Digest: {error.digest}</span>}
-											{eventId && <span>Event: {eventId}</span>}
+										<div className="select-children flex max-w-sm flex-col whitespace-pre-wrap font-mono text-xs">
+											{error.digest && (
+												<span>
+													Digest:
+													{error.digest}
+												</span>
+											)}
+											{eventId && (
+												<span>
+													Event:
+													{eventId}
+												</span>
+											)}
 										</div>
 									</motion.div>
 								</div>
@@ -208,9 +222,18 @@ export default function Error({
 								</InlineLink>
 							</div>
 							<footer>
-								© {new Date().getFullYear()} Flirtual{" "}
+								©
+								{" "}
+								{new Date().getFullYear()}
+								{" "}
+								Flirtual
+								{" "}
 								<span className="text-sm opacity-75">
-									{gitCommitSha?.slice(0, 6)} ({environment})
+									{gitCommitSha?.slice(0, 6)}
+									{" "}
+									(
+									{environment}
+									)
 								</span>
 							</footer>
 						</div>
