@@ -225,7 +225,7 @@ export const ConversationChatbox: React.FC<
 	return (
 		<div
 			data-sentry-block
-			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
+			className="relative w-full overflow-hidden bg-white-20 dark:bg-black-70 vision:bg-transparent desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
 			style={
 				{
 					height
