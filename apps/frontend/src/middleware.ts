@@ -6,6 +6,7 @@ import {
 	apiOrigin,
 	environment,
 	sentryDsn,
+	sentryReportTo,
 	siteOrigin,
 	uppyBucketOrigin,
 	uppyCompanionUrl
@@ -100,7 +101,9 @@ function getContentSecurityPolicy() {
 			// https://docs.widgetbot.io/
 			"https://e.widgetbot.io"
 		],
-		"upgrade-insecure-requests": []
+		"upgrade-insecure-requests": [],
+		"report-uri": [sentryReportTo],
+		"report-to": ["csp"]
 	};
 
 	return {
@@ -112,6 +115,13 @@ function getContentSecurityPolicy() {
 			)
 			.join("; ")
 	};
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Reporting-Endpoints
+function getReportingEndpoints() {
+	return Object.entries({
+		"csp": sentryReportTo
+	}).map(([name, url]) => `${name}="${url}"`).join(", ");
 }
 
 export function middleware(request: NextRequest) {
@@ -144,6 +154,7 @@ export function middleware(request: NextRequest) {
 	});
 
 	response.headers.set("Content-Security-Policy-Report-Only", contentSecurityPolicy);
+	response.headers.set("Reporting-Endpoints", getReportingEndpoints());
 	return response;
 }
 

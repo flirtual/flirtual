@@ -180,6 +180,7 @@ export const InfoForm: FC = () => {
 								<InputAutocomplete
 									{...field.props}
 									limit={3}
+
 									placeholder="Select your sexualities..."
 									value={field.props.value || []}
 									options={sexualities.map((sexuality) => {
@@ -204,6 +205,7 @@ export const InfoForm: FC = () => {
 					<FormField name="country">
 						{(field) => (
 							<>
+							{""}a
 								<InputLabel>Location</InputLabel>
 								<InputCountrySelect {...field.props} />
 							</>
