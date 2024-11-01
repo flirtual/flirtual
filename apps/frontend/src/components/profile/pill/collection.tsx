@@ -93,7 +93,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 
 					return (
 						<Pill
-							active={session.user.profile.attributes.interest?.includes(id)}
+							active={session.user.id !== user.id && session.user.profile.attributes.interest?.includes(id)}
 							href={editable ? urls.settings.interests : undefined}
 							key={id}
 						>
