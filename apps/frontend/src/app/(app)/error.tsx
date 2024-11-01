@@ -169,12 +169,14 @@ export default function Error({
 											{error.digest && (
 												<span>
 													Digest:
+													{" "}
 													{error.digest}
 												</span>
 											)}
 											{eventId && (
 												<span>
 													Event:
+													{" "}
 													{eventId}
 												</span>
 											)}
