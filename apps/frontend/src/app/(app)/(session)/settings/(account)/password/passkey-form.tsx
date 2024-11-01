@@ -96,7 +96,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 					const credential = (await navigator.credentials
 						.create(challenge)
 						.catch((reason) => {
-							if (reason.name === "InvalidStateError") {
+							if (reason instanceof Error && reason.name === "InvalidStateError") {
 								toasts.add({
 									type: "warning",
 									value: "You've already added this passkey."
