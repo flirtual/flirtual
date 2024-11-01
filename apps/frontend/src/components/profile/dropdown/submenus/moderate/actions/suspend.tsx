@@ -1,9 +1,11 @@
 import { Gavel } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { type FC, useState } from "react";
 import { mutate } from "swr";
 
+import { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
+import { optimisticQueueMove } from "~/app/(app)/(session)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -23,11 +25,11 @@ import {
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
 import { useToast } from "~/hooks/use-toast";
-import { userKey } from "~/swr";
+import { queueKey, userKey } from "~/swr";
 
 export const SuspendAction: FC<{ user: User }> = ({ user }) => {
-	const router = useRouter();
 	const toasts = useToast();
+	const query = useSearchParams();
 
 	const reasons = useAttributes("ban-reason");
 	const defaultReason = reasons[0] as string;
@@ -66,6 +68,9 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 						onSubmit={async ({ targetId, ...body }) => {
 							await User.suspend(targetId, body);
 							mutate(userKey(user.id));
+							const kind = (query.get("kind") || "love") as ProspectKind;
+							if (ProspectKind.includes(kind))
+								mutate(queueKey(kind), optimisticQueueMove("forward"));
 
 							toasts.add("Account banned");
 							setOpen(false);
