@@ -159,7 +159,6 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 					const errors = [
 						t(
-							// eslint-disable-next-line @typescript-eslint/no-explicit-any
 							`errors.${error}` as any,
 							reason.json.details as TranslationValues
 						)
@@ -171,6 +170,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 				const errors = Array.isArray(reason)
 					? [<span key={0}>{reason as ReactNode}</span>]
+					// @ts-expect-error reason is unknown
 					: [reason.message];
 
 				setErrors(errors);

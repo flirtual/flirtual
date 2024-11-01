@@ -95,7 +95,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 												text: t("icy_stock_herring_burn"),
 												url: toAbsoluteUrl(urls.profile(profileLink)).toString()
 											}).catch((reason) => {
-												if (reason.name === "AbortError") return;
+												if (reason instanceof Error && reason.name === "AbortError") return;
 												toasts.addError(reason);
 											});
 										}}
