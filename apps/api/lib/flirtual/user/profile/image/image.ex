@@ -70,7 +70,7 @@ defmodule Flirtual.User.Profile.Image do
 
   def url(%Image{original_file: original_file}, _) when is_binary(original_file) do
     URI.new!("https://pfpup.flirtu.al/")
-    |> URI.merge(original_file)
+    |> URI.merge(original_file |> URI.encode())
     |> URI.to_string()
   end
 
