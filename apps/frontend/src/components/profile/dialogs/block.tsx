@@ -1,13 +1,15 @@
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { FC, PropsWithChildren } from "react";
 import { mutate } from "swr";
 
+import { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
+import { optimisticQueueMove } from "~/app/(app)/(session)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
 import { useToast } from "~/hooks/use-toast";
-import { userKey } from "~/swr";
+import { queueKey, userKey } from "~/swr";
 
 import {
 	AlertDialog,
@@ -24,8 +26,8 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	children
 }) => {
 	const t = useTranslations("profile.dialogs.block");
-	const router = useRouter();
 	const toasts = useToast();
+	const query = useSearchParams();
 
 	return (
 		<AlertDialog>
@@ -51,6 +53,9 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 							onClick={async () => {
 								await User.block(user.id).catch(toasts.addError);
 								mutate(userKey(user.id));
+								const kind = (query.get("kind") || "love") as ProspectKind;
+								if (ProspectKind.includes(kind))
+									mutate(queueKey(kind), optimisticQueueMove("forward"));
 
 								toasts.add(
 									t("swift_loved_albatross_leap", {

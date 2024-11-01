@@ -69,6 +69,18 @@ function DefaultTour() {
 	return null;
 }
 
+export const optimisticQueueMove = (direction: QueueAnimationDirection) => {
+	return (value?: Queue): Queue => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+
+		if (!value) return [null, null, null];
+
+		return direction === "backward"
+			? value[0] ? [null, value[0], value[1]] : value
+			: value[2] ? [value[1], value[2], null] : value;
+	};
+};
+
 export const QueueActions_: FC<{
 	queue?: Queue;
 	explicitUserId?: string;
@@ -140,37 +152,22 @@ export const QueueActions_: FC<{
 		}
 	);
 
-	const optimisticMove = (direction: QueueAnimationDirection) => {
-		return (value?: Queue): Queue => {
-			window.scrollTo({ top: 0, behavior: "smooth" });
-
-			if (setAnimationDirection)
-				flushSync(() => setAnimationDirection(direction));
-
-			if (!value) return [null, null, null];
-
-			return direction === "backward"
-				? value[0] ? [null, value[0], value[1]] : value
-				: value[2] ? [value[1], value[2], null] : value;
-		};
-	};
-
 	const like = (kind: ProspectKind = "love") =>
 		trigger(
 			{ type: "like", kind, userId: explicitUserId },
-			{ optimisticData: optimisticMove("forward") }
+			{ optimisticData: optimisticQueueMove("forward") }
 		);
 
 	const pass = () =>
 		trigger(
 			{ type: "pass", kind: mode, userId: explicitUserId },
-			{ optimisticData: optimisticMove("forward") }
+			{ optimisticData: optimisticQueueMove("forward") }
 		);
 
 	const undo = () =>
 		trigger(
 			{ type: "undo", kind: mode },
-			{ optimisticData: optimisticMove("backward") }
+			{ optimisticData: optimisticQueueMove("backward") }
 		);
 
 	useGlobalEventListener(
