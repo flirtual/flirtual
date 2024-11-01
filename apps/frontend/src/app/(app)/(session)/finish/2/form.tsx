@@ -1,9 +1,17 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { CheckCircle2, MoveLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import type { FC } from "react";
 
+import {
+	Profile,
+	ProfileMonopolyList,
+	ProfileRelationshipLabel,
+	ProfileRelationshipList
+} from "~/api/user/profile";
+import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -12,20 +20,12 @@ import {
 	InputSelect,
 	InputSwitch
 } from "~/components/inputs";
-import { urls } from "~/urls";
-import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
-import { useSession } from "~/hooks/use-session";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { ButtonLink } from "~/components/button";
-import {
-	Profile,
-	ProfileMonopolyList,
-	ProfileRelationshipLabel,
-	ProfileRelationshipList
-} from "~/api/user/profile";
+import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-
-import type { FC } from "react";
+import { useSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
 export const Finish2Form: FC = () => {
 	const platforms = useAttributes("platform");
@@ -43,8 +43,6 @@ export const Finish2Form: FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
-			requireChange={false}
 			fields={{
 				relationships: profile.relationships ?? [],
 				monopoly: profile.monopoly,
@@ -53,6 +51,8 @@ export const Finish2Form: FC = () => {
 				platformId: user.profile.attributes.platform || [],
 				sexualityId: user.profile.attributes.sexuality || []
 			}}
+			className="flex flex-col gap-8"
+			requireChange={false}
 			onSubmit={async ({ ...values }) => {
 				const newProfile = await Profile.update(user.id, {
 					...values,
@@ -79,9 +79,13 @@ export const Finish2Form: FC = () => {
 						<div className="flex gap-4 pb-6 desktop:pb-6">
 							<CheckCircle2 className="mt-1.5 size-7 shrink-0 text-pink" />
 							<span>
-								Your profile is{" "}
-								{user.emailConfirmedAt ? "now visible" : "good to go"}! The rest
-								is <strong>optional</strong>, but helps us find the best people
+								Your profile is
+								{" "}
+								{user.emailConfirmedAt ? "now visible" : "good to go"}
+								! The rest
+								is
+								<strong>optional</strong>
+								, but helps us find the best people
 								for you. You can always add more later in your Profile Settings.
 							</span>
 						</div>
@@ -107,12 +111,23 @@ export const Finish2Form: FC = () => {
 								<InputLabel>Sexuality</InputLabel>
 								<InputAutocomplete
 									{...field.props}
+									options={sexualities.map((sexuality) => {
+										const { id, definitionLink } = typeof sexuality === "string" ? { id: sexuality } : sexuality;
+
+										const { name, definition }
+											= (tAttribute[
+												id
+											] as AttributeTranslation<"sexuality">) ?? {};
+
+										return {
+											key: id,
+											label: name ?? id,
+											definition,
+											definitionLink
+										};
+									})}
 									limit={3}
 									placeholder="Select your sexualities..."
-									options={sexualities.map((sexuality) => ({
-										key: sexuality.id,
-										label: tAttribute[sexuality.id]?.name || sexuality.id
-									}))}
 								/>
 							</>
 						)}
@@ -146,12 +161,12 @@ export const Finish2Form: FC = () => {
 								<InputLabel>VR setup</InputLabel>
 								<InputAutocomplete
 									{...field.props}
-									limit={8}
-									placeholder="Select the platforms you use..."
 									options={platforms.map((platformId) => ({
 										key: platformId,
 										label: tAttribute[platformId]?.name || platformId
 									}))}
+									limit={8}
+									placeholder="Select the platforms you use..."
 								/>
 							</>
 						)}
