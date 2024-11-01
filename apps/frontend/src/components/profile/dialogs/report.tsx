@@ -1,10 +1,12 @@
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { type FC, type PropsWithChildren, useState } from "react";
 import { mutate } from "swr";
 
+import { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
 import { displayName, type User } from "~/api/user";
+import { optimisticQueueMove } from "~/app/(app)/(session)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -27,7 +29,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { userKey } from "~/swr";
+import { queueKey, userKey } from "~/swr";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
@@ -37,8 +39,8 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	const t = useTranslations("profile.dialogs.report");
 	const tAttributes = useAttributeTranslation();
 
-	const router = useRouter();
 	const toasts = useToast();
+	const query = useSearchParams();
 
 	const reasons = useAttributes("report-reason");
 	const defaultReason = reasons[0]!;
@@ -74,6 +76,9 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 								images: values.images.map((image) => image.id).filter(Boolean)
 							});
 							mutate(userKey(user.id));
+							const kind = (query.get("kind") || "love") as ProspectKind;
+							if (ProspectKind.includes(kind))
+								mutate(queueKey(kind), optimisticQueueMove("forward"));
 
 							toasts.add(t("day_front_cat_cry"));
 							setOpen(false);
