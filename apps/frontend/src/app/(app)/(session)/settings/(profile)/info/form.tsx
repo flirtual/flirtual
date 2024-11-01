@@ -205,7 +205,6 @@ export const InfoForm: FC = () => {
 					<FormField name="country">
 						{(field) => (
 							<>
-							{""}a
 								<InputLabel>Location</InputLabel>
 								<InputCountrySelect {...field.props} />
 							</>
