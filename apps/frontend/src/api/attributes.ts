@@ -35,9 +35,9 @@ export interface AttributeMetadata {
 		// definition?: string;
 		definitionLink: string;
 	};
-	sexuality: {
+	sexuality?: {
 		// definition?: string;
-		definitionLink: string;
+		definitionLink?: string;
 	};
 	relationship: undefined;
 	language: undefined;

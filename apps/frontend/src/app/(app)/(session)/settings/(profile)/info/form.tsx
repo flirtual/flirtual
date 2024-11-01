@@ -183,16 +183,18 @@ export const InfoForm: FC = () => {
 									placeholder="Select your sexualities..."
 									value={field.props.value || []}
 									options={sexualities.map((sexuality) => {
+										const { id, definitionLink } = typeof sexuality === "string" ? { id: sexuality } : sexuality;
+										
 										const { name, definition } =
 											(tAttribute[
-												sexuality.id
+												id
 											] as AttributeTranslation<"sexuality">) ?? {};
 
 										return {
-											key: sexuality.id,
-											label: name ?? sexuality.id,
+											key: id,
+											label: name ?? id,
 											definition,
-											definitionLink: sexuality.definitionLink
+											definitionLink
 										};
 									})}
 								/>
