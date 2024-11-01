@@ -4,11 +4,11 @@ import { Slot } from "@radix-ui/react-slot";
 import { useTranslations } from "next-intl";
 import {
 	createContext,
-	forwardRef,
-	use,
-	useState,
 	type FC,
-	type PropsWithChildren
+	forwardRef,
+	type PropsWithChildren,
+	use,
+	useState
 } from "react";
 import { useInView } from "react-intersection-observer";
 import { twMerge } from "tailwind-merge";
@@ -43,13 +43,13 @@ export const Tile = forwardRef<
 	return (
 		<section
 			{...props}
-			data-tile={id}
-			data-tile-active={tile === id ? "" : undefined}
-			ref={reference}
 			className={twMerge(
 				"group h-screen min-h-screen w-screen min-w-[100vw] snap-start snap-always pb-[env(safe-area-inset-bottom,0rem)] pl-[env(safe-area-inset-left,0rem)] pr-[env(safe-area-inset-right,0rem)] pt-[env(safe-area-inset-top,0rem)] android:pt-[var(--safe-area-inset-top,0rem)]",
 				className
 			)}
+			data-tile={id}
+			data-tile-active={tile === id ? "" : undefined}
+			ref={reference}
 		>
 			{children}
 		</section>
@@ -89,13 +89,13 @@ export const TileGuide: FC<{ tileCount: number }> = ({ tileCount }) => {
 					<button
 						className="group flex size-5 items-center justify-center"
 						data-active={index === tile ? "" : undefined}
+						// eslint-disable-next-line react/no-array-index-key
 						key={index}
 						type="button"
 						onClick={() =>
 							document
 								.querySelector(`[data-tile="${index}"]`)
-								?.scrollIntoView({ behavior: "smooth" })
-						}
+								?.scrollIntoView({ behavior: "smooth" })}
 					>
 						<div className="size-2 rounded-full bg-white-10 shadow-md transition-all group-hover:size-3 group-data-[active]:size-4 " />
 					</button>

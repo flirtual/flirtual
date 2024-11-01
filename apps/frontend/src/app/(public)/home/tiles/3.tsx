@@ -1,9 +1,9 @@
+import { getFormatter, getMessages, getTranslations } from "next-intl/server";
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
-import { getFormatter, getMessages, getTranslations } from "next-intl/server";
 
-import { urls } from "~/urls";
 import { User } from "~/api/user";
+import { urls } from "~/urls";
 
 import { Tile, TileAnchor, type TileProps } from ".";
 

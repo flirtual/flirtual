@@ -1,9 +1,8 @@
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 import { ButtonLink } from "~/components/button";
 import { DownloadButton } from "~/components/download-button";
-import { urls } from "~/urls";
 import {
 	AppleIcon,
 	GooglePlayIcon,
@@ -12,10 +11,10 @@ import {
 } from "~/components/icons";
 import { Footer } from "~/components/layout/footer";
 import { FlirtualLogo } from "~/components/logo";
-
-import { SignUpButton } from "../sign-up-button";
+import { urls } from "~/urls";
 
 import { Tile, TileAnchor, type TileProps } from ".";
+import { SignUpButton } from "../sign-up-button";
 
 export function CallToAction({ id }: TileProps) {
 	const t = useTranslations();

@@ -1,10 +1,9 @@
-import Image from "next/image";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 import { urls } from "~/urls";
 
 import { Tile, TileAnchor, type TileProps } from "..";
-
 import { ProfileMessage } from "./message";
 
 export function AvatarProfiles({ id }: TileProps) {
@@ -12,7 +11,7 @@ export function AvatarProfiles({ id }: TileProps) {
 
 	return (
 		<Tile className="content-center px-4 pt-8 desktop:px-28" id={id}>
-			<div className="max-w-screen-2xl mx-auto -mt-32 flex flex-col items-center justify-center gap-8 desktop:mt-0">
+			<div className="mx-auto -mt-32 flex flex-col items-center justify-center gap-8 desktop:mt-0">
 				<Image
 					priority
 					alt={t("legal_big_finch_kiss")}

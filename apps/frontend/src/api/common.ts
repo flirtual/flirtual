@@ -1,13 +1,13 @@
+import { unstable_noStore } from "next/cache";
 import wretch, { type ConfiguredMiddleware } from "wretch";
-import QueryAddon from "wretch/addons/queryString";
 import AbortAddon from "wretch/addons/abort";
+import QueryAddon from "wretch/addons/queryString";
 import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
-import { unstable_noStore } from "next/cache";
 
+import { environment } from "~/const";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
-import { environment } from "~/const";
 
 export interface UuidModel {
 	id: string;
@@ -31,10 +31,10 @@ export interface Paginate<T> {
 	};
 }
 
-export type PaginateOptions<T> = T & {
+export type PaginateOptions<T> = {
 	limit?: number;
 	page?: number;
-};
+} & T;
 
 const releventHeaders = ["cookie", "authorization", "user-agent"];
 
@@ -61,10 +61,10 @@ export const api = wretch(urls.api)
 						);
 
 					if (
-						typeof window === "undefined" &&
+						typeof window === "undefined"
 						// We can't use `headers` with `unstable_cache` which caches across requests,
 						// so when we're using `credentials: "omit"`, we'll exclude the headers.
-						options.credentials !== "omit"
+						&& options.credentials !== "omit"
 					) {
 						const { headers } = await import("next/headers");
 						const relevantHeaders = Object.fromEntries(
@@ -104,9 +104,9 @@ export const api = wretch(urls.api)
 				maxAttempts: 3,
 				until: (response) => {
 					if (
-						response?.status &&
-						(!retriableStatusCodes.includes(response.status) ||
-							response.status >= 500)
+						response?.status
+						&& (!retriableStatusCodes.includes(response.status)
+							|| response.status >= 500)
 					)
 						return true;
 
@@ -123,18 +123,18 @@ export const api = wretch(urls.api)
 					const headers = new Headers(options.headers);
 					options.headers = headers;
 
-					const retryCount =
-						Number.parseInt(headers.get("retry-count") || "0") + 1;
+					const retryCount
+						= Number.parseInt(headers.get("retry-count") || "0") + 1;
 					headers.set("retry-count", retryCount.toString());
 
 					const json = await response?.json().catch(() => null);
-					const message =
-						typeof json === "object" &&
-						json !== null &&
-						"error" in json &&
-						typeof json.error === "object" &&
-						json.error !== null &&
-						"message" in json.error
+					const message
+						= typeof json === "object"
+						&& json !== null
+						&& "error" in json
+						&& typeof json.error === "object"
+						&& json.error !== null
+						&& "message" in json.error
 							? json.error.message
 							: (error?.message ?? response?.statusText);
 
@@ -159,6 +159,7 @@ export const api = wretch(urls.api)
 	.defer((wretch, _url, options) => {
 		const headers = new Headers(options.headers || {});
 		if (headers.get("content-type") === "application/json")
+			// @ts-expect-error: Type mismatch, look into this later.
 			options.body = JSON.stringify(toSnakeObject(JSON.parse(options.body)));
 
 		const url = new URL(_url);
@@ -192,9 +193,9 @@ export type InvalidPropertiesIssue = Issue<
 	Record<string, Array<Issue>>
 >;
 
-export type WretchIssue<T extends Issue = Issue> = Omit<WretchError, "json"> & {
+export type WretchIssue<T extends Issue = Issue> = {
 	json: T;
-};
+} & Omit<WretchError, "json">;
 
 export function isWretchError(
 	error: unknown,
@@ -211,8 +212,8 @@ export function isWretchError(
 	errorType?: string
 ): error is WretchIssue {
 	return (
-		error instanceof WretchError &&
-		(errorType === undefined || error.json?.error === errorType)
+		error instanceof WretchError
+		&& (errorType === undefined || error.json?.error === errorType)
 	);
 }
 

@@ -1,15 +1,15 @@
 import { redirect } from "next/navigation";
+import type { NextRequest } from "next/server";
 
 import { Authentication } from "~/api/auth";
-import { ExternalRedirect } from "~/components/external-redirect";
 import { urls } from "~/urls";
 
 export interface CannyPageProps {
 	searchParams?: Promise<{ companyID?: string; redirect?: string }>;
 }
 
-export default async function CannyPage(props: CannyPageProps) {
-	const { companyID, redirect: to } = (await props.searchParams) || {};
+export async function GET(request: NextRequest) {
+	const { companyID, redirect: to } = Object.fromEntries(request.nextUrl.searchParams.entries());
 	if (!to || !to.startsWith("https://") || !companyID) redirect(urls.default);
 
 	const session = await Authentication.getOptionalSession();
@@ -17,10 +17,5 @@ export default async function CannyPage(props: CannyPageProps) {
 		redirect(urls.login(`/sso/canny?companyID=${companyID}&redirect=${to}`));
 
 	const { token } = await Authentication.sso("canny");
-
-	return (
-		<ExternalRedirect
-			url={`https://canny.io/api/redirects/sso?companyID=${companyID}&ssoToken=${token}&redirect=${to}`}
-		/>
-	);
+	return redirect(`https://canny.io/api/redirects/sso?companyID=${companyID}&ssoToken=${token}&redirect=${to}`);
 }

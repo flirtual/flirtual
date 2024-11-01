@@ -1,7 +1,7 @@
 "use client";
 
 import { useMessages } from "next-intl";
-import { useCallback, useState, type FC } from "react";
+import { type FC, useCallback, useState } from "react";
 
 import { useInterval } from "~/hooks/use-interval";
 

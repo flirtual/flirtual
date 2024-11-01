@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 
 import { Tile, TileAnchor, type TileProps } from "..";
-
 import { CarouselGallery } from "./gallery";
 
 export function Carousel({ id }: TileProps) {

@@ -1,5 +1,5 @@
-import createNextIntlPlugin from "next-intl/plugin";
 import { withSentryConfig } from "@sentry/nextjs";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -12,9 +12,9 @@ export default withSentryConfig(
 			},
 			reactCompiler: true
 		},
-		typescript: {
-			ignoreBuildErrors: true
-		},
+		// typescript: {
+		// 	ignoreBuildErrors: true
+		// },
 		sassOptions: {
 			// https://github.com/vercel/next.js/discussions/67931
 			silenceDeprecations: ["legacy-js-api"]
