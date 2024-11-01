@@ -21,7 +21,7 @@ export default async function ConversationsLayout({
 }: PropsWithChildren) {
 	const [{ data: conversations, metadata }, likes] = await Promise.all([
 		Conversation.list(),
-		Matchmaking.listMatches(true)
+		Matchmaking.likesYou()
 	]);
 
 	if (conversations.length === 0)

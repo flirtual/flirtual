@@ -1,9 +1,10 @@
 import { snakeCase } from "change-case";
 import ms from "ms";
 
-import { isUid } from "~/utilities";
 import { cache } from "~/cache";
+import { isUid } from "~/utilities";
 
+import type { Attribute } from "../attributes";
 import {
 	api,
 	type DatedModel,
@@ -11,12 +12,9 @@ import {
 	type PaginateOptions,
 	type UuidModel
 } from "../common";
-
-import { Preferences } from "./preferences";
-
-import type { Subscription } from "../subscription";
-import type { Attribute } from "../attributes";
 import type { Connection } from "../connections";
+import type { Subscription } from "../subscription";
+import { Preferences } from "./preferences";
 import type { Profile } from "./profile";
 import type { Relationship } from "./relationship";
 
@@ -42,10 +40,10 @@ export const userTagNames: Record<UserTags, string> = {
 
 export type UserTags = (typeof userTags)[number];
 
-export type UserPasskey = UuidModel &
-	DatedModel & {
-		aaguid: string;
-	};
+export type UserPasskey = {
+	aaguid: string;
+} &
+DatedModel & UuidModel;
 
 export const UserStatuses = [
 	"registered",
@@ -56,40 +54,40 @@ export const UserStatuses = [
 
 export type UserStatus = (typeof UserStatuses)[number];
 
-export type User = UuidModel &
-	Partial<DatedModel> & {
-		email: string;
-		slug: string;
-		language?: string;
-		talkjsId: string;
-		talkjsSignature?: string;
-		apnsToken?: string;
-		fcmToken?: string;
-		pushCount?: number;
-		ratingPrompts?: number;
-		chargebeeId?: string;
-		stripeId?: string;
-		revenuecatId?: string;
-		moderatorMessage?: string;
-		moderatorNote?: string;
-		status: UserStatus;
-		relationship?: Relationship;
-		bornAt?: string;
-		activeAt?: string;
-		emailConfirmedAt?: string;
-		shadowbannedAt?: string;
-		indefShadowbannedAt?: string;
-		paymentsBannedAt?: string;
-		bannedAt?: string;
-		deactivatedAt?: string;
-		preferences?: Preferences;
-		profile: Profile;
-		subscription?: Subscription;
-		tags?: Array<UserTags>;
-		tnsDiscordInBiography?: string;
-		connections?: Array<Connection>;
-		passkeys?: Array<UserPasskey>;
-	};
+export type User = {
+	email: string;
+	slug: string;
+	language?: string;
+	talkjsId: string;
+	talkjsSignature?: string;
+	apnsToken?: string;
+	fcmToken?: string;
+	pushCount?: number;
+	ratingPrompts?: number;
+	chargebeeId?: string;
+	stripeId?: string;
+	revenuecatId?: string;
+	moderatorMessage?: string;
+	moderatorNote?: string;
+	status: UserStatus;
+	relationship?: Relationship;
+	bornAt?: string;
+	activeAt?: string;
+	emailConfirmedAt?: string;
+	shadowbannedAt?: string;
+	indefShadowbannedAt?: string;
+	paymentsBannedAt?: string;
+	bannedAt?: string;
+	deactivatedAt?: string;
+	preferences?: Preferences;
+	profile: Profile;
+	subscription?: Subscription;
+	tags?: Array<UserTags>;
+	tnsDiscordInBiography?: string;
+	connections?: Array<Connection>;
+	passkeys?: Array<UserPasskey>;
+} &
+Partial<DatedModel> & UuidModel;
 
 export interface UserPreview {
 	id: string;
@@ -101,7 +99,7 @@ export interface UserPreview {
 }
 
 export function displayName(
-	user: Pick<User, "slug"> & { profile: Pick<Profile, "displayName"> }
+	user: { profile: Pick<Profile, "displayName"> } & Pick<User, "slug">
 ) {
 	return user.profile.displayName || user.slug;
 }
@@ -207,7 +205,7 @@ export const User = {
 		{
 			required,
 			...options
-		}: UpdateUserOptions & { required?: Array<keyof UpdateUserOptions> }
+		}: { required?: Array<keyof UpdateUserOptions> } & UpdateUserOptions
 	) {
 		return this.api
 			.url(`/${userId}`)

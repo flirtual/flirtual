@@ -1,6 +1,6 @@
-import { ConversationAside } from "./aside";
-
 import type { Metadata } from "next";
+
+import { ConversationAside } from "./aside";
 
 export const metadata: Metadata = {
 	title: "Matches"

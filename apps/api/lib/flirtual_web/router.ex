@@ -260,13 +260,13 @@ defmodule FlirtualWeb.Router do
 
         scope "/matches" do
           pipe_through([:require_authenticated_user, :require_valid_user])
-
-          get("/", MatchmakingController, :list_matches)
           delete("/", MatchmakingController, :unmatch)
         end
 
         scope "/likes" do
           pipe_through([:require_authenticated_user, :require_valid_user])
+
+          get("/", MatchmakingController, :list_likes)
           delete("/", MatchmakingController, :reset_likes)
         end
 

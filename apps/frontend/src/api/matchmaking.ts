@@ -1,8 +1,8 @@
 import {
 	api,
+	type CreatedAtModel,
 	type Issue,
 	isWretchError,
-	type CreatedAtModel,
 	type UuidModel
 } from "./common";
 
@@ -11,15 +11,12 @@ export type ProspectKind = (typeof ProspectKind)[number];
 
 export type ProspectRespondType = "like" | "pass";
 
-export type LikeAndPassItem = UuidModel &
-	CreatedAtModel & {
-		profileId: string;
-		targetId: string;
-		type: ProspectRespondType;
-		kind: ProspectKind;
-		match?: boolean;
-		opposite?: LikeAndPassItem;
-	};
+export interface LikeAndPassItem {
+	profileId: string;
+	targetId: string;
+	type: ProspectRespondType;
+	kind: ProspectKind;
+};
 
 export interface RespondProspectBody {
 	type: ProspectRespondType;
@@ -36,8 +33,8 @@ export interface RespondProspect {
 }
 
 export type QueueActionIssue =
-	| Issue<"out_of_likes" | "out_of_passes", { reset_at: string }>
 	| Issue<"already_responded">
+	| Issue<"out_of_likes" | "out_of_passes", { reset_at: string }>
 	| QueueIssue;
 
 export interface ReverseRespondProspectBody {
@@ -50,7 +47,7 @@ export type Queue = [
 	next: string | null
 ];
 
-export type QueueIssue = Issue<"finish_profile" | "confirm_email">;
+export type QueueIssue = Issue<"confirm_email" | "finish_profile">;
 export type QueueResponse = Queue | QueueIssue;
 
 export const Matchmaking = {
@@ -88,8 +85,8 @@ export const Matchmaking = {
 	resetPasses() {
 		return api.url("passes").delete().res();
 	},
-	listMatches(unrequited?: boolean) {
-		return api.url("matches").query({ unrequited }).get().json<{
+	likesYou() {
+		return api.url("likes").get().json<{
 			count: {
 				[K in ProspectKind]?: number;
 			};

@@ -1,17 +1,17 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
+import { CheckCheck, ChevronLeft, X } from "lucide-react";
 import Link from "next/link";
 import { type FC, Suspense, useLayoutEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { CheckCheck, ChevronLeft, X } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
-import { urls } from "~/urls";
+import { Conversation } from "~/api/conversations";
+import { Button } from "~/components/button";
 import { useConversations } from "~/hooks/use-conversations";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
-import { Button } from "~/components/button";
 import { useToast } from "~/hooks/use-toast";
-import { Conversation } from "~/api/conversations";
+import { urls } from "~/urls";
 
 import { LikesYouButton } from "./likes-you-button";
 import {
@@ -43,16 +43,16 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 		<div
 			className={twMerge(
 				"flex w-full shrink-0 grow-0 flex-col desktop:w-96 desktop:rounded-2xl desktop:bg-brand-gradient desktop:shadow-brand-1",
-				!activeConversationId &&
-					"desktop:mx-auto desktop:w-full desktop:max-w-md"
+				!activeConversationId
+				&& "desktop:mx-auto desktop:w-full desktop:max-w-md"
 			)}
 		>
 			<div className="flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(env(safe-area-inset-top,0rem)+0.5rem),1rem)] text-white-20 android:pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] desktop:static desktop:bg-transparent desktop:pt-[1.125rem] android:desktop:pt-[1.125rem]">
 				<Link
-					className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
 					href={
 						activeConversationId ? urls.conversations.list() : urls.browse()
 					}
+					className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
 				>
 					<HeaderIcon className="w-6" />
 				</Link>
@@ -94,11 +94,11 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 									>
 										<ConversationListItem
 											{...conversation}
-											active={activeConversationId === conversation.id}
 											lastItem={
-												dataIndex === data.length - 1 &&
-												conversationIndex === conversations.length - 1
+												dataIndex === data.length - 1
+												&& conversationIndex === conversations.length - 1
 											}
+											active={activeConversationId === conversation.id}
 										/>
 									</Suspense>
 								))}

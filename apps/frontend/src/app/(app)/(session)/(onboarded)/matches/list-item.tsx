@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { type FC, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
-import Link from "next/link";
 
+import type { Conversation } from "~/api/conversations";
 import { displayName, type User } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
@@ -12,14 +13,12 @@ import { UserAvatar, type UserAvatarProps } from "~/components/user-avatar";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
-import type { Conversation } from "~/api/conversations";
-
-export type ConversationListItemProps = Conversation & {
+export type ConversationListItemProps = {
 	active?: boolean;
 	lastItem?: boolean;
 	userOverride?: UserAvatarProps["user"];
 	example?: boolean;
-};
+} & Conversation;
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 	const {
@@ -76,31 +75,35 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						<span className="truncate font-montserrat text-lg font-semibold leading-tight">
 							{displayName(user)}
 						</span>
-						{kind === "love" ? (
-							<HeartIcon className="inline h-5" />
-						) : (
-							<PeaceIcon className="inline h-5" />
-						)}
+						{kind === "love"
+							? (
+									<HeartIcon className="inline h-5" />
+								)
+							: (
+									<PeaceIcon className="inline h-5" />
+								)}
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
 						<span className="w-full truncate text-black-50 dark:text-white-40">
-							{lastMessage ? (
-								<>
-									{lastMessage?.senderId !== userId && !lastMessage.system && (
-										<span>You: </span>
+							{lastMessage
+								? (
+										<>
+											{lastMessage?.senderId !== userId && !lastMessage.system && (
+												<span>You: </span>
+											)}
+											{lastMessage.content}
+										</>
+									)
+								: (
+										<span className="truncate">It&apos;s a match!</span>
 									)}
-									{lastMessage.content}
-								</>
-							) : (
-								<span className="truncate">It&apos;s a match!</span>
-							)}
 						</span>
 						{lastMessage && (
 							<TimeRelative
-								value={lastMessage.createdAt}
 								elementProps={{
 									className: "shrink-0 text-xs text-black-60 dark:text-white-50"
 								}}
+								value={lastMessage.createdAt}
 							/>
 						)}
 					</div>

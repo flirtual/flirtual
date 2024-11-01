@@ -126,7 +126,7 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
-  def list_matches(conn, %{"unrequited" => _}) do
+  def list_likes(conn, _) do
     with items <-
            LikesAndPasses.list_unrequited(profile_id: conn.assigns[:session].user_id)
            |> Policy.filter(conn, :count) do
@@ -157,17 +157,17 @@ defmodule FlirtualWeb.MatchmakingController do
     end
   end
 
-  def list_matches(conn, _) do
-    with items <-
-           LikesAndPasses.list_matches(profile_id: conn.assigns[:session].user_id) do
-      conn
-      |> json_with_etag(%{
-        count: Enum.group_by(items, & &1.kind) |> Map.new(fn {k, v} -> {k, length(v)} end),
-        items:
-          items
-          |> Policy.filter(conn, :read)
-          |> then(&Policy.transform(conn, &1))
-      })
-    end
-  end
+  # def list_matches(conn, _) do
+  #   with items <-
+  #          LikesAndPasses.list_matches(profile_id: conn.assigns[:session].user_id) do
+  #     conn
+  #     |> json_with_etag(%{
+  #       count: Enum.group_by(items, & &1.kind) |> Map.new(fn {k, v} -> {k, length(v)} end),
+  #       items:
+  #         items
+  #         |> Policy.filter(conn, :read)
+  #         |> then(&Policy.transform(conn, &1))
+  #     })
+  #   end
+  # end
 end
