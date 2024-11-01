@@ -31,7 +31,9 @@ function getContentSecurityPolicy() {
 			"https://*.freshworks.com",
 			"https://*.freshdesk.com",
 			// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
-			"https://challenges.cloudflare.com"
+			"https://challenges.cloudflare.com",
+			// https://developers.cloudflare.com/web-analytics/
+			"https://static.cloudflareinsights.com"
 		],
 		"style-src": [
 			"'self'",
@@ -77,6 +79,9 @@ function getContentSecurityPolicy() {
 			"https://*.freshdesk.com",
 			// https://github.com/passkeydeveloper/passkey-authenticator-aaguids
 			"https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json",
+			// https://developers.cloudflare.com/web-analytics/
+			"https://cloudflareinsights.com",
+			"https://static.cloudflareinsights.com",
 			// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
 			new URL(sentryDsn).origin
 		],
@@ -120,7 +125,7 @@ function getContentSecurityPolicy() {
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Reporting-Endpoints
 function getReportingEndpoints() {
 	return Object.entries({
-		"csp": sentryReportTo
+		csp: sentryReportTo
 	}).map(([name, url]) => `${name}="${url}"`).join(", ");
 }
 
