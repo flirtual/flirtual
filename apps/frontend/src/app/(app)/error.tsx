@@ -181,7 +181,7 @@ export default function Error({
 										</div>
 									</motion.div>
 								</div>
-								<div className="flex gap-2">
+								<div className="flex flex-wrap gap-2">
 									<Button className="w-fit" size="sm" onClick={reset}>
 										Try again
 									</Button>
