@@ -27,7 +27,7 @@ export const LikesList: FC = () => {
 
 	return (
 		<div className="flex flex-col gap-2 desktop:gap-4">
-			{items.map((item) => <LikeListItem {...item} key={item.targetId} />)}
+			{items.map((item) => <LikeListItem {...item} key={item.profileId} />)}
 		</div>
 	);
 };

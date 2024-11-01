@@ -13,7 +13,7 @@ import { yearsAgo } from "~/date";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
-export const LikeListItem: FC<LikeAndPassItem> = ({ kind, targetId: userId }) => {
+export const LikeListItem: FC<LikeAndPassItem> = ({ kind, profileId: userId }) => {
 	const user = useUser(userId);
 	if (!user) return null;
 
