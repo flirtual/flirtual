@@ -10,19 +10,19 @@ export const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
 assert(apiUrl, "NEXT_PUBLIC_API_URL is required");
 export const apiOrigin = new URL(apiUrl).origin;
 
-export const environment = (process.env.NEXT_PUBLIC_VERCEL_ENV ||
-	process.env.NODE_ENV) as "development" | "preview" | "production";
+export const environment = (process.env.NEXT_PUBLIC_VERCEL_ENV
+	|| process.env.NODE_ENV) as "development" | "preview" | "production";
 
 export const gitOrganization = process.env
 	.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER as string;
 export const gitRepository = process.env
 	.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG as string;
-export const gitCommitSha =
-	process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || "local";
+export const gitCommitSha
+	= process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || "local";
 export const gitCommitReference = process.env
 	.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF as string;
-export const gitCommitUrl =
-	gitCommitSha !== "local"
+export const gitCommitUrl
+	= gitCommitSha !== "local"
 		? `https://github.com/${gitOrganization}/${gitRepository}/commit/${gitCommitSha}`
 		: null;
 
@@ -42,3 +42,5 @@ export const uppyCompanionUrl = process.env
 	.NEXT_PUBLIC_UPPY_COMPANION_URL as string;
 export const uppyBucketOrigin = process.env
 	.NEXT_PUBLIC_UPPY_BUCKET_ORIGIN as string;
+export const picoAppId = process.env
+	.NEXT_PUBLIC_PICO_APP_ID as string;
