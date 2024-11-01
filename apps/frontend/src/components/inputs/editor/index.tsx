@@ -1,10 +1,9 @@
 import dynamic from "next/dynamic";
+import type React from "react";
 
 import { editorColors } from "~/html";
 
 import { EditorSkeleton } from "./skeleton";
-
-import type React from "react";
 
 import "./style.scss";
 
@@ -37,9 +36,7 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 }) => {
 	return (
 		<ReactQuill
-			data-sentry-mask
-			className="prose max-w-none dark:prose-invert [&_*]:!select-auto"
-			value={value}
+			data-sentry-block
 			formats={[
 				"header",
 				"bold",
@@ -57,11 +54,13 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 					[{ header: 3 }],
 					["bold", "italic", "underline"],
 					[{ color: editorColors }, { background: editorColors }],
-					[{ list: "ordered" } /* , { list: "bullet" } */],
+					[{ list: "ordered" }],
 					["blockquote"],
 					[{ align: [] }]
 				]
 			}}
+			className="prose max-w-none dark:prose-invert [&_*]:!select-auto"
+			value={value}
 			onChange={(value) => onChange(value)}
 		/>
 	);

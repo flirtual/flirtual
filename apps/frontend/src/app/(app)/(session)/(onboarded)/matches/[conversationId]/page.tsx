@@ -1,19 +1,17 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { ConversationChatbox } from "~/hooks/use-talkjs";
-import { displayName } from "~/api/user";
-import { urls } from "~/urls";
-import { UserAvatar } from "~/components/user-avatar";
-import { InlineLink } from "~/components/inline-link";
-import { Conversation } from "~/api/conversations";
 import { Authentication } from "~/api/auth";
+import { Conversation } from "~/api/conversations";
+import { displayName } from "~/api/user";
+import { InlineLink } from "~/components/inline-link";
+import { UserAvatar } from "~/components/user-avatar";
+import { ConversationChatbox } from "~/hooks/use-talkjs";
+import { urls } from "~/urls";
 
 import { getProfile } from "../../[slug]/data";
 import { ConversationAside } from "../aside";
-
 import { FaceTimeButton } from "./facetime-button";
-
-import type { Metadata } from "next";
 
 export interface ConversationPageProps {
 	params: Promise<{
@@ -46,8 +44,8 @@ export default async function ConversationPage(props: ConversationPageProps) {
 	const user = await getProfile(conversation.userId);
 
 	if (
-		!user ||
-		(!user.relationship?.matched && !session.user.tags?.includes("admin"))
+		!user
+		|| (!user.relationship?.matched && !session.user.tags?.includes("admin"))
 	)
 		return redirect(urls.conversations.list());
 
@@ -67,7 +65,7 @@ export default async function ConversationPage(props: ConversationPageProps) {
 							variant="icon"
 							width={40}
 						/>
-						<span className="font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
+						<span data-sentry-mask className="font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
 							{displayName(user)}
 						</span>
 					</InlineLink>
