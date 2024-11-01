@@ -32,7 +32,7 @@ export default async function ConversationsLayout({
 				title="Matches"
 			>
 				<h1 className="text-2xl font-semibold">
-					You haven&apos;t matched with anyone yet
+					You'll find your matches here
 				</h1>
 				<p>
 					When someone likes or homies you back, it&apos;s a match! You&apos;ll be able to message them and meet up in VR.
