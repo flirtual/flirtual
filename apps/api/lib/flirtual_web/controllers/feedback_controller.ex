@@ -20,14 +20,14 @@ defmodule FlirtualWeb.FeedbackController do
         %{status: :visible, profile: profile} ->
           response = %{
             "bio" => profile.biography,
-            "prompts" =>
-              profile.prompts
-              |> Enum.map(fn prompt ->
-                %{
-                  "question" => prompt.prompt.name,
-                  "answer" => prompt.response
-                }
-              end),
+            # "prompts" =>
+            #   profile.prompts
+            #   |> Enum.map(fn prompt ->
+            #     %{
+            #       "question" => prompt.prompt.name,
+            #       "answer" => prompt.response
+            #     }
+            #   end),
             # "interests" =>
             #   profile.attributes
             #   |> Enum.filter(fn attr ->
