@@ -22,7 +22,7 @@ export default async function ConversationsLayout({
 	const [{ data: conversations, metadata }, likes] = await Promise.all([
 		Conversation.list(),
 		Matchmaking.listMatches(true)
-	]);
+	]);a
 
 	if (conversations.length === 0)
 		return (
