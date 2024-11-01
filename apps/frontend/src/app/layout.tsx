@@ -17,7 +17,7 @@ import { InsetPreview } from "~/components/inset-preview";
 import NativeStartup from "~/components/native-startup";
 import { SessionProvider } from "~/components/session-provider";
 import { TooltipProvider } from "~/components/tooltip";
-import { apiOrigin, siteOrigin } from "~/const";
+import { apiOrigin, cloudflareBeaconId, siteOrigin } from "~/const";
 import { type DevicePlatform, DeviceProvider } from "~/hooks/use-device";
 import { InternationalizationProvider } from "~/hooks/use-internationalization";
 import { ThemeProvider } from "~/hooks/use-theme";
@@ -161,9 +161,13 @@ export default async function RootLayout({
 })()
 						`.trim()
 											}}
-											data-cfasync="false"
 										/>
 									)}
+									{session?.user.preferences?.privacy.analytics && <Script 
+										defer
+										src="https://static.cloudflareinsights.com/beacon.min.js"
+										data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}
+									/>}
 									<link
 										color="#e9658b"
 										href={SafariPinnedTabImage.src}

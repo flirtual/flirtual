@@ -32,6 +32,8 @@ export const talkjsAppId = process.env.NEXT_PUBLIC_TALKJS_APP_ID as string;
 export const freshworksWidgetId = process.env
 	.NEXT_PUBLIC_FRESHWORKS_WIDGET_ID as string;
 export const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN as string;
+export const cloudflareBeaconId = process.env.NEXT_PUBLIC_CLOUDFLARE_BEACON_ID as string;
+
 export const cannyAppId = process.env.NEXT_PUBLIC_CANNY_APP_ID as string;
 export const rcAppleKey = process.env.NEXT_PUBLIC_RC_APPL_PUBLIC_KEY as string;
 export const rcGoogleKey = process.env.NEXT_PUBLIC_RC_GOOG_PUBLIC_KEY as string;
