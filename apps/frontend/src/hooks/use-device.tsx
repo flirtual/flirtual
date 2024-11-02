@@ -1,12 +1,10 @@
 "use client";
 
-import * as Sentry from "@sentry/nextjs";
-import { createContext, forwardRef, useContext } from "react";
 import { Slot } from "@radix-ui/react-slot";
-
 import type { userAgentFromString } from "next/server";
+import { createContext, forwardRef, useContext, useMemo } from "react";
 
-export type DevicePlatform = "web" | "android" | "apple";
+export type DevicePlatform = "android" | "apple" | "web";
 export type UserAgent = ReturnType<typeof userAgentFromString>;
 
 export interface DeviceContext {
@@ -19,22 +17,19 @@ export interface DeviceContext {
 const DeviceContext = createContext<DeviceContext>({} as DeviceContext);
 
 export type DeviceProviderProps = React.PropsWithChildren<
-	Pick<DeviceContext, "userAgent" | "platform" | "native" | "vision">
+	Pick<DeviceContext, "native" | "platform" | "userAgent" | "vision">
 >;
 
 export const DeviceProvider = forwardRef<HTMLHtmlElement, DeviceProviderProps>(
 	({ children, native, platform, userAgent, vision, ...props }, reference) => {
-		Sentry.setTag("native", native ? "yes" : "no");
-		Sentry.setTag("vision", vision ? "yes" : "no");
-
 		return (
 			<DeviceContext.Provider
-				value={{
+				value={useMemo(() => ({
 					native,
 					platform,
 					userAgent,
 					vision
-				}}
+				}), [native, platform, userAgent, vision])}
 			>
 				<Slot
 					{...props}
