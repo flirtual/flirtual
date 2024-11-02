@@ -32,7 +32,12 @@ export const talkjsAppId = process.env.NEXT_PUBLIC_TALKJS_APP_ID as string;
 export const freshworksWidgetId = process.env
 	.NEXT_PUBLIC_FRESHWORKS_WIDGET_ID as string;
 export const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN as string;
+export const sentryOrganization = process.env.NEXT_PUBLIC_SENTRY_ORGANIZATION as string;
+export const sentryProjectId = Number.parseInt(process.env.NEXT_PUBLIC_SENTRY_PROJECT_ID as string);
 export const sentryReportTo = process.env.NEXT_PUBLIC_SENTRY_REPORT_TO as string;
+export const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY as string;
+export const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST as string;
+
 export const cloudflareBeaconId = process.env.NEXT_PUBLIC_CLOUDFLARE_BEACON_ID as string;
 
 export const cannyAppId = process.env.NEXT_PUBLIC_CANNY_APP_ID as string;

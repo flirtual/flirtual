@@ -67,7 +67,7 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 			onClick={() => toast.remove()}
 		>
 			<Icon className="size-5 shrink-0" strokeWidth={2} />
-			<span data-sentry-mask className="font-montserrat font-semibold">
+			<span data-mask className="font-montserrat font-semibold">
 				{toast.children}
 			</span>
 		</motion.button>

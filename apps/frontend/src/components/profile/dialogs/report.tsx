@@ -92,7 +92,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 											<UserThumbnail user={user} />
 											<div className="flex flex-col">
 												<span
-													data-sentry-mask
+													data-mask
 													className="text-lg font-semibold leading-none"
 												>
 													{displayName(user)}

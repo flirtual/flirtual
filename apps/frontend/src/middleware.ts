@@ -5,6 +5,7 @@ import { playlistPlatforms } from "./components/profile/playlist";
 import {
 	apiOrigin,
 	environment,
+	posthogHost,
 	sentryDsn,
 	sentryReportTo,
 	siteOrigin,
@@ -33,7 +34,9 @@ function getContentSecurityPolicy() {
 			// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
 			"https://challenges.cloudflare.com",
 			// https://developers.cloudflare.com/web-analytics/
-			"https://static.cloudflareinsights.com"
+			"https://static.cloudflareinsights.com",
+			// https://posthog.com/docs
+			"https://us-assets.i.posthog.com"
 		],
 		"style-src": [
 			"'self'",
@@ -83,7 +86,10 @@ function getContentSecurityPolicy() {
 			"https://cloudflareinsights.com",
 			"https://static.cloudflareinsights.com",
 			// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
-			new URL(sentryDsn).origin
+			new URL(sentryDsn).origin,
+			// https://posthog.com/docs
+			posthogHost,
+
 		],
 		"font-src": ["'self'"],
 		"object-src": ["'self'", "data:"],

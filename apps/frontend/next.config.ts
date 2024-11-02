@@ -10,7 +10,9 @@ export default withSentryConfig(
 			staleTimes: {
 				dynamic: 30
 			},
-			reactCompiler: true
+			// ppr: "incremental",
+			reactCompiler: true,
+			useLightningcss: true
 		},
 		// typescript: {
 		// 	ignoreBuildErrors: true
@@ -19,27 +21,19 @@ export default withSentryConfig(
 			// https://github.com/vercel/next.js/discussions/67931
 			silenceDeprecations: ["legacy-js-api"]
 		},
-		reactStrictMode: true,
+		logging: {
+			fetches: {
+				fullUrl: false,
+				hmrRefreshes: true
+			}
+		},
 		images: {
 			unoptimized: true
 		},
 		eslint: {
 			ignoreDuringBuilds: true
 		},
-		modularizeImports: {
-			"@heroicons/react/24/outline": {
-				transform: "@heroicons/react/24/outline/{{ member }}",
-				preventFullImport: true
-			},
-			"@heroicons/react/24/solid": {
-				transform: "@heroicons/react/24/solid/{{ member }}",
-				preventFullImport: true
-			},
-			"lucide-react": {
-				transform: "lucide-react/dist/esm/icons/{{ kebabCase member }}",
-				preventFullImport: true
-			}
-		},
+		productionBrowserSourceMaps: true,
 		async headers() {
 			return [
 				{

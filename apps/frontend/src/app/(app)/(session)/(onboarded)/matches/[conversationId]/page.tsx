@@ -65,7 +65,7 @@ export default async function ConversationPage(props: ConversationPageProps) {
 							variant="icon"
 							width={40}
 						/>
-						<span data-sentry-mask className="font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
+						<span data-mask className="font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
 							{displayName(user)}
 						</span>
 					</InlineLink>

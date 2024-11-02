@@ -1,29 +1,28 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
-	type CSSProperties,
 	createContext,
+	type CSSProperties,
 	useContext,
 	useEffect,
 	useMemo,
 	useState
 } from "react";
-import Talk from "talkjs";
-import { useRouter } from "next/navigation";
+import type React from "react";
 import { useSWRConfig } from "swr";
 import { unstable_serialize } from "swr/infinite";
+import Talk from "talkjs";
+import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
 import { resolveTheme } from "~/theme";
 
+import { getConversationsKey } from "./use-conversations.shared";
+import { useDevice } from "./use-device";
+import { useNotifications } from "./use-notifications";
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
-import { useNotifications } from "./use-notifications";
-import { useDevice } from "./use-device";
-import { getConversationsKey } from "./use-conversations.shared";
-
-import type { ChatboxOptions } from "talkjs/types/talk.types";
-import type React from "react";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
@@ -136,7 +135,7 @@ export function useUnreadConversations() {
 	return useContext(UnreadConversationContext);
 }
 
-const emojis: Array<{ name: string; type: "png" | "gif"; hidden?: boolean }> = [
+const emojis: Array<{ name: string; type: "gif" | "png"; hidden?: boolean }> = [
 	{ name: "bonk", type: "gif" },
 	{ name: "chad", type: "png" },
 	{ name: "cool", type: "png" },
@@ -168,9 +167,9 @@ const customEmojis = Object.fromEntries(
 );
 
 export const ConversationChatbox: React.FC<
-	React.ComponentProps<"div"> & {
+	{
 		conversationId: string | null;
-	}
+	} & React.ComponentProps<"div">
 > = ({ conversationId, ...props }) => {
 	const session = useTalkjs();
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
@@ -224,13 +223,13 @@ export const ConversationChatbox: React.FC<
 
 	return (
 		<div
-			data-sentry-block
-			className="relative w-full overflow-hidden bg-white-20 dark:bg-black-70 vision:bg-transparent desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
+			data-block
 			style={
 				{
 					height
 				} as CSSProperties
 			}
+			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent dark:bg-black-70 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
 			{...props}
 			ref={setElement}
 		/>

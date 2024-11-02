@@ -3,8 +3,9 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from "@sentry/nextjs";
+import posthog from "posthog-js";
 
-import { sentryDsn, apiUrl, siteOrigin, environment } from "~/const";
+import { apiUrl, environment, sentryDsn, sentryOrganization, sentryProjectId, siteOrigin } from "~/const";
 
 Sentry.init({
 	enabled: environment !== "development",
@@ -19,6 +20,8 @@ Sentry.init({
 			blockAllMedia: false,
 			maskAllText: false,
 			maskAllInputs: true,
+			mask: ["[data-mask]"],
+			block: ["[data-block]"],
 			networkDetailAllowUrls: [
 				window.location.origin,
 				new URL(siteOrigin).origin,
@@ -27,6 +30,10 @@ Sentry.init({
 		}),
 		Sentry.feedbackIntegration({
 			autoInject: false
+		}),
+		posthog.sentryIntegration({
+			organization: sentryOrganization,
+			projectId: sentryProjectId
 		})
 	]
 });

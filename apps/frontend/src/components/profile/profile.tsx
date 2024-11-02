@@ -66,7 +66,7 @@ export function Profile(props: ProfileProps) {
 			}
 			id={id}
 			{...elementProps}
-			data-sentry-mask
+			data-mask
 			className={twMerge(
 				"flex w-full vision:bg-none desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
 				className

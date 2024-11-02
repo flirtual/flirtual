@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { forwardRef, useState, type MouseEventHandler } from "react";
-import { twMerge } from "tailwind-merge";
+import { AnimatePresence, motion } from "framer-motion";
 import { Pencil } from "lucide-react";
+import Link from "next/link";
+import { forwardRef, type MouseEventHandler, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "../../icons";
 
@@ -39,9 +39,6 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				ref={reference as any}
 				{...elementProps}
-				data-active={active ? "" : undefined}
-				href={href!}
-				type={onClick ? "button" : undefined}
 				className={twMerge(
 					"group pointer-events-auto relative flex h-8 items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 transition-all vision:!bg-white-30/70 desktop:text-base",
 					(href || onClick) && "cursor-pointer",
@@ -51,6 +48,9 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 					small ? "px-3 py-1 text-sm" : " px-4 py-1",
 					props.className
 				)}
+				data-active={active ? "" : undefined}
+				href={href!}
+				type={onClick ? "button" : undefined}
 				onBlur={() => setHocused(false)}
 				onClick={onClick}
 				onFocus={() => hocusable && setHocused(true)}
@@ -59,13 +59,13 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 			>
 				{Icon && <Icon className="h-4" />}
 				<motion.div
-					data-sentry-block
-					className="flex items-center gap-2"
-					initial={{ marginRight: 0 }}
-					transition={{ type: "tween" }}
+					data-block
 					animate={
 						href && hocused ? { marginRight: "1.5rem" } : { marginRight: 0 }
 					}
+					className="flex items-center gap-2"
+					initial={{ marginRight: 0 }}
+					transition={{ type: "tween" }}
 				>
 					{props.children}
 				</motion.div>

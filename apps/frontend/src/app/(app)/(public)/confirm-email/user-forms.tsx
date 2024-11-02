@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 
+import { User } from "~/api/user";
+import { CopyClick } from "~/components/copy-click";
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useInterval } from "~/hooks/use-interval";
 import { useToast } from "~/hooks/use-toast";
-import { CopyClick } from "~/components/copy-click";
-import { User } from "~/api/user";
 
 export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 	const router = useRouter();
@@ -42,7 +42,7 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 					<span className="text-lg">
 						Check your email (
 						<CopyClick value={user.email}>
-							<span data-sentry-mask className="select-all font-semibold">
+							<span data-mask className="select-all font-semibold">
 								{user.email}
 							</span>
 						</CopyClick>
@@ -53,13 +53,13 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 				<FormButton>Send again</FormButton>
 			</Form>
 			<Form
-				className="mt-8"
-				requireChange={["email", "emailConfirmation", "currentPassword"]}
 				fields={{
 					email: user.email,
 					emailConfirmation: "",
 					currentPassword: ""
 				}}
+				className="mt-8"
+				requireChange={["email", "emailConfirmation", "currentPassword"]}
 				onSubmit={async (body) => {
 					await User.updateEmail(user.id, body)
 						.then(() => {

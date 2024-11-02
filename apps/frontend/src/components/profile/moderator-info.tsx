@@ -28,7 +28,7 @@ export const ProfileModeratorInfo: FC<{
 
 	return (
 		<div
-			data-sentry-mask
+			data-mask
 			className="select-children -mx-4 flex flex-col gap-4 rounded-xl bg-white-30 px-4 py-3 font-mono shadow-brand-inset vision:bg-white-30/70 dark:bg-black-90/80 dark:text-white-20"
 		>
 			<div className="flex flex-col">

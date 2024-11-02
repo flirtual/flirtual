@@ -41,7 +41,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 
 	return (
 		<div
-			data-sentry-mask
+			data-mask
 			className={twMerge(
 				"relative rounded-xl shadow-brand-1",
 				active && "bg-brand-gradient pb-1"

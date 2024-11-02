@@ -36,7 +36,7 @@ export const InputEditor: React.FC<InputEditorProps> = ({
 }) => {
 	return (
 		<ReactQuill
-			data-sentry-block
+			data-block
 			formats={[
 				"header",
 				"bold",

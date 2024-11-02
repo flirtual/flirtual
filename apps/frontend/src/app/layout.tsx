@@ -12,12 +12,13 @@ import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
+import { AnalyticsProvider } from "~/components/analytics";
 import AppUrlListener from "~/components/app-url-listener";
 import { InsetPreview } from "~/components/inset-preview";
 import NativeStartup from "~/components/native-startup";
 import { SessionProvider } from "~/components/session-provider";
 import { TooltipProvider } from "~/components/tooltip";
-import { apiOrigin, cloudflareBeaconId, siteOrigin } from "~/const";
+import { apiOrigin, cloudflareBeaconId, environment, siteOrigin } from "~/const";
 import { type DevicePlatform, DeviceProvider } from "~/hooks/use-device";
 import { InternationalizationProvider } from "~/hooks/use-internationalization";
 import { ThemeProvider } from "~/hooks/use-theme";
@@ -101,6 +102,8 @@ const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
 const fontClassNames = twMerge(montserrat.variable, nunito.variable);
 
+// export const experimental_ppr = true;
+
 export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
@@ -163,13 +166,6 @@ export default async function RootLayout({
 											}}
 										/>
 									)}
-									{session?.user.preferences?.privacy.analytics && (
-										<Script
-											defer
-											data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}
-											src="https://static.cloudflareinsights.com/beacon.min.js"
-										/>
-									)}
 									<link
 										color="#e9658b"
 										href={SafariPinnedTabImage.src}
@@ -179,18 +175,21 @@ export default async function RootLayout({
 									<AppUrlListener />
 								</head>
 								<body className={fontClassNames}>
+
 									<InsetPreview />
 									<NextTopLoader
 										color={["#FF8975", "#E9658B"]}
 										height={5}
 										showSpinner={false}
 									/>
-									<NativeStartup />
-									<ToastProvider>
-										{/* <Suspense fallback={<LoadingIndicatorScreen />}> */}
-										<TooltipProvider>{children}</TooltipProvider>
-										{/* </Suspense> */}
-									</ToastProvider>
+									<AnalyticsProvider>
+										<NativeStartup />
+										<ToastProvider>
+											{/* <Suspense fallback={<LoadingIndicatorScreen />}> */}
+											<TooltipProvider>{children}</TooltipProvider>
+											{/* </Suspense> */}
+										</ToastProvider>
+									</AnalyticsProvider>
 								</body>
 							</html>
 						</ThemeProvider>

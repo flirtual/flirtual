@@ -18,13 +18,11 @@ export const SessionProvider = forwardRef<
 
 	return (
 		<SWRConfig
-			value={(swrConfig) => ({
-				...swrConfig,
+			value={{
 				fallback: {
-					...swrConfig?.fallback,
 					session
 				}
-			})}
+			}}
 		>
 			<Slot
 				{...props}
