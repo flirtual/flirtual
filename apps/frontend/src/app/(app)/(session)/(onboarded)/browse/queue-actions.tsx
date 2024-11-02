@@ -69,7 +69,7 @@ function DefaultTour() {
 	return null;
 }
 
-export const optimisticQueueMove = (direction: QueueAnimationDirection) => {
+export function optimisticQueueMove(direction: QueueAnimationDirection) {
 	return (value?: Queue): Queue => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -79,7 +79,7 @@ export const optimisticQueueMove = (direction: QueueAnimationDirection) => {
 			? value[0] ? [null, value[0], value[1]] : value
 			: value[2] ? [value[1], value[2], null] : value;
 	};
-};
+}
 
 export const QueueActions_: FC<{
 	queue?: Queue;
@@ -404,7 +404,7 @@ const MatchDialog: FC<{
 						<span>
 							You and
 							{" "}
-							<InlineLink data-sentry-block href={urls.profile(user)}>
+							<InlineLink data-block href={urls.profile(user)}>
 								{displayName(user)}
 							</InlineLink>
 							{" "}

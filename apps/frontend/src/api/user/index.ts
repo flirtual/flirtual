@@ -70,7 +70,7 @@ export type User = {
 	moderatorMessage?: string;
 	moderatorNote?: string;
 	status: UserStatus;
-	relationship?: Relationship;
+	// relationship?: Relationship;
 	bornAt?: string;
 	activeAt?: string;
 	emailConfirmedAt?: string;
@@ -168,6 +168,16 @@ export const User = {
 			.badRequest(() => null)
 			.notFound(() => null)
 			.json<User | null>();
+	},
+	getRelationship(userId: string | null) {
+		if (!userId || !isUid(userId)) return Promise.resolve(null);
+
+		return this.api
+			.url(`/${userId}/relationship`)
+			.get()
+			.badRequest(() => null)
+			.notFound(() => null)
+			.json<Relationship | null>();
 	},
 	getBySlug(slug: string) {
 		if (slug.length < 3) return null;

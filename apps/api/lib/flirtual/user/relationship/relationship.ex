@@ -9,18 +9,43 @@ defmodule Flirtual.User.Relationship do
   alias Flirtual.User
 
   embedded_schema do
-    field :user_id, :binary_id
+    field(:user_id, :binary_id)
 
-    field :blocked, :boolean
-    field :matched, :boolean
-    field :conversation_id, :string
-    field :type, :string
-    field :kind, :string
-    field :liked_me, :map
+    field(:blocked, :boolean)
+    field(:matched, :boolean)
+    field(:conversation_id, :string)
+    field(:type, :string)
+    field(:kind, :string)
+    field(:liked_me, :map)
   end
 
   defp liked_me(%LikesAndPasses{type: :like, kind: kind}), do: kind
   defp liked_me(_), do: nil
+
+  def get(user_id, target_id) when is_binary(user_id) and is_binary(target_id) do
+    lap = LikesAndPasses.get(user_id: user_id, target_id: target_id)
+    opposite_lap = lap[:opposite] || LikesAndPasses.get(user_id: target_id, target_id: user_id)
+
+    matched = LikesAndPasses.matched?(lap, opposite_lap)
+
+    %__MODULE__{
+      # user_id: user.id,
+      blocked: User.blocked?(user_id, target_id),
+      type: lap[:type],
+      matched: matched,
+      kind:
+        if(matched,
+          do: Matchmaking.reduce_kind(lap[:kind], opposite_lap[:kind]),
+          else: lap[:kind]
+        ),
+      liked_me: liked_me(opposite_lap),
+      conversation_id:
+        if(matched,
+          do: Talkjs.new_conversation_id(user_id, target_id),
+          else: nil
+        )
+    }
+  end
 
   def get(%User{} = user, %User{} = target) do
     lap = LikesAndPasses.get(user: user, target: target)

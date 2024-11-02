@@ -256,6 +256,10 @@ defmodule Flirtual.User do
     Block.exists?(user: user, target: target)
   end
 
+  def blocked?(user_id, target_id) do
+    Block.exists?(user_id: user_id, target_id: target_id)
+  end
+
   def relationship(%User{} = user, %User{} = target) do
     Relationship.get(user, target)
   end

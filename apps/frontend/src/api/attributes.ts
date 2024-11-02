@@ -79,10 +79,10 @@ export type Attribute<T = unknown> = {
 
 export type MinimalAttribute<T extends AttributeType> =
 	AttributeMetadata[T] extends infer A
-	? A extends undefined
-	? string
-	: Expand<Omit<Attribute<AttributeMetadata[T]>, "type">>
-	: never;
+		? A extends undefined
+			? string
+			: Expand<Omit<Attribute<AttributeMetadata[T]>, "type">>
+		: never;
 
 export type AttributeCollection<T extends AttributeType> = Array<
 	MinimalAttribute<T>
@@ -98,16 +98,17 @@ export type GroupedAttributeCollection = Record<
 export const Attribute = {
 	api: api.url("attributes"),
 	list<T extends AttributeType>(type: T) {
-		return cache.global(
-			() =>
-				this.api
-					.url(`/${type}`)
-					.query({ v: gitCommitSha })
-					.options({ credentials: "omit" })
-					.get()
-					.json<AttributeCollection<T>>(),
-			{ key: [type, gitCommitSha], revalidate: false }
-		);
+		return this.api
+			.url(`/${type}`)
+			.query({ v: gitCommitSha })
+			.options({
+				credentials: "omit",
+				next: {
+					revalidate: false
+				}
+			})
+			.get()
+			.json<AttributeCollection<T>>();
 	},
 	async get<T extends AttributeType>(type: T, id: string) {
 		const values = await this.list(type);

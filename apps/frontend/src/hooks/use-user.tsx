@@ -1,31 +1,55 @@
 "use client";
 
-import useSWR from "swr";
+import useSWR, { unstable_serialize, useSWRConfig } from "swr";
 
-import { User } from "~/api/user";
+import type { User } from "~/api/user";
 import type { Relationship } from "~/api/user/relationship";
-import { relationshipKey, userFetcher, userKey } from "~/swr";
+import { relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/swr";
+import { isUid } from "~/utilities";
 
-export function useUser(userId: string): User | null {
-	const { data } = useSWR(userKey(userId), userFetcher, {
-		suspense: true
-	});
+import { useCurrentUser } from "./use-session";
+
+export function useUser(_userId: string): User | null {
+	const { fallback } = useSWRConfig();
+	const self = useCurrentUser();
+
+	// If we've received a slug, we must find the related user from
+	// SWR's fallback cache, because we don't have the user's ID yet.
+	const userId = isUid(_userId)
+		? _userId
+		: ((Object.entries(fallback).find(([key, value]) => {
+				return value
+					&& key.startsWith(unstable_serialize(["user"]))
+					&& (value as User).slug === _userId;
+			})?.[1]) as User).id;
+
+	const { data } = useSWR(
+		self?.id !== userId
+			? userKey(userId)
+			: null,
+		userFetcher,
+		{
+			suspense: true
+		}
+	);
+
+	// If the user is the current user, return the session user instead.
+	if (self?.id === userId) return self;
 
 	return data;
 }
 
 export function useRelationship(userId: string): Relationship | null {
-	const { data } = useSWR(relationshipKey(userId), ([, userId]) => User.getRelationship(userId), {
-		suspense: true
-	});
-
-	return data;
-}
-
-export function useUserBySlug(slug: string): User | null {
-	const { data } = useSWR(userKey(slug), ([, slug]) => User.getBySlug(slug), {
-		suspense: true
-	});
+	const self = useCurrentUser();
+	const { data } = useSWR(
+		self?.id !== userId
+			? relationshipKey(userId)
+			: null,
+		relationshipFetcher,
+		{
+			suspense: true
+		}
+	);
 
 	return data;
 }

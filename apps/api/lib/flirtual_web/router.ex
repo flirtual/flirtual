@@ -295,6 +295,7 @@ defmodule FlirtualWeb.Router do
             pipe_through(:require_authenticated_user)
 
             get("/", UsersController, :get)
+            get("/relationship", UsersController, :get_relationship)
             post("/", UsersController, :update)
 
             delete("/", UsersController, :admin_delete)

@@ -13,7 +13,7 @@ defmodule FlirtualWeb.AttributeController do
     attributes = Attribute.get(attribute_id, attribute_type)
 
     conn
-    |> put_resp_header("cache-control", "public, max-age=86400, immutable")
+    |> cache_control([:public, :immutable, {"max-age", [day: 1]}])
     |> json_with_etag(attributes)
   end
 
@@ -21,7 +21,7 @@ defmodule FlirtualWeb.AttributeController do
     attributes = Attribute.list(type: attribute_type) |> Attribute.compress()
 
     conn
-    |> put_resp_header("cache-control", "public, max-age=86400, immutable")
+    |> cache_control([:public, :immutable, {"max-age", [day: 1]}])
     |> json_with_etag(attributes)
   end
 end

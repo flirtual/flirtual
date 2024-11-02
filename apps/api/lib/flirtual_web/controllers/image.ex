@@ -19,13 +19,11 @@ defmodule FlirtualWeb.ImageController do
     end
   end
 
-  @year_in_seconds 31_536_000
-
   def view(conn, %{"image_id" => image_id, "type" => variant}) do
     with %Image{} = image <- Image.get(image_id),
          :ok <- Policy.can(conn, :view, image) do
       conn
-      |> put_resp_header("cache-control", "public, max-age=#{@year_in_seconds}, immutable")
+      |> cache_control([:public, :immutable, {"max-age", [year: 1]}])
       |> put_resp_header("etag", image.external_id)
       |> put_status(:permanent_redirect)
       |> redirect(external: Image.url(image, variant))

@@ -122,7 +122,6 @@ defmodule Flirtual.User.Policy do
       do: :admin in user.tags
 
   @debugger_actions [
-    :read_error_cipher,
     :inspect
   ]
 
@@ -145,17 +144,17 @@ defmodule Flirtual.User.Policy do
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
-  def transform(
-        %Plug.Conn{
-          assigns: %{
-            user: user
-          }
-        },
-        target
-      ) do
-    target
-    |> User.with_relationship(user)
-  end
+  # def transform(
+  #       %Plug.Conn{
+  #         assigns: %{
+  #           user: user
+  #         }
+  #       },
+  #       target
+  #     ) do
+  #   target
+  #   |> User.with_relationship(user)
+  # end
 
   def transform(
         :connections,
@@ -190,20 +189,20 @@ defmodule Flirtual.User.Policy do
     :created_at
   ]
 
-  def transform(
-        :relationship,
-        %Plug.Conn{
-          assigns: %{
-            session: %{
-              user_id: user_id
-            }
-          }
-        },
-        %User{
-          id: user_id
-        }
-      ),
-      do: nil
+  # def transform(
+  #       :relationship,
+  #       %Plug.Conn{
+  #         assigns: %{
+  #           session: %{
+  #             user_id: user_id
+  #           }
+  #         }
+  #       },
+  #       %User{
+  #         id: user_id
+  #       }
+  #     ),
+  #     do: nil
 
   def transform(
         key,

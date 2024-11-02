@@ -1,69 +1,45 @@
-import type { Metadata } from "next";
-import { redirect } from "next/navigation";
-import { unstable_serialize } from "swr";
+"use client";
 
-import { Attribute } from "~/api/attributes";
-import { displayName } from "~/api/user";
+import { redirect } from "next/navigation";
+import { type FC, Suspense, use } from "react";
+
 import { Profile } from "~/components/profile/profile";
-import { SWRConfig } from "~/components/swr";
-import { attributeKey, userKey } from "~/swr";
+import { useRelationship, useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
 import { QueueActions } from "../browse/queue-actions";
-import { getProfile, profileRequiredAttributes } from "./data";
+import type { ProfilePageProps } from "./layout";
 
-export interface ProfilePageProps {
-	params: Promise<{ slug: string }>;
-}
+const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
+	const user = useUser(userId);
+	const relationship = useRelationship(userId);
 
-export async function generateMetadata(
-	props: ProfilePageProps
-): Promise<Metadata> {
-	const { slug } = (await props.params) || {};
-	const user = await getProfile(slug);
-	if (!user) return redirect(urls.default);
-
-	return {
-		title: displayName(user)
-	};
-}
-
-export default async function ProfilePage(props: ProfilePageProps) {
-	const { slug } = (await props.params) || {};
-	const [user, attributes] = await Promise.all([
-		getProfile(slug),
-		Promise.all(
-			profileRequiredAttributes.map(
-				async (type) => [type, await Attribute.list(type)] as const
-			)
-		)
-	]);
-	if (!user) redirect(urls.default);
+	if (!user
+		|| user.bannedAt
+		|| !relationship
+		|| relationship?.blocked
+		|| relationship?.kind) return;
 
 	return (
-		<SWRConfig
-			value={{
-				fallback: {
-					[unstable_serialize(userKey(user.id))]: user,
-					...Object.fromEntries(
-						attributes.map(([type, attribute]) => [
-							unstable_serialize(attributeKey(type)),
-							attribute
-						])
-					)
-				}
-			}}
-		>
+		<QueueActions
+			explicitUserId={userId}
+			kind="love"
+		/>
+	);
+};
+
+export default function ProfilePage({ params }: ProfilePageProps) {
+	const { slug } = use(params);
+
+	const user = useUser(slug);
+	if (!user) return null; // redirect(urls.default);
+
+	return (
+		<>
 			<Profile direct userId={user.id} />
-			{!user.bannedAt
-			&& user.relationship
-			&& !user.relationship?.blocked
-			&& !user.relationship?.kind && (
-				<QueueActions
-					explicitUserId={user.id}
-					kind="love"
-				/>
-			)}
-		</SWRConfig>
+			<Suspense>
+				<ProfileQueueActions userId={user.id} />
+			</Suspense>
+		</>
 	);
 }

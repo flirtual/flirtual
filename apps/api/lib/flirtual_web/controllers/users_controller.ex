@@ -34,8 +34,14 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :read, user) do
       {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
-      conn |> json_with_etag(Policy.transform(conn, user))
+      conn
+      |> cache_control([:public, {"max-age", [hour: 1]}])
+      |> json_with_etag(Policy.transform(conn, user))
     end
+  end
+
+  def get_relationship(conn, %{"user_id" => user_id}) do
+    conn |> json_with_etag(User.Relationship.get(conn.assigns[:session].user[:id], user_id))
   end
 
   def get(conn, %{"slug" => slug}) do
@@ -54,6 +60,7 @@ defmodule FlirtualWeb.UsersController do
       conn |> redirect(to: "/v1/users/#{user_id}")
     end
   end
+
 
   def preview(conn, %{"user_id" => user_id}) do
     user = Users.get(user_id)

@@ -13,8 +13,7 @@ defmodule FlirtualWeb.SubscriptionController do
     plans = Policy.transform(conn, Plan.list())
 
     conn
-    |> put_resp_header("cache-control", "public, max-age=86400, immutable")
-    |> put_resp_header("cdn-cache-control", "public, max-age=86400, immutable")
+    |> cache_control([:public, :immutable, {"max-age", [day: 1]}])
     |> json_with_etag(plans)
   end
 

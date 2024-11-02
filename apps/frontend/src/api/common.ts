@@ -1,4 +1,4 @@
-import { unstable_noStore } from "next/cache";
+import { connection } from "next/server";
 import wretch, { type ConfiguredMiddleware } from "wretch";
 import AbortAddon from "wretch/addons/abort";
 import QueryAddon from "wretch/addons/queryString";
@@ -73,8 +73,6 @@ export const api = wretch(urls.api)
 							)
 						);
 
-						unstable_noStore();
-
 						options.headers = {
 							...options.headers,
 							...relevantHeaders
@@ -84,15 +82,15 @@ export const api = wretch(urls.api)
 					const headers = new Headers(options.headers);
 					options.headers = headers;
 
-					const { origin } = new URL(url);
-					console.debug(options.method, url.replace(origin, ""));
+					// const { origin } = new URL(url);
+					// console.debug(options.method, url.replace(origin, ""));
 					const response = await next(url, options);
 
-					console.debug(
-						options.method,
-						url.replace(origin, ""),
-						response.status
-					);
+					// console.debug(
+					// 	options.method,
+					// 	url.replace(origin, ""),
+					// 	response.status
+					// );
 
 					return response;
 				};
@@ -119,7 +117,7 @@ export const api = wretch(urls.api)
 
 					return response?.ok ?? false;
 				},
-				onRetry: async ({ url, response, options, error }) => {
+				onRetry: async ({ url, options }) => {
 					const headers = new Headers(options.headers);
 					options.headers = headers;
 
@@ -127,27 +125,27 @@ export const api = wretch(urls.api)
 						= Number.parseInt(headers.get("retry-count") || "0") + 1;
 					headers.set("retry-count", retryCount.toString());
 
-					const json = await response?.json().catch(() => null);
-					const message
-						= typeof json === "object"
-						&& json !== null
-						&& "error" in json
-						&& typeof json.error === "object"
-						&& json.error !== null
-						&& "message" in json.error
-							? json.error.message
-							: (error?.message ?? response?.statusText);
+					// const json = await response?.json().catch(() => null);
+					// const message
+					// 	= typeof json === "object"
+					// 	&& json !== null
+					// 	&& "error" in json
+					// 	&& typeof json.error === "object"
+					// 	&& json.error !== null
+					// 	&& "message" in json.error
+					// 		? json.error.message
+					// 		: (error?.message ?? response?.statusText);
 
-					const { origin } = new URL(url);
+					// const { origin } = new URL(url);
 
-					console.debug(
-						"(retry)",
-						options.method,
-						url.replace(origin, ""),
-						`x${retryCount + 1}`,
-						response?.status,
-						message
-					);
+					// console.debug(
+					// 	"(retry)",
+					// 	options.method,
+					// 	url.replace(origin, ""),
+					// 	`x${retryCount + 1}`,
+					// 	response?.status,
+					// 	message
+					// );
 					return { url, options };
 				},
 				retryOnNetworkError: true,
@@ -204,7 +202,6 @@ export function isWretchError(
 export function isWretchError(error: unknown): error is WretchIssue;
 export function isWretchError(
 	error: unknown,
-	// eslint-disable-next-line @typescript-eslint/unified-signatures
 	errorType?: string
 ): error is WretchIssue;
 export function isWretchError(
@@ -218,6 +215,6 @@ export function isWretchError(
 }
 
 if (environment === "development") {
-	// @ts-expect-error
+	// @ts-expect-error: Expose the API for debugging.
 	globalThis.api = api;
 }

@@ -1,17 +1,15 @@
-import * as Sentry from "@sentry/nextjs";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
 import { urls } from "~/urls";
 
-import { api, type Issue, type DatedModel, isWretchError } from "./common";
+import { api, type DatedModel, type Issue, isWretchError } from "./common";
+import { displayName, type User } from "./user";
 
-import type { User } from "./user";
-
-export type Session = DatedModel & {
+export type Session = {
 	sudoerId?: string;
 	user: User;
-};
+} & DatedModel;
 
 export interface LoginOptions {
 	login: string;
@@ -47,7 +45,7 @@ export interface AuthenticatePasskeyOptions {
 interface PublicKeyCredentialCreationOptionsBase64
 	extends Omit<
 		PublicKeyCredentialCreationOptions,
-		"challenge" | "user" | "excludeCredentials"
+		"challenge" | "excludeCredentials" | "user"
 	> {
 	challenge: string;
 	user: PublicKeyCredentialUserEntityBase64;
@@ -69,13 +67,11 @@ interface PublicKeyCredentialDescriptorBase64
 	id: string;
 }
 
-const convertBase64ToArrayBuffer = (base64String: string): ArrayBuffer => {
+function convertBase64ToArrayBuffer(base64String: string): ArrayBuffer {
 	return Uint8Array.from(atob(base64String), (c) => c.charCodeAt(0)).buffer;
-};
+}
 
-const convertPublicKey = (
-	publicKey: PublicKeyCredentialCreationOptionsBase64
-): CredentialCreationOptions => {
+function convertPublicKey(publicKey: PublicKeyCredentialCreationOptionsBase64): CredentialCreationOptions {
 	const { challenge, user, excludeCredentials, ...options } = publicKey;
 	return {
 		publicKey: {
@@ -91,7 +87,7 @@ const convertPublicKey = (
 			}
 		}
 	};
-};
+}
 
 export const Authentication = {
 	api: api.url("auth"),
@@ -113,19 +109,11 @@ export const Authentication = {
 		return session;
 	},
 	async getOptionalSession() {
-		const session = await this.api
+		return this.api
 			.url("/session")
 			.get()
 			.unauthorized(() => null)
 			.json<Session | null>();
-
-		Sentry.setUser(
-			session?.user.preferences?.privacy.analytics
-				? { id: session?.user.id }
-				: null
-		);
-
-		return session;
 	},
 	async getSession() {
 		const session = await this.getOptionalSession();
@@ -144,7 +132,7 @@ export const Authentication = {
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
 			})
-			.json<Session | Issue<"invalid_credentials"> | Issue<"account_banned">>();
+			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Session>();
 	},
 	logout() {
 		return this.api.url("/session").delete().res();
