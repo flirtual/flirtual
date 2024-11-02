@@ -2,30 +2,28 @@
 
 import { Ban, Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
-
-import { useSession } from "~/hooks/use-session";
-import { DialogTrigger } from "~/components/dialog/dialog";
-
-import { AlertDialogTrigger } from "../dialog/alert";
-import { Button } from "../button";
-
-import { ProfileModeratorInfo } from "./moderator-info";
-import { ProfileDropdown } from "./dropdown";
-import { ReportDialog } from "./dialogs/report";
-import { BlockDialog } from "./dialogs/block";
+import type { FC } from "react";
 
 import type { User } from "~/api/user";
-import type { FC } from "react";
+import { DialogTrigger } from "~/components/dialog/dialog";
+import { useSession } from "~/hooks/use-session";
+
+import { Button } from "../button";
+import { AlertDialogTrigger } from "../dialog/alert";
+import { BlockDialog } from "./dialogs/block";
+import { ReportDialog } from "./dialogs/report";
+import { ProfileDropdown } from "./dropdown";
+import { ProfileModeratorInfo } from "./moderator-info";
 
 export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
 	const t = useTranslations("profile");
 
 	if (
-		!session ||
-		(session.user.id === user.id &&
-			!session.user.tags?.includes("moderator") &&
-			!session.user.tags?.includes("admin"))
+		!session
+		|| (session.user.id === user.id
+			&& !session.user.tags?.includes("moderator")
+			&& !session.user.tags?.includes("admin"))
 	)
 		return null;
 
@@ -35,9 +33,9 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 				<ProfileModeratorInfo user={user} />
 			)}
 			<div className="flex w-full gap-4 pb-4 desktop:pb-0">
-				{(session.user.tags?.includes("moderator") ||
-					session.user.tags?.includes("admin")) && (
-					<ProfileDropdown user={user} />
+				{(session.user.tags?.includes("moderator")
+					|| session.user.tags?.includes("admin")) && (
+					<ProfileDropdown userId={user.id} />
 				)}
 				<div className="flex w-full justify-center gap-6 vision:text-white-20">
 					{session.user.id !== user.id && (

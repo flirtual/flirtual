@@ -1,19 +1,18 @@
-import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
+import type { FC } from "react";
+import type React from "react";
+import { twMerge } from "tailwind-merge";
 
 import { displayName } from "~/api/user";
 import { urls } from "~/urls";
 
 import { Image, type ImageProps } from "./image";
 
-import type { FC } from "react";
-import type React from "react";
-
-export type UserAvatarProps = Omit<ImageProps, "src" | "alt"> & {
+export type UserAvatarProps = {
 	user: Parameters<typeof displayName>[0] &
-		Parameters<typeof urls.userAvatar>[0];
+		Parameters<typeof urls.userAvatar>[0] | null;
 	variant?: string;
-};
+} & Omit<ImageProps, "alt" | "src">;
 
 export const UserAvatar: React.FC<UserAvatarProps> = ({
 	user,
@@ -25,20 +24,20 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 	return (
 		<UserImage
 			{...props}
-			alt={t("happy_yummy_otter_climb", { displayName: displayName(user) })}
+			alt={t("happy_yummy_otter_climb", { displayName: user ? displayName(user) : "anonymous" })}
 			draggable={false}
 			src={urls.userAvatar(user, variant)}
 		/>
 	);
 };
 
-export type UserThumbnailProps = Omit<UserAvatarProps, "width" | "height">;
+export type UserThumbnailProps = Omit<UserAvatarProps, "height" | "width">;
 
-export const UserThumbnail: FC<UserThumbnailProps> = (props) => {
+export const UserThumbnail: FC<UserThumbnailProps> = ({ className, ...props }) => {
 	return (
 		<UserAvatar
 			{...props}
-			className={twMerge("rounded-xl", props.className)}
+			className={twMerge("rounded-xl", className)}
 			height={32}
 			variant="icon"
 			width={32}
@@ -46,17 +45,17 @@ export const UserThumbnail: FC<UserThumbnailProps> = (props) => {
 	);
 };
 
-export type UserImageProps = Omit<ImageProps, "src"> & { src: string };
+export type UserImageProps = { src: string } & Omit<ImageProps, "src">;
 
 export const UserImage: React.FC<UserImageProps> = ({ src, ...props }) => {
 	return (
 		<Image
 			{...props}
-			src={src}
 			className={twMerge(
 				"aspect-square shrink-0 object-cover",
 				props.className
 			)}
+			src={src}
 		/>
 	);
 };

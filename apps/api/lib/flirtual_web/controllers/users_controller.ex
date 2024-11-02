@@ -66,7 +66,7 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:forbidden, :missing_permission}}
     else
       with {:ok, page} <- User.search(params) do
-        page = %{page | entries: Policy.transform(conn, page.entries)}
+        # page = %{page | entries: Policy.transform(conn, page.entries)}
         conn |> json(page)
       end
     end
