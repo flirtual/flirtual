@@ -6,6 +6,7 @@ defmodule FlirtualWeb.UsersController do
   import Plug.Conn
   import Phoenix.Controller
   import Ecto.Changeset
+  import Ecto.Query
 
   import FlirtualWeb.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
@@ -38,16 +39,19 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def get(conn, %{"slug" => slug}) do
-    user =
+    user_id =
       if(conn.assigns[:session].user.slug === slug,
-        do: conn.assigns[:session].user,
-        else: Users.get_by_slug(slug)
+        do: conn.assigns[:session].user["id"],
+        else: User
+          |> where([u], u.slug == ^slug)
+          |> select([u], u.id)
+          |> Repo.one()
       )
 
-    if is_nil(user) or Policy.cannot?(conn, :read, user) do
+    if is_nil(user_id) do
       {:error, {:not_found, :user_not_found, %{name: slug}}}
     else
-      conn |> json_with_etag(Policy.transform(conn, user))
+      conn |> redirect(to: "/v1/users/#{user_id}")
     end
   end
 
@@ -72,19 +76,19 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def bulk(conn, %{"_json" => user_ids}) do
-    conn
-    |> json_with_etag(
-      Users.by_ids(user_ids)
-      |> Enum.map(
-        &if(not is_nil(&1) and Policy.can?(conn, :read, &1),
-          do: Policy.transform(conn, &1),
-          else: nil
-        )
-      )
-      |> Enum.reject(&is_nil/1)
-    )
-  end
+  # def bulk(conn, %{"_json" => user_ids}) do
+  #   conn
+  #   |> json_with_etag(
+  #     Users.by_ids(user_ids)
+  #     |> Enum.map(
+  #       &if(not is_nil(&1) and Policy.can?(conn, :read, &1),
+  #         do: Policy.transform(conn, &1),
+  #         else: nil
+  #       )
+  #     )
+  #     |> Enum.reject(&is_nil/1)
+  #   )
+  # end
 
   def inspect(conn, %{"user_id" => user_id, "type" => "elasticsearch"}) do
     user =
