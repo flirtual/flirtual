@@ -190,6 +190,11 @@ export default withSentryConfig(
 					source: "/.well-known/change-password",
 					destination: "/settings/password",
 					permanent: false
+				},
+				{
+					source: "/security.txt",
+					destination: "/.well-known/security.txt",
+					permanent: true
 				}
 			];
 		}

@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 "use no memo";
 
@@ -7,9 +9,9 @@ import {
 	getCoreRowModel,
 	useReactTable
 } from "@tanstack/react-table";
-import { Eye, EyeOff, Gavel, Gem, Search } from "lucide-react";
+import { Eye, EyeOff, Gavel, Gem, Search, ShieldEllipsis } from "lucide-react";
 import Link from "next/link";
-import { type FC, useDeferredValue, useEffect, useState } from "react";
+import { type FC, Suspense, useDeferredValue, useEffect, useState } from "react";
 import useSWR from "swr";
 import { twMerge } from "tailwind-merge";
 
@@ -44,57 +46,169 @@ import {
 } from "~/components/tooltip";
 import { UserThumbnail } from "~/components/user-avatar";
 import { useCurrentUser } from "~/hooks/use-session";
+import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 import { capitalize } from "~/utilities";
 
-export const columns: Array<ColumnDef<User>> = [
+const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
+	const user = useUser(userId);
+	if (!user) return null;
+
+	const name = displayName(user);
+
+	return (
+		<Link
+			className="flex w-fit items-center gap-4"
+			href={urls.profile(user)}
+		>
+			<UserThumbnail user={user} />
+			<div className="flex flex-col">
+				{name === user.slug
+					? (
+							"-"
+						)
+					: (
+							<span className="truncate">{name}</span>
+						)}
+				<span className="truncate text-xs brightness-75">{user.slug}</span>
+			</div>
+		</Link>
+	);
+};
+
+const ColumnStatus: FC<{ userId: string; placeholder?: boolean }> = ({ userId, placeholder }) => {
+	const user = placeholder ? null : useUser(userId);
+	const VisibilityIcon = user?.status === "visible" ? Eye : EyeOff;
+
+	return (
+		<div className="inline-flex gap-2">
+			<MinimalTooltip content={capitalize(user?.status || "unavailable").replace("_", " ")}>
+				<VisibilityIcon
+					className={twMerge(
+						"size-5",
+						user?.status === "visible"
+							? "text-green-500"
+							: user?.status === "finished_profile"
+								? "text-yellow-500"
+								: user?.status === "onboarded"
+									? "text-orange-500"
+									: "text-red-500"
+					)}
+				/>
+			</MinimalTooltip>
+			<MinimalTooltip
+				content={
+					user?.subscription
+						? user?.subscription.active
+							? "Active"
+							: "Canceled"
+						: "No subscription"
+				}
+			>
+				<Gem
+					className={twMerge(
+						"size-5",
+						user?.subscription
+							? user?.subscription.active
+								? "text-green-500"
+								: "text-yellow-500"
+							: "opacity-50"
+					)}
+				/>
+			</MinimalTooltip>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<Gavel
+						className={twMerge(
+							"size-5",
+							user?.bannedAt
+								? "text-red-500"
+								: user?.indefShadowbannedAt
+									? "text-orange-500"
+									: user?.paymentsBannedAt
+										? "text-violet-500"
+										: user?.shadowbannedAt
+											? "text-yellow-500"
+											: "opacity-50"
+						)}
+					/>
+				</TooltipTrigger>
+				<TooltipContent className="flex flex-col gap-1">
+					{user?.bannedAt
+						? (
+								<>
+									<span>Banned</span>
+									<DateTimeRelative value={user?.bannedAt} />
+								</>
+							)
+						: user?.indefShadowbannedAt
+							? (
+									<>
+										<span>Indefinite Shadowban</span>
+										<DateTimeRelative value={user?.indefShadowbannedAt} />
+									</>
+								)
+							: user?.paymentsBannedAt
+								? (
+										<>
+											<span>Payments Banned</span>
+											<DateTimeRelative value={user?.paymentsBannedAt} />
+										</>
+									)
+								: user?.shadowbannedAt
+									? (
+											<>
+												<span>Shadowbanned</span>
+												<DateTimeRelative value={user?.shadowbannedAt} />
+											</>
+										)
+									: (
+											<>No bans</>
+										)}
+				</TooltipContent>
+			</Tooltip>
+			{placeholder
+				? <ShieldEllipsis className="size-5 opacity-50" />
+				: <ProfileDropdown userId={userId} />}
+		</div>
+	);
+};
+
+export const columns: Array<ColumnDef<string>> = [
 	{
 		id: "displayName",
 		enableHiding: false,
 		header: "Display Name",
-		cell: ({ row: { original: user } }) => {
-			const name = displayName(user);
-			return (
-				<Link
-					className="flex w-fit items-center gap-4"
-					href={urls.profile(user)}
-				>
-					<UserThumbnail user={user} />
-					<div className="flex flex-col">
-						{name === user.slug
-							? (
-									"-"
-								)
-							: (
-									<span className="truncate">{name}</span>
-								)}
-						<span className="truncate text-xs brightness-75">{user.slug}</span>
-					</div>
-				</Link>
-			);
-		}
+		cell: ({ row: { original: userId } }) => <ColumnDisplayName userId={userId} />
 	},
 	{
 		id: "email",
 		header: "Email",
-		cell: ({ row: { original: user } }) => (
-			<MinimalTooltip content={user.email}>
-				<div
-					className={twMerge(
-						"w-[12em] truncate",
-						!user.emailConfirmedAt && "text-red-500"
-					)}
-				>
-					{user.email}
-				</div>
-			</MinimalTooltip>
-		)
+		cell: ({ row: { original: userId } }) => {
+			const user = useUser(userId);
+			if (!user) return null;
+
+			return (
+				<MinimalTooltip content={user.email}>
+					<div
+						className={twMerge(
+							"w-[12em] truncate",
+							!user.emailConfirmedAt && "text-red-500"
+						)}
+					>
+						{user.email}
+					</div>
+				</MinimalTooltip>
+			);
+		}
 	},
 	{
 		id: "activeAt",
 		header: "Active",
-		cell: ({ row: { original: user } }) => {
-			if (!user.activeAt || !user.createdAt) return null;
+		cell: ({ row: { original: userId } }) => {
+			const user = useUser(userId);
+			if (!user || !user.activeAt || !user.createdAt) return null;
+
 			const createdAt = new Date(user.createdAt);
 			const activeAt = new Date(user.activeAt);
 
@@ -114,119 +228,32 @@ export const columns: Array<ColumnDef<User>> = [
 	{
 		id: "createdAt",
 		header: "Created",
-		cell: ({ row: { original: user } }) =>
-			user.createdAt && (
+		cell: ({ row: { original: userId } }) => {
+			const user = useUser(userId);
+			if (!user || !user.createdAt) return null;
+
+			return (
 				<MinimalTooltip content={<DateTimeRelative value={user.createdAt} />}>
 					<span className="whitespace-nowrap">
 						<TimeRelative value={user.createdAt} />
 					</span>
 				</MinimalTooltip>
-			)
+			);
+		}
 	},
 	{
 		id: "status",
 		header: "Status",
 		enableHiding: false,
-		cell: ({ row: { original: user } }) => {
-			const VisibilityIcon = user.status === "visible" ? Eye : EyeOff;
-
-			return (
-				<div className="inline-flex gap-2">
-					<MinimalTooltip content={capitalize(user.status).replace("_", " ")}>
-						<VisibilityIcon
-							className={twMerge(
-								"size-5",
-								user.status === "visible"
-									? "text-green-500"
-									: user.status === "finished_profile"
-										? "text-yellow-500"
-										: user.status === "onboarded"
-											? "text-orange-500"
-											: "text-red-500"
-							)}
-						/>
-					</MinimalTooltip>
-					<MinimalTooltip
-						content={
-							user.subscription
-								? user.subscription.active
-									? "Active"
-									: "Canceled"
-								: "No subscription"
-						}
-					>
-						<Gem
-							className={twMerge(
-								"size-5",
-								user.subscription
-									? user.subscription.active
-										? "text-green-500"
-										: "text-yellow-500"
-									: "opacity-50"
-							)}
-						/>
-					</MinimalTooltip>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<Gavel
-								className={twMerge(
-									"size-5",
-									user.bannedAt
-										? "text-red-500"
-										: user.indefShadowbannedAt
-											? "text-orange-500"
-											: user.paymentsBannedAt
-												? "text-violet-500"
-												: user.shadowbannedAt
-													? "text-yellow-500"
-													: "opacity-50"
-								)}
-							/>
-						</TooltipTrigger>
-						<TooltipContent className="flex flex-col gap-1">
-							{user.bannedAt
-								? (
-										<>
-											<span>Banned</span>
-											<DateTimeRelative value={user.bannedAt} />
-										</>
-									)
-								: user.indefShadowbannedAt
-									? (
-											<>
-												<span>Indefinite Shadowban</span>
-												<DateTimeRelative value={user.indefShadowbannedAt} />
-											</>
-										)
-									: user.paymentsBannedAt
-										? (
-												<>
-													<span>Payments Banned</span>
-													<DateTimeRelative value={user.paymentsBannedAt} />
-												</>
-											)
-										: user.shadowbannedAt
-											? (
-													<>
-														<span>Shadowbanned</span>
-														<DateTimeRelative value={user.shadowbannedAt} />
-													</>
-												)
-											: (
-													<>No bans</>
-												)}
-						</TooltipContent>
-					</Tooltip>
-					<ProfileDropdown user={user} />
-				</div>
-			);
-		}
+		cell: ({ row: { original: userId } }) => <ColumnStatus userId={userId} />
 	}
 ];
 
-const DataTable: FC<{ data: Array<User>; admin: boolean }> = ({
+const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pending: boolean }> = ({
 	data,
-	admin
+	admin,
+	limit,
+	pending
 }) => {
 	const table = useReactTable({
 		data,
@@ -252,32 +279,62 @@ const DataTable: FC<{ data: Array<User>; admin: boolean }> = ({
 					</TableRow>
 				))}
 			</TableHeader>
-			<TableBody>
+			<TableBody className="relative">
 				{table.getRowModel().rows?.length
 					? (
-							table.getRowModel().rows.map((row) => (
-								<TableRow
-									data-state={row.getIsSelected() && "selected"}
-									key={row.id}
-								>
-									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
-										</TableCell>
-									))}
-								</TableRow>
-							))
+							<>
+								{table.getRowModel().rows.map((row) => (
+									<TableRow
+										className={twMerge("h-20", pending && "opacity-50")}
+										data-state={row.getIsSelected() && "selected"}
+										key={row.id}
+									>
+										<Suspense fallback={(
+											<TableCell colSpan={row.getVisibleCells().length}>
+												<span className="truncate text-xs brightness-75">
+													Loading profile:
+													{" "}
+													{row.original}
+													...
+												</span>
+											</TableCell>
+										)}
+										>
+											{row.getVisibleCells().map((cell) => (
+												<TableCell key={cell.id}>
+													{flexRender(cell.column.columnDef.cell, cell.getContext())}
+												</TableCell>
+											))}
+										</Suspense>
+									</TableRow>
+								))}
+								{pending && (
+									<tr>
+										<td className="absolute inset-0 flex items-center justify-center">
+											<span>Loading...</span>
+										</td>
+									</tr>
+								)}
+							</>
 						)
 					: (
-							<TableRow>
-								<TableCell
-									className="h-[680px] text-center"
-									colSpan={columns.length}
-								>
-									No results.
-								</TableCell>
-							</TableRow>
+							<>
+								{Array.from({ length: limit }).map((_, index) => (
+								// eslint-disable-next-line react/no-array-index-key
+									<TableRow className="h-20"key={index}>
+										{columns.map((column) => (
+											<TableCell key={column.id} />
+										))}
+									</TableRow>
+								))}
+								<tr>
+									<td className="absolute inset-0 flex items-center justify-center">
+										<span>No results.</span>
+									</td>
+								</tr>
+							</>
 						)}
+
 			</TableBody>
 		</Table>
 	);
@@ -302,7 +359,7 @@ export const SearchView: React.FC = () => {
 	// Reset page when the search options change.
 	useEffect(() => setPage(1), [deferredOptions]);
 
-	const { data } = useSWR(
+	const { data, isLoading } = useSWR(
 		["users/search", deferredOptions, { page: deferredPage }],
 		([, searchOptions, { page }]) => {
 			return User.search(
@@ -317,6 +374,7 @@ export const SearchView: React.FC = () => {
 		},
 		{
 			suspense: true,
+			keepPreviousData: true,
 			fallbackData: {
 				entries: [],
 				metadata: {
@@ -335,7 +393,7 @@ export const SearchView: React.FC = () => {
 			title="Search"
 		>
 			<div className="flex flex-col gap-4">
-				<div className="grid-col-1 grid gap-4 wide:grid-cols-2">
+				<div className="grid gap-4 wide:grid-cols-2">
 					<div className="flex flex-col gap-2">
 						<span>Filter</span>
 						<div className="grid grid-cols-3 gap-2">
@@ -422,6 +480,8 @@ export const SearchView: React.FC = () => {
 				<DataTable
 					admin={user?.tags?.includes("admin") ?? false}
 					data={data.entries}
+					limit={data.metadata.limit}
+					pending={isLoading}
 				/>
 				<div className="flex items-center justify-end gap-2">
 					<div className="grow brightness-75">

@@ -98,6 +98,7 @@
     "tailwindcss-animate": "^1.0.7",
     "talkjs": "^0.30.0",
     "ts-pattern": "^5.5.0",
+    "use-sound": "^4.0.3",
     "vaul": "^1.1.0",
     "wretch": "^2.11.0"
   },

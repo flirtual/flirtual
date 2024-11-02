@@ -279,6 +279,9 @@ importers:
       ts-pattern:
         specifier: ^5.5.0
         version: 5.5.0
+      use-sound:
+        specifier: ^4.0.3
+        version: 4.0.3(react@19.0.0-rc-65a56d0e-20241020)
       vaul:
         specifier: ^1.1.0
         version: 1.1.0(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
@@ -288,7 +291,7 @@ importers:
     devDependencies:
       '@ariesclark/eslint-config':
         specifier: ^2.1.1-canary.2
-        version: 2.1.1-canary.2(@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@next/eslint-plugin-next@15.0.2)(@prettier/plugin-xml@3.4.1(prettier@3.3.3))(@typescript-eslint/utils@8.12.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-tailwindcss@3.17.5(tailwindcss@3.4.14(ts-node@10.9.2(@types/node@22.8.6)(typescript@5.6.3))))(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)
+        version: 2.1.1-canary.2(@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@next/eslint-plugin-next@15.0.2)(@prettier/plugin-xml@3.4.1)(@typescript-eslint/utils@8.12.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-tailwindcss@3.17.5(tailwindcss@3.4.14(ts-node@10.9.2(@types/node@22.8.6)(typescript@5.6.3))))(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)
       '@capacitor/assets':
         specifier: ^3.0.5
         version: 3.0.5(@types/node@22.8.6)(typescript@5.6.3)
@@ -3805,6 +3808,9 @@ packages:
     resolution: {integrity: sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==}
     engines: {node: '>=10'}
 
+  howler@2.2.4:
+    resolution: {integrity: sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==}
+
   htmlparser2@8.0.2:
     resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
 
@@ -5737,6 +5743,11 @@ packages:
       '@types/react':
         optional: true
 
+  use-sound@4.0.3:
+    resolution: {integrity: sha512-L205pEUFIrLsGYsCUKHQVCt0ajs//YQOFbEQeNwaWaqQj3y3st4SuR+rvpMHLmv8hgTcfUFlvMQawZNI3OE18w==}
+    peerDependencies:
+      react: '>=16.8'
+
   use-sync-external-store@1.2.2:
     resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
     peerDependencies:
@@ -5960,7 +5971,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@antfu/eslint-config@3.8.0(@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@prettier/plugin-xml@3.4.1(prettier@3.3.3))(@typescript-eslint/utils@8.12.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@2.4.0)))(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)':
+  '@antfu/eslint-config@3.8.0(@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@prettier/plugin-xml@3.4.1)(@typescript-eslint/utils@8.12.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@2.4.0)))(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)':
     dependencies:
       '@antfu/install-pkg': 0.4.1
       '@clack/prompts': 0.7.0
@@ -6000,7 +6011,7 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       '@eslint-react/eslint-plugin': 1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)
-      '@prettier/plugin-xml': 3.4.1(prettier@3.3.3)
+      '@prettier/plugin-xml': 3.4.1
       eslint-plugin-react-hooks: 5.0.0(eslint@9.13.0(jiti@2.4.0))
       eslint-plugin-react-refresh: 0.4.14(eslint@9.13.0(jiti@2.4.0))
     transitivePeerDependencies:
@@ -6018,9 +6029,9 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@ariesclark/eslint-config@2.1.1-canary.2(@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@next/eslint-plugin-next@15.0.2)(@prettier/plugin-xml@3.4.1(prettier@3.3.3))(@typescript-eslint/utils@8.12.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-tailwindcss@3.17.5(tailwindcss@3.4.14(ts-node@10.9.2(@types/node@22.8.6)(typescript@5.6.3))))(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)':
+  '@ariesclark/eslint-config@2.1.1-canary.2(@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@next/eslint-plugin-next@15.0.2)(@prettier/plugin-xml@3.4.1)(@typescript-eslint/utils@8.12.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-tailwindcss@3.17.5(tailwindcss@3.4.14(ts-node@10.9.2(@types/node@22.8.6)(typescript@5.6.3))))(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)':
     dependencies:
-      '@antfu/eslint-config': 3.8.0(@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@prettier/plugin-xml@3.4.1(prettier@3.3.3))(@typescript-eslint/utils@8.12.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@2.4.0)))(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)
+      '@antfu/eslint-config': 3.8.0(@eslint-react/eslint-plugin@1.15.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@prettier/plugin-xml@3.4.1)(@typescript-eslint/utils@8.12.2(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint-plugin-react-hooks@5.0.0(eslint@9.13.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.13.0(jiti@2.4.0)))(eslint@9.13.0(jiti@2.4.0))(typescript@5.6.3)
       eslint: 9.13.0(jiti@2.4.0)
       eslint-flat-config-utils: 0.4.0
       local-pkg: 0.5.0
@@ -7343,10 +7354,9 @@ snapshots:
       '@xml-tools/parser': 1.0.11
       prettier: 2.8.8
 
-  '@prettier/plugin-xml@3.4.1(prettier@3.3.3)':
+  '@prettier/plugin-xml@3.4.1':
     dependencies:
       '@xml-tools/parser': 1.0.11
-      prettier: 3.3.3
     optional: true
 
   '@prisma/instrumentation@5.19.1':
@@ -10166,6 +10176,8 @@ snapshots:
     dependencies:
       lru-cache: 6.0.0
 
+  howler@2.2.4: {}
+
   htmlparser2@8.0.2:
     dependencies:
       domelementtype: 2.3.0
@@ -12267,6 +12279,11 @@ snapshots:
       tslib: 2.8.0
     optionalDependencies:
       '@types/react': types-react@19.0.0-rc.1
+
+  use-sound@4.0.3(react@19.0.0-rc-65a56d0e-20241020):
+    dependencies:
+      howler: 2.2.4
+      react: 19.0.0-rc-65a56d0e-20241020
 
   use-sync-external-store@1.2.2(react@19.0.0-rc-65a56d0e-20241020):
     dependencies:

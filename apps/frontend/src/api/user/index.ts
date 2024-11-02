@@ -198,7 +198,7 @@ export const User = {
 		return this.api.url(`/${userId}/preview`).get().json<UserPreview>();
 	},
 	search(options: PaginateOptions<SearchOptions>) {
-		return this.api.query(options).get().json<Paginate<User>>();
+		return this.api.query(options).get().json<Paginate<string>>();
 	},
 	update(
 		userId: string,

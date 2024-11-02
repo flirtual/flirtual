@@ -1,3 +1,5 @@
+"use client";
+
 import {
 	CircleUserRound,
 	ClipboardList,
@@ -9,7 +11,10 @@ import {
 	Tags
 } from "lucide-react";
 import Link from "next/link";
+import type { FC } from "react";
 
+import { api } from "~/api/common";
+import type { User } from "~/api/user";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -19,24 +24,24 @@ import {
 	DropdownMenuTrigger
 } from "~/components/dropdown";
 import { useSession } from "~/hooks/use-session";
+import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
-import { api } from "~/api/common";
 
-import { ProfileDropdownCopySubmenu } from "./submenus/copy";
-import { ProfileDropdownReportsSubmenu } from "./submenus/reports";
-import { ProfileDropdownModerateSubmenu } from "./submenus/moderate";
-import { ProfileDropdownTagsSubmenu } from "./submenus/tags";
 import { ImpersonateAction } from "./actions/impersonate";
-
-import type { User } from "~/api/user";
-import type { FC } from "react";
+import { ProfileDropdownCopySubmenu } from "./submenus/copy";
+import { ProfileDropdownModerateSubmenu } from "./submenus/moderate";
+import { ProfileDropdownReportsSubmenu } from "./submenus/reports";
+import { ProfileDropdownTagsSubmenu } from "./submenus/tags";
 
 export interface ProfileDropdownProps {
-	user: User;
+	userId: string;
 }
 
-export const ProfileDropdown: FC<ProfileDropdownProps> = ({ user }) => {
+export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 	const [session] = useSession();
+
+	const user = useUser(userId);
+	if (!user) return null;
 
 	return (
 		<DropdownMenu>

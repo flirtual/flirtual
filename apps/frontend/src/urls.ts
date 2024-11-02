@@ -1,13 +1,14 @@
-import { entries, fromEntries } from "./utilities";
-import { siteOrigin } from "./const";
-import { escapeVRChat } from "./vrchat";
-
 import type { Url } from "next/dist/shared/lib/router/router";
+
 import type { ProspectKind } from "~/api/matchmaking";
+
 import type { User } from "./api/user";
-import type { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/(app)/(public)/confirm-email/page";
-import type { ProfileImage } from "./api/user/profile/images";
 import type { Profile } from "./api/user/profile";
+import type { ProfileImage } from "./api/user/profile/images";
+import type { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/(app)/(public)/confirm-email/page";
+import { siteOrigin } from "./const";
+import { entries, fromEntries } from "./utilities";
+import { escapeVRChat } from "./vrchat";
 
 export function ensureRelativeUrl(pathname: string) {
 	if (!isInternalHref(pathname))
@@ -25,15 +26,15 @@ export function toRelativeUrl(url: { href: string; origin: string }) {
 
 export function urlEqual(a: URL, b: URL, strict: boolean = true) {
 	return (
-		a.origin === b.origin &&
-		a.pathname === b.pathname &&
-		(strict ? a.search === b.search : true)
+		a.origin === b.origin
+		&& a.pathname === b.pathname
+		&& (strict ? a.search === b.search : true)
 	);
 }
 
 function url(
 	pathname: string,
-	query: Record<string, string | number | undefined> = {}
+	query: Record<string, number | string | undefined> = {}
 ) {
 	const searchParameters = new URLSearchParams(
 		fromEntries(
@@ -44,8 +45,8 @@ function url(
 	);
 
 	searchParameters.sort();
-	const queryString =
-		[...searchParameters.keys()].length > 0
+	const queryString
+		= [...searchParameters.keys()].length > 0
 			? `?${searchParameters.toString()}`
 			: "";
 
@@ -76,8 +77,8 @@ export const urls = {
 			: image.originalFile
 				? urls.media(image.originalFile, "pfpup")
 				: urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
-	userAvatar: (user: { profile: Pick<Profile, "images"> }, variant?: string) =>
-		user.profile.images[0]
+	userAvatar: (user: { profile: Pick<Profile, "images"> } | null, variant?: string) =>
+		user?.profile.images[0]
 			? urls.pfp(user.profile.images[0], variant)
 			: urls.media("8d120672-c717-49d2-b9f3-2d4479bbacf6"),
 	vrchat: (username: string) =>
