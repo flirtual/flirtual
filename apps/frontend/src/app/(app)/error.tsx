@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import useSound from "use-sound";
 
 import { displayName } from "~/api/user";
 import { Button } from "~/components/button";
@@ -36,6 +37,7 @@ export default function Error({
 	const router = useRouter();
 	const [session] = useSession();
 	const [addDetails, setAddDetails] = useState(false);
+	const [squeak] = useSound(urls.media("squeak.mp3"));
 
 	const eventId = useMemo(() => Sentry.captureException(error), [error]);
 	error.digest ??= "000000000";
@@ -150,6 +152,7 @@ export default function Error({
 										height={345}
 										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 										width={412}
+										onClick={squeak}
 									/>
 									<motion.div
 										animate={{ scale: 1, opacity: 1 }}
