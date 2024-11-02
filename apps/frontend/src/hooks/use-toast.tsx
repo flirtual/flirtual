@@ -1,8 +1,9 @@
 "use client";
 
-import * as Sentry from "@sentry/nextjs";
 import { Toast as NativeToast } from "@capacitor/toast";
-import { motion, AnimatePresence } from "framer-motion";
+import * as Sentry from "@sentry/nextjs";
+import { AnimatePresence, motion } from "framer-motion";
+import { AlertTriangle, Check } from "lucide-react";
 import {
 	createContext,
 	type PropsWithChildren,
@@ -12,15 +13,17 @@ import {
 	useState
 } from "react";
 import { twMerge } from "tailwind-merge";
-import { AlertTriangle, Check } from "lucide-react";
+
+import type { IconComponent } from "~/components/icons";
 
 import { useDevice } from "./use-device";
 
-export type ToastType = "success" | "error" | "warning";
-export type ToastDuration = "short" | "long";
+export type ToastType = "error" | "success" | "warning";
+export type ToastDuration = "long" | "short";
 
 export interface CreateToast {
 	type?: ToastType;
+	icon?: IconComponent;
 	duration?: ToastDuration;
 	value: string;
 }
@@ -28,6 +31,7 @@ export interface CreateToast {
 export interface Toast {
 	id: string;
 	type: ToastType;
+	icon: IconComponent;
 	children: string;
 	ttl: number | null;
 	remove: () => void;
@@ -49,13 +53,10 @@ export function useToast() {
 }
 
 const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
-	const Icon = toast.type === "success" ? Check : AlertTriangle;
+	const Icon = toast.icon;
 
 	return (
 		<motion.button
-			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-			initial={{ opacity: 0 }}
 			className={twMerge(
 				"pointer-events-auto flex items-center gap-4 rounded-lg px-6 py-4 text-left shadow-brand-1",
 				{
@@ -64,6 +65,9 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 					warning: "bg-black-80 border-2 border-yellow-500"
 				}[toast.type]
 			)}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			initial={{ opacity: 0 }}
 			onClick={() => toast.remove()}
 		>
 			<Icon className="size-5 shrink-0" strokeWidth={2} />
@@ -89,19 +93,19 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const add = useCallback(
 		(options: CreateToast | string) => {
 			if (typeof options === "string") options = { value: options };
-			const { type = "success", duration = "short", value } = options;
+			const { type = "success", icon, duration = "short", value } = options;
 
 			// Match duration of native toasts.
 			// See https://capacitorjs.com/docs/apis/toast
 			const ttl = duration === "short" ? 2000 : 3500;
 
 			const toast: Toast = {
-				type,
 				id: String(performance.now()),
-
+				type,
+				icon: icon || (type === "success" ? Check : AlertTriangle),
 				ttl,
 				children: value,
-				remove: function () {
+				remove() {
 					remove(this);
 				}
 			};
