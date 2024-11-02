@@ -12,7 +12,6 @@ export default withSentryConfig(
 			},
 			// ppr: "incremental",
 			reactCompiler: true,
-			useLightningcss: true
 		},
 		// typescript: {
 		// 	ignoreBuildErrors: true
