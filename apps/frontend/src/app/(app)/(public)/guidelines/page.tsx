@@ -1,10 +1,10 @@
+import { kebabCase } from "change-case";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
+import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
-
-import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("guidelines");
@@ -31,12 +31,14 @@ export default async function GuidelinesPage() {
 						<div className="flex flex-col gap-1">{children}</div>
 					),
 					h1: (children) => (
-						<h1 className="text-2xl font-semibold">{children}</h1>
+						<h1 className="text-2xl font-semibold" id={children ? kebabCase(children.toString()) : undefined}>
+							{children}
+						</h1>
 					),
 					h2: (children) => (
-						<h2 className="text-xl font-semibold">{children}</h2>
+						<h2 className="text-xl font-semibold" id={children ? kebabCase(children.toString()) : undefined}>{children}</h2>
 					),
-					h3: (children) => <h3 className="font-semibold">{children}</h3>,
+					h3: (children) => <h3 className="font-semibold" id={children ? kebabCase(children.toString()) : undefined}>{children}</h3>,
 					vulnerability: (children) => (
 						<InlineLink href={urls.resources.vulnerabilityReport}>
 							{children}

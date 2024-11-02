@@ -458,7 +458,7 @@ defmodule Flirtual.User do
            sort_order = if(attrs.order === "asc", do: :asc_nulls_first, else: :desc_nulls_last),
            query <-
              User
-             |> preload(^default_assoc())
+             # |> preload(^default_assoc())
              |> join(:left, [user], profile in assoc(user, :profile), as: :profile)
              |> join(:left, [user], connections in assoc(user, :connections), as: :connections),
            query <-
@@ -509,6 +509,7 @@ defmodule Flirtual.User do
              query
              |> order_by([user], ^order)
              |> paginate(attrs.page, attrs.limit)
+             |> select([user], user.id)
              |> Repo.all() do
         %{
           entries: entries,
