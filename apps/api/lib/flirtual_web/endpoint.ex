@@ -25,7 +25,8 @@ defmodule FlirtualWeb.Endpoint do
     headers: [
       "content-type",
       "idempotency-key",
-      "retry-count"
+      "retry-count",
+      "cache-control"
     ],
     expose: [
       "retry-after"
