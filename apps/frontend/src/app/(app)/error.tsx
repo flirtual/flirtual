@@ -152,7 +152,7 @@ export default function Error({
 										height={345}
 										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 										width={412}
-										onClick={squeak}
+										onClick={() => squeak()}
 									/>
 									<motion.div
 										animate={{ scale: 1, opacity: 1 }}
