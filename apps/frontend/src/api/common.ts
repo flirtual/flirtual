@@ -6,6 +6,7 @@ import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
 
 import { environment } from "~/const";
+import { cloudflareInternalIdentifier } from "~/const-server";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 
@@ -82,6 +83,9 @@ export const api = wretch(urls.api)
 					}
 
 					const headers = new Headers(options.headers);
+					if (cloudflareInternalIdentifier)
+						headers.set("flirtual-internal", cloudflareInternalIdentifier);
+
 					options.headers = headers;
 
 					const { origin } = new URL(url);
