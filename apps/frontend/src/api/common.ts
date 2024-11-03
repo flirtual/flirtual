@@ -37,7 +37,7 @@ export type PaginateOptions<T> = {
 	page?: number;
 } & T;
 
-const releventHeaders = ["cookie", "authorization", "user-agent"];
+const releventHeaders = ["cookie", "authorization"];
 
 // All status codes that are retriable by the browser, except 5xx which are always retried.
 const retriableStatusCodes = [408, 429];
@@ -67,24 +67,28 @@ export const api = wretch(urls.api)
 						// so when we're using `credentials: "omit"`, we'll exclude the headers.
 						&& options.credentials !== "omit"
 					) {
-						const { headers } = await import("next/headers");
+						const { headers: getHeaders } = await import("next/headers");
+						const headers = await getHeaders();
+
 						const relevantHeaders = Object.fromEntries(
-							[...(await headers()).entries()].filter(([key]) =>
+							[...headers.entries()].filter(([key]) =>
 								releventHeaders.includes(key)
 							)
 						);
 
 						unstable_noStore();
+						if (headers.has("user-agent"))
+							relevantHeaders["x-forwarded-user-agent"] = headers.get("user-agent")!;
 
 						options.headers = {
 							...options.headers,
-							...relevantHeaders
+							...relevantHeaders,
 						};
 					}
 
 					const headers = new Headers(options.headers);
 					if (cloudflareInternalIdentifier)
-						headers.set("flirtual-internal", cloudflareInternalIdentifier);
+						headers.set("user-agent", cloudflareInternalIdentifier);
 
 					options.headers = headers;
 
