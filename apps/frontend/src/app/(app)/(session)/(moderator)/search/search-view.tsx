@@ -388,6 +388,7 @@ export const SearchView: React.FC = () => {
 
 	return (
 		<ModelCard
+			data-block
 			className="desktop:max-w-7xl"
 			containerProps={{ className: "gap-8 min-h-screen" }}
 			title="Search"

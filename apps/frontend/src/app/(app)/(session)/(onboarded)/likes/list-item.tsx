@@ -29,7 +29,7 @@ export const LikeListItem: FC<LikeAndPassItem> = ({ kind, profileId: userId }) =
 				width={64}
 			/>
 			<div className="flex w-full grow flex-col">
-				<h1 className="text-xl font-semibold desktop:text-2xl">
+				<h1 data-mask className="text-xl font-semibold desktop:text-2xl">
 					{displayName(user)}
 				</h1>
 				<div className="flex w-full gap-2">

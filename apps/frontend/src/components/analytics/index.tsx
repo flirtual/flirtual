@@ -80,6 +80,7 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 			person_profiles: "identified_only",
 			capture_pageview: false,
 			capture_pageleave: true,
+
 			session_recording: {
 				maskAllInputs: true,
 				maskTextSelector: "[data-mask]",

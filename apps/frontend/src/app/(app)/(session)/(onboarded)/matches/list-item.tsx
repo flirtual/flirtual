@@ -35,7 +35,6 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 
 	return (
 		<div
-			data-mask
 			className={twMerge(
 				"relative rounded-xl shadow-brand-1",
 				active && "bg-brand-gradient pb-1"
@@ -66,7 +65,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 				)}
 				<div className="flex w-1 grow flex-col p-4">
 					<div className="flex justify-between gap-4">
-						<span className="truncate font-montserrat text-lg font-semibold leading-tight">
+						<span data-mask className="truncate font-montserrat text-lg font-semibold leading-tight">
 							{displayName(user)}
 						</span>
 						{kind === "love"
@@ -78,7 +77,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 								)}
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
-						<span className="w-full truncate text-black-50 dark:text-white-40">
+						<span data-mask className="w-full truncate text-black-50 dark:text-white-40">
 							{lastMessage
 								? (
 										<>

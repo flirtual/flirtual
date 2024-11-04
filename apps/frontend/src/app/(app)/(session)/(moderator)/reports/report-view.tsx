@@ -351,6 +351,7 @@ export const ReportView: React.FC = () => {
 			)}
 		>
 			<ModelCard
+				data-block
 				className="desktop:max-w-4xl"
 				containerProps={{ className: "gap-8 min-h-screen" }}
 				title="Reports"
