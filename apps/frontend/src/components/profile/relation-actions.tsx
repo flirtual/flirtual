@@ -8,22 +8,24 @@ import { mutate } from "swr";
 import { Matchmaking } from "~/api/matchmaking";
 import { displayName, type User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
+import { useRelationship, useUser } from "~/hooks/use-user";
 import { userKey } from "~/swr";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
 
-export const RelationActions: React.FC<{ user: User; direct: boolean }> = ({
-	user,
+export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
+	userId,
 	direct
 }) => {
-	const { relationship } = user;
+	const user = useUser(userId);
+	const relationship = useRelationship(userId);
 
 	const t = useTranslations("profile");
 	const toasts = useToast();
 	const router = useRouter();
 
-	if (!relationship) return null;
+	if (!user || !relationship) return null;
 
 	if (relationship.matched)
 		return (

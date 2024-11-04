@@ -36,17 +36,13 @@ export async function generateMetadata(
 
 export default async function ConversationPage(props: ConversationPageProps) {
 	const { conversationId } = (await props.params) || {};
-	const session = await Authentication.getSession();
 
 	const conversation = await Conversation.get(conversationId);
 	if (!conversation) return redirect(urls.conversations.list());
 
 	const user = await getProfile(conversation.userId);
 
-	if (
-		!user
-		|| (!user.relationship?.matched && !session.user.tags?.includes("admin"))
-	)
+	if (!user)
 		return redirect(urls.conversations.list());
 
 	return (

@@ -10,14 +10,12 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar, type UserAvatarProps } from "~/components/user-avatar";
-import { useUser } from "~/hooks/use-user";
+import { useRelationship, useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
 export type ConversationListItemProps = {
 	active?: boolean;
 	lastItem?: boolean;
-	userOverride?: UserAvatarProps["user"];
-	example?: boolean;
 } & Conversation;
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
@@ -28,16 +26,12 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 		userId,
 		lastMessage,
 		isUnread,
-		userOverride,
-		example
 	} = props;
 
-	let user = useUser(userId);
-	if (userOverride) user = userOverride as User;
-	if (!userOverride && (!user || !user.relationship?.matched)) return null;
+	const user = useUser(userId);
+	// const relationship = useRelationship(userId);
+	// if ((!user || !user.relationship?.matched)) return null;
 	if (!user) return null;
-
-	const LinkComponent = example ? "span" : Link;
 
 	return (
 		<div
@@ -53,7 +47,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 					active && "rounded-b-xl"
 				)}
 			>
-				<LinkComponent
+				<Link
 					className="shrink-0 before:absolute before:size-full"
 					href={urls.conversations.of(id)}
 				>
@@ -64,7 +58,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						variant="thumb"
 						width={80}
 					/>
-				</LinkComponent>
+				</Link>
 				{isUnread && !active && (
 					<div className="absolute -left-1 -top-1 flex size-5 items-center justify-center rounded-full bg-theme-2 shadow-brand-1">
 						<div className="size-4 animate-ping rounded-full bg-theme-1" />

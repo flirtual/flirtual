@@ -41,11 +41,21 @@ defmodule FlirtualWeb.Utilities do
     "#{key}=#{value}"
   end
 
-  defp cache_control_format_option(key) when is_atom(key) do
-    Atom.to_string(key)
+  defp cache_control_format_option(key) when is_atom(key), do: Atom.to_string(key)
+  defp cache_control_format_option(key) when is_binary(key), do: key
+
+  defp exclude_cache?(conn) do
+    tags = (get_in(conn.assigns, [:session, :user, :tags]) || [])
+    :admin in tags or :moderator in tags
   end
 
   def cache_control(conn, options \\ []) do
+    options = if (exclude_cache?(conn) and not Enum.member?(options, :always)) do
+      [:private, :"no-cache", :"no-store"]
+    else
+      options -- [:always]
+    end
+
     conn
     |> put_resp_header(
       "cache-control",

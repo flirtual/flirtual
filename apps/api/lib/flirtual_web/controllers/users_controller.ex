@@ -35,7 +35,7 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
       conn
-      |> cache_control([:public, {"max-age", [hour: 1]}])
+      |> cache_control([:public, {"max-age", [minute: 5]}])
       |> json_with_etag(Policy.transform(conn, user))
     end
   end
@@ -57,7 +57,8 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user_id) do
       {:error, {:not_found, :user_not_found, %{name: slug}}}
     else
-      conn |> redirect(to: "/v1/users/#{user_id}")
+      conn
+      |> redirect(to: "/v1/users/#{user_id}")
     end
   end
 

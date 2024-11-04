@@ -10,7 +10,7 @@ import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
 import { yearsAgo } from "~/date";
 import { useSession } from "~/hooks/use-session";
-import { useUser } from "~/hooks/use-user";
+import { useRelationship, useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
 import { CopyClick } from "../copy-click";
@@ -38,12 +38,13 @@ export function Profile(props: ProfileProps) {
 
 	const [session] = useSession();
 	const user = useUser(userId);
+	const relationship = useRelationship(userId);
 
 	const t = useTranslations("profile");
 
 	if (!session || !user) return null;
 
-	if (user.relationship?.blocked) return <BlockedProfile user={user} />;
+	if (relationship?.blocked) return <BlockedProfile user={user} />;
 	const myProfile = session.user.id === user.id;
 
 	const discordConnection = user.connections?.find(
@@ -115,7 +116,7 @@ export function Profile(props: ProfileProps) {
 				<div className="h-1 shrink-0 bg-brand-gradient desktop:hidden" />
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
-					<RelationActions direct={direct} user={user} />
+					<RelationActions direct={direct} userId={user.id} />
 					{(discordConnection
 						|| user.profile.discord
 						|| user.profile.vrchat) && (
@@ -205,7 +206,7 @@ export function Profile(props: ProfileProps) {
 									)}
 								>
 									{user.profile.biography.replaceAll(
-										/(<p>(<br\s?\/?>)+<\/p>){2,}?/g,
+										/(<p>(<br\s?\/?>)+<\/p>){2}/g,
 										""
 									)}
 								</Html>
