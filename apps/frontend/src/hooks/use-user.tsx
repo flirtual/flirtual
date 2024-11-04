@@ -16,17 +16,21 @@ export function useUser(_userId: string): User | null {
 
 	// If we've received a slug, we must find the related user from
 	// SWR's fallback cache, because we don't have the user's ID yet.
-	const userId = isUid(_userId)
-		? _userId
-		: ((Object.entries(fallback).find(([key, value]) => {
-				return value
-					&& key.startsWith(unstable_serialize(["user"]))
-					&& (value as User).slug.toLowerCase() === _userId.toLowerCase();
-			})?.[1]) as User).id;
+	const userId = _userId
+		? isUid(_userId)
+			? _userId
+			: ((Object.entries(fallback).find(([key, value]) => {
+					return value
+						&& key.startsWith(unstable_serialize(["user"]))
+						&& (value as User).slug.toLowerCase() === _userId.toLowerCase();
+				})?.[1]) as User).id
+		: null;
 
 	const { data } = useSWR(
-		self?.id !== userId
-			? userKey(userId)
+		userId
+			? self?.id !== userId
+				? userKey(userId)
+				: null
 			: null,
 		userFetcher,
 		{
