@@ -164,7 +164,7 @@ export const User = {
 
 		return this.api
 			.url(`/${userId}`)
-			.headers({ "Cache-Control": "no-cache" })
+			// .headers({ "Cache-Control": "no-cache" })
 			.get()
 			.badRequest(() => null)
 			.notFound(() => null)
