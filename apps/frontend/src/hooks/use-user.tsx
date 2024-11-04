@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import useSWR, { unstable_serialize, useSWRConfig } from "swr";
 
 import type { User } from "~/api/user";
@@ -20,7 +21,7 @@ export function useUser(_userId: string): User | null {
 		: ((Object.entries(fallback).find(([key, value]) => {
 				return value
 					&& key.startsWith(unstable_serialize(["user"]))
-					&& (value as User).slug === _userId;
+					&& (value as User).slug.toLowerCase() === _userId.toLowerCase();
 			})?.[1]) as User).id;
 
 	const { data } = useSWR(
