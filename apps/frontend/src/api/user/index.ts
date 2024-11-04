@@ -1,5 +1,6 @@
 import { snakeCase } from "change-case";
 import ms from "ms";
+import type { WretchOptions } from "wretch";
 
 import { cache } from "~/cache";
 import { isUid } from "~/utilities";
@@ -159,13 +160,12 @@ export const User = {
 		return Promise.all(userIds.map((userId) => this.get(userId)));
 		// return this.api.url("/bulk").json(userIds).get().json<Array<User>>();
 	},
-	get(userId: string | null) {
+	get(userId: string | null, options: WretchOptions = {}) {
 		if (!userId || !isUid(userId)) return Promise.resolve(null);
 
 		return this.api
 			.url(`/${userId}`)
-			// .headers({ "Cache-Control": "no-cache" })
-			.options({ cache: "no-cache" })
+			.options(options)
 			.get()
 			.badRequest(() => null)
 			.notFound(() => null)

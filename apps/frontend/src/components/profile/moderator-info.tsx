@@ -1,7 +1,7 @@
 import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { mutate } from "swr";
 import { twMerge } from "tailwind-merge";
 
@@ -9,6 +9,7 @@ import { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useUser } from "~/hooks/use-user";
 import { userKey } from "~/swr";
 import { capitalize } from "~/utilities";
 
@@ -17,14 +18,14 @@ import { DateTimeRelative } from "../datetime-relative";
 import { InlineLink } from "../inline-link";
 
 export const ProfileModeratorInfo: FC<{
-	user: User;
-}> = ({ user }) => {
+	userId: string;
+}> = ({ userId }) => {
 	const [session] = useSession();
 	const toasts = useToast();
-	const router = useRouter();
 	const tAttributes = useAttributeTranslation();
+	const user = useUser(userId, { cache: "no-cache" });
 
-	if (!session || !session.user?.tags?.includes("moderator")) return null;
+	if (!user || !session || !session.user?.tags?.includes("moderator")) return null;
 
 	return (
 		<div
@@ -284,66 +285,64 @@ export const ProfileModeratorInfo: FC<{
 				</span>
 			</span>
 			{session.user.tags.includes("admin") && (
-				<>
-					<div className="flex flex-col">
-						<span>
-							<span className="font-bold">Email:</span>
-							{" "}
-							<CopyClick value={user.email}>
-								<span className="cursor-pointer hover:underline">
-									{user.email}
-								</span>
-							</CopyClick>
-						</span>
-						<span>
-							<span className="font-bold">Date of birth:</span>
-							{" "}
-							<span>{user.bornAt}</span>
-						</span>
-						<span>
-							<span className="font-bold">Chargebee customer:</span>
-							{" "}
-							<InlineLink
-								className="underline"
-								highlight={false}
-								href={`https://flirtual.chargebee.com/d/customers/${user.chargebeeId}`}
-							>
-								{user.chargebeeId}
-							</InlineLink>
-						</span>
-						<span>
-							<span className="font-bold">Stripe customer:</span>
-							{" "}
-							<InlineLink
-								className="underline"
-								highlight={false}
-								href={`https://dashboard.stripe.com/customers/${user.stripeId}`}
-							>
-								{user.stripeId}
-							</InlineLink>
-						</span>
-						<span>
-							<span className="font-bold">RevenueCat customer:</span>
-							{" "}
-							<InlineLink
-								className="underline"
-								highlight={false}
-								href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
-							>
-								{user.revenuecatId}
-							</InlineLink>
-						</span>
-						<span>
-							<span className="font-bold">Tags:</span>
-							{" "}
-							<span>
-								{user.tags && user.tags.length > 0
-									? user.tags?.join(", ")
-									: "None"}
+				<div className="flex flex-col">
+					<span>
+						<span className="font-bold">Email:</span>
+						{" "}
+						<CopyClick value={user.email}>
+							<span className="cursor-pointer hover:underline">
+								{user.email}
 							</span>
+						</CopyClick>
+					</span>
+					<span>
+						<span className="font-bold">Date of birth:</span>
+						{" "}
+						<span>{user.bornAt}</span>
+					</span>
+					<span>
+						<span className="font-bold">Chargebee customer:</span>
+						{" "}
+						<InlineLink
+							className="underline"
+							highlight={false}
+							href={`https://flirtual.chargebee.com/d/customers/${user.chargebeeId}`}
+						>
+							{user.chargebeeId}
+						</InlineLink>
+					</span>
+					<span>
+						<span className="font-bold">Stripe customer:</span>
+						{" "}
+						<InlineLink
+							className="underline"
+							highlight={false}
+							href={`https://dashboard.stripe.com/customers/${user.stripeId}`}
+						>
+							{user.stripeId}
+						</InlineLink>
+					</span>
+					<span>
+						<span className="font-bold">RevenueCat customer:</span>
+						{" "}
+						<InlineLink
+							className="underline"
+							highlight={false}
+							href={`https://app.revenuecat.com/customers/cf0649d1/${user.revenuecatId}`}
+						>
+							{user.revenuecatId}
+						</InlineLink>
+					</span>
+					<span>
+						<span className="font-bold">Tags:</span>
+						{" "}
+						<span>
+							{user.tags && user.tags.length > 0
+								? user.tags?.join(", ")
+								: "None"}
 						</span>
-					</div>
-				</>
+					</span>
+				</div>
 			)}
 		</div>
 	);

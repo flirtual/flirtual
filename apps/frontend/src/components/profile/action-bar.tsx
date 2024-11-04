@@ -3,13 +3,16 @@
 import { Ban, Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { unstable_serialize } from "swr";
 
 import type { User } from "~/api/user";
 import { DialogTrigger } from "~/components/dialog/dialog";
 import { useSession } from "~/hooks/use-session";
+import { userKey } from "~/swr";
 
 import { Button } from "../button";
 import { AlertDialogTrigger } from "../dialog/alert";
+import { SWRConfig } from "../swr";
 import { BlockDialog } from "./dialogs/block";
 import { ReportDialog } from "./dialogs/report";
 import { ProfileDropdown } from "./dropdown";
@@ -29,9 +32,14 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 
 	return (
 		<div className="flex flex-col gap-8 px-8 py-4 pt-0 desktop:pb-8 desktop:dark:bg-black-70">
-			{session.user.tags?.includes("moderator") && (
-				<ProfileModeratorInfo user={user} />
-			)}
+			<SWRConfig value={{
+				fallback: {
+					[unstable_serialize(userKey(user.id, { cache: "no-cache" }))]: null
+				}
+			}}
+			>
+				<ProfileModeratorInfo userId={user.id} />
+			</SWRConfig>
 			<div className="flex w-full gap-4 pb-4 desktop:pb-0">
 				{(session.user.tags?.includes("moderator")
 					|| session.user.tags?.includes("admin")) && (

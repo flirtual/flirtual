@@ -2,6 +2,7 @@
 
 import { use } from "react";
 import useSWR, { unstable_serialize, useSWRConfig } from "swr";
+import type { WretchOptions } from "wretch";
 
 import type { User } from "~/api/user";
 import type { Relationship } from "~/api/user/relationship";
@@ -10,7 +11,7 @@ import { isUid } from "~/utilities";
 
 import { useCurrentUser } from "./use-session";
 
-export function useUser(_userId: string): User | null {
+export function useUser(_userId: string, options: WretchOptions = {}): User | null {
 	const { fallback } = useSWRConfig();
 	const self = useCurrentUser();
 
@@ -29,7 +30,7 @@ export function useUser(_userId: string): User | null {
 	const { data } = useSWR(
 		userId
 			? self?.id !== userId
-				? userKey(userId)
+				? userKey(userId, options)
 				: null
 			: null,
 		userFetcher,
