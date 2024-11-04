@@ -7,7 +7,7 @@ import useMutation from "swr/mutation";
 
 import { displayName, User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
-import { userKey } from "~/swr";
+import { relationshipKey, userKey } from "~/swr";
 
 import { Button } from "../button";
 import { DialogTrigger } from "../dialog/dialog";
@@ -25,7 +25,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 				size="sm"
 				onClick={async () => {
 					await User.unblock(user.id).catch(toasts.addError);
-					mutate(userKey(user.id));
+					mutate(relationshipKey(user.id));
 
 					toasts.add(
 						t("top_sweet_macaw_pet", { displayName: displayName(user) })

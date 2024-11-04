@@ -9,7 +9,7 @@ import { Matchmaking } from "~/api/matchmaking";
 import { displayName, type User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { userKey } from "~/swr";
+import { relationshipKey, userKey } from "~/swr";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
@@ -44,7 +44,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					type="button"
 					onClick={async () => {
 						await Matchmaking.unmatch(user.id).catch(toasts.addError);
-						mutate(userKey(user.id));
+						mutate(relationshipKey(user.id));
 
 						toasts.add(
 							t("weird_green_crab_peek", {
@@ -79,7 +79,8 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					size="sm"
 					onClick={async () => {
 						await Matchmaking.unmatch(user.id).catch(toasts.addError);
-						mutate(userKey(user.id));
+						mutate(relationshipKey(user.id));
+
 						router.refresh();
 					}}
 				>

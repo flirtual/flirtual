@@ -46,7 +46,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
-import { queueKey, userKey } from "~/swr";
+import { queueKey, relationshipKey, userKey } from "~/swr";
 import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";
 
@@ -144,10 +144,10 @@ export const QueueActions_: FC<{
 			},
 			onSuccess: (data) => {
 				if (data?.userId)
-					mutate(userKey(data?.userId));
+					mutate(relationshipKey(data?.userId));
 
 				if (Array.isArray(data?.queue))
-					data.queue.filter(Boolean).map((userId) => mutate(userKey(userId)));
+					data.queue.filter(Boolean).map((userId) => mutate(relationshipKey(userId)));
 			}
 		}
 	);

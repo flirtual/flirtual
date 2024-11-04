@@ -22,7 +22,6 @@ import { useToast } from "~/hooks/use-toast";
 import { userKey } from "~/swr";
 
 export const WarnAction: FC<{ user: User }> = ({ user }) => {
-	const router = useRouter();
 	const toasts = useToast();
 
 	const [open, setOpen] = useState(false);

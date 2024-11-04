@@ -68,6 +68,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 						onSubmit={async ({ targetId, ...body }) => {
 							await User.suspend(targetId, body);
 							mutate(userKey(user.id));
+
 							const kind = (query.get("kind") || "love") as ProspectKind;
 							if (ProspectKind.includes(kind))
 								mutate(queueKey(kind), optimisticQueueMove("forward"));
