@@ -1,0 +1,35 @@
+name: Deploy API (staging)
+on:
+  push:
+    branches: [ "main" ]
+    paths: 
+      - "apps/api/**"
+      - ".github/workflows/deploy-api-staging.yaml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-staging-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: |
+          fly config show -a flirtual | jq '
+            .app = "flirtual-staging" |
+            .deploy.strategy = "immediate" |
+            .services[0].auto_stop_machines = true |
+            .services[0].auto_start_machines = true |
+            .services[0].min_machines_running = 0 |
+            .vm[0].size = "shared-cpu-2x"
+          ' > fly-staging.json
+          fly deploy -c fly-staging.json --remote-only --update-only
+        working-directory: ./apps/api
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

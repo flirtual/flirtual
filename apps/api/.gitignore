@@ -26,3 +26,4 @@ flirtual-*.tar
 
 # mix phx.gen.cert
 priv/cert
+fly-staging.json
