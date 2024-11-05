@@ -1,3 +1,5 @@
+import { Buffer } from "node:buffer";
+
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -53,7 +55,9 @@ function getContentSecurityPolicy() {
 			"data:",
 			...imageOrigins,
 			// Country flag icons.
-			"https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/flags/4x3/"
+			"https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/flags/4x3/",
+			// ???
+			"https://play-lh.googleusercontent.com"
 		],
 		"media-src": [
 			"'self'",
@@ -69,6 +73,7 @@ function getContentSecurityPolicy() {
 			"'self'",
 			"blob:",
 			apiOrigin,
+			...imageOrigins,
 			uppyCompanionUrl,
 			uppyBucketOrigin,
 			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
@@ -106,8 +111,10 @@ function getContentSecurityPolicy() {
 			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 			"https://*.talkjs.com",
 			// https://developers.canny.io/
+			"https://canny.io",
 			"https://*.canny.io",
 			// https://www.chargebee.com/docs/2.0/embedded-checkout.html
+			"https://chargebee.com",
 			"https://*.chargebee.com",
 			// https://docs.widgetbot.io/
 			"https://e.widgetbot.io"

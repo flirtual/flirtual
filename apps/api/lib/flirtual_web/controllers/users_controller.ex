@@ -35,7 +35,7 @@ defmodule FlirtualWeb.UsersController do
       {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
     else
       conn
-      |> cache_control([:public, {"max-age", [minute: 5]}])
+      # |> cache_control([:public, {"max-age", [minute: 5]}])
       |> json_with_etag(Policy.transform(conn, user))
     end
   end
