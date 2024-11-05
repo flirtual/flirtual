@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import deepmerge from "deepmerge";
 import type {
 	AbstractIntlMessages,
@@ -48,7 +49,6 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 			? current
 			: await getLanguageMessages(locale.preferred);
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const messages = deepmerge(fallback, current) as any;
 
 	return {
@@ -74,6 +74,6 @@ export default getRequestConfig(async () => {
 	return {
 		locale: locale.current,
 		messages,
-		onError
+		onError: Sentry.captureException
 	};
 });
