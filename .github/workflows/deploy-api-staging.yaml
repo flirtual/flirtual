@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: |
-          fly config show -a flirtual | jq '
+          flyctl config show -a flirtual | jq '
             .app = "flirtual-staging" |
             .deploy.strategy = "immediate" |
             .services[0].auto_stop_machines = true |
@@ -29,7 +29,7 @@ jobs:
             .services[0].min_machines_running = 0 |
             .vm[0].size = "shared-cpu-2x"
           ' > fly-staging.json
-          fly deploy -c fly-staging.json --remote-only --update-only
+          flyctl deploy -c fly-staging.json --remote-only --update-only
         working-directory: ./apps/api
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
