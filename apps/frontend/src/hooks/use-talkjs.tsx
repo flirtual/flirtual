@@ -24,108 +24,112 @@ import { useNotifications } from "./use-notifications";
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
 
+const emptyConversationsArray: Array<Talk.UnreadConversation> = [];
+
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 	[]
 );
 
-export const TalkjsProvider: React.FC<React.PropsWithChildren> = ({
-	children
-}) => {
-	if (!talkjsAppId) {
-		useEffect(
-			() =>
-				console.warn(
-					"Talk.js is not configured properly, conversations & related features are disabled. To enable them, set NEXT_PUBLIC_TALKJS_APP_ID in your environment."
-				),
-			[]
-		);
+// eslint-disable-next-line react-refresh/only-export-components
+export const TalkjsProvider: React.FC<React.PropsWithChildren> = talkjsAppId
+	? ({
+			children
+		}) => {
+			const { platform } = useDevice();
 
-		return (
-			<TalkjsContext.Provider value={null}>
-				<UnreadConversationContext.Provider value={[]}>
-					{children}
-				</UnreadConversationContext.Provider>
-			</TalkjsContext.Provider>
-		);
-	}
+			const [ready, setReady] = useState(false);
+			const [authSession] = useSession();
 
-	const { platform } = useDevice();
+			const router = useRouter();
+			const { mutate } = useSWRConfig();
 
-	const [ready, setReady] = useState(false);
-	const [authSession] = useSession();
+			const { pushRegistrationId } = useNotifications();
+			const [unreadConversations, setUnreadConversations] = useState<
+				Array<Talk.UnreadConversation>
+			>([]);
 
-	const router = useRouter();
-	const { mutate } = useSWRConfig();
+			useEffect(() => void Talk.ready.then(() => setReady(true)), []);
 
-	const { pushRegistrationId } = useNotifications();
-	const [unreadConversations, setUnreadConversations] = useState<
-		Array<Talk.UnreadConversation>
-	>([]);
+			const talkjsUserId = authSession?.user.talkjsId;
+			const talkjsSignature = authSession?.user.talkjsSignature;
 
-	useEffect(() => void Talk.ready.then(() => setReady(true)), []);
+			const session = useMemo(() => {
+				if (!talkjsUserId || !talkjsSignature || !ready) return null;
 
-	const talkjsUserId = authSession?.user.talkjsId;
-	const talkjsSignature = authSession?.user.talkjsSignature;
-
-	const session = useMemo(() => {
-		if (!talkjsUserId || !talkjsSignature || !ready) return null;
-
-		return new Talk.Session({
-			appId: talkjsAppId,
-			signature: talkjsSignature,
-			me: new Talk.User(talkjsUserId)
-		});
-	}, [talkjsUserId, talkjsSignature, ready]);
-
-	useEffect(() => {
-		if (!session || !pushRegistrationId || authSession?.sudoerId) return;
-
-		void (async () => {
-			await session.clearPushRegistrations();
-			if (authSession?.user.preferences?.pushNotifications.messages)
-				await session.setPushRegistration({
-					provider: platform === "apple" ? "apns" : "fcm",
-					pushRegistrationId
+				return new Talk.Session({
+					appId: talkjsAppId,
+					signature: talkjsSignature,
+					me: new Talk.User(talkjsUserId)
 				});
-		})();
-	}, [
-		session,
-		pushRegistrationId,
-		platform,
-		router,
-		authSession?.user.preferences?.pushNotifications.messages
-	]);
+			}, [talkjsUserId, talkjsSignature, ready]);
 
-	useEffect(() => {
-		setUnreadConversations([]);
-		if (!session) return;
+			useEffect(() => {
+				if (!session || !pushRegistrationId || authSession?.sudoerId) return;
 
-		const messageSubscription = session.onMessage(async () => {
-			await mutate(unstable_serialize(getConversationsKey));
-			router.refresh();
-		});
+				void (async () => {
+					await session.clearPushRegistrations();
+					if (authSession?.user.preferences?.pushNotifications.messages)
+						await session.setPushRegistration({
+							provider: platform === "apple" ? "apns" : "fcm",
+							pushRegistrationId
+						});
+				})();
+			}, [
+				session,
+				authSession,
+				pushRegistrationId,
+				platform,
+				router,
+				authSession?.user.preferences?.pushNotifications.messages
+			]);
 
-		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
+			useEffect(() => {
+				setUnreadConversations([]);
+				if (!session) return;
 
-		return () => {
-			unreadSubscription.unsubscribe();
-			messageSubscription.unsubscribe();
+				const messageSubscription = session.onMessage(async () => {
+					await mutate(unstable_serialize(getConversationsKey));
+					router.refresh();
+				});
+
+				const unreadSubscription = session.unreads.onChange(setUnreadConversations);
+
+				return () => {
+					unreadSubscription.unsubscribe();
+					messageSubscription.unsubscribe();
+				};
+			}, [session, router, mutate]);
+
+			useEffect(() => {
+				return () => session?.destroy();
+			}, [session]);
+
+			return (
+				<TalkjsContext.Provider value={session}>
+					<UnreadConversationContext.Provider value={unreadConversations}>
+						{children}
+					</UnreadConversationContext.Provider>
+				</TalkjsContext.Provider>
+			);
+		}
+	: ({ children }) => {
+			useEffect(
+				() =>
+					console.warn(
+						"Talk.js is not configured properly, conversations & related features are disabled. To enable them, set NEXT_PUBLIC_TALKJS_APP_ID in your environment."
+					),
+				[]
+			);
+
+			return (
+				<TalkjsContext.Provider value={null}>
+					<UnreadConversationContext.Provider value={emptyConversationsArray}>
+						{children}
+					</UnreadConversationContext.Provider>
+				</TalkjsContext.Provider>
+			);
 		};
-	}, [session, router, mutate]);
-
-	useEffect(() => {
-		return () => session?.destroy();
-	}, [session]);
-
-	return (
-		<TalkjsContext.Provider value={session}>
-			<UnreadConversationContext.Provider value={unreadConversations}>
-				{children}
-			</UnreadConversationContext.Provider>
-		</TalkjsContext.Provider>
-	);
-};
 
 export function useTalkjs() {
 	return useContext(TalkjsContext);
@@ -229,7 +233,7 @@ export const ConversationChatbox: React.FC<
 					height
 				} as CSSProperties
 			}
-			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent dark:bg-black-70 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
+			className="bg-white-20 vision:bg-transparent dark:bg-black-70 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-[''] relative w-full overflow-hidden"
 			{...props}
 			ref={setElement}
 		/>
