@@ -1,14 +1,13 @@
-import { getRequestConfig } from "next-intl/server";
-import { cache } from "react";
 import deepmerge from "deepmerge";
-
-import { getInternationalization } from ".";
-
 import type {
 	AbstractIntlMessages,
 	NamespaceKeys,
 	NestedKeyOf
 } from "next-intl";
+import { getRequestConfig } from "next-intl/server";
+import { cache } from "react";
+
+import { getInternationalization } from ".";
 
 export type MessageKeys = NamespaceKeys<
 	IntlMessages,
@@ -39,13 +38,13 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 
 	const fallback = await getLanguageMessages(locale.fallback);
 
-	const current =
-		locale.current === locale.fallback
+	const current
+		= locale.current === locale.fallback
 			? fallback
 			: await getLanguageMessages(locale.current);
 
-	const preferred =
-		locale.current === locale.preferred
+	const preferred
+		= locale.current === locale.preferred
 			? current
 			: await getLanguageMessages(locale.preferred);
 
@@ -74,6 +73,7 @@ export default getRequestConfig(async () => {
 
 	return {
 		locale: locale.current,
-		messages
+		messages,
+		onError
 	};
 });

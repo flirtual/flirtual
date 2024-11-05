@@ -25,7 +25,6 @@ Allow: /icon3.png
 Allow: /manifest.json
 Allow: /mstile-150x150.png
 Allow: /safari-pinned-tab.svg
-Allow: /sw.js
 Allow: /images/
 Allow: /_next/
 Allow: /$

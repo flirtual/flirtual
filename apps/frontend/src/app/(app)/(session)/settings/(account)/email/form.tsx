@@ -18,12 +18,12 @@ export const EmailForm: React.FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
 			fields={{
 				email: user.email,
 				emailConfirmation: "",
 				currentPassword: ""
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async (body) => {
 				await mutateSession({
 					...session,
