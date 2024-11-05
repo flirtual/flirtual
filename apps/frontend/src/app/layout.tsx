@@ -5,7 +5,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { Montserrat, Nunito } from "next/font/google";
 import { headers as getHeaders } from "next/headers";
-import Script from "next/script";
 import { userAgentFromString } from "next/server";
 import { preconnect } from "react-dom";
 import { twMerge } from "tailwind-merge";
@@ -26,8 +25,6 @@ import { ToastProvider } from "~/hooks/use-toast";
 import { getInternationalization } from "~/i18n";
 import { resolveTheme } from "~/theme";
 import { imageOrigins, urls } from "~/urls";
-
-import { ClientScripts } from "./client-scripts";
 
 import "~/css/index.css";
 
@@ -171,7 +168,6 @@ export default async function RootLayout({
 										href={SafariPinnedTabImage.src}
 										rel="mask-icon"
 									/>
-									<ClientScripts />
 									<AppUrlListener />
 								</head>
 								<body className={fontClassNames}>
