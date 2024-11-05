@@ -485,6 +485,7 @@
 		"invalid_credentials": "Incorrect email or password, please try resetting your password.",
 		"invalid_credentials_complex": "Incorrect email or password, please try <reset>resetting your password</reset> or <help>check common issues</help>.",
 		"invalid_password": "Incorrect password, please try again or log out and reset your password.",
+		"email_must_be_different": "New email cannot be the same as the old email.",
 		"account_banned": "You have been suspended, please check your account email for details and appeal instructions.",
 		"connection_account_not_found": "No Flirtual account found for this Discord user. Ensure you are logged into the correct Discord account. If you haven't linked your Discord account, log in with your email and password first, then add your Discord account in the Connections settings.",
 		"connection_verify_email": "Please verify your email with Discord and try again.",
