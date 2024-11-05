@@ -7,5 +7,8 @@ export default configure({
 		react: {
 			version: 19
 		}
+	},
+	rules: {
+		"node/prefer-global/buffer": "off"
 	}
 });
