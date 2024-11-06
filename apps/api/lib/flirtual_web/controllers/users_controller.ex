@@ -47,7 +47,7 @@ defmodule FlirtualWeb.UsersController do
   def get(conn, %{"slug" => slug}) do
     user_id =
       if(conn.assigns[:session].user.slug === slug,
-        do: conn.assigns[:session].user["id"],
+        do: conn.assigns[:session].user.id,
         else: User
           |> where([u], u.slug == ^slug)
           |> select([u], u.id)

@@ -69,17 +69,17 @@ export function Profile(props: ProfileProps) {
 			{...elementProps}
 			data-mask
 			className={twMerge(
-				"flex w-full vision:bg-none desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1",
+				"vision:bg-none desktop:max-w-lg desktop:rounded-3xl desktop:bg-brand-gradient desktop:p-1 desktop:shadow-brand-1 flex w-full",
 				className
 			)}
 		>
-			<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-[1.25rem] desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
+			<div className="text-black-70 dark:text-white-20 desktop:rounded-[1.25rem] desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70 flex w-full flex-col overflow-hidden bg-transparent">
 				<ProfileImageDisplay
 					current={id !== "next-profile"}
 					user={user}
 				>
-					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
-						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
+					<div className="text-white-10 absolute bottom-0 flex w-full flex-col gap-2 p-8">
+						<div className="font-montserrat pointer-events-auto flex w-fit items-baseline gap-4">
 							<span className="text-shadow-brand text-4xl font-bold leading-none [word-break:break-all]">
 								{displayName(user)}
 							</span>
@@ -96,7 +96,7 @@ export function Profile(props: ProfileProps) {
 								</div>
 							)}
 						</div>
-						<div className="flex flex-wrap items-center gap-2 font-montserrat ">
+						<div className="font-montserrat flex flex-wrap items-center gap-2 ">
 							<GenderPills
 								attributes={user.profile.attributes.gender ?? []}
 								className="!bg-opacity-70"
@@ -113,14 +113,18 @@ export function Profile(props: ProfileProps) {
 						)}
 					</div>
 				</ProfileImageDisplay>
-				<div className="h-1 shrink-0 bg-brand-gradient desktop:hidden" />
+				<div className="bg-brand-gradient desktop:hidden h-1 shrink-0" />
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} userId={user.id} />
-					{(discordConnection
+					{(session.user.tags?.includes("admin")
+						|| session.user.tags?.includes("moderator")
+						|| relationship?.matched)
+					&& (discordConnection
 						|| user.profile.discord
-						|| user.profile.vrchat) && (
-						<div className="flex flex-col gap-2 vision:text-white-20">
+						|| user.profile.vrchat)
+					&& (
+						<div className="vision:text-white-20 flex flex-col gap-2">
 							{(discordConnection || user.profile.discord) && (
 								<div className="flex items-center gap-2">
 									<DiscordIcon className="size-6 shrink-0" />
@@ -151,7 +155,7 @@ export function Profile(props: ProfileProps) {
 							)}
 							{user.profile.vrchat && (
 								<div className="flex items-center gap-2">
-									<VRChatOutlineIcon className="size-6 shrink-0 text-black-90" />
+									<VRChatOutlineIcon className="text-black-90 size-6 shrink-0" />
 									{t.rich("zany_salty_cheetah_lead", {
 										name: user.profile.vrchat,
 										copy: (children) => (
@@ -184,12 +188,12 @@ export function Profile(props: ProfileProps) {
 						? (
 								session?.user.profile.new
 									? (
-											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
+											<span className="vision:text-white-20 dark:text-white-20 text-xl italic">
 												{t("strong_home_bullock_taste")}
 											</span>
 										)
 									: (
-											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
+											<span className="vision:text-white-20 dark:text-white-20 text-xl italic">
 												{t("fuzzy_calm_ant_nudge", {
 													displayName: displayName(user)
 												})}
@@ -213,7 +217,7 @@ export function Profile(props: ProfileProps) {
 							)
 						: myProfile
 							? (
-									<span className="text-xl italic dark:text-white-20">
+									<span className="dark:text-white-20 text-xl italic">
 										{t.rich("early_quiet_giraffe_dine", {
 											"settings-bio": (children) => (
 												<InlineLink href={urls.settings.bio}>{children}</InlineLink>

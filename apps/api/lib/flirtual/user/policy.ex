@@ -144,6 +144,18 @@ defmodule Flirtual.User.Policy do
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false
 
+  def transform(
+        %Plug.Conn{
+          assigns: %{
+            user: user
+          }
+        },
+        target
+      ) do
+    target
+    |> User.with_relationship(user)
+  end
+
   # def transform(
   #       %Plug.Conn{
   #         assigns: %{
