@@ -1,18 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
+import type Error from "next/error";
+import { Montserrat, Nunito } from "next/font/google";
 import Link from "next/link";
+import { useEffect } from "react";
+import { twMerge } from "tailwind-merge";
 
+import { Button } from "~/components/button";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
-import { Button } from "~/components/button";
-
-import type Error from "next/error";
 
 import "~/css/index.css";
-import { Montserrat, Nunito } from "next/font/google";
-import { twMerge } from "tailwind-merge";
 
 const montserrat = Montserrat({
 	variable: "--font-montserrat",
@@ -26,7 +25,7 @@ export default function GlobalError({
 	error,
 	reset
 }: {
-	error: Error & { digest?: string };
+	error: { digest?: string } & Error;
 	reset: () => void;
 }) {
 	useEffect(() => {
@@ -41,24 +40,26 @@ export default function GlobalError({
 						<div className="flex flex-col gap-8">
 							<FlirtualLogo className="w-64" />
 							<h1 className="font-montserrat text-2xl font-semibold desktop:text-3xl">
-								<span className="line-through">Scheduled</span> maintenance
+								There was an error loading Flirtual
 							</h1>
 							<div className="flex flex-col gap-4 font-nunito">
 								<p>
-									We&apos;re currently performing <span className="line-through">scheduled</span> maintenance.
+									Please try refreshing or going back and trying again. If that doesn't work, try fully closing and reopening your app/browser.
 									<br className="hidden desktop:block" />
-									Apologies for the interruption, we&apos;ll be back shortly!
-									<br className="hidden desktop:block" /> If this issue
-									persists, please{" "}
+									{" "}
+									If this issue persists, please check your network connection or
+									{" "}
 									<Link
 										className="text-white-10 underline"
 										href={urls.resources.contact}
 									>
 										contact us
-									</Link>{" "}
-									or check back later.
-									<br className="hidden desktop:block" /> Thank you for your
-									patience &lt;3
+									</Link>
+									{" "}
+									and let us know the page or action you&apos;re seeing this on.
+									<br className="hidden desktop:block" />
+									{" "}
+									Thank you for your patience &lt;3
 								</p>
 							</div>
 						</div>
@@ -94,7 +95,12 @@ export default function GlobalError({
 									Twitter
 								</Link>
 							</div>
-							<footer>© {new Date().getFullYear()} Flirtual</footer>
+							<footer>
+								©
+								{new Date().getFullYear()}
+								{" "}
+								Flirtual
+							</footer>
 						</div>
 					</div>
 				</div>
