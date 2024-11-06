@@ -614,9 +614,9 @@ defmodule Flirtual.Discord do
                       |> Enum.map_join(
                         ", \n",
                         &if &1.metadata["simple"] do
-                          "**" <> &1.name <> "**"
+                          "**" <> &1.id <> "**"
                         else
-                          &1.name
+                          &1.id
                         end
                       ),
                     inline: true
@@ -626,7 +626,7 @@ defmodule Flirtual.Discord do
                     value:
                       user.profile.preferences.attributes
                       |> filter_by(:type, "gender")
-                      |> Enum.map_join(", \n", & &1.name),
+                      |> Enum.map_join(", \n", & &1.id),
                     inline: true
                   }
                 ]
