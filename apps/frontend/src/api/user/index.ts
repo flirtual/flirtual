@@ -204,7 +204,7 @@ export const User = {
 	},
 	async getApproximateCount() {
 		const { count } = await this.getCount();
-		return Math.floor(count / 5000) * 5000;
+		return Math.floor(count / 50000) * 50000;
 	},
 	preview(userId: string) {
 		return this.api.url(`/${userId}/preview`).get().json<UserPreview>();
