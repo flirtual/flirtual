@@ -6,19 +6,17 @@ import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useInterval } from "~/hooks/use-interval";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
-export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
+export const UserForms: React.FC = () => {
 	const router = useRouter();
 	const toasts = useToast();
+	const [session] = useSession({
+		refreshInterval: 1000
+	});
 
-	useInterval(() => {
-		if (!user) return;
-		router.refresh();
-	}, 5000);
-
-	if (!user) return null;
+	if (!session) return null;
 
 	return (
 		<>
@@ -41,9 +39,9 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 					</h1>
 					<span className="text-lg">
 						Check your email (
-						<CopyClick value={user.email}>
+						<CopyClick value={session.user.email}>
 							<span data-mask className="select-all font-semibold">
-								{user.email}
+								{session.user.email}
 							</span>
 						</CopyClick>
 						) for your account confirmation link. If you don&apos;t see it in
@@ -54,14 +52,14 @@ export const UserForms: React.FC<{ user?: User }> = ({ user }) => {
 			</Form>
 			<Form
 				fields={{
-					email: user.email,
+					email: session.user.email,
 					emailConfirmation: "",
 					currentPassword: ""
 				}}
 				className="mt-8"
 				requireChange={["email", "emailConfirmation", "currentPassword"]}
 				onSubmit={async (body) => {
-					await User.updateEmail(user.id, body)
+					await User.updateEmail(session.user.id, body)
 						.then(() => {
 							toasts.add("Email changed");
 							return router.refresh();

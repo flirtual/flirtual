@@ -1,19 +1,20 @@
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import useSWR from "swr";
+import useSWR, { type SWRConfiguration } from "swr";
 
 import { Authentication, type Session } from "~/api/auth";
 import type { User } from "~/api/user";
 import { sessionKey } from "~/swr";
 import { urls } from "~/urls";
 
-export function useSession() {
+export function useSession(options: SWRConfiguration<Session | null> = {}) {
 	const router = useRouter();
 	const { data: session = null, mutate } = useSWR(
 		sessionKey(),
 		Authentication.getOptionalSession,
 		{
-			suspense: true
+			suspense: true,
+			...options
 		}
 	);
 

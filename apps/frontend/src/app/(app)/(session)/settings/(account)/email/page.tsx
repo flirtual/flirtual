@@ -1,8 +1,8 @@
+import type { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { EmailForm } from "./form";
-
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Email"
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function SettingsAccountEmailPage() {
 	return (
 		<ModelCard
-			className="shrink desktop:w-full desktop:max-w-2xl"
+			className="desktop:w-full desktop:max-w-2xl shrink"
 			inset={false}
 			title="Change email"
 		>

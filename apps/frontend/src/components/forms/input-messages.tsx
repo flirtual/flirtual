@@ -1,11 +1,11 @@
+import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
 import { type FC, type PropsWithChildren, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
-import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
 
 import type { IconComponent } from "../icons";
 
-export type FormMessageType = "error" | "warning" | "success" | "informative";
-export type FormMessageSize = "sm" | "md";
+export type FormMessageType = "error" | "informative" | "success" | "warning";
+export type FormMessageSize = "md" | "sm";
 
 export interface FormMessage {
 	type: FormMessageType;
@@ -51,12 +51,12 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 
 	return (
 		<div
-			ref={reference}
 			className={twMerge(
-				"select-children flex gap-2 font-nunito",
+				"select-children font-nunito flex gap-2",
 				formMessageStyle[type],
 				formMessageSize[size]
 			)}
+			ref={reference}
 		>
 			<Icon className="mt-0.5 size-6 shrink-0" />
 			<span>{children}</span>
@@ -71,15 +71,12 @@ export interface FormInputMessagesProps {
 export const FormInputMessages: React.FC<FormInputMessagesProps> = ({
 	messages
 }) => {
-	if (!messages || messages.length === 0) return null;
+	const message = messages?.[0];
+	if (!message) return null;
 
 	return (
-		<div className="flex flex-col gap-2">
-			{messages.map(({ value, ...message }, messageIndex) => (
-				<FormMessage key={messageIndex} {...message}>
-					{value}
-				</FormMessage>
-			))}
-		</div>
+		<FormMessage {...message}>
+			{message.value}
+		</FormMessage>
 	);
 };

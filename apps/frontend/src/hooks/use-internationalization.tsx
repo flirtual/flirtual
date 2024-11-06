@@ -1,6 +1,8 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
+import * as Sentry from "@sentry/nextjs";
+import { type AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { createContext, forwardRef, type PropsWithChildren, use, useEffect } from "react";
 
 import type { getInternationalization } from "~/i18n";
@@ -17,19 +19,27 @@ export const InternationalizationContext = createContext(
 
 export const InternationalizationProvider = forwardRef<
 	HTMLHtmlElement,
-	PropsWithChildren<{ value: Internationalization }>
->(({ children, value, ...props }, reference) => {
+	PropsWithChildren<{ value: Internationalization; messages: AbstractIntlMessages }>
+>(({ children, value, messages, ...props }, reference) => {
 	return (
-		<InternationalizationContext.Provider value={value}>
-			<Slot
-				{...props}
-				data-country={value.country || "xx"}
-				lang={value.locale.current}
-				ref={reference}
-			>
-				{children}
-			</Slot>
-		</InternationalizationContext.Provider>
+		<NextIntlClientProvider
+			locale={value.locale.current}
+			messages={messages}
+			onError={(reason) => {
+				Sentry.captureException(reason);
+			}}
+		>
+			<InternationalizationContext.Provider value={value}>
+				<Slot
+					{...props}
+					data-country={value.country || "xx"}
+					lang={value.locale.current}
+					ref={reference}
+				>
+					{children}
+				</Slot>
+			</InternationalizationContext.Provider>
+		</NextIntlClientProvider>
 	);
 });
 

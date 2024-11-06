@@ -241,7 +241,7 @@ export const User = {
 			.json<User>();
 	},
 	confirmEmail(token: string) {
-		return api.url("auth/email/confirm").json({ token }).post().json<User>();
+		return api.url("auth/email/confirm").json({ token }).post().json<unknown>();
 	},
 	resendConfirmEmail() {
 		return api.url("auth/email/confirm").delete().json<User>();

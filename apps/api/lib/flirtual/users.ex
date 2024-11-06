@@ -198,9 +198,9 @@ defmodule Flirtual.Users do
       value
       |> User.validate_current_password(user)
       |> User.validate_email()
-      |> validate_confirmation(:email, message: "Email doesn't match")
+      |> validate_confirmation(:email)
       |> validate_predicate(:not_equal, {:email, {:value, user.email}},
-        message: "New email cannot be the same as the old email"
+        message: "email_must_be_different"
       )
       |> Flag.validate_allowed_email(:email)
     end
