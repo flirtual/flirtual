@@ -243,7 +243,7 @@ defmodule Flirtual.Flag do
   def check_openai_moderation(user_id, text) do
     user = Users.get(user_id)
 
-    case OpenAI.moderations(input: text) do
+    case OpenAI.moderations(input: text, model: "omni-moderation-latest") do
       {:ok, %{results: [%{"categories" => categories, "category_scores" => scores}]}} ->
         flagged_categories =
           categories
