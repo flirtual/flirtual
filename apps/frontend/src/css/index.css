@@ -50,11 +50,14 @@
   --friend-theme-1: #82bf72;
   --friend-theme-2: #4d8888;
 
+  --arc-theme-1: var(--arc-background-gradient-color0, var(--arc-background-simple-color));
+  --arc-theme-2: var(--arc-background-gradient-color1, var(--arc-background-simple-color));
+
   --brand-theme-1: var(--light-theme-1);
   --brand-theme-2: var(--light-theme-2);
 
-  --theme-1: var(--brand-theme-1);
-  --theme-2: var(--brand-theme-2);
+  --theme-1: var(--arc-theme-1, var(--brand-theme-1));
+  --theme-2: var(--arc-theme-2, var(--brand-theme-2));
 }
 
 :root[data-theme="dark"] {
