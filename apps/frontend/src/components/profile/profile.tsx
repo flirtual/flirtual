@@ -134,7 +134,7 @@ export function Profile(props: ProfileProps) {
 										copy: (children) => (
 											<CopyClick
 												value={
-													user.status === "visible"
+													session.user.status === "visible"
 														? discordConnection?.displayName
 														|| user.profile.discord!
 														: null
@@ -167,7 +167,7 @@ export function Profile(props: ProfileProps) {
 												>
 													{children}
 												</InlineLink>
-												{user.status === "visible" && (
+												{session.user.status === "visible" && (
 													<CopyClick value={user.profile.vrchat!}>
 														<button
 															className="p-2 opacity-0 transition-opacity group-hover:opacity-100"
@@ -206,7 +206,7 @@ export function Profile(props: ProfileProps) {
 								<Html
 									className={twMerge(
 										"text-xl",
-										user.status === "visible" && "select-children"
+										session.user.status === "visible" && "select-children"
 									)}
 								>
 									{user.profile.biography.replaceAll(
