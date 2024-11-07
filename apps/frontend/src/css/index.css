@@ -5,9 +5,12 @@
 * {
   min-width: 0;
   -webkit-tap-highlight-color: transparent;
-  user-select: none;
   user-drag: none;
   overscroll-behavior: none;
+}
+
+*:not(input) {
+  user-select: none;
 }
 
 *:not(.unhide-scrollbar) {
