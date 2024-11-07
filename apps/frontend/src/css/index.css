@@ -53,18 +53,18 @@
   --brand-theme-1: var(--light-theme-1);
   --brand-theme-2: var(--light-theme-2);
 
-  &[data-theme="dark"] {
-    --brand-theme-1: var(--dark-theme-1);
-    --brand-theme-2: var(--dark-theme-2);
-  }
-
   --theme-1: var(--brand-theme-1);
   --theme-2: var(--brand-theme-2);
+}
 
-  &[data-theme-style="friend"] {
-    --theme-1: var(--friend-theme-1);
-    --theme-2: var(--friend-theme-2);
-  }
+:root[data-theme="dark"] {
+  --brand-theme-1: var(--dark-theme-1);
+  --brand-theme-2: var(--dark-theme-2);
+}
+
+:root[data-theme-style="friend"] {
+  --theme-1: var(--friend-theme-1);
+  --theme-2: var(--friend-theme-2);
 }
 
 nextjs-portal {
