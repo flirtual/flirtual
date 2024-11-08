@@ -186,7 +186,8 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 				if (
 					(document.querySelector("[data-radix-focus-guard]")
 						&& !expandedImage)
-						|| event.ctrlKey
+					|| event.ctrlKey
+					|| event.metaKey
 				)
 					return;
 
