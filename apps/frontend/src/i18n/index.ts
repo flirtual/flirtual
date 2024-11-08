@@ -1,21 +1,25 @@
-import { cache } from "react";
 import { create as setupAcceptLanguage } from "accept-language";
 import { headers as getHeaders } from "next/headers";
+import { cache } from "react";
 
 import settings from "../../project.inlang/settings.json";
 import { Authentication } from "../api/auth";
-
 import { polyfill } from "./polyfill";
 
 const { languageTags: languages, sourceLanguageTag } = settings;
 
 function getCountry(headers: Headers) {
-	const country =
-		headers.get("cf-ipcountry") || headers.get("x-vercel-ip-country");
+	const country
+		= headers.get("cf-ipcountry") || headers.get("x-vercel-ip-country");
 
 	return country !== "XX" && country !== "T1"
 		? (country?.toLowerCase() ?? null)
 		: null;
+}
+
+function getTimezone(headers: Headers) {
+	const timezone = headers.get("x-vercel-ip-timezone");
+	return timezone || "America/New_York";
 }
 
 export const getInternationalization = cache(async (override?: string) => {
@@ -30,8 +34,8 @@ export const getInternationalization = cache(async (override?: string) => {
 	const browser = al.get(accept);
 
 	const session = await Authentication.getOptionalSession();
-	const translating =
-		headers.has("translating") || session?.user.tags?.includes("translating");
+	const translating
+		= headers.has("translating") || session?.user.tags?.includes("translating");
 
 	const preferred = session?.user.language || browser || sourceLanguageTag;
 
@@ -41,9 +45,11 @@ export const getInternationalization = cache(async (override?: string) => {
 	await polyfill(current);
 
 	const country = getCountry(headers);
+	const timezone = getTimezone(headers);
 
 	return {
 		country,
+		timezone,
 		languages,
 		locale: {
 			browser,
