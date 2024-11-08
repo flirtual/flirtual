@@ -236,7 +236,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 						<Dialog open={expandedImage} onOpenChange={setExpandedImage}>
 							<DialogContent
 								border={false}
-								className="max-w-[95svw] overflow-hidden rounded-xl desktop:max-w-[95svw]"
+								className="max-w-full overflow-hidden rounded-none desktop:max-w-[95svw] desktop:rounded-xl"
 							>
 								<DialogTitle className="sr-only">View image</DialogTitle>
 								<div className="relative max-h-[80vh] w-full bg-black-90">
