@@ -144,5 +144,9 @@
     "title": "Eventos",
     "gross_loose_stork_vent": "Invitación a VRChat",
     "fun_still_clownfish_arrive": "¡Sí hay un evento en curso, este botón te llevará a el!"
+  },
+  "deft_raw_cod_fond": "Hecho con <action> {heart} </action> en VR",
+  "banners": {
+    "finish_profile": "<link> Completa tu perfil </link> ¡para que la gente pueda verte y encontrarte!"
   }
 }
