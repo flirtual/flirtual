@@ -49,7 +49,7 @@ function Identity() {
 		const { preferences } = session.user;
 
 		if (!preferences?.privacy.analytics) return reset();
-		posthog?.opt_in_capturing();
+		if (posthogOptIn) posthog?.opt_in_capturing();
 
 		posthog?.identify(session.user.id);
 		Sentry.setUser({ id: session.user.id });
