@@ -1,12 +1,61 @@
 {
-  "ban-reason": {
-    "jBVZ29YcQ2dDXbURb6AxXk": {
-      "name": "Werbung"
-    },
-    "tUaxdXYAcyeb3G4Qc7gNLh": {
-      "name": "Spam"
-    }
-  },
+	"ban-reason": {
+		"jBVZ29YcQ2dDXbURb6AxXk": {
+			"name": "Werbung",
+			"details": "Werbung. Ihr Profil scheint in erster Linie ein externes Konto oder einen externen Dienst zu bewerben. Sie können gerne Ihre sozialen Netzwerke oder Ihre Arbeit in Ihrem Profil erwähnen, aber der Hauptzweck Ihres Profils sollte darin bestehen, Freunde zu finden oder sich zu verabreden. Sie können auf diese E-Mail antworten, um gegen Ihre Sperrung Einspruch einzulegen und Ihr Profil zu aktualisieren, um die Sperrung Ihres Kontos aufzuheben."
+		},
+		"tUaxdXYAcyeb3G4Qc7gNLh": {
+			"name": "Spam",
+			"details": "Spam-Profil. Ihr Profilinhalt wurde als Spam markiert. Sie können auf diese E-Mail antworten, um gegen die Sperrung Einspruch einzulegen und die Sperrung Ihres Kontos aufzuheben. Möglicherweise bitten wir Sie, Ihr Profil mit weiteren Informationen zu aktualisieren."
+		},
+		"WSD2yPcs64FB27qpb4AGuT": {
+			"details": "Nachahmung. Ihr Profil scheint eine andere Person nachzuahmen. Wenn Sie glauben, dass Sie irrtümlicherweise gesperrt wurden, können Sie auf diese E-Mail antworten, um Einspruch einzulegen und die Sperrung Ihres Kontos aufzuheben.",
+			"name": "Nachahmung"
+		},
+		"nupwCrjodUd4ZvPizEBc8L": {
+			"details": "Betteln. Sie dürfen auf Flirtual nicht um Geld bitten. Sie können auf diese E-Mail antworten, um gegen Ihre Sperrung Einspruch einzulegen.",
+			"name": "Um Geld betteln"
+		},
+		"VgQw2st96dZKZotsnYUEaN": {
+			"details": "Umgehung von Banns. Sie haben anscheinend ein neues Konto erstellt oder auf andere Weise einen früheren Flirtual-Bann umgangen. Wenn Sie gegen einen früheren Bann Einspruch einlegen und die Sperrung Ihres Kontos aufheben möchten, können Sie auf die ursprüngliche Bann-E-Mail antworten.",
+			"name": "Umgehung des Banns"
+		},
+		"dWDkcjmXQEQRVoXmNkutAB": {
+			"details": "Belästigung. Wenn Sie gegen Ihre Sperrung Einspruch einlegen und die Sperrung Ihres Kontos aufheben möchten, antworten Sie bitte auf diese E-Mail. Bitte beachten Sie, dass wir keine Einzelheiten zu Moderationsberichten weitergeben können, falls solche erstellt wurden.",
+			"name": "Belästigung"
+		},
+		"muXMqNjneKnwqxT8nqcy4d": {
+			"details": "Minderjährig. Sie müssen mindestens 18 Jahre alt sein, um Flirtual nutzen zu können. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie auf diese E-Mail antworten, um Einspruch einzulegen. Wir senden Ihnen dann einen sicheren Link zur Überprüfung Ihres Ausweises, um die Sperrung Ihres Kontos aufzuheben.",
+			"name": "Minderjährig"
+		},
+		"KfFVwKB4DYMXx7foyqGUZM": {
+			"name": "Gewaltverherrlichende/verstörende Inhalte",
+			"details": "Inhalte mit Gewalt/verstörenden Inhalten. Ihr Profil scheint Inhalte mit Gewalt oder verstörenden Inhalten zu enthalten. Wenn Sie gegen diese Sperre Einspruch einlegen möchten, antworten Sie bitte auf diese E-Mail."
+		},
+		"YLsXz4iHn9yNLLLmuMHLCT": {
+			"details": "Inhalte, die zu Selbstverletzung aufrufen. Ihr Profil oder Ihre Aktivität wurde als Quelle für Selbstverletzungsaufrufe markiert, die andere Benutzer stören könnten. Wir haben einige Ressourcen zur psychischen Gesundheit unter https://flirtu.al/mentalhealth, die hilfreich sein könnten. Bitte passen Sie auf sich auf. Wenn Sie gegen diese Sperre Einspruch einlegen möchten, antworten Sie bitte auf diese E-Mail.",
+			"name": "Inhalte über Selbstverletzung"
+		},
+		"Lfb829DEo36f54Uu3H3ybj": {
+			"name": "Betrug, Schadsoftware oder schädliche Links",
+			"details": "Betrug, Schadsoftware oder schädliche Links. Ihr Profil scheint schädliche Links oder Aktivitäten zu enthalten. Wenn Sie glauben, dass Sie fälschlicherweise gesperrt wurden, können Sie auf diese E-Mail antworten, um Einspruch zu erheben."
+		},
+		"HmF9W5yHfH3nLRYnt6F2cc": {
+			"name": "Rechtswidriger Inhalt",
+			"details": "Rechtswidrige Inhalte. Ihr Profil oder Ihre Aktivitäten verstoßen offenbar gegen kanadisches oder örtliches Recht. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie auf diese E-Mail antworten, um Einspruch einzulegen."
+		},
+		"5H9nMhQacZBD9Zomu7Tbt9": {
+			"details": "Doppeltes Konto. Das Erstellen mehrerer Flirtual-Konten ist nicht erlaubt. Dieses Konto wurde deaktiviert, aber Sie können weiterhin Ihr anderes Konto verwenden. Wenn Sie glauben, dass Sie fälschlicherweise gesperrt wurden, oder wenn Sie möchten, dass Ihr anderes Konto anstelle dieses Kontos deaktiviert wird, antworten Sie bitte auf diese E-Mail.",
+			"name": "Doppeltes Konto"
+		},
+		"hLwvdpKQiofFTCDHox75SY": {
+			"name": "Hasserfüllte Inhalte",
+			"details": "Hasserfüllte Inhalte. Hasserfüllte Profilinhalte oder Nachrichten sind auf Flirtual nicht willkommen. Wenn Sie glauben, dass Sie zu Unrecht gesperrt wurden, können Sie auf diese E-Mail antworten, um Einspruch einzulegen und die Sperrung Ihres Kontos aufzuheben."
+		},
+		"8P2pi5232LTpzGTDWkBprc": {
+			"name": "Sonstiges"
+		}
+	},
 	"language": {
 		"ab": {
 			"name": "Abchasisch"
@@ -620,8 +669,144 @@
 		"tzm": {
 			"name": "Zentralatlas-Tamazight"
 		},
-    "ase": {
-      "name": "Amerikanische Gebärdensprache"
-    }
+		"ase": {
+			"name": "Amerikanische Gebärdensprache"
+		}
+	},
+	"delete-reason": {
+		"kTXr4okVAGLovjKBiwSgnF": {
+			"name": "Nicht genug Matches"
+		},
+		"6R764W55PvotuTz3BBRHXD": {
+			"name": "Niedrige Match-/Profilqualität"
+		},
+		"sQcEHRLCffbLfcgM4zAELf": {
+			"name": "Ich mache eine Pause"
+		},
+		"BMEJteBnvo8vrUrPh7j634": {
+			"name": "Ich habe woanders eine Beziehung gefunden"
+		},
+		"TaqMV38Taxdz7ZNxEG4oEU": {
+			"name": "Nicht genug Dates"
+		},
+		"jrAqzBkasZwqfjSPAazNq3": {
+			"name": "Ich habe eine Beziehung auf Flirtual gefunden"
+		},
+		"EkWwgZavkCxJhRgKJF3yRn": {
+			"name": "Ich bevorzuge andere Dating-Apps, bei denen man sich persönlich trifft"
+		},
+		"jgc6z6qpeYmTAwHmid6n8X": {
+			"name": "Ich bevorzuge andere VR-Dating-Apps"
+		},
+		"3fm9o3onrqPiwKhceexRMZ": {
+			"name": "Schlechte Erfahrungen mit Matches"
+		},
+		"J3vVp9PWZQi5cEuk8G8wij": {
+			"name": "Technische Probleme"
+		},
+		"g4hPG9psXVxzKa4Tr9GjDN": {
+			"name": "Sonstige"
+		}
+	},
+	"game": {
+		"YChvDcFrBL2FjUYRs8Kn5E": {
+			"name": "Tabletop Simulator"
+		},
+		"3nzcXDoMySRrPn6jHC8n3o": {
+			"name": "VRChat"
+		},
+		"MhWAgbFzmusLJyAdtSXfXV": {
+			"name": "Phasmophobia"
+		},
+		"vKBHWZMpiBHjcwGyjKDm88": {
+			"name": "Gun Raiders"
+		},
+		"KtMvXwxoazna8HPayXUqMA": {
+			"name": "Walkabout Mini Golf"
+		},
+		"uZMiTn4iySMVugZPDiK5LR": {
+			"name": "Onward"
+		},
+		"bgxJhCTVuYKkmxMYwx4MSF": {
+			"name": "Ghosts of Tabor"
+		},
+		"pMVwYrn8byRREG5zGxHfVC": {
+			"name": "Elite Dangerous"
+		},
+		"yf4g49maWEZTnBAKwsEFSX": {
+			"name": "Pavlov Shack"
+		},
+		"LuMaVcT8Xveqhbt4ZRPe8Q": {
+			"name": "Rec Room"
+		},
+		"G9qwehfhnKZx2pE3WFwQw2": {
+			"name": "Zenith: Nexus"
+		},
+		"bHF6sv68wCUEQ6VNEYEvGQ": {
+			"name": "Gorilla Tag"
+		},
+		"7EuDksBCySX5vnxzQLKx3e": {
+			"name": "ChilloutVR"
+		},
+		"GhScLf7QXNJa2GrZjWVk49": {
+			"name": "Bigscreen"
+		},
+		"mkyAHUgKDWFiqkZcgZD6pS": {
+			"name": "Horizon Worlds"
+		},
+		"zk8azbDyuxAXKmB7n78CC3": {
+			"name": "STAR WARS: Squadrons"
+		},
+		"gNZZfj4cpvTBD2wyMKisDQ": {
+			"name": "War Thunder"
+		},
+		"eo2DSet8HVzi8RAHQSZooF": {
+			"name": "Pavlov"
+		},
+		"JSyJfiSSzqm232nKidEDog": {
+			"name": "Beat Saber"
+		},
+		"tEFPjkby9U6ZiTBkNeAqwA": {
+			"name": "Roblox"
+		},
+		"oMVF6HtJ9NM39TgtduA36W": {
+			"name": "The Forest"
+		},
+		"9NttFgjqMQMCvxiRTNz99W": {
+			"name": "Among Us VR"
+		},
+		"mHF6zQZ3tbVe9iYjGuzAPK": {
+			"name": "PAYDAY 2"
+		},
+		"b3YVqwSVNMcsh2xUPSd9hU": {
+			"name": "PokerStars VR"
+		},
+		"HF4tppeRywmq9oWsR2GyMg": {
+			"name": "POPULATION: ONE"
+		},
+		"T65Eophn8t8ukfig9S3JdD": {
+			"name": "Neos"
+		},
+		"6DjtoKvDStyCEJBWdjDnva": {
+			"name": "A Township Tale"
+		},
+		"ibNMSB3mTjSqA4yVh424BG": {
+			"name": "Drunkn Bar Fight"
+		},
+		"tNGaLaE29HH3jTDa9PTvJE": {
+			"name": "Arizona Sunshine"
+		},
+		"GeUXPSsyL2sxwjrBfWUaHf": {
+			"name": "Real VR Fishing"
+		},
+		"d3ZV6rendJA86ejpCSaHBK": {
+			"name": "Minecraft VR"
+		},
+		"ffrwQHFv2kN4uRRJCLYqVb": {
+			"name": "Contractors"
+		},
+		"ACUnhMdbAtXCVPJmEsfqMY": {
+			"name": "Assetto Corsa"
+		}
 	}
 }
