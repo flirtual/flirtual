@@ -144,16 +144,16 @@
 		"title": "Eventos",
 		"gross_loose_stork_vent": "Invitación a VRChat",
 		"fun_still_clownfish_arrive": "¡Sí hay un evento en curso, este botón te llevará a el!",
-		"elegant_bald_parakeet_animate": "Primero inicia VRChat y luego haz clic en \"invitarme\" en la página siguiente. Recibirás una invitación tuya en el juego. <joining> ¿Necesitas ayuda para unirte? </joining>",
+		"elegant_bald_parakeet_animate": "Primero inicia VRChat y luego haz clic en \"invitarme\" en la página siguiente. Recibirás una invitación tuya en el juego. <joining>¿Necesitas ayuda para unirte?</joining>",
 		"arable_nice_puma_comfort": "Unirse al evento",
 		"top_big_tern_twist": "Próximos eventos",
-		"flaky_early_shad_nourish": "Para conocer nuestro calendario de eventos y anuncios, <discord> únete a nuestro servidor de Discord </discord> .",
+		"flaky_early_shad_nourish": "Para conocer nuestro calendario de eventos y anuncios, <discord>únete a nuestro servidor de Discord</discord> .",
 		"quiet_lazy_marten_amuse": "Mundos de VRChat",
 		"blue_calm_chipmunk_spark": "Nuestros eventos semanales se llevan a cabo en nuestros mundos de VRChat, pero puedes unirte a ellos en cualquier momento. Siéntete libre de usarlos también para tus propios eventos."
 	},
-	"deft_raw_cod_fond": "Hecho con <action> {heart} </action> en VR",
+	"deft_raw_cod_fond": "Hecho con <action>{heart}</action> en VR",
 	"banners": {
-		"finish_profile": "<link> Completa tu perfil </link> ¡para que la gente pueda verte y encontrarte!"
+		"finish_profile": "<link>Completa tu perfil</link> ¡para que la gente pueda verte y encontrarte!"
 	},
 	"errors": {
 		"cannot_block_user": "Error al bloquear usuario (cuenta deshabilitada).",
