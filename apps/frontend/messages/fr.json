@@ -1,159 +1,159 @@
 {
-  "meta": {
-    "name": "Flirtual",
-    "title": "%s - Flirtual",
-    "knotty_direct_mongoose_bend": "Rencontrez de nouvelles personnes dans la Réalité Virtuelle ! Flirtual vous aide à organiser des recontres en VR et dans VRChat.",
-    "green_plain_mongoose_lend": "La première appli de rencontre en VR. Rejoignez des milliers pour des rendez-vous dans les applis VR telles que VRChat."
-  },
-  "about": {
-    "title": "À propos de nous",
-    "team": {
-      "image_alt": "Avatar de {name}",
-      "roles": {
-        "existony": "Partenariat, Conception et Sécurité",
-        "aries": "Développeur Logiciel",
-        "moderator": "Modérateur",
-        "event_host": "Hôte d'événement",
-        "social": "Réseaux Sociaux",
-        "katten": "Conseiller Communautaire",
-        "syrmor": "Conseiller en Marketing",
-        "juice": "Créateur d'Avatar VRChat",
-        "community_advisor": "Conseiller Communautaire",
-        "faxmashine": "Créateur de Monde VRChat",
-        "kfarwell": "Développeur en chef"
-      }
-    },
-    "timeline": {
-      "2018": {
-        "title": "2018 🐣",
-        "description": "La première appli de rencontre VR est née.",
-        "image_alt": "Flirtual en 2018",
-        "image": "88bb9381-87ed-499d-9667-cd61eff96938"
-      },
-      "2019": {
-        "title": "🏆 2019",
-        "description": "VRLFP est désignée la meilleure nouvelle technologie aux iDate Awards.",
-        "image": "c373b72d-16a0-479c-b834-ccb7041bc615",
-        "image_alt": "Flirtual en 2019"
-      },
-      "2020": {
-        "title": "2020 🧪",
-        "description": "Quelques concepts farfelus qui ont finalement donné naissance au Flirtual que vous connaissez et aimez aujourd'hui. Merci de nous avoir laissé mijoter.",
-        "image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
-        "image_alt": "Flirtual en 2020"
-      },
-      "2021": {
-        "image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
-        "description": "ROVR est lancé, une appli de jumelage social pour les amis et groupes en VR. Son esprit réside dans le Mode Copain.",
-        "image_alt": "Flirtual en 2021",
-        "title": "✌️ 2021"
-      },
-      "2022": {
-        "description": "VRLFP devient Flirtual. Peut-être que les gens sauront maintenant comment épeler notre nom.",
-        "image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
-        "title": "2022 😻",
-        "image_alt": "Flirtual en 2022"
-      },
-      "2023": {
-        "title": "✨ 2023",
-        "description": "Nouveaux concepts, applications mobiles et d'énormes améliorations derrière les rideaux.",
-        "image": "36446ecb-9103-4b6d-b221-7c657f17323d",
-        "image_alt": "Flirtual en 2023"
-      }
-    },
-    "images": {
-      "2": {
-        "link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4",
-        "image": "0d6b9258-a330-47cd-9964-eb0143f34825",
-        "image_alt": "Soirée DJ Flirtual dans VRChat"
-      },
-      "3": {
-        "image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
-        "image_alt": "Flirtual à VRCon 2022",
-        "link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
-      },
-      "4": {
-        "image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
-        "image_alt": "Flirtual apparaît dans le Today Show",
-        "link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
-      },
-      "5": {
-        "image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
-        "image_alt": "Flirtual au Vket Été 2023",
-        "link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
-      },
-      "0": {
-        "image_alt": "Fête de lancement de Flirtual pour la Saint-Valentin 2022, d'une durée de 12 heures, avec Vanguard",
-        "image": "273de50f-7a03-4918-bd7c-331e11a00949",
-        "link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
-      },
-      "1": {
-        "image_alt": "Rencontres Éclair Flirtual dans VRChat",
-        "link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539",
-        "image": "d76791d0-bcdd-4a56-87c0-9b298e14a246"
-      }
-    }
-  },
-  "branding": {
-    "title": "Marque",
-    "lime_soft_shad_skip": "Vous souhaitez utiliser notre art ? Le voici. Merci de le garder approprié et <contact>contactez-nous</contact> pour obtenir l’approbation.",
-    "brave_early_weasel_arise": "Notre logo",
-    "flaky_same_grizzly_snap": "Merci de ne pas éditer, changer, déformer, recolorer ou reconfigurer le logo de Flirtual.",
-    "mild_spry_hamster_persist": "Marque seule",
-    "such_pink_jan_spur": "Utilisez-les uniquement lorsque la marque Flirtual est clairement visible ou bien établie ailleurs sur la page ou dans le design.",
-    "tasty_last_pony_transform": "Couleurs",
-    "gross_red_earthworm_reside": "Gradient",
-    "fair_yummy_penguin_harbor": "Mode Sombre",
-    "empty_sharp_sheep_list": "Mode Copain",
-    "whole_round_penguin_pet": "Rose",
-    "known_trick_raven_sew": "Crème",
-    "wise_great_crow_foster": "Besoins de plus ?",
-    "ornate_upper_guppy_mend": "Téléchargez notre kit complet de presse pour plus de graphiques et d'information.",
-    "tired_extra_bear_forgive": "Télécharger"
-  },
-  "debugger": {
-    "spicy_pretty_tiger_pet": "Appareil",
-    "lucky_sound_opossum_absorb": "Plateforme de l'application :",
-    "vexed_yummy_tadpole_grow": "Fureteur:",
-    "title": "Information de debug",
-    "known_spare_mantis_pet": "Système:",
-    "mushy_muddy_warthog_win": "Session",
-    "wacky_spry_haddock_jump": "Profil de l'utilisateur:",
-    "spry_polite_elk_grace": "Objet de l'utilisateur:",
-    "brief_neat_kestrel_ascend": "Non disponible",
-    "flat_civil_goat_absorb": "Objet du Sudoer:",
-    "north_crisp_fly_dart": "Âge:",
-    "dark_wild_mouse_roar": "Build",
-    "swift_short_koala_fond": "Environnement:",
-    "each_zippy_millipede_pop": "Version :"
-  },
-  "download": {
-    "title": "Télécharger",
-    "best_topical_mayfly_tap": "Télécharger sur",
-    "platform": {
-      "apple": "App Store",
-      "google": "Google Play",
-      "microsoft": "Microsoft Store",
-      "side_quest": "SideQuest"
-    }
-  },
-  "events": {
-    "title": "Événements",
-    "gross_loose_stork_vent": "Invitation VRChat",
-    "fun_still_clownfish_arrive": "SI un événement est en cours, ce bouton vous y conduira !",
-    "elegant_bald_parakeet_animate": "Lancez VRChat d'abord, puis cliquez sur \"invite-moi\" à la page suivante. Vous recevrez une invitation de votre part dans le jeu. <joining>Besoins d'aide pour rejoindre?</joining>",
-    "arable_nice_puma_comfort": "Rejoindre l'événement",
-    "top_big_tern_twist": "Événements à venir",
-    "nimble_equal_loris_foster": "Nous organisons des événements rencontres éclair et des soirées DJ chaque fin de semaine dans VRChat. Vous êtes invité !",
-    "flaky_early_shad_nourish": "Pour consulter notre calendrier des événements et les annonces, <discord>rejoignez notre serveur Discord</discord>.",
-    "quiet_lazy_marten_amuse": "Mondes VRChat",
-    "tidy_wise_robin_urge": "Rencontres Éclair Flirtual",
-    "careful_wise_bumblebee_walk": "Rencontrez des personnes lors de séances de rencontre éclair/création d’amitiés en tête-à-tête. Chaque séance dure 3 minutes (l’hôte peut choisir une durée de 3 à 7 minutes). Des sujets de conversation, des tags d'intérêt et un mode nocturne sont inclus.",
-    "flat_ok_penguin_vent": "Rencontres Éclair Flirtual",
-    "inclusive_simple_alligator_zap": "Le Flirtual Club",
-    "sweet_mellow_ant_hunt": "Un festival de musique en plein air avec audiolink. Faites la fête.",
-    "fine_low_deer_propel": "Le Flirtual Club",
-    "blue_calm_chipmunk_spark": "Nos événements hebdomadaires se déroulent dans nos mondes VRChat, mais vous pouvez les rejoindre à tout moment ! N'hésitez pas à les utiliser pour vos propres événements.",
-    "dry_inclusive_ox_trust": "Créé par <faxmashine>Faxmashine</faxmashine>, nos mondes sont compatibles avec PCVR, Quest et Desktop. Nouveau sur VRChat ? <vrchat>Inscrivez-vous gratuitement.</vrchat>"
-  }
+	"meta": {
+		"name": "Flirtual",
+		"title": "%s - Flirtual",
+		"knotty_direct_mongoose_bend": "Rencontrez de nouvelles personnes dans la Réalité Virtuelle ! Flirtual vous aide à organiser des recontres en VR et dans VRChat.",
+		"green_plain_mongoose_lend": "La première appli de rencontre en VR. Rejoignez des milliers pour des rendez-vous dans les applis VR telles que VRChat."
+	},
+	"about": {
+		"title": "À propos de nous",
+		"team": {
+			"image_alt": "Avatar de {name}",
+			"roles": {
+				"existony": "Partenariat, Conception et Sécurité",
+				"aries": "Développeur Logiciel",
+				"moderator": "Modérateur",
+				"event_host": "Hôte d'événement",
+				"social": "Réseaux Sociaux",
+				"katten": "Conseiller Communautaire",
+				"syrmor": "Conseiller en Marketing",
+				"juice": "Créateur d'Avatar VRChat",
+				"community_advisor": "Conseiller Communautaire",
+				"faxmashine": "Créateur de Monde VRChat",
+				"kfarwell": "Développeur en chef"
+			}
+		},
+		"timeline": {
+			"2018": {
+				"title": "2018 🐣",
+				"description": "La première appli de rencontre VR est née.",
+				"image_alt": "Flirtual en 2018",
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938"
+			},
+			"2019": {
+				"title": "🏆 2019",
+				"description": "VRLFP est désignée la meilleure nouvelle technologie aux iDate Awards.",
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
+				"image_alt": "Flirtual en 2019"
+			},
+			"2020": {
+				"title": "2020 🧪",
+				"description": "Quelques concepts farfelus qui ont finalement donné naissance au Flirtual que vous connaissez et aimez aujourd'hui. Merci de nous avoir laissé mijoter.",
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
+				"image_alt": "Flirtual en 2020"
+			},
+			"2021": {
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
+				"description": "ROVR est lancé, une appli de jumelage social pour les amis et groupes en VR. Son esprit réside dans le Mode Copain.",
+				"image_alt": "Flirtual en 2021",
+				"title": "✌️ 2021"
+			},
+			"2022": {
+				"description": "VRLFP devient Flirtual. Peut-être que les gens sauront maintenant comment épeler notre nom.",
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
+				"title": "2022 😻",
+				"image_alt": "Flirtual en 2022"
+			},
+			"2023": {
+				"title": "✨ 2023",
+				"description": "Nouveaux concepts, applications mobiles et d'énormes améliorations derrière les rideaux.",
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
+				"image_alt": "Flirtual en 2023"
+			}
+		},
+		"images": {
+			"2": {
+				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4",
+				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+				"image_alt": "Soirée DJ Flirtual dans VRChat"
+			},
+			"3": {
+				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+				"image_alt": "Flirtual à VRCon 2022",
+				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
+			},
+			"4": {
+				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+				"image_alt": "Flirtual apparaît dans le Today Show",
+				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
+			},
+			"5": {
+				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+				"image_alt": "Flirtual au Vket Été 2023",
+				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
+			},
+			"0": {
+				"image_alt": "Fête de lancement de Flirtual pour la Saint-Valentin 2022, d'une durée de 12 heures, avec Vanguard",
+				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
+			},
+			"1": {
+				"image_alt": "Rencontres Éclair Flirtual dans VRChat",
+				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539",
+				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246"
+			}
+		}
+	},
+	"branding": {
+		"title": "Marque",
+		"lime_soft_shad_skip": "Vous souhaitez utiliser notre art ? Le voici. Merci de le garder approprié et <contact>contactez-nous</contact> pour obtenir l’approbation.",
+		"brave_early_weasel_arise": "Notre logo",
+		"flaky_same_grizzly_snap": "Merci de ne pas éditer, changer, déformer, recolorer ou reconfigurer le logo de Flirtual.",
+		"mild_spry_hamster_persist": "Marque seule",
+		"such_pink_jan_spur": "Utilisez-les uniquement lorsque la marque Flirtual est clairement visible ou bien établie ailleurs sur la page ou dans le design.",
+		"tasty_last_pony_transform": "Couleurs",
+		"gross_red_earthworm_reside": "Gradient",
+		"fair_yummy_penguin_harbor": "Mode Sombre",
+		"empty_sharp_sheep_list": "Mode Copain",
+		"whole_round_penguin_pet": "Rose",
+		"known_trick_raven_sew": "Crème",
+		"wise_great_crow_foster": "Besoins de plus ?",
+		"ornate_upper_guppy_mend": "Téléchargez notre kit complet de presse pour plus de graphiques et d'information.",
+		"tired_extra_bear_forgive": "Télécharger"
+	},
+	"debugger": {
+		"spicy_pretty_tiger_pet": "Appareil",
+		"lucky_sound_opossum_absorb": "Plateforme de l'application :",
+		"vexed_yummy_tadpole_grow": "Fureteur :",
+		"title": "Information de debug",
+		"known_spare_mantis_pet": "Système :",
+		"mushy_muddy_warthog_win": "Session",
+		"wacky_spry_haddock_jump": "Profil de l'utilisateur :",
+		"spry_polite_elk_grace": "Objet de l'utilisateur :",
+		"brief_neat_kestrel_ascend": "Non disponible",
+		"flat_civil_goat_absorb": "Objet du Sudoer :",
+		"north_crisp_fly_dart": "Âge :",
+		"dark_wild_mouse_roar": "Build",
+		"swift_short_koala_fond": "Environnement :",
+		"each_zippy_millipede_pop": "Version :"
+	},
+	"download": {
+		"title": "Télécharger",
+		"best_topical_mayfly_tap": "Télécharger sur",
+		"platform": {
+			"apple": "App Store",
+			"google": "Google Play",
+			"microsoft": "Microsoft Store",
+			"side_quest": "SideQuest"
+		}
+	},
+	"events": {
+		"title": "Événements",
+		"gross_loose_stork_vent": "Invitation VRChat",
+		"fun_still_clownfish_arrive": "SI un événement est en cours, ce bouton vous y conduira !",
+		"elegant_bald_parakeet_animate": "Lancez VRChat d'abord, puis cliquez sur \"invite-moi\" à la page suivante. Vous recevrez une invitation de votre part dans le jeu. <joining>Besoins d'aide pour rejoindre?</joining>",
+		"arable_nice_puma_comfort": "Rejoindre l'événement",
+		"top_big_tern_twist": "Événements à venir",
+		"nimble_equal_loris_foster": "Nous organisons des événements rencontres éclair et des soirées DJ chaque fin de semaine dans VRChat. Vous êtes invité !",
+		"flaky_early_shad_nourish": "Pour consulter notre calendrier des événements et les annonces, <discord>rejoignez notre serveur Discord</discord>.",
+		"quiet_lazy_marten_amuse": "Mondes VRChat",
+		"tidy_wise_robin_urge": "Rencontres Éclair Flirtual",
+		"careful_wise_bumblebee_walk": "Rencontrez des personnes lors de séances de rencontre éclair/création d’amitiés en tête-à-tête. Chaque séance dure 3 minutes (l’hôte peut choisir une durée de 3 à 7 minutes). Des sujets de conversation, des tags d'intérêt et un mode nocturne sont inclus.",
+		"flat_ok_penguin_vent": "Rencontres Éclair Flirtual",
+		"inclusive_simple_alligator_zap": "Le Flirtual Club",
+		"sweet_mellow_ant_hunt": "Un festival de musique en plein air avec audiolink. Faites la fête.",
+		"fine_low_deer_propel": "Le Flirtual Club",
+		"blue_calm_chipmunk_spark": "Nos événements hebdomadaires se déroulent dans nos mondes VRChat, mais vous pouvez les rejoindre à tout moment ! N'hésitez pas à les utiliser pour vos propres événements.",
+		"dry_inclusive_ox_trust": "Créé par <faxmashine>Faxmashine</faxmashine>, nos mondes sont compatibles avec PCVR, Quest et Desktop. Nouveau sur VRChat ? <vrchat>Inscrivez-vous gratuitement.</vrchat>"
+	}
 }
