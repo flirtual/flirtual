@@ -131,23 +131,24 @@ export default async function RootLayout({
 	const messages = await getMessages();
 
 	return (
-		<InternationalizationProvider messages={messages} value={internationalization}>
-			<DeviceProvider
-				native={native}
-				platform={platform}
-				userAgent={userAgent}
-				vision={vision}
-			>
-				<SessionProvider session={session}>
-					<ThemeProvider theme={theme}>
-						<html suppressHydrationWarning>
-							<head suppressHydrationWarning>
-								<meta name="darkreader-lock" />
-								{theme === "system" && (
-								// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-									<script
-										dangerouslySetInnerHTML={{
-											__html: `(() => {
+		<NextIntlClientProvider messages={messages}>
+			<InternationalizationProvider messages={messages} value={internationalization}>
+				<DeviceProvider
+					native={native}
+					platform={platform}
+					userAgent={userAgent}
+					vision={vision}
+				>
+					<SessionProvider session={session}>
+						<ThemeProvider theme={theme}>
+							<html suppressHydrationWarning>
+								<head suppressHydrationWarning>
+									<meta name="darkreader-lock" />
+									{theme === "system" && (
+									// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+										<script
+											dangerouslySetInnerHTML={{
+												__html: `(() => {
   const resolveTheme = ${resolveTheme.toString()};
 
   const url = new URL(location);
@@ -159,37 +160,38 @@ export default async function RootLayout({
   });
 })()
 						`.trim()
-										}}
+											}}
+										/>
+									)}
+									<link
+										color="#e9658b"
+										href={SafariPinnedTabImage.src}
+										rel="mask-icon"
 									/>
-								)}
-								<link
-									color="#e9658b"
-									href={SafariPinnedTabImage.src}
-									rel="mask-icon"
-								/>
-								<AppUrlListener />
-							</head>
-							<body className={fontClassNames}>
+									<AppUrlListener />
+								</head>
+								<body className={fontClassNames}>
 
-								<InsetPreview />
-								<NextTopLoader
-									color={["#FF8975", "#E9658B"]}
-									height={5}
-									showSpinner={false}
-								/>
-								<AnalyticsProvider>
-									<NativeStartup />
-									<ToastProvider>
-										{/* <Suspense fallback={<LoadingIndicatorScreen />}> */}
-										<TooltipProvider>{children}</TooltipProvider>
-										{/* </Suspense> */}
-									</ToastProvider>
-								</AnalyticsProvider>
-							</body>
-						</html>
-					</ThemeProvider>
-				</SessionProvider>
-			</DeviceProvider>
-		</InternationalizationProvider>
+									<InsetPreview />
+									<NextTopLoader
+										color={["#FF8975", "#E9658B"]}
+										height={5}
+										showSpinner={false}
+									/>
+									<AnalyticsProvider>
+										<NativeStartup />
+										<ToastProvider>
+											{/* <Suspense fallback={<LoadingIndicatorScreen />}> */}
+											<TooltipProvider>{children}</TooltipProvider>
+											{/* </Suspense> */}
+										</ToastProvider>
+									</AnalyticsProvider>
+								</body>
+							</html>
+						</ThemeProvider>
+					</SessionProvider>
+				</DeviceProvider>
+			</InternationalizationProvider>
+		</NextIntlClientProvider>
 	);
 }

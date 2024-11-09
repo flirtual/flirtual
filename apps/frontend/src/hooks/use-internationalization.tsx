@@ -22,25 +22,16 @@ export const InternationalizationProvider = forwardRef<
 	PropsWithChildren<{ value: Internationalization; messages: AbstractIntlMessages }>
 >(({ children, value, messages, ...props }, reference) => {
 	return (
-		<NextIntlClientProvider
-			locale={value.locale.current}
-			messages={messages}
-			timeZone={value.timezone}
-			onError={(reason) => {
-				Sentry.captureException(reason);
-			}}
-		>
-			<InternationalizationContext.Provider value={value}>
-				<Slot
-					{...props}
-					data-country={value.country || "xx"}
-					lang={value.locale.current}
-					ref={reference}
-				>
-					{children}
-				</Slot>
-			</InternationalizationContext.Provider>
-		</NextIntlClientProvider>
+		<InternationalizationContext.Provider value={value}>
+			<Slot
+				{...props}
+				data-country={value.country || "xx"}
+				lang={value.locale.current}
+				ref={reference}
+			>
+				{children}
+			</Slot>
+		</InternationalizationContext.Provider>
 	);
 });
 
