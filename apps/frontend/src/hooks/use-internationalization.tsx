@@ -27,9 +27,7 @@ export const InternationalizationProvider = forwardRef<
 			messages={messages}
 			timeZone={value.timezone}
 			onError={(reason) => {
-				Sentry.captureException(reason, {
-					mechanism
-				});
+				Sentry.captureException(reason);
 			}}
 		>
 			<InternationalizationContext.Provider value={value}>
