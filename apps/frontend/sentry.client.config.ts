@@ -11,7 +11,7 @@ import {
 } from "~/const";
 
 Sentry.init({
-	enabled: environment !== "development",
+	// enabled: environment !== "development",
 	dsn: sentryDsn,
 	sampleRate: 1,
 	tracesSampleRate: 1,

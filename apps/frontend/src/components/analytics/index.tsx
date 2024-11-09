@@ -73,7 +73,7 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 		|| false;
 
 	useEffect(() => {
-		if (!posthogOptIn) return;
+		if (!posthogOptIn || !posthogKey) return;
 
 		posthog.init(posthogKey, {
 			api_host: posthogHost,
@@ -89,7 +89,7 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 		});
 	}, [posthogOptIn]);
 
-	if (posthogOptIn)
+	if (posthogOptIn && posthogKey)
 		children = <PostHogProvider client={posthog}>{children}</PostHogProvider>;
 
 	return (
