@@ -18,6 +18,9 @@ Sentry.init({
 	enableTracing: false,
 	replaysOnErrorSampleRate: 1,
 	replaysSessionSampleRate: 0,
+	ignoreErrors: [
+		"ENVIRONMENT_FALLBACK"
+	],
 	integrations: [
 		Sentry.replayIntegration({
 			blockAllMedia: false,
