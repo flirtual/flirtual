@@ -143,7 +143,7 @@ export const InfoForm: FC = () => {
 											})),
 											{
 												key: "other",
-												label: "Other"
+												label: "Other genders"
 											}
 										]}
 									/>

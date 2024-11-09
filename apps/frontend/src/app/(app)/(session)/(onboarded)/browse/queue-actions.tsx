@@ -175,7 +175,7 @@ export const QueueActions_: FC<{
 		"keydown",
 		useCallback(
 			(event) => {
-				if (document.querySelector("[data-radix-focus-guard]") || event.ctrlKey)
+				if (document.querySelector("[data-radix-focus-guard]") || event.ctrlKey || event.metaKey)
 					return;
 
 				if (event.key === "h") void undo();

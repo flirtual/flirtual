@@ -80,7 +80,7 @@ export function Profile(props: ProfileProps) {
 				>
 					<div className="text-white-10 absolute bottom-0 flex w-full flex-col gap-2 p-8">
 						<div className="font-montserrat pointer-events-auto flex w-fit items-baseline gap-4">
-							<span className="text-shadow-brand text-4xl font-bold leading-none [word-break:break-all]">
+							<span className={twMerge("text-shadow-brand text-4xl font-bold leading-none [word-break:break-all]", session.user.tags?.includes("moderator") && "select-text")}>
 								{displayName(user)}
 							</span>
 							{user.bornAt && (
