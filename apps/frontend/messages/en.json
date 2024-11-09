@@ -224,7 +224,7 @@
 					"image": "b9326c15-c996-488f-8d68-d7ea4cb8649b"
 				},
 				"1": {
-					"title": "Swim... with sharks",
+					"title": "Swim… with sharks",
 					"image": "738f3d22-6f38-4059-9dd3-7fdd672acccd"
 				},
 				"2": {
@@ -495,15 +495,15 @@
 		"state_mismatch": "Couldn't connect account, please try again later (state mismatch)",
 		"provider_not_found": "Couldn't connect account, please try again later. (unknown provider)",
 		"authorize_not_supported": "Couldn't connect account, please try again later. (unsupported provider)",
-		"image_not_found": "Image not found",
+		"image_not_found": "Image not found.",
 		"conversation_not_found": "Conversation not found (user unmatched, blocked, disabled account or suspended).",
 		"user_not_found": "User not found (blocked, disabled account or suspended).",
 		"prospect_not_found": "Error undoing, sorry!",
 		"missing_permission": "You don't have permission to perform this action.",
 		"report_not_found": "Report not found.",
 		"subscription_not_found": "Error canceling subscription, please contact us for assistance.",
-		"cannot_block_user": "Error blocking user (disabled account or suspended).",
-		"cannot_unblock_user": "Error unblocking user (disabled account or suspended).",
+		"cannot_block_user": "Error blocking user (account disabled).",
+		"cannot_unblock_user": "Error unblocking user (account disabled).",
 		"profile_not_blocked": "Error unblocking user (already unblocked).",
 		"passkey_login_failed": "Passkey login failed, please try again or use a different method."
 	}

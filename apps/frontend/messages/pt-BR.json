@@ -228,7 +228,7 @@
 					"image": "b9326c15-c996-488f-8d68-d7ea4cb8649b"
 				},
 				"1": {
-					"title": "Nade... com tubarões",
+					"title": "Nade… com tubarões",
 					"image": "738f3d22-6f38-4059-9dd3-7fdd672acccd"
 				},
 				"2": {
@@ -418,7 +418,7 @@
 		"prospect_not_found": "Erro desfazendo, perdão!",
 		"must_be_less_than_{number}": "Deve ser menor que {number}.",
 		"user_not_found": "Usuário não encontrado (bloqueado, conta desativada ou suspensa).",
-		"image_not_found": "Imagem não encontrada",
+		"image_not_found": "Imagem não encontrada.",
 		"state_mismatch": "Não foi possível conectar conta, por favor tente novamente mais tarde. (incompatibilidade de estado)",
 		"passkey_login_failed": "Login com chave de passe falhou, por favor tente novamente ou use outro método.",
 		"password_does_not_match": "Nova senha não corresponde, porfavor confira sua senha e tente denovo.",
@@ -427,7 +427,6 @@
 		"should_be_{count}_character(s)": "Deve ser {count, plural, =0 {vazio} =1 {um caracter} other {# caracteres}}.",
 		"should_have_{count}_item(s)": "{count, plural, =0 {Deve ser vazio} =1 {Por favor selecione um item} other {Por favor selecione # items}}.",
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Obrigatório} =1 {Obrigatório} other {Deve possuir ao menos # caracteres}}.",
-		"should_be_at_least_{count}_bytes(s)": "{count, plural, =0 {Obrigatório} =1 {Obrigatório} other {Deve possuir ao menos # caracteres}}.",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Obrigatório} =1 {Obrigatório} other {Porfavor selecione ao menos # items}}.",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Deve ser vazio} =1 {Não pode ter mais de 1 caracter} other {Não pode ter mais de # caracteres}}.",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {Deve ser vazio} =1 {Não pode ter mais de 1 item} other {Não pode ter mais de # items}}.",
