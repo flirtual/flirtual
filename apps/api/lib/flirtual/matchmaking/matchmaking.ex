@@ -288,7 +288,9 @@ defmodule Flirtual.Matchmaking do
             """,
             "type" => "marketing"
           }
-          |> Flirtual.ObanWorkers.Email.new(unique: [period: 60 * 60])
+          |> Flirtual.ObanWorkers.Email.new(
+            unique: [period: 60 * 60, states: [:available, :scheduled, :executing, :completed]]
+          )
           |> Oban.insert()
         else
           {:ok, :disabled}
@@ -308,7 +310,9 @@ defmodule Flirtual.Matchmaking do
               ),
             "url" => "flirtual://matches/" <> conversation_id
           }
-          |> Flirtual.ObanWorkers.Push.new(unique: [period: 60 * 60])
+          |> Flirtual.ObanWorkers.Push.new(
+            unique: [period: 60 * 60, states: [:available, :scheduled, :executing, :completed]]
+          )
           |> Oban.insert()
         else
           {:ok, :disabled}
