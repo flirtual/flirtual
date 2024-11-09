@@ -205,7 +205,7 @@
 			"brands": {
 				"0": {
 					"image": "dc248f6f-aee6-4318-b473-6fe2d6db07ee",
-					"name": "New York Times"
+					"name": "The New York Times"
 				},
 				"1": {
 					"image": "d34ee25e-31e6-47a7-952f-51820f1e1ce1",
@@ -221,11 +221,11 @@
 				},
 				"4": {
 					"image": "29a2f1bc-0b3e-469a-aa11-0de69b75b629",
-					"name": "Road To VR"
+					"name": "Road to VR"
 				},
 				"5": {
 					"image": "db2eb424-e837-4d64-85e0-e49409ae33a6",
-					"name": "Samsung"
+					"name": "Samsung Whatever Next?"
 				},
 				"6": {
 					"image": "54ffe640-1c54-4d8f-a754-4c7b7ca82456",
@@ -241,7 +241,7 @@
 				},
 				"9": {
 					"image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
-					"name": "iDate Awards"
+					"name": "iDate Awards - Best New Technology"
 				}
 			}
 		}
