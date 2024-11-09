@@ -1,3 +1,4 @@
+/* eslint-disable node/prefer-global/process */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function assert(condition: any, message: string): asserts condition {
 	if (!condition) throw new Error(message);

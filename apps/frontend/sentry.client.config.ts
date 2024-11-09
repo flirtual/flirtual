@@ -13,6 +13,7 @@ import {
 Sentry.init({
 	// enabled: environment !== "development",
 	dsn: sentryDsn,
+	environment: environment === "preview" ? "staging" : environment,
 	sampleRate: 1,
 	tracesSampleRate: 1,
 	enableTracing: false,

@@ -23,6 +23,7 @@ jobs:
       - run: |
           flyctl config show -a flirtual | jq '
             .app = "flirtual-staging" |
+            .env.staging = "1" |
             .deploy.strategy = "immediate" |
             .services[0].auto_stop_machines = true |
             .services[0].auto_start_machines = true |

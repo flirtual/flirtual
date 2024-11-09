@@ -12,6 +12,8 @@ if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
   config :flirtual, FlirtualWeb.Endpoint, server: true
 end
 
+staging = System.get_env("STAGING", "") === "1"
+
 config :flirtual, Flirtual.ObanWorkers,
   enabled_workers:
     if(config_env() == :prod,
@@ -151,5 +153,6 @@ if config_env() == :prod do
   config :swoosh, :api_client, Swoosh.ApiClient.Finch
 
   config :sentry,
-    dsn: System.fetch_env!("SENTRY_DSN")
+    dsn: System.fetch_env!("SENTRY_DSN"),
+    environment_name: if(staging, do: :staging, else: :production)
 end
