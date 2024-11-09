@@ -7,7 +7,6 @@ import posthog from "posthog-js";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { type PropsWithChildren, useCallback, useEffect } from "react";
 
-import { displayName } from "~/api/user";
 import { cloudflareBeaconId, environment, posthogHost, posthogKey } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
@@ -30,6 +29,11 @@ function Identity() {
 	const { native, vision } = useDevice();
 	const posthog = usePostHog();
 
+	const posthogOptIn = session?.user.tags?.includes("admin")
+		// || session?.user.tags?.includes("moderator")
+		|| session?.user.tags?.includes("debugger")
+		|| false;
+
 	const reset = useCallback(() => {
 		Sentry.setUser(null);
 
@@ -42,12 +46,14 @@ function Identity() {
 	useEffect(() => {
 		if (!session) return reset();
 
-		const { preferences, email, ...user } = session.user;
-		if (!preferences?.privacy.analytics) return reset();
+		const { preferences } = session.user;
 
-		if (posthog) posthog.identify(session.user.id, { name: displayName(user), email, });
-		Sentry.setUser({ id: session.user.id, username: displayName(user) });
-	}, [posthog, session, reset]);
+		if (!preferences?.privacy.analytics) return reset();
+		posthog?.opt_in_capturing();
+
+		posthog?.identify(session.user.id);
+		Sentry.setUser({ id: session.user.id });
+	}, [posthog, session, posthogOptIn, reset]);
 
 	useEffect(() => {
 		if (posthog) posthog.capture("$set", {
@@ -66,30 +72,25 @@ function Identity() {
 
 export function AnalyticsProvider({ children }: PropsWithChildren) {
 	const current = useCurrentUser();
-	const posthogOptIn = current?.tags?.includes("admin")
-		|| current?.tags?.includes("moderator")
-		|| current?.tags?.includes("debugger")
-		// || current?.tags?.includes("beta_tester")
-		|| false;
 
 	useEffect(() => {
-		if (!posthogOptIn || !posthogKey) return;
+		if (!posthogKey) return;
 
 		posthog.init(posthogKey, {
 			api_host: posthogHost,
 			person_profiles: "identified_only",
+			opt_out_capturing_by_default: true,
 			capture_pageview: false,
 			capture_pageleave: true,
-
 			session_recording: {
 				maskAllInputs: true,
 				maskTextSelector: "[data-mask]",
 				blockSelector: "[data-block]",
 			}
 		});
-	}, [posthogOptIn]);
+	}, []);
 
-	if (posthogOptIn && posthogKey)
+	if (posthogKey)
 		children = <PostHogProvider client={posthog}>{children}</PostHogProvider>;
 
 	return (
