@@ -1,9 +1,9 @@
 {
 	"meta": {
-		"green_plain_mongoose_lend": "O primeiro applicativo de encontros do VR. Junte-se a milhares de encontros no VR em applicativos como VRChat.",
-		"knotty_direct_mongoose_bend": "Encontre novas pessoas na Realidade Virtual! Flirtual te ajuda ir à encontros no VR e VRChat.",
 		"name": "Flirtual",
-		"title": "%s - Flirtual"
+		"title": "%s - Flirtual",
+		"green_plain_mongoose_lend": "O primeiro applicativo de encontros do VR. Junte-se a milhares de encontros no VR em applicativos como VRChat.",
+		"knotty_direct_mongoose_bend": "Encontre novas pessoas na Realidade Virtual! Flirtual te ajuda ir à encontros no VR e VRChat."
 	},
 	"about": {
 		"image_alt": "Foto do time do Flirtual no VRChat",
