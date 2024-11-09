@@ -23,14 +23,24 @@ jobs:
       - run: |
           flyctl config show -a flirtual | jq '
             .app = "flirtual-staging" |
-            .env.staging = "1" |
             .deploy.strategy = "immediate" |
             .services[0].auto_stop_machines = true |
             .services[0].auto_start_machines = true |
             .services[0].min_machines_running = 0 |
             .vm[0].size = "shared-cpu-2x"
           ' > fly-staging.json
-          flyctl deploy -c fly-staging.json --remote-only --update-only
+
+          GIT_COMMIT_SHA=$(git rev-parse HEAD)
+
+          flyctl deploy \
+            -c fly-staging.json \
+            --remote-only \
+            --update-only \
+            --env STAGING=1 \
+            --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
         working-directory: ./apps/api
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: flirtual
+          SENTRY_PROJECT: api

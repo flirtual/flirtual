@@ -154,5 +154,6 @@ if config_env() == :prod do
 
   config :sentry,
     dsn: System.fetch_env!("SENTRY_DSN"),
-    environment_name: if(staging, do: :staging, else: :production)
+    environment_name: if(staging, do: :staging, else: :production),
+    release: System.get_env("GIT_COMMIT_SHA")
 end
