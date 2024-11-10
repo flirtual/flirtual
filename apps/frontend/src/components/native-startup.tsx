@@ -1,6 +1,5 @@
 "use client";
 
-import { StatusBar } from "@capacitor/status-bar";
 import {
 	AppUpdate,
 	AppUpdateAvailability,
