@@ -1,4 +1,1917 @@
 {
+	"ban-reason": {
+		"tUaxdXYAcyeb3G4Qc7gNLh": {
+			"details": "Perfil de spam. O conteúdo do seu perfil foi marcado como spam. Você pode responder esse email para apelar seu banimento e ter sua conta desbanida. Podemos pedir que você atualize seu perfil com mais informação.",
+			"name": "Spam"
+		},
+		"nupwCrjodUd4ZvPizEBc8L": {
+			"details": "Solicitando. Você não pode solicitar dinheiro no Flirtual. Você pode responder este email para apelar seu banimento e remover qualquer solicitação do seu perfil para desbanir sua conta.",
+			"name": "Solicitando dinheiro"
+		},
+		"VgQw2st96dZKZotsnYUEaN": {
+			"details": "Evasão de Ban. Pareçe que você criou uma nova conta ou ignorou um banimento anterior. Se você gostaria de apelar seu ban anterior e ter sua conta desbanida, responda ao email do ban original.",
+			"name": "Evasão de Ban"
+		},
+		"muXMqNjneKnwqxT8nqcy4d": {
+			"details": "Menor de idade. Você deve ter no mínimo 18 anos para usar Flirtual. Se você acredita que foi banido por erro, você pode responder este email para apelar seu ban e enviaremos um link seguro para verificar sua idade através de um documento para desbanir sua conta.",
+			"name": "Menor de idade"
+		},
+		"hLwvdpKQiofFTCDHox75SY": {
+			"details": "Conteúdo odioso. Mensagens e conteúdo de ódio não são bem-vindos no Flirtual. Se você acredita que este ban foi um erro responda este email para apelar e ter sua conta desbanida.",
+			"name": "Conteúdo Odioso"
+		},
+		"EVU7hHnv5u6eQwRBTW8aYU": {
+			"details": "Nudez ou conteúdo adulto. Imagens de conteúdo adulto ou texto excessivamente obsceno não são permitidos no Flirtual. Você pode responder este email para apelar seu ban e atualizar seu perfil para desbanir sua conta.",
+			"name": "Conteúdo Adulto"
+		},
+		"WSD2yPcs64FB27qpb4AGuT": {
+			"details": "Personificação. Seu perfil aparenta estar se passando por outra pessoa. Se você acredita ter sido banido por erro responda este email para apelar e ter sua conta desbanida.",
+			"name": "Personificação"
+		},
+		"dWDkcjmXQEQRVoXmNkutAB": {
+			"name": "Assédio",
+			"details": "Assédio. Se você gostaria de apelar seu banimento, por favor responda este email. Por favor note que não podemos compartilhar detalhes de denúncias de moderação, caso alguma tenha sido feita."
+		},
+		"KfFVwKB4DYMXx7foyqGUZM": {
+			"details": "Conteúdo Violento/Perturbante. Seu perfil aparenta conter conteúdo violento ou perturbante. Se você quiser apelar este banimento, por favor responde este email.",
+			"name": "Conteúdo Violento/Perturbante"
+		},
+		"YLsXz4iHn9yNLLLmuMHLCT": {
+			"details": "Automutilação. Seu perfil ou atividade foi marcado como contendo referências a automutilação que pode ser perturbante para outros usuários, Nós temos alguns recursos em https://flirtu.al/mentalhealth que podem ser úteis. Por favor se cuide. Se você quiser apelar este banimento, porfavor responda este email.",
+			"name": "Automutilação"
+		},
+		"HmF9W5yHfH3nLRYnt6F2cc": {
+			"name": "Conteúdo ilegal",
+			"details": "Conteúdo ilegal. Seu perfil ou atividade aparenta violar as leis Canadenses ou locais. Se você acredita ter sido banido por erro, responda este email para apelar."
+		},
+		"Lfb829DEo36f54Uu3H3ybj": {
+			"details": "Golpe, malware, ou links maliciosos. Seu perfil aparenta conter links ou atividade maliciosa. Se você acredita ter sido banido por erro, poderá apelar respondendo este email.",
+			"name": "Golpe, malware, ou links maliciosos"
+		},
+		"8P2pi5232LTpzGTDWkBprc": {
+			"name": "Outro"
+		},
+		"jBVZ29YcQ2dDXbURb6AxXk": {
+			"name": "Anúnciando",
+			"details": "Anúnciando. Seu perfil aparenta ser focado em promover uma conta ou serviço externo. Você é livre para mencionar suas redes sociais ou trabalho no seu perfil, mas o propósito principal do seu perfil deve ser encontrar amigos ou pares. Você pode responder esse email para apelar seu ban e atualizar seu perfil para desbanir sua conta."
+		},
+		"5H9nMhQacZBD9Zomu7Tbt9": {
+			"details": "Conta duplicada. Criar múltiplas contas no Flirtual não é permitido. Essa conta foi desativada mas você ainda pode usar sua outra conta. Se você acredita ter sido banido por erro, ou gostaria de ter a outra conta desativada ao invés desta, porfavor responda esse email.",
+			"name": "Conta duplicada"
+		}
+	},
+	"delete-reason": {
+		"jrAqzBkasZwqfjSPAazNq3": {
+			"name": "Eu encontrei um relacionamento no Flirtual"
+		},
+		"BMEJteBnvo8vrUrPh7j634": {
+			"name": "Eu encontrei um relacionamento em outro lugar"
+		},
+		"jgc6z6qpeYmTAwHmid6n8X": {
+			"name": "Prefiro outros aplicativos de namoro de RV"
+		},
+		"kTXr4okVAGLovjKBiwSgnF": {
+			"name": "Sem pares suficientes"
+		},
+		"TaqMV38Taxdz7ZNxEG4oEU": {
+			"name": "Sem encontros suficientes"
+		},
+		"3fm9o3onrqPiwKhceexRMZ": {
+			"name": "Experiência ruim com matches"
+		},
+		"EkWwgZavkCxJhRgKJF3yRn": {
+			"name": "Prefiro outros aplicativos de namoro em pessoa"
+		},
+		"6R764W55PvotuTz3BBRHXD": {
+			"name": "Baixa taxa de matches/qualidade de perfis"
+		},
+		"J3vVp9PWZQi5cEuk8G8wij": {
+			"name": "Erros técnicos"
+		},
+		"sQcEHRLCffbLfcgM4zAELf": {
+			"name": "Estou tomando uma pausa"
+		},
+		"g4hPG9psXVxzKa4Tr9GjDN": {
+			"name": "Outra"
+		}
+	},
+	"game": {
+		"3nzcXDoMySRrPn6jHC8n3o": {
+			"name": "VRChat"
+		},
+		"JSyJfiSSzqm232nKidEDog": {
+			"name": "Beat Saber"
+		},
+		"LuMaVcT8Xveqhbt4ZRPe8Q": {
+			"name": "Rec Room"
+		},
+		"MhWAgbFzmusLJyAdtSXfXV": {
+			"name": "Phasmophobia"
+		},
+		"d3ZV6rendJA86ejpCSaHBK": {
+			"name": "Minecraft VR"
+		},
+		"eo2DSet8HVzi8RAHQSZooF": {
+			"name": "Pavlov"
+		},
+		"tEFPjkby9U6ZiTBkNeAqwA": {
+			"name": "Roblox"
+		},
+		"oMVF6HtJ9NM39TgtduA36W": {
+			"name": "The Forest"
+		},
+		"G9qwehfhnKZx2pE3WFwQw2": {
+			"name": "Zenith: Nexus"
+		},
+		"uZMiTn4iySMVugZPDiK5LR": {
+			"name": "Onward"
+		},
+		"bHF6sv68wCUEQ6VNEYEvGQ": {
+			"name": "Gorilla Tag"
+		},
+		"9NttFgjqMQMCvxiRTNz99W": {
+			"name": "Among Us VR"
+		},
+		"7EuDksBCySX5vnxzQLKx3e": {
+			"name": "ChilloutVR"
+		},
+		"mHF6zQZ3tbVe9iYjGuzAPK": {
+			"name": "PAYDAY 2"
+		},
+		"b3YVqwSVNMcsh2xUPSd9hU": {
+			"name": "PokerStars VR"
+		},
+		"HF4tppeRywmq9oWsR2GyMg": {
+			"name": "POPULATION: ONE"
+		},
+		"GhScLf7QXNJa2GrZjWVk49": {
+			"name": "Bigscreen"
+		},
+		"YChvDcFrBL2FjUYRs8Kn5E": {
+			"name": "Tabletop Simulator"
+		},
+		"mkyAHUgKDWFiqkZcgZD6pS": {
+			"name": "Horizon Worlds"
+		},
+		"ffrwQHFv2kN4uRRJCLYqVb": {
+			"name": "Contractors"
+		},
+		"T65Eophn8t8ukfig9S3JdD": {
+			"name": "Neos"
+		},
+		"6DjtoKvDStyCEJBWdjDnva": {
+			"name": "A Township Tale"
+		},
+		"ibNMSB3mTjSqA4yVh424BG": {
+			"name": "Drunkn Bar Fight"
+		},
+		"ACUnhMdbAtXCVPJmEsfqMY": {
+			"name": "Assetto Corsa"
+		},
+		"zk8azbDyuxAXKmB7n78CC3": {
+			"name": "STAR WARS: Squadrons"
+		},
+		"bgxJhCTVuYKkmxMYwx4MSF": {
+			"name": "Ghosts of Tabor"
+		},
+		"pMVwYrn8byRREG5zGxHfVC": {
+			"name": "Elite Dangerous"
+		},
+		"tNGaLaE29HH3jTDa9PTvJE": {
+			"name": "Arizona Sunshine"
+		},
+		"yf4g49maWEZTnBAKwsEFSX": {
+			"name": "Pavlov Shack"
+		},
+		"vKBHWZMpiBHjcwGyjKDm88": {
+			"name": "Gun Raiders"
+		},
+		"gNZZfj4cpvTBD2wyMKisDQ": {
+			"name": "War Thunder"
+		},
+		"KtMvXwxoazna8HPayXUqMA": {
+			"name": "Walkabout Mini Golf"
+		},
+		"GeUXPSsyL2sxwjrBfWUaHf": {
+			"name": "Real VR Fishing"
+		},
+		"esVH3qS2SfDBjrkwr7gkN9": {
+			"name": "Inside the Backrooms"
+		},
+		"Uzpbh2WhLAdc7pGGLMNHnU": {
+			"name": "Cook-Out"
+		},
+		"SGRV8jPo3rPqMcHZYhjEJf": {
+			"name": "Multiverse"
+		},
+		"hDwNqLH89jVE5SeeHKQpXR": {
+			"name": "SCP: Labrat"
+		},
+		"yJeA9FYJmykkceZPnZKdET": {
+			"name": "Zero Caliber VR"
+		},
+		"6XHd53DTXKRJejTLkZCkES": {
+			"name": "PokerVR"
+		},
+		"p5YpamzGR5NfmvWWESpL6S": {
+			"name": "Demeo"
+		},
+		"bys8eVjiZjsuD3oBGeQ5Bb": {
+			"name": "DEVOUR"
+		},
+		"ny8xSj6mJUGz7zwJREHvod": {
+			"name": "Escape the Backrooms"
+		},
+		"atanSTGZ9KMUtfkneQCrWa": {
+			"name": "iRacing"
+		},
+		"o3SZXkUK5EZ4vECSriB4U7": {
+			"name": "vTime"
+		},
+		"XGUp3Ndoiy8Q8W2F6aazsd": {
+			"name": "After the Fall"
+		},
+		"f5zwQJNjEHehfvaxmSL9Za": {
+			"name": "Chess Club"
+		},
+		"XdotYY46M3coWWzYrgmaLA": {
+			"name": "Wave"
+		},
+		"qVyhnUw74xehwfAtH4Nb2D": {
+			"name": "Synth Riders"
+		},
+		"rqCACS8o3wrw6Hzu3jJSBU": {
+			"name": "DiRT Rally 2.0"
+		},
+		"WxbMUomENN2kERWMeLwn3Z": {
+			"name": "Ragnarock"
+		},
+		"svg3V7m7PWFkcVMLHc4qP8": {
+			"name": "Eleven Table Tennis"
+		},
+		"DPe2yHXfMdTnKd6GuQi6BH": {
+			"name": "GOLF+"
+		},
+		"4vCKL6mzNRt5F89A2uDGEj": {
+			"name": "DCS World"
+		},
+		"6jaR2MaS3zCefnHmLan6DV": {
+			"name": "Kingspray Graffiti"
+		},
+		"38ziUfShQMNJvnB3sRZZuL": {
+			"name": "Creed: Rise to Glory"
+		},
+		"aMnbvaXq5RgSCxKRsqSSk2": {
+			"name": "FaceTime"
+		},
+		"ixWMQQGAquaWdZ3b3yNFWe": {
+			"name": "Star Trek: Bridge Crew"
+		},
+		"ZUUcewRoLYzjSN3RRZjaMb": {
+			"name": "Dance Central"
+		},
+		"s6XpgiaXSuwEjPL7EBjao8": {
+			"name": "Project CARS 2"
+		},
+		"mqoriULTqL2XcsbVjSrA8k": {
+			"name": "Tetris Effect: Connected"
+		},
+		"7WmVKjbTLEyNAMuGjr5Cj6": {
+			"name": "VAIL"
+		},
+		"hueUzWdLJzeQyGEgFiJa8D": {
+			"name": "Fruit Ninja 2"
+		},
+		"ZTJnqN7w9NDaeEcaRF2w3g": {
+			"name": "Half + Half"
+		},
+		"iAfAoJhthiMbk469A2Hdde": {
+			"name": "Resonite"
+		},
+		"74Sjo5qywbL8q73QJ7FoqE": {
+			"name": "Cards & Tankards"
+		},
+		"uXMtPXbrSvf8ReGAfKDXN7": {
+			"name": "Gym Class - Basketball VR"
+		},
+		"W3smAUVVQSCEdvVLzqTn5Y": {
+			"name": "Electronauts - VR Music"
+		},
+		"HiPFU76JUxsbmiFNjR5JXf": {
+			"name": "Hyper Dash"
+		},
+		"CirbzoyPbRnDS3vjmBf2Pe": {
+			"name": "Legendary Tales"
+		},
+		"FzP5g29sSgzrieSCrrXJed": {
+			"name": "STRIDE"
+		},
+		"7v4uz6en93khFT7xFXwc4e": {
+			"name": "Epic Roller Coasters"
+		},
+		"xLssrjTmx5jC3rBwVgpeya": {
+			"name": "Breachers"
+		},
+		"TfaA23SUr8UbigpDBS4iVk": {
+			"name": "Death Horizon: Reloaded"
+		},
+		"gT8utkQESbYePEJ6yYVAxg": {
+			"name": "Zero Caliber: Reloaded"
+		},
+		"Nog6kCqMmCviaa5tUfstaa": {
+			"name": "Warplanes: WW1 Fighters"
+		},
+		"B6NFLuwPrxgHFX6TQAB9B6": {
+			"name": "Ironlights"
+		},
+		"NDmNAPeGknzWeSMghLwCHW": {
+			"name": "Sports Scramble"
+		},
+		"NsgH6QXSP8LGpF2PeRAcBc": {
+			"name": "RUSH"
+		},
+		"nmR9ZVp3jpMbqDG2fyoUnW": {
+			"name": "Tactical Assault VR"
+		},
+		"v8FF4MyiNWWjBMXeKpo4xE": {
+			"name": "Gods of Gravity"
+		},
+		"uuHafwQebiYQoxTuG6YLiN": {
+			"name": "OrbusVR: Reborn"
+		},
+		"ht3FF4tuWvsrSTwMXp5ujb": {
+			"name": "IronWolf VR"
+		},
+		"qzcXZATsnTgW29grR2fJ36": {
+			"name": "DiRT Rally"
+		},
+		"4rGM6uz7KwSnSoDCSjtFMT": {
+			"name": "FOREWARNED"
+		},
+		"tJd8FV2qj77hvVrha4aiDC": {
+			"name": "Smash Drums"
+		},
+		"jTzfNyE4ggw3WRyopj7dnb": {
+			"name": "Killing Floor: Incursion"
+		},
+		"KLwiCwcwgcmZXcLEJU5y4L": {
+			"name": "Elven Assassin"
+		},
+		"z6PXMo8JatbqCcYzjCaW9F": {
+			"name": "Museum of Other Realities"
+		},
+		"E4Vf4HRy33aPjYkyXXdoee": {
+			"name": "F1 23"
+		},
+		"2B7KNoGh5iAEJsp5ADvZVG": {
+			"name": "Golf It!"
+		},
+		"UVnj5Tfm2MT7wKavrNUtUi": {
+			"name": "VirtualCast"
+		},
+		"o3ADHYL6zYENdDd6WrrzoT": {
+			"name": "Wander"
+		},
+		"m7MYMFUx28taDwmjPHfX26": {
+			"name": "Lavender"
+		},
+		"pabRUaoeHixCrf7b3hARUj": {
+			"name": "Premium Bowling"
+		},
+		"cbi5XAds9KWHcdQMdew9Eo": {
+			"name": "Broken Edge"
+		},
+		"tLfA6XspAcvCaQK6XC8mfT": {
+			"name": "BattleGroupVR"
+		},
+		"RAkDhE4EzRgMCd6siRXHgY": {
+			"name": "Noclip VR"
+		},
+		"BPoQhJvNi32kbECipz4aWa": {
+			"name": "IL-2 Sturmovik: Battle of Stalingrad"
+		},
+		"DSWMTYMW3BFnfJMVjftU8n": {
+			"name": "Blaston"
+		},
+		"aW7HoLx2pA3FvwWFRz3d3M": {
+			"name": "Vegas Infinite"
+		},
+		"pJAc8ipKGh5AjxkccveUUQ": {
+			"name": "Gun World VR"
+		},
+		"gBjREdNLqSz5yRCJyo93ua": {
+			"name": "Spatial"
+		},
+		"XPtLgbB63VUsPFqx5ELnLD": {
+			"name": "STAND OUT: VR Battle Royale"
+		},
+		"KiomNcSCbSEQMdGNSy67C8": {
+			"name": "Dead and Buried II"
+		},
+		"ycxBiAbVpXKpHJwZmicB68": {
+			"name": "Warhammer 40,000: Battle Sister"
+		},
+		"N87PbNYd4pP6L7EDa7RwnD": {
+			"name": "RUMBLE"
+		},
+		"xxQjKi8CCJ6xinmfa8hpSH": {
+			"name": "V-Sekai"
+		},
+		"Nx6QgkoRg3kkSQ93poStfY": {
+			"name": "Dungeons Of Eternity"
+		},
+		"UaYWH2QPYGbKGc4YVfkm9e": {
+			"name": "Golf 5"
+		},
+		"tFd3LWWTn5zzRrkxKboBuh": {
+			"name": "SHOOTOUT"
+		},
+		"8YniapyDoD8DxRrK38rCgG": {
+			"name": "Arcade Legend"
+		},
+		"ARJTLv5p7uxqtuJ4Zw3Vwn": {
+			"name": "ForeVR Pool"
+		},
+		"8ViWUMM3UrhJn2NgdZv8fL": {
+			"name": "Werewolves Within"
+		},
+		"CUbsNRTRdjBYxk4nPSMePJ": {
+			"name": "Climbey"
+		},
+		"YR6BMd4YhdY8prtgqiiYt4": {
+			"name": "First Person Tennis"
+		},
+		"TSCWbVuxyUkZtra7atqPB9": {
+			"name": "Catan VR"
+		},
+		"MUPA7cU49qWd2WQH8rjVc7": {
+			"name": "iB Cricket"
+		},
+		"xcJ4U35Qmbvna6373AEqMN": {
+			"name": "Survival Nation"
+		},
+		"vHRknsmcE7YZcewUJUGUSa": {
+			"name": "NFL PRO ERA"
+		},
+		"2QGKkCnxpHNZ2ZaZZiGuFE": {
+			"name": "TOTALLY BASEBALL"
+		},
+		"Z65Epq7eSkG5AcCxSKiF5Y": {
+			"name": "Vox Machinae"
+		},
+		"KQWdxJu5HSuNMi5ECmFKeK": {
+			"name": "Arizona Sunshine 2"
+		},
+		"ZCodFBajjKVX6xnq6zhesg": {
+			"name": "Path of the Warrior"
+		},
+		"V8i2C9REDa48BWhhZWdaEc": {
+			"name": "Cluster"
+		},
+		"QEfHerxPBkaLJzBeBZ6od8": {
+			"name": "Racket Fury"
+		},
+		"JMcgrsasKgQ4n5LiHNsaHG": {
+			"name": "Drop Dead: Dual Strike Edition"
+		},
+		"xjNgcDvAwVVTuL9tGvGqf6": {
+			"name": "All-In-One Sports VR"
+		},
+		"VAXHujeaGhwJspxF7WzkFA": {
+			"name": "Raccoon Lagoon"
+		},
+		"pLvV7HCfHi5c5fuW8W9Dsk": {
+			"name": "Sairento VR: Untethered"
+		},
+		"UUscPuE4Lw5Z9wu3WK6Xi6": {
+			"name": "Warplanes: Battles over Pacific"
+		},
+		"g6bfwzSasvtbNe3TV6oXxk": {
+			"name": "Pillow"
+		},
+		"qGrgAzy3oieNmdaLmREjJb": {
+			"name": "Tribe XR"
+		},
+		"pRfEB2eSFTfwy6qQA9suWL": {
+			"name": "Clash of Chefs VR"
+		},
+		"rYhoZL8MePT9piqyJHDWrH": {
+			"name": "GRID Legends"
+		},
+		"QDyydepJS4KNtDkxFUvRdC": {
+			"name": "X-Plane 12"
+		},
+		"SUYK8tfrWmbvpopJZsnPzJ": {
+			"name": "Mini Motor Racing X"
+		},
+		"gnZzXhApVnhpLH4SAAuxBR": {
+			"name": "Death Lap"
+		},
+		"3dXr7GXNjW7SBKNfMWgYJe": {
+			"name": "PULSAR: Lost Colony"
+		},
+		"nqUgzf7FGLFNUi5MfcpmV8": {
+			"name": "Mozilla Hubs"
+		},
+		"GKPrtXp4v4kjusPN4Y7sBk": {
+			"name": "Eagle Flight"
+		},
+		"AqC9969ZdjD69MiMFQd2FG": {
+			"name": "Anyland"
+		},
+		"syWmXHYaQA8H2Nv3QQt7WX": {
+			"name": "FitXR"
+		},
+		"LTDYaeVKTXiX6frTeNJykE": {
+			"name": "Automobilista 2"
+		},
+		"zQ5bGpSqDs4oZj9NAMM5gF": {
+			"name": "Innerworld"
+		},
+		"BfCJdsQUAqVJDh6iNkN4A8": {
+			"name": "Spaceteam VR"
+		},
+		"jE3i2DFKy7XbusiBR8PXGK": {
+			"name": "Nature Treks: Together"
+		},
+		"nxoQSyoCFXMZ7ceyAzLQSA": {
+			"name": "Wooorld"
+		},
+		"bYsz5BcyuHQtBjKxxEdPiA": {
+			"name": "X-Plane 11"
+		},
+		"wtg3f4JC58Nhw2SQh8jXjU": {
+			"name": "Sky Climb"
+		},
+		"Lp5SSmGdQbko5nLdtdsjPK": {
+			"name": "ForeVR Bowl"
+		},
+		"5vADCYUVFbgrmbMecFYyvn": {
+			"name": "Carrier Command 2"
+		},
+		"LQj8ZkUMcA8Qw4Qb5Hv7sn": {
+			"name": "VR Regatta"
+		},
+		"wNBhTGiCSK5L4QFz9mMqK5": {
+			"name": "The Under Presents"
+		},
+		"dXbVxiHPTDPRnCiyBnXWY3": {
+			"name": "MOTHERGUNSHIP: FORGE"
+		},
+		"XeaDoiGzgCamCkedxGLUiS": {
+			"name": "Windlands 2"
+		},
+		"AofXjSBRCDNwARLiUthS4B": {
+			"name": "Fast and Low"
+		},
+		"PfdjveZpqqYCkSCRkVF3iA": {
+			"name": "Stormland VR"
+		},
+		"Nrbx2Zhx2TnJefBR846nm6": {
+			"name": "ForeVR Cornhole"
+		},
+		"nvLQ9yJhkPahct8pxMLuPA": {
+			"name": "Racket Club"
+		},
+		"eaaKrfePsG94RsmcwrHL3c": {
+			"name": "WipEout Omega Collection"
+		},
+		"QGSpnyBWm92A54zNdFMU2T": {
+			"name": "Landfall"
+		},
+		"skwQg7RzwQVPkKjYoonKQ9": {
+			"name": "SculptrVR"
+		},
+		"mXvvfVrtPqHXoWeDCgK7A4": {
+			"name": "Neverboard"
+		},
+		"ynW2JCRLR4X9oU6Kqj7LKY": {
+			"name": "Nock"
+		},
+		"3x7zGb9ycfa8L2tERRiqKT": {
+			"name": "Alvo"
+		},
+		"o5KLvKMfKwMaSFFxZLh3Wg": {
+			"name": "Helios"
+		},
+		"2H2uaDpDTfUrDhZy7WBTVo": {
+			"name": "Farpoint"
+		},
+		"sM28jmnyEAXyFoHMNTzE3G": {
+			"name": "From Other Suns"
+		},
+		"8LA6Hcw65AShAruPjkGgkF": {
+			"name": "Demeo Battles"
+		},
+		"cQUv4XrTKKAcrak34Tvjpc": {
+			"name": "Contractors Showdown"
+		},
+		"hZAgCtLnnR7gjuMDnt2Prh": {
+			"name": "No More Rainbows"
+		},
+		"dprz2Fy5RkZ9xMtv3u7hp5": {
+			"name": "Dragon Fist: VR Kung Fu"
+		},
+		"zSDxjnPFuaQoPFVzSCanE2": {
+			"name": "ForeVR Suck It!"
+		},
+		"zDc2judgDVSRZfr67njf9G": {
+			"name": "Holofit"
+		},
+		"mRFA8QzpPFS3iGXPeESnin": {
+			"name": "Riff XR"
+		},
+		"vyVWcqupmUg8SNHRJaY8xg": {
+			"name": "Game Room"
+		},
+		"mEbg8pTyZ82LZEkJboFJQF": {
+			"name": "Darksword: Battle Eternity"
+		},
+		"jTP9tBW65iEcj7bX4ojBpQ": {
+			"name": "STACK"
+		},
+		"AdwyMgDm5hzAHjPn4qiDC9": {
+			"name": "Skyworld: Kingdom Brawl"
+		},
+		"TsoZ2PUcsbVJskcTr9qUjB": {
+			"name": "Puppet Fever"
+		},
+		"xhsSuzmX7FqjgZNEmZNdUY": {
+			"name": "SOLARIS OFFWORLD COMBAT"
+		},
+		"Mbd8zj52WrqmP6zmVeRCJm": {
+			"name": "Bait!"
+		},
+		"hgA8Uxk4J66NbdVnuUzUxf": {
+			"name": "Villa: AI Creation & Collaboration"
+		},
+		"owNcWMbrtQ7PCtY7qeMc8L": {
+			"name": "Brass Tactics"
+		},
+		"8PkWG2ACLwqjtfGxGxy262": {
+			"name": "Battlezone Gold Edition"
+		},
+		"JxrYt7MwvqrdTS5wu3YjbQ": {
+			"name": "Ilysia"
+		},
+		"ZmutKTykJx7wuW2ftpY3Qc": {
+			"name": "Firewall Zero Hour"
+		},
+		"MWStBEu5BFAD4CP5TsTTWB": {
+			"name": "Grapple Tournament"
+		},
+		"SbJFuwK2uzPL3RD7gYWXbc": {
+			"name": "Labyrinthine"
+		},
+		"t7uir94ZfxS5UMXCBptHyh": {
+			"name": "Rock Life: The Rock Simulator"
+		},
+		"3vK9d6PQe6Cq7QYWp9b88C": {
+			"name": "Gambit!"
+		},
+		"MpjcJ4U2VEriowWX3v2m2D": {
+			"name": "World of Mechs"
+		},
+		"3hSA5qtq6KixvtzJgMTFdM": {
+			"name": "Larcenauts"
+		},
+		"DSJqXZgmyaBknzvzpGYfrm": {
+			"name": "rFactor"
+		},
+		"zCGSieHB5EpxuHj7k63oim": {
+			"name": "F1 24"
+		},
+		"CF98VW77vLQVRaxJt6Kzu9": {
+			"name": "The Break-In"
+		},
+		"NYVYsvysVxFYuPDLdpbt6a": {
+			"name": "Planet Theta"
+		},
+		"nRygXu83WZ6cTocbYKPTd2": {
+			"name": "s&box"
+		},
+		"ggxR45ZsJLuv8dpN8qupUD": {
+			"name": "X8"
+		},
+		"rFXCdJEuaD5b6SiiQWdYgi": {
+			"name": "DAVIGO"
+		},
+		"KKukj7BAw9d89TV7uUh2zk": {
+			"name": "Trickster VR: Co-op Dungeon Crawler"
+		},
+		"ZGLXgRN6WxdFXtn7PbuoMg": {
+			"name": "Barbaria"
+		},
+		"oysKPjuBR4cKeksTJBh5cm": {
+			"name": "PowerWash Simulator VR"
+		},
+		"b6zBfj9k9dAg4XzHRk8r9E": {
+			"name": "Racket: Nx"
+		},
+		"tdYbN8jykNvjvoeAMqNCFQ": {
+			"name": "Dash Dash World"
+		},
+		"5rjs4rNHEXbP4AgTvEFXEn": {
+			"name": "Void Racer: Extreme"
+		},
+		"zHprZ7YhXBe9KuZPoaHZeP": {
+			"name": "Wands"
+		},
+		"ju2kCVwEcSBMUoc5NChfMP": {
+			"name": "Ultrawings 2"
+		},
+		"KArJvtkwvfDmijfb3rAfV6": {
+			"name": "Banter"
+		},
+		"7NjeRRK6XWcQ2VwamJFk4N": {
+			"name": "Planeta"
+		},
+		"q2XrCRJGZEJRBkgzxxP4XL": {
+			"name": "ForeVR Darts"
+		},
+		"uSKh9xCtykee2xADbmrodC": {
+			"name": "VZfit"
+		},
+		"p36v7ZTdy4uXN34gfArbQo": {
+			"name": "NERF Ultimate Championship"
+		},
+		"bFhFf6dKrnXwaob93HNGn2": {
+			"name": "The Unspoken"
+		},
+		"6ZBqAmK3V3PCp2dLxUTRB9": {
+			"name": "IRONSTRIKE"
+		},
+		"CYykpUUDfcKppKtCLAccrW": {
+			"name": "INVERSE"
+		},
+		"RwfdcvqjWW6aK2Upo5wNt3": {
+			"name": "Wands: Alliances"
+		},
+		"EaU8Vg4zaXw4h6BdAxqUCW": {
+			"name": "Block Buster"
+		},
+		"pJe2kkrcsrjypCr62eCi5i": {
+			"name": "Into the Radius 2"
+		},
+		"oVoQRmrYccb8QccHFuLLb6": {
+			"name": "RIGS Mechanized Combat League"
+		},
+		"WaBNA7Z7WZv7K2vVJKmUdB": {
+			"name": "BIG BALLERS VR"
+		},
+		"MnaGzup5TKirJqart6uVyn": {
+			"name": "Vermillion - VR Painting"
+		},
+		"MtMqrQh8QcEXZH6vjnQ6rN": {
+			"name": "Hellsweeper VR"
+		},
+		"h5W9ayvbJp57SsvVqC6FpE": {
+			"name": "Crossfire: Sierra Squad"
+		},
+		"yftjBC7ZRpf9kPYe4roahc": {
+			"name": "Ghostbusters: Rise of the Ghost Lord"
+		},
+		"ujNkH68EgTUnBw89qnC4qf": {
+			"name": "SOUL COVENANT"
+		},
+		"eR5qPKfQ8answShFLd5Rj6": {
+			"name": "REQUISITION VR"
+		},
+		"33Tn42vj5imwGddPLnc8zP": {
+			"name": "NFL PRO ERA II"
+		},
+		"tr7gmQpLb4f2EUDGg4GdKL": {
+			"name": "Painting VR"
+		},
+		"z7ynMsHUhvD9ri3criCzdj": {
+			"name": "Swarm"
+		},
+		"veeBYrCZkHZdNnfDdvxtkH": {
+			"name": "Monkey Doo"
+		},
+		"dCoCvVtwYXyjdR5oxswotL": {
+			"name": "Puzzling Places"
+		},
+		"NkgQyWU9EznfYKjD7oNkyL": {
+			"name": "TOSS!"
+		},
+		"YQk3mniA5hRS8k7uSa6vFN": {
+			"name": "VR Karts: Sprint"
+		},
+		"NoP6ZmkDchkGudHjmDy4jQ": {
+			"name": "Penguin Paradise"
+		},
+		"RzcEGH96sX9wANAxQFrMBS": {
+			"name": "Ultimechs"
+		},
+		"K7mtqJmmJeKDMrzgmTGPiS": {
+			"name": "Alcove"
+		},
+		"tsA7n35LaiVm2iT5eAUcuS": {
+			"name": "Remio"
+		},
+		"FrqmDa3JH6KU6JzTcU8Gkb": {
+			"name": "Ancient Dungeon"
+		},
+		"XRqn7WphUYq7v8CRTpUoBe": {
+			"name": "ALTAIR BREAKER"
+		},
+		"Wohs97dMJJcgWim4Tgd2D3": {
+			"name": "Cybrix"
+		},
+		"2qjVbegePFWX6edLCDYbBE": {
+			"name": "Statik"
+		},
+		"p6rKSRtKpA2pQhDrbUXPKo": {
+			"name": "Vket Cloud"
+		},
+		"nzbA5ahuw5cNWimAoxVetd": {
+			"name": "MiRacle Pool"
+		},
+		"oGskRvhYEvF95B8V3th6pb": {
+			"name": "UBOAT: The Silent Wolf"
+		},
+		"PWXhBhetZzxgsfyuTyWGvM": {
+			"name": "Drop Dead: The Cabin"
+		},
+		"n4kmKNpxtZa4wZu5CFQ52i": {
+			"name": "SWORDS of GARGANTUA"
+		},
+		"QCi5obHsHQJaLYtdKbDhiP": {
+			"name": "Tennis Esports"
+		},
+		"Eni52PYzFJTMQrKDmhRaR6": {
+			"name": "Crazy Kung Fu"
+		},
+		"Yg8zTiFYRTQZiKXxixvxKA": {
+			"name": "Vircadia"
+		},
+		"P36iExD7sxrtu4xyeCi6zA": {
+			"name": "VRider SBK"
+		},
+		"uGripoFScoHnWvMsG7gxU2": {
+			"name": "BRINK Traveler"
+		},
+		"YyQVuUUPq9BnczPJQHUCmG": {
+			"name": "Rocking Legend"
+		},
+		"BUNcqvRSwo8aMQX69wgMHR": {
+			"name": "Ultimate Swing Golf"
+		},
+		"HnxZtb4f4CeqPoayJSxdBc": {
+			"name": "Warplanes: Air Corp"
+		},
+		"V7PHWUz3MeobwTpFfQTutg": {
+			"name": "The Wizards - Dark Times: Brotherhood"
+		},
+		"JS2xfAazDZXswSqR7AnMoB": {
+			"name": "Yeeps: Hide and Seek"
+		},
+		"2eRxYQuuivHeVcZrCVZU8Q": {
+			"name": "Headspace XR"
+		},
+		"u5RJ22PRcNu3ToBpvNoyYM": {
+			"name": "Guardians Frontline"
+		},
+		"uABBtPPKjhKhFm8jBWvPYK": {
+			"name": "Bounce Shot"
+		},
+		"RQVUFNkHrLcwLSzWwa5NPH": {
+			"name": "Zero Caliber 2"
+		},
+		"bQfJUMuUR2sR7mVcNCDk7a": {
+			"name": "MarineVerse Cup"
+		},
+		"84LTttUvpxL9Qnp7SRRjcc": {
+			"name": "Project TERMINUS VR"
+		},
+		"mpzedqNWE2JVPXpUfDuUkD": {
+			"name": "Overte"
+		},
+		"XDtbVnYqYaUq9DuMdxj5da": {
+			"name": "Mahjong Space"
+		},
+		"xxFBZfrRzWEUSTTXod3iig": {
+			"name": "Stabby"
+		},
+		"GX8Uv5ydV2pojj6gkCy5Q8": {
+			"name": "Blacktop Hoops"
+		},
+		"EVJY9qA2nFem93cnhXuK9a": {
+			"name": "Crisis Brigade 2 reloaded"
+		},
+		"sHw3ZznXxeC9DSBNcAYa39": {
+			"name": "Loco Dojo Unleashed"
+		},
+		"j8VAyoKBqpAKLoGYZBpvA9": {
+			"name": "Brazen Blaze"
+		},
+		"3YswU2vDF59pgGA9dpCdeX": {
+			"name": "Strike Rush"
+		},
+		"4TPmwvW8y9xw7AiUuWtp2m": {
+			"name": "Paradiddle"
+		},
+		"DmV7i9pb6UUyGiGkVeK88m": {
+			"name": "inSpaze"
+		},
+		"gS7XC884NzMB4Lqk9ARMJX": {
+			"name": "Espire 2: Stealth Operatives"
+		},
+		"AWr2CAxhJsY4GoNJZDZarC": {
+			"name": "CleanSheet Soccer"
+		},
+		"3nhLdefwZxD4k5Y6WgWqHf": {
+			"name": "NHL Sense Arena"
+		},
+		"ucFdaZAkrrAjRLkj7KDbPB": {
+			"name": "PatchWorld"
+		},
+		"Xzx6kokjFrpUiuiBwiHDKd": {
+			"name": "Astro Hunters VR"
+		},
+		"DSUSXcT8CMQVYffYSvSPzh": {
+			"name": "Dimensional Double Shift"
+		},
+		"tyxUgBtv2gcsqy9DEaKhQf": {
+			"name": "Exploding Kittens VR"
+		},
+		"rLXRgj5mxaktUnoMEJHULP": {
+			"name": "Oktoberfest"
+		},
+		"QzoPn654AmDFxP4dQvX5Zb": {
+			"name": "Rampage Agents"
+		},
+		"d8vLzn2pPdm7gwPMQqCkwh": {
+			"name": "Spectral Scream"
+		},
+		"YLu6CmQXBuVFpmnReyz44g": {
+			"name": "Table Space"
+		}
+	},
+	"prompt": {
+		"WZygBQGJYXzez6K66JYcuE": {
+			"name": "Meu medo mais irracional"
+		},
+		"mLL9t4DgPHTNRsa8aVNbsR": {
+			"name": "Se eu tivesse que comer apensa uma coisa o resto da vida, seria"
+		},
+		"HHrtwjS3BUvdGoyQMJeZvh": {
+			"name": "Meu mundo favorito do VRChat"
+		},
+		"x5XHpp7uDA4Y3aws7v4WGK": {
+			"name": "Eu penso muito sobre"
+		},
+		"g8KyzzfF9ijBSCoPJuvHX2": {
+			"name": "Eu sou obcecado em"
+		},
+		"tEUfrkPqK47zjhcJKoRvhh": {
+			"name": "O segredo para me conhecer é"
+		},
+		"c9ztgC7hXX47zNRLNMZHca": {
+			"name": "Eu quero alguém que"
+		},
+		"rnQjiqXivKanoxFtGi6RS8": {
+			"name": "Juntos poderíamos"
+		},
+		"JyC9xq83f47wfDTVEh77yC": {
+			"name": "Estou procurando por"
+		},
+		"JgCFt5P7ZvSt8Tor9NbkMB": {
+			"name": "Minha coisa favorita de se fazer no VR"
+		},
+		"aqXFM7oU7FsXhFnJ2AaVsg": {
+			"name": "Meu jogo favorito"
+		},
+		"VW97RnUAmtUQTzEhCJbxC8": {
+			"name": "Eu acabei de descobrir que"
+		},
+		"esvDHHBdB4wow5YofJT9pJ": {
+			"name": "Eu escuto esse albúm no repetir"
+		},
+		"DcowtBMp6ZU5jHPWt3rhNe": {
+			"name": "Meu filme favorito é"
+		},
+		"JLiCKV2g295AG5GYuH5vQM": {
+			"name": "Meu personagem fictício favorito"
+		},
+		"NEGzuX2TMdtxqVkb4xrvDm": {
+			"name": "Opnião impopular, mas"
+		},
+		"s5U6p73oVaym6ujZq3doy4": {
+			"name": "Eu não vou parar de falar sobre"
+		},
+		"CxdN69Xv6M9BPsDXJGTCHA": {
+			"name": "Eu nunca"
+		},
+		"VaCimF6SdZQxj2nAUDAiRY": {
+			"name": "Aposto que não consegue"
+		},
+		"Hbemf67DabFCSCxGVMBxzg": {
+			"name": "Um objetivo de vida meu é"
+		}
+	},
+	"platform": {
+		"6BdtcWSEHNwX6ba9nzd2Yc": {
+			"name": "Desktop"
+		},
+		"n6sSShVCXahjazwqEraKCG": {
+			"name": "PlayStation VR"
+		},
+		"aNGgneQH5YX4HyWpNEUpmQ": {
+			"name": "Outro VR"
+		},
+		"UpyGwuCHANjYmM2P269dFm": {
+			"name": "Quest Link"
+		},
+		"RNaigbGdB7H4ZMw5c8ysbi": {
+			"name": "Meta Quest"
+		},
+		"pzkBdEYqgAZiSEBZAcJMPZ": {
+			"name": "Haptic suit"
+		},
+		"c255sGSiJpMNnm6NTUcvx6": {
+			"name": "Apple Vision"
+		},
+		"d52VH6CyRaVPQvAwoStEoY": {
+			"name": "SteamVR"
+		},
+		"MLWTjDZEuacyr2qwbXEw4K": {
+			"name": "Full-body tracking"
+		},
+		"fyBa2tUpgEgqBPda4BpXAE": {
+			"name": "VR de Celular"
+		},
+		"WQVnXwQzfThHr7yczTjm3C": {
+			"name": "Windows Mixed Reality"
+		},
+		"qhAm6Z9kGRP5opGfnrVYda": {
+			"name": "Oculus Rift"
+		},
+		"x5T9enPhP8WpYwnoottGDL": {
+			"name": "Esteira de Locomoção"
+		},
+		"m4S2N4Jn2f3WDbJm7bcbgQ": {
+			"name": "Tracking de olhos/facial"
+		},
+		"FEX8jjr4P9aeBurRUTLhU7": {
+			"name": "Pico"
+		}
+	},
+	"kink": {
+		"FDiw6WUePpHDckmVG5coKF": {
+			"name": "Experimentalista"
+		},
+		"ANgPHfEKZqZZUspmgfKjdf": {
+			"name": "Exibicionista"
+		},
+		"9civt22SpMr7z4nuPcuL3V": {
+			"name": "Sádico"
+		},
+		"7WBnwThpTkEHyQHDZTbw47": {
+			"name": "Presa"
+		},
+		"nSPurHtFp8dpHKvW4Ux9Q9": {
+			"name": "Caçador"
+		},
+		"yamRiwkspejx4mnzbtMdxN": {
+			"name": "Garoto/Garota"
+		},
+		"HEPqnrrPsMqx9nQvDk5rHT": {
+			"name": "Masoquista"
+		},
+		"pnebwXNPvGr56PEZwSRbHi": {
+			"name": "Escravo"
+		}
+	},
+	"gender": {
+		"2ETbJJJ3shADLphvncUwSL": {
+			"name": "Mulher Cis",
+			"definition": "Uma mulher que se identifica com o gênero definido no nascimento."
+		},
+		"879KtanHc548synGhcNE7J": {
+			"definition": "Alguém que não se identifica ou vivencia nenhum gênero.",
+			"name": "Agênero"
+		},
+		"CHkgoEoKzTSeVaLVByviBZ": {
+			"definition": "Alguém de gênero masculino que foi designado como mulher no nascimento.",
+			"name": "Transmasculino"
+		},
+		"fAPzVgy7VyGPgAPhkwSkSU": {
+			"definition": "Alguém que não concorda com as expectativas ou normas sociais de gênero.",
+			"name": "Inconformidade de Gênero"
+		},
+		"GJitRtRoYWT6DfVasptK7N": {
+			"definition": "Um homem cujo gênero corresponde ao sexo definido no nascimento.",
+			"name": "Homem Cis"
+		},
+		"hv43aTXJZjMHfXRXvTcYiH": {
+			"name": "Ele/Dele"
+		},
+		"PFEmTKdmxAoPuxttYPwFZb": {
+			"definition": "Alguém que se identifica com múltiplos ou todos os gêneros.",
+			"name": "Pangênero"
+		},
+		"QwXvxjisosKeTP97ouczoZ": {
+			"definition": "Alguém cujo gênero está fora do binário de gêneros.",
+			"name": "Não-binário"
+		},
+		"tpkW7r8PZ2RUuYGUSYi82N": {
+			"name": "Mulher",
+			"plural": "Mulheres"
+		},
+		"w3t9h2SyNhr2rBWouXim8c": {
+			"name": "Intersexo",
+			"definition": "Alguém que nasce com características sexuais que não se enquadram nas definições típicas de corpo masculino ou feminino."
+		},
+		"XTVsHQMWXiJGEc5xCf7RUb": {
+			"definition": "Um homem que foi designado como mulher no nascimento.",
+			"name": "Homem Trans"
+		},
+		"YBkoUyfKJd6jJGwbekY3HN": {
+			"name": "Bigênero",
+			"definition": "Alguém que vivencia duas identidades de gênero."
+		},
+		"zMta3qtGyqW4hFdcDFUHik": {
+			"definition": "Alguém cujo gênero está fora do binário tradicional de gêneros.",
+			"name": "Gêneroqueer"
+		},
+		"aKEzfuPY6TaMkmnugQWLUd": {
+			"name": "Gênero Fluido",
+			"definition": "Alguém cujo gênero varia ao longo do tempo."
+		},
+		"mosDhQUt8JGumiup4yQWbZ": {
+			"name": "Ela/Dela"
+		},
+		"pAzAxxF4UYr3qN6F4tPYec": {
+			"name": "Elu/Delu"
+		},
+		"rhw3rcbheU7vc9vcSy6W6V": {
+			"plural": "Homens",
+			"name": "Homem"
+		},
+		"RdMpwqWGydDgk9X2u32BBW": {
+			"name": "Andrógine",
+			"definition": "Alguém com uma combinação de traços masculinos e femininos."
+		},
+		"wJdnfUvuvACEWRSV4KBdzS": {
+			"name": "Hijra",
+			"definition": "Um terceiro gênero nas culturas do sul da Ásia."
+		},
+		"tyrdBY4Rbfitznr65hpRPR": {
+			"name": "Transgênero",
+			"definition": "Alguém que se identifica com gênero que não corresponde ao sexo atribuído no nascimento."
+		},
+		"HWte4cB6TUzzXZoJeuxJuf": {
+			"definition": "Uma mulher que foi designada como homem no nascimento.",
+			"name": "Mulher Trans"
+		},
+		"rGFyY9WbvBBJSUAUpY5iUE": {
+			"definition": "Alguém com identidade de gênero feminina que foi designada homem no nascimento.",
+			"name": "Transfeminino"
+		},
+		"JL8AaDCJMVApbEuAfwG86Y": {
+			"definition": "Um terceiro gênero nas culturas indígenas norte-americanas.",
+			"name": "Dois Espíritos"
+		},
+		"jAL62ePbibxaG4FPu7S8LG": {
+			"name": "Outro"
+		}
+	},
+	"interest": {
+		"ZH7obevCWQmuLmHGQgaTF7": {
+			"name": "Among Us"
+		},
+		"sZZJLGtJX8MohZENZX9GdJ": {
+			"name": "Apex Legends"
+		},
+		"y6mH6biHKb5u7DWiAx65t4": {
+			"name": "Avakin Life"
+		},
+		"UXCy3bePW2WMDA6RCv6iZh": {
+			"name": "Call of Duty"
+		},
+		"XESzLLYMMdaVqTQ8Tv6Qig": {
+			"name": "Counter Strike"
+		},
+		"JctyN5EwihD2pa9zVktx2o": {
+			"name": "Dead by Daylight"
+		},
+		"V7nnYFUmEahv69NVybWzrP": {
+			"name": "Destiny 2"
+		},
+		"xHBPtTXA6S5ptoJ9nH3GB7": {
+			"name": "Final Fantasy XIV"
+		},
+		"wNLsMkCkrPbHHwpRbPrm7E": {
+			"name": "Five Nights at Freddy's"
+		},
+		"iH4ixES2RmvvG5F69eQjQe": {
+			"name": "Fortnite"
+		},
+		"vFjxVagULNzG4SQgncbcGN": {
+			"name": "Genshin Impact"
+		},
+		"Hnr8pBT5G3XxNmYgabRTVU": {
+			"name": "Grand Theft Auto"
+		},
+		"yuA96WnDtShVGMZYJXHbRc": {
+			"name": "Halo"
+		},
+		"u8ZKWRf3XK3ipbHo5cuArS": {
+			"name": "IMVU"
+		},
+		"Ajo23jt7zDTZjJ85ib7uSS": {
+			"name": "Kingdom Hearts"
+		},
+		"ZA7gUc3YbdSdhSbwpnt8rm": {
+			"name": "League of Legends"
+		},
+		"gbeLm6w9S7jTuHZ3b6jhCc": {
+			"name": "Monster Hunter"
+		},
+		"riLJvHysCVv2wbzjz34kbC": {
+			"name": "Nintendo"
+		},
+		"LNJB83mjPSFgWnjKuLBSEG": {
+			"name": "Overwatch"
+		},
+		"A55Aw7nfXg2A75uwNJhwrh": {
+			"name": "Persona"
+		},
+		"BBQbPpGQv5QA6tbm6qV8Vg": {
+			"name": "Pokémon"
+		},
+		"LpaAvRMRqT3yWQskovUta4": {
+			"name": "Rocket League"
+		},
+		"uiEz3zZDfe7UaJgoodssZE": {
+			"name": "Second Life"
+		},
+		"3b7sZwdYj6tNAziQQuCKEE": {
+			"name": "Team Fortress 2"
+		},
+		"dQdjQyL9M8kCxrL9Si2zqM": {
+			"name": "Touhou"
+		},
+		"YCg9tPA8V3bfbjDqoM79ei": {
+			"name": "Undertale"
+		},
+		"p39ZFJiMxJoCGZNRjo4osC": {
+			"name": "Valorant"
+		},
+		"j7cbohAXG2oFtBJqpxhKmL": {
+			"name": "World of Warcraft"
+		},
+		"cU8xQqQfNN6n8xDAHkpdN9": {
+			"name": "Zepeto"
+		},
+		"DBQsu388Xfn2KcE5oW2ae2": {
+			"name": "osu!"
+		},
+		"2gBkrkuQN6PjTEeexms7nf": {
+			"name": "Programação ⌨️"
+		},
+		"5XrzAmQSCM2onKyJBjbr6j": {
+			"name": "Corrida 🏃"
+		},
+		"6PobkXZnqFst2ZAZQWeS2D": {
+			"name": "Natureza 🌲"
+		},
+		"5FcuhkdAngzscEJK4DiWPo": {
+			"name": "Natação 🏊"
+		},
+		"4THEgH4BLaftoQWAhYaFoM": {
+			"name": "Simuladores de Direção 🏎️"
+		},
+		"4q9oopWm8XNXoX7z4RnQE8": {
+			"name": "ESTP (Empreendedor)"
+		},
+		"4UEEGvGvhyBTRWKUjVAMMe": {
+			"name": "Explorar mundos 🗺️"
+		},
+		"4CgRETn3q2iwk3h8fzWzSQ": {
+			"name": "INFP (Mediador)"
+		},
+		"2Wz4xFdHgY8PZf2mkqWpwa": {
+			"name": "Filosofia"
+		},
+		"47vHoxVTRx5ZuV7aJmxm5N": {
+			"name": "Teatro 🎭"
+		},
+		"658ffCwnSFxaY3hQSDvkGW": {
+			"name": "Certificado para usar empilhadeiras 🦺"
+		},
+		"7MxTQSH57TKECXfFJXjVea": {
+			"name": "Alma velha"
+		},
+		"7N7jNvobkTyCBG9PWvcRUm": {
+			"name": "Tempo de qualidade ⏳"
+		},
+		"9zSDJJgBFsgxjHGYCcEQ43": {
+			"name": "Comida 🍕"
+		},
+		"BmuNHSVwKnyyVMUqEMqpYg": {
+			"name": "Piloto de Mechas 🤖"
+		},
+		"bSH9xxw4iBP736fUjxeMrX": {
+			"name": "Criador de Mundos 🛠️"
+		},
+		"b65XzJUEmhkGcs4X6HtQvD": {
+			"name": "Ser DJ 🎧"
+		},
+		"BMkKqLcXLZ7g77u47mHnza": {
+			"name": "Literalmente só vibando"
+		},
+		"fEnnW4XeNnNbqReCryY58R": {
+			"name": "Música 🎵"
+		},
+		"g4VXtqWN8TKiCTxzBcWeRU": {
+			"name": "Explorador da mente 🧠"
+		},
+		"gD4Tp9YNXnyTctMQwGaijR": {
+			"name": "Animais"
+		},
+		"gjdYnF6jWBxtweAB3YmcLU": {
+			"name": "Clássico 🎻"
+		},
+		"GzLxoRQCmGWBjABNrCZWiD": {
+			"name": "Jogos de esporte ⚽️"
+		},
+		"bz9jVSncDmgYzdBdg98NV3": {
+			"name": "Militar"
+		},
+		"crtnnE8akbJwwA9BdqUFRc": {
+			"name": "Jogos Retrô 👾"
+		},
+		"dQAeMiAqHwxcVbjHYkC6dC": {
+			"name": "Espiritual"
+		},
+		"JAsmfUmdh2uL6ZLZTWp8dF": {
+			"name": "Procurando Grupo 🎮"
+		},
+		"mpS9oivuYqhZk99Vca5dHn": {
+			"name": "Zen pra caramba 🪷"
+		},
+		"kYABzgDPzJeaU9TJez4JKc": {
+			"name": "Cancer ♋️"
+		},
+		"NMCLsa8AfCkuZBTqYSzEQm": {
+			"name": "Aprender línguas"
+		},
+		"rDDDYYEjrdUWFjgaE4NSDM": {
+			"name": "Libra ♎️"
+		},
+		"qDsrBajn8sdumFdSHNr4e2": {
+			"name": "Política"
+		},
+		"Qec82XHyZh6r2HpREWULv2": {
+			"name": "Vegano 🌱"
+		},
+		"uwhn9iPM4kntT2Bq2WDXKN": {
+			"name": "Motos 🏍️"
+		},
+		"y53Q79KXYjdqCJps7Nzn8e": {
+			"name": "Futebol americano 🏈"
+		},
+		"ZgUBUVj26rHvpPyoF6TF8c": {
+			"name": "Ciência 🔬"
+		},
+		"znH7NHT6ysUrRHzVcqxNYQ": {
+			"name": "Roleplay 🎭"
+		},
+		"ZNXNaLMr85qQbKmX2TsrGQ": {
+			"name": "Arte 🎨"
+		},
+		"zqjTVmpmDLmnWs2PhXYFoG": {
+			"name": "Psicologia"
+		},
+		"PPeutfrRpwTs2v2CVNT6TR": {
+			"name": "ESTJ (Executivo)"
+		},
+		"AGheroLVRTz6DvXnDdMJh3": {
+			"name": "Buscando um terceiro"
+		},
+		"9HPT7wgAd7HJajQkAXMbrQ": {
+			"name": "Cozinhar 🍳"
+		},
+		"cqaodBdFdfeegFVzxuA3QB": {
+			"name": "Modelagem 3D"
+		},
+		"eTSWVwrcAF6tzHDPDLvJAd": {
+			"name": "Impressão 3D 🖨️"
+		},
+		"NpxR4mSbkKEo2ru79eboyS": {
+			"name": "Atos de serviço 🤝"
+		},
+		"NZjaoEMBizfYF2ScZbYAuG": {
+			"name": "Amigável à verdinha 🍁"
+		},
+		"vHGjkMhPppZ5bhh8uded4G": {
+			"name": "E s t é t i c a ✨"
+		},
+		"eGP3EZe6r5NUwfpgFc9Mv6": {
+			"name": "Sempre no modo escuro 🌚"
+		},
+		"iPWiK6ULojrRgUsMcQArYY": {
+			"name": "Alternativo 🎸"
+		},
+		"siBAM5nerfTqbBT6JCa6wf": {
+			"name": "Aventureiro"
+		},
+		"qmthjNQK6U6zxeUHWQWFEY": {
+			"name": "Aquário ♒️"
+		},
+		"8VvHQ63mBuCLdtc5bXcAdb": {
+			"name": "Cafeinado ☕️"
+		},
+		"ba58TDSPbjG9jtZixoneUn": {
+			"name": "Jogos de tabuleiro 🎲"
+		},
+		"R9vN8EaDE7xTuUFMXA4bkP": {
+			"name": "Avatares do Booth"
+		},
+		"ufVyJtRHU6RpqVjnFdsRU9": {
+			"name": "Ciclismo 🚲"
+		},
+		"wS9AhkYmx7jSgtoqwUw8oL": {
+			"name": "Basquete 🏀"
+		},
+		"7nnemBz5mR5iHZNjw8E4aB": {
+			"name": "Acampar 🏕️"
+		},
+		"Eu7WzNKBxcQKXhPWgAWAYW": {
+			"name": "Carros 🚗"
+		},
+		"F96TUKJtBt8UtbHEeDss8M": {
+			"name": "Capricórnio ♑️"
+		},
+		"nzy5prmodZfCQmkr6nMP5m": {
+			"name": "Desenhos"
+		},
+		"m9K2k5wXQrVdehe3KN9ZaY": {
+			"name": "Gatos 🐈"
+		},
+		"Hacqj4nYnvzcbCD8vxPniH": {
+			"name": "Festas 🪩"
+		},
+		"Qf69ZcHcgzrGyW8tVUSvkk": {
+			"name": "Comédia"
+		},
+		"CrvLT7p3UtXCe3ZmG8dZt7": {
+			"name": "Criador de conteúdo"
+		},
+		"GcPbtTWyfDWqVeiNLzsV7c": {
+			"name": "Concertos"
+		},
+		"cEfjsZtYLiWDSMSeg7q8V5": {
+			"name": "Dança 💃"
+		},
+		"EXYCJJeyc6JP5yKhkt2GoX": {
+			"name": "Piadas de pai"
+		},
+		"Hge2bJA39qY7XSnqqrrY9Y": {
+			"name": "Surdo"
+		},
+		"BB9qTGoqRiniinjxcy7jzn": {
+			"name": "Documentários"
+		},
+		"RjqdzibeHN5ovVcvNuneSB": {
+			"name": "Desenhar 🖋️"
+		},
+		"xXDcmmB7yrZEMWi4ZLg6z3": {
+			"name": "Cachorros 🐶"
+		},
+		"aWrMMCsArXZAbRqYqyXL8g": {
+			"name": "ESFJ (Cônsul)"
+		},
+		"BkTRV57GEQdMUuYonoo3g4": {
+			"name": "ENTJ (Comandante)"
+		},
+		"PkuUGAJvgsGnkfeMcGg56J": {
+			"name": "ENFP (Ativista)"
+		},
+		"Upgh5qK8AzorVt6rgiWTR7": {
+			"name": "ESFP (Animador)"
+		},
+		"YBGsznRconrCoTa5YbQsBW": {
+			"name": "ENTP (Orador)"
+		},
+		"ETXYWLwrk2BQD3mpvjXaN6": {
+			"name": "Amigo de suporte emocional"
+		},
+		"FjZaJeuY5TD2KhzNB67Y5T": {
+			"name": "Eletrônico 🎛️"
+		},
+		"bR2veGptTAE4VHitxqZxJV": {
+			"name": "Jogos de luta 🥊"
+		},
+		"fZEB4pAAHbst5B5dwnCFbS": {
+			"name": "Fantasia 🐉"
+		},
+		"La4WBQ9zBc7k6VCLJgEuDD": {
+			"name": "Moda"
+		},
+		"7PSViCMY8iKswNUxAjDwiY": {
+			"name": "Gótico 🕷️"
+		},
+		"BJwi9ji9dCqrX6YwqVLb2X": {
+			"name": "Cafunés"
+		},
+		"ftwVayAr6jTqmUw8A4RWMg": {
+			"name": "Armas"
+		},
+		"Ka3JLErYVPJWHLLzQBT2WE": {
+			"name": "Caminhadas 🥾"
+		},
+		"QSS6J4qhxDDiyWrbVoHxyY": {
+			"name": "Desenvolvedor de jogos"
+		},
+		"daTRTaC6weg6cu9j6K5XZV": {
+			"name": "INFJ (Patrono)"
+		},
+		"gAQLfYHHAQu7hhdBdBN35b": {
+			"name": "Caçar 🦌"
+		},
+		"HVQvfazU9oX6qSeM8kXvaM": {
+			"name": "Terror 👻"
+		},
+		"xY4UQxjZP8Qb4ybKTvAka9": {
+			"name": "História 📜"
+		},
+		"EMiJ5kbdhDp6QtCr3P7pBV": {
+			"name": "ISFP (Aventureiro)"
+		},
+		"K9piJDTQhCoabBZR4k6TzB": {
+			"name": "ISFJ (Defensor)"
+		},
+		"rD5R2Aqg5yVnK5QfF22R3Z": {
+			"name": "INTP (Lógico)"
+		},
+		"WN28HaENtrSDwSgKxX8Xv7": {
+			"name": "INTJ (Arquiteto)"
+		},
+		"dzBoXKdvDJ77aoh9GLnusi": {
+			"name": "ISTJ (Logístico)"
+		},
+		"jaJkU3XRMqRmxGZia74XB8": {
+			"name": "ISTP (Virtuoso)"
+		},
+		"yZAPLKAMizp9ha78cErdkF": {
+			"name": "Jogos indies 🕹️"
+		},
+		"fcHJKqULdrBvrAmPF4vuV9": {
+			"name": "Leão ♌️"
+		},
+		"r9YDRMbRwSsoFybfDo6jdG": {
+			"name": "Longas caminhadas na praia 🏖️"
+		},
+		"tYzVk2i9uhMzVXuPXcXe2b": {
+			"name": "Vive no VR 🥽"
+		},
+		"fAgh4qEey9okWzNjooerLG": {
+			"name": "Meditação 🧘"
+		},
+		"J9HbxPqPYnCFPKHUyg8ece": {
+			"name": "Artes marciais 🥋"
+		},
+		"8kbF5HwfJBoBC4q324xHJT": {
+			"name": "Produção de música 🎧"
+		},
+		"Amq7oATgh6UcQx4SoeJdkD": {
+			"name": "Filmes 🍿"
+		},
+		"acyqyBz7FZQFSp8iHYWB5A": {
+			"name": "Parceiro em crime"
+		},
+		"bsKcuRDVC99WuWnBUiSEDN": {
+			"name": "Baladeiro 🎉"
+		},
+		"bTWW3iSkRQD8V3uQ9viWvN": {
+			"name": "Investigador paranormal 👻"
+		},
+		"zoEgxZ7KoBNRCrgA3XbdDA": {
+			"name": "Phantom sense"
+		},
+		"mmkY4XtSERJYxeEfdmY68D": {
+			"name": "Toque físico 🫂"
+		},
+		"PzXGL29kYUR8Tja6WQDDKT": {
+			"name": "Fotografia 📸"
+		},
+		"qUavCrMx6HrR2v5wf7stFN": {
+			"name": "Peixes ♓️"
+		},
+		"gHSLGNxhyjKKkarcNq9nBa": {
+			"name": "Sinuca🎱"
+		},
+		"is5SeEgzo3ZAH6GPTCX7ma": {
+			"name": "Religioso"
+		},
+		"M9FwNtCEQT3xUNV4EsnQ3d": {
+			"name": "Jogos de Ritmo 🎼"
+		},
+		"TuaoosdiDnHXC7FHVArkdW": {
+			"name": "Quebra-cabeças 🧩"
+		},
+		"XJUTFqrF2avzVtHMA7AGzk": {
+			"name": "Ler 📖"
+		},
+		"jEf5ZYAU7SMbteXJbQydZJ": {
+			"name": "Sagitário ♐️"
+		},
+		"Dr4VrjyyvH8kbdrozsMMFd": {
+			"name": "Cantar 🎤"
+		},
+		"EkGzXrWW5fEnC9HdJ9okWc": {
+			"name": "Linguagem de sinais"
+		},
+		"f2BCBxugmR8H3dGdrJRmpV": {
+			"name": "Tímido 🙈"
+		},
+		"k53DpziykEgW7M6engXhem": {
+			"name": "Esquiar ⛸️"
+		},
+		"o4MbotEvh3dhz2Symgvtbj": {
+			"name": "Escorpião ♏️"
+		},
+		"yNrG4wB8Et3kGTaofec3Be": {
+			"name": "Andar de skate🛹"
+		},
+		"8NWGrqWSzC5KQ6QDanNwgf": {
+			"name": "Tênis 👟"
+		},
+		"dBCYhmt2vTLfw7DNgNmP53": {
+			"name": "Dorme no VR"
+		},
+		"ibrUnfQBwhrzBdFPhxisp2": {
+			"name": "Dormir em chamada"
+		},
+		"MDRvcQGDrY6VMbaGtPk89m": {
+			"name": "Futebol ⚽️"
+		},
+		"8ioURqcYyxmHCkcyKFiub2": {
+			"name": "Jogos sociais 💬"
+		},
+		"AyaSxEYUdjX4maBsTuhxS5": {
+			"name": "Socialmente desajeitado"
+		},
+		"svS7TMjzrzjmsh2X3Qe23e": {
+			"name": "Espaço 🪐"
+		},
+		"UkC6H5qf7xGFtpueRQQWxS": {
+			"name": "Borboleta social 🦋"
+		},
+		"xLnre8baC2zsrWJog4ypjm": {
+			"name": "Fazer speedruns"
+		},
+		"gUm9n5xfnMzCVtxA9rCnLV": {
+			"name": "Estudante 🎓"
+		},
+		"NrsAVMm65UFBPsqEPkWgZT": {
+			"name": "Jogos de estratégia ♟️"
+		},
+		"VuojdaCuJQEAsPaxq26jmK": {
+			"name": "Jogos de sobrevivência 🏕️"
+		},
+		"wZBbZRUrr68X5CjVXmruKL": {
+			"name": "Esportes"
+		},
+		"Y65RLPXEzBHsnZphF84Gnc": {
+			"name": "Streamar 🎥"
+		},
+		"7mfqhCUsniXPWXa6EK7Qqh": {
+			"name": "Técnologia 💾"
+		},
+		"fe2ysuwBXcZfCbbGNhbe3L": {
+			"name": "Viajar 🧳"
+		},
+		"iXKfPBmMRxKGzNZA38g3iS": {
+			"name": "Tatuagens"
+		},
+		"j6ZmBCoKutQZ2ABFjJvZoK": {
+			"name": "Doces 🍰"
+		},
+		"UCTar6EEZJDhncJtQtAjVC": {
+			"name": "Viajante do tempo ⏳"
+		},
+		"usxHtsoFwppLo787TfBvLF": {
+			"name": "Televisão 📺"
+		},
+		"vJsJJUXQXc4c9jaaTyzmBZ": {
+			"name": "Touro ♉️"
+		},
+		"WPUHPKAHLmHw2kcbzfA9tb": {
+			"name": "Tênis 🎾"
+		},
+		"QpsRiXnBWQMG5ZYtZd8BoR": {
+			"name": "Videografia 🎥"
+		},
+		"6vPzqeBurT9AtnQcxG3knW": {
+			"name": "Voluntario🤝"
+		},
+		"Qm4yoeSbfnL9AoDZHwotWX": {
+			"name": "Nômade virtual"
+		},
+		"Uv5MM3vocd3asfdE2VErQk": {
+			"name": "Vôlei 🏐"
+		},
+		"XyLtoquzjjLdYyGHtojCo5": {
+			"name": "Dublagem 🎙️"
+		},
+		"zp25zogqt2XWNG9v2wi4ET": {
+			"name": "Virgem ♍️"
+		},
+		"nZfksPK35VkxjtjBG5De7f": {
+			"name": "Bruxaria 🧙‍♀️"
+		},
+		"uiFv8roivUuL7LFjXoPkiY": {
+			"name": "Palavras de afirmação 💬"
+		},
+		"WTw73CaXZ4AWmbiQpooJiQ": {
+			"name": "Escrever ✍️"
+		},
+		"XRjfs5BAZhgeKnofywDX8d": {
+			"name": "eSports"
+		},
+		"yfQMpqdsbfNqCKjzrJT4wR": {
+			"name": "Criador de avatares 🛠️"
+		},
+		"g2fAPyAgPKt7WaoVZYxPm2": {
+			"name": "Aviação ✈️"
+		},
+		"UPLtrF5xLGLpnfWkfv8WDg": {
+			"name": "Baseball ⚾️"
+		},
+		"Tc4uFhvgWvKjVssZhGAQuj": {
+			"name": "Ruim com direções 🧭"
+		},
+		"JTnaqV7ZtSm7ecGmk9JbUN": {
+			"name": "Xadrez ♟️"
+		},
+		"pJfikJmWtJZnfKJbNXZqnE": {
+			"name": "Relaxando igual vilão 😎"
+		},
+		"fM4o5U2ebgVDFEvsD66hEe": {
+			"name": "Parceiro de bebidas 🍻"
+		},
+		"mTwcM4tfp49ronrVRbPvVK": {
+			"name": "ENFJ (Protagonista)"
+		},
+		"BrKGJW7c8TvnQh7zxbJNuQ": {
+			"name": "Pescar 🎣"
+		},
+		"rG2FKKUdai8Gsn9U6cQp2T": {
+			"name": "Em forma 💪"
+		},
+		"jQD3WHErNsMnhtMeDgE6SE": {
+			"name": "Simuladores de avião ✈️"
+		},
+		"P8E5xJTRAgxycZMErjVMYa": {
+			"name": "Jardinagem 🪴"
+		},
+		"PAepdb7ewc4GVEnpWDCbcK": {
+			"name": "Jogar 🎮"
+		},
+		"MneeWkir8YLxVNH2BxDtKR": {
+			"name": "Gêmeos ♊️"
+		},
+		"NxJszSBMm3vkbRaZmPd2gh": {
+			"name": "Presentes 🎁"
+		},
+		"JGwyrqtUfCC7HVNZ2ot8LV": {
+			"name": "Guitarra 🎸"
+		},
+		"K9MHU3GP3kVfW8yck8ZPdg": {
+			"name": "Karaokê 🎤"
+		},
+		"jxfxsraaBHshyVCEHhk2Qg": {
+			"name": "Mistério 🔎"
+		},
+		"qjjjMrjxZHuqVMuC9ADyiZ": {
+			"name": "Mudo"
+		}
+	},
+	"interest-category": {
+		"43i5J3VsKCvU4HGRJHjehn": {
+			"name": "Tipos de personalidades"
+		},
+		"9os9Yxxr6zGR4k7kh5BKrB": {
+			"name": "Linguagem de amor"
+		},
+		"DAweztCvdXBa5cKvhgNsPY": {
+			"name": "Esportes"
+		},
+		"fQK3RUCYFW4WeSfLkzVP42": {
+			"name": "Música"
+		},
+		"hR3X5w26ba6M98fVB2kVxX": {
+			"name": "Alinhamento"
+		},
+		"TgrEr2C6DAcp69Winej5Q4": {
+			"name": "Geral"
+		},
+		"59oWHt4bZSdQ6tj8f4CWs9": {
+			"name": "Jogos"
+		},
+		"aSCFm5P7awrqNKnknWuChQ": {
+			"name": "Identidade"
+		},
+		"nFiqbX3n6aiEdKe3JbynBL": {
+			"name": "Astrologia"
+		},
+		"tmQbiXNw7d9Ys2DG9Ddg28": {
+			"name": "Gêneros de jogo"
+		}
+	},
+	"report-reason": {
+		"BtJvp62cJ5vm6CeuCPTP5H": {
+			"name": "Conteúdo ilegal"
+		},
+		"MyexHAyY8gzQjBQ6agCSx3": {
+			"name": "Golpe, malware, ou links maliciosos"
+		},
+		"9iwmQ8huhkngyY9BgLDE9W": {
+			"name": "Outro"
+		},
+		"AFe9ijRg9MYGubm2Efi4Ki": {
+			"name": "Assédio"
+		},
+		"Ec5fqqgVo5X3s4QCeFUJ6D": {
+			"name": "Personificando a mim ou outra pessoa"
+		},
+		"ymWd4JdTqpnBLmGSLmJRvY": {
+			"name": "Fotos nuas ou impróprias"
+		},
+		"L6FRU2xjUiZwHUbegAcWTa": {
+			"name": "Anúnciando ou solicitando"
+		},
+		"vTzgZw4Eexx7fehzCM9PQY": {
+			"name": "Conteúdo de automultilação"
+		},
+		"zu6HcxQxmJDDq4rmvJazkf": {
+			"name": "Usuário menor de idade"
+		},
+		"Ur6iAuTDCktZe3zZQGqtZ2": {
+			"name": "Conta de spam ou troll"
+		},
+		"Wf4t9FT7Lmvnn73KqpZGPG": {
+			"name": "Conteúdo violento ou perturbador"
+		},
+		"wFkctcaaf5B4Ef5i3ggY3G": {
+			"name": "Conteúdo odioso"
+		}
+	},
+	"sexuality": {
+		"3cWT9ob4r7Zpikkd9kVPEg": {
+			"name": "Queer",
+			"definition": "Alguém com orientação sexual não normativa."
+		},
+		"a29qas632KmMpQ8T6arLxa": {
+			"definition": "Alguém atraído por vários gêneros.",
+			"name": "Bisexual"
+		},
+		"4yJadhjWkDN6WSxbDcp33G": {
+			"definition": "Alguém que está explorando sua orientação sexual no VR ou cuja sexualidade difere no VR e pessoalmente.",
+			"name": "Experimentando no VR"
+		},
+		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
+			"definition": "Alguém atraído por outras mulheres ou pessoas femininas.",
+			"name": "Lésbica"
+		},
+		"NC5wiUcxGavten9E8gw64n": {
+			"definition": "Alguém atraído por outras pessoas, independentemente do sexo.",
+			"name": "Pansexual"
+		},
+		"ndxSn4BdATmm5droBw6iQG": {
+			"name": "Homoflexível",
+			"definition": "Alguém que se sente predominantemente atraído pelo mesmo sexo, mas às vezes sente atração pelo sexo oposto."
+		},
+		"vu2pJzRmKRroA3GPZRsLxM": {
+			"definition": "Alguém que se sente predominantemente atraído pelo sexo oposto, mas às vezes sente atração pelo mesmo sexo.",
+			"name": "Heteroflexível"
+		},
+		"rN7DERN6NdNQzNQ99pQUN4": {
+			"name": "Questionando",
+			"definition": "Alguém que está examinando sua orientação sexual."
+		},
+		"t5hhQahW7HQVKnhQX7xRqn": {
+			"definition": "Alguém atraído pelo sexo oposto.",
+			"name": "Hétero"
+		},
+		"wPATvG4t9CJhW2goGmBznU": {
+			"definition": "Alguém que só sente atração sexual depois de formar um vínculo emocional com alguém.",
+			"name": "Demisexual"
+		},
+		"UxY3zSKrwKpts6cfZ3wYjM": {
+			"definition": "Alguém atraído por outras pessoas do mesmo sexo.",
+			"name": "Gay"
+		},
+		"neMSEFPb9zvFRhoZLUobW9": {
+			"definition": "Alguém que sente pouca ou nenhuma atração sexual.",
+			"name": "Asexual"
+		}
+	},
 	"language": {
 		"ab": {
 			"name": "abcázio"
@@ -613,7 +2526,63 @@
 			"name": "tamazight do Atlas Central"
 		},
 		"ase": {
-			"name": "língua gestual americana"
+			"name": "Línguagem de sinais Americana"
+		},
+		"bfi": {
+			"name": "Linguagem de sinais Britânica"
+		},
+		"fsl": {
+			"name": "Linguagem de sinais Francesa"
+		},
+		"csl": {
+			"name": "Linguagem de sinais Chinesa"
+		},
+		"gsg": {
+			"name": "Linguagem de sinais Alemã"
+		},
+		"dse": {
+			"name": "Linguagem de sinais Holandesa"
+		},
+		"inl": {
+			"name": "Linguagem de sinais Indonésia"
+		},
+		"kvk": {
+			"name": "Línguagem de sinais Coreana"
+		},
+		"mfs": {
+			"name": "Línguagem de sinais Mexicana"
+		},
+		"psr": {
+			"name": "Línguagem de sinais Portuguesa"
+		},
+		"bzs": {
+			"name": "Linguagem de sinais Brasileira"
+		},
+		"ins": {
+			"name": "Línguagem de sinais Indo-Paquistanesa"
+		},
+		"ssp": {
+			"name": "Línguagem de sinais Espanhola"
+		},
+		"rsl": {
+			"name": "Línguagem de sinais Russa"
+		},
+		"jsl": {
+			"name": "Línguagem de sinais Japonesa"
+		}
+	},
+	"relationship": {
+		"friends": {
+			"name": "Novos amigos"
+		},
+		"hookups": {
+			"name": "Diversão casual"
+		},
+		"serious": {
+			"name": "Namoro sério"
+		},
+		"vr": {
+			"name": "Namoro casual"
 		}
 	}
 }

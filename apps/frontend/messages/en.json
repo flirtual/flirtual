@@ -224,7 +224,7 @@
 					"image": "b9326c15-c996-488f-8d68-d7ea4cb8649b"
 				},
 				"1": {
-					"title": "Swim... with sharks",
+					"title": "Swim… with sharks",
 					"image": "738f3d22-6f38-4059-9dd3-7fdd672acccd"
 				},
 				"2": {
@@ -270,7 +270,7 @@
 			"brands": {
 				"0": {
 					"image": "dc248f6f-aee6-4318-b473-6fe2d6db07ee",
-					"name": "New York Times"
+					"name": "The New York Times"
 				},
 				"1": {
 					"image": "d34ee25e-31e6-47a7-952f-51820f1e1ce1",
@@ -286,11 +286,11 @@
 				},
 				"4": {
 					"image": "29a2f1bc-0b3e-469a-aa11-0de69b75b629",
-					"name": "Road To VR"
+					"name": "Road to VR"
 				},
 				"5": {
 					"image": "db2eb424-e837-4d64-85e0-e49409ae33a6",
-					"name": "Samsung"
+					"name": "Samsung Whatever Next?"
 				},
 				"6": {
 					"image": "54ffe640-1c54-4d8f-a754-4c7b7ca82456",
@@ -306,7 +306,7 @@
 				},
 				"9": {
 					"image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
-					"name": "iDate Awards"
+					"name": "iDate Awards - Best New Technology"
 				}
 			}
 		},
@@ -472,6 +472,7 @@
 		"should_be_{count}_character(s)": "Must be {count, plural, =0 {empty} =1 {one character long} other {# characters long}}.",
 		"should_have_{count}_item(s)": "{count, plural, =0 {Must be empty} =1 {Please select one item} other {Please select # items}}.",
 		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {Required} =1 {Required} other {Must be at least # characters long}}.",
+		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Required} =1 {Required} other {Must be at least # characters long}}.",
 		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {Required} =1 {Required} other {Please select at least # items}}.",
 		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {Must be empty} =1 {Cannot be more than 1 character long} other {Cannot be more than # characters long}}.",
 		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {Must be empty} =1 {Cannot have more than 1 item} other {Cannot have more than # items}}.",
@@ -494,15 +495,15 @@
 		"state_mismatch": "Couldn't connect account, please try again later (state mismatch)",
 		"provider_not_found": "Couldn't connect account, please try again later. (unknown provider)",
 		"authorize_not_supported": "Couldn't connect account, please try again later. (unsupported provider)",
-		"image_not_found": "Image not found",
+		"image_not_found": "Image not found.",
 		"conversation_not_found": "Conversation not found (user unmatched, blocked, disabled account or suspended).",
 		"user_not_found": "User not found (blocked, disabled account or suspended).",
 		"prospect_not_found": "Error undoing, sorry!",
 		"missing_permission": "You don't have permission to perform this action.",
 		"report_not_found": "Report not found.",
 		"subscription_not_found": "Error canceling subscription, please contact us for assistance.",
-		"cannot_block_user": "Error blocking user (disabled account or suspended).",
-		"cannot_unblock_user": "Error unblocking user (disabled account or suspended).",
+		"cannot_block_user": "Error blocking user (account disabled).",
+		"cannot_unblock_user": "Error unblocking user (account disabled).",
 		"profile_not_blocked": "Error unblocking user (already unblocked).",
 		"passkey_login_failed": "Passkey login failed, please try again or use a different method."
 	}

@@ -1,13 +1,184 @@
 {
-  "about": {
-    "title": "Über uns",
-    "team": {
-      "image_alt": "Avatar von {name}",
-      "roles": {
-        "kfarwell": "Hauptentwickler",
-        "aries": "Softwareentwickler",
-        "moderator": "Moderator"
-      }
-    }
-  }
+	"meta": {
+		"name": "Flirtual",
+		"title": "%s - Flirtual"
+	},
+	"about": {
+		"title": "Über uns",
+		"team": {
+			"image_alt": "Avatar von {name}",
+			"roles": {
+				"kfarwell": "Hauptentwickler",
+				"aries": "Softwareentwickler",
+				"moderator": "Moderator"
+			}
+		},
+		"timeline": {
+			"2018": {
+				"title": "2018 🐣",
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938"
+			},
+			"2019": {
+				"title": "🏆 2019",
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615"
+			},
+			"2020": {
+				"title": "2020 🧪",
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86"
+			},
+			"2021": {
+				"title": "✌️ 2021",
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f"
+			},
+			"2022": {
+				"title": "2022 😻",
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
+			},
+			"2023": {
+				"title": "✨ 2023",
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d"
+			}
+		},
+		"images": {
+			"0": {
+				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
+			},
+			"1": {
+				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
+				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
+			},
+			"2": {
+				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
+			},
+			"3": {
+				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
+			},
+			"4": {
+				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
+			},
+			"5": {
+				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
+			}
+		}
+	},
+	"download": {
+		"platform": {
+			"apple": "App Store",
+			"google": "Google Play",
+			"microsoft": "Microsoft Store",
+			"side_quest": "SideQuest"
+		}
+	},
+	"privacy": {
+		"title": "Datenschutzerklärung",
+		"title_superseded": "Datenschutzerklärung (veraltet)",
+		"content": "<p>Ihr Benutzername, Ihr Anzeigename, Ihre Profilbilder, Ihre Bio, Ihr Alter, Ihr Geschlecht, Ihre Vermittlungspräferenzen, Ihre persönlichen Interessentags, Ihre ausgewählten VR-Apps/Spiele und ob Sie neu in VR sind, werden anderen Nutzern sichtbar sein. Ihre zusätzlichen Profilinformationen (einschließlich Ihrer Sexualität, NSFW-Tags, Ihres Landes, verlinkter Konten usw.) werden anderen Benutzern je nach Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy>, die Sie jederzeit ändern können, sichtbar oder verborgen sein. Ihre Persönlichkeitsmerkmale (die wir basierend auf Ihren Antworten auf unseren Persönlichkeitsfragebogen identifizieren) werden anderen Benutzern je nach Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy> sichtbar oder verborgen sein, aber Ihre spezifischen Fragebogenantworten werden nicht sichtbar sein.</p><p>Wir verwenden eine eigene, lokal installierte Datenanalyse. Wir können anonymisierte Statistiken über Flirtual teilen (zum Beispiel die Anzahl der Benutzer, die eine bestimmte Social VR-App oder ein Spiel verwenden). Sie können sich in Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy> von diesen Statistiken abmelden.</p><p>Ihre Nachrichten und Nachrichtenhistorie mit anderen Benutzern werden von TalkJS gehostet und geteilt, jedoch nicht mit anderen Dritten geteilt.</p><p>Ihre Kontaktemail wird anderen Benutzern nicht angezeigt. Ihre Kontaktemail kann von Drittanbietern abgerufen werden, um Transaktions-, Marketing- und Supportnachrichten gemäß Ihren Präferenzen zu liefern. Sie können sich von <settings-notifications>Benachrichtigungen per E-Mail</settings-notifications> abmelden, was Ihre E-Mail-Adresse aus den Aufzeichnungen von TalkJS entfernt.</p><p>Wenn Sie vermuten, dass Ihr Konto kompromittiert wurde, ändern Sie bitte sofort Ihr <settings-password>Passwort</settings-password> und <contact>melden Sie das Problem</contact> mit dem Wort „DRINGEND“ in der Betreffzeile. Geben Sie im Nachrichtentext Ihren Benutzernamen, den Zeitpunkt des letzten Zugriffs auf die Seite und alle Details an, die Sie zu der Annahme einer Sicherheitsverletzung geführt haben.</p><p>Ihr Passwort wird gehasht und gesalzen gespeichert.</p><p>Wir verwenden bestimmte vertrauenswürdige Dritte, die Dienste für Flirtual bereitstellen. Wir können personenbezogene Daten von Nutzern mit diesen Dritten teilen, jedoch nur zum Zweck der Bereitstellung ihrer Dienste. Weitere Informationen und Beispiele finden Sie unten.</p><p><strong>Cloud-Hosting-Dienste:</strong> um eine zuverlässige und sichere Infrastruktur für die Verwaltung und den Betrieb unserer Plattform bereitzustellen (zum Beispiel Fly.io und Vercel).</p><p><strong>In-App-Funktionalitätsdienste:</strong> um wichtige Funktionen wie Messaging und optimiertes Bild-Hosting innerhalb unserer App zu erleichtern (zum Beispiel TalkJS).</p><p><strong>Abrechnungsdienste:</strong> um Zahlungen und Abonnements zu verwalten (zum Beispiel Stripe).</p><p><strong>Social Media-Dienste:</strong> um es Nutzern zu ermöglichen, ihre Konten mit unserer Plattform zu verknüpfen und soziale Interaktionen zu erleichtern (zum Beispiel Discord).</p><p><strong>Sicherheits- und Leistungsdienste:</strong> um unsere Plattform zu schützen, unsere Nutzer zu schützen und die Gesamtleistung zu verbessern (zum Beispiel Cloudflare).</p><p><strong>Einblicks- und Verbesserungsdienste:</strong> um Benutzerfeedback zu sammeln und Analysen zur kontinuierlichen Verbesserung unserer Plattform durchzuführen (zum Beispiel Canny).</p><p><strong>Kommunikationsdienste:</strong> um bei der Übermittlung von Transaktions- und Marketingnachrichten an Benutzer zu unterstützen (zum Beispiel Amazon Web Services).</p><p><strong>Moderationsdienste:</strong> um angemessenes Verhalten innerhalb der App zu gewährleisten und Gemeinschaftsstandards aufrechtzuerhalten (zum Beispiel Google Cloud).</p><p><strong>IT-Dienste:</strong> um verschiedene Betriebsabläufe unseres Unternehmens zu unterstützen, beispielsweise wenn ein Benutzer mit unseren Supportdiensten interagiert, was die Verarbeitung personenbezogener Daten der Benutzer beinhalten kann (zum Beispiel Freshworks).</p><p>Wir überprüfen die Dritten, mit denen wir zusammenarbeiten, um sicherzustellen, dass sie über angemessene Datenschutz- und Informationssicherheitsmaßnahmen verfügen. Wir ergreifen Maßnahmen, um Daten, die an Dritte weitergegeben werden, zu schützen und zu anonymisieren, soweit dies angesichts der Art der erbrachten Dienste angemessen ist. Wir stellen den vertrauenswürdigen Dritten nur die für den von ihnen erbrachten Dienst notwendigen personenbezogenen Daten zur Verfügung.</p><p>Wenn Sie eine Sicherheitslücke oder ein Datenschutzleck entdecken, melden Sie es uns bitte diskret über <vulnerability>GitHub</vulnerability> oder <contact>Email</contact>.</p><p>Sie können die bei uns gespeicherten Daten in Ihren <settings>Kontoeinstellungen</settings> und in Ihren Nachrichten überprüfen. Sie können alle Daten anfordern, die wir gespeichert haben, indem Sie uns eine E-Mail senden; Sie erhalten diese innerhalb von 30 Tagen.</p>"
+	},
+	"superseded_policy": {
+		"fancy_noisy_grizzly_hint": "Diese Richtlinie war in Kraft {range} und ist nicht mehr aktiv. Bitte sehen Sie sich die <current>neueste Version dieser Richtlinie</current> an."
+	},
+	"machine-translated": {
+		"large_wild_tortoise_sing": "Diese Seite wurde maschinell übersetzt und kann Ungenauigkeiten enthalten. Diese Übersetzung wird nur zu Ihrer Bequemlichkeit bereitgestellt. Die <original>englische Version</original> dieses Dokuments ist die offizielle Version und sollte bei Abweichungen herangezogen werden.",
+		"active_frail_antelope_support": "Bitte <contact>kontaktieren Sie uns</contact>, wenn Sie Fragen haben."
+	},
+	"terms": {
+		"title": "Nutzungsbedingungen",
+		"title_superseded": "Nutzungsbedingungen (veraltet)",
+		"content": "<p>Dieser Dienst (der „Dienst“) wird von ROVR LABS INC., handelnd unter dem Namen Flirtual („wir“ oder „Flirtual“), betrieben.</p><section><h1>Regeln</h1><p>Um diesen Dienst zu nutzen, müssen Sie:</p><ol><li>mindestens 18 Jahre alt sein;</li><li>nach kanadischem und lokalem Recht dazu berechtigt sein;</li><li>niemals wegen eines Verbrechens verurteilt worden sein;</li><li>nicht verpflichtet sein, sich in einem Regierungsregister als Sexualstraftäter registrieren zu lassen;</li><li>sich bereit erklären, an diese Nutzungsbedingungen und unsere <privacy>Datenschutzerklärung</privacy> gebunden zu sein.</li></ol><p>Sie erklären sich damit einverstanden, Folgendes zu unterlassen:</p><ol><li>gegen lokales oder kanadisches Recht zu verstoßen;</li><li>andere Benutzer um Geld zu bitten oder zu betrügen;</li><li>eine Person oder ein Unternehmen zu imitieren oder Bilder einer anderen Person ohne deren Erlaubnis zu veröffentlichen;</li><li>missbräuchliche, rassistische, sexistische, abfällige, verleumderische, illegale, NSFW- oder anderweitig schädliche Inhalte auf dem Dienst zu posten;</li><li>andere Benutzer auf dieser Plattform zu belästigen;</li><li>wissentlich bösartigen Code oder Links zu bösartigen Seiten zu veröffentlichen, die anderen Benutzern schaden könnten;</li><li>Spam auf Profilen zu posten;</li><li>Urheberrechte zu verletzen;</li><li>diesen Dienst zu nutzen, um Flirtual oder den Dienst zu schädigen.</li></ol><p>Bitte lesen Sie unsere <guidelines>Community-Richtlinien</guidelines> für weitere Informationen darüber, wie wir Benutzerprofile und -verhalten auf dem Dienst moderieren. Ein Verstoß gegen diese Richtlinien führt zu einer Konto-Moderation, wie z.B. einem dauerhaften Ausschluss vom Dienst. Wir behalten uns das Recht vor, Konten nach eigenem Ermessen zu moderieren.</p></section><section><h1>Sicherheit</h1><p>Wir raten Ihnen, Vorsicht walten zu lassen, wenn Sie mit anderen Nutzern des Dienstes interagieren. Wir sind nicht verantwortlich für das Verhalten von Nutzern innerhalb oder außerhalb des Dienstes oder für Ihre Interaktionen mit anderen Nutzern. Wir überprüfen die Benutzer nicht.</p></section><section><h1>Datenschutz</h1><p>Sie ermächtigen uns, bestimmte Informationen über Sie zu verwenden und anzuzeigen. Weitere Informationen finden Sie in unserer <privacy>Datenschutzerklärung</privacy>.</p></section><section><h1>Drittanbieter-Dienste</h1><p>Flirtual ist nicht verantwortlich für Dienste von Drittanbietern.</p></section><section><h1>Rechte</h1><p>Sie können Ihr Konto jederzeit in Ihren <delete-account>Kontoeinstellungen</delete-account> schließen.</p><p>Sie erhalten eine Vorabinformation über Änderungen dieser Bedingungen oder neue Funktionen, die die Privatsphäre betreffen.</p><p>Moderationsentscheidungen werden von unserem Moderationsteam getroffen. Sie haben das Recht, eine Erklärung zu erhalten, wenn Ihr Profil geändert oder Ihr Konto wegen eines Verstoßes gegen diese Nutzungsbedingungen gekündigt wird. Sie haben kein Recht auf eine Vorabbenachrichtigung über diese Änderungen an Ihrem Konto.</p><p>Wenn Ihr Konto aufgrund eines Verstoßes gegen diese Nutzungsbedingungen gekündigt wird, werden Ihre Daten 30 Tage lang aufbewahrt, damit wir Moderationsentscheidungen überprüfen und gegebenenfalls rückgängig machen können. Bitte <contact>kontaktieren Sie uns</contact>, wenn Sie eine Moderationsentscheidung anfechten oder Ihre Daten vorzeitig löschen lassen möchten.</p><p>Ihre Daten werden regelmäßig gesichert.</p></section><section><h1>Sicherheit</h1><p>Der Dienst läuft auf einer von Dritten bereitgestellten Infrastruktur. Diese Infrastruktur ist durch branchenübliche Sicherheitsmaßnahmen wie Firewalls geschützt.</p><p>Ihre Verbindung zum Dienst verwendet eine <ssltest>starke Transportverschlüsselung</ssltest>.</p><p>Ihr Passwort wird sicher gehasht und gesalzen gespeichert.</p><p>Sie sind dafür verantwortlich, Ihr Kontopasswort sicher zu halten. Sie sind verantwortlich für alle Aktivitäten, die mit Ihren Kontozugangsdaten durchgeführt werden.</p><p>Trotz größter Bemühungen gibt es online keine perfekte Sicherheit. Wir garantieren nicht den absoluten Schutz Ihrer Daten.</p><p>Wir haben nicht alle Materialien, einschließlich Computer-Software, die über die Websites und Webseiten, auf die der Dienst verweist und die auf den Dienst verweisen, zugänglich gemacht werden, überprüft und können dies auch nicht tun. Wir haben keine Kontrolle über diese nicht-Flirtual-Websites und sind nicht für deren Inhalte oder deren Nutzung verantwortlich. Durch das Verlinken zu einer nicht-Flirtual-Website stellt Flirtual keine ausdrückliche oder implizite Befürwortung dieser Website dar. Sie sind dafür verantwortlich, die notwendigen Vorsichtsmaßnahmen zu treffen, um sich und Ihre Computersysteme vor Viren, Würmern, Trojanern und anderem schädlichen oder zerstörerischen Inhalt zu schützen. Flirtual lehnt jede Verantwortung für Schäden ab, die durch Ihre Nutzung von nicht-Flirtual-Websites und -Webseiten entstehen.</p></section><section><h1>Haftungsausschlüsse</h1><p>In keinem Fall haften Flirtual oder seine Lieferanten oder Lizenzgeber für irgendeinen Gegenstand dieses Vertrags, sei es durch Vertrag, Fahrlässigkeit, verschuldensunabhängige Haftung oder eine andere rechtliche oder billige Theorie, für: (i) besondere, zufällige oder Folgeschäden; (ii) die Kosten für die Beschaffung von Ersatzprodukten oder -dienstleistungen; (iii) Unterbrechungen der Nutzung oder Verlust oder Beschädigung von Daten; oder (iv) für Beträge, die die Gebühren übersteigen, die Sie Flirtual im Rahmen dieses Vertrags in den zwölf (12) Monaten vor dem Klagegrund gezahlt haben. Flirtual haftet nicht für Verzögerungen oder Ausfälle, die außerhalb ihrer angemessenen Kontrolle liegen. Das Vorstehende gilt nicht, soweit es nach geltendem Recht verboten ist.</p></section>"
+	},
+	"landing": {
+		"profiles": {
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
+		},
+		"carousel": {
+			"images": {
+				"0": {
+					"image": "b9326c15-c996-488f-8d68-d7ea4cb8649b"
+				},
+				"1": {
+					"image": "738f3d22-6f38-4059-9dd3-7fdd672acccd"
+				},
+				"2": {
+					"image": "be840a83-86f9-4ba2-87ae-3cd93f73f099"
+				},
+				"3": {
+					"image": "107737a5-d694-43db-a082-0d71bdfc4105"
+				},
+				"4": {
+					"image": "30023b24-f08a-43d4-918a-aa8940cefb24"
+				},
+				"5": {
+					"image": "09402677-a01e-4f6b-9171-f8c533ec774f"
+				},
+				"6": {
+					"image": "7e736467-63c4-4ff4-9989-54546b24cc6f"
+				}
+			}
+		},
+		"testimonial": {
+			"images": {
+				"0": "a68e9441-8430-4a33-a067-04313d4d260c",
+				"1": "5e0d4116-2e60-4ae9-b865-3ce7d17c68ec",
+				"2": "01db5707-2aac-45cd-a80c-223c6e1b93f2",
+				"3": "b8ea7c5b-5110-46b7-8635-38728e8a77aa",
+				"4": "eea60bde-de1a-4f43-9f02-a218fddf2a73",
+				"5": "ad5cba2d-03ff-43eb-9cf3-e6986bb0be54",
+				"6": "40122187-d831-4131-ab8e-ee0f5544ce73",
+				"7": "17b87f45-0ef8-4dfa-80c4-c23450f09b30",
+				"8": "28eaf327-e2bd-4fd2-a7f9-4dd6be153bfc",
+				"9": "5bbf00fc-2c97-49b2-9f16-9d3c1a180ae8",
+				"10": "f3b27da8-4f36-4c7f-bd65-094421d28f22",
+				"11": "c0d8ad7f-a6df-4de8-a429-a8fa729bf447",
+				"12": "9f2de017-6b5a-4ca9-b858-95057889fd64",
+				"13": "b8b087b9-3ab3-4a05-b01a-166b502789f5"
+			},
+			"brands": {
+				"0": {
+					"image": "dc248f6f-aee6-4318-b473-6fe2d6db07ee",
+					"name": "The New York Times"
+				},
+				"1": {
+					"image": "d34ee25e-31e6-47a7-952f-51820f1e1ce1",
+					"name": "Today"
+				},
+				"2": {
+					"image": "257a7f46-a6c1-4bee-9a3e-5dbdfe9d2a66",
+					"name": "Forbes"
+				},
+				"3": {
+					"image": "18e4a7ad-625a-42f6-b581-d14386ced012",
+					"name": "The New Yorker"
+				},
+				"4": {
+					"image": "29a2f1bc-0b3e-469a-aa11-0de69b75b629",
+					"name": "Road to VR"
+				},
+				"5": {
+					"image": "db2eb424-e837-4d64-85e0-e49409ae33a6",
+					"name": "Samsung Whatever Next?"
+				},
+				"6": {
+					"image": "54ffe640-1c54-4d8f-a754-4c7b7ca82456",
+					"name": "Future of Sex"
+				},
+				"7": {
+					"image": "b779aa38-8592-48cd-8f9b-88228c5abc21",
+					"name": "Dazed"
+				},
+				"8": {
+					"image": "7845a7d0-0461-41dd-934c-cb8439e90dc7",
+					"name": "Virtual Week-ality"
+				},
+				"9": {
+					"image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
+					"name": "iDate Awards - Best New Technology"
+				}
+			}
+		}
+	}
 }
