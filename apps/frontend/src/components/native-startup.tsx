@@ -1,18 +1,19 @@
 "use client";
 
+import { StatusBar } from "@capacitor/status-bar";
 import {
 	AppUpdate,
 	AppUpdateAvailability,
 	type AppUpdateInfo
 } from "@capawesome/capacitor-app-update";
-import { StatusBar } from "@capacitor/status-bar";
+import ms from "ms";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import useSWR from "swr";
-import { useTranslations } from "next-intl";
-import ms from "ms";
 
 import { useDevice } from "~/hooks/use-device";
 
+import { Button } from "./button";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -23,7 +24,6 @@ import {
 	AlertDialogTitle
 } from "./dialog/alert";
 import { DialogFooter } from "./dialog/dialog";
-import { Button } from "./button";
 
 const NativeStartup: React.FC = () => {
 	const t = useTranslations();
@@ -41,9 +41,9 @@ const NativeStartup: React.FC = () => {
 
 	useEffect(() => {
 		if (
-			!updateInformation ||
-			updateInformation.updateAvailability !==
-				AppUpdateAvailability.UPDATE_AVAILABLE
+			!updateInformation
+			|| updateInformation.updateAvailability
+			!== AppUpdateAvailability.UPDATE_AVAILABLE
 		)
 			return;
 
@@ -52,18 +52,21 @@ const NativeStartup: React.FC = () => {
 	}, [updateInformation]);
 
 	useEffect(() => {
-		void StatusBar.setOverlaysWebView({ overlay: true }).catch(() => {});
+		void import("@capacitor/status-bar")
+			.then(({ StatusBar }) => StatusBar.setOverlaysWebView({ overlay: true }))
+			.catch(() => {});
+
 		void import("@aashu-dubey/capacitor-statusbar-safe-area")
-			.then(({ SafeAreaController }) => SafeAreaController.injectCSSVariables())
+			.then(({ SafeAreaController, }) => SafeAreaController.injectCSSVariables())
 			.catch(() => {});
 	}, []);
 
 	if (
-		!native ||
-		!updateInformation ||
-		updateInformation.updateAvailability !==
-			AppUpdateAvailability.UPDATE_AVAILABLE ||
-		updateInformation.flexibleUpdateAllowed
+		!native
+		|| !updateInformation
+		|| updateInformation.updateAvailability
+		!== AppUpdateAvailability.UPDATE_AVAILABLE
+		|| updateInformation.flexibleUpdateAllowed
 	)
 		return null;
 
