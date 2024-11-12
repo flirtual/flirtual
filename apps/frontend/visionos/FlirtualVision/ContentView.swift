@@ -1,5 +1,16 @@
 import SwiftUI
 
+extension Binding {
+    func onUpdate(_ closure: @escaping () -> Void) -> Binding<Value> {
+        Binding(get: {
+            wrappedValue
+        }, set: { newValue in
+            wrappedValue = newValue
+            closure()
+        })
+    }
+}
+
 struct ContentView: View {
     private let BASE_URL = "https://flirtu.al"
     @ObservedObject private var vm = WebViewModel()
@@ -9,33 +20,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            TabView(selection: $selectedTab) {
-                Text("").tabItem {
-                    Label("Browse", systemImage: "heart")
-                }
-                .tag(0)
-                
-                Text("").tabItem {
-                    Label("Homies", systemImage: "hand.wave")
-                }
-                .tag(1)
-                
-                Text("").tabItem {
-                    Label("Matches", systemImage: "bubble")
-                }
-                .tag(2)
-                
-                Text("").tabItem {
-                    Label("Profile", systemImage: "person")
-                }
-                .tag(3)
-                
-                Text("").tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
-                .tag(4)
-            }
-            .onChange(of: selectedTab) {
+            TabView(selection: $selectedTab.onUpdate{
                 if !isProgrammaticTabChange {
                     switch selectedTab {
                     case 0:
@@ -54,6 +39,36 @@ struct ContentView: View {
                     vm.loadWebPage()
                 }
                 isProgrammaticTabChange = false
+            }) {
+                Text("").tabItem {
+                    Image("heart")
+                    Text("Browse")
+                }
+                .tag(0)
+                
+                Text("").tabItem {
+                    Image("peace")
+                    Text("Homies")
+                }
+                .tag(1)
+                
+                Text("").tabItem {
+                    Image(systemName: "bubble")
+                    Text("Matches")
+                }
+                .tag(2)
+                
+                Text("").tabItem {
+                    Image(systemName: "person")
+                    Text("Profile")
+                }
+                .tag(3)
+                
+                Text("").tabItem {
+                    Image(systemName: "gear")
+                    Text("Settings")
+                }
+                .tag(4)
             }
             .onAppear {
                 selectedTab = 0
