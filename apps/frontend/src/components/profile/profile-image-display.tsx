@@ -243,14 +243,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">
 											<button
-												className="flex h-full w-1/3 items-center justify-start px-8 opacity-70 transition-opacity hover:opacity-100"
+												className="flex h-full w-1/4 items-center justify-start px-8 opacity-70 transition-opacity hover:opacity-100"
 												type="button"
 												onClick={() => set(-1)}
 											>
 												<ChevronLeft className="size-10 text-white-10 drop-shadow" />
 											</button>
 											<button
-												className="ml-auto flex h-full w-1/3 items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
+												className="ml-auto flex h-full w-1/4 items-center justify-end px-8 opacity-70 transition-opacity hover:opacity-100"
 												type="button"
 												onClick={() => set(1)}
 											>
@@ -275,14 +275,14 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 					<>
 						<div className="pointer-events-none absolute flex size-full">
 							<button
-								className="pointer-events-auto flex h-full w-1/3 items-center justify-start px-6 opacity-70 transition-opacity hover:opacity-100"
+								className="pointer-events-auto flex h-full w-1/4 items-center justify-start px-6 opacity-70 transition-opacity hover:opacity-100"
 								type="button"
 								onClick={() => set(-1)}
 							>
 								<ChevronLeft className="size-10 text-white-10 drop-shadow" />
 							</button>
 							<button
-								className="pointer-events-auto ml-auto flex h-full w-1/3 items-center justify-end px-6 opacity-70 transition-opacity hover:opacity-100"
+								className="pointer-events-auto ml-auto flex h-full w-1/4 items-center justify-end px-6 opacity-70 transition-opacity hover:opacity-100"
 								type="button"
 								onClick={() => set(1)}
 							>
