@@ -110,16 +110,16 @@ export const ConversationListItemSkeleton = forwardRef<HTMLDivElement, unknown>(
 	(props, reference) => {
 		return (
 			<div className="relative rounded-xl shadow-brand-1" ref={reference}>
-				<div className="flex rounded-xl bg-white-30 dark:bg-black-60">
-					<div className="size-20 animate-pulse rounded-l-xl bg-white-20 dark:bg-black-50" />
+				<div className="flex rounded-xl bg-white-30 vision:bg-white-10/50 dark:bg-black-60">
+					<div className="size-20 animate-pulse rounded-l-xl bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
 					<div className="flex w-1 grow flex-col gap-1 p-4">
 						<div className="flex justify-between gap-4">
-							<span className="h-5 w-1/2 animate-pulse rounded bg-white-20 dark:bg-black-50" />
-							<span className="size-5 animate-pulse rounded bg-white-20 dark:bg-black-50" />
+							<span className="h-5 w-1/2 animate-pulse rounded bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
+							<span className="size-5 animate-pulse rounded bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
 						</div>
 						<div className="flex items-baseline justify-between gap-4">
-							<span className="h-5 w-full animate-pulse rounded bg-white-20 dark:bg-black-50" />
-							<span className="h-5 w-1/4 animate-pulse rounded bg-white-20 dark:bg-black-50" />
+							<span className="h-5 w-full animate-pulse rounded bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
+							<span className="h-5 w-1/4 animate-pulse rounded bg-white-20 vision:bg-white-20/50 dark:bg-black-50" />
 						</div>
 					</div>
 				</div>
