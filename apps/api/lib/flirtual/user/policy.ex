@@ -185,6 +185,7 @@ defmodule Flirtual.User.Policy do
     :talkjs_signature,
     :apns_token,
     :fcm_token,
+    :platforms,
     :push_count,
     :rating_prompts,
     :subscription,

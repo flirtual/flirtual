@@ -362,6 +362,7 @@ defmodule FlirtualWeb.Router do
               post("/prompts", ProfileController, :update_prompts)
               post("/preferences", ProfileController, :update_preferences)
               post("/custom-weights", ProfileController, :update_custom_weights)
+              post("/custom-filters", ProfileController, :update_custom_filters)
             end
           end
         end

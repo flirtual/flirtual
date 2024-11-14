@@ -44,8 +44,7 @@ defmodule FlirtualWeb.SessionController do
       |> json(Policy.transform(conn, session))
     else
       %User{} ->
-        {:error,
-         {:unauthorized, :account_banned}}
+        {:error, {:unauthorized, :account_banned}}
 
       _ ->
         {:error, {:unauthorized, :invalid_credentials}}
@@ -88,7 +87,22 @@ defmodule FlirtualWeb.SessionController do
   end
 
   def create(%Plug.Conn{} = conn, %User{} = user, remember_me \\ false) do
-    session = Session.create(user)
+    user_agent = get_req_header(conn, "user-agent") |> List.first() |> String.downcase()
+
+    platform =
+      case String.split(user_agent) |> List.last() do
+        "flirtual-native" ->
+          if(String.contains?(user_agent, "android"), do: "android", else: "ios")
+
+        "flirtual-vision" ->
+          "vision"
+
+        _ ->
+          "web"
+      end
+
+    session = Session.create(user, platform)
+    User.update_platforms(user)
 
     conn =
       conn

@@ -10,7 +10,7 @@ defmodule Flirtual.User.Profile do
   alias Flirtual.Languages
   alias Flirtual.{Attribute, User}
   alias Flirtual.User.Profile
-  alias Flirtual.User.Profile.{CustomWeights, Image, Preferences, Prompt}
+  alias Flirtual.User.Profile.{CustomFilter, CustomWeights, Image, Preferences, Prompt}
 
   @derive {Inspect,
            only: [
@@ -115,6 +115,7 @@ defmodule Flirtual.User.Profile do
       preload_order: [asc: :type, asc: :order]
     )
 
+    has_many(:custom_filters, CustomFilter, references: :user_id, foreign_key: :profile_id)
     has_many(:images, Image, references: :user_id, foreign_key: :profile_id)
     has_many(:prompts, Prompt, references: :user_id, foreign_key: :profile_id)
 
@@ -139,6 +140,7 @@ defmodule Flirtual.User.Profile do
   def default_assoc do
     [
       :custom_weights,
+      :custom_filters,
       attributes: from(attribute in Attribute, order_by: [attribute.type, attribute.id]),
       preferences: Preferences.default_assoc(),
       images: from(image in Image, order_by: image.order),
@@ -206,6 +208,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Profile do
       :custom_interests,
       :preferences,
       :custom_weights,
+      :custom_filters,
       :queue_love_reset_at,
       :queue_friend_reset_at,
       :vrchat,

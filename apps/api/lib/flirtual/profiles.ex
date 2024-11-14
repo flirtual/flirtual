@@ -260,6 +260,38 @@ defmodule Flirtual.Profiles do
     |> Repo.insert_or_update()
   end
 
+  def update_custom_filters(%Profile{user_id: profile_id}, filters) do
+    Repo.transaction(fn ->
+      with {_, nil} <-
+             Profile.CustomFilter
+             |> where(profile_id: ^profile_id)
+             |> Repo.delete_all(),
+           filters <-
+             filters
+             |> Enum.map(fn filter ->
+               with {:ok, filter} <-
+                      %Profile.CustomFilter{}
+                      |> Profile.CustomFilter.changeset(
+                        filter
+                        |> Map.put("profile_id", profile_id)
+                      )
+                      |> Repo.insert() do
+                 filter
+               else
+                 {:error, reason} -> Repo.rollback(reason)
+                 reason -> Repo.rollback(reason)
+               end
+             end),
+           {:ok, _} <-
+             ObanWorkers.update_user(profile_id, [:elasticsearch]) do
+        filters
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   defmodule UpdateColors do
     use Flirtual.EmbeddedSchema
 

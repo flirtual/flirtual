@@ -1,11 +1,21 @@
 "use client";
 
 import { Loader2, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { type FC, startTransition, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { useTranslations } from "next-intl";
 
+import { Matchmaking } from "~/api/matchmaking";
+import {
+	CustomWeightList,
+	DefaultProfileCustomWeights,
+	Profile,
+	ProfileMonopolyList,
+	ProfileRelationshipLabel,
+	ProfileRelationshipList
+} from "~/api/user/profile";
+import { NewBadge, PremiumBadge } from "~/components/badge";
 import { Button } from "~/components/button";
 import {
 	AlertDialog,
@@ -20,27 +30,17 @@ import {
 import { DialogFooter } from "~/components/dialog/dialog";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
-import { InputLabel, InputLabelHint, InputSelect } from "~/components/inputs";
+import { InputCheckbox, InputLabel, InputLabelHint, InputSelect } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
-import { NewBadge, PremiumBadge } from "~/components/badge";
+import {
+	type AttributeTranslation,
+	useAttributes,
+	useAttributeTranslation
+} from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { capitalize } from "~/utilities";
-import {
-	CustomWeightList,
-	DefaultProfileCustomWeights,
-	Profile,
-	ProfileMonopolyList,
-	ProfileRelationshipLabel,
-	ProfileRelationshipList
-} from "~/api/user/profile";
-import { Matchmaking } from "~/api/matchmaking";
-import {
-	useAttributes,
-	useAttributeTranslation,
-	type AttributeTranslation
-} from "~/hooks/use-attribute";
 
 const absMinAge = 18;
 const absMaxAge = 60;
@@ -60,13 +60,13 @@ export const MatchmakingForm: FC = () => {
 
 	if (!session) return null;
 	const { user } = session;
-	const { preferences, customWeights = DefaultProfileCustomWeights } =
-		user.profile;
+	const { preferences, customWeights = DefaultProfileCustomWeights }
+		= user.profile;
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
 			fields={{
+				visionFilter: user.profile.customFilters?.some(({ preferred, type, value }) => preferred && type === "platform" && value === "vision"),
 				gender: preferences?.attributes.gender || [],
 				age: [
 					preferences?.agemin ?? absMinAge,
@@ -87,10 +87,11 @@ export const MatchmakingForm: FC = () => {
 				weightLanguages: customWeights.languages,
 				weightPersonality: customWeights.personality
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async (values) => {
 				const [agemin, agemax] = values.age;
-				const { gender: _, ...preferenceAttributes } =
-					preferences?.attributes ?? {};
+				const { gender: _, ...preferenceAttributes }
+					= preferences?.attributes ?? {};
 
 				await Promise.all([
 					Profile.update(user.id, {
@@ -119,7 +120,14 @@ export const MatchmakingForm: FC = () => {
 						monopoly: values.weightMonopoly,
 						languages: values.weightLanguages,
 						personality: values.weightPersonality
-					})
+					}),
+					Profile.updateCustomFilters(user.id, values.visionFilter
+						? [{
+								preferred: true,
+								type: "platform",
+								value: "vision"
+							}]
+						: [])
 				]);
 
 				startTransition(() => router.refresh());
@@ -128,6 +136,18 @@ export const MatchmakingForm: FC = () => {
 		>
 			{({ FormField, fields }) => (
 				<>
+					{user.platforms?.includes("vision") && (
+						<FormField name="visionFilter">
+							{(field) => (
+								<div className="flex items-center gap-4">
+									<InputCheckbox {...field.props} />
+									<InputLabel {...field.labelProps}>
+										Show visionOS users first
+									</InputLabel>
+								</div>
+							)}
+						</FormField>
+					)}
 					<FormField name="gender">
 						{(field) => (
 							<>
@@ -275,9 +295,9 @@ export const MatchmakingForm: FC = () => {
 					</div>
 					{CustomWeightList.map((key) => {
 						if (
-							(key === "monopoly" && !fields.monopoly.props.value) ||
-							(key === "relationships" && !fields.relationships.props.value) ||
-							(["domsub", "kinks"].includes(key) && !user.preferences?.nsfw)
+							(key === "monopoly" && !fields.monopoly.props.value)
+							|| (key === "relationships" && !fields.relationships.props.value)
+							|| (["domsub", "kinks"].includes(key) && !user.preferences?.nsfw)
 						)
 							return null;
 
@@ -287,16 +307,17 @@ export const MatchmakingForm: FC = () => {
 									<>
 										<InputLabel
 											{...labelProps}
-											hint={
+											hint={(
 												<InputLabelHint
 													className={twMerge(
 														"ml-auto",
 														value === 0 ? "!text-red-500" : ""
 													)}
 												>
-													{value}x
+													{value}
+													x
 												</InputLabelHint>
-											}
+											)}
 										>
 											<span>
 												{
@@ -328,13 +349,13 @@ export const MatchmakingForm: FC = () => {
 										</InputLabel>
 										<Slider
 											{...props}
+											disabled={
+												key === "country" ? false : !user.subscription?.active
+											}
 											max={2}
 											min={0}
 											step={0.25}
 											value={[value]}
-											disabled={
-												key === "country" ? false : !user.subscription?.active
-											}
 											onValueChange={(values) => onChange(values[0]!)}
 										/>
 									</>

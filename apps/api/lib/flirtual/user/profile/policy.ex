@@ -62,6 +62,7 @@ defmodule Flirtual.User.Profile.Policy do
                        :country,
                        :preferences,
                        :custom_weights,
+                       :custom_filters,
                        :queue_love_reset_at,
                        :queue_friend_reset_at,
                        :updated_at

@@ -85,6 +85,19 @@ defmodule FlirtualWeb.ProfileController do
     end
   end
 
+  def update_custom_filters(conn, %{"user_id" => user_id, "_json" => filters}) do
+    user = Users.get(user_id)
+    profile = %Profile{user.profile | user: user}
+
+    if is_nil(user) or Policy.cannot?(conn, :update, profile) do
+      {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
+    else
+      with {:ok, preferences} <- Profiles.update_custom_filters(profile, filters) do
+        conn |> json(preferences)
+      end
+    end
+  end
+
   def update_colors(conn, %{"user_id" => user_id} = params) do
     user =
       if(conn.assigns[:session].user.id === user_id,

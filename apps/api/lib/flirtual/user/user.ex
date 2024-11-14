@@ -56,6 +56,7 @@ defmodule Flirtual.User do
     field(:unsubscribe_token, Ecto.ShortUUID)
     field(:apns_token, :string)
     field(:fcm_token, :string)
+    field(:platforms, {:array, :string})
     field(:push_count, :integer)
     field(:rating_prompts, :integer)
     field(:stripe_id, :string)
@@ -778,6 +779,27 @@ defmodule Flirtual.User do
     end)
   end
 
+  def update_platforms(%User{} = user) do
+    platforms =
+      user
+      |> Repo.preload(:sessions)
+      |> Map.get(:sessions)
+      |> Enum.map(& &1.platform)
+      |> Enum.uniq()
+
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{platforms: platforms})
+             |> Repo.update() do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
   def update_push_tokens(%User{} = user, attrs) do
     Repo.transaction(fn ->
       with {:ok, user} <-
@@ -1005,6 +1027,7 @@ defimpl Elasticsearch.Document, for: Flirtual.User do
           id: user.id,
           dob: user.born_at,
           active_at: user.active_at,
+          platforms: user.platforms,
           agemin: profile.preferences.agemin || 18,
           agemax: profile.preferences.agemax || 128,
           openness: profile.openness,
@@ -1056,6 +1079,7 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :talkjs_signature,
       :apns_token,
       :fcm_token,
+      :platforms,
       :push_count,
       :rating_prompts,
       :talkjs_id,

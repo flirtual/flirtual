@@ -1,20 +1,19 @@
 import { snakeCase } from "change-case";
 
-import { api, type UpdatedAtModel } from "../../common";
-
-import { Personality } from "./personality";
-import { ProfileImage } from "./images";
-
 import type {
 	AttributeType,
 	GroupedAttributeCollection
 } from "~/api/attributes";
 
-export type ProfilePreferences = UpdatedAtModel & {
+import { api, type UpdatedAtModel } from "../../common";
+import { ProfileImage } from "./images";
+import { Personality } from "./personality";
+
+export type ProfilePreferences = {
 	agemin?: number;
 	agemax?: number;
 	attributes: GroupedAttributeCollection;
-};
+} & UpdatedAtModel;
 
 export const ProfileRelationshipList = [
 	"serious",
@@ -37,7 +36,7 @@ export const ProfileMonopolyList = ["monogamous", "nonmonogamous"] as const;
 
 export type ProfileMonopoly = (typeof ProfileMonopolyList)[number];
 
-export type Profile = Partial<UpdatedAtModel> & {
+export type Profile = {
 	displayName?: string;
 	biography?: string;
 	new?: boolean;
@@ -57,13 +56,14 @@ export type Profile = Partial<UpdatedAtModel> & {
 	customInterests: Array<string>;
 	preferences?: ProfilePreferences;
 	customWeights?: ProfileCustomWeights;
+	customFilters?: ProfileCustomFilters;
 	images: Array<ProfileImage>;
 	prompts: Array<ProfilePrompt>;
 	queueResetLoveAt?: string;
 	queueResetFriendAt?: string;
 	color_1?: string;
 	color_2?: string;
-};
+} & Partial<UpdatedAtModel>;
 
 export const ProfileAttributes = [
 	"gender",
@@ -76,33 +76,33 @@ export const ProfileAttributes = [
 
 export type ProfileAttribute = (typeof ProfileAttributes)[number];
 
-export type UpdateProfileOptions = Partial<
-	Pick<
-		Profile,
-		| "displayName"
-		| "biography"
-		| "new"
-		| "country"
-		| "languages"
-		| "relationships"
-		| "customInterests"
-		| "vrchat"
-		| "discord"
-		| "facetime"
-		| "playlist"
-	>
-> & {
+export type UpdateProfileOptions = {
 	[K in ProfileAttribute as `${K}Id`]?: Array<string>;
 } & {
-	domsub?: ProfileDomsub | "none";
-	monopoly?: ProfileMonopoly | "none";
-};
+	domsub?: "none" | ProfileDomsub;
+	monopoly?: "none" | ProfileMonopoly;
+} & Partial<
+	Pick<
+		Profile,
+		| "biography"
+		| "country"
+		| "customInterests"
+		| "discord"
+		| "displayName"
+		| "facetime"
+		| "languages"
+		| "new"
+		| "playlist"
+		| "relationships"
+		| "vrchat"
+	>
+>;
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export type ProfileColors = {
+export interface ProfileColors {
 	color_1: string;
 	color_2: string;
-};
+}
 
 export const CustomWeightList = [
 	"country",
@@ -130,6 +130,14 @@ export const DefaultProfileCustomWeights = Object.freeze<ProfileCustomWeights>(
 	) as ProfileCustomWeights
 );
 
+export interface CustomFilter {
+	preferred: boolean;
+	type: "country" | "game" | "gender" | "interest" | "kink" | "language" | "platform" | "sexuality";
+	value: string;
+}
+
+export type ProfileCustomFilters = Array<CustomFilter>;
+
 export interface ProfilePrompt {
 	promptId: string;
 	response: string;
@@ -150,7 +158,7 @@ export const Profile = {
 		{
 			required,
 			...options
-		}: UpdateProfileOptions & { required?: Array<keyof UpdateProfileOptions> }
+		}: { required?: Array<keyof UpdateProfileOptions> } & UpdateProfileOptions
 	) {
 		return api
 			.url(`users/${userId}/profile`)
@@ -164,8 +172,17 @@ export const Profile = {
 			.json<Profile>();
 	},
 	updateCustomWeights(userId: string, options: Partial<ProfileCustomWeights>) {
+		console.log(options);
 		return api
 			.url(`users/${userId}/profile/custom-weights`)
+			.json(options)
+			.post()
+			.json<Profile>();
+	},
+	updateCustomFilters(userId: string, options: Partial<ProfileCustomFilters>) {
+		console.log(options);
+		return api
+			.url(`users/${userId}/profile/custom-filters`)
 			.json(options)
 			.post()
 			.json<Profile>();
@@ -194,7 +211,7 @@ export const Profile = {
 			agemin?: number | null;
 			agemax?: number | null;
 			attributes?: Array<string>;
-			required?: Array<"agemin" | "agemax">;
+			required?: Array<"agemax" | "agemin">;
 			requiredAttributes?: Array<AttributeType>;
 		}
 	) {
