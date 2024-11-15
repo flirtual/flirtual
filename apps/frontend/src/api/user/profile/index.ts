@@ -98,11 +98,11 @@ export type UpdateProfileOptions = {
 	>
 >;
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export interface ProfileColors {
+// eslint-disable-next-line ts/consistent-type-definitions
+export type ProfileColors = {
 	color_1: string;
 	color_2: string;
-}
+};
 
 export const CustomWeightList = [
 	"country",
