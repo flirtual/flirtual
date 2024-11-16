@@ -1,6 +1,6 @@
 "use client";
 
-import * as Sentry from "@sentry/nextjs";
+import { captureException } from "@sentry/nextjs";
 import type Error from "next/error";
 import { Montserrat, Nunito } from "next/font/google";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export default function GlobalError({
 	reset: () => void;
 }) {
 	useEffect(() => {
-		Sentry.captureException(error);
+		captureException(error);
 	}, [error]);
 
 	return (

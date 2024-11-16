@@ -1,11 +1,11 @@
-import * as Sentry from "@sentry/nextjs";
+import { captureRequestError, init } from "@sentry/nextjs";
 
 import { environment, sentryDsn } from "~/const";
 
-export const onRequestError = Sentry.captureRequestError;
+export const onRequestError = captureRequestError;
 
 export function register() {
-	Sentry.init({
+	init({
 		enabled: environment !== "development",
 		environment: environment === "preview" ? "staging" : environment,
 		dsn: sentryDsn,

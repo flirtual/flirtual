@@ -1,6 +1,6 @@
 "use client";
 
-import * as Sentry from "@sentry/nextjs";
+import { captureException, captureFeedback, setUser } from "@sentry/nextjs";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -43,7 +43,7 @@ export default function Error({
 
 	error.digest ??= "000000000";
 
-	const eventId = useMemo(() => Sentry.captureException(error, {
+	const eventId = useMemo(() => captureException(error, {
 		tags: {
 			digest: error.digest
 		}
@@ -109,9 +109,9 @@ export default function Error({
 											className="flex flex-col gap-4"
 											fields={{ message: "" }}
 											onSubmit={async ({ message }) => {
-												if (session) Sentry.setUser({ id: session.user.id });
+												if (session) setUser({ id: session.user.id });
 
-												Sentry.captureFeedback(
+												captureFeedback(
 													{
 														message,
 														associatedEventId: eventId,

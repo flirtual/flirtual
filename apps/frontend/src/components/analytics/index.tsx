@@ -1,6 +1,6 @@
 "use client";
 
-import * as Sentry from "@sentry/nextjs";
+import { setTag, setUser } from "@sentry/nextjs";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import posthog from "posthog-js";
@@ -35,7 +35,7 @@ function Identity() {
 		|| false;
 
 	const reset = useCallback(() => {
-		Sentry.setUser(null);
+		setUser(null);
 
 		if (posthog) {
 			posthog.clear_opt_in_out_capturing();
@@ -52,7 +52,7 @@ function Identity() {
 		if (posthogOptIn) posthog?.opt_in_capturing();
 
 		posthog?.identify(session.user.id);
-		Sentry.setUser({ id: session.user.id });
+		setUser({ id: session.user.id });
 	}, [posthog, session, posthogOptIn, reset]);
 
 	useEffect(() => {
@@ -63,8 +63,8 @@ function Identity() {
 			}
 		});
 
-		Sentry.setTag("native", native ? "yes" : "no");
-		Sentry.setTag("vision", vision ? "yes" : "no");
+		setTag("native", native ? "yes" : "no");
+		setTag("vision", vision ? "yes" : "no");
 	}, [posthog, native, vision]);
 
 	return null;

@@ -1,6 +1,6 @@
 "use client";
 
-import * as Sentry from "@sentry/nextjs";
+import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -15,13 +15,13 @@ export default function Error({
 	error,
 	reset
 }: {
-	error: Error & { digest?: string };
+	error: { digest?: string } & Error;
 	reset: () => void;
 }) {
 	const router = useRouter();
 
 	useEffect(() => {
-		Sentry.captureException(error);
+		captureException(error);
 		console.error(error);
 	});
 
@@ -36,16 +36,22 @@ export default function Error({
 					<div className="flex flex-col gap-4 font-nunito">
 						<p>
 							Sorry about that! There was an error processing your request.
-							<br className="hidden desktop:block" /> If this issue persists,
-							please{" "}
+							<br className="hidden desktop:block" />
+							{" "}
+							If this issue persists,
+							please
+							{" "}
 							<InlineLink
 								className="text-white-10 underline"
 								href={urls.resources.contact}
 							>
 								contact us
-							</InlineLink>{" "}
+							</InlineLink>
+							{" "}
 							or check back later.
-							<br className="hidden desktop:block" /> Thank you for your
+							<br className="hidden desktop:block" />
+							{" "}
+							Thank you for your
 							patience &lt;3
 						</p>
 					</div>
@@ -86,7 +92,12 @@ export default function Error({
 							Twitter
 						</InlineLink>
 					</div>
-					<footer>© {new Date().getFullYear()} Flirtual</footer>
+					<footer>
+						©
+						{new Date().getFullYear()}
+						{" "}
+						Flirtual
+					</footer>
 				</div>
 			</div>
 		</div>

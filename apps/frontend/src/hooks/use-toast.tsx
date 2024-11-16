@@ -1,7 +1,7 @@
 "use client";
 
 import { Toast as NativeToast } from "@capacitor/toast";
-import * as Sentry from "@sentry/nextjs";
+import { captureException } from "@sentry/nextjs";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, Check } from "lucide-react";
 import {
@@ -140,10 +140,10 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					&& "message" in reason
 					&& typeof reason.message === "string"
 					&& reason.message)
-					|| (typeof reason === "string" && reason)
-					|| "Unknown request error";
+				|| (typeof reason === "string" && reason)
+				|| "Unknown request error";
 
-			if (!expected) Sentry.captureException(reason);
+			if (!expected) captureException(reason);
 
 			return add({
 				type: "error",

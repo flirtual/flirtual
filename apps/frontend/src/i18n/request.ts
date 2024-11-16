@@ -1,4 +1,4 @@
-import * as Sentry from "@sentry/nextjs";
+import { captureException } from "@sentry/nextjs";
 import deepmerge from "deepmerge";
 import type {
 	AbstractIntlMessages,
@@ -74,6 +74,6 @@ export default getRequestConfig(async () => {
 	return {
 		locale: locale.current,
 		messages,
-		onError: Sentry.captureException
+		onError: captureException
 	};
 });

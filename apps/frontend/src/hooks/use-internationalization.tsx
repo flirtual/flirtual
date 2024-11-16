@@ -1,7 +1,6 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import * as Sentry from "@sentry/nextjs";
 import { type AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { createContext, forwardRef, type PropsWithChildren, use, useEffect } from "react";
 
