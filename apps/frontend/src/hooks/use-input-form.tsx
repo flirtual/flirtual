@@ -114,13 +114,13 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 		const captcha
 			= withCaptcha && captchaRef.current
-				? await captchaRef.current.getResponsePromise()
+				? captchaRef.current.getResponse()
 				: "";
 
 		setCaptcha(captcha || "");
 
-		setFieldErrors({});
-		setErrors([]);
+		// setFieldErrors({});
+		// setErrors([]);
 
 		const result = await onSubmit(_values, { ...form, captcha: captcha || "", submit })
 			.then(() => {
@@ -173,7 +173,9 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 				return { errors, fieldErrors: {}, fields: _values };
 			});
 
-		if (withCaptcha) captchaRef.current?.reset();
+		if (withCaptcha)
+			captchaRef.current?.reset();
+
 		setSubmitting(false);
 		return result;
 	};
@@ -239,6 +241,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		setErrors([]);
 		setFieldErrors({});
 		setSubmitting(false);
+
+		if (withCaptcha) captchaRef.current?.reset();
 	};
 
 	const form = {
