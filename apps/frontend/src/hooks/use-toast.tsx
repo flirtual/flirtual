@@ -2,7 +2,6 @@
 
 import { Toast as NativeToast } from "@capacitor/toast";
 import { captureException } from "@sentry/nextjs";
-import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, Check } from "lucide-react";
 import {
 	createContext,
