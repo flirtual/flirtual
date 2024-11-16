@@ -55,7 +55,7 @@ export const SortableGrid: FC<
 	);
 
 	return (
-		<CurrentSortableContext.Provider
+		<CurrentSortableContext
 			value={useMemo(() => ({ currentItem }), [currentItem])}
 		>
 			<DndContext
@@ -90,7 +90,7 @@ export const SortableGrid: FC<
 					{children}
 				</SortableContext>
 			</DndContext>
-		</CurrentSortableContext.Provider>
+		</CurrentSortableContext>
 	);
 };
 

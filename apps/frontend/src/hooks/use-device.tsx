@@ -23,7 +23,7 @@ export type DeviceProviderProps = React.PropsWithChildren<
 export const DeviceProvider = forwardRef<HTMLHtmlElement, DeviceProviderProps>(
 	({ children, native, platform, userAgent, vision, ...props }, reference) => {
 		return (
-			<DeviceContext.Provider
+			<DeviceContext
 				value={useMemo(() => ({
 					native,
 					platform,
@@ -40,7 +40,7 @@ export const DeviceProvider = forwardRef<HTMLHtmlElement, DeviceProviderProps>(
 				>
 					{children}
 				</Slot>
-			</DeviceContext.Provider>
+			</DeviceContext>
 		);
 	}
 );

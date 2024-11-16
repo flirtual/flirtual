@@ -22,7 +22,7 @@ export const InternationalizationProvider = forwardRef<
 	PropsWithChildren<{ value: Internationalization; messages: AbstractIntlMessages }>
 >(({ children, value, messages, ...props }, reference) => {
 	return (
-		<InternationalizationContext.Provider value={value}>
+		<InternationalizationContext value={value}>
 			<Slot
 				{...props}
 				data-country={value.country || "xx"}
@@ -31,7 +31,7 @@ export const InternationalizationProvider = forwardRef<
 			>
 				{children}
 			</Slot>
-		</InternationalizationContext.Provider>
+		</InternationalizationContext>
 	);
 });
 

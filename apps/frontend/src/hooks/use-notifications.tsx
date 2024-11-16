@@ -119,7 +119,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 	);
 
 	return (
-		<NotificationContext.Provider
+		<NotificationContext
 			value={useMemo<NotificationContext>(
 				() => ({
 					status,
@@ -129,7 +129,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			)}
 		>
 			{children}
-		</NotificationContext.Provider>
+		</NotificationContext>
 	);
 }
 

@@ -53,7 +53,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 				"withGlobalId"
 			])}
 		>
-			<FormContext.Provider value={form}>
+			<FormContext value={form}>
 				{children}
 				{props.formErrorMessages && (
 					<FormInputMessages
@@ -61,7 +61,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 					/>
 				)}
 				{props.withCaptcha && <FormCaptcha ref={captchaReference} />}
-			</FormContext.Provider>
+			</FormContext>
 		</form>
 	);
 }

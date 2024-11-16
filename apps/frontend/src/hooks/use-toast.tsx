@@ -150,7 +150,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	);
 
 	return (
-		<ToastContext.Provider
+		<ToastContext
 			value={useMemo(
 				() => ({
 					toasts,
@@ -169,6 +169,6 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					))}
 				</div>
 			)}
-		</ToastContext.Provider>
+		</ToastContext>
 	);
 };

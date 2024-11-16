@@ -29,11 +29,11 @@ export const TileProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [tile, setTile] = useState(0);
 
 	return (
-		<TileContext.Provider
+		<TileContext
 			value={useMemo(() => ({ tile, setTile }), [tile, setTile])}
 		>
 			{children}
-		</TileContext.Provider>
+		</TileContext>
 	);
 };
 

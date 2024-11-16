@@ -339,7 +339,7 @@ export const ReportView: React.FC = () => {
 	);
 
 	return (
-		<ReportListContext.Provider
+		<ReportListContext
 			value={useMemo(
 				() =>
 					({
@@ -406,6 +406,6 @@ export const ReportView: React.FC = () => {
 					))}
 				</div>
 			</ModelCard>
-		</ReportListContext.Provider>
+		</ReportListContext>
 	);
 };

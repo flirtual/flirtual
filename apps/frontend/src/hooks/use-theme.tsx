@@ -83,7 +83,7 @@ export const ThemeProvider = forwardRef<
 	useEffect(() => {}, [theme]);
 
 	return (
-		<Context.Provider
+		<Context
 			value={useMemo(() => ({
 				theme,
 				sessionTheme,
@@ -93,7 +93,7 @@ export const ThemeProvider = forwardRef<
 			<Slot {...props} data-theme={theme} ref={reference}>
 				{children}
 			</Slot>
-		</Context.Provider>
+		</Context>
 	);
 });
 

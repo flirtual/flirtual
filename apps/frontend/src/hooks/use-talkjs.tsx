@@ -103,11 +103,11 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	}, [session]);
 
 	return (
-		<TalkjsContext.Provider value={session}>
-			<UnreadConversationContext.Provider value={unreadConversations}>
+		<TalkjsContext value={session}>
+			<UnreadConversationContext value={unreadConversations}>
 				{children}
-			</UnreadConversationContext.Provider>
-		</TalkjsContext.Provider>
+			</UnreadConversationContext>
+		</TalkjsContext>
 	);
 };
 
@@ -115,11 +115,11 @@ const FallbackProvider: FC<PropsWithChildren> = ({ children }) => {
 	warnOnce("Talk.js is not configured properly, conversations & related features are disabled. To enable them, set \"NEXT_PUBLIC_TALKJS_APP_ID\" in your environment.");
 
 	return (
-		<TalkjsContext.Provider value={null}>
-			<UnreadConversationContext.Provider value={emptyArray}>
+		<TalkjsContext value={null}>
+			<UnreadConversationContext value={emptyArray}>
 				{children}
-			</UnreadConversationContext.Provider>
-		</TalkjsContext.Provider>
+			</UnreadConversationContext>
+		</TalkjsContext>
 	);
 };
 

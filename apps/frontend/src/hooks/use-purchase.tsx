@@ -111,14 +111,14 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	);
 
 	return (
-		<PurchaseContext.Provider
+		<PurchaseContext
 			value={useMemo(() => ({
 				purchase,
 				packages
 			}), [packages, purchase])}
 		>
 			{children}
-		</PurchaseContext.Provider>
+		</PurchaseContext>
 	);
 };
 
