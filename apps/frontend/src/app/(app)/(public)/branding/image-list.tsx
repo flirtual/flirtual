@@ -13,27 +13,27 @@ function getUrl(name: string, kind: string) {
 	return urls.media(`flirtual-${name.replaceAll("/", "-")}.${kind}`, "files");
 }
 
-async function ImageListItem(item: ImageListItemProps) {
-	const defaultKind = item.kinds[0];
+async function ImageListItem({ name, kinds, dark }: ImageListItemProps) {
+	const defaultKind = kinds[0];
 
 	return (
 		<div className="flex flex-col gap-2">
 			<a
-				className="flex h-full items-center justify-center overflow-hidden rounded-lg"
-				href={getUrl(item.name, defaultKind!)}
 				style={{
-					background: item.dark
+					background: dark
 						? "repeating-conic-gradient(#333 0% 25%, #555 0% 50%) 50% / 30px 30px"
 						: "repeating-conic-gradient(#fff 0% 25%, #eee 0% 50%) 50% / 30px 30px"
 				}}
+				className="flex h-full items-center justify-center overflow-hidden rounded-lg"
+				href={getUrl(name, defaultKind!)}
 			>
-				<img className="h-fit w-full" src={getUrl(item.name, defaultKind!)} />
+				<img className="h-fit w-full" src={getUrl(name, defaultKind!)} />
 			</a>
 			<div className="flex gap-2">
-				{item.kinds.map((kind) => (
+				{kinds.map((kind) => (
 					<a
 						className="uppercase text-theme-2 hocus:underline hocus:outline-none"
-						href={getUrl(item.name, kind)}
+						href={getUrl(name, kind)}
 						key={kind}
 					>
 						{kind}

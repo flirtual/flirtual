@@ -1,21 +1,20 @@
+import type { Metadata } from "next";
 import { unstable_serialize } from "swr";
 
-import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
+import { ModelCard } from "~/components/model-card";
 import { SWRConfig } from "~/components/swr";
 import { attributeKey } from "~/swr";
 
 import { InfoForm } from "./form";
-
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Basic info"
 };
 
 export default async function SettingsProfileInfoPage() {
-	const [games, platforms, sexualities, genders, languages, countries] =
-		await Promise.all([
+	const [games, platforms, sexualities, genders, languages, countries]
+		= await Promise.all([
 			Attribute.list("game"),
 			Attribute.list("platform"),
 			Attribute.list("sexuality"),

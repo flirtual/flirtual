@@ -4,7 +4,6 @@ import { match, P } from "ts-pattern";
 import { getInternationalization } from "~/i18n";
 
 import { Banner } from "../banner";
-
 import { SelfLink } from "./self-link";
 
 export default async function FallbackBanner() {

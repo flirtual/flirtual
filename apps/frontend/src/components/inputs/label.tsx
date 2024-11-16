@@ -1,26 +1,26 @@
 import { twMerge } from "tailwind-merge";
 
-export type InputLabelProps = React.ComponentProps<"label"> & {
+export type InputLabelProps = {
 	inline?: boolean;
 	hint?: React.ReactNode;
-};
+} & React.ComponentProps<"label">;
 
 export const InputLabelHint: React.FC<React.ComponentProps<"span">> = (
-	props
+	{ className, ...props }
 ) => {
 	return (
 		<span
 			{...props}
 			className={twMerge(
 				"text-base text-black-50 vision:text-white-50 dark:text-white-50",
-				props.className
+				className
 			)}
 		/>
 	);
 };
 
 export const InputLabel: React.FC<InputLabelProps> = (props) => {
-	const { inline, children, hint, ...elementProps } = props;
+	const { className, inline, children, hint, ...elementProps } = props;
 
 	return (
 		<label
@@ -28,15 +28,17 @@ export const InputLabel: React.FC<InputLabelProps> = (props) => {
 			className={twMerge(
 				"flex items-baseline gap-x-2 font-nunito text-xl",
 				inline && "flex-col",
-				props.className
+				className
 			)}
 		>
 			{children}
-			{typeof hint === "string" ? (
-				<InputLabelHint>{hint}</InputLabelHint>
-			) : (
-				hint
-			)}
+			{typeof hint === "string"
+				? (
+						<InputLabelHint>{hint}</InputLabelHint>
+					)
+				: (
+						hint
+					)}
 		</label>
 	);
 };

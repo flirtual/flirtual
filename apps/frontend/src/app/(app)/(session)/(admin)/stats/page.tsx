@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
+
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { Table, TableBody, TableCell, TableRow } from "~/components/table";
 import { urls } from "~/urls";
-
-import type { Metadata } from "next";
 
 const stats = [
 	"dau",

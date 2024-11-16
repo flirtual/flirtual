@@ -3,11 +3,10 @@
 import { Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { mutate } from "swr";
-import useMutation from "swr/mutation";
 
 import { displayName, User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
-import { relationshipKey, userKey } from "~/swr";
+import { relationshipKey } from "~/swr";
 
 import { Button } from "../button";
 import { DialogTrigger } from "../dialog/dialog";

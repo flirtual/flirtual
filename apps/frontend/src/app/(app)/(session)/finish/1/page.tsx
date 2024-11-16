@@ -1,12 +1,11 @@
 import { unstable_serialize } from "swr";
 
-import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
+import { ModelCard } from "~/components/model-card";
 import { SWRConfig } from "~/components/swr";
 import { attributeKey } from "~/swr";
 
 import { FinishProgress } from "../progress";
-
 import { Finish1Form } from "./form";
 
 export default async function Finish1Page() {

@@ -1,14 +1,13 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { ModelCard } from "~/components/model-card";
-import { InlineLink } from "~/components/inline-link";
 import { ButtonLink } from "~/components/button";
+import { InlineLink } from "~/components/inline-link";
+import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 
-import { ImageList } from "./image-list";
 import { ColorBlock } from "./color-block";
-
-import type { Metadata } from "next";
+import { ImageList } from "./image-list";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("branding");
@@ -63,7 +62,6 @@ export default async function BrandingPage() {
 				</span>
 				<span>{t("such_pink_jan_spur")}</span>
 				<ImageList
-					className="desktop:grid-cols-4"
 					items={[
 						{
 							name: "mark/background",
@@ -83,6 +81,7 @@ export default async function BrandingPage() {
 							kinds: ["svg", "png"]
 						}
 					]}
+					className="desktop:grid-cols-4"
 				/>
 			</div>
 			<div className="flex flex-col gap-4">

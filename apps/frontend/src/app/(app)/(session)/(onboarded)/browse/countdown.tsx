@@ -30,7 +30,8 @@ function useCountdown(date: string, onComplete: () => void) {
 				onComplete();
 				clear();
 			}
-		}, []),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [date, onComplete]),
 		500
 	);
 

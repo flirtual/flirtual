@@ -1,4 +1,4 @@
-import { useId, type CSSProperties } from "react";
+import { type CSSProperties, useId } from "react";
 
 import type { GradientIconProps } from ".";
 

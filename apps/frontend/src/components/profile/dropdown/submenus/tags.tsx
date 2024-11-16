@@ -1,3 +1,5 @@
+import type { FC, PropsWithChildren } from "react";
+
 import { type User, userTagNames, userTags } from "~/api/user";
 import {
 	DropdownMenuCheckboxItem,
@@ -7,8 +9,6 @@ import {
 	DropdownMenuSubContent
 } from "~/components/dropdown";
 import { useToast } from "~/hooks/use-toast";
-
-import type { FC, PropsWithChildren } from "react";
 
 export const ProfileDropdownTagsSubmenu: FC<
 	PropsWithChildren<{ user: User }>
@@ -29,8 +29,7 @@ export const ProfileDropdownTagsSubmenu: FC<
 							toasts.add({
 								type: "error",
 								value: "Not implemented"
-							})
-						}
+							})}
 					>
 						{userTagNames[tag]}
 					</DropdownMenuCheckboxItem>

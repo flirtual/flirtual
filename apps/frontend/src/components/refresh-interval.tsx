@@ -1,4 +1,3 @@
-/* eslint-disable react/hook-use-state */
 "use client";
 
 import { type FC, type ReactNode, useCallback, useState } from "react";
@@ -6,7 +5,7 @@ import { type FC, type ReactNode, useCallback, useState } from "react";
 import { useInterval } from "~/hooks/use-interval";
 
 export interface RefreshIntervalProps {
-	every: string | number;
+	every: number | string;
 	children: () => ReactNode;
 }
 

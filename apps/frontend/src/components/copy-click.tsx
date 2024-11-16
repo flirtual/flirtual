@@ -1,12 +1,11 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
 import { Clipboard } from "@capacitor/clipboard";
+import { Slot } from "@radix-ui/react-slot";
 import { useTranslations } from "next-intl";
+import type { FC, PropsWithChildren } from "react";
 
 import { useToast } from "~/hooks/use-toast";
-
-import type { PropsWithChildren, FC } from "react";
 
 export const CopyClick: FC<PropsWithChildren<{ value: string | null }>> = ({
 	value,
@@ -24,8 +23,7 @@ export const CopyClick: FC<PropsWithChildren<{ value: string | null }>> = ({
 			onClick={() =>
 				Clipboard.write({ string: value }).then(() =>
 					toasts.add(t("loose_fancy_marlin_zip"))
-				)
-			}
+				)}
 		>
 			{children}
 		</Slot>

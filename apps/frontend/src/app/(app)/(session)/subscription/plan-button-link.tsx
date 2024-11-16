@@ -1,23 +1,23 @@
 "use client";
 
-import { type FC, useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
+import { type FC, useState, useTransition } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Button } from "~/components/button";
+import { Dialog, DialogContent, DialogTitle } from "~/components/dialog/dialog";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useToast } from "~/hooks/use-toast";
-import { Dialog, DialogContent, DialogTitle } from "~/components/dialog/dialog";
 
 import type { PlanCardProps } from "./plan-card";
 
 export const PlanButtonLink: FC<
-	PlanCardProps & {
+	{
 		active: boolean;
 		lifetime: boolean;
-	}
+	} & PlanCardProps
 > = (props) => {
-	const { highlight, id, active, lifetime } = props;
+	const { highlight, id, active, lifetime, disabled } = props;
 
 	const toasts = useToast();
 	const { purchase } = usePurchase();
@@ -37,6 +37,7 @@ export const PlanButtonLink: FC<
 				>
 					<DialogTitle className="sr-only">Purchase</DialogTitle>
 					<DialogContent className="w-fit overflow-hidden p-0">
+						{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
 						<iframe
 							className="max-h-[90vh] max-w-full rounded-[1.25rem] bg-[#f4f5f9]"
 							height={561}
@@ -48,7 +49,7 @@ export const PlanButtonLink: FC<
 			)}
 			<Button
 				className={twMerge("relative flex", !highlight && "vision:bg-white-10")}
-				disabled={props.disabled || pending}
+				disabled={disabled || pending}
 				Icon={pending ? Loader2 : undefined}
 				iconClassName="animate-spin absolute left-2 h-5"
 				kind={highlight ? "primary" : "secondary"}
@@ -57,8 +58,7 @@ export const PlanButtonLink: FC<
 					startTransition(async () => {
 						const url = await purchase(id).catch(toasts.addError);
 						setPurchaseUrl(url || null);
-					})
-				}
+					})}
 			>
 				{active ? "Manage" : lifetime ? "Purchase" : "Subscribe"}
 			</Button>

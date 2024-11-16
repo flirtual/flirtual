@@ -1,15 +1,15 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { createContext, forwardRef, use, useCallback, useEffect } from "react";
 import { Slot } from "@radix-ui/react-slot";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { createContext, forwardRef, use, useCallback, useEffect, useMemo } from "react";
 
-import { resolveTheme, type Theme } from "~/theme";
 import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
+import { resolveTheme, type Theme } from "~/theme";
 
+import { useDevice } from "./use-device";
 import { useMediaQuery } from "./use-media-query";
 import { useSession } from "./use-session";
-import { useDevice } from "./use-device";
 
 const Context = createContext(
 	{} as {
@@ -19,6 +19,7 @@ const Context = createContext(
 	}
 );
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
 	return use(Context);
 }
@@ -73,8 +74,8 @@ export const ThemeProvider = forwardRef<
 	);
 
 	useEffect(() => {
-		const themeStyle =
-			pathname === "/browse" && kind === "friend" ? "friend" : "love";
+		const themeStyle
+			= pathname === "/browse" && kind === "friend" ? "friend" : "love";
 
 		Object.assign(document.documentElement.dataset, { themeStyle });
 	}, [pathname, kind]);
@@ -82,7 +83,13 @@ export const ThemeProvider = forwardRef<
 	useEffect(() => {}, [theme]);
 
 	return (
-		<Context.Provider value={{ theme, sessionTheme, setTheme }}>
+		<Context.Provider
+			value={useMemo(() => ({
+				theme,
+				sessionTheme,
+				setTheme
+			}), [sessionTheme, setTheme, theme])}
+		>
 			<Slot {...props} data-theme={theme} ref={reference}>
 				{children}
 			</Slot>

@@ -6,10 +6,10 @@ import { InputLabel, InputText } from "~/components/inputs";
 export const ReferralForm: React.FC = () => {
 	return (
 		<Form
-			className="flex flex-col gap-8"
 			fields={{
 				code: ""
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async () => {}}
 		>
 			{({ FormField }) => (

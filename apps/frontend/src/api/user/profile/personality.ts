@@ -2,7 +2,7 @@ import { api } from "~/api/common";
 
 import type { Profile } from ".";
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+// eslint-disable-next-line ts/consistent-type-definitions
 export type ProfilePersonality = {
 	question0: boolean | null;
 	question1: boolean | null;

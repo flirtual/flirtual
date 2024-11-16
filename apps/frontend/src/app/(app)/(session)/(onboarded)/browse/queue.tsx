@@ -1,12 +1,15 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { type FC, Suspense, useEffect, useState } from "react";
+import { type FC, useEffect } from "react";
+import { preload } from "swr";
 
 import type { ProspectKind } from "~/api/matchmaking";
+import { User } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
+import { userKey } from "~/swr";
 
 import {
 	ConfirmEmailError,
@@ -14,26 +17,21 @@ import {
 	OutOfProspectsError
 } from "./out-of-prospects";
 import { QueueActions } from "./queue-actions";
-import { preload } from "swr";
-import { userKey } from "~/swr";
-import { User } from "~/api/user";
 
 export type QueueAnimationDirection = "backward" | "forward";
 
 export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const [session] = useSession();
 	const { data: queue } = useQueue(kind);
-	const [animationDirection, setAnimationDirection]
-		= useState<QueueAnimationDirection>("forward");
 
-		useEffect(() => {
-			if (!Array.isArray(queue)) return;
-			
-			// Optimistically preload the next and previous profiles.
-			queue.filter(Boolean).map((userId) => {
-				preload(userKey(userId), ([, userId]) => User.get(userId));
-			})
-		}, [queue])
+	useEffect(() => {
+		if (!Array.isArray(queue)) return;
+
+		// Optimistically preload the next and previous profiles.
+		queue.filter(Boolean).forEach((userId) => {
+			preload(userKey(userId), ([, userId]) => User.get(userId));
+		});
+	}, [queue]);
 
 	if (!session) return null;
 
@@ -46,22 +44,21 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 	const [, current] = queue;
 
-
 	return (
 		<>
 			<div className="relative max-w-full gap-4 overflow-hidden">
 				{current
 					? (
 							<AnimatePresence initial={false}>
-									<motion.div
+								<motion.div
+									animate={{ opacity: 1 }}
+									className="relative top-0 z-10"
+									exit={{ opacity: 0, position: "absolute" }}
+									initial={{ opacity: 0 }}
 									key={current}
-										animate={{ opacity: 1 }}
-										className="relative top-0 z-10"
-										exit={{ opacity: 0, position: "absolute" }}
-										initial={{ opacity: 0 }}
-									>
-										<Profile userId={current} />
-									</motion.div>
+								>
+									<Profile userId={current} />
+								</motion.div>
 								{/* {previous && (
 									<Suspense key={`${previous}-previous`}>
 										<motion.div
@@ -97,7 +94,6 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 					key={kind}
 					kind={kind}
 					queue={queue}
-					setAnimationDirection={setAnimationDirection}
 				/>
 			)}
 		</>

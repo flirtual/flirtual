@@ -47,6 +47,7 @@ export const DeviceProvider = forwardRef<HTMLHtmlElement, DeviceProviderProps>(
 
 DeviceProvider.displayName = "DeviceProvider";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useDevice() {
 	return useContext(DeviceContext);
 }

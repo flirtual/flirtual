@@ -1,10 +1,8 @@
 "use client";
 
-import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
+import * as React from "react";
 import { twMerge } from "tailwind-merge";
-
-import { ThemedBorder } from "../themed-border";
 
 import {
 	dialogContentClassName,
@@ -13,6 +11,7 @@ import {
 	dialogOverlayClassName,
 	dialogTitleClassName
 } from ".";
+import { ThemedBorder } from "../themed-border";
 
 const AlertDialog = AlertDialogPrimitive.Root;
 
@@ -51,18 +50,20 @@ const AlertDialogContent = React.forwardRef<
 ));
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName;
 
-const AlertDialogHeader = ({
+function AlertDialogHeader({
 	className,
 	...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-	<div
-		className={twMerge(
-			"flex flex-col gap-2 text-center desktop:text-left",
-			className
-		)}
-		{...props}
-	/>
-);
+}: React.HTMLAttributes<HTMLDivElement>) {
+	return (
+		<div
+			className={twMerge(
+				"flex flex-col gap-2 text-center desktop:text-left",
+				className
+			)}
+			{...props}
+		/>
+	);
+}
 AlertDialogHeader.displayName = "AlertDialogHeader";
 
 const AlertDialogTitle = React.forwardRef<
@@ -87,8 +88,8 @@ const AlertDialogDescription = React.forwardRef<
 		{...props}
 	/>
 ));
-AlertDialogDescription.displayName =
-	AlertDialogPrimitive.Description.displayName;
+AlertDialogDescription.displayName
+	= AlertDialogPrimitive.Description.displayName;
 
 const AlertDialogAction = React.forwardRef<
 	React.ElementRef<typeof AlertDialogPrimitive.Action>,
@@ -112,11 +113,11 @@ AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 
 export {
 	AlertDialog,
-	AlertDialogTrigger,
+	AlertDialogAction,
+	AlertDialogCancel,
 	AlertDialogContent,
+	AlertDialogDescription,
 	AlertDialogHeader,
 	AlertDialogTitle,
-	AlertDialogDescription,
-	AlertDialogAction,
-	AlertDialogCancel
+	AlertDialogTrigger
 };

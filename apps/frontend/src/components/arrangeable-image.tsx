@@ -1,14 +1,13 @@
 "use client";
 
-import { forwardRef } from "react";
-import { twMerge } from "tailwind-merge";
 import { Expand, MoreHorizontal, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
 
-import { UserImage } from "./user-avatar";
 import { useCurrentSortableItem } from "./forms/sortable";
-
 import type { ImageProps } from "./image";
+import { UserImage } from "./user-avatar";
 
 export interface ArrangeableImageProps {
 	src: string;
@@ -18,18 +17,18 @@ export interface ArrangeableImageProps {
 }
 
 export const ArrangeableImagePreview: React.FC<
-	Omit<ImageProps, "width" | "height" | "src" | "alt"> & { src: string }
-> = (props) => {
+	{ src: string } & Omit<ImageProps, "alt" | "height" | "src" | "width">
+> = ({ className, ...props }) => {
 	return (
 		<UserImage
 			{...props}
+			className={twMerge(
+				"size-full rounded-md object-cover shadow-brand-1",
+				className
+			)}
 			alt=""
 			height={175}
 			width={175}
-			className={twMerge(
-				"size-full rounded-md object-cover shadow-brand-1",
-				props.className
-			)}
 		/>
 	);
 };

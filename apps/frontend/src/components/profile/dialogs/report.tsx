@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { type FC, type PropsWithChildren, useState } from "react";
 import { mutate } from "swr";
 
@@ -108,20 +108,18 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 								</FormField>
 								<FormField name="reasonId">
 									{(field) => (
-										<>
-											<InputSelect
-												{...field.props}
-												options={reasons.map((reason) => {
-													const id
+										<InputSelect
+											{...field.props}
+											options={reasons.map((reason) => {
+												const id
 														= typeof reason === "object" ? reason.id : reason;
 
-													return {
-														id,
-														name: tAttributes[id]?.name || id
-													};
-												})}
-											/>
-										</>
+												return {
+													id,
+													name: tAttributes[id]?.name || id
+												};
+											})}
+										/>
 									)}
 								</FormField>
 								<FormField name="message">

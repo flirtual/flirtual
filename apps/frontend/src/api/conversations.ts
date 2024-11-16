@@ -1,22 +1,21 @@
 import { api, type CreatedAtModel } from "./common";
-
 import type { ProspectKind } from "./matchmaking";
 
-export type Message = CreatedAtModel & {
+export type Message = {
 	id: string;
 	content: ProspectKind;
 	viewed: boolean;
 	system: boolean;
 	senderId: string;
-};
+} & CreatedAtModel;
 
-export type Conversation = CreatedAtModel & {
+export type Conversation = {
 	id: string;
 	kind: ProspectKind;
 	lastMessage?: Message;
 	isUnread: boolean;
 	userId: string;
-};
+} & CreatedAtModel;
 
 export interface PaginateMetadata {
 	total: number;

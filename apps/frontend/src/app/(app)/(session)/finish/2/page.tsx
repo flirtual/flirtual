@@ -1,15 +1,13 @@
+import type { Metadata } from "next";
 import { unstable_serialize } from "swr";
 
-import { ModelCard } from "~/components/model-card";
 import { Attribute } from "~/api/attributes";
+import { ModelCard } from "~/components/model-card";
 import { SWRConfig } from "~/components/swr";
 import { attributeKey } from "~/swr";
 
 import { FinishProgress } from "../progress";
-
 import { Finish2Form } from "./form";
-
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "More details"

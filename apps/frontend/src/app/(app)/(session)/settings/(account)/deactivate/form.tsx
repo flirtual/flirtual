@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 
+import { Subscription } from "~/api/subscription";
+import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import {
 	Form,
@@ -11,8 +13,6 @@ import {
 import { ModelCard } from "~/components/model-card";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
-import { User } from "~/api/user";
-import { Subscription } from "~/api/subscription";
 
 export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();

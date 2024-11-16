@@ -1,11 +1,10 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
-import { urls } from "~/urls";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
-
-import type { Metadata } from "next";
+import { ModelCard } from "~/components/model-card";
+import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("payments");
@@ -26,15 +25,19 @@ export default async function PaymentsPage() {
 					California subscribers: you may cancel your subscription and request a
 					refund at any time before midnight of the third business day following
 					the date you purchased any Premium subscription. If you subscribed
-					through your Apple ID, refunds are handled by Apple. Please visit{" "}
+					through your Apple ID, refunds are handled by Apple. Please visit
+					{" "}
 					<InlineLink href="https://getsupport.apple.com">
 						Apple Support
-					</InlineLink>{" "}
+					</InlineLink>
+					{" "}
 					to request a refund. If you subscribed through our website or Google
-					Play, please{" "}
+					Play, please
+					{" "}
 					<InlineLink href={urls.resources.contactDirect}>
 						contact us
-					</InlineLink>{" "}
+					</InlineLink>
+					{" "}
 					to request a refund. Please use your Flirtual account email address in
 					your refund request.
 				</p>
@@ -56,18 +59,22 @@ export default async function PaymentsPage() {
 					</p>
 					<p>
 						If you subscribed through your Apple ID, you can also cancel your
-						subscription through the App Store, or contact{" "}
+						subscription through the App Store, or contact
+						{" "}
 						<InlineLink href="https://getsupport.apple.com">
 							Apple Support
-						</InlineLink>{" "}
+						</InlineLink>
+						{" "}
 						for help.
 					</p>
 					<p>
 						If you subscribed through Google Play, you can also cancel your
-						subscription through Google Play, or contact{" "}
+						subscription through Google Play, or contact
+						{" "}
 						<InlineLink href="https://support.google.com/googleplay">
 							Google Play Support
-						</InlineLink>{" "}
+						</InlineLink>
+						{" "}
 						for help.
 					</p>
 					<p>
@@ -78,10 +85,12 @@ export default async function PaymentsPage() {
 					<p>
 						If you initiate a chargeback or reverse a payment, Flirtual may
 						immediately terminate your account and assume you no longer want the
-						subscription. If the chargeback is overturned, please{" "}
+						subscription. If the chargeback is overturned, please
+						{" "}
 						<InlineLink href={urls.resources.contactDirect}>
 							contact us
-						</InlineLink>{" "}
+						</InlineLink>
+						{" "}
 						within 30 days to resume your subscription.
 					</p>
 				</div>
@@ -97,11 +106,14 @@ export default async function PaymentsPage() {
 					<p>
 						Flirtual reserves the right to investigate and, if necessary,
 						suspend or terminate your account without a refund, or prevent you
-						from accessing Flirtual, if it believes you have violated our{" "}
+						from accessing Flirtual, if it believes you have violated our
+						{" "}
 						<InlineLink href={urls.resources.termsOfService}>
 							Terms of Service
-						</InlineLink>{" "}
-						or{" "}
+						</InlineLink>
+						{" "}
+						or
+						{" "}
 						<InlineLink href={urls.resources.communityGuidelines}>
 							Community Guidelines
 						</InlineLink>
@@ -154,18 +166,22 @@ export default async function PaymentsPage() {
 					<p>
 						In addition to canceling your subscription, you must request a
 						refund in order to receive one. If you subscribed through your Apple
-						ID, refunds are handled by Apple. Please visit{" "}
+						ID, refunds are handled by Apple. Please visit
+						{" "}
 						<InlineLink href="https://getsupport.apple.com">
 							Apple Support
-						</InlineLink>{" "}
+						</InlineLink>
+						{" "}
 						to request a refund, or visit the App Store, click/tap on your Apple
 						ID, then &quot;Purchase history&quot;, find the transaction for your
 						Flirtual subscription, and click/tap &quot;Report Problem&quot; to
 						request a refund. If you subscribed through our website or Google
-						Play, please{" "}
+						Play, please
+						{" "}
 						<InlineLink href={urls.resources.contactDirect}>
 							contact us
-						</InlineLink>{" "}
+						</InlineLink>
+						{" "}
 						to request a refund. Please use your Flirtual account email address
 						in your refund request.
 					</p>

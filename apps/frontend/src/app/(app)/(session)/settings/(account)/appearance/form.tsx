@@ -1,24 +1,24 @@
 "use client";
 
-import { HexColorInput, HexColorPicker } from "react-colorful";
-import { twMerge } from "tailwind-merge";
-import { useRouter } from "next/navigation";
 import { Hash } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { type FC, useState } from "react";
+import { HexColorInput, HexColorPicker } from "react-colorful";
 import { flushSync } from "react-dom";
+import { twMerge } from "tailwind-merge";
 
-import { InputLabel } from "~/components/inputs";
 import { PreferenceThemes } from "~/api/user/preferences";
+import { Profile, type ProfileColors } from "~/api/user/profile";
 import { PremiumBadge } from "~/components/badge";
 import { Form, FormButton } from "~/components/forms";
+import { InputLabel } from "~/components/inputs";
 import { useFormContext } from "~/hooks/use-input-form";
-import { useTheme } from "~/hooks/use-theme";
 import { useSession } from "~/hooks/use-session";
+import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
-import { Profile, type ProfileColors } from "~/api/user/profile";
 
-import { ThemePreview } from "./theme-preview";
 import { ProfileColorPreview } from "./profile-preview";
+import { ThemePreview } from "./theme-preview";
 import { defaultProfileColors, recommendedThemes } from "./themes";
 
 const ProfileColorEditor: FC = () => {
@@ -33,21 +33,21 @@ const ProfileColorEditor: FC = () => {
 		<div className="flex flex-col gap-4">
 			<div className="flex gap-2">
 				<button
-					style={{ backgroundColor: color_1.props.value }}
-					type="button"
 					className={twMerge(
 						"focusable size-8 rounded-md",
 						selectedColorIndex === 0 && "focused"
 					)}
+					style={{ backgroundColor: color_1.props.value }}
+					type="button"
 					onClick={() => setSelectedColorIndex(0)}
 				/>
 				<button
-					style={{ backgroundColor: color_2.props.value }}
-					type="button"
 					className={twMerge(
 						"focusable size-8 rounded-md",
 						selectedColorIndex === 1 && "focused"
 					)}
+					style={{ backgroundColor: color_2.props.value }}
+					type="button"
 					onClick={() => setSelectedColorIndex(1)}
 				/>
 			</div>
@@ -106,9 +106,9 @@ const ReccommendedProfileThemes: FC = () => {
 					<div
 						className={twMerge(
 							"h-8 w-full rounded-md",
-							color_1.props.value === theme.color_1 &&
-								color_2.props.value === theme.color_2 &&
-								"focused border-2"
+							color_1.props.value === theme.color_1
+							&& color_2.props.value === theme.color_2
+							&& "focused border-2"
 						)}
 						style={{
 							backgroundImage: `linear-gradient(to right, ${theme.color_1}, ${theme.color_2})`
@@ -125,9 +125,9 @@ const SaveButton: FC = () => {
 	const { changes } = useFormContext<ProfileColors>();
 
 	if (!session) return null;
-	const disabled =
-		(!session.user.subscription || !session.user.subscription.active) &&
-		(changes.includes("color_1") || changes.includes("color_2"));
+	const disabled
+		= (!session.user.subscription || !session.user.subscription.active)
+		&& (changes.includes("color_1") || changes.includes("color_2"));
 
 	return (
 		<FormButton disabled={disabled}>
@@ -148,11 +148,11 @@ export const AppearanceForm: FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
 			fields={{
 				color_1: session.user.profile.color_1 || defaultTheme.color_1,
 				color_2: session.user.profile.color_2 || defaultTheme.color_2
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async (values) => {
 				if (session.user.subscription?.active) {
 					await Profile.updateColors(session.user.id, values);

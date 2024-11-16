@@ -1,9 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { useEffect, useRef, useState, type FC } from "react";
-import { twMerge } from "tailwind-merge";
+import { AnimatePresence, motion } from "framer-motion";
 import {
 	Download,
 	LineChart,
@@ -14,18 +11,21 @@ import {
 	VenetianMask
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { type FC, useEffect, useRef, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
+import { Authentication } from "~/api/auth";
 import { DiscordOutlineIcon } from "~/components/icons";
 import { UserAvatar } from "~/components/user-avatar";
+import { useCanny } from "~/hooks/use-canny";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
-import { useCanny } from "~/hooks/use-canny";
-import { Authentication } from "~/api/auth";
 
 import { ProfileNavigationCannyButton } from "../../components/layout/canny-button";
 
@@ -39,14 +39,17 @@ type ProfileNavigationItemProps = React.PropsWithChildren<
 const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 	const className = twMerge(
 		"flex w-full items-center gap-5 py-2 text-left font-montserrat text-lg font-semibold hover:text-theme-2",
+		// eslint-disable-next-line react/prefer-destructuring-assignment
 		props.className
 	);
 
-	return "href" in props ? (
-		<Link {...props} className={className} />
-	) : (
-		<button {...props} className={className} type="button" />
-	);
+	return "href" in props
+		? (
+				<Link {...props} className={className} />
+			)
+		: (
+				<button {...props} className={className} type="button" />
+			);
 };
 
 export const NavigationItemProfile: FC = () => {
@@ -81,14 +84,14 @@ export const NavigationItemProfile: FC = () => {
 	return (
 		<div className="relative aspect-square shrink-0">
 			<button
-				id="profile-dropdown-button"
-				type="button"
 				className={twMerge(
 					"group rounded-full p-1 transition-all",
 					active
 						? "bg-white-20 shadow-brand-1"
 						: "bg-transparent hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				)}
+				id="profile-dropdown-button"
+				type="button"
 				onClick={() => setVisible(true)}
 			>
 				<UserAvatar
@@ -135,7 +138,7 @@ export const NavigationItemProfile: FC = () => {
 							</ProfileNavigationItem>
 							<ProfileNavigationItem href={urls.subscription.default}>
 								<Sparkles className="size-6 shrink-0" />
-								<span className="whitespace-norap">{t("premium")}</span>
+								<span className="whitespace-nowrap">{t("premium")}</span>
 							</ProfileNavigationItem>
 							<ProfileNavigationCannyButton />
 							<ProfileNavigationItem href={urls.socials.discord}>
@@ -163,12 +166,10 @@ export const NavigationItemProfile: FC = () => {
 								</>
 							)}
 							{user.tags?.includes("admin") && (
-								<>
-									<ProfileNavigationItem href={urls.admin.stats}>
-										<LineChart className="size-6 shrink-0" />
-										<span className="whitespace-nowrap">{t("stats")}</span>
-									</ProfileNavigationItem>
-								</>
+								<ProfileNavigationItem href={urls.admin.stats}>
+									<LineChart className="size-6 shrink-0" />
+									<span className="whitespace-nowrap">{t("stats")}</span>
+								</ProfileNavigationItem>
 							)}
 							{session.sudoerId && (
 								<ProfileNavigationItem

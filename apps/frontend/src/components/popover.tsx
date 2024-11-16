@@ -3,7 +3,6 @@
 import { Children, type Dispatch, useRef } from "react";
 
 import { useClickOutside } from "~/hooks/use-click-outside";
-
 import type { ScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 
 export interface PopoverProps {
@@ -16,6 +15,7 @@ export interface PopoverProps {
 export const Popover: React.FC<PopoverProps> = (props) => {
 	const { children, open, onOpenChange } = props;
 
+	// eslint-disable-next-line react/no-children-to-array
 	const [overlayNode, contentNode] = Children.toArray(children);
 
 	const overlayParentReference = useRef<HTMLDivElement>(null);

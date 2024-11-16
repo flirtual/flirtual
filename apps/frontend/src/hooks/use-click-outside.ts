@@ -1,6 +1,6 @@
-import { useGlobalEventListener } from "./use-event-listener";
-
 import type { RefObject } from "react";
+
+import { useGlobalEventListener } from "./use-event-listener";
 
 export function useClickOutside<T extends HTMLElement>(
 	reference: RefObject<T | null>,
@@ -13,8 +13,8 @@ export function useClickOutside<T extends HTMLElement>(
 		(event) => {
 			if (!(event.target instanceof HTMLElement) || !reference.current) return;
 			if (
-				event.target === reference.current ||
-				reference.current.contains(event.target)
+				event.target === reference.current
+				|| reference.current.contains(event.target)
 			)
 				return;
 			onClickOutside(event);

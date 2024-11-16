@@ -1,6 +1,6 @@
 function rgbComponentToHex(c: number) {
 	const hex = c.toString(16);
-	return hex.length == 1 ? "0" + hex : hex;
+	return hex.length === 1 ? `0${hex}` : hex;
 }
 
 export const rgb = {
@@ -20,7 +20,7 @@ export const rgb = {
 	}
 };
 
-const colorAverage = (color1: string, color2: string) => {
+function colorAverage(color1: string, color2: string) {
 	const rgb1 = rgb.fromHex(color1);
 	const rgb2 = rgb.fromHex(color2);
 
@@ -29,7 +29,7 @@ const colorAverage = (color1: string, color2: string) => {
 		Math.floor((rgb1.g + rgb2.g) / 2),
 		Math.floor((rgb1.b + rgb2.b) / 2)
 	] as const;
-};
+}
 
 export function gradientTextColor(color1: string, color2: string) {
 	const [r, g, b] = colorAverage(color1, color2);
@@ -40,7 +40,7 @@ export function gradientTextColor(color1: string, color2: string) {
 		if (col <= 0.039_28) {
 			return col / 12.92;
 		}
-		return Math.pow((col + 0.055) / 1.055, 2.4);
+		return ((col + 0.055) / 1.055) ** 2.4;
 	});
 	const L = 0.2126 * c[0]! + 0.7152 * c[1]! + 0.0722 * c[2]!;
 	return L > threshold ? "#111111" : "#F5F5F5";

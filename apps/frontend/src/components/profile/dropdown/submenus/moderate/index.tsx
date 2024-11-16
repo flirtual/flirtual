@@ -1,5 +1,4 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import type { FC, PropsWithChildren } from "react";
 import { mutate } from "swr";
 
@@ -36,7 +35,6 @@ export const ProfileDropdownModerateSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
 	const [session] = useSession();
-	const router = useRouter();
 	const toasts = useToast();
 
 	return (

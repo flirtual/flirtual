@@ -1,4 +1,3 @@
-import { cache } from "~/cache";
 import { gitCommitSha } from "~/const";
 
 import { api, type DatedModel, type UuidModel } from "./common";

@@ -1,10 +1,10 @@
-import { gradientTextColor } from "~/colors";
-import { useFormContext } from "~/hooks/use-input-form";
-import { ThemedBorder } from "~/components/themed-border";
-import { Pill } from "~/components/profile/pill/pill";
+import type { CSSProperties, FC } from "react";
 
 import type { ProfileColors } from "~/api/user/profile";
-import type { CSSProperties, FC } from "react";
+import { gradientTextColor } from "~/colors";
+import { Pill } from "~/components/profile/pill/pill";
+import { ThemedBorder } from "~/components/themed-border";
+import { useFormContext } from "~/hooks/use-input-form";
 
 export const ProfileColorPreview: FC = () => {
 	const {
@@ -15,7 +15,6 @@ export const ProfileColorPreview: FC = () => {
 
 	return (
 		<ThemedBorder
-			className="flex flex-col gap-1 rounded-lg"
 			style={
 				{
 					"--theme-1": color_1.props.value,
@@ -23,6 +22,7 @@ export const ProfileColorPreview: FC = () => {
 					"--theme-text": textColor
 				} as CSSProperties
 			}
+			className="flex flex-col gap-1 rounded-lg"
 		>
 			<div className="flex size-full flex-col gap-4 rounded bg-white-20 px-3 py-2 text-black-70">
 				<span>This is how your profile colors look in Light Mode!</span>

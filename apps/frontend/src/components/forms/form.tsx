@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-destructuring-assignment */
 import { useRef } from "react";
 import { omit } from "remeda";
 

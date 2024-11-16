@@ -1,27 +1,28 @@
 "use client";
 
 import {
-	type PropsWithChildren,
-	type FC,
-	createContext,
-	useContext,
-	useEffect,
-	useCallback,
-	useState
-} from "react";
-import {
 	Purchases,
 	type PurchasesPackage
 } from "@revenuecat/purchases-capacitor";
 import { useRouter } from "next/navigation";
+import {
+	createContext,
+	type FC,
+	type PropsWithChildren,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState
+} from "react";
 
+import { Subscription } from "~/api/subscription";
 import { rcAppleKey, rcGoogleKey } from "~/const";
 import { urls } from "~/urls";
-import { Subscription } from "~/api/subscription";
 
 import { useDevice } from "./use-device";
-import { useCurrentUser } from "./use-session";
 import { usePlans } from "./use-plans";
+import { useCurrentUser } from "./use-session";
 import { useToast } from "./use-toast";
 
 interface PurchaseContext {
@@ -31,11 +32,11 @@ interface PurchaseContext {
 
 const PurchaseContext = createContext<PurchaseContext>({} as PurchaseContext);
 
-export const getPackage = async (revenuecatId: string) => {
+async function getPackage(revenuecatId: string) {
 	return (await Purchases.getOfferings()).current?.availablePackages.find(
 		(availablePackage) => availablePackage.identifier === revenuecatId
 	);
-};
+}
 
 export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { platform, native } = useDevice();
@@ -84,8 +85,8 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			const productId = platform === "apple" ? plan.appleId : plan.googleId;
 
 			if (
-				customerInfo.activeSubscriptions.includes(productId) &&
-				customerInfo.managementURL
+				customerInfo.activeSubscriptions.includes(productId)
+				&& customerInfo.managementURL
 			) {
 				window.open(customerInfo.managementURL, "_blank");
 				return null;
@@ -111,16 +112,17 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 	return (
 		<PurchaseContext.Provider
-			value={{
+			value={useMemo(() => ({
 				purchase,
 				packages
-			}}
+			}), [packages, purchase])}
 		>
 			{children}
 		</PurchaseContext.Provider>
 	);
 };
 
-export const usePurchase = () => {
+// eslint-disable-next-line react-refresh/only-export-components
+export function usePurchase() {
 	return useContext(PurchaseContext);
-};
+}

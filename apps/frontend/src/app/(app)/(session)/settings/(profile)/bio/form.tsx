@@ -1,36 +1,36 @@
 "use client";
 
+import type { FC } from "react";
+
+import { displayName } from "~/api/user";
+import { Profile } from "~/api/user/profile";
+import { ProfileImage } from "~/api/user/profile/images";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputImageSet } from "~/components/forms/input-image-set";
+import { InputPrompts } from "~/components/forms/prompts";
 import {
 	InputEditor,
 	InputLabel,
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
 import { urls } from "~/urls";
-import { InputPrompts } from "~/components/forms/prompts";
-import { displayName } from "~/api/user";
-import { Profile } from "~/api/user/profile";
-import { ProfileImage } from "~/api/user/profile/images";
-import { useAttributeTranslation } from "~/hooks/use-attribute";
-
-import type { FC } from "react";
 
 export const BiographyForm: FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
+	const tAttribute = useAttributeTranslation();
+
 	if (!session) return null;
 
 	const { user } = session;
 	const { profile } = user;
-
-	const tAttribute = useAttributeTranslation();
 
 	const favoriteGameId = (user.profile.attributes.game || []).filter(
 		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
@@ -38,7 +38,6 @@ export const BiographyForm: FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
 			fields={{
 				displayName: displayName(user),
 				images: profile.images.map((image) => ({
@@ -49,6 +48,7 @@ export const BiographyForm: FC = () => {
 				biography: user.profile.biography || "",
 				prompts: user.profile.prompts
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async ({ displayName, biography, ...values }) => {
 				const [profile, images, prompts] = await Promise.all([
 					Profile.update(user.id, {
@@ -105,11 +105,12 @@ export const BiographyForm: FC = () => {
 								<InputLabel
 									{...field.labelProps}
 									inline
-									hint={
+									hint={(
 										<InputLabelHint>
-											Upload your avatar pictures from VRChat,{" "}
-											{tAttribute[favoriteGameId || ""]?.name ??
-												"Horizon Worlds"}
+											Upload your avatar pictures from VRChat,
+											{" "}
+											{tAttribute[favoriteGameId || ""]?.name
+											?? "Horizon Worlds"}
 											, or another social VR app. Aim for 3+ avatar pictures to
 											get more matches.
 											<details>
@@ -121,7 +122,7 @@ export const BiographyForm: FC = () => {
 												pictures.
 											</details>
 										</InputLabelHint>
-									}
+									)}
 								>
 									Profile pictures
 								</InputLabel>
@@ -134,7 +135,7 @@ export const BiographyForm: FC = () => {
 							<>
 								<InputLabel
 									inline
-									hint={
+									hint={(
 										<InputLabelHint>
 											A great bio shows your personality and interests, maybe
 											your sense of humor and what you&apos;re looking for.
@@ -147,7 +148,7 @@ export const BiographyForm: FC = () => {
 												hateful or controversial content.
 											</details>
 										</InputLabelHint>
-									}
+									)}
 									{...field.labelProps}
 								>
 									Bio

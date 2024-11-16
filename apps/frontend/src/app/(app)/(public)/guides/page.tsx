@@ -1,10 +1,9 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
-
-import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("guides");

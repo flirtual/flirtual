@@ -6,14 +6,11 @@ import ms from "ms";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import {
-	type Dispatch,
 	type FC,
-	type SetStateAction,
 	Suspense,
 	useCallback,
 	useEffect
 } from "react";
-import { flushSync } from "react-dom";
 import { type Key, mutate } from "swr";
 import useMutation from "swr/mutation";
 import { match, P } from "ts-pattern";
@@ -46,17 +43,17 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
-import { queueKey, relationshipKey, userKey } from "~/swr";
+import { queueKey, relationshipKey } from "~/swr";
 import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";
 
 import { Countdown } from "./countdown";
 import type { QueueAnimationDirection } from "./queue";
 
-function Key(props: { label: string }) {
+function Key({ label }: { label: string }) {
 	return (
 		<kbd className="mb-0.5 inline-block size-7 rounded-md bg-white-20 pt-0.5 text-center font-nunito font-bold text-black-60 shadow-[0_1px_1px_2px_rgba(255,255,255,0.75)] dark:bg-black-60 dark:text-white-20 dark:shadow-[0_1px_1px_2px_rgba(0,0,0,0.65)]">
-			{props.label}
+			{label}
 		</kbd>
 	);
 }
@@ -69,6 +66,7 @@ function DefaultTour() {
 	return null;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function optimisticQueueMove(direction: QueueAnimationDirection) {
 	return (value?: Queue): Queue => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
@@ -81,12 +79,11 @@ export function optimisticQueueMove(direction: QueueAnimationDirection) {
 	};
 }
 
-export const QueueActions_: FC<{
+const QueueActions_: FC<{
 	queue?: Queue;
 	explicitUserId?: string;
 	kind: ProspectKind;
-	setAnimationDirection?: Dispatch<SetStateAction<QueueAnimationDirection>>;
-}> = ({ queue, explicitUserId, kind: mode, setAnimationDirection }) => {
+}> = ({ queue, explicitUserId, kind: mode }) => {
 	const [session] = useSession();
 	const { native } = useDevice();
 
@@ -152,23 +149,23 @@ export const QueueActions_: FC<{
 		}
 	);
 
-	const like = (kind: ProspectKind = "love") =>
+	const like = useCallback((kind: ProspectKind = "love") =>
 		trigger(
 			{ type: "like", kind, userId: explicitUserId },
 			{ optimisticData: optimisticQueueMove("forward") }
-		);
+		), [trigger, explicitUserId]);
 
-	const pass = () =>
+	const pass = useCallback(() =>
 		trigger(
 			{ type: "pass", kind: mode, userId: explicitUserId },
 			{ optimisticData: optimisticQueueMove("forward") }
-		);
+		), [trigger, mode, explicitUserId]);
 
-	const undo = () =>
+	const undo = useCallback(() =>
 		trigger(
 			{ type: "undo", kind: mode },
 			{ optimisticData: optimisticQueueMove("backward") }
-		);
+		), [trigger, mode]);
 
 	useGlobalEventListener(
 		"document",
@@ -184,7 +181,7 @@ export const QueueActions_: FC<{
 				if (event.key === "l") void pass();
 				event.preventDefault();
 			},
-			[mode]
+			[like, pass, undo]
 		)
 	);
 
@@ -417,9 +414,7 @@ const MatchDialog: FC<{
 								user={session.user}
 								width={256}
 							/>
-							<div className="motion-duration-2000 hover:motion-preset-confetti">
-								<Icon className="size-12 shrink-0" />
-							</div>
+							<Icon className="size-12 shrink-0" />
 							<UserAvatar
 								className="size-32 rounded-3xl"
 								height={256}

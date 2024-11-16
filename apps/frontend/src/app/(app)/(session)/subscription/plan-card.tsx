@@ -1,14 +1,13 @@
 "use client";
 
+import type { Dispatch, FC, SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useSession } from "~/hooks/use-session";
-import { usePurchase } from "~/hooks/use-purchase";
 import { usePlans } from "~/hooks/use-plans";
+import { usePurchase } from "~/hooks/use-purchase";
+import { useSession } from "~/hooks/use-session";
 
 import { PlanButtonLink } from "./plan-button-link";
-
-import type { Dispatch, FC, SetStateAction } from "react";
 
 export interface PlanCardProps {
 	id: string;
@@ -25,6 +24,9 @@ export interface PlanCardProps {
 
 export const PlanCard: FC<PlanCardProps> = (props) => {
 	const {
+		id,
+		oneMonthId,
+		disabled,
 		duration,
 		price: webPrice,
 		originalPrice: originalWebPrice = webPrice,
@@ -37,11 +39,11 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const { packages } = usePurchase();
 	const plans = usePlans();
 
-	const plan = plans?.find((p) => p.id === props.id);
+	const plan = plans?.find((p) => p.id === id);
 	const currentPackage = packages.find(
 		(p) => p.identifier === plan?.revenuecatId
 	);
-	const basePlan = plans?.find((p) => p.id === props.oneMonthId);
+	const basePlan = plans?.find((p) => p.id === oneMonthId);
 	const basePackage = packages.find(
 		(p) => p.identifier === basePlan?.revenuecatId
 	);
@@ -53,20 +55,20 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 	const displayPrice = currentPackage
 		? currentPackage.product.priceString
 		: `$${webPrice}`;
-	const originalPrice =
-		currentPackage && basePackage
-			? (basePackage.product.price ?? 0) *
-				Number.parseInt(
-					currentPackage.product.subscriptionPeriod?.slice(1, 2) ?? "0"
-				)
+	const originalPrice
+		= currentPackage && basePackage
+			? (basePackage.product.price ?? 0)
+			* Number.parseInt(
+				currentPackage.product.subscriptionPeriod?.slice(1, 2) ?? "0"
+			)
 			: originalWebPrice;
-	const discount =
-		originalDiscount ??
-		Math.round(((originalPrice - price) / originalPrice) * 100);
+	const discount
+		= originalDiscount
+		?? Math.round(((originalPrice - price) / originalPrice) * 100);
 
-	const activePlan =
-		(user.subscription?.active && user.subscription.plan.id === props.id) ??
-		false;
+	const activePlan
+		= (user.subscription?.active && user.subscription.plan.id === id)
+		?? false;
 
 	const containerClassName = "grow shadow-brand-1";
 
@@ -88,9 +90,9 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 					className={twMerge(
 						"font-montserrat text-sm font-semibold text-black-60 line-through dark:text-white-50",
 						duration === "lifetime" && "hidden",
-						duration !== "lifetime" &&
-							price === originalPrice &&
-							"hidden desktop:invisible desktop:block"
+						duration !== "lifetime"
+						&& price === originalPrice
+						&& "hidden desktop:invisible desktop:block"
 					)}
 				>
 					{originalPrice}
@@ -102,14 +104,18 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 			</div>
 			{!!discount && duration !== "lifetime" && (
 				<div
-					className="absolute right-0 top-0 flex aspect-square items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
 					style={{
 						clipPath: "polygon(100% 0, 0 0, 100% 100%)",
 						margin: "-1px -1px 0 0"
 					}}
+					className="absolute right-0 top-0 flex aspect-square items-center justify-center rounded-tr-xl bg-brand-gradient p-3 text-white-20"
 				>
 					<div className="origin-center -translate-y-3 translate-x-3 rotate-45">
-						<span className="font-semibold">Save {discount}%</span>
+						<span className="font-semibold">
+							Save
+							{discount}
+							%
+						</span>
 					</div>
 				</div>
 			)}
@@ -117,22 +123,24 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 			<PlanButtonLink
 				{...props}
 				active={activePlan}
-				disabled={props.disabled}
+				disabled={disabled}
 				lifetime={duration === "lifetime"}
 			/>
 		</div>
 	);
 
-	return highlight ? (
-		<div
-			className={twMerge(
-				"rounded-2xl bg-brand-gradient p-1",
-				highlight && containerClassName
-			)}
-		>
-			{inner}
-		</div>
-	) : (
-		inner
-	);
+	return highlight
+		? (
+				<div
+					className={twMerge(
+						"rounded-2xl bg-brand-gradient p-1",
+						highlight && containerClassName
+					)}
+				>
+					{inner}
+				</div>
+			)
+		: (
+				inner
+			);
 };

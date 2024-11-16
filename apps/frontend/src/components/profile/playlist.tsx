@@ -1,10 +1,10 @@
+import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useTheme } from "~/hooks/use-theme";
 import { resolveTheme } from "~/theme";
 
-import type { FC } from "react";
-
+// eslint-disable-next-line react-refresh/only-export-components
 export const playlistPlatforms = [
 	{
 		pattern: /^https?:\/\/open\.spotify\.com\/playlist\/([\dA-Za-z]+)/,
@@ -55,6 +55,7 @@ export const ProfilePlaylist: FC<{
 			className={twMerge("w-full rounded-xl shadow-brand-1", className)}
 			frameBorder="0"
 			height="450"
+			// eslint-disable-next-line react-dom/no-unsafe-iframe-sandbox
 			sandbox="allow-forms allow-popups allow-same-origin allow-scripts"
 			src={matchedPlatform.embed(playlistId, resolveTheme(sessionTheme))}
 		/>

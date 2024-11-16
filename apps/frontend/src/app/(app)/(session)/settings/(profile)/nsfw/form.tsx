@@ -1,5 +1,7 @@
 "use client";
 
+import { Preferences } from "~/api/user/preferences";
+import { Profile, ProfileDomsubList } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -9,15 +11,13 @@ import {
 	InputSwitch
 } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
+import {
+	type AttributeTranslation,
+	useAttributes,
+	useAttributeTranslation
+} from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { Profile, ProfileDomsubList } from "~/api/user/profile";
-import { Preferences } from "~/api/user/preferences";
-import {
-	useAttributes,
-	useAttributeTranslation,
-	type AttributeTranslation
-} from "~/hooks/use-attribute";
 
 export const NsfwForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
@@ -31,13 +31,13 @@ export const NsfwForm: React.FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
 			fields={{
 				nsfw: user.preferences?.nsfw ?? false,
 				domsub: user.profile.domsub,
 				kinks: user.profile.attributes.kink ?? [],
 				kinksPrivacy: user.preferences?.privacy.kinks ?? "everyone"
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async ({ domsub, kinks, kinksPrivacy, nsfw }) => {
 				const [newProfile, newPreferences] = await Promise.all([
 					Profile.update(user.id, {
@@ -104,7 +104,6 @@ export const NsfwForm: React.FC = () => {
 										<InputLabel {...field.labelProps}>Kinks</InputLabel>
 										<InputAutocomplete
 											{...field.props}
-											limit={8}
 											options={kinks.map(({ id, definitionLink }) => {
 												const { name, definition } = (tAttribute[
 													id
@@ -119,6 +118,7 @@ export const NsfwForm: React.FC = () => {
 													definitionLink
 												};
 											})}
+											limit={8}
 										/>
 									</>
 								)}

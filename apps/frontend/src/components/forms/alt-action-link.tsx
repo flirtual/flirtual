@@ -3,7 +3,7 @@ import Link, { type LinkProps } from "next/link";
 import { twMerge } from "tailwind-merge";
 
 export const FormAlternativeActionLink: React.FC<
-	Omit<React.ComponentProps<"a">, "ref"> & LinkProps
+	LinkProps & Omit<React.ComponentProps<"a">, "ref">
 > = ({ children, ...props }) => (
 	<Link
 		{...props}

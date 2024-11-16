@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -31,7 +32,6 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 	[]
 );
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const TalkjsProvider: React.FC<React.PropsWithChildren> = talkjsAppId
 	? ({
 			children
@@ -196,7 +196,7 @@ export const ConversationChatbox: React.FC<
 			messageField: { spellcheck: true, enterSendsMessage: !native },
 			customEmojis
 		} as ChatboxOptions);
-	}, [session, sessionTheme, native]);
+	}, [session, sessionTheme, vision, native]);
 
 	const conversation = useMemo(() => {
 		if (!session || !conversationId) return null;
@@ -211,7 +211,7 @@ export const ConversationChatbox: React.FC<
 			: platform === "android"
 				? `calc(100${unit} - max(calc(var(--safe-area-inset-top, 0rem) + 0.5rem), 1rem) - 11.625rem)`
 				: `calc(100${unit} - max(calc(env(safe-area-inset-top, 0rem) + 0.5rem), 1rem) - max(calc(env(safe-area-inset-bottom, 0rem) - 0.625rem), 0.5rem) - 11.125rem)`;
-	}, [element, platform]);
+	}, [element, platform, vision]);
 
 	useEffect(() => {
 		if (!chatbox || !conversation) return;
@@ -233,7 +233,7 @@ export const ConversationChatbox: React.FC<
 					height
 				} as CSSProperties
 			}
-			className="bg-white-20 vision:bg-transparent dark:bg-black-70 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-[''] relative w-full overflow-hidden"
+			className="relative w-full overflow-hidden bg-white-20 vision:bg-transparent dark:bg-black-70 desktop:max-h-[38rem] desktop:rounded-xl desktop:pt-0 desktop:before:pointer-events-none desktop:before:absolute desktop:before:inset-0 desktop:before:z-10 desktop:before:size-full desktop:before:rounded-xl desktop:before:shadow-brand-inset desktop:before:content-['']"
 			{...props}
 			ref={setElement}
 		/>

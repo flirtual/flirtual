@@ -8,8 +8,8 @@ import {
 	useScreenBreakpoint
 } from "~/hooks/use-screen-breakpoint";
 
-import { Drawer, DrawerContent } from "./drawer";
 import { Dialog, DialogContent } from "./dialog/dialog";
+import { Drawer, DrawerContent } from "./drawer";
 
 export interface DrawerOrDialogProps {
 	children: React.ReactNode;
@@ -29,28 +29,31 @@ export const DrawerOrDialog: React.FC<DrawerOrDialogProps> = (props) => {
 		closable = true,
 		className
 	} = props;
+	// eslint-disable-next-line react/no-children-to-array
 	const [overlayNode, contentNode] = Children.toArray(children);
 	const drawer = !useScreenBreakpoint(breakpoint);
 
 	return (
 		<>
 			{contentNode}
-			{drawer ? (
-				<Drawer dismissible={closable} open={open} onOpenChange={onOpenChange}>
-					<DrawerContent className={twMerge("group", className)} data-drawer="">
-						{overlayNode}
-					</DrawerContent>
-				</Drawer>
-			) : (
-				<Dialog open={open} onOpenChange={onOpenChange}>
-					<DialogContent
-						className={twMerge("group", className)}
-						closable={closable}
-					>
-						{overlayNode}
-					</DialogContent>
-				</Dialog>
-			)}
+			{drawer
+				? (
+						<Drawer dismissible={closable} open={open} onOpenChange={onOpenChange}>
+							<DrawerContent className={twMerge("group", className)} data-drawer="">
+								{overlayNode}
+							</DrawerContent>
+						</Drawer>
+					)
+				: (
+						<Dialog open={open} onOpenChange={onOpenChange}>
+							<DialogContent
+								className={twMerge("group", className)}
+								closable={closable}
+							>
+								{overlayNode}
+							</DialogContent>
+						</Dialog>
+					)}
 		</>
 	);
 };

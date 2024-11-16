@@ -2,23 +2,22 @@
 
 import { MoveLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import type { FC } from "react";
 
+import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
+import {
+	type AttributeTranslation,
+	useAttributes,
+	useAttributeTranslation
+} from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
-import { Profile } from "~/api/user/profile";
-import {
-	useAttributes,
-	useAttributeTranslation,
-	type AttributeTranslation
-} from "~/hooks/use-attribute";
-
-import type { FC } from "react";
 
 const absMinAge = 18;
 const absMaxAge = 60;
@@ -38,8 +37,6 @@ export const Onboarding2Form: FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
-			requireChange={false}
 			fields={{
 				gender: preferences?.attributes.gender || [],
 				age: [
@@ -47,10 +44,12 @@ export const Onboarding2Form: FC = () => {
 					preferences?.agemax ?? absMaxAge
 				]
 			}}
+			className="flex flex-col gap-8"
+			requireChange={false}
 			onSubmit={async (values) => {
 				const [agemin, agemax] = values.age;
-				const { gender: _, ...preferenceAttributes } =
-					preferences?.attributes ?? {};
+				const { gender: _, ...preferenceAttributes }
+					= preferences?.attributes ?? {};
 
 				await Profile.updatePreferences(session.user.id, {
 					requiredAttributes: ["gender"],
@@ -70,25 +69,23 @@ export const Onboarding2Form: FC = () => {
 				<>
 					<FormField name="gender">
 						{(field) => (
-							<>
-								<InputCheckboxList
-									{...field.props}
-									items={genders.map((gender) => {
-										const { name, plural } = (tAttribute[
-											gender.id
-										] as AttributeTranslation<"gender">) ?? {
-											name: gender.id
-										};
+							<InputCheckboxList
+								{...field.props}
+								items={genders.map((gender) => {
+									const { name, plural } = (tAttribute[
+										gender.id
+									] as AttributeTranslation<"gender">) ?? {
+										name: gender.id
+									};
 
-										return {
-											key: gender.id,
-											label: gender.fallback
-												? "Other genders"
-												: (plural ?? name)
-										};
-									})}
-								/>
-							</>
+									return {
+										key: gender.id,
+										label: gender.fallback
+											? "Other genders"
+											: (plural ?? name)
+									};
+								})}
+							/>
 						)}
 					</FormField>
 					<FormField name="age">

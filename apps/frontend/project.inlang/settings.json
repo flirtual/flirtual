@@ -1,23 +1,23 @@
 {
-  "$schema": "https://inlang.com/schema/project-settings",
-  "sourceLanguageTag": "en",
-  "languageTags": [
-    "de",
-    "en",
-    "es",
-    "fr",
-    "ja",
-    "ko",
-    "nl",
-    "pt",
-    "pt-BR",
-    "ru",
-    "sv"
-  ],
-  "modules": [
-    "https://cdn.jsdelivr.net/npm/@inlang/plugin-next-intl@latest/dist/index.js"
-  ],
-  "plugin.inlang.nextIntl": {
-    "pathPattern": "./messages/{languageTag}.json"
-  }
+	"$schema": "https://inlang.com/schema/project-settings",
+	"sourceLanguageTag": "en",
+	"languageTags": [
+		"de",
+		"en",
+		"es",
+		"fr",
+		"ja",
+		"ko",
+		"nl",
+		"pt",
+		"pt-BR",
+		"ru",
+		"sv"
+	],
+	"modules": [
+		"https://cdn.jsdelivr.net/npm/@inlang/plugin-next-intl@latest/dist/index.js"
+	],
+	"plugin.inlang.nextIntl": {
+		"pathPattern": "./messages/{languageTag}.json"
+	}
 }

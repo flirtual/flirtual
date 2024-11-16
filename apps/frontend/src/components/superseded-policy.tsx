@@ -1,8 +1,7 @@
 import { useFormatter, useTranslations } from "next-intl";
+import type { FC } from "react";
 
 import { InlineLink } from "./inline-link";
-
-import type { FC } from "react";
 
 export const SupersededPolicy: FC<{
 	introduced: Date;

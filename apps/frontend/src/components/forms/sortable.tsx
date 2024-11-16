@@ -11,8 +11,8 @@ import {
 } from "@dnd-kit/core";
 import {
 	arrayMove,
-	SortableContext,
 	rectSortingStrategy,
+	SortableContext,
 	useSortable
 } from "@dnd-kit/sortable";
 import { Slot } from "@radix-ui/react-slot";
@@ -23,6 +23,7 @@ import {
 	type PropsWithChildren,
 	use,
 	useEffect,
+	useMemo,
 	useState
 } from "react";
 import { Portal } from "react-portal";
@@ -31,8 +32,10 @@ const CurrentSortableContext = createContext(
 	{} as { currentItem: UniqueIdentifier | null }
 );
 
-export const useCurrentSortableItem = () =>
-	use(CurrentSortableContext).currentItem;
+// eslint-disable-next-line react-refresh/only-export-components
+export function useCurrentSortableItem() {
+	return use(CurrentSortableContext).currentItem;
+}
 
 export const SortableGrid: FC<
 	PropsWithChildren<{
@@ -52,7 +55,9 @@ export const SortableGrid: FC<
 	);
 
 	return (
-		<CurrentSortableContext.Provider value={{ currentItem }}>
+		<CurrentSortableContext.Provider
+			value={useMemo(() => ({ currentItem }), [currentItem])}
+		>
 			<DndContext
 				accessibility={{}}
 				autoScroll={false}
@@ -105,11 +110,9 @@ export const SortableItem: FC<PropsWithChildren<{ id: UniqueIdentifier }>> = ({
 	return (
 		<Slot
 			suppressHydrationWarning
-			data-dragging={isDragging ? "" : undefined}
-			ref={setNodeRef}
 			style={
 				{
-					transition: transition,
+					transition,
 					transform: `translate3d(${
 						transform ? `${Math.round(transform.x)}px` : 0
 					}, ${transform ? `${Math.round(transform.y)}px` : undefined}, 0)
@@ -117,6 +120,8 @@ export const SortableItem: FC<PropsWithChildren<{ id: UniqueIdentifier }>> = ({
 					transformOrigin: "0 0"
 				} as React.CSSProperties
 			}
+			data-dragging={isDragging ? "" : undefined}
+			ref={setNodeRef}
 			{...attributes}
 			{...listeners}
 		>

@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
-import { ReferralTicket } from "./referral-ticket";
 import { ReferralForm } from "./form";
-
-import type { Metadata } from "next";
+import { ReferralTicket } from "./referral-ticket";
 
 export const metadata: Metadata = {
 	title: "Refer a homie"

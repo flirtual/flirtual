@@ -1,18 +1,17 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { useRouter } from "next/navigation";
+import type { FC } from "react";
+import { twMerge } from "tailwind-merge";
 
 import {
 	Connection,
 	ConnectionMetadata,
 	type ConnectionType
 } from "~/api/connections";
-import { useLocation } from "~/hooks/use-location";
 import { useDevice } from "~/hooks/use-device";
-
-import type { FC } from "react";
+import { useLocation } from "~/hooks/use-location";
 
 export interface AddConnectionButtonProps {
 	type: ConnectionType;
@@ -61,7 +60,7 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 
 				await InAppBrowser.addListener("urlChangeEvent", async (event) => {
 					const url = new URL(event.url);
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 					const query: any = Object.fromEntries(url.searchParams.entries());
 
 					if ("error" in query) {
@@ -94,7 +93,9 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 		>
 			<Icon className={twMerge("size-6", iconClassName)} />
 			<span className="font-montserrat text-lg font-semibold">
-				Log in with {label[type]}
+				Log in with
+				{" "}
+				{label[type]}
 			</span>
 		</button>
 	);

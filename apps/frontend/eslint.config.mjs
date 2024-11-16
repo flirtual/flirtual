@@ -8,7 +8,16 @@ export default configure({
 			version: 19
 		}
 	},
+	ignores: [
+		"next-env.d.ts",
+		"paraglide/",
+		"messages/",
+		"android/",
+		"ios/",
+		"visionos/",
+	],
 	rules: {
-		"node/prefer-global/buffer": "off"
+		"node/prefer-global/buffer": "off",
+		"node/prefer-global/process": "off",
 	}
 });

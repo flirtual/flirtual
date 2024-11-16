@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import { mutate } from "swr";
 
 import { Matchmaking } from "~/api/matchmaking";
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { relationshipKey, userKey } from "~/swr";
+import { relationshipKey } from "~/swr";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
@@ -33,7 +33,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 		return (
 			<div className="flex gap-4">
 				<ButtonLink
-					className="text-theme-overlay w-full shrink"
+					className="w-full shrink text-theme-overlay"
 					href={urls.conversations.of(relationship.conversationId)}
 					size="sm"
 				>
@@ -63,8 +63,8 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 
 	if (direct && relationship.type && relationship.kind)
 		return (
-			<div className="bg-brand-gradient shadow-brand-1 flex w-full items-center justify-between gap-4 rounded-xl px-4 py-2">
-				<span className="text-theme-overlay text-xl [overflow-wrap:anywhere]">
+			<div className="flex w-full items-center justify-between gap-4 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
+				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
 					{t(`relationship_status.to_other`, {
 						status:
 							relationship.type === "like"
@@ -93,9 +93,9 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 
 	if (relationship.likedMe && current?.subscription?.active)
 		return (
-			<div className="bg-brand-gradient shadow-brand-1 flex items-center gap-3 rounded-xl px-4 py-2">
-				<Sparkles className="text-theme-overlay size-6 shrink-0" />
-				<span className="text-theme-overlay text-xl [overflow-wrap:anywhere]">
+			<div className="flex items-center gap-3 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
+				<Sparkles className="size-6 shrink-0 text-theme-overlay" />
+				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
 					{t(`relationship_status.to_me`, {
 						status: relationship.likedMe === "love" ? "liked" : "homied",
 						displayName: displayName(user)

@@ -110,3 +110,6 @@ export function newIdempotencyKey() {
 		.map((byte) => byte.toString(16).padStart(2, "0"))
 		.join("");
 }
+
+export const emptyObject = Object.freeze({}) as Record<string, never>;
+export const emptyArray = Object.freeze([]) as Array<never>;

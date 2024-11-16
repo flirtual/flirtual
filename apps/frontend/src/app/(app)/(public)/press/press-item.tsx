@@ -1,8 +1,7 @@
 import { useFormatter } from "next-intl";
+import type React from "react";
 
 import { InlineLink } from "~/components/inline-link";
-
-import type React from "react";
 
 export interface PressItemProps {
 	name: string;
@@ -11,17 +10,17 @@ export interface PressItemProps {
 	date: Date;
 }
 
-export const PressItem: React.FC<PressItemProps> = (props) => {
+export const PressItem: React.FC<PressItemProps> = ({ name, href, date, site }) => {
 	const { dateTime } = useFormatter();
 
 	return (
 		<div className="select-children flex flex-col text-xl">
-			<InlineLink className="font-semibold" href={props.href}>
-				{props.name}
+			<InlineLink className="font-semibold" href={href}>
+				{name}
 			</InlineLink>
 			<div className="flex items-baseline gap-2">
-				<span>{props.site}</span>
-				<span className="text-sm">{dateTime(props.date)}</span>
+				<span>{site}</span>
+				<span className="text-sm">{dateTime(date)}</span>
 			</div>
 		</div>
 	);

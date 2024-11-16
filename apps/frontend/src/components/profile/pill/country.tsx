@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/no-img-element, react-refresh/only-export-components  */
 
 import { useLocale } from "next-intl";
 import type { FC } from "react";

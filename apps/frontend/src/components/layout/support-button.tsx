@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { useFreshworks } from "~/hooks/use-freshworks";
 
 import { InlineButton } from "../inline-button";
-
 import { FooterListIconLink, FooterListLink } from "./footer";
 
 export const FooterSupportLink: React.FC = () => {

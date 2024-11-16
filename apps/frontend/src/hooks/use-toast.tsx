@@ -7,8 +7,8 @@ import { AlertTriangle, Check } from "lucide-react";
 import {
 	createContext,
 	type PropsWithChildren,
+	use,
 	useCallback,
-	useContext,
 	useMemo,
 	useState
 } from "react";
@@ -48,13 +48,12 @@ export interface ToastContext {
 
 const ToastContext = createContext<ToastContext>({} as ToastContext);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useToast() {
-	return useContext(ToastContext);
+	return use(ToastContext);
 }
 
-const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
-	const Icon = toast.icon;
-
+const ToastItem: React.FC<Omit<Toast, "key">> = ({ type, icon: Icon, children, remove }) => {
 	return (
 		<motion.button
 			className={twMerge(
@@ -63,16 +62,16 @@ const ToastItem: React.FC<Omit<Toast, "key">> = (toast) => {
 					success: "bg-brand-gradient",
 					error: "bg-black-80 border-2 border-red-500",
 					warning: "bg-black-80 border-2 border-yellow-500"
-				}[toast.type]
+				}[type]
 			)}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			initial={{ opacity: 0 }}
-			onClick={() => toast.remove()}
+			onClick={() => remove()}
 		>
 			<Icon className="size-5 shrink-0" strokeWidth={2} />
 			<span data-mask className="font-montserrat font-semibold">
-				{toast.children}
+				{children}
 			</span>
 		</motion.button>
 	);

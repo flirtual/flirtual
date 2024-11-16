@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
 import { forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { isInternalHref } from "~/urls";
 
@@ -17,7 +17,7 @@ const sizes = {
 	base: "py-4 px-8 text-xl"
 } as const;
 
-export type ButtonSize = keyof typeof sizes | false;
+export type ButtonSize = false | keyof typeof sizes;
 
 const kinds = {
 	primary: "bg-brand-gradient text-white-20 shadow-brand-1",
@@ -25,7 +25,7 @@ const kinds = {
 	tertiary: ""
 };
 
-export type ButtonKind = keyof typeof kinds | false;
+export type ButtonKind = false | keyof typeof kinds;
 
 export interface ButtonProps {
 	size?: ButtonSize;
@@ -38,7 +38,7 @@ export interface ButtonProps {
 
 export const Button = forwardRef<
 	HTMLButtonElement,
-	React.ComponentProps<"button"> & ButtonProps
+	ButtonProps & React.ComponentProps<"button">
 >((props, reference) => {
 	const {
 		size = "base",
@@ -53,10 +53,6 @@ export const Button = forwardRef<
 		<button
 			ref={reference}
 			{...elementProps}
-			aria-disabled={disabled}
-			disabled={disabled}
-			// eslint-disable-next-line react/button-has-type
-			type={elementProps.type ?? "button"}
 			className={twMerge(
 				defaultClassName,
 				size && sizes[size],
@@ -65,6 +61,9 @@ export const Button = forwardRef<
 				disabled && "cursor-not-allowed opacity-75",
 				elementProps.className
 			)}
+			aria-disabled={disabled}
+			disabled={disabled}
+			type={elementProps.type ?? "button"}
 		>
 			{Icon && (
 				<Icon
@@ -82,13 +81,15 @@ export const Button = forwardRef<
 
 Button.displayName = "Button";
 
-export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
+export const ButtonLink: React.FC<ButtonProps & Parameters<typeof Link>[0]> = (
 	props
 ) => {
 	const {
 		size = "base",
 		kind = "primary",
 		disabled,
+		target,
+		href,
 		Icon,
 		iconClassName,
 		...elementProps
@@ -97,8 +98,6 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 	return (
 		<Link
 			{...elementProps}
-			aria-disabled={disabled}
-			target={(props.target ?? isInternalHref(props.href)) ? "_self" : "_blank"}
 			className={twMerge(
 				defaultClassName,
 				size && sizes[size],
@@ -106,6 +105,9 @@ export const ButtonLink: React.FC<Parameters<typeof Link>[0] & ButtonProps> = (
 				Icon && "flex gap-4",
 				elementProps.className
 			)}
+			aria-disabled={disabled}
+			href={href}
+			target={(target ?? isInternalHref(href)) ? "_self" : "_blank"}
 			onClick={(event) => {
 				if (disabled) return event.preventDefault();
 				if (elementProps.onClick) elementProps.onClick(event);

@@ -26,13 +26,15 @@ export const LetterDialog: FC<PropsWithChildren> = ({ children }) => {
 				<DialogBody>
 					<span>
 						Skip the line and stand out with a letter. This will use one of your
-						0 envelopes. <InlineLink href={null}>Get more</InlineLink>
+						0 envelopes.
+						{" "}
+						<InlineLink href={null}>Get more</InlineLink>
 					</span>
 					<Form
-						className="flex flex-col gap-4"
 						fields={{
 							message: ""
 						}}
+						className="flex flex-col gap-4"
 						onSubmit={async () => {}}
 					>
 						{({ FormField }) => (
@@ -43,10 +45,10 @@ export const LetterDialog: FC<PropsWithChildren> = ({ children }) => {
 											<InputLabel {...field.labelProps}>Message</InputLabel>
 											<InputTextArea
 												{...field.props}
-												rows={6}
 												placeholder={
 													"Roses are red,\nViolets are blue,\nIs that a custom avatar?\nIt looks good on you"
 												}
+												rows={6}
 											/>
 										</>
 									)}

@@ -1,12 +1,11 @@
-import { ModelCard } from "~/components/model-card";
+import type { Metadata } from "next";
+
 import { Authentication } from "~/api/auth";
 import { Personality } from "~/api/user/profile/personality";
+import { ModelCard } from "~/components/model-card";
 
 import { FinishProgress } from "../progress";
-
 import { Finish4Form } from "./form";
-
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Personality"

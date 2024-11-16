@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
-import { WretchError } from "wretch/resolver";
 
 import { Authentication } from "~/api/auth";
 import { isWretchError } from "~/api/common";
@@ -11,7 +10,6 @@ import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useDevice } from "~/hooks/use-device";
 import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
@@ -19,7 +17,6 @@ import { urls } from "~/urls";
 import { LoginConnectionButton } from "./login-connection-button";
 
 export const LoginForm: FC<{ next?: string }> = ({ next }) => {
-	const { platform, native } = useDevice();
 	const router = useRouter();
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
@@ -90,7 +87,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 			}
 		}
 		void webAuthnAuthenticate();
-	}, [router, toasts, next]);
+	}, [router, toasts, next, t]);
 
 	return (
 		<>

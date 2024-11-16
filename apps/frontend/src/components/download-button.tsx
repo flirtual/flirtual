@@ -1,14 +1,13 @@
-import Link, { type LinkProps } from "next/link";
 import { useTranslations } from "next-intl";
+import Link, { type LinkProps } from "next/link";
+import type React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { urls } from "~/urls";
 
 import { AppleIcon, GooglePlayIcon, MetaIcon, MicrosoftIcon } from "./icons";
 
-import type React from "react";
-
-export const platforms = {
+const platforms = {
 	apple: {
 		href: urls.apps.apple,
 		Icon: AppleIcon
@@ -29,10 +28,10 @@ export const platforms = {
 
 export type DownloadPlatform = keyof typeof platforms;
 
-export type DownloadButtonProps = Omit<LinkProps, "href"> & {
+export type DownloadButtonProps = {
 	platform: DownloadPlatform;
 	className?: string;
-};
+} & Omit<LinkProps, "href">;
 
 export const DownloadButton: React.FC<DownloadButtonProps> = ({
 	platform,
@@ -45,12 +44,12 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 	return (
 		<Link
 			{...props}
-			href={href}
-			target="_blank"
 			className={twMerge(
 				"flex w-56 items-center gap-4 rounded-xl bg-white-10 px-6 py-4 text-black-70 shadow-brand-1",
 				className
 			)}
+			href={href}
+			target="_blank"
 		>
 			<Icon className="h-8" />
 			<div className="flex flex-col justify-center text-left">

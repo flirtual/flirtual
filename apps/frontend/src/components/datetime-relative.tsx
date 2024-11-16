@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormatter, type DateTimeFormatOptions } from "next-intl";
+import { type DateTimeFormatOptions, useFormatter } from "next-intl";
 import { type ComponentProps, type FC, useMemo } from "react";
 
 interface DateTimeRelativeProps {
@@ -9,7 +9,7 @@ interface DateTimeRelativeProps {
 }
 
 export const DateTimeRelative: FC<
-	DateTimeRelativeProps & ComponentProps<"span">
+	ComponentProps<"span"> & DateTimeRelativeProps
 > = ({ value, options, ...props }) => {
 	const date = useMemo(() => new Date(value), [value]);
 	const formatter = useFormatter();

@@ -1,6 +1,5 @@
 "use client";
 
-import { use } from "react";
 import useSWR, { unstable_serialize, useSWRConfig } from "swr";
 import type { WretchOptions } from "wretch";
 

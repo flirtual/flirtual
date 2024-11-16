@@ -17,7 +17,7 @@ export function useEventListener<
 	}, [eventName, reference, callback]);
 }
 
-export type GlobalEventSource = "document" | "window" | "body";
+export type GlobalEventSource = "body" | "document" | "window";
 
 export type GlobalEventMap<T extends GlobalEventSource> = T extends "document"
 	? DocumentEventMap
@@ -42,8 +42,8 @@ export function useGlobalEventListener<
 	useDebugValue(`${name} on ${source}`);
 
 	useEffect(() => {
-		const element =
-			source === "document"
+		const element
+			= source === "document"
 				? document
 				: source === "window"
 					? window

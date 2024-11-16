@@ -8,6 +8,7 @@ import {
 	forwardRef,
 	type PropsWithChildren,
 	use,
+	useMemo,
 	useState
 } from "react";
 import { useInView } from "react-intersection-observer";
@@ -20,7 +21,7 @@ export interface TileProps {
 	id: number;
 }
 
-export const TileContext = createContext(
+const TileContext = createContext(
 	{} as { tile: number; setTile: (tile: number) => void }
 );
 
@@ -28,7 +29,9 @@ export const TileProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [tile, setTile] = useState(0);
 
 	return (
-		<TileContext.Provider value={{ tile, setTile }}>
+		<TileContext.Provider
+			value={useMemo(() => ({ tile, setTile }), [tile, setTile])}
+		>
 			{children}
 		</TileContext.Provider>
 	);

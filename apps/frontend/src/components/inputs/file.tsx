@@ -4,12 +4,12 @@ import { forwardRef } from "react";
 
 export type InputFileValue = Array<File>;
 
-export type InputFileProps = Omit<
-	React.ComponentProps<"input">,
-	"onChange" | "value" | "type"
-> & {
+export type InputFileProps = {
 	onChange?: React.Dispatch<InputFileValue>;
-};
+} & Omit<
+	React.ComponentProps<"input">,
+	"onChange" | "type" | "value"
+>;
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
 	({ onChange, ...props }, reference) => (

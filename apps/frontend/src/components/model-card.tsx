@@ -1,22 +1,23 @@
+import type React from "react";
 import { twMerge } from "tailwind-merge";
+
+import { emptyObject } from "~/utilities";
 
 import { FlirtualLogo } from "./logo";
 
-import type React from "react";
-
-export type ModelCardProps = React.ComponentProps<"div"> & {
+export type ModelCardProps = {
 	title: React.ReactNode;
 	titleProps?: React.ComponentProps<"div">;
 	containerProps?: React.ComponentProps<"div">;
 	branded?: boolean;
 	inset?: boolean;
-};
+} & React.ComponentProps<"div">;
 
 export const ModelCard: React.FC<ModelCardProps> = ({
 	children,
 	title,
-	titleProps = {},
-	containerProps = {},
+	titleProps = emptyObject,
+	containerProps = emptyObject,
 	branded = false,
 	inset = true,
 	...props
@@ -36,8 +37,8 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 				{...titleProps}
 				className={twMerge(
 					"w-full bg-brand-gradient py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 desktop:w-full desktop:rounded-t-2xl desktop:px-8 desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
-					inset &&
-						"pt-[max(calc(env(safe-area-inset-top,0rem)+1rem),1.75rem)] android:pt-[max(calc(var(--safe-area-inset-top,0rem)+1rem),1.75rem)]",
+					inset
+					&& "pt-[max(calc(env(safe-area-inset-top,0rem)+1rem),1.75rem)] android:pt-[max(calc(var(--safe-area-inset-top,0rem)+1rem),1.75rem)]",
 					titleProps.className
 				)}
 			>

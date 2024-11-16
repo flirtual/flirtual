@@ -28,13 +28,13 @@ export const FormCaptcha = forwardRef<TurnstileInstance, unknown>(
 
 		return (
 			<Turnstile
+				options={{
+					theme,
+					appearance: "interaction-only"
+				}}
 				className={isInteractive ? "mx-auto" : "-mt-8"}
 				ref={reference}
 				siteKey={turnstileSiteKey}
-				options={{
-					theme: theme,
-					appearance: "interaction-only"
-				}}
 				onBeforeInteractive={() => {
 					setIsInteractive(true);
 				}}

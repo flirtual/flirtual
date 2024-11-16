@@ -1,8 +1,8 @@
+import type { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { NotificationsForm } from "./form";
-
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Notifications"

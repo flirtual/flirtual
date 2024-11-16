@@ -1,14 +1,10 @@
 "use client";
 
-import { type FC, useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
+import { type FC, useState, useTransition } from "react";
 
-import { useSession } from "~/hooks/use-session";
-import { usePurchase } from "~/hooks/use-purchase";
+import { Subscription } from "~/api/subscription";
 import { Button } from "~/components/button";
-import { useToast } from "~/hooks/use-toast";
-import { InlineLink } from "~/components/inline-link";
-import { urls } from "~/urls";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -25,7 +21,11 @@ import {
 	DialogFooter,
 	DialogTitle
 } from "~/components/dialog/dialog";
-import { Subscription } from "~/api/subscription";
+import { InlineLink } from "~/components/inline-link";
+import { usePurchase } from "~/hooks/use-purchase";
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
+import { urls } from "~/urls";
 
 export const ManageButton: FC = () => {
 	const [session] = useSession();
@@ -38,8 +38,8 @@ export const ManageButton: FC = () => {
 
 	const { subscription } = session.user;
 	if (
-		!subscription ||
-		(subscription.cancelledAt && !subscription.plan.purchasable)
+		!subscription
+		|| (subscription.cancelledAt && !subscription.plan.purchasable)
 	)
 		return null;
 
@@ -98,10 +98,12 @@ export const ManageButton: FC = () => {
 				<div className="font-bold">
 					Subscription management is temporarily unavailable. If you need to
 					update your billing details, first cancel your current subscription
-					and then resubscribe. Please{" "}
+					and then resubscribe. Please
+					{" "}
 					<InlineLink href={urls.resources.contactDirect}>
 						contact us
-					</InlineLink>{" "}
+					</InlineLink>
+					{" "}
 					if you need any assistance. Thank you for your understanding.
 				</div>
 			</>
@@ -120,6 +122,7 @@ export const ManageButton: FC = () => {
 				>
 					<DialogTitle className="sr-only">Manage subscription</DialogTitle>
 					<DialogContent className="w-fit overflow-hidden p-0">
+						{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
 						<iframe
 							className="max-h-[90vh] max-w-full rounded-[1.25rem] bg-[#f4f5f9]"
 							height={561}

@@ -23,7 +23,6 @@ const fontClassNames = twMerge(montserrat.variable, nunito.variable);
 
 export default function GlobalError({
 	error,
-	reset
 }: {
 	error: { digest?: string } & Error;
 	reset: () => void;

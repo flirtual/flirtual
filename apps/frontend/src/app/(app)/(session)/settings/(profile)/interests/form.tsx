@@ -60,7 +60,8 @@ const HighlightedText: FC<{ children: string; snippet: string }> = ({
 			{parts.map((part, index) => {
 				if (part.toLowerCase() !== snippet.toLowerCase()) return part;
 				return (
-					<span className="font-bold" key={index}>
+					// eslint-disable-next-line react/no-array-index-key
+					<span className="font-bold" key={`${part}-${index}`}>
 						{part}
 					</span>
 				);
@@ -233,7 +234,7 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 	);
 };
 
-export const maximumInterests = 10;
+const maximumInterests = 10;
 
 export const InterestsForm: FC = () => {
 	const [session] = useSession();

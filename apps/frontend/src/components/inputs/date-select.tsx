@@ -1,14 +1,14 @@
+/* eslint-disable react/prefer-destructuring-assignment */
 "use client";
 
-import { useCallback, useState } from "react";
 import { DatetimePicker } from "@capawesome-team/capacitor-datetime-picker";
+import { useCallback, useState } from "react";
 
 import { useDevice } from "~/hooks/use-device";
 import { useTheme } from "~/hooks/use-theme";
 import { resolveTheme } from "~/theme";
 
 import { Popover } from "../popover";
-
 import {
 	InputCalendar,
 	type InputCalendarProps,
@@ -21,9 +21,9 @@ import { InputText } from "./text";
  * We should use proper date formatting libraries to handle this.
  */
 function toDateString(value: Date): string {
-	const day = String(value.getDate()).padStart(2, "0"),
-		month = String(value.getMonth() + 1).padStart(2, "0"),
-		year = String(value.getFullYear()).padStart(4, "0");
+	const day = String(value.getDate()).padStart(2, "0");
+	const month = String(value.getMonth() + 1).padStart(2, "0");
+	const year = String(value.getFullYear()).padStart(4, "0");
 
 	return `${month}/${day}/${year}`;
 }
@@ -31,16 +31,16 @@ function toDateString(value: Date): string {
 function fromDateString(value: string): globalThis.Date {
 	const values = value.split("/");
 
-	const month = Number.parseInt(values[0]!) - 1,
-		day = Number.parseInt(values[1]!),
-		year = Number.parseInt(values[2]!);
+	const month = Number.parseInt(values[0]!) - 1;
+	const day = Number.parseInt(values[1]!);
+	const year = Number.parseInt(values[2]!);
 
 	return new Date(year, month, day);
 }
 
 export type InputDateSelectProps = Pick<
 	InputCalendarProps,
-	"value" | "onChange" | "min" | "max"
+	"max" | "min" | "onChange" | "value"
 >;
 
 export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
@@ -85,8 +85,6 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 				className="w-full"
 				type="date"
 				value={inputValue}
-				onClick={() => setDrawerVisible(true)}
-				onFocus={() => setDrawerVisible(true)}
 				onBlur={() => {
 					const value = fromDateString(inputValue);
 
@@ -105,6 +103,8 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 					if (Number.isNaN(date.getTime())) return;
 					props.onChange(date);
 				}}
+				onClick={() => setDrawerVisible(true)}
+				onFocus={() => setDrawerVisible(true)}
 				onKeyDown={(event) => {
 					const { currentTarget } = event;
 
@@ -143,7 +143,6 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 							preserveSelection();
 
 							event.preventDefault();
-							return;
 						}
 					}
 				}}
@@ -186,7 +185,8 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 				setSelectedDate(newDate);
 				onChange(newDate);
 			}
-		} catch (reason) {
+		}
+		catch (reason) {
 			console.error("Failed to open date picker", reason);
 		}
 	};

@@ -1,20 +1,19 @@
-import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
+import { twMerge } from "tailwind-merge";
 
-import { urls } from "~/urls";
 import {
-	type IconComponent,
 	DiscordIcon,
+	type IconComponent,
 	TwitterIcon
 } from "~/components/icons";
 import { gitCommitSha, gitCommitUrl } from "~/const";
+import { urls } from "~/urls";
 
-import { FlirtualLogo } from "../logo";
 import { InlineLink } from "../inline-link";
-
-import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
+import { FlirtualLogo } from "../logo";
 import { FooterCannyLink } from "./canny-button";
 import { MadeWithLove } from "./made-with-love";
+import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 
 type LinkOrButtonProps<T> = T &
 	(
@@ -28,44 +27,46 @@ export const FooterListIconLink: React.FC<FooterListIconLinkProps> = ({
 	Icon,
 	...props
 }) =>
-	"href" in props ? (
-		<a
-			className="touch-callout-default cursor-pointer hover:brightness-90"
-			{...props}
-		>
-			<Icon className="size-6 desktop:size-8" />
-		</a>
-	) : (
-		<button
-			className="cursor-pointer hover:brightness-90"
-			type="button"
-			{...props}
-		>
-			<Icon className="size-6 desktop:size-8" />
-		</button>
-	);
+	"href" in props
+		? (
+				<a
+					className="touch-callout-default cursor-pointer hover:brightness-90"
+					{...props}
+				>
+					<Icon className="size-6 desktop:size-8" />
+				</a>
+			)
+		: (
+				<button
+					className="cursor-pointer hover:brightness-90"
+					type="button"
+					{...props}
+				>
+					<Icon className="size-6 desktop:size-8" />
+				</button>
+			);
 
 type FooterListLinkProps = LinkOrButtonProps<{
 	label: string;
 }>;
 
-export const FooterListLink: React.FC<FooterListLinkProps> = (props) => (
+export const FooterListLink: React.FC<FooterListLinkProps> = ({ label, ...props }) => (
 	<li className="cursor-pointer hover:underline">
-		{"href" in props ? (
-			<a {...props}>{props.label}</a>
-		) : (
-			<button {...props} className="hover:underline" type="button">
-				{props.label}
-			</button>
-		)}
+		{"href" in props
+			? (<a {...props}>{label}</a>)
+			: (
+					<button {...props} className="hover:underline" type="button">
+						{label}
+					</button>
+				)}
 	</li>
 );
 
-export type FooterProps = React.ComponentProps<"footer"> & {
+export type FooterProps = {
 	desktopOnly?: boolean;
 	background?: boolean;
 	logoClassName?: string;
-};
+} & React.ComponentProps<"footer">;
 
 export const Footer: React.FC<FooterProps> = ({
 	desktopOnly,
@@ -81,8 +82,8 @@ export const Footer: React.FC<FooterProps> = ({
 			className={twMerge(
 				"-mt-1 w-full justify-center px-8 py-12 font-nunito desktop:pb-36 wide:pb-20",
 				desktopOnly ? "hidden desktop:flex" : "flex",
-				background &&
-					"border-t-4 border-theme-1 dark:text-white-20 desktop:bg-white-20 desktop:p-16 desktop:shadow-brand-inset dark:desktop:bg-black-70",
+				background
+				&& "border-t-4 border-theme-1 dark:text-white-20 desktop:bg-white-20 desktop:p-16 desktop:shadow-brand-inset dark:desktop:bg-black-70",
 				props.className
 			)}
 		>

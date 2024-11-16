@@ -1,4 +1,3 @@
-import { cache } from "~/cache";
 import { gitCommitSha } from "~/const";
 import type { Expand } from "~/utilities";
 

@@ -1,7 +1,6 @@
 import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { capitalize } from "remeda";
 import { mutate } from "swr";
 import { twMerge } from "tailwind-merge";

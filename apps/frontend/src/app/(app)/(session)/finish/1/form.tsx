@@ -1,25 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { MoveLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import type { FC } from "react";
 
+import { Profile } from "~/api/user/profile";
+import { ButtonLink } from "~/components/button";
+import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
+import { InputImageSet } from "~/components/forms/input-image-set";
+import { InputPrompts } from "~/components/forms/prompts";
 import {
 	InputEditor,
 	InputLabel,
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { Form } from "~/components/forms";
-import { FormButton } from "~/components/forms/button";
-import { urls } from "~/urls";
-import { InputImageSet } from "~/components/forms/input-image-set";
-import { useSession } from "~/hooks/use-session";
-import { InputPrompts } from "~/components/forms/prompts";
-import { ButtonLink } from "~/components/button";
-import { Profile } from "~/api/user/profile";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-
-import type { FC } from "react";
+import { useSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
 export const Finish1Form: FC = () => {
 	const [session] = useSession();
@@ -36,8 +35,6 @@ export const Finish1Form: FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
-			requireChange={false}
 			fields={{
 				displayName: user.profile.displayName || "",
 				images: user.profile.images.map((image) => ({
@@ -48,6 +45,8 @@ export const Finish1Form: FC = () => {
 				biography: user.profile.biography || "",
 				prompts: user.profile.prompts
 			}}
+			className="flex flex-col gap-8"
+			requireChange={false}
 			onSubmit={async (values) => {
 				await Promise.all([
 					Profile.update(user.id, {
@@ -92,11 +91,12 @@ export const Finish1Form: FC = () => {
 								<InputLabel
 									{...field.labelProps}
 									inline
-									hint={
+									hint={(
 										<InputLabelHint>
-											Upload your avatar pictures from VRChat,{" "}
-											{tAttribute[favoriteGameId || ""]?.name ??
-												"Horizon Worlds"}
+											Upload your avatar pictures from VRChat,
+											{" "}
+											{tAttribute[favoriteGameId || ""]?.name
+											?? "Horizon Worlds"}
 											, or another social VR app. Aim for 3+ avatar pictures to
 											get more matches. Don&apos;t have any handy? You can go
 											back to browsing and come back later.
@@ -109,7 +109,7 @@ export const Finish1Form: FC = () => {
 												pictures.
 											</details>
 										</InputLabelHint>
-									}
+									)}
 								>
 									Profile pictures
 								</InputLabel>
@@ -123,7 +123,7 @@ export const Finish1Form: FC = () => {
 								<InputLabel
 									{...field.labelProps}
 									inline
-									hint={
+									hint={(
 										<InputLabelHint>
 											A great bio shows your personality and interests, maybe
 											your sense of humor and what you&apos;re looking for.
@@ -136,7 +136,7 @@ export const Finish1Form: FC = () => {
 												hateful or controversial content.
 											</details>
 										</InputLabelHint>
-									}
+									)}
 								>
 									Bio
 								</InputLabel>

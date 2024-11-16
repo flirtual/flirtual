@@ -56,11 +56,11 @@ const TableRow = React.forwardRef<
 	React.HTMLAttributes<HTMLTableRowElement>
 >(({ className, ...props }, reference) => (
 	<tr
-		ref={reference}
 		className={twMerge(
 			"transition-colors even:bg-white-10/10 data-[state=selected]:brightness-75 dark:even:bg-black-90/5",
 			className
 		)}
+		ref={reference}
 		{...props}
 	/>
 ));
@@ -71,11 +71,11 @@ const TableHead = React.forwardRef<
 	React.ThHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, reference) => (
 	<th
-		ref={reference}
 		className={twMerge(
 			"h-12 px-4 text-left align-middle font-montserrat font-semibold text-white-20 [&:has([role=checkbox])]:pr-0",
 			className
 		)}
+		ref={reference}
 		{...props}
 	/>
 ));
@@ -86,11 +86,11 @@ const TableCell = React.forwardRef<
 	React.TdHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, reference) => (
 	<td
-		ref={reference}
 		className={twMerge(
 			"w-0 p-4 align-middle [&:has([role=checkbox])]:pr-0",
 			className
 		)}
+		ref={reference}
 		{...props}
 	/>
 ));
@@ -110,11 +110,11 @@ TableCaption.displayName = "TableCaption";
 
 export {
 	Table,
-	TableHeader,
 	TableBody,
+	TableCaption,
+	TableCell,
 	TableFooter,
 	TableHead,
-	TableRow,
-	TableCell,
-	TableCaption
+	TableHeader,
+	TableRow
 };

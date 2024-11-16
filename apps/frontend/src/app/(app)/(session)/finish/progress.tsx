@@ -14,11 +14,11 @@ const ProgressLink: React.FC<{
 
 	return (
 		<InlineLink
-			href={urls.finish(page)}
 			className={twMerge(
 				"z-10 hidden h-fit justify-center px-3 hocus:no-underline desktop:flex",
 				active ? "text-white-10" : "text-black-70 dark:text-white-10"
 			)}
+			href={urls.finish(page)}
 		>
 			{name}
 		</InlineLink>
@@ -38,7 +38,10 @@ export const FinishProgress: React.FC<{ page: FinishPage }> = ({ page }) => {
 						width: `calc(${page * 20}% - ${page * 0.4}rem)`
 					}}
 				>
-					<span className="text-white-10 desktop:hidden">{page}/5</span>
+					<span className="text-white-10 desktop:hidden">
+						{page}
+						/5
+					</span>
 				</div>
 			</div>
 			<div className="grid h-6 w-full grid-cols-3 items-center justify-center rounded-full bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60 desktop:h-9 desktop:max-w-2xl desktop:grid-cols-5">

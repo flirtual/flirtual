@@ -1,15 +1,14 @@
+import type { Metadata } from "next";
 import { getMessages, getTranslations } from "next-intl/server";
 
-import { ModelCard } from "~/components/model-card";
-import { InlineLink } from "~/components/inline-link";
-import { urls } from "~/urls";
 import { Image } from "~/components/image";
+import { InlineLink } from "~/components/inline-link";
+import { ModelCard } from "~/components/model-card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { urls } from "~/urls";
 
 import { TeamList } from "./team-list";
 import { TimelineItem } from "./timeline-item";
-
-import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("about");

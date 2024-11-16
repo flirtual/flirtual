@@ -1,9 +1,7 @@
 import {
 	api,
-	type CreatedAtModel,
 	type Issue,
-	isWretchError,
-	type UuidModel
+	isWretchError
 } from "./common";
 
 export const ProspectKind = ["love", "friend"] as const;

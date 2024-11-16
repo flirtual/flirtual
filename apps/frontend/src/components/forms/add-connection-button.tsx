@@ -78,7 +78,6 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 
 					await InAppBrowser.addListener("urlChangeEvent", async (event) => {
 						const url = new URL(event.url);
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						const query: any = Object.fromEntries(url.searchParams.entries());
 
 						if ("error" in query) {

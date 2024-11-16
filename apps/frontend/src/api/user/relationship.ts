@@ -7,11 +7,11 @@ export type Relationship = {
 	kind?: ProspectKind;
 } & (
 	| {
-			matched: false;
-			conversationId?: undefined;
-	  }
+		matched: false;
+		conversationId?: undefined;
+	}
 	| {
-			matched: true;
-			conversationId: string;
-	  }
+		matched: true;
+		conversationId: string;
+	}
 );

@@ -16,13 +16,13 @@ export const PasswordChangeForm: React.FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
-			requireChange={["password", "passwordConfirmation", "currentPassword"]}
 			fields={{
 				password: "",
 				passwordConfirmation: "",
 				currentPassword: ""
 			}}
+			className="flex flex-col gap-8"
+			requireChange={["password", "passwordConfirmation", "currentPassword"]}
 			onSubmit={async (body) => {
 				await User.updatePassword(session.user.id, body);
 				router.refresh();

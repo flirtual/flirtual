@@ -3,11 +3,10 @@
 import { X } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import type React from "react";
 
 import { InlineLink } from "~/components/inline-link";
 import { urls } from "~/urls";
-
-import type React from "react";
 
 export const SuccessMessage: React.FC = () => {
 	const searchParameters = useSearchParams();
@@ -31,7 +30,8 @@ export const SuccessMessage: React.FC = () => {
 					Your subscription will be applied to your account momentarily.
 				</span>
 				<span>
-					If you need any help with your purchase, please{" "}
+					If you need any help with your purchase, please
+					{" "}
 					<InlineLink
 						className="underline"
 						highlight={false}

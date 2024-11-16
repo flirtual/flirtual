@@ -1,13 +1,13 @@
-import { useAttributeTranslation } from "~/hooks/use-attribute";
-
 import type { FC } from "react";
+
 import type { ProfilePrompt } from "~/api/user/profile";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 
 export const ProfilePrompts: FC<{
 	prompts: Array<ProfilePrompt>;
 }> = ({ prompts }) => {
-	if (!prompts || prompts.length === 0) return null;
 	const tAttribute = useAttributeTranslation();
+	if (!prompts || prompts.length === 0) return null;
 
 	return (
 		<div className="flex flex-col gap-4 vision:text-white-20">

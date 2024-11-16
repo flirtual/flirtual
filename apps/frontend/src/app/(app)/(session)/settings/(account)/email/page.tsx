@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function SettingsAccountEmailPage() {
 	return (
 		<ModelCard
-			className="desktop:w-full desktop:max-w-2xl shrink"
+			className="shrink desktop:w-full desktop:max-w-2xl"
 			inset={false}
 			title="Change email"
 		>

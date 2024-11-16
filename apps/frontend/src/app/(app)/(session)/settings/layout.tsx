@@ -1,6 +1,6 @@
-import { SettingsNavigation } from "./navigation";
-
 import type { Metadata } from "next";
+
+import { SettingsNavigation } from "./navigation";
 
 export const metadata: Metadata = {
 	title: {

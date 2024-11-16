@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { Authentication } from "~/api/auth";
 import { Conversation } from "~/api/conversations";
 import { displayName } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";

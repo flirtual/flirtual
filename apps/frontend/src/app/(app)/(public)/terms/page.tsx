@@ -1,12 +1,11 @@
-import { getTranslations } from "next-intl/server";
-
-import { ModelCard } from "~/components/model-card";
-import { InlineLink } from "~/components/inline-link";
-import { urls } from "~/urls";
-import { MachineTranslatedLegal } from "~/components/machine-translated";
-
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
+
+import { InlineLink } from "~/components/inline-link";
+import { MachineTranslatedLegal } from "~/components/machine-translated";
+import { ModelCard } from "~/components/model-card";
+import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("terms");

@@ -1,25 +1,24 @@
 import { Check } from "lucide-react";
+import type React from "react";
 import { twMerge } from "tailwind-merge";
 
-import type React from "react";
-
-export type InputCheckboxProps = Omit<
+export type InputCheckboxProps = { value?: boolean; onChange?: React.Dispatch<boolean> } & Omit<
 	React.ComponentProps<"input">,
-	"type" | "checked" | "value" | "onChange"
-> & { value?: boolean; onChange?: React.Dispatch<boolean> };
+	"checked" | "onChange" | "type" | "value"
+>;
 
 export const InputCheckbox: React.FC<InputCheckboxProps> = (props) => {
-	const { value, onChange, ...elementProps } = props;
+	const { value, className, onChange, ...elementProps } = props;
 	return (
 		<div className="relative flex size-8 shrink-0 items-center justify-center">
 			<input
 				{...elementProps}
-				checked={value}
-				type="checkbox"
 				className={twMerge(
 					"peer focusable size-full cursor-pointer items-center justify-center rounded-xl border-[3px] border-black-50 bg-white-30 text-2xl text-white-20 transition-all checked:bg-brand-gradient checked:shadow-brand-1 vision:border-white-20/70 vision:bg-transparent vision:checked:border-none dark:bg-black-60 hocus:dark:!bg-black-60",
-					props.className
+					className
 				)}
+				checked={value}
+				type="checkbox"
 				onChange={(event) => {
 					if (!onChange) return;
 					onChange(event.target.checked);

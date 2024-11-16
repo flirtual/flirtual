@@ -1,11 +1,9 @@
 "use client";
 
-import { redirect } from "next/navigation";
 import { type FC, Suspense, use } from "react";
 
 import { Profile } from "~/components/profile/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { urls } from "~/urls";
 
 import { QueueActions } from "../browse/queue-actions";
 import type { ProfilePageProps } from "./layout";

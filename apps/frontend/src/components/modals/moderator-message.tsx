@@ -15,7 +15,6 @@ import { Button } from "../button";
 import { DialogBody, DialogHeader, DialogTitle } from "../dialog/dialog";
 import { DrawerOrDialog } from "../drawer-or-dialog";
 import { InlineLink } from "../inline-link";
-import { FlirtualLogo } from "../logo";
 
 export const ModerationMessageDialog: FC = () => {
 	const [session] = useSession();

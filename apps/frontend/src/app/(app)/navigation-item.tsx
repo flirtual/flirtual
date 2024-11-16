@@ -1,13 +1,12 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
-import Link from "next/link";
 import { Slot } from "@radix-ui/react-slot";
+import Link from "next/link";
+import type { ComponentProps, FC, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { useLocation } from "~/hooks/use-location";
 import { toAbsoluteUrl, urlEqual } from "~/urls";
-
-import type { ComponentProps, FC, ReactNode } from "react";
 
 export interface NavigationalSwitchItemProps {
 	href: string;
@@ -28,15 +27,15 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	return (
 		<Link
 			{...props}
-			data-active={active ? "" : undefined}
 			className={twMerge(
 				"group shrink-0 rounded-full p-2 transition-colors focus:outline-none data-[active]:shadow-brand-1 hocus:shadow-brand-1",
 				className
 			)}
+			data-active={active ? "" : undefined}
 		>
 			<Slot
 				className="aspect-square h-6 group-hocus:fill-white-20 desktop:h-8"
-				//gradient={!active}
+				// gradient={!active}
 			>
 				{icon}
 			</Slot>
@@ -45,13 +44,12 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 };
 
 export const NavigationItem: FC<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	ComponentProps<"a"> & { href: string; ref?: any }
+	{ href: string; ref?: any } & ComponentProps<"a">
 > = ({ children, ...props }) => {
 	const location = useLocation();
-	const active =
-		toAbsoluteUrl(props.href).pathname.split("/")[1] ===
-		location.pathname.split("/")[1];
+	const active
+		= toAbsoluteUrl(props.href).pathname.split("/")[1]
+		=== location.pathname.split("/")[1];
 
 	return (
 		<Link

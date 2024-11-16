@@ -1,8 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import { type AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
-import { createContext, forwardRef, type PropsWithChildren, use, useEffect } from "react";
+import type { AbstractIntlMessages } from "next-intl";
+import { createContext, forwardRef, type PropsWithChildren, use } from "react";
 
 import type { getInternationalization } from "~/i18n";
 

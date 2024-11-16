@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-destructuring-assignment */
 "use client";
 
 import { CalendarDays, Eye, EyeOff } from "lucide-react";

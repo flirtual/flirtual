@@ -2,7 +2,7 @@ import type { ImageLoaderProps } from "next/image";
 
 export type ImageOptions = Record<
 	string,
-	string | null | Array<string | number | null>
+	Array<number | string | null> | string | null
 >;
 
 export default function imageLoader({ src }: ImageLoaderProps): string {

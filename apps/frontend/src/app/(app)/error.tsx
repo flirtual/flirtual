@@ -21,7 +21,6 @@ import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Form, FormButton } from "~/components/forms";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputTextArea } from "~/components/inputs";
-import { FlirtualLogo } from "~/components/logo";
 import { environment, gitCommitSha } from "~/const";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";

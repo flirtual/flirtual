@@ -1,8 +1,8 @@
+import type { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { Onboarding0Form } from "./form";
-
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Create account"

@@ -1,12 +1,12 @@
 "use client";
 
-import { ButtonLink } from "~/components/button";
-import { useDevice } from "~/hooks/use-device";
-import { FaceTimeIcon } from "~/components/icons";
-import { useSession } from "~/hooks/use-session";
+import type { FC } from "react";
 
 import type { User } from "~/api/user";
-import type { FC } from "react";
+import { ButtonLink } from "~/components/button";
+import { FaceTimeIcon } from "~/components/icons";
+import { useDevice } from "~/hooks/use-device";
+import { useSession } from "~/hooks/use-session";
 
 export interface FaceTimeButtonProps {
 	user: User;
@@ -18,10 +18,10 @@ export const FaceTimeButton: FC<FaceTimeButtonProps> = (props) => {
 	const [session] = useSession();
 
 	if (
-		!vision ||
-		!session?.user.tags?.includes("debugger") ||
-		!session.user.profile.facetime ||
-		!user.profile.facetime
+		!vision
+		|| !session?.user.tags?.includes("debugger")
+		|| !session.user.profile.facetime
+		|| !user.profile.facetime
 	)
 		return null;
 

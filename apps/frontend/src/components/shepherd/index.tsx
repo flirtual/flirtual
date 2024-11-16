@@ -1,8 +1,9 @@
 "use client";
 
+import type { FC, PropsWithChildren } from "react";
 import { ShepherdTour, type Tour } from "react-shepherd";
 
-import type { FC, PropsWithChildren } from "react";
+import { emptyArray } from "~/utilities";
 
 const tourOptions = {
 	useModalOverlay: true,
@@ -16,7 +17,7 @@ const tourOptions = {
 
 export const ShepherdProvider: FC<PropsWithChildren> = ({ children }) => {
 	return (
-		<ShepherdTour steps={[]} tourOptions={tourOptions}>
+		<ShepherdTour steps={emptyArray} tourOptions={tourOptions}>
 			{children}
 		</ShepherdTour>
 	);

@@ -8,8 +8,8 @@ export interface ResetPasswordPageProps {
 	params: Promise<{ token: string }>;
 }
 
-export default async function ResetPasswordPage(props: ResetPasswordPageProps) {
-	const { token } = await props.params;
+export default async function ResetPasswordPage({ params }: ResetPasswordPageProps) {
+	const { token } = await params;
 
 	const payload = decode(token, { json: true });
 	if (!payload?.sub) return null;

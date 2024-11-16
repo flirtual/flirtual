@@ -113,7 +113,7 @@ export const api = wretch(urls.api)
 
 					return response?.ok ?? false;
 				},
-				onRetry: async ({ url, options, error, response }) => {
+				onRetry: async ({ url, options, response }) => {
 					const headers = new Headers(options.headers);
 					options.headers = headers;
 
@@ -123,6 +123,7 @@ export const api = wretch(urls.api)
 
 					const { origin } = new URL(url);
 
+					// eslint-disable-next-line no-console
 					console.debug(
 						"(retry)",
 						options.method,

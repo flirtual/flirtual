@@ -1,21 +1,20 @@
+import type { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { FinishProgress } from "../progress";
-
 import { Finish5Form } from "./form";
-
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Connections"
 };
 
-export default async function Finish5Page(props: {
+export default async function Finish5Page({ searchParams }: {
 	searchParams?: Promise<{
 		error?: string;
 	}>;
 }) {
-	const { error } = (await props.searchParams) || {};
+	const { error } = (await searchParams) || {};
 
 	return (
 		<>

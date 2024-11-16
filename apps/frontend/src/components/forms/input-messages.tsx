@@ -52,7 +52,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 	return (
 		<div
 			className={twMerge(
-				"select-children font-nunito flex gap-2",
+				"select-children flex gap-2 font-nunito",
 				formMessageStyle[type],
 				formMessageSize[size]
 			)}

@@ -7,9 +7,10 @@ import {
 	Link2,
 	Share2
 } from "lucide-react";
+import type { FC, PropsWithChildren } from "react";
 
-import { type ConnectionType, ConnectionMetadata } from "~/api/connections";
-import { type User, displayName } from "~/api/user";
+import { ConnectionMetadata, type ConnectionType } from "~/api/connections";
+import { displayName, type User } from "~/api/user";
 import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
@@ -20,8 +21,6 @@ import {
 } from "~/components/dropdown";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urls } from "~/urls";
-
-import type { FC, PropsWithChildren } from "react";
 
 export const ProfileDropdownCopySubmenu: FC<
 	PropsWithChildren<{ user: User }>
@@ -105,8 +104,7 @@ export const ProfileDropdownCopySubmenu: FC<
 					onClick={() =>
 						Clipboard.write({
 							url: toAbsoluteUrl(urls.profile(user)).href
-						})
-					}
+						})}
 				>
 					<Link2 className="size-5" />
 					URL

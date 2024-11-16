@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type IconComponentProps = React.ComponentProps<"svg"> & { ref?: any };
+export type IconComponentProps = { ref?: any } & React.ComponentProps<"svg">;
 export type IconComponent = React.FC<IconComponentProps>;
 
+// eslint-disable-next-line react-refresh/only-export-components
 export * from "./brand";

@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
+
 import { ModelCard } from "~/components/model-card";
 
 import { PasswordChangeForm } from "./change-form";
 import { PasswordPasskeyForm } from "./passkey-form";
-
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Password & passkeys"

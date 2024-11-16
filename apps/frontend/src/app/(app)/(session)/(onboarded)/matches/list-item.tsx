@@ -5,12 +5,12 @@ import { type FC, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { Conversation } from "~/api/conversations";
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { TimeRelative } from "~/components/time-relative";
-import { UserAvatar, type UserAvatarProps } from "~/components/user-avatar";
-import { useRelationship, useUser } from "~/hooks/use-user";
+import { UserAvatar } from "~/components/user-avatar";
+import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
 export type ConversationListItemProps = {

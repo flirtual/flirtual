@@ -14,7 +14,6 @@ import Link from "next/link";
 import type { FC } from "react";
 
 import { api } from "~/api/common";
-import type { User } from "~/api/user";
 import {
 	DropdownMenu,
 	DropdownMenuContent,

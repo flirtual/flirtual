@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { twMerge } from "tailwind-merge";
 import {
 	ChevronDown,
 	ChevronLeft,
@@ -10,6 +8,10 @@ import {
 	ChevronsRight
 } from "lucide-react";
 import { useFormatter } from "next-intl";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { twMerge } from "tailwind-merge";
+
+import type { IconComponent } from "~/components/icons";
 
 import {
 	type InputOptionEvent,
@@ -17,39 +19,37 @@ import {
 	type InputSelectOption
 } from "./option-window";
 
-import type { IconComponent } from "~/components/icons";
-
-export function getMonthLength(date: Date): number {
+function getMonthLength(date: Date): number {
 	return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 }
 
-export function getMonthDayOffset(date: Date): number {
+function getMonthDayOffset(date: Date): number {
 	return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
 }
 
 /**
  * A loose date comparison, only compares date, not time.
  */
-export function dateEqual(a: Date, b: Date): boolean {
+function dateEqual(a: Date, b: Date): boolean {
 	return (
-		a.getFullYear() === b.getFullYear() &&
-		a.getMonth() === b.getMonth() &&
-		a.getDate() === b.getDate()
+		a.getFullYear() === b.getFullYear()
+		&& a.getMonth() === b.getMonth()
+		&& a.getDate() === b.getDate()
 	);
 }
 
-type CalendarButtonProps = React.ComponentProps<"button"> & {
+type CalendarButtonProps = {
 	Icon: IconComponent;
-};
+} & React.ComponentProps<"button">;
 
 const CalendarButton: React.FC<CalendarButtonProps> = ({ Icon, ...props }) => (
 	<button
 		{...props}
-		type="button"
 		className={twMerge(
 			"focusable flex size-7 shrink-0 items-center justify-center rounded-full p-1 text-black-90 dark:text-white-20",
 			props.className
 		)}
+		type="button"
 	>
 		<Icon className="w-3" strokeWidth={3} />
 	</button>
@@ -63,7 +63,7 @@ interface LabelSelectProps {
 	children: React.ReactNode;
 }
 
-const LabelSelect: React.FC<LabelSelectProps> = (props) => {
+const LabelSelect: React.FC<LabelSelectProps> = ({ options, children, onOptionAction }) => {
 	const [visible, setVisible] = useState(false);
 
 	return (
@@ -82,15 +82,15 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 				className="flex items-center gap-2 px-3 font-montserrat text-xl font-semibold focus:outline-none"
 				type="button"
 			>
-				<span className="w-12 whitespace-nowrap">{props.children}</span>
+				<span className="w-12 whitespace-nowrap">{children}</span>
 				<ChevronDown className="size-4" strokeWidth={3} />
 			</button>
 			{visible && (
 				<InputOptionWindow
 					className="absolute mt-4 flex"
-					options={props.options}
+					options={options}
 					onOptionClick={(event) => {
-						props.onOptionAction(
+						onOptionAction(
 							event as InputOptionEvent<
 								React.SyntheticEvent<HTMLButtonElement>,
 								string
@@ -100,7 +100,7 @@ const LabelSelect: React.FC<LabelSelectProps> = (props) => {
 						setVisible(true);
 					}}
 					onOptionFocus={(event) => {
-						props.onOptionAction(
+						onOptionAction(
 							event as InputOptionEvent<
 								React.SyntheticEvent<HTMLButtonElement>,
 								string
@@ -117,17 +117,17 @@ const yearInMilliseconds = 3.154e10;
 
 export type MinmaxDate = "now" | Date;
 
-export type InputCalendarProps = Omit<
-	React.ComponentProps<"div">,
-	"onChange"
-> & {
+export type InputCalendarProps = {
 	value: Date;
 	offset?: number;
 	min?: MinmaxDate;
 	max?: MinmaxDate;
 	onChange: React.Dispatch<Date>;
 	onDateClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-};
+} & Omit<
+	React.ComponentProps<"div">,
+	"onChange"
+>;
 
 export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	const {
@@ -156,15 +156,15 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 
 	const min = useMemo(
 		() =>
-			(minDate === "now" ? new Date() : minDate) ||
-			new Date(Date.now() - offset * yearInMilliseconds),
+			(minDate === "now" ? new Date() : minDate)
+			|| new Date(Date.now() - offset * yearInMilliseconds),
 		[minDate, offset]
 	);
 
 	const max = useMemo(
 		() =>
-			(maxDate === "now" ? new Date() : maxDate) ||
-			new Date(Date.now() + offset * yearInMilliseconds),
+			(maxDate === "now" ? new Date() : maxDate)
+			|| new Date(Date.now() + offset * yearInMilliseconds),
 		[maxDate, offset]
 	);
 
@@ -218,7 +218,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 
 	const weekNames = useMemo(
 		() =>
-			[...Array(7).keys()].map((day) => {
+			[...Array.from({ length: 7 }).keys()].map((day) => {
 				return formatter.dateTime(new Date(2021, 5, day - 1), {
 					weekday: "narrow"
 				});
@@ -271,11 +271,11 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	return (
 		<div
 			{...elementProps}
-			tabIndex={-1}
 			className={twMerge(
 				"focusable-within h-fit origin-top-left rounded-3xl bg-white-20 p-4 font-nunito text-black-70 dark:bg-black-60 dark:text-white-20 [@media(width<800px)]:scale-75",
 				elementProps.className
 			)}
+			tabIndex={-1}
 		>
 			<div className="w-full">
 				<div className="mb-4 flex items-center justify-between">
@@ -344,8 +344,8 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 					<table className="w-full text-black-70 dark:text-white-10">
 						<thead>
 							<tr>
-								{weekNames.map((name, index) => (
-									<th className="size-10 font-extrabold" key={index}>
+								{weekNames.map((name) => (
+									<th className="size-10 font-extrabold" key={name}>
 										{name}
 									</th>
 								))}
@@ -356,15 +356,16 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								.fill(null)
 								.map((_, weekIndex) => {
 									return (
+										// eslint-disable-next-line react/no-array-index-key
 										<tr className="" key={weekIndex}>
 											{Array.from({ length: 7 })
 												.fill(null)
 												.map((_, dayIndex) => {
-													const previousMonth =
-														weekIndex === 0 && dayIndex < dayOffset;
+													const previousMonth
+														= weekIndex === 0 && dayIndex < dayOffset;
 
-													const nthDay =
-														dayIndex + (7 * weekIndex - dayOffset) + 1;
+													const nthDay
+														= dayIndex + (7 * weekIndex - dayOffset) + 1;
 													const date = new Date(
 														displayDate.getFullYear(),
 														displayDate.getMonth(),
@@ -381,12 +382,11 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 															: nthDay;
 
 													const disabled = !(compare(date) === 0);
-													const active = dateEqual(props.value, date);
+													const active = dateEqual(value, date);
 
 													return (
-														<td className="p-1" key={dayIndex}>
+														<td className="p-1" key={day}>
 															<button
-																type="button"
 																className={twMerge(
 																	"size-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",
 																	disabled
@@ -394,9 +394,10 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 																		: "focusable bg-white-25 dark:bg-black-50",
 																	active
 																		? "bg-brand-gradient text-white-20"
-																		: (!currentMonth || disabled) &&
-																				"text-black-30 dark:text-black-10"
+																		: (!currentMonth || disabled)
+																			&& "text-black-30 dark:text-black-10"
 																)}
+																type="button"
 																onClick={(event) => {
 																	doChange(date);
 																	onDateClick?.(event);

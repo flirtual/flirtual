@@ -1,16 +1,16 @@
 import { useCallback } from "react";
 
 import { displayName, type User } from "~/api/user";
-import { urls } from "~/urls";
-import { resolveTheme } from "~/theme";
 import { cannyAppId } from "~/const";
+import { resolveTheme } from "~/theme";
+import { urls } from "~/urls";
 
+import { useScreenBreakpoint } from "./use-screen-breakpoint";
 import { useCurrentUser } from "./use-session";
 import { useTheme } from "./use-theme";
-import { useScreenBreakpoint } from "./use-screen-breakpoint";
 
 declare global {
-	// eslint-disable-next-line no-var
+	// eslint-disable-next-line no-var, vars-on-top
 	var Canny: {
 		(...arguments_: Array<unknown>): void;
 		q: Array<unknown>;
@@ -27,8 +27,8 @@ if (typeof globalThis.Canny !== "function") {
 	);
 }
 
-const load = () =>
-	new Promise<void>((resolve, reject) => {
+function load() {
+	return new Promise<void>((resolve, reject) => {
 		if (document.querySelector("#canny-jssdk")) return resolve(undefined);
 
 		const script = document.createElement("script");
@@ -41,9 +41,10 @@ const load = () =>
 
 		document.body.append(script);
 	});
+}
 
-const identify = (user: User) =>
-	new Promise<void>((resolve) =>
+function identify(user: User) {
+	return new Promise<void>((resolve) =>
 		Canny(
 			"identify",
 			{
@@ -58,6 +59,7 @@ const identify = (user: User) =>
 			resolve
 		)
 	);
+}
 
 const closeChangelog = () => Canny("closeChangelog");
 

@@ -1,11 +1,10 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { ModelCard } from "~/components/model-card";
 import { InlineLink } from "~/components/inline-link";
-import { urls } from "~/urls";
+import { ModelCard } from "~/components/model-card";
 import { SupersededPolicy } from "~/components/superseded-policy";
-
-import type { Metadata } from "next";
+import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("terms");
@@ -48,7 +47,8 @@ export default async function TermsPage() {
 							registry;
 						</li>
 						<li>
-							agree to be bound by these Terms of Service and our{" "}
+							agree to be bound by these Terms of Service and our
+							{" "}
 							<InlineLink href={urls.resources.privacyPolicy}>
 								Privacy Policy
 							</InlineLink>
@@ -93,10 +93,12 @@ export default async function TermsPage() {
 					<h1 className="text-2xl font-semibold">Privacy</h1>
 					<p>
 						You authorize us to use and display certain information about you.
-						Please see our{" "}
+						Please see our
+						{" "}
 						<InlineLink href={urls.resources.privacyPolicy}>
 							Privacy Policy
-						</InlineLink>{" "}
+						</InlineLink>
+						{" "}
 						for more information.
 					</p>
 				</div>
@@ -107,7 +109,8 @@ export default async function TermsPage() {
 				<div className="flex flex-col gap-2">
 					<h1 className="text-2xl font-semibold">Rights</h1>
 					<p>
-						You can close your account at any time in your{" "}
+						You can close your account at any time in your
+						{" "}
 						<InlineLink href={urls.settings.deleteAccount}>
 							account settings
 						</InlineLink>
@@ -127,8 +130,11 @@ export default async function TermsPage() {
 					<p>
 						If your account is cancelled for violation of these Terms of Use,
 						your data will be kept for 30 days so that we can review moderation
-						decisions and reverse them if necessary. Please{" "}
-						<InlineLink href={urls.resources.contact}>contact us</InlineLink> if
+						decisions and reverse them if necessary. Please
+						{" "}
+						<InlineLink href={urls.resources.contact}>contact us</InlineLink>
+						{" "}
+						if
 						you would like to appeal a moderation decision or have your data
 						deleted early.
 					</p>
@@ -142,7 +148,8 @@ export default async function TermsPage() {
 						such as firewalls.
 					</p>
 					<p>
-						Your connection to the Website uses{" "}
+						Your connection to the Website uses
+						{" "}
 						<InlineLink href="https://www.ssllabs.com/ssltest/analyze.html?d=flirtu.al&latest">
 							strong transport encryption
 						</InlineLink>

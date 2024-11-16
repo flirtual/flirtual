@@ -9,7 +9,6 @@ import {
 	createContext,
 	type PropsWithChildren,
 	useContext,
-	useEffect,
 	useMemo
 } from "react";
 import useSWR from "swr";
@@ -70,12 +69,6 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			const registrationListener = await PushNotifications.addListener(
 				"registration",
 				async ({ value: newPushRegistrationId }) => {
-					console.log("PushNotifications.addListener(registration)", {
-						platform,
-						pushRegistrationId,
-						newPushRegistrationId
-					});
-
 					if (
 						!session
 						|| session.sudoerId
@@ -108,7 +101,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			const registrationErrorListener = await PushNotifications.addListener(
 				"registrationError",
 				async ({ error }) => {
-					console.log("PushNotifications.addListener(registrationError)", {
+					console.error("push registration error", {
 						platform,
 						pushRegistrationId,
 						error
@@ -140,6 +133,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 	);
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useNotifications() {
 	return useContext(NotificationContext);
 }

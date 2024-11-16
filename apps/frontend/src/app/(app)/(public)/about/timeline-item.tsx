@@ -1,11 +1,10 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { urls } from "~/urls";
-
-import type { FC } from "react";
 import type { MessageKeys } from "~/i18n/request";
+import { urls } from "~/urls";
 
 export type TimelineItemYear = {
 	[K in MessageKeys]: K extends `about.timeline.${infer T}` ? T : never;

@@ -1,10 +1,10 @@
 import {
 	AppleIcon,
 	DiscordIcon,
-	MetaIcon,
 	GoogleIcon,
-	VRChatIcon,
-	type IconComponent
+	type IconComponent,
+	MetaIcon,
+	VRChatIcon
 } from "~/components/icons";
 
 import { api, type UpdatedAtModel } from "./common";
@@ -50,13 +50,13 @@ export const ConnectionMetadata: Record<
 	}
 };
 
-export type Connection = UpdatedAtModel & {
+export type Connection = {
 	type: ConnectionType;
 	uid: string;
 	displayName: string;
 	url?: string;
 	avatarUrl?: string;
-};
+} & UpdatedAtModel;
 
 export interface ConnectionAuthorizeOptions {
 	type: ConnectionType;
@@ -85,9 +85,9 @@ export const Connection = {
 			.url(this.authorizeUrl({ ...options, json: true }), true)
 			.get()
 			.json<{
-				state: string;
-				authorizeUrl: string;
-			}>();
+			state: string;
+			authorizeUrl: string;
+		}>();
 	},
 	grant(options: ConnectionGrantOptions) {
 		return this.api.url("/grant").query(options).get().res();

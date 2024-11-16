@@ -36,7 +36,6 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 	return (
 		<AnimatePresence>
 			<Element
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				ref={reference as any}
 				{...elementProps}
 				className={twMerge(

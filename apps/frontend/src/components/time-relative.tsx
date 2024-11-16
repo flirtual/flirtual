@@ -1,7 +1,7 @@
 "use client";
 
+import { type createFormatter, useFormatter } from "next-intl";
 import { type ComponentProps, type FC, useMemo } from "react";
-import { useFormatter, type createFormatter } from "next-intl";
 
 import { RefreshInterval } from "./refresh-interval";
 
@@ -12,7 +12,7 @@ type RelativeTimeFormatOptions = Exclude<
 
 interface TimeRelativeProps extends RelativeTimeFormatOptions {
 	elementProps?: ComponentProps<"span">;
-	every?: string | number;
+	every?: number | string;
 	value: string;
 }
 

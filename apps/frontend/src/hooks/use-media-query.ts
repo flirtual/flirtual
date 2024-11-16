@@ -1,6 +1,6 @@
 "use client";
 
-import { useDebugValue, useState, useEffect } from "react";
+import { useDebugValue, useEffect, useState } from "react";
 
 export function useMediaQuery(media: string, defaultValue: boolean = false) {
 	const [value, setValue] = useState(defaultValue);

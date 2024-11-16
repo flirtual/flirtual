@@ -1,10 +1,9 @@
-import { getTranslations } from "next-intl/server";
-import { useTranslations } from "next-intl";
-
-import { ModelCard } from "~/components/model-card";
-import { DownloadButton } from "~/components/download-button";
-
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+
+import { DownloadButton } from "~/components/download-button";
+import { ModelCard } from "~/components/model-card";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("download");

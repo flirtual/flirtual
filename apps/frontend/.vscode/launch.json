@@ -17,12 +17,12 @@
 			],
 			"env": {
 				// https://nodejs.org/api/tty.html#writestreamgetcolordepthenv
-				"FORCE_COLOR": "3",
+				"FORCE_COLOR": "3"
 			},
 			"autoAttachChildProcesses": true,
 			"skipFiles": [
 				"<node_internals>/**"
-			],
+			]
 		}
 	]
 }

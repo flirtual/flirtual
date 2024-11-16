@@ -1,7 +1,7 @@
 // See the Tailwind configuration guide for advanced usage
 // https://tailwindcss.com/docs/configuration
 
-let plugin = require("tailwindcss/plugin");
+const plugin = require("tailwindcss/plugin");
 
 const colors = {
 	"theme-overlay": "var(--theme-text, #F5F5F5)",
@@ -43,14 +43,14 @@ const colors = {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
-	darkMode: ["class", '[data-theme="dark"]'],
+	darkMode: ["class", "[data-theme=\"dark\"]"],
 	theme: {
 		extend: {
 			fontFamily: {
 				nunito: "var(--font-nunito)",
 				montserrat: "var(--font-montserrat)"
 			},
-			colors: colors,
+			colors,
 			backgroundImage: {
 				"brand-gradient": `linear-gradient(to right, var(--theme-1), var(--theme-2))`,
 				"brand-gradient-pink": `linear-gradient(to right, var(--brand-theme-1), var(--brand-theme-2))`,

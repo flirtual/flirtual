@@ -1,13 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { search as fuzzySearch, fuzzy } from "fast-fuzzy";
-import { motion, AnimatePresence } from "framer-motion";
+import { fuzzy, search as fuzzySearch } from "fast-fuzzy";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { emptyArray } from "~/utilities";
+
 import { InlineLink } from "../inline-link";
-
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { InputOptionWindow } from "./option-window";
 
 export interface InputAutocompleteOption<K extends string = string> {
@@ -33,10 +34,11 @@ export function InputAutocomplete<K extends string>(
 	props: InputAutocompleteProps<K>
 ) {
 	const {
-		value: values = [],
+		value: values = emptyArray,
 		limit = Number.POSITIVE_INFINITY,
 		dropdown = true,
 		supportArbitrary = false,
+		placeholder: _placeholder,
 		onChange,
 		options,
 		...elementProps
@@ -48,10 +50,10 @@ export function InputAutocomplete<K extends string>(
 			options.length === 0
 				? []
 				: values
-						.map((value) => {
-							const option =
-								options.find((option) => option.key === value) ??
-								(supportArbitrary
+					.map((value) => {
+						const option
+								= options.find((option) => option.key === value)
+								?? (supportArbitrary
 									? {
 											key: value,
 											label: value,
@@ -61,13 +63,13 @@ export function InputAutocomplete<K extends string>(
 										}
 									: undefined);
 
-							return !option?.hidden && option;
-						})
-						.filter(Boolean),
+						return !option?.hidden && option;
+					})
+					.filter(Boolean),
 		[options, values, supportArbitrary]
 	);
 
-	const placeholder = visibleValueOptions.length > 0 ? "" : props.placeholder;
+	const placeholder = visibleValueOptions.length > 0 ? "" : _placeholder;
 
 	const inputReference = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState("");
@@ -91,32 +93,32 @@ export function InputAutocomplete<K extends string>(
 		() =>
 			inputValue
 				? fuzzySearch(inputValue, potentialOptions, {
-						keySelector: (option) => option.label
-					})
+					keySelector: (option) => option.label
+				})
 				: potentialOptions,
 		[inputValue, potentialOptions]
 	);
 
 	useEffect(() => {
 		if (values.length <= limit) return;
-		onChange.call(null, values.slice(0, limit));
+		onChange(values.slice(0, limit));
 	}, [limit, onChange, values]);
 
 	return (
 		<div
 			{...elementProps}
 			className="group relative"
-			onClick={() => inputReference.current?.focus()}
-			onFocus={() => setOverlayVisible(true)}
 			onBlur={({ currentTarget, relatedTarget }) => {
 				if (currentTarget.contains(relatedTarget)) return;
 				setOverlayVisible(false);
 				setInputValue("");
 			}}
+			onClick={() => inputReference.current?.focus()}
+			onFocus={() => setOverlayVisible(true)}
 			onKeyDown={(event) => {
 				if (
-					(event.key !== "ArrowUp" && event.key !== "ArrowDown") ||
-					optionWindowReference.current?.contains(document.activeElement)
+					(event.key !== "ArrowUp" && event.key !== "ArrowDown")
+					|| optionWindowReference.current?.contains(document.activeElement)
 				)
 					return;
 
@@ -132,9 +134,7 @@ export function InputAutocomplete<K extends string>(
 								className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 shadow-brand-1"
 								key={option.key}
 								type="button"
-								onClick={() => {
-									props.onChange(values.filter((v) => v !== option.key));
-								}}
+								onClick={() => onChange(values.filter((v) => v !== option.key))}
 							>
 								<Tooltip>
 									<TooltipTrigger asChild>
@@ -146,7 +146,8 @@ export function InputAutocomplete<K extends string>(
 									</TooltipTrigger>
 									{(option.definition || option.definitionLink) && (
 										<TooltipContent>
-											{option.definition}{" "}
+											{option.definition}
+											{" "}
 											{option.definitionLink && (
 												<InlineLink
 													className="pointer-events-auto"
@@ -162,15 +163,15 @@ export function InputAutocomplete<K extends string>(
 						);
 					})}
 					<input
+						style={{
+							width: `${(inputValue.length || placeholder?.length || 1) + 2}em`
+						}}
 						autoComplete="off"
 						className="grow border-none bg-transparent caret-theme-2 placeholder:text-black-50 focus:ring-transparent placeholder:dark:text-white-50"
 						placeholder={placeholder}
 						ref={inputReference}
 						type="text"
 						value={inputValue}
-						style={{
-							width: `${(inputValue.length || placeholder?.length || 1) + 2}em`
-						}}
 						onChange={onInputChange}
 						onKeyDown={(event) => {
 							const { key, currentTarget } = event;
@@ -182,12 +183,12 @@ export function InputAutocomplete<K extends string>(
 								);
 
 								if (
-									exactMatchOption ||
+									exactMatchOption
 									// If there is only one suggestion and it's close enough to the input.
-									(suggestions.length === 1 &&
-										fuzzy(value, suggestions[0]!.key) > 0.7)
+									|| (suggestions.length === 1
+										&& fuzzy(value, suggestions[0]!.key) > 0.7)
 								) {
-									props.onChange([
+									onChange([
 										...values,
 										exactMatchOption?.key ?? suggestions[0]!.key
 									]);
@@ -198,7 +199,7 @@ export function InputAutocomplete<K extends string>(
 								}
 
 								if (supportArbitrary) {
-									props.onChange([...values, value as K]);
+									onChange([...values, value as K]);
 									setInputValue("");
 
 									event.preventDefault();
@@ -210,7 +211,7 @@ export function InputAutocomplete<K extends string>(
 							event.preventDefault();
 
 							const lastValue = values.at(-1);
-							props.onChange(values.filter((value) => value !== lastValue));
+							onChange(values.filter((value) => value !== lastValue));
 						}}
 					/>
 				</div>
@@ -229,7 +230,7 @@ export function InputAutocomplete<K extends string>(
 							ref={optionWindowReference}
 							onOptionClick={({ option }) => {
 								if (values.length === limit) return;
-								props.onChange([...values, option.key as K]);
+								onChange([...values, option.key as K]);
 
 								inputReference.current?.focus();
 								setInputValue("");

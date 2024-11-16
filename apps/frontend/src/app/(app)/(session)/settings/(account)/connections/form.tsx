@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 
-import { ModelCard } from "~/components/model-card";
-import { InputText } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
-import { Form, FormButton } from "~/components/forms";
-import { useToast } from "~/hooks/use-toast";
-import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
-import { useDevice } from "~/hooks/use-device";
-import { ProfilePlaylist } from "~/components/profile/playlist";
-import { NewBadge } from "~/components/badge";
-import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { Profile } from "~/api/user/profile";
+import { NewBadge } from "~/components/badge";
+import { Form, FormButton } from "~/components/forms";
+import { AddConnectionButton } from "~/components/forms/add-connection-button";
+import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
+import { InputText } from "~/components/inputs";
+import { ModelCard } from "~/components/model-card";
+import { ProfilePlaylist } from "~/components/profile/playlist";
+import { useDevice } from "~/hooks/use-device";
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 
 export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
@@ -38,20 +38,23 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 				</div>
 			)}
 			<Form
-				className="flex flex-col gap-8"
 				fields={{
 					vrchat: user.profile.vrchat || "",
 					facetime: user.profile.facetime || "",
 					playlist: user.profile.playlist || ""
 				}}
+				className="flex flex-col gap-8"
 				onSubmit={async ({ vrchat, facetime, playlist }) => {
 					if (/deezer\.page\.link/.test(playlist)) {
 						setPlaylistSubmitted("deezer.page.link");
-					} else if (/youtu\.?be/.test(playlist)) {
+					}
+					else if (/youtu\.?be/.test(playlist)) {
 						setPlaylistSubmitted("youtube");
-					} else if (playlist === "") {
+					}
+					else if (playlist === "") {
 						setPlaylistSubmitted(null);
-					} else {
+					}
+					else {
 						setPlaylistSubmitted("other");
 					}
 
@@ -149,23 +152,33 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 									/>
 								)}
 							</FormField>
-							{playlistSubmitted === "deezer.page.link" ? (
-								<span className="italic text-red-600">
-									Sorry, deezer.page.link links are not supported. Please
-									provide a deezer.com link. You can find this by following your
-									link and copying the URL from your browser.
-								</span>
-							) : playlistSubmitted === "youtube" ? (
-								<span className="italic text-red-600">
-									Sorry, YouTube Music playlists are not supported.
-								</span>
-							) : playlistSubmitted === "other" ? (
-								<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
-									If your playlist doesn&apos;t appear below, ensure you have
-									provided a valid <strong>public playlist</strong> link. Songs,
-									albums, and private playlists are not supported.
-								</span>
-							) : null}
+							{playlistSubmitted === "deezer.page.link"
+								? (
+										<span className="italic text-red-600">
+											Sorry, deezer.page.link links are not supported. Please
+											provide a deezer.com link. You can find this by following your
+											link and copying the URL from your browser.
+										</span>
+									)
+								: playlistSubmitted === "youtube"
+									? (
+											<span className="italic text-red-600">
+												Sorry, YouTube Music playlists are not supported.
+											</span>
+										)
+									: playlistSubmitted === "other"
+										? (
+												<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
+													If your playlist doesn&apos;t appear below, ensure you have
+													provided a valid
+													{" "}
+													<strong>public playlist</strong>
+													{" "}
+													link. Songs,
+													albums, and private playlists are not supported.
+												</span>
+											)
+										: null}
 							<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
 								Be careful: if your real name or other personal information is
 								on your music streaming profile, it will be public.

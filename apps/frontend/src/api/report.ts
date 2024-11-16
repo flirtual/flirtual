@@ -1,31 +1,31 @@
-import { api, type DatedModel, type UuidModel } from "./common";
-
 import type { Expand } from "~/utilities";
 
+import { api, type DatedModel, type UuidModel } from "./common";
+
 export type Report = Expand<
-	UuidModel &
-		DatedModel & {
-			reasonId: string;
-			message?: string;
-			images?: Array<string>;
-			reviewedAt?: string;
-			userId?: string;
-			targetId: string;
-		}
+	{
+		reasonId: string;
+		message?: string;
+		images?: Array<string>;
+		reviewedAt?: string;
+		userId?: string;
+		targetId: string;
+	} &
+	DatedModel & UuidModel
 >;
 
 export type ListReportOptions = Partial<
-	Pick<Report, "userId" | "targetId"> & {
+	{
 		reviewed: boolean;
 		indefShadowbanned: boolean;
-	}
+	} & Pick<Report, "targetId" | "userId">
 >;
 
-export type CreateReportOptions = Pick<Report, "targetId"> & {
+export type CreateReportOptions = {
 	reasonId: string;
 	message?: string;
 	images?: Array<string>;
-};
+} & Pick<Report, "targetId">;
 
 export const Report = {
 	api: api.url("reports"),

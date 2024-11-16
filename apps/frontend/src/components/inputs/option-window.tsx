@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import {
 	type ComponentProps,
 	type EventHandler,
@@ -12,10 +13,9 @@ import {
 	useRef
 } from "react";
 import { twMerge } from "tailwind-merge";
-import { useTranslations } from "next-intl";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { InlineLink } from "../inline-link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 export interface InputSelectOption<K> {
 	key: K;
@@ -26,12 +26,11 @@ export interface InputSelectOption<K> {
 }
 
 export type InputOptionEvent<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends SyntheticEvent<any>,
 	K
-> = T & {
+> = {
 	option: InputSelectOption<K>;
-};
+} & T;
 
 export interface OptionItemProps<K> {
 	option: InputSelectOption<K>;
@@ -44,10 +43,7 @@ export interface OptionItemProps<K> {
 	};
 }
 
-export type InputOptionWindowProps<K> = Omit<
-	ComponentProps<"div">,
-	"onChange"
-> & {
+export type InputOptionWindowProps<K> = {
 	options: Array<InputSelectOption<K>>;
 	OptionItem?: FC<OptionItemProps<K>>;
 	onOptionClick?: EventHandler<
@@ -56,7 +52,10 @@ export type InputOptionWindowProps<K> = Omit<
 	onOptionFocus?: EventHandler<
 		InputOptionEvent<FocusEvent<HTMLButtonElement>, K>
 	>;
-};
+} & Omit<
+	ComponentProps<"div">,
+	"onChange"
+>;
 
 function getFirstActiveElement(root: HTMLElement): HTMLElement {
 	return (
@@ -66,7 +65,7 @@ function getFirstActiveElement(root: HTMLElement): HTMLElement {
 	);
 }
 
-export function focusElementByKeydown({
+function focusElementByKeydown({
 	code,
 	currentTarget
 }: KeyboardEvent<HTMLDivElement>) {
@@ -76,8 +75,8 @@ export function focusElementByKeydown({
 
 	for (const element of elements) {
 		if (
-			!(element instanceof HTMLElement) ||
-			!element.dataset.name?.toLowerCase().startsWith(key)
+			!(element instanceof HTMLElement)
+			|| !element.dataset.name?.toLowerCase().startsWith(key)
 		)
 			continue;
 
@@ -95,20 +94,21 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 			<TooltipTrigger asChild>
 				<button
 					{...elementProps}
-					type="button"
 					className={twMerge(
 						"px-4 py-2 text-left hocus:outline-none",
 						option.active
 							? "bg-brand-gradient text-white-20"
 							: "text-black-70 focus:outline-none hocus:bg-white-40 dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20"
 					)}
+					type="button"
 				>
 					<span className="font-nunito text-lg">{option.label}</span>
 				</button>
 			</TooltipTrigger>
 			{(option.definition || option.definitionLink) && (
 				<TooltipContent align="start">
-					{option.definition}{" "}
+					{option.definition}
+					{" "}
 					{option.definitionLink && (
 						<InlineLink
 							className="pointer-events-auto"
@@ -136,22 +136,22 @@ export const InputOptionWindow = forwardRef<
 	} = props;
 	const optionsReference = useRef<HTMLDivElement>(null);
 
-	const focusOption = useCallback((target: -1 | 1 | 0) => {
+	const focusOption = useCallback((target: -1 | 0 | 1) => {
 		const { current: root } = optionsReference;
 		if (!root) return;
 
 		const firstActiveElement = getFirstActiveElement(root);
 		if (
-			!root.contains(document.activeElement) ||
-			!document.activeElement ||
-			target === 0
+			!root.contains(document.activeElement)
+			|| !document.activeElement
+			|| target === 0
 		) {
 			if (root.firstChild instanceof HTMLElement) firstActiveElement.focus();
 			return;
 		}
 
-		const sibling =
-			document.activeElement[
+		const sibling
+			= document.activeElement[
 				target === -1 ? "previousSibling" : "nextSibling"
 			] ?? root[target === -1 ? "lastChild" : "firstChild"];
 		if (sibling instanceof HTMLElement) sibling.focus();
@@ -174,12 +174,12 @@ export const InputOptionWindow = forwardRef<
 
 	return (
 		<div
-			ref={reference}
-			tabIndex={-1}
 			className={twMerge(
 				"focusable-within flex max-h-72 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-60",
 				elementProps.className
 			)}
+			ref={reference}
+			tabIndex={-1}
 			onFocusCapture={(event) => {
 				props.onFocusCapture?.(event);
 
@@ -199,7 +199,6 @@ export const InputOptionWindow = forwardRef<
 					case "ArrowDown": {
 						event.preventDefault();
 						focusOption(1);
-						return;
 					}
 				}
 			}}
@@ -210,9 +209,6 @@ export const InputOptionWindow = forwardRef<
 
 					return (
 						<OptionItem
-							// eslint-disable-next-line @typescript-eslint/no-explicit-any
-							key={option.key as any}
-							option={option}
 							elementProps={{
 								"data-active": option.active ?? false,
 								"data-key": option.key,
@@ -222,6 +218,8 @@ export const InputOptionWindow = forwardRef<
 								onFocus: (event) =>
 									onOptionFocus?.(Object.assign(event, { option }))
 							}}
+							key={option.key as any}
+							option={option}
 						/>
 					);
 				})}

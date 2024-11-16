@@ -4,6 +4,6 @@
 
 import * as swr from "swr";
 
-export const SWRConfig = ((props) => {
-	return <swr.SWRConfig {...props}>{props.children}</swr.SWRConfig>;
+export const SWRConfig = (({ children, ...props }) => {
+	return <swr.SWRConfig {...props}>{children}</swr.SWRConfig>;
 }) as typeof swr.SWRConfig;

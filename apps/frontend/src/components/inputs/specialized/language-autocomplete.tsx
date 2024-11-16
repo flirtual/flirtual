@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useMemo } from "react";
 
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 
@@ -30,10 +30,10 @@ export const InputLanguageAutocomplete: React.FC<
 		() =>
 			languages
 				.map((languageId) => {
-					const label =
-						tAttribute[languageId]?.name ??
-						languageNames.of(languageId) ??
-						languageId;
+					const label
+						= tAttribute[languageId]?.name
+						?? languageNames.of(languageId)
+						?? languageId;
 
 					return {
 						key: languageId,
@@ -45,7 +45,7 @@ export const InputLanguageAutocomplete: React.FC<
 					if (b.key === pinnedLanguage) return 1;
 					return a.label.localeCompare(b.label, systemLanguage);
 				}),
-		[languages, systemLanguage, pinnedLanguage, languageNames]
+		[languages, tAttribute, languageNames, pinnedLanguage, systemLanguage]
 	);
 
 	return (

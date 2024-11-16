@@ -1,13 +1,15 @@
+/* eslint-disable react/prefer-destructuring-assignment */
 "use client";
 
-import { twMerge } from "tailwind-merge";
-import { X, ChevronsUpDown, ChevronUp, ChevronDown } from "lucide-react";
 import { SelectItemText } from "@radix-ui/react-select";
-import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import { ChevronDown, ChevronsUpDown, ChevronUp, X } from "lucide-react";
 import { useTranslations } from "next-intl";
-
+import * as React from "react";
 import type { Dispatch, FC } from "react";
+import { twMerge } from "tailwind-merge";
+
+import { emptyArray } from "~/utilities";
 
 const Select = SelectPrimitive.Root;
 const SelectGroup = SelectPrimitive.Group;
@@ -19,11 +21,11 @@ const SelectTrigger = React.forwardRef<
 >(({ className, children, ...props }, reference) => (
 	<SelectPrimitive.Trigger
 		asChild
-		ref={reference}
 		className={twMerge(
 			"focusable flex h-11 w-full items-center gap-4 overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 data-[state=open]:focused disabled:cursor-not-allowed disabled:opacity-50 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20",
 			className
 		)}
+		ref={reference}
 		{...props}
 	>
 		<div className="relative cursor-pointer" tabIndex={0}>
@@ -41,11 +43,11 @@ const SelectScrollUpButton = React.forwardRef<
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
 >(({ className, ...props }, reference) => (
 	<SelectPrimitive.ScrollUpButton
-		ref={reference}
 		className={twMerge(
 			"absolute inset-x-0 top-0 z-10 flex h-7 cursor-default items-center justify-center bg-gradient-to-b from-black-90/5 to-transparent py-1",
 			className
 		)}
+		ref={reference}
 		{...props}
 	>
 		<ChevronUp className="size-4 text-black-90 dark:text-white-10" />
@@ -58,24 +60,24 @@ const SelectScrollDownButton = React.forwardRef<
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
 >(({ className, ...props }, reference) => (
 	<SelectPrimitive.ScrollDownButton
-		ref={reference}
 		className={twMerge(
 			"absolute inset-x-0 bottom-0 z-10 flex h-7 cursor-default items-center justify-center bg-gradient-to-t from-black-90/5 to-transparent py-1",
 			className
 		)}
+		ref={reference}
 		{...props}
 	>
 		<ChevronDown className="size-4 text-black-90 dark:text-white-10" />
 	</SelectPrimitive.ScrollDownButton>
 ));
-SelectScrollDownButton.displayName =
-	SelectPrimitive.ScrollDownButton.displayName;
+SelectScrollDownButton.displayName
+	= SelectPrimitive.ScrollDownButton.displayName;
 
 const SelectContent = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Content>,
-	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> & {
+	{
 		rows?: number;
-	}
+	} & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >((props, reference) => {
 	const {
 		className,
@@ -89,15 +91,15 @@ const SelectContent = React.forwardRef<
 	return (
 		<SelectPrimitive.Portal>
 			<SelectPrimitive.Content
+				className={twMerge(
+					"focusable-within relative z-50 max-h-[min(var(--radix-select-content-available-height),theme(spacing.96))] min-w-32 overflow-hidden rounded-xl bg-white-20 font-nunito shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-black-60",
+					position === "popper"
+					&& "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+					className
+				)}
 				position={position}
 				ref={reference}
 				sideOffset={sideOffset}
-				className={twMerge(
-					"focusable-within relative z-50 max-h-[min(var(--radix-select-content-available-height),theme(spacing.96))] min-w-32 overflow-hidden rounded-xl bg-white-20 font-nunito shadow-brand-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-black-60",
-					position === "popper" &&
-						"data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-					className
-				)}
 				{...elementProps}
 			>
 				<SelectScrollUpButton />
@@ -133,11 +135,11 @@ const SelectItem = React.forwardRef<
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ className, children, ...props }, reference) => (
 	<SelectPrimitive.Item
-		ref={reference}
 		className={twMerge(
 			"relative flex w-full cursor-pointer items-center px-4 py-2 text-left font-nunito text-black-70 focus:outline-none data-[disabled]:pointer-events-none data-[state=checked]:bg-brand-gradient data-[state=checked]:text-white-10 data-[disabled]:opacity-50 hocus:bg-white-40 hocus:outline-none dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20",
 			className
 		)}
+		ref={reference}
 		{...props}
 	>
 		{children}
@@ -159,13 +161,13 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
 	Select,
-	SelectGroup,
-	SelectValue,
-	SelectTrigger,
 	SelectContent,
-	SelectLabel,
+	SelectGroup,
 	SelectItem,
-	SelectSeparator
+	SelectLabel,
+	SelectSeparator,
+	SelectTrigger,
+	SelectValue
 };
 
 export interface InputSelectOption {
@@ -189,9 +191,10 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 
 	const {
 		value,
+		// eslint-disable-next-line react/no-unstable-default-props
 		placeholder = t("placeholder"),
 		optional = false,
-		options = [],
+		options = emptyArray,
 		className
 	} = props;
 

@@ -1,10 +1,9 @@
 import { useLocale, useTranslations } from "next-intl";
+import type { FC } from "react";
 
 import { urls } from "~/urls";
 
 import { InlineLink } from "./inline-link";
-
-import type { FC } from "react";
 
 export const MachineTranslatedLegal: FC<{
 	intended?: string;
@@ -29,7 +28,8 @@ export const MachineTranslatedLegal: FC<{
 							{children}
 						</InlineLink>
 					)
-				})}{" "}
+				})}
+				{" "}
 			</span>
 			<span>
 				{t.rich("active_frail_antelope_support", {

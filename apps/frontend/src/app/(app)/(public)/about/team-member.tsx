@@ -34,11 +34,11 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 			/>
 			<div className="flex flex-col">
 				<InlineLink
-					href={url ?? "#"}
 					className={twMerge(
 						"font-montserrat text-lg font-semibold text-pink",
 						!url && "cursor-default hocus:no-underline"
 					)}
+					href={url ?? "#"}
 				>
 					{name}
 				</InlineLink>

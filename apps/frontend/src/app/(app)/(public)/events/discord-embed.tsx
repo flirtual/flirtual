@@ -7,7 +7,7 @@ import { displayName } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
-export const _DiscordEmbed: React.FC = () => {
+const DiscordEmbed_: React.FC = () => {
 	const [session] = useSession();
 
 	return (
@@ -22,7 +22,7 @@ export const _DiscordEmbed: React.FC = () => {
 	);
 };
 
-export const DiscordEmbed = dynamic(() => Promise.resolve(_DiscordEmbed), {
+export const DiscordEmbed = dynamic(() => Promise.resolve(DiscordEmbed_), {
 	ssr: false,
 	loading: () => <div style={{ height: 600, width: "100%" }} />
 });

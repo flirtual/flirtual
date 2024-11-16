@@ -1,7 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
-import { twMerge } from "tailwind-merge";
-
 import type { ComponentPropsWithoutRef, FC, PropsWithChildren } from "react";
+import { twMerge } from "tailwind-merge";
 
 export type ThemedBorderProps = PropsWithChildren<
 	{

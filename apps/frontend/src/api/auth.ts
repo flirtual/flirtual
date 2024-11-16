@@ -4,7 +4,7 @@ import { cache } from "react";
 import { urls } from "~/urls";
 
 import { api, type DatedModel, type Issue, isWretchError } from "./common";
-import { displayName, type User } from "./user";
+import type { User } from "./user";
 
 export type Session = {
 	sudoerId?: string;
