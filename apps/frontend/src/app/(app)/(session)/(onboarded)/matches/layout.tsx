@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from "react";
+import { fromEntries, groupBy } from "remeda";
 import { unstable_serialize } from "swr";
 import { unstable_serialize as unstable_serialize_infinite } from "swr/infinite";
 
@@ -12,7 +13,6 @@ import { SWRConfig } from "~/components/swr";
 import { getConversationsKey } from "~/hooks/use-conversations.shared";
 import { userKey } from "~/swr";
 import { urls } from "~/urls";
-import { fromEntries } from "~/utilities";
 
 import { LikesYouButton } from "./likes-you-button";
 
@@ -57,16 +57,15 @@ export default async function ConversationsLayout({
 			</ModelCard>
 		);
 
-	const users = (
-		await User.getMany(conversations.map(({ userId }) => userId))
-	).filter(Boolean);
+	const userIds = conversations.map(({ userId }) => userId);
+	const userById = groupBy((await User.getMany(userIds)).filter(Boolean), ({ id }) => id);
 
 	return (
 		<SWRConfig
 			value={{
 				fallback: {
 					...fromEntries(
-						users.map((user) => [unstable_serialize(userKey(user.id)), user])
+						userIds.map((userId) => [unstable_serialize(userKey(userId)), userById[userId] || null])
 					),
 					[unstable_serialize("likes")]: likes,
 					[unstable_serialize_infinite(getConversationsKey)]: [
