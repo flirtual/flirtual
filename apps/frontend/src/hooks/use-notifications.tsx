@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import {
 	createContext,
 	type PropsWithChildren,
-	useContext,
+	use,
 	useMemo
 } from "react";
 import useSWR from "swr";
@@ -135,5 +135,5 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useNotifications() {
-	return useContext(NotificationContext);
+	return use(NotificationContext);
 }

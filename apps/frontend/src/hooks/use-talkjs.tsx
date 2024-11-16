@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import {
 	createContext,
 	type CSSProperties,
-	useContext,
+	type FC,
+	type PropsWithChildren,
+	use,
 	useEffect,
 	useMemo,
 	useState
@@ -18,125 +20,121 @@ import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
 import { resolveTheme } from "~/theme";
+import { emptyArray } from "~/utilities";
 
 import { getConversationsKey } from "./use-conversations.shared";
 import { useDevice } from "./use-device";
+import { warnOnce } from "./use-log";
 import { useNotifications } from "./use-notifications";
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
-
-const emptyConversationsArray: Array<Talk.UnreadConversation> = [];
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
 const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 	[]
 );
 
-export const TalkjsProvider: React.FC<React.PropsWithChildren> = talkjsAppId
-	? ({
-			children
-		}) => {
-			const { platform } = useDevice();
+const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
+	const { platform } = useDevice();
 
-			const [ready, setReady] = useState(false);
-			const [authSession] = useSession();
+	const [ready, setReady] = useState(false);
+	const [authSession] = useSession();
 
-			const router = useRouter();
-			const { mutate } = useSWRConfig();
+	const router = useRouter();
+	const { mutate } = useSWRConfig();
 
-			const { pushRegistrationId } = useNotifications();
-			const [unreadConversations, setUnreadConversations] = useState<
-				Array<Talk.UnreadConversation>
-			>([]);
+	const { pushRegistrationId } = useNotifications();
+	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>([]);
 
-			useEffect(() => void Talk.ready.then(() => setReady(true)), []);
+	useEffect(() => void Talk.ready.then(() => setReady(true)), []);
 
-			const talkjsUserId = authSession?.user.talkjsId;
-			const talkjsSignature = authSession?.user.talkjsSignature;
+	const talkjsUserId = authSession?.user.talkjsId;
+	const talkjsSignature = authSession?.user.talkjsSignature;
 
-			const session = useMemo(() => {
-				if (!talkjsUserId || !talkjsSignature || !ready) return null;
+	const session = useMemo(() => {
+		if (!talkjsUserId || !talkjsSignature || !ready) return null;
 
-				return new Talk.Session({
-					appId: talkjsAppId,
-					signature: talkjsSignature,
-					me: new Talk.User(talkjsUserId)
+		return new Talk.Session({
+			appId: talkjsAppId,
+			signature: talkjsSignature,
+			me: new Talk.User(talkjsUserId)
+		});
+	}, [talkjsUserId, talkjsSignature, ready]);
+
+	useEffect(() => {
+		if (!session || !pushRegistrationId || authSession?.sudoerId) return;
+
+		void (async () => {
+			await session.clearPushRegistrations();
+			if (authSession?.user.preferences?.pushNotifications.messages)
+				await session.setPushRegistration({
+					provider: platform === "apple" ? "apns" : "fcm",
+					pushRegistrationId
 				});
-			}, [talkjsUserId, talkjsSignature, ready]);
+		})();
+	}, [
+		session,
+		authSession,
+		pushRegistrationId,
+		platform,
+		router,
+		authSession?.user.preferences?.pushNotifications.messages
+	]);
 
-			useEffect(() => {
-				if (!session || !pushRegistrationId || authSession?.sudoerId) return;
+	useEffect(() => {
+		setUnreadConversations([]);
+		if (!session) return;
 
-				void (async () => {
-					await session.clearPushRegistrations();
-					if (authSession?.user.preferences?.pushNotifications.messages)
-						await session.setPushRegistration({
-							provider: platform === "apple" ? "apns" : "fcm",
-							pushRegistrationId
-						});
-				})();
-			}, [
-				session,
-				authSession,
-				pushRegistrationId,
-				platform,
-				router,
-				authSession?.user.preferences?.pushNotifications.messages
-			]);
+		const messageSubscription = session.onMessage(async () => {
+			await mutate(unstable_serialize(getConversationsKey));
+			router.refresh();
+		});
 
-			useEffect(() => {
-				setUnreadConversations([]);
-				if (!session) return;
+		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
 
-				const messageSubscription = session.onMessage(async () => {
-					await mutate(unstable_serialize(getConversationsKey));
-					router.refresh();
-				});
-
-				const unreadSubscription = session.unreads.onChange(setUnreadConversations);
-
-				return () => {
-					unreadSubscription.unsubscribe();
-					messageSubscription.unsubscribe();
-				};
-			}, [session, router, mutate]);
-
-			useEffect(() => {
-				return () => session?.destroy();
-			}, [session]);
-
-			return (
-				<TalkjsContext.Provider value={session}>
-					<UnreadConversationContext.Provider value={unreadConversations}>
-						{children}
-					</UnreadConversationContext.Provider>
-				</TalkjsContext.Provider>
-			);
-		}
-	: ({ children }) => {
-			useEffect(
-				() =>
-					console.warn(
-						"Talk.js is not configured properly, conversations & related features are disabled. To enable them, set NEXT_PUBLIC_TALKJS_APP_ID in your environment."
-					),
-				[]
-			);
-
-			return (
-				<TalkjsContext.Provider value={null}>
-					<UnreadConversationContext.Provider value={emptyConversationsArray}>
-						{children}
-					</UnreadConversationContext.Provider>
-				</TalkjsContext.Provider>
-			);
+		return () => {
+			unreadSubscription.unsubscribe();
+			messageSubscription.unsubscribe();
 		};
+	}, [session, router, mutate]);
+
+	useEffect(() => {
+		return () => session?.destroy();
+	}, [session]);
+
+	return (
+		<TalkjsContext.Provider value={session}>
+			<UnreadConversationContext.Provider value={unreadConversations}>
+				{children}
+			</UnreadConversationContext.Provider>
+		</TalkjsContext.Provider>
+	);
+};
+
+const FallbackProvider: FC<PropsWithChildren> = ({ children }) => {
+	warnOnce("Talk.js is not configured properly, conversations & related features are disabled. To enable them, set \"NEXT_PUBLIC_TALKJS_APP_ID\" in your environment.");
+
+	return (
+		<TalkjsContext.Provider value={null}>
+			<UnreadConversationContext.Provider value={emptyArray}>
+				{children}
+			</UnreadConversationContext.Provider>
+		</TalkjsContext.Provider>
+	);
+};
+
+export const TalkjsProvider = talkjsAppId
+	? TalkjsProvider_
+	: FallbackProvider;
+
+TalkjsProvider.displayName = "TalkjsProvider";
 
 export function useTalkjs() {
-	return useContext(TalkjsContext);
+	return use(TalkjsContext);
 }
 
 export function useUnreadConversations() {
-	return useContext(UnreadConversationContext);
+	return use(UnreadConversationContext);
 }
 
 const emojis: Array<{ name: string; type: "gif" | "png"; hidden?: boolean }> = [

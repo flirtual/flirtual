@@ -2,13 +2,13 @@
 
 import { captureException, captureFeedback, setUser } from "@sentry/nextjs";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import useSound from "use-sound";
 
 import { displayName } from "~/api/user";
+import { LoadingIndicator } from "~/app/(app)/loading-indicator";
 import { Button } from "~/components/button";
 import { CopyClick } from "~/components/copy-click";
 import {
@@ -37,7 +37,6 @@ export default function Error({
 	const router = useRouter();
 	const [session] = useSession();
 	const [addDetails, setAddDetails] = useState(false);
-	const t = useTranslations();
 	const [squeak] = useSound(urls.media("squeak.mp3"));
 
 	error.digest ??= "000000000";
@@ -50,24 +49,7 @@ export default function Error({
 
 	return (
 		<>
-			<div className="flex min-h-screen w-full items-center justify-center opacity-75">
-				<Image
-					priority
-					alt={t("meta.name")}
-					className="hidden w-1/2 max-w-lg animate-pulse dark:block desktop:block"
-					height={1000}
-					src={urls.media("flirtual-white.svg", "files")}
-					width={3468}
-				/>
-				<Image
-					priority
-					alt={t("meta.name")}
-					className="block w-1/2 max-w-lg animate-pulse dark:hidden desktop:hidden"
-					height={1000}
-					src={urls.media("flirtual-black.svg", "files")}
-					width={3468}
-				/>
-			</div>
+			<LoadingIndicator />
 			<DrawerOrDialog
 				open
 				className="desktop:max-w-lg"

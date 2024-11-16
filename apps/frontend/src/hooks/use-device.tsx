@@ -2,7 +2,7 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import type { userAgentFromString } from "next/server";
-import { createContext, forwardRef, useContext, useMemo } from "react";
+import { createContext, forwardRef, use, useMemo } from "react";
 
 export type DevicePlatform = "android" | "apple" | "web";
 export type UserAgent = ReturnType<typeof userAgentFromString>;
@@ -49,5 +49,5 @@ DeviceProvider.displayName = "DeviceProvider";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useDevice() {
-	return useContext(DeviceContext);
+	return use(DeviceContext);
 }

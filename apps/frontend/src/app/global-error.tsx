@@ -29,6 +29,7 @@ export default function GlobalError({
 }) {
 	useEffect(() => {
 		captureException(error);
+		console.error(error);
 	}, [error]);
 
 	return (

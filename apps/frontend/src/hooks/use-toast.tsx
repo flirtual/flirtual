@@ -55,25 +55,23 @@ export function useToast() {
 
 const ToastItem: React.FC<Omit<Toast, "key">> = ({ type, icon: Icon, children, remove }) => {
 	return (
-		<motion.button
+		<button
 			className={twMerge(
-				"pointer-events-auto flex items-center gap-4 rounded-lg px-6 py-4 text-left shadow-brand-1",
+				"pointer-events-auto flex w-full max-w-xl items-center gap-4 rounded-lg px-6 py-4 text-left shadow-brand-1",
 				{
-					success: "bg-brand-gradient",
-					error: "bg-black-80 border-2 border-red-500",
+					success: "bg-brand-gradient text-white-20",
+					error: "bg-white-10 dark:bg-black-80 border-2 border-red-500 text-black-80 dark:text-white-20 motion-preset-slide-left",
 					warning: "bg-black-80 border-2 border-yellow-500"
 				}[type]
 			)}
-			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-			initial={{ opacity: 0 }}
+			type="button"
 			onClick={() => remove()}
 		>
 			<Icon className="size-5 shrink-0" strokeWidth={2} />
 			<span data-mask className="font-montserrat font-semibold">
 				{children}
 			</span>
-		</motion.button>
+		</button>
 	);
 };
 
@@ -104,8 +102,8 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				icon: icon || (type === "success" ? Check : AlertTriangle),
 				ttl,
 				children: value,
-				remove() {
-					remove(this);
+				remove: () => {
+					remove(toast);
 				}
 			};
 
@@ -165,18 +163,12 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			)}
 		>
 			{children}
-			{!native && (
-				// We only want to render the toasts if we're not a native device, as
-				// toasts are handled by the device itself.
-				<AnimatePresence>
-					{toasts.length > 0 && (
-						<div className="pointer-events-none fixed right-0 top-0 z-[999] flex flex-col-reverse gap-2 p-8 text-white-20 desktop:top-16">
-							{toasts.map((toast) => (
-								<ToastItem {...toast} key={toast.id} />
-							))}
-						</div>
-					)}
-				</AnimatePresence>
+			{!native && toasts.length > 0 && (
+				<div className="pointer-events-none fixed bottom-16 right-0 z-[999] flex flex-col-reverse gap-2 p-8 px-4 desktop:bottom-[unset] desktop:top-16 desktop:px-8">
+					{toasts.map((toast) => (
+						<ToastItem {...toast} key={toast.id} />
+					))}
+				</div>
 			)}
 		</ToastContext.Provider>
 	);

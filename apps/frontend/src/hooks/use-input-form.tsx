@@ -1,5 +1,5 @@
 import { type TranslationValues, useTranslations } from "next-intl";
-import { createContext, useContext, useId, useMemo, useState } from "react";
+import { createContext, use, useId, useMemo, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 import type React from "react";
 import { entries, fromEntries, toCamelCase } from "remeda";
@@ -71,7 +71,7 @@ export interface UseInputForm<T extends FormFieldsDefault> {
 export const FormContext = createContext<UseInputForm<any> | null>(null);
 
 export function useFormContext<T extends FormFieldsDefault>() {
-	const form = useContext(FormContext);
+	const form = use(FormContext);
 	if (!form) throw new Error("Missing form context");
 
 	return form as UseInputForm<T>;

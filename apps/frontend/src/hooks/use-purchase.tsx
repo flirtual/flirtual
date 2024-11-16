@@ -9,8 +9,8 @@ import {
 	createContext,
 	type FC,
 	type PropsWithChildren,
+	use,
 	useCallback,
-	useContext,
 	useEffect,
 	useMemo,
 	useState
@@ -124,5 +124,5 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function usePurchase() {
-	return useContext(PurchaseContext);
+	return use(PurchaseContext);
 }

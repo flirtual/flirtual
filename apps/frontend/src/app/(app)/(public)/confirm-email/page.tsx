@@ -21,18 +21,13 @@ export default async function ConfirmEmailPage({ searchParams }: ConfirmEmailPag
 	const session = await Authentication.getOptionalSession();
 
 	if (session?.user.emailConfirmedAt && !token) redirect(to ?? urls.browse());
-
 	if (!session?.user && !token) redirect(urls.login(to));
+
+	if (token) return <ConfirmTokenForm token={token} />;
 
 	return (
 		<ModelCard branded title="Confirm your email">
-			{token
-				? (
-						<ConfirmTokenForm token={token} />
-					)
-				: (
-						<UserForms />
-					)}
+			<UserForms />
 		</ModelCard>
 	);
 }

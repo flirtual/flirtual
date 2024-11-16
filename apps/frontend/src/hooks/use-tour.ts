@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo } from "react";
+import { use, useCallback, useEffect, useMemo } from "react";
 import {
 	type ShepherdOptionsWithType,
 	ShepherdTourContext,
@@ -12,7 +12,7 @@ import { useScrollLock } from "./use-scroll-lock";
 import "~/components/shepherd/style.scss";
 
 export function useShepherd() {
-	return useContext(ShepherdTourContext)!;
+	return use(ShepherdTourContext)!;
 }
 
 export function useTour(

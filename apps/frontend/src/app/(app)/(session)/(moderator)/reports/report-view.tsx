@@ -14,7 +14,7 @@ import {
 	createContext,
 	type Dispatch,
 	type SetStateAction,
-	useContext,
+	use,
 	useMemo,
 	useState
 } from "react";
@@ -64,7 +64,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	const [observedConversation, setObservedConversation] = useState<
 		string | null
 	>(null);
-	const { mutate } = useContext(ReportListContext);
+	const { mutate } = use(ReportListContext);
 	const toasts = useToast();
 	const [session] = useSession();
 	const tAttributes = useAttributeTranslation();
