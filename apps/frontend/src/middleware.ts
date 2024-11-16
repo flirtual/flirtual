@@ -5,8 +5,10 @@ import { playlistPlatforms } from "./components/profile/playlist";
 import {
 	apiOrigin,
 	environment,
+	posthogEnabled,
 	posthogHost,
 	sentryDsn,
+	sentryEnabled,
 	sentryReportTo,
 	siteOrigin,
 	uppyBucketOrigin,
@@ -16,6 +18,7 @@ import { imageOrigins } from "./urls";
 
 function getContentSecurityPolicy() {
 	const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+	const reportTo = sentryEnabled ? sentryReportTo : undefined;
 
 	const value = {
 		"default-src": ["'self'"],
@@ -89,10 +92,9 @@ function getContentSecurityPolicy() {
 			"https://cloudflareinsights.com",
 			"https://static.cloudflareinsights.com",
 			// https://docs.sentry.io/concepts/key-terms/dsn-explainer/
-			new URL(sentryDsn).origin,
+			sentryEnabled && new URL(sentryDsn).origin,
 			// https://posthog.com/docs
-			posthogHost,
-
+			posthogEnabled && posthogHost,
 		],
 		"font-src": ["'self'"],
 		"object-src": ["'self'", "data:"],
@@ -118,8 +120,13 @@ function getContentSecurityPolicy() {
 			"https://e.widgetbot.io"
 		],
 		"upgrade-insecure-requests": [],
-		"report-uri": [sentryReportTo],
-		"report-to": ["csp"]
+		...(reportTo
+			? {
+					"report-uri": [reportTo],
+					"report-to": ["csp"]
+				}
+			: {
+				})
 	};
 
 	return {
@@ -131,13 +138,6 @@ function getContentSecurityPolicy() {
 			)
 			.join("; ")
 	};
-}
-
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Reporting-Endpoints
-function getReportingEndpoints() {
-	return Object.entries({
-		csp: sentryReportTo
-	}).map(([name, url]) => `${name}="${url}"`).join(", ");
 }
 
 export function middleware(request: NextRequest) {
@@ -170,7 +170,6 @@ export function middleware(request: NextRequest) {
 	});
 
 	response.headers.set("Content-Security-Policy-Report-Only", contentSecurityPolicy);
-	response.headers.set("Reporting-Endpoints", getReportingEndpoints());
 	return response;
 }
 

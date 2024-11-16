@@ -1,27 +1,17 @@
-import { feedbackIntegration, init, replayIntegration } from "@sentry/nextjs";
-// import posthog from "posthog-js";
+import {
+	feedbackIntegration,
+	init,
+	replayIntegration
+} from "@sentry/nextjs";
 
 import {
 	apiUrl,
-	environment,
-	sentryDsn,
-	// sentryOrganization,
-	// sentryProjectId,
 	siteOrigin
 } from "~/const";
+import { sentryConfig } from "~/sentry";
 
 init({
-	// enabled: environment !== "development",
-	dsn: sentryDsn,
-	environment: environment === "preview" ? "staging" : environment,
-	sampleRate: 1,
-	tracesSampleRate: 1,
-	enableTracing: false,
-	replaysOnErrorSampleRate: 1,
-	replaysSessionSampleRate: 0,
-	ignoreErrors: [
-		"ENVIRONMENT_FALLBACK"
-	],
+	...sentryConfig,
 	integrations: [
 		replayIntegration({
 			blockAllMedia: false,
@@ -37,10 +27,6 @@ init({
 		}),
 		feedbackIntegration({
 			autoInject: false
-		}),
-		// posthog.sentryIntegration({
-		// 	organization: sentryOrganization,
-		// 	projectId: sentryProjectId
-		// })
+		})
 	]
 });

@@ -1,12 +1,10 @@
-import { connection } from "next/server";
 import wretch, { type ConfiguredMiddleware } from "wretch";
 import AbortAddon from "wretch/addons/abort";
 import QueryAddon from "wretch/addons/queryString";
 import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
 
-import { environment } from "~/const";
-import { cloudflareInternalIdentifier } from "~/const-server";
+import { cloudflareInternalIdentifier, environment } from "~/const";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 

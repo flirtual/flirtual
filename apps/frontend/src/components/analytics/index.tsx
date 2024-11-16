@@ -7,7 +7,13 @@ import posthog from "posthog-js";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { type PropsWithChildren, useCallback, useEffect } from "react";
 
-import { cloudflareBeaconId, environment, posthogHost, posthogKey } from "~/const";
+import {
+	cloudflareBeaconId,
+	environment,
+	posthogEnabled,
+	posthogHost,
+	posthogKey
+} from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
 import { useCurrentUser, useSession } from "~/hooks/use-session";
@@ -74,7 +80,7 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 	const current = useCurrentUser();
 
 	useEffect(() => {
-		if (!posthogKey) return;
+		if (!posthogEnabled) return;
 
 		posthog.init(posthogKey, {
 			api_host: posthogHost,
@@ -90,7 +96,7 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 		});
 	}, []);
 
-	if (posthogKey)
+	if (posthogEnabled)
 		children = <PostHogProvider client={posthog}>{children}</PostHogProvider>;
 
 	return (
