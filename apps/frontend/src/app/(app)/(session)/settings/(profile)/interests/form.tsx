@@ -234,7 +234,8 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 	);
 };
 
-const maximumInterests = 10;
+// eslint-disable-next-line react-refresh/only-export-components
+export const maximumInterests = 10;
 
 export const InterestsForm: FC = () => {
 	const [session] = useSession();
