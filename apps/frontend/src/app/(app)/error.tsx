@@ -53,6 +53,7 @@ export default function Error({
 		<>
 			<div className="flex min-h-screen w-full items-center justify-center opacity-75">
 				<Image
+					priority
 					alt={t("meta.name")}
 					className="hidden w-1/2 max-w-lg animate-pulse dark:block desktop:block"
 					height={1000}
@@ -60,6 +61,7 @@ export default function Error({
 					width={3468}
 				/>
 				<Image
+					priority
 					alt={t("meta.name")}
 					className="block w-1/2 max-w-lg animate-pulse dark:hidden desktop:hidden"
 					height={1000}

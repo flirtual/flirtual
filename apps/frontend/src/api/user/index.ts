@@ -199,6 +199,7 @@ export const User = {
 					.url("/count")
 					.options({ credentials: "omit" })
 					.get()
+					.fetchError(() => ({ count: 0 }))
 					.json<{ count: number }>(),
 			{ revalidate: ms("1d") / 1000 }
 		);

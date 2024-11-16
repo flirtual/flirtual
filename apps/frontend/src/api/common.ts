@@ -35,10 +35,12 @@ export type PaginateOptions<T> = {
 	page?: number;
 } & T;
 
-const releventHeaders = ["cookie", "authorization"];
+const relevantHeaderNames = ["cookie", "authorization"];
 
 // All status codes that are retriable by the browser, except 5xx which are always retried.
 const retriableStatusCodes = [408, 429];
+
+const maximumRetries = environment === "development" ? 0 : 3;
 
 export const api = wretch(urls.api)
 	.addon(QueryAddon)
@@ -53,11 +55,8 @@ export const api = wretch(urls.api)
 					options.headers ??= {};
 
 					if (environment === "development")
-						// Artificially slow requests in development, ensuring we can see
-						// loading/pending states.
-						await new Promise((resolve) =>
-							setTimeout(resolve, options.method === "GET" ? 100 : 200)
-						);
+						// Artificially slow requests in development, ensuring we can see loading/pending states.
+						await new Promise((resolve) => setTimeout(resolve, options.method === "GET" ? 100 : 200));
 
 					if (
 						typeof window === "undefined"
@@ -70,7 +69,7 @@ export const api = wretch(urls.api)
 
 						const relevantHeaders = Object.fromEntries(
 							[...headers.entries()].filter(([key]) =>
-								releventHeaders.includes(key)
+								relevantHeaderNames.includes(key)
 							)
 						);
 
@@ -89,24 +88,14 @@ export const api = wretch(urls.api)
 
 					options.headers = headers;
 
-					// const { origin } = new URL(url);
-					// console.debug(options.method, url.replace(origin, ""));
-					const response = await next(url, options);
-
-					// console.debug(
-					// 	options.method,
-					// 	url.replace(origin, ""),
-					// 	response.status
-					// );
-
-					return response;
+					return next(url, options);
 				};
 			}) as ConfiguredMiddleware,
-			retry({
+			maximumRetries !== 0 && retry({
 				delayTimer: 100,
 				// Exponential backoff.
 				delayRamp: (delay, nbOfAttempts) => Math.exp(nbOfAttempts) * delay,
-				maxAttempts: 3,
+				maxAttempts: maximumRetries,
 				until: (response) => {
 					if (
 						response?.status
@@ -124,7 +113,7 @@ export const api = wretch(urls.api)
 
 					return response?.ok ?? false;
 				},
-				onRetry: async ({ url, options }) => {
+				onRetry: async ({ url, options, error, response }) => {
 					const headers = new Headers(options.headers);
 					options.headers = headers;
 
@@ -132,27 +121,15 @@ export const api = wretch(urls.api)
 						= Number.parseInt(headers.get("retry-count") || "0") + 1;
 					headers.set("retry-count", retryCount.toString());
 
-					// const json = await response?.json().catch(() => null);
-					// const message
-					// 	= typeof json === "object"
-					// 	&& json !== null
-					// 	&& "error" in json
-					// 	&& typeof json.error === "object"
-					// 	&& json.error !== null
-					// 	&& "message" in json.error
-					// 		? json.error.message
-					// 		: (error?.message ?? response?.statusText);
+					const { origin } = new URL(url);
 
-					// const { origin } = new URL(url);
-
-					// console.debug(
-					// 	"(retry)",
-					// 	options.method,
-					// 	url.replace(origin, ""),
-					// 	`x${retryCount + 1}`,
-					// 	response?.status,
-					// 	message
-					// );
+					console.debug(
+						"(retry)",
+						options.method,
+						url.replace(origin, ""),
+						`x${retryCount + 1}`,
+						response?.status
+					);
 					return { url, options };
 				},
 				retryOnNetworkError: true,
@@ -160,7 +137,7 @@ export const api = wretch(urls.api)
 			})
 		].filter(Boolean)
 	)
-	.errorType("json")
+	// .errorType("json")
 	.defer((wretch, _url, options) => {
 		const headers = new Headers(options.headers || {});
 		if (headers.get("content-type") === "application/json")

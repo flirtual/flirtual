@@ -39,31 +39,16 @@ export const sentryProject = process.env.SENTRY_PROJECT as string;
 export const sentryProjectId = Number.parseInt(process.env.NEXT_PUBLIC_SENTRY_PROJECT_ID as string);
 export const sentryReportTo = process.env.NEXT_PUBLIC_SENTRY_REPORT_TO as string;
 
-export const sentryEnabled = environment !== "development"
-	&& !!sentryDsn
+export const sentryEnabled = !!sentryDsn
 	&& !!sentryOrganization
 	&& !!sentryProject
 	&& !!sentryProjectId;
-if (!sentryEnabled) console.warn(` ⚠ Sentry is disabled because ${!sentryDsn
-	? "\"NEXT_PUBLIC_SENTRY_DSN\" is missing"
-	: !sentryOrganization
-			? "\"NEXT_PUBLIC_SENTRY_ORGANIZATION\" is missing"
-			: !sentryProject
-					? "\"SENTRY_PROJECT\" is missing"
-					: !sentryProjectId
-							? "\"NEXT_PUBLIC_SENTRY_PROJECT_ID\" is missing"
-							: "the environment is development"}.`);
 
 // PostHog
 export const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY as string;
 export const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST as string;
 
 export const posthogEnabled = !!posthogKey && !!posthogHost;
-if (!posthogEnabled) console.warn(` ⚠ PostHog is disabled because ${!posthogKey
-	? "\"NEXT_PUBLIC_POSTHOG_KEY\" is missing"
-	: !posthogHost
-			? "\"NEXT_PUBLIC_POSTHOG_HOST\" is missing"
-			: "the environment is development"}.`);
 
 // Miscellaneous
 export const cloudflareBeaconId = process.env.NEXT_PUBLIC_CLOUDFLARE_BEACON_ID as string;

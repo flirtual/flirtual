@@ -1,8 +1,10 @@
+// import { inspect } from "node:util";
+
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-import { sentryOrganization, sentryProject } from "~/const";
+import { sentryEnabled, sentryOrganization, sentryProject } from "~/const";
 
 // eslint-disable-next-line import/no-mutable-exports
 let nextConfig: NextConfig = {
@@ -193,14 +195,21 @@ let nextConfig: NextConfig = {
 const withNextIntl = createNextIntlPlugin();
 nextConfig = withNextIntl(nextConfig);
 
-if (sentryOrganization && sentryProject)
+if (sentryEnabled)
 	nextConfig = withSentryConfig(nextConfig, {
 		org: sentryOrganization,
 		project: sentryProject,
-		// silent: true,
 		widenClientFileUpload: true,
-		// hideSourceMaps: true,
-		disableLogger: true
+		reactComponentAnnotation: {
+			enabled: true
+		},
+		disableLogger: true,
+		bundleSizeOptimizations: {
+			excludeDebugStatements: true,
+			excludeReplayShadowDom: true,
+			excludeReplayIframe: true
+		}
 	});
 
+// console.log(inspect(nextConfig, { depth: null, colors: true }));
 export default nextConfig;

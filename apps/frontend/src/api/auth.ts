@@ -112,6 +112,7 @@ export const Authentication = {
 		return this.api
 			.url("/session")
 			.get()
+			.fetchError(() => null)
 			.unauthorized(() => null)
 			.json<Session | null>();
 	},
