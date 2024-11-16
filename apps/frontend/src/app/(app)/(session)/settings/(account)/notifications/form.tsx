@@ -2,6 +2,7 @@
 
 import { Mail, Smartphone } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { fromEntries, keys } from "remeda";
 
 import { Preferences } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
@@ -10,7 +11,6 @@ import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { fromEntries, keys } from "~/utilities";
 
 export const NotificationsForm: React.FC = () => {
 	const user = useCurrentUser();
@@ -22,7 +22,6 @@ export const NotificationsForm: React.FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
 			fields={{
 				email: keys(preferences.emailNotifications).filter(
 					(key) => preferences.emailNotifications[key]
@@ -31,6 +30,7 @@ export const NotificationsForm: React.FC = () => {
 					(key) => preferences.pushNotifications[key]
 				)
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async (values) => {
 				await Preferences.updateNotifications(user.id, {
 					email: fromEntries(

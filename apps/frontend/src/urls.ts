@@ -1,4 +1,5 @@
 import type { Url } from "next/dist/shared/lib/router/router";
+import { entries, fromEntries } from "remeda";
 
 import type { ProspectKind } from "~/api/matchmaking";
 
@@ -7,7 +8,6 @@ import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/(app)/(public)/confirm-email/page";
 import { siteOrigin } from "./const";
-import { entries, fromEntries } from "./utilities";
 import { escapeVRChat } from "./vrchat";
 
 export function ensureRelativeUrl(pathname: string) {
@@ -39,7 +39,7 @@ function url(
 	const searchParameters = new URLSearchParams(
 		fromEntries(
 			entries(query)
-				.map(([k, v]) => (v ? [k, String(v)] : null))
+				.map(([k, v]) => (v ? [k, String(v)] as const : null))
 				.filter(Boolean)
 		)
 	);

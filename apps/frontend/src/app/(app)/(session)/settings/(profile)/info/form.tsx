@@ -1,5 +1,10 @@
 "use client";
 
+import type { FC } from "react";
+import { fromEntries } from "remeda";
+
+import { User } from "~/api/user";
+import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -14,18 +19,13 @@ import {
 	InputCountrySelect,
 	InputLanguageAutocomplete
 } from "~/components/inputs/specialized";
+import {
+	type AttributeTranslation,
+	useAttributes,
+	useAttributeTranslation
+} from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { fromEntries } from "~/utilities";
-import { Profile } from "~/api/user/profile";
-import { User } from "~/api/user";
-import {
-	useAttributes,
-	useAttributeTranslation,
-	type AttributeTranslation
-} from "~/hooks/use-attribute";
-
-import type { FC } from "react";
 
 const AttributeKeys = [
 	...(["gender", "sexuality", "platform", "game"] as const)
@@ -49,7 +49,6 @@ export const InfoForm: FC = () => {
 	return (
 		<Form
 			withGlobalId
-			className="flex flex-col gap-8"
 			fields={{
 				bornAt: user.bornAt
 					? new Date(user.bornAt.replaceAll("-", "/"))
@@ -62,6 +61,7 @@ export const InfoForm: FC = () => {
 				platform: profile.attributes.platform || [],
 				game: profile.attributes.game || []
 			}}
+			className="flex flex-col gap-8"
 			onSubmit={async ({ bornAt, country, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
 					User.update(user.id, {
@@ -134,7 +134,6 @@ export const InfoForm: FC = () => {
 									<InputLabel {...field.labelProps}>Gender</InputLabel>
 									<InputCheckboxList
 										{...field.props}
-										value={checkboxValue ?? []}
 										items={[
 											...simpleGenders.map((gender) => ({
 												key: gender.id,
@@ -146,16 +145,14 @@ export const InfoForm: FC = () => {
 												label: "Other genders"
 											}
 										]}
+										value={checkboxValue ?? []}
 									/>
 									{checkboxValue?.includes("other") && (
 										<InputAutocomplete
 											{...field.props}
-											limit={4}
-											placeholder="Select your genders..."
-											value={field.props.value || []}
 											options={genders.map((gender) => {
-												const { name, definition } =
-													(tAttribute[
+												const { name, definition }
+													= (tAttribute[
 														gender.id
 													] as AttributeTranslation<"gender">) ?? {};
 
@@ -167,6 +164,9 @@ export const InfoForm: FC = () => {
 													hidden: simpleGenderIds.has(gender.id)
 												};
 											})}
+											limit={4}
+											placeholder="Select your genders..."
+											value={field.props.value || []}
 										/>
 									)}
 								</>
@@ -179,15 +179,11 @@ export const InfoForm: FC = () => {
 								<InputLabel>Sexuality</InputLabel>
 								<InputAutocomplete
 									{...field.props}
-									limit={3}
-
-									placeholder="Select your sexualities..."
-									value={field.props.value || []}
 									options={sexualities.map((sexuality) => {
 										const { id, definitionLink } = typeof sexuality === "string" ? { id: sexuality } : sexuality;
-										
-										const { name, definition } =
-											(tAttribute[
+
+										const { name, definition }
+											= (tAttribute[
 												id
 											] as AttributeTranslation<"sexuality">) ?? {};
 
@@ -198,6 +194,10 @@ export const InfoForm: FC = () => {
 											definitionLink
 										};
 									})}
+
+									limit={3}
+									placeholder="Select your sexualities..."
+									value={field.props.value || []}
 								/>
 							</>
 						)}
@@ -224,13 +224,13 @@ export const InfoForm: FC = () => {
 								<InputLabel>VR setup</InputLabel>
 								<InputAutocomplete
 									{...field.props}
-									limit={8}
-									placeholder="Select the platforms you use..."
-									value={field.props.value || []}
 									options={platforms.map((platform) => ({
 										key: platform,
 										label: tAttribute[platform]?.name ?? platform
 									}))}
+									limit={8}
+									placeholder="Select the platforms you use..."
+									value={field.props.value || []}
 								/>
 							</>
 						)}
@@ -245,13 +245,13 @@ export const InfoForm: FC = () => {
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
-									limit={5}
-									placeholder="Select your favorite games..."
-									value={field.props.value || []}
 									options={games.map((game) => ({
 										key: game,
 										label: tAttribute[game]?.name ?? game
 									}))}
+									limit={5}
+									placeholder="Select your favorite games..."
+									value={field.props.value || []}
 								/>
 							</>
 						)}

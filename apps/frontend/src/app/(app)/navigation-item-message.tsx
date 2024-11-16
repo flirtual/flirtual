@@ -2,18 +2,17 @@
 
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import { useFormatter } from "next-intl";
+import type { FC } from "react";
+import { clamp } from "remeda";
 
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { urls } from "~/urls";
-import { clamp } from "~/utilities";
 
 import { NavigationItem } from "./navigation-item";
 
-import type { FC } from "react";
-
 export const NavigationItemMessage: FC = () => {
 	const formatter = useFormatter();
-	const conversationCount = clamp(useUnreadConversations().length, 0, 99);
+	const conversationCount = clamp(useUnreadConversations().length, { min: 0, max: 99 });
 
 	return (
 		<NavigationItem href={urls.conversations.list()} id="conversation-button">

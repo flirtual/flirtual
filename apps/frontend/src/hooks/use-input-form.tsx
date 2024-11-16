@@ -1,14 +1,13 @@
-import { camelCase } from "change-case";
 import { type TranslationValues, useTranslations } from "next-intl";
 import { createContext, useContext, useId, useMemo, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 import type React from "react";
+import { entries, fromEntries, toCamelCase } from "remeda";
 import { WretchError } from "wretch/resolver";
 
 import { isWretchError } from "~/api/common";
 import type { FormCaptchaReference } from "~/components/forms/captcha";
 import { FormField, type FormFieldFC } from "~/components/forms/field";
-import { entries } from "~/utilities";
 
 export interface FormFieldsDefault {
 	[s: string]: unknown;
@@ -30,7 +29,6 @@ export interface InputFormOptions<T extends FormFieldsDefault> {
 	fields: T;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyInputFormOptions = InputFormOptions<any>;
 
 export interface InputProps<K, V> {
@@ -70,7 +68,6 @@ export interface UseInputForm<T extends FormFieldsDefault> {
 	}>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const FormContext = createContext<UseInputForm<any> | null>(null);
 
 export function useFormContext<T extends FormFieldsDefault>() {
@@ -141,9 +138,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 						Object.entries(properties).map(
 							([key, issues]) =>
 								[
-									camelCase(key),
+									toCamelCase(key),
 									issues.map(({ error, details }) =>
-										// eslint-disable-next-line @typescript-eslint/no-explicit-any
 										t(`errors.${error}` as any, details as TranslationValues)
 									)
 								] as const
@@ -193,7 +189,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const fields: UseInputForm<T>["fields"] = useMemo(
 		() =>
-			Object.fromEntries(
+			fromEntries(
 				entries(values).map(([key, value]) => {
 					const id = `${formId}${String(key)}`;
 					const props: InputProps<unknown, unknown> = {
@@ -223,7 +219,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const changes = entries(fields)
 		.filter(([, field]) => field.changed)
-		.map(([name]) => name);
+		.map(([name]) => name as keyof T);
 
 	const buttonProps: UseInputForm<T>["buttonProps"] = {
 		disabled:

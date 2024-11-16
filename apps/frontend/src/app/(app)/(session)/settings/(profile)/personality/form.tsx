@@ -1,20 +1,19 @@
 "use client";
 
 import shuffle from "fast-shuffle";
+import type { FC } from "react";
+import { entries } from "remeda";
 
-import { Form } from "~/components/forms";
-import { FormButton } from "~/components/forms/button";
-import { InputLabel, InputSwitch } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
-import { useToast } from "~/hooks/use-toast";
-import { entries } from "~/utilities";
 import {
 	Personality,
 	personalityQuestionLabels,
 	type ProfilePersonality
 } from "~/api/user/profile/personality";
-
-import type { FC } from "react";
+import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
+import { InputLabel, InputSwitch } from "~/components/inputs";
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 
 export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 	personality

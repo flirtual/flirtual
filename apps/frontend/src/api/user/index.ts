@@ -1,5 +1,5 @@
-import { snakeCase } from "change-case";
 import ms from "ms";
+import { toSnakeCase } from "remeda";
 import type { WretchOptions } from "wretch";
 
 import { cache } from "~/cache";
@@ -44,7 +44,7 @@ export type UserTags = (typeof userTags)[number];
 export type UserPasskey = {
 	aaguid: string;
 } &
-	DatedModel & UuidModel;
+DatedModel & UuidModel;
 
 export const UserStatuses = [
 	"registered",
@@ -89,7 +89,7 @@ export type User = {
 	connections?: Array<Connection>;
 	passkeys?: Array<UserPasskey>;
 } &
-	Partial<DatedModel> & UuidModel;
+Partial<DatedModel> & UuidModel;
 
 export interface UserPreview {
 	id: string;
@@ -225,7 +225,7 @@ export const User = {
 			.json(options)
 			.query({
 				required: Array.isArray(required)
-					? required.map((key) => snakeCase(key))
+					? required.map((key) => toSnakeCase(key))
 					: undefined
 			})
 			.post()

@@ -1,7 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import type { FC } from "react";
+import { fromEntries } from "remeda";
 
+import { User } from "~/api/user";
+import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
@@ -11,20 +15,15 @@ import {
 	InputLabelHint
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
-import { urls } from "~/urls";
-import { fromEntries } from "~/utilities";
 import { InputCountrySelect } from "~/components/inputs/specialized";
-import { useSession } from "~/hooks/use-session";
-import { useInternationalization } from "~/hooks/use-internationalization";
-import { User } from "~/api/user";
-import { Profile } from "~/api/user/profile";
 import {
+	type AttributeTranslation,
 	useAttributes,
-	useAttributeTranslation,
-	type AttributeTranslation
+	useAttributeTranslation
 } from "~/hooks/use-attribute";
-
-import type { FC } from "react";
+import { useInternationalization } from "~/hooks/use-internationalization";
+import { useSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 
@@ -45,8 +44,6 @@ export const Onboarding1Form: FC = () => {
 
 	return (
 		<Form
-			className="flex flex-col gap-8"
-			requireChange={false}
 			fields={{
 				bornAt: user.bornAt
 					? new Date(user.bornAt.replaceAll("-", "/"))
@@ -56,6 +53,8 @@ export const Onboarding1Form: FC = () => {
 				gender: profile.attributes.gender || [],
 				interest: profile.attributes.interest || []
 			}}
+			className="flex flex-col gap-8"
+			requireChange={false}
 			onSubmit={async ({ bornAt, ...values }) => {
 				const [newUser, newProfile] = await Promise.all([
 					User.update(user.id, {
@@ -124,7 +123,6 @@ export const Onboarding1Form: FC = () => {
 									<InputLabel {...field.labelProps}>My gender</InputLabel>
 									<InputCheckboxList
 										{...field.props}
-										value={checkboxValue ?? []}
 										items={[
 											...simpleGenders.map((gender) => ({
 												conflicts: gender.conflicts ?? [],
@@ -136,16 +134,14 @@ export const Onboarding1Form: FC = () => {
 												label: "Other genders"
 											}
 										]}
+										value={checkboxValue ?? []}
 									/>
 									{checkboxValue?.includes("other") && (
 										<InputAutocomplete
 											{...field.props}
-											limit={4}
-											placeholder="Select your gender(s)..."
-											value={field.props.value || []}
 											options={genders.map((gender) => {
-												const { name, definition } =
-													(tAttribute[
+												const { name, definition }
+													= (tAttribute[
 														gender.id
 													] as AttributeTranslation<"gender">) ?? {};
 
@@ -157,6 +153,9 @@ export const Onboarding1Form: FC = () => {
 													label: name ?? gender.id
 												};
 											})}
+											limit={4}
+											placeholder="Select your gender(s)..."
+											value={field.props.value || []}
 										/>
 									)}
 								</>
@@ -181,13 +180,13 @@ export const Onboarding1Form: FC = () => {
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
-									limit={5}
-									placeholder="Select your favorite games..."
-									value={field.props.value || []}
 									options={games.map((game) => ({
 										key: game,
 										label: tAttribute[game]?.name ?? game
 									}))}
+									limit={5}
+									placeholder="Select your favorite games..."
+									value={field.props.value || []}
 								/>
 							</>
 						)}
@@ -201,9 +200,6 @@ export const Onboarding1Form: FC = () => {
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
-									limit={10}
-									placeholder="Select your interests..."
-									value={field.props.value || []}
 									options={interests
 										.filter(
 											(interest) =>
@@ -217,6 +213,9 @@ export const Onboarding1Form: FC = () => {
 											if (a.label > b.label) return 1;
 											return -1;
 										})}
+									limit={10}
+									placeholder="Select your interests..."
+									value={field.props.value || []}
 								/>
 							</>
 						)}

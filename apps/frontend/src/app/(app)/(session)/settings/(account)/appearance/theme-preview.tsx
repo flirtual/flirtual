@@ -1,15 +1,14 @@
 "use client";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import type { PreferenceTheme } from "~/api/user/preferences";
 import { Image } from "~/components/image";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useTheme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
-import { capitalize } from "~/utilities";
-
-import type { PreferenceTheme } from "~/api/user/preferences";
 
 const ThemeImage = {
 	light: "52f7a831-8f7d-46c3-aace-4a99d1f4792d",
@@ -29,11 +28,11 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<button
-					type="button"
 					className={twMerge(
 						"relative overflow-hidden rounded-xl p-1",
 						active ? "bg-theme-2" : "border-transparent"
 					)}
+					type="button"
 					onClick={() => setTheme(theme)}
 				>
 					<Image
@@ -49,9 +48,9 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 				</button>
 			</TooltipTrigger>
 			<TooltipContent>
-				{theme == "system"
+				{theme === "system"
 					? "Automatically match your system theme"
-					: capitalize(theme) + " theme"}
+					: `${capitalize(theme)} theme`}
 			</TooltipContent>
 		</Tooltip>
 	);

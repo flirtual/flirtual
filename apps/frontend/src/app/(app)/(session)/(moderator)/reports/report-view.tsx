@@ -18,6 +18,7 @@ import {
 	useMemo,
 	useState
 } from "react";
+import { entries, groupBy, prop, sortBy } from "remeda";
 import useSWR, { type KeyedMutator } from "swr";
 import { twMerge } from "tailwind-merge";
 
@@ -37,7 +38,7 @@ import { useSession } from "~/hooks/use-session";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
-import { entries, groupBy, newConversationId, sortBy } from "~/utilities";
+import { newConversationId } from "~/utilities";
 
 type CompleteReport = { user?: User; target: User } & Report;
 
@@ -181,7 +182,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							)
 						: (
 								<div className="flex flex-col gap-2">
-									{sortBy(reports, "createdAt", 1).map((report) => (
+									{sortBy(reports, prop("createdAt")).map((report) => (
 										<div
 											className={twMerge(
 												"flex flex-col gap-2 rounded-xl bg-white-30 p-4 dark:bg-black-80",
@@ -278,7 +279,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 															target="_blank"
 														>
 															{!image.includes(".")
-															|| /\.(jpg|jpeg|png|gif|webm)$/i.test(image)
+															|| /\.(?:jpg|jpeg|png|gif|webm)$/i.test(image)
 																? (
 																		<Image
 																			alt="Report attachment"

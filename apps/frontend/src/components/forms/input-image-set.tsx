@@ -1,5 +1,14 @@
 "use client";
 
+import AwsS3 from "@uppy/aws-s3";
+import Compressor from "@uppy/compressor";
+import Uppy, { type UppyFile } from "@uppy/core";
+import DropTarget from "@uppy/drop-target";
+import GoldenRetriever from "@uppy/golden-retriever";
+import ImageEditor from "@uppy/image-editor";
+import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
+import RemoteSources from "@uppy/remote-sources";
+import { ImagePlus } from "lucide-react";
 import {
 	type Dispatch,
 	type FC,
@@ -7,29 +16,14 @@ import {
 	useEffect,
 	useState
 } from "react";
-import { ImagePlus } from "lucide-react";
+import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
-import Uppy, { type UppyFile } from "@uppy/core";
-import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
-import RemoteSources from "@uppy/remote-sources";
-import GoldenRetriever from "@uppy/golden-retriever";
-import ImageEditor from "@uppy/image-editor";
-import Compressor from "@uppy/compressor";
-import DropTarget from "@uppy/drop-target";
-import AwsS3 from "@uppy/aws-s3";
 
-import "@uppy/core/dist/style.min.css";
-import "@uppy/dashboard/dist/style.min.css";
-import "@uppy/image-editor/dist/style.min.css";
-import "@uppy/drag-drop/dist/style.min.css";
-import "@uppy/status-bar/dist/style.min.css";
-
+import { uppyCompanionUrl } from "~/const";
+import { useDevice } from "~/hooks/use-device";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
-import { groupBy } from "~/utilities";
 import { urls } from "~/urls";
-import { useDevice } from "~/hooks/use-device";
-import { uppyCompanionUrl } from "~/const";
 
 import {
 	ArrangeableImage,
@@ -44,13 +38,18 @@ import {
 	DialogTitle
 } from "../dialog/dialog";
 import { UserImage } from "../user-avatar";
-
 import {
 	SortableGrid,
 	SortableItem,
 	SortableItemOverlay,
 	useCurrentSortableItem
 } from "./sortable";
+
+import "@uppy/core/dist/style.min.css";
+import "@uppy/dashboard/dist/style.min.css";
+import "@uppy/image-editor/dist/style.min.css";
+import "@uppy/drag-drop/dist/style.min.css";
+import "@uppy/status-bar/dist/style.min.css";
 
 export interface ImageSetValue {
 	id: string;
@@ -68,16 +67,16 @@ export interface InputImageSetProps {
 type UppyfileMeta = Record<string, unknown>;
 type UppyfileData = Record<string, unknown>;
 
-type MultipartFile = UppyFile<UppyfileMeta, UppyfileData> & {
+type MultipartFile = {
 	s3Multipart: {
 		key: string;
 		uploadId: string;
 	};
-};
+} & UppyFile<UppyfileMeta, UppyfileData>;
 
-type UploadedMultipartFile = MultipartFile & {
+type UploadedMultipartFile = {
 	uploadURL: string;
-};
+} & MultipartFile;
 
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile" } = props;
@@ -194,7 +193,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		}
 
 		setUppy(uppyInstance);
-	}, [user, handleUppyComplete, type]);
+	}, [user, handleUppyComplete, type, native]);
 
 	const sortableItems = value.map(({ id }, index) => id || index);
 
@@ -211,24 +210,26 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		>
 			<div className="grid grid-cols-3 gap-2">
 				{value.map((image, imageIndex) =>
-					type === "profile" ||
-					!image.id?.includes(".") ||
-					/\.(jpg|jpeg|png|gif|webm)$/i.test(image.id) ? (
-						<SortableItem id={image.id} key={image.id}>
-							<ArrangeableImage
-								id={image.id}
-								src={image.src}
-								onFullscreen={() => setFullPreviewId(image.id)}
-								onDelete={() => {
-									onChange?.(value.filter((_, index) => imageIndex !== index));
-								}}
-							/>
-						</SortableItem>
-					) : (
-						<div className="m-auto" key={imageIndex}>
-							{image.id.split("-").pop()}
-						</div>
-					)
+					type === "profile"
+					|| !image.id?.includes(".")
+					|| /\.(?:jpg|jpeg|png|gif|webm)$/i.test(image.id)
+						? (
+								<SortableItem id={image.id} key={image.id}>
+									<ArrangeableImage
+										id={image.id}
+										src={image.src}
+										onDelete={() => {
+											onChange?.(value.filter((_, index) => imageIndex !== index));
+										}}
+										onFullscreen={() => setFullPreviewId(image.id)}
+									/>
+								</SortableItem>
+							)
+						: (
+								<div className="m-auto" key={image.id}>
+									{image.id.split("-").pop()}
+								</div>
+							)
 				)}
 				{fullPreviewImage && (
 					<ArrangeableImageDialog
@@ -238,51 +239,53 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 						}}
 					/>
 				)}
-				{type === "profile" ? (
-					<>
-						{uppy && (
-							<Dialog
-								open={uppyVisible}
-								onOpenChange={(visible) => setUppyVisible(visible)}
-							>
-								<DialogContent>
-									<DialogHeader>
-										<DialogTitle>Upload pictures</DialogTitle>
-									</DialogHeader>
-									<DialogBody>
-										<Dashboard
-											showProgressDetails
-											proudlyDisplayPoweredByUppy={false}
-											theme={theme}
-											uppy={uppy}
-										/>
-									</DialogBody>
-								</DialogContent>
-							</Dialog>
+				{type === "profile"
+					? (
+							<>
+								{uppy && (
+									<Dialog
+										open={uppyVisible}
+										onOpenChange={(visible) => setUppyVisible(visible)}
+									>
+										<DialogContent>
+											<DialogHeader>
+												<DialogTitle>Upload pictures</DialogTitle>
+											</DialogHeader>
+											<DialogBody>
+												<Dashboard
+													showProgressDetails
+													proudlyDisplayPoweredByUppy={false}
+													theme={theme}
+													uppy={uppy}
+												/>
+											</DialogBody>
+										</DialogContent>
+									</Dialog>
+								)}
+								<Button
+									className={twMerge(
+										"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-md bg-brand-gradient",
+										dragging && "animate-pulse"
+									)}
+									tabIndex={0}
+									onClick={() => setUppyVisible(true)}
+								>
+									<ImagePlus className="size-10 text-white-20" />
+								</Button>
+							</>
+						)
+					: (
+							uppy && (
+								<DragDrop
+									// @ts-expect-error: no
+									className={twMerge(
+										"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-md bg-brand-gradient shadow-brand-1",
+										dragging && "animate-pulse"
+									)}
+									uppy={uppy}
+								/>
+							)
 						)}
-						<Button
-							tabIndex={0}
-							className={twMerge(
-								"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-md bg-brand-gradient",
-								dragging && "animate-pulse"
-							)}
-							onClick={() => setUppyVisible(true)}
-						>
-							<ImagePlus className="size-10 text-white-20" />
-						</Button>
-					</>
-				) : (
-					uppy && (
-						<DragDrop
-							uppy={uppy}
-							// @ts-expect-error: no
-							className={twMerge(
-								"focusable flex aspect-square size-full cursor-pointer items-center justify-center rounded-md bg-brand-gradient shadow-brand-1",
-								dragging && "animate-pulse"
-							)}
-						/>
-					)
-				)}
 			</div>
 			<InputImageSetDragOverlay values={value} />
 			{type === "report" && uppy && <StatusBar uppy={uppy} />}

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { Dispatch, FC } from "react";
+import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import { Profile } from "~/api/user/profile";
@@ -32,7 +33,6 @@ import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { groupBy } from "~/utilities";
 
 const categoryIcons: Record<string, React.ReactNode> = {
 	iiCe39JvGQAAtsrTqnLddb: <Star />,

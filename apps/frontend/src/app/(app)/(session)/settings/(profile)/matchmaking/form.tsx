@@ -4,6 +4,7 @@ import { Loader2, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { type FC, startTransition, useState } from "react";
+import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import { Matchmaking } from "~/api/matchmaking";
@@ -40,7 +41,6 @@ import {
 } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { capitalize } from "~/utilities";
 
 const absMinAge = 18;
 const absMaxAge = 60;

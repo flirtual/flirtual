@@ -1,24 +1,22 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { twMerge } from "tailwind-merge";
 import { CalendarDays, Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
-
-import { omit } from "~/utilities";
-
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { useRef, useState } from "react";
+import type React from "react";
+import { omit } from "remeda";
+import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "../icons";
-import type React from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
-export type InputTextProps = Omit<React.ComponentProps<"input">, "onChange"> & {
+export type InputTextProps = {
 	Icon?: IconComponent;
 	iconColor?: string;
 	onChange?: React.Dispatch<string>;
 	startContent?: React.ReactNode;
 	endContent?: React.ReactNode;
-};
+} & Omit<React.ComponentProps<"input">, "onChange">;
 
 export const InputText: React.FC<InputTextProps> = (props) => {
 	const inputReference = useRef<HTMLInputElement>(null);
@@ -41,11 +39,11 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 		>
 			{Icon && (
 				<div
-					style={{ background: props.iconColor }}
 					className={twMerge(
 						"flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2 text-white-20"
 						// props.connection && "h-12 w-14"
 					)}
+					style={{ background: props.iconColor }}
 				>
 					<Icon className="size-6" />
 				</div>
@@ -59,14 +57,14 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					"endContent",
 					"iconColor"
 				])}
-				ref={inputReference}
-				type={type}
 				className={twMerge(
 					"w-full border-none bg-transparent px-4 py-2 font-nunito caret-theme-2 placeholder:text-black-30 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50",
-					type === "number" &&
-						"[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
+					type === "number"
+					&& "[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
 					props.className
 				)}
+				ref={inputReference}
+				type={type}
 				onChange={(event) => {
 					if (!props?.onChange) return;
 					props.onChange(event.target.value);

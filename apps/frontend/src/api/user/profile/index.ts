@@ -1,4 +1,4 @@
-import { snakeCase } from "change-case";
+import { toSnakeCase } from "remeda";
 
 import type {
 	AttributeType,
@@ -164,7 +164,7 @@ export const Profile = {
 			.url(`users/${userId}/profile`)
 			.query({
 				required: Array.isArray(required)
-					? required.map((key) => snakeCase(key))
+					? required.map((key) => toSnakeCase(key))
 					: undefined
 			})
 			.json(options)
@@ -172,7 +172,6 @@ export const Profile = {
 			.json<Profile>();
 	},
 	updateCustomWeights(userId: string, options: Partial<ProfileCustomWeights>) {
-		console.log(options);
 		return api
 			.url(`users/${userId}/profile/custom-weights`)
 			.json(options)
@@ -180,7 +179,6 @@ export const Profile = {
 			.json<Profile>();
 	},
 	updateCustomFilters(userId: string, options: Partial<ProfileCustomFilters>) {
-		console.log(options);
 		return api
 			.url(`users/${userId}/profile/custom-filters`)
 			.json(options)
@@ -219,10 +217,10 @@ export const Profile = {
 			.url(`users/${userId}/profile/preferences`)
 			.query({
 				required: Array.isArray(required)
-					? required.map((key) => snakeCase(key))
+					? required.map((key) => toSnakeCase(key))
 					: undefined,
 				requiredAttributes: Array.isArray(requiredAttributes)
-					? requiredAttributes.map((key) => snakeCase(key))
+					? requiredAttributes.map((key) => toSnakeCase(key))
 					: undefined
 			})
 			.json(options)

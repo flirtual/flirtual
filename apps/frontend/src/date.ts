@@ -1,4 +1,4 @@
-import { capitalize } from "./utilities";
+import { capitalize } from "remeda";
 
 const secondInMilliseconds = 1e3;
 const minuteInMilliseconds = 6e4;
@@ -30,7 +30,7 @@ export interface RelativeTimeOptions {
 function maybeCapitalize<T extends string>(
 	value: T,
 	shouldCapitalize: boolean
-): T | Capitalize<T> {
+): Capitalize<T> | T {
 	return shouldCapitalize ? capitalize(value) : value;
 }
 

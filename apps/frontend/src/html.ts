@@ -1,11 +1,10 @@
+import type { PropertiesHyphen, Property } from "csstype";
+import { entries } from "remeda";
 import sanitizeHtml, { type Attributes } from "sanitize-html";
 
 import { rgb } from "./colors";
-import { isInternalHref, toAbsoluteUrl } from "./urls";
-import { entries } from "./utilities";
 import { siteOrigin } from "./const";
-
-import type { PropertiesHyphen, Property } from "csstype";
+import { isInternalHref, toAbsoluteUrl } from "./urls";
 
 export function toStyleProperties(
 	style: PropertiesHyphen,
@@ -85,8 +84,8 @@ export const editorColors = [
 ];
 
 const colorHexRegex = new RegExp(editorColors.join("|"), "i");
-const colorRgbRegex =
-	/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
+const colorRgbRegex
+	= /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
 
 const allowedOrigins = new Set([siteOrigin, "https://vrchat.com"]);
 

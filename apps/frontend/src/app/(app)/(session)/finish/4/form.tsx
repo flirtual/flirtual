@@ -1,21 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import shuffle from "fast-shuffle";
 import { MoveLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { entries } from "remeda";
 
-import { InputLabel, InputSwitch } from "~/components/inputs";
-import { Form } from "~/components/forms";
-import { entries } from "~/utilities";
-import { FormButton } from "~/components/forms/button";
-import { urls } from "~/urls";
-import { useSession } from "~/hooks/use-session";
-import { ButtonLink } from "~/components/button";
+import { Profile } from "~/api/user/profile";
 import {
 	personalityQuestionLabels,
 	type ProfilePersonality
 } from "~/api/user/profile/personality";
-import { Profile } from "~/api/user/profile";
+import { ButtonLink } from "~/components/button";
+import { Form } from "~/components/forms";
+import { FormButton } from "~/components/forms/button";
+import { InputLabel, InputSwitch } from "~/components/inputs";
+import { useSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
 export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 	personality

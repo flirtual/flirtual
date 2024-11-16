@@ -2,6 +2,7 @@ import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FC, useState } from "react";
+import { capitalize } from "remeda";
 import { mutate } from "swr";
 import { twMerge } from "tailwind-merge";
 
@@ -11,7 +12,6 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
 import { userKey } from "~/swr";
-import { capitalize } from "~/utilities";
 
 import { CopyClick } from "../copy-click";
 import { DateTimeRelative } from "../datetime-relative";

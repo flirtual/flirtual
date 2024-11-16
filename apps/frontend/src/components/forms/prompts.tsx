@@ -1,12 +1,13 @@
 import { Pencil, Plus, X } from "lucide-react";
 import { type Dispatch, type FC, useEffect, useState } from "react";
+import { groupBy, prop, uniqueBy } from "remeda";
 
-import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
+import type { ProfilePrompt } from "~/api/user/profile";
 import { Button } from "~/components/button";
-import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { SortableGrid, SortableItem } from "~/components/forms/sortable";
-import { groupBy, uniqueLast } from "~/utilities";
+import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 
 import { NewBadge } from "../badge";
 import {
@@ -15,8 +16,6 @@ import {
 	DialogHeader,
 	DialogTitle
 } from "../dialog/dialog";
-
-import type { ProfilePrompt } from "~/api/user/profile";
 
 const EditPromptDialog: FC<{
 	dialogOpen: boolean;
@@ -43,17 +42,21 @@ const EditPromptDialog: FC<{
 		<DrawerOrDialog open={dialogOpen} onOpenChange={onDialogOpen}>
 			<>
 				<DialogHeader>
-					<DialogTitle>{initialValue ? "Edit" : "Add a"} prompt</DialogTitle>
+					<DialogTitle>
+						{initialValue ? "Edit" : "Add a"}
+						{" "}
+						prompt
+					</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
 				<DialogBody className="grid w-full gap-4">
 					<InputSelect
-						placeholder="Select a prompt"
-						value={value?.promptId}
 						options={filteredPrompts.map((promptId) => ({
 							id: promptId,
 							name: tAttribute[promptId]?.name ?? promptId
 						}))}
+						placeholder="Select a prompt"
+						value={value?.promptId}
 						onChange={(id) => {
 							const promptId = filteredPrompts.find(
 								(promptId) => promptId === id
@@ -76,12 +79,9 @@ const EditPromptDialog: FC<{
 								(value) =>
 									({
 										...(value || { prompt: null }),
-
 										response
-										// eslint-disable-next-line @typescript-eslint/no-explicit-any
 									}) as any
-							)
-						}
+							)}
 					/>
 					<Button
 						className="ml-auto"
@@ -118,9 +118,7 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 	return (
 		<>
 			<InputLabel
-				className="items-center"
-				htmlFor={props.labelId}
-				hint={
+				hint={(
 					<Button
 						className="ml-auto gap-2"
 						disabled={props.value.length >= 5}
@@ -133,9 +131,13 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 						<span className="text-sm">Add</span>
 						<Plus className="size-5" />
 					</Button>
-				}
+				)}
+				className="items-center"
+				htmlFor={props.labelId}
 			>
-				Prompts {props.newBadge && <NewBadge />}
+				Prompts
+				{" "}
+				{props.newBadge && <NewBadge />}
 			</InputLabel>
 			<SortableGrid
 				values={props.value.map(({ promptId }) => promptId)}
@@ -180,8 +182,7 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 														props.value.filter(
 															(value) => value.promptId !== promptId
 														)
-													)
-												}
+													)}
 											>
 												<X className="size-5" />
 											</Button>
@@ -197,29 +198,29 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 				</div>
 			</SortableGrid>
 			<EditPromptDialog
-				dialogOpen={promptDialogOpen}
 				excludedPrompts={props.value
 					.map(({ promptId }) => promptId)
 					.filter((id) => id !== editingPrompt)}
 				value={
 					editingPrompt
-						? props.value.find(({ promptId }) => promptId === editingPrompt) ||
-							null
+						? props.value.find(({ promptId }) => promptId === editingPrompt)
+						|| null
 						: null
 				}
-				onDialogOpen={setPromptDialogOpen}
+				dialogOpen={promptDialogOpen}
 				onChange={(value) => {
-					const newPrompts = uniqueLast(
+					const newPrompts = uniqueBy(
 						editingPrompt
 							? props.value.map((prompt) =>
-									prompt.promptId === editingPrompt ? value : prompt
-								)
-							: [...props.value, value],
-						({ promptId }) => promptId
+								prompt.promptId === editingPrompt ? value : prompt
+							)
+							: [...props.value, value].reverse(),
+						prop("promptId")
 					);
 					props.onChange(newPrompts);
 					setEditingPrompt(null);
 				}}
+				onDialogOpen={setPromptDialogOpen}
 			/>
 		</>
 	);

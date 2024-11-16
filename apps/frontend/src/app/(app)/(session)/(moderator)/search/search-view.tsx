@@ -12,6 +12,7 @@ import {
 import { Eye, EyeOff, Gavel, Gem, Search, ShieldEllipsis } from "lucide-react";
 import Link from "next/link";
 import { type FC, Suspense, useDeferredValue, useEffect, useState } from "react";
+import { capitalize } from "remeda";
 import useSWR from "swr";
 import { twMerge } from "tailwind-merge";
 
@@ -48,7 +49,6 @@ import { UserThumbnail } from "~/components/user-avatar";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
-import { capitalize } from "~/utilities";
 
 const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
 	const user = useUser(userId);
