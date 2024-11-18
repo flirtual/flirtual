@@ -10,21 +10,21 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import type {
+	ComponentProps,
+	FC
+} from "react";
 import {
-	createContext,
-	type Dispatch,
-	type SetStateAction,
-	use,
 	useMemo,
 	useState
 } from "react";
 import { entries, groupBy, prop, sortBy } from "remeda";
-import useSWR, { type KeyedMutator } from "swr";
+import useSWR from "swr";
 import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
 import { type ListReportOptions, Report } from "~/api/report";
-import { displayName, User } from "~/api/user";
+import { displayName } from "~/api/user";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { Dialog, DialogContent } from "~/components/dialog/dialog";
 import { InlineLink } from "~/components/inline-link";
@@ -37,34 +37,44 @@ import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
+import { useUser } from "~/hooks/use-user";
+import { withSuspense } from "~/hooks/with-suspense";
 import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";
 
-type CompleteReport = { user?: User; target: User } & Report;
-
-interface ReportListContext {
-	listOptions: ListReportOptions;
-	reports: Array<CompleteReport>;
-	setListOptions: Dispatch<SetStateAction<ListReportOptions>>;
-	mutate: KeyedMutator<Array<CompleteReport>>;
-}
-
-const ReportListContext = createContext({} as ReportListContext);
-
 interface ProfileReportViewProps {
-	reported?: User;
-	reports: Array<CompleteReport>;
+	targetId?: string;
+	reports: Array<Report>;
 }
+
+function useReports(options: ListReportOptions = {}) {
+	return useSWR(
+		["reports", options],
+		([, listOptions]) => Report.list(listOptions)
+	);
+}
+
+const UserDisplayName: FC<{ userId?: string } & ComponentProps<"span">> = withSuspense(({ userId = "", ...props }) => {
+	const user = useUser(userId);
+
+	return (
+		<span {...props}>
+			{user ? displayName(user) : "Deleted user"}
+		</span>
+	);
+}, {
+	fallback: ({ className, ...props }) =>
+		<span {...props} className={twMerge("inline-block h-[1em] w-[12em] animate-pulse rounded-lg bg-black-80/25 text-transparent", className)} />
+});
 
 const ProfileReportView: React.FC<ProfileReportViewProps> = ({
-	reported,
+	targetId,
 	reports
 }) => {
 	const [collapsed, setCollapsed] = useState(reports.length >= 2);
 	const [observedConversation, setObservedConversation] = useState<
 		string | null
 	>(null);
-	const { mutate } = use(ReportListContext);
 	const toasts = useToast();
 	const [session] = useSession();
 	const tAttributes = useAttributeTranslation();
@@ -72,6 +82,8 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	const CollapseIcon = collapsed ? ChevronRight : ChevronDown;
 
 	const activeReports = reports.filter((report) => !report.reviewedAt);
+
+	const { mutate } = useReports();
 
 	return (
 		<>
@@ -97,15 +109,16 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							onClick={() => setCollapsed((collapsed) => !collapsed)}
 						>
 							<CollapseIcon className="size-6" />
-							<span className="w-44 truncate font-montserrat text-xl font-semibold">
-								{reported ? displayName(reported) : "Deleted user"}
-							</span>
+							<UserDisplayName
+								className="max-w-44 truncate font-montserrat text-xl font-semibold"
+								userId={targetId}
+							/>
 						</button>
-						{reported && (
+						{targetId && (
 							<div className="flex gap-4">
 								<Tooltip>
 									<TooltipTrigger asChild>
-										<Link href={urls.profile(reported)}>
+										<Link href={urls.profile(targetId)}>
 											<ExternalLink className="size-6" />
 										</Link>
 									</TooltipTrigger>
@@ -117,7 +130,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 											className="h-fit"
 											type="button"
 											onClick={() =>
-												Report.clearAll(reported.id)
+												Report.clearAll(targetId)
 													.then(({ count }) =>
 														toasts.add(
 															`Cleared ${count} report${count === 1 ? "" : "s"}`
@@ -131,7 +144,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 									</TooltipTrigger>
 									<TooltipContent>Clear reports</TooltipContent>
 								</Tooltip>
-								<ProfileDropdown userId={reported.id} />
+								<ProfileDropdown userId={targetId} />
 							</div>
 						)}
 					</div>
@@ -146,7 +159,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							{" "}
 							reports
 						</span>
-						{reported && reported.indefShadowbannedAt
+						{/* {reported && reported.indefShadowbannedAt
 							? (
 									<span className="font-bold text-red-600">
 										Indefinitely shadowbanned
@@ -157,7 +170,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 									&& reported.shadowbannedAt && (
 										<span className="font-bold text-red-600">Shadowbanned</span>
 									)
-								)}
+								)} */}
 					</div>
 				</div>
 				<div className="flex flex-col pl-10">
@@ -207,14 +220,12 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 														Reporter:
 														<InlineLink
 															href={
-																report.user
-																	? urls.profile(report.user)
+																report.userId
+																	? urls.profile(report.userId)
 																	: urls.moderation.reports()
 															}
 														>
-															{report.user
-																? displayName(report.user)
-																: "Deleted user"}
+															<UserDisplayName userId={report.userId} />
 														</InlineLink>
 													</div>
 												</div>
@@ -249,10 +260,10 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 																			});
 
 																			const conversationId
-																			= await newConversationId(
-																				report.userId!,
-																				report.targetId
-																			);
+																				= await newConversationId(
+																					report.userId!,
+																					report.targetId
+																				);
 																			setObservedConversation(conversationId);
 																		}}
 																	>
@@ -307,31 +318,12 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 };
 
 export const ReportView: React.FC = () => {
-	const [listOptions, setListOptions] = useState<ListReportOptions>({
+	const [options, setOptions] = useState<ListReportOptions>({
 		reviewed: false,
 		indefShadowbanned: false
 	});
 
-	const { data: reports = [], mutate } = useSWR(
-		["reports", listOptions],
-		async ([, listOptions]) => {
-			const reports = await Report.list(listOptions);
-			const users = await User.getMany(
-				[
-					...new Set([
-						...reports.map((report) => report.userId),
-						...reports.map((report) => report.targetId)
-					])
-				].filter(Boolean)
-			);
-
-			return reports.map((report) => ({
-				...report,
-				user: users.find((user) => user?.id === report.userId) || undefined,
-				target: users.find((user) => user?.id === report.targetId)!
-			}));
-		}
-	);
+	const { data: reports = [] } = useReports(options);
 
 	const grouped = useMemo(
 		() => groupBy(reports, ({ targetId }) => targetId),
@@ -339,73 +331,61 @@ export const ReportView: React.FC = () => {
 	);
 
 	return (
-		<ReportListContext
-			value={useMemo(
-				() =>
-					({
-						listOptions,
-						reports,
-						setListOptions,
-						mutate
-					}) as ReportListContext,
-				[listOptions, setListOptions, reports, mutate]
-			)}
+
+		<ModelCard
+			data-block
+			className="desktop:max-w-4xl"
+			containerProps={{ className: "gap-8 min-h-screen" }}
+			title="Reports"
 		>
-			<ModelCard
-				data-block
-				className="desktop:max-w-4xl"
-				containerProps={{ className: "gap-8 min-h-screen" }}
-				title="Reports"
-			>
-				<div className="flex gap-8">
-					<div className="flex items-center gap-4">
-						<InputCheckbox
-							id="reviewed"
-							value={listOptions.reviewed}
-							onChange={(value) => {
-								setListOptions((listOptions) => ({
-									...listOptions,
-									reviewed: value
-								}));
-							}}
-						/>
-						<InputLabel inline htmlFor="reviewed">
-							Include reviewed
-						</InputLabel>
-					</div>
-					<div className="flex items-center gap-4">
-						<InputCheckbox
-							id="indefShadowbanned"
-							value={listOptions.indefShadowbanned}
-							onChange={(value) => {
-								setListOptions((listOptions) => ({
-									...listOptions,
-									indefShadowbanned: value
-								}));
-							}}
-						/>
-						<InputLabel inline htmlFor="indefShadowbanned">
-							Include indef. shadowbanned
-						</InputLabel>
-					</div>
+			<div className="flex gap-8">
+				<div className="flex items-center gap-4">
+					<InputCheckbox
+						id="reviewed"
+						value={options.reviewed}
+						onChange={(value) => {
+							setOptions((options) => ({
+								...options,
+								reviewed: value
+							}));
+						}}
+					/>
+					<InputLabel inline htmlFor="reviewed">
+						Include reviewed
+					</InputLabel>
 				</div>
-				<div>
-					<span>
-						{reports.length}
-						{" "}
-						reports
-					</span>
+				<div className="flex items-center gap-4">
+					<InputCheckbox
+						id="indefShadowbanned"
+						value={options.indefShadowbanned}
+						onChange={(value) => {
+							setOptions((options) => ({
+								...options,
+								indefShadowbanned: value
+							}));
+						}}
+					/>
+					<InputLabel inline htmlFor="indefShadowbanned">
+						Include indef. shadowbanned
+					</InputLabel>
 				</div>
-				<div className="flex flex-col gap-4">
-					{entries(grouped).map(([targetId, reports]) => (
-						<ProfileReportView
-							key={targetId}
-							reported={reports[0]?.target}
-							reports={reports}
-						/>
-					))}
-				</div>
-			</ModelCard>
-		</ReportListContext>
+			</div>
+			<div>
+				<span>
+					{reports.length}
+					{" "}
+					reports
+				</span>
+			</div>
+			<div className="flex flex-col gap-4">
+				{entries(grouped).map(([targetId, reports]) => (
+					<ProfileReportView
+						key={targetId}
+						reports={reports}
+						targetId={reports[0]?.targetId}
+					/>
+				))}
+			</div>
+		</ModelCard>
 	);
 };
