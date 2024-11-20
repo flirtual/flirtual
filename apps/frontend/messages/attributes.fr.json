@@ -1561,5 +1561,27 @@
 		"ase": {
 			"name": "langue des signes américaine"
 		}
+	},
+	"ban-reason": {
+		"tUaxdXYAcyeb3G4Qc7gNLh": {
+			"name": "Spam",
+			"details": "Profil Spam. Le contenu de votre profil a été marqué comme spam. Vous pouvez répondre à ce courriel pour contester votre ban et réactiver votre compte. Il se peut que nous vous demandions de mettre à jour votre profil avec plus d'information."
+		},
+		"WSD2yPcs64FB27qpb4AGuT": {
+			"name": "Impersonation",
+			"details": "Impersonation. Votre profil semble usurper l'identité d'une autre personne. Si vous pensez avoir été banni par erreur, vous pouvez répondre à cet e-mail pour contester et demander la réactivation de votre compte."
+		},
+		"nupwCrjodUd4ZvPizEBc8L": {
+			"name": "Solicitation d'argent",
+			"details": "Solicitation. Il est interdit de solliciter de l'argent sur Flirtual. Vous pouvez répondre à cet e-mail pour contester votre ban et retirer toute sollicitation de votre profil afin de réactiver votre compte."
+		},
+		"jBVZ29YcQ2dDXbURb6AxXk": {
+			"name": "Publicité",
+			"details": "Publicité. Votre profil semble principalement promouvoir un compte ou un service externe. Vous êtes libre de mentionner vos réseaux sociaux ou vos créations sur votre profil, mais l'objectif principal de votre profil doit être la rencontre ou la recherche d'amis. Vous pouvez répondre à cet e-mail pour contester votre ban et mettre à jour votre profil afin de réactiver votre compte."
+		},
+		"5H9nMhQacZBD9Zomu7Tbt9": {
+			"name": "Compte duplique",
+			"details": "Compte duplique. La création de plusieurs comptes Flirtual n'est pas autorisée. Ce compte a été désactivé, mais vous pouvez toujours utiliser votre autre compte. Si vous pensez avoir été banni par erreur, ou si vous souhaitez que votre autre compte soit désactivé à la place de celui-ci, veuillez répondre à cet e-mail."
+		}
 	}
 }
