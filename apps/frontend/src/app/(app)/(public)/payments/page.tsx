@@ -186,6 +186,20 @@ export default async function PaymentsPage() {
 						in your refund request.
 					</p>
 				</div>
+				<div className="flex flex-col gap-2">
+					<h1 className="text-2xl font-semibold">Consent to Share Consumption Data with Apple</h1>
+					<p>
+						By using our app and making in-app purchases, you consent to our
+						sharing of data regarding your usage and consumption of purchased
+						content with Apple, as part of our efforts to resolve refund
+						requests. This information may include details about how you have
+						accessed and interacted with the purchased content. The purpose of
+						sharing this data is to help Apple make an informed decision
+						regarding refund requests. We ensure that such data sharing is done
+						in compliance with Apple's policies and only as necessary to process
+						your requests.
+					</p>
+				</div>
 			</div>
 		</ModelCard>
 	);
