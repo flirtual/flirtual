@@ -1582,6 +1582,18 @@
 		"5H9nMhQacZBD9Zomu7Tbt9": {
 			"name": "Compte duplique",
 			"details": "Compte duplique. La création de plusieurs comptes Flirtual n'est pas autorisée. Ce compte a été désactivé, mais vous pouvez toujours utiliser votre autre compte. Si vous pensez avoir été banni par erreur, ou si vous souhaitez que votre autre compte soit désactivé à la place de celui-ci, veuillez répondre à cet e-mail."
+		},
+		"VgQw2st96dZKZotsnYUEaN": {
+			"name": "Évasion de ban",
+			"details": "Évasion de ban. Il semble que vous ayez créé un nouveau compte ou contourné un ban précédent sur Flirtual. Si vous souhaitez contester un ancien ban et réactiver votre compte, vous pouvez répondre à l’e-mail original concernant le bannissement de votre compte."
+		},
+		"muXMqNjneKnwqxT8nqcy4d": {
+			"name": "Utilisateur mineur",
+			"details": "Utilisateur mineur. Vous devez avoir au moins 18 ans pour utiliser Flirtual. Si vous pensez avoir été banni par erreur, vous pouvez répondre à cet e-mail pour contester votre ban. Nous vous enverrons alors un lien sécurisé pour vérifier votre pièce d'identité afin de réactiver votre compte."
+		},
+		"dWDkcjmXQEQRVoXmNkutAB": {
+			"details": "Harcèlement. Si vous souhaitez contester votre ban et réactiver votre compte, veuillez répondre à cet e-mail. Veuillez noter que nous ne sommes pas en mesure de partager les détails des signalements, s'il en existent.",
+			"name": "Harcèlement"
 		}
 	}
 }
