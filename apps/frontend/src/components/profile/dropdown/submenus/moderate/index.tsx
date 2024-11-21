@@ -1,5 +1,5 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
-import type { FC, PropsWithChildren } from "react";
+import { type FC, type PropsWithChildren, Suspense } from "react";
 import { mutate } from "swr";
 
 import { displayName, User } from "~/api/user";
@@ -40,147 +40,149 @@ export const ProfileDropdownModerateSubmenu: FC<
 	return (
 		<DropdownMenuSub>
 			{children}
-			<DropdownMenuSubContent>
-				<DropdownMenuLabel>Moderate</DropdownMenuLabel>
-				<DropdownMenuSeparator />
-				<SuspendAction user={user} />
-				<WarnAction user={user} />
-				{user.indefShadowbannedAt
-					? (
-							<DropdownMenuItem
-								asChild
-								className="text-red-500"
-								onClick={async () => {
-									await User.unindefShadowban(user.id).catch(toasts.addError);
-									mutate(userKey(user.id));
-
-									toasts.add("User unshadowbanned");
-								}}
-							>
-								<button className="w-full gap-2" type="button">
-									<EyeOff className="size-5" />
-									Remove indef. shadowban
-								</button>
-							</DropdownMenuItem>
-						)
-					: (
-							<DropdownMenuItem
-								asChild
-								className="text-red-500"
-								onClick={async () => {
-									await User.indefShadowban(user.id).catch(toasts.addError);
-									mutate(userKey(user.id));
-
-									toasts.add("User indefinitely shadowbanned");
-								}}
-							>
-								<button className="w-full gap-2" type="button">
-									<EyeOff className="size-5" />
-									Indef. shadowban
-								</button>
-							</DropdownMenuItem>
-						)}
-				{session?.user.tags?.includes("admin") && (
-					<>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem
-							asChild
-							className="text-green-500"
-							disabled={!user.bannedAt}
-							onClick={async () => {
-								await User.unsuspend(user.id).catch(toasts.addError);
-								mutate(userKey(user.id));
-
-								toasts.add("User unbanned");
-							}}
-						>
-							<button className="w-full gap-2" type="button">
-								<Scale className="size-5" />
-								Unban
-							</button>
-						</DropdownMenuItem>
-						{user.paymentsBannedAt
-							? (
-									<DropdownMenuItem
-										asChild
-										className="text-red-500"
-										onClick={async () => {
-											await User.paymentsUnban(user.id).catch(toasts.addError);
-											mutate(userKey(user.id));
-
-											toasts.add("User payments unbanned");
-										}}
-									>
-										<button className="w-full gap-2" type="button">
-											<CreditCard className="size-5" />
-											Remove payments ban
-										</button>
-									</DropdownMenuItem>
-								)
-							: (
-									<DropdownMenuItem
-										asChild
-										className="text-red-500"
-										onClick={async () => {
-											await User.paymentsBan(user.id).catch(toasts.addError);
-											mutate(userKey(user.id));
-
-											toasts.add("User payments banned");
-										}}
-									>
-										<button className="w-full gap-2" type="button">
-											<CreditCard className="size-5" />
-											Payments ban
-										</button>
-									</DropdownMenuItem>
-								)}
-						<AlertDialog>
-							<AlertDialogTrigger asChild>
+			<Suspense>
+				<DropdownMenuSubContent>
+					<DropdownMenuLabel>Moderate</DropdownMenuLabel>
+					<DropdownMenuSeparator />
+					<SuspendAction user={user} />
+					<WarnAction user={user} />
+					{user.indefShadowbannedAt
+						? (
 								<DropdownMenuItem
-									className="w-full gap-2 text-red-500"
-									onSelect={(event) => event.preventDefault()}
+									asChild
+									className="text-red-500"
+									onClick={async () => {
+										await User.unindefShadowban(user.id).catch(toasts.addError);
+										mutate(userKey(user.id));
+
+										toasts.add("User unshadowbanned");
+									}}
 								>
-									<Trash2 className="size-5" />
-									Delete account
+									<button className="w-full gap-2" type="button">
+										<EyeOff className="size-5" />
+										Remove indef. shadowban
+									</button>
 								</DropdownMenuItem>
-							</AlertDialogTrigger>
-							<AlertDialogContent>
-								<AlertDialogHeader>
-									<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-								</AlertDialogHeader>
-								<AlertDialogDescription>
-									This action cannot be undone. This action will permanently
-									delete the account
-									{" "}
-									<InlineLink href={urls.profile(user)}>
-										{displayName(user)}
-									</InlineLink>
-									{" "}
-									and it will be unrecoverable.
-								</AlertDialogDescription>
-								<DialogFooter>
-									<AlertDialogCancel asChild>
-										<Button kind="tertiary" size="sm">
-											Cancel
-										</Button>
-									</AlertDialogCancel>
-									<AlertDialogAction asChild>
-										<Button
-											size="sm"
+							)
+						: (
+								<DropdownMenuItem
+									asChild
+									className="text-red-500"
+									onClick={async () => {
+										await User.indefShadowban(user.id).catch(toasts.addError);
+										mutate(userKey(user.id));
+
+										toasts.add("User indefinitely shadowbanned");
+									}}
+								>
+									<button className="w-full gap-2" type="button">
+										<EyeOff className="size-5" />
+										Indef. shadowban
+									</button>
+								</DropdownMenuItem>
+							)}
+					{session?.user.tags?.includes("admin") && (
+						<>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem
+								asChild
+								className="text-green-500"
+								disabled={!user.bannedAt}
+								onClick={async () => {
+									await User.unsuspend(user.id).catch(toasts.addError);
+									mutate(userKey(user.id));
+
+									toasts.add("User unbanned");
+								}}
+							>
+								<button className="w-full gap-2" type="button">
+									<Scale className="size-5" />
+									Unban
+								</button>
+							</DropdownMenuItem>
+							{user.paymentsBannedAt
+								? (
+										<DropdownMenuItem
+											asChild
+											className="text-red-500"
 											onClick={async () => {
-												await User.delete(user.id).catch(toasts.addError);
-												toasts.add("User deleted");
+												await User.paymentsUnban(user.id).catch(toasts.addError);
+												mutate(userKey(user.id));
+
+												toasts.add("User payments unbanned");
 											}}
 										>
-											Delete account
-										</Button>
-									</AlertDialogAction>
-								</DialogFooter>
-							</AlertDialogContent>
-						</AlertDialog>
-					</>
-				)}
-			</DropdownMenuSubContent>
+											<button className="w-full gap-2" type="button">
+												<CreditCard className="size-5" />
+												Remove payments ban
+											</button>
+										</DropdownMenuItem>
+									)
+								: (
+										<DropdownMenuItem
+											asChild
+											className="text-red-500"
+											onClick={async () => {
+												await User.paymentsBan(user.id).catch(toasts.addError);
+												mutate(userKey(user.id));
+
+												toasts.add("User payments banned");
+											}}
+										>
+											<button className="w-full gap-2" type="button">
+												<CreditCard className="size-5" />
+												Payments ban
+											</button>
+										</DropdownMenuItem>
+									)}
+							<AlertDialog>
+								<AlertDialogTrigger asChild>
+									<DropdownMenuItem
+										className="w-full gap-2 text-red-500"
+										onSelect={(event) => event.preventDefault()}
+									>
+										<Trash2 className="size-5" />
+										Delete account
+									</DropdownMenuItem>
+								</AlertDialogTrigger>
+								<AlertDialogContent>
+									<AlertDialogHeader>
+										<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+									</AlertDialogHeader>
+									<AlertDialogDescription>
+										This action cannot be undone. This action will permanently
+										delete the account
+										{" "}
+										<InlineLink href={urls.profile(user)}>
+											{displayName(user)}
+										</InlineLink>
+										{" "}
+										and it will be unrecoverable.
+									</AlertDialogDescription>
+									<DialogFooter>
+										<AlertDialogCancel asChild>
+											<Button kind="tertiary" size="sm">
+												Cancel
+											</Button>
+										</AlertDialogCancel>
+										<AlertDialogAction asChild>
+											<Button
+												size="sm"
+												onClick={async () => {
+													await User.delete(user.id).catch(toasts.addError);
+													toasts.add("User deleted");
+												}}
+											>
+												Delete account
+											</Button>
+										</AlertDialogAction>
+									</DialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
+						</>
+					)}
+				</DropdownMenuSubContent>
+			</Suspense>
 		</DropdownMenuSub>
 	);
 };

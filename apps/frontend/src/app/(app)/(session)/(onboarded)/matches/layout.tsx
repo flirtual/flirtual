@@ -58,7 +58,7 @@ export default async function ConversationsLayout({
 		);
 
 	const userIds = conversations.map(({ userId }) => userId);
-	const userById = groupBy((await User.getMany(userIds)).filter(Boolean), ({ id }) => id);
+	const userById = fromEntries((await User.getMany(userIds)).filter(Boolean).map((user) => [user.id, user]));
 
 	return (
 		<SWRConfig

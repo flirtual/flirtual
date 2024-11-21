@@ -15,6 +15,7 @@ import type {
 	FC
 } from "react";
 import {
+	Suspense,
 	useMemo,
 	useState
 } from "react";
@@ -63,8 +64,30 @@ const UserDisplayName: FC<{ userId?: string } & ComponentProps<"span">> = withSu
 		</span>
 	);
 }, {
-	fallback: ({ className, ...props }) =>
-		<span {...props} className={twMerge("inline-block h-[1em] w-[12em] animate-pulse rounded-lg bg-black-80/25 text-transparent", className)} />
+	fallback: ({ className, userId, ...props }) => (
+		<span {...props} className={twMerge("animate-pulse", className)}>
+			{userId}
+		</span>
+	)
+});
+
+const UserShadowban: FC<{ userId?: string }> = withSuspense(({ userId = "" }) => {
+	const user = useUser(userId);
+	if (!user) return null;
+
+	if (user.indefShadowbannedAt) {
+		return (
+			<span className="font-bold text-red-600">
+				Indefinitely shadowbanned
+			</span>
+		);
+	}
+
+	if (user.shadowbannedAt) {
+		return (
+			<span className="font-bold text-red-600">Shadowbanned</span>
+		);
+	}
 });
 
 const ProfileReportView: React.FC<ProfileReportViewProps> = ({
@@ -144,7 +167,9 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 									</TooltipTrigger>
 									<TooltipContent>Clear reports</TooltipContent>
 								</Tooltip>
-								<ProfileDropdown userId={targetId} />
+								<Suspense>
+									<ProfileDropdown userId={targetId} />
+								</Suspense>
 							</div>
 						)}
 					</div>
@@ -159,18 +184,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 							{" "}
 							reports
 						</span>
-						{/* {reported && reported.indefShadowbannedAt
-							? (
-									<span className="font-bold text-red-600">
-										Indefinitely shadowbanned
-									</span>
-								)
-							: (
-									reported
-									&& reported.shadowbannedAt && (
-										<span className="font-bold text-red-600">Shadowbanned</span>
-									)
-								)} */}
+						<UserShadowban userId={targetId} />
 					</div>
 				</div>
 				<div className="flex flex-col pl-10">
