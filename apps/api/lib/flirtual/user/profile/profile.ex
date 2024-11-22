@@ -117,7 +117,12 @@ defmodule Flirtual.User.Profile do
 
     has_many(:custom_filters, CustomFilter, references: :user_id, foreign_key: :profile_id)
     has_many(:images, Image, references: :user_id, foreign_key: :profile_id)
-    has_many(:prompts, Prompt, references: :user_id, foreign_key: :profile_id)
+
+    has_many(:prompts, Prompt,
+      references: :user_id,
+      foreign_key: :profile_id,
+      preload_order: [asc: :order]
+    )
 
     many_to_many(:blocked, Profile,
       join_through: Profile.Block,
