@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { fromEntries, groupBy } from "remeda";
+import { fromEntries } from "remeda";
 import { unstable_serialize } from "swr";
 import { unstable_serialize as unstable_serialize_infinite } from "swr/infinite";
 
