@@ -2,6 +2,7 @@
 
 import { Link, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { User } from "~/api/user";
@@ -19,7 +20,8 @@ import { ShareIcon } from "../icons/share";
 import { InputText } from "../inputs";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
-	const [session] = useSession();
+	const router = useRouter();
+	const [session, mutateSession] = useSession();
 	const t = useTranslations("profile");
 	const toasts = useToast();
 	const { share, canShare } = useShare();
@@ -54,8 +56,10 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 									await User.update(user.id, {
 										slug
 									})
-										.then(() => {
+										.then((user) => {
 											setProfileLink(slug);
+											router.push(urls.profile(slug));
+											mutateSession({ ...session, user });
 											return toasts.add(t("odd_mad_dog_nurture"));
 										});
 								}}
