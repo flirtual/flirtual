@@ -422,7 +422,7 @@ export const SearchView: React.FC = () => {
 							<InputSelect
 								optional
 								options={UserStatuses.map((status) => ({
-									name: status.split("_").map(capitalize).join(" "),
+									name: status.split("_").map((value) => capitalize(value)).join(" "),
 									id: status
 								}))}
 								placeholder="Any status"
@@ -436,7 +436,7 @@ export const SearchView: React.FC = () => {
 							<InputSelect
 								optional
 								options={userTags.map((tag) => ({
-									name: tag.split("_").map(capitalize).join(" "),
+									name: tag.split("_").map((value) => capitalize(value)).join(" "),
 									id: tag
 								}))}
 								placeholder="Any tags"
@@ -454,7 +454,7 @@ export const SearchView: React.FC = () => {
 						<div className="flex items-center gap-2">
 							<InputSelect
 								options={searchSortKeys.map((sort) => ({
-									name: sort.split("_").map(capitalize).join(" "),
+									name: sort.split("_").map((value) => capitalize(value)).join(" "),
 									id: sort,
 									disabled: sort === "similarity" && searchOptions.search === ""
 								}))}
