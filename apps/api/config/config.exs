@@ -54,6 +54,8 @@ config :flirtual, Flirtual.Elasticsearch,
     }
   }
 
+config :floki, :html_parser, Floki.HTMLParser.FastHtml
+
 config :bodyguard,
   default_error: {:unauthorized, "Unauthorized"}
 

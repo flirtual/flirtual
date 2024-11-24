@@ -73,6 +73,8 @@ defmodule Flirtual.MixProject do
       {:bandit, "~> 1.0-pre"},
       {:plug_cowboy, "~> 2.5"},
       {:libcluster, "~> 3.3"},
+      {:floki, "~> 0.36.0"},
+      {:fast_html, "~> 2.0"},
       {:ex_check, "~> 0.16.0", only: [:dev], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]

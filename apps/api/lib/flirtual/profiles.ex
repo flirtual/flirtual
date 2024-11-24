@@ -79,6 +79,7 @@ defmodule Flirtual.Profiles do
     embedded_schema do
       field(:display_name, :string)
       field(:biography, :string)
+      field(:biography_fragment, :map)
       field(:vrchat, :string, default: "")
       field(:discord, :string, default: "")
       field(:facetime, :string, default: "")
@@ -113,11 +114,40 @@ defmodule Flirtual.Profiles do
       }
     end
 
+    def validate_html(changeset, field) when is_atom(field) do
+      value = get_change(changeset, field)
+
+      case Floki.parse_fragment(value) do
+        {:error, _} -> add_error(changeset, field, "is invalid")
+        {:ok, fragment} -> put_change(changeset, :"#{field}_fragment", fragment)
+      end
+    end
+
+    def validate_html_length(changeset, field, options) when is_atom(field) do
+      case changeset do
+        %{valid?: false} -> changeset
+        _ ->
+          case changed?(changeset, field) do
+            false -> changeset
+            true ->
+              original = get_change(changeset, field)
+              fragment = get_change(changeset, :"#{field}_fragment")
+
+              changeset
+              |> put_change(field, Floki.text(fragment))
+              |> validate_length(field, options)
+              |> put_change(field, original)
+          end
+
+      end
+    end
+
     def changeset(value, _, %{required: required}) do
       value
       |> validate_required(required || [])
       |> validate_length(:display_name, min: 1, max: 32)
-      |> validate_length(:biography, min: 48, max: 10_000)
+      |> validate_html(:biography)
+      |> validate_html_length(:biography, min: 48, max: 10_000)
       |> validate_length(:languages, max: 5)
       |> validate_attributes(:gender_id, "gender")
       |> validate_length(:gender, min: 1, max: 4)
