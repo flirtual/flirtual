@@ -18,7 +18,8 @@ import NativeStartup from "~/components/native-startup";
 import { SessionProvider } from "~/components/session-provider";
 import { TooltipProvider } from "~/components/tooltip";
 import { apiOrigin, siteOrigin } from "~/const";
-import { type DevicePlatform, DeviceProvider } from "~/hooks/use-device";
+import type { DeviceContext, DevicePlatform } from "~/hooks/use-device";
+import { DeviceProvider } from "~/hooks/use-device";
 import { InternationalizationProvider } from "~/hooks/use-internationalization";
 import { ThemeProvider } from "~/hooks/use-theme";
 import { ToastProvider } from "~/hooks/use-toast";
@@ -103,6 +104,19 @@ const fontClassNames = twMerge(montserrat.variable, nunito.variable);
 
 // export const experimental_ppr = true;
 
+function getDevice(headers: Headers): DeviceContext {
+	const userAgent = userAgentFromString(headers.get("user-agent")!);
+	const { os, ua } = userAgent;
+
+	const platform: DevicePlatform
+		= platforms[os.name?.toLowerCase() ?? ""] || "web";
+
+	const native = ua.includes("Flirtual-Native");
+	const vision = ua.includes("Flirtual-Vision");
+
+	return { native, platform, userAgent, vision };
+}
+
 export default async function RootLayout({
 	children
 }: React.PropsWithChildren) {
@@ -110,15 +124,9 @@ export default async function RootLayout({
 	imageOrigins.map((origin) => preconnect(origin));
 
 	const session = await Authentication.getOptionalSession();
+
 	const headers = await getHeaders();
-
-	const userAgent = userAgentFromString(headers.get("user-agent")!);
-
-	const platform: DevicePlatform
-		= platforms[userAgent.os.name?.toLowerCase() ?? ""] || "web";
-
-	const native = userAgent.ua.includes("Flirtual-Native");
-	const vision = userAgent.ua.includes("Flirtual-Vision");
+	const device = getDevice(headers);
 
 	let themeOverride = headers.get("theme") as PreferenceTheme | null;
 	if (themeOverride && !PreferenceThemes.includes(themeOverride))
@@ -126,21 +134,15 @@ export default async function RootLayout({
 
 	const theme
 		= themeOverride
-		|| (vision ? "light" : (session?.user.preferences?.theme ?? "light"));
+		|| (device.vision ? "light" : (session?.user.preferences?.theme ?? "light"));
 
 	const internationalization = await getInternationalization();
-
 	const messages = await getMessages();
 
 	return (
 		<NextIntlClientProvider messages={messages}>
 			<InternationalizationProvider messages={messages} value={internationalization}>
-				<DeviceProvider
-					native={native}
-					platform={platform}
-					userAgent={userAgent}
-					vision={vision}
-				>
+				<DeviceProvider {...device}>
 					<SessionProvider session={session}>
 						<ThemeProvider theme={theme}>
 							<html suppressHydrationWarning>

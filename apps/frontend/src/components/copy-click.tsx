@@ -7,7 +7,9 @@ import type { FC, PropsWithChildren } from "react";
 
 import { useToast } from "~/hooks/use-toast";
 
-export const CopyClick: FC<PropsWithChildren<{ value: string | null }>> = ({
+export type CopyClickProps = PropsWithChildren<{ value: string | null }>;
+
+export const CopyClick: FC<CopyClickProps> = ({
 	value,
 	children
 }) => {
