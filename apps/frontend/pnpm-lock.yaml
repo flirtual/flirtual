@@ -250,8 +250,8 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2(react@19.0.0-rc-65a56d0e-20241020)
       remeda:
-        specifier: ^2.17.3
-        version: 2.17.3
+        specifier: https://pkg.csb.dev/remeda/remeda/commit/e4d5fa60/remeda
+        version: https://pkg.csb.dev/remeda/remeda/commit/e4d5fa60/remeda
       require-in-the-middle:
         specifier: ^7.4.0
         version: 7.4.0
@@ -5540,8 +5540,9 @@ packages:
     resolution: {integrity: sha512-qx+xQGZVsy55CH0a1hiVwHmqjLryfh7wQyF5HO07XJ9f7dQMY/gPQHhlyDkIzJKC+x2fUCpCcUODUUUFrm7SHA==}
     hasBin: true
 
-  remeda@2.17.3:
-    resolution: {integrity: sha512-xyi2rCQkz2j4BEWbWxPw6JCapv1yBuSwr4Uf9BX00AkesAJaiKvc6Il6thsBidwVZAtNiSaCIXvslkKL0ybz8w==}
+  remeda@https://pkg.csb.dev/remeda/remeda/commit/e4d5fa60/remeda:
+    resolution: {tarball: https://pkg.csb.dev/remeda/remeda/commit/e4d5fa60/remeda}
+    version: 2.0.0
 
   replace@1.2.2:
     resolution: {integrity: sha512-C4EDifm22XZM2b2JOYe6Mhn+lBsLBAvLbK8drfUQLTfD1KYl/n3VaW/CDju0Ny4w3xTtegBpg8YNSpFJPUDSjA==}
@@ -12411,7 +12412,7 @@ snapshots:
     dependencies:
       jsesc: 0.5.0
 
-  remeda@2.17.3:
+  remeda@https://pkg.csb.dev/remeda/remeda/commit/e4d5fa60/remeda:
     dependencies:
       type-fest: 4.27.0
 
