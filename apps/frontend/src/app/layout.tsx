@@ -1,5 +1,4 @@
 import NextTopLoader from "@kfarwell/nextjs-toploader";
-import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
@@ -9,6 +8,7 @@ import { userAgentFromString } from "next/server";
 import { preconnect } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
+import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { Authentication } from "~/api/auth";
 import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
 import { AnalyticsProvider } from "~/components/analytics";

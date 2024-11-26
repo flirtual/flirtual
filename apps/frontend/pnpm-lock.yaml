@@ -293,8 +293,8 @@ importers:
         version: 2.11.0
     devDependencies:
       '@ariesclark/eslint-config':
-        specifier: ^3.1.0
-        version: 3.1.0(@eslint-react/eslint-plugin@1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@next/eslint-plugin-next@15.0.3)(@prettier/plugin-xml@3.4.1(prettier@3.3.3))(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint-plugin-react-hooks@5.0.0(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-tailwindcss@3.17.5(tailwindcss@3.4.15(ts-node@10.9.2(@types/node@22.10.0)(typescript@5.7.2))))(eslint@9.15.0(jiti@2.4.0))(jiti@2.4.0)(postcss@8.4.49)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.6.1)
+        specifier: ^3.1.1
+        version: 3.1.1(@eslint-react/eslint-plugin@1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@next/eslint-plugin-next@15.0.3)(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint-plugin-react-hooks@5.0.0(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.15.0(jiti@2.4.0)))(eslint@9.15.0(jiti@2.4.0))(jiti@2.4.0)(postcss@8.4.49)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.6.1)
       '@capacitor/assets':
         specifier: ^3.0.5
         version: 3.0.5(@types/node@22.10.0)(typescript@5.7.2)
@@ -432,8 +432,8 @@ packages:
   '@antfu/utils@0.7.10':
     resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
 
-  '@ariesclark/eslint-config@3.1.0':
-    resolution: {integrity: sha512-HM1GTvQmW73qpK43Aoz3UK0azCUBuSBU52d1K5UcAhTEjbEJQ1KNmmUc3DMYaS5t12Hppv+RyAETUk0dbZTu9w==}
+  '@ariesclark/eslint-config@3.1.1':
+    resolution: {integrity: sha512-9bmdqwS+3Vwxkz27xaSyg0BKpcAHkq7SiueY2eA7QG+xRG/YmxdELBlY9WhoE1EHCi2q7TheMBGZqvXZgk/yiA==}
     peerDependencies:
       '@next/eslint-plugin-next': ^15
       eslint: ^9
@@ -1720,11 +1720,6 @@ packages:
 
   '@prettier/plugin-xml@2.2.0':
     resolution: {integrity: sha512-UWRmygBsyj4bVXvDiqSccwT1kmsorcwQwaIy30yVh8T+Gspx4OlC0shX1y+ZuwXZvgnafmpRYKks0bAu9urJew==}
-
-  '@prettier/plugin-xml@3.4.1':
-    resolution: {integrity: sha512-Uf/6/+9ez6z/IvZErgobZ2G9n1ybxF5BhCd7eMcKqfoWuOzzNUxBipNo3QAP8kRC1VD18TIo84no7LhqtyDcTg==}
-    peerDependencies:
-      prettier: ^3.0.0
 
   '@prisma/instrumentation@5.19.1':
     resolution: {integrity: sha512-VLnzMQq7CWroL5AeaW0Py2huiNKeoMfCH3SUxstdzPrlWQi6UQ9UrfcbUkNHlVFqOMacqy8X/8YtE0kuKDpD9w==}
@@ -3745,12 +3740,6 @@ packages:
     engines: {node: ^18 || >=20}
     peerDependencies:
       eslint: '>=8.44.0'
-
-  eslint-plugin-tailwindcss@3.17.5:
-    resolution: {integrity: sha512-8Mi7p7dm+mO1dHgRHHFdPu4RDTBk69Cn4P0B40vRQR+MrguUpwmKwhZy1kqYe3Km8/4nb+cyrCF+5SodOEmaow==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      tailwindcss: ^3.4.0
 
   eslint-plugin-toml@0.11.1:
     resolution: {integrity: sha512-Y1WuMSzfZpeMIrmlP1nUh3kT8p96mThIq4NnHrYUhg10IKQgGfBZjAWnrg9fBqguiX4iFps/x/3Hb5TxBisfdw==}
@@ -6405,7 +6394,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@antfu/eslint-config@3.10.0(@eslint-react/eslint-plugin@1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@prettier/plugin-xml@3.4.1(prettier@3.3.3))(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint-plugin-react-hooks@5.0.0(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.15.0(jiti@2.4.0)))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)':
+  '@antfu/eslint-config@3.10.0(@eslint-react/eslint-plugin@1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint-plugin-react-hooks@5.0.0(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.15.0(jiti@2.4.0)))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)':
     dependencies:
       '@antfu/install-pkg': 0.4.1
       '@clack/prompts': 0.8.2
@@ -6445,7 +6434,6 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       '@eslint-react/eslint-plugin': 1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)
-      '@prettier/plugin-xml': 3.4.1(prettier@3.3.3)
       eslint-plugin-react-hooks: 5.0.0(eslint@9.15.0(jiti@2.4.0))
       eslint-plugin-react-refresh: 0.4.14(eslint@9.15.0(jiti@2.4.0))
     transitivePeerDependencies:
@@ -6463,9 +6451,9 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@ariesclark/eslint-config@3.1.0(@eslint-react/eslint-plugin@1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@next/eslint-plugin-next@15.0.3)(@prettier/plugin-xml@3.4.1(prettier@3.3.3))(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint-plugin-react-hooks@5.0.0(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-tailwindcss@3.17.5(tailwindcss@3.4.15(ts-node@10.9.2(@types/node@22.10.0)(typescript@5.7.2))))(eslint@9.15.0(jiti@2.4.0))(jiti@2.4.0)(postcss@8.4.49)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.6.1)':
+  '@ariesclark/eslint-config@3.1.1(@eslint-react/eslint-plugin@1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@next/eslint-plugin-next@15.0.3)(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint-plugin-react-hooks@5.0.0(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.15.0(jiti@2.4.0)))(eslint@9.15.0(jiti@2.4.0))(jiti@2.4.0)(postcss@8.4.49)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.6.1)':
     dependencies:
-      '@antfu/eslint-config': 3.10.0(@eslint-react/eslint-plugin@1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@prettier/plugin-xml@3.4.1(prettier@3.3.3))(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint-plugin-react-hooks@5.0.0(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.15.0(jiti@2.4.0)))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)
+      '@antfu/eslint-config': 3.10.0(@eslint-react/eslint-plugin@1.17.1(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint-plugin-react-hooks@5.0.0(eslint@9.15.0(jiti@2.4.0)))(eslint-plugin-react-refresh@0.4.14(eslint@9.15.0(jiti@2.4.0)))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)
       eslint: 9.15.0(jiti@2.4.0)
       eslint-flat-config-utils: 0.4.0
       esno: 4.8.0
@@ -6473,7 +6461,6 @@ snapshots:
       tsup: 8.3.5(jiti@2.4.0)(postcss@8.4.49)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.6.1)
     optionalDependencies:
       '@next/eslint-plugin-next': 15.0.3
-      eslint-plugin-tailwindcss: 3.17.5(tailwindcss@3.4.15(ts-node@10.9.2(@types/node@22.10.0)(typescript@5.7.2)))
     transitivePeerDependencies:
       - '@eslint-react/eslint-plugin'
       - '@eslint/json'
@@ -7927,12 +7914,6 @@ snapshots:
     dependencies:
       '@xml-tools/parser': 1.0.11
       prettier: 2.8.8
-
-  '@prettier/plugin-xml@3.4.1(prettier@3.3.3)':
-    dependencies:
-      '@xml-tools/parser': 1.0.11
-      prettier: 3.3.3
-    optional: true
 
   '@prisma/instrumentation@5.19.1':
     dependencies:
@@ -10329,13 +10310,6 @@ snapshots:
       refa: 0.12.1
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
-
-  eslint-plugin-tailwindcss@3.17.5(tailwindcss@3.4.15(ts-node@10.9.2(@types/node@22.10.0)(typescript@5.7.2))):
-    dependencies:
-      fast-glob: 3.3.2
-      postcss: 8.4.49
-      tailwindcss: 3.4.15(ts-node@10.9.2(@types/node@22.10.0)(typescript@5.7.2))
-    optional: true
 
   eslint-plugin-toml@0.11.1(eslint@9.15.0(jiti@2.4.0)):
     dependencies:
