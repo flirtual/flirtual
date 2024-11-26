@@ -17,7 +17,7 @@ import { InsetPreview } from "~/components/inset-preview";
 import NativeStartup from "~/components/native-startup";
 import { SessionProvider } from "~/components/session-provider";
 import { TooltipProvider } from "~/components/tooltip";
-import { apiOrigin, siteOrigin } from "~/const";
+import { apiOrigin, environment, siteOrigin } from "~/const";
 import type { DeviceContext, DevicePlatform } from "~/hooks/use-device";
 import { DeviceProvider } from "~/hooks/use-device";
 import { InternationalizationProvider } from "~/hooks/use-internationalization";
@@ -26,6 +26,8 @@ import { ToastProvider } from "~/hooks/use-toast";
 import { getInternationalization } from "~/i18n";
 import { resolveTheme } from "~/theme";
 import { imageOrigins, urls } from "~/urls";
+
+import { StagingBanner } from "./staging-banner";
 
 import "~/css/index.css";
 
@@ -175,7 +177,7 @@ export default async function RootLayout({
 									<AppUrlListener />
 								</head>
 								<body className={fontClassNames}>
-
+									{environment === "preview" && <StagingBanner />}
 									<InsetPreview />
 									<NextTopLoader
 										color={["#FF8975", "#E9658B"]}
