@@ -225,7 +225,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					];
 				})
 			) as UseInputForm<T>["fields"],
-		[formId, fieldErrors, submitting, initialValues, values]
+		[values, withCaptcha, captcha, formId, submitting, initialValues, fieldErrors]
 	);
 
 	const changes = entries(fields)
