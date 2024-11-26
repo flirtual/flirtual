@@ -1,12 +1,18 @@
-name: Frontend CI
+name: Continuous Integration (Frontend)
 
 on:
   push:
-    branches: [main]
-    paths: [ "apps/frontend/**", ".github/workflows/lint-frontend.yaml" ]
+    paths: [ "apps/frontend/**", ".github/workflows/frontend.yaml" ]
   pull_request:
-    branches: [main]
-    paths: [ "apps/frontend/**", ".github/workflows/lint-frontend.yaml" ]
+    paths: [ "apps/frontend/**", ".github/workflows/frontend.yaml" ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   eslint:
