@@ -63,6 +63,7 @@ defmodule Flirtual.Profiles do
     @optional [
                 :display_name,
                 :biography,
+                :biography_fragment,
                 :domsub,
                 :monopoly,
                 :country,
@@ -115,20 +116,30 @@ defmodule Flirtual.Profiles do
     end
 
     def validate_html(changeset, field) when is_atom(field) do
-      value = get_change(changeset, field)
+      case changed?(changeset, field) do
+        false ->
+          changeset
 
-      case Floki.parse_fragment(value) do
-        {:error, _} -> add_error(changeset, field, "is invalid")
-        {:ok, fragment} -> put_change(changeset, :"#{field}_fragment", fragment)
+        true ->
+          value = get_change(changeset, field)
+
+          case Floki.parse_fragment(value) do
+            {:error, _} -> add_error(changeset, field, "is invalid")
+            {:ok, fragment} -> put_change(changeset, :"#{field}_fragment", fragment)
+          end
       end
     end
 
     def validate_html_length(changeset, field, options) when is_atom(field) do
       case changeset do
-        %{valid?: false} -> changeset
+        %{valid?: false} ->
+          changeset
+
         _ ->
           case changed?(changeset, field) do
-            false -> changeset
+            false ->
+              changeset
+
             true ->
               original = get_change(changeset, field)
               fragment = get_change(changeset, :"#{field}_fragment")
@@ -138,7 +149,6 @@ defmodule Flirtual.Profiles do
               |> validate_length(field, options)
               |> put_change(field, original)
           end
-
       end
     end
 
