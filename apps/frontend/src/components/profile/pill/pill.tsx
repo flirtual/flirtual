@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { Pencil } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { forwardRef, type MouseEventHandler, useState } from "react";
 import { twMerge } from "tailwind-merge";

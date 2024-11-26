@@ -1,8 +1,8 @@
 import { Clipboard } from "@capacitor/clipboard";
 import { Slot } from "@radix-ui/react-slot";
 import { captureException, captureFeedback, setUser } from "@sentry/nextjs";
-import { motion } from "framer-motion";
 import { Chrome, MoveRight, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import type { FC, PropsWithChildren } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";

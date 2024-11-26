@@ -1,7 +1,7 @@
 "use client";
 
 import { fuzzy, search as fuzzySearch } from "fast-fuzzy";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
