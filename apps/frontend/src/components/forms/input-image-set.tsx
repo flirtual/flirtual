@@ -82,7 +82,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile" } = props;
 	const user = useCurrentUser();
 	const { theme } = useTheme();
-	const { native } = useDevice();
+	const { platform, native } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(
 		null
 	);
@@ -258,6 +258,11 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 													theme={theme}
 													uppy={uppy}
 												/>
+												{platform === "android" && native && (
+													<span className="text-sm opacity-75">
+														We&apos;re aware of issues uploading some images from the Android app. If you&apos;re encountering errors, please try again through your web browser at www.flirtu.al.
+													</span>
+												)}
 											</DialogBody>
 										</DialogContent>
 									</Dialog>
