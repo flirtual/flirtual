@@ -1,5 +1,3 @@
-name: Continuous Integration (Frontend)
-
 on:
   push:
     paths: [ "apps/frontend/**", ".github/workflows/frontend.yaml" ]
