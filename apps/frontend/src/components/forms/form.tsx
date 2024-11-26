@@ -60,7 +60,14 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 						messages={form.errors.map((value) => ({ type: "error", value }))}
 					/>
 				)}
-				{props.withCaptcha && <FormCaptcha ref={captchaReference} />}
+				{props.withCaptcha && (
+					<>
+						<FormCaptcha ref={captchaReference} />
+						<FormInputMessages
+							messages={form.fields.captcha?.errors.map((value) => ({ type: "error", value }))}
+						/>
+					</>
+				)}
 			</FormContext>
 		</form>
 	);

@@ -35,6 +35,13 @@ defmodule Flirtual.Turnstile do
     end
   end
 
+  defp format_error_code("missing-input-secret"), do: "not_configured"
+  defp format_error_code("invalid-input-secret"), do: "not_configured"
+  defp format_error_code("invalid-input-response"), do: "turnstile_invalid"
+  defp format_error_code("timeout-or-duplicate"), do: "turnstile_expired"
+  defp format_error_code("internal-error"), do: "internal_server_error"
+  defp format_error_code(value), do: value
+
   def validate_captcha(changeset, field \\ :captcha) do
     changeset
     |> validate_required(field)
@@ -47,7 +54,7 @@ defmodule Flirtual.Turnstile do
           if Enum.empty?(error_codes) do
             [{field, "is invalid"}]
           else
-            Enum.map(error_codes, &{field, &1})
+            Enum.map(error_codes, &{field, {format_error_code(&1), raw: &1}})
           end
 
         _ ->

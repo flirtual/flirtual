@@ -145,6 +145,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 								] as const
 						)
 					) as FieldErrors<T>;
+
+					setErrors([]);
 					setFieldErrors(fieldErrors);
 
 					return { errors: [], fieldErrors, fields: _values };
@@ -159,7 +161,9 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 							reason.json.details as TranslationValues
 						)
 					];
+
 					setErrors(errors);
+					setFieldErrors({});
 
 					return { errors, fieldErrors: {}, fields: _values };
 				}
@@ -170,6 +174,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					: [reason.message];
 
 				setErrors(errors);
+				setFieldErrors({});
+
 				return { errors, fieldErrors: {}, fields: _values };
 			});
 
@@ -192,7 +198,10 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 	const fields: UseInputForm<T>["fields"] = useMemo(
 		() =>
 			fromEntries(
-				entries(values).map(([key, value]) => {
+				[
+					...entries(values),
+					withCaptcha && ["captcha", captcha]
+				].filter(Boolean).map(([key, value]) => {
 					const id = `${formId}${String(key)}`;
 					const props: InputProps<unknown, unknown> = {
 						disabled: submitting,
