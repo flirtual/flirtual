@@ -1,8 +1,8 @@
 name: Deploy API (staging)
 on:
   push:
-    branches: [ "main" ]
-    paths: 
+    branches: ["main"]
+    paths:
       - "apps/api/**"
       - ".github/workflows/deploy-api-staging.yaml"
   workflow_dispatch:
@@ -41,6 +41,3 @@ jobs:
         working-directory: ./apps/api
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: flirtual
-          SENTRY_PROJECT: api
