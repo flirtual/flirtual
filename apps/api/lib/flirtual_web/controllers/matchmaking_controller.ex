@@ -151,7 +151,8 @@ defmodule FlirtualWeb.MatchmakingController do
         items:
           items
           |> Policy.filter(conn, :read)
-          |> then(&Policy.transform(conn, &1)),
+          |> then(&Policy.transform(conn, &1))
+          |> Enum.take(100),
         thumbnails: thumbnails
       })
     end

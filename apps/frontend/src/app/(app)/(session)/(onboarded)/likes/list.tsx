@@ -14,7 +14,9 @@ function useLikesYou() {
 }
 
 export const LikesList: FC = () => {
-	const { items } = useLikesYou();
+	const { items, count } = useLikesYou();
+
+	const total = (count.love ?? 0) + (count.friend ?? 0);
 
 	if (items.length === 0) return (
 		<div className="flex flex-col gap-1 px-4 desktop:px-0">
@@ -28,6 +30,13 @@ export const LikesList: FC = () => {
 	return (
 		<div className="flex flex-col gap-2 desktop:gap-4">
 			{items.map((item) => <LikeListItem {...item} key={item.profileId} />)}
+			{items.length >= 100 && total > 100 && (
+				<span className="text-center text-sm opacity-75">
+					Like or pass profiles above to load older likes (showing 100/
+					{total}
+					)
+				</span>
+			)}
 		</div>
 	);
 };
