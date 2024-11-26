@@ -76,6 +76,8 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 	const [addDetails, setAddDetails] = useState(false);
 	const throwCount = (errors.get(errorKey) || 0) + 1;
 
+	const native = navigator.userAgent.includes("Flirtual-Native") || navigator.userAgent.includes("Flirtual-Vision");
+
 	const tryAgain = useCallback(() => {
 		if (throwCount >= 4) {
 			location.reload();
@@ -192,17 +194,23 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 									</div>
 									<ul className="ml-4 flex list-disc flex-col gap-2">
 										<li>
-											Check if your
-											{" "}
-											<span className="whitespace-nowrap">
-												<WifiOff className="mr-1 inline-block size-4 shrink-0" />
-												network connection
-											</span>
-											{" "}
-											is stable.
+											<button
+												className="underline"
+												type="button"
+												onClick={() => location.reload()}
+											>
+												<RotateCw className="mr-1 inline-block size-4 shrink-0" />
+												Refresh the
+												{" "}
+												{native ? "app" : "page"}
+											</button>
+											.
 										</li>
+										{native && (<li>Close and re-open the Flirtual app.</li>)}
 										<li>
-											Make sure your app,
+											Make sure your
+											{" "}
+											{native && "app,"}
 											{" "}
 											<span className="whitespace-nowrap">
 												<Chrome className="mr-1 inline-block size-4 shrink-0" />
@@ -219,16 +227,12 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 											are updated to the latest version.
 										</li>
 										<li>
-											Close and re-open Flirtual, or
+											Check your
 											{" "}
-											<button
-												className="underline"
-												type="button"
-												onClick={() => location.reload()}
-											>
-												<RotateCw className="mr-1 inline-block size-4 shrink-0" />
-												refresh the page
-											</button>
+											<span className="whitespace-nowrap">
+												<WifiOff className="mr-1 inline-block size-4 shrink-0" />
+												internet connection
+											</span>
 											.
 										</li>
 										<li>
