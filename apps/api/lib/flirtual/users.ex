@@ -447,6 +447,9 @@ defmodule Flirtual.Users do
   end
 
   def create(attrs, options \\ []) do
+    IO.inspect(attrs)
+    IO.inspect(options)
+
     Repo.transaction(fn ->
       with {:ok, attrs} <-
              cast_arbitrary(
@@ -516,8 +519,9 @@ defmodule Flirtual.Users do
            :ok <- Flag.check_honeypot(user.id, attrs[:url]),
            :ok <- Flag.check_email_flags(user.id, attrs[:email]),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
-           {:ok, _} <- Talkjs.update_user(user),
-           {:ok, _} <- Listmonk.create_subscriber(user),
+           {:ok, _} <- Talkjs.update_user(user) |> IO.inspect(label: "Talkjs.update_user"),
+           {:ok, _} <-
+             Listmonk.create_subscriber(user) |> IO.inspect(label: "Listmonk.create_subscriber"),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
       else

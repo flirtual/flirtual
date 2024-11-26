@@ -17,20 +17,43 @@ defmodule Flirtual.Listmonk do
   end
 
   def fetch(method, pathname, body \\ nil, options \\ []) do
-    raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
-    url = new_url(pathname, Keyword.get(options, :query))
+    case {config(:url), config(:username), config(:password)} do
+      {basename, username, password}
+      when basename in [nil, ""] or username in [nil, ""] or password in [nil, ""] ->
+        log(
+          :warning,
+          [method, pathname],
+          "Requested dropped because Listmonk was not properly configured. If this is unintentional, ensure the following environment variables are set: LISTMONK_URL, LISTMONK_USERNAME and LISTMONK_PASSWORD."
+        )
 
-    log(:debug, [method, url], body)
+        {:error, :not_configured}
 
-    HTTPoison.request(
-      method,
-      url,
-      raw_body,
-      [
-        {"content-type", "application/json"}
-      ],
-      hackney: [basic_auth: {config(:username), config(:password)}]
-    )
+      {basename, username, password} ->
+        raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
+        query = Keyword.get(options, :query)
+
+        url =
+          URI.parse(basename <> "/api/" <> pathname)
+          |> then(
+            &if(is_nil(query),
+              do: &1,
+              else: Map.put(&1, :query, URI.encode_query(query))
+            )
+          )
+          |> URI.to_string()
+
+        log(:debug, [method, url], body)
+
+        HTTPoison.request(
+          method,
+          url,
+          raw_body,
+          [
+            {"content-type", "application/json"}
+          ],
+          hackney: [basic_auth: {username, password}]
+        )
+    end
   end
 
   def get_subscriber_lists(%User{} = user) do
@@ -84,8 +107,12 @@ defmodule Flirtual.Listmonk do
             :error
         end
 
-      _ ->
-        :error
+      {:error, :not_configured} ->
+        {:ok, nil}
+
+      reason ->
+        log(:error, [reason], body)
+        {:error, :unknown}
     end
   end
 

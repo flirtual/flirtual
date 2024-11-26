@@ -47,7 +47,7 @@ defmodule Flirtual.Talkjs do
       {access_token, app_id} when access_token in [nil, ""] or app_id in [nil, ""] ->
         log(
           :warning,
-          [method, url],
+          [method, pathname],
           "Requested dropped because Talk.js was not properly configured. If this is unintentional, set both the TALKJS_APP_ID and TALKJS_ACCESS_TOKEN environment variables."
         )
 
@@ -136,8 +136,11 @@ defmodule Flirtual.Talkjs do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
 
+      {:error, :not_configured} ->
+        {:ok, nil}
+
       _ ->
-        :error
+        {:error, :unknown}
     end
   end
 
