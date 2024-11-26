@@ -48,7 +48,8 @@ defmodule FlirtualWeb.UsersController do
     user_id =
       if(conn.assigns[:session].user.slug === slug,
         do: conn.assigns[:session].user.id,
-        else: User
+        else:
+          User
           |> where([u], u.slug == ^slug)
           |> select([u], u.id)
           |> Repo.one()
@@ -61,7 +62,6 @@ defmodule FlirtualWeb.UsersController do
       |> redirect(to: "/v1/users/#{user_id}")
     end
   end
-
 
   def preview(conn, %{"user_id" => user_id}) do
     user = Users.get(user_id)

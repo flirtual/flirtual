@@ -42,23 +42,23 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
   def get(user: %User{id: user_id}, target: %User{id: target_id}, type: type),
     do: get(user_id: user_id, target_id: target_id, type: type)
 
-    def get(user_id: user_id, target_id: target_id, type: type) do
-      LikesAndPasses
-      |> where(profile_id: ^user_id, target_id: ^target_id, type: ^type)
-      |> with_opposite()
-      |> order_by(:type)
-      |> limit(1)
-      |> Repo.one()
-    end
+  def get(user_id: user_id, target_id: target_id, type: type) do
+    LikesAndPasses
+    |> where(profile_id: ^user_id, target_id: ^target_id, type: ^type)
+    |> with_opposite()
+    |> order_by(:type)
+    |> limit(1)
+    |> Repo.one()
+  end
 
-    def get(user_id: user_id, target_id: target_id) do
-      LikesAndPasses
-      |> where(profile_id: ^user_id, target_id: ^target_id)
-      |> with_opposite()
-      |> order_by(:type)
-      |> limit(1)
-      |> Repo.one()
-    end
+  def get(user_id: user_id, target_id: target_id) do
+    LikesAndPasses
+    |> where(profile_id: ^user_id, target_id: ^target_id)
+    |> with_opposite()
+    |> order_by(:type)
+    |> limit(1)
+    |> Repo.one()
+  end
 
   def get(user: %User{id: user_id}, target: %User{id: target_id}) do
     LikesAndPasses

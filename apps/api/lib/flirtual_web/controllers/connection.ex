@@ -97,7 +97,7 @@ defmodule FlirtualWeb.ConnectionController do
     |> halt()
   end
 
-  def grant(conn, params = %{"redirect" => "off"}) do
+  def grant(conn, %{"redirect" => "off"} = params) do
     conn |> resp(200, "") |> halt()
   end
 
@@ -105,7 +105,7 @@ defmodule FlirtualWeb.ConnectionController do
     grant_error(conn, "auto", error)
   end
 
-  def grant(conn, params = %{"type" => type, "code" => code}) do
+  def grant(conn, %{"type" => type, "code" => code} = params) do
     type = to_atom(type)
 
     redirect_type = params["redirect"] || "auto"

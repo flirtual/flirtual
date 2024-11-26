@@ -66,7 +66,9 @@ defmodule FlirtualWeb.ErrorHelpers do
 
   defp maybe_put_headers(conn, %{headers: headers} = details) do
     {
-      Enum.reduce(headers, conn, fn {key, value}, conn -> put_resp_header(conn, key, value |> to_string()) end),
+      Enum.reduce(headers, conn, fn {key, value}, conn ->
+        put_resp_header(conn, key, value |> to_string())
+      end),
       Map.delete(details, :headers)
     }
   end

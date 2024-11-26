@@ -153,12 +153,10 @@ defmodule FlirtualWeb.PasskeyController do
       |> json(%{})
     else
       %User{} ->
-        {:error,
-         {:unauthorized, :account_banned}}
+        {:error, {:unauthorized, :account_banned}}
 
       _ ->
-        {:error,
-         {:unauthorized, :passkey_login_failed}}
+        {:error, {:unauthorized, :passkey_login_failed}}
     end
   end
 end
