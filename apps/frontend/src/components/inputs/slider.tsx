@@ -4,7 +4,7 @@ import * as SliderPrimitive from "@radix-ui/react-slider";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
-export function Sider({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {
+export function Slider({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {
 	return (
 		<SliderPrimitive.Root
 			className={twMerge(
