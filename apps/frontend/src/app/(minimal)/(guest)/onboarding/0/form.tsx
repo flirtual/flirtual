@@ -146,7 +146,7 @@ export const Onboarding0Form: FC = () => {
 								kind="tertiary"
 								size="sm"
 							>
-								<span>or login</span>
+								<span>or log in</span>
 								<MoveRight className="size-5 desktop:rotate-180" />
 							</ButtonLink>
 						</div>

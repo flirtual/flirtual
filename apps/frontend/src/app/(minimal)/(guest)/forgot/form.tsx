@@ -47,13 +47,16 @@ export const ForgotPasswordForm: React.FC = () => {
 									<InlineLink href={urls.resources.contactDirect}>contact us</InlineLink>
 									.
 								</p>
-								<div className="flex gap-4">
-									<ButtonLink className="w-fit" href={urls.login()} size="sm">
-										Login
-									</ButtonLink>
-
-									<Button className="w-fit" size="sm" onClick={openFreshworks}>
-										Support
+								<div className="flex gap-2">
+									<ButtonLink className="w-44" href={urls.login()} size="sm">Login</ButtonLink>
+									<Button
+										className="flex w-fit flex-row gap-2 opacity-75"
+										kind="tertiary"
+										size="sm"
+										onClick={openFreshworks}
+									>
+										<span>Support</span>
+										<MoveRight className="size-5" />
 									</Button>
 								</div>
 							</>
@@ -85,7 +88,7 @@ export const ForgotPasswordForm: React.FC = () => {
 											kind="tertiary"
 											size="sm"
 										>
-											<span>or login</span>
+											<span>or log in</span>
 											<MoveRight className="size-5 desktop:rotate-180" />
 										</ButtonLink>
 									</div>
