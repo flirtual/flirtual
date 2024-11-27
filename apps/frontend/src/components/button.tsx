@@ -4,7 +4,7 @@ import type { HTMLMotionProps } from "motion/react";
 import { motion } from "motion/react";
 import type { LinkProps } from "next/link";
 import Link from "next/link";
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { isInternalHref } from "~/urls";
@@ -77,8 +77,6 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 		</motion.button>
 	);
 };
-
-Button.displayName = "Button";
 
 const MotionLink = motion(Link);
 

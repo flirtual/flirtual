@@ -1,6 +1,6 @@
 import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { type FC, type PropsWithChildren, useEffect, useRef } from "react";
+import type { FC, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "../icons";
