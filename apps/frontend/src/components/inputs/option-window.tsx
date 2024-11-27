@@ -4,7 +4,6 @@ import {
 	type EventHandler,
 	type FC,
 	type FocusEvent,
-	forwardRef,
 	type KeyboardEvent,
 	type MouseEvent,
 	type SyntheticEvent,
@@ -123,15 +122,14 @@ export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	);
 };
 
-export const InputOptionWindow = forwardRef<
-	HTMLDivElement,
-	InputOptionWindowProps<unknown>
->((props, reference) => {
+export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 	const {
 		options,
 		onOptionClick,
 		onOptionFocus,
 		OptionItem = DefaultOptionItem,
+		onFocusCapture,
+		onKeyDown,
 		...elementProps
 	} = props;
 	const optionsReference = useRef<HTMLDivElement>(null);
@@ -174,20 +172,20 @@ export const InputOptionWindow = forwardRef<
 
 	return (
 		<div
+			{...elementProps}
 			className={twMerge(
 				"focusable-within flex max-h-72 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-60",
 				elementProps.className
 			)}
-			ref={reference}
 			tabIndex={-1}
 			onFocusCapture={(event) => {
-				props.onFocusCapture?.(event);
+				onFocusCapture?.(event);
 
 				if (event.currentTarget !== event.target) return;
 				focusOption(0);
 			}}
 			onKeyDown={(event) => {
-				props.onKeyDown?.(event);
+				onKeyDown?.(event);
 				focusElementByKeydown(event);
 
 				switch (event.key) {
@@ -226,6 +224,4 @@ export const InputOptionWindow = forwardRef<
 			</div>
 		</div>
 	);
-});
-
-InputOptionWindow.displayName = "InputOptionWindow";
+}

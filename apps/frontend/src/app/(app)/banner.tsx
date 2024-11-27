@@ -2,8 +2,7 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import { MoveRight } from "lucide-react";
-import type { FC, PropsWithChildren, ReactNode } from "react";
-import { forwardRef } from "react";
+import type { FC, PropsWithChildren, ReactNode, RefAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink, type InlineLinkProps } from "~/components/inline-link";
@@ -50,21 +49,18 @@ export const SelfLink: FC<
 export type BannerProps = PropsWithChildren<{
 	className?: string;
 	icon?: ReactNode;
-}>;
+}> & RefAttributes<HTMLDivElement>;
 
 const defaultBannerIcon = <MoveRight />;
 
-export const Banner = forwardRef<
-	HTMLDivElement,
-	BannerProps
->(({ children, className, icon = defaultBannerIcon }, reference) => {
+export function Banner({ children, className, ref, icon = defaultBannerIcon }: BannerProps) {
 	return (
 		<div
 			className={twMerge(
 				"flex w-full justify-center bg-black-70 text-white-20",
 				className
 			)}
-			ref={reference}
+			ref={ref}
 		>
 			<div className="relative flex w-full items-center justify-center px-8 py-4 pt-[max(calc(env(safe-area-inset-top,0rem)+0.5rem),1rem)]">
 				<div className="relative flex items-center gap-4 font-montserrat leading-none desktop:text-lg">
@@ -74,9 +70,7 @@ export const Banner = forwardRef<
 			</div>
 		</div>
 	);
-});
-
-Banner.displayName = "Banner";
+}
 
 export const AppBanner: FC = () => {
 	const [session] = useSession();

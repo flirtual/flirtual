@@ -1,15 +1,12 @@
 import { Share, Share2 } from "lucide-react";
-import { forwardRef } from "react";
 
 import { useDevice } from "~/hooks/use-device";
 
 import type { IconComponentProps } from ".";
 
-export const ShareIcon = forwardRef<SVGSVGElement, IconComponentProps>(
-	(props, reference) => {
-		const { platform } = useDevice();
-		return platform === "apple"
-			? (<Share {...props} ref={reference} />)
-			: (<Share2 {...props} ref={reference} />);
-	}
-);
+export function ShareIcon(props: IconComponentProps) {
+	const { platform } = useDevice();
+	const Component = platform === "apple" ? Share : Share2;
+
+	return <Component {...props} />;
+}

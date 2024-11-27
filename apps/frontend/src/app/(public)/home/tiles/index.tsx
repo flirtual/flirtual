@@ -2,11 +2,13 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import { useTranslations } from "next-intl";
+import type {
+	FC,
+	PropsWithChildren,
+	RefAttributes
+} from "react";
 import {
 	createContext,
-	type FC,
-	forwardRef,
-	type PropsWithChildren,
 	use,
 	useMemo,
 	useState
@@ -37,10 +39,7 @@ export const TileProvider: FC<PropsWithChildren> = ({ children }) => {
 	);
 };
 
-export const Tile = forwardRef<
-	HTMLElement,
-	Omit<React.ComponentProps<"section">, "id"> & TileProps
->(({ className, children, id, ...props }, reference) => {
+export function Tile({ className, children, id, ...props }: Omit<React.ComponentProps<"section">, "id"> & RefAttributes<HTMLElement> & TileProps) {
 	const { tile } = use(TileContext);
 
 	return (
@@ -52,14 +51,11 @@ export const Tile = forwardRef<
 			)}
 			data-tile={id}
 			data-tile-active={tile === id ? "" : undefined}
-			ref={reference}
 		>
 			{children}
 		</section>
 	);
-});
-
-Tile.displayName = "Tile";
+}
 
 export const TileAnchor: FC<PropsWithChildren<TileProps>> = ({
 	id,

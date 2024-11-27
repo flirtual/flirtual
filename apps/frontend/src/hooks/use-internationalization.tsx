@@ -3,7 +3,8 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import type { AbstractIntlMessages } from "next-intl";
-import { createContext, forwardRef, type PropsWithChildren, use } from "react";
+import type { PropsWithChildren, RefAttributes } from "react";
+import { createContext, use } from "react";
 
 import type { getInternationalization } from "~/i18n";
 
@@ -17,23 +18,24 @@ export const InternationalizationContext = createContext(
 	{} as Internationalization
 );
 
-export const InternationalizationProvider = forwardRef<
-	HTMLHtmlElement,
-	PropsWithChildren<{ value: Internationalization; messages: AbstractIntlMessages }>
->(({ children, value, messages, ...props }, reference) => {
+export interface InternationalizationProviderProps extends PropsWithChildren, RefAttributes<HTMLHtmlElement> {
+	value: Internationalization;
+	messages: AbstractIntlMessages;
+}
+
+export function InternationalizationProvider({ children, value, messages, ...props }: InternationalizationProviderProps) {
 	return (
 		<InternationalizationContext value={value}>
 			<Slot
 				{...props}
 				data-country={value.country || "xx"}
 				lang={value.locale.current}
-				ref={reference}
 			>
 				{children}
 			</Slot>
 		</InternationalizationContext>
 	);
-});
+}
 
 InternationalizationProvider.displayName = "InternationalizationProvider";
 

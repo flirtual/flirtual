@@ -2,7 +2,8 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { createContext, forwardRef, use, useCallback, useEffect, useMemo } from "react";
+import type { PropsWithChildren, RefAttributes } from "react";
+import { createContext, use, useCallback, useEffect, useMemo } from "react";
 
 import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
 import { resolveTheme, type Theme } from "~/theme";
@@ -24,13 +25,12 @@ export function useTheme() {
 	return use(Context);
 }
 
-export const ThemeProvider = forwardRef<
-	HTMLHtmlElement,
-	{
-		children: React.ReactNode;
-		theme: PreferenceTheme;
-	}
->(({ children, theme: sessionTheme, ...props }, reference) => {
+export interface ThemeProviderProps extends PropsWithChildren, RefAttributes<HTMLHtmlElement> {
+	children: React.ReactNode;
+	theme: PreferenceTheme;
+}
+
+export function ThemeProvider({ children, theme: sessionTheme, ...props }: ThemeProviderProps) {
 	const [session, mutateSession] = useSession();
 	const { vision } = useDevice();
 	const router = useRouter();
@@ -90,11 +90,11 @@ export const ThemeProvider = forwardRef<
 				setTheme
 			}), [sessionTheme, setTheme, theme])}
 		>
-			<Slot {...props} data-theme={theme} ref={reference}>
+			<Slot {...props} data-theme={theme}>
 				{children}
 			</Slot>
 		</Context>
 	);
-});
+}
 
 ThemeProvider.displayName = "ThemeProvider";

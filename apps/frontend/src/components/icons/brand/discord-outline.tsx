@@ -1,13 +1,10 @@
-import { forwardRef } from "react";
-
 import type { IconComponentProps } from "..";
 
-export const DiscordOutlineIcon = forwardRef<SVGSVGElement, IconComponentProps>(
-	(props, reference) => (
+export function DiscordOutlineIcon(props: IconComponentProps) {
+	return (
 		<svg
 			{...props}
 			fill="none"
-			ref={reference}
 			role="img"
 			stroke="currentColor"
 			strokeWidth={2}
@@ -20,5 +17,5 @@ export const DiscordOutlineIcon = forwardRef<SVGSVGElement, IconComponentProps>(
 				strokeLinejoin="round"
 			/>
 		</svg>
-	)
-);
+	);
+}

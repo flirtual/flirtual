@@ -2,12 +2,11 @@ import { forwardRef } from "react";
 
 import type { IconComponentProps } from "..";
 
-export const VRChatIcon = forwardRef<SVGSVGElement, IconComponentProps>(
-	(props, reference) => (
+export function VRChatIcon(props: IconComponentProps) {
+	return (
 		<svg
 			{...props}
 			fill="currentColor"
-			ref={reference}
 			role="img"
 			viewBox="0 0 447.296 447.296"
 			xmlns="http://www.w3.org/2000/svg"
@@ -18,5 +17,5 @@ export const VRChatIcon = forwardRef<SVGSVGElement, IconComponentProps>(
 				fill="#fff"
 			/>
 		</svg>
-	)
-);
+	);
+}

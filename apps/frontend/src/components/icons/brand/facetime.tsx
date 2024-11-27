@@ -1,13 +1,10 @@
-import { forwardRef } from "react";
-
 import type { IconComponentProps } from "..";
 
-export const FaceTimeIcon = forwardRef<SVGSVGElement, IconComponentProps>(
-	(props, reference) => (
+export function FaceTimeIcon(props: IconComponentProps) {
+	return (
 		<svg
 			{...props}
 			fill="currentColor"
-			ref={reference}
 			role="img"
 			viewBox="0 0 417.1 261.5"
 			xmlns="http://www.w3.org/2000/svg"
@@ -18,5 +15,5 @@ export const FaceTimeIcon = forwardRef<SVGSVGElement, IconComponentProps>(
 				fill="#fff"
 			/>
 		</svg>
-	)
-);
+	);
+}

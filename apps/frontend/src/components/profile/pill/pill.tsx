@@ -3,41 +3,42 @@
 import { Pencil } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { forwardRef, type MouseEventHandler, useState } from "react";
+import type { MouseEventHandler, PropsWithChildren, RefAttributes } from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "../../icons";
 
-export interface PillProps {
+export interface PillProps extends RefAttributes<HTMLElement>, PropsWithChildren {
 	Icon?: IconComponent;
 	active?: boolean;
 	href?: string;
-	children: React.ReactNode;
 	hocusable?: boolean;
 	small?: boolean;
 	className?: string;
 	onClick?: MouseEventHandler<HTMLElement>;
 }
 
-export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
+export function Pill(props: PillProps) {
 	const {
 		Icon,
 		active = false,
 		hocusable = true,
 		small = false,
 		href,
+		className,
+		children,
 		onClick,
 		...elementProps
 	} = props;
-	const Element = href ? Link : onClick ? "button" : "div";
+	const Component = href ? Link : onClick ? "button" : "div";
 
 	const [hocused, setHocused] = useState(false);
 
 	return (
 		<AnimatePresence>
-			<Element
-				ref={reference as any}
-				{...elementProps}
+			<Component
+				{...elementProps as any}
 				className={twMerge(
 					"group pointer-events-auto relative flex h-8 items-center gap-2 rounded-xl font-montserrat text-sm font-medium shadow-brand-1 transition-all vision:!bg-white-30/70 desktop:text-base",
 					(href || onClick) && "cursor-pointer",
@@ -45,7 +46,7 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 						? "bg-brand-gradient text-theme-overlay"
 						: "bg-white-30 text-black-70 dark:bg-black-60 dark:text-white-20",
 					small ? "px-3 py-1 text-sm" : " px-4 py-1",
-					props.className
+					className
 				)}
 				data-active={active ? "" : undefined}
 				href={href!}
@@ -66,7 +67,7 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 					initial={{ marginRight: 0 }}
 					transition={{ type: "tween" }}
 				>
-					{props.children}
+					{children}
 				</motion.div>
 				{href && hocused && (
 					<motion.div
@@ -79,9 +80,7 @@ export const Pill = forwardRef<HTMLElement, PillProps>((props, reference) => {
 						<Pencil className=" size-4" />
 					</motion.div>
 				)}
-			</Element>
+			</Component>
 		</AnimatePresence>
 	);
-});
-
-Pill.displayName = "Pill";
+}

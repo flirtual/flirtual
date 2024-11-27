@@ -1,20 +1,18 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import { forwardRef, useEffect } from "react";
+import type { PropsWithChildren, RefAttributes } from "react";
+import { useEffect } from "react";
 import { mutate, SWRConfig } from "swr";
 
 import type { Session } from "~/api/auth";
 import { sessionKey } from "~/swr";
 
-export type SessionProviderProps = React.PropsWithChildren<{
+export interface SessionProviderProps extends PropsWithChildren, RefAttributes<HTMLHtmlElement> {
 	session: Session | null;
-}>;
+}
 
-export const SessionProvider = forwardRef<
-	HTMLHtmlElement,
-	SessionProviderProps
->(({ children, session, ...props }, reference) => {
+export function SessionProvider({ children, session, ...props }: SessionProviderProps) {
 	useEffect(() => void mutate(sessionKey(), session), [session]);
 
 	return (
@@ -28,12 +26,10 @@ export const SessionProvider = forwardRef<
 			<Slot
 				{...props}
 				data-user={session?.user?.id ? session.user.id : undefined}
-				ref={reference}
+
 			>
 				{children}
 			</Slot>
 		</SWRConfig>
 	);
-});
-
-SessionProvider.displayName = "SessionProvider";
+}

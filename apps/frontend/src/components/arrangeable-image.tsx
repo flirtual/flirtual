@@ -2,7 +2,7 @@
 
 import { Expand, MoreHorizontal, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { forwardRef } from "react";
+import type { RefAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useCurrentSortableItem } from "./forms/sortable";
@@ -33,10 +33,7 @@ export const ArrangeableImagePreview: React.FC<
 	);
 };
 
-export const ArrangeableImage = forwardRef<
-	HTMLDivElement,
-	ArrangeableImageProps
->(({ src, id, onDelete, onFullscreen, ...props }, reference) => {
+export function ArrangeableImage({ src, id, onDelete, onFullscreen, ...props }: ArrangeableImageProps & RefAttributes<HTMLDivElement>) {
 	const t = useTranslations("arrangeable_image");
 	const currentId = useCurrentSortableItem();
 	const dragging = currentId === id;
@@ -44,7 +41,6 @@ export const ArrangeableImage = forwardRef<
 	return (
 		<div
 			className="group relative aspect-square max-h-full w-full shrink-0"
-			ref={reference}
 			{...props}
 		>
 			<ArrangeableImagePreview
@@ -82,4 +78,4 @@ export const ArrangeableImage = forwardRef<
 			</div>
 		</div>
 	);
-});
+}
