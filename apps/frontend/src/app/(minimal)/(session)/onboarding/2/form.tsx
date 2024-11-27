@@ -101,7 +101,9 @@ export const Onboarding2Form: FC = () => {
 												? "any age"
 												: max === absMaxAge
 													? `${min}+`
-													: `${min}-${max}`
+													: min === max
+														? min
+														: `${min}-${max}`
 										}
 									>
 										Age range

@@ -185,7 +185,9 @@ export const MatchmakingForm: FC = () => {
 												? "any age"
 												: max === absMaxAge
 													? `${min}+`
-													: `${min}-${max}`
+													: min === max
+														? min
+														: `${min}-${max}`
 										}
 									>
 										Age range

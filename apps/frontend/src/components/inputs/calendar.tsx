@@ -344,8 +344,9 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 					<table className="w-full text-black-70 dark:text-white-10">
 						<thead>
 							<tr>
-								{weekNames.map((name) => (
-									<th className="size-10 font-extrabold" key={name}>
+								{weekNames.map((name, index) => (
+									// eslint-disable-next-line react/no-array-index-key
+									<th className="size-10 font-extrabold" key={index}>
 										{name}
 									</th>
 								))}
