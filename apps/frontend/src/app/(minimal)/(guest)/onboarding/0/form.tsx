@@ -8,6 +8,7 @@ import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
+import { InlineLink } from "~/components/inline-link";
 import {
 	InputCheckbox,
 	InputLabel,
@@ -87,21 +88,23 @@ export const Onboarding0Form: FC = () => {
 										<InputLabelHint className="max-w-[34ch]">
 											to the
 											{" "}
-											<a
+											<InlineLink
 												className="underline"
+												highlight={false}
 												href={urls.resources.termsOfService}
 											>
 												Terms of Service
-											</a>
+											</InlineLink>
 											{" "}
 											&
 											{" "}
-											<a
+											<InlineLink
 												className="underline"
+												highlight={false}
 												href={urls.resources.privacyPolicy}
 											>
 												Privacy Policy
-											</a>
+											</InlineLink>
 											{" "}
 											and I&apos;m at least 18 years of age
 										</InputLabelHint>

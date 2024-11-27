@@ -1,11 +1,13 @@
 "use client";
 
+import { MoveRight } from "lucide-react";
 import { useState } from "react";
 
 import { Authentication } from "~/api/auth";
 import { Button, ButtonLink } from "~/components/button";
-import { Form } from "~/components/forms";
+import { Form, FormInputMessages } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
+import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
@@ -20,13 +22,14 @@ export const ForgotPasswordForm: React.FC = () => {
 				email: ""
 			}}
 			className="flex flex-col gap-8"
+			formErrorMessages={false}
 			requireChange={["email"]}
 			onSubmit={async ({ email }) => {
 				await Authentication.resetPassword(email);
 				setSuccess(true);
 			}}
 		>
-			{({ FormField, fields }) =>
+			{({ FormField, fields, errors }) =>
 				success
 					? (
 							<>
@@ -39,7 +42,10 @@ export const ForgotPasswordForm: React.FC = () => {
 									<br />
 									<br />
 									If you don&apos;t see it, check your spam/junk/trash folders, and
-									if you still don&apos;t see it, contact us.
+									if you still don&apos;t see it,
+									{" "}
+									<InlineLink href={urls.resources.contactDirect}>contact us</InlineLink>
+									.
 								</p>
 								<div className="flex gap-4">
 									<ButtonLink className="w-fit" href={urls.login()} size="sm">
@@ -61,7 +67,7 @@ export const ForgotPasswordForm: React.FC = () => {
 								<FormField name="email">
 									{(field) => (
 										<>
-											<InputLabel>Account email</InputLabel>
+											<InputLabel>Email address</InputLabel>
 											<InputText
 												{...field.props}
 												autoComplete="email"
@@ -70,7 +76,23 @@ export const ForgotPasswordForm: React.FC = () => {
 										</>
 									)}
 								</FormField>
-								<FormButton>Submit</FormButton>
+								<div className="flex flex-col gap-4">
+									<div className="flex gap-2 desktop:flex-row-reverse">
+										<FormButton className="w-44" size="sm" />
+										<ButtonLink
+											className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
+											href={urls.login()}
+											kind="tertiary"
+											size="sm"
+										>
+											<span>or login</span>
+											<MoveRight className="size-5 desktop:rotate-180" />
+										</ButtonLink>
+									</div>
+									<FormInputMessages
+										messages={errors.map((value) => ({ type: "error", value }))}
+									/>
+								</div>
 							</>
 						)}
 		</Form>

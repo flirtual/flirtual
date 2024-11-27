@@ -1,7 +1,10 @@
 "use client";
 
+import type { HTMLMotionProps } from "motion/react";
+import { motion } from "motion/react";
+import type { LinkProps } from "next/link";
 import Link from "next/link";
-import { forwardRef } from "react";
+import type { FC, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { isInternalHref } from "~/urls";
@@ -9,7 +12,7 @@ import { isInternalHref } from "~/urls";
 import type { IconComponent } from "./icons";
 
 const defaultClassName = twMerge(
-	"group/button focusable flex shrink-0 items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:cursor-not-allowed aria-disabled:brightness-90"
+	"group/button focusable flex shrink-0 items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:opacity-75"
 );
 
 const sizes = {
@@ -32,38 +35,34 @@ export interface ButtonProps {
 	kind?: ButtonKind;
 	disabled?: boolean;
 	Icon?: IconComponent;
-
 	iconClassName?: string;
 }
 
-export const Button = forwardRef<
-	HTMLButtonElement,
-	ButtonProps & React.ComponentProps<"button">
->((props, reference) => {
+export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 	const {
 		size = "base",
 		kind = "primary",
 		disabled,
 		Icon,
 		iconClassName,
+		children,
 		...elementProps
 	} = props;
 
 	return (
-		<button
-			ref={reference}
+		<motion.button
 			{...elementProps}
 			className={twMerge(
 				defaultClassName,
 				size && sizes[size],
 				kind && kinds[kind],
 				Icon && "flex gap-4",
-				disabled && "cursor-not-allowed opacity-75",
 				elementProps.className
 			)}
 			aria-disabled={disabled}
 			disabled={disabled}
 			type={elementProps.type ?? "button"}
+			whileTap={{ scale: disabled ? 1 : 0.97 }}
 		>
 			{Icon && (
 				<Icon
@@ -74,16 +73,16 @@ export const Button = forwardRef<
 					)}
 				/>
 			)}
-			{elementProps.children}
-		</button>
+			{children as ReactNode}
+		</motion.button>
 	);
-});
+};
 
 Button.displayName = "Button";
 
-export const ButtonLink: React.FC<ButtonProps & Parameters<typeof Link>[0]> = (
-	props
-) => {
+const MotionLink = motion(Link);
+
+export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps) {
 	const {
 		size = "base",
 		kind = "primary",
@@ -92,11 +91,12 @@ export const ButtonLink: React.FC<ButtonProps & Parameters<typeof Link>[0]> = (
 		href,
 		Icon,
 		iconClassName,
+		children,
 		...elementProps
 	} = props;
 
 	return (
-		<Link
+		<MotionLink
 			{...elementProps}
 			className={twMerge(
 				defaultClassName,
@@ -108,6 +108,7 @@ export const ButtonLink: React.FC<ButtonProps & Parameters<typeof Link>[0]> = (
 			aria-disabled={disabled}
 			href={href}
 			target={(target ?? isInternalHref(href)) ? "_self" : "_blank"}
+			whileTap={{ scale: disabled ? 1 : 0.97 }}
 			onClick={(event) => {
 				if (disabled) return event.preventDefault();
 				if (elementProps.onClick) elementProps.onClick(event);
@@ -122,7 +123,7 @@ export const ButtonLink: React.FC<ButtonProps & Parameters<typeof Link>[0]> = (
 					)}
 				/>
 			)}
-			{elementProps.children}
-		</Link>
+			{children as ReactNode}
+		</MotionLink>
 	);
 };

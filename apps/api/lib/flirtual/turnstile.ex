@@ -1,5 +1,5 @@
 defmodule Flirtual.Turnstile do
-  import Ecto.Changeset, only: [validate_change: 3, validate_required: 2]
+  import Ecto.Changeset, only: [validate_change: 3, validate_required: 3]
 
   defp config(key) do
     Application.get_env(:flirtual, Flirtual.Turnstile)[key]
@@ -44,7 +44,7 @@ defmodule Flirtual.Turnstile do
 
   def validate_captcha(changeset, field \\ :captcha) do
     changeset
-    |> validate_required(field)
+    |> validate_required(field, message: "turnstile_required")
     |> validate_change(field, fn _, value ->
       case validate(value) do
         %{"success" => true} ->

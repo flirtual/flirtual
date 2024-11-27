@@ -21,7 +21,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 	const t = await getTranslations();
 
 	return (
-		<ModelCard className="gap-4 desktop:w-full desktop:max-w-lg" title="Log in">
+		<ModelCard branded className="shrink-0 desktop:max-w-xl" title="Log in">
 			{error && error !== "access_denied" && (
 				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
 					<span className="font-montserrat text-lg text-white-10">

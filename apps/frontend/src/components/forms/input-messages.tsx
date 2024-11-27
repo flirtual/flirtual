@@ -1,4 +1,5 @@
 import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { type FC, type PropsWithChildren, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -32,51 +33,59 @@ const formMessageSize: Record<FormMessageSize, string> = {
 	md: "text-lg"
 };
 
-export type FormMessageProps = PropsWithChildren<Omit<FormMessage, "value">>;
+const formMessageIconSize: Record<FormMessageSize, string> = {
+	sm: "mt-1 size-4",
+	md: "mt-0.5 size-6"
+};
+
+export type FormMessageProps = PropsWithChildren<{ className?: string } & Omit<FormMessage, "value">>;
 
 export const FormMessage: FC<FormMessageProps> = (props) => {
-	const { type, size = "md", children } = props;
+	const { type, size = "md", className, children } = props;
 	const Icon = formMessageIcon[type];
-	const reference = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		if (reference.current) {
-			reference.current.scrollIntoView({
-				behavior: "smooth",
-				block: "center",
-				inline: "center"
-			});
-		}
-	}, [children]);
 
 	return (
-		<div
+		<motion.div
 			className={twMerge(
 				"select-children flex gap-2 font-nunito",
 				formMessageStyle[type],
-				formMessageSize[size]
+				formMessageSize[size],
+				className
 			)}
-			ref={reference}
+			ref={(element) =>
+				element?.scrollIntoView({
+					behavior: "smooth",
+					block: "center",
+					inline: "center"
+				})}
+			animate={{ opacity: 1, height: "auto" }}
+			exit={{ opacity: 0, height: 0 }}
+			initial={{ opacity: 0, height: 0 }}
 		>
-			<Icon className="mt-0.5 size-6 shrink-0" />
+			<Icon className={twMerge("shrink-0", formMessageIconSize[size])} />
 			<span>{children}</span>
-		</div>
+		</motion.div>
 	);
 };
 
 export interface FormInputMessagesProps {
 	messages?: Array<FormMessage>;
+	className?: string;
 }
 
 export const FormInputMessages: React.FC<FormInputMessagesProps> = ({
-	messages
+	messages,
+	className
 }) => {
 	const message = messages?.[0];
-	if (!message) return null;
 
 	return (
-		<FormMessage {...message}>
-			{message.value}
-		</FormMessage>
+		<AnimatePresence>
+			{message && (
+				<FormMessage {...message} className={className}>
+					{message.value}
+				</FormMessage>
+			)}
+		</AnimatePresence>
 	);
 };

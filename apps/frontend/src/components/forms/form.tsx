@@ -61,12 +61,13 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 					/>
 				)}
 				{props.withCaptcha && (
-					<>
+					<div className="flex flex-col gap-2">
 						<FormCaptcha ref={captchaReference} />
 						<FormInputMessages
+							className="desktop:mx-auto desktop:w-fit desktop:text-center"
 							messages={form.fields.captcha?.errors.map((value) => ({ type: "error", value }))}
 						/>
-					</>
+					</div>
 				)}
 			</FormContext>
 		</form>

@@ -10,6 +10,7 @@ import {
 	ConnectionMetadata,
 	type ConnectionType
 } from "~/api/connections";
+import { Button, ButtonLink } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
 
@@ -29,33 +30,34 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 	type
 }) => {
 	const location = useLocation();
+	location.search = "";
+
 	const router = useRouter();
 	const { native } = useDevice();
+
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 
-	return (
-		<button
-			className="flex items-center justify-center gap-4 rounded-lg px-4 py-2 text-white-20 shadow-brand-1"
-			style={{ backgroundColor: color }}
-			type="button"
-			onClick={async () => {
-				const url = new URL(location.href);
-				url.search = "";
+	const Component = native ? Button : ButtonLink;
+	const href = Connection.authorizeUrl({
+		type,
+		prompt: "consent",
+		next: location.href
+	});
 
-				if (!native) {
-					return router.push(
-						Connection.authorizeUrl({
-							type,
-							prompt: "consent",
-							next: url.href
-						})
-					);
-				}
+	return (
+		<Component
+			className="gap-4 bg-none"
+			href={href}
+			size="sm"
+			style={{ backgroundColor: color }}
+			target="_self"
+			onClick={async () => {
+				if (!native) return;
 
 				const { authorizeUrl } = await Connection.authorize({
 					type,
 					prompt: "consent",
-					next: url.href
+					next: location.href
 				});
 
 				await InAppBrowser.addListener("urlChangeEvent", async (event) => {
@@ -97,7 +99,7 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 				{" "}
 				{label[type]}
 			</span>
-		</button>
+		</Component>
 	);
 };
 

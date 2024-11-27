@@ -1,15 +1,16 @@
 "use client";
 
+import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
 
 import { Authentication } from "~/api/auth";
 import { isWretchError } from "~/api/common";
+import { ButtonLink } from "~/components/button";
 import { Form, FormButton } from "~/components/forms";
-import { FormAlternativeActionLink } from "~/components/forms/alt-action-link";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
-import { InputLabel, InputText } from "~/components/inputs";
+import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
@@ -92,6 +93,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 	return (
 		<>
 			<Form
+				withCaptcha
 				fields={{
 					login: "",
 					password: "",
@@ -153,7 +155,16 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						<FormField name="password">
 							{({ props, labelProps }) => (
 								<>
-									<InputLabel {...labelProps}>Password</InputLabel>
+									<InputLabel
+										{...labelProps}
+										hint={(
+											<InputLabelHint>
+												<InlineLink href={urls.forgotPassword}>Forgot your password?</InlineLink>
+											</InputLabelHint>
+										)}
+									>
+										Password
+									</InputLabel>
 									<InputText
 										{...props}
 										autoComplete="current-password"
@@ -163,29 +174,35 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 							)}
 						</FormField>
 						<div className="flex flex-col gap-4">
-							<FormButton>Log in</FormButton>
+							<div className="flex gap-2 desktop:flex-row-reverse">
+								<FormButton className="w-44" size="sm">
+									Log in
+								</FormButton>
+								<ButtonLink
+									className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
+									href={urls.register}
+									kind="tertiary"
+									size="sm"
+								>
+									<span>or sign up</span>
+									<MoveRight className="size-5 desktop:rotate-180" />
+								</ButtonLink>
+							</div>
 							<FormInputMessages
 								messages={errors.map((value) => ({ type: "error", value }))}
 							/>
-							<div className="flex flex-col font-nunito text-lg">
-								<FormAlternativeActionLink href={urls.register}>
-									Don&apos;t have an account yet? Sign&nbsp;up!
-								</FormAlternativeActionLink>
-								<FormAlternativeActionLink href={urls.forgotPassword}>
-									Forgot your password?
-								</FormAlternativeActionLink>
-							</div>
 						</div>
 					</>
 				)}
 			</Form>
 			<div className="flex flex-col gap-2">
 				<div className="inline-flex items-center justify-center">
-					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-40" />
-					<span className="absolute left-1/2 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold uppercase text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+					<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
 						or
 					</span>
+					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 				</div>
+				<LoginConnectionButton type="discord" />
 				{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />
@@ -198,7 +215,6 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						</>
 					)}
 					<LoginConnectionButton type="meta" /> */}
-				<LoginConnectionButton type="discord" />
 				{/* <LoginConnectionButton type="vrchat" /> */}
 			</div>
 		</>

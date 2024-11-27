@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ForgotPage() {
 	return (
-		<ModelCard title="Reset password">
+		<ModelCard branded title="Reset password">
 			<ForgotPasswordForm />
 		</ModelCard>
 	);
