@@ -5,7 +5,7 @@ import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
 export const Slider = React.forwardRef<
-	React.ElementRef<typeof SliderPrimitive.Root>,
+	React.ComponentRef<typeof SliderPrimitive.Root>,
 	React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(({ className, ...props }, reference) => (
 	<SliderPrimitive.Root
