@@ -39,7 +39,7 @@ export const ProfilePlaylist: FC<{
 	playlist: string;
 	className?: string;
 }> = ({ playlist, className }) => {
-	const { sessionTheme } = useTheme();
+	const { theme } = useTheme();
 
 	const matchedPlatform = playlistPlatforms.find(({ pattern }) =>
 		pattern.test(playlist)
@@ -57,7 +57,7 @@ export const ProfilePlaylist: FC<{
 			height="450"
 			// eslint-disable-next-line react-dom/no-unsafe-iframe-sandbox
 			sandbox="allow-forms allow-popups allow-same-origin allow-scripts"
-			src={matchedPlatform.embed(playlistId, resolveTheme(sessionTheme))}
+			src={matchedPlatform.embed(playlistId, theme)}
 		/>
 	);
 };
