@@ -3,7 +3,7 @@
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { LoaderCircle, ShieldAlert, ShieldCheck } from "lucide-react";
 import type { RefAttributes } from "react";
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { turnstileSiteKey } from "~/const";
