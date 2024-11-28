@@ -147,6 +147,9 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				onDragOver: () => setDragging(true),
 				onDragLeave: () => setDragging(false)
 			})
+			.use(Compressor, {
+				quality: 0.6
+			})
 			.use(GoldenRetriever, {})
 			.use(AwsS3, {
 				endpoint: uppyCompanionUrl,
@@ -159,13 +162,6 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				void handleUppyComplete(keys);
 				setUppyVisible(false);
 			});
-
-		// Android native app tends to fail compression on low-end devices
-		if (platform !== "android" || !native) {
-			uppyInstance.use(Compressor, {
-				quality: 0.6
-			});
-		}
 
 		if (type === "profile") {
 			uppyInstance
