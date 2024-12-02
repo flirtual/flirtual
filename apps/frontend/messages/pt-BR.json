@@ -443,8 +443,8 @@
 		"missing_permission": "Você não possui permissão para fazer essa ação.",
 		"report_not_found": "Reporte não encontrado.",
 		"subscription_not_found": "Erro cancelando inscrição, por favor nos contate para assistência.",
-		"cannot_block_user": "Erro bloqueando usuário (conta desativada ou suspensa).",
-		"cannot_unblock_user": "Erro desbloqueando usuário (conta desativada ou suspensa).",
+		"cannot_block_user": "Erro bloqueando usuário (conta desativada).",
+		"cannot_unblock_user": "Erro desbloqueando usuário (conta desativada).",
 		"profile_not_blocked": "Erro desbloqueando usuário (já desbloqueado).",
 		"cant_be_blank": "Não pode ser vazio.",
 		"has_already_been_taken": "Já em relacionamento com outro usuário.",
@@ -460,7 +460,12 @@
 		"too_old": "Por favor insira sua data de nascimento real.",
 		"connection_account_not_found": "Nenhuma conta do Flirtual encontrada com este usuário do Discord. Cheque se você entrou com a conta correta do Discord. Se você não vinculou sua conta do Discord, entre com seu email e senha primeiro, depois adiciona sua conta do Discord nas configurações de Conexões.",
 		"connection_verify_email": "Por favor verifique seu email com Discord e tente novamente.",
-		"invalid_grant": "Não foi possível conectar sua conta, por favor tente novamente mais tarde. (invalid grant)"
+		"invalid_grant": "Não foi possível conectar sua conta, por favor tente novamente mais tarde. (invalid grant)",
+		"turnstile_expired": "Verificação expirada, Tente novamente.",
+		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {Obrigatório} =1 {Obrigatório} other {Deve ter ao menos # caracteres}}.",
+		"email_must_be_different": "Novo email não pode ser o mesmo do antigo email.",
+		"turnstile_invalid": "Falha na verificação. Tente novamente.",
+		"turnstile_required": "Você é um robô?"
 	},
 	"early_north_alpaca_sail": "Atualizar Flirtual?",
 	"arrangeable_image": {
