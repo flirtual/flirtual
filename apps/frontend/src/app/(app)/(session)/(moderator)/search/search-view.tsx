@@ -301,7 +301,7 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 										)}
 										>
 											{row.getVisibleCells().map((cell) => (
-												<TableCell key={cell.id}>
+												<TableCell className="select-children" key={cell.id}>
 													{flexRender(cell.column.columnDef.cell, cell.getContext())}
 												</TableCell>
 											))}
