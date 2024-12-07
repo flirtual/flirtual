@@ -60,7 +60,7 @@ export interface ImageSetValue {
 export interface InputImageSetProps {
 	value: Array<ImageSetValue>;
 	onChange: Dispatch<Array<ImageSetValue>>;
-	id: string;
+	id?: string;
 	type?: "profile" | "report";
 }
 

@@ -154,18 +154,20 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 		[formatter]
 	);
 
+	const now = useMemo(() => new Date(), []);
+
 	const min = useMemo(
 		() =>
-			(minDate === "now" ? new Date() : minDate)
+			(minDate === "now" ? now : minDate)
 			|| new Date(Date.now() - offset * yearInMilliseconds),
-		[minDate, offset]
+		[now, minDate, offset]
 	);
 
 	const max = useMemo(
 		() =>
-			(maxDate === "now" ? new Date() : maxDate)
+			(maxDate === "now" ? now : maxDate)
 			|| new Date(Date.now() + offset * yearInMilliseconds),
-		[maxDate, offset]
+		[now, maxDate, offset]
 	);
 
 	const compare = useCallback(
@@ -186,7 +188,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	);
 
 	const years = useMemo(() => {
-		const currentYear = new Date().getFullYear();
+		const currentYear = now.getFullYear();
 
 		const minYear = min.getFullYear();
 		const maxYear = max.getFullYear();
@@ -201,7 +203,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			})
 			.filter(Boolean)
 			.reverse();
-	}, [offset, min, max]);
+	}, [now, offset, min, max]);
 
 	const yearNames = useMemo(
 		() =>
@@ -396,7 +398,11 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 																	active
 																		? "bg-brand-gradient text-white-20"
 																		: (!currentMonth || disabled)
-																			&& "text-black-30 dark:text-black-10"
+																			&& "text-black-30 dark:text-black-10",
+																	now.getDate() === date.getDate()
+																	&& now.getMonth() === date.getMonth()
+																	&& now.getFullYear() === date.getFullYear()
+																	&& "border-2 border-dashed border-pink"
 																)}
 																type="button"
 																onClick={(event) => {

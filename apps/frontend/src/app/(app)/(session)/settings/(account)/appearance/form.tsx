@@ -1,8 +1,9 @@
 "use client";
 
-import { Hash } from "lucide-react";
+import { Hash, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { type FC, useState } from "react";
+import type { CSSProperties, Dispatch, FC } from "react";
+import { useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { flushSync } from "react-dom";
 import { twMerge } from "tailwind-merge";
@@ -21,13 +22,54 @@ import { ProfileColorPreview } from "./profile-preview";
 import { ThemePreview } from "./theme-preview";
 import { defaultProfileColors, recommendedThemes } from "./themes";
 
-const ProfileColorEditor: FC = () => {
-	const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-	const {
-		fields: { color_1, color_2 }
-	} = useFormContext<ProfileColors>();
+export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ value, onChange }) => {
+	return (
+		<div className="relative flex flex-col gap-4" style={{ "--color": value } as CSSProperties}>
+			<HexColorPicker
+				className="aspect-square rounded-lg shadow-brand-1 desktop:!h-auto desktop:!w-full"
+				color={value}
+				onChange={onChange}
+			/>
+			<div className="focusable-within flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20">
+				<div className="flex items-center justify-center bg-[var(--color)] p-2 text-[lch(from_var(--color)_calc((49.44_-_l)_*_infinity)_0_0)]">
+					<Hash className="size-7" />
+				</div>
+				<HexColorInput
+					className="w-full border-none bg-transparent px-4 py-2 font-mono uppercase caret-theme-2 placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50"
+					color={value}
+					onChange={onChange}
+				/>
+				{value && (
+					<button
+						className="focusable pointer-events-auto absolute right-4 rounded-full brightness-90 hocus:brightness-100"
+						tabIndex={0}
+						type="button"
+						onClick={(event) => {
+							event.stopPropagation();
+							onChange("");
+						}}
+					>
+						<X className="size-5" />
+					</button>
+				)}
+			</div>
+		</div>
+	);
+};
 
+export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<ProfileColors> }> = ({ value, onChange }) => {
+	const { color_1, color_2 } = value;
+
+	const [selectedColorIndex, setSelectedColorIndex] = useState(0);
 	const selectedColor = selectedColorIndex === 0 ? color_1 : color_2;
+
+	function change(newColor: string) {
+		const value = selectedColorIndex === 0
+			? { color_1: newColor, color_2 }
+			: { color_1, color_2: newColor };
+
+		onChange(value);
+	}
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -37,7 +79,7 @@ const ProfileColorEditor: FC = () => {
 						"focusable size-8 rounded-md",
 						selectedColorIndex === 0 && "focused"
 					)}
-					style={{ backgroundColor: color_1.props.value }}
+					style={{ backgroundColor: color_1 }}
 					type="button"
 					onClick={() => setSelectedColorIndex(0)}
 				/>
@@ -46,27 +88,32 @@ const ProfileColorEditor: FC = () => {
 						"focusable size-8 rounded-md",
 						selectedColorIndex === 1 && "focused"
 					)}
-					style={{ backgroundColor: color_2.props.value }}
+					style={{ backgroundColor: color_2 }}
 					type="button"
 					onClick={() => setSelectedColorIndex(1)}
 				/>
 			</div>
-			<HexColorPicker
-				className="aspect-square rounded-lg shadow-brand-1 desktop:!h-auto desktop:!w-full"
-				color={selectedColor.props.value}
-				onChange={selectedColor.props.onChange}
-			/>
-			<div className="focusable-within flex items-center overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 dark:bg-black-60 dark:text-white-20">
-				<div className="flex items-center justify-center bg-brand-gradient p-2 text-white-20">
-					<Hash className="size-7" />
-				</div>
-				<HexColorInput
-					className="w-full border-none bg-transparent px-4 py-2 font-mono uppercase caret-theme-2 placeholder:text-black-20 focus:outline-none focus:ring-0 disabled:text-black-20 dark:placeholder:text-white-50 dark:disabled:text-white-50"
-					color={selectedColor.props.value}
-					onChange={selectedColor.props.onChange}
-				/>
-			</div>
+			<InputColor value={selectedColor} onChange={change} />
 		</div>
+	);
+};
+
+const ProfileColorEditor: FC = () => {
+	const {
+		fields: { color_1, color_2 }
+	} = useFormContext<ProfileColors>();
+
+	return (
+		<InputProfileColor
+			value={{
+				color_1: color_1.props.value,
+				color_2: color_2.props.value
+			}}
+			onChange={(value) => {
+				color_1.props.onChange(value.color_1);
+				color_2.props.onChange(value.color_2);
+			}}
+		/>
 	);
 };
 

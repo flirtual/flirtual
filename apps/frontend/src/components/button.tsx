@@ -78,7 +78,7 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 	);
 };
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps) {
 	const {

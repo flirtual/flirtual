@@ -231,6 +231,9 @@ importers:
       react-dom:
         specifier: 19.0.0-rc-65a56d0e-20241020
         version: 19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020)
+      react-error-boundary:
+        specifier: ^4.1.2
+        version: 4.1.2(react@19.0.0-rc-65a56d0e-20241020)
       react-intersection-observer:
         specifier: ^9.13.1
         version: 9.13.1(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)
@@ -508,6 +511,10 @@ packages:
     resolution: {integrity: sha512-DWMCZH9WA4Maitz2q21SRKHo9QXZxkDsbNZoVD62gusNtNBBqDg9i7uOhASfTfIGNzW+O+r7+jAlM8dwphcJKQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+
+  '@babel/runtime@7.26.0':
+    resolution: {integrity: sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==}
+    engines: {node: '>=6.9.0'}
 
   '@babel/template@7.25.9':
     resolution: {integrity: sha512-9DGttpmPvIxBb/2uwpVo3dqJ+O6RooAFOS+lB+xDqoE2PVCE8nfoHMdZLpfCQRLwvohzXISPZcgxt80xLfsuwg==}
@@ -5367,6 +5374,11 @@ packages:
     peerDependencies:
       react: 19.0.0-rc-65a56d0e-20241020
 
+  react-error-boundary@4.1.2:
+    resolution: {integrity: sha512-GQDxZ5Jd+Aq/qUxbCm1UtzmL/s++V7zKgE8yMktJiCQXCCFZnMZh9ng+6/Ne6PjNSXH0L9CjeOEREfRnq6Duag==}
+    peerDependencies:
+      react: '>=16.13.1'
+
   react-intersection-observer@9.13.1:
     resolution: {integrity: sha512-tSzDaTy0qwNPLJHg8XZhlyHTgGW6drFKTtvjdL+p6um12rcnp8Z5XstE+QNBJ7c64n5o0Lj4ilUleA41bmDoMw==}
     peerDependencies:
@@ -5488,6 +5500,9 @@ packages:
   refa@0.12.1:
     resolution: {integrity: sha512-J8rn6v4DBb2nnFqkqwy6/NnTYMcgLA+sLr0iIO41qpv0n+ngb7ksag2tMRl0inb1bbO/esUwzW1vbJi7K0sI0g==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
+
+  regenerator-runtime@0.14.1:
+    resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
 
   regexp-ast-analysis@0.7.1:
     resolution: {integrity: sha512-sZuz1dYW/ZsfG17WSAG7eS85r5a0dDsvg+7BiiYR5o6lKCAtUrEwdmRmaGF6rwVj3LcmAeYkOWKEPlbPzN3Y3A==}
@@ -6593,6 +6608,10 @@ snapshots:
   '@babel/parser@7.26.2':
     dependencies:
       '@babel/types': 7.26.0
+
+  '@babel/runtime@7.26.0':
+    dependencies:
+      regenerator-runtime: 0.14.1
 
   '@babel/template@7.25.9':
     dependencies:
@@ -12100,6 +12119,11 @@ snapshots:
       react: 19.0.0-rc-65a56d0e-20241020
       scheduler: 0.25.0-rc-65a56d0e-20241020
 
+  react-error-boundary@4.1.2(react@19.0.0-rc-65a56d0e-20241020):
+    dependencies:
+      '@babel/runtime': 7.26.0
+      react: 19.0.0-rc-65a56d0e-20241020
+
   react-intersection-observer@9.13.1(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020):
     dependencies:
       react: 19.0.0-rc-65a56d0e-20241020
@@ -12231,6 +12255,8 @@ snapshots:
   refa@0.12.1:
     dependencies:
       '@eslint-community/regexpp': 4.12.1
+
+  regenerator-runtime@0.14.1: {}
 
   regexp-ast-analysis@0.7.1:
     dependencies:

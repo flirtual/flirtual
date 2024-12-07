@@ -31,10 +31,11 @@ import { ProfileVerificationBadge } from "./verification-badge";
 export type ProfileProps = {
 	userId: string;
 	direct?: boolean;
+	hideModeratorInfo?: boolean;
 } & ComponentProps<"div">;
 
 export function Profile(props: ProfileProps) {
-	const { userId, direct = false, className, id, ...elementProps } = props;
+	const { userId, direct = false, hideModeratorInfo = false, className, id, ...elementProps } = props;
 
 	const [session] = useSession();
 	const user = useUser(userId);
@@ -229,7 +230,7 @@ export function Profile(props: ProfileProps) {
 					<ProfilePrompts prompts={user.profile.prompts} />
 					<PillCollection user={user} />
 				</div>
-				<ProfileActionBar user={user} />
+				<ProfileActionBar hideModeratorInfo={hideModeratorInfo} user={user} />
 			</div>
 		</div>
 	);

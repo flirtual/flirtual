@@ -23,7 +23,7 @@ export const ProfileModeratorInfo: FC<{
 	const [session] = useSession();
 	const toasts = useToast();
 	const tAttributes = useAttributeTranslation();
-	const user = useUser(userId, { cache: "no-cache" });
+	const user = useUser(userId);
 
 	const [shown, setShown] = usePreferences(
 		"profile-moderator-info-visible",
@@ -39,8 +39,11 @@ export const ProfileModeratorInfo: FC<{
 			data-block
 			className="select-children -mx-4 flex flex-col gap-4 rounded-xl bg-white-30 px-4 py-3 font-mono shadow-brand-inset vision:bg-white-30/70 dark:bg-black-90/80 dark:text-white-20"
 		>
-			<button className="float-right mr-2" type="button" onClick={() => setShown(!shown)}>
-				<ShownIcon className="size-4 shrink-0" />
+			<button className="flex items-center gap-2" type="button" onClick={() => setShown(!shown)}>
+				<ShownIcon className="mt-0.5 size-4 shrink-0" />
+				<span className="select-none text-sm">
+					Sensitive Information
+				</span>
 			</button>
 			{shown && (
 				<>

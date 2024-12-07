@@ -18,7 +18,7 @@ import { ReportDialog } from "./dialogs/report";
 import { ProfileDropdown } from "./dropdown";
 import { ProfileModeratorInfo } from "./moderator-info";
 
-export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
+export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> = ({ user, hideModeratorInfo }) => {
 	const [session] = useSession();
 	const t = useTranslations("profile");
 
@@ -32,17 +32,11 @@ export const ProfileActionBar: FC<{ user: User }> = ({ user }) => {
 
 	return (
 		<div className="flex flex-col gap-8 px-8 py-4 pt-0 desktop:pb-8 desktop:dark:bg-black-70">
-			<SWRConfig value={{
-				fallback: {
-					[unstable_serialize(userKey(user.id, { cache: "no-cache" }))]: user
-				}
-			}}
-			>
-				<ProfileModeratorInfo userId={user.id} />
-			</SWRConfig>
+			{!hideModeratorInfo && <ProfileModeratorInfo userId={user.id} />}
 			<div className="flex w-full gap-4 pb-4 desktop:pb-0">
-				{(session.user.tags?.includes("moderator")
-					|| session.user.tags?.includes("admin")) && (
+				{!hideModeratorInfo
+				&& (session.user.tags?.includes("moderator") || session.user.tags?.includes("admin"))
+				&& (
 					<ProfileDropdown userId={user.id} />
 				)}
 				<div className="flex w-full justify-center gap-6 vision:text-white-20">
