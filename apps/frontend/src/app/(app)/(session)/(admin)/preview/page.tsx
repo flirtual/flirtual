@@ -62,11 +62,15 @@ export default function FakeProfilePage() {
 	const [backgroundColor, setBackgroundColor] = useState("#000000");
 
 	useEffect(() => {
-		const { relationship, user, viewer } = JSON.parse(atob(window.location.hash.slice(1))) as any;
+		try {
+			const { relationship, user, viewer } = JSON.parse(atob(window.location.hash.slice(1))) as any;
 
-		setRelationship(relationship);
-		setUser(user);
-		setViewer(viewer);
+			setRelationship(relationship);
+			setUser(user);
+			setViewer(viewer);
+		}
+		// eslint-disable-next-line unused-imports/no-unused-vars
+		catch (reason) {}
 	}, []);
 
 	const data = useMemo(() => ({ relationship, user, viewer }), [relationship, user, viewer]);
