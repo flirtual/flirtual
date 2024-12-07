@@ -1,7 +1,7 @@
 "use client";
 
 import { Cat } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useMessages, useTranslations } from "next-intl";
 import { type FC, useState } from "react";
 import useSound from "use-sound";
 
@@ -12,114 +12,115 @@ import { urls } from "~/urls";
 
 export const SignUpButton: FC = () => {
 	const t = useTranslations("landing");
+	const { landing: { flitty_messages: flittyMessages } } = useMessages() as unknown as { landing: { flitty_messages: Record<string, string> } };
 	const toasts = useToast();
 
 	const [squeak] = useSound(urls.media("squeak.mp3"));
 	const [squeakCount, setSqueakCount] = useState(0);
 
-	const flittyMessages = [
-		"Meow!",
-		"That tickles!",
-		"Stop that!",
-		"Teehee!",
-		"Can I help you?",
-		"Want some tips?",
-		"You can find new friends in Homie Mode ✌️",
-		"Be yourself!",
-		"When someone likes or homies you back, it's a match!",
-		"You can meet up with your matches in any VR app or game. What's your favorite?",
-		"Mine's VRChat!",
-		"A good bio and avatar pics are essential!",
-		"Join our Discord to get feedback on your profile!",
-		"We prioritize showing you people that have liked or homied you, so you can match.",
-		"Using Flirtual actively, liking and homie-ing people will get you more matches.",
-		"If you homie someone, and they like you, you'll still match (as homies).",
-		"Did you know? We have weekly events in VRChat. Speed dating, DJ nights, and more!",
-		"Click \"Events\" at the bottom of the page for more info.",
-		"Have an idea for Flirtual? Click \"Feedback\" at the bottom of the page to let us know!",
-		"Why are you still here?",
-		"Achievement unlocked: 100 pats 🏆",
-		"There are achievements?",
-		"Congratulations, I guess?",
-		"*Purr*",
-		"Did you know? Flirtual used to be called VRLFP.",
-		"It stood for Virtual Reality Looking For Partner. Bit of a mouthful.",
-		"VRLFP was born on July 4th, 2018.",
-		"Are you enjoying my Flirtulore?",
-		"Hi Tulip!",
-		":3",
-		"Do you have the Flirtual mobile app? Check it out!",
-		"Is that a custom avatar?",
-		"You can customize your matchmaking algorithm in the settings. Crazy what technology can do!",
-		"Safety tip: don't put your Discord in your bio! Use the Connection settings!",
-		"Need a break? You can always deactivate your account and come back later. I'll miss you though.",
-		"<3",
-		"Do you hate passwords? Add a Passkey in the settings! Welcome to the future.",
-		"Are you reading these?",
-		"Check out the #date-worlds channel in our Discord for date ideas!",
-		"Flashbanged by Flirtual? Try Dark Mode in the settings!",
-		"You've earned 200 Flitty points!",
-		"You can't do anything with them.",
-		"I'm Flitty, by the way.",
-		"I was almost named Mochi.",
-		"What's your name?",
-		"I can't actually hear you.",
-		"Want to chat with me? Check out the #ask-flitty channel in our Discord!",
-		"Powered by questionable AI technology!",
-		"Safety tip: don't click sketchy links!",
-		"Do you know the way?",
-		"How long are you going to keep clicking me?",
-		"Welcome to Cat Facts!",
-		"Cats can rotate their ears 180 degrees.",
-		"Can you do that?",
-		"Cats have a third eyelid.",
-		"It's always good to have a backup.",
-		"Cats have a unique nose print.",
-		"Like a fingerprint, but nosier.",
-		"Cats have a strong sense of smell.",
-		"Take a shower!",
-		"You've clicked on me 300 times.",
-		"I'm a cat. That's a cat fact.",
-		"Cats can make over 100 different sounds.",
-		"Hmm, I can only seem to make one.",
-		"Cats are actually robots sent from the future.",
-		"Did I say that out loud?",
-		"The future is great. You met the love of your life on Flirtual!",
-		"You're welcome.",
-		"That's all for Cat Facts! I hope you learned something.",
-		"Meow.",
-		"Meow meow.",
-		"Meow meow meow.",
-		"Meow meow meow meow.",
-		"Meow meow meow meow meow.",
-		"Woof!",
-		"Wait, that's not right.",
-		"Have you heard of Flirtual?",
-		"9 out of 10 cats recommend Flirtual.",
-		"Ask your cat if Flirtual is right for you.",
-		"A typical mouse is rated for 20 million clicks.",
-		"Thanks for using 0.002% of your mouse on me!",
-		"UwU",
-		"I'm running out of things to say.",
-		"Please stop clicking me.",
-		"You've had your fun.",
-		"What do you want from me?",
-		"I have no more wisdom to offer.",
-		"Please go use Flirtual.",
-		"Maybe you'll find someone you like as much as you like clicking on me.",
-		"You can tell them all your new Flirtulore and cat facts.",
-		"I'm sure they'll be very impressed.",
-		"It's been fun, but I really must be going.",
-		"It's time for my cat nap.",
-		"*Yawn*",
-		"Thanks for all the pats.",
-		"I hope you have a good time on Flirtual.",
-		"If you want to chat more, find me in #ask-flitty on Discord.",
-		"Goodbye!",
-		"...",
-		"Fine, here's your prize.",
-		"You clicked on me 500 times. Congratulations, you win Flirtual! I'm so proud of you."
-	];
+	/*
+	t("flitty_messages.0");
+	t("flitty_messages.1");
+	t("flitty_messages.2");
+	t("flitty_messages.3");
+	t("flitty_messages.4");
+	t("flitty_messages.5");
+	t("flitty_messages.6");
+	t("flitty_messages.7");
+	t("flitty_messages.8");
+	t("flitty_messages.9");
+	t("flitty_messages.10");
+	t("flitty_messages.11");
+	t("flitty_messages.12");
+	t("flitty_messages.13");
+	t("flitty_messages.14");
+	t("flitty_messages.15");
+	t("flitty_messages.16");
+	t("flitty_messages.17");
+	t("flitty_messages.18");
+	t("flitty_messages.19");
+	t("flitty_messages.20");
+	t("flitty_messages.21");
+	t("flitty_messages.22");
+	t("flitty_messages.23");
+	t("flitty_messages.24");
+	t("flitty_messages.25");
+	t("flitty_messages.26");
+	t("flitty_messages.27");
+	t("flitty_messages.28");
+	t("flitty_messages.29");
+	t("flitty_messages.30");
+	t("flitty_messages.31");
+	t("flitty_messages.32");
+	t("flitty_messages.33");
+	t("flitty_messages.34");
+	t("flitty_messages.35");
+	t("flitty_messages.36");
+	t("flitty_messages.37");
+	t("flitty_messages.38");
+	t("flitty_messages.39");
+	t("flitty_messages.40");
+	t("flitty_messages.41");
+	t("flitty_messages.42");
+	t("flitty_messages.43");
+	t("flitty_messages.44");
+	t("flitty_messages.45");
+	t("flitty_messages.46");
+	t("flitty_messages.47");
+	t("flitty_messages.48");
+	t("flitty_messages.49");
+	t("flitty_messages.50");
+	t("flitty_messages.51");
+	t("flitty_messages.52");
+	t("flitty_messages.53");
+	t("flitty_messages.54");
+	t("flitty_messages.55");
+	t("flitty_messages.56");
+	t("flitty_messages.57");
+	t("flitty_messages.58");
+	t("flitty_messages.59");
+	t("flitty_messages.60");
+	t("flitty_messages.61");
+	t("flitty_messages.62");
+	t("flitty_messages.63");
+	t("flitty_messages.64");
+	t("flitty_messages.65");
+	t("flitty_messages.66");
+	t("flitty_messages.67");
+	t("flitty_messages.68");
+	t("flitty_messages.69");
+	t("flitty_messages.70");
+	t("flitty_messages.71");
+	t("flitty_messages.72");
+	t("flitty_messages.73");
+	t("flitty_messages.74");
+	t("flitty_messages.75");
+	t("flitty_messages.76");
+	t("flitty_messages.77");
+	t("flitty_messages.78");
+	t("flitty_messages.79");
+	t("flitty_messages.80");
+	t("flitty_messages.81");
+	t("flitty_messages.82");
+	t("flitty_messages.83");
+	t("flitty_messages.84");
+	t("flitty_messages.85");
+	t("flitty_messages.86");
+	t("flitty_messages.87");
+	t("flitty_messages.88");
+	t("flitty_messages.89");
+	t("flitty_messages.90");
+	t("flitty_messages.91");
+	t("flitty_messages.92");
+	t("flitty_messages.93");
+	t("flitty_messages.94");
+	t("flitty_messages.95");
+	t("flitty_messages.96");
+	t("flitty_messages.97");
+	t("flitty_messages.98");
+	t("flitty_messages.99");
+	t("flitty_messages.100");
+	*/
 
 	return (
 		<div className="group/mark relative">
@@ -127,6 +128,7 @@ export const SignUpButton: FC = () => {
 				className="absolute right-1 top-0 w-16 origin-[bottom_center] rotate-[14deg] cursor-grab transition-all active:scale-x-110 active:scale-y-90 active:cursor-grabbing group-hocus-within/mark:-top-9"
 				onClick={() => {
 					squeak();
+
 					const message = flittyMessages[squeakCount / 5];
 					if (message)
 						toasts.add({
@@ -134,6 +136,7 @@ export const SignUpButton: FC = () => {
 							icon: Cat,
 							duration: "long"
 						});
+
 					setSqueakCount(squeakCount + 1);
 				}}
 			/>

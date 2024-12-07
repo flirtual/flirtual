@@ -23,7 +23,7 @@ import { DeviceProvider } from "~/hooks/use-device";
 import { InternationalizationProvider } from "~/hooks/use-internationalization";
 import { ThemeProvider } from "~/hooks/use-theme";
 import { ToastProvider } from "~/hooks/use-toast";
-import { getInternationalization } from "~/i18n";
+import { getInternationalization, supportedLanguages } from "~/i18n";
 import { resolveTheme } from "~/theme";
 import { imageOrigins, urls } from "~/urls";
 
@@ -33,8 +33,25 @@ import "~/css/index.css";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("meta");
+	const appName = t("name");
 
 	return {
+		title: {
+			default: appName,
+			template: t("title")
+		},
+		applicationName: appName,
+		description: t("knotty_direct_mongoose_bend"),
+		category: "technology",
+		alternates: {
+			canonical: new URL("/", siteOrigin),
+			languages: Object.fromEntries(supportedLanguages.map((language) => {
+				const url = new URL("/", siteOrigin);
+				url.searchParams.set("language", language);
+
+				return [language, url];
+			}))
+		},
 		appLinks: {
 			android: {
 				package: "zone.homie.flirtual.pwa",
@@ -50,10 +67,8 @@ export async function generateMetadata(): Promise<Metadata> {
 			}
 		},
 		appleWebApp: {
-			title: t("name")
+			title: appName,
 		},
-		applicationName: t("name"),
-		description: t("knotty_direct_mongoose_bend"),
 		itunes: {
 			appId: "6450485324"
 		},
@@ -61,20 +76,16 @@ export async function generateMetadata(): Promise<Metadata> {
 		metadataBase: new URL(siteOrigin),
 		openGraph: {
 			description: t("green_plain_mongoose_lend"),
-			title: t("name"),
+			title: appName,
 			type: "website"
-		},
-		other: {
-			"msapplication-TileColor": "#e9658b"
-		},
-		title: {
-			default: t("name"),
-			template: t("title")
 		},
 		twitter: {
 			card: "summary",
 			site: `@${urls.socials.twitter.split("twitter.com/")[1]}`
-		}
+		},
+		other: {
+			"msapplication-TileColor": "#e9658b"
+		},
 	};
 }
 
@@ -103,8 +114,6 @@ const montserrat = Montserrat({
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
 const fontClassNames = twMerge(montserrat.variable, nunito.variable);
-
-// export const experimental_ppr = true;
 
 function getDevice(headers: Headers): DeviceContext {
 	const userAgent = userAgentFromString(headers.get("user-agent")!);

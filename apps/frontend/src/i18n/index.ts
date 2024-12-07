@@ -8,6 +8,8 @@ import { polyfill } from "./polyfill";
 
 const { languageTags: languages, sourceLanguageTag } = settings;
 
+export const supportedLanguages = languages;
+
 function getCountry(headers: Headers) {
 	const country
 		= headers.get("cf-ipcountry") || headers.get("x-vercel-ip-country");
