@@ -3,16 +3,13 @@
 import { Ban, Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";
-import { unstable_serialize } from "swr";
 
 import type { User } from "~/api/user";
 import { DialogTrigger } from "~/components/dialog/dialog";
 import { useSession } from "~/hooks/use-session";
-import { userKey } from "~/swr";
 
 import { Button } from "../button";
 import { AlertDialogTrigger } from "../dialog/alert";
-import { SWRConfig } from "../swr";
 import { BlockDialog } from "./dialogs/block";
 import { ReportDialog } from "./dialogs/report";
 import { ProfileDropdown } from "./dropdown";
