@@ -32,8 +32,12 @@ import { StagingBanner } from "./staging-banner";
 import "~/css/index.css";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("meta");
+	const [t, { locale: { current } }] = await Promise.all([getTranslations("meta"), getInternationalization()]);
+
 	const appName = t("name");
+
+	const canonical = new URL("/", siteOrigin);
+	canonical.searchParams.set("language", current);
 
 	return {
 		title: {
@@ -44,10 +48,12 @@ export async function generateMetadata(): Promise<Metadata> {
 		description: t("knotty_direct_mongoose_bend"),
 		category: "technology",
 		alternates: {
-			canonical: new URL("/", siteOrigin),
-			languages: Object.fromEntries(supportedLanguages.map((language) => {
+			canonical,
+			languages: Object.fromEntries([...supportedLanguages, "x-default"].map((language) => {
 				const url = new URL("/", siteOrigin);
-				url.searchParams.set("language", language);
+
+				if (language !== "x-default")
+					url.searchParams.set("language", language);
 
 				return [language, url];
 			}))
