@@ -104,7 +104,7 @@ defmodule Flirtual.Report do
 
           user ->
             # User is shadowbanned, resolve.
-            {:ok, _} =
+            {:ok, user} =
               user
               |> change(%{shadowbanned_at: nil})
               |> Repo.update()

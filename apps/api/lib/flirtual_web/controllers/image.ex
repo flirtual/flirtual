@@ -53,6 +53,7 @@ defmodule FlirtualWeb.ImageController do
              else: :ok
            ),
          {:ok, _} <- Image.delete(image),
+         image_owner = User.get(image_owner.id),
          {:ok, _} <- User.update_status(image_owner),
          {:ok, _} <- ObanWorkers.update_user(image_owner.id, [:elasticsearch, :talkjs]) do
       conn |> json(%{deleted: true})
