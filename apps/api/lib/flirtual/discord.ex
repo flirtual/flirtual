@@ -209,7 +209,7 @@ defmodule Flirtual.Discord do
                                 do:
                                   "[Issue refund](https://app.revenuecat.com/customers/cf0649d1/#{user.revenuecat_id})",
                                 else:
-                                  "[Send refund reminder](https://hello.flirtu.al/a/tickets/new)"
+                                  "[Send refund reminder](https://hello.flirtu.al/a/tickets/compose-email)"
                               )
                           )
                       )
