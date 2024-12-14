@@ -31,13 +31,16 @@ import { StagingBanner } from "./staging-banner";
 
 import "~/css/index.css";
 
+const defaultLanguages = ["en", "x-default"];
+
 export async function generateMetadata(): Promise<Metadata> {
 	const [t, { locale: { current } }] = await Promise.all([getTranslations("meta"), getInternationalization()]);
 
 	const appName = t("name");
 
 	const canonical = new URL("/", siteOrigin);
-	canonical.searchParams.set("language", current);
+	if (!defaultLanguages.includes(current))
+		canonical.searchParams.set("language", current);
 
 	return {
 		title: {
@@ -49,10 +52,10 @@ export async function generateMetadata(): Promise<Metadata> {
 		category: "technology",
 		alternates: {
 			canonical,
-			languages: Object.fromEntries([...supportedLanguages, "x-default"].map((language) => {
+			languages: Object.fromEntries([...defaultLanguages, ...supportedLanguages].map((language) => {
 				const url = new URL("/", siteOrigin);
 
-				if (language !== "x-default")
+				if (!defaultLanguages.includes(language))
 					url.searchParams.set("language", language);
 
 				return [language, url];
