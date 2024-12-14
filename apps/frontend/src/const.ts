@@ -38,7 +38,8 @@ export const sentryProject = process.env.SENTRY_PROJECT as string;
 export const sentryProjectId = Number.parseInt(process.env.NEXT_PUBLIC_SENTRY_PROJECT_ID as string);
 export const sentryReportTo = process.env.NEXT_PUBLIC_SENTRY_REPORT_TO as string;
 
-export const sentryEnabled = !!sentryDsn
+export const sentryEnabled = environment !== "development"
+	&& !!sentryDsn
 	&& !!sentryOrganization
 	&& !!sentryProject
 	&& !!sentryProjectId;
