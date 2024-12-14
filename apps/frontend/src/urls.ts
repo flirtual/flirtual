@@ -163,7 +163,7 @@ export const urls = {
 		download: "/download",
 		events: "/events",
 		invite: "/invite",
-		networkStatus: "http://status.flirtu.al",
+		networkStatus: "https://status.flirtu.al",
 		press: "/press",
 		pressEmail: "mailto:press@flirtu.al",
 		branding: "/branding",
