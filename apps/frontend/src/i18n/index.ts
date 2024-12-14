@@ -9,6 +9,7 @@ import { polyfill } from "./polyfill";
 const { languageTags: languages, sourceLanguageTag } = settings;
 
 export const supportedLanguages = languages;
+export const defaultLanguage = sourceLanguageTag;
 
 function getCountry(headers: Headers) {
 	const country

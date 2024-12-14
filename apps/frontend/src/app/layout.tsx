@@ -23,7 +23,7 @@ import { DeviceProvider } from "~/hooks/use-device";
 import { InternationalizationProvider } from "~/hooks/use-internationalization";
 import { ThemeProvider } from "~/hooks/use-theme";
 import { ToastProvider } from "~/hooks/use-toast";
-import { getInternationalization, supportedLanguages } from "~/i18n";
+import { defaultLanguage, getInternationalization, supportedLanguages } from "~/i18n";
 import { resolveTheme } from "~/theme";
 import { imageOrigins, urls } from "~/urls";
 
@@ -31,7 +31,7 @@ import { StagingBanner } from "./staging-banner";
 
 import "~/css/index.css";
 
-const defaultLanguages = ["en", "x-default"];
+const defaultLanguages = [defaultLanguage, "x-default"];
 
 export async function generateMetadata(): Promise<Metadata> {
 	const [t, { locale: { current } }] = await Promise.all([getTranslations("meta"), getInternationalization()]);
