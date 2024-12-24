@@ -430,7 +430,7 @@
 		"smart_just_scallop_reside": "Discord verified",
 		"zany_salty_cheetah_lead": "VRChat: <copy>{name}</copy>",
 		"relationship_status": {
-			"to_other": "You {status, select, liked {liked} homied {homied} other {passed}} {displayName}.",
+			"to_other": "You {status, select, liked {liked} homied {homied} other {passed on}} {displayName}.",
 			"to_me": "{displayName} {status, select, liked {liked} other {homied}} you."
 		},
 		"strong_trite_squid_grasp": "Uploaded {uploaded}{scanned, select, true {, and was scanned} false {, and was <bold>not scanned</bold>} other {}}.",
