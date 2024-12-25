@@ -22,33 +22,61 @@ defmodule FlirtualWeb.SessionController do
   end
 
   def login(%Plug.Conn{} = conn, params) do
-    with {:ok, attrs} <-
-           cast_arbitrary(
-             %{
-               login: :string,
-               password: :string,
-               remember_me: :boolean
-             },
-             params
-           )
-           |> validate_required([:login, :password])
-           |> apply_action(:update),
-         %User{banned_at: nil} = user <-
-           Users.get_by_login_and_password(
-             attrs[:login],
-             attrs[:password]
-           ),
-         {session, conn} = create(conn, user, attrs[:remember_me]) do
-      conn
-      |> put_status(:created)
-      |> json(Policy.transform(conn, session))
-    else
-      %User{} ->
-        {:error, {:unauthorized, :account_banned}}
+    ip = get_conn_ip(conn)
 
-      _ ->
-        {:error, {:unauthorized, :invalid_credentials}}
+    case ExRated.check_rate("login:#{ip}", 900_000, 5) do
+      {:ok, _} ->
+        with {:ok, attrs} <-
+               cast_arbitrary(
+                 %{
+                   login: :string,
+                   password: :string,
+                   remember_me: :boolean
+                 },
+                 params
+               )
+               |> validate_required([:login, :password])
+               |> apply_action(:update),
+             %User{banned_at: nil} = user <-
+               Users.get_by_login_and_password(
+                 attrs[:login],
+                 attrs[:password]
+               ),
+             false <- LeakedPasswords.leaked?(attrs[:password]),
+             {session, conn} = create(conn, user, attrs[:remember_me]) do
+          conn
+          |> put_status(:created)
+          |> json(Policy.transform(conn, session))
+        else
+          %User{} ->
+            {:error, {:unauthorized, :account_banned}}
+
+          leak_count when is_integer(leak_count) ->
+            deliver_leaked_password_alert(params["login"], get_conn_ip(conn))
+            {:error, {:unauthorized, :leaked_login_password}}
+
+          _ ->
+            {:error, {:unauthorized, :invalid_credentials}}
+        end
+
+      {:error, _} ->
+        {:error, {:unauthorized, :login_rate_limit}}
     end
+  end
+
+  def deliver_leaked_password_alert(login, ip) do
+    %{
+      "recipient" => "security@flirtu.al",
+      "subject" => "Login attempted with leaked password",
+      "body_text" => """
+      Attempted login to #{login} from #{ip}.
+      """,
+      "body_html" => """
+      <p>Attempted login to #{login} from #{ip}.</p>
+      """
+    }
+    |> Flirtual.ObanWorkers.Email.new()
+    |> Oban.insert()
   end
 
   def sudo(conn, %{"user_id" => user_id}) do

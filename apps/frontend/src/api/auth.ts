@@ -133,7 +133,7 @@ export const Authentication = {
 			.unauthorized((reason) => {
 				if (isWretchError(reason)) return reason.json;
 			})
-			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Session>();
+			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"leaked_login_password"> | Issue<"login_rate_limit"> | Session>();
 	},
 	logout() {
 		return this.api.url("/session").delete().res();

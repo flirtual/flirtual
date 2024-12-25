@@ -84,4 +84,22 @@ defmodule FlirtualWeb.Utilities do
       json(conn, term)
     end
   end
+
+  def get_conn_ip(conn) do
+    forwarded_for =
+      conn
+      |> get_req_header("x-forwarded-for")
+      |> List.first()
+
+    if forwarded_for do
+      forwarded_for
+      |> String.split(",")
+      |> Enum.map(&String.trim/1)
+      |> List.first()
+    else
+      conn.remote_ip
+      |> :inet_parse.ntoa()
+      |> to_string()
+    end
+  end
 end

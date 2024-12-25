@@ -126,6 +126,32 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 								)
 							});
 						}
+						if (value.error === "leaked_login_password") {
+							throw t.rich("errors.leaked_login_password", {
+								reset: (children) => (
+									<InlineLink
+										className="underline"
+										highlight={false}
+										href={urls.forgotPassword}
+									>
+										{children}
+									</InlineLink>
+								)
+							});
+						}
+						if (value.error === "login_rate_limit") {
+							throw t.rich("errors.login_rate_limit", {
+								reset: (children) => (
+									<InlineLink
+										className="underline"
+										highlight={false}
+										href={urls.forgotPassword}
+									>
+										{children}
+									</InlineLink>
+								)
+							});
+						}
 
 						// eslint-disable-next-line no-throw-literal
 						throw [t(`errors.${value.error}`)];

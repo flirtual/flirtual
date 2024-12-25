@@ -893,10 +893,21 @@ defmodule Flirtual.User do
     changeset
     |> validate_required([:password])
     |> validate_length(:password, min: 8, max: 72, count: :bytes)
+    |> check_for_leaked_password()
+  end
 
-    # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
-    # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
-    # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
+  defp check_for_leaked_password(%Changeset{changes: %{password: password}} = changeset) do
+    password
+    |> LeakedPasswords.leaked?()
+    |> process_leaked_check(changeset)
+  end
+
+  defp check_for_leaked_password(changeset), do: changeset
+
+  defp process_leaked_check(false, changeset), do: changeset
+
+  defp process_leaked_check(_, changeset) do
+    add_error(changeset, :password, "leaked_password")
   end
 
   def validate_password_confirmation(changeset, options \\ []) do
