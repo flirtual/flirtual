@@ -34,7 +34,7 @@ defmodule Flirtual.Flag do
     if is_nil(flag) do
       changeset
     else
-      add_error(changeset, field, "Sorry, your email service has been blocked due to abuse.")
+      add_error(changeset, field, "email_domain_blocked")
     end
   end
 
