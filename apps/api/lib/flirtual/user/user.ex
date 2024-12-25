@@ -47,6 +47,7 @@ defmodule Flirtual.User do
 
   schema "users" do
     field(:email, :string)
+    field(:previous_email, :string)
     field(:username, :string)
     field(:slug, :string)
     field(:password_hash, :string, redact: true)
@@ -437,6 +438,7 @@ defmodule Flirtual.User do
     {:profile, :discord},
     {:profile, :facetime},
     :email,
+    :previous_email,
     :stripe_id,
     :chargebee_id,
     :revenuecat_id,
@@ -948,6 +950,7 @@ defmodule Flirtual.User do
     user
     |> cast(attrs, [:email])
     |> validate_unique_email()
+    |> put_change(:previous_email, user.email)
     |> put_change(:email_confirmed_at, nil)
   end
 

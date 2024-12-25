@@ -41,12 +41,13 @@ defmodule Flirtual.ObanWorkers.Email do
 
   @impl Oban.Worker
   def perform(%Oban.Job{
-        args: %{
-          "recipient" => recipient,
-          "subject" => subject,
-          "body_text" => body_text,
-          "body_html" => body_html
-        }
+        args:
+          %{
+            "recipient" => recipient,
+            "subject" => subject,
+            "body_text" => body_text,
+            "body_html" => body_html
+          } = args
       }) do
     case ExRated.check_rate(
            "email",
@@ -54,9 +55,11 @@ defmodule Flirtual.ObanWorkers.Email do
            Application.get_env(:flirtual, Flirtual.ObanWorkers)[:email_rate_limit]
          ) do
       {:ok, _} ->
+        from = Map.get(args, "from", "noreply@flirtu.al")
+
         Mailer.send(
           recipient,
-          from: "noreply@flirtu.al",
+          from: from,
           subject: subject,
           body_text: body_text,
           body_html: body_html

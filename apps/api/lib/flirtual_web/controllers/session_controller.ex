@@ -64,7 +64,7 @@ defmodule FlirtualWeb.SessionController do
     end
   end
 
-  def deliver_leaked_password_alert(login, ip) do
+  defp deliver_leaked_password_alert(login, ip) do
     %{
       "recipient" => "security@flirtu.al",
       "subject" => "Login attempted with leaked password",
