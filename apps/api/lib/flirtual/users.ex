@@ -198,7 +198,8 @@ defmodule Flirtual.Users do
   def confirm_reset_password(attrs) do
     Repo.transaction(fn ->
       with {:ok, attrs} <- ConfirmResetPassword.apply(attrs),
-           {:ok, user} <- User.update_password(attrs.user, attrs.password) do
+           {:ok, user} <- User.update_password(attrs.user, attrs.password),
+           {:ok, _} <- deliver_changed_password_alert(user) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
