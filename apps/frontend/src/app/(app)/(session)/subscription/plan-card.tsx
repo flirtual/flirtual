@@ -113,6 +113,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 					<div className="origin-center -translate-y-3 translate-x-3 rotate-45">
 						<span className="font-semibold">
 							Save
+							{" "}
 							{discount}
 							%
 						</span>
