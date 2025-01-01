@@ -94,10 +94,10 @@ export default async function AboutPage() {
 									url: urls.profile("mMFE4M3CvbrvL4dP2LywHT")
 								},
 								{
-									name: "Krauser",
+									name: "Lvcidu",
 									role: t("team.roles.moderator"),
-									avatar: "ff780f16-133a-45fd-943c-ed2b86953d2a",
-									url: urls.profile("qX6FJu6fn2Ebpj4MFzzAbY")
+									avatar: "49623cce-d03e-443a-822d-80412d28290d",
+									url: urls.profile("RiAEmdNcdbKYXHw5n6kepB")
 								},
 								{
 									name: "Reploidsham",
@@ -118,34 +118,34 @@ export default async function AboutPage() {
 									url: urls.profile("KKidURg3PuYzGGqErGAADC")
 								},
 								{
-									name: "Teru",
-									role: t("team.roles.moderator"),
-									avatar: "84f5d8ce-e7df-499f-8e55-db7e94d134a9",
-									url: urls.profile("2azZQZEEQQSw5YMjKD5PHJ")
-								},
-								{
 									name: "The_Blarg",
 									role: t("team.roles.moderator"),
 									avatar: "e3793c96-e6df-4520-9ead-d4fc4b1f2d9f",
 									url: urls.profile("CtCeB3m7jSDTaKTu2GF6HN")
 								},
 								{
-									name: "Solo!!",
-									role: `${t("team.roles.moderator")} & ${t("team.roles.event_host")}`,
-									avatar: "c2d09814-db3b-49ba-a502-e5421e4816b3",
-									url: urls.profile("QWnJPkY2SYZYZCPtSFDu4N")
-								},
-								{
 									name: "Tip_The_Spartan",
-									role: t("team.roles.event_host"),
+									role: `${t("team.roles.moderator")} & ${t("team.roles.event_host")}`,
 									avatar: "4b7e5902-c19d-4c35-ac2e-e9d534a7f7bf",
 									url: urls.profile("BrKN6eEdeF9gUEgD6xf8uB")
 								},
 								{
-									name: "turtledude01",
+									name: "noxatnight",
 									role: t("team.roles.event_host"),
-									avatar: "e6587a59-b35c-47ef-9782-5c62f8ba9a73",
-									url: urls.profile("RKXrZ8wxFsc6BNR4Vqsw45")
+									avatar: "ebacda78-2516-40af-8cd6-2f812764df1b",
+									url: urls.profile("phzPP68JZq2m9HovbPeuZQ")
+								},
+								{
+									name: "Solo!!",
+									role: t("team.roles.event_host"),
+									avatar: "c2d09814-db3b-49ba-a502-e5421e4816b3",
+									url: urls.profile("QWnJPkY2SYZYZCPtSFDu4N")
+								},
+								{
+									name: "Xero_XIII",
+									role: t("team.roles.event_host"),
+									avatar: "8b85f8fc-6f0b-41df-8f7d-a829cb346b86",
+									url: urls.profile("nro9VuxaTPq7YLSVw6uZgk")
 								},
 								{
 									name: "Antithalice",
@@ -154,7 +154,7 @@ export default async function AboutPage() {
 									url: urls.profile("djj7zNDxYPyCs3WmNJ5BBY")
 								},
 								{
-									name: "Fuugul",
+									name: "FuuGhoul",
 									role: t("team.roles.social"),
 									avatar: "0ebe531d-cb90-4c42-8294-37145c49a49a",
 									url: urls.profile("iCMu3yfBx5d9Yhmst3pBc3")
