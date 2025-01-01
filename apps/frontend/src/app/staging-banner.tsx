@@ -42,7 +42,7 @@ export async function StagingBanner() {
 										{" "}
 										{behind_by}
 										{" "}
-										commits behind
+										commit(s) behind
 									</>
 								)}
 								{ahead_by > 0 && (
@@ -51,11 +51,11 @@ export async function StagingBanner() {
 										{" "}
 										{ahead_by}
 										{" "}
-										commits ahead
+										commit(s) ahead of
 									</>
 								)}
 								{" "}
-								of production
+								production
 							</InlineLink>
 						</>
 					)}
