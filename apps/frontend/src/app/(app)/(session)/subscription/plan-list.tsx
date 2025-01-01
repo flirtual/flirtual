@@ -1,5 +1,6 @@
 "use client";
 
+import { TicketPercent } from "lucide-react";
 import { type FC, useState } from "react";
 
 import { useDevice } from "~/hooks/use-device";
@@ -47,7 +48,6 @@ export const PlanList: FC = () => {
 					duration: "every 3 months",
 					price: 29.99,
 					originalPrice: 44.97,
-					highlight: true
 				},
 				{
 					id: "Wt4aFY7jVzvSNFK9qcYAr5",
@@ -68,12 +68,24 @@ export const PlanList: FC = () => {
 			})}
 			<div className="col-span-full flex flex-col gap-2">
 				<PlanCard
+					highlight
 					disabled={purchasePending}
 					duration="lifetime"
 					id="Di7Sypboma4ryhy6MUagyS"
-					price={129.99}
+					originalPrice={129.99}
+					price={native ? 129.99 : 99.99}
 					setPurchasePending={setPurchasePending}
 				/>
+				{!native && (
+					<div className="mt-2 flex flex-row items-center gap-2 self-center text-pink">
+						<TicketPercent />
+						<span>
+							Save 20% on Lifetime Premium until January 7
+							<sup>th</sup>
+							. Happy New Year!
+						</span>
+					</div>
+				)}
 			</div>
 		</div>
 	);

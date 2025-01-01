@@ -98,7 +98,8 @@ defmodule Flirtual.Chargebee do
                    item_prices: [
                      %{item_price_id: plan.chargebee_id}
                    ],
-                   currency_code: "usd"
+                   currency_code: "usd",
+                   "coupon_ids[0]": "NEWYEAR2025"
                  }
                ) do
           {:ok, url}
