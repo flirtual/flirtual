@@ -48,6 +48,7 @@ export const PlanList: FC = () => {
 					duration: "every 3 months",
 					price: 29.99,
 					originalPrice: 44.97,
+					highlight: native
 				},
 				{
 					id: "Wt4aFY7jVzvSNFK9qcYAr5",
@@ -68,9 +69,9 @@ export const PlanList: FC = () => {
 			})}
 			<div className="col-span-full flex flex-col gap-2">
 				<PlanCard
-					highlight
 					disabled={purchasePending}
 					duration="lifetime"
+					highlight={!native}
 					id="Di7Sypboma4ryhy6MUagyS"
 					originalPrice={129.99}
 					price={native ? 129.99 : 99.99}
