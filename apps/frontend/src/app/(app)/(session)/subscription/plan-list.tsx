@@ -73,7 +73,7 @@ export const PlanList: FC = () => {
 					duration="lifetime"
 					highlight={!native}
 					id="Di7Sypboma4ryhy6MUagyS"
-					originalPrice={129.99}
+					originalPrice={native ? undefined : 129.99}
 					price={native ? 129.99 : 99.99}
 					setPurchasePending={setPurchasePending}
 				/>
