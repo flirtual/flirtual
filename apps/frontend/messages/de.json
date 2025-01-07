@@ -69,7 +69,8 @@
 		}
 	},
 	"download": {
-		"best_topical_mayfly_tap": "Download auf",
+		"title": "Herunterladen",
+		"best_topical_mayfly_tap": "Herunterladen auf",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
@@ -215,8 +216,59 @@
 			"3": "Hihi!",
 			"4": "Kann ich Ihnen helfen?",
 			"5": "Möchten Sie Tipps?",
-			"6": "Im Homie-Modus kannst du neue Freunde finden ✌️"
+			"6": "Im Homie-Modus kannst du neue Freunde finden ✌️",
+			"7": "Sei du selbst!",
+			"60": "Du hast 300 Mal auf mich geklickt.",
+			"19": "Warum bist du noch hier?",
+			"26": "VRLFP wurde am 4. Juli 2018 geboren.",
+			"29": ":3",
+			"35": "<3",
+			"44": "Was ist dein Name?",
+			"49": "Kennst du den Weg?",
+			"53": "Kannst du das?",
+			"59": "Geh duschen!",
+			"61": "Ich bin eine Katze. Das ist eine Katzenweisheit.",
+			"69": "Miau."
 		}
+	},
+	"branding": {
+		"brave_early_weasel_arise": "Unser Logo",
+		"tasty_last_pony_transform": "Farben",
+		"gross_red_earthworm_reside": "Farbverlauf",
+		"fair_yummy_penguin_harbor": "Dunkler Modus",
+		"whole_round_penguin_pet": "Pink",
+		"known_trick_raven_sew": "Creme",
+		"tired_extra_bear_forgive": "Herunterladen"
+	},
+	"debugger": {
+		"spicy_pretty_tiger_pet": "Gerät",
+		"lucky_sound_opossum_absorb": "App-Plattform:",
+		"vexed_yummy_tadpole_grow": "Browser:",
+		"known_spare_mantis_pet": "System:",
+		"hour_odd_kudu_dine": "Sprache:",
+		"mushy_muddy_warthog_win": "Sitzung",
+		"wacky_spry_haddock_jump": "Benutzerprofil:",
+		"spry_polite_elk_grace": "Benutzerobjekt:",
+		"brief_neat_kestrel_ascend": "Nicht verfügbar",
+		"north_crisp_fly_dart": "Alter:",
+		"swift_short_koala_fond": "Umgebung:",
+		"each_zippy_millipede_pop": "Version:"
+	},
+	"events": {
+		"title": "Veranstaltungen",
+		"top_big_tern_twist": "Anstehende Veranstaltungen",
+		"quiet_lazy_marten_amuse": "VRChat-Welten"
+	},
+	"mentalhealth": {
+		"title": "Psychische Gesundheit",
+		"early_lazy_squid_advise": "Krisen-Hotlines"
+	},
+	"payments": {
+		"title": "Zahlungsbedingungen"
+	},
+	"press": {
+		"title": "Presse",
+		"mellow_level_butterfly_emerge": "Herunterladen"
 	},
 	"deft_raw_cod_fond": "Hergestellt mit<action> {heart}</action> in VR",
 	"footer": {

@@ -430,7 +430,7 @@
 		"smart_just_scallop_reside": "Discord verified",
 		"zany_salty_cheetah_lead": "VRChat: <copy>{name}</copy>",
 		"relationship_status": {
-			"to_other": "You {status, select, liked {liked} homied {homied} other {passed}} {displayName}.",
+			"to_other": "You {status, select, liked {liked} homied {homied} other {passed on}} {displayName}.",
 			"to_me": "{displayName} {status, select, liked {liked} other {homied}} you."
 		},
 		"strong_trite_squid_grasp": "Uploaded {uploaded}{scanned, select, true {, and was scanned} false {, and was <bold>not scanned</bold>} other {}}.",
@@ -570,6 +570,9 @@
 		"is_reserved": "Reserved.",
 		"does_not_match_confirmation": "Does not match.",
 		"password_does_not_match": "New passwords do not match, please check the spelling and try again.",
+		"leaked_password": "This password was exposed in a data breach on another app or site. For your security, please choose a new password that you haven't used anywhere else.",
+		"leaked_login_password": "Your password was exposed in a data breach on another app or site. For your security, please <reset>reset your password</reset> to one that you haven't used anywhere else.",
+		"login_rate_limit": "Too many login attempts, please try again in 15 minutes or <reset>reset your password</reset>.",
 		"is_still_associated_with_this_entry": "Still associated with this entry.",
 		"are_still_associated_with_this_entry": "Still associated with this entry.",
 		"should_be_{count}_character(s)": "Must be {count, plural, =0 {empty} =1 {one character long} other {# characters long}}.",
@@ -589,6 +592,7 @@
 		"invalid_credentials": "Incorrect email or password, please try resetting your password.",
 		"invalid_credentials_complex": "Incorrect email or password, please try <reset>resetting your password</reset> or <help>check common issues</help>.",
 		"invalid_password": "Incorrect password, please try again or log out and reset your password.",
+		"email_domain_blocked": "Sorry, your email service has been blocked due to abuse.",
 		"email_must_be_different": "New email cannot be the same as the old email.",
 		"account_banned": "You have been suspended, please check your account email for details and appeal instructions.",
 		"connection_account_not_found": "No Flirtual account found for this Discord user. Ensure you are logged into the correct Discord account. If you haven't linked your Discord account, log in with your email and password first, then add your Discord account in the Connections settings.",

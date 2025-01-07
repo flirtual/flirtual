@@ -132,7 +132,7 @@
 	},
 	"download": {
 		"title": "Baixar",
-		"best_topical_mayfly_tap": "Baixar ligado {platform}",
+		"best_topical_mayfly_tap": "Baixar ligado",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
