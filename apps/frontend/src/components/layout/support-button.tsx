@@ -9,8 +9,10 @@ import { InlineButton } from "../inline-button";
 import { FooterListIconLink, FooterListLink } from "./footer";
 
 export const FooterSupportLink: React.FC = () => {
+	const t = useTranslations("footer");
+
 	return (
-		<FooterListLink label="Support" onClick={useFreshworks().openFreshworks} />
+		<FooterListLink label={t("support")} onClick={useFreshworks().openFreshworks} />
 	);
 };
 

@@ -176,34 +176,50 @@
 			"calm_calm_alligator_taste": "Citas virtuales, conexiones reales"
 		},
 		"profiles": {
-			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
+			"legal_big_finch_kiss": "Captura de pantalla de un perfil de Flirtual",
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+			"stout_last_kudu_bend": "Tu avatar, tu elección",
+			"messages": {
+				"0": "La realidad virtual es una forma de conocer gente nueva que prioriza la personalidad.",
+				"1": "Los avatares te ayudan a expresarte sin sentirte cohibido.",
+				"2": "¡Después de una o dos citas en realidad virtual, haz una videollamada o conoce a alguien en la vida real!"
+			}
 		},
 		"carousel": {
+			"spare_chunky_cougar_honor": "Disfrute de citas mágicas y seguras juntos en Realidad Virtual",
 			"images": {
 				"0": {
+					"title": "Alimenta a algunos patos",
 					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 				},
 				"1": {
+					"title": "Nadar… con tiburones",
 					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
 				},
 				"2": {
+					"title": "Relájate en una cafetería acogedora",
 					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
 				},
 				"3": {
+					"title": "Observar un agujero negro",
 					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
 				},
 				"4": {
+					"title": "Toca la hierba",
 					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
 				},
 				"5": {
+					"title": "Pintar juntos",
 					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
 				},
 				"6": {
+					"title": "Juega un poco al billar",
 					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
 				}
 			}
 		},
 		"testimonial": {
+			"even_major_hare_believe": "¡Conéctate con {userCount, number} y más personas de todo el mundo!",
 			"images": {
 				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
 				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
@@ -263,6 +279,9 @@
 				}
 			}
 		},
+		"cta": {
+			"few_grassy_hyena_adapt": "Enamorarse de una<highlight> Una dimensión completamente nueva</highlight>"
+		},
 		"flitty_messages": {
 			"0": "¡Maullido!",
 			"1": "¡Eso hace cosquillas!",
@@ -276,6 +295,20 @@
 	"deft_raw_cod_fond": "Hecho con <action>{heart}</action> en VR",
 	"banners": {
 		"finish_profile": "<link>Completa tu perfil</link> ¡para que la gente pueda verte y encontrarte!"
+	},
+	"footer": {
+		"events": "Eventos",
+		"support": "Apoyo",
+		"feedback": "Comentario",
+		"status": "Estado",
+		"about": "Acerca de",
+		"press": "Prensa",
+		"branding": "Herrada",
+		"guidelines": "Normas de la comunidad",
+		"terms": "Condiciones de servicio",
+		"privacy": "política de privacidad",
+		"developers": "Desarrolladores",
+		"copyright": "© {year} Flirtual"
 	},
 	"errors": {
 		"cannot_block_user": "Error al bloquear usuario (cuenta deshabilitada).",

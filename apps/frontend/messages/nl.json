@@ -60,6 +60,7 @@
 		}
 	},
 	"download": {
+		"best_topical_mayfly_tap": "Downloaden op",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
@@ -92,34 +93,50 @@
 			"calm_calm_alligator_taste": "Virtuele dates, echte connecties"
 		},
 		"profiles": {
-			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
+			"legal_big_finch_kiss": "Screenshot van een Flirtual-profiel",
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+			"stout_last_kudu_bend": "Jouw avatar, jouw keuze",
+			"messages": {
+				"0": "VR is een manier om nieuwe mensen te ontmoeten, waarbij de persoonlijkheid centraal staat.",
+				"1": "Met avatars kunt u uzelf uiten, zonder dat u zich onzeker voelt.",
+				"2": "Na een VR-date of twee, kun je een videogesprek voeren of elkaar in het echt ontmoeten!"
+			}
 		},
 		"carousel": {
+			"spare_chunky_cougar_honor": "Beleef samen veilige, magische dates in Virtual Reality",
 			"images": {
 				"0": {
+					"title": "Geef wat eenden te eten",
 					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 				},
 				"1": {
+					"title": "Zwemmen… met haaien",
 					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
 				},
 				"2": {
+					"title": "Ontspan in een gezellig café",
 					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
 				},
 				"3": {
+					"title": "Observeer een zwart gat",
 					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
 				},
 				"4": {
+					"title": "Gras aanraken",
 					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
 				},
 				"5": {
+					"title": "Samen schilderen",
 					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
 				},
 				"6": {
+					"title": "Speel een potje pool",
 					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
 				}
 			}
 		},
 		"testimonial": {
+			"even_major_hare_believe": "Match met {userCount, number}+ mensen van over de hele wereld!",
 			"images": {
 				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
 				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
@@ -179,6 +196,9 @@
 				}
 			}
 		},
+		"cta": {
+			"few_grassy_hyena_adapt": "Word verliefd in een<highlight> geheel nieuwe dimensie</highlight>"
+		},
 		"flitty_messages": {
 			"0": "Miauw!",
 			"1": "Dat kietelt!",
@@ -188,5 +208,20 @@
 			"5": "Wilt u wat tips?",
 			"6": "Je kunt nieuwe vrienden vinden in de Homie-modus ✌️"
 		}
+	},
+	"deft_raw_cod_fond": "Gemaakt met<action> {heart}</action> in VR",
+	"footer": {
+		"events": "Evenementen",
+		"support": "Steun",
+		"feedback": "Feedback",
+		"status": "Staat",
+		"about": "Over",
+		"press": "Pers",
+		"branding": "Merknaam",
+		"guidelines": "Community-richtlijnen",
+		"terms": "Servicevoorwaarden",
+		"privacy": "Privacybeleid",
+		"developers": "Ontwikkelaars",
+		"copyright": "© {year} Flirtual"
 	}
 }

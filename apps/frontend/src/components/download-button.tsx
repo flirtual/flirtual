@@ -55,6 +55,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 			<div className="flex flex-col justify-center text-left">
 				<span className="font-montserrat text-xs font-bold uppercase">
 					{t("best_topical_mayfly_tap")}
+					{" "}
 				</span>
 				<span className="font-nunito">{t(`platform.${platform}`)}</span>
 			</div>

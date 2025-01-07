@@ -60,6 +60,7 @@
 		}
 	},
 	"download": {
+		"best_topical_mayfly_tap": "다운로드",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
@@ -91,34 +92,50 @@
 			"calm_calm_alligator_taste": "가상 데이트, 실제 연결"
 		},
 		"profiles": {
-			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
+			"legal_big_finch_kiss": "Flirtual 프로필의 스크린샷",
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+			"stout_last_kudu_bend": "당신의 아바타, 당신의 선택",
+			"messages": {
+				"0": "VR은 새로운 사람을 만나는 개성 중심의 방법입니다.",
+				"1": "아바타는 자신감 없이 자신을 표현하는 데 도움이 됩니다.",
+				"2": "VR 데이트를 한두 번 한 후, 화상 통화를 하거나 실제로 만나 보세요!"
+			}
 		},
 		"carousel": {
+			"spare_chunky_cougar_honor": "가상현실에서 안전하고 마법같은 데이트를 함께 즐기세요",
 			"images": {
 				"0": {
+					"title": "오리에게 먹이를 주세요",
 					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 				},
 				"1": {
+					"title": "상어와 함께 수영하세요",
 					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
 				},
 				"2": {
+					"title": "아늑한 카페에서 휴식을 취하세요",
 					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
 				},
 				"3": {
+					"title": "블랙홀을 관찰하다",
 					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
 				},
 				"4": {
+					"title": "잔디를 만지다",
 					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
 				},
 				"5": {
+					"title": "함께 페인트하다",
 					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
 				},
 				"6": {
+					"title": "당구를 치다",
 					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
 				}
 			}
 		},
 		"testimonial": {
+			"even_major_hare_believe": "전 세계의 {userCount, number} 이상의 사람들과 매치해보세요!",
 			"images": {
 				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
 				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
@@ -178,6 +195,9 @@
 				}
 			}
 		},
+		"cta": {
+			"few_grassy_hyena_adapt": "사랑에 빠지다<highlight> 완전히 새로운 차원</highlight>"
+		},
 		"flitty_messages": {
 			"0": "야옹!",
 			"1": "간지럽네요!",
@@ -187,5 +207,18 @@
 			"5": "몇 가지 팁을 원하시나요?",
 			"6": "Homie Mode에서 새로운 친구를 만나 보세요 ✌️"
 		}
+	},
+	"deft_raw_cod_fond": "로 만들어졌습니다<action> {heart}</action> VR에서",
+	"footer": {
+		"events": "이벤트",
+		"support": "지원하다",
+		"feedback": "피드백",
+		"status": "상태",
+		"about": "에 대한",
+		"press": "누르다",
+		"branding": "브랜딩",
+		"guidelines": "커뮤니티 가이드라인",
+		"privacy": "개인정보 보호정책",
+		"copyright": "© {year} Flirtual"
 	}
 }

@@ -8,7 +8,7 @@ import { urls } from "~/urls";
 import { Tile, TileAnchor, type TileProps } from ".";
 
 export async function Testimonial({ id }: TileProps) {
-	const [userCount, messages, t, format] = await Promise.all([
+	const [userCount, messages, t] = await Promise.all([
 		User.getApproximateCount(),
 		getMessages(),
 		getTranslations("landing.testimonial"),
@@ -42,7 +42,7 @@ export async function Testimonial({ id }: TileProps) {
 				<TileAnchor id={id}>
 					<span className="font-montserrat text-3xl font-extrabold desktop:text-4xl">
 						{t("even_major_hare_believe", {
-							userCount: format.number(userCount)
+							userCount
 						})}
 					</span>
 				</TileAnchor>

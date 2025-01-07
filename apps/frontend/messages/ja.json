@@ -60,6 +60,7 @@
 		}
 	},
 	"download": {
+		"best_topical_mayfly_tap": "ダウンロード",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
@@ -91,34 +92,50 @@
 			"calm_calm_alligator_taste": "バーチャルデート、リアルなつながり"
 		},
 		"profiles": {
-			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
+			"legal_big_finch_kiss": "浮気プロフィールのスクリーンショット",
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+			"stout_last_kudu_bend": "あなたのアバター、あなたの選択",
+			"messages": {
+				"0": "VR は、個性を重視して新しい人と出会う方法です。",
+				"1": "アバターは、自意識過剰にならずに自分自身を表現するのに役立ちます。",
+				"2": "VR デートを 1 回か 2 回した後は、ビデオ通話をしたり、実際に会ったりしましょう。"
+			}
 		},
 		"carousel": {
+			"spare_chunky_cougar_honor": "バーチャルリアリティで安全で魔法のようなデートを一緒に楽しみましょう",
 			"images": {
 				"0": {
+					"title": "アヒルに餌をあげる",
 					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 				},
 				"1": {
+					"title": "サメと一緒に泳ぐ",
 					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
 				},
 				"2": {
+					"title": "居心地の良いカフェでくつろぐ",
 					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
 				},
 				"3": {
+					"title": "ブラックホールを観察する",
 					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
 				},
 				"4": {
+					"title": "草に触れる",
 					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
 				},
 				"5": {
+					"title": "一緒に絵を描く",
 					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
 				},
 				"6": {
+					"title": "ビリヤードをする",
 					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
 				}
 			}
 		},
 		"testimonial": {
+			"even_major_hare_believe": "世界中の{userCount, number}人以上の人とマッチしましょう!",
 			"images": {
 				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
 				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
@@ -178,6 +195,9 @@
 				}
 			}
 		},
+		"cta": {
+			"few_grassy_hyena_adapt": "恋に落ちる<highlight>全く新しい次元</highlight>"
+		},
 		"flitty_messages": {
 			"0": "ニャー！",
 			"1": "くすぐったい！",
@@ -187,5 +207,20 @@
 			"5": "ヒントが欲しいですか?",
 			"6": "Homie Modeで新しい友達を見つけることができます✌️"
 		}
+	},
+	"deft_raw_cod_fond": "作られた<action>{heart}</action> VRで",
+	"footer": {
+		"events": "イベント",
+		"support": "サポート",
+		"feedback": "フィードバック",
+		"status": "状態",
+		"about": "について",
+		"press": "プレス",
+		"branding": "ブランディング",
+		"guidelines": "コミュニティガイドライン",
+		"terms": "利用規約",
+		"privacy": "プライバシーポリシー",
+		"developers": "開発者",
+		"copyright": "© {year} Flirtual"
 	}
 }

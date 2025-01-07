@@ -26,6 +26,16 @@ export const CarouselGallery: FC = () => {
 		};
 	};
 
+	/*
+	t("landing.carousel.images.0.title")"
+	t("landing.carousel.images.1.title")"
+	t("landing.carousel.images.2.title")"
+	t("landing.carousel.images.3.title")"
+	t("landing.carousel.images.4.title")"
+	t("landing.carousel.images.5.title")"
+	t("landing.carousel.images.6.title")"
+	*/
+
 	const images = Object.values(_images);
 	const [activeIndex, setActiveIndex] = useState(0);
 

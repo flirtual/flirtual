@@ -181,34 +181,50 @@
 			"calm_calm_alligator_taste": "Rendez-vous virtuels, connexions réelles"
 		},
 		"profiles": {
-			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
+			"legal_big_finch_kiss": "Capture d'écran d'un profil Flirtual",
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+			"stout_last_kudu_bend": "Votre avatar, votre choix",
+			"messages": {
+				"0": "La réalité virtuelle est un moyen de rencontrer de nouvelles personnes qui privilégie la personnalité.",
+				"1": "Les avatars vous aident à vous exprimer, sans vous sentir gêné.",
+				"2": "Après un ou deux rendez-vous en réalité virtuelle, passez un appel vidéo ou rencontrez-vous dans la vraie vie !"
+			}
 		},
 		"carousel": {
+			"spare_chunky_cougar_honor": "Profitez de rendez-vous magiques et sûrs ensemble en réalité virtuelle",
 			"images": {
 				"0": {
+					"title": "Nourrir des canards",
 					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 				},
 				"1": {
+					"title": "Nager… avec les requins",
 					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
 				},
 				"2": {
+					"title": "Détendez-vous dans un café chaleureux",
 					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
 				},
 				"3": {
+					"title": "Observer un trou noir",
 					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
 				},
 				"4": {
+					"title": "Toucher l'herbe",
 					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
 				},
 				"5": {
+					"title": "Peindre ensemble",
 					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
 				},
 				"6": {
+					"title": "Jouez au billard",
 					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
 				}
 			}
 		},
 		"testimonial": {
+			"even_major_hare_believe": "Faites correspondre avec {userCount, number}+ des personnes du monde entier !",
 			"images": {
 				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
 				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
@@ -268,6 +284,9 @@
 				}
 			}
 		},
+		"cta": {
+			"few_grassy_hyena_adapt": "Tomber amoureux dans un<highlight> toute nouvelle dimension</highlight>"
+		},
 		"flitty_messages": {
 			"0": "Miaou!",
 			"1": "Ça chatouille !",
@@ -277,5 +296,20 @@
 			"5": "Vous voulez des conseils ?",
 			"6": "Vous pouvez trouver de nouveaux amis en mode Homie ✌️"
 		}
+	},
+	"deft_raw_cod_fond": "Fabriqué avec<action> {heart}</action> en réalité virtuelle",
+	"footer": {
+		"events": "Événements",
+		"support": "Soutien",
+		"feedback": "Retour",
+		"status": "Statut",
+		"about": "À propos",
+		"press": "Presse",
+		"branding": "Image de marque",
+		"guidelines": "Règles de la communauté",
+		"terms": "Conditions d'utilisation",
+		"privacy": "politique de confidentialité",
+		"developers": "Développeurs",
+		"copyright": "© {year} Flirtual"
 	}
 }

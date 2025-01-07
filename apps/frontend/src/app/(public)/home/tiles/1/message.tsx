@@ -19,6 +19,12 @@ export const ProfileMessage: FC = () => {
 		Object.keys(messages)[0] as ProfileMessageKey
 	);
 
+	/*
+	t("landing.profiles.messages.0")"
+	t("landing.profiles.messages.1")"
+	t("landing.profiles.messages.2")"
+	*/
+
 	useInterval(
 		useCallback(() => {
 			setCurrent((current) => {

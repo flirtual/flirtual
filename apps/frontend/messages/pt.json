@@ -132,7 +132,7 @@
 	},
 	"download": {
 		"title": "Baixar",
-		"best_topical_mayfly_tap": "Baixar ligado",
+		"best_topical_mayfly_tap": "Baixar ligado {platform}",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
@@ -250,7 +250,7 @@
 			}
 		},
 		"testimonial": {
-			"even_major_hare_believe": "Dê Match com mais de {userCount}+ pessoas de todo o mundo!",
+			"even_major_hare_believe": "Dê Match com mais de {userCount, number}+ pessoas de todo o mundo!",
 			"images": {
 				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
 				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
