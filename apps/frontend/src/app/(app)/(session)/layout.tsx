@@ -28,18 +28,16 @@ export default async function AuthenticatedLayout({
 			}}
 		>
 			<PurchaseProvider>
-				<TalkjsProvider>
-					<ShepherdProvider>
-						<NotificationProvider>
-							{children}
-							{user.moderatorMessage && <ModerationMessageDialog />}
-							{user.tnsDiscordInBiography
-							&& new Date(user.tnsDiscordInBiography).getTime() < Date.now() && (
-								<DiscordSpamDialog />
-							)}
-						</NotificationProvider>
-					</ShepherdProvider>
-				</TalkjsProvider>
+				<ShepherdProvider>
+					<NotificationProvider>
+						{children}
+						{user.moderatorMessage && <ModerationMessageDialog />}
+						{user.tnsDiscordInBiography
+						&& new Date(user.tnsDiscordInBiography).getTime() < Date.now() && (
+							<DiscordSpamDialog />
+						)}
+					</NotificationProvider>
+				</ShepherdProvider>
 			</PurchaseProvider>
 		</SWRConfig>
 	);
