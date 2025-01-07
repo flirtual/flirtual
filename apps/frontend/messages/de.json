@@ -18,27 +18,33 @@
 		"timeline": {
 			"2018": {
 				"title": "2018 🐣",
-				"image": "88bb9381-87ed-499d-9667-cd61eff96938"
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938",
+				"image_alt": "Flirtual in 2018"
 			},
 			"2019": {
 				"title": "🏆 2019",
-				"image": "c373b72d-16a0-479c-b834-ccb7041bc615"
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
+				"image_alt": "Flirtual in 2019"
 			},
 			"2020": {
 				"title": "2020 🧪",
-				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86"
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
+				"image_alt": "Flirtual in 2020"
 			},
 			"2021": {
 				"title": "✌️ 2021",
-				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f"
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
+				"image_alt": "Flirtual in 2021"
 			},
 			"2022": {
 				"title": "2022 😻",
-				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
+				"image_alt": "Flirtual in 2022"
 			},
 			"2023": {
 				"title": "✨ 2023",
-				"image": "36446ecb-9103-4b6d-b221-7c657f17323d"
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
+				"image_alt": "Flirtual in 2023"
 			}
 		},
 		"images": {
@@ -74,7 +80,9 @@
 			"google": "Google Play",
 			"microsoft": "Microsoft Store",
 			"side_quest": "SideQuest"
-		}
+		},
+		"title": "Herunterladen",
+		"best_topical_mayfly_tap": "Herunterladen auf"
 	},
 	"privacy": {
 		"title": "Datenschutzerklärung",
@@ -101,7 +109,8 @@
 			"calm_calm_alligator_taste": "Virtuelle Dates, echte Verbindungen"
 		},
 		"profiles": {
-			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+			"stout_last_kudu_bend": "Dein Avatar, deine Wahl"
 		},
 		"carousel": {
 			"images": {
@@ -109,7 +118,8 @@
 					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 				},
 				"1": {
-					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
+					"image": "a137add7-ecc1-425a-9313-e6862d43e00c",
+					"title": "Schwimmen… mit Haien"
 				},
 				"2": {
 					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
@@ -118,10 +128,12 @@
 					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
 				},
 				"4": {
-					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
+					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66",
+					"title": "Gras berühren"
 				},
 				"5": {
-					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
+					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e",
+					"title": "Gemeinsam malen"
 				},
 				"6": {
 					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
@@ -195,7 +207,58 @@
 			"3": "Hihi!",
 			"4": "Kann ich Ihnen helfen?",
 			"5": "Möchten Sie Tipps?",
-			"6": "Im Homie-Modus kannst du neue Freunde finden ✌️"
+			"6": "Im Homie-Modus kannst du neue Freunde finden ✌️",
+			"7": "Sei du selbst!",
+			"60": "Du hast 300 Mal auf mich geklickt.",
+			"19": "Warum bist du noch hier?",
+			"26": "VRLFP wurde am 4. Juli 2018 geboren.",
+			"29": ":3",
+			"35": "<3",
+			"44": "Was ist dein Name?",
+			"49": "Kennst du den Weg?",
+			"53": "Kannst du das?",
+			"59": "Geh duschen!",
+			"61": "Ich bin eine Katze. Das ist eine Katzenweisheit.",
+			"69": "Miau."
 		}
+	},
+	"branding": {
+		"brave_early_weasel_arise": "Unser Logo",
+		"tasty_last_pony_transform": "Farben",
+		"gross_red_earthworm_reside": "Farbverlauf",
+		"fair_yummy_penguin_harbor": "Dunkler Modus",
+		"whole_round_penguin_pet": "Pink",
+		"known_trick_raven_sew": "Creme",
+		"tired_extra_bear_forgive": "Herunterladen"
+	},
+	"debugger": {
+		"spicy_pretty_tiger_pet": "Gerät",
+		"lucky_sound_opossum_absorb": "App-Plattform:",
+		"vexed_yummy_tadpole_grow": "Browser:",
+		"known_spare_mantis_pet": "System:",
+		"hour_odd_kudu_dine": "Sprache:",
+		"mushy_muddy_warthog_win": "Sitzung",
+		"wacky_spry_haddock_jump": "Benutzerprofil:",
+		"spry_polite_elk_grace": "Benutzerobjekt:",
+		"brief_neat_kestrel_ascend": "Nicht verfügbar",
+		"north_crisp_fly_dart": "Alter:",
+		"swift_short_koala_fond": "Umgebung:",
+		"each_zippy_millipede_pop": "Version:"
+	},
+	"events": {
+		"title": "Veranstaltungen",
+		"top_big_tern_twist": "Anstehende Veranstaltungen",
+		"quiet_lazy_marten_amuse": "VRChat-Welten"
+	},
+	"mentalhealth": {
+		"title": "Psychische Gesundheit",
+		"early_lazy_squid_advise": "Krisen-Hotlines"
+	},
+	"payments": {
+		"title": "Zahlungsbedingungen"
+	},
+	"press": {
+		"title": "Presse",
+		"mellow_level_butterfly_emerge": "Herunterladen"
 	}
 }
