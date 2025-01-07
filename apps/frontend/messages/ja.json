@@ -88,7 +88,8 @@
 				"event_host": "イベントホスト"
 			}
 		},
-		"content": "<section><h1>ストーリー</h1><p>Hey、Flirtualのクリエイター、KyleとTonyです。 Kyleは、Oculusの初期の頃からVRで肥満していますが、VRChatに加わり、親しい友人(彼の妻を含む)に会ったとき、それは本当に彼の人生を変えました。 COVIDが当たる直前に、Kyleは幼い頃の親友を招いた 旅の途中でトニー、VRも人生を変えました。 VRLFP(Virtual Reality Look For Partner)をはじめ、世界中の素晴らしい人々と出会うお手伝いをします。 地理的な距離を埋め、人格を最初に置くことで、私たちの使命は、どこにいても、あなたにとって非常に最高の人を見つけることです。 そして、デートをより安全で魔法のように!</p><p> 2022年にVRLFPがFlirtualになりました。 地面から再建し、マッチメイキングを強化し、個性と興味のタグを追加し、改良されたアプリを立ち上げました。 実際の生活に移行する深刻な関係を探しているかどうか、VRでよりカジュアルな何か、または単に新しい趣味、私たちはあなたの完璧なマッチを見つけるのに役立つ準備ができています。</p><group><p><3 kfarwell、Tony&The Flirtual Team</p><discord>Join私達のDiscord</discord></group><<<></><></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></> ピーシー VRLFPの謙虚な始まりから長い道が来ましたが、まだVRコミュニティで根ざした小さなチームです。 私たちは、それができる限り素晴らしいFlirtualを作るために努力するので、あなたの忍耐を感謝します. <contact> のバグ</contact> や <feedback> が提案するかどうかをお知らせください。</feedback>!</italic></p></section></section><h1></h1></h1><team-list></team-list></section></section><h1></h1></timeline></timeline></timeline></timeline></></timeline></></timeline></></timeline></section></></></></></>"
+		"content": "<section><h1>ストーリー</h1><p>Hey、Flirtualのクリエイター、KyleとTonyです。 Kyleは、Oculusの初期の頃からVRで肥満していますが、VRChatに加わり、親しい友人(彼の妻を含む)に会ったとき、それは本当に彼の人生を変えました。 COVIDが当たる直前に、Kyleは幼い頃の親友を招いた 旅の途中でトニー、VRも人生を変えました。 VRLFP(Virtual Reality Look For Partner)をはじめ、世界中の素晴らしい人々と出会うお手伝いをします。 地理的な距離を埋め、人格を最初に置くことで、私たちの使命は、どこにいても、あなたにとって非常に最高の人を見つけることです。 そして、デートをより安全で魔法のように!</p><p> 2022年にVRLFPがFlirtualになりました。 地面から再建し、マッチメイキングを強化し、個性と興味のタグを追加し、改良されたアプリを立ち上げました。 実際の生活に移行する深刻な関係を探しているかどうか、VRでよりカジュアルな何か、または単に新しい趣味、私たちはあなたの完璧なマッチを見つけるのに役立つ準備ができています。</p><group><p><3 kfarwell、Tony&The Flirtual Team</p><discord>Join私達のDiscord</discord></group><<<></><></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></></> ピーシー VRLFPの謙虚な始まりから長い道が来ましたが、まだVRコミュニティで根ざした小さなチームです。 私たちは、それができる限り素晴らしいFlirtualを作るために努力するので、あなたの忍耐を感謝します. <contact> のバグ</contact> や <feedback> が提案するかどうかをお知らせください。</feedback>!</italic></p></section></section><h1></h1></h1><team-list></team-list></section></section><h1></h1></timeline></timeline></timeline></timeline></></timeline></></timeline></></timeline></section></></></></></>",
+		"title": "会社概要"
 	},
 	"download": {
 		"best_topical_mayfly_tap": "ダウンロード",
@@ -404,7 +405,8 @@
 		"mellow_level_butterfly_emerge": "ダウンロード",
 		"hour_smug_giraffe_lend": "お問い合わせ",
 		"heavy_fancy_butterfly_glow": "ニュースルーム",
-		"wide_stock_bulldog_tend": "プレスキット"
+		"wide_stock_bulldog_tend": "プレスキット",
+		"title": "プレス"
 	},
 	"profile": {
 		"dialogs": {
@@ -493,7 +495,8 @@
 		"wise_great_crow_foster": "お問い合わせ?",
 		"tired_extra_bear_forgive": "ダウンロード",
 		"ornate_upper_guppy_mend": "より多くのグラフィックスと情報のためのフルプレスキットをダウンロードしてください.",
-		"flaky_same_grizzly_snap": "Flirtualロゴの編集、変更、歪み、リカラー、または再構成はしないでください."
+		"flaky_same_grizzly_snap": "Flirtualロゴの編集、変更、歪み、リカラー、または再構成はしないでください.",
+		"title": "ブランディング"
 	},
 	"debugger": {
 		"title": "デバッグ情報",
@@ -527,7 +530,8 @@
 		"flaky_early_shad_nourish": "イベントのスケジュールと発表については、【X42X】Discordサーバー</discord>にご連絡ください.",
 		"blue_calm_chipmunk_spark": "VRChatの世界では毎週のイベントを開催していますが、いつでも参加できます! 自分のイベントでも自由にお使いください.",
 		"careful_wise_bumblebee_walk": "1対1のスピードデート/友達作りのラウンドで人を知ることができます。 各ラウンドは3分(ホストは3〜7分から丸の長さを選択できます)です。 会話プロンプト、興味タグ、ナイトモードが含まれます.",
-		"dry_inclusive_ox_trust": "<faxmashine>Faxmashine</faxmashine>によって作成された、私たちの世界は、PCVR、Quest、デスクトップと互換性があります。 VRChat への新規登録は? <vrchat> 無料で登録できます。</vrchat>"
+		"dry_inclusive_ox_trust": "<faxmashine>Faxmashine</faxmashine>によって作成された、私たちの世界は、PCVR、Quest、デスクトップと互換性があります。 VRChat への新規登録は? <vrchat> 無料で登録できます。</vrchat>",
+		"title": "イベント"
 	},
 	"payments": {
 		"title": "支払条件"
@@ -539,7 +543,8 @@
 		"trust_and_safety": {
 			"title": "信頼と安全",
 			"acknowledge": "同意する",
-			"jolly_nimble_crow_taste": "お問い合わせ"
+			"jolly_nimble_crow_taste": "お問い合わせ",
+			"lofty_day_snail_treasure": "コミュニティガイドライン"
 		}
 	},
 	"busy_direct_cockroach_hush": "お問い合わせ",
@@ -566,5 +571,9 @@
 	"learn_more": "もっと詳しく",
 	"arrangeable_image": {
 		"soft_curly_pony_advise": "画像の移動"
-	}
+	},
+	"guidelines": {
+		"title": "コミュニティガイドライン"
+	},
+	"support": "サポート"
 }
