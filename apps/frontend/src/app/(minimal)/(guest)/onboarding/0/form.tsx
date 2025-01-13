@@ -51,7 +51,7 @@ export const Onboarding0Form: FC = () => {
 					<FormField name="email">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>Email address</InputLabel>
+								<InputLabel {...labelProps}>{t("email")}</InputLabel>
 								<InputText {...props} autoComplete="email" type="email" />
 							</>
 						)}
@@ -59,7 +59,7 @@ export const Onboarding0Form: FC = () => {
 					<FormField name="password">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>Password</InputLabel>
+								<InputLabel {...labelProps}>{t("password")}</InputLabel>
 								<InputText
 									{...props}
 									autoComplete="new-password"
@@ -75,7 +75,7 @@ export const Onboarding0Form: FC = () => {
 					>
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>URL</InputLabel>
+								<InputLabel {...labelProps}>{t("url")}</InputLabel>
 								<InputText {...props} autoComplete="nope" tabIndex={-1} />
 							</>
 						)}
@@ -89,31 +89,30 @@ export const Onboarding0Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											to the
-											{" "}
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href={urls.resources.termsOfService}
-											>
-												Terms of Service
-											</InlineLink>
-											{" "}
-											&
-											{" "}
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href={urls.resources.privacyPolicy}
-											>
-												Privacy Policy
-											</InlineLink>
-											{" "}
-											and I&apos;m at least 18 years of age
+											{t.rich("agreement", {
+												terms: (children) => (
+													<InlineLink
+														className="underline"
+														highlight={false}
+														href={urls.resources.termsOfService}
+													>
+														{children}
+													</InlineLink>
+												),
+												privacy: (children) => (
+													<InlineLink
+														className="underline"
+														highlight={false}
+														href={urls.resources.privacyPolicy}
+													>
+														{children}
+													</InlineLink>
+												)
+											})}
 										</InputLabelHint>
 									)}
 								>
-									I agree
+									{t("agree")}
 								</InputLabel>
 							</div>
 						)}
@@ -127,13 +126,11 @@ export const Onboarding0Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											with new features, changes, and offers
-											<br />
-											(we won&apos;t spam you)
+											{t.rich("updates_description", { br: () => <br /> })}
 										</InputLabelHint>
 									)}
 								>
-									Get Flirtual updates
+									{t("updates")}
 								</InputLabel>
 							</div>
 						)}
@@ -141,7 +138,7 @@ export const Onboarding0Form: FC = () => {
 					<Captcha />
 					<div className="flex flex-col gap-4">
 						<div className="flex gap-2 desktop:flex-row-reverse">
-							<FormButton className="w-44" size="sm">
+							<FormButton className="min-w-44" size="sm">
 								{t("title")}
 							</FormButton>
 							<ButtonLink

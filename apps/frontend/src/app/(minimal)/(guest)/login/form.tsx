@@ -102,6 +102,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 				}}
 				className="flex flex-col gap-8"
 				formErrorMessages={false}
+				renderCaptcha={false}
 				onSubmit={async (body) => {
 					const value = await Authentication.login(body);
 					if ("error" in value) {
@@ -162,7 +163,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					router.refresh();
 				}}
 			>
-				{({ errors, FormField }) => (
+				{({ errors, FormField, Captcha }) => (
 					<>
 						<FormField name="login">
 							{({ props, labelProps }) => (
@@ -200,9 +201,10 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 								</>
 							)}
 						</FormField>
+						<Captcha />
 						<div className="flex flex-col gap-4">
 							<div className="flex gap-2 desktop:flex-row-reverse">
-								<FormButton className="w-44" size="sm">
+								<FormButton className="min-w-44" size="sm">
 									{t("title")}
 								</FormButton>
 								<ButtonLink

@@ -49,7 +49,7 @@ export const ForgotPasswordForm: React.FC = () => {
 									.
 								</p>
 								<div className="flex gap-2">
-									<ButtonLink className="w-44" href={urls.login()} size="sm">Login</ButtonLink>
+									<ButtonLink className="min-w-44" href={urls.login()} size="sm">Login</ButtonLink>
 									<Button
 										className="flex w-fit flex-row gap-2 opacity-75"
 										kind="tertiary"
@@ -82,7 +82,7 @@ export const ForgotPasswordForm: React.FC = () => {
 								</FormField>
 								<div className="flex flex-col gap-4">
 									<div className="flex gap-2 desktop:flex-row-reverse">
-										<FormButton className="w-44" size="sm" />
+										<FormButton className="min-w-44" size="sm" />
 										<ButtonLink
 											className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
 											href={urls.login()}

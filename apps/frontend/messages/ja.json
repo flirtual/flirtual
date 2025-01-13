@@ -236,6 +236,13 @@
 	"jolly_this_crow_hug": "デバイスを確認しています...",
 	"signup": {
 		"title": "アカウントを作成する",
-		"or_log_in": "またはログイン"
+		"or_log_in": "またはログイン",
+		"email": "電子メールアドレス",
+		"password": "パスワード",
+		"url": "メールアドレス",
+		"agree": "同意します",
+		"agreement": "に<terms>利用規約</terms>＆<privacy>プライバシーポリシー</privacy>私は18歳以上です",
+		"updates": "浮気の最新情報を入手",
+		"updates_description": "新しい機能、変更、オファー<br></br>（スパムメールは送信しません）"
 	}
 }

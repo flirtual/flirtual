@@ -631,6 +631,13 @@
 	"jolly_this_crow_hug": "Checking your device...",
 	"signup": {
 		"title": "Create account",
-		"or_log_in": "or log in"
+		"or_log_in": "or log in",
+		"email": "Email address",
+		"password": "Password",
+		"url": "URL",
+		"agree": "I agree",
+		"agreement": "to the <terms>Terms of Service</terms> & <privacy>Privacy Policy</privacy> and I'm at least 18 years of age",
+		"updates": "Get Flirtual updates",
+		"updates_description": "with new features, changes, and offers <br></br>(we won't spam you)"
 	}
 }
