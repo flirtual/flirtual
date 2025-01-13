@@ -1,6 +1,7 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
@@ -18,6 +19,7 @@ import {
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
+	const t = useTranslations("signup");
 	const router = useRouter();
 
 	return (
@@ -32,6 +34,7 @@ export const Onboarding0Form: FC = () => {
 			}}
 			className="flex flex-col gap-8"
 			formErrorMessages={false}
+			renderCaptcha={false}
 			requireChange={false}
 			onSubmit={async ({ ...values }, { captcha }) => {
 				await User.create({
@@ -43,7 +46,7 @@ export const Onboarding0Form: FC = () => {
 				router.push(urls.onboarding(1));
 			}}
 		>
-			{({ errors, FormField }) => (
+			{({ errors, Captcha, FormField }) => (
 				<>
 					<FormField name="email">
 						{({ props, labelProps }) => (
@@ -135,10 +138,11 @@ export const Onboarding0Form: FC = () => {
 							</div>
 						)}
 					</FormField>
+					<Captcha />
 					<div className="flex flex-col gap-4">
 						<div className="flex gap-2 desktop:flex-row-reverse">
 							<FormButton className="w-44" size="sm">
-								Create account
+								{t("title")}
 							</FormButton>
 							<ButtonLink
 								className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
@@ -146,7 +150,7 @@ export const Onboarding0Form: FC = () => {
 								kind="tertiary"
 								size="sm"
 							>
-								<span>or log in</span>
+								<span>{t("or_log_in")}</span>
 								<MoveRight className="size-5 desktop:rotate-180" />
 							</ButtonLink>
 						</div>

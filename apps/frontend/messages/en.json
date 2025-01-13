@@ -617,5 +617,20 @@
 		"turnstile_invalid": "Verification failed, please try again.",
 		"turnstile_expired": "Verification expired, please try again."
 	},
-	"support": "Support"
+	"support": "Support",
+	"login": {
+		"title": "Log in",
+		"email": "Email address",
+		"forgot": "Forgot your password?",
+		"password": "Password",
+		"or_sign_up": "or sign up",
+		"or": "or",
+		"log_in_with": "Log in with {type}"
+	},
+	"home_wild_marten_wave": "Device verified.",
+	"jolly_this_crow_hug": "Checking your device...",
+	"signup": {
+		"title": "Create account",
+		"or_log_in": "or log in"
+	}
 }

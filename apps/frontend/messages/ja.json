@@ -222,5 +222,20 @@
 		"privacy": "プライバシーポリシー",
 		"developers": "開発者",
 		"copyright": "© {year} Flirtual"
+	},
+	"login": {
+		"title": "ログイン",
+		"email": "メールアドレス",
+		"forgot": "パスワードをお忘れですか？",
+		"password": "パスワード",
+		"or_sign_up": "またはサインアップ",
+		"or": "または",
+		"log_in_with": "{type}でログイン"
+	},
+	"home_wild_marten_wave": "デバイスが検証されました。",
+	"jolly_this_crow_hug": "デバイスを確認しています...",
+	"signup": {
+		"title": "アカウントを作成する",
+		"or_log_in": "またはログイン"
 	}
 }
