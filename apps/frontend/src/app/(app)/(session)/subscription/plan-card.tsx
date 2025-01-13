@@ -89,8 +89,8 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 				<span
 					className={twMerge(
 						"font-montserrat text-sm font-semibold text-black-60 line-through dark:text-white-50",
-						duration === "lifetime" && !highlight && "hidden",
-						!highlight
+						duration === "lifetime" && "hidden",
+						duration !== "lifetime"
 						&& price === originalPrice
 						&& "hidden desktop:invisible desktop:block"
 					)}
