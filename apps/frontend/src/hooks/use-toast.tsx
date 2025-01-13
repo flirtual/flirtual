@@ -3,6 +3,7 @@
 import { Toast as NativeToast } from "@capacitor/toast";
 import { captureException } from "@sentry/nextjs";
 import { AlertTriangle, Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
 	createContext,
 	type PropsWithChildren,
@@ -79,6 +80,7 @@ export interface AddErrorOptions {
 }
 
 export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
+	const t = useTranslations();
 	const [toasts, setToasts] = useState<Array<Toast>>([]);
 	const { native } = useDevice();
 
@@ -137,7 +139,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					&& typeof reason.message === "string"
 					&& reason.message)
 				|| (typeof reason === "string" && reason)
-				|| "Unknown request error";
+				|| t("errors.internal_server_error");
 
 			if (!expected) captureException(reason);
 
@@ -146,7 +148,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				value: message
 			});
 		},
-		[add]
+		[t, add]
 	);
 
 	return (
