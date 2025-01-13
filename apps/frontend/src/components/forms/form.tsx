@@ -14,7 +14,7 @@ import { FormCaptcha, type FormCaptchaReference } from "./captcha";
 import { FormInputMessages } from "./input-messages";
 
 export type FormChildrenFunction<T extends FormFieldsDefault> = (
-	form: UseInputForm<T>
+	form: { Captcha: () => React.ReactNode | null } & UseInputForm<T>
 ) => React.ReactNode;
 
 export type FormChildren<T extends FormFieldsDefault> =
@@ -24,6 +24,7 @@ export type FormChildren<T extends FormFieldsDefault> =
 export type FormProps<T extends FormFieldsDefault> = {
 	children: FormChildren<T>;
 	formErrorMessages?: boolean;
+	renderCaptcha?: boolean;
 } &
 Omit<InputFormOptions<T>, "captchaRef"> & Omit<
 	React.ComponentProps<"form">,
@@ -33,12 +34,25 @@ Omit<InputFormOptions<T>, "captchaRef"> & Omit<
 export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 	const captchaReference = useRef<FormCaptchaReference>(null);
 
-	props = Object.assign({ formErrorMessages: true }, props);
+	props = Object.assign({ formErrorMessages: true, renderCaptcha: true }, props);
 	const form = useInputForm({ ...props, captchaRef: captchaReference });
+
+	const captcha = props.withCaptcha && (
+		<div className="flex flex-col gap-2">
+			<FormCaptcha ref={captchaReference} />
+			<FormInputMessages
+				className="desktop:mx-auto desktop:w-fit desktop:text-center"
+				messages={form.fields.captcha?.errors.map((value) => ({ type: "error", value }))}
+			/>
+		</div>
+	);
 
 	const children
 		= typeof props.children === "function"
-			? props.children(form)
+			? props.children({
+				...form,
+				Captcha: () => captcha
+			})
 			: props.children;
 
 	return (
@@ -60,15 +74,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 						messages={form.errors.map((value) => ({ type: "error", value }))}
 					/>
 				)}
-				{props.withCaptcha && (
-					<div className="flex flex-col gap-2">
-						<FormCaptcha ref={captchaReference} />
-						<FormInputMessages
-							className="desktop:mx-auto desktop:w-fit desktop:text-center"
-							messages={form.fields.captcha?.errors.map((value) => ({ type: "error", value }))}
-						/>
-					</div>
-				)}
+				{props.renderCaptcha && captcha}
 			</FormContext>
 		</form>
 	);
