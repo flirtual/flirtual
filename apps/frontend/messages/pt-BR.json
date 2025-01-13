@@ -413,7 +413,8 @@
 			"79": "Um mouse típico é avaliado em 20 milhões de cliques.",
 			"92": "Hora da minha soneca de gato.",
 			"95": "Espero que se divirta no Flirtual.",
-			"60": "Você clicou em mim 300 vezes."
+			"60": "Você clicou em mim 300 vezes.",
+			"6": "Encontre novas amizades no Modo amigos ✌️"
 		}
 	},
 	"profile": {
@@ -615,5 +616,6 @@
 		"leaked_login_password": "Sua senha foi exposta em um vazamento de dados em outro site ou applicativo. Para sua segurança, porfavor <reset>resete sua senha</reset> para uma que não usou em outro lugar.",
 		"login_rate_limit": "Muitas tentativas de login, porfavor tente novamente em 15 minutos ou <reset>resete sua senha</reset>.",
 		"email_domain_blocked": "Desculpe, seu serviço de email foi bloqueado por abuso."
-	}
+	},
+	"support": "Suporte"
 }
