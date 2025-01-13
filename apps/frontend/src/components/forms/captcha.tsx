@@ -7,12 +7,16 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { turnstileSiteKey } from "~/const";
+import { useInternationalization, useTranslations } from "~/hooks/use-internationalization";
 import { warnOnce } from "~/hooks/use-log";
 import { useTheme } from "~/hooks/use-theme";
 
 export type FormCaptchaReference = TurnstileInstance;
 
 export function FormCaptcha({ ref }: RefAttributes<TurnstileInstance>) {
+	const { locale: { current: language } } = useInternationalization();
+	const t = useTranslations();
+
 	const { theme } = useTheme();
 	const [error, setError] = useState<string | null>(null);
 
@@ -31,7 +35,7 @@ export function FormCaptcha({ ref }: RefAttributes<TurnstileInstance>) {
 							<div className="motion-preset-fade flex items-center gap-2 text-sm">
 								<ShieldCheck className="size-4" />
 								<span>
-									Device verified.
+									{t("home_wild_marten_wave")}
 								</span>
 							</div>
 						)
@@ -63,7 +67,7 @@ export function FormCaptcha({ ref }: RefAttributes<TurnstileInstance>) {
 						: (
 								<>
 									<span>
-										Checking your device...
+										{t("jolly_this_crow_hug")}
 									</span>
 									<LoaderCircle className="size-4 animate-spin" />
 								</>
@@ -72,6 +76,7 @@ export function FormCaptcha({ ref }: RefAttributes<TurnstileInstance>) {
 			<Turnstile
 				options={{
 					theme,
+					language,
 					size: "normal",
 					appearance: "interaction-only",
 					retryInterval: 500
