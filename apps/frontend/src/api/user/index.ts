@@ -183,8 +183,6 @@ export const User = {
 			.json<Relationship | null>();
 	},
 	getBySlug(slug: string) {
-		if (slug.length < 3) return null;
-
 		return this.api
 			.url(`/${slug.slice(0, 20)}/name`)
 			.get()
