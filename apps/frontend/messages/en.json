@@ -639,5 +639,8 @@
 		"agreement": "to the <terms>Terms of Service</terms> & <privacy>Privacy Policy</privacy> and I'm at least 18 years of age",
 		"updates": "Get Flirtual updates",
 		"updates_description": "with new features, changes, and offers <br></br>(we won't spam you)"
+	},
+	"forgot": {
+		"title": "Reset password"
 	}
 }

@@ -244,5 +244,8 @@
 		"agreement": "に<terms>利用規約</terms>＆<privacy>プライバシーポリシー</privacy>私は18歳以上です",
 		"updates": "浮気の最新情報を入手",
 		"updates_description": "新しい機能、変更、オファー<br></br>（スパムメールは送信しません）"
+	},
+	"forgot": {
+		"title": "パスワードをリセット"
 	}
 }
