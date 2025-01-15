@@ -62,15 +62,15 @@ export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ 
 };
 
 export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<ProfileColors> }> = ({ value, onChange }) => {
-	const { color_1, color_2 } = value;
+	const { color1, color2 } = value;
 
 	const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-	const selectedColor = selectedColorIndex === 0 ? color_1 : color_2;
+	const selectedColor = selectedColorIndex === 0 ? color1 : color2;
 
 	function change(newColor: string) {
 		const value = selectedColorIndex === 0
-			? { color_1: newColor, color_2 }
-			: { color_1, color_2: newColor };
+			? { color1: newColor, color2 }
+			: { color1, color2: newColor };
 
 		onChange(value);
 	}
@@ -83,7 +83,7 @@ export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<Pr
 						"focusable size-8 rounded-md",
 						selectedColorIndex === 0 && "focused"
 					)}
-					style={{ backgroundColor: color_1 }}
+					style={{ backgroundColor: color1 }}
 					type="button"
 					onClick={() => setSelectedColorIndex(0)}
 				/>
@@ -92,7 +92,7 @@ export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<Pr
 						"focusable size-8 rounded-md",
 						selectedColorIndex === 1 && "focused"
 					)}
-					style={{ backgroundColor: color_2 }}
+					style={{ backgroundColor: color2 }}
 					type="button"
 					onClick={() => setSelectedColorIndex(1)}
 				/>
@@ -104,18 +104,18 @@ export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<Pr
 
 const ProfileColorEditor: FC = () => {
 	const {
-		fields: { color_1, color_2 }
+		fields: { color1, color2 }
 	} = useFormContext<ProfileColors>();
 
 	return (
 		<InputProfileColor
 			value={{
-				color_1: color_1.props.value,
-				color_2: color_2.props.value
+				color1: color1.props.value,
+				color2: color2.props.value
 			}}
 			onChange={(value) => {
-				color_1.props.onChange(value.color_1);
-				color_2.props.onChange(value.color_2);
+				color1.props.onChange(value.color1);
+				color2.props.onChange(value.color2);
 			}}
 		/>
 	);
@@ -123,7 +123,7 @@ const ProfileColorEditor: FC = () => {
 
 const ReccommendedProfileThemes: FC = () => {
 	const {
-		fields: { color_1, color_2 }
+		fields: { color1, color2 }
 	} = useFormContext<ProfileColors>();
 	const { theme } = useTheme();
 
@@ -141,8 +141,8 @@ const ReccommendedProfileThemes: FC = () => {
 					type="button"
 					onClick={() => {
 						flushSync(() => {
-							color_1.props.onChange(theme.color_1);
-							color_2.props.onChange(theme.color_2);
+							color1.props.onChange(theme.color1);
+							color2.props.onChange(theme.color2);
 						});
 					}}
 				>
@@ -157,12 +157,12 @@ const ReccommendedProfileThemes: FC = () => {
 					<div
 						className={twMerge(
 							"h-8 w-full rounded-md",
-							color_1.props.value === theme.color_1
-							&& color_2.props.value === theme.color_2
+							color1.props.value === theme.color1
+							&& color2.props.value === theme.color2
 							&& "focused border-2"
 						)}
 						style={{
-							backgroundImage: `linear-gradient(to right, ${theme.color_1}, ${theme.color_2})`
+							backgroundImage: `linear-gradient(to right, ${theme.color1}, ${theme.color2})`
 						}}
 					/>
 				</button>
@@ -178,7 +178,7 @@ const SaveButton: FC = () => {
 	if (!session) return null;
 	const disabled
 		= (!session.user.subscription || !session.user.subscription.active)
-		&& (changes.includes("color_1") || changes.includes("color_2"));
+		&& (changes.includes("color1") || changes.includes("color2"));
 
 	return (
 		<FormButton disabled={disabled}>
@@ -204,8 +204,8 @@ export const AppearanceForm: FC = () => {
 	return (
 		<Form
 			fields={{
-				color_1: session.user.profile.color_1 || defaultTheme.color_1,
-				color_2: session.user.profile.color_2 || defaultTheme.color_2
+				color1: session.user.profile.color1 || defaultTheme.color1,
+				color2: session.user.profile.color2 || defaultTheme.color2
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async (values) => {

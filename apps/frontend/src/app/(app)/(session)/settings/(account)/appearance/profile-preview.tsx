@@ -8,17 +8,17 @@ import { useFormContext } from "~/hooks/use-input-form";
 
 export const ProfileColorPreview: FC = () => {
 	const {
-		fields: { color_1, color_2 }
+		fields: { color1, color2 }
 	} = useFormContext<ProfileColors>();
 
-	const textColor = gradientTextColor(color_1.props.value, color_2.props.value);
+	const textColor = gradientTextColor(color1.props.value, color2.props.value);
 
 	return (
 		<ThemedBorder
 			style={
 				{
-					"--theme-1": color_1.props.value,
-					"--theme-2": color_2.props.value,
+					"--theme-1": color1.props.value,
+					"--theme-2": color2.props.value,
 					"--theme-text": textColor
 				} as CSSProperties
 			}

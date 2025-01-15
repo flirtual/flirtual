@@ -260,15 +260,15 @@ export default function FakeProfilePage() {
 						<div className="grid grid-cols-2 gap-8">
 							<InputProfileColor
 								value={{
-									color_1: user.profile.color_1 || "#000000",
-									color_2: user.profile.color_2 || "#000000"
+									color1: user.profile.color1 || "#000000",
+									color2: user.profile.color2 || "#000000"
 								}}
 								onChange={(value) => setUser((user) => ({
 									...user,
 									profile: {
 										...user.profile,
-										color_1: value.color_1,
-										color_2: value.color_2
+										color1: value.color1,
+										color2: value.color2
 									}
 								}))}
 							/>

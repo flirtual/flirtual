@@ -55,13 +55,13 @@ export function Profile(props: ProfileProps) {
 	return (
 		<div
 			style={
-				user.profile.color_1 && user.profile.color_2
+				user.profile.color1 && user.profile.color2
 					? ({
-							"--theme-1": user.profile.color_1,
-							"--theme-2": user.profile.color_2,
+							"--theme-1": user.profile.color1,
+							"--theme-2": user.profile.color2,
 							"--theme-text": gradientTextColor(
-								user.profile.color_1,
-								user.profile.color_2
+								user.profile.color1,
+								user.profile.color2
 							)
 						} as CSSProperties)
 					: {}

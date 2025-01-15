@@ -61,8 +61,8 @@ export type Profile = {
 	prompts: Array<ProfilePrompt>;
 	queueResetLoveAt?: string;
 	queueResetFriendAt?: string;
-	color_1?: string;
-	color_2?: string;
+	color1?: string;
+	color2?: string;
 } & Partial<UpdatedAtModel>;
 
 export const ProfileAttributes = [
@@ -100,8 +100,8 @@ export type UpdateProfileOptions = {
 
 // eslint-disable-next-line ts/consistent-type-definitions
 export type ProfileColors = {
-	color_1: string;
-	color_2: string;
+	color1: string;
+	color2: string;
 };
 
 export const CustomWeightList = [
