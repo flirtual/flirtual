@@ -16,10 +16,12 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
+import { useInternationalization } from "~/hooks/use-internationalization";
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
 	const t = useTranslations("signup");
+	const { locale: { current } } = useInternationalization();
 	const router = useRouter();
 
 	return (
@@ -39,7 +41,8 @@ export const Onboarding0Form: FC = () => {
 			onSubmit={async ({ ...values }, { captcha }) => {
 				await User.create({
 					...values,
-					captcha
+					captcha,
+					language: current
 				});
 
 				router.refresh();

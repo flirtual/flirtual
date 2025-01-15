@@ -1,9 +1,12 @@
+"use client";
+
 import { ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
+import { useCurrentUser } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export interface TeamMemberProps {
@@ -17,6 +20,7 @@ export interface TeamMemberProps {
 export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 	const t = useTranslations("about.team");
 	const { name, role, avatar, url, extra_url } = props;
+	const currentUser = useCurrentUser();
 
 	return (
 		<div
@@ -38,7 +42,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 						"font-montserrat text-lg font-semibold text-pink",
 						!url && "cursor-default hocus:no-underline"
 					)}
-					href={url ?? "#"}
+					href={(currentUser && url) ?? null}
 				>
 					{name}
 				</InlineLink>

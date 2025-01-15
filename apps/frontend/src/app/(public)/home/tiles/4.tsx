@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 import { ButtonLink } from "~/components/button";
 import { DownloadButton } from "~/components/download-button";
@@ -10,6 +9,7 @@ import {
 	MicrosoftIcon
 } from "~/components/icons";
 import { Footer } from "~/components/layout/footer";
+import { Link } from "~/components/link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 

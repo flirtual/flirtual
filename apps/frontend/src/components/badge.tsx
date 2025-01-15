@@ -1,8 +1,8 @@
 import { Slot } from "@radix-ui/react-slot";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import type { FC, PropsWithChildren, RefAttributes } from "react";
 
+import { Link } from "~/components/link";
 import { urls } from "~/urls";
 
 export interface BadgeProps extends PropsWithChildren, RefAttributes<HTMLDivElement> {

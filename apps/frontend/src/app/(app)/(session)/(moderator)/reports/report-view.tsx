@@ -9,7 +9,6 @@ import {
 	ShieldCheck
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import type {
 	ComponentProps,
 	FC
@@ -30,6 +29,7 @@ import { DateTimeRelative } from "~/components/datetime-relative";
 import { Dialog, DialogContent } from "~/components/dialog/dialog";
 import { InlineLink } from "~/components/inline-link";
 import { InputCheckbox, InputLabel } from "~/components/inputs";
+import { Link } from "~/components/link";
 import { ModelCard } from "~/components/model-card";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import { TimeRelative } from "~/components/time-relative";

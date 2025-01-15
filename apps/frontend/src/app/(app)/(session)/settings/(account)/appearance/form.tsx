@@ -12,8 +12,12 @@ import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile, type ProfileColors } from "~/api/user/profile";
 import { PremiumBadge } from "~/components/badge";
 import { Form, FormButton } from "~/components/forms";
-import { InputLabel } from "~/components/inputs";
+import { InlineLink } from "~/components/inline-link";
+import { InputLabel, InputLabelHint } from "~/components/inputs";
+import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useFormContext } from "~/hooks/use-input-form";
+import { useInternationalization, useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
@@ -185,6 +189,10 @@ const SaveButton: FC = () => {
 };
 
 export const AppearanceForm: FC = () => {
+	const { locale: { current: language } } = useInternationalization();
+	const t = useTranslations();
+	const tAttribute = useAttributeTranslation();
+
 	const { theme } = useTheme();
 	const defaultTheme = defaultProfileColors[theme];
 
@@ -209,6 +217,30 @@ export const AppearanceForm: FC = () => {
 				router.refresh();
 			}}
 		>
+			<div className="flex flex-col gap-2">
+				<InputLabel
+					inline
+					hint={(
+						<InputLabelHint>
+							{t.rich(language === "en"
+								? "help_translate_others"
+								: "help_translate", {
+								language: tAttribute[language]?.name || language,
+								link: (children) => (
+									<InlineLink
+										href={`https://hosted.weblate.org/projects/flirtual/flirtual/${language === "en" ? "" : language}`}
+									>
+										{children}
+									</InlineLink>
+								)
+							})}
+						</InputLabelHint>
+					)}
+				>
+					Language
+				</InputLabel>
+				<InputLanguageSelect />
+			</div>
 			<div className="flex flex-col gap-2 vision:hidden">
 				<InputLabel>Theme</InputLabel>
 				<div className="grid grid-cols-3 gap-4">

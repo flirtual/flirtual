@@ -2,10 +2,11 @@
 
 import { Pencil } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import Link from "next/link";
 import type { MouseEventHandler, PropsWithChildren, RefAttributes } from "react";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+
+import { Link } from "~/components/link";
 
 import type { IconComponent } from "../../icons";
 

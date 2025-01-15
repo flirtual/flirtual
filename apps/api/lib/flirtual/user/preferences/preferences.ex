@@ -4,6 +4,7 @@ defmodule Flirtual.User.Preferences do
 
   import Ecto.Changeset
 
+  alias Flirtual.Languages
   alias Flirtual.User
   alias Flirtual.User.Preferences
   alias Flirtual.User.Preferences.{EmailNotifications, Privacy, PushNotifications}
@@ -13,6 +14,7 @@ defmodule Flirtual.User.Preferences do
 
     field(:nsfw, :boolean, default: false)
     field(:theme, Ecto.Enum, values: [:light, :dark, :system], default: :light)
+    field(:language, :string)
 
     has_one(:email_notifications, EmailNotifications,
       references: :user_id,
@@ -39,8 +41,14 @@ defmodule Flirtual.User.Preferences do
     preferences
     |> cast(attrs, [
       :nsfw,
-      :theme
+      :theme,
+      :language
     ])
+    |> validate_inclusion(
+      :language,
+      Languages.list(:preference),
+      message: "invalid_language"
+    )
   end
 end
 
@@ -49,6 +57,7 @@ defimpl Jason.Encoder, for: Flirtual.User.Preferences do
     only: [
       :nsfw,
       :theme,
+      :language,
       :email_notifications,
       :push_notifications,
       :privacy

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import type { FC, RefAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -8,6 +7,7 @@ import type { Conversation } from "~/api/conversations";
 import { displayName } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { Link } from "~/components/link";
 import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar } from "~/components/user-avatar";
 import { useUser } from "~/hooks/use-user";

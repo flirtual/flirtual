@@ -1,11 +1,11 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
+import { Link } from "~/components/link";
 import { isInternalHref, toAbsoluteUrl } from "~/urls";
 
 export type NavigationLinkProps = {

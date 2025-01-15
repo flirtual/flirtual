@@ -229,7 +229,22 @@ defmodule Flirtual.Languages do
   @language_codes Enum.map(@languages, & &1[:bcp_47])
   @language_names Enum.map(@languages, & &1[:name])
 
+  @preference_languages [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "ja",
+    "ko",
+    "nl",
+    "pt",
+    "pt-BR",
+    "ru",
+    "sv"
+  ]
+
   def list(), do: @languages
   def list(:bcp_47), do: @language_codes
   def list(:name), do: @language_names
+  def list(:preference), do: @preference_languages
 end

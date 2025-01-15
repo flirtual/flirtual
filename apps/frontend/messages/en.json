@@ -480,6 +480,7 @@
 		"dark_level_goat_gulp": "{value, select, dominant {Dominant} submissive {Submissive} switch {Switch} other {?}}",
 		"brave_funny_vulture_sail": "{value, select, monogamous {Monogamous} nonmonogamous {Non-monogamous} other {?}}"
 	},
+	"continue": "Continue",
 	"early_north_alpaca_sail": "Update Flirtual?",
 	"icy_sound_emu_kiss": "We recommend updating to the latest version of Flirtual to get the best experience. You may encounter bugs if you continue using this version.",
 	"aware_such_leopard_fond": "No thanks",
@@ -641,6 +642,15 @@
 		"updates_description": "with new features, changes, and offers <br></br>(we won't spam you)"
 	},
 	"forgot": {
-		"title": "Reset password"
-	}
+		"title": "Reset password",
+		"enter_email": "Please enter your email and we'll send along a link to reset your password.",
+		"email": "Email address",
+		"or_log_in": "or log in",
+		"need_help": "Need help? <support></support>",
+		"email_sent": "If you have an account, we'll send an email to <email></email> with a link to reset your password. <br></br><br></br>If you don't see it, check your spam/junk/trash folders, and if you still don't see it, <contact>contact us</contact>.",
+		"login": "Login",
+		"support": "Support"
+	},
+	"help_translate_others": "Want to help translate Flirtual to your language? <link>Contribute</link>.",
+	"help_translate": "Want to help translate Flirtual to {language}? <link>Contribute</link>."
 }

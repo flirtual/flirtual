@@ -72,7 +72,7 @@ export default async function EventsPage() {
 				/>
 				<h2 className="text-xl font-semibold">{t("tidy_wise_robin_urge")}</h2>
 				<p>{t("careful_wise_bumblebee_walk")}</p>
-				<ButtonLink href="/speeddate">{t("flat_ok_penguin_vent")}</ButtonLink>
+				<ButtonLink href="/speeddate" target="_blank">{t("flat_ok_penguin_vent")}</ButtonLink>
 				<Image
 					alt={t("inclusive_simple_alligator_zap")}
 					className="mt-4 w-full max-w-sm rounded-xl shadow-brand-1"
@@ -84,7 +84,7 @@ export default async function EventsPage() {
 					{t("inclusive_simple_alligator_zap")}
 				</h2>
 				<p>{t("sweet_mellow_ant_hunt")}</p>
-				<ButtonLink href="/club">{t("fine_low_deer_propel")}</ButtonLink>
+				<ButtonLink href="/club" target="_blank">{t("fine_low_deer_propel")}</ButtonLink>
 				<p>
 					{t.rich("dry_inclusive_ox_trust", {
 						faxmashine: (children) => (

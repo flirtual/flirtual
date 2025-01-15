@@ -10,7 +10,6 @@ import {
 	ShieldEllipsis,
 	Tags
 } from "lucide-react";
-import Link from "next/link";
 import type { FC } from "react";
 
 import { api } from "~/api/common";
@@ -22,6 +21,7 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger
 } from "~/components/dropdown";
+import { Link } from "~/components/link";
 import { useSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";

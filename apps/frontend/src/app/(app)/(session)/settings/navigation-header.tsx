@@ -1,7 +1,7 @@
 import { ChevronLeft, X } from "lucide-react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
+import { Link } from "~/components/link";
 import { ensureRelativeUrl, urls } from "~/urls";
 
 export interface NavigationHeaderProps {

@@ -1,10 +1,10 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import Link from "next/link";
 import type { ComponentProps, FC, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { Link } from "~/components/link";
 import { useLocation } from "~/hooks/use-location";
 import { toAbsoluteUrl, urlEqual } from "~/urls";
 

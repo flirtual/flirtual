@@ -14,6 +14,7 @@ defmodule Flirtual.Users do
     Flag,
     Hash,
     Jwt,
+    Languages,
     Listmonk,
     ObanWorkers,
     Repo,
@@ -505,6 +506,7 @@ defmodule Flirtual.Users do
                  service_agreement: :boolean,
                  notifications: :boolean,
                  captcha: :string,
+                 language: :string,
                  url: :string
                },
                attrs
@@ -513,9 +515,11 @@ defmodule Flirtual.Users do
                :email,
                :password,
                :service_agreement,
+               :language,
                :notifications
              ])
              |> validate_acceptance(:service_agreement)
+             |> validate_inclusion(:language, Languages.list(:preference))
              |> then(
                &if(Keyword.get(options, :captcha, true),
                  do: &1 |> validate_captcha(),
@@ -540,7 +544,9 @@ defmodule Flirtual.Users do
              })
              |> Repo.update(),
            {:ok, preferences} <-
-             Ecto.build_assoc(user, :preferences)
+             Ecto.build_assoc(user, :preferences, %{
+               language: attrs[:language]
+             })
              |> Repo.insert(),
            {:ok, _} <-
              Ecto.build_assoc(preferences, :email_notifications, %{

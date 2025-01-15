@@ -63,7 +63,6 @@ defmodule Flirtual.User do
     field(:stripe_id, :string)
     field(:chargebee_id, :string)
     field(:revenuecat_id, Ecto.ShortUUID)
-    field(:language, :string, default: "en")
     field(:status, Ecto.Enum, values: @status_atoms, default: :registered)
     field(:moderator_message, :string)
     field(:moderator_note, :string)
@@ -295,15 +294,11 @@ defmodule Flirtual.User do
   def changeset(user, attrs, options \\ []) do
     user
     |> cast(attrs, [
-      :language,
       :born_at,
       :slug,
       :tns_discord_in_biography
     ])
     |> validate_required(Keyword.get(options, :required, []))
-    |> validate_inclusion(:language, Languages.list(:bcp_47),
-      message: "is an unrecognized language"
-    )
     |> validate_change(:born_at, fn _, born_at ->
       now = Date.utc_today()
 
@@ -1086,7 +1081,6 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :id,
       :email,
       :slug,
-      :language,
       :born_at,
       :moderator_message,
       :moderator_note,

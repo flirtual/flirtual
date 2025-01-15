@@ -1,5 +1,4 @@
 import { Search, ShieldCheck } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC, PropsWithChildren } from "react";
 
@@ -12,6 +11,7 @@ import {
 	DropdownMenuSub,
 	DropdownMenuSubContent
 } from "~/components/dropdown";
+import { Link } from "~/components/link";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";

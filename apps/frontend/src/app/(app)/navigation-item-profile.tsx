@@ -11,13 +11,13 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { DiscordOutlineIcon } from "~/components/icons";
+import { Link } from "~/components/link";
 import { UserAvatar } from "~/components/user-avatar";
 import { useCanny } from "~/hooks/use-canny";
 import { useClickOutside } from "~/hooks/use-click-outside";

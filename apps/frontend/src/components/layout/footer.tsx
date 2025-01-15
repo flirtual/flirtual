@@ -1,3 +1,5 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
@@ -10,6 +12,8 @@ import { gitCommitSha, gitCommitUrl } from "~/const";
 import { urls } from "~/urls";
 
 import { InlineLink } from "../inline-link";
+import { InputLanguageSelect } from "../inputs/specialized/language-select";
+import { Link } from "../link";
 import { FlirtualLogo } from "../logo";
 import { FooterCannyLink } from "./canny-button";
 import { MadeWithLove } from "./made-with-love";
@@ -53,7 +57,7 @@ type FooterListLinkProps = LinkOrButtonProps<{
 export const FooterListLink: React.FC<FooterListLinkProps> = ({ label, ...props }) => (
 	<li className="cursor-pointer hover:underline">
 		{"href" in props
-			? (<a {...props}>{label}</a>)
+			? (<Link href={props.href || null} {...props}>{label}</Link>)
 			: (
 					<button {...props} className="hover:underline" type="button">
 						{label}
@@ -88,24 +92,27 @@ export const Footer: React.FC<FooterProps> = ({
 			)}
 		>
 			<div className="flex w-full max-w-screen-wide flex-col gap-4 desktop:gap-8">
-				<div className="flex items-center gap-8">
-					<FlirtualLogo
-						className={twMerge(
-							"w-36 text-black-80 dark:text-[snow]",
-							logoClassName
-						)}
-					/>
-					<div className="flex gap-4">
-						<FooterIconSupportLink />
-						<FooterListIconLink
-							href={urls.socials.discord}
-							Icon={DiscordIcon}
+				<div className="flex justify-between gap-8">
+					<div className="flex items-center gap-8">
+						<FlirtualLogo
+							className={twMerge(
+								"w-36 text-black-80 dark:text-[snow]",
+								logoClassName
+							)}
 						/>
-						<FooterListIconLink
-							href={urls.socials.twitter}
-							Icon={TwitterIcon}
-						/>
+						<div className="flex gap-4">
+							<FooterIconSupportLink />
+							<FooterListIconLink
+								href={urls.socials.discord}
+								Icon={DiscordIcon}
+							/>
+							<FooterListIconLink
+								href={urls.socials.twitter}
+								Icon={TwitterIcon}
+							/>
+						</div>
 					</div>
+					<InputLanguageSelect className="w-52 shrink-0" />
 				</div>
 				<div className="grid max-w-screen-desktop grid-cols-3 gap-x-4 desktop:justify-center">
 					<ul>

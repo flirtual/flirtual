@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 
 import { ButtonLink } from "~/components/button";
+import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
@@ -18,6 +19,7 @@ export function Hero({ id }: TileProps) {
 			id={id}
 		>
 			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-32">
+				<InputLanguageSelect className="!absolute top-8 w-[calc(100%-4rem)] desktop:right-4 desktop:top-4 desktop:w-56" />
 				<FlirtualLogo className="mb-4 w-56" />
 				<TileAnchor id={id}>
 					<h1 className="max-w-4xl text-balance text-center text-5xl font-bold text-white-10 desktop:text-7xl desktop:tall:text-8xl">

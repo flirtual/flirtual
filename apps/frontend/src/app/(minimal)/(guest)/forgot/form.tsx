@@ -1,6 +1,7 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Authentication } from "~/api/auth";
@@ -14,6 +15,8 @@ import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
 
 export const ForgotPasswordForm: React.FC = () => {
+	const t = useTranslations("forgot");
+
 	const [success, setSuccess] = useState(false);
 	const { openFreshworks } = useFreshworks();
 
@@ -35,28 +38,21 @@ export const ForgotPasswordForm: React.FC = () => {
 					? (
 							<>
 								<p>
-									If you have an account, we&apos;ll send an email to
-									{" "}
-									<span className="font-semibold">{fields.email.props.value}</span>
-									{" "}
-									with a link to reset your password.
-									<br />
-									<br />
-									If you don&apos;t see it, check your spam/junk/trash folders, and
-									if you still don&apos;t see it,
-									{" "}
-									<InlineLink href={urls.resources.contactDirect}>contact us</InlineLink>
-									.
+									{t.rich("email_sent", {
+										br: () => <br />,
+										email: () => <span className="font-semibold">{fields.email.props.value}</span>,
+										contact: (children) => <InlineLink href={urls.resources.contactDirect}>{children}</InlineLink>
+									})}
 								</p>
 								<div className="flex gap-2">
-									<ButtonLink className="min-w-44" href={urls.login()} size="sm">Login</ButtonLink>
+									<ButtonLink className="min-w-44" href={urls.login()} size="sm">{t("login")}</ButtonLink>
 									<Button
 										className="flex w-fit flex-row gap-2 opacity-75"
 										kind="tertiary"
 										size="sm"
 										onClick={openFreshworks}
 									>
-										<span>Support</span>
+										<span>{t("support")}</span>
 										<MoveRight className="size-5" />
 									</Button>
 								</div>
@@ -64,14 +60,11 @@ export const ForgotPasswordForm: React.FC = () => {
 						)
 					: (
 							<>
-								<p>
-									Please enter your email and we&apos;ll send along a link to reset
-									your password.
-								</p>
+								<p>{t("enter_email")}</p>
 								<FormField name="email">
 									{(field) => (
 										<>
-											<InputLabel>Email address</InputLabel>
+											<InputLabel>{t("email")}</InputLabel>
 											<InputText
 												{...field.props}
 												autoComplete="email"
@@ -89,7 +82,7 @@ export const ForgotPasswordForm: React.FC = () => {
 											kind="tertiary"
 											size="sm"
 										>
-											<span>or log in</span>
+											<span>{t("or_log_in")}</span>
 											<MoveRight className="size-5 desktop:rotate-180" />
 										</ButtonLink>
 									</div>
@@ -98,9 +91,7 @@ export const ForgotPasswordForm: React.FC = () => {
 									/>
 								</div>
 								<p className="text-center">
-									Need help?
-									{" "}
-									<SupportButton />
+									{t.rich("need_help", { support: () => <SupportButton /> })}
 								</p>
 							</>
 						)}
