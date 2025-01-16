@@ -11,10 +11,10 @@ export interface ResetPasswordPageProps {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("forgot");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("reset_password")
 	};
 }
 
@@ -24,10 +24,10 @@ export default async function ResetPasswordPage({ params }: ResetPasswordPagePro
 	const payload = decode(token, { json: true });
 	if (!payload?.sub) return null;
 
-	const t = await getTranslations("forgot");
+	const t = await getTranslations();
 
 	return (
-		<ModelCard title={t("title")}>
+		<ModelCard title={t("reset_password")}>
 			<ResetPasswordForm email={payload.sub} token={token} />
 		</ModelCard>
 	);

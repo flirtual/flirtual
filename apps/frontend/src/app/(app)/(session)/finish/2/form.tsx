@@ -32,7 +32,7 @@ export const Finish2Form: FC = () => {
 	const sexualities = useAttributes("sexuality");
 
 	const [session, mutateSession] = useSession();
-	const t = useTranslations("profile");
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	const router = useRouter();
@@ -142,7 +142,7 @@ export const Finish2Form: FC = () => {
 									optional
 									options={ProfileMonopolyList.map((value) => ({
 										id: value,
-										name: t("brave_funny_vulture_sail", { value })
+										name: t(value)
 									}))}
 								/>
 							</>

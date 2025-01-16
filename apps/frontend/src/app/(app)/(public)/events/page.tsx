@@ -30,7 +30,7 @@ export default async function EventsPage() {
 			<Livestream />
 			<div className="flex flex-col gap-4">
 				<h1 className="text-2xl font-semibold">
-					{t("gross_loose_stork_vent")}
+					{t("vrchat_invite")}
 				</h1>
 				<p>{t("fun_still_clownfish_arrive")}</p>
 				<p>
@@ -72,7 +72,7 @@ export default async function EventsPage() {
 				/>
 				<h2 className="text-xl font-semibold">{t("tidy_wise_robin_urge")}</h2>
 				<p>{t("careful_wise_bumblebee_walk")}</p>
-				<ButtonLink href="/speeddate" target="_blank">{t("flat_ok_penguin_vent")}</ButtonLink>
+				<ButtonLink href="/speeddate" target="_blank">{t("tidy_wise_robin_urge")}</ButtonLink>
 				<Image
 					alt={t("inclusive_simple_alligator_zap")}
 					className="mt-4 w-full max-w-sm rounded-xl shadow-brand-1"
@@ -84,7 +84,7 @@ export default async function EventsPage() {
 					{t("inclusive_simple_alligator_zap")}
 				</h2>
 				<p>{t("sweet_mellow_ant_hunt")}</p>
-				<ButtonLink href="/club" target="_blank">{t("fine_low_deer_propel")}</ButtonLink>
+				<ButtonLink href="/club" target="_blank">{t("inclusive_simple_alligator_zap")}</ButtonLink>
 				<p>
 					{t.rich("dry_inclusive_ox_trust", {
 						faxmashine: (children) => (

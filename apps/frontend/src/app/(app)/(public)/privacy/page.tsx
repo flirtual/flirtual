@@ -7,24 +7,24 @@ import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("privacy");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("privacy_policy")
 	};
 }
 
 export default async function PrivacyPage() {
-	const t = await getTranslations("privacy");
+	const t = await getTranslations();
 
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-2xl"
 			containerProps={{ className: "gap-4" }}
-			title={t("title")}
+			title={t("privacy_policy")}
 		>
 			<MachineTranslatedLegal original={urls.resources.privacyPolicy} />
-			{t.rich("content", {
+			{t.rich("sticks_protect_zinc_explain", {
 				p: (children) => <p className="select-children">{children}</p>,
 				strong: (children) => <strong>{children}</strong>,
 				"settings-privacy": (children) => (

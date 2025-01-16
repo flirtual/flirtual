@@ -14,7 +14,7 @@ export interface InputSwitchProps {
 
 export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const { yes, no, value, onChange } = props;
-	const t = useTranslations("inputs.switch");
+	const t = useTranslations();
 
 	const ariaChecked = value === null ? "mixed" : value;
 

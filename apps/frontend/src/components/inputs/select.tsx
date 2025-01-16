@@ -190,12 +190,12 @@ export interface InputSelectProps<T> {
 }
 
 export function InputSelect<K>(props: InputSelectProps<K>) {
-	const t = useTranslations("inputs.select");
+	const t = useTranslations();
 
 	const {
 		value,
 		// eslint-disable-next-line react/no-unstable-default-props
-		placeholder = t("placeholder"),
+		placeholder = t("select_an_option"),
 		optional = false,
 		options = emptyArray,
 		className,

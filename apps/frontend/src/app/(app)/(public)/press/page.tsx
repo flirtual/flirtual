@@ -26,7 +26,7 @@ export default async function PressPage() {
 		>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
-					{t("wide_stock_bulldog_tend")}
+					{t("press_kit")}
 				</span>
 				<ButtonLink
 					download
@@ -46,7 +46,7 @@ export default async function PressPage() {
 			</div>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
-					{t("heavy_fancy_butterfly_glow")}
+					{t("newsroom")}
 				</span>
 				<div className="flex flex-col gap-4">
 					{[

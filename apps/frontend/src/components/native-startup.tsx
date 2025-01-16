@@ -86,7 +86,7 @@ const NativeStartup: React.FC = () => {
 					</AlertDialogCancel>
 					<AlertDialogAction asChild>
 						<Button size="sm" onClick={() => AppUpdate.openAppStore()}>
-							{t("patient_gross_herring_grow")}
+							{t("update")}
 						</Button>
 					</AlertDialogAction>
 				</DialogFooter>

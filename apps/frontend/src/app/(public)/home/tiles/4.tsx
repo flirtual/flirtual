@@ -47,19 +47,19 @@ export function CallToAction({ id }: TileProps) {
 						<div className="flex w-fit flex-wrap justify-center gap-4 gap-y-2 desktop:grid desktop:grid-cols-2">
 							<DownloadButton
 								className="hidden apple:flex desktop:flex"
-								platform="apple"
+								platform="app_store"
 							/>
 							<DownloadButton
 								className="hidden android:flex desktop:flex"
-								platform="google"
+								platform="google_play"
 							/>
 							<DownloadButton
 								className="hidden desktop:flex"
-								platform="microsoft"
+								platform="microsoft_store"
 							/>
 							<DownloadButton
 								className="hidden desktop:flex"
-								platform="side_quest"
+								platform="sidequest"
 							/>
 						</div>
 						<div className="flex gap-2 desktop:hidden">

@@ -25,7 +25,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
 	children
 }) => {
-	const t = useTranslations("profile.dialogs.block");
+	const t = useTranslations();
 	const toasts = useToast();
 	const query = useSearchParams();
 
@@ -35,12 +35,12 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>
-						{t("title", {
-							displayName: displayName(user)
+						{t("block_name", {
+							name: displayName(user)
 						})}
 					</AlertDialogTitle>
 				</AlertDialogHeader>
-				<AlertDialogDescription>{t("description")}</AlertDialogDescription>
+				<AlertDialogDescription>{t("barbarous_hypnotic_thank_book")}</AlertDialogDescription>
 				<DialogFooter>
 					<AlertDialogCancel asChild>
 						<Button kind="tertiary" size="sm">
@@ -58,8 +58,8 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 									mutate(queueKey(kind), optimisticQueueMove("forward"));
 
 								toasts.add(
-									t("swift_loved_albatross_leap", {
-										displayName: displayName(user)
+									t("blocked_name", {
+										name: displayName(user)
 									})
 								);
 							}}

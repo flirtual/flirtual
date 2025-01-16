@@ -7,20 +7,20 @@ import { SupersededPolicy } from "~/components/superseded-policy";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("terms");
+	const t = await getTranslations();
 
 	return {
-		title: t("title_superseded")
+		title: t("terms_outdated")
 	};
 }
 
 export default async function TermsPage() {
-	const t = await getTranslations("terms");
+	const t = await getTranslations();
 
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-2xl"
-			title={t("title_superseded")}
+			title={t("terms_outdated")}
 		>
 			<div className="flex flex-col gap-4">
 				<SupersededPolicy

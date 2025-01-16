@@ -6,18 +6,18 @@ import { ModelCard } from "../model-card";
 import { BlockedActions } from "./blocked-actions";
 
 export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
-	const t = useTranslations("profile");
+	const t = useTranslations();
 
 	return (
 		<ModelCard
 			containerProps={{
 				className: "gap-8"
 			}}
-			title={t("merry_yummy_bulldog_quell")}
+			title={t("account_blocked")}
 		>
 			<span>
 				{t.rich("giant_strong_thrush_startle", {
-					displayName: displayName(user),
+					name: displayName(user),
 					highlight: (children) => (
 						<span data-mask className="font-semibold">
 							{children}

@@ -35,7 +35,7 @@ async function getLanguageMessages(locale: string) {
 }
 
 const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
-	const { locale, translating } = await getInternationalization();
+	const { locale } = await getInternationalization();
 
 	const fallback = await getLanguageMessages(locale.fallback);
 
@@ -52,9 +52,8 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 	const messages = deepmerge(fallback, current) as any;
 
 	return {
-		// If the user is translating, we will pretend that we don't have any messages.
-		// This will force all translations to be shown as their raw strings.
-		...(translating ? {} : messages),
+		...messages,
+		pleasant_ugliest_expert_camera: preferred.pleasant_ugliest_expert_camera
 	};
 });
 

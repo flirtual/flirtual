@@ -22,7 +22,7 @@ export type InputTextProps = {
 export const InputText: React.FC<InputTextProps> = (props) => {
 	const inputReference = useRef<HTMLInputElement>(null);
 	const [inputVisible, setInputVisible] = useState(props.type !== "password");
-	const t = useTranslations("inputs.text");
+	const t = useTranslations();
 
 	const type = inputVisible
 		? props.type === "date" || props.type === "password"

@@ -134,7 +134,7 @@ export const TrustAndSafetyDialog: FC<{
 							src={urls.media("flirtual-black.svg", "files")}
 							width={3468}
 						/>
-						<span>{t("dialogs.trust_and_safety.title")}</span>
+						<span>{t("trust_and_safety")}</span>
 					</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
@@ -147,15 +147,15 @@ export const TrustAndSafetyDialog: FC<{
 						<div className="flex flex-col gap-2">
 							{actions || (
 								<Button size="sm" onClick={onAcknowledge}>
-									{t("dialogs.trust_and_safety.acknowledge")}
+									{t("i_acknowledge")}
 								</Button>
 							)}
 							<span className="flex flex-row justify-center gap-4 font-nunito text-xs">
 								<InlineLink href={urls.resources.communityGuidelines}>
-									{t("dialogs.trust_and_safety.lofty_day_snail_treasure")}
+									{t("community_guidelines")}
 								</InlineLink>
 								<InlineLink href={urls.resources.contactDirect}>
-									{t("dialogs.trust_and_safety.jolly_nimble_crow_taste")}
+									{t("contact_us")}
 								</InlineLink>
 							</span>
 						</div>

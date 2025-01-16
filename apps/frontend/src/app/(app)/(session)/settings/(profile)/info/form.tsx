@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { fromEntries } from "remeda";
 
@@ -40,6 +41,7 @@ export const InfoForm: FC = () => {
 	const sexualities = useAttributes("sexuality");
 	const genders = useAttributes("gender");
 
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;

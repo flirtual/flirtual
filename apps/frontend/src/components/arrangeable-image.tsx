@@ -34,7 +34,7 @@ export const ArrangeableImagePreview: React.FC<
 };
 
 export function ArrangeableImage({ src, id, onDelete, onFullscreen, ...props }: ArrangeableImageProps & RefAttributes<HTMLDivElement>) {
-	const t = useTranslations("arrangeable_image");
+	const t = useTranslations();
 	const currentId = useCurrentSortableItem();
 	const dragging = currentId === id;
 
@@ -60,7 +60,7 @@ export function ArrangeableImage({ src, id, onDelete, onFullscreen, ...props }: 
 							onClick={onDelete}
 						>
 							<Trash className="size-4 text-white-20" />
-							<span className="sr-only">{t("soft_curly_pony_advise")}</span>
+							<span className="sr-only">{t("delete_image")}</span>
 						</button>
 						<button
 							className="opacity-60 hocus:opacity-100"
@@ -68,7 +68,7 @@ export function ArrangeableImage({ src, id, onDelete, onFullscreen, ...props }: 
 							onClick={onFullscreen}
 						>
 							<Expand className="size-4 text-white-20" />
-							<span className="sr-only">{t("glad_giant_mantis_win")}</span>
+							<span className="sr-only">{t("expand_image")}</span>
 						</button>
 					</div>
 					<button className="opacity-60 hocus:opacity-100" type="button">

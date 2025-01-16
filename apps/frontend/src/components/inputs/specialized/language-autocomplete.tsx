@@ -14,7 +14,7 @@ import {
 export const InputLanguageAutocomplete: React.FC<
 	Omit<InputAutocompleteProps, "options">
 > = (props) => {
-	const t = useTranslations("inputs.language_autocomplete");
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	const languages = useAttributes("language");
@@ -50,7 +50,7 @@ export const InputLanguageAutocomplete: React.FC<
 
 	return (
 		<InputAutocomplete
-			placeholder={t("placeholder")}
+			placeholder={t("select_a_language")}
 			{...props}
 			options={options}
 		/>

@@ -10,9 +10,17 @@ export interface BadgeProps extends PropsWithChildren, RefAttributes<HTMLDivElem
 	asChild?: boolean;
 	white?: boolean;
 	small?: boolean;
+	className?: string;
 }
 
-export function Badge({ asChild = false, white = false, small = false, children, ref }: BadgeProps) {
+export function Badge({
+	asChild = false,
+	white = false,
+	small = false,
+	className,
+	children,
+	ref
+}: BadgeProps) {
 	const Component = asChild ? Slot : "div";
 
 	return (
@@ -24,7 +32,8 @@ export function Badge({ asChild = false, white = false, small = false, children,
 					: "bg-brand-gradient text-white-10 shadow-brand-1",
 				small
 					? "px-2 text-xs"
-					: "px-3 py-1 text-sm"
+					: "px-3 py-1 text-sm",
+				className,
 			)}
 			ref={ref}
 		>
@@ -45,11 +54,11 @@ export const PremiumBadge: FC = () => {
 	);
 };
 
-export const NewBadge: FC<BadgeProps> = ({ children, ...props }) => {
+export const NewBadge: FC<BadgeProps> = ({ className, children, ...props }) => {
 	const t = useTranslations();
 
 	return (
-		<Badge {...props}>
+		<Badge className={twMerge("uppercase", className)} {...props}>
 			{t("new")}
 		</Badge>
 	);

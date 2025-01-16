@@ -20,7 +20,7 @@ import { useInternationalization } from "~/hooks/use-internationalization";
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
-	const t = useTranslations("signup");
+	const t = useTranslations();
 	const { locale: { current } } = useInternationalization();
 	const router = useRouter();
 
@@ -54,7 +54,7 @@ export const Onboarding0Form: FC = () => {
 					<FormField name="email">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>{t("email")}</InputLabel>
+								<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
 								<InputText {...props} autoComplete="email" type="email" />
 							</>
 						)}
@@ -92,7 +92,7 @@ export const Onboarding0Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											{t.rich("agreement", {
+											{t.rich("pickle_capricious_cemetery_name", {
 												terms: (children) => (
 													<InlineLink
 														className="underline"
@@ -115,7 +115,7 @@ export const Onboarding0Form: FC = () => {
 										</InputLabelHint>
 									)}
 								>
-									{t("agree")}
+									{t("i_agree")}
 								</InputLabel>
 							</div>
 						)}
@@ -129,11 +129,11 @@ export const Onboarding0Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											{t.rich("updates_description", { br: () => <br /> })}
+											{t.rich("spade_mindless_furry_jeans", { br: () => <br /> })}
 										</InputLabelHint>
 									)}
 								>
-									{t("updates")}
+									{t("acidic_temporary_fill_cracker")}
 								</InputLabel>
 							</div>
 						)}
@@ -142,7 +142,7 @@ export const Onboarding0Form: FC = () => {
 					<div className="flex flex-col gap-4">
 						<div className="flex gap-2 desktop:flex-row-reverse">
 							<FormButton className="min-w-44" size="sm">
-								{t("title")}
+								{t("create_account")}
 							</FormButton>
 							<ButtonLink
 								className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"

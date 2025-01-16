@@ -8,23 +8,23 @@ import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("terms");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("terms_of_service")
 	};
 }
 
 export default async function TermsPage() {
-	const t = await getTranslations("terms");
+	const t = await getTranslations();
 
 	return (
-		<ModelCard className="w-full desktop:max-w-2xl" title={t("title")}>
+		<ModelCard className="w-full desktop:max-w-2xl" title={t("terms_of_service")}>
 			<div className="flex flex-col gap-4">
 				<MachineTranslatedLegal
 					original={`${urls.resources.termsOfService}?language=en`}
 				/>
-				{t.rich("content", {
+				{t.rich("committee_trucks_welcome_approval", {
 					section: (children: ReactNode) => (
 						<section className="select-children flex flex-col gap-2">
 							{children}

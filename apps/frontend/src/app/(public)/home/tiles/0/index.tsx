@@ -11,7 +11,7 @@ import { SignUpButton } from "../../sign-up-button";
 import { BackgroundVideo } from "./background-video";
 
 export function Hero({ id }: TileProps) {
-	const t = useTranslations("landing");
+	const t = useTranslations();
 
 	return (
 		<Tile
@@ -23,7 +23,7 @@ export function Hero({ id }: TileProps) {
 				<FlirtualLogo className="mb-4 w-56" />
 				<TileAnchor id={id}>
 					<h1 className="max-w-4xl text-balance text-center text-5xl font-bold text-white-10 desktop:text-7xl desktop:tall:text-8xl">
-						{t("hero.calm_calm_alligator_taste")}
+						{t("calm_calm_alligator_taste")}
 					</h1>
 				</TileAnchor>
 				<div className="mt-16 hidden grid-cols-2 flex-col gap-2 desktop:grid">

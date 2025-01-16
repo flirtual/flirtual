@@ -22,7 +22,7 @@ import { InputText } from "../inputs";
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const [session, mutateSession] = useSession();
-	const t = useTranslations("profile");
+	const t = useTranslations();
 	const toasts = useToast();
 	const { share, canShare } = useShare();
 	const [shareVisible, setShareVisible] = useState(false);
@@ -38,7 +38,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				Icon={Pencil}
 				size="sm"
 			>
-				{t("crazy_large_hound_grace")}
+				{t("edit")}
 			</ButtonLink>
 			<DrawerOrDialog open={shareVisible} onOpenChange={setShareVisible}>
 				<>
@@ -84,7 +84,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											</FormField>
 										</div>
 										<FormButton kind="secondary" size="sm">
-											{t("sleek_simple_puma_find")}
+											{t("update")}
 										</FormButton>
 									</div>
 								)}
@@ -104,7 +104,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											});
 										}}
 									>
-										{t("spare_short_tapir_dream")}
+										{t("share")}
 									</Button>
 								)}
 								<CopyClick
@@ -115,7 +115,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 										kind={canShare ? "secondary" : "primary"}
 										size="sm"
 									>
-										{t("mealy_any_javelina_hint")}
+										{t("copy_link")}
 									</Button>
 								</CopyClick>
 							</div>
@@ -129,7 +129,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				size="sm"
 				onClick={() => setShareVisible(true)}
 			>
-				{t("spare_short_tapir_dream")}
+				{t("share")}
 			</Button>
 		</div>
 	);

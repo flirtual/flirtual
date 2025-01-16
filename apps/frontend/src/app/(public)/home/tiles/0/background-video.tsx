@@ -4,7 +4,7 @@ import { Image } from "~/components/image";
 import { urls } from "~/urls";
 
 export const BackgroundVideo: React.FC = () => {
-	const t = useTranslations("landing.hero");
+	const t = useTranslations();
 
 	return (
 		<video

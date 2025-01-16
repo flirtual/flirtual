@@ -35,7 +35,7 @@ export const UserForms: React.FC = () => {
 			>
 				<div className="flex flex-col gap-2">
 					<h1 className="font-montserrat text-xl font-semibold">
-						Just one more step!
+						One more step
 					</h1>
 					<span className="text-lg">
 						Check your email (

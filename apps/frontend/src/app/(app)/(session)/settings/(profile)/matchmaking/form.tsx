@@ -47,7 +47,7 @@ const absMaxAge = 60;
 
 export const MatchmakingForm: FC = () => {
 	const [session] = useSession();
-	const t = useTranslations("profile");
+	const t = useTranslations();
 	const router = useRouter();
 	const toasts = useToast();
 
@@ -229,7 +229,7 @@ export const MatchmakingForm: FC = () => {
 									optional
 									options={ProfileMonopolyList.map((value) => ({
 										id: value,
-										name: t("brave_funny_vulture_sail", { value })
+										name: t(value)
 									}))}
 								/>
 							</>

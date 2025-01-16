@@ -15,7 +15,7 @@ import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
 
 export const ForgotPasswordForm: React.FC = () => {
-	const t = useTranslations("forgot");
+	const t = useTranslations();
 
 	const [success, setSuccess] = useState(false);
 	const { openFreshworks } = useFreshworks();
@@ -38,7 +38,7 @@ export const ForgotPasswordForm: React.FC = () => {
 					? (
 							<>
 								<p>
-									{t.rich("email_sent", {
+									{t.rich("ready_ghost_locket_bubble", {
 										br: () => <br />,
 										email: () => <span className="font-semibold">{fields.email.props.value}</span>,
 										contact: (children) => <InlineLink href={urls.resources.contactDirect}>{children}</InlineLink>
@@ -60,11 +60,11 @@ export const ForgotPasswordForm: React.FC = () => {
 						)
 					: (
 							<>
-								<p>{t("enter_email")}</p>
+								<p>{t("sticks_own_phobic_utopian")}</p>
 								<FormField name="email">
 									{(field) => (
 										<>
-											<InputLabel>{t("email")}</InputLabel>
+											<InputLabel>{t("email_address")}</InputLabel>
 											<InputText
 												{...field.props}
 												autoComplete="email"

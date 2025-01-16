@@ -1,84 +1,10 @@
 {
-	"meta": {
-		"name": "Flirtual",
-		"title": "%s - Flirtual",
-		"knotty_direct_mongoose_bend": "Encontre novas pessoas na Realidade Virtual! Flirtual te ajuda ir à encontros no VR e VRChat.",
-		"green_plain_mongoose_lend": "O primeiro applicativo de encontros do VR. Junte-se a milhares de encontros no VR em applicativos como VRChat."
-	},
-	"guides": {
-		"title": "Guias",
-		"ago_patchy_chipmunk_find": "Recursos de saúde mental"
-	},
-	"superseded_policy": {
-		"fancy_noisy_grizzly_hint": "Essa politica estava em efeito {range} e não está mais ativa. Porfavor veja a <current>última iteração dessa política</current>."
-	},
-	"machine-translated": {
-		"large_wild_tortoise_sing": "Essa página foi traduzida automaticamente e pode conter imprecisões. Essa tradução foi providênciada apenas para sua conveniência. A <original>versão inglês</original> deste documento é a versão oficial e deve ser referênciada em caso de discrepâncias.",
-		"active_frail_antelope_support": "Porfavor <contact>contate-nos</contact> se você tiver qualquer dúvida."
-	},
 	"early_north_alpaca_sail": "Atualizar Flirtual?",
 	"icy_sound_emu_kiss": "Recomendamos sempre atualizar para a última versão do Flirtual para uma melhor experiência. Você pode encontrar bugs se continuar usando esta versão.",
 	"aware_such_leopard_fond": "Não obrigado",
-	"patient_gross_herring_grow": "Atualizar",
 	"loose_fancy_marlin_zip": "Copiado para área de transferência",
 	"learn_more": "Saiba mais",
-	"arrangeable_image": {
-		"soft_curly_pony_advise": "Mover imagem",
-		"glad_giant_mantis_win": "Deletar imagem"
-	},
-	"dialogs": {
-		"trust_and_safety": {
-			"title": "Confiança & Segurança",
-			"acknowledge": "Eu concordo",
-			"lofty_day_snail_treasure": "Regras da Comunidade",
-			"jolly_nimble_crow_taste": "Contate-nos"
-		}
-	},
-	"busy_direct_cockroach_hush": "Contate-nos",
 	"deft_raw_cod_fond": "Feito com <action>{heart}</action> na RV",
-	"banners": {
-		"finish_profile": "<link>Complete seu perfil</link> para pessoas poderem te ver e dar match!",
-		"confirm_email": "<link>Confirme seu email</link> para pessoas poderem te ver e dar match!",
-		"mobile": "<link>Baixar aplicativo móvel</link>",
-		"language": "Línguagem atual é {current}, mas sua língua de preferência é <link>{preferred}</link>.",
-		"translating": "Você ativou as teclas de tradução, conteúdo pode ser incompreensível até você <link>desativa-las</link>."
-	},
-	"navigation": {
-		"updates": "Atualizações",
-		"profile": "Perfil",
-		"settings": "Configurações",
-		"premium": "Premium",
-		"discord": "Discord",
-		"get_app": "Baixar Aplicativo",
-		"reports": "Reportes",
-		"search": "Buscar",
-		"stats": "Estatísticas",
-		"unsudo": "Unsudo"
-	},
-	"inputs": {
-		"text": {
-			"hide": "Ocultar",
-			"show": "Mostrar"
-		},
-		"switch": {
-			"yes": "Sim",
-			"no": "Não"
-		},
-		"select": {
-			"placeholder": "Selecione uma opção"
-		},
-		"privacy_select": {
-			"everyone": "Qualquer um no Flirtual",
-			"matches": "Apenas Matches",
-			"me": "Apenas eu"
-		},
-		"language_autocomplete": {
-			"placeholder": "Selecionar línguagem."
-		},
-		"country_select": {
-			"placeholder": "Selecionar país."
-		}
-	},
 	"errors": {
 		"internal_server_error": "Perdão, algo deu errado! Tente novamente mais tarde.",
 		"cant_be_blank": "Não pode ser vazio.",
@@ -137,186 +63,35 @@
 		"turnstile_invalid": "Falha na verificação. Tente novamente.",
 		"turnstile_expired": "Verificação expirada, Tente novamente."
 	},
-	"support": "Suporte",
-	"privacy": "Política de Privacidade",
-	"premium": "Premium",
-	"new": "NOVO",
-	"events": "Eventos",
-	"about": "Sobre",
-	"branding": "Marca",
-	"press": "Imprensa",
-	"feedback": "Feedback",
-	"status": "Status",
-	"developers": "Desenvolvedores",
-	"copyright": "© {year} Flirtual",
-	"lime_soft_shad_skip": "Procurando nossa arte para uso em algo? Aqui está. Porfavor à mantenha elegante e <contact>nos contate</contact> para aprovação.",
-	"brave_early_weasel_arise": "Nossa logo",
-	"flaky_same_grizzly_snap": "Porfavor não edite, mude, distorça, recolore, ou reconfigure a logo do Flirtual.",
-	"mild_spry_hamster_persist": "Marca apenas",
-	"such_pink_jan_spur": "Use estas apenas para quando a marca do Flirtual estiver claramente vísivel ou ser estabelecida bem em outra area da página ou design.",
-	"tasty_last_pony_transform": "Cores",
-	"gross_red_earthworm_reside": "Gradiente",
-	"fair_yummy_penguin_harbor": "Modo Escuro",
-	"empty_sharp_sheep_list": "Modo Amigos",
-	"whole_round_penguin_pet": "Rosa",
-	"known_trick_raven_sew": "Creme",
-	"wise_great_crow_foster": "Precisa de mais?",
-	"ornate_upper_guppy_mend": "Baixe nosso kit completo para mais imagens e informação.",
-	"wide_stock_bulldog_tend": "Kit de Imprensa",
-	"heavy_fancy_butterfly_glow": "Notícias",
-	"guidelines": "Regras da Comunidade",
-	"events_page": {
-		"title": "Eventos",
-		"gross_loose_stork_vent": "Convite VRChat",
-		"fun_still_clownfish_arrive": "Se um evento estiver acontecendo agora, este botão te levará lá!",
-		"elegant_bald_parakeet_animate": "Inicie o VRChat primeiro e clique em \"me convide\" na seguinte página. Você receberá um convite de você mesmo no jogo. <joining>Precisa de ajuda para entrar?</joining>",
-		"arable_nice_puma_comfort": "Entrar no Evento",
-		"top_big_tern_twist": "Próximos eventos",
-		"nimble_equal_loris_foster": "Nós hospedamos encontros relâmpagos e eventos de DJ todos finais de semana no VRChat, e você está convidado!",
-		"flaky_early_shad_nourish": "Para nossos horários de eventos e anúncios, <discord>entre no nosso servidor do Discord</discord>.",
-		"quiet_lazy_marten_amuse": "Mundos de VRChat",
-		"blue_calm_chipmunk_spark": "Nossos eventos semanais são hospedados nos nossos mundos do VRChat, mas você pode entrar a qualquer hora! sinta-se à vontade para usa-los para seus próprios eventos também.",
-		"tidy_wise_robin_urge": "Encontros Relâmpago do Flirtual",
-		"careful_wise_bumblebee_walk": "Conheça pessoas de 1-para-1 em rodadas de encontros/criar amizades. Cada rodada toma 3 minutos (o hospedeiro pode escolher de 3-7 minutos). Sugestões de conversa, rótulos de interesses, e modo escuro inclusos.",
-		"flat_ok_penguin_vent": "Encontro Relâmpago do Flirtual",
-		"inclusive_simple_alligator_zap": "The Flirtual Club",
-		"sweet_mellow_ant_hunt": "Festival de música ao ar livre com audiolink.",
-		"fine_low_deer_propel": "The Flirtual Club",
-		"dry_inclusive_ox_trust": "Criado por <faxmashine>Faxmashine</faxmashine>, nossos mundos são compatíveis com PCVR, Quest, e Desktop. Novo no VRChat? <vrchat>Registrar-se grátis.</vrchat>"
+	"meta": {
+		"name": "Flirtual",
+		"title": "%s - Flirtual",
+		"knotty_direct_mongoose_bend": "Encontre novas pessoas na Realidade Virtual! Flirtual te ajuda ir à encontros no VR e VRChat.",
+		"green_plain_mongoose_lend": "O primeiro applicativo de encontros do VR. Junte-se a milhares de encontros no VR em applicativos como VRChat."
 	},
-	"about_page": {
-		"title": "Sobre nós",
-		"image_alt": "Foto do time do Flirtual no VRChat",
-		"content": "<section><h1>Nossa história</h1><p>Olá, somos Kyle e Tony, os criadores do Flirtual. Kyle foi obcecado com RV desde os primeiros dias da Oculus, mas sua vida mudou ao entrar no VRChat e encontrou seus amigos mais próximos (incluindo sua esposa!). Logo antes da chegada do COVID, Kyle trouxe seu melhor amigo de infância Tony para a jornada, e a RV também mudou a vida dele. Começamos a focar em ajudar os outros a encontrarem pessoas incríveis ao redor do mundo assim como nós, começando com VRLFP (Virtual Reality Looking For Partner).</p><p>A presença imersiva da RV te ajuda a formar conexões fortes com pessoas em qualquer lugar do mundo. Ao ignorar a distância geográfica e colocando personalidade em primeiro lugar, nossa missão é encontrar as melhores pessoas pra você, onde quer que esteja. E fazer namoros mais seguros e mágicos!</p><p>Em 2022, VRLFP se tornou Flirtual. Feito do zero, nós melhoramos o matchmaking, adicionamos rótulos de personalidade & interesses, e lançamos aplicativos aprimorados. Esteja você procurando por um relacionamento que se converte para vida real, ou algo casual na RV, ou apenas amigos, estamos prontos para te ajuda a encontrar o par perfeito.</p><group><p><3 kfarwell, Tony & O time da Flirtual </p><discord>Entre no Discord</discord></group><p><italic>P.S. Tivemos um longo caminho desde o humilde começo do VRLFP, mas ainda somos um time pequeno focado na comunidade de RV. Apreciamos sua paciência enquanto trabalhamos duro para fazer do Flirtual o mais incrível possível. Por favor nos avise se você <contact>encontrou bugs</contact> ou <feedback>tiver sugestões</feedback>!</italic></p></section><section><h1>A equipe</h1><team-list></team-list></section><section><h1>Linha do Tempo</h1><timeline></timeline></section>",
-		"team": {
-			"image_alt": "Avatar de {name}",
-			"roles": {
-				"kfarwell": "Desenvolvedor Principal",
-				"existony": "Parceiros, Design & Segurança",
-				"aries": "Desenvolvedor de Software",
-				"moderator": "Moderador",
-				"event_host": "Hospedeiro de Eventos",
-				"social": "Sociais",
-				"community_advisor": "Conselheiro de Comunidade",
-				"katten": "Conselheiro de Comunidade",
-				"syrmor": "Conselheiro de Marketing",
-				"faxmashine": "Criador de Mundos do VRChat",
-				"juice": "Criador de Avatares de VRChat"
-			}
-		},
-		"timeline": {
-			"2018": {
-				"title": "2018 🐣",
-				"description": "O primeiro aplicativo de namoros no VR nasce.",
-				"image": "88bb9381-87ed-499d-9667-cd61eff96938",
-				"image_alt": "Flirtual em 2018"
-			},
-			"2019": {
-				"title": "🏆 2019",
-				"description": "VRLFP é nomeado a melhor técnologia no iDate Awards.",
-				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
-				"image_alt": "Flirtual em 2019"
-			},
-			"2020": {
-				"title": "2020 🧪",
-				"description": "Alguns conceitos malucos que eventualmente se tornaram o Flirtual que você conhece e ama hoje. Obrigado por nos deixar cozinhar.",
-				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
-				"image_alt": "Flirtual em 2020"
-			},
-			"2021": {
-				"title": "✌️ 2021",
-				"description": "ROVR é lançado, um aplicativo social de amizades e grupos. Seu espírito vive no modo Amigos.",
-				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
-				"image_alt": "Flirtual em 2021"
-			},
-			"2022": {
-				"title": "2022 😻",
-				"description": "VRLFP se torna Flirtual. Talvez agora as pessoas se lembrarão como soletrar nosso nome.",
-				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
-				"image_alt": "Flirtual em 2022"
-			},
-			"2023": {
-				"title": "✨ 2023",
-				"description": "Novo design, aplicativos, e muitas melhorias por trás das cenas.",
-				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
-				"image_alt": "Flirtual em 2023"
-			}
-		},
-		"images": {
-			"0": {
-				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
-				"image_alt": "Festa de lançamento de 12 horas do Flirtual para o Dia dos Namorados de 2022 com a Vanguard",
-				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
-			},
-			"1": {
-				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
-				"image_alt": "Encontros relâmpago do Flirtual no VRChat",
-				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
-			},
-			"2": {
-				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
-				"image_alt": "Noite de DJ do Flirtual no VRChat",
-				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
-			},
-			"3": {
-				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
-				"image_alt": "Flirtual na VRCon 2022",
-				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
-			},
-			"4": {
-				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
-				"image_alt": "Flirtual no The Today Show",
-				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
-			},
-			"5": {
-				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
-				"image_alt": "Flirtual no Vket 2023 Summer",
-				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
-			}
-		}
-	},
-	"debugger_page": {
-		"title": "Informação de Debug",
-		"spicy_pretty_tiger_pet": "Dispositivo",
-		"lucky_sound_opossum_absorb": "Plafaforma do aplicativo:",
-		"vexed_yummy_tadpole_grow": "Navegador:",
-		"known_spare_mantis_pet": "Sistema:",
-		"hour_odd_kudu_dine": "Língua:",
-		"mushy_muddy_warthog_win": "Sessão",
-		"wacky_spry_haddock_jump": "Perfil de usuário:",
-		"spry_polite_elk_grace": "Objeto do usuário:",
-		"brief_neat_kestrel_ascend": "Indisponível",
-		"flat_civil_goat_absorb": "Objeto Sudoer:",
-		"north_crisp_fly_dart": "Idade:",
-		"dark_wild_mouse_roar": "Build",
-		"swift_short_koala_fond": "Ambiente:",
-		"each_zippy_millipede_pop": "Versão:"
-	},
-	"download_page": {
-		"title": "Baixar",
+	"download": {
 		"best_topical_mayfly_tap": "Baixar ligado",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
 			"microsoft": "Microsoft Store",
 			"side_quest": "SideQuest"
-		}
+		},
+		"title": "Baixar"
 	},
-	"guidelines_page": {
-		"title": "Regras da Comunidade",
-		"content": "<p>Queremos que Flirtual seja um espaço positivo e acolhedor para todos. As regras da comunidade te informarão como moderamos perfis de usuários e comportamento no Flirtual. Quebrar essas regras resultará em moderação na sua conta, como ban permanente do Flirtual. Reservamos o direito de moderar contas a nosso critério.</p><section><h1>Respeite todos</h1><group><h2>Sem discurso de ódio ou ações odiosas contra qualquer grupo</h2><p>Isso inclui racismo, sexismo, ou símbolos de ódio e conteúdo contra certos grupos em seu perfil ou conversas do Flirtual.</p></group><group><h2>Sem assédio</h2><p>Isso inclui bullying, conteúdo sexual sem consentimento, ameaças diretas ou indiretas, doxxing, caçada às bruxas, perseguição, ou ataques a outros usuários em seu perfil.</p></group><group><h2>Sem spam, trolagem, personificação, deturpação ou golpes</h2><p>Não tente tirar vantagem de usuários no Flirtual. Não pretenda ser alguém que você não é.</p></group><group><h2>Sem fotos NSFW</h2><p>Nudez completa não é permitida no Flirtual, isso vale para fotos reais e de avatares. Isso inclui roupas altamente reveladoras, ou poses sexualizadas.</p></group><group><h2>Conteúdo impróprio limitado no perfil</h2><p>Porfavor evite textos de conteúdo adulto na sua biográfia. A maioria da sua biográfia deve ser apropriado, não impróprio. Porfavor limite palavras ou frases impróprias no seu perfil. Você é livre para usar rótulos de conteúdo adulto e interesses personalizados não gráficos.</p></group></section><section><h1>Mantenha-se em tópico</h1><p>Flirtual é uma plataforma de namorar e criar amizades. O principal propósito do seu perfil deve seguir isso.</p><group><h2>Sem solicitação</h2><p>Não peça dinheiro ou envie links de pagamento (Ex. PayPal). Não divulgue produtos ou serviços no Flirtual.</p></group><group><h2>Sem conteúdo altamente político ou controverso</h2><p>Por favor fale sobre política, religião ou controversias em outro lugar.</p></group><group><h2>Sem conteúdo violento ou representações de violência</h2><p>Fotos violentas ou gore que atormentam pessoas serão removidas e podem resultar em ban.</p></group><group><h1>Sem fotos de crianças ou menores de idade</h1><p>Não toleramos conteúdo envolvendo menores, como fotos reais de crianças. Isso é para a segurança dos usuários e das crianças.</p></group><group><h2>Auto-divulgação limitada</h2><p>Você pode divulgar links não relacionados a pagamentos de suas redes sociais (como Instagram ou Discord), mas isso não deve ser o propósito principal do seu perfil ou conta no Flirtual.</p></group><group><h2>Sem conteúdo de automutilação</h2><p>Conteúdo de automutilaçãoo não é permitido no Flirtual. Nós possuimos <mental-health>recursos de saúde mental</mental-health> que podem ser úteis.</p></group></section><section><h1>Respeite o Flirtual</h1><group><h2>Sem atividade ilegal</h2><p>Não faça nada no Flirtual que quebre suas leis locais ou leis do Canada, onde Flirtual é hospedado.</p></group><group><h2>Sem usuários menores de idade</h2><p>Flirtual é estritamente 18+.</p></group><group><h2>Sem contas duplicadas</h2><p>Contas duplicadas serão banidas. Sua conta mais ativa será mantida.</p></group><group><h2>Quebrar regras da comunidade do Flirtual fora do Flirtual</h2><p>Nós podemos moderar usuários que quebram os <terms>Termos de Serviço</terms> ou Regras da Comunidade no Flirtual. Porém, se a quebra de regras acontecer em uma plataforma fora do Flirtual, nós podemos não ser capazes de moderar. Se você ver um usuário do Flirtual quebrando as regras fore do Flirtual, sinta-se livre para o reportar no Flirtual, mas tenha certeza de reportar na outra plataforma também (Ex. Discord).</p></group><group><h2>Sem atacas outros usuários no seu perfil</h2><p>Não poste o nome de usuário ou chame atenção á outro usuário do Flirtual em sua biográfia. Nós moderamos enquanto respeitamos a privacidade dos usuários. Você pode reportar um perfil para nosso time de moderação apertando o botão de \"Reporte\" na parte de baixo do perfil dele.</p></group><group><h2>Não abuse ou danifique produtos do Flirtual</h2><p>Mal uso do Flirtual ou tentativas de explorar o Flirtual maliciosamente serão investigados. Pesquisa de vulnerabilidade de boa fé, de acordo com nossos <terms>Termos de Serviço</terms> são bem-vindos, e bugs podem ser reportados através do <vulnerability>GitHub</vulnerability> ou <email>email</email>.</p></group><p>Caso você veja algo contra as regras ou algo que te fez sentir vulnerável, por favor nos deixe saber.</p><group><h3>Faça uma denúncia</h3><p>Aperte o botão de \"Reporte\" na parte de baixo do perfil de alguém para marcar para nosso time de moderação. Porfavor inclua qualquer informação relevante ou evidência no seu reporte.</p></group><group><h3>Apelo de Moderação</h3><p>Se sua conta foi banida, você receberá um email com a razão do seu ban. Se você quiser apelar esta decisão responda o email de ban. Caso você não tenha recebido uma resposta do seu apelo dentro de 30 dias, ele foi revisado e negado.</p></group><group><h3>Mais informação</h3><terms>Termos de Serviço</terms><privacy>Política de Privacidade</privacy></group></section>"
+	"superseded_policy": {
+		"fancy_noisy_grizzly_hint": "Essa politica estava em efeito {range} e não está mais ativa. Porfavor veja a <current>última iteração dessa política</current>."
 	},
-	"guides_mental_health": {
-		"title": "Saúde mental",
-		"title_long": "Recursos de saúde mental",
-		"early_lazy_squid_advise": "Linhas Diretas de Crise"
+	"machine-translated": {
+		"large_wild_tortoise_sing": "Essa página foi traduzida automaticamente e pode conter imprecisões. Essa tradução foi providênciada apenas para sua conveniência. A <original>versão inglês</original> deste documento é a versão oficial e deve ser referênciada em caso de discrepâncias.",
+		"active_frail_antelope_support": "Porfavor <contact>contate-nos</contact> se você tiver qualquer dúvida."
 	},
-	"terms_page": {
+	"terms": {
 		"title": "Termos de Serviço",
 		"content": "<p>Esse serviço (o 'Serviço') é operado por ROVR LABS INC., fazendo negócios como Flirtual ('nós', ou 'Flirtual').</p><section><h1>Regras</h1><p>Para manter esse Serviço, você deve:</p><ol><li>ter no mínimo 18 anos de idade;</li><li>ser legalmente permitido perante as leis Canadenses e locais</li><li>nunca ter cometido nenhum crime;</li><li>não ser obrigado a se registrar como assediador sexual em nenhum registro de governo;</li><li>concordar em vincular-se aos Termos de Serviço e nossa <privacy>Política de Privacidade</privacy>.</li></ol><p>Você concorda em não:</p><ol><li>quebrar leis locais ou Canadenses;</li><li>solicitar dinheiro ou defraudar outros usuários;</li><li> personificar qualquer pessoa ou entidade ou postar quaisquer imagens de outra pessoa sem a permissão dele ou dela;</li><li> postar qualquer conteúdo abusivo, racista, sexista, depreciativo, difamatório, ilegal, sexual, impróprio, ou prejudicial no Serviço;</li><li>assediar qualquer usuário nesta plataforma;</li><li> conscientemente postar codigos maliciosos ou links para sites maliciosos, que podem prejudicar outros usuários;</li><li>postar spam nos perfis;</li><li>infringir em qualquer direito autoral;</li><li>usar esse serviço para prejudicar Flirtual ou o Serviço.</li></ol><p>Por favor revise nossas <guidelines>Regras da Comunidade</guidelines> para mais informação em como moderamos perfis e comportamento no Serviço. Quebrar essas regras resultará em moderação na conta, assim como banimento permanente do Serviço. Reservamos o direito de moderar contas a nosso critério.</p></section><section><h1>Segurança</h1><p>Aconselhamos que você tenha cautela ao interagir com usuários do Serviço. Não somos responsáveis pelo comportamento de usuários dentro ou fora do Serviço ou de suas interações com outros usuários, Nós não vemos telas de usuários</p></section><section><h1>Privacidade</h1><p>Você nos autoriza a usar e exibir certas informações sobre você. Porfavor veja nossa <privacy>Política de Privacidade</privacy> para mais informação.</p></section><section><h1>Serviços de Terceiros</h1><p>Flirtual não é responsável por serviços de terceiros.</p></section><section><h1>Direitos</h1><p>Você pode apagar sua conta a qualquer momento nas suas <delete-account>configurações de conta</delete-account>.</p><p>Você receberá um aviso em avanço sobre qualquer troca nesses termos ou novos serviços que afetam a privacidade.</p><p>Decisões de moderação serão feitas com nosso time de moderação. Você tem o direito de receber uma explicação se seu perfil for modificado ou sua conta ser cancelada por violação dos Termos de Uso. Você não tem o direito de receber um aviso adiantado sobre essas mudanças na sua conta.</p><p>Caso sua conta seja cancelada por violação dos Termos de Uso, seus dados serão mantidos por 30 dias para que possamos revisar as decisões de moderação e reverte-las se necessário. Por favor <contact>contate-nos</contact> se você gostaria de apelar uma decisão da moderação ou teve seus dados deletados com antecedência.</p><p>Seus dados serão salvos regularmente.</p></section><section><h1>Segurança</h1><p>O Serviço opera em uma infraestrutura providenciada por terceiros. Essa infraestrutura é protegida por esforços padrões de segurança da indústria tais como firewalls.</p><p>Sua conexão com o Serviço usa <ssltest>strong transport encryption</ssltest>.</p><p>Sua senha é guardada com segurança com métodos hashed and salted.</p><p>Você é responsável por manter a senha da sua conta segura. Você é responsável por todas as atividades que ocorrem com as credenciais da sua conta.</p><p>Apesar dos melhores esforços, não existe segurança perfeita online. Nós não garantimos proteção absoluta do seus dados.</p><p>Nós não revisamos, e não podemos revisar, todo o material, incluindo software de computador, disponibilizado através de sites e páginas aos quais o Serviço se vincula ou é vinculado ao Serviço. Nós não temos controle á sites que não sejam do Flirtual, e não nos responsabilizamos pelos seus conteúdos ou seu uso. Ao vincular um site de fora do Flirtual, Flirtual não representa ou implicar que endossa tal site. Você é responsável por tomar precauções como necessário para proteger a si mesmo e seu sistema de computador contra vírus, cavalos de Troia, e outras formas de counteúdo destrutivo. Flirtual nega qualquer responsabilidade de danos resultates do seu uso de sites e páginas fora do Flirtual.</p></section><section><h1>Isenções de Responsabilidade</h1><p>Em nenhum evento Flirtual, ou seus fornecedores ou licenciantes, se responsabilizarão com relação a qualquer assunto deste Contrato sob qualquer contrato, negligência, responsabilidade estrita ou outra teoria legal ou equitativa para: (i) qualquer danos especial, incidental, ou consequencial; (ii) o custo de aquisição de produtos ou serviços substitutos; (iii) por interrupção de uso ou perda ou corrupção de dados; ou (iv) por quaisquer valores que excedam as taxas pagas por você ao Flirtual sob este Contrato durante o período de doze (12) meses anteriores à causa da ação. Flirtual não terá nenhuma responsabilidade por qualquer falha ou atraso devido a assuntos além de seu controle razoável. O acima exposto não se aplicará na medida proibida pela lei aplicável.</p></section>",
 		"title_superseded": "Termos de Serviço (Desatualizado)"
 	},
-	"landing_page": {
+	"landing": {
 		"sign_up": "Registre-se",
 		"log_in": "Log in",
 		"hero": {
@@ -324,9 +99,9 @@
 			"calm_calm_alligator_taste": "Encontros virtuais, conexões reais"
 		},
 		"profiles": {
-			"legal_big_finch_kiss": "Foto de um perfil do Flirtual",
 			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
 			"stout_last_kudu_bend": "Seu avatar, sua escolha",
+			"legal_big_finch_kiss": "Foto de um perfil do Flirtual",
 			"messages": {
 				"0": "RV é uma maneira que prioriza a personalidade ao conhecer pessoas novas.",
 				"1": "Avatares te ajudam a se expressar, sem se sentir auto-consciente.",
@@ -334,23 +109,22 @@
 			}
 		},
 		"carousel": {
-			"spare_chunky_cougar_honor": "Aproveite encontros seguros e mágicos dentro da Realidade Virtual",
 			"images": {
 				"0": {
-					"title": "Alimente patos",
-					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
+					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e",
+					"title": "Alimente patos"
 				},
 				"1": {
 					"title": "Nade… com tubarões",
 					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
 				},
 				"2": {
-					"title": "Relaxe em um café aconchegante",
-					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
+					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6",
+					"title": "Relaxe em um café aconchegante"
 				},
 				"3": {
-					"title": "Observe um buraco negro",
-					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
+					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74",
+					"title": "Observe um buraco negro"
 				},
 				"4": {
 					"title": "Toque em grama",
@@ -361,13 +135,13 @@
 					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
 				},
 				"6": {
-					"title": "Jogue sinuca",
-					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
+					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d",
+					"title": "Jogue sinuca"
 				}
-			}
+			},
+			"spare_chunky_cougar_honor": "Aproveite encontros seguros e mágicos dentro da Realidade Virtual"
 		},
 		"testimonial": {
-			"even_major_hare_believe": "Dê Match com mais de {userCount, number}+ pessoas de todo o mundo!",
 			"images": {
 				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
 				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
@@ -425,7 +199,8 @@
 					"image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
 					"name": "iDate Awards - Best New Technology"
 				}
-			}
+			},
+			"even_major_hare_believe": "Dê Match com mais de {userCount}+ pessoas de todo o mundo!"
 		},
 		"flitty_messages": {
 			"0": "Miau!",
@@ -434,6 +209,7 @@
 			"3": "Risada!",
 			"4": "Posso ajudar?",
 			"5": "Quer algumas dicas?",
+			"6": "Você pode encontrar novos amigos no Modo Homie ✌️",
 			"7": "Seja você mesmo!",
 			"8": "Quando alguem te curtir ou amigar de volta, é um match!",
 			"9": "Você pode se encontrar com quer der match em qualquer aplicativo ou Jogo VR. Qual o seu favorito?",
@@ -528,12 +304,243 @@
 			"98": "...",
 			"99": "Ta bom, aqui seu prêmio.",
 			"100": "Você clicou em mim 500 vezes. Parabéns, você ganhou Flirtual! estou tão orgulhoso de você."
+		},
+		"cta": {
+			"few_grassy_hyena_adapt": "Apaixone-se em uma <highlight>dimensão completamente nova</highlight>"
 		}
 	},
-	"payments_page": {
+	"about": {
+		"title": "Sobre nós",
+		"team": {
+			"image_alt": "Avatar de {name}",
+			"roles": {
+				"kfarwell": "Desenvolvedor Principal",
+				"aries": "Desenvolvedor de Software",
+				"moderator": "Moderador",
+				"existony": "Parceiros, Design & Segurança",
+				"event_host": "Hospedeiro de Eventos",
+				"social": "Sociais",
+				"community_advisor": "Conselheiro de Comunidade",
+				"katten": "Conselheiro de Comunidade",
+				"syrmor": "Conselheiro de Marketing",
+				"faxmashine": "Criador de Mundos do VRChat",
+				"juice": "Criador de Avatares de VRChat"
+			}
+		},
+		"timeline": {
+			"2018": {
+				"title": "2018 🐣",
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938",
+				"image_alt": "Flirtual em 2018",
+				"description": "O primeiro aplicativo de namoros no VR nasce."
+			},
+			"2019": {
+				"title": "🏆 2019",
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
+				"image_alt": "Flirtual em 2019",
+				"description": "VRLFP é nomeado a melhor técnologia no iDate Awards."
+			},
+			"2020": {
+				"title": "2020 🧪",
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
+				"image_alt": "Flirtual em 2020",
+				"description": "Alguns conceitos malucos que eventualmente se tornaram o Flirtual que você conhece e ama hoje. Obrigado por nos deixar cozinhar."
+			},
+			"2021": {
+				"title": "✌️ 2021",
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
+				"image_alt": "Flirtual em 2021",
+				"description": "ROVR é lançado, um aplicativo social de amizades e grupos. Seu espírito vive no modo Amigos."
+			},
+			"2022": {
+				"title": "2022 😻",
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
+				"image_alt": "Flirtual em 2022",
+				"description": "VRLFP se torna Flirtual. Talvez agora as pessoas se lembrarão como soletrar nosso nome."
+			},
+			"2023": {
+				"title": "✨ 2023",
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
+				"image_alt": "Flirtual em 2023",
+				"description": "Novo design, aplicativos, e muitas melhorias por trás das cenas."
+			}
+		},
+		"images": {
+			"0": {
+				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395",
+				"image_alt": "Festa de lançamento de 12 horas do Flirtual para o Dia dos Namorados de 2022 com a Vanguard"
+			},
+			"1": {
+				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
+				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539",
+				"image_alt": "Encontros relâmpago do Flirtual no VRChat"
+			},
+			"2": {
+				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4",
+				"image_alt": "Noite de DJ do Flirtual no VRChat"
+			},
+			"3": {
+				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c",
+				"image_alt": "Flirtual na VRCon 2022"
+			},
+			"4": {
+				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg",
+				"image_alt": "Flirtual no The Today Show"
+			},
+			"5": {
+				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788",
+				"image_alt": "Flirtual no Vket 2023 Summer"
+			}
+		},
+		"image_alt": "Foto do time do Flirtual no VRChat",
+		"content": "<section><h1>Nossa história</h1><p>Olá, somos Kyle e Tony, os criadores do Flirtual. Kyle foi obcecado com RV desde os primeiros dias da Oculus, mas sua vida mudou ao entrar no VRChat e encontrou seus amigos mais próximos (incluindo sua esposa!). Logo antes da chegada do COVID, Kyle trouxe seu melhor amigo de infância Tony para a jornada, e a RV também mudou a vida dele. Começamos a focar em ajudar os outros a encontrarem pessoas incríveis ao redor do mundo assim como nós, começando com VRLFP (Virtual Reality Looking For Partner).</p><p>A presença imersiva da RV te ajuda a formar conexões fortes com pessoas em qualquer lugar do mundo. Ao ignorar a distância geográfica e colocando personalidade em primeiro lugar, nossa missão é encontrar as melhores pessoas pra você, onde quer que esteja. E fazer namoros mais seguros e mágicos!</p><p>Em 2022, VRLFP se tornou Flirtual. Feito do zero, nós melhoramos o matchmaking, adicionamos rótulos de personalidade & interesses, e lançamos aplicativos aprimorados. Esteja você procurando por um relacionamento que se converte para vida real, ou algo casual na RV, ou apenas amigos, estamos prontos para te ajuda a encontrar o par perfeito.</p><group><p><3 kfarwell, Tony & O time da Flirtual </p><discord>Entre no Discord</discord></group><p><italic>P.S. Tivemos um longo caminho desde o humilde começo do VRLFP, mas ainda somos um time pequeno focado na comunidade de RV. Apreciamos sua paciência enquanto trabalhamos duro para fazer do Flirtual o mais incrível possível. Por favor nos avise se você <contact>encontrou bugs</contact> ou <feedback>tiver sugestões</feedback>!</italic></p></section><section><h1>A equipe</h1><team-list></team-list></section><section><h1>Linha do Tempo</h1><timeline></timeline></section>"
+	},
+	"branding": {
+		"brave_early_weasel_arise": "Nossa logo",
+		"tasty_last_pony_transform": "Cores",
+		"gross_red_earthworm_reside": "Gradiente",
+		"fair_yummy_penguin_harbor": "Modo Escuro",
+		"whole_round_penguin_pet": "Rosa",
+		"known_trick_raven_sew": "Creme",
+		"tired_extra_bear_forgive": "Baixar",
+		"title": "Marca",
+		"lime_soft_shad_skip": "Procurando nossa arte para uso em algo? Aqui está. Porfavor à mantenha elegante e <contact>nos contate</contact> para aprovação.",
+		"flaky_same_grizzly_snap": "Porfavor não edite, mude, distorça, recolore, ou reconfigure a logo do Flirtual.",
+		"mild_spry_hamster_persist": "Marca apenas",
+		"such_pink_jan_spur": "Use estas apenas para quando a marca do Flirtual estiver claramente vísivel ou ser estabelecida bem em outra area da página ou design.",
+		"empty_sharp_sheep_list": "Modo Amigos",
+		"wise_great_crow_foster": "Precisa de mais?",
+		"ornate_upper_guppy_mend": "Baixe nosso kit completo para mais imagens e informação."
+	},
+	"debugger": {
+		"spicy_pretty_tiger_pet": "Dispositivo",
+		"lucky_sound_opossum_absorb": "Plafaforma do aplicativo:",
+		"vexed_yummy_tadpole_grow": "Navegador:",
+		"known_spare_mantis_pet": "Sistema:",
+		"hour_odd_kudu_dine": "Língua:",
+		"mushy_muddy_warthog_win": "Sessão",
+		"wacky_spry_haddock_jump": "Perfil de usuário:",
+		"spry_polite_elk_grace": "Objeto do usuário:",
+		"brief_neat_kestrel_ascend": "Indisponível",
+		"north_crisp_fly_dart": "Idade:",
+		"swift_short_koala_fond": "Ambiente:",
+		"each_zippy_millipede_pop": "Versão:",
+		"title": "Informação de Debug",
+		"flat_civil_goat_absorb": "Objeto Sudoer:",
+		"dark_wild_mouse_roar": "Build"
+	},
+	"events": {
+		"title": "Eventos",
+		"top_big_tern_twist": "Próximos eventos",
+		"quiet_lazy_marten_amuse": "Mundos de VRChat",
+		"gross_loose_stork_vent": "Convite VRChat",
+		"fun_still_clownfish_arrive": "Se um evento estiver acontecendo agora, este botão te levará lá!",
+		"elegant_bald_parakeet_animate": "Inicie o VRChat primeiro e clique em \"me convide\" na seguinte página. Você receberá um convite de você mesmo no jogo. <joining>Precisa de ajuda para entrar?</joining>",
+		"arable_nice_puma_comfort": "Entrar no Evento",
+		"flaky_early_shad_nourish": "Para nossos horários de eventos e anúncios, <discord>entre no nosso servidor do Discord</discord>.",
+		"blue_calm_chipmunk_spark": "Nossos eventos semanais são hospedados nos nossos mundos do VRChat, mas você pode entrar a qualquer hora! sinta-se à vontade para usa-los para seus próprios eventos também.",
+		"nimble_equal_loris_foster": "Nós hospedamos encontros relâmpagos e eventos de DJ todos finais de semana no VRChat, e você está convidado!",
+		"tidy_wise_robin_urge": "Encontros Relâmpago do Flirtual",
+		"careful_wise_bumblebee_walk": "Conheça pessoas de 1-para-1 em rodadas de encontros/criar amizades. Cada rodada toma 3 minutos (o hospedeiro pode escolher de 3-7 minutos). Sugestões de conversa, rótulos de interesses, e modo escuro inclusos.",
+		"flat_ok_penguin_vent": "Encontro Relâmpago do Flirtual",
+		"inclusive_simple_alligator_zap": "The Flirtual Club",
+		"sweet_mellow_ant_hunt": "Festival de música ao ar livre com audiolink.",
+		"fine_low_deer_propel": "The Flirtual Club",
+		"dry_inclusive_ox_trust": "Criado por <faxmashine>Faxmashine</faxmashine>, nossos mundos são compatíveis com PCVR, Quest, e Desktop. Novo no VRChat? <vrchat>Registrar-se grátis.</vrchat>"
+	},
+	"mentalhealth": {
+		"title": "Saúde mental",
+		"early_lazy_squid_advise": "Linhas Diretas de Crise",
+		"title_long": "Recursos de saúde mental"
+	},
+	"payments": {
 		"title": "Termos de Pagamento"
 	},
-	"profile_page": {
+	"privacy": {
+		"title": "Política de Privacidade",
+		"title_superseded": "Política de Privacidade (Desatualizado)",
+		"content": "<p>Seu nome de usuário, nome de exibição, fotos de perfil, biografia, idade, gênero, suas preferências de matchmaking, seus interesses pessoais, suas seleções de aplicativos de RV/jogos, e se você é ou não novo na RV será visível à outros usuários. Sua informação adicional de perfil (incluindo sua sexualidade, Rótulos adultos, país, contas conectadas, etc). serão visíveis ou ocultas dependendo das suas <settings-privacy>configurações de privacidade</settings-privacy>, que podem ser alteradas livremente. Seus traços de personalidade (que são identificados baseados nas suas respostas do questionário de personalidade) serão visíveis ou ocultos para outros usuários baseados nas suas <settings-privacy>configurações de privacidade</settings-privacy>, mas suas respostas ao questionário serão ocultas.</p><p>Nós usamos análises de dados locais e próprias. Nós podemos compartilhar estatísticas anônimas sobre Firtual (por exemplo, o número de usuários que usam um aplicativo ou jogo específico). Você pode optar sair dessas estatísticas nas suas <settings-privacy>configurações de privacidade</settings-privacy>.</p><p>Suas mensagens e histórico de mensagens com outros usuários são hospedados e compartilhados com TalkJS, mas não serão compartilhados com terceiros.</p><p>O email da sua conta não será mostrado para outros usuários. Seu email pode ser acessado por terceiros para entrega de mensagens transacionais, de marketing e de suporte de acordo com suas preferências. Você pode optar sair das <settings-notifications>email de notificação de mensagem</settings-notifications>, que removerá seu email do registro do TalkJS.</p><p>Caso você suspeite que sua conta foi comprometida, por favor <settings-password> troque sua senha</settings-password> imediatamente e <contact>reporte o problema</contact> com a palavra 'URGENT' na linha de título. Na mensagem, inclua seu usuário, a última vez que acessou o site, e qualquer detalhe que te fez suspeitar de uma invasão.</p><p>Sua senha é salva com métodos hashed e salted.</p><p>Nós usamos terceiros confiáveis que proporcionam serviços para Flirtual. Nós podemos compartilar dados pessoais com estes terceiros, mas apenas com a finalidade de fornecer seus serviços. Para mais informações e exemplos, veja abaixo.</p><p><strong>Serviços de Hospedagem em Nuvem:</strong> para disponibilizar uma infraestrutura confiável e segura para gerenciar e operar nossa plataforma (por exemplo, Fly.io e Vercel).</p><p><strong>Serviços de Funcionalidade no Aplicativo:</strong> para facilitar os principais recursos como mensagens, hospedagem de imagens otimizado dento do nosso aplicativo (por exemplo, TalkJS).</p><p><strong>Serviços de Cobrança:</strong> para gerenciar pagamentos e inscrições (por exemplo, Stripe).</p><p><strong>Serviços de Redes Sociais:</strong> para permitir usuários conectares suas contas a nossa plataforma e facilitar interações sociais (por exemplo Discord).</p><p><strong>Serviços de Segurança e Desempenho:</strong> para proteger nossa plataforma, usuários, e melhorar o desempenho em geral (por exemplo, Cloudflare).</p><p><strong>Serviços de Pesquisa e Melhoria:</strong> para juntar opiniões de usuários e fazer análises para melhoria contínua da nossa plataforma(por exemplo, Canny).</p><p><strong>Serviços de Comunicação:</strong> para ajudar a enviar comunicações transacionais e marketing para usuários(por exemplo, Amazon Web Services).</p><p><strong>Serviços de Moderação:</strong> para certificar conduta apropriada dentro do aplicativo e manter os padrões da comunidade (por exemplo, Google Cloud).</p><p><strong>Serviços de TI:</strong> para ajudar em várias operações dos nossos negócios, como quando um usuário interage com nossos serviços de suporte, que podem envolver processar dados pessoais do usuário(por exemplo, Freshworks).</p><p>Nós revisamos terceiros e nos comprometemos em ter certeza que a proteção de dados adequada e informações de segurança estão em vigor. Nós tomamos medidas para proteger e anonimizar dados compartilhados com terceiros, conforme apropriado, dada a natureza dos serviços prestados. Fornecemos apenas a terceiros de confiança os dados pessoais necessários para o serviço que prestam.</p><p>Caso tenha encontrado alguma vúlnerabilidade ou vazamento de privacidade, por favor reporte para nós discretamente via <vulnerability>GitHub</vulnerability> ou <contact>email</contact>.</p><p>Você pode revisar dados que temos arquivados nas suas <settings>configurações de conta</settings>, e nas suas mensagens. Você pode requisitar todos seus dados que temos arquivados nos enviando um email, e as receberá dentro de 30 dias.</p>"
+	},
+	"press": {
+		"title": "Imprensa",
+		"mellow_level_butterfly_emerge": "Baixar",
+		"wide_stock_bulldog_tend": "Kit de Imprensa",
+		"hour_smug_giraffe_lend": "Contate-nos",
+		"heavy_fancy_butterfly_glow": "Notícias"
+	},
+	"banners": {
+		"finish_profile": "<link>Complete seu perfil</link> para pessoas poderem te ver e dar match!",
+		"confirm_email": "<link>Confirme seu email</link> para pessoas poderem te ver e dar match!",
+		"mobile": "<link>Baixar aplicativo móvel</link>",
+		"language": "Línguagem atual é {current}, mas sua língua de preferência é <link>{preferred}</link>.",
+		"translating": "Você ativou as teclas de tradução, conteúdo pode ser incompreensível até você <link>desativa-las</link>."
+	},
+	"guides": {
+		"title": "Guias",
+		"ago_patchy_chipmunk_find": "Recursos de saúde mental"
+	},
+	"patient_gross_herring_grow": "Atualizar",
+	"arrangeable_image": {
+		"soft_curly_pony_advise": "Mover imagem",
+		"glad_giant_mantis_win": "Deletar imagem"
+	},
+	"dialogs": {
+		"trust_and_safety": {
+			"title": "Confiança & Segurança",
+			"acknowledge": "Eu concordo",
+			"lofty_day_snail_treasure": "Regras da Comunidade",
+			"jolly_nimble_crow_taste": "Contate-nos"
+		}
+	},
+	"busy_direct_cockroach_hush": "Contate-nos",
+	"navigation": {
+		"updates": "Atualizações",
+		"profile": "Perfil",
+		"settings": "Configurações",
+		"premium": "Premium",
+		"discord": "Discord",
+		"get_app": "Baixar Aplicativo",
+		"reports": "Reportes",
+		"search": "Buscar",
+		"stats": "Estatísticas",
+		"unsudo": "Unsudo"
+	},
+	"inputs": {
+		"text": {
+			"hide": "Ocultar",
+			"show": "Mostrar"
+		},
+		"switch": {
+			"yes": "Sim",
+			"no": "Não"
+		},
+		"select": {
+			"placeholder": "Selecione uma opção"
+		},
+		"privacy_select": {
+			"everyone": "Qualquer um no Flirtual",
+			"matches": "Apenas Matches",
+			"me": "Apenas eu"
+		},
+		"language_autocomplete": {
+			"placeholder": "Selecionar línguagem."
+		},
+		"country_select": {
+			"placeholder": "Selecionar país."
+		}
+	},
+	"nimble_solid_spider_fond": "Premium",
+	"home_seemly_larva_flip": "NOVO",
+	"guidelines": {
+		"title": "Regras da Comunidade",
+		"content": "<p>Queremos que Flirtual seja um espaço positivo e acolhedor para todos. As regras da comunidade te informarão como moderamos perfis de usuários e comportamento no Flirtual. Quebrar essas regras resultará em moderação na sua conta, como ban permanente do Flirtual. Reservamos o direito de moderar contas a nosso critério.</p><section><h1>Respeite todos</h1><group><h2>Sem discurso de ódio ou ações odiosas contra qualquer grupo</h2><p>Isso inclui racismo, sexismo, ou símbolos de ódio e conteúdo contra certos grupos em seu perfil ou conversas do Flirtual.</p></group><group><h2>Sem assédio</h2><p>Isso inclui bullying, conteúdo sexual sem consentimento, ameaças diretas ou indiretas, doxxing, caçada às bruxas, perseguição, ou ataques a outros usuários em seu perfil.</p></group><group><h2>Sem spam, trolagem, personificação, deturpação ou golpes</h2><p>Não tente tirar vantagem de usuários no Flirtual. Não pretenda ser alguém que você não é.</p></group><group><h2>Sem fotos NSFW</h2><p>Nudez completa não é permitida no Flirtual, isso vale para fotos reais e de avatares. Isso inclui roupas altamente reveladoras, ou poses sexualizadas.</p></group><group><h2>Conteúdo impróprio limitado no perfil</h2><p>Porfavor evite textos de conteúdo adulto na sua biográfia. A maioria da sua biográfia deve ser apropriado, não impróprio. Porfavor limite palavras ou frases impróprias no seu perfil. Você é livre para usar rótulos de conteúdo adulto e interesses personalizados não gráficos.</p></group></section><section><h1>Mantenha-se em tópico</h1><p>Flirtual é uma plataforma de namorar e criar amizades. O principal propósito do seu perfil deve seguir isso.</p><group><h2>Sem solicitação</h2><p>Não peça dinheiro ou envie links de pagamento (Ex. PayPal). Não divulgue produtos ou serviços no Flirtual.</p></group><group><h2>Sem conteúdo altamente político ou controverso</h2><p>Por favor fale sobre política, religião ou controversias em outro lugar.</p></group><group><h2>Sem conteúdo violento ou representações de violência</h2><p>Fotos violentas ou gore que atormentam pessoas serão removidas e podem resultar em ban.</p></group><group><h1>Sem fotos de crianças ou menores de idade</h1><p>Não toleramos conteúdo envolvendo menores, como fotos reais de crianças. Isso é para a segurança dos usuários e das crianças.</p></group><group><h2>Auto-divulgação limitada</h2><p>Você pode divulgar links não relacionados a pagamentos de suas redes sociais (como Instagram ou Discord), mas isso não deve ser o propósito principal do seu perfil ou conta no Flirtual.</p></group><group><h2>Sem conteúdo de automutilação</h2><p>Conteúdo de automutilaçãoo não é permitido no Flirtual. Nós possuimos <mental-health>recursos de saúde mental</mental-health> que podem ser úteis.</p></group></section><section><h1>Respeite o Flirtual</h1><group><h2>Sem atividade ilegal</h2><p>Não faça nada no Flirtual que quebre suas leis locais ou leis do Canada, onde Flirtual é hospedado.</p></group><group><h2>Sem usuários menores de idade</h2><p>Flirtual é estritamente 18+.</p></group><group><h2>Sem contas duplicadas</h2><p>Contas duplicadas serão banidas. Sua conta mais ativa será mantida.</p></group><group><h2>Quebrar regras da comunidade do Flirtual fora do Flirtual</h2><p>Nós podemos moderar usuários que quebram os <terms>Termos de Serviço</terms> ou Regras da Comunidade no Flirtual. Porém, se a quebra de regras acontecer em uma plataforma fora do Flirtual, nós podemos não ser capazes de moderar. Se você ver um usuário do Flirtual quebrando as regras fore do Flirtual, sinta-se livre para o reportar no Flirtual, mas tenha certeza de reportar na outra plataforma também (Ex. Discord).</p></group><group><h2>Sem atacas outros usuários no seu perfil</h2><p>Não poste o nome de usuário ou chame atenção á outro usuário do Flirtual em sua biográfia. Nós moderamos enquanto respeitamos a privacidade dos usuários. Você pode reportar um perfil para nosso time de moderação apertando o botão de \"Reporte\" na parte de baixo do perfil dele.</p></group><group><h2>Não abuse ou danifique produtos do Flirtual</h2><p>Mal uso do Flirtual ou tentativas de explorar o Flirtual maliciosamente serão investigados. Pesquisa de vulnerabilidade de boa fé, de acordo com nossos <terms>Termos de Serviço</terms> são bem-vindos, e bugs podem ser reportados através do <vulnerability>GitHub</vulnerability> ou <email>email</email>.</p></group><p>Caso você veja algo contra as regras ou algo que te fez sentir vulnerável, por favor nos deixe saber.</p><group><h3>Faça uma denúncia</h3><p>Aperte o botão de \"Reporte\" na parte de baixo do perfil de alguém para marcar para nosso time de moderação. Porfavor inclua qualquer informação relevante ou evidência no seu reporte.</p></group><group><h3>Apelo de Moderação</h3><p>Se sua conta foi banida, você receberá um email com a razão do seu ban. Se você quiser apelar esta decisão responda o email de ban. Caso você não tenha recebido uma resposta do seu apelo dentro de 30 dias, ele foi revisado e negado.</p></group><group><h3>Mais informação</h3><terms>Termos de Serviço</terms><privacy>Política de Privacidade</privacy></group></section>"
+	},
+	"profile": {
 		"happy_yummy_otter_climb": "avatar de {displayName}",
 		"neat_moving_ibex_nail": "Unmatch",
 		"every_sleek_llama_feast": "Enviar Mensagem",
@@ -596,12 +603,18 @@
 		"dark_level_goat_gulp": "{value, select, dominant {Dominante} submissive {Submisso} switch {Switch} other {?}}",
 		"brave_funny_vulture_sail": "{value, select, monogamous {Monogâmico} nonmonogamous {Não monogâmico} other {?}}"
 	},
-	"contact_us": "Contate-nos",
-	"few_grassy_hyena_adapt": "Apaixone-se em uma <highlight>dimensão completamente nova</highlight>",
-	"privacy_page": {
-		"title": "Política de Privacidade",
-		"title_superseded": "Política de Privacidade (Desatualizado)",
-		"content": "<p>Seu nome de usuário, nome de exibição, fotos de perfil, biografia, idade, gênero, suas preferências de matchmaking, seus interesses pessoais, suas seleções de aplicativos de RV/jogos, e se você é ou não novo na RV será visível à outros usuários. Sua informação adicional de perfil (incluindo sua sexualidade, Rótulos adultos, país, contas conectadas, etc). serão visíveis ou ocultas dependendo das suas <settings-privacy>configurações de privacidade</settings-privacy>, que podem ser alteradas livremente. Seus traços de personalidade (que são identificados baseados nas suas respostas do questionário de personalidade) serão visíveis ou ocultos para outros usuários baseados nas suas <settings-privacy>configurações de privacidade</settings-privacy>, mas suas respostas ao questionário serão ocultas.</p><p>Nós usamos análises de dados locais e próprias. Nós podemos compartilhar estatísticas anônimas sobre Firtual (por exemplo, o número de usuários que usam um aplicativo ou jogo específico). Você pode optar sair dessas estatísticas nas suas <settings-privacy>configurações de privacidade</settings-privacy>.</p><p>Suas mensagens e histórico de mensagens com outros usuários são hospedados e compartilhados com TalkJS, mas não serão compartilhados com terceiros.</p><p>O email da sua conta não será mostrado para outros usuários. Seu email pode ser acessado por terceiros para entrega de mensagens transacionais, de marketing e de suporte de acordo com suas preferências. Você pode optar sair das <settings-notifications>email de notificação de mensagem</settings-notifications>, que removerá seu email do registro do TalkJS.</p><p>Caso você suspeite que sua conta foi comprometida, por favor <settings-password> troque sua senha</settings-password> imediatamente e <contact>reporte o problema</contact> com a palavra 'URGENT' na linha de título. Na mensagem, inclua seu usuário, a última vez que acessou o site, e qualquer detalhe que te fez suspeitar de uma invasão.</p><p>Sua senha é salva com métodos hashed e salted.</p><p>Nós usamos terceiros confiáveis que proporcionam serviços para Flirtual. Nós podemos compartilar dados pessoais com estes terceiros, mas apenas com a finalidade de fornecer seus serviços. Para mais informações e exemplos, veja abaixo.</p><p><strong>Serviços de Hospedagem em Nuvem:</strong> para disponibilizar uma infraestrutura confiável e segura para gerenciar e operar nossa plataforma (por exemplo, Fly.io e Vercel).</p><p><strong>Serviços de Funcionalidade no Aplicativo:</strong> para facilitar os principais recursos como mensagens, hospedagem de imagens otimizado dento do nosso aplicativo (por exemplo, TalkJS).</p><p><strong>Serviços de Cobrança:</strong> para gerenciar pagamentos e inscrições (por exemplo, Stripe).</p><p><strong>Serviços de Redes Sociais:</strong> para permitir usuários conectares suas contas a nossa plataforma e facilitar interações sociais (por exemplo Discord).</p><p><strong>Serviços de Segurança e Desempenho:</strong> para proteger nossa plataforma, usuários, e melhorar o desempenho em geral (por exemplo, Cloudflare).</p><p><strong>Serviços de Pesquisa e Melhoria:</strong> para juntar opiniões de usuários e fazer análises para melhoria contínua da nossa plataforma(por exemplo, Canny).</p><p><strong>Serviços de Comunicação:</strong> para ajudar a enviar comunicações transacionais e marketing para usuários(por exemplo, Amazon Web Services).</p><p><strong>Serviços de Moderação:</strong> para certificar conduta apropriada dentro do aplicativo e manter os padrões da comunidade (por exemplo, Google Cloud).</p><p><strong>Serviços de TI:</strong> para ajudar em várias operações dos nossos negócios, como quando um usuário interage com nossos serviços de suporte, que podem envolver processar dados pessoais do usuário(por exemplo, Freshworks).</p><p>Nós revisamos terceiros e nos comprometemos em ter certeza que a proteção de dados adequada e informações de segurança estão em vigor. Nós tomamos medidas para proteger e anonimizar dados compartilhados com terceiros, conforme apropriado, dada a natureza dos serviços prestados. Fornecemos apenas a terceiros de confiança os dados pessoais necessários para o serviço que prestam.</p><p>Caso tenha encontrado alguma vúlnerabilidade ou vazamento de privacidade, por favor reporte para nós discretamente via <vulnerability>GitHub</vulnerability> ou <contact>email</contact>.</p><p>Você pode revisar dados que temos arquivados nas suas <settings>configurações de conta</settings>, e nas suas mensagens. Você pode requisitar todos seus dados que temos arquivados nos enviando um email, e as receberá dentro de 30 dias.</p>"
-	},
-	"terms": "Termos de Serviço"
+	"footer": {
+		"events": "Eventos",
+		"support": "Suporte",
+		"feedback": "Feedback",
+		"status": "Status",
+		"about": "Sobre",
+		"press": "Imprensa",
+		"branding": "Marca",
+		"guidelines": "Regras da Comunidade",
+		"terms": "Termos de Serviço",
+		"privacy": "Política de Privacidade",
+		"developers": "Desenvolvedores",
+		"copyright": "© {year} Flirtual"
+	}
 }

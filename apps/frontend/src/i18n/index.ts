@@ -39,8 +39,6 @@ export const getInternationalization = cache(async (override?: PreferenceLanguag
 	const browser = al.get(accept) as PreferenceLanguage;
 
 	const session = await Authentication.getOptionalSession();
-	const translating
-		= headers.has("translating") || session?.user.tags?.includes("translating");
 
 	const preferred = session?.user.preferences?.language || browser || "en";
 
@@ -62,7 +60,6 @@ export const getInternationalization = cache(async (override?: PreferenceLanguag
 			fallback: "en" as const,
 			override,
 			preferred
-		},
-		translating
+		}
 	};
 });

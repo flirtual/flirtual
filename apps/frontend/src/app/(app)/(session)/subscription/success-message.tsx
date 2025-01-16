@@ -19,7 +19,7 @@ export const SuccessMessage: React.FC = () => {
 		<div className="flex flex-col gap-4 rounded-xl bg-brand-gradient p-6 text-white-20 shadow-brand-1">
 			<div className="relative">
 				<h1 className="text-xl font-semibold">
-					{t("weve_received_your_order")}
+					{t("homely_living_owe_coach")}
 				</h1>
 				<Link
 					className="absolute right-0 top-0"

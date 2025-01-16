@@ -6,13 +6,11 @@ import { keys } from "remeda";
 
 import { useInterval } from "~/hooks/use-interval";
 
-type ProfileMessageKey = keyof IntlMessages["landing"]["profiles"]["messages"];
+type ProfileMessageKey = keyof IntlMessages["motionless_absorbed_scintillating_rightful"];
 
 export const ProfileMessage: FC = () => {
 	const {
-		landing: {
-			profiles: { messages }
-		}
+		motionless_absorbed_scintillating_rightful: messages
 	} = useMessages() as unknown as IntlMessages;
 
 	const [current, setCurrent] = useState(
@@ -20,9 +18,9 @@ export const ProfileMessage: FC = () => {
 	);
 
 	/*
-	t("landing.profiles.messages.0")"
-	t("landing.profiles.messages.1")"
-	t("landing.profiles.messages.2")"
+	t("motionless_absorbed_scintillating_rightful.0")"
+	t("motionless_absorbed_scintillating_rightful.1")"
+	t("motionless_absorbed_scintillating_rightful.2")"
 	*/
 
 	useInterval(
@@ -30,7 +28,7 @@ export const ProfileMessage: FC = () => {
 			setCurrent((current) => {
 				const messageKeys = keys(messages);
 				return messageKeys[
-					(messageKeys.indexOf(current) + 1) % messageKeys.length
+					(messageKeys.indexOf(current.toString()) + 1) % messageKeys.length
 				] as ProfileMessageKey;
 			});
 		}, [messages]),

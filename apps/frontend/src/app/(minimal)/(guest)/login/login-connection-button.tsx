@@ -30,7 +30,7 @@ const label = {
 export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 	type
 }) => {
-	const t = useTranslations("login");
+	const t = useTranslations();
 	const location = useLocation();
 	location.search = "";
 

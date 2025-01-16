@@ -6,18 +6,18 @@ import { ModelCard } from "~/components/model-card";
 import { ForgotPasswordForm } from "./form";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("forgot");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("reset_password")
 	};
 }
 
 export default async function ForgotPage() {
-	const t = await getTranslations("forgot");
+	const t = await getTranslations();
 
 	return (
-		<ModelCard branded title={t("title")}>
+		<ModelCard branded title={t("reset_password")}>
 			<ForgotPasswordForm />
 		</ModelCard>
 	);

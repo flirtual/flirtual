@@ -83,7 +83,7 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 };
 
 const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
-	const t = useTranslations("profile");
+	const t = useTranslations();
 	const formatter = useFormatter();
 
 	const toasts = useToast();
@@ -107,7 +107,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 							<Search className="size-5" strokeWidth={2} />
 						</button>
 					</TooltipTrigger>
-					<TooltipContent>{t("sea_proof_eel_fade")}</TooltipContent>
+					<TooltipContent>{t("search_image")}</TooltipContent>
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -117,13 +117,13 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 								await ProfileImage.delete(image.id).catch(toasts.addError);
 								mutate(userKey(user.id));
 
-								toasts.add(t("super_quick_alpaca_empower"));
+								toasts.add(t("image_deleted"));
 							}}
 						>
 							<Trash2 className="size-5" />
 						</button>
 					</TooltipTrigger>
-					<TooltipContent>{t("still_due_tuna_dazzle")}</TooltipContent>
+					<TooltipContent>{t("delete_image")}</TooltipContent>
 				</Tooltip>
 			</div>
 		</div>

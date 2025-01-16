@@ -6,10 +6,10 @@ import { ModelCard } from "~/components/model-card";
 import { LoginForm } from "./form";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("login");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("login")
 	};
 }
 
@@ -25,7 +25,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 	const t = await getTranslations();
 
 	return (
-		<ModelCard branded className="shrink-0 desktop:max-w-xl" title={t("login.title")}>
+		<ModelCard branded className="shrink-0 desktop:max-w-xl" title={t("log_in")}>
 			{error && error !== "access_denied" && (
 				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
 					<span className="font-montserrat text-lg text-white-10">

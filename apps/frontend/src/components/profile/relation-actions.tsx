@@ -23,7 +23,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 	const relationship = useRelationship(userId);
 	const current = useCurrentUser();
 
-	const t = useTranslations("profile");
+	const t = useTranslations();
 	const toasts = useToast();
 	const router = useRouter();
 
@@ -37,7 +37,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					href={urls.conversations.of(relationship.conversationId)}
 					size="sm"
 				>
-					{t("every_sleek_llama_feast")}
+					{t("message")}
 				</ButtonLink>
 				<Button
 					className="w-fit"
@@ -49,14 +49,14 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 						mutate(relationshipKey(user.id));
 
 						toasts.add(
-							t("weird_green_crab_peek", {
-								displayName: displayName(user)
+							t("unmatched_name", {
+								name: displayName(user)
 							})
 						);
 						router.refresh();
 					}}
 				>
-					{t("neat_moving_ibex_nail")}
+					{t("unmatch")}
 				</Button>
 			</div>
 		);
@@ -65,14 +65,14 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 		return (
 			<div className="flex w-full items-center justify-between gap-4 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
-					{t(`relationship_status.to_other`, {
+					{t(`pipe_land_teeny_hypnotic`, {
 						status:
 							relationship.type === "like"
 								? relationship.kind === "love"
 									? "liked"
 									: "homied"
 								: "passed",
-						displayName: displayName(user)
+						name: displayName(user)
 					})}
 				</span>
 				<Button
@@ -96,7 +96,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 			<div className="flex items-center gap-3 rounded-xl bg-brand-gradient px-4 py-2 shadow-brand-1">
 				<Sparkles className="size-6 shrink-0 text-theme-overlay" />
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
-					{t(`relationship_status.to_me`, {
+					{t(`mint_colossal_kettle_sense`, {
 						status: relationship.likedMe === "love" ? "liked" : "homied",
 						displayName: displayName(user)
 					})}

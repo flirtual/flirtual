@@ -21,7 +21,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 	const router = useRouter();
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
-	const t = useTranslations("login");
+	const t = useTranslations();
 	const tError = useTranslations("errors");
 
 	useEffect(() => {
@@ -168,7 +168,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						<FormField name="login">
 							{({ props, labelProps }) => (
 								<>
-									<InputLabel {...labelProps}>{t("email")}</InputLabel>
+									<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
 									<InputText
 										{...props}
 										autoCapitalize="none"
@@ -187,7 +187,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 										{...labelProps}
 										hint={(
 											<InputLabelHint>
-												<InlineLink href={urls.forgotPassword}>{t("forgot")}</InlineLink>
+												<InlineLink href={urls.forgotPassword}>{t("forgot_your_password")}</InlineLink>
 											</InputLabelHint>
 										)}
 									>
@@ -205,7 +205,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						<div className="flex flex-col gap-4">
 							<div className="flex gap-2 desktop:flex-row-reverse">
 								<FormButton className="min-w-44" size="sm">
-									{t("title")}
+									{t("log_in")}
 								</FormButton>
 								<ButtonLink
 									className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"

@@ -7,20 +7,20 @@ import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("guidelines");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("community_guidelines")
 	};
 }
 
 export default async function GuidelinesPage() {
-	const t = await getTranslations("guidelines");
+	const t = await getTranslations();
 
 	return (
-		<ModelCard className="w-full desktop:max-w-2xl" title={t("title")}>
+		<ModelCard className="w-full desktop:max-w-2xl" title={t("community_guidelines")}>
 			<div className="flex flex-col gap-8">
-				{t.rich("content", {
+				{t.rich("seemly_sticky_frightening_fetch", {
 					p: (children) => <p className="select-text">{children}</p>,
 					section: (children) => (
 						<section className="select-children flex flex-col gap-4">

@@ -7,18 +7,18 @@ import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("payments");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("payment_terms")
 	};
 }
 
 export default async function PaymentsPage() {
-	const t = await getTranslations("payments");
+	const t = await getTranslations();
 
 	return (
-		<ModelCard className="w-full desktop:max-w-2xl" title={t("title")}>
+		<ModelCard className="w-full desktop:max-w-2xl" title={t("payment_terms")}>
 			<div className="select-children flex flex-col gap-4">
 				<MachineTranslatedLegal original="/payments?language=en" />
 				<p>

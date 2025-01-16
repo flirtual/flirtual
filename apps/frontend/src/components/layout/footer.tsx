@@ -78,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({
 	logoClassName,
 	...props
 }) => {
-	const t = useTranslations("footer");
+	const t = useTranslations();
 
 	return (
 		<footer
@@ -139,15 +139,15 @@ export const Footer: React.FC<FooterProps> = ({
 					<ul>
 						<FooterListLink
 							href={urls.resources.communityGuidelines}
-							label={t("guidelines")}
+							label={t("community_guidelines")}
 						/>
 						<FooterListLink
 							href={urls.resources.termsOfService}
-							label={t("terms")}
+							label={t("terms_of_service")}
 						/>
 						<FooterListLink
 							href={urls.resources.privacyPolicy}
-							label={t("privacy")}
+							label={t("privacy_policy")}
 						/>
 					</ul>
 				</div>

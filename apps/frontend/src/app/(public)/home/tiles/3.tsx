@@ -11,28 +11,14 @@ export async function Testimonial({ id }: TileProps) {
 	const [userCount, messages, t] = await Promise.all([
 		User.getApproximateCount(),
 		getMessages(),
-		getTranslations("landing.testimonial"),
+		getTranslations(),
 		getFormatter()
 	]);
 
 	const {
-		landing: {
-			testimonial: { images: _images, brands }
-		}
-	} = messages as unknown as {
-		landing: {
-			testimonial: {
-				images: Record<number, string>;
-				brands: Record<
-					number,
-					{
-						name: string;
-						image: string;
-					}
-				>;
-			};
-		};
-	};
+		flaky_thunder_red_flap: _images,
+		acidic_advertisement_request_cough: brands
+	} = messages as unknown as IntlMessages;
 
 	const images = Object.values(_images);
 

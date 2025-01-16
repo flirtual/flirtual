@@ -41,7 +41,7 @@ export function Profile(props: ProfileProps) {
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
 
-	const t = useTranslations("profile");
+	const t = useTranslations();
 
 	if (!session || !user) return null;
 
@@ -91,7 +91,7 @@ export function Profile(props: ProfileProps) {
 									</span>
 									{user.tags?.includes("verified") && (
 										<ProfileVerificationBadge
-											tooltip={t("sound_whole_jaguar_charm")}
+											tooltip={t("age_verified")}
 										/>
 									)}
 								</div>
@@ -149,7 +149,7 @@ export function Profile(props: ProfileProps) {
 									})}
 									{discordConnection && (
 										<ProfileVerificationBadge
-											tooltip={t("smart_just_scallop_reside")}
+											tooltip={t("discord_verified")}
 										/>
 									)}
 								</div>

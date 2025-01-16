@@ -7,15 +7,15 @@ import { SupersededPolicy } from "~/components/superseded-policy";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("privacy");
+	const t = await getTranslations();
 
 	return {
-		title: t("title_superseded")
+		title: t("privacy_policy_outdated")
 	};
 }
 
 export default async function PrivacyPage() {
-	const t = await getTranslations("privacy");
+	const t = await getTranslations();
 
 	const privacySettingLink = (
 		<InlineLink href={urls.settings.privacy}>privacy settings</InlineLink>
@@ -25,7 +25,7 @@ export default async function PrivacyPage() {
 		<ModelCard
 			className="w-full desktop:max-w-2xl"
 			containerProps={{ className: "gap-4" }}
-			title={t("title_superseded")}
+			title={t("privacy_policy_outdated")}
 		>
 			<SupersededPolicy
 				current={urls.resources.privacyPolicy}
@@ -45,6 +45,7 @@ export default async function PrivacyPage() {
 				traits (which we identify based on your answers to our personality
 				questionnaire) will be visible or hidden to other users depending on
 				your
+				{" "}
 				{privacySettingLink}
 				, but your specific questionnaire answers will
 				not be visible.

@@ -6,7 +6,6 @@
 		"green_plain_mongoose_lend": "初の VR デート アプリ。VRChat などの VR アプリで何千人もの人とデートしましょう。"
 	},
 	"download": {
-		"best_topical_mayfly_tap": "ダウンロード",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
@@ -33,50 +32,34 @@
 			"calm_calm_alligator_taste": "バーチャルデート、リアルなつながり"
 		},
 		"profiles": {
-			"legal_big_finch_kiss": "浮気プロフィールのスクリーンショット",
-			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
-			"stout_last_kudu_bend": "あなたのアバター、あなたの選択",
-			"messages": {
-				"0": "VR は、個性を重視して新しい人と出会う方法です。",
-				"1": "アバターは、自意識過剰にならずに自分自身を表現するのに役立ちます。",
-				"2": "VR デートを 1 回か 2 回した後は、ビデオ通話をしたり、実際に会ったりしましょう。"
-			}
+			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
 		},
 		"carousel": {
-			"spare_chunky_cougar_honor": "バーチャルリアリティで安全で魔法のようなデートを一緒に楽しみましょう",
 			"images": {
 				"0": {
-					"title": "アヒルに餌をあげる",
 					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 				},
 				"1": {
-					"title": "サメと一緒に泳ぐ",
 					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
 				},
 				"2": {
-					"title": "居心地の良いカフェでくつろぐ",
 					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
 				},
 				"3": {
-					"title": "ブラックホールを観察する",
 					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
 				},
 				"4": {
-					"title": "草に触れる",
 					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
 				},
 				"5": {
-					"title": "一緒に絵を描く",
 					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
 				},
 				"6": {
-					"title": "ビリヤードをする",
 					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
 				}
 			}
 		},
 		"testimonial": {
-			"even_major_hare_believe": "世界中の{userCount, number}人以上の人とマッチしましょう!",
 			"images": {
 				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
 				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
@@ -146,116 +129,7 @@
 			"6": "Homie Modeで新しい友達を見つけることができます✌️"
 		}
 	},
-	"continue": "続行",
-	"deft_raw_cod_fond": "作られた<action>{heart}</action> VRで",
-	"inputs": {
-		"country_select": {
-			"placeholder": "国を選択してください。"
-		}
-	},
-	"support": "サポート",
-	"login": {
-		"title": "ログイン",
-		"email": "メールアドレス",
-		"forgot": "パスワードをお忘れですか？",
-		"password": "パスワード",
-		"or_sign_up": "またはサインアップ",
-		"or": "または",
-		"log_in_with": "{type}でログイン"
-	},
-	"home_wild_marten_wave": "デバイスが検証されました。",
-	"jolly_this_crow_hug": "デバイスを確認しています...",
-	"signup": {
-		"title": "アカウントを作成する",
-		"or_log_in": "またはログイン",
-		"email": "電子メールアドレス",
-		"password": "パスワード",
-		"url": "メールアドレス",
-		"agree": "同意します",
-		"agreement": "に<terms>利用規約</terms>＆<privacy>プライバシーポリシー</privacy>私は18歳以上です",
-		"updates": "浮気の最新情報を入手",
-		"updates_description": "新しい機能、変更、オファー<br></br>（スパムメールは送信しません）"
-	},
-	"forgot": {
-		"title": "パスワードをリセット",
-		"enter_email": "メールアドレスを入力してください。パスワードをリセットするリンクをお送りします。",
-		"email": "メールアドレス",
-		"or_log_in": "またはログイン",
-		"need_help": "お困りですか？ <support></support>",
-		"email_sent": "アカウントが存在する場合、<email></email> にパスワードをリセットするリンクを含むメールをお送りします。<br></br><br></br>メールが見つからない場合は、迷惑メール/ゴミ箱/削除済みフォルダーを確認してください。それでも見つからない場合は、<contact>こちらからお問い合わせ</contact>ください。",
-		"login": "ログイン",
-		"support": "サポート"
-	},
-	"help_translate_others": "Flirtualをあなたの言語に翻訳するお手伝いをしませんか？<link>協力する</link>。",
-	"help_translate": "Flirtualを{language}に翻訳するお手伝いをしませんか？<link>協力する</link>。",
-	"date_of_birth": "生年月日",
-	"about_me": "私について",
-	"my_gender": "私の性別",
-	"other_genders": "その他の性別",
-	"location": "位置",
-	"optional": "（オプション）",
-	"vr_apps_games": "VRアプリ/ゲーム",
-	"select_genders": "性別を選択してください...",
-	"game_hint": "Flirtual でマッチングした後は、あらゆるソーシャル アプリやマルチプレイヤー ゲームで会うことができます。",
-	"select_games": "お気に入りのゲームを選択してください...",
-	"interests": "興味",
-	"onboarding_interests_hint": "後でさらに興味を追加する機会があります。",
-	"select_interests": "興味のあるものを選択してください...",
-	"want_to_meet": "会いたいです…",
-	"any_age": "年齢問わず",
-	"number_plus": "{number}+",
-	"number_range": "{from}-{to}",
-	"up_to_number": "（最大{number}）",
-	"age_range": "年齢範囲",
-	"finish": "仕上げる",
-	"back": "戻る",
-	"confirm_email": "Eメール確認",
-	"confirm_your_email": "メールアドレスを確認してください",
-	"homie_mode": "ホーミーモード",
-	"browse": "ブラウズ",
-	"likes_you": "あなたを好き",
-	"matches": "マッチ",
-	"more_details": "詳細情報",
-	"personality": "人格",
-	"connections": "接続",
-	"settings": "設定",
-	"appearance": "外観",
-	"reactivate_account": "アカウントを再有効化",
-	"deactivate_account": "アカウントを無効にする",
-	"delete_account": "アカウントを削除",
-	"email": "メール",
-	"change_email": "メールアドレスの変更",
-	"notifications": "通知",
-	"password_passkeys": "パスワードとパスキー",
-	"privacy": "プライバシー",
-	"bio_pics": "経歴と写真",
-	"basic_info": "基本情報",
-	"matchmaking": "マッチメイキング",
-	"nsfw": "閲覧注意",
-	"premium": "プレミアム",
-	"profile": "プロフィール",
-	"account": "アカウント",
-	"logout": "ログアウト",
-	"social": "社交",
-	"events": "イベント",
-	"discord_server": "Discordサーバー",
-	"vrchat_group": "VRChatグループ",
-	"twitter": "ツイッター",
-	"help": "ヘルプ",
-	"network_status": "ネットワークステータス",
-	"info": "情報",
-	"legal": "法律上の",
-	"about": "について",
-	"branding": "ブランディング",
-	"press": "プレス",
-	"feedback": "フィードバック",
-	"status": "状態",
-	"developers": "開発者",
-	"copyright": "© {year} Flirtual",
-	"community_guidelines": "コミュニティガイドライン",
-	"terms_of_service": "利用規約",
-	"privacy_policy": "プライバシーポリシー",
-	"about_us": {
+	"about": {
 		"timeline": {
 			"2018": {
 				"title": "2018 🐣",
@@ -309,7 +183,9 @@
 			}
 		}
 	},
-	"contact_us": "お問い合わせ",
-	"few_grassy_hyena_adapt": "恋に落ちる<highlight>全く新しい次元</highlight>",
-	"updates": "アップデート"
+	"privacy": {
+		"title": "プライバシーポリシー",
+		"title_superseded": "プライバシーポリシー（古い）",
+		"content": "<p>あなたのユーザー名、表示名、プロフィール写真、経歴、年齢、性別、マッチメイキングの好み、個人的な興味タグ、選択したVRアプリ/ゲーム、VR初心者かどうかは、他のユーザーに表示されます。あなたの追加プロフィール情報（性的指向、NSFWタグ、国、リンクされたアカウントなど）は、あなたの設定に応じて他のユーザーに表示または非表示になります。<settings-privacy>プライバシー設定</settings-privacy>いつでも変更できます。あなたの性格特性（性格アンケートの回答に基づいて特定されます）は、あなたの性格特性に応じて他のユーザーに表示されるか非表示になります。<settings-privacy>プライバシー設定</settings-privacy>ただし、アンケートの具体的な回答は表示されません。</p><p>当社はファーストパーティのオンプレミスデータ分析を使用しています。Flirtualに関する匿名の統計情報（特定のソーシャルVRアプリやゲームを使用するユーザー数など）を共有する場合があります。これらの統計情報は、<settings-privacy>プライバシー設定</settings-privacy>。</p><p>あなたのメッセージや他のユーザーとのメッセージ履歴は TalkJS によってホストされ、共有されますが、他のサードパーティと共有されることはありません。</p><p>あなたのアカウントのメールは他のユーザーには表示されません。あなたのアカウントのメールは、あなたの好みに応じて取引、マーケティング、サポートのメッセージを配信するために第三者によってアクセスされる可能性があります。<settings-notifications>メッセージメール通知</settings-notifications>これにより、TalkJS の記録からメール アドレスが削除されます。</p><p>アカウントが侵害されたと思われる場合は、<settings-password>パスワードを変更する</settings-password>すぐにそして<contact>問題を報告する</contact>件名に「緊急」と記入してください。メッセージには、ユーザー名、サイトに最後にアクセスした日時、侵入を疑う理由となる詳細を記載してください。</p><p>パスワードはハッシュ化され、ソルト化されて保存されます。</p><p>当社は、Flirtual にサービスを提供する特定の信頼できる第三者を利用しています。当社は、これらの第三者とユーザーの個人データを共有することがありますが、その目的はサービスを提供することです。詳細と例については、以下を参照してください。</p><p><strong>クラウド ホスティング サービス:</strong>当社のプラットフォーム (Fly.io や Vercel など) を管理および運用するための信頼性が高く安全なインフラストラクチャを提供します。</p><p><strong>アプリ内機能サービス:</strong>アプリ内でのメッセージングや最適化された画像ホスティングなどの主要機能を容易にします (例: TalkJS)。</p><p><strong>請求サービス:</strong>支払いとサブスクリプションを管理します (例: Stripe)。</p><p><strong>ソーシャル メディア サービス:</strong>ユーザーが自分のアカウントを当社のプラットフォームに接続し、ソーシャル インタラクションを促進できるようにします (例: Discord)。</p><p><strong>セキュリティおよびパフォーマンス サービス:</strong>プラットフォームを保護し、ユーザーを保護し、全体的なパフォーマンスを向上させるため (例: Cloudflare)。</p><p><strong>洞察および改善サービス:</strong>ユーザーからのフィードバックを収集し、分析を実行して、当社のプラットフォーム (Canny など) を継続的に改善します。</p><p><strong>通信サービス:</strong>ユーザーへのトランザクションおよびマーケティング通信の送信を支援します (例: Amazon Web Services)。</p><p><strong>モデレーション サービス:</strong>アプリ内での適切な行動を確保し、コミュニティ標準を維持します (例: Google Cloud)。</p><p> <strong>IT サービス:</strong>ユーザーが当社のサポート サービスとやり取りする際など、ユーザーの個人データの処理を伴う可能性のある、当社の事業のさまざまな業務を支援するため (例: Freshworks)。</p><p>当社は、提携する第三者を審査し、適切なデータ保護および情報セキュリティ対策が実施されていることを確認します。当社は、提供されるサービスの性質に応じて、第三者と共有するデータを保護および匿名化する対策を講じます。当社は、信頼できる第三者に、そのサービスに必要な個人データのみを提供します。</p><p>脆弱性やプライバシー漏洩を発見した場合は、以下の方法で慎重に報告してください。<vulnerability> GitHub</vulnerability>または<contact>メール</contact>。</p><p>弊社が保管しているデータは、<settings>アカウント設定</settings>、およびメッセージに記載されています。当社に電子メールを送信して、当社が保管しているすべてのデータをリクエストできます。データは 30 日以内に送信されます。</p>"
+	}
 }

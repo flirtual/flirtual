@@ -4,7 +4,7 @@ import { Tile, TileAnchor, type TileProps } from "..";
 import { CarouselGallery } from "./gallery";
 
 export function Carousel({ id }: TileProps) {
-	const t = useTranslations("landing.carousel");
+	const t = useTranslations();
 
 	return (
 		<Tile className="relative" id={id}>
