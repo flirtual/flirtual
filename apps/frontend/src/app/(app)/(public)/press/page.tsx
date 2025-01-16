@@ -8,21 +8,21 @@ import { urls } from "~/urls";
 import { PressItem } from "./press-item";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("press");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("press")
 	};
 }
 
 export default async function PressPage() {
-	const t = await getTranslations("press");
+	const t = await getTranslations();
 
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-2xl"
 			containerProps={{ className: "gap-8" }}
-			title={t("title")}
+			title={t("press")}
 		>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
@@ -33,12 +33,12 @@ export default async function PressPage() {
 					className="w-fit"
 					href={urls.media("presskit.zip", "files")}
 				>
-					{t("mellow_level_butterfly_emerge")}
+					{t("download")}
 				</ButtonLink>
 			</div>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
-					{t("hour_smug_giraffe_lend")}
+					{t("contact_us")}
 				</span>
 				<ButtonLink className="w-fit" href={urls.resources.pressEmail}>
 					{urls.resources.pressEmail.split(":")[1]}

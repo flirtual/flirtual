@@ -10,21 +10,21 @@ import { ColorBlock } from "./color-block";
 import { ImageList } from "./image-list";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("branding");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("branding")
 	};
 }
 
 export default async function BrandingPage() {
-	const t = await getTranslations("branding");
+	const t = await getTranslations();
 
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-xl"
 			containerProps={{ className: "gap-8" }}
-			title={t("title")}
+			title={t("branding")}
 		>
 			<p>
 				{t.rich("lime_soft_shad_skip", {

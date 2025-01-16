@@ -54,7 +54,7 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 
 export const NavigationItemProfile: FC = () => {
 	const [session] = useSession();
-	const t = useTranslations("navigation");
+	const t = useTranslations();
 	const router = useRouter();
 
 	const [visible, setVisible] = useState(false);

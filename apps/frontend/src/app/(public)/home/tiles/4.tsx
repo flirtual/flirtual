@@ -27,7 +27,7 @@ export function CallToAction({ id }: TileProps) {
 						<FlirtualLogo className="w-56" />
 						<TileAnchor id={id}>
 							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-5xl desktop:tall:text-8xl">
-								{t.rich("landing.cta.few_grassy_hyena_adapt", {
+								{t.rich("few_grassy_hyena_adapt", {
 									highlight: (children) => (
 										<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent wide:block">
 											{children}
@@ -40,7 +40,7 @@ export function CallToAction({ id }: TileProps) {
 					<div className="hidden grid-cols-2 flex-col gap-2 desktop:grid">
 						<SignUpButton />
 						<ButtonLink href={urls.login()} kind="secondary">
-							{t("landing.log_in")}
+							{t("login")}
 						</ButtonLink>
 					</div>
 					<div className="flex flex-col items-center gap-4 native:hidden vision:hidden">

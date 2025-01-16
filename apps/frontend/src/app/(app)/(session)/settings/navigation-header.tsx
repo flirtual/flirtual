@@ -1,4 +1,5 @@
 import { ChevronLeft, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 
 import { Link } from "~/components/link";
@@ -12,6 +13,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 	navigationInner
 }) => {
 	const query = useSearchParams();
+	const t = useTranslations();
 
 	const Icon = navigationInner ? ChevronLeft : X;
 	const returnTo = ensureRelativeUrl(
@@ -27,7 +29,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 			>
 				<Icon className="w-6" />
 			</Link>
-			<span className="font-montserrat text-2xl font-extrabold">Settings</span>
+			<span className="font-montserrat text-2xl font-extrabold">{t("settings")}</span>
 		</div>
 	);
 };

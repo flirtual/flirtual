@@ -1669,5 +1669,99 @@
 		"ase": {
 			"name": "アメリカ手話"
 		}
+	},
+	"gender": {
+		"mosDhQUt8JGumiup4yQWbZ": {
+			"name": "彼女"
+		},
+		"hv43aTXJZjMHfXRXvTcYiH": {
+			"name": "彼"
+		},
+		"pAzAxxF4UYr3qN6F4tPYec": {
+			"name": "本人"
+		},
+		"tpkW7r8PZ2RUuYGUSYi82N": {
+			"name": "女性",
+			"plural": "女性たち"
+		},
+		"rhw3rcbheU7vc9vcSy6W6V": {
+			"name": "男性",
+			"plural": "男性たち"
+		},
+		"879KtanHc548synGhcNE7J": {
+			"name": "アジェンダー",
+			"definition": "いかなる性別も持たない人。"
+		},
+		"RdMpwqWGydDgk9X2u32BBW": {
+			"name": "アンドロジナス",
+			"definition": "男性的特性と女性的特性の両方を持つ人。"
+		},
+		"YBkoUyfKJd6jJGwbekY3HN": {
+			"name": "バイジェンダー",
+			"definition": "二つの性別アイデンティティを持つ人。"
+		},
+		"2ETbJJJ3shADLphvncUwSL": {
+			"name": "シス女性",
+			"definition": "性別アイデンティティが出生時に割り当てられた性と一致する女性。"
+		},
+		"GJitRtRoYWT6DfVasptK7N": {
+			"name": "シス男性",
+			"definition": "性別アイデンティティが出生時に割り当てられた性と一致する男性。"
+		},
+		"aKEzfuPY6TaMkmnugQWLUd": {
+			"name": "ジェンダーフルイド",
+			"definition": "性別が時間とともに変化する人。"
+		},
+		"zMta3qtGyqW4hFdcDFUHik": {
+			"name": "ジェンダークィア",
+			"definition": "伝統的な性別の枠組みに収まらない性別を持つ人。"
+		},
+		"fAPzVgy7VyGPgAPhkwSkSU": {
+			"name": "ジェンダーノンコンフォーミング",
+			"definition": "社会的な性別の期待や規範に従わない人。"
+		},
+		"wJdnfUvuvACEWRSV4KBdzS": {
+			"name": "ヒジュラ",
+			"definition": "南アジアの文化における第三の性別。"
+		},
+		"w3t9h2SyNhr2rBWouXim8c": {
+			"name": "インターセックス",
+			"definition": "典型的な男性または女性の身体の定義に当てはまらない性特徴を持って生まれた人。"
+		},
+		"QwXvxjisosKeTP97ouczoZ": {
+			"name": "ノンバイナリー",
+			"definition": "性別がバイナリー（男女）の枠組みに収まらない人。"
+		},
+		"PFEmTKdmxAoPuxttYPwFZb": {
+			"name": "パンジェンダー",
+			"definition": "複数またはすべての性別を持つと認識する人。"
+		},
+		"tyrdBY4Rbfitznr65hpRPR": {
+			"name": "トランスジェンダー",
+			"definition": "性別アイデンティティが出生時に割り当てられた性と一致しない人。"
+		},
+		"HWte4cB6TUzzXZoJeuxJuf": {
+			"name": "トランス女性",
+			"definition": "出生時に男性として割り当てられた女性。"
+		},
+		"XTVsHQMWXiJGEc5xCf7RUb": {
+			"name": "トランス男性",
+			"definition": "出生時に女性として割り当てられた男性。"
+		},
+		"rGFyY9WbvBBJSUAUpY5iUE": {
+			"name": "トランスフェミニン",
+			"definition": "出生時に男性として割り当てられた女性的な性別アイデンティティを持つ人。"
+		},
+		"CHkgoEoKzTSeVaLVByviBZ": {
+			"name": "トランスマスキュリン",
+			"definition": "出生時に女性として割り当てられた男性的な性別アイデンティティを持つ人。"
+		},
+		"JL8AaDCJMVApbEuAfwG86Y": {
+			"name": "ツースピリット",
+			"definition": "北米先住民の文化における第三の性別。"
+		},
+		"jAL62ePbibxaG4FPu7S8LG": {
+			"name": "その他"
+		}
 	}
 }

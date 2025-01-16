@@ -45,7 +45,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 		<Link
 			{...props}
 			className={twMerge(
-				"flex w-56 items-center gap-4 rounded-xl bg-white-10 px-6 py-4 text-black-70 shadow-brand-1",
+				"flex min-w-56 items-center gap-4 rounded-xl bg-white-10 px-6 py-4 text-black-70 shadow-brand-1",
 				className
 			)}
 			href={href}

@@ -55,15 +55,6 @@ const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
 		// If the user is translating, we will pretend that we don't have any messages.
 		// This will force all translations to be shown as their raw strings.
 		...(translating ? {} : messages),
-		banners: {
-			...(translating ? {} : messages.banners),
-			translating: messages.banners.translating
-		},
-		_preferred: {
-			banners: {
-				language: preferred.banners?.language ?? messages.banners.language
-			}
-		}
 	};
 });
 

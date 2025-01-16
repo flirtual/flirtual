@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
 import type { Metadata } from "next";
-import { getFormatter } from "next-intl/server";
+import { getFormatter, getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { Authentication } from "~/api/auth";
@@ -18,11 +18,17 @@ import {
 } from "./platform-mismatch";
 import { SuccessMessage } from "./success-message";
 
-export const metadata: Metadata = {
-	title: "Premium"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
+
+	return {
+		title: t("premium")
+	};
+}
 
 export default async function SubscriptionPage() {
+	const t = await getTranslations();
+
 	const [
 		{
 			user: { emailConfirmedAt, subscription }
@@ -42,7 +48,7 @@ export default async function SubscriptionPage() {
 		<ModelCard
 			className="desktop:max-w-3xl"
 			containerProps={{ className: "gap-8" }}
-			title="Flirtual Premium"
+			title={t("flirtual_premium")}
 		>
 			<SuccessMessage />
 			<PlatformMismatchMessage />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { unstable_serialize } from "swr";
 
@@ -14,13 +15,16 @@ import { urls } from "~/urls";
 
 import { LikesList } from "./list";
 
-export const maxDuration = 120;
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
 
-export const metadata: Metadata = {
-	title: "Likes you"
-};
+	return {
+		title: t("likes_you")
+	};
+}
 
 export default async function LikesPage() {
+	const t = await getTranslations();
 	const { user } = await Authentication.getSession();
 
 	if (!user.subscription?.active) redirect(urls.subscription.default);
@@ -46,7 +50,7 @@ export default async function LikesPage() {
 			<ModelCard
 				className="desktop:max-w-3xl"
 				containerProps={{ className: "p-0 desktop:px-16 desktop:py-10" }}
-				title="Likes you"
+				title={t("likes_you")}
 			>
 				<div className="flex flex-col gap-8 py-8 desktop:py-0">
 					<div className="px-4 desktop:p-0">
@@ -55,7 +59,7 @@ export default async function LikesPage() {
 							href={urls.conversations.list()}
 							size="sm"
 						>
-							Matches
+							{t("matches")}
 						</ButtonLink>
 					</div>
 					<LikesList />

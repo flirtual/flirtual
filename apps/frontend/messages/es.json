@@ -5,7 +5,59 @@
 		"knotty_direct_mongoose_bend": "¡Conoce gente nueva en realidad virtual! Flirtual te ayuda a tener citas en VR y VRChat.",
 		"green_plain_mongoose_lend": "La primera aplicación de citas en realidad virtual. Únete a miles de personas para tener citas en aplicaciones de realidad virtual como VRChat."
 	},
-	"about": {
+	"superseded_policy": {
+		"fancy_noisy_grizzly_hint": "Esta política estuvo en vigor {range} y ya no está activa. Consulte la <current>última versión de esta política</current>."
+	},
+	"machine-translated": {
+		"large_wild_tortoise_sing": "Esta página fue traducida automáticamente y puede contener imprecisiones. Esta traducción se proporciona solo para su conveniencia. La <original>versión en inglés</original> de este documento es la versión oficial y debe consultarse en caso de discrepancias.",
+		"active_frail_antelope_support": "Por favor, <contact>contáctenos</contact> si tiene alguna pregunta."
+	},
+	"deft_raw_cod_fond": "Hecho con <action>{heart}</action> en VR",
+	"banners": {
+		"finish_profile": "<link>Completa tu perfil</link> ¡para que la gente pueda verte y encontrarte!"
+	},
+	"errors": {
+		"cannot_block_user": "Error al bloquear usuario (cuenta deshabilitada).",
+		"cannot_unblock_user": "Error al desbloquear usuario (cuenta deshabilitada).",
+		"profile_not_blocked": "Error al desbloquear usuario (ya desbloqueado).",
+		"passkey_login_failed": "Error al iniciar sesión con contraseña; inténtelo nuevamente o utilice un método diferente."
+	},
+	"support": "Apoyo",
+	"privacy": "política de privacidad",
+	"events": "Eventos",
+	"about": "Acerca de",
+	"branding": "Herrada",
+	"press": "Prensa",
+	"feedback": "Comentario",
+	"status": "Estado",
+	"developers": "Desarrolladores",
+	"copyright": "© {year} Flirtual",
+	"lime_soft_shad_skip": "¿Quieres utilizar nuestro arte para algo? Aquí lo tienes. Por favor, que sea de buen gusto <contact>contacta con nosotros</contact> para su aprobación.",
+	"brave_early_weasel_arise": "Nuestro logotipo",
+	"flaky_same_grizzly_snap": "Por favor no edites, cambies, distorsiones, cambies los colores, ni cambies el logotipo de Flirtual.",
+	"mild_spry_hamster_persist": "Marcar solamente",
+	"such_pink_jan_spur": "Úsalos sólo cuando la marca Flirtual sea claramente visible o esté bien establecida en otra parte de la página o en el diseño.",
+	"tasty_last_pony_transform": "Colores",
+	"gross_red_earthworm_reside": "Gradiente",
+	"fair_yummy_penguin_harbor": "Modo oscuro",
+	"empty_sharp_sheep_list": "Modo amigo",
+	"whole_round_penguin_pet": "Rosa",
+	"known_trick_raven_sew": "Crema",
+	"wise_great_crow_foster": "¿Necesitas más?",
+	"ornate_upper_guppy_mend": "Descarga nuestro kit de prensa completo para obtener más gráficos e información.",
+	"guidelines": "Normas de la comunidad",
+	"events_page": {
+		"title": "Eventos",
+		"gross_loose_stork_vent": "Invitación a VRChat",
+		"fun_still_clownfish_arrive": "¡Sí hay un evento en curso, este botón te llevará a el!",
+		"elegant_bald_parakeet_animate": "Primero inicia VRChat y luego haz clic en \"invitarme\" en la página siguiente. Recibirás una invitación tuya en el juego. <joining>¿Necesitas ayuda para unirte?</joining>",
+		"arable_nice_puma_comfort": "Unirse al evento",
+		"top_big_tern_twist": "Próximos eventos",
+		"flaky_early_shad_nourish": "Para conocer nuestro calendario de eventos y anuncios, <discord>únete a nuestro servidor de Discord</discord> .",
+		"quiet_lazy_marten_amuse": "Mundos de VRChat",
+		"blue_calm_chipmunk_spark": "Nuestros eventos semanales se llevan a cabo en nuestros mundos de VRChat, pero puedes unirte a ellos en cualquier momento. Siéntete libre de usarlos también para tus propios eventos."
+	},
+	"about_page": {
 		"title": "Sobre nosotros",
 		"image_alt": "Imagen del equipo de Flirtual en VRChat",
 		"content": "<section><h1>Nuestra historia</h1><p>Hola, somos Kyle y Tony, los creadores de Flirtual. Kyle ha estado obsesionado con la realidad virtual desde los primeros días de Oculus, pero realmente cambió su vida cuando se unió a VRChat y conoció a algunos de sus amigos más cercanos (¡incluida su esposa!) allí. Justo antes de que llegara la COVID, Kyle llevó a su mejor amigo de la infancia, Tony, para el viaje, y la realidad virtual también cambió su vida. Nos propusimos ayudar a otros a conocer personas increíbles en todo el mundo también, comenzando con VRLFP (Virtual Reality Looking For Partner).</p><p>La presencia inmersiva en realidad virtual te ayuda a formar conexiones profundas con personas en cualquier parte del mundo. Al reducir la distancia geográfica y priorizar la personalidad, nuestra misión es encontrar a las mejores personas para ti, donde sea que estén. ¡Y hacer que las citas sean más seguras y mágicas!</p><p>En 2022, VRLFP se convirtió en Flirtual. Reconstruido desde cero, hemos mejorado el emparejamiento, hemos agregado etiquetas de personalidad e intereses y hemos lanzado aplicaciones mejoradas. Ya sea que estés buscando una relación seria que se transforme en una relación en la vida real, algo más informal en realidad virtual o simplemente nuevos amigos, estamos listos para ayudarte a encontrar tu pareja perfecta.</p><group><p><3 kfarwell, Tony y el equipo de Flirtual</p><discord>Únete a nuestro Discord</discord></group><p><italic>PD: Hemos recorrido un largo camino desde los humildes comienzos de VRLFP, pero aún somos un equipo pequeño arraigado en la comunidad de realidad virtual. Agradecemos tu paciencia mientras trabajamos duro para hacer que Flirtual sea lo mejor posible. ¡Avísanos si <contact>encuentras algún error</contact> o si <feedback>tienes alguna sugerencia</feedback>!</italic></p></section><section><h1>El equipo</h1><team-list></team-list></section><section><h1>Cronología</h1><timeline></timeline></section>",
@@ -96,24 +148,7 @@
 			}
 		}
 	},
-	"branding": {
-		"title": "Branding",
-		"lime_soft_shad_skip": "¿Quieres utilizar nuestro arte para algo? Aquí lo tienes. Por favor, que sea de buen gusto <contact>contacta con nosotros</contact> para su aprobación.",
-		"brave_early_weasel_arise": "Nuestro logotipo",
-		"flaky_same_grizzly_snap": "Por favor no edites, cambies, distorsiones, cambies los colores, ni cambies el logotipo de Flirtual.",
-		"mild_spry_hamster_persist": "Marcar solamente",
-		"such_pink_jan_spur": "Úsalos sólo cuando la marca Flirtual sea claramente visible o esté bien establecida en otra parte de la página o en el diseño.",
-		"tasty_last_pony_transform": "Colores",
-		"gross_red_earthworm_reside": "Gradiente",
-		"fair_yummy_penguin_harbor": "Modo oscuro",
-		"empty_sharp_sheep_list": "Modo amigo",
-		"whole_round_penguin_pet": "Rosa",
-		"known_trick_raven_sew": "Crema",
-		"wise_great_crow_foster": "¿Necesitas más?",
-		"ornate_upper_guppy_mend": "Descarga nuestro kit de prensa completo para obtener más gráficos e información.",
-		"tired_extra_bear_forgive": "Descargar"
-	},
-	"debugger": {
+	"debugger_page": {
 		"title": "Información de depuración",
 		"spicy_pretty_tiger_pet": "Dispositivo",
 		"lucky_sound_opossum_absorb": "Plataforma de aplicación:",
@@ -130,7 +165,7 @@
 		"swift_short_koala_fond": "Ambiente:",
 		"each_zippy_millipede_pop": "Versión:"
 	},
-	"download": {
+	"download_page": {
 		"title": "Descargar",
 		"best_topical_mayfly_tap": "Descargar en",
 		"platform": {
@@ -140,35 +175,12 @@
 			"side_quest": "SideQuest"
 		}
 	},
-	"events": {
-		"title": "Eventos",
-		"gross_loose_stork_vent": "Invitación a VRChat",
-		"fun_still_clownfish_arrive": "¡Sí hay un evento en curso, este botón te llevará a el!",
-		"elegant_bald_parakeet_animate": "Primero inicia VRChat y luego haz clic en \"invitarme\" en la página siguiente. Recibirás una invitación tuya en el juego. <joining>¿Necesitas ayuda para unirte?</joining>",
-		"arable_nice_puma_comfort": "Unirse al evento",
-		"top_big_tern_twist": "Próximos eventos",
-		"flaky_early_shad_nourish": "Para conocer nuestro calendario de eventos y anuncios, <discord>únete a nuestro servidor de Discord</discord> .",
-		"quiet_lazy_marten_amuse": "Mundos de VRChat",
-		"blue_calm_chipmunk_spark": "Nuestros eventos semanales se llevan a cabo en nuestros mundos de VRChat, pero puedes unirte a ellos en cualquier momento. Siéntete libre de usarlos también para tus propios eventos."
-	},
-	"privacy": {
-		"title": "Política de Privacidad",
-		"title_superseded": "Política de Privacidad (desactualizada)",
-		"content": "<p>Su nombre de usuario, su nombre para mostrar, sus fotos de perfil, su biografía, su edad, su género, sus preferencias de emparejamiento, sus etiquetas de interés personal, sus aplicaciones/juegos de VR seleccionados y si es nuevo en VR serán visibles para otros usuarios. Su información de perfil adicional (incluida su sexualidad, etiquetas NSFW, país, cuentas vinculadas, etc.) será visible u oculta para otros usuarios dependiendo de su <settings-privacy>configuración de privacidad</settings-privacy>, que puede modificar en cualquier momento. Sus rasgos de personalidad (que identificamos en función de sus respuestas a nuestro cuestionario de personalidad) serán visibles u ocultos para otros usuarios dependiendo de su <settings-privacy>configuración de privacidad</settings-privacy>, pero sus respuestas específicas al cuestionario no serán visibles.</p><p>Utilizamos análisis de datos propios en las instalaciones. Podemos compartir estadísticas anonimizadas sobre Flirtual (por ejemplo, el número de usuarios que utiliza una aplicación o juego de Social VR en particular). Puede optar por no participar en estas estadísticas en su <settings-privacy>configuración de privacidad</settings-privacy>.</p><p>Sus mensajes y el historial de mensajes con otros usuarios están alojados y compartidos con TalkJS, pero no se compartirán con terceros.</p><p>Su correo electrónico de cuenta no se mostrará a otros usuarios. Su correo electrónico de cuenta puede ser accedido por terceros para entregar mensajes transaccionales, de marketing y de soporte de acuerdo con sus preferencias. Puede optar por no recibir <settings-notifications>notificaciones de mensajes por correo electrónico</settings-notifications>, lo que eliminará su dirección de correo electrónico de los registros de TalkJS.</p><p>Si sospecha que su cuenta ha sido comprometida, por favor <settings-password>cambie su contraseña</settings-password> inmediatamente y <contact>informe del problema</contact> con la palabra 'URGENTE' en el asunto. En el mensaje, incluya su nombre de usuario, la última vez que accedió al sitio y cualquier detalle que lo haya llevado a sospechar de una brecha de seguridad.</p><p>Su contraseña se almacena de forma cifrada y con sal.</p><p>Utilizamos ciertos terceros de confianza que brindan servicios a Flirtual. Podemos compartir datos personales de usuarios con estos terceros, pero solo con el propósito de brindar sus servicios. Para obtener más información y ejemplos, consulte a continuación.</p><p><strong>Servicios de Hosting en la Nube:</strong> para proporcionar una infraestructura confiable y segura para gestionar y operar nuestra plataforma (por ejemplo, Fly.io y Vercel).</p><p><strong>Servicios de Funcionalidad en la Aplicación:</strong> para facilitar funciones clave como mensajería y hospedaje optimizado de imágenes dentro de nuestra aplicación (por ejemplo, TalkJS).</p><p><strong>Servicios de Facturación:</strong> para gestionar pagos y suscripciones (por ejemplo, Stripe).</p><p><strong>Servicios de Redes Sociales:</strong> para permitir que los usuarios conecten sus cuentas con nuestra plataforma y faciliten interacciones sociales (por ejemplo, Discord).</p><p><strong>Servicios de Seguridad y Rendimiento:</strong> para proteger nuestra plataforma, proteger a nuestros usuarios y mejorar el rendimiento general (por ejemplo, Cloudflare).</p><p><strong>Servicios de Análisis y Mejora:</strong> para recopilar comentarios de los usuarios y realizar análisis para la mejora continua de nuestra plataforma (por ejemplo, Canny).</p><p><strong>Servicios de Comunicación:</strong> para ayudar en el envío de comunicaciones transaccionales y de marketing a los usuarios (por ejemplo, Amazon Web Services).</p><p><strong>Servicios de Moderación:</strong> para asegurar una conducta apropiada dentro de la aplicación y mantener los estándares de la comunidad (por ejemplo, Google Cloud).</p><p><strong>Servicios de TI:</strong> para ayudar en diversas operaciones de nuestro negocio, como cuando un usuario interactúa con nuestros servicios de soporte, lo que puede implicar el procesamiento de datos personales de los usuarios (por ejemplo, Freshworks).</p><p>Revisamos los terceros con los que trabajamos para asegurar que tengan medidas adecuadas de protección de datos y seguridad de la información. Tomamos medidas para proteger y anonimizar los datos compartidos con terceros, según sea apropiado dada la naturaleza de los servicios proporcionados. Solo proporcionamos a terceros de confianza los datos personales necesarios para el servicio que están proporcionando.</p><p>Si encuentra una vulnerabilidad o fuga de privacidad, infórmenos de manera discreta a través de <vulnerability>GitHub</vulnerability> o <contact>correo electrónico</contact>.</p><p>Puede revisar los datos que tenemos archivados en su <settings>configuración de cuenta</settings> y en sus mensajes. Puede solicitar todos los datos que tenemos archivados enviándonos un correo electrónico, y los recibirá en un plazo de 30 días.</p>"
-	},
-	"superseded_policy": {
-		"fancy_noisy_grizzly_hint": "Esta política estuvo en vigor {range} y ya no está activa. Consulte la <current>última versión de esta política</current>."
-	},
-	"machine-translated": {
-		"large_wild_tortoise_sing": "Esta página fue traducida automáticamente y puede contener imprecisiones. Esta traducción se proporciona solo para su conveniencia. La <original>versión en inglés</original> de este documento es la versión oficial y debe consultarse en caso de discrepancias.",
-		"active_frail_antelope_support": "Por favor, <contact>contáctenos</contact> si tiene alguna pregunta."
-	},
-	"terms": {
+	"terms_page": {
 		"title": "Términos de Servicio",
 		"content": "<p>Este servicio (el 'Servicio') es operado por ROVR LABS INC., que opera como Flirtual ('nosotros', 'nos', o 'Flirtual').</p><section><h1>Reglas</h1><p>Para usar este Servicio, debe:</p><ol><li>tener al menos 18 años de edad;</li><li>tener permiso legal para hacerlo bajo las leyes canadienses y locales;</li><li>no haber sido condenado por un delito grave;</li><li>no estar obligado a registrarse como delincuente sexual en ningún registro gubernamental;</li><li>aceptar estar sujeto a estos Términos de Servicio y a nuestra <privacy>Política de Privacidad</privacy>.</li></ol><p>Usted acepta no:</p><ol><li>violar la ley local o canadiense;</li><li>solicitar dinero o defraudar a otros usuarios;</li><li>suplantar a cualquier persona o entidad o publicar cualquier imagen de otra persona sin su permiso;</li><li>publicar cualquier contenido abusivo, racista, sexista, despectivo, difamatorio, ilegal, NSFW o perjudicial de otro modo en el Servicio;</li><li>acoso a cualquier usuario en esta plataforma;</li><li>publicar a sabiendas código malicioso o enlaces a sitios maliciosos que puedan dañar a otros usuarios;</li><li>publicar spam en los perfiles;</li><li>infringir cualquier derecho de autor;</li><li>usar este servicio para dañar a Flirtual o el Servicio.</li></ol><p>Revise nuestras <guidelines>Directrices de la Comunidad</guidelines> para obtener más información sobre cómo moderamos los perfiles y comportamientos de los usuarios en el Servicio. Romper estas pautas resultará en la moderación de la cuenta, como una prohibición permanente del Servicio. Nos reservamos el derecho de moderar cuentas a nuestra discreción.</p></section><section><h1>Seguridad</h1><p>Le aconsejamos que tenga precaución al interactuar con otros usuarios del Servicio. No somos responsables del comportamiento de los usuarios dentro o fuera del Servicio ni de sus interacciones con otros usuarios. No realizamos una selección de los usuarios.</p></section><section><h1>Privacidad</h1><p>Nos autoriza a usar y mostrar cierta información sobre usted. Consulte nuestra <privacy>Política de Privacidad</privacy> para obtener más información.</p></section><section><h1>Servicios de Terceros</h1><p>Flirtual no es responsable por los servicios de terceros.</p></section><section><h1>Derechos</h1><p>Puede cerrar su cuenta en cualquier momento en su <delete-account>configuración de cuenta</delete-account>.</p><p>Se le notificará con anticipación sobre cualquier cambio en estos términos o cualquier característica nueva que afecte la privacidad.</p><p>Las decisiones de moderación serán tomadas por nuestro equipo de moderación. Tiene derecho a recibir una explicación si su perfil es modificado o su cuenta es cancelada por violación de estos Términos de Uso. No tiene derecho a recibir notificación anticipada de estos cambios en su cuenta.</p><p>Si su cuenta es cancelada por violación de estos Términos de Uso, sus datos se conservarán durante 30 días para que podamos revisar las decisiones de moderación y revertirlas si es necesario. Por favor <contact>contáctenos</contact> si desea apelar una decisión de moderación o que sus datos se eliminen antes.</p><p>Sus datos se respaldarán regularmente.</p></section><section><h1>Seguridad</h1><p>El Servicio se ejecuta en una infraestructura proporcionada por terceros. Esta infraestructura está protegida por esfuerzos de seguridad estándar de la industria, como firewalls.</p><p>Su conexión al Servicio utiliza <ssltest>cifrado de transporte fuerte</ssltest>.</p><p>Su contraseña se almacena de forma segura con cifrado y sal.</p><p>Es responsable de mantener la seguridad de su contraseña de cuenta. Usted es responsable de todas las actividades que ocurran con las credenciales de su cuenta.</p><p>A pesar de los mejores esfuerzos, no existe una seguridad perfecta en línea. No garantizamos la protección absoluta de sus datos.</p><p>No hemos revisado, ni podemos revisar, todo el material, incluido el software informático, puesto a disposición a través de los sitios web y páginas web a los que enlaza el Servicio y que enlazan con el Servicio. No tenemos ningún control sobre esos sitios web no pertenecientes a Flirtual y no somos responsables de sus contenidos ni de su uso. Al enlazar a un sitio web no perteneciente a Flirtual, Flirtual no representa ni implica que respalde dicho sitio web. Usted es responsable de tomar las precauciones necesarias para protegerse a sí mismo y a sus sistemas informáticos de virus, gusanos, troyanos y otros contenidos dañinos o destructivos. Flirtual renuncia a cualquier responsabilidad por cualquier daño resultante de su uso de sitios web y páginas web no pertenecientes a Flirtual.</p></section><section><h1>Descargos de Responsabilidad</h1><p>En ningún caso Flirtual, ni sus proveedores o licenciantes, serán responsables con respecto a cualquier asunto relacionado con este Acuerdo bajo cualquier contrato, negligencia, responsabilidad estricta u otra teoría legal o equitativa por: (i) cualquier daño especial, incidental o consecuente; (ii) el costo de adquisición de productos o servicios sustitutos; (iii) por interrupción de uso o pérdida o corrupción de datos; o (iv) por cualquier cantidad que exceda las tarifas pagadas por usted a Flirtual en virtud de este Acuerdo durante el período de doce (12) meses anterior a la causa de la acción. Flirtual no tendrá ninguna responsabilidad por cualquier falla o retraso debido a asuntos fuera de su control razonable. Lo anterior no se aplicará en la medida prohibida por la ley aplicable.</p></section>",
 		"title_superseded": "Términos de Servicio (desactualizados)"
 	},
-	"landing": {
+	"landing_page": {
 		"sign_up": "Inscribirse",
 		"log_in": "Acceso",
 		"hero": {
@@ -279,9 +291,6 @@
 				}
 			}
 		},
-		"cta": {
-			"few_grassy_hyena_adapt": "Enamorarse de una<highlight> Una dimensión completamente nueva</highlight>"
-		},
 		"flitty_messages": {
 			"0": "¡Maullido!",
 			"1": "¡Eso hace cosquillas!",
@@ -292,28 +301,12 @@
 			"6": "Podrás encontrar nuevos amigos en el Modo Homie ✌️"
 		}
 	},
-	"deft_raw_cod_fond": "Hecho con <action>{heart}</action> en VR",
-	"banners": {
-		"finish_profile": "<link>Completa tu perfil</link> ¡para que la gente pueda verte y encontrarte!"
+	"download": "Descargar",
+	"few_grassy_hyena_adapt": "Enamorarse de una<highlight> Una dimensión completamente nueva</highlight>",
+	"privacy_page": {
+		"title": "Política de Privacidad",
+		"title_superseded": "Política de Privacidad (desactualizada)",
+		"content": "<p>Su nombre de usuario, su nombre para mostrar, sus fotos de perfil, su biografía, su edad, su género, sus preferencias de emparejamiento, sus etiquetas de interés personal, sus aplicaciones/juegos de VR seleccionados y si es nuevo en VR serán visibles para otros usuarios. Su información de perfil adicional (incluida su sexualidad, etiquetas NSFW, país, cuentas vinculadas, etc.) será visible u oculta para otros usuarios dependiendo de su <settings-privacy>configuración de privacidad</settings-privacy>, que puede modificar en cualquier momento. Sus rasgos de personalidad (que identificamos en función de sus respuestas a nuestro cuestionario de personalidad) serán visibles u ocultos para otros usuarios dependiendo de su <settings-privacy>configuración de privacidad</settings-privacy>, pero sus respuestas específicas al cuestionario no serán visibles.</p><p>Utilizamos análisis de datos propios en las instalaciones. Podemos compartir estadísticas anonimizadas sobre Flirtual (por ejemplo, el número de usuarios que utiliza una aplicación o juego de Social VR en particular). Puede optar por no participar en estas estadísticas en su <settings-privacy>configuración de privacidad</settings-privacy>.</p><p>Sus mensajes y el historial de mensajes con otros usuarios están alojados y compartidos con TalkJS, pero no se compartirán con terceros.</p><p>Su correo electrónico de cuenta no se mostrará a otros usuarios. Su correo electrónico de cuenta puede ser accedido por terceros para entregar mensajes transaccionales, de marketing y de soporte de acuerdo con sus preferencias. Puede optar por no recibir <settings-notifications>notificaciones de mensajes por correo electrónico</settings-notifications>, lo que eliminará su dirección de correo electrónico de los registros de TalkJS.</p><p>Si sospecha que su cuenta ha sido comprometida, por favor <settings-password>cambie su contraseña</settings-password> inmediatamente y <contact>informe del problema</contact> con la palabra 'URGENTE' en el asunto. En el mensaje, incluya su nombre de usuario, la última vez que accedió al sitio y cualquier detalle que lo haya llevado a sospechar de una brecha de seguridad.</p><p>Su contraseña se almacena de forma cifrada y con sal.</p><p>Utilizamos ciertos terceros de confianza que brindan servicios a Flirtual. Podemos compartir datos personales de usuarios con estos terceros, pero solo con el propósito de brindar sus servicios. Para obtener más información y ejemplos, consulte a continuación.</p><p><strong>Servicios de Hosting en la Nube:</strong> para proporcionar una infraestructura confiable y segura para gestionar y operar nuestra plataforma (por ejemplo, Fly.io y Vercel).</p><p><strong>Servicios de Funcionalidad en la Aplicación:</strong> para facilitar funciones clave como mensajería y hospedaje optimizado de imágenes dentro de nuestra aplicación (por ejemplo, TalkJS).</p><p><strong>Servicios de Facturación:</strong> para gestionar pagos y suscripciones (por ejemplo, Stripe).</p><p><strong>Servicios de Redes Sociales:</strong> para permitir que los usuarios conecten sus cuentas con nuestra plataforma y faciliten interacciones sociales (por ejemplo, Discord).</p><p><strong>Servicios de Seguridad y Rendimiento:</strong> para proteger nuestra plataforma, proteger a nuestros usuarios y mejorar el rendimiento general (por ejemplo, Cloudflare).</p><p><strong>Servicios de Análisis y Mejora:</strong> para recopilar comentarios de los usuarios y realizar análisis para la mejora continua de nuestra plataforma (por ejemplo, Canny).</p><p><strong>Servicios de Comunicación:</strong> para ayudar en el envío de comunicaciones transaccionales y de marketing a los usuarios (por ejemplo, Amazon Web Services).</p><p><strong>Servicios de Moderación:</strong> para asegurar una conducta apropiada dentro de la aplicación y mantener los estándares de la comunidad (por ejemplo, Google Cloud).</p><p><strong>Servicios de TI:</strong> para ayudar en diversas operaciones de nuestro negocio, como cuando un usuario interactúa con nuestros servicios de soporte, lo que puede implicar el procesamiento de datos personales de los usuarios (por ejemplo, Freshworks).</p><p>Revisamos los terceros con los que trabajamos para asegurar que tengan medidas adecuadas de protección de datos y seguridad de la información. Tomamos medidas para proteger y anonimizar los datos compartidos con terceros, según sea apropiado dada la naturaleza de los servicios proporcionados. Solo proporcionamos a terceros de confianza los datos personales necesarios para el servicio que están proporcionando.</p><p>Si encuentra una vulnerabilidad o fuga de privacidad, infórmenos de manera discreta a través de <vulnerability>GitHub</vulnerability> o <contact>correo electrónico</contact>.</p><p>Puede revisar los datos que tenemos archivados en su <settings>configuración de cuenta</settings> y en sus mensajes. Puede solicitar todos los datos que tenemos archivados enviándonos un correo electrónico, y los recibirá en un plazo de 30 días.</p>"
 	},
-	"footer": {
-		"events": "Eventos",
-		"support": "Apoyo",
-		"feedback": "Comentario",
-		"status": "Estado",
-		"about": "Acerca de",
-		"press": "Prensa",
-		"branding": "Herrada",
-		"guidelines": "Normas de la comunidad",
-		"terms": "Condiciones de servicio",
-		"privacy": "política de privacidad",
-		"developers": "Desarrolladores",
-		"copyright": "© {year} Flirtual"
-	},
-	"errors": {
-		"cannot_block_user": "Error al bloquear usuario (cuenta deshabilitada).",
-		"cannot_unblock_user": "Error al desbloquear usuario (cuenta deshabilitada).",
-		"profile_not_blocked": "Error al desbloquear usuario (ya desbloqueado).",
-		"passkey_login_failed": "Error al iniciar sesión con contraseña; inténtelo nuevamente o utilice un método diferente."
-	}
+	"terms": "Condiciones de servicio"
 }

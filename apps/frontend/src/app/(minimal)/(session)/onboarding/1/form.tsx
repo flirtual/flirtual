@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { fromEntries } from "remeda";
@@ -30,6 +31,7 @@ const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 export const Onboarding1Form: FC = () => {
 	const [session, mutateSession] = useSession();
 	const { country: systemCountry } = useInternationalization();
+	const t = useTranslations();
 	const router = useRouter();
 
 	const games = useAttributes("game");
@@ -96,7 +98,7 @@ export const Onboarding1Form: FC = () => {
 									{...field.labelProps}
 									className="flex-col desktop:flex-row"
 								>
-									Date of birth
+									{t("date_of_birth")}
 								</InputLabel>
 								<InputDateSelect
 									{...field.props}
@@ -120,7 +122,7 @@ export const Onboarding1Form: FC = () => {
 
 							return (
 								<>
-									<InputLabel {...field.labelProps}>My gender</InputLabel>
+									<InputLabel {...field.labelProps}>{t("my_gender")}</InputLabel>
 									<InputCheckboxList
 										{...field.props}
 										items={[
@@ -131,7 +133,7 @@ export const Onboarding1Form: FC = () => {
 											})),
 											{
 												key: "other",
-												label: "Other genders"
+												label: t("other_genders")
 											}
 										]}
 										value={checkboxValue ?? []}
@@ -154,7 +156,7 @@ export const Onboarding1Form: FC = () => {
 												};
 											})}
 											limit={4}
-											placeholder="Select your gender(s)..."
+											placeholder={t("select_genders")}
 											value={field.props.value || []}
 										/>
 									)}
@@ -165,7 +167,7 @@ export const Onboarding1Form: FC = () => {
 					<FormField name="country">
 						{(field) => (
 							<>
-								<InputLabel hint="(optional)">Location</InputLabel>
+								<InputLabel hint={t("optional")}>{t("location")}</InputLabel>
 								<InputCountrySelect {...field.props} />
 							</>
 						)}
@@ -173,10 +175,9 @@ export const Onboarding1Form: FC = () => {
 					<FormField name="game">
 						{(field) => (
 							<>
-								<InputLabel hint="(up to 5)">VR apps/games</InputLabel>
+								<InputLabel hint={t("up_to_number", { number: 5 })}>{t("vr_apps_games")}</InputLabel>
 								<InputLabelHint className="-mt-2">
-									After matching on Flirtual, you can meet up in any social app
-									or multiplayer game.
+									{t("game_hint")}
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
@@ -185,7 +186,7 @@ export const Onboarding1Form: FC = () => {
 										label: tAttribute[game]?.name ?? game
 									}))}
 									limit={5}
-									placeholder="Select your favorite games..."
+									placeholder={t("select_games")}
 									value={field.props.value || []}
 								/>
 							</>
@@ -194,9 +195,9 @@ export const Onboarding1Form: FC = () => {
 					<FormField name="interest">
 						{(field) => (
 							<>
-								<InputLabel hint="(up to 10)">Interests</InputLabel>
+								<InputLabel hint={t("up_to_number", { number: 10 })}>{t("interests")}</InputLabel>
 								<InputLabelHint className="-mt-2">
-									You&apos;ll have a chance to add more interests later.
+									{t("onboarding_interests_hint")}
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
@@ -214,13 +215,13 @@ export const Onboarding1Form: FC = () => {
 											return -1;
 										})}
 									limit={10}
-									placeholder="Select your interests..."
+									placeholder={t("select_interests")}
 									value={field.props.value || []}
 								/>
 							</>
 						)}
 					</FormField>
-					<FormButton className="ml-auto w-36" size="sm" />
+					<FormButton className="ml-auto min-w-36" size="sm" />
 				</>
 			)}
 		</Form>

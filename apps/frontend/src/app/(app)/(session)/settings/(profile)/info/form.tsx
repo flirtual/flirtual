@@ -107,7 +107,7 @@ export const InfoForm: FC = () => {
 									{...field.labelProps}
 									className="flex-col desktop:flex-row"
 								>
-									Date of birth
+									{t("date_of_birth")}
 								</InputLabel>
 								<InputDateSelect
 									{...field.props}

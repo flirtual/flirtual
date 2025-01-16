@@ -35,7 +35,7 @@ export const SupportButton: React.FC<{ className?: string }> = ({
 			className={className}
 			onClick={useFreshworks().openFreshworks}
 		>
-			{t("busy_direct_cockroach_hush")}
+			{t("contact_us")}
 		</InlineButton>
 	);
 };

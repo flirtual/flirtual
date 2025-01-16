@@ -121,14 +121,14 @@ export const TrustAndSafetyDialog: FC<{
 				<DialogHeader>
 					<DialogTitle className="flex h-full items-center gap-2">
 						<Image
-							alt={t("meta.name")}
+							alt={t("flirtual")}
 							className="hidden h-fit w-24 dark:block desktop:block"
 							height={1000}
 							src={urls.media("flirtual-white.svg", "files")}
 							width={3468}
 						/>
 						<Image
-							alt={t("meta.name")}
+							alt={t("flirtual")}
 							className="block h-fit w-24 dark:hidden desktop:hidden"
 							height={1000}
 							src={urls.media("flirtual-black.svg", "files")}

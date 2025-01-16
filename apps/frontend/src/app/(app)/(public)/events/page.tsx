@@ -11,21 +11,21 @@ import { DiscordEmbed } from "./discord-embed";
 import { Livestream } from "./livestream";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("events");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("events")
 	};
 }
 
 export default async function EventsPage() {
-	const t = await getTranslations("events");
+	const t = await getTranslations();
 
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-3xl"
 			containerProps={{ className: "gap-8" }}
-			title={t("title")}
+			title={t("events")}
 		>
 			<Livestream />
 			<div className="flex flex-col gap-4">

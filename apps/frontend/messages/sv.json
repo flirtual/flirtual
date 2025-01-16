@@ -5,7 +5,26 @@
 		"knotty_direct_mongoose_bend": "Träffa nya människor i Virtual Reality! Flirtual hjälper dig att gå på dejter i VR och VRChat.",
 		"green_plain_mongoose_lend": "Den första VR-dejtingappen. Gå med tusentals för dejter i VR-appar som VRChat."
 	},
-	"about": {
+	"superseded_policy": {
+		"fancy_noisy_grizzly_hint": "Denna policy var i kraft {range} och är inte längre aktiv. Vänligen se den <current>senaste versionen av denna policy</current>."
+	},
+	"machine-translated": {
+		"large_wild_tortoise_sing": "Denna sida har maskinöversatts och kan innehålla felaktigheter. Denna översättning tillhandahålls endast för din bekvämlighet. <original>Den engelska versionen</original> av detta dokument är den officiella versionen och bör konsulteras vid eventuella avvikelser.",
+		"active_frail_antelope_support": "Vänligen <contact>kontakta oss</contact> om du har några frågor."
+	},
+	"deft_raw_cod_fond": "Tillverkad med<action> {heart}</action> i VR",
+	"support": "Stöd",
+	"privacy": "Sekretesspolicy",
+	"events": "Händelser",
+	"about": "Om",
+	"branding": "Branding",
+	"press": "Trycka",
+	"feedback": "Feed-back",
+	"status": "Status",
+	"developers": "Utvecklare",
+	"copyright": "© {year} Flirtual",
+	"guidelines": "Riktlinjer för communityn",
+	"about_page": {
 		"timeline": {
 			"2018": {
 				"title": "2018 🐣",
@@ -59,7 +78,7 @@
 			}
 		}
 	},
-	"download": {
+	"download_page": {
 		"best_topical_mayfly_tap": "Ladda ner på",
 		"platform": {
 			"apple": "App Store",
@@ -68,24 +87,12 @@
 			"side_quest": "SideQuest"
 		}
 	},
-	"privacy": {
-		"title": "Integritetspolicy",
-		"title_superseded": "Integritetspolicy (föråldrad)",
-		"content": "<p>Ditt användarnamn, ditt visningsnamn, dina profilbilder, din bio, din ålder, ditt kön, dina matchmakingpreferenser, dina personliga intressetaggar, dina valda VR-appar/spel och om du är ny inom VR kommer att vara synliga för andra användare. Din ytterligare profilinformation (inklusive din sexualitet, NSFW-taggar, land, länkade konton, etc.) kommer att vara synlig eller dold för andra användare beroende på dina <settings-privacy>integritetsinställningar</settings-privacy>, som du kan ändra när som helst. Dina personlighetsegenskaper (som vi identifierar baserat på dina svar på vårt personlighetsformulär) kommer att vara synliga eller dolda för andra användare beroende på dina <settings-privacy>integritetsinställningar</settings-privacy>, men dina specifika svar på frågeformuläret kommer inte att vara synliga.</p><p>Vi använder förstapartsdataanalys lokalt. Vi kan dela anonymiserad statistik om Flirtual (till exempel antalet användare som använder en viss Social VR-app eller ett visst spel). Du kan välja att avstå från att ingå i denna statistik i dina <settings-privacy>integritetsinställningar</settings-privacy>.</p><p>Dina meddelanden och meddelandehistorik med andra användare är värd för och delas med TalkJS, men kommer inte att delas med andra tredje parter.</p><p>Din kontomejl kommer inte att visas för andra användare. Din kontomejl kan komma att tillgås av tredje parter för att leverera transaktions-, marknadsförings- och supportmeddelanden enligt dina preferenser. Du kan välja bort <settings-notifications>meddelanden via e-post</settings-notifications>, vilket tar bort din e-postadress från TalkJS’ register.</p><p>Om du misstänker att ditt konto har komprometterats, vänligen <settings-password>byt lösenord</settings-password> omedelbart och <contact>rapportera problemet</contact> med ordet \"AKUT\" i ämnesraden. Inkludera i meddelandet ditt användarnamn, senaste tidpunkten du besökte sajten och alla detaljer som fick dig att misstänka ett intrång.</p><p>Ditt lösenord lagras hashar och saltat.</p><p>Vi använder vissa betrodda tredje parter som tillhandahåller tjänster till Flirtual. Vi kan dela personliga data om användare med dessa tredje parter, men endast för syftet att tillhandahålla deras tjänster. För mer information och exempel, se nedan.</p><p><strong>Molnhostingstjänster:</strong> för att tillhandahålla en pålitlig och säker infrastruktur för att hantera och driva vår plattform (t.ex. Fly.io och Vercel).</p><p><strong>In-App Funktionalitetsstjänster:</strong> för att underlätta viktiga funktioner som meddelanden och optimerad bildhosting inom vår app (t.ex. TalkJS).</p><p><strong>Betaltjänster:</strong> för att hantera betalningar och prenumerationer (t.ex. Stripe).</p><p><strong>Sociala medietjänster:</strong> för att tillåta användare att koppla sina konton till vår plattform och underlätta sociala interaktioner (t.ex. Discord).</p><p><strong>Säkerhets- och prestandatjänster:</strong> för att skydda vår plattform, säkra våra användare och förbättra den övergripande prestandan (t.ex. Cloudflare).</p><p><strong>Insikts- och förbättringstjänster:</strong> för att samla in användarfeedback och utföra analyser för att kontinuerligt förbättra vår plattform (t.ex. Canny).</p><p><strong>Kommunikationstjänster:</strong> för att hjälpa till med att skicka transaktions- och marknadsföringsmeddelanden till användare (t.ex. Amazon Web Services).</p><p><strong>Modereringstjänster:</strong> för att säkerställa ett korrekt beteende inom appen och upprätthålla gemenskapsstandarder (t.ex. Google Cloud).</p><p><strong>IT-tjänster:</strong> för att assistera i olika affärsoperationer, som när en användare interagerar med våra supporttjänster, vilket kan involvera behandling av användares personliga data (t.ex. Freshworks).</p><p>Vi granskar de tredje parter vi samarbetar med för att säkerställa att de har tillräckliga dataskydds- och informationssäkerhetsåtgärder på plats. Vi vidtar åtgärder för att skydda och anonymisera data som delas med tredje parter, så långt det är lämpligt med tanke på karaktären av de tjänster som tillhandahålls. Vi tillhandahåller endast de betrodda tredje parterna de personliga data som är nödvändiga för den tjänst de tillhandahåller.</p><p>Om du upptäcker en sårbarhet eller ett integritetsläckage, vänligen rapportera detta diskret via <vulnerability>GitHub</vulnerability> eller <contact>e-post</contact>.</p><p>Du kan granska data som vi har sparat om dig i dina <settings>kontoinställningar</settings> och i dina meddelanden. Du kan begära all data vi har sparat genom att mejla oss, och du får den inom 30 dagar.</p>"
-	},
-	"superseded_policy": {
-		"fancy_noisy_grizzly_hint": "Denna policy var i kraft {range} och är inte längre aktiv. Vänligen se den <current>senaste versionen av denna policy</current>."
-	},
-	"machine-translated": {
-		"large_wild_tortoise_sing": "Denna sida har maskinöversatts och kan innehålla felaktigheter. Denna översättning tillhandahålls endast för din bekvämlighet. <original>Den engelska versionen</original> av detta dokument är den officiella versionen och bör konsulteras vid eventuella avvikelser.",
-		"active_frail_antelope_support": "Vänligen <contact>kontakta oss</contact> om du har några frågor."
-	},
-	"terms": {
+	"terms_page": {
 		"title": "Användarvillkor",
 		"content": "<p>Denna tjänst (”Tjänsten”) drivs av ROVR LABS INC., under namnet Flirtual (”vi” eller ”Flirtual”).</p><section><h1>Regler</h1><p>För att använda denna Tjänst måste du:</p><ol><li>vara minst 18 år gammal;</li><li>vara juridiskt berättigad att göra det enligt kanadensisk och lokal lagstiftning;</li><li>aldrig ha blivit dömd för ett brott;</li><li>inte vara skyldig att registrera dig som sexualförbrytare i något offentligt register;</li><li>godkänna att följa dessa Användarvillkor och vår <privacy>Integritetspolicy</privacy>.</li></ol><p>Du går med på att inte:</p><ol><li>bryta mot lokal eller kanadensisk lag;</li><li>begära pengar från eller bedra andra användare;</li><li>utge dig för att vara någon annan eller publicera bilder på någon annan utan deras tillstånd;</li><li>posta något missbrukande, rasistiskt, sexistiskt, nedsättande, förtalande, olagligt, NSFW eller på annat sätt skadligt innehåll på Tjänsten;</li><li>trakassera andra användare på denna plattform;</li><li>medvetet posta skadlig kod eller länkar till skadliga sajter som kan skada andra användare;</li><li>posta spam på profiler;</li><li>kränka någon upphovsrätt;</li><li>använda denna tjänst för att skada Flirtual eller Tjänsten.</li></ol><p>Vänligen läs våra <guidelines>Gemenskapsriktlinjer</guidelines> för mer information om hur vi modererar användarprofiler och beteenden på Tjänsten. Att bryta mot dessa riktlinjer kommer att resultera i moderering av kontot, såsom permanent avstängning från Tjänsten. Vi förbehåller oss rätten att moderera konton efter eget gottfinnande.</p></section><section><h1>Säkerhet</h1><p>Vi råder dig att vara försiktig när du interagerar med andra användare av Tjänsten. Vi är inte ansvariga för användarnas beteende inom eller utanför Tjänsten eller för dina interaktioner med andra användare. Vi granskar inte användarna i förväg.</p></section><section><h1>Integritet</h1><p>Du ger oss tillåtelse att använda och visa viss information om dig. Vänligen se vår <privacy>Integritetspolicy</privacy> för mer information.</p></section><section><h1>Tjänster från tredje part</h1><p>Flirtual ansvarar inte för tjänster från tredje part.</p></section><section><h1>Rättigheter</h1><p>Du kan stänga ditt konto när som helst i dina <delete-account>kontoinställningar</delete-account>.</p><p>Du kommer att få förhandsinformation om eventuella ändringar i dessa villkor eller nya funktioner som påverkar integriteten.</p><p>Moderationsbeslut kommer att fattas av vårt moderationsteam. Du har rätt att få en förklaring om din profil ändras eller om ditt konto avslutas på grund av brott mot dessa Användarvillkor. Du har inte rätt att få förhandsinformation om dessa ändringar i ditt konto.</p><p>Om ditt konto avslutas på grund av brott mot dessa Användarvillkor kommer dina data att behållas i 30 dagar så att vi kan granska moderationsbeslut och ändra dem om nödvändigt. Vänligen <contact>kontakta oss</contact> om du vill överklaga ett moderationsbeslut eller om du vill att dina data tas bort tidigare.</p><p>Dina data kommer att säkerhetskopieras regelbundet.</p></section><section><h1>Säkerhet</h1><p>Tjänsten körs på infrastruktur som tillhandahålls av tredje part. Denna infrastruktur skyddas av säkerhetsåtgärder enligt branschstandard, såsom brandväggar.</p><p>Ditt anslutning till Tjänsten använder <ssltest>stark transportkryptering</ssltest>.</p><p>Ditt lösenord lagras säkert hashar och saltat.</p><p>Du är ansvarig för att hålla ditt kontolösenord säkert. Du är ansvarig för alla aktiviteter som sker med dina kontouppgifter.</p><p>Trots bästa ansträngningar finns det ingen perfekt säkerhet online. Vi garanterar inte absolut skydd av dina data.</p><p>Vi har inte granskat, och kan inte granska, allt material, inklusive datormjukvara, som görs tillgängligt via de webbplatser och webbsidor som Tjänsten länkar till och som länkar till Tjänsten. Vi har ingen kontroll över dessa icke-Flirtual-webbplatser och ansvarar inte för deras innehåll eller användning. Genom att länka till en icke-Flirtual-webbplats representerar eller antyder inte Flirtual att den stöder sådan webbplats. Du ansvarar för att vidta de nödvändiga försiktighetsåtgärderna för att skydda dig själv och dina datasystem mot virus, maskar, trojaner och annat skadligt eller destruktivt innehåll. Flirtual avsäger sig allt ansvar för skada som uppstår till följd av din användning av icke-Flirtual-webbplatser och webbsidor.</p></section><section><h1>Ansvarsfriskrivning</h1><p>Under inga omständigheter kommer Flirtual, dess leverantörer eller licensgivare vara ansvariga för något ämne i detta Avtal under något kontrakt, vårdslöshet, strikt ansvar eller annan juridisk eller rättvis teori för: (i) några speciella, tillfälliga eller följdskador; (ii) kostnaden för anskaffning av ersättningsprodukter eller -tjänster; (iii) avbrott i användning eller förlust eller skada på data; eller (iv) för belopp som överstiger de avgifter som du betalat till Flirtual enligt detta Avtal under de tolv (12) månader som föregår orsaken till åtgärden. Flirtual ska inte ha något ansvar för något misslyckande eller försening på grund av omständigheter utanför deras rimliga kontroll. Det föregående gäller inte i den utsträckning som är förbjudet enligt tillämplig lag.</p></section>",
 		"title_superseded": "Användarvillkor (föråldrade)"
 	},
-	"landing": {
+	"landing_page": {
 		"sign_up": "Anmäl dig",
 		"log_in": "Logga in",
 		"hero": {
@@ -196,9 +203,6 @@
 				}
 			}
 		},
-		"cta": {
-			"few_grassy_hyena_adapt": "Bli kär i en<highlight> helt ny dimension</highlight>"
-		},
 		"flitty_messages": {
 			"0": "Mjau!",
 			"1": "Det kittlar!",
@@ -209,19 +213,11 @@
 			"6": "Du kan hitta nya vänner i Homie Mode ✌️"
 		}
 	},
-	"deft_raw_cod_fond": "Tillverkad med<action> {heart}</action> i VR",
-	"footer": {
-		"events": "Händelser",
-		"support": "Stöd",
-		"feedback": "Feed-back",
-		"status": "Status",
-		"about": "Om",
-		"press": "Trycka",
-		"branding": "Branding",
-		"guidelines": "Riktlinjer för communityn",
-		"terms": "Användarvillkor",
-		"privacy": "Sekretesspolicy",
-		"developers": "Utvecklare",
-		"copyright": "© {year} Flirtual"
-	}
+	"few_grassy_hyena_adapt": "Bli kär i en<highlight> helt ny dimension</highlight>",
+	"privacy_page": {
+		"title": "Integritetspolicy",
+		"title_superseded": "Integritetspolicy (föråldrad)",
+		"content": "<p>Ditt användarnamn, ditt visningsnamn, dina profilbilder, din bio, din ålder, ditt kön, dina matchmakingpreferenser, dina personliga intressetaggar, dina valda VR-appar/spel och om du är ny inom VR kommer att vara synliga för andra användare. Din ytterligare profilinformation (inklusive din sexualitet, NSFW-taggar, land, länkade konton, etc.) kommer att vara synlig eller dold för andra användare beroende på dina <settings-privacy>integritetsinställningar</settings-privacy>, som du kan ändra när som helst. Dina personlighetsegenskaper (som vi identifierar baserat på dina svar på vårt personlighetsformulär) kommer att vara synliga eller dolda för andra användare beroende på dina <settings-privacy>integritetsinställningar</settings-privacy>, men dina specifika svar på frågeformuläret kommer inte att vara synliga.</p><p>Vi använder förstapartsdataanalys lokalt. Vi kan dela anonymiserad statistik om Flirtual (till exempel antalet användare som använder en viss Social VR-app eller ett visst spel). Du kan välja att avstå från att ingå i denna statistik i dina <settings-privacy>integritetsinställningar</settings-privacy>.</p><p>Dina meddelanden och meddelandehistorik med andra användare är värd för och delas med TalkJS, men kommer inte att delas med andra tredje parter.</p><p>Din kontomejl kommer inte att visas för andra användare. Din kontomejl kan komma att tillgås av tredje parter för att leverera transaktions-, marknadsförings- och supportmeddelanden enligt dina preferenser. Du kan välja bort <settings-notifications>meddelanden via e-post</settings-notifications>, vilket tar bort din e-postadress från TalkJS’ register.</p><p>Om du misstänker att ditt konto har komprometterats, vänligen <settings-password>byt lösenord</settings-password> omedelbart och <contact>rapportera problemet</contact> med ordet \"AKUT\" i ämnesraden. Inkludera i meddelandet ditt användarnamn, senaste tidpunkten du besökte sajten och alla detaljer som fick dig att misstänka ett intrång.</p><p>Ditt lösenord lagras hashar och saltat.</p><p>Vi använder vissa betrodda tredje parter som tillhandahåller tjänster till Flirtual. Vi kan dela personliga data om användare med dessa tredje parter, men endast för syftet att tillhandahålla deras tjänster. För mer information och exempel, se nedan.</p><p><strong>Molnhostingstjänster:</strong> för att tillhandahålla en pålitlig och säker infrastruktur för att hantera och driva vår plattform (t.ex. Fly.io och Vercel).</p><p><strong>In-App Funktionalitetsstjänster:</strong> för att underlätta viktiga funktioner som meddelanden och optimerad bildhosting inom vår app (t.ex. TalkJS).</p><p><strong>Betaltjänster:</strong> för att hantera betalningar och prenumerationer (t.ex. Stripe).</p><p><strong>Sociala medietjänster:</strong> för att tillåta användare att koppla sina konton till vår plattform och underlätta sociala interaktioner (t.ex. Discord).</p><p><strong>Säkerhets- och prestandatjänster:</strong> för att skydda vår plattform, säkra våra användare och förbättra den övergripande prestandan (t.ex. Cloudflare).</p><p><strong>Insikts- och förbättringstjänster:</strong> för att samla in användarfeedback och utföra analyser för att kontinuerligt förbättra vår plattform (t.ex. Canny).</p><p><strong>Kommunikationstjänster:</strong> för att hjälpa till med att skicka transaktions- och marknadsföringsmeddelanden till användare (t.ex. Amazon Web Services).</p><p><strong>Modereringstjänster:</strong> för att säkerställa ett korrekt beteende inom appen och upprätthålla gemenskapsstandarder (t.ex. Google Cloud).</p><p><strong>IT-tjänster:</strong> för att assistera i olika affärsoperationer, som när en användare interagerar med våra supporttjänster, vilket kan involvera behandling av användares personliga data (t.ex. Freshworks).</p><p>Vi granskar de tredje parter vi samarbetar med för att säkerställa att de har tillräckliga dataskydds- och informationssäkerhetsåtgärder på plats. Vi vidtar åtgärder för att skydda och anonymisera data som delas med tredje parter, så långt det är lämpligt med tanke på karaktären av de tjänster som tillhandahålls. Vi tillhandahåller endast de betrodda tredje parterna de personliga data som är nödvändiga för den tjänst de tillhandahåller.</p><p>Om du upptäcker en sårbarhet eller ett integritetsläckage, vänligen rapportera detta diskret via <vulnerability>GitHub</vulnerability> eller <contact>e-post</contact>.</p><p>Du kan granska data som vi har sparat om dig i dina <settings>kontoinställningar</settings> och i dina meddelanden. Du kan begära all data vi har sparat genom att mejla oss, och du får den inom 30 dagar.</p>"
+	},
+	"terms": "Användarvillkor"
 }

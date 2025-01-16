@@ -5,7 +5,26 @@
 		"knotty_direct_mongoose_bend": "Ontmoet nieuwe mensen in Virtual Reality! Flirtual helpt je op dates te gaan in VR en VRChat.",
 		"green_plain_mongoose_lend": "De eerste VR-datingapp. Doe mee met duizenden anderen voor dates in VR-apps zoals VRChat."
 	},
-	"about": {
+	"superseded_policy": {
+		"fancy_noisy_grizzly_hint": "Dit beleid was van kracht van {range} en is niet langer actief. Bekijk de <current>meest recente versie van dit beleid</current>."
+	},
+	"machine-translated": {
+		"large_wild_tortoise_sing": "Deze pagina is automatisch vertaald en kan onnauwkeurigheden bevatten. Deze vertaling wordt alleen voor uw gemak aangeboden. De <original>Engelse versie</original> van dit document is de officiële versie en dient te worden geraadpleegd bij eventuele afwijkingen.",
+		"active_frail_antelope_support": "Neem <contact>contact met ons op</contact> als u vragen heeft."
+	},
+	"deft_raw_cod_fond": "Gemaakt met<action> {heart}</action> in VR",
+	"support": "Steun",
+	"privacy": "Privacybeleid",
+	"events": "Evenementen",
+	"about": "Over",
+	"branding": "Merknaam",
+	"press": "Pers",
+	"feedback": "Feedback",
+	"status": "Staat",
+	"developers": "Ontwikkelaars",
+	"copyright": "© {year} Flirtual",
+	"guidelines": "Community-richtlijnen",
+	"about_page": {
 		"timeline": {
 			"2018": {
 				"title": "2018 🐣",
@@ -59,7 +78,7 @@
 			}
 		}
 	},
-	"download": {
+	"download_page": {
 		"best_topical_mayfly_tap": "Downloaden op",
 		"platform": {
 			"apple": "App Store",
@@ -68,24 +87,12 @@
 			"side_quest": "SideQuest"
 		}
 	},
-	"privacy": {
-		"title": "Privacybeleid",
-		"title_superseded": "Privacybeleid (verouderd)",
-		"content": "<p>Uw gebruikersnaam, uw weergavenaam, uw profielfoto’s, uw biografie, uw leeftijd, uw geslacht, uw matchmaking-voorkeuren, uw persoonlijke interesse-tags, uw geselecteerde VR-apps/spellen en of u nieuw bent in VR, zullen zichtbaar zijn voor andere gebruikers. Uw aanvullende profielinformatie (inclusief uw seksualiteit, NSFW-tags, land, gekoppelde accounts, enz.) zal zichtbaar of verborgen zijn voor andere gebruikers afhankelijk van uw <settings-privacy>privacy-instellingen</settings-privacy>, die u op elk moment kunt wijzigen. Uw persoonlijkheidskenmerken (die wij identificeren op basis van uw antwoorden op onze persoonlijkheidsvragenlijst) zullen zichtbaar of verborgen zijn voor andere gebruikers afhankelijk van uw <settings-privacy>privacy-instellingen</settings-privacy>, maar uw specifieke vragenlijstantwoorden zullen niet zichtbaar zijn.</p><p>We gebruiken eigen, on-premises data-analyse. We kunnen geanonimiseerde statistieken over Flirtual delen (bijvoorbeeld het aantal gebruikers dat een bepaalde Social VR-app of spel gebruikt). U kunt zich afmelden voor deze statistieken in uw <settings-privacy>privacy-instellingen</settings-privacy>.</p><p>Uw berichten en berichtgeschiedenis met andere gebruikers worden gehost en gedeeld met TalkJS, maar zullen niet worden gedeeld met andere derden.</p><p>Uw account-e-mailadres zal niet aan andere gebruikers worden getoond. Uw account-e-mailadres kan door derden worden benaderd om transactionele, marketing- en ondersteuningsberichten te leveren volgens uw voorkeuren. U kunt zich afmelden voor <settings-notifications>e-mailnotificaties voor berichten</settings-notifications>, waardoor uw e-mailadres uit de gegevens van TalkJS wordt verwijderd.</p><p>Als u vermoedt dat uw account is gecompromitteerd, <settings-password>wijzig dan onmiddellijk uw wachtwoord</settings-password> en <contact>meld het probleem</contact> met 'DRINGEND' in de onderwerpregel. Vermeld in het bericht uw gebruikersnaam, de laatste keer dat u de site hebt bezocht, en eventuele details die u ertoe brachten te vermoeden dat er een inbraak is geweest.</p><p>Uw wachtwoord wordt gehasht en gezouten opgeslagen.</p><p>We maken gebruik van bepaalde vertrouwde derden die diensten aan Flirtual leveren. We kunnen persoonlijke gebruikersgegevens delen met deze derden, maar alleen voor het doel van het leveren van hun diensten. Voor meer informatie en voorbeelden, zie hieronder.</p><p><strong>Cloud Hosting-diensten:</strong> om een betrouwbare en veilige infrastructuur te bieden voor het beheren en opereren van ons platform (bijvoorbeeld Fly.io en Vercel).</p><p><strong>In-App Functionaliteitsdiensten:</strong> om belangrijke functies zoals berichten en geoptimaliseerde beeldhosting binnen onze app te faciliteren (bijvoorbeeld TalkJS).</p><p><strong>Facturatiediensten:</strong> om betalingen en abonnementen te beheren (bijvoorbeeld Stripe).</p><p><strong>Social Media-diensten:</strong> om gebruikers in staat te stellen hun accounts met ons platform te verbinden en sociale interacties te vergemakkelijken (bijvoorbeeld Discord).</p><p><strong>Beveiligings- en prestatiediensten:</strong> om ons platform te beschermen, onze gebruikers te beveiligen en de algehele prestaties te verbeteren (bijvoorbeeld Cloudflare).</p><p><strong>Inzicht- en verbeteringsdiensten:</strong> om gebruikersfeedback te verzamelen en analyses uit te voeren voor de voortdurende verbetering van ons platform (bijvoorbeeld Canny).</p><p><strong>Communicatiediensten:</strong> om te helpen met het verzenden van transactionele en marketingcommunicatie naar gebruikers (bijvoorbeeld Amazon Web Services).</p><p><strong>Moderatieservices:</strong> om gepast gedrag binnen de app te waarborgen en de gemeenschapsnormen te handhaven (bijvoorbeeld Google Cloud).</p><p><strong>IT-diensten:</strong> om te assisteren bij verschillende operaties van ons bedrijf, zoals wanneer een gebruiker contact opneemt met onze ondersteuningsdiensten, wat kan betekenen dat persoonlijke gegevens van gebruikers worden verwerkt (bijvoorbeeld Freshworks).</p><p>We beoordelen de derden met wie we samenwerken om ervoor te zorgen dat zij adequate gegevensbeschermings- en informatieveiligheidsmaatregelen hebben. We nemen maatregelen om gegevens te beschermen en te anonimiseren die met derden worden gedeeld, passend bij de aard van de geleverde diensten. We verstrekken alleen de noodzakelijke persoonlijke gegevens aan vertrouwde derden voor de diensten die zij leveren.</p><p>Als u een kwetsbaarheid of privacylek ontdekt, meld dit dan discreet via <vulnerability>GitHub</vulnerability> of <contact>e-mail</contact>.</p><p>U kunt de gegevens die wij in ons bestand hebben inzien in uw <settings>accountinstellingen</settings> en in uw berichten. U kunt alle gegevens opvragen die wij in ons bestand hebben door ons een e-mail te sturen, en u ontvangt deze binnen 30 dagen.</p>"
-	},
-	"superseded_policy": {
-		"fancy_noisy_grizzly_hint": "Dit beleid was van kracht van {range} en is niet langer actief. Bekijk de <current>meest recente versie van dit beleid</current>."
-	},
-	"machine-translated": {
-		"large_wild_tortoise_sing": "Deze pagina is automatisch vertaald en kan onnauwkeurigheden bevatten. Deze vertaling wordt alleen voor uw gemak aangeboden. De <original>Engelse versie</original> van dit document is de officiële versie en dient te worden geraadpleegd bij eventuele afwijkingen.",
-		"active_frail_antelope_support": "Neem <contact>contact met ons op</contact> als u vragen heeft."
-	},
-	"terms": {
+	"terms_page": {
 		"title": "Servicevoorwaarden",
 		"content": "<p>Deze dienst (de 'Dienst') wordt geëxploiteerd door ROVR LABS INC., handelend onder de naam Flirtual ('wij', 'ons' of 'Flirtual').</p><section><h1>Regels</h1><p>Om gebruik te maken van deze Dienst, moet u:</p><ol><li>minstens 18 jaar oud zijn;</li><li>legaal toestemming hebben volgens de Canadese en lokale wetgeving;</li><li>nooit veroordeeld zijn voor een misdrijf;</li><li>niet verplicht zijn zich te registreren als zedendelinquent op enig overheidsregister;</li><li>akkoord gaan met deze Gebruiksvoorwaarden en ons <privacy>Privacybeleid</privacy>.</li></ol><p>U stemt ermee in om het volgende niet te doen:</p><ol><li>lokale of Canadese wetgeving overtreden;</li><li>geld vragen of fraude plegen bij andere gebruikers;</li><li>iemand of een entiteit imiteren of afbeeldingen van iemand anders zonder toestemming plaatsen;</li><li>misbruik, racistische, seksistische, denigrerende, lasterlijke, illegale, NSFW of anderszins schadelijke inhoud op de Dienst plaatsen;</li><li>andere gebruikers op dit platform lastigvallen;</li><li>opzettelijk kwaadaardige code of links naar kwaadaardige sites plaatsen die andere gebruikers kunnen schaden;</li><li>spam op profielen plaatsen;</li><li>enige vorm van auteursrecht schenden;</li><li>deze dienst gebruiken om schade toe te brengen aan Flirtual of de Dienst.</li></ol><p>Lees onze <guidelines>Communityrichtlijnen</guidelines> voor meer informatie over hoe wij gebruikersprofielen en gedrag op de Dienst modereren. Het overtreden van deze richtlijnen zal leiden tot accountmoderatie, zoals een permanente ban van de Dienst. Wij behouden ons het recht voor om accounts naar eigen inzicht te modereren.</p></section><section><h1>Veiligheid</h1><p>Wij adviseren u voorzichtig te zijn bij het omgaan met andere gebruikers van de Dienst. Wij zijn niet verantwoordelijk voor het gedrag van gebruikers binnen of buiten de Dienst of voor uw interacties met andere gebruikers. Wij screenen gebruikers niet vooraf.</p></section><section><h1>Privacy</h1><p>U machtigt ons om bepaalde informatie over u te gebruiken en weer te geven. Raadpleeg ons <privacy>Privacybeleid</privacy> voor meer informatie.</p></section><section><h1>Diensten van Derden</h1><p>Flirtual is niet verantwoordelijk voor diensten van derden.</p></section><section><h1>Rechten</h1><p>U kunt uw account op elk moment sluiten in uw <delete-account>accountinstellingen</delete-account>.</p><p>U ontvangt vooraf een melding van wijzigingen in deze voorwaarden of nieuwe functies die privacy beïnvloeden.</p><p>Moderatiebeslissingen worden genomen door ons moderatieteam. U heeft recht op een uitleg als uw profiel wordt aangepast of uw account wordt beëindigd vanwege een schending van deze Gebruiksvoorwaarden. U heeft echter geen recht op voorafgaande kennisgeving van deze wijzigingen aan uw account.</p><p>Als uw account wordt beëindigd wegens schending van deze Gebruiksvoorwaarden, worden uw gegevens 30 dagen bewaard, zodat wij moderatiebeslissingen kunnen herzien en indien nodig kunnen terugdraaien. Neem <contact>contact met ons op</contact> als u in beroep wilt gaan tegen een moderatiebeslissing of als u wilt dat uw gegevens eerder worden verwijderd.</p><p>Uw gegevens worden regelmatig geback-upt.</p></section><section><h1>Beveiliging</h1><p>De Dienst draait op infrastructuur geleverd door derden. Deze infrastructuur is beveiligd door industriestandaard veiligheidsmaatregelen, zoals firewalls.</p><p>Uw verbinding met de Dienst gebruikt <ssltest>sterke transportversleuteling</ssltest>.</p><p>Uw wachtwoord wordt veilig gehasht en gezouten opgeslagen.</p><p>U bent verantwoordelijk voor de veiligheid van uw accountwachtwoord. U bent verantwoordelijk voor alle activiteiten die plaatsvinden met uw accountreferenties.</p><p>Ondanks de beste inspanningen bestaat er online geen perfecte beveiliging. Wij garanderen niet de absolute bescherming van uw gegevens.</p><p>Wij hebben niet alle materialen, waaronder computersoftware, die beschikbaar zijn gemaakt via de websites en webpagina's waarnaar de Dienst linkt, en die naar de Dienst linken, beoordeeld en kunnen dat ook niet doen. Wij hebben geen controle over deze niet-Flirtual websites en zijn niet verantwoordelijk voor hun inhoud of gebruik. Door te linken naar een niet-Flirtual website, impliceert Flirtual niet dat het die website onderschrijft. U bent verantwoordelijk voor het nemen van voorzorgsmaatregelen die nodig zijn om uzelf en uw computersystemen te beschermen tegen virussen, wormen, Trojaanse paarden en andere schadelijke of destructieve inhoud. Flirtual wijst elke verantwoordelijkheid af voor enige schade die voortvloeit uit uw gebruik van niet-Flirtual websites en webpagina's.</p></section><section><h1>Aansprakelijkheidsverklaringen</h1><p>In geen geval zullen Flirtual, of haar leveranciers of licentiegevers, aansprakelijk zijn met betrekking tot enig onderwerp van deze Overeenkomst onder welk contract, nalatigheid, strikte aansprakelijkheid of andere juridische of billijke theorie dan ook voor: (i) enige speciale, incidentele of gevolgschade; (ii) de kosten van vervangende producten of diensten; (iii) onderbreking van gebruik of verlies of beschadiging van gegevens; of (iv) voor enig bedrag dat de vergoedingen die u onder deze Overeenkomst aan Flirtual hebt betaald gedurende de twaalf (12) maanden voorafgaand aan de oorzaak van de actie, overschrijdt. Flirtual is niet aansprakelijk voor enige storing of vertraging die te wijten is aan omstandigheden buiten hun redelijke controle. Het voorgaande is niet van toepassing voor zover verboden door de toepasselijke wetgeving.</p></section>",
 		"title_superseded": "Servicevoorwaarden (verouderd)"
 	},
-	"landing": {
+	"landing_page": {
 		"sign_up": "Aanmelden",
 		"log_in": "Inloggen",
 		"hero": {
@@ -196,9 +203,6 @@
 				}
 			}
 		},
-		"cta": {
-			"few_grassy_hyena_adapt": "Word verliefd in een<highlight> geheel nieuwe dimensie</highlight>"
-		},
 		"flitty_messages": {
 			"0": "Miauw!",
 			"1": "Dat kietelt!",
@@ -209,19 +213,11 @@
 			"6": "Je kunt nieuwe vrienden vinden in de Homie-modus ✌️"
 		}
 	},
-	"deft_raw_cod_fond": "Gemaakt met<action> {heart}</action> in VR",
-	"footer": {
-		"events": "Evenementen",
-		"support": "Steun",
-		"feedback": "Feedback",
-		"status": "Staat",
-		"about": "Over",
-		"press": "Pers",
-		"branding": "Merknaam",
-		"guidelines": "Community-richtlijnen",
-		"terms": "Servicevoorwaarden",
-		"privacy": "Privacybeleid",
-		"developers": "Ontwikkelaars",
-		"copyright": "© {year} Flirtual"
-	}
+	"few_grassy_hyena_adapt": "Word verliefd in een<highlight> geheel nieuwe dimensie</highlight>",
+	"privacy_page": {
+		"title": "Privacybeleid",
+		"title_superseded": "Privacybeleid (verouderd)",
+		"content": "<p>Uw gebruikersnaam, uw weergavenaam, uw profielfoto’s, uw biografie, uw leeftijd, uw geslacht, uw matchmaking-voorkeuren, uw persoonlijke interesse-tags, uw geselecteerde VR-apps/spellen en of u nieuw bent in VR, zullen zichtbaar zijn voor andere gebruikers. Uw aanvullende profielinformatie (inclusief uw seksualiteit, NSFW-tags, land, gekoppelde accounts, enz.) zal zichtbaar of verborgen zijn voor andere gebruikers afhankelijk van uw <settings-privacy>privacy-instellingen</settings-privacy>, die u op elk moment kunt wijzigen. Uw persoonlijkheidskenmerken (die wij identificeren op basis van uw antwoorden op onze persoonlijkheidsvragenlijst) zullen zichtbaar of verborgen zijn voor andere gebruikers afhankelijk van uw <settings-privacy>privacy-instellingen</settings-privacy>, maar uw specifieke vragenlijstantwoorden zullen niet zichtbaar zijn.</p><p>We gebruiken eigen, on-premises data-analyse. We kunnen geanonimiseerde statistieken over Flirtual delen (bijvoorbeeld het aantal gebruikers dat een bepaalde Social VR-app of spel gebruikt). U kunt zich afmelden voor deze statistieken in uw <settings-privacy>privacy-instellingen</settings-privacy>.</p><p>Uw berichten en berichtgeschiedenis met andere gebruikers worden gehost en gedeeld met TalkJS, maar zullen niet worden gedeeld met andere derden.</p><p>Uw account-e-mailadres zal niet aan andere gebruikers worden getoond. Uw account-e-mailadres kan door derden worden benaderd om transactionele, marketing- en ondersteuningsberichten te leveren volgens uw voorkeuren. U kunt zich afmelden voor <settings-notifications>e-mailnotificaties voor berichten</settings-notifications>, waardoor uw e-mailadres uit de gegevens van TalkJS wordt verwijderd.</p><p>Als u vermoedt dat uw account is gecompromitteerd, <settings-password>wijzig dan onmiddellijk uw wachtwoord</settings-password> en <contact>meld het probleem</contact> met 'DRINGEND' in de onderwerpregel. Vermeld in het bericht uw gebruikersnaam, de laatste keer dat u de site hebt bezocht, en eventuele details die u ertoe brachten te vermoeden dat er een inbraak is geweest.</p><p>Uw wachtwoord wordt gehasht en gezouten opgeslagen.</p><p>We maken gebruik van bepaalde vertrouwde derden die diensten aan Flirtual leveren. We kunnen persoonlijke gebruikersgegevens delen met deze derden, maar alleen voor het doel van het leveren van hun diensten. Voor meer informatie en voorbeelden, zie hieronder.</p><p><strong>Cloud Hosting-diensten:</strong> om een betrouwbare en veilige infrastructuur te bieden voor het beheren en opereren van ons platform (bijvoorbeeld Fly.io en Vercel).</p><p><strong>In-App Functionaliteitsdiensten:</strong> om belangrijke functies zoals berichten en geoptimaliseerde beeldhosting binnen onze app te faciliteren (bijvoorbeeld TalkJS).</p><p><strong>Facturatiediensten:</strong> om betalingen en abonnementen te beheren (bijvoorbeeld Stripe).</p><p><strong>Social Media-diensten:</strong> om gebruikers in staat te stellen hun accounts met ons platform te verbinden en sociale interacties te vergemakkelijken (bijvoorbeeld Discord).</p><p><strong>Beveiligings- en prestatiediensten:</strong> om ons platform te beschermen, onze gebruikers te beveiligen en de algehele prestaties te verbeteren (bijvoorbeeld Cloudflare).</p><p><strong>Inzicht- en verbeteringsdiensten:</strong> om gebruikersfeedback te verzamelen en analyses uit te voeren voor de voortdurende verbetering van ons platform (bijvoorbeeld Canny).</p><p><strong>Communicatiediensten:</strong> om te helpen met het verzenden van transactionele en marketingcommunicatie naar gebruikers (bijvoorbeeld Amazon Web Services).</p><p><strong>Moderatieservices:</strong> om gepast gedrag binnen de app te waarborgen en de gemeenschapsnormen te handhaven (bijvoorbeeld Google Cloud).</p><p><strong>IT-diensten:</strong> om te assisteren bij verschillende operaties van ons bedrijf, zoals wanneer een gebruiker contact opneemt met onze ondersteuningsdiensten, wat kan betekenen dat persoonlijke gegevens van gebruikers worden verwerkt (bijvoorbeeld Freshworks).</p><p>We beoordelen de derden met wie we samenwerken om ervoor te zorgen dat zij adequate gegevensbeschermings- en informatieveiligheidsmaatregelen hebben. We nemen maatregelen om gegevens te beschermen en te anonimiseren die met derden worden gedeeld, passend bij de aard van de geleverde diensten. We verstrekken alleen de noodzakelijke persoonlijke gegevens aan vertrouwde derden voor de diensten die zij leveren.</p><p>Als u een kwetsbaarheid of privacylek ontdekt, meld dit dan discreet via <vulnerability>GitHub</vulnerability> of <contact>e-mail</contact>.</p><p>U kunt de gegevens die wij in ons bestand hebben inzien in uw <settings>accountinstellingen</settings> en in uw berichten. U kunt alle gegevens opvragen die wij in ons bestand hebben door ons een e-mail te sturen, en u ontvangt deze binnen 30 dagen.</p>"
+	},
+	"terms": "Servicevoorwaarden"
 }

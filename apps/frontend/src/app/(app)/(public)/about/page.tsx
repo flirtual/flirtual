@@ -11,7 +11,7 @@ import { TeamList } from "./team-list";
 import { TimelineItem } from "./timeline-item";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("about");
+	const t = await getTranslations("about_us");
 
 	return {
 		title: t("title")
@@ -19,9 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-	const t = await getTranslations("about");
+	const t = await getTranslations("about_us");
 	const {
-		about: { images }
+		about_us: { images }
 	} = (await getMessages()) as unknown as IntlMessages;
 
 	return (

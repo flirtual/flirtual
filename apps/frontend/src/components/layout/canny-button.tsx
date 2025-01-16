@@ -8,7 +8,7 @@ import { useCanny } from "~/hooks/use-canny";
 import { FooterListLink } from "./footer";
 
 export const FooterCannyLink: React.FC = () => {
-	const t = useTranslations("footer");
+	const t = useTranslations();
 
 	return (
 		<FooterListLink label={t("feedback")} onClick={useCanny().openFeedback} />
@@ -16,7 +16,7 @@ export const FooterCannyLink: React.FC = () => {
 };
 
 export const ProfileNavigationCannyButton: React.FC = () => {
-	const t = useTranslations("navigation");
+	const t = useTranslations();
 	const { openChangelog } = useCanny();
 
 	return (
