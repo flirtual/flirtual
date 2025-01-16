@@ -122,11 +122,11 @@ function getContentSecurityPolicy() {
 		"upgrade-insecure-requests": [],
 		...(reportTo
 			? {
-				"report-uri": [reportTo],
-				"report-to": ["csp"]
-			}
+					"report-uri": [reportTo],
+					"report-to": ["csp"]
+				}
 			: {
-			})
+				})
 	};
 
 	return {

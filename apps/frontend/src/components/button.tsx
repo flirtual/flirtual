@@ -2,13 +2,11 @@
 
 import type { HTMLMotionProps } from "motion/react";
 import { motion } from "motion/react";
-import type { LinkProps } from "next/link";
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { isInternalHref } from "~/urls";
-
 import type { IconComponent } from "./icons";
+import type { LinkProps } from "./link";
 import { Link } from "./link";
 
 const defaultClassName = twMerge(

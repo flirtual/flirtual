@@ -3,6 +3,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import { useLocale } from "next-intl";
 import type { Url } from "next/dist/shared/lib/router/router";
+// eslint-disable-next-line no-restricted-imports
 import NextLink from "next/link";
 import { forwardRef } from "react";
 
