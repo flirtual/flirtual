@@ -17,11 +17,13 @@ import { DropdownMenuItem } from "~/components/dropdown";
 import { Form, FormButton, FormMessage } from "~/components/forms";
 import { InputCheckbox, InputLabel, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 import { userKey } from "~/swr";
 
 export const WarnAction: FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
+	const t = useTranslations();
 
 	const [open, setOpen] = useState(false);
 
@@ -57,7 +59,7 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 								await User.deleteWarn(targetId);
 								mutate(userKey(user.id));
 
-								toasts.add("Account warning removed");
+								toasts.add(t("account_warning_removed"));
 								setOpen(false);
 								return;
 							}
@@ -65,7 +67,7 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 							await User.warn(targetId, { message, shadowban });
 							mutate(userKey(user.id));
 
-							toasts.add("Account warned");
+							toasts.add(t("account_warned"));
 							setOpen(false);
 						}}
 					>

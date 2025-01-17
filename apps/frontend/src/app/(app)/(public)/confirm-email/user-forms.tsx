@@ -6,6 +6,7 @@ import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -15,6 +16,7 @@ export const UserForms: React.FC = () => {
 	const [session] = useSession({
 		refreshInterval: 1000
 	});
+	const t = useTranslations();
 
 	if (!session) return null;
 
@@ -27,7 +29,7 @@ export const UserForms: React.FC = () => {
 				onSubmit={async () => {
 					await User.resendConfirmEmail()
 						.then(() => {
-							toasts.add("Resent confirmation email");
+							toasts.add(t("salty_novel_octopus_surge"));
 							return router.refresh();
 						})
 						.catch(toasts.addError);
@@ -61,7 +63,7 @@ export const UserForms: React.FC = () => {
 				onSubmit={async (body) => {
 					await User.updateEmail(session.user.id, body)
 						.then(() => {
-							toasts.add("Email changed");
+							toasts.add(t("email_changed"));
 							return router.refresh();
 						})
 						.catch(toasts.addError);

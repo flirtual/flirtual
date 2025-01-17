@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { Authentication } from "~/api/auth";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -31,6 +32,8 @@ export const PasswordPasskeyForm: React.FC = () => {
 	const { native } = useDevice();
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
+
 	const [passkeysAvailable, setPasskeysAvailable] = useState(false);
 	const { data: aaguidData = {} } = useSWR("aaguid", async () => {
 		const response = await fetch(AAGUID_DATABASE);
@@ -99,7 +102,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 							if (reason instanceof Error && reason.name === "InvalidStateError") {
 								toasts.add({
 									type: "warning",
-									value: "You've already added this passkey."
+									value: t("level_nice_cheetah_drum")
 								});
 							}
 						})) as PublicKeyCredential;

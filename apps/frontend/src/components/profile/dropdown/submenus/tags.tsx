@@ -8,12 +8,14 @@ import {
 	DropdownMenuSub,
 	DropdownMenuSubContent
 } from "~/components/dropdown";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 
 export const ProfileDropdownTagsSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
 	const toasts = useToast();
+	const t = useTranslations();
 
 	return (
 		<DropdownMenuSub>
@@ -28,7 +30,7 @@ export const ProfileDropdownTagsSubmenu: FC<
 						onCheckedChange={() =>
 							toasts.add({
 								type: "error",
-								value: "Not implemented"
+								value: t("not_implemented")
 							})}
 					>
 						{userTagNames[tag]}

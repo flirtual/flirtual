@@ -20,6 +20,7 @@ export const ModerationMessageDialog: FC = () => {
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
+	const t = useTranslations();
 
 	if (!session?.user.moderatorMessage) return null;
 
@@ -28,7 +29,7 @@ export const ModerationMessageDialog: FC = () => {
 			onAcknowledge={() =>
 				User.acknowledgeWarn(session.user.id)
 					.then(() => {
-						toasts.add("Message acknowledged");
+						toasts.add(t("message_acknowledged"));
 						return router.refresh();
 					})
 					.catch(toasts.addError)}
@@ -50,7 +51,7 @@ export const DiscordSpamDialog: FC = () => {
 			tnsDiscordInBiography: new Date(Date.now() + ms("30d")).toISOString()
 		});
 
-		if (!quiet) toasts.add("You will be reminded in 30 days.");
+		if (!quiet) toasts.add(t("you_will_be_reminded_in_number_days", { number: 30 }));
 	};
 
 	return (

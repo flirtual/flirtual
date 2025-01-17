@@ -87,7 +87,7 @@ export const InfoForm: FC = () => {
 					})
 				]);
 
-				toasts.add("Saved basic info");
+				toasts.add(t("awake_few_wren_skip"));
 
 				await mutateSession({
 					...session,

@@ -16,6 +16,7 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -23,8 +24,9 @@ export const NsfwForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
-	const kinks = useAttributes("kink");
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
+	const kinks = useAttributes("kink");
 
 	if (!session) return null;
 	const { user } = session;
@@ -50,7 +52,7 @@ export const NsfwForm: React.FC = () => {
 					})
 				]);
 
-				toasts.add("Saved NSFW preferences");
+				toasts.add(t("born_sweet_nils_thrive"));
 
 				await mutateSession({
 					...session,

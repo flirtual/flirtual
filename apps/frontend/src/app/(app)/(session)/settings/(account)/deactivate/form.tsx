@@ -11,12 +11,14 @@ import {
 	FormButton
 } from "~/components/forms";
 import { ModelCard } from "~/components/model-card";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
 
 	const deactivated = !!user.deactivatedAt;
 
@@ -34,7 +36,7 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 					await (
 						deactivated ? User.reactivate(user.id) : User.deactivate(user.id)
 					).then(() =>
-						toasts.add(`${deactivated ? "Reactivated" : "Deactivated"} account`)
+						toasts.add(t(deactivated ? "reactivated_account" : "deactivated_account"))
 					);
 					router.refresh();
 				}}

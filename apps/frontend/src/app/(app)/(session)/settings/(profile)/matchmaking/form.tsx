@@ -47,14 +47,14 @@ const absMaxAge = 60;
 
 export const MatchmakingForm: FC = () => {
 	const [session] = useSession();
-	const t = useTranslations();
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
+	const tAttribute = useAttributeTranslation();
 
 	const genders = useAttributes("gender").filter(
 		({ simple, fallback }) => simple || fallback
 	);
-	const tAttribute = useAttributeTranslation();
 
 	const [passesPending, setPassesPending] = useState(false);
 
@@ -131,7 +131,7 @@ export const MatchmakingForm: FC = () => {
 				]);
 
 				startTransition(() => router.refresh());
-				toasts.add("Saved matchmaking preferences");
+				toasts.add(t("east_low_niklas_list"));
 			}}
 		>
 			{({ FormField, fields }) => (
@@ -267,7 +267,7 @@ export const MatchmakingForm: FC = () => {
 											await Matchmaking.resetPasses()
 												.then(() => {
 													setPassesPending(false);
-													toasts.add("Passes reset");
+													toasts.add(t("passes_reset"));
 													return router.refresh();
 												})
 												.catch(toasts.addError);

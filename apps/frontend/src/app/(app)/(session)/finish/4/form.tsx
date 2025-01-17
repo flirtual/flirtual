@@ -52,7 +52,7 @@ export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 							{(field) => (
 								<div className="flex items-center justify-between gap-4">
 									<InputLabel {...field.labelProps} inline>
-										{t(`personality_questions.${Number.parseInt(name.slice(-1))}`)}
+										{t(`personality_questions.${Number.parseInt(name.slice(-1))}` as any)}
 									</InputLabel>
 									<InputSwitch {...field.props} />
 								</div>

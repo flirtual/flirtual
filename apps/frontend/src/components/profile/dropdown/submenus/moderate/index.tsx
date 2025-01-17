@@ -23,6 +23,7 @@ import {
 	DropdownMenuSubContent
 } from "~/components/dropdown";
 import { InlineLink } from "~/components/inline-link";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { userKey } from "~/swr";
@@ -36,6 +37,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 > = ({ user, children }) => {
 	const [session] = useSession();
 	const toasts = useToast();
+	const t = useTranslations();
 
 	return (
 		<DropdownMenuSub>
@@ -55,7 +57,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 										await User.unindefShadowban(user.id).catch(toasts.addError);
 										mutate(userKey(user.id));
 
-										toasts.add("User unshadowbanned");
+										toasts.add(t("user_unshadowbanned"));
 									}}
 								>
 									<button className="w-full gap-2" type="button">
@@ -72,7 +74,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 										await User.indefShadowban(user.id).catch(toasts.addError);
 										mutate(userKey(user.id));
 
-										toasts.add("User indefinitely shadowbanned");
+										toasts.add(t("user_indefinitely_shadowbanned"));
 									}}
 								>
 									<button className="w-full gap-2" type="button">
@@ -92,7 +94,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 									await User.unsuspend(user.id).catch(toasts.addError);
 									mutate(userKey(user.id));
 
-									toasts.add("User unbanned");
+									toasts.add(t("user_unbanned"));
 								}}
 							>
 								<button className="w-full gap-2" type="button">
@@ -109,7 +111,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 												await User.paymentsUnban(user.id).catch(toasts.addError);
 												mutate(userKey(user.id));
 
-												toasts.add("User payments unbanned");
+												toasts.add(t("user_payments_unbanned"));
 											}}
 										>
 											<button className="w-full gap-2" type="button">
@@ -126,7 +128,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 												await User.paymentsBan(user.id).catch(toasts.addError);
 												mutate(userKey(user.id));
 
-												toasts.add("User payments banned");
+												toasts.add(t("user_payments_banned"));
 											}}
 										>
 											<button className="w-full gap-2" type="button">
@@ -170,7 +172,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 												size="sm"
 												onClick={async () => {
 													await User.delete(user.id).catch(toasts.addError);
-													toasts.add("User deleted");
+													toasts.add(t("user_deleted"));
 												}}
 											>
 												Delete account

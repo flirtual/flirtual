@@ -213,7 +213,7 @@ export const AppearanceForm: FC = () => {
 					await Profile.updateColors(session.user.id, values);
 				}
 
-				toasts.add("Saved appearance");
+				toasts.add(t("neat_plane_slug_savor"));
 				router.refresh();
 			}}
 		>

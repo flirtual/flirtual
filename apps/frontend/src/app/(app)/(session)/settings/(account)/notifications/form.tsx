@@ -9,6 +9,7 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -16,6 +17,7 @@ export const NotificationsForm: React.FC = () => {
 	const user = useCurrentUser();
 	const toasts = useToast();
 	const router = useRouter();
+	const t = useTranslations();
 
 	if (!user || !user.preferences) return null;
 	const { preferences } = user;
@@ -47,7 +49,7 @@ export const NotificationsForm: React.FC = () => {
 					)
 				});
 
-				toasts.add("Saved notification preferences");
+				toasts.add(t("merry_smart_snake_boil"));
 				router.refresh();
 			}}
 		>

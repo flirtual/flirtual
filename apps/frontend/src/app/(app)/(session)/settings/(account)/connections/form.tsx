@@ -11,6 +11,7 @@ import { InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { ProfilePlaylist } from "~/components/profile/playlist";
 import { useDevice } from "~/hooks/use-device";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -21,6 +22,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
 		null
 	);
+	const t = useTranslations();
 
 	if (!session) return null;
 
@@ -64,7 +66,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 						playlist: playlist.trim() || null
 					});
 
-					toasts.add("Saved connections");
+					toasts.add(t("merry_arable_alligator_coax"));
 
 					await mutateSession({
 						...session,

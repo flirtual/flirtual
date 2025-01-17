@@ -35,6 +35,7 @@ import { ProfileDropdown } from "~/components/profile/dropdown";
 import { TimeRelative } from "~/components/time-relative";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
@@ -100,6 +101,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	>(null);
 	const toasts = useToast();
 	const [session] = useSession();
+	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 
 	const CollapseIcon = collapsed ? ChevronRight : ChevronDown;
@@ -155,9 +157,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 											onClick={() =>
 												Report.clearAll(targetId)
 													.then(({ count }) =>
-														toasts.add(
-															`Cleared ${count} report${count === 1 ? "" : "s"}`
-														)
+														toasts.add(t("cleared_count_reports", { number: count }))
 													)
 													.catch(toasts.addError)
 													.finally(mutate)}
@@ -253,7 +253,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 																	onClick={async () => {
 																		await Report.clear(report.id);
 
-																		toasts.add("Cleared single report");
+																		toasts.add(t("cleared_single_report"));
 																		await mutate();
 																	}}
 																>

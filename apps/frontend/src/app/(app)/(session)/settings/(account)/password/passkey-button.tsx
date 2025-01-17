@@ -5,6 +5,7 @@ import { useFormatter } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { Authentication } from "~/api/auth";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 
 export interface PasskeyButtonProps {
@@ -19,6 +20,7 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 	const toasts = useToast();
 	const router = useRouter();
 	const formatter = useFormatter();
+	const t = useTranslations();
 
 	return (
 		<div className="flex w-full gap-2 rounded-xl bg-white-40 shadow-brand-1  dark:bg-black-60 dark:text-white-20">
@@ -46,7 +48,7 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 					void Authentication.passkey
 						.delete(id)
 						.then(() => {
-							toasts.add(`Removed ${name || "passkey"}`);
+							toasts.add(name ? t("removed_item", { item: name }) : t("removed_passkey"));
 							return router.refresh();
 						})
 						.catch(toasts.addError);

@@ -257,7 +257,7 @@ export const InterestsForm: FC = () => {
 					customInterests,
 					interestId: defaultInterests
 				}).then(() => {
-					toasts.add("Saved interests");
+					toasts.add(t("bad_tangy_lynx_tend"));
 					return router.refresh();
 				});
 			}}

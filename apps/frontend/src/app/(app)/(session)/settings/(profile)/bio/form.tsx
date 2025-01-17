@@ -16,6 +16,7 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
@@ -25,6 +26,7 @@ export const BiographyForm: FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
@@ -68,7 +70,7 @@ export const BiographyForm: FC = () => {
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
-				toasts.add("Saved bio & pics");
+				toasts.add(t("cuddly_few_llama_catch"));
 
 				await mutateSession({
 					...session,
