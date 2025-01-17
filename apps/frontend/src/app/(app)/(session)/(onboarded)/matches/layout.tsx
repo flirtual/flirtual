@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { PropsWithChildren } from "react";
 import { fromEntries } from "remeda";
 import { unstable_serialize } from "swr";
@@ -19,6 +20,8 @@ import { LikesYouButton } from "./likes-you-button";
 export default async function ConversationsLayout({
 	children
 }: PropsWithChildren) {
+	const t = await getTranslations();
+
 	const [{ data: conversations, metadata }, likes] = await Promise.all([
 		Conversation.list(),
 		Matchmaking.likesYou()
@@ -46,30 +49,24 @@ export default async function ConversationsLayout({
 						<ModelCard
 							branded
 							containerProps={{ className: "flex flex-col gap-4" }}
-							title="Matches"
+							title={t("matches")}
 						>
-							<h1 className="text-2xl font-semibold">
-								You'll find your matches here
-							</h1>
-							<p>
-								When someone likes or homies you back, it&apos;s a match! You&apos;ll be able to message them and meet up in VR.
-							</p>
-							<p>
-								We prioritize showing you people who like or homie you, so you can match.
-							</p>
+							<h1 className="text-2xl font-semibold">{t("just_loud_orangutan_dash")}</h1>
+							<p>{t("born_green_lion_tend")}</p>
+							<p>{t("antsy_great_spider_drum")}</p>
 							<details>
 								<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-									Tips
+									{t("tips")}
 								</summary>
-								We&apos;ll show your profile to more people when you use Flirtual actively, like/homie people, and complete your profile details.
-								{" "}
-								<InlineLink href={urls.socials.discord}>Join our Discord</InlineLink>
-								{" "}
-								to share your profile and get feedback!
+								{t.rich("heavy_weak_hare_spin", {
+									link: (children) => (
+										<InlineLink href={urls.socials.discord}>{children}</InlineLink>
+									)
+								})}
 							</details>
 							<div className="flex flex-col gap-2">
-								<ButtonLink href={urls.browse()} size="sm">Browse profiles</ButtonLink>
 								<LikesYouButton />
+								<ButtonLink href={urls.browse()} kind="tertiary" size="sm">{t("browse_profiles")}</ButtonLink>
 							</div>
 						</ModelCard>
 					)

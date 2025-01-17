@@ -9,6 +9,10 @@
   overscroll-behavior: none;
 }
 
+* {
+  @apply ja:not-italic;
+}
+
 *:not(input) {
   user-select: none;
 }

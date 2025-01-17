@@ -89,9 +89,10 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 									</div>
 								)}
 							</Form>
-							<div className="grid grid-cols-2 gap-2">
+							<div className="flex w-full gap-2">
 								{canShare && (
 									<Button
+										className="grow"
 										Icon={ShareIcon}
 										size="sm"
 										onClick={async () => {
@@ -111,6 +112,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 									value={toAbsoluteUrl(urls.profile(profileLink)).toString()}
 								>
 									<Button
+										className="grow"
 										Icon={Link}
 										kind={canShare ? "secondary" : "primary"}
 										size="sm"

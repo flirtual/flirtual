@@ -1,4 +1,100 @@
 {
+	"ban-reason": {
+		"tUaxdXYAcyeb3G4Qc7gNLh": {
+			"name": "スパム",
+			"details": "スパムとしてのプロフィール。あなたのプロフィール内容はスパムと判断されました。このメールに返信してバンの異議申し立てを行い、アカウントの復旧を求めることができます。必要に応じて、プロフィールに更なる情報を追加していただく場合があります。"
+		},
+		"WSD2yPcs64FB27qpb4AGuT": {
+			"name": "なりすまし",
+			"details": "なりすましとしてのプロフィール。あなたのプロフィールが他人になりすましていると判断されました。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行い、アカウントの復旧を求めることができます。"
+		},
+		"nupwCrjodUd4ZvPizEBc8L": {
+			"name": "金銭の勧誘",
+			"details": "金銭の勧誘。Flirtual上でお金を要求することはできません。このメールに返信してバンの異議申し立てを行い、プロフィールから金銭の勧誘に関する内容を削除していただければアカウントが復旧される場合があります。"
+		},
+		"jBVZ29YcQ2dDXbURb6AxXk": {
+			"name": "広告",
+			"details": "広告行為。あなたのプロフィールは外部アカウントやサービスの宣伝を主目的としているようです。プロフィールにSNSや活動について記載すること自体は歓迎しますが、プロフィールの主な目的はデートや友達探しであるべきです。このメールに返信して異議申し立てを行い、プロフィールを修正していただければアカウントが復旧される場合があります。"
+		},
+		"5H9nMhQacZBD9Zomu7Tbt9": {
+			"name": "重複アカウント",
+			"details": "重複アカウント。Flirtualでは複数のアカウント作成を許可していません。このアカウントは無効化されましたが、他のアカウントは引き続き利用可能です。もし誤ってバンされたと思われる場合や、別のアカウントを無効化してほしい場合は、このメールに返信してください。"
+		},
+		"VgQw2st96dZKZotsnYUEaN": {
+			"name": "バン回避",
+			"details": "バン回避。以前のFlirtualでのバンを回避するために新しいアカウントを作成した、または他の手段で制裁を回避した可能性があります。以前のバンについて異議申し立てやアカウントの復旧を希望する場合は、もともとのバン通知メールに返信してください。"
+		},
+		"muXMqNjneKnwqxT8nqcy4d": {
+			"name": "未成年",
+			"details": "未成年。Flirtualの利用は18歳以上に限られます。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行ってください。本人確認のための安全なリンクをお送りし、身分証明の確認ができればアカウントを復旧できる可能性があります。"
+		},
+		"dWDkcjmXQEQRVoXmNkutAB": {
+			"name": "ハラスメント",
+			"details": "ハラスメント。バンの異議申し立てやアカウントの復旧を希望する場合は、このメールに返信してください。なお、もし通報があった場合でも、その詳細については公開できませんのでご了承ください。"
+		},
+		"hLwvdpKQiofFTCDHox75SY": {
+			"name": "差別的・憎悪表現",
+			"details": "差別的・憎悪表現。差別的なプロフィールやメッセージはFlirtualでは許可されません。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行い、アカウントの復旧を希望する旨をお伝えください。"
+		},
+		"EVU7hHnv5u6eQwRBTW8aYU": {
+			"name": "NSFWコンテンツ",
+			"details": "ヌードや過度に猥褻な内容はFlirtualでは許可されていません。このメールに返信してバンの異議申し立てを行い、プロフィールを修正していただければアカウントが復旧される場合があります。"
+		},
+		"KfFVwKB4DYMXx7foyqGUZM": {
+			"name": "暴力的・不快なコンテンツ",
+			"details": "暴力的・不快なコンテンツ。プロフィールに暴力的または不快な内容が含まれている可能性があります。バンに対する異議申し立てを希望される場合は、このメールに返信してください。"
+		},
+		"YLsXz4iHn9yNLLLmuMHLCT": {
+			"name": "自傷行為に関するコンテンツ",
+			"details": "自傷行為に関するコンテンツ。他のユーザーに不安を与える可能性がある自傷行為の言及が含まれていると判断されました。こちらにいくつかのメンタルヘルス支援リソース（https://flirtu.al/mentalhealth）をご用意していますのでご活用ください。もしバンの異議申し立てを希望される場合は、このメールに返信してください。"
+		},
+		"Lfb829DEo36f54Uu3H3ybj": {
+			"name": "詐欺、マルウェア、または有害なリンク",
+			"details": "詐欺やマルウェア、または有害なリンクがプロフィールに含まれていると判断されました。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行ってください。"
+		},
+		"HmF9W5yHfH3nLRYnt6F2cc": {
+			"name": "違法コンテンツ",
+			"details": "違法コンテンツ。あなたのプロフィールまたは行為がカナダ法や現地法に違反している可能性があります。誤ってバンされたと思われる場合は、このメールに返信して異議申し立てを行ってください。"
+		},
+		"8P2pi5232LTpzGTDWkBprc": {
+			"name": "その他"
+		}
+	},
+	"delete-reason": {
+		"jrAqzBkasZwqfjSPAazNq3": {
+			"name": "Flirtualでパートナーが見つかった"
+		},
+		"BMEJteBnvo8vrUrPh7j634": {
+			"name": "別のところでパートナーが見つかった"
+		},
+		"EkWwgZavkCxJhRgKJF3yRn": {
+			"name": "対面型のデーティングアプリの方が好み"
+		},
+		"jgc6z6qpeYmTAwHmid6n8X": {
+			"name": "ほかのVRデーティングアプリの方が好み"
+		},
+		"kTXr4okVAGLovjKBiwSgnF": {
+			"name": "十分なマッチが得られない"
+		},
+		"TaqMV38Taxdz7ZNxEG4oEU": {
+			"name": "十分にデートできない"
+		},
+		"3fm9o3onrqPiwKhceexRMZ": {
+			"name": "マッチした相手とのやり取りが良くなかった"
+		},
+		"6R764W55PvotuTz3BBRHXD": {
+			"name": "マッチやプロフィールの質が低い"
+		},
+		"J3vVp9PWZQi5cEuk8G8wij": {
+			"name": "技術的な問題"
+		},
+		"sQcEHRLCffbLfcgM4zAELf": {
+			"name": "少しお休みしたい"
+		},
+		"g4hPG9psXVxzKa4Tr9GjDN": {
+			"name": "その他"
+		}
+	},
 	"game": {
 		"3nzcXDoMySRrPn6jHC8n3o": {
 			"name": "VRChat"
@@ -961,101 +1057,1244 @@
 			"name": "Virtual Pool IRL"
 		}
 	},
+	"gender": {
+		"mosDhQUt8JGumiup4yQWbZ": {
+			"name": "彼女 / She/Her"
+		},
+		"hv43aTXJZjMHfXRXvTcYiH": {
+			"name": "彼 / He/Him"
+		},
+		"pAzAxxF4UYr3qN6F4tPYec": {
+			"name": "彼ら / They/Them"
+		},
+		"tpkW7r8PZ2RUuYGUSYi82N": {
+			"name": "女性",
+			"plural": "女性"
+		},
+		"rhw3rcbheU7vc9vcSy6W6V": {
+			"name": "男性",
+			"plural": "男性"
+		},
+		"879KtanHc548synGhcNE7J": {
+			"name": "アジェンダ",
+			"definition": "いかなる性別にも当てはまらない、または性別自体を持たない人。"
+		},
+		"RdMpwqWGydDgk9X2u32BBW": {
+			"name": "アンドロジナス",
+			"definition": "男性的要素と女性的要素を併せ持つ人。"
+		},
+		"YBkoUyfKJd6jJGwbekY3HN": {
+			"name": "バイジェンダー",
+			"definition": "2つの性別アイデンティティを持つ人。"
+		},
+		"2ETbJJJ3shADLphvncUwSL": {
+			"name": "シス女性",
+			"definition": "出生時に割り当てられた性別が女性であり、自身の性自認も女性である人。"
+		},
+		"GJitRtRoYWT6DfVasptK7N": {
+			"name": "シス男性",
+			"definition": "出生時に割り当てられた性別が男性であり、自身の性自認も男性である人。"
+		},
+		"aKEzfuPY6TaMkmnugQWLUd": {
+			"name": "ジェンダーフルイド",
+			"definition": "時間の経過とともに性自認が変化する人。"
+		},
+		"zMta3qtGyqW4hFdcDFUHik": {
+			"name": "ジェンダークィア",
+			"definition": "伝統的な男女の二元性に当てはまらない人。"
+		},
+		"fAPzVgy7VyGPgAPhkwSkSU": {
+			"name": "ジェンダーノンコンフォーミング",
+			"definition": "社会的に期待される性別の役割や規範に従わない人。"
+		},
+		"wJdnfUvuvACEWRSV4KBdzS": {
+			"name": "ヒジュラ",
+			"definition": "南アジアの文化における第3の性。"
+		},
+		"w3t9h2SyNhr2rBWouXim8c": {
+			"name": "インターセックス",
+			"definition": "典型的な男性または女性の身体的特徴に当てはまらない性特性を持って生まれた人。"
+		},
+		"QwXvxjisosKeTP97ouczoZ": {
+			"name": "ノンバイナリー",
+			"definition": "性自認が男女の二元に当てはまらない人。"
+		},
+		"PFEmTKdmxAoPuxttYPwFZb": {
+			"name": "パンジェンダー",
+			"definition": "複数、またはあらゆる性別を自認する人。"
+		},
+		"tyrdBY4Rbfitznr65hpRPR": {
+			"name": "トランスジェンダー",
+			"definition": "出生時に割り当てられた性別と自身の性自認が異なる人。"
+		},
+		"HWte4cB6TUzzXZoJeuxJuf": {
+			"name": "トランス女性",
+			"definition": "出生時に割り当てられた性別が男性であり、女性として自認する人。"
+		},
+		"XTVsHQMWXiJGEc5xCf7RUb": {
+			"name": "トランス男性",
+			"definition": "出生時に割り当てられた性別が女性であり、男性として自認する人。"
+		},
+		"rGFyY9WbvBBJSUAUpY5iUE": {
+			"name": "トランスフェミニン",
+			"definition": "出生時の性別が男性であり、女性的な性自認を持つ人。"
+		},
+		"CHkgoEoKzTSeVaLVByviBZ": {
+			"name": "トランスマスキュリン",
+			"definition": "出生時の性別が女性であり、男性的な性自認を持つ人。"
+		},
+		"JL8AaDCJMVApbEuAfwG86Y": {
+			"name": "ツースピリット",
+			"definition": "北米先住民族の文化における第3の性。"
+		},
+		"jAL62ePbibxaG4FPu7S8LG": {
+			"name": "その他"
+		}
+	},
 	"interest": {
+		"cqaodBdFdfeegFVzxuA3QB": {
+			"name": "3Dモデリング"
+		},
+		"eTSWVwrcAF6tzHDPDLvJAd": {
+			"name": "3Dプリンティング 🖨️"
+		},
+		"NZjaoEMBizfYF2ScZbYAuG": {
+			"name": "420フレンドリー 🍁"
+		},
+		"vHGjkMhPppZ5bhh8uded4G": {
+			"name": "アートな美的センス ✨"
+		},
+		"NpxR4mSbkKEo2ru79eboyS": {
+			"name": "奉仕活動 🤝"
+		},
+		"siBAM5nerfTqbBT6JCa6wf": {
+			"name": "冒険家"
+		},
+		"vsfvQqgYfRMqy9GcvYbSTF": {
+			"name": "エアソフト"
+		},
+		"iPWiK6ULojrRgUsMcQArYY": {
+			"name": "オルタナティブ 🎸"
+		},
+		"eGP3EZe6r5NUwfpgFc9Mv6": {
+			"name": "常にダークモード 🌚"
+		},
 		"ZH7obevCWQmuLmHGQgaTF7": {
 			"name": "Among Us"
+		},
+		"gD4Tp9YNXnyTctMQwGaijR": {
+			"name": "動物"
+		},
+		"BTGLoHoCuPjvY2NrRKSWpb": {
+			"name": "アニメ 🌸"
 		},
 		"sZZJLGtJX8MohZENZX9GdJ": {
 			"name": "Apex Legends"
 		},
+		"qmthjNQK6U6zxeUHWQWFEY": {
+			"name": "みずがめ座 ♒️"
+		},
+		"3MJtyHPdUjvYhPsbEci58W": {
+			"name": "おひつじ座 ♈️"
+		},
+		"ZNXNaLMr85qQbKmX2TsrGQ": {
+			"name": "アート 🎨"
+		},
 		"y6mH6biHKb5u7DWiAx65t4": {
 			"name": "Avakin Life"
+		},
+		"yfQMpqdsbfNqCKjzrJT4wR": {
+			"name": "アバタークリエイター 🛠️"
+		},
+		"g2fAPyAgPKt7WaoVZYxPm2": {
+			"name": "航空 ✈️"
+		},
+		"Tc4uFhvgWvKjVssZhGAQuj": {
+			"name": "方向音痴 🧭"
+		},
+		"UPLtrF5xLGLpnfWkfv8WDg": {
+			"name": "野球 ⚾️"
+		},
+		"wS9AhkYmx7jSgtoqwUw8oL": {
+			"name": "バスケットボール 🏀"
+		},
+		"ufVyJtRHU6RpqVjnFdsRU9": {
+			"name": "サイクリング 🚲"
+		},
+		"ba58TDSPbjG9jtZixoneUn": {
+			"name": "ボードゲーム 🎲"
+		},
+		"R9vN8EaDE7xTuUFMXA4bkP": {
+			"name": "Boothアバター"
+		},
+		"8VvHQ63mBuCLdtc5bXcAdb": {
+			"name": "カフェイン中毒 ☕️"
 		},
 		"UXCy3bePW2WMDA6RCv6iZh": {
 			"name": "Call of Duty"
 		},
+		"7nnemBz5mR5iHZNjw8E4aB": {
+			"name": "キャンプ 🏕️"
+		},
+		"kYABzgDPzJeaU9TJez4JKc": {
+			"name": "かに座 ♋️"
+		},
+		"F96TUKJtBt8UtbHEeDss8M": {
+			"name": "やぎ座 ♑️"
+		},
+		"Eu7WzNKBxcQKXhPWgAWAYW": {
+			"name": "車 🚗"
+		},
+		"nzy5prmodZfCQmkr6nMP5m": {
+			"name": "アニメーション / カートゥーン"
+		},
+		"m9K2k5wXQrVdehe3KN9ZaY": {
+			"name": "猫 🐈"
+		},
+		"TJeFyc6EQhdBmEoLGqpYDh": {
+			"name": "カオティック・イービル"
+		},
+		"xSLzANhRAqr5h3sXqhoKvT": {
+			"name": "カオティック・グッド"
+		},
+		"66TnRrCCPUeUdqjotUgReM": {
+			"name": "カオティック・ニュートラル"
+		},
+		"JTnaqV7ZtSm7ecGmk9JbUN": {
+			"name": "チェス ♟️"
+		},
+		"pJfikJmWtJZnfKJbNXZqnE": {
+			"name": "まったりヴィラン風 😎"
+		},
+		"WpPJDKVjSHqLB5FhnYa6JQ": {
+			"name": "中二病"
+		},
+		"gjdYnF6jWBxtweAB3YmcLU": {
+			"name": "クラシック 🎻"
+		},
+		"Hacqj4nYnvzcbCD8vxPniH": {
+			"name": "クラブ 🪩"
+		},
+		"Qf69ZcHcgzrGyW8tVUSvkk": {
+			"name": "コメディ"
+		},
+		"PuMdJoFBdxvf8xWuSpDmP7": {
+			"name": "コミック"
+		},
+		"GcPbtTWyfDWqVeiNLzsV7c": {
+			"name": "コンサート"
+		},
+		"CrvLT7p3UtXCe3ZmG8dZt7": {
+			"name": "コンテンツクリエイター"
+		},
+		"9HPT7wgAd7HJajQkAXMbrQ": {
+			"name": "料理 🍳"
+		},
+		"4vTwGjfH9oEk6fLthm4HjX": {
+			"name": "コスプレ 👘"
+		},
+		"RNP3HRDvwVZnCZ28wZcYGf": {
+			"name": "コテージコア 🌻"
+		},
 		"XESzLLYMMdaVqTQ8Tv6Qig": {
 			"name": "Counter Strike"
+		},
+		"3MbxP4iLYi6MC6FUbeqYbX": {
+			"name": "カントリー 🤠"
+		},
+		"Bmkx6cmyU9kbuA3pdwv43o": {
+			"name": "抱きしめ合うのが好き 🥰"
+		},
+		"th2ujgrqPcZifgaLYuv99Y": {
+			"name": "サイバーパンク"
+		},
+		"6bNZo7xhhuEXCekE5PyU2Z": {
+			"name": "DIY 🛠️"
+		},
+		"b65XzJUEmhkGcs4X6HtQvD": {
+			"name": "DJ 🎧"
+		},
+		"EXYCJJeyc6JP5yKhkt2GoX": {
+			"name": "ダジャレ好きの父"
+		},
+		"cEfjsZtYLiWDSMSeg7q8V5": {
+			"name": "ダンス 💃"
 		},
 		"JctyN5EwihD2pa9zVktx2o": {
 			"name": "Dead by Daylight"
 		},
+		"Hge2bJA39qY7XSnqqrrY9Y": {
+			"name": "デフ（聴覚障害）"
+		},
 		"V7nnYFUmEahv69NVybWzrP": {
 			"name": "Destiny 2"
+		},
+		"koZvXYA7RHi7hgPN7b3Vca": {
+			"name": "ディズニー"
+		},
+		"BB9qTGoqRiniinjxcy7jzn": {
+			"name": "ドキュメンタリー"
+		},
+		"xXDcmmB7yrZEMWi4ZLg6z3": {
+			"name": "犬 🐶"
+		},
+		"RjqdzibeHN5ovVcvNuneSB": {
+			"name": "ドローイング 🖋️"
+		},
+		"fM4o5U2ebgVDFEvsD66hEe": {
+			"name": "飲み仲間 🍻"
+		},
+		"4THEgH4BLaftoQWAhYaFoM": {
+			"name": "ドライビングシミュレーター 🏎️"
+		},
+		"rsdnj8EDHstxBCLX4Z7kEn": {
+			"name": "Dungeons & Dragons 🏰"
+		},
+		"mTwcM4tfp49ronrVRbPvVK": {
+			"name": "ENFJ（主人公タイプ）"
+		},
+		"PkuUGAJvgsGnkfeMcGg56J": {
+			"name": "ENFP（広報運動家）"
+		},
+		"BkTRV57GEQdMUuYonoo3g4": {
+			"name": "ENTJ（指揮官）"
+		},
+		"YBGsznRconrCoTa5YbQsBW": {
+			"name": "ENTP（討論者）"
+		},
+		"aWrMMCsArXZAbRqYqyXL8g": {
+			"name": "ESFJ（領事官）"
+		},
+		"Upgh5qK8AzorVt6rgiWTR7": {
+			"name": "ESFP（エンターテイナー）"
+		},
+		"PPeutfrRpwTs2v2CVNT6TR": {
+			"name": "ESTJ（幹部）"
+		},
+		"4q9oopWm8XNXoX7z4RnQE8": {
+			"name": "ESTP（起業家）"
+		},
+		"FjZaJeuY5TD2KhzNB67Y5T": {
+			"name": "エレクトロニック 🎛️"
+		},
+		"mNhUREva2s5sfkMxLfwqk3": {
+			"name": "エモ 🖤"
+		},
+		"ETXYWLwrk2BQD3mpvjXaN6": {
+			"name": "感情支えます担当"
+		},
+		"4UEEGvGvhyBTRWKUjVAMMe": {
+			"name": "ワールド巡りが好き 🗺️"
+		},
+		"3PrSVjk8jt594oPCrvDFvL": {
+			"name": "FPS 🔫"
+		},
+		"mh6zGfyseAeUk82fuqu9VT": {
+			"name": "ファンフィクション"
+		},
+		"fZEB4pAAHbst5B5dwnCFbS": {
+			"name": "ファンタジー 🐉"
+		},
+		"La4WBQ9zBc7k6VCLJgEuDD": {
+			"name": "ファッション"
+		},
+		"3jGAehpXeSjweUPwpTRvJZ": {
+			"name": "フェンボーイ"
+		},
+		"bR2veGptTAE4VHitxqZxJV": {
+			"name": "格闘ゲーム 🥊"
 		},
 		"xHBPtTXA6S5ptoJ9nH3GB7": {
 			"name": "Final Fantasy XIV"
 		},
+		"BrKGJW7c8TvnQh7zxbJNuQ": {
+			"name": "釣り 🎣"
+		},
+		"rG2FKKUdai8Gsn9U6cQp2T": {
+			"name": "フィットネス 💪"
+		},
 		"wNLsMkCkrPbHHwpRbPrm7E": {
 			"name": "Five Nights at Freddy's"
+		},
+		"jQD3WHErNsMnhtMeDgE6SE": {
+			"name": "フライトシム ✈️"
+		},
+		"9zSDJJgBFsgxjHGYCcEQ43": {
+			"name": "食べ物 🍕"
+		},
+		"y53Q79KXYjdqCJps7Nzn8e": {
+			"name": "フットボール 🏈"
+		},
+		"658ffCwnSFxaY3hQSDvkGW": {
+			"name": "フォークリフト免許持ち 🦺"
 		},
 		"iH4ixES2RmvvG5F69eQjQe": {
 			"name": "Fortnite"
 		},
+		"MTmW4A9pTEqZem2wZvGN3F": {
+			"name": "Furry 🐾"
+		},
+		"VJfGs3Znz75RWK3nmWwaE5": {
+			"name": "ガチャ 🎰"
+		},
+		"QSS6J4qhxDDiyWrbVoHxyY": {
+			"name": "ゲーム開発"
+		},
+		"PAepdb7ewc4GVEnpWDCbcK": {
+			"name": "ゲーム全般 🎮"
+		},
+		"P8E5xJTRAgxycZMErjVMYa": {
+			"name": "ガーデニング 🪴"
+		},
+		"MneeWkir8YLxVNH2BxDtKR": {
+			"name": "ふたご座 ♊️"
+		},
 		"vFjxVagULNzG4SQgncbcGN": {
-			"name": "Genshin Impact"
+			"name": "原神"
+		},
+		"NxJszSBMm3vkbRaZmPd2gh": {
+			"name": "ギフト🎁"
+		},
+		"KUtsRJcw6NQPr8VCAbMaE2": {
+			"name": "ゴルフ ⛳️"
+		},
+		"7PSViCMY8iKswNUxAjDwiY": {
+			"name": "ゴス 🕷️"
 		},
 		"Hnr8pBT5G3XxNmYgabRTVU": {
 			"name": "Grand Theft Auto"
 		},
+		"JGwyrqtUfCC7HVNZ2ot8LV": {
+			"name": "ギター 🎸"
+		},
+		"ftwVayAr6jTqmUw8A4RWMg": {
+			"name": "銃"
+		},
 		"yuA96WnDtShVGMZYJXHbRc": {
 			"name": "Halo"
+		},
+		"BJwi9ji9dCqrX6YwqVLb2X": {
+			"name": "ヘッドパット"
+		},
+		"Ka3JLErYVPJWHLLzQBT2WE": {
+			"name": "ハイキング 🥾"
+		},
+		"dumoS7nkPSh4vDaVCMNBYc": {
+			"name": "ヒップホップ 💿"
+		},
+		"7xQwxvJ5MDtfjTEHtRcdm9": {
+			"name": "ヒッピー 🌼"
+		},
+		"xY4UQxjZP8Qb4ybKTvAka9": {
+			"name": "歴史 📜"
+		},
+		"D9xPvsU52DEStz6gnJJewe": {
+			"name": "ホッケー 🏒"
+		},
+		"HVQvfazU9oX6qSeM8kXvaM": {
+			"name": "ホラー 👻"
+		},
+		"gAQLfYHHAQu7hhdBdBN35b": {
+			"name": "狩猟 🦌"
 		},
 		"u8ZKWRf3XK3ipbHo5cuArS": {
 			"name": "IMVU"
 		},
+		"daTRTaC6weg6cu9j6K5XZV": {
+			"name": "INFJ（提唱者）"
+		},
+		"4CgRETn3q2iwk3h8fzWzSQ": {
+			"name": "INFP（仲介者）"
+		},
+		"WN28HaENtrSDwSgKxX8Xv7": {
+			"name": "INTJ（建築家）"
+		},
+		"rD5R2Aqg5yVnK5QfF22R3Z": {
+			"name": "INTP（論理学者）"
+		},
+		"K9piJDTQhCoabBZR4k6TzB": {
+			"name": "ISFJ（擁護者）"
+		},
+		"EMiJ5kbdhDp6QtCr3P7pBV": {
+			"name": "ISFP（冒険家）"
+		},
+		"dzBoXKdvDJ77aoh9GLnusi": {
+			"name": "ISTJ（管理者）"
+		},
+		"jaJkU3XRMqRmxGZia74XB8": {
+			"name": "ISTP（巨匠）"
+		},
+		"yZAPLKAMizp9ha78cErdkF": {
+			"name": "インディーゲーム 🕹️"
+		},
+		"brqEVFEEsMUdoAE5oabtAh": {
+			"name": "インディー 📼"
+		},
+		"VviV5H6FZMUUrmvpV8A9N6": {
+			"name": "J-pop 🇯🇵"
+		},
+		"KpHyxBddWuMZzhx8vPHUwj": {
+			"name": "JRPG 🎌"
+		},
+		"ygSknA4rAWip5bDjXwawYd": {
+			"name": "ジャズ 🎷"
+		},
+		"ZwP6JmwP2Hk8PMpujmvGDY": {
+			"name": "Kドラマ 🇰🇷"
+		},
+		"rY6Mf9bdYcpLbCWpVBnhym": {
+			"name": "K-pop 🇰🇷"
+		},
+		"K9MHU3GP3kVfW8yck8ZPdg": {
+			"name": "カラオケ 🎤"
+		},
+		"B4vkCyhTZJX5SvkQ7RWoJm": {
+			"name": "かわいい系 💖"
+		},
 		"Ajo23jt7zDTZjJ85ib7uSS": {
 			"name": "Kingdom Hearts"
+		},
+		"guNDL9je3iot5XcYqaj9uS": {
+			"name": "LGBTQ+ 🏳️‍🌈"
+		},
+		"NMCLsa8AfCkuZBTqYSzEQm": {
+			"name": "語学学習"
+		},
+		"sYGiQ4XuHJihLvWMZGPApc": {
+			"name": "ラテン 💃"
+		},
+		"JAVpr44XUBC5wkmxtKX4rW": {
+			"name": "ローフル・イービル"
+		},
+		"BTmeninByD4KaKKkQTiYga": {
+			"name": "ローフル・グッド"
+		},
+		"QqXRreYsKwxs38WyUPPWwi": {
+			"name": "ローフル・ニュートラル"
 		},
 		"ZA7gUc3YbdSdhSbwpnt8rm": {
 			"name": "League of Legends"
 		},
+		"fcHJKqULdrBvrAmPF4vuV9": {
+			"name": "しし座 ♌️"
+		},
+		"rDDDYYEjrdUWFjgaE4NSDM": {
+			"name": "てんびん座 ♎️"
+		},
+		"BMkKqLcXLZ7g77u47mHnza": {
+			"name": "ひたすらにのんびり"
+		},
+		"tYzVk2i9uhMzVXuPXcXe2b": {
+			"name": "VRで生きてる 🥽"
+		},
+		"r9YDRMbRwSsoFybfDo6jdG": {
+			"name": "浜辺の散歩 🏖️"
+		},
+		"JAsmfUmdh2uL6ZLZTWp8dF": {
+			"name": "一緒にゲームしよう 🎮"
+		},
+		"GH8sb9A9WRYBoKCurnTqFH": {
+			"name": "MMO 🌐"
+		},
+		"hJoRPhWDwSDteA7nXarZ5i": {
+			"name": "MOBA ⚔️"
+		},
+		"uDxAuTWV85Jr7r8YbnDxnd": {
+			"name": "Magic: The Gathering"
+		},
+		"KsQnqSKQQKjhTvdHhYX86G": {
+			"name": "マンガ 📚"
+		},
+		"wR9dYu4RUTPFwPtoKov2RB": {
+			"name": "マンファ 🇰🇷"
+		},
+		"J9HbxPqPYnCFPKHUyg8ece": {
+			"name": "武道 🥋"
+		},
+		"g7SwgV8y7JQNG4UrQUJUCP": {
+			"name": "マーベル"
+		},
+		"BmuNHSVwKnyyVMUqEMqpYg": {
+			"name": "メカパイロット 🤖"
+		},
+		"fAgh4qEey9okWzNjooerLG": {
+			"name": "瞑想 🧘"
+		},
+		"JTp3btTZgozbnvZoatpJwR": {
+			"name": "ミーム好き"
+		},
+		"9LGdoTTRR6eDXjTRqEwrxD": {
+			"name": "メタル 🤘"
+		},
+		"bz9jVSncDmgYzdBdg98NV3": {
+			"name": "ミリタリー"
+		},
+		"g4VXtqWN8TKiCTxzBcWeRU": {
+			"name": "マインド探求 🧠"
+		},
+		"QXAV9E84tkhjZKgKqgRjDA": {
+			"name": "鏡の住人 🪞"
+		},
 		"gbeLm6w9S7jTuHZ3b6jhCc": {
-			"name": "Monster Hunter"
+			"name": "モンスターハンター"
+		},
+		"uwhn9iPM4kntT2Bq2WDXKN": {
+			"name": "バイク 🏍️"
+		},
+		"Amq7oATgh6UcQx4SoeJdkD": {
+			"name": "映画 🍿"
+		},
+		"8kbF5HwfJBoBC4q324xHJT": {
+			"name": "音楽制作 🎧"
+		},
+		"fEnnW4XeNnNbqReCryY58R": {
+			"name": "音楽 🎵"
+		},
+		"qjjjMrjxZHuqVMuC9ADyiZ": {
+			"name": "ミュート"
+		},
+		"jxfxsraaBHshyVCEHhk2Qg": {
+			"name": "ミステリー 🔎"
+		},
+		"6PobkXZnqFst2ZAZQWeS2D": {
+			"name": "自然 🌲"
+		},
+		"8T5dMoiNwZyQuiD6xJKMVH": {
+			"name": "オタク 🤓"
+		},
+		"NdtkEKfWtyNqKux7gs5juV": {
+			"name": "ニュートラル・イービル"
+		},
+		"2oxVb7fbNxvorrXZk7bgv3": {
+			"name": "ニュートラル・グッド"
 		},
 		"riLJvHysCVv2wbzjz34kbC": {
-			"name": "Nintendo"
+			"name": "任天堂"
+		},
+		"7MxTQSH57TKECXfFJXjVea": {
+			"name": "オールドソウル"
+		},
+		"vHWMgQ4fHUwUxY72vi5Sz7": {
+			"name": "オタク系（オタク）"
 		},
 		"LNJB83mjPSFgWnjKuLBSEG": {
 			"name": "Overwatch"
 		},
+		"bTWW3iSkRQD8V3uQ9viWvN": {
+			"name": "パラノーマル調査員 👻"
+		},
+		"acyqyBz7FZQFSp8iHYWB5A": {
+			"name": "悪だくみ仲間"
+		},
+		"bsKcuRDVC99WuWnBUiSEDN": {
+			"name": "パリピ 🎉"
+		},
 		"A55Aw7nfXg2A75uwNJhwrh": {
 			"name": "Persona"
 		},
+		"zoEgxZ7KoBNRCrgA3XbdDA": {
+			"name": "ファントムセンシング"
+		},
+		"2Wz4xFdHgY8PZf2mkqWpwa": {
+			"name": "哲学"
+		},
+		"PzXGL29kYUR8Tja6WQDDKT": {
+			"name": "写真 📸"
+		},
+		"mmkY4XtSERJYxeEfdmY68D": {
+			"name": "スキンシップ 🫂"
+		},
+		"KqYcEh6DTSd62kVJUU2Aim": {
+			"name": "ピアノ 🎹"
+		},
+		"qUavCrMx6HrR2v5wf7stFN": {
+			"name": "うお座 ♓️"
+		},
 		"BBQbPpGQv5QA6tbm6qV8Vg": {
-			"name": "Pokémon"
+			"name": "ポケモン"
+		},
+		"qDsrBajn8sdumFdSHNr4e2": {
+			"name": "政治"
+		},
+		"gHSLGNxhyjKKkarcNq9nBa": {
+			"name": "ビリヤード 🎱"
+		},
+		"YQSAPjKy33ZRxaSZqbTxCk": {
+			"name": "ポップ 🌟"
+		},
+		"6UTLvYWp6y4Snv6hexijLD": {
+			"name": "レイブガール"
+		},
+		"2gBkrkuQN6PjTEeexms7nf": {
+			"name": "プログラミング ⌨️"
+		},
+		"zqjTVmpmDLmnWs2PhXYFoG": {
+			"name": "心理学"
+		},
+		"dEWG2fauN29LXFiaGSAvK4": {
+			"name": "パンク 🧷"
+		},
+		"TuaoosdiDnHXC7FHVArkdW": {
+			"name": "パズル 🧩"
+		},
+		"7N7jNvobkTyCBG9PWvcRUm": {
+			"name": "クオリティタイム ⏳"
+		},
+		"VPhvhASscLY49xNFjw4o8n": {
+			"name": "R&B 🎤"
+		},
+		"8t9ZxQYhZtPZSJM99pHqtB": {
+			"name": "RPG 🧙"
+		},
+		"XJUTFqrF2avzVtHMA7AGzk": {
+			"name": "読書 📖"
+		},
+		"is5SeEgzo3ZAH6GPTCX7ma": {
+			"name": "宗教"
+		},
+		"crtnnE8akbJwwA9BdqUFRc": {
+			"name": "レトロゲーム 👾"
+		},
+		"M9FwNtCEQT3xUNV4EsnQ3d": {
+			"name": "リズムゲーム 🎼"
+		},
+		"pET4ZuyMW3ACUXzaYaxd3S": {
+			"name": "ロック 🥁"
 		},
 		"LpaAvRMRqT3yWQskovUta4": {
 			"name": "Rocket League"
 		},
+		"znH7NHT6ysUrRHzVcqxNYQ": {
+			"name": "ロールプレイ 🎭"
+		},
+		"5XrzAmQSCM2onKyJBjbr6j": {
+			"name": "ランニング 🏃"
+		},
+		"jEf5ZYAU7SMbteXJbQydZJ": {
+			"name": "いて座 ♐️"
+		},
+		"JS498WmSAassZnJU3dyvzj": {
+			"name": "SF 👽"
+		},
+		"ZgUBUVj26rHvpPyoF6TF8c": {
+			"name": "科学 🔬"
+		},
+		"o4MbotEvh3dhz2Symgvtbj": {
+			"name": "さそり座 ♏️"
+		},
 		"uiEz3zZDfe7UaJgoodssZE": {
 			"name": "Second Life"
+		},
+		"AGheroLVRTz6DvXnDdMJh3": {
+			"name": "3人目を探してる"
+		},
+		"f2BCBxugmR8H3dGdrJRmpV": {
+			"name": "恥ずかしがり屋 🙈"
+		},
+		"EkGzXrWW5fEnC9HdJ9okWc": {
+			"name": "手話"
+		},
+		"Dr4VrjyyvH8kbdrozsMMFd": {
+			"name": "歌うのが好き 🎤"
+		},
+		"yNrG4wB8Et3kGTaofec3Be": {
+			"name": "スケートボード 🛹"
+		},
+		"k53DpziykEgW7M6engXhem": {
+			"name": "スケート ⛸️"
+		},
+		"ibrUnfQBwhrzBdFPhxisp2": {
+			"name": "寝落ち通話"
+		},
+		"dBCYhmt2vTLfw7DNgNmP53": {
+			"name": "VRで寝る"
+		},
+		"8NWGrqWSzC5KQ6QDanNwgf": {
+			"name": "スニーカー 👟"
+		},
+		"oYT4VenxFxNrBshwrsM2WH": {
+			"name": "スノーボード 🏂"
+		},
+		"MDRvcQGDrY6VMbaGtPk89m": {
+			"name": "サッカー ⚽️"
+		},
+		"UkC6H5qf7xGFtpueRQQWxS": {
+			"name": "社交的 🦋"
+		},
+		"8ioURqcYyxmHCkcyKFiub2": {
+			"name": "ソーシャルゲーム 💬"
+		},
+		"AyaSxEYUdjX4maBsTuhxS5": {
+			"name": "人見知り"
+		},
+		"svS7TMjzrzjmsh2X3Qe23e": {
+			"name": "宇宙 🪐"
+		},
+		"xLnre8baC2zsrWJog4ypjm": {
+			"name": "スピードラン"
+		},
+		"dQAeMiAqHwxcVbjHYkC6dC": {
+			"name": "スピリチュアル"
+		},
+		"wZBbZRUrr68X5CjVXmruKL": {
+			"name": "スポーツ"
+		},
+		"GzLxoRQCmGWBjABNrCZWiD": {
+			"name": "スポーツゲーム ⚽️"
+		},
+		"Z3JAwEM6n7wuc5dAXX36DQ": {
+			"name": "スター・ウォーズ"
+		},
+		"NrsAVMm65UFBPsqEPkWgZT": {
+			"name": "ストラテジーゲーム ♟️"
+		},
+		"Y65RLPXEzBHsnZphF84Gnc": {
+			"name": "配信・ストリーミング 🎥"
+		},
+		"gUm9n5xfnMzCVtxA9rCnLV": {
+			"name": "学生 🎓"
+		},
+		"VuojdaCuJQEAsPaxq26jmK": {
+			"name": "サバイバルゲーム 🏕️"
+		},
+		"j6ZmBCoKutQZ2ABFjJvZoK": {
+			"name": "甘いもの 🍰"
+		},
+		"5FcuhkdAngzscEJK4DiWPo": {
+			"name": "水泳 🏊"
+		},
+		"usxHtsoFwppLo787TfBvLF": {
+			"name": "TV 📺"
+		},
+		"iXKfPBmMRxKGzNZA38g3iS": {
+			"name": "タトゥー"
+		},
+		"vJsJJUXQXc4c9jaaTyzmBZ": {
+			"name": "おうし座 ♉️"
 		},
 		"3b7sZwdYj6tNAziQQuCKEE": {
 			"name": "Team Fortress 2"
 		},
+		"7mfqhCUsniXPWXa6EK7Qqh": {
+			"name": "テクノロジー 💾"
+		},
+		"WPUHPKAHLmHw2kcbzfA9tb": {
+			"name": "テニス 🎾"
+		},
+		"47vHoxVTRx5ZuV7aJmxm5N": {
+			"name": "演劇 🎭"
+		},
+		"UCTar6EEZJDhncJtQtAjVC": {
+			"name": "タイムトラベラー ⏳"
+		},
 		"dQdjQyL9M8kCxrL9Si2zqM": {
-			"name": "Touhou"
+			"name": "東方"
+		},
+		"fe2ysuwBXcZfCbbGNhbe3L": {
+			"name": "旅行 🧳"
+		},
+		"KMrisZLkbq6VEeTqiAdSHc": {
+			"name": "トゥルークライム 🕵️"
+		},
+		"YjvHypMDZzANaTkadS9apP": {
+			"name": "トゥルーニュートラル"
+		},
+		"pHU7w3PAb7fhcTDqFQWMKX": {
+			"name": "ツンデレ 💢"
+		},
+		"aBheDEqVsh7iCgEVmNhsoE": {
+			"name": "Twitch"
 		},
 		"YCg9tPA8V3bfbjDqoM79ei": {
 			"name": "Undertale"
 		},
+		"jJmDX2sxgQ6YGVXN2CNJFV": {
+			"name": "VTuber"
+		},
 		"p39ZFJiMxJoCGZNRjo4osC": {
 			"name": "Valorant"
+		},
+		"jMDdcShxVDc5cj2uX4ygyX": {
+			"name": "Vaporwave 🌊"
+		},
+		"Qec82XHyZh6r2HpREWULv2": {
+			"name": "ヴィーガン 🌱"
+		},
+		"QpsRiXnBWQMG5ZYtZd8BoR": {
+			"name": "ビデオ撮影 🎥"
+		},
+		"zp25zogqt2XWNG9v2wi4ET": {
+			"name": "おとめ座 ♍️"
+		},
+		"Qm4yoeSbfnL9AoDZHwotWX": {
+			"name": "バーチャル放浪者"
+		},
+		"rj3SPLcAwa6bkKSuBxsfsD": {
+			"name": "ビジュアルノベル 📖"
+		},
+		"V6dXwTJecCTbaUy4nbZip4": {
+			"name": "ボーカロイド"
+		},
+		"XyLtoquzjjLdYyGHtojCo5": {
+			"name": "ボイスアクティング 🎙️"
+		},
+		"Uv5MM3vocd3asfdE2VErQk": {
+			"name": "バレーボール 🏐"
+		},
+		"6vPzqeBurT9AtnQcxG3knW": {
+			"name": "ボランティア 🤝"
+		},
+		"tqFRhDSaSL6m2d9YHGQdSA": {
+			"name": "Warhammer"
+		},
+		"nZfksPK35VkxjtjBG5De7f": {
+			"name": "魔女っ子 🧙‍♀️"
+		},
+		"uiFv8roivUuL7LFjXoPkiY": {
+			"name": "肯定的な言葉 💬"
+		},
+		"bSH9xxw4iBP736fUjxeMrX": {
+			"name": "ワールドクリエイター 🛠️"
 		},
 		"j7cbohAXG2oFtBJqpxhKmL": {
 			"name": "World of Warcraft"
 		},
+		"WTw73CaXZ4AWmbiQpooJiQ": {
+			"name": "執筆 ✍️"
+		},
+		"WEnom9DcbnWrCepxx2PNnE": {
+			"name": "ヤンデレ 😍"
+		},
+		"neCdcEJXKyQdf4uSqd5Jig": {
+			"name": "ヨガ 🧘"
+		},
+		"vDr4xQGTCNYMTMNUu8v5Wg": {
+			"name": "YouTube"
+		},
+		"mpS9oivuYqhZk99Vca5dHn": {
+			"name": "禅の心 🪷"
+		},
 		"cU8xQqQfNN6n8xDAHkpdN9": {
 			"name": "Zepeto"
+		},
+		"XRjfs5BAZhgeKnofywDX8d": {
+			"name": "eSports"
 		},
 		"DBQsu388Xfn2KcE5oW2ae2": {
 			"name": "osu!"
 		}
 	},
+	"interest-category": {
+		"iiCe39JvGQAAtsrTqnLddb": {
+			"name": "人気"
+		},
+		"TgrEr2C6DAcp69Winej5Q4": {
+			"name": "一般"
+		},
+		"aSCFm5P7awrqNKnknWuChQ": {
+			"name": "アイデンティティ"
+		},
+		"59oWHt4bZSdQ6tj8f4CWs9": {
+			"name": "ゲーム"
+		},
+		"fQK3RUCYFW4WeSfLkzVP42": {
+			"name": "音楽"
+		},
+		"DAweztCvdXBa5cKvhgNsPY": {
+			"name": "スポーツ"
+		},
+		"9os9Yxxr6zGR4k7kh5BKrB": {
+			"name": "愛の言語"
+		},
+		"nFiqbX3n6aiEdKe3JbynBL": {
+			"name": "占星術"
+		},
+		"43i5J3VsKCvU4HGRJHjehn": {
+			"name": "パーソナリティタイプ"
+		},
+		"hR3X5w26ba6M98fVB2kVxX": {
+			"name": "アライメント"
+		},
+		"tmQbiXNw7d9Ys2DG9Ddg28": {
+			"name": "ゲームジャンル"
+		}
+	},
+	"kink": {
+		"wZ4AXSmb3hufSDxGVEkoNo": {
+			"name": "ブラットテイマー"
+		},
+		"sNdx2sNbnG5RmNZDtTVNCg": {
+			"name": "ブラット"
+		},
+		"nEDgGpz9eHcomwcbsCaCZP": {
+			"name": "オーナー"
+		},
+		"cKzdEwXmCY3naeYdHuowJ7": {
+			"name": "ペット"
+		},
+		"rGDn478bBZCDajvQRYAkLf": {
+			"name": "ダディ / マミー"
+		},
+		"yamRiwkspejx4mnzbtMdxN": {
+			"name": "ボーイ / ガール"
+		},
+		"dXxUHt5t69rNeg2g7EE3bR": {
+			"name": "マスター / ミストレス"
+		},
+		"pnebwXNPvGr56PEZwSRbHi": {
+			"name": "スレイブ"
+		},
+		"2D9uSBJtgiRRfgdwXhyvm5": {
+			"name": "リガー"
+		},
+		"werFoPERXyXK9J6roSzCXG": {
+			"name": "ロープバニー"
+		},
+		"9civt22SpMr7z4nuPcuL3V": {
+			"name": "サディスト"
+		},
+		"HEPqnrrPsMqx9nQvDk5rHT": {
+			"name": "マゾヒスト"
+		},
+		"ANgPHfEKZqZZUspmgfKjdf": {
+			"name": "エキシビショニスト"
+		},
+		"Jyy988TnEA8J2FeG5ZSyDh": {
+			"name": "ヴォイイヤー"
+		},
+		"nSPurHtFp8dpHKvW4Ux9Q9": {
+			"name": "ハンター"
+		},
+		"7WBnwThpTkEHyQHDZTbw47": {
+			"name": "プレイ"
+		},
+		"9mbQ4hxFEMBL4bHVYomPz3": {
+			"name": "デグレイダー"
+		},
+		"RE2twp4mgYSXjhya266npP": {
+			"name": "デグラディー"
+		},
+		"ooyTbhoJNZCoVersYZBWea": {
+			"name": "エイジプレイヤー"
+		},
+		"FDiw6WUePpHDckmVG5coKF": {
+			"name": "エクスペリメンタリスト"
+		}
+	},
+	"platform": {
+		"RNaigbGdB7H4ZMw5c8ysbi": {
+			"name": "Meta Quest"
+		},
+		"UpyGwuCHANjYmM2P269dFm": {
+			"name": "Quest Link"
+		},
+		"qhAm6Z9kGRP5opGfnrVYda": {
+			"name": "Oculus Rift"
+		},
+		"d52VH6CyRaVPQvAwoStEoY": {
+			"name": "SteamVR"
+		},
+		"c255sGSiJpMNnm6NTUcvx6": {
+			"name": "Apple Vision"
+		},
+		"FEX8jjr4P9aeBurRUTLhU7": {
+			"name": "Pico"
+		},
+		"WQVnXwQzfThHr7yczTjm3C": {
+			"name": "Windows Mixed Reality"
+		},
+		"n6sSShVCXahjazwqEraKCG": {
+			"name": "PlayStation VR"
+		},
+		"fyBa2tUpgEgqBPda4BpXAE": {
+			"name": "モバイルVR"
+		},
+		"aNGgneQH5YX4HyWpNEUpmQ": {
+			"name": "その他VR"
+		},
+		"6BdtcWSEHNwX6ba9nzd2Yc": {
+			"name": "デスクトップ"
+		},
+		"MLWTjDZEuacyr2qwbXEw4K": {
+			"name": "フルボディトラッキング"
+		},
+		"m4S2N4Jn2f3WDbJm7bcbgQ": {
+			"name": "アイトラッキング/フェイストラッキング"
+		},
+		"pzkBdEYqgAZiSEBZAcJMPZ": {
+			"name": "ハプティックスーツ"
+		},
+		"x5T9enPhP8WpYwnoottGDL": {
+			"name": "ルームランナー型デバイス"
+		}
+	},
+	"prompt": {
+		"JyC9xq83f47wfDTVEh77yC": {
+			"name": "私が探しているのは"
+		},
+		"c9ztgC7hXX47zNRLNMZHca": {
+			"name": "求める相手はこんな人"
+		},
+		"rnQjiqXivKanoxFtGi6RS8": {
+			"name": "一緒にできること"
+		},
+		"tEUfrkPqK47zjhcJKoRvhh": {
+			"name": "私を知るカギは"
+		},
+		"g8KyzzfF9ijBSCoPJuvHX2": {
+			"name": "私が極めているオタク要素"
+		},
+		"x5XHpp7uDA4Y3aws7v4WGK": {
+			"name": "私がよく考えていること"
+		},
+		"aqXFM7oU7FsXhFnJ2AaVsg": {
+			"name": "私の一番好きなゲーム"
+		},
+		"HHrtwjS3BUvdGoyQMJeZvh": {
+			"name": "お気に入りのVRChatワールド"
+		},
+		"JgCFt5P7ZvSt8Tor9NbkMB": {
+			"name": "VRで一番楽しいこと"
+		},
+		"CxdN69Xv6M9BPsDXJGTCHA": {
+			"name": "今までやったことがないこと"
+		},
+		"s5U6p73oVaym6ujZq3doy4": {
+			"name": "これに関しては止まらなく語るかも"
+		},
+		"NEGzuX2TMdtxqVkb4xrvDm": {
+			"name": "異論あるかもだけど"
+		},
+		"JLiCKV2g295AG5GYuH5vQM": {
+			"name": "好きな架空のキャラクター"
+		},
+		"DcowtBMp6ZU5jHPWt3rhNe": {
+			"name": "好きな映画は"
+		},
+		"esvDHHBdB4wow5YofJT9pJ": {
+			"name": "リピートしまくってるアルバム"
+		},
+		"VW97RnUAmtUQTzEhCJbxC8": {
+			"name": "最近知って驚いたこと"
+		},
+		"mLL9t4DgPHTNRsa8aVNbsR": {
+			"name": "一生これだけ食べられるって言われたら選ぶのは"
+		},
+		"WZygBQGJYXzez6K66JYcuE": {
+			"name": "私の不合理な怖いもの"
+		},
+		"VaCimF6SdZQxj2nAUDAiRY": {
+			"name": "私にはできないかもよ"
+		},
+		"Hbemf67DabFCSCxGVMBxzg": {
+			"name": "人生の目標のひとつ"
+		}
+	},
+	"report-reason": {
+		"Ur6iAuTDCktZe3zZQGqtZ2": {
+			"name": "スパムまたは荒らしアカウント"
+		},
+		"wFkctcaaf5B4Ef5i3ggY3G": {
+			"name": "差別的・憎悪表現"
+		},
+		"Wf4t9FT7Lmvnn73KqpZGPG": {
+			"name": "暴力的または不快なコンテンツ"
+		},
+		"ymWd4JdTqpnBLmGSLmJRvY": {
+			"name": "ヌードまたはNSFW画像"
+		},
+		"AFe9ijRg9MYGubm2Efi4Ki": {
+			"name": "ハラスメント"
+		},
+		"Ec5fqqgVo5X3s4QCeFUJ6D": {
+			"name": "自分や他人のなりすまし"
+		},
+		"MyexHAyY8gzQjBQ6agCSx3": {
+			"name": "詐欺、マルウェア、有害リンク"
+		},
+		"L6FRU2xjUiZwHUbegAcWTa": {
+			"name": "広告または勧誘行為"
+		},
+		"zu6HcxQxmJDDq4rmvJazkf": {
+			"name": "未成年ユーザー"
+		},
+		"BtJvp62cJ5vm6CeuCPTP5H": {
+			"name": "違法コンテンツ"
+		},
+		"vTzgZw4Eexx7fehzCM9PQY": {
+			"name": "自傷行為に関するコンテンツ"
+		},
+		"9iwmQ8huhkngyY9BgLDE9W": {
+			"name": "その他"
+		}
+	},
+	"relationship": {
+		"serious": {
+			"name": "本気の恋愛"
+		},
+		"vr": {
+			"name": "カジュアルデート"
+		},
+		"hookups": {
+			"name": "気軽な遊び"
+		},
+		"friends": {
+			"name": "新しい友達"
+		}
+	},
+	"sexuality": {
+		"t5hhQahW7HQVKnhQX7xRqn": {
+			"name": "ストレート",
+			"definition": "異性に対してのみ性的に惹かれる人。"
+		},
+		"gkKfqSoBJ7dUHtaKJ5Cfmk": {
+			"name": "レズビアン",
+			"definition": "女性や女性的な人に惹かれる女性。"
+		},
+		"UxY3zSKrwKpts6cfZ3wYjM": {
+			"name": "ゲイ",
+			"definition": "同性に惹かれる人。"
+		},
+		"a29qas632KmMpQ8T6arLxa": {
+			"name": "バイセクシュアル",
+			"definition": "複数の性に惹かれる人。"
+		},
+		"NC5wiUcxGavten9E8gw64n": {
+			"name": "パンセクシュアル",
+			"definition": "相手の性別にかかわらず惹かれる人。"
+		},
+		"neMSEFPb9zvFRhoZLUobW9": {
+			"name": "アセクシュアル",
+			"definition": "性的魅力をほとんど、あるいはまったく感じない人。"
+		},
+		"wPATvG4t9CJhW2goGmBznU": {
+			"name": "デミセクシュアル",
+			"definition": "強い感情的つながりができてからでないと性的魅力を感じない人。"
+		},
+		"vu2pJzRmKRroA3GPZRsLxM": {
+			"name": "ヘテロフレキシブル",
+			"definition": "主に異性に惹かれるが、時々同性にも惹かれる人。"
+		},
+		"ndxSn4BdATmm5droBw6iQG": {
+			"name": "ホモフレキシブル",
+			"definition": "主に同性に惹かれるが、時々異性にも惹かれる人。"
+		},
+		"3cWT9ob4r7Zpikkd9kVPEg": {
+			"name": "クィア",
+			"definition": "従来の枠組みに当てはまらない性的指向を持つ人。"
+		},
+		"rN7DERN6NdNQzNQ99pQUN4": {
+			"name": "クエスチョニング",
+			"definition": "自分の性的指向を模索中の人。"
+		},
+		"4yJadhjWkDN6WSxbDcp33G": {
+			"name": "VRで探求中",
+			"definition": "VR上で性的指向を探求中、または現実とVRで性的指向が異なる可能性のある人。"
+		}
+	},
 	"language": {
 		"ab": {
-			"name": "アブハズ語"
+			"name": "アブハジア語"
 		},
 		"aa": {
 			"name": "アファル語"
@@ -1124,10 +2363,10 @@
 			"name": "ブルガリア語"
 		},
 		"my": {
-			"name": "ミャンマー語"
+			"name": "ビルマ語"
 		},
 		"ca": {
-			"name": "カタロニア語"
+			"name": "カタルーニャ語"
 		},
 		"ch": {
 			"name": "チャモロ語"
@@ -1142,7 +2381,7 @@
 			"name": "中国語"
 		},
 		"cu": {
-			"name": "教会スラブ語"
+			"name": "教会スラヴ語"
 		},
 		"cv": {
 			"name": "チュヴァシ語"
@@ -1199,7 +2438,7 @@
 			"name": "フランス語"
 		},
 		"ff": {
-			"name": "フラ語"
+			"name": "フラニ語"
 		},
 		"gd": {
 			"name": "スコットランド・ゲール語"
@@ -1226,7 +2465,7 @@
 			"name": "グジャラート語"
 		},
 		"ht": {
-			"name": "ハイチ・クレオール語"
+			"name": "ハイチ語（クレオール）"
 		},
 		"ha": {
 			"name": "ハウサ語"
@@ -1265,7 +2504,7 @@
 			"name": "インターリング"
 		},
 		"iu": {
-			"name": "イヌクティトット語"
+			"name": "イヌクティトゥット語"
 		},
 		"ik": {
 			"name": "イヌピアック語"
@@ -1283,7 +2522,7 @@
 			"name": "ジャワ語"
 		},
 		"kl": {
-			"name": "グリーンランド語"
+			"name": "カラリスット語"
 		},
 		"kn": {
 			"name": "カンナダ語"
@@ -1304,7 +2543,7 @@
 			"name": "キクユ語"
 		},
 		"rw": {
-			"name": "キニアルワンダ語"
+			"name": "ルワンダ語"
 		},
 		"rn": {
 			"name": "ルンディ語"
@@ -1400,10 +2639,10 @@
 			"name": "北サーミ語"
 		},
 		"nb": {
-			"name": "ノルウェー語(ブークモール)"
+			"name": "ノルウェー語ブークモール"
 		},
 		"nn": {
-			"name": "ノルウェー語(ニーノシュク)"
+			"name": "ノルウェー語ニーノシュク"
 		},
 		"no": {
 			"name": "ノルウェー語"
@@ -1415,7 +2654,7 @@
 			"name": "オック語"
 		},
 		"oj": {
-			"name": "オジブウェー語"
+			"name": "オジブワ語"
 		},
 		"or": {
 			"name": "オディア語"
@@ -1430,10 +2669,10 @@
 			"name": "パーリ語"
 		},
 		"pa": {
-			"name": "パンジャブ語"
+			"name": "パンジャーブ語"
 		},
 		"ps": {
-			"name": "パシュトゥー語"
+			"name": "パシュトー語"
 		},
 		"fa": {
 			"name": "ペルシア語"
@@ -1493,7 +2732,7 @@
 			"name": "南ンデベレ語"
 		},
 		"st": {
-			"name": "南部ソト語"
+			"name": "南ソト語"
 		},
 		"es": {
 			"name": "スペイン語"
@@ -1535,7 +2774,7 @@
 			"name": "チベット語"
 		},
 		"ti": {
-			"name": "ティグリニア語"
+			"name": "ティグリニャ語"
 		},
 		"to": {
 			"name": "トンガ語"
@@ -1568,13 +2807,13 @@
 			"name": "ウズベク語"
 		},
 		"ve": {
-			"name": "ベンダ語"
+			"name": "ヴェンダ語"
 		},
 		"vi": {
 			"name": "ベトナム語"
 		},
 		"vo": {
-			"name": "ヴォラピュク語"
+			"name": "ヴォラピュク"
 		},
 		"wa": {
 			"name": "ワロン語"
@@ -1607,7 +2846,7 @@
 			"name": "マプチェ語"
 		},
 		"ary": {
-			"name": "モロッコ・アラビア語"
+			"name": "モロッコアラビア語"
 		},
 		"ckb": {
 			"name": "中央クルド語"
@@ -1616,16 +2855,16 @@
 			"name": "低地ソルブ語"
 		},
 		"fil": {
-			"name": "フィリピノ語"
+			"name": "フィリピン語"
 		},
 		"gil": {
-			"name": "キリバス語"
+			"name": "ギルバート語"
 		},
 		"gsw": {
 			"name": "スイスドイツ語"
 		},
 		"hrv": {
-			"name": "セルビア・クロアチア語"
+			"name": "セルボクロアチア語"
 		},
 		"hsb": {
 			"name": "高地ソルブ語"
@@ -1634,7 +2873,7 @@
 			"name": "コンカニ語"
 		},
 		"moh": {
-			"name": "モーホーク語"
+			"name": "モホーク語"
 		},
 		"pap": {
 			"name": "パピアメント語"
@@ -1652,7 +2891,7 @@
 			"name": "南サーミ語"
 		},
 		"smj": {
-			"name": "ルレ・サーミ語"
+			"name": "ルーレ・サーミ語"
 		},
 		"smn": {
 			"name": "イナリ・サーミ語"
@@ -1668,100 +2907,48 @@
 		},
 		"ase": {
 			"name": "アメリカ手話"
-		}
-	},
-	"gender": {
-		"mosDhQUt8JGumiup4yQWbZ": {
-			"name": "彼女"
 		},
-		"hv43aTXJZjMHfXRXvTcYiH": {
-			"name": "彼"
+		"bzs": {
+			"name": "ブラジル手話"
 		},
-		"pAzAxxF4UYr3qN6F4tPYec": {
-			"name": "本人"
+		"bfi": {
+			"name": "イギリス手話"
 		},
-		"tpkW7r8PZ2RUuYGUSYi82N": {
-			"name": "女性",
-			"plural": "女性たち"
+		"csl": {
+			"name": "中国手話"
 		},
-		"rhw3rcbheU7vc9vcSy6W6V": {
-			"name": "男性",
-			"plural": "男性たち"
+		"dse": {
+			"name": "オランダ手話"
 		},
-		"879KtanHc548synGhcNE7J": {
-			"name": "アジェンダー",
-			"definition": "いかなる性別も持たない人。"
+		"fsl": {
+			"name": "フランス手話"
 		},
-		"RdMpwqWGydDgk9X2u32BBW": {
-			"name": "アンドロジナス",
-			"definition": "男性的特性と女性的特性の両方を持つ人。"
+		"gsg": {
+			"name": "ドイツ手話"
 		},
-		"YBkoUyfKJd6jJGwbekY3HN": {
-			"name": "バイジェンダー",
-			"definition": "二つの性別アイデンティティを持つ人。"
+		"ins": {
+			"name": "インド・パキスタン手話"
 		},
-		"2ETbJJJ3shADLphvncUwSL": {
-			"name": "シス女性",
-			"definition": "性別アイデンティティが出生時に割り当てられた性と一致する女性。"
+		"inl": {
+			"name": "インドネシア手話"
 		},
-		"GJitRtRoYWT6DfVasptK7N": {
-			"name": "シス男性",
-			"definition": "性別アイデンティティが出生時に割り当てられた性と一致する男性。"
+		"jsl": {
+			"name": "日本手話"
 		},
-		"aKEzfuPY6TaMkmnugQWLUd": {
-			"name": "ジェンダーフルイド",
-			"definition": "性別が時間とともに変化する人。"
+		"kvk": {
+			"name": "韓国手話"
 		},
-		"zMta3qtGyqW4hFdcDFUHik": {
-			"name": "ジェンダークィア",
-			"definition": "伝統的な性別の枠組みに収まらない性別を持つ人。"
+		"mfs": {
+			"name": "メキシコ手話"
 		},
-		"fAPzVgy7VyGPgAPhkwSkSU": {
-			"name": "ジェンダーノンコンフォーミング",
-			"definition": "社会的な性別の期待や規範に従わない人。"
+		"psr": {
+			"name": "ポルトガル手話"
 		},
-		"wJdnfUvuvACEWRSV4KBdzS": {
-			"name": "ヒジュラ",
-			"definition": "南アジアの文化における第三の性別。"
+		"rsl": {
+			"name": "ロシア手話"
 		},
-		"w3t9h2SyNhr2rBWouXim8c": {
-			"name": "インターセックス",
-			"definition": "典型的な男性または女性の身体の定義に当てはまらない性特徴を持って生まれた人。"
-		},
-		"QwXvxjisosKeTP97ouczoZ": {
-			"name": "ノンバイナリー",
-			"definition": "性別がバイナリー（男女）の枠組みに収まらない人。"
-		},
-		"PFEmTKdmxAoPuxttYPwFZb": {
-			"name": "パンジェンダー",
-			"definition": "複数またはすべての性別を持つと認識する人。"
-		},
-		"tyrdBY4Rbfitznr65hpRPR": {
-			"name": "トランスジェンダー",
-			"definition": "性別アイデンティティが出生時に割り当てられた性と一致しない人。"
-		},
-		"HWte4cB6TUzzXZoJeuxJuf": {
-			"name": "トランス女性",
-			"definition": "出生時に男性として割り当てられた女性。"
-		},
-		"XTVsHQMWXiJGEc5xCf7RUb": {
-			"name": "トランス男性",
-			"definition": "出生時に女性として割り当てられた男性。"
-		},
-		"rGFyY9WbvBBJSUAUpY5iUE": {
-			"name": "トランスフェミニン",
-			"definition": "出生時に男性として割り当てられた女性的な性別アイデンティティを持つ人。"
-		},
-		"CHkgoEoKzTSeVaLVByviBZ": {
-			"name": "トランスマスキュリン",
-			"definition": "出生時に女性として割り当てられた男性的な性別アイデンティティを持つ人。"
-		},
-		"JL8AaDCJMVApbEuAfwG86Y": {
-			"name": "ツースピリット",
-			"definition": "北米先住民の文化における第三の性別。"
-		},
-		"jAL62ePbibxaG4FPu7S8LG": {
-			"name": "その他"
+		"ssp": {
+			"name": "スペイン手話"
 		}
 	}
 }

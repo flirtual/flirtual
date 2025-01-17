@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type FC, useState, useTransition } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -22,6 +23,7 @@ export const PlanButtonLink: FC<
 	const toasts = useToast();
 	const { purchase } = usePurchase();
 	const [pending, startTransition] = useTransition();
+	const t = useTranslations();
 
 	const [purchaseUrl, setPurchaseUrl] = useState<string | null>(null);
 
@@ -48,7 +50,7 @@ export const PlanButtonLink: FC<
 				</Dialog>
 			)}
 			<Button
-				className={twMerge("relative flex", !highlight && "vision:bg-white-10")}
+				className={twMerge("relative my-auto flex h-fit", !highlight && "vision:bg-white-10")}
 				disabled={disabled || pending}
 				Icon={pending ? Loader2 : undefined}
 				iconClassName="animate-spin absolute left-2 h-5"
@@ -60,7 +62,7 @@ export const PlanButtonLink: FC<
 						setPurchaseUrl(url || null);
 					})}
 			>
-				{active ? "Manage" : lifetime ? "Purchase" : "Subscribe"}
+				{t(active ? "manage" : lifetime ? "purchase" : "subscribe")}
 			</Button>
 		</>
 	);

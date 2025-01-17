@@ -21,12 +21,6 @@ export const ProfileRelationshipList = [
 	"hookups",
 	"friends"
 ] as const;
-export const ProfileRelationshipLabel = {
-	serious: "Serious dating (meet in-person eventually)",
-	vr: "Casual dating (VR-only dating)",
-	hookups: "Casual fun",
-	friends: "New friends"
-};
 export type ProfileRelationship = (typeof ProfileRelationshipList)[number];
 
 export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;

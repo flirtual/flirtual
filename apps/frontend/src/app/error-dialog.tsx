@@ -188,7 +188,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 												style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 											/>
 											<p>
-												These issues are usually temporary, but if it persists, try the following:
+												Issues are typically short-lived, but if they continue, consider the following steps:
 											</p>
 										</motion.div>
 									</div>

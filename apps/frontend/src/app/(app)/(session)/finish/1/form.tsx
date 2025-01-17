@@ -17,6 +17,7 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -24,6 +25,7 @@ export const Finish1Form: FC = () => {
 	const [session] = useSession();
 	const router = useRouter();
 
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
@@ -31,7 +33,7 @@ export const Finish1Form: FC = () => {
 
 	const favoriteGameId = (user.profile.attributes.game || []).filter(
 		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
-	)[0];
+	)[0] || "mkyAHUgKDWFiqkZcgZD6pS";
 
 	return (
 		<Form
@@ -76,10 +78,10 @@ export const Finish1Form: FC = () => {
 							<>
 								<InputLabel
 									inline
-									hint="For your privacy, please do not put your Discord username here (or any other usernames that you use). This helps you avoid unwanted messages on other platforms!"
+									hint={t("factual_curly_fly_pop")}
 									{...field.labelProps}
 								>
-									Display name
+									{t("display_name")}
 								</InputLabel>
 								<InputText {...field.props} />
 							</>
@@ -93,25 +95,17 @@ export const Finish1Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint>
-											Upload your avatar pictures from VRChat,
-											{" "}
-											{tAttribute[favoriteGameId || ""]?.name
-											?? "Horizon Worlds"}
-											, or another social VR app. Aim for 3+ avatar pictures to
-											get more matches. Don&apos;t have any handy? You can go
-											back to browsing and come back later.
+											{t("known_antsy_gull_savor", { game: tAttribute[favoriteGameId]!.name })}
 											<details>
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-													Guidelines
+													{t("guidelines")}
 												</summary>
-												Don&apos;t include nude/NSFW, disturbing, or off-topic
-												content, and don&apos;t use other people&apos;s
-												pictures.
+												{t("formal_icy_hound_type")}
 											</details>
 										</InputLabelHint>
 									)}
 								>
-									Profile pictures
+									{t("profile_pictures")}
 								</InputLabel>
 								<InputImageSet {...field.props} />
 							</>
@@ -125,20 +119,17 @@ export const Finish1Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint>
-											A great bio shows your personality and interests, maybe
-											your sense of humor and what you&apos;re looking for.
+											{t("proof_east_termite_pave")}
 											<details>
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-													Guidelines
+													{t("guidelines")}
 												</summary>
-												Be respectful and don&apos;t include spam, soliciting,
-												excessive self-promotion, graphic NSFW descriptions,
-												hateful or controversial content.
+												{t("tame_weird_termite_zap")}
 											</details>
 										</InputLabelHint>
 									)}
 								>
-									Bio
+									{t("bio")}
 								</InputLabel>
 								<InputEditor {...field.props} />
 							</>
@@ -160,7 +151,7 @@ export const Finish1Form: FC = () => {
 							size="sm"
 						>
 							<MoveLeft className="size-5" />
-							<span>Back to browsing</span>
+							<span>{t("back_to_browsing")}</span>
 						</ButtonLink>
 						<FormButton className="w-36" size="sm" />
 					</div>

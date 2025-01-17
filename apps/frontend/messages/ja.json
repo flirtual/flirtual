@@ -1,191 +1,695 @@
 {
-	"meta": {
-		"name": "Flirtual",
-		"title": "%s - Flirtual",
-		"knotty_direct_mongoose_bend": "バーチャルリアリティで新しい人と出会いましょう！Flirtual は VR と VRChat でデートをお手伝いします。",
-		"green_plain_mongoose_lend": "初の VR デート アプリ。VRChat などの VR アプリで何千人もの人とデートしましょう。"
+	"flirtual": "Flirtual",
+	"page_title": "%s - Flirtual",
+	"knotty_direct_mongoose_bend": "バーチャルリアリティで新しい人と出会おう！FlirtualはVRとVRChatでデートするのをサポートします。",
+	"green_plain_mongoose_lend": "最初のVRデーティングアプリ。VRChatのようなVRアプリでデートをする数千人に参加しましょう。",
+	"about_us": "私たちについて",
+	"hard_cause_trick_puzzling": "<section><h1>私たちのストーリー</h1><p>こんにちは、私たちはFlirtualのクリエイター、カイルとトニーです。カイルはオキュラスの初期からVRに夢中でしたが、VRChatに参加して、親友や妻を含む最も親しい友人と出会ったことで人生が変わりました。COVIDが流行する直前に、カイルは幼なじみのトニーをこの旅に誘い、VRは彼の人生も変えました。私たちは他の人々も世界中の素晴らしい人々に出会えるようにすることを目指し、VRLFP（バーチャルリアリティパートナー探し）から始めました。</p><p>VRでの没入感のある存在感は、世界中のどこにいる人々とも深い繋がりを築くのに役立ちます。地理的な距離を橋渡しし、個性を最優先にすることで、私たちの使命はどこにいてもあなたに最適な人を見つけること、そしてデートをより安全で魔法のようなものにすることです。</p><p>2022年、VRLFPはFlirtualとなりました。一から再構築し、マッチメイキングを強化し、個性と興味のタグを追加し、改良されたアプリを立ち上げました。真剣な関係をリアルライフに移行したい場合でも、VR内でのカジュアルな関係を探している場合でも、新しい友達を見つけたい場合でも、私たちは完璧な相手を見つけるお手伝いをします。</p><group><p><3 kfarwell, Tony & Flirtual Team</p><discord>Discordに参加する</discord></group><p><italic>P.S. VRLFPの控えめな始まりから長い道のりを歩んできましたが、私たちは依然としてVRコミュニティに根ざした小さなチームです。Flirtualを最高のものにするために一生懸命努力している間、私たちに忍耐を示していただければ幸いです。<contact>バグを見つけた</contact>場合や、<feedback>提案がある</feedback>場合はお知らせください！</italic></p></section><section><h1>チーム</h1><team-list></team-list></section><section><h1>タイムライン</h1><timeline></timeline></section>",
+	"extra_moving_jackdaw_twist": "{name}のアバター",
+	"voice_spiritual_polite_entertaining": "VRChatでのFlirtualチームの写真",
+	"copy_frighten_wobble_futuristic": {
+		"kfarwell": "リードデベロッパー",
+		"existony": "パートナー、デザイン＆セーフティ",
+		"aries": "ソフトウェアデベロッパー",
+		"moderator": "モデレーター",
+		"event_host": "イベントホスト",
+		"social": "ソーシャル",
+		"community_advisor": "コミュニティアドバイザー",
+		"katten": "コミュニティアドバイザー",
+		"syrmor": "マーケティングアドバイザー",
+		"faxmashine": "VRChatワールドクリエイター",
+		"juice": "VRChatアバタークリエイター"
 	},
-	"download": {
-		"platform": {
-			"apple": "App Store",
-			"google": "Google Play",
-			"microsoft": "Microsoft Store",
-			"side_quest": "SideQuest"
+	"outgoing_teeny_tiny_pass_male": {
+		"2018": {
+			"title": "2018 🐣",
+			"description": "最初のVRデーティングアプリが誕生しました。",
+			"image": "88bb9381-87ed-499d-9667-cd61eff96938",
+			"image_alt": "2018年のFlirtual"
+		},
+		"2019": {
+			"title": "🏆 2019",
+			"description": "VRLFPがiDate Awardsでベスト新技術賞を受賞。",
+			"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
+			"image_alt": "2019年のFlirtual"
+		},
+		"2020": {
+			"title": "2020 🧪",
+			"description": "最終的に今日のFlirtualになるいくつかの風変わりなコンセプトが生まれました。おかげで実験ができました。",
+			"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
+			"image_alt": "2020年のFlirtual"
+		},
+		"2021": {
+			"title": "✌️ 2021",
+			"description": "VRの友達やグループのためのソーシャルマッチメイキングアプリROVRが登場。Homie Modeにその精神が引き継がれています。",
+			"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
+			"image_alt": "2021年のFlirtual"
+		},
+		"2022": {
+			"title": "2022 😻",
+			"description": "VRLFPがFlirtualに生まれ変わりました。これで名前のスペルを覚えてもらえるかもしれません。",
+			"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
+			"image_alt": "2022年のFlirtual"
+		},
+		"2023": {
+			"title": "✨ 2023",
+			"description": "新しいデザイン、モバイルアプリ、そして裏側での大幅な改良。",
+			"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
+			"image_alt": "2023年のFlirtual"
 		}
 	},
-	"superseded_policy": {
-		"fancy_noisy_grizzly_hint": "このポリシーは{range}で有効でしたが、現在は無効です。<current>このポリシーの最新版</current>。"
-	},
-	"machine-translated": {
-		"large_wild_tortoise_sing": "このページは機械翻訳されており、不正確な部分がある可能性があります。この翻訳は便宜上のみ提供されています。<original>英語版</original>この文書は公式バージョンであり、矛盾がある場合は参照する必要があります。",
-		"active_frail_antelope_support": "お願いします<contact>お問い合わせ</contact>ご質問がございましたら。"
-	},
-	"terms": {
-		"title": "利用規約",
-		"content": "<p>このサービス（以下「本サービス」）は、Flirtual（以下「当社」）として事業を行っているROVR LABS INC.によって運営されています。</p><section><h1>ルール</h1><p>このサービスを利用するには、以下の条件を満たす必要があります。</p><ol><li> 18歳以上であること</li><li>カナダおよび現地の法律に基づいて合法的に許可されている</li><li>重罪で有罪判決を受けたことがない。</li><li>いかなる政府登録簿にも性犯罪者として登録する必要がない。</li><li>本利用規約および当社の<privacy>プライバシーポリシー</privacy>。</li></ol><p>以下の行為を行わないことに同意するものとします。</p><ol><li>現地の法律またはカナダの法律に違反する;</li><li>他のユーザーから金銭を募ったり詐欺行為をしたりすること。</li><li>他人または団体になりすますこと、または他人の許可なくその画像を掲載すること。</li><li>虐待的、人種差別的、性差別的、軽蔑的、中傷的、違法、NSFW、またはその他の有害なコンテンツをサービスに投稿すること。</li><li>このプラットフォーム上のユーザーに対して嫌がらせを行うこと。</li><li>他のユーザーに危害を及ぼす可能性のある悪意のあるコードや悪意のあるサイトへのリンクを故意に投稿する。</li><li>プロフィールにスパムを投稿する;</li><li>著作権を侵害する;</li><li> Flirtual または本サービスに損害を与える目的で本サービスを使用すること。</li></ol><p>ぜひご覧ください<guidelines>コミュニティガイドライン</guidelines>当社が本サービスにおけるユーザー プロフィールおよび行動を管理する方法の詳細については、こちらをご覧ください。これらのガイドラインに違反した場合、サービスからの永久禁止などのアカウント管理の対象となります。当社は、独自の裁量でアカウントを管理する権利を留保します。</p></section><section><h1>安全性</h1><p>本サービスの他のユーザーと交流する際には注意することをお勧めします。当社は、本サービス内外のユーザーの行動、または他のユーザーとの交流について責任を負いません。当社はユーザーを審査しません。</p></section><section><h1>プライバシー</h1><p>お客様は、当社がお客様に関する特定の情報を使用および表示することを許可します。<privacy>プライバシーポリシー</privacy>詳細についてはこちらをご覧ください。</p></section><section><h1>サードパーティのサービス</h1><p>Flirtual はサードパーティのサービスについては責任を負いません。</p></section><section><h1>権利</h1><p>いつでもアカウントを閉鎖することができます。<delete-account>アカウント設定</delete-account>。</p><p>これらの規約に変更があった場合、またはプライバシーに影響する新機能が追加された場合は、事前に通知されます。</p><p>モデレーションの決定は、当社のモデレーション チームによって行われます。本利用規約に違反したためにプロフィールが変更された場合、またはアカウントが取り消された場合、説明を受ける権利があります。アカウントへのこれらの変更について事前に通知を受ける権利はありません。</p><p>本利用規約に違反したためにアカウントがキャンセルされた場合、あなたのデータは30日間保存され、モデレーションの決定を確認し、必要に応じて元に戻すことができます。<contact>お問い合わせ</contact>モデレーションの決定に対して異議を申し立てたい場合、またはデータを早期に削除したい場合は、</p><p>データは定期的にバックアップされます。</p></section><section><h1>安全</h1><p>本サービスは、第三者が提供するインフラストラクチャ上で実行されます。このインフラストラクチャは、ファイアウォールなどの業界標準のセキュリティ対策によって保護されています。</p><p>サービスへの接続には<ssltest>強力なトランスポート暗号化</ssltest>。</p><p>パスワードはハッシュ化され、ソルト化されて安全に保管されます。</p><p>アカウントのパスワードを安全に保つ責任はお客様にあります。アカウントの資格情報を使用して行われるすべてのアクティビティの責任はお客様にあります。</p><p>最大限の努力を払っていますが、オンラインで完璧なセキュリティというものは存在しません。当社はお客様のデータの絶対的な保護を保証するものではありません。</p><p>当社は、本サービスがリンクしているウェブサイトやウェブページ、および本サービスにリンクしているウェブサイトやウェブページを通じて提供されるすべての資料（コンピュータ ソフトウェアを含む）を確認していませんし、確認することもできません。当社は、Flirtual 以外のウェブサイトを管理することはなく、そのコンテンツや使用について責任を負いません。Flirtual 以外のウェブサイトにリンクすることで、Flirtual はそのようなウェブサイトを推奨することを表明または暗示するものではありません。お客様は、ウイルス、ワーム、トロイの木馬、その他の有害または破壊的なコンテンツからお客様自身とお客様のコンピュータ システムを保護するために必要な予防措置を講じる責任があります。Flirtual は、Flirtual 以外のウェブサイトやウェブページの使用によって生じるいかなる損害についても責任を負いません。</p></section><section><h1>免責事項</h1><p>いかなる場合においても、Flirtual またはそのサプライヤーやライセンサーは、いかなる契約、過失、厳格責任、またはその他の法理または衡平法上の理論に基づき、本契約の主題に関して、(i) 特別、偶発的または結果的な損害、(ii) 代替製品またはサービスの調達費用、(iii) 使用中断またはデータの損失または破損、(iv) 訴訟原因前の 12 か月間に本契約に基づいてお客様が Flirtual に支払った料金を超える金額について、一切の責任を負いません。Flirtual は、合理的な管理が及ばない事項による不履行または遅延については一切責任を負いません。上記は、適用法で禁止されている範囲には適用されません。</p></section>"
-	},
-	"landing": {
-		"sign_up": "サインアップ",
-		"log_in": "ログイン",
-		"hero": {
-			"mellow_short_shark_propel": "いちゃいちゃデート",
-			"calm_calm_alligator_taste": "バーチャルデート、リアルなつながり"
+	"price_listen_wise_communicate": {
+		"0": {
+			"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+			"image_alt": "Flirtualの12時間バレンタイン2022ローンチパーティー（Vanguardと共に）",
+			"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
 		},
-		"profiles": {
-			"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9"
+		"1": {
+			"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
+			"image_alt": "VRChatでのFlirtualスピードデーティング",
+			"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
 		},
-		"carousel": {
-			"images": {
-				"0": {
-					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
-				},
-				"1": {
-					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
-				},
-				"2": {
-					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
-				},
-				"3": {
-					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
-				},
-				"4": {
-					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
-				},
-				"5": {
-					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
-				},
-				"6": {
-					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
-				}
-			}
+		"2": {
+			"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+			"image_alt": "VRChatでのFlirtual DJナイト",
+			"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
 		},
-		"testimonial": {
-			"images": {
-				"0": "406321aa-d3f9-4218-895d-a6b407be3658",
-				"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
-				"2": "7edf15b5-f913-4923-9180-06e3824ffd3d",
-				"3": "363c885e-8a7d-4f26-af41-d2356144ccf4",
-				"4": "e812eb97-03ba-4309-a2e1-42cddadc4497",
-				"5": "cc9dfd99-ed08-41e7-b4df-22bcda1477ed",
-				"6": "fa83b674-ccc4-4dce-9573-917fc0a0c090",
-				"7": "2f008d68-81d6-4d16-b467-d248858659fc",
-				"8": "bdd0738b-d2b6-498c-b889-61cc3e8707f1",
-				"9": "ad9255b2-d4c8-4f42-9c96-23584c4456d4",
-				"10": "ab689e7b-6211-419a-9cdd-abf5de43a72f",
-				"11": "b2dae95f-ec0f-4143-ba1c-14aa4c4dc0ef",
-				"12": "535227ef-443c-4fef-a1c2-a25daaa568d0",
-				"13": "c5075e9a-79b1-46a9-a587-90cade6c6182"
-			},
-			"brands": {
-				"0": {
-					"image": "dc248f6f-aee6-4318-b473-6fe2d6db07ee",
-					"name": "The New York Times"
-				},
-				"1": {
-					"image": "d34ee25e-31e6-47a7-952f-51820f1e1ce1",
-					"name": "Today"
-				},
-				"2": {
-					"image": "257a7f46-a6c1-4bee-9a3e-5dbdfe9d2a66",
-					"name": "Forbes"
-				},
-				"3": {
-					"image": "18e4a7ad-625a-42f6-b581-d14386ced012",
-					"name": "The New Yorker"
-				},
-				"4": {
-					"image": "29a2f1bc-0b3e-469a-aa11-0de69b75b629",
-					"name": "Road to VR"
-				},
-				"5": {
-					"image": "db2eb424-e837-4d64-85e0-e49409ae33a6",
-					"name": "Samsung Whatever Next?"
-				},
-				"6": {
-					"image": "54ffe640-1c54-4d8f-a754-4c7b7ca82456",
-					"name": "Future of Sex"
-				},
-				"7": {
-					"image": "b779aa38-8592-48cd-8f9b-88228c5abc21",
-					"name": "Dazed"
-				},
-				"8": {
-					"image": "7845a7d0-0461-41dd-934c-cb8439e90dc7",
-					"name": "Virtual Week-ality"
-				},
-				"9": {
-					"image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
-					"name": "iDate Awards - Best New Technology"
-				}
-			}
+		"3": {
+			"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+			"image_alt": "VRCon 2022でのFlirtual",
+			"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
 		},
-		"flitty_messages": {
-			"0": "ニャー！",
-			"1": "くすぐったい！",
-			"2": "やめてください！",
-			"3": "ふふふ！",
-			"4": "いかがなさいましたか？",
-			"5": "ヒントが欲しいですか?",
-			"6": "Homie Modeで新しい友達を見つけることができます✌️"
+		"4": {
+			"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+			"image_alt": "Today ShowでのFlirtual",
+			"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
+		},
+		"5": {
+			"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+			"image_alt": "Vket 2023 SummerでのFlirtual",
+			"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
 		}
 	},
-	"about": {
-		"timeline": {
-			"2018": {
-				"title": "2018 🐣",
-				"image": "88bb9381-87ed-499d-9667-cd61eff96938"
-			},
-			"2019": {
-				"title": "🏆 2019",
-				"image": "c373b72d-16a0-479c-b834-ccb7041bc615"
-			},
-			"2020": {
-				"title": "2020 🧪",
-				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86"
-			},
-			"2021": {
-				"title": "✌️ 2021",
-				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f"
-			},
-			"2022": {
-				"title": "2022 😻",
-				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
-			},
-			"2023": {
-				"title": "✨ 2023",
-				"image": "36446ecb-9103-4b6d-b221-7c657f17323d"
-			}
+	"debug_information": "デバッグ情報",
+	"device": "デバイス",
+	"lucky_sound_opossum_absorb": "アプリプラットフォーム：",
+	"vexed_yummy_tadpole_grow": "ブラウザ：",
+	"known_spare_mantis_pet": "システム：",
+	"hour_odd_kudu_dine": "言語：",
+	"session": "セッション",
+	"wacky_spry_haddock_jump": "ユーザープロファイル：",
+	"spry_polite_elk_grace": "ユーザーオブジェクト：",
+	"brief_neat_kestrel_ascend": "利用不可",
+	"flat_civil_goat_absorb": "スードオブジェクト：",
+	"north_crisp_fly_dart": "年齢：",
+	"dark_wild_mouse_roar": "ビルド",
+	"swift_short_koala_fond": "環境：",
+	"each_zippy_millipede_pop": "バージョン：",
+	"download_on": "ダウンロード先",
+	"app_store": "App Store",
+	"google_play": "Google Play",
+	"microsoft_store": "Microsoft Store",
+	"sidequest": "SideQuest",
+	"vrchat_invite": "VRChat招待",
+	"fun_still_clownfish_arrive": "イベントが現在進行中の場合、このボタンで参加できます！",
+	"elegant_bald_parakeet_animate": "まずVRChatを起動し、その後次のページで「招待する」をクリックしてください。ゲーム内で自分からの招待が届きます。<joining>参加方法について助けが必要ですか？</joining>",
+	"arable_nice_puma_comfort": "イベントに参加",
+	"top_big_tern_twist": "今後のイベント",
+	"nimble_equal_loris_foster": "毎週末VRChatでスピードマッチングやDJイベントを開催しています。ぜひご参加ください！",
+	"flaky_early_shad_nourish": "イベントスケジュールやお知らせについては、<discord>Discordサーバーに参加</discord>してください。",
+	"quiet_lazy_marten_amuse": "VRChatワールド",
+	"blue_calm_chipmunk_spark": "毎週のイベントは私たちのVRChatワールドで開催されますが、いつでも参加可能です！ご自身のイベントにも自由にご利用ください。",
+	"tidy_wise_robin_urge": "Flirtualスピードデーティング",
+	"careful_wise_bumblebee_walk": "1対1のスピードデーティング/友達作りのラウンドで人々と知り合いましょう。各ラウンドは3分間（ホストが3〜7分のラウンド長を選択できます）。会話のヒント、興味タグ、ナイトモードが含まれています。",
+	"inclusive_simple_alligator_zap": "Flirtualクラブ",
+	"sweet_mellow_ant_hunt": "オーディオリンク付きの屋外音楽フェスティバル。リラックスして楽しんでください。",
+	"dry_inclusive_ox_trust": "<faxmashine>Faxmashine</faxmashine>によって作成され、PCVR、Quest、デスクトップに対応しています。VRChatを初めて使用する場合は、<vrchat>無料でサインアップ</vrchat>してください。",
+	"seemly_sticky_frightening_fetch": "<p>Flirtualを誰にとってもポジティブで歓迎される空間にしたいと考えています。このコミュニティガイドラインは、Flirtual上でのユーザープロファイルや行動をどのようにモデレートするかについての詳細を提供します。このガイドラインに違反すると、アカウントのモデレーション（例えば永久的なFlirtualからの禁止）につながります。アカウントのモデレーションは当社の裁量で行われます。</p><section><h1>お互いを尊重する</h1><group><h2>ヘイトスピーチやグループへの憎悪行動を禁止</h2><p>Flirtualのプロフィールや会話において、特定のグループに対する人種差別的、性差別的、またはその他の憎悪的なシンボルやコンテンツを含めることは禁止されています。</p></group><group><h2>嫌がらせの禁止</h2><p>これには、いじめ、未承諾の性的コンテンツ、直接的または間接的な脅迫、ドキシング、ウィッチハント、ストーキング、他のユーザーへの攻撃が含まれます。</p></group><group><h2>スパム、トロール行為、なりすまし、虚偽の表示、詐欺の禁止</h2><p>他のユーザーを悪用しようとしないでください。自分ではない誰かを装うことはやめましょう。</p></group><group><h2>NSFW画像の禁止</h2><p>完全なヌードはFlirtualで許可されていません。これには、「ペイスティーズ」、非常に露出の多い衣装、または性的に挑発的なポーズが含まれます。</p></group><group><h2>プロフィールでのNSFWの制限</h2><p>プロフィールの説明文にグラフィックなNSFWテキストを避けてください。あなたの説明文の大部分はSFW（安全な閲覧用）であるべきです。ただし、NSFWタグや非グラフィックなカスタム興味を自由に使用することができます。</p></group></section><section><h1>トピックに集中する</h1><p>Flirtualはデートと友達作りのためのプラットフォームです。Flirtualでのプロフィールと行動の主な目的はこれに従うべきです。</p><group><h2>勧誘の禁止</h2><p>他のユーザーにお金を求めたり、収益化されたソーシャルリンク（例：PayPal）を投稿しないでください。Flirtualで製品やサービスを広告したりマーケティングしたりすることは禁止されています。</p></group><group><h2>論争的または高度に政治的な内容の禁止</h2><p>政治、宗教、または論争的なトピックについて話す場合は、他の場所で行ってください。</p></group><group><h2>暴力的なコンテンツや暴力の描写の禁止</h2><p>衝撃を与えるようなゴアや暴力的な画像は削除され、禁止の原因になる場合があります。</p></group><group><h1>子供や未成年者の写真の禁止</h1><p>未成年者を含むコンテンツ（子供の実際の写真を含む）は認められません。これはユーザーと子供の安全のためです。</p></group><group><h2>自己プロモーションの制限</h2><p>支払いに関連しないソーシャルリンク（InstagramやDiscordなど）を説明文にリンクすることはできますが、自己プロモーションやあらゆるプロモーションがFlirtualのプロフィールやアカウントの主な目的になることはできません。</p></group><group><h2>自傷行為のコンテンツの禁止</h2><p>自傷行為のコンテンツはFlirtualで許可されていません。<mental-health>メンタルヘルスリソース</mental-health>が役に立つ場合があります。</p></group></section><section><h1>Flirtualを尊重する</h1><group><h2>違法行為の禁止</h2><p>Flirtualでローカル法またはカナダの法律に違反することをしないでください。</p></group><group><h2>未成年ユーザーの禁止</h2><p>Flirtualは18歳以上に限定されています。</p></group><group><h2>重複アカウントの禁止</h2><p>重複アカウントは禁止されます。最もアクティブなアカウントが保持されます。</p></group><group><h2>Flirtualコミュニティガイドラインの違反</h2><p>Flirtual外で規則に違反した場合でも、私たちは利用規約やコミュニティガイドラインに基づいてユーザーをモデレートすることができます。他のプラットフォーム（例：Discord）で規則違反が発生した場合、Flirtualでのモデレーションが制限されることがあります。Flirtual外でガイドラインを破ったFlirtualユーザーを見た場合は、Flirtualで報告するとともに、そのプラットフォームでも報告してください。</p></group><group><h2>他のユーザーへの攻撃の禁止</h2><p>他のFlirtualユーザーのユーザー名や指摘を説明文に記載しないでください。私たちはユーザーのプライバシーを尊重しながらモデレーションを行います。プロフィールの下部にある「報告」ボタンを押して、モデレーションチームにフラグを立てることができます。</p></group><group><h2>Flirtual製品の悪用または損害行為の禁止</h2><p>Flirtualを悪用したり、Flirtualを意図的に損害を与えようとする試みは調査されます。<terms>利用規約</terms>に従った善意の脆弱性調査は歓迎されており、<vulnerability>GitHub</vulnerability>または<email>メール</email>を通じてバグを報告できます。</p></group><p>規則に違反するものや安全でないと感じるものを見た場合は、ぜひお知らせください。</p><group><h3>報告を行う</h3><p>誰かのプロフィールの下部にある「報告」ボタンを押して、モデレーションチームにフラグを立てます。報告には関連情報や証拠を含めてください。</p></group><group><h3>モデレーションのアピール</h3><p>アカウントが禁止された場合、禁止理由とアピール手順が記載されたメールが届きます。この決定にアピールしたい場合は、禁止メールに返信してください。アピールに30日以内に応答がない場合、レビューされ却下されたことを意味します。</p></group><group><h3>詳細情報</h3><terms>利用規約</terms><privacy>プライバシーポリシー</privacy></group></section>",
+	"guides": "ガイド",
+	"mental_health": "メンタルヘルス",
+	"mental_health_resources": "メンタルヘルスリソース",
+	"crisis_hotlines": "危機ホットライン",
+	"payment_terms": "支払い条件",
+	"sticks_protect_zinc_explain": "<p>ユーザー名、表示名、プロフィール写真、バイオ、年齢、性別、マッチメイキングの設定、パーソナルインタレストタグ、選択したVRアプリ/ゲーム、VR初心者かどうかが他のユーザーに見えるようになります。追加のプロフィール情報（性的指向、NSFWタグ、国、リンク済みアカウントなど）は、<settings-privacy>プライバシー設定</settings-privacy>に基づいて他のユーザーに表示されるか非表示になります。プライバシー設定はいつでも変更可能です。性格特性（性格診断への回答に基づく）は、プライバシー設定に基づいて他のユーザーに見えるか非表示になりますが、具体的な質問への回答は表示されません。</p><p>私たちは、ファーストパーティのオンプレミスデータ分析を使用しています。Flirtualに関する匿名化された統計情報（例：特定のソーシャルVRアプリやゲームを使用しているユーザー数）を共有することがあります。これらの統計からオプトアウトすることは、<settings-privacy>プライバシー設定</settings-privacy>で可能です。</p><p>他のユーザーとのメッセージやメッセージ履歴はTalkJSによってホストされ、他の第三者には共有されません。</p><p>アカウントのメールアドレスは他のユーザーに表示されません。アカウントのメールアドレスは、トランザクション、マーケティング、サポートメッセージを配信するために第三者がアクセスする場合があります。<settings-notifications>メール通知</settings-notifications>をオプトアウトすることで、TalkJSの記録からメールアドレスを削除できます。</p><p>アカウントが侵害された疑いがある場合は、<settings-password>パスワードを変更</settings-password>し、<contact>「緊急」</contact>という件名で問題を報告してください。メッセージにはユーザー名、サイトに最後にアクセスした日時、侵害の疑いを持った理由の詳細を含めてください。</p><p>パスワードはハッシュ化され、ソルトされています。</p><p>Flirtualは、以下に挙げるような特定の信頼できる第三者と連携してサービスを提供します。これらの第三者には、サービス提供のために必要な範囲でのみ個人データを共有します。</p><p><strong>クラウドホスティングサービス:</strong> プラットフォームの管理と運用において信頼性と安全性を提供します（例：Fly.io、Vercel）。</p><p><strong>アプリ機能サービス:</strong> アプリ内でのメッセージングや画像の最適化を実現します（例：TalkJS）。</p><p><strong>請求サービス:</strong> 支払いとサブスクリプションを管理します（例：Stripe）。</p><p><strong>ソーシャルメディアサービス:</strong> ユーザーがアカウントをプラットフォームにリンクし、ソーシャルなやり取りを促進します（例：Discord）。</p><p><strong>セキュリティとパフォーマンスサービス:</strong> プラットフォームを保護し、パフォーマンスを向上させます（例：Cloudflare）。</p><p><strong>洞察と改善サービス:</strong> ユーザーのフィードバックを収集し、プラットフォームを継続的に改善します（例：Canny）。</p><p><strong>コミュニケーションサービス:</strong> トランザクションやマーケティングコミュニケーションをユーザーに送信します（例：Amazon Web Services）。</p><p><strong>モデレーションサービス:</strong> アプリ内での適切な行動を確保し、コミュニティ基準を維持します（例：Google Cloud）。</p><p><strong>ITサービス:</strong> サポートサービスとのやり取りなどで、個人データを処理する場合があります（例：Freshworks）。</p><p>私たちは、関与する第三者が適切なデータ保護と情報セキュリティ対策を講じていることを確認します。適切な場合は、共有データを保護し匿名化する措置を講じます。信頼できる第三者には、提供されるサービスに必要な範囲でのみ個人データを提供します。</p><p>脆弱性やプライバシーリークを発見した場合は、<vulnerability>GitHub</vulnerability>または<contact>メール</contact>を通じて慎重に報告してください。</p><p><settings>アカウント設定</settings>で私たちが保有しているデータを確認でき、メッセージでも確認できます。保存されているすべてのデータをリクエストする場合は、メールで連絡してください。30日以内に提供します。</p>",
+	"privacy_policy_outdated": "プライバシーポリシー（旧版）",
+	"terms_outdated": "利用規約（旧版）",
+	"fancy_noisy_grizzly_hint": "このポリシーは{range}の間有効であり、現在はアクティブではありません。<current>最新のポリシー</current>をご覧ください。",
+	"large_wild_tortoise_sing": "このページは機械翻訳されています。不正確な表現が含まれる場合があります。この翻訳は便宜のために提供されています。正式な版は<original>英語版</original>であり、不一致がある場合はそちらを参照してください。",
+	"active_frail_antelope_support": "ご質問がある場合は<contact>お問い合わせ</contact>ください。",
+	"committee_trucks_welcome_approval": "<p>このサービス（以下「サービス」）は、Flirtualとして事業を展開するROVR LABS INC.（以下「当社」または「Flirtual」）によって運営されています。</p><section><h1>規則</h1><p>このサービスを利用するには、以下の条件を満たす必要があります：</p><ol><li>18歳以上であること。</li><li>カナダおよび地元の法律で合法的に許可されていること。</li><li>重罪で有罪判決を受けたことがないこと。</li><li>政府の登録リストに性犯罪者として登録されていないこと。</li><li>本利用規約および<privacy>プライバシーポリシー</privacy>に同意すること。</li></ol><p>次の行為を行わないことに同意します：</p><ol><li>地元またはカナダの法律を破ること。</li><li>他のユーザーを詐欺または金銭的な勧誘の対象とすること。</li><li>他人や団体を偽装したり、許可なく他人の画像を投稿すること。</li><li>虐待的、人種差別的、性差別的、誹謗中傷的、違法、NSFW、または有害な内容をサービスに投稿すること。</li><li>このプラットフォームの他のユーザーを嫌がらせすること。</li><li>悪意のあるコード、または他のユーザーに害を及ぼす可能性のあるリンクを投稿すること。</li><li>プロフィールにスパムを投稿すること。</li><li>著作権を侵害すること。</li><li>このサービスを使用してFlirtualやサービスに損害を与えること。</li></ol><p>詳細は<guidelines>コミュニティガイドライン</guidelines>を確認してください。これらのガイドラインを破ると、アカウントの永久的な停止などのモデレーションが行われます。当社は裁量に基づいてアカウントをモデレーションする権利を有します。</p></section><section><h1>安全性</h1><p>このサービスの他のユーザーとやり取りする際は注意を払ってください。当社は、サービス内外でのユーザーの行動や他のユーザーとのやり取りについて責任を負いません。当社はユーザーを事前に審査することはありません。</p></section><section><h1>プライバシー</h1><p>当社は、ユーザーに関する特定の情報を使用および表示する権限を有します。詳細については<privacy>プライバシーポリシー</privacy>をご覧ください。</p></section><section><h1>第三者サービス</h1><p>Flirtualは第三者サービスに責任を負いません。</p></section><section><h1>権利</h1><p>アカウントは<delete-account>アカウント設定</delete-account>でいつでも閉じることができます。</p><p>プライバシーに影響を与える変更または新機能については事前に通知されます。</p><p>モデレーション決定は当社のモデレーションチームによって行われます。プロフィールが変更されたり、利用規約違反によりアカウントがキャンセルされた場合、その理由を受け取る権利がありますが、これらの変更について事前通知を受ける権利はありません。</p><p>利用規約違反によりアカウントがキャンセルされた場合、データは30日間保持され、モデレーション決定のレビューや必要に応じた撤回が可能です。モデレーション決定に異議を申し立てる場合や、データを早期に削除したい場合は<contact>お問い合わせ</contact>ください。</p><p>データは定期的にバックアップされます。</p></section><section><h1>セキュリティ</h1><p>このサービスは第三者が提供するインフラストラクチャ上で動作します。このインフラストラクチャはファイアウォールなどの業界標準のセキュリティ対策によって保護されています。</p><p>サービスへの接続には<strong><ssltest>強力なトランスポート暗号化</ssltest></strong>が使用されています。</p><p>パスワードは安全にハッシュ化され、ソルトされています。</p><p>アカウントのパスワードを安全に保つ責任はユーザーにあります。アカウントの認証情報で発生するすべての活動について責任を負います。</p><p>最善の努力を払っても、オンラインでの完全なセキュリティは保証できません。データの絶対的な保護は保証されません。</p><p>当社はサービスにリンクしているすべてのマテリアルやWebページをレビューしておらず、Flirtual以外のWebサイトやWebページの内容や使用について責任を負いません。Flirtual以外のWebサイトにリンクすることで、FlirtualがそのWebサイトを支持していることを示唆するものではありません。ウイルス、ワーム、トロイの木馬、その他有害または破壊的なコンテンツから保護するために必要な予防措置を取る責任はユーザーにあります。Flirtualは、Flirtual以外のWebサイトやWebページの使用に起因するいかなる損害についても責任を負いません。</p></section><section><h1>免責事項</h1><p>いかなる場合でも、Flirtual、またはそのサプライヤーまたはライセンサーは、この契約に関連するいかなる件についても、いかなる契約、不法行為（過失を含む）、厳格責任、その他の法的または衡平的な理論に基づいても、以下に対して責任を負わないものとします：(i) 特別、偶発的、または間接的損害；(ii) 代替製品またはサービスの調達コスト；(iii) 使用の中断またはデータの損失または破損；(iv) 本契約の原因となる行為の前の12か月間にFlirtualに支払われた料金を超える金額。Flirtualは、合理的な制御を超えた事項による失敗や遅延について責任を負いません。前述の内容は、適用される法律によって禁止されている範囲には適用されません。</p></section>",
+	"mellow_short_shark_propel": "Flirtualデート",
+	"calm_calm_alligator_taste": "バーチャルデート、リアルなつながり",
+	"legal_big_finch_kiss": "Flirtualプロフィールのスクリーンショット",
+	"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
+	"stout_last_kudu_bend": "あなたのアバター、あなたの選択",
+	"motionless_absorbed_scintillating_rightful": {
+		"0": "VRは新しい人々と出会うための「個性重視」の方法です。",
+		"1": "アバターは、自分を表現しながら恥ずかしさを感じないように助けてくれます。",
+		"2": "VRデートを2〜3回した後、ビデオ通話や現実での出会いに進みましょう！"
+	},
+	"spare_chunky_cougar_honor": "バーチャルリアリティで安全で魔法のようなデートを楽しんでください",
+	"bounce_knot_legs_bell": {
+		"0": {
+			"title": "アヒルに餌をあげる",
+			"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 		},
-		"images": {
-			"0": {
-				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
-				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
-			},
-			"1": {
-				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
-				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
-			},
-			"2": {
-				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
-				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
-			},
-			"3": {
-				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
-				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
-			},
-			"4": {
-				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
-				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
-			},
-			"5": {
-				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
-				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
-			}
+		"1": {
+			"title": "サメと一緒に泳ぐ",
+			"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
+		},
+		"2": {
+			"title": "居心地の良いカフェでリラックス",
+			"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
+		},
+		"3": {
+			"title": "ブラックホールを観察する",
+			"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
+		},
+		"4": {
+			"title": "草に触れる",
+			"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
+		},
+		"5": {
+			"title": "一緒に絵を描く",
+			"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
+		},
+		"6": {
+			"title": "ビリヤードを楽しむ",
+			"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
 		}
 	},
-	"privacy": {
-		"title": "プライバシーポリシー",
-		"title_superseded": "プライバシーポリシー（古い）",
-		"content": "<p>あなたのユーザー名、表示名、プロフィール写真、経歴、年齢、性別、マッチメイキングの好み、個人的な興味タグ、選択したVRアプリ/ゲーム、VR初心者かどうかは、他のユーザーに表示されます。あなたの追加プロフィール情報（性的指向、NSFWタグ、国、リンクされたアカウントなど）は、あなたの設定に応じて他のユーザーに表示または非表示になります。<settings-privacy>プライバシー設定</settings-privacy>いつでも変更できます。あなたの性格特性（性格アンケートの回答に基づいて特定されます）は、あなたの性格特性に応じて他のユーザーに表示されるか非表示になります。<settings-privacy>プライバシー設定</settings-privacy>ただし、アンケートの具体的な回答は表示されません。</p><p>当社はファーストパーティのオンプレミスデータ分析を使用しています。Flirtualに関する匿名の統計情報（特定のソーシャルVRアプリやゲームを使用するユーザー数など）を共有する場合があります。これらの統計情報は、<settings-privacy>プライバシー設定</settings-privacy>。</p><p>あなたのメッセージや他のユーザーとのメッセージ履歴は TalkJS によってホストされ、共有されますが、他のサードパーティと共有されることはありません。</p><p>あなたのアカウントのメールは他のユーザーには表示されません。あなたのアカウントのメールは、あなたの好みに応じて取引、マーケティング、サポートのメッセージを配信するために第三者によってアクセスされる可能性があります。<settings-notifications>メッセージメール通知</settings-notifications>これにより、TalkJS の記録からメール アドレスが削除されます。</p><p>アカウントが侵害されたと思われる場合は、<settings-password>パスワードを変更する</settings-password>すぐにそして<contact>問題を報告する</contact>件名に「緊急」と記入してください。メッセージには、ユーザー名、サイトに最後にアクセスした日時、侵入を疑う理由となる詳細を記載してください。</p><p>パスワードはハッシュ化され、ソルト化されて保存されます。</p><p>当社は、Flirtual にサービスを提供する特定の信頼できる第三者を利用しています。当社は、これらの第三者とユーザーの個人データを共有することがありますが、その目的はサービスを提供することです。詳細と例については、以下を参照してください。</p><p><strong>クラウド ホスティング サービス:</strong>当社のプラットフォーム (Fly.io や Vercel など) を管理および運用するための信頼性が高く安全なインフラストラクチャを提供します。</p><p><strong>アプリ内機能サービス:</strong>アプリ内でのメッセージングや最適化された画像ホスティングなどの主要機能を容易にします (例: TalkJS)。</p><p><strong>請求サービス:</strong>支払いとサブスクリプションを管理します (例: Stripe)。</p><p><strong>ソーシャル メディア サービス:</strong>ユーザーが自分のアカウントを当社のプラットフォームに接続し、ソーシャル インタラクションを促進できるようにします (例: Discord)。</p><p><strong>セキュリティおよびパフォーマンス サービス:</strong>プラットフォームを保護し、ユーザーを保護し、全体的なパフォーマンスを向上させるため (例: Cloudflare)。</p><p><strong>洞察および改善サービス:</strong>ユーザーからのフィードバックを収集し、分析を実行して、当社のプラットフォーム (Canny など) を継続的に改善します。</p><p><strong>通信サービス:</strong>ユーザーへのトランザクションおよびマーケティング通信の送信を支援します (例: Amazon Web Services)。</p><p><strong>モデレーション サービス:</strong>アプリ内での適切な行動を確保し、コミュニティ標準を維持します (例: Google Cloud)。</p><p> <strong>IT サービス:</strong>ユーザーが当社のサポート サービスとやり取りする際など、ユーザーの個人データの処理を伴う可能性のある、当社の事業のさまざまな業務を支援するため (例: Freshworks)。</p><p>当社は、提携する第三者を審査し、適切なデータ保護および情報セキュリティ対策が実施されていることを確認します。当社は、提供されるサービスの性質に応じて、第三者と共有するデータを保護および匿名化する対策を講じます。当社は、信頼できる第三者に、そのサービスに必要な個人データのみを提供します。</p><p>脆弱性やプライバシー漏洩を発見した場合は、以下の方法で慎重に報告してください。<vulnerability> GitHub</vulnerability>または<contact>メール</contact>。</p><p>弊社が保管しているデータは、<settings>アカウント設定</settings>、およびメッセージに記載されています。当社に電子メールを送信して、当社が保管しているすべてのデータをリクエストできます。データは 30 日以内に送信されます。</p>"
-	}
+	"even_major_hare_believe": "世界中から{userCount, number}+人とマッチしよう！",
+	"flaky_thunder_red_flap": {
+		"0": "406321aa-d3f9-4218-895d-a6b407be3658",
+		"1": "65dcb388-7d26-4f9c-a8af-e6a11ec37c86",
+		"2": "7edf15b5-f913-4923-9180-06e3824ffd3d",
+		"3": "363c885e-8a7d-4f26-af41-d2356144ccf4",
+		"4": "e812eb97-03ba-4309-a2e1-42cddadc4497",
+		"5": "cc9dfd99-ed08-41e7-b4df-22bcda1477ed",
+		"6": "fa83b674-ccc4-4dce-9573-917fc0a0c090",
+		"7": "2f008d68-81d6-4d16-b467-d248858659fc",
+		"8": "bdd0738b-d2b6-498c-b889-61cc3e8707f1",
+		"9": "ad9255b2-d4c8-4f42-9c96-23584c4456d4",
+		"10": "ab689e7b-6211-419a-9cdd-abf5de43a72f",
+		"11": "b2dae95f-ec0f-4143-ba1c-14aa4c4dc0ef",
+		"12": "535227ef-443c-4fef-a1c2-a25daaa568d0",
+		"13": "c5075e9a-79b1-46a9-a587-90cade6c6182"
+	},
+	"acidic_advertisement_request_cough": {
+		"0": {
+			"image": "dc248f6f-aee6-4318-b473-6fe2d6db07ee",
+			"name": "The New York Times"
+		},
+		"1": {
+			"image": "d34ee25e-31e6-47a7-952f-51820f1e1ce1",
+			"name": "Today"
+		},
+		"2": {
+			"image": "257a7f46-a6c1-4bee-9a3e-5dbdfe9d2a66",
+			"name": "Forbes"
+		},
+		"3": {
+			"image": "18e4a7ad-625a-42f6-b581-d14386ced012",
+			"name": "The New Yorker"
+		},
+		"4": {
+			"image": "29a2f1bc-0b3e-469a-aa11-0de69b75b629",
+			"name": "Road to VR"
+		},
+		"5": {
+			"image": "db2eb424-e837-4d64-85e0-e49409ae33a6",
+			"name": "Samsung Whatever Next?"
+		},
+		"6": {
+			"image": "54ffe640-1c54-4d8f-a754-4c7b7ca82456",
+			"name": "Future of Sex"
+		},
+		"7": {
+			"image": "b779aa38-8592-48cd-8f9b-88228c5abc21",
+			"name": "Dazed"
+		},
+		"8": {
+			"image": "7845a7d0-0461-41dd-934c-cb8439e90dc7",
+			"name": "Virtual Week-ality"
+		},
+		"9": {
+			"image": "fd92ab0f-d264-4a69-813f-bea13def2c46",
+			"name": "iDate Awards - Best New Technology"
+		}
+	},
+	"receptive_fairies_legal_thumb": {
+		"0": "にゃー！",
+		"1": "くすぐったい！",
+		"2": "やめて！",
+		"3": "てへへ！",
+		"4": "お手伝いしますか？",
+		"5": "ヒントが欲しいですか？",
+		"6": "Homieモードで新しい友達を見つけられます ✌️",
+		"7": "自分らしく！",
+		"8": "誰かがあなたを「いいね」または「ホミー」してくれたら、それはマッチです！",
+		"9": "マッチした人とは、どのVRアプリやゲームでも会えます。あなたのお気に入りは何ですか？",
+		"10": "私のお気に入りはVRChatです！",
+		"11": "良いバイオとアバターピクチャーは必須です！",
+		"12": "Discordに参加してプロフィールのフィードバックを受けましょう！",
+		"13": "あなたを「いいね」または「ホミー」してくれた人を優先的に表示します。マッチする可能性が高まります。",
+		"14": "Flirtualをアクティブに使い、「いいね」や「ホミー」をすることで、より多くのマッチが得られます。",
+		"15": "もしあなたが誰かをホミーしたら、相手があなたを「いいね」してもホミーとしてマッチします。",
+		"16": "知っていましたか？VRChatで毎週イベントを開催しています。スピードデーティング、DJナイトなど！",
+		"17": "ページ下部の「イベント」をクリックして詳細を確認してください。",
+		"18": "Flirtualにアイデアがありますか？ページ下部の「フィードバック」をクリックしてお知らせください！",
+		"19": "まだここにいるの？",
+		"20": "実績解除：100タップ 🏆",
+		"21": "実績があるの？",
+		"22": "おめでとうございます、多分。",
+		"23": "*ゴロゴロ*",
+		"24": "知っていましたか？FlirtualはかつてVRLFPと呼ばれていました。",
+		"25": "それはVirtual Reality Looking For Partnerの略でした。ちょっと言いにくいですよね。",
+		"26": "VRLFPは2018年7月4日に誕生しました。",
+		"27": "私のFlirtualの歴史を楽しんでいますか？",
+		"28": "こんにちは、チューリップ！",
+		"29": ":3",
+		"30": "Flirtualモバイルアプリをお持ちですか？ぜひチェックしてみてください！",
+		"31": "それはカスタムアバターですか？",
+		"32": "設定でマッチメイキングアルゴリズムをカスタマイズできます。技術ってすごいですね！",
+		"33": "安全のためにバイオにDiscordを入れないでください！接続設定を使用してください！",
+		"34": "休憩が必要ですか？アカウントを一時停止して後で戻ることもできます。ただ、寂しくなりますけどね。",
+		"35": "<3",
+		"36": "パスワードが嫌いですか？設定でパスキーを追加してください！未来へようこそ。",
+		"37": "これを読んでいますか？",
+		"38": "Discordの#date-worldsチャンネルでデートのアイデアをチェックしてください！",
+		"39": "Flirtualで目がチカチカしますか？設定でダークモードをお試しください！",
+		"40": "200フリッティポイントを獲得しました！",
+		"41": "ただし、それを使うことはできません。",
+		"42": "ちなみに、私はフリッティです。",
+		"43": "一時期、モチという名前になりそうでした。",
+		"44": "あなたの名前は何ですか？",
+		"45": "実際には聞こえません。",
+		"46": "私とチャットしたいですか？Discordの#ask-flittyチャンネルをご覧ください！",
+		"47": "怪しいAI技術で動作しています！",
+		"48": "安全のため、怪しいリンクはクリックしないでください！",
+		"49": "道を知っていますか？",
+		"50": "どのくらいの間、私をクリックし続けますか？",
+		"51": "猫の事実をお届けします！",
+		"52": "猫は耳を180度回転させることができます。",
+		"53": "あなたもできますか？",
+		"54": "猫には第三のまぶたがあります。",
+		"55": "予備があるのはいいことです。",
+		"56": "猫にはユニークな鼻の形があります。",
+		"57": "指紋のようなものですが、鼻です。",
+		"58": "猫は嗅覚が鋭いです。",
+		"59": "シャワーを浴びてください！",
+		"60": "私を300回クリックしました。",
+		"61": "私は猫です。それが猫の事実です。",
+		"62": "猫は100以上の異なる音を作ることができます。",
+		"63": "うーん、私は一つしか作れないようです。",
+		"64": "猫は未来から送られたロボットです。",
+		"65": "それを声に出して言ってしまいましたか？",
+		"66": "未来は素晴らしいです。あなたはFlirtualで人生の愛を見つけました！",
+		"67": "どういたしまして。",
+		"68": "猫の事実はこれで終わりです！何か学べましたか？",
+		"69": "にゃー。",
+		"70": "にゃーにゃー。",
+		"71": "にゃーにゃーにゃー。",
+		"72": "にゃーにゃーにゃーにゃー。",
+		"73": "にゃーにゃーにゃーにゃーにゃー。",
+		"74": "わん！",
+		"75": "待って、それは間違いです。",
+		"76": "Flirtualについて聞いたことがありますか？",
+		"77": "猫の9割がFlirtualを推薦します。",
+		"78": "あなたの猫にFlirtualが適しているかどうか尋ねてください。",
+		"79": "一般的なマウスは2000万回のクリックに耐えられます。",
+		"80": "マウスの0.002%を私に使ってくれてありがとう！",
+		"81": "ウウウ",
+		"82": "言うことがなくなりそうです。",
+		"83": "もうクリックするのをやめてください。",
+		"84": "十分楽しんだでしょう。",
+		"85": "何を求めているのですか？",
+		"86": "これ以上の知恵は提供できません。",
+		"87": "どうぞFlirtualを利用してください。",
+		"88": "あなたが私をクリックするのと同じくらい好きな人を見つけるかもしれません。",
+		"89": "その人に新しいFlirtuloreや猫の事実を教えてあげてください。",
+		"90": "きっととても感動するでしょう。",
+		"91": "楽しかったですが、本当に行かなければなりません。",
+		"92": "そろそろ猫の昼寝の時間です。",
+		"93": "*あくび*",
+		"94": "たくさんのタップをありがとう。",
+		"95": "Flirtualで楽しい時間を過ごしてください。",
+		"96": "もっとおしゃべりしたい場合は、Discordの#ask-flittyチャンネルで私を見つけてください。",
+		"97": "さようなら！",
+		"98": "...",
+		"99": "よろしい、これがあなたの賞品です。",
+		"100": "私を500回クリックしました。おめでとうございます、Flirtualを勝ち取りました！あなたを誇りに思います。"
+	},
+	"few_grassy_hyena_adapt": "<highlight>まったく新しい次元</highlight>で恋に落ちる",
+	"unmatch": "アンマッチ",
+	"message": "メッセージ",
+	"unmatched_name": "{name}とのアンマッチ",
+	"strong_home_bullock_taste": "お互いにVR初心者です。一緒に探索しましょう！",
+	"fuzzy_calm_ant_nudge": "{name}はVR初心者です。案内してみませんか？",
+	"early_quiet_giraffe_dine": "<settings-bio>バイオを追加</settings-bio>するのをお忘れなく！",
+	"age_verified": "年齢確認済み",
+	"that_proud_butterfly_find": "Discord: <copy>{name}</copy>",
+	"discord_verified": "Discord確認済み",
+	"zany_salty_cheetah_lead": "VRChat: <copy>{name}</copy>",
+	"pipe_land_teeny_hypnotic": "あなたは{name}を{status, select, liked {いいねしました} homied {ホミーしました} other {スキップしました}}。",
+	"mint_colossal_kettle_sense": "{name}があなたを{status, select, liked {いいねしました} other {ホミーしました}}。",
+	"strong_trite_squid_grasp": "{uploaded}{scanned, select, true {アップロードされ、スキャンされました} false {アップロードされ、<bold>スキャンされませんでした</bold>} other {}}。",
+	"search_image": "画像検索",
+	"edit": "編集",
+	"home_watery_koala_stop": "プロフィールリンクを共有",
+	"odd_mad_dog_nurture": "更新されたプロフィールリンク",
+	"update": "更新",
+	"share": "共有",
+	"copy_link": "リンクをコピー",
+	"icy_stock_herring_burn": "私のFlirtualプロフィールをチェックしてください！",
+	"account_blocked": "アカウントがブロックされました",
+	"giant_strong_thrush_startle": "<highlight>{name}</highlight>をブロックしましたので、お互いのプロフィールを見ることはできず、メッセージのやり取りもできません。",
+	"unblock": "ブロック解除",
+	"unblocked_name": "{name}のブロックを解除しました",
+	"report_profile": "プロフィールを報告",
+	"active_today": "今日アクティブ",
+	"active_recently": "最近アクティブ",
+	"block": "ブロック",
+	"block_name": "{name}をブロックしますか？",
+	"barbarous_hypnotic_thank_book": "これにより、お互いのプロフィールを見ることができなくなり、メッセージのやり取りもできなくなります。この操作は永久で、後で取り消すことはできません。",
+	"cancel": "キャンセル",
+	"blocked_name": "{name}をブロックしました",
+	"day_front_cat_cry": "Flirtualの安全を守ってくれてありがとうございます！報告をできるだけ早く確認します。",
+	"details": "詳細",
+	"jolly_moving_stork_love": "この出来事についてもう少し詳しく教えてください（任意）",
+	"ok_gross_ostrich_work": "スクリーンショットやその他の証拠をアップロード（任意）",
+	"attachments": "添付ファイル",
+	"report": "報告",
+	"open_minded": "オープンマインド",
+	"practical": "実用的",
+	"reliable": "信頼できる",
+	"free_spirited": "自由な精神",
+	"friendly": "親しみやすい",
+	"straightforward": "率直",
+	"submissive": "従順",
+	"switch": "スイッチ",
+	"monogamous": "一夫一妻制",
+	"continue": "続ける",
+	"early_north_alpaca_sail": "Flirtualを更新しますか？",
+	"icy_sound_emu_kiss": "Flirtualを最新バージョンに更新することをお勧めします。このバージョンを使い続けるとバグに遭遇する可能性があります。",
+	"aware_such_leopard_fond": "結構です",
+	"loose_fancy_marlin_zip": "クリップボードにコピーしました",
+	"learn_more": "詳細はこちら",
+	"delete_image": "画像を削除",
+	"trust_and_safety": "信頼と安全",
+	"i_acknowledge": "承認します",
+	"contact_us": "お問い合わせ",
+	"deft_raw_cod_fond": "VRで<action>{heart}</action>を込めて制作",
+	"nutritious_challenge_blue_end": "<link>プロフィールを完成</link>させて、他の人があなたを見つけてマッチできるようにしましょう！",
+	"exuberant_green_horse_fowl": "<link>メールを確認</link>して、他の人があなたを見つけてマッチできるようにしましょう！",
+	"strip_zesty_bushes_idiotic": "<link>モバイルアプリをダウンロード</link>",
+	"pleasant_ugliest_expert_camera": "現在の言語は{current}ですが、希望する言語は<link>{preferred}</link>です。",
+	"flesh_stitch_realize_bike": "翻訳キーをオンにしました。<link>オフにする</link>まで内容が理解しにくい場合があります。",
+	"updates": "アップデート",
+	"discord": "Discord",
+	"get_app": "アプリを入手",
+	"reports": "報告",
+	"search": "検索",
+	"stats": "統計",
+	"hide": "隠す",
+	"yes": "はい",
+	"no": "いいえ",
+	"select_an_option": "オプションを選択",
+	"select_a_country": "国を選択",
+	"select_a_language": "言語を選択",
+	"anyone_on_flirtual": "Flirtual上の全員",
+	"matches_only": "マッチのみ",
+	"just_me": "自分だけ",
+	"show": "表示",
+	"unsudo": "スード解除",
+	"errors": {
+		"internal_server_error": "申し訳ありませんが、何か問題が発生しました！後でもう一度お試しください。",
+		"cant_be_blank": "空白にすることはできません。",
+		"has_already_been_taken": "他のユーザーによってすでに使用されています。",
+		"is_invalid": "無効な入力です。",
+		"must_be_accepted": "必須です。",
+		"has_invalid_format": "無効な形式です。",
+		"has_an_invalid_entry": "無効なエントリです。",
+		"is_reserved": "予約済みです。",
+		"does_not_match_confirmation": "確認と一致しません。",
+		"password_does_not_match": "新しいパスワードが一致しません。スペルを確認して再試行してください。",
+		"leaked_password": "このパスワードは他のアプリやサイトのデータ侵害で漏洩しました。セキュリティのため、他の場所で使用していない新しいパスワードを選択してください。",
+		"leaked_login_password": "あなたのパスワードは他のアプリやサイトのデータ侵害で漏洩しました。セキュリティのため、<reset>パスワードをリセット</reset>して、他の場所で使用していないものに変更してください。",
+		"login_rate_limit": "ログイン試行回数が多すぎます。15分後にもう一度試すか、<reset>パスワードをリセット</reset>してください。",
+		"is_still_associated_with_this_entry": "このエントリに関連付けられています。",
+		"are_still_associated_with_this_entry": "このエントリに関連付けられています。",
+		"should_be_{count}_character(s)": "{count, plural, =0 {空白である必要があります} =1 {1文字である必要があります} other {#文字である必要があります}}。",
+		"should_have_{count}_item(s)": "{count, plural, =0 {空白である必要があります} =1 {1つの項目を選択してください} other {#項目を選択してください}}。",
+		"should_be_at_least_{count}_character(s)": "{count, plural, =0 {必須です} =1 {必須です} other {少なくとも#文字である必要があります}}。",
+		"should_be_at_least_{count}_byte(s)": "{count, plural, =0 {必須です} =1 {必須です} other {少なくとも#文字である必要があります}}。",
+		"should_have_at_least_{count}_item(s)": "{count, plural, =0 {必須です} =1 {必須です} other {少なくとも#項目を選択してください}}。",
+		"should_be_at_most_{count}_character(s)": "{count, plural, =0 {空白である必要があります} =1 {1文字を超えてはいけません} other {#文字を超えてはいけません}}。",
+		"should_have_at_most_{count}_item(s)": "{count, plural, =0 {空白である必要があります} =1 {1つ以上の項目を持つことはできません} other {#項目を超えてはいけません}}。",
+		"must_be_less_than_{number}": "{number}未満でなければなりません。",
+		"must_be_greater_than_{number}": "{number}より大きくなければなりません。",
+		"must_be_less_than_or_equal_to_{number}": "{number}以下でなければなりません。",
+		"must_be_greater_than_or_equal_to_{number}": "{number}以上でなければなりません。",
+		"must_be_equal_to_{number}": "{number}でなければなりません。",
+		"too_young": "Flirtualを使用するには少なくとも18歳である必要があります。",
+		"too_old": "実際の生年月日を入力してください。",
+		"invalid_credentials": "メールまたはパスワードが間違っています。パスワードをリセットしてください。",
+		"invalid_credentials_complex": "メールまたはパスワードが間違っています。<reset>パスワードをリセット</reset>するか、<help>一般的な問題を確認</help>してください。",
+		"invalid_password": "パスワードが間違っています。再試行するかログアウトしてパスワードをリセットしてください。",
+		"email_domain_blocked": "申し訳ありませんが、あなたのメールサービスは濫用のためブロックされています。",
+		"email_must_be_different": "新しいメールアドレスは古いメールアドレスと同じにすることはできません。",
+		"account_banned": "アカウントが停止されました。詳細と異議申し立て手順についてはアカウントのメールを確認してください。",
+		"connection_account_not_found": "このDiscordユーザーに関連付けられたFlirtualアカウントが見つかりません。このDiscordアカウントにログインしていることを確認してください。Discordアカウントをリンクしていない場合、まずメールとパスワードでログインし、その後接続設定でDiscordアカウントを追加してください。",
+		"connection_verify_email": "Discordでメールを確認してもう一度お試しください。",
+		"invalid_grant": "アカウントを接続できませんでした。後でもう一度お試しください。（無効な認証）",
+		"upstream_error": "アカウントを接続できませんでした。後でもう一度お試しください。（上流エラー）",
+		"state_mismatch": "アカウントを接続できませんでした。後でもう一度お試しください（状態の不一致）",
+		"provider_not_found": "アカウントを接続できませんでした。後でもう一度お試しください。（未知のプロバイダー）",
+		"authorize_not_supported": "アカウントを接続できませんでした。後でもう一度お試しください。（サポートされていないプロバイダー）",
+		"image_not_found": "画像が見つかりませんでした。",
+		"conversation_not_found": "会話が見つかりません（ユーザーがアンマッチ、ブロック、またはアカウントが無効化または停止されています）。",
+		"user_not_found": "ユーザーが見つかりません（ブロック、アカウントの無効化または停止されています）。",
+		"prospect_not_found": "元に戻せませんでした。申し訳ありません！",
+		"missing_permission": "このアクションを実行する権限がありません。",
+		"report_not_found": "報告が見つかりませんでした。",
+		"subscription_not_found": "サブスクリプションのキャンセル中にエラーが発生しました。サポートにお問い合わせください。",
+		"cannot_block_user": "ユーザーをブロックできませんでした（アカウントが無効化されています）。",
+		"cannot_unblock_user": "ユーザーのブロックを解除できませんでした（アカウントが無効化されています）。",
+		"profile_not_blocked": "ユーザーのブロックを解除できませんでした（すでに解除されています）。",
+		"passkey_login_failed": "パスキーログインに失敗しました。もう一度お試しになるか、別の方法をご利用ください。",
+		"turnstile_required": "あなたはロボットですか？",
+		"turnstile_invalid": "認証に失敗しました。もう一度お試しください。",
+		"turnstile_expired": "認証が期限切れです。もう一度お試しください。"
+	},
+	"support": "サポート",
+	"forgot_your_password": "パスワードを忘れましたか？",
+	"or_sign_up": "またはサインアップ",
+	"or": "または",
+	"log_in_with": "{type}でログイン",
+	"home_wild_marten_wave": "デバイスが確認されました。",
+	"jolly_this_crow_hug": "デバイスを確認中...",
+	"create_account": "アカウントを作成",
+	"password": "パスワード",
+	"url": "URL",
+	"i_agree": "同意します",
+	"pickle_capricious_cemetery_name": "<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意し、18歳以上であることを表明します",
+	"acidic_temporary_fill_cracker": "Flirtualの更新情報を受け取る",
+	"spade_mindless_furry_jeans": "新機能、変更、お得情報など<br></br>（スパムはしません）",
+	"reset_password": "パスワードをリセット",
+	"sticks_own_phobic_utopian": "メールアドレスを入力してください。パスワードリセット用リンクをお送りします。",
+	"or_log_in": "またはログイン",
+	"need_help": "お困りですか？<support></support>",
+	"ready_ghost_locket_bubble": "アカウントをお持ちの場合、<email></email>にパスワードリセット用リンクを含むメールをお送りします。<br></br><br></br>メールが見つからない場合は、迷惑メールやスパムフォルダーを確認してください。それでも見つからない場合は<contact>お問い合わせ</contact>ください。",
+	"login": "ログイン",
+	"help_translate_others": "Flirtualをあなたの言語に翻訳するお手伝いをしたいですか？<link>協力する</link>",
+	"help_translate": "Flirtualを{language}に翻訳するお手伝いをしたいですか？<link>協力する</link>",
+	"date_of_birth": "生年月日",
+	"about_me": "自己紹介",
+	"my_gender": "自分の性別",
+	"other_genders": "その他の性別",
+	"location": "場所",
+	"optional": "（オプション）",
+	"vr_apps_games": "VRアプリ/ゲーム",
+	"select_genders": "性別を選択してください...",
+	"game_hint": "Flirtualでマッチした後、どのソーシャルアプリやマルチプレイヤーゲームでも会うことができます。",
+	"select_games": "お気に入りのゲームを選択してください...",
+	"interests": "興味",
+	"onboarding_interests_hint": "後でさらに興味を追加する機会があります。",
+	"select_interests": "興味を選択してください...",
+	"want_to_meet": "会いたい人",
+	"any_age": "どの年齢でも",
+	"number_plus": "{number}+",
+	"number_range": "{from}-{to}",
+	"up_to_number": "（最大{number}まで）",
+	"age_range": "年齢範囲",
+	"finish": "完了",
+	"back": "戻る",
+	"confirm_email": "メールを確認",
+	"confirm_your_email": "メールを確認してください",
+	"homie_mode": "Homieモード",
+	"browse": "閲覧",
+	"likes_you": "あなたをいいねした人",
+	"matches": "マッチ",
+	"more_details": "詳細情報",
+	"personality": "個性",
+	"connections": "接続",
+	"settings": "設定",
+	"appearance": "外見",
+	"reactivate_account": "アカウントを再アクティブ化",
+	"deactivate_account": "アカウントを無効化",
+	"delete_account": "アカウントを削除",
+	"email": "メール",
+	"change_email": "メールを変更",
+	"notifications": "通知",
+	"password_passkeys": "パスワード＆パスキー",
+	"bio_pics": "バイオ＆画像",
+	"basic_info": "基本情報",
+	"matchmaking": "マッチメイキング",
+	"nsfw": "NSFW",
+	"premium": "プレミアム",
+	"flirtual_premium": "Flirtualプレミアム",
+	"new": "新しい",
+	"profile": "プロフィール",
+	"account": "アカウント",
+	"logout": "ログアウト",
+	"social": "ソーシャル",
+	"events": "イベント",
+	"discord_server": "Discordサーバー",
+	"vrchat_group": "VRChatグループ",
+	"twitter": "Twitter",
+	"help": "ヘルプ",
+	"network_status": "ネットワークステータス",
+	"info": "情報",
+	"legal": "法的事項",
+	"feedback": "フィードバック",
+	"status": "ステータス",
+	"about": "概要",
+	"press": "プレス",
+	"branding": "ブランディング",
+	"community_guidelines": "コミュニティガイドライン",
+	"terms_of_service": "利用規約",
+	"privacy_policy": "プライバシーポリシー",
+	"developers": "開発者",
+	"copyright": "© {year} Flirtual",
+	"privacy": "プライバシー",
+	"lime_soft_shad_skip": "私たちのアートを使用したいですか？ここにあります。センス良く使用し、<contact>承認のために連絡</contact>してください。",
+	"our_logo": "私たちのロゴ",
+	"flaky_same_grizzly_snap": "Flirtualのロゴを編集、変更、歪めたり、再着色、再構成しないでください。",
+	"mark_only": "マークのみ",
+	"such_pink_jan_spur": "Flirtualブランドがページやデザイン内で明確に表示される場合、または他の場所で十分に認識されている場合にのみ使用してください。",
+	"colors": "色",
+	"gradient": "グラデーション",
+	"dark_mode": "ダークモード",
+	"pink": "ピンク",
+	"cream": "クリーム",
+	"wise_great_crow_foster": "もっと必要ですか？",
+	"ornate_upper_guppy_mend": "より多くのグラフィックと情報のために、完全なプレスキットをダウンロードしてください。",
+	"download": "ダウンロード",
+	"press_kit": "プレスキット",
+	"newsroom": "ニュースルーム",
+	"homely_living_owe_coach": "ご注文を受け付けました。",
+	"remark_butterfly_sum_seasonal": "サブスクリプションは間もなくアカウントに適用されます。購入に関してご不明な点がございましたら、<contact>お問い合わせください</contact>。",
+	"version": "Flirtual {version}",
+	"equal_quaint_swallow_dial": "関係や一般的なアドバイス、ピアサポート、または認定アドバイザーとの1対1の相談。",
+	"awake_solid_slug_flop": "VRでのピアサポートメンタルヘルスグループ。",
+	"nonmonogamous": "非一夫一妻制",
+	"email_address": "メールアドレス",
+	"anonymous": "匿名",
+	"log_in": "ログイン",
+	"sign_up": "サインアップ",
+	"expand_image": "画像を拡大",
+	"image_deleted": "画像が削除されました",
+	"dominant": "支配的",
+	"display_name": "表示名",
+	"factual_curly_fly_pop": "プライバシー保護のため、Discord ユーザー名 (または他のユーザー名) をここに入力しないでください。これにより、他のプラットフォームで不要なメッセージを避けることができます。",
+	"guidelines": "ガイドライン",
+	"formal_icy_hound_type": "ヌード/NSFW、不快、またはトピックから外れたコンテンツを含めないでください。また、他の人の写真を使用しないでください。",
+	"known_antsy_gull_savor": "VRChat、 {game} 、またはその他のソーシャル VR アプリからアバター写真をアップロードします。より多くのマッチングを得るには、3 枚以上のアバター写真を目指してください。手元に写真がない場合は、閲覧に戻って後で戻ってくることができます。",
+	"profile_pictures": "プロフィール写真",
+	"proof_east_termite_pave": "優れたプロフィールは、あなたの性格や興味、ユーモアのセンス、そしてあなたが探しているものなどを示します。",
+	"tame_weird_termite_zap": "敬意を持って投稿し、スパム、勧誘、過度な自己宣伝、NSFW のグラフィック説明、憎悪や物議を醸すコンテンツを含めないでください。",
+	"bio": "バイオ",
+	"back_to_browsing": "閲覧に戻る",
+	"add": "追加",
+	"prompts": "プロンプト",
+	"edit_prompt": "プロンプトを編集",
+	"add_a_prompt": "プロンプトを追加する",
+	"select_a_prompt": "プロンプトを選択",
+	"actual_stock_camel_devour": "あなたのプロフィールが公開されました。残りは<strong>オプション</strong>ですが、あなたに最適な人を見つけるのに役立ちます。プロフィール設定でいつでも追加できます。",
+	"clean_extra_goldfish_pause": "プロフィールは準備完了です。残りは<strong>オプション</strong>ですが、あなたに最適な人を見つけるのに役立ちます。プロフィール設定でいつでも追加できます。",
+	"im_open_to": "私は…にオープンです。",
+	"sexuality": "セクシュアリティ",
+	"serious_dating_hint": "真剣な交際（最終的には直接会う）",
+	"casual_dating_hint": "カジュアルデート（VR限定デート）",
+	"new_friends": "新しい友達",
+	"casual_fun": "カジュアルな楽しみ",
+	"select_your_sexualities": "あなたの性的指向を選択してください...",
+	"relation_type": "関係タイプ",
+	"language": "言語",
+	"vr_setup": "VRセットアップ",
+	"select_the_platforms_you_use": "使用するプラットフォームを選択してください...",
+	"nimble_hour_bumblebee_savor": "バーチャルリアリティは初めてですか?",
+	"chunky_weak_tadpole_relish": "最大 10 件の興味を選択します。ページの下部で、独自のカスタム興味を追加できます。",
+	"search_interests": "興味を検索...",
+	"inclusive_silly_ibex_succeed": "興味が最大 10 件に達しました",
+	"custom_interests": "カスタム興味",
+	"wide_shy_loris_gleam": "各関心ごとに<small>Return⏎</small>を押します",
+	"born_game_pony_empower": "各関心ごとに<small>Enter⏎</small>を押します",
+	"type_your_custom_interests": "あなたのカスタム興味を入力してください...",
+	"quiet_gross_skate_honor": "これは、ビッグファイブ性格テストに基づいて、あなたと相性の合う人とのマッチングに役立ちます。",
+	"personality_questions": {
+		"0": "私はよく空想にふける",
+		"1": "私は多くのものを美しいと感じる",
+		"2": "物事が変わるのは好きではない",
+		"3": "私は人生を計画する",
+		"4": "ルールは守るべきものだ",
+		"5": "私はよく衝動的な行動をする",
+		"6": "心の奥底では、多くの人は善人だ",
+		"7": "人を助けるのが大好きだ",
+		"8": "真実は人の感情よりも重要だ"
+	},
+	"drab_game_myna_yell": "プロフィールにアカウントを追加する",
+	"empty_petty_bullock_drop": "マッチング後、他のユーザーがあなたのアカウントを閲覧できるので、会うのが簡単になります。また、Discord アカウントで Flirtual にログインすることもできます。",
+	"vrchat": "VRChat",
+	"facetime_number": "FaceTime番号",
+	"connect_account": "アカウントを接続",
+	"removed_connection": "接続を解除しまし",
+	"google": "Google",
+	"apple": "Apple",
+	"meta": "Meta",
+	"undo": "元に戻す",
+	"like": "のように",
+	"homie": "ホーミー",
+	"pass": "合格",
+	"mark_all_as_read": "すべてを既読にする",
+	"just_loud_orangutan_dash": "ここでマッチするものが見つかります",
+	"born_green_lion_tend": "誰かがあなたに「いいね！」したり、「友達」になったりすると、マッチングが成立します。メッセージを送信して VR で会うことができます。",
+	"antsy_great_spider_drum": "あなたに好意を持っている人や仲の良い人を優先的に表示して、マッチングできるようにします。",
+	"tips": "ヒント",
+	"heavy_weak_hare_spin": "Flirtual を積極的に使用し、他の人に「いいね！」したり、友達になったり、プロフィールの詳細を入力すると、あなたのプロフィールがより多くの人に公開されます。<link> Discordに参加する</link>プロフィールを共有してフィードバックをもらいましょう!",
+	"browse_profiles": "プロフィールを閲覧する",
+	"see_who_likes_you": "誰があなたを気に入っているか確認する",
+	"many_direct_chipmunk_sew": "マッチする前に誰があなたを気に入っているか確認しましょう",
+	"civil_active_nils_value": "無制限のプロフィールを閲覧",
+	"sharp_calm_stork_cry": "マッチメイキングの優先順位を管理する",
+	"many_top_quail_embrace": "プロフィールの色をカスタマイズする",
+	"brave_late_dolphin_dart": "もう推測する必要はありません。誰がすでにあなたに興味を持っているかを見つけ、より早くマッチングし、潜在的なつながりを見逃すことはありません。",
+	"flat_topical_hornet_nourish": "まだ飽きていませんか? 1 日の制限を解除して、いつでも幅広いプロフィールを閲覧できます。",
+	"stock_zany_puma_gulp": "時には、1 つのサイズがすべての人に合うとは限りません。アルゴリズムをカスタマイズして、自分にぴったりの人を見つけましょう。",
+	"check_it_out": "（それをチェックしてください）",
+	"late_full_rat_stab": "群衆から目立ちましょう! プロフィールにカスタムカラースキームを選択して、あなたのスタイルをアピールし、印象に残る第一印象を与えましょう。",
+	"drab_lucky_lemming_feel": "Flirtual はまだ初期段階です。 {number}人のユーザーがおり、成長を続けており、常に新しい機能をリリースし、プラットフォームを改善しています。プレミアムを提供することで、開発費とホスティング費用を賄うことができます。",
+	"loved_many_raven_pout": "私たちの活動にご賛同いただけましたら、ぜひ購読してサポートしてください。",
+	"basic_wide_ape_buy": "応援していただきありがとうございます！",
+	"lost_spare_millipede_nurture": "「管理」ボタンを押すと、いつでもサブスクリプションを変更またはキャンセルできます。",
+	"cute_smug_ocelot_flip": "このページに戻って「管理」ボタンを押すと、いつでもサブスクリプションを変更またはキャンセルできます。",
+	"payment_terms_and_refund_policy": "支払条件と返金ポリシー",
+	"manage": "管理",
+	"purchase": "購入",
+	"subscribe": "購読する",
+	"monthly": "毎月",
+	"every_number_months": "{number}か月ごと",
+	"lifetime": "一生",
+	"save_percent": "{number} % を保存",
+	"manage_subscription": "サブスクリプションの管理",
+	"resubscribe": "再登録"
 }

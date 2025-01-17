@@ -8,7 +8,6 @@ import type { FC } from "react";
 import {
 	Profile,
 	ProfileMonopolyList,
-	ProfileRelationshipLabel,
 	ProfileRelationshipList
 } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
@@ -79,15 +78,9 @@ export const Finish2Form: FC = () => {
 						<div className="flex gap-4 pb-6 desktop:pb-6">
 							<CheckCircle2 className="mt-1.5 size-7 shrink-0 text-pink" />
 							<span>
-								Your profile is
-								{" "}
-								{user.emailConfirmedAt ? "now visible" : "good to go"}
-								! The rest
-								is
-								{" "}
-								<strong>optional</strong>
-								, but helps us find the best people
-								for you. You can always add more later in your Profile Settings.
+								{t.rich(user.emailConfirmedAt ? "actual_stock_camel_devour" : "clean_extra_goldfish_pause", {
+									strong: (children) => <strong>{children}</strong>
+								})}
 							</span>
 						</div>
 						<hr className="border-t-2 border-white-30 dark:border-black-60" />
@@ -95,12 +88,17 @@ export const Finish2Form: FC = () => {
 					<FormField name="relationships">
 						{(field) => (
 							<>
-								<InputLabel>I&apos;m open to...</InputLabel>
+								<InputLabel>{t("im_open_to")}</InputLabel>
 								<InputCheckboxList
 									{...field.props}
 									items={ProfileRelationshipList.map((item) => ({
 										key: item,
-										label: ProfileRelationshipLabel[item]
+										label: t(({
+											serious: "serious_dating_hint",
+											vr: "casual_dating_hint",
+											hookups: "casual_fun",
+											friends: "new_friends"
+										} as const)[item])
 									}))}
 								/>
 							</>
@@ -109,7 +107,7 @@ export const Finish2Form: FC = () => {
 					<FormField name="sexualityId">
 						{(field) => (
 							<>
-								<InputLabel>Sexuality</InputLabel>
+								<InputLabel>{t("sexuality")}</InputLabel>
 								<InputAutocomplete
 									{...field.props}
 									options={sexualities.map((sexuality) => {
@@ -128,7 +126,7 @@ export const Finish2Form: FC = () => {
 										};
 									})}
 									limit={3}
-									placeholder="Select your sexualities..."
+									placeholder={t("select_your_sexualities")}
 								/>
 							</>
 						)}
@@ -136,7 +134,7 @@ export const Finish2Form: FC = () => {
 					<FormField name="monopoly">
 						{(field) => (
 							<>
-								<InputLabel>Relationship type</InputLabel>
+								<InputLabel>{t("relation_type")}</InputLabel>
 								<InputSelect
 									{...field.props}
 									optional
@@ -151,7 +149,7 @@ export const Finish2Form: FC = () => {
 					<FormField name="languages">
 						{(field) => (
 							<>
-								<InputLabel>Language</InputLabel>
+								<InputLabel>{t("language")}</InputLabel>
 								<InputLanguageAutocomplete limit={5} {...field.props} />
 							</>
 						)}
@@ -159,7 +157,7 @@ export const Finish2Form: FC = () => {
 					<FormField name="platformId">
 						{(field) => (
 							<>
-								<InputLabel>VR setup</InputLabel>
+								<InputLabel>{t("vr_setup")}</InputLabel>
 								<InputAutocomplete
 									{...field.props}
 									options={platforms.map((platformId) => ({
@@ -167,7 +165,7 @@ export const Finish2Form: FC = () => {
 										label: tAttribute[platformId]?.name || platformId
 									}))}
 									limit={8}
-									placeholder="Select the platforms you use..."
+									placeholder={t("select_the_platforms_you_use")}
 								/>
 							</>
 						)}
@@ -175,7 +173,7 @@ export const Finish2Form: FC = () => {
 					<FormField name="new">
 						{(field) => (
 							<>
-								<InputLabel>Are you new to Virtual Reality?</InputLabel>
+								<InputLabel>{t("nimble_hour_bumblebee_savor")}</InputLabel>
 								<InputSwitch {...field.props} />
 							</>
 						)}
@@ -188,9 +186,9 @@ export const Finish2Form: FC = () => {
 							size="sm"
 						>
 							<MoveLeft className="size-5" />
-							<span>Back</span>
+							<span>{t("back")}</span>
 						</ButtonLink>
-						<FormButton className="w-36" size="sm" />
+						<FormButton className="min-w-36" size="sm" />
 					</div>
 				</>
 			)}

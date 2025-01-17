@@ -3,7 +3,7 @@
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -12,6 +12,7 @@ import {
 	type ConnectionType
 } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -22,24 +23,19 @@ export interface ConnectionButtonProps {
 
 export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const { type } = props;
-	const { Icon, iconClassName, label, color } = ConnectionMetadata[type];
+	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 	const location = useLocation();
 	const [session] = useSession();
 	const router = useRouter();
 	const toasts = useToast();
 	const { native } = useDevice();
+	const t = useTranslations();
 
 	const connection = useMemo(() => {
 		return session
 			? session.user.connections?.find((connection) => connection.type === type)
 			: null;
 	}, [session, type]);
-
-	const [text, setText] = useState("");
-
-	useMemo(() => {
-		setText(connection?.displayName ?? "Connect account");
-	}, [connection]);
 
 	if (!session) return null;
 
@@ -111,8 +107,8 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 				<Icon className={twMerge("size-6", iconClassName)} />
 			</button>
 			<div className="pointer-events-none flex flex-col overflow-hidden whitespace-nowrap px-4 py-2 font-nunito leading-none vision:text-black-80">
-				<span className="text-sm leading-none opacity-75">{label}</span>
-				<span data-mask>{text}</span>
+				<span className="text-sm leading-none opacity-75">{t(type)}</span>
+				<span data-mask>{connection?.displayName ?? t("connect_account")}</span>
 			</div>
 			{connection && (
 				<button
@@ -121,7 +117,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 					onClick={async () => {
 						await Connection.delete(type)
 							.then(() => {
-								toasts.add("Removed connection");
+								toasts.add(t("removed_connection"));
 								return router.refresh();
 							})
 							.catch(toasts.addError);

@@ -42,7 +42,7 @@ export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> =
 							<BlockDialog user={user}>
 								<AlertDialogTrigger asChild>
 									<Button className="gap-2 p-0" kind="tertiary" size="sm">
-										<Ban className="size-full" />
+										<Ban className="size-6" />
 										{t("block")}
 									</Button>
 								</AlertDialogTrigger>

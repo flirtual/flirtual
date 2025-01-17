@@ -10,6 +10,7 @@ import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { InputText } from "~/components/inputs";
 import { useDevice } from "~/hooks/use-device";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -17,6 +18,7 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
 	const router = useRouter();
 	const [session] = useSession();
+	const t = useTranslations();
 
 	if (!session) return null;
 
@@ -31,12 +33,8 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 			)}
 			<div className="flex flex-col gap-4">
 				<div>
-					<span className="flex text-xl">Add accounts to your profile</span>
-					<span className="text-black-50 vision:text-white-50 dark:text-white-50">
-						People can see your accounts after you match, to help you meet up.
-						You&apos;ll also be able to log in to Flirtual with your Discord
-						account.
-					</span>
+					<span className="flex text-xl">{t("drab_game_myna_yell")}</span>
+					<span className="text-black-50 vision:text-white-50 dark:text-white-50">{t("empty_petty_bullock_drop")}</span>
 				</div>
 				<Form
 					fields={{
@@ -78,7 +76,7 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 										<InputText
 											Icon={VRChatIcon}
 											iconColor="#095d6a"
-											placeholder="VRChat"
+											placeholder={t("vrchat")}
 											{...field.props}
 										/>
 									)}
@@ -91,7 +89,7 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 											<InputText
 												Icon={FaceTimeIcon}
 												iconColor="#34da4f"
-												placeholder="FaceTime number"
+												placeholder={t("facetime_number")}
 												{...field.props}
 											/>
 										)}
@@ -106,10 +104,10 @@ export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
 									size="sm"
 								>
 									<MoveLeft className="size-5" />
-									<span>Back</span>
+									<span>{t("back")}</span>
 								</ButtonLink>
-								<FormButton className="w-36" size="sm">
-									Finish
+								<FormButton className="min-w-36" size="sm">
+									{t("finish")}
 								</FormButton>
 							</div>
 						</>

@@ -19,6 +19,7 @@ import {
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger
 } from "~/components/dropdown";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urls } from "~/urls";
 
@@ -26,6 +27,7 @@ export const ProfileDropdownCopySubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
 	const [session] = useSession();
+	const t = useTranslations();
 
 	const connections: Array<{ type: ConnectionType; value: string | null }> = [
 		{ type: "discord", value: user.profile.discord ?? null },
@@ -36,21 +38,21 @@ export const ProfileDropdownCopySubmenu: FC<
 		<DropdownMenuSub>
 			{children}
 			<DropdownMenuSubContent>
-				<DropdownMenuLabel>Copy</DropdownMenuLabel>
+				<DropdownMenuLabel>{t("copy")}</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
 					className="gap-2"
 					onClick={() => Clipboard.write({ string: displayName(user) })}
 				>
 					<CaseSensitive className="size-5" />
-					Display Name
+					{t("display_name")}
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					className="gap-2"
 					onClick={() => Clipboard.write({ string: user.slug })}
 				>
 					<CaseLower className="size-5" />
-					Profile link
+					{t("profile_link")}
 				</DropdownMenuItem>
 				{session?.user.tags?.includes("admin") && (
 					<DropdownMenuItem
@@ -58,7 +60,7 @@ export const ProfileDropdownCopySubmenu: FC<
 						onClick={() => Clipboard.write({ string: user.email })}
 					>
 						<AtSign className="size-5" />
-						Email address
+						{t("email_address")}
 					</DropdownMenuItem>
 				)}
 				<DropdownMenuSeparator />
@@ -67,14 +69,14 @@ export const ProfileDropdownCopySubmenu: FC<
 					onClick={() => Clipboard.write({ string: user.id })}
 				>
 					<Fingerprint className="size-5" />
-					User ID
+					{t("user_id")}
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					className="gap-2"
 					onClick={() => Clipboard.write({ string: user.talkjsId })}
 				>
 					<Fingerprint className="size-5" />
-					Legacy User ID
+					{t("legacy_user_id")}
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuSub>
@@ -83,7 +85,7 @@ export const ProfileDropdownCopySubmenu: FC<
 						disabled={connections.every(({ value }) => !value)}
 					>
 						<Share2 className="size-5" />
-						Connection
+						{t("connection")}
 					</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent>
 						{connections.map(({ type, value }) => {
@@ -93,7 +95,7 @@ export const ProfileDropdownCopySubmenu: FC<
 									key={type}
 									onClick={() => value && Clipboard.write({ string: value })}
 								>
-									{ConnectionMetadata[type].label}
+									{t(type)}
 								</DropdownMenuItem>
 							);
 						})}
@@ -107,7 +109,7 @@ export const ProfileDropdownCopySubmenu: FC<
 						})}
 				>
 					<Link2 className="size-5" />
-					URL
+					{t("url")}
 				</DropdownMenuItem>
 			</DropdownMenuSubContent>
 		</DropdownMenuSub>

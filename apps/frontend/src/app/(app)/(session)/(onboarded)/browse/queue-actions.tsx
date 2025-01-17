@@ -40,6 +40,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { UserAvatar } from "~/components/user-avatar";
 import { useDevice } from "~/hooks/use-device";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
@@ -86,6 +87,7 @@ const QueueActions_: FC<{
 }> = ({ queue, explicitUserId, kind: mode }) => {
 	const [session] = useSession();
 	const { native } = useDevice();
+	const t = useTranslations();
 
 	useEffect(() => {
 		if (!session?.user.createdAt || !native) return;
@@ -296,7 +298,7 @@ const QueueActions_: FC<{
 										</button>
 									</TooltipTrigger>
 									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-										<span className="pt-1">Undo</span>
+										<span className="pt-1">{t("undo")}</span>
 										<Key label="H" />
 									</TooltipContent>
 								</Tooltip>
@@ -318,7 +320,7 @@ const QueueActions_: FC<{
 											</button>
 										</TooltipTrigger>
 										<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-											<span className="pt-1">Like</span>
+											<span className="pt-1">{t("like")}</span>
 											<Key label="J" />
 										</TooltipContent>
 									</Tooltip>
@@ -338,7 +340,7 @@ const QueueActions_: FC<{
 										</button>
 									</TooltipTrigger>
 									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-										<span className="pt-1">Homie</span>
+										<span className="pt-1">{t("homie")}</span>
 										<Key label={mode === "love" ? "K" : "J"} />
 									</TooltipContent>
 								</Tooltip>
@@ -355,7 +357,7 @@ const QueueActions_: FC<{
 									</button>
 								</TooltipTrigger>
 								<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-									<span className="pt-1">Pass</span>
+									<span className="pt-1">{t("pass")}</span>
 									<Key label="L" />
 								</TooltipContent>
 							</Tooltip>

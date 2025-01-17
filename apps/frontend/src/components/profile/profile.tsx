@@ -196,7 +196,7 @@ export function Profile(props: ProfileProps) {
 									: (
 											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
 												{t("fuzzy_calm_ant_nudge", {
-													displayName: displayName(user)
+													name: displayName(user)
 												})}
 											</span>
 										)

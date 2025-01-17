@@ -9,6 +9,7 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
@@ -24,6 +25,7 @@ export const Finish3Form: FC = () => {
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
+	const t = useTranslations();
 
 	if (!session) return null;
 	const { user } = session;
@@ -66,15 +68,14 @@ export const Finish3Form: FC = () => {
 				return (
 					<>
 						<InputLabel>
-							Choose up to 10 interests. You can add your own custom interests
-							at the bottom of the page.
+							{t("chunky_weak_tadpole_relish")}
 						</InputLabel>
 						<FormField name="filter">
 							{(field) => (
 								<InputText
 									{...field.props}
 									Icon={Search}
-									placeholder="Search interests..."
+									placeholder={t("search_interests")}
 								/>
 							)}
 						</FormField>
@@ -93,7 +94,7 @@ export const Finish3Form: FC = () => {
 										)
 											return toasts.add({
 												type: "warning",
-												value: "You've reached the maximum of 10 interests"
+												value: t("inclusive_silly_ibex_succeed")
 											});
 
 										onChange(newValues);
@@ -112,7 +113,7 @@ export const Finish3Form: FC = () => {
 										)
 											return toasts.add({
 												type: "warning",
-												value: "You've reached the maximum of 10 interests"
+												value: t("inclusive_silly_ibex_succeed")
 											});
 
 										onChange(newValues);
@@ -128,9 +129,9 @@ export const Finish3Form: FC = () => {
 								size="sm"
 							>
 								<MoveLeft className="size-5" />
-								<span>Back</span>
+								<span>{t("back")}</span>
 							</ButtonLink>
-							<FormButton className="w-36" size="sm" />
+							<FormButton className="min-w-36" size="sm" />
 						</div>
 						<InterestSelectCount
 							className="mb-11 desktop:mb-0"
