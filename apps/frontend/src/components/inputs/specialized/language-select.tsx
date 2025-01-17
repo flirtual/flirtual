@@ -25,14 +25,14 @@ export const InputLanguageSelect: React.FC<{ className?: string }> = ({ classNam
 
 	const { trigger } = useMutation(
 		"change-language",
-		(_, { arg: language }: { arg: PreferenceLanguage }) => {
+		async (_, { arg: language }: { arg: PreferenceLanguage }) => {
 			if (!session) {
 				location.searchParams.set("language", language);
 				router.push(location.href);
 				return;
 			}
 
-			Preferences.update(session.user.id, { language });
+			await Preferences.update(session.user.id, { language });
 			if (location.searchParams.has("language")) {
 				location.searchParams.delete("language");
 				router.push(location.href);
