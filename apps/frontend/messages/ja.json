@@ -729,5 +729,18 @@
 	"account_warning_removed": "アカウント警告が削除されました",
 	"account_warned": "アカウントに警告",
 	"cleared_count_reports": "{count, plural, =1 {1 report}その他{# reports}をクリアしました。",
-	"cleared_single_report": "単一レポートをクリア"
+	"cleared_single_report": "単一レポートをクリア",
+	"out_of_profiles": "プロフィール外",
+	"full_zesty_finch_exhale": "あなたの好みに合う人全員を見てきました。",
+	"round_stout_iguana_stab": "より多くの人を見るには、<link>マッチメイキングフィルター</link>。",
+	"sea_giant_anteater_slurp": "または、後でもう一度確認してください。毎週、何百もの新しい Flirtual プロファイルが作成されます。お友達を招待して Flirtual を試してみましょう!",
+	"main_large_goat_succeed": "引き続き<link>ホーミーモード</link>、新しい友達と出会える場所です（マッチメイキングフィルターなし）。",
+	"filters": "フィルター",
+	"pretty_last_shrike_bend": "皆さんにお会いしましたね。",
+	"stout_tired_warbler_inspire": "後でまた来てください! 毎週何百もの新しい Flirtual プロフィールが作成されます。友達を招待して Flirtual を試してみましょう!",
+	"sharp_gray_sloth_clasp": "ホーミーモードを終了",
+	"silly_petty_meerkat_hug": "あなたのプロフィールは現在非表示になっています。他のユーザーとマッチングできるようにプロフィールの設定を完了してください。",
+	"complete_your_profile": "プロフィールを完成させましょう",
+	"heroic_big_firefox_enrich": "あなたのプロフィールは現在非表示になっています。アカウントを保護して Flirtual を引き続き使用するには、メール アドレスを確認してください。",
+	"finish_profile": "プロフィールを完成"
 }

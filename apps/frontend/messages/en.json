@@ -732,5 +732,18 @@
 	"account_warning_removed": "Account warning removed",
 	"account_warned": "Account warned",
 	"cleared_count_reports": "Cleared {count, plural, =1 {1 report} other {# reports}.",
-	"cleared_single_report": "Cleared single report"
+	"cleared_single_report": "Cleared single report",
+	"out_of_profiles": "Out of profiles",
+	"full_zesty_finch_exhale": "You've seen everyone that matches your preferences.",
+	"round_stout_iguana_stab": "To see more people, try expanding your <link>matchmaking filters</link>.",
+	"sea_giant_anteater_slurp": "Or check back later. Each week hundreds of new Flirtual profiles are created. Invite your friends to try Flirtual!",
+	"main_large_goat_succeed": "You can also continue in <link>Homie Mode</link>, where you can meet new friends (without matchmaking filters).",
+	"filters": "Filters",
+	"pretty_last_shrike_bend": "You've seen everyone.",
+	"stout_tired_warbler_inspire": "Come back later! Each week hundreds of new Flirtual profiles are created. Invite your friends to try Flirtual!",
+	"sharp_gray_sloth_clasp": "Leave Homie Mode",
+	"silly_petty_meerkat_hug": "Your profile is currently hidden. Finish setting up your profile so that you can match with other users!",
+	"complete_your_profile": "Complete your profile",
+	"heroic_big_firefox_enrich": "Your profile is currently hidden. Confirm your email to secure your account and continue using Flirtual.",
+	"finish_profile": "Finish profile"
 }
