@@ -61,7 +61,7 @@ const ToastItem: React.FC<Omit<Toast, "key">> = ({ type, icon: Icon, children, r
 				{
 					success: "bg-brand-gradient text-white-20",
 					error: "bg-white-10 dark:bg-black-80 border-2 border-red-500 text-black-80 dark:text-white-20 motion-preset-slide-left",
-					warning: "bg-black-80 border-2 border-yellow-500"
+					warning: "bg-black-80 text-white-20 border-2 border-yellow-500"
 				}[type]
 			)}
 			type="button"
