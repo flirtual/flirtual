@@ -32,7 +32,11 @@ export const InputLanguageSelect: React.FC<{ className?: string }> = ({ classNam
 				return;
 			}
 
-			return Preferences.update(session.user.id, { language });
+			Preferences.update(session.user.id, { language });
+			if (location.searchParams.has("language")) {
+				location.searchParams.delete("language");
+				router.push(location.href);
+			}
 		},
 		{
 			onError: () => {
