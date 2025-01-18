@@ -166,10 +166,6 @@ iframe {
   padding-top: 2px !important;
 }
 
-.uppy-StatusBar-actionBtn--upload {
-  content: "Upload" !important;
-}
-
 .uppy-Dashboard-browse,
 .uppy-DashboardContent-back,
 .uppy-DashboardContent-save,
