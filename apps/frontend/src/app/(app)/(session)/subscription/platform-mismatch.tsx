@@ -1,13 +1,20 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
 
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 
+const osName = {
+	apple: "ios",
+	android: "android"
+} as const;
+
 export const PlatformMismatchMessage: FC = () => {
 	const { platform, native, vision } = useDevice();
 	const [session] = useSession();
+	const t = useTranslations();
 
 	if (!session) return null;
 	const { subscription } = session.user;
@@ -15,10 +22,7 @@ export const PlatformMismatchMessage: FC = () => {
 	if (vision) return (
 		<div className="rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
-				Please use the iPhone or iPad app to
-				{" "}
-				{subscription?.active ? "manage your subscription" : "purchase Premium. Your subscription will be available on Apple Vision after purchase"}
-				.
+				{t(subscription?.active ? "dull_steep_tadpole_grin" : "light_wacky_tadpole_enrich")}
 			</span>
 		</div>
 	);
@@ -37,58 +41,16 @@ export const PlatformMismatchMessage: FC = () => {
 	return (
 		<div className="rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
-				Sorry, you can&apos;t make changes to this subscription
-				{" "}
-				{platform === "apple"
-					? (
-							<>
-								in the
-								{" "}
-								<span className="font-semibold">iOS</span>
-								{" "}
-								app
-							</>
-						)
-					: platform === "android"
-						? (
-								<>
-									in the
-									{" "}
-									<span className="font-semibold">Android</span>
-									{" "}
-									app
-								</>
-							)
-						: (
-								<>
-									on the
-									{" "}
-									<span className="font-semibold">website</span>
-								</>
-							)}
-				. Please use the
-				{" "}
-				{subscription.platform === "ios"
-					? (
-							<>
-								<span className="font-semibold">iOS</span>
-								{" "}
-								app
-							</>
-						)
-					: subscription.platform === "android"
-						? (
-								<>
-									<span className="font-semibold">Android</span>
-									{" "}
-									app
-								</>
-							)
-						: (
-								<span className="font-semibold">website</span>
-							)}
-				{" "}
-				to manage your subscription.
+				{(platform !== "web" && !["chargebee", "stripe"].includes(subscription.platform))
+					? t("caring_smug_felix_gleam", {
+						currentPlatform: t(osName[platform]),
+						// @ts-expect-error: "chargebee" is not assignable.
+						otherPlatform: t(subscription.platform)
+					})
+					: (platform !== "web" && ["chargebee", "stripe"].includes(subscription.platform))
+							? t("gross_each_cobra_talk", { platform: t(osName[platform]) })
+							// @ts-expect-error: "chargebee" is not assignable.
+							: t("elegant_chunky_frog_soar", { platform: t(subscription.platform) })}
 			</span>
 		</div>
 	);

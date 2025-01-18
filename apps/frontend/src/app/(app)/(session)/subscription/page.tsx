@@ -55,19 +55,17 @@ export default async function SubscriptionPage() {
 			{subscription && (
 				<div data-mask className="flex flex-col gap-4">
 					<h1 className="text-2xl font-semibold">
-						{subscription.active ? "Active" : "Inactive"}
-						{" "}
-						Subscription
+						{t(subscription.active ? "active_subscription" : "inactive_subscription")}
 					</h1>
 					<div className="flex flex-col">
 						<div className="flex items-center gap-2">
 							<Sparkles className="inline size-5" />
-							<span>{subscription.plan.name}</span>
+							<span>{t(`attributes.${subscription.plan.id}.name` as any)}</span>
 						</div>
 						<span className="ml-5 pl-2 text-sm text-black-30 vision:text-white-50 dark:text-white-50">
 							{subscription.cancelledAt
-								? `Canceled on ${formatDate(subscription.cancelledAt)}`
-								: `Since ${formatDate(subscription.updatedAt)}`}
+								? t("canceled_on_date", { date: new Date(subscription.cancelledAt) })
+								: t("since_date", { date: new Date(subscription.createdAt) })}
 						</span>
 					</div>
 				</div>

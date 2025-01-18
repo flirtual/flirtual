@@ -19,7 +19,6 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 	const { id, name, icon, date } = props;
 	const toasts = useToast();
 	const router = useRouter();
-	const formatter = useFormatter();
 	const t = useTranslations();
 
 	return (
@@ -35,11 +34,9 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 						)}
 			</div>
 			<div className="flex flex-col overflow-hidden whitespace-nowrap p-2 text-left font-nunito leading-none vision:text-black-80">
-				{name || "Passkey"}
+				{name || t("passkey")}
 				<span className="text-sm leading-none text-black-60 dark:text-white-40">
-					Added
-					{" "}
-					{formatter.dateTime(date)}
+					{t("added_date", { date })}
 				</span>
 			</div>
 			<div

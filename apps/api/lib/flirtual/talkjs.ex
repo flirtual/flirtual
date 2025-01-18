@@ -89,6 +89,7 @@ defmodule Flirtual.Talkjs do
       name: User.display_name(user),
       email: if(user.preferences.email_notifications.messages, do: [user.email], else: []),
       photoUrl: User.avatar_url(user, "icon"),
+      locale: user.preferences.language,
       role: "user"
     })
   end

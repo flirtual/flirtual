@@ -126,13 +126,14 @@ const ReccommendedProfileThemes: FC = () => {
 		fields: { color1, color2 }
 	} = useFormContext<ProfileColors>();
 	const { theme } = useTheme();
+	const t = useTranslations();
 
 	const defaultTheme = defaultProfileColors[theme];
 
 	return (
 		<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
 			{[
-				{ name: "Flirtual", description: "default", ...defaultTheme },
+				{ name: "flirtual", description: t("default"), ...defaultTheme },
 				...recommendedThemes
 			].map((theme) => (
 				<button
@@ -147,9 +148,9 @@ const ReccommendedProfileThemes: FC = () => {
 					}}
 				>
 					<div className="flex w-fit items-baseline gap-2">
-						<span>{theme.name}</span>
+						<span className="ja:text-sm">{t(theme.name)}</span>
 						{theme.description && (
-							<span className="text-sm text-black-50 vision:text-white-40 dark:text-white-40">
+							<span className="text-sm text-black-50 vision:text-white-40 ja:text-xs dark:text-white-40">
 								{theme.description}
 							</span>
 						)}
@@ -173,6 +174,7 @@ const ReccommendedProfileThemes: FC = () => {
 
 const SaveButton: FC = () => {
 	const [session] = useSession();
+	const t = useTranslations();
 	const { changes } = useFormContext<ProfileColors>();
 
 	if (!session) return null;
@@ -182,8 +184,9 @@ const SaveButton: FC = () => {
 
 	return (
 		<FormButton disabled={disabled}>
-			Save
-			{disabled && " (Premium required)"}
+			{t("save")}
+			{" "}
+			{disabled && t("premium_required")}
 		</FormButton>
 	);
 };
@@ -237,12 +240,12 @@ export const AppearanceForm: FC = () => {
 						</InputLabelHint>
 					)}
 				>
-					Language
+					{t("language")}
 				</InputLabel>
 				<InputLanguageSelect />
 			</div>
 			<div className="flex flex-col gap-2 vision:hidden">
-				<InputLabel>Theme</InputLabel>
+				<InputLabel>{t("theme")}</InputLabel>
 				<div className="grid grid-cols-3 gap-4">
 					{PreferenceThemes.map((theme) => (
 						<ThemePreview key={theme} theme={theme} />
@@ -253,7 +256,7 @@ export const AppearanceForm: FC = () => {
 				<div className="flex w-full flex-col justify-between gap-8 wide:flex-row">
 					<div className="flex shrink-0 flex-col gap-2">
 						<InputLabel className="flex items-center gap-2">
-							<span>Profile colors</span>
+							<span>{t("profile_colors")}</span>
 							<PremiumBadge />
 						</InputLabel>
 						<ProfileColorEditor />

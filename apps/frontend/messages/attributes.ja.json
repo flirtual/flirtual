@@ -2230,13 +2230,13 @@
 	},
 	"relationship": {
 		"serious": {
-			"name": "本気の恋愛"
+			"name": "真剣な交際"
 		},
 		"vr": {
 			"name": "カジュアルデート"
 		},
 		"hookups": {
-			"name": "気軽な遊び"
+			"name": "ワンナイトスタンド"
 		},
 		"friends": {
 			"name": "新しい友達"
@@ -2949,6 +2949,50 @@
 		},
 		"ssp": {
 			"name": "スペイン手話"
+		}
+	},
+	"plans": {
+		"w4WDwDWKtmLSqkn8oNqCN3": {
+			"name": "旧プレミアム（US$24.99/3ヶ月）"
+		},
+		"Wt4aFY7jVzvSNFK9qcYAr5": {
+			"name": "プレミアム（6ヶ月ごと）"
+		},
+		"fBDvWjdgvG6zEZMj6ZfyNG": {
+			"name": "プレミアム（3ヶ月ごと）"
+		},
+		"6xZywHRc432o5H9PqFFoyG": {
+			"name": "旧プレミアム（US$9.99/月）"
+		},
+		"rFxKcnAZGQtwckWUQbrG9J": {
+			"name": "フォールバックプレミアム"
+		},
+		"PQZuLuEmXRwuRhiQisgkPM": {
+			"name": "旧プレミアム（US$39.99/6ヶ月）"
+		},
+		"PHpCmDBMX6wCkuXXr36foQ": {
+			"name": "早期プレミアム（US$24.99/3ヶ月）"
+		},
+		"Di7Sypboma4ryhy6MUagyS": {
+			"name": "生涯プラン"
+		},
+		"43V699voRpLqskJEM42Vsa": {
+			"name": "早期サポーター"
+		},
+		"CJv2NQ7AiEimvDoZJ3uQTe": {
+			"name": "早期生涯プラン"
+		},
+		"2nAci9TWPaMaYFzVASVgme": {
+			"name": "早期プレミアム（US$9.99/月）"
+		},
+		"5NcKBUELrTmZr6JQQFespf": {
+			"name": "早期プレミアム（US$39.99/6ヶ月）"
+		},
+		"LVjvu5YE7PjUJxVrkfsnMi": {
+			"name": "プレミアム（月額）"
+		},
+		"QQd364odDmzV69gsaKTYwm": {
+			"name": "旧生涯プラン"
 		}
 	}
 }

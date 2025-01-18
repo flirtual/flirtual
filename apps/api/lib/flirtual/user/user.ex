@@ -570,7 +570,7 @@ defmodule Flirtual.User do
              |> change(%{banned_at: nil, shadowbanned_at: nil, indef_shadowbanned_at: nil})
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :premium_reset, :talkjs]),
            :ok <-
              Discord.deliver_webhook(:unsuspended,
                user: user,
@@ -593,7 +593,7 @@ defmodule Flirtual.User do
              |> change(%{indef_shadowbanned_at: now})
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :premium_reset, :talkjs]),
            :ok <-
              Discord.deliver_webhook(:indef_shadowbanned,
                user: user,
@@ -614,7 +614,7 @@ defmodule Flirtual.User do
              |> change(%{indef_shadowbanned_at: nil, shadowbanned_at: nil})
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :premium_reset, :talkjs]),
            :ok <-
              Discord.deliver_webhook(:unindef_shadowbanned,
                user: user,

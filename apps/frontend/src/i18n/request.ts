@@ -8,6 +8,8 @@ import type {
 import { getRequestConfig } from "next-intl/server";
 import { cache } from "react";
 
+import type { PreferenceLanguage } from "~/api/user/preferences";
+
 import { getInternationalization } from ".";
 
 export type MessageKeys = NamespaceKeys<
@@ -15,7 +17,7 @@ export type MessageKeys = NamespaceKeys<
 	NestedKeyOf<IntlMessages>
 >;
 
-async function getLanguageMessages(locale: string) {
+async function getLanguageMessages(locale: PreferenceLanguage) {
 	const { default: messages } = await import(
 		`../../messages/${locale}.json`
 	).catch(() => ({}));
@@ -26,8 +28,24 @@ async function getLanguageMessages(locale: string) {
 		}))
 	).default as Record<string, Record<string, unknown>>;
 
+	// @uppy/locales/en_US
+	const uppy = (await import(`@uppy/locales/lib/${{
+		en: "en_US",
+		de: "de_DE",
+		es: "es_ES",
+		fr: "fr_FR",
+		ja: "ja_JP",
+		ko: "ko_KR",
+		nl: "nl_NL",
+		pt: "pt_PT",
+		"pt-BR": "pt_BR",
+		ru: "ru_RU",
+		sv: "sv_SE"
+	}[locale]}`)).default.strings;
+
 	return {
 		...messages,
+		uppy,
 		attributes: Object.values(attributes).reduce((previous, current) => {
 			return { ...previous, ...current };
 		}, {})

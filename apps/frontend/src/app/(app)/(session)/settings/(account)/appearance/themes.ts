@@ -19,77 +19,77 @@ export const recommendedThemes: Array<
 	} & ProfileColors
 > = [
 	{
-		name: "Peachy Petal",
+		name: "peachy_petal",
 		color1: "#f9c58d",
 		color2: "#f492f0"
 	},
 	{
-		name: "Minty Fresh",
+		name: "minty_fresh",
 		color1: "#00ff87",
 		color2: "#60efff"
 	},
 	{
-		name: "3D Movie",
+		name: "3d_movie",
 		color1: "#ff1b6b",
 		color2: "#45caff"
 	},
 	{
-		name: "Rise and Shine",
+		name: "rise_and_shine",
 		color1: "#ffa585",
 		color2: "#ffeda0"
 	},
 	{
-		name: "Pretty in Pink",
+		name: "pretty_in_pink",
 		color1: "#ff00b4",
 		color2: "#ff9abe"
 	},
 	{
-		name: "Aqua Depths",
+		name: "aqua_depths",
 		color1: "#6ff7e8",
 		color2: "#1f7ea1"
 	},
 	{
-		name: "Galactic Glow",
+		name: "galactic_glow",
 		color1: "#fcb0f3",
 		color2: "#3d05dd"
 	},
 	{
-		name: "Vaporwave",
+		name: "vaporwave",
 		color1: "#fc4ecb",
 		color2: "#2effcb"
 	},
 	{
-		name: "Fox Fire",
+		name: "fox_fire",
 		color1: "#f46605",
 		color2: "#ffb45d"
 	},
 	{
-		name: "Touch Grass",
+		name: "touch_grass",
 		color1: "#743d17",
 		color2: "#478f50"
 	},
 	{
-		name: "Lemon Lime",
+		name: "lemon_lime",
 		color1: "#fff82e",
 		color2: "#4dff3d"
 	},
 	{
-		name: "Vampiric Vibe",
+		name: "vampiric_vibe",
 		color1: "#d80000",
 		color2: "#650000"
 	},
 	{
-		name: "Trick or Treat",
+		name: "trick_or_treat",
 		color1: "#ff8400",
 		color2: "#b337fc"
 	},
 	{
-		name: "Serene Silver",
+		name: "serene_silver",
 		color1: "#ebf4f5",
 		color2: "#8694a9"
 	},
 	{
-		name: "Dark as My Soul",
+		name: "dark_as_my_soul",
 		color1: "#000000",
 		color2: "#000000"
 	}

@@ -133,7 +133,7 @@ export const InfoForm: FC = () => {
 
 							return (
 								<>
-									<InputLabel {...field.labelProps}>Gender</InputLabel>
+									<InputLabel {...field.labelProps}>{t("gender")}</InputLabel>
 									<InputCheckboxList
 										{...field.props}
 										items={[
@@ -144,7 +144,7 @@ export const InfoForm: FC = () => {
 											})),
 											{
 												key: "other",
-												label: "Other genders"
+												label: t("other_genders")
 											}
 										]}
 										value={checkboxValue ?? []}
@@ -167,7 +167,7 @@ export const InfoForm: FC = () => {
 												};
 											})}
 											limit={4}
-											placeholder="Select your genders..."
+											placeholder={t("select_genders")}
 											value={field.props.value || []}
 										/>
 									)}
@@ -178,7 +178,7 @@ export const InfoForm: FC = () => {
 					<FormField name="sexuality">
 						{(field) => (
 							<>
-								<InputLabel>Sexuality</InputLabel>
+								<InputLabel>{t("sexuality")}</InputLabel>
 								<InputAutocomplete
 									{...field.props}
 									options={sexualities.map((sexuality) => {
@@ -198,7 +198,7 @@ export const InfoForm: FC = () => {
 									})}
 
 									limit={3}
-									placeholder="Select your sexualities..."
+									placeholder={t("select_your_sexualities")}
 									value={field.props.value || []}
 								/>
 							</>
@@ -207,7 +207,7 @@ export const InfoForm: FC = () => {
 					<FormField name="country">
 						{(field) => (
 							<>
-								<InputLabel>Location</InputLabel>
+								<InputLabel>{t("location")}</InputLabel>
 								<InputCountrySelect {...field.props} />
 							</>
 						)}
@@ -215,7 +215,7 @@ export const InfoForm: FC = () => {
 					<FormField name="languages">
 						{(field) => (
 							<>
-								<InputLabel>Language</InputLabel>
+								<InputLabel>{t("language")}</InputLabel>
 								<InputLanguageAutocomplete {...field.props} />
 							</>
 						)}
@@ -223,7 +223,7 @@ export const InfoForm: FC = () => {
 					<FormField name="platform">
 						{(field) => (
 							<>
-								<InputLabel>VR setup</InputLabel>
+								<InputLabel>{t("vr_setup")}</InputLabel>
 								<InputAutocomplete
 									{...field.props}
 									options={platforms.map((platform) => ({
@@ -231,7 +231,7 @@ export const InfoForm: FC = () => {
 										label: tAttribute[platform]?.name ?? platform
 									}))}
 									limit={8}
-									placeholder="Select the platforms you use..."
+									placeholder={t("select_the_platforms_you_use")}
 									value={field.props.value || []}
 								/>
 							</>
@@ -240,10 +240,9 @@ export const InfoForm: FC = () => {
 					<FormField name="game">
 						{(field) => (
 							<>
-								<InputLabel hint="(up to 5)">VR apps/games</InputLabel>
+								<InputLabel hint={t("up_to_number", { number: 5 })}>{t("vr_apps_games")}</InputLabel>
 								<InputLabelHint className="-mt-2">
-									After matching on Flirtual, you can meet up in any social app
-									or multiplayer game.
+									{t("game_hint")}
 								</InputLabelHint>
 								<InputAutocomplete
 									{...field.props}
@@ -252,7 +251,7 @@ export const InfoForm: FC = () => {
 										label: tAttribute[game]?.name ?? game
 									}))}
 									limit={5}
-									placeholder="Select your favorite games..."
+									placeholder={t("select_games")}
 									value={field.props.value || []}
 								/>
 							</>
@@ -261,12 +260,12 @@ export const InfoForm: FC = () => {
 					<FormField name="new">
 						{(field) => (
 							<>
-								<InputLabel>Are you new to Virtual Reality?</InputLabel>
+								<InputLabel>{t("nimble_hour_bumblebee_savor")}</InputLabel>
 								<InputSwitch {...field.props} />
 							</>
 						)}
 					</FormField>
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>

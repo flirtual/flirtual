@@ -89,7 +89,7 @@ defmodule Flirtual.Users do
              |> User.changeset(attrs, options)
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :premium_reset, :talkjs]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -290,7 +290,7 @@ defmodule Flirtual.Users do
              User.confirm_email_changeset(attrs.user)
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :talkjs]),
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:chargebee, :elasticsearch, :listmonk, :talkjs]),
            {:ok, _} <- deliver_changed_email_alert(user) do
         user
       else
@@ -400,7 +400,7 @@ defmodule Flirtual.Users do
              |> change(%{deactivated_at: nil})
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(user.id) do
+           {:ok, _} <- ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :premium_reset, :talkjs]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)

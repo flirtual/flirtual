@@ -98,7 +98,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
 					{t(`mint_colossal_kettle_sense`, {
 						status: relationship.likedMe === "love" ? "liked" : "homied",
-						displayName: displayName(user)
+						name: displayName(user)
 					})}
 				</span>
 			</div>

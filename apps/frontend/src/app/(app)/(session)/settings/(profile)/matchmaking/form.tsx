@@ -13,7 +13,6 @@ import {
 	DefaultProfileCustomWeights,
 	Profile,
 	ProfileMonopolyList,
-	ProfileRelationshipLabel,
 	ProfileRelationshipList
 } from "~/api/user/profile";
 import { NewBadge, PremiumBadge } from "~/components/badge";
@@ -142,7 +141,7 @@ export const MatchmakingForm: FC = () => {
 								<div className="flex items-center gap-4">
 									<InputCheckbox {...field.props} />
 									<InputLabel {...field.labelProps}>
-										Show visionOS users first
+										{t("legal_actual_newt_soar")}
 									</InputLabel>
 								</div>
 							)}
@@ -151,7 +150,7 @@ export const MatchmakingForm: FC = () => {
 					<FormField name="gender">
 						{(field) => (
 							<>
-								<InputLabel {...field.labelProps}>I want to meet...</InputLabel>
+								<InputLabel {...field.labelProps}>{t("want_to_meet")}</InputLabel>
 								<InputCheckboxList
 									{...field.props}
 									items={genders.map((gender) => {
@@ -164,7 +163,7 @@ export const MatchmakingForm: FC = () => {
 										return {
 											key: gender.id,
 											label: gender.fallback
-												? "Other genders"
+												? t("other_genders")
 												: (plural ?? name)
 										};
 									})}
@@ -182,15 +181,15 @@ export const MatchmakingForm: FC = () => {
 										{...labelProps}
 										hint={
 											min === absMinAge && max === absMaxAge
-												? "any age"
+												? t("any_age")
 												: max === absMaxAge
-													? `${min}+`
+													? t("number_plus", { number: min })
 													: min === max
 														? min
-														: `${min}-${max}`
+														: t("number_range", { from: min, to: max })
 										}
 									>
-										Age range
+										{t("age_range")}
 									</InputLabel>
 									<Slider
 										{...props}
@@ -207,14 +206,19 @@ export const MatchmakingForm: FC = () => {
 						{(field) => (
 							<>
 								<InputLabel className="items-center">
-									I&apos;m open to...
+									{t("im_open_to")}
 									<NewBadge />
 								</InputLabel>
 								<InputCheckboxList
 									{...field.props}
 									items={ProfileRelationshipList.map((item) => ({
 										key: item,
-										label: ProfileRelationshipLabel[item]
+										label: t(({
+											serious: "serious_dating_hint",
+											vr: "casual_dating_hint",
+											hookups: "hookups_hint",
+											friends: "new_friends"
+										} as const)[item])
 									}))}
 								/>
 							</>
@@ -223,7 +227,7 @@ export const MatchmakingForm: FC = () => {
 					<FormField name="monopoly">
 						{(field) => (
 							<>
-								<InputLabel>Relationship type</InputLabel>
+								<InputLabel>{t("relationship_type")}</InputLabel>
 								<InputSelect
 									{...field.props}
 									optional
@@ -243,20 +247,20 @@ export const MatchmakingForm: FC = () => {
 								iconClassName={twMerge("h-5", passesPending && "animate-spin")}
 								size="sm"
 							>
-								Reset passes
+								{t("reset_passes")}
 							</Button>
 						</AlertDialogTrigger>
 						<AlertDialogContent>
 							<AlertDialogHeader>
-								<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+								<AlertDialogTitle>{t("are_you_sure")}</AlertDialogTitle>
 							</AlertDialogHeader>
 							<AlertDialogDescription>
-								This will permanently undo all profiles you&apos;ve passed on.
+								{t("noble_cute_lionfish_thrive")}
 							</AlertDialogDescription>
 							<DialogFooter>
 								<AlertDialogCancel asChild>
 									<Button kind="tertiary" size="sm">
-										Cancel
+										{t("cancel")}
 									</Button>
 								</AlertDialogCancel>
 								<AlertDialogAction asChild>
@@ -273,7 +277,7 @@ export const MatchmakingForm: FC = () => {
 												.catch(toasts.addError);
 										}}
 									>
-										Reset passes
+										{t("reset_passes")}
 									</Button>
 								</AlertDialogAction>
 							</DialogFooter>
@@ -281,18 +285,14 @@ export const MatchmakingForm: FC = () => {
 					</AlertDialog>
 					<div className="flex flex-col gap-4">
 						<InputLabel className="flex items-center gap-2 text-2xl font-semibold">
-							<span>Matchmaking priorities</span>
+							<span>{t("matchmaking_priorities")}</span>
 							<PremiumBadge />
 						</InputLabel>
 						<span>
-							Customize who you see on Flirtual. Slide right to increase
-							importance, left to decrease. Premium subscribers unlock full
-							customization.
+							{t("safe_good_rat_bask")}
 						</span>
 						<span>
-							For example, slide &quot;Same country&quot; to the right to see
-							more people from your country, or left if you want to see more
-							people from other countries.
+							{t("weird_dizzy_baboon_support")}
 						</span>
 					</div>
 					{CustomWeightList.map((key) => {
@@ -316,35 +316,34 @@ export const MatchmakingForm: FC = () => {
 														value === 0 ? "!text-red-500" : ""
 													)}
 												>
-													{value}
-													x
+													{t("number_multiplier", { number: value })}
 												</InputLabelHint>
 											)}
 										>
 											<span>
 												{
 													{
-														country: "Same country",
-														games: "Shared VR games",
-														defaultInterests: "Shared interests",
-														customInterests: "Shared custom interests",
-														personality: "Personality match",
-														relationships: "Relationship types",
+														country: t("same_country"),
+														games: t("shared_vr_games"),
+														defaultInterests: t("shared_interests"),
+														customInterests: t("shared_custom_interests"),
+														personality: t("personality_match"),
+														relationships: t("relationship_types"),
 														monopoly:
 															fields.monopoly.props.value === "monogamous"
-																? "Monogamous"
-																: "Non-monogamous",
-														languages: "Shared languages",
+																? t("monogamous")
+																: t("nonmonogamous"),
+														languages: t("shared_languages"),
 														domsub:
 															user.profile.domsub === "dominant"
-																? "Submissive"
+																? t("submissive")
 																: user.profile.domsub === "submissive"
-																	? "Dominant"
+																	? t("dominant")
 																	: user.profile.domsub === "switch"
-																		? "Switch"
-																		: "Dom/sub/switch match",
-														kinks: "Kink compatibility",
-														likes: "People who have liked you"
+																		? t("switch")
+																		: t("domsubswitch_match"),
+														kinks: t("kink_compatibility"),
+														likes: t("people_who_have_liked_you")
 													}[key]
 												}
 											</span>
@@ -365,7 +364,7 @@ export const MatchmakingForm: FC = () => {
 							</FormField>
 						);
 					})}
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>

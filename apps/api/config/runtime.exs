@@ -17,7 +17,7 @@ staging = System.get_env("STAGING", "") === "1"
 config :flirtual, Flirtual.ObanWorkers,
   enabled_workers:
     if(config_env() == :prod,
-      do: [:elasticsearch, :listmonk, :premium_reset, :talkjs],
+      do: [:chargebee, :elasticsearch, :listmonk, :premium_reset, :talkjs],
       else: [:elasticsearch, :premium_reset]
     ),
   enabled_cron_tasks:

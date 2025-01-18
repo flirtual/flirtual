@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { captureException, captureFeedback, setUser } from "@sentry/nextjs";
 import { Chrome, MoveRight, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { FC, PropsWithChildren } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -38,36 +39,42 @@ const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({ value, children }
 	</Slot>
 );
 
-const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, eventId }) => (
-	<>
-		{digest && (
-			<CopyClick value={digest}>
-				<span>
-					<span className="font-bold">Digest</span>
-					:
-					{" "}
-					{digest}
-				</span>
-			</CopyClick>
-		)}
-		{eventId && (
-			<CopyClick value={eventId}>
-				<span>
-					<span className="font-bold">Event</span>
-					:
-					{" "}
-					{eventId}
-				</span>
-			</CopyClick>
-		)}
-	</>
-);
+const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, eventId }) => {
+	const t = useTranslations();
+
+	return (
+		<>
+			{digest && (
+				<CopyClick value={digest}>
+					<span>
+						{t.rich("zany_watery_zebra_play", {
+							value: digest,
+							strong: (children) => <strong className="font-bold">{children}</strong>
+						})}
+					</span>
+				</CopyClick>
+			)}
+			{eventId && (
+				<CopyClick value={eventId}>
+					<span>
+						{t.rich("big_that_insect_slurp", {
+							value: eventId,
+							strong: (children) => <strong className="font-bold">{children}</strong>
+						})}
+					</span>
+				</CopyClick>
+			)}
+		</>
+	);
+};
 
 export type ErrorDialogProps = { userId?: string } & ErrorProps;
 
 const errors = new Map<string, number>();
 
 export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
+	const t = useTranslations();
+
 	const errorKey = error.digest || error.message;
 
 	const eventId = useMemo(() => captureException(error, { tags: { digest: error.digest } }), [error]);
@@ -105,16 +112,16 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 		>
 			<>
 				<DialogHeader>
-					<DialogTitle>It looks like we&apos;re having issues</DialogTitle>
+					<DialogTitle>{t("each_aloof_parrot_dine")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
 				<DialogBody className="flex flex-col">
 					{addDetails
 						? (
 								<>
-									<p>Add some details to help us fix this issue faster.</p>
+									<p>{t("seemly_busy_vulture_skip")}</p>
 									<div data-vaul-no-drag className="select-children flex flex-col whitespace-pre-wrap font-mono text-xs">
-										<span className="mb-2 font-bold">Error details</span>
+										<span className="mb-2 font-bold">{t("odd_dull_turkey_grip")}</span>
 										<ErrorDetails digest={error.digest} eventId={eventId} />
 										<span className="mt-2">{error.message}</span>
 									</div>
@@ -138,7 +145,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 									>
 										<div className="flex flex-col gap-2">
 											<InputLabel>
-												What happened?
+												{t("sunny_giant_cougar_taste")}
 											</InputLabel>
 											<InputTextArea name="message" rows={5} />
 										</div>
@@ -149,7 +156,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 												size="sm"
 												type="submit"
 											>
-												Submit
+												{t("submit")}
 											</Button>
 											<Button
 												className="w-fit px-2"
@@ -157,7 +164,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 												size="sm"
 												onClick={() => setAddDetails(false)}
 											>
-												Back
+												{t("back")}
 												<MoveRight className="ml-2 size-5 shrink-0" />
 											</Button>
 										</div>
@@ -188,7 +195,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 												style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 											/>
 											<p>
-												Issues are typically short-lived, but if they continue, consider the following steps:
+												{t("quiet_quaint_whale_rest")}
 											</p>
 										</motion.div>
 									</div>
@@ -200,52 +207,35 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 												onClick={() => location.reload()}
 											>
 												<RotateCw className="mr-1 inline-block size-4 shrink-0" />
-												Refresh the
-												{" "}
-												{native ? "app" : "page"}
+												{t(native ? "refresh_the_app" : "refresh_the_page")}
 											</button>
 											.
 										</li>
-										{native && (<li>Close and re-open the Flirtual app.</li>)}
+										{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
 										<li>
-											Make sure your
-											{" "}
-											{native && "app,"}
-											{" "}
-											<span className="whitespace-nowrap">
-												<Chrome className="mr-1 inline-block size-4 shrink-0" />
-												browser
-											</span>
-											{" "}
-											and
-											{" "}
-											<span className="whitespace-nowrap">
-												<Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
-												device
-											</span>
-											{" "}
-											are updated to the latest version.
+											{t.rich(native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe", {
+												"browser-icon": () => <Chrome className="mr-1 inline-block size-4 shrink-0" />,
+												"device-icon": () => <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
+											})}
 										</li>
 										<li>
-											Check your
-											{" "}
-											<span className="whitespace-nowrap">
-												<WifiOff className="mr-1 inline-block size-4 shrink-0" />
-												internet connection
-											</span>
-											.
+											{t.rich("tough_sleek_wasp_reside", {
+												icon: () => <WifiOff className="mr-1 inline-block size-4 shrink-0" />
+											})}
 										</li>
 										<li>
-											If none of the above solutions work, please
-											{" "}
-											<a
-												className="whitespace-nowrap underline"
-												href={urls.resources.contact}
-											>
-												<Send className="mr-1 inline-block size-4 shrink-0" />
-												contact us
-											</a>
-											.
+											{t.rich("yummy_salty_porpoise_greet", {
+												contact: (children) => (
+													<a
+														className="whitespace-nowrap lowercase underline"
+														href={urls.resources.contact}
+													>
+														<Send className="mr-1 inline-block size-4 shrink-0" />
+														{children}
+													</a>
+												)
+											})}
+
 										</li>
 									</ul>
 									<div data-vaul-no-drag className="select-children flex max-w-sm flex-col whitespace-pre-wrap font-mono text-xs">
@@ -258,7 +248,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 											size="sm"
 											onClick={tryAgain}
 										>
-											Try again
+											{t("try_again")}
 										</Button>
 										<Button
 											className="w-fit px-2"
@@ -266,7 +256,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 											size="sm"
 											onClick={() => setAddDetails((addDetails) => !addDetails)}
 										>
-											Add details
+											{t("add_details")}
 											<MoveRight className="ml-2 size-5 shrink-0" />
 										</Button>
 									</div>
@@ -275,31 +265,21 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 					<div className="mt-auto flex flex-col">
 						<div className="flex gap-2">
 							<a href={urls.resources.networkStatus}>
-								Network Status
+								{t("network_status")}
 							</a>
 							{" • "}
 							<a href={urls.socials.discord}>
-								Discord
+								{t("discord")}
 							</a>
 							{" • "}
 							<a href={urls.socials.twitter}>
-								Twitter
+								{t("twitter")}
 							</a>
 						</div>
 						<footer>
-							©
+							<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 							{" "}
-							{new Date().getFullYear()}
-							{" "}
-							Flirtual
-							{" "}
-							<span className="text-sm opacity-75">
-								{gitCommitSha?.slice(0, 6)}
-								{" "}
-								(
-								{environment}
-								)
-							</span>
+							<span className="text-sm opacity-75">{gitCommitSha?.slice(0, 6)}</span>
 						</footer>
 					</div>
 				</DialogBody>

@@ -3,7 +3,7 @@ import type { ProspectKind } from "./matchmaking";
 
 export type Message = {
 	id: string;
-	content: ProspectKind;
+	content: string;
 	viewed: boolean;
 	system: boolean;
 	senderId: string;

@@ -96,7 +96,7 @@ export const Finish2Form: FC = () => {
 										label: t(({
 											serious: "serious_dating_hint",
 											vr: "casual_dating_hint",
-											hookups: "casual_fun",
+											hookups: "hookups_hint",
 											friends: "new_friends"
 										} as const)[item])
 									}))}
@@ -134,7 +134,7 @@ export const Finish2Form: FC = () => {
 					<FormField name="monopoly">
 						{(field) => (
 							<>
-								<InputLabel>{t("relation_type")}</InputLabel>
+								<InputLabel>{t("relationship_type")}</InputLabel>
 								<InputSelect
 									{...field.props}
 									optional

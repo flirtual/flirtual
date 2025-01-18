@@ -10,7 +10,7 @@
 }
 
 * {
-  @apply ja:not-italic;
+  @apply ja:not-italic ko:not-italic ru:not-italic;
 }
 
 *:not(input) {

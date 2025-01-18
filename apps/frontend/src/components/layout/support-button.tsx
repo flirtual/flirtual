@@ -2,6 +2,7 @@
 
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
 
@@ -25,8 +26,9 @@ export const FooterIconSupportLink: React.FC = () => {
 	);
 };
 
-export const SupportButton: React.FC<{ className?: string }> = ({
-	className
+export const SupportButton: React.FC<{ className?: string; children?: ReactNode }> = ({
+	className,
+	children
 }) => {
 	const t = useTranslations();
 
@@ -35,7 +37,7 @@ export const SupportButton: React.FC<{ className?: string }> = ({
 			className={className}
 			onClick={useFreshworks().openFreshworks}
 		>
-			{t("contact_us")}
+			{children || t("contact_us")}
 		</InlineButton>
 	);
 };

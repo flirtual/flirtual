@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 "use client";
 
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
 	createContext,
@@ -24,6 +25,7 @@ import { emptyArray } from "~/utilities";
 
 import { getConversationsKey } from "./use-conversations.shared";
 import { useDevice } from "./use-device";
+import { useTranslations } from "./use-internationalization";
 import { warnOnce } from "./use-log";
 import { useNotifications } from "./use-notifications";
 import { useSession } from "./use-session";
@@ -178,23 +180,32 @@ export const ConversationChatbox: React.FC<
 
 	const { sessionTheme } = useTheme();
 	const { platform, native, vision } = useDevice();
+	const t = useTranslations();
+	const locale = useLocale();
 
 	const chatbox = useMemo(() => {
 		if (!session) return null;
 
 		const dark = resolveTheme(sessionTheme) === "dark";
 		const theme = vision
-			? "next-noheader-vision"
+			? "vision"
 			: dark
-				? "next-noheader-dark"
-				: "next-noheader";
+				? "dark"
+				: "light";
 
 		return session.createChatbox({
-			theme,
+			theme: {
+				name: theme,
+				custom: {
+					language: locale,
+					matchMessage: t("talkjs_match_message"),
+					inputPlaceholder: t("talkjs_input_placeholder", { name: "{name}" })
+				}
+			},
 			messageField: { spellcheck: true, enterSendsMessage: !native },
 			customEmojis
 		} as ChatboxOptions);
-	}, [session, sessionTheme, vision, native]);
+	}, [session, sessionTheme, vision, locale, t, native]);
 
 	const conversation = useMemo(() => {
 		if (!session || !conversationId) return null;

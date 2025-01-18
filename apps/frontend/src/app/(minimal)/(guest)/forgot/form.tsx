@@ -90,9 +90,6 @@ export const ForgotPasswordForm: React.FC = () => {
 										messages={errors.map((value) => ({ type: "error", value }))}
 									/>
 								</div>
-								<p className="text-center">
-									{t.rich("need_help", { support: () => <SupportButton /> })}
-								</p>
 							</>
 						)}
 		</Form>

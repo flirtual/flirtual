@@ -19,6 +19,7 @@ export default async function Onboarding0Page() {
 	return (
 		<ModelCard
 			branded
+			miniFooter
 			className="shrink-0 desktop:max-w-xl"
 			title={t("create_account")}
 		>

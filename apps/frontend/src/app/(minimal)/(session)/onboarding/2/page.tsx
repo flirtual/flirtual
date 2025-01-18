@@ -22,7 +22,7 @@ export default async function Onboarding2Page() {
 	const genders = await Attribute.list("gender");
 
 	return (
-		<ModelCard branded className="desktop:max-w-2xl" title={t("want_to_meet")}>
+		<ModelCard branded miniFooter className="desktop:max-w-2xl" title={t("want_to_meet")}>
 			<SWRConfig
 				value={{
 					fallback: {

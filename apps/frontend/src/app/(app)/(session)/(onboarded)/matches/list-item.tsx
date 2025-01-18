@@ -10,6 +10,7 @@ import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Link } from "~/components/link";
 import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar } from "~/components/user-avatar";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -27,6 +28,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 		lastMessage,
 		isUnread,
 	} = props;
+	const t = useTranslations();
 
 	const user = useUser(userId);
 	// const relationship = useRelationship(userId);
@@ -78,17 +80,16 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
 						<span data-mask className="w-full truncate text-black-50 dark:text-white-40">
-							{lastMessage
+							{lastMessage && !(lastMessage.system && lastMessage.content === "It's a match!")
 								? (
 										<>
-											{lastMessage?.senderId !== userId && !lastMessage.system && (
-												<span>You: </span>
-											)}
-											{lastMessage.content}
+											{(lastMessage?.senderId !== userId && !lastMessage.system)
+												? t("level_orange_stingray_fulfill", { message: lastMessage.content })
+												: lastMessage.content}
 										</>
 									)
 								: (
-										<span className="truncate">It&apos;s a match!</span>
+										<span className="truncate">{t("talkjs_match_message")}</span>
 									)}
 						</span>
 						{lastMessage && (

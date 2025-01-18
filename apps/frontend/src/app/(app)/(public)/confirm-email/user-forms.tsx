@@ -37,20 +37,22 @@ export const UserForms: React.FC = () => {
 			>
 				<div className="flex flex-col gap-2">
 					<h1 className="font-montserrat text-xl font-semibold">
-						One more step
+						{t("one_more_step")}
 					</h1>
 					<span className="text-lg">
-						Check your email (
-						<CopyClick value={session.user.email}>
-							<span data-mask className="select-all font-semibold">
-								{session.user.email}
-							</span>
-						</CopyClick>
-						) for your account confirmation link. If you don&apos;t see it in
-						your inbox, check your spam/trash folders.
+						{t.rich("maroon_polite_butterfly_boil", {
+							copy: (children) => (
+								<CopyClick value={session.user.email}>
+									<span data-mask className="select-all font-semibold">
+										{children}
+									</span>
+								</CopyClick>
+							),
+							email: session.user.email
+						})}
 					</span>
 				</div>
-				<FormButton>Send again</FormButton>
+				<FormButton>{t("send_again")}</FormButton>
 			</Form>
 			<Form
 				fields={{
@@ -73,18 +75,17 @@ export const UserForms: React.FC = () => {
 					<div className="flex flex-col gap-4">
 						<div>
 							<h1 className="font-montserrat text-xl font-semibold">
-								Wrong email address?
+								{t("happy_whole_parrot_intend")}
 							</h1>
 							<h2 className="text-lg">
-								If you entered the wrong email, or if you&apos;d like to try a
-								different email, you can enter a new one below:
+								{t("even_trick_pelican_swim")}
 							</h2>
 						</div>
 						<FormField name="email">
 							{(field) => (
 								<>
 									<InputLabel {...field.labelProps}>
-										New email address
+										{t("new_email_address")}
 									</InputLabel>
 									<InputText
 										{...field.props}
@@ -98,7 +99,7 @@ export const UserForms: React.FC = () => {
 							{(field) => (
 								<>
 									<InputLabel {...field.labelProps}>
-										Confirm email address
+										{t("confirm_email_address")}
 									</InputLabel>
 									<InputText {...field.props} autoComplete="off" type="email" />
 								</>
@@ -108,7 +109,7 @@ export const UserForms: React.FC = () => {
 							{(field) => (
 								<>
 									<InputLabel {...field.labelProps}>
-										Confirm current password
+										{t("confirm_current_password")}
 									</InputLabel>
 									<InputText
 										{...field.props}
@@ -118,7 +119,7 @@ export const UserForms: React.FC = () => {
 								</>
 							)}
 						</FormField>
-						<FormButton>Update email</FormButton>
+						<FormButton>{t("update_email")}</FormButton>
 					</div>
 				)}
 			</Form>

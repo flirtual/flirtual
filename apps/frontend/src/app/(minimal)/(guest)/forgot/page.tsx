@@ -17,7 +17,7 @@ export default async function ForgotPage() {
 	const t = await getTranslations();
 
 	return (
-		<ModelCard branded title={t("reset_password")}>
+		<ModelCard branded miniFooter title={t("reset_password")}>
 			<ForgotPasswordForm />
 		</ModelCard>
 	);

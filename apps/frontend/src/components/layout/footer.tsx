@@ -94,12 +94,14 @@ export const Footer: React.FC<FooterProps> = ({
 			<div className="flex w-full max-w-screen-wide flex-col gap-4 desktop:gap-8">
 				<div className="flex justify-between gap-8">
 					<div className="flex items-center gap-8">
-						<FlirtualLogo
-							className={twMerge(
-								"w-36 text-black-80 dark:text-[snow]",
-								logoClassName
-							)}
-						/>
+						<Link href={urls.landing}>
+							<FlirtualLogo
+								className={twMerge(
+									"w-36 text-black-80 dark:text-[snow]",
+									logoClassName
+								)}
+							/>
+						</Link>
 						<div className="flex gap-4">
 							<FooterIconSupportLink />
 							<FooterListIconLink
@@ -112,7 +114,7 @@ export const Footer: React.FC<FooterProps> = ({
 							/>
 						</div>
 					</div>
-					<InputLanguageSelect className="w-52 shrink-0" />
+					<InputLanguageSelect className="w-56 shrink-0" />
 				</div>
 				<div className="grid max-w-screen-desktop grid-cols-3 gap-x-4 desktop:justify-center">
 					<ul>

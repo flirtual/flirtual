@@ -28,7 +28,12 @@ export default async function Onboarding1Page() {
 	]);
 
 	return (
-		<ModelCard branded className="shrink-0 desktop:max-w-2xl" title={t("about_me")}>
+		<ModelCard
+			branded
+			miniFooter
+			className="shrink-0 desktop:max-w-2xl"
+			title={t("about_me")}
+		>
 			<SWRConfig
 				value={{
 					fallback: {

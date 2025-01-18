@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { useTranslations } from "next-intl";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -21,6 +22,7 @@ export interface ThemePreviewProps {
 }
 
 export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
+	const t = useTranslations();
 	const { setTheme, sessionTheme } = useTheme();
 	const active = theme === sessionTheme;
 
@@ -39,7 +41,7 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 						alt={`${capitalize(theme)} theme preview`}
 						className="rounded-lg"
 						height={206}
-						src={urls.media(ThemeImage[theme])}
+						src={urls.media(t(`${theme}_theme_image` as any))}
 						width={320}
 					/>
 					{active && (

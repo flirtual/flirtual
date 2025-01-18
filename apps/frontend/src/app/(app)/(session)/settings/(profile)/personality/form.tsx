@@ -6,7 +6,6 @@ import { entries } from "remeda";
 
 import {
 	Personality,
-	personalityQuestionLabels,
 	type ProfilePersonality
 } from "~/api/user/profile/personality";
 import { Form } from "~/components/forms";
@@ -47,8 +46,7 @@ export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 			{({ FormField }) => (
 				<>
 					<InputLabel>
-						This helps us match you with people you&apos;ll vibe with, based on
-						the Big 5 Personality Test.
+						{t("quiet_gross_skate_honor")}
 					</InputLabel>
 					{shuffle(
 						Number.parseInt(user.talkjsId.slice(0, 8), 16),
@@ -58,14 +56,14 @@ export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
 							{(field) => (
 								<div className="flex items-center justify-between gap-4">
 									<InputLabel {...field.labelProps} inline>
-										{personalityQuestionLabels[Number.parseInt(name.slice(-1))]}
+										{t(`personality_questions.${Number.parseInt(name.slice(-1))}` as any)}
 									</InputLabel>
 									<InputSwitch {...field.props} />
 								</div>
 							)}
 						</FormField>
 					))}
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>
