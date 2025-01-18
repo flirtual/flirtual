@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { use, useCallback, useEffect, useMemo } from "react";
 import {
 	type ShepherdOptionsWithType,
@@ -27,6 +28,7 @@ export function useTour(
 ) {
 	const shepherd = useShepherd();
 	const [, setScrollLocked] = useScrollLock();
+	const t = useTranslations();
 
 	const [completed, setCompleted] = usePreferences(
 		`tour-${name}-completed`,
@@ -39,18 +41,18 @@ export function useTour(
 				...step,
 				buttons: step.buttons ?? [
 					{
-						text: "Back",
+						text: t("back"),
 						action: shepherd.back
 					},
 					{
 						classes: "primary shadow-brand-1",
-						text: "Continue",
+						text: t("continue"),
 						action: shepherd.next
 					}
 				],
 				id: `${name}-${step.id}`
 			})),
-		[name, shepherd, getSteps]
+		[name, shepherd, getSteps, t]
 	);
 
 	const start = useCallback(
@@ -108,6 +110,7 @@ export function useTour(
 
 export function useDefaultTour(enabled: boolean = true) {
 	const mobile = !useScreenBreakpoint("desktop");
+	const t = useTranslations();
 
 	useTour(
 		enabled,
@@ -118,54 +121,54 @@ export function useDefaultTour(enabled: boolean = true) {
 					? [
 							{
 								id: "introduction",
-								title: "Flirtual Tutorial",
+								title: t("flirtual_tutorial"),
 								text: `
-					Take a quick tour with us! We can't wait to introduce you to some amazing people :)
+					${t("tidy_known_whale_imagine")}
 					`,
 								buttons: [
 									{
-										text: "Exit",
+										text: t("exit"),
 										action: cancel
 									},
 									{
 										classes: "primary shadow-brand-1",
-										text: "Continue",
+										text: t("continue"),
 										action: next
 									}
 								]
 							},
 							{
 								id: "like",
-								title: "Like their profile?",
-								text: "Press the <b>Like button</b>! If they like you back, you'll match.",
+								title: t("royal_house_peacock_roar"),
+								text: t("helpful_petty_peacock_hunt"),
 								attachTo: { element: "#like-button", on: "top" },
 								modalOverlayOpeningRadius: 33
 							},
 							{
 								id: "friend",
-								title: "Like their profile?",
-								text: "Or press the <b>Homie button</b> if you want to be friends. You'll still match if it's mutual whether you Like or Homie each other.",
+								title: t("royal_house_peacock_roar"),
+								text: t("light_flat_racoon_buzz"),
 								attachTo: { element: "#friend-button", on: "top" },
 								modalOverlayOpeningRadius: 33
 							},
 							{
 								id: "pass",
-								title: "Not interested?",
-								text: "Press the <b>Pass button</b> to move on to the next profile.",
+								title: t("bad_ideal_stingray_amuse"),
+								text: t("away_lime_hound_launch"),
 								attachTo: { element: "#pass-button", on: "top" },
 								modalOverlayOpeningRadius: 26
 							},
 							{
 								id: "undo",
-								title: "Changed your mind?",
-								text: "Press <b>Undo</b> to go back and see the last profile.",
+								title: t("mean_such_flamingo_drop"),
+								text: t("aloof_caring_niklas_fade"),
 								attachTo: { element: "#undo-button", on: "top" },
 								modalOverlayOpeningRadius: 26
 							},
 							{
 								id: "conversations",
-								title: "Shoot your shot!",
-								text: "View your matches here. Message them and meet up in VR!",
+								title: t("basic_tense_mayfly_devour"),
+								text: t("mushy_sound_nils_fetch"),
 								attachTo: {
 									element: "#conversation-button",
 									on: "top"
@@ -175,10 +178,11 @@ export function useDefaultTour(enabled: boolean = true) {
 							},
 							{
 								id: "browse-mode",
-								title: "Looking for something else?",
+								title: t("minor_gaudy_seal_ask"),
 								text: `
-					Switch between <b>Date Mode</b> and <b>Homie Mode</b> (without matchmaking filters) to see more profiles.<br/><br/>
-					Each day, you can browse up to <b>30 profiles</b> and Like or Homie up to 15 of them in each mode.`,
+					${t("chunky_zany_leopard_peek")}
+					<br/><br/>
+					${t("honest_loud_felix_favor")}`,
 								attachTo: {
 									element: "#browse-mode-switch",
 									on: "top"
@@ -187,8 +191,8 @@ export function useDefaultTour(enabled: boolean = true) {
 							},
 							{
 								id: "profile-dropdown",
-								title: "Customize your experience!",
-								text: "Here you can <b>update your profile</b>, or subscribe to Premium to browse unlimited profiles and see who likes you before you match.",
+								title: t("nice_wise_ibex_accept"),
+								text: t("sad_spare_grizzly_twirl"),
 								attachTo: {
 									element: "#profile-dropdown-button",
 									on: "top"
@@ -198,29 +202,32 @@ export function useDefaultTour(enabled: boolean = true) {
 							},
 							{
 								id: "conclusion",
-								title: "Thank you!",
+								title: t("every_agent_sloth_advise"),
 								text: `
-					That concludes our tutorial! We hope you have a great time here, and remember to treat each other kindly.<br/><br/>
-					Don't forget to drink water and take breaks as needed!<br/><br/>
-					&lt;3<br/>
-					The Flirtual Team`,
+					${t("mealy_lime_mayfly_support")}
+					<br/><br/>
+					${t("dry_tame_sloth_yell")}
+					<br/><br/>
+					${t("chunky_lost_parrot_roam")}
+					<br/>
+					${t("that_active_seal_nail")}`,
 								modalOverlayOpeningRadius: 20,
 								modalOverlayOpeningPadding: 4,
 								buttons: [
 									{
-										text: "Back",
+										text: t("back"),
 										action: back
 									},
 									{
 										classes: "primary shadow-brand-1",
-										text: "Start matching",
+										text: t("start_matching"),
 										action: next
 									}
 								]
 							}
 						]
 					: [],
-			[enabled, mobile]
+			[enabled, mobile, t]
 		),
 		{
 			defaultStart: true
