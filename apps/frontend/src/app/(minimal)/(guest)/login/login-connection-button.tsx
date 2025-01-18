@@ -17,6 +17,7 @@ import { useLocation } from "~/hooks/use-location";
 
 export interface AddConnectionButtonProps {
 	type: ConnectionType;
+	tabIndex?: number;
 }
 
 const label = {
@@ -28,7 +29,8 @@ const label = {
 };
 
 export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
-	type
+	type,
+	tabIndex
 }) => {
 	const t = useTranslations();
 	const location = useLocation();
@@ -52,6 +54,7 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 			href={href}
 			size="sm"
 			style={{ backgroundColor: color }}
+			tabIndex={tabIndex}
 			target="_self"
 			onClick={async () => {
 				if (!native) return;

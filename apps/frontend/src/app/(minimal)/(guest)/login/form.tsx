@@ -100,6 +100,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					password: "",
 					rememberMe: false
 				}}
+				captchaTabIndex={7}
 				className="flex flex-col gap-8"
 				formErrorMessages={false}
 				renderCaptcha={false}
@@ -175,6 +176,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 										autoComplete="username webauthn"
 										autoCorrect="off"
 										spellCheck="false"
+										tabIndex={1}
 										type="text"
 									/>
 								</>
@@ -187,7 +189,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 										{...labelProps}
 										hint={(
 											<InputLabelHint>
-												<InlineLink href={urls.forgotPassword}>{t("forgot_your_password")}</InlineLink>
+												<InlineLink href={urls.forgotPassword} tabIndex={6}>{t("forgot_your_password")}</InlineLink>
 											</InputLabelHint>
 										)}
 									>
@@ -196,6 +198,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 									<InputText
 										{...props}
 										autoComplete="current-password"
+										tabIndex={2}
 										type="password"
 									/>
 								</>
@@ -204,7 +207,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						<Captcha />
 						<div className="flex flex-col gap-4">
 							<div className="flex gap-2 desktop:flex-row-reverse">
-								<FormButton className="min-w-44" size="sm">
+								<FormButton className="min-w-44" size="sm" tabIndex={3}>
 									{t("log_in")}
 								</FormButton>
 								<ButtonLink
@@ -212,6 +215,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 									href={urls.register}
 									kind="tertiary"
 									size="sm"
+									tabIndex={4}
 								>
 									<span>{t("or_sign_up")}</span>
 									<MoveRight className="size-5 desktop:rotate-180" />
@@ -231,7 +235,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					</span>
 					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 				</div>
-				<LoginConnectionButton type="discord" />
+				<LoginConnectionButton tabIndex={5} type="discord" />
 				{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />

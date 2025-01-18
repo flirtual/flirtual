@@ -15,7 +15,7 @@ import { sessionKey } from "~/swr";
 
 import { InputSelect } from "../select";
 
-export const InputLanguageSelect: React.FC<{ className?: string }> = ({ className }) => {
+export const InputLanguageSelect: React.FC<{ className?: string; tabIndex?: number }> = ({ className, tabIndex }) => {
 	const { locale: { current: language } } = useInternationalization();
 	const toasts = useToast();
 	const [session] = useSession();
@@ -73,6 +73,7 @@ export const InputLanguageSelect: React.FC<{ className?: string }> = ({ classNam
 			}))}
 			className={className}
 			Icon={Languages}
+			tabIndex={tabIndex}
 			value={language}
 			onChange={(newLanguage) => trigger(newLanguage)}
 		/>

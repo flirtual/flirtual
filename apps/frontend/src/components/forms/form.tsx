@@ -39,7 +39,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 
 	const captcha = props.withCaptcha && (
 		<div className="flex flex-col gap-2">
-			<FormCaptcha ref={captchaReference} />
+			<FormCaptcha ref={captchaReference} tabIndex={props.captchaTabIndex} />
 			<FormInputMessages
 				className="desktop:mx-auto desktop:w-fit desktop:text-center"
 				messages={form.fields.captcha?.errors.map((value) => ({ type: "error", value }))}

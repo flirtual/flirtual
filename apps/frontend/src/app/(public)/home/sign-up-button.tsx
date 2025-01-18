@@ -10,7 +10,7 @@ import { FlirtualMark } from "~/components/mark";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
-export const SignUpButton: FC = () => {
+export const SignUpButton: FC<{ tabIndex?: number }> = ({ tabIndex }) => {
 	const t = useTranslations();
 	const { receptive_fairies_legal_thumb: flittyMessages } = useMessages() as unknown as IntlMessages;
 	const toasts = useToast();
@@ -140,7 +140,7 @@ export const SignUpButton: FC = () => {
 					setSqueakCount(squeakCount + 1);
 				}}
 			/>
-			<ButtonLink className="isolate" href={urls.register} kind="primary">
+			<ButtonLink className="isolate" href={urls.register} kind="primary" tabIndex={tabIndex}>
 				{t("sign_up")}
 			</ButtonLink>
 		</div>

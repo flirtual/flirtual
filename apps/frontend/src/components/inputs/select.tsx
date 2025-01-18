@@ -187,6 +187,7 @@ export interface InputSelectProps<T> {
 	Item?: FC<{ value: NonNullable<T> }>;
 	className?: string;
 	Icon?: FC<React.ComponentProps<"svg">>;
+	tabIndex?: number;
 }
 
 export function InputSelect<K>(props: InputSelectProps<K>) {
@@ -199,7 +200,8 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 		optional = false,
 		options = emptyArray,
 		className,
-		Icon
+		Icon,
+		tabIndex
 	} = props;
 
 	const activeOption = options.find((option) => option.id === value);
@@ -213,7 +215,7 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 
 	return (
 		<Select value={(value || "") as string} onValueChange={onChange}>
-			<SelectTrigger className={className} Icon={Icon}>
+			<SelectTrigger className={className} Icon={Icon} tabIndex={tabIndex}>
 				<span
 					className={twMerge(
 						"truncate",

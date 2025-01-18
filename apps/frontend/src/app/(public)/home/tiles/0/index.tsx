@@ -19,7 +19,7 @@ export function Hero({ id }: TileProps) {
 			id={id}
 		>
 			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-32">
-				<InputLanguageSelect className="!absolute top-8 w-[calc(100%-4rem)] desktop:right-4 desktop:top-4 desktop:w-56" />
+				<InputLanguageSelect className="!absolute top-8 w-[calc(100%-4rem)] desktop:right-4 desktop:top-4 desktop:w-56" tabIndex={3} />
 				<FlirtualLogo className="mb-4 w-56" />
 				<TileAnchor id={id}>
 					<h1 className="max-w-4xl text-balance text-center text-5xl font-bold text-white-10 desktop:text-7xl desktop:tall:text-8xl">
@@ -27,8 +27,8 @@ export function Hero({ id }: TileProps) {
 					</h1>
 				</TileAnchor>
 				<div className="mt-16 hidden grid-cols-2 flex-col gap-2 desktop:grid">
-					<SignUpButton />
-					<ButtonLink href={urls.login()} kind="secondary">
+					<SignUpButton tabIndex={1} />
+					<ButtonLink href={urls.login()} kind="secondary" tabIndex={2}>
 						{t("log_in")}
 					</ButtonLink>
 				</div>

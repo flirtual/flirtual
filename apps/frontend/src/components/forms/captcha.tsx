@@ -13,7 +13,11 @@ import { useTheme } from "~/hooks/use-theme";
 
 export type FormCaptchaReference = TurnstileInstance;
 
-export function FormCaptcha({ ref }: RefAttributes<TurnstileInstance>) {
+interface FormCaptchaProps extends RefAttributes<TurnstileInstance> {
+	tabIndex?: number;
+}
+
+export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 	const { locale: { current: language } } = useInternationalization();
 	const t = useTranslations();
 
@@ -76,6 +80,7 @@ export function FormCaptcha({ ref }: RefAttributes<TurnstileInstance>) {
 			<Turnstile
 				options={{
 					theme,
+					tabIndex,
 					language,
 					size: "normal",
 					appearance: "interaction-only",

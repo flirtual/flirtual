@@ -77,6 +77,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					<TooltipTrigger asChild>
 						<button
 							className="mr-4"
+							tabIndex={-1}
 							type="button"
 							onClick={() => setInputVisible((inputVisible) => !inputVisible)}
 						>

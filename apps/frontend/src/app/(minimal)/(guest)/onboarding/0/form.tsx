@@ -34,6 +34,7 @@ export const Onboarding0Form: FC = () => {
 				serviceAgreement: false,
 				notifications: true
 			}}
+			captchaTabIndex={10}
 			className="flex flex-col gap-8"
 			formErrorMessages={false}
 			renderCaptcha={false}
@@ -55,7 +56,7 @@ export const Onboarding0Form: FC = () => {
 						{({ props, labelProps }) => (
 							<>
 								<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
-								<InputText {...props} autoComplete="email" type="email" />
+								<InputText {...props} autoComplete="email" tabIndex={1} type="email" />
 							</>
 						)}
 					</FormField>
@@ -64,6 +65,7 @@ export const Onboarding0Form: FC = () => {
 							<>
 								<InputLabel {...labelProps}>{t("password")}</InputLabel>
 								<InputText
+									tabIndex={2}
 									{...props}
 									autoComplete="new-password"
 									type="password"
@@ -86,7 +88,7 @@ export const Onboarding0Form: FC = () => {
 					<FormField name="serviceAgreement">
 						{({ props, labelProps }) => (
 							<div className="flex items-center gap-4">
-								<InputCheckbox {...props} />
+								<InputCheckbox {...props} tabIndex={4} />
 								<InputLabel
 									{...labelProps}
 									inline
@@ -98,6 +100,7 @@ export const Onboarding0Form: FC = () => {
 														className="underline"
 														highlight={false}
 														href={urls.resources.termsOfService}
+														tabIndex={8}
 													>
 														{children}
 													</InlineLink>
@@ -107,6 +110,7 @@ export const Onboarding0Form: FC = () => {
 														className="underline"
 														highlight={false}
 														href={urls.resources.privacyPolicy}
+														tabIndex={9}
 													>
 														{children}
 													</InlineLink>
@@ -123,7 +127,7 @@ export const Onboarding0Form: FC = () => {
 					<FormField name="notifications">
 						{({ props, labelProps }) => (
 							<div className="flex items-center gap-4">
-								<InputCheckbox {...props} />
+								<InputCheckbox {...props} tabIndex={5} />
 								<InputLabel
 									{...labelProps}
 									inline
@@ -141,7 +145,7 @@ export const Onboarding0Form: FC = () => {
 					<Captcha />
 					<div className="flex flex-col gap-4">
 						<div className="flex gap-2 desktop:flex-row-reverse">
-							<FormButton className="min-w-44" size="sm">
+							<FormButton className="min-w-44" size="sm" tabIndex={6}>
 								{t("create_account")}
 							</FormButton>
 							<ButtonLink
@@ -149,6 +153,7 @@ export const Onboarding0Form: FC = () => {
 								href={urls.login()}
 								kind="tertiary"
 								size="sm"
+								tabIndex={7}
 							>
 								<span>{t("or_log_in")}</span>
 								<MoveRight className="size-5 desktop:rotate-180" />
