@@ -166,6 +166,10 @@ iframe {
   padding-top: 2px !important;
 }
 
+.uppy-StatusBar-actionBtn--upload {
+  content: "Upload" !important;
+}
+
 .uppy-Dashboard-browse,
 .uppy-DashboardContent-back,
 .uppy-DashboardContent-save,
@@ -223,6 +227,11 @@ iframe {
 .uppy-DragDrop-container {
   background: none !important;
   border: none !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+.uppy-DragDrop-inner {
+  padding: 0 20px !important;
 }
 
 .uppy-DragDrop-inner>svg {

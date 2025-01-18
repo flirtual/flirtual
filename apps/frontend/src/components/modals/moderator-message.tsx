@@ -43,6 +43,7 @@ export const DiscordSpamDialog: FC = () => {
 	const [session] = useSession();
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
 
 	const remindMeLater = async (quiet: boolean = false) => {
 		if (!session) return;
@@ -58,8 +59,9 @@ export const DiscordSpamDialog: FC = () => {
 		<TrustAndSafetyDialog
 			closable
 			actions={(
-				<div className="grid grid-cols-2 gap-2">
+				<div className="flex gap-2">
 					<Button
+						className="grow"
 						size="sm"
 						onClick={async () => {
 							await remindMeLater(true);
@@ -68,10 +70,10 @@ export const DiscordSpamDialog: FC = () => {
 							router.refresh();
 						}}
 					>
-						Edit profile
+						{t("edit_profile")}
 					</Button>
 					<Button
-						className="text-sm"
+						className="grow text-sm"
 						kind="tertiary"
 						size="sm"
 						onClick={async () => {
@@ -79,7 +81,7 @@ export const DiscordSpamDialog: FC = () => {
 							router.refresh();
 						}}
 					>
-						Remind me later
+						{t("remind_me_later")}
 					</Button>
 				</div>
 			)}
@@ -90,16 +92,10 @@ export const DiscordSpamDialog: FC = () => {
 				router.refresh();
 			}}
 		>
-			It looks like you&apos;ve mentioned your Discord username on your profile. For your privacy, we strongly recommend removing your Discord from your bio or display name and
-			{" "}
-			<InlineLink href={urls.settings.connections}>
-				connecting your Discord account
-			</InlineLink>
-			{" "}
-			instead.
-			<br />
-			<br />
-			This helps protect you from spam and unwanted messages by only sharing your Discord with your matches.
+			{t.rich("tense_active_gibbon_dare", {
+				link: (children) => <InlineLink href={urls.settings.connections}>{children}</InlineLink>,
+				br: () => <br />
+			})}
 		</TrustAndSafetyDialog>
 	);
 };

@@ -37,7 +37,7 @@ export const PlanButtonLink: FC<
 						setPurchaseUrl(null);
 					}}
 				>
-					<DialogTitle className="sr-only">Purchase</DialogTitle>
+					<DialogTitle className="sr-only">{t("purchase")}</DialogTitle>
 					<DialogContent className="w-fit overflow-hidden p-0">
 						{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
 						<iframe

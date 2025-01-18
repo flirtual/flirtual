@@ -127,6 +127,9 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			locale: {
 				strings: {
 					...uppyLocale,
+					save: t("save"),
+					rotate: t("rotate_90"),
+					dropHereOr: native ? t("cute_male_chipmunk_agree") : t("stock_topical_mouse_inspire"),
 					dropPasteFiles: native
 						? "%{browseFiles}"
 						: t("gross_known_deer_sprout", { browseFiles: "%{browseFiles}" }),
@@ -139,7 +142,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 							: t("patient_proof_octopus_revive")
 						: uppyLocale.browse!
 				},
-				pluralize: (n) => n
+				pluralize: (n) => n === 1 ? 0 : 1
 			}
 		})
 			.use(DropTarget, {

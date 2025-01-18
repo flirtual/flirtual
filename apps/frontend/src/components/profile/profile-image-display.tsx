@@ -139,6 +139,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
 	const [session] = useSession();
+	const t = useTranslations();
 
 	const [imageId, setImageId] = useState(firstImageId);
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
@@ -238,7 +239,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								border={false}
 								className="max-w-full overflow-hidden rounded-none desktop:max-w-[95svw] desktop:rounded-xl"
 							>
-								<DialogTitle className="sr-only">View image</DialogTitle>
+								<DialogTitle className="sr-only">{t("view_image")}</DialogTitle>
 								<div className="relative max-h-[80vh] w-full bg-black-90">
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">
