@@ -67,7 +67,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 				</div>
 			</div>
 			{miniFooter && (
-				<footer className="mt-8 grid grid-cols-2 justify-center">
+				<footer className="mb-4 mt-8 grid grid-cols-2 justify-center desktop:mb-0">
 					<SupportButton className="whitespace-nowrap">{t("need_help")}</SupportButton>
 					<div className="w-[168px]">
 						<InputLanguageSelect className="w-56 origin-left scale-75" />
