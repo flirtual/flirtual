@@ -72,6 +72,10 @@ export const NavigationItemProfile: FC = () => {
 	);
 
 	useEffect(() => {
+		setVisible(false);
+	}, [location]);
+
+	useEffect(() => {
 		if (visible) return void openChangelog();
 		closeChangelog();
 	}, [openChangelog, closeChangelog, visible]);
