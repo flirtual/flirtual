@@ -133,7 +133,7 @@ const ReccommendedProfileThemes: FC = () => {
 	return (
 		<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
 			{[
-				{ name: "flirtual", description: t("default"), ...defaultTheme },
+				{ name: "flirtual" as const, description: t("default"), ...defaultTheme },
 				...recommendedThemes
 			].map((theme) => (
 				<button
@@ -149,7 +149,7 @@ const ReccommendedProfileThemes: FC = () => {
 				>
 					<div className="flex w-fit items-baseline gap-2">
 						<span className="ja:text-sm">{t(theme.name)}</span>
-						{theme.description && (
+						{"description" in theme && (
 							<span className="text-sm text-black-50 vision:text-white-40 ja:text-xs dark:text-white-40">
 								{theme.description}
 							</span>
@@ -220,30 +220,32 @@ export const AppearanceForm: FC = () => {
 				router.refresh();
 			}}
 		>
-			<div className="flex flex-col gap-2">
-				<InputLabel
-					inline
-					hint={(
-						<InputLabelHint>
-							{t.rich(language === "en"
-								? "help_translate_others"
-								: "help_translate", {
-								language: tAttribute[language]?.name || language,
-								link: (children) => (
-									<InlineLink
-										href={`https://hosted.weblate.org/projects/flirtual/flirtual/${language === "en" ? "" : language}`}
-									>
-										{children}
-									</InlineLink>
-								)
-							})}
-						</InputLabelHint>
-					)}
-				>
-					{t("language")}
-				</InputLabel>
-				<InputLanguageSelect />
-			</div>
+			{session.user.tags?.includes("debugger") && (
+				<div className="flex flex-col gap-2">
+					<InputLabel
+						inline
+						hint={(
+							<InputLabelHint>
+								{t.rich(language === "en"
+									? "help_translate_others"
+									: "help_translate", {
+									language: tAttribute[language]?.name || language,
+									link: (children) => (
+										<InlineLink
+											href={`https://hosted.weblate.org/projects/flirtual/flirtual/${language === "en" ? "" : language}`}
+										>
+											{children}
+										</InlineLink>
+									)
+								})}
+							</InputLabelHint>
+						)}
+					>
+						{t("language")}
+					</InputLabel>
+					<InputLanguageSelect />
+				</div>
+			)}
 			<div className="flex flex-col gap-2 vision:hidden">
 				<InputLabel>{t("theme")}</InputLabel>
 				<div className="grid grid-cols-3 gap-4">

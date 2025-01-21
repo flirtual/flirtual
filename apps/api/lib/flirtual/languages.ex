@@ -231,16 +231,16 @@ defmodule Flirtual.Languages do
 
   @preference_languages [
     "en",
-    "de",
-    "es",
-    "fr",
-    "ja",
-    "ko",
-    "nl",
-    "pt",
-    "pt-BR",
-    "ru",
-    "sv"
+    # "de",
+    # "es",
+    # "fr",
+    "ja"#,
+    # "ko",
+    # "nl",
+    # "pt",
+    # "pt-BR",
+    # "ru",
+    # "sv"
   ]
 
   def list(), do: @languages

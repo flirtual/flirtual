@@ -1,8 +1,11 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "~/components/inline-link";
+import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 import { emptyObject } from "~/utilities";
 
@@ -30,6 +33,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	...props
 }) => {
 	const t = useTranslations();
+	const [session] = useSession();
 
 	return (
 		<>
@@ -67,11 +71,18 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 				</div>
 			</div>
 			{miniFooter && (
-				<footer className="mb-4 mt-8 grid grid-cols-2 justify-center desktop:mb-0">
+				<footer className={twMerge(
+					"mb-4 mt-8 grid justify-center desktop:mb-0",
+					session?.user.tags?.includes("debugger")
+					&& "grid-cols-2"
+				)}
+				>
 					<SupportButton className="whitespace-nowrap">{t("need_help")}</SupportButton>
-					<div className="w-[168px]">
-						<InputLanguageSelect className="w-56 origin-left scale-75" />
-					</div>
+					{session?.user.tags?.includes("debugger") && (
+						<div className="w-[168px]">
+							<InputLanguageSelect className="w-56 origin-left scale-75" />
+						</div>
+					)}
 				</footer>
 			)}
 		</>

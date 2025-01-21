@@ -7,7 +7,6 @@ import { Authentication } from "~/api/auth";
 import { User } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
-import { formatDate } from "~/date";
 import { urls } from "~/urls";
 
 import { ManageButton } from "./manage-button";
@@ -99,7 +98,7 @@ export default async function SubscriptionPage() {
 									</InlineLink>
 								</li>
 								<li>
-									💅
+									💃
 									{" "}
 									<InlineLink href={urls.settings.appearance}>
 										{t("many_top_quail_embrace")}
@@ -135,13 +134,13 @@ export default async function SubscriptionPage() {
 										{t("stock_zany_puma_gulp")}
 										{" "}
 										<InlineLink href={urls.settings.matchmaking()}>
-											{t("check_it_out")}
+											{t("check_this_out_for_free")}
 										</InlineLink>
 									</span>
 								</li>
 								<li className="flex flex-col">
 									<span className="text-lg font-semibold">
-										💅
+										💃
 										{" "}
 										{t("many_top_quail_embrace")}
 									</span>
@@ -149,7 +148,7 @@ export default async function SubscriptionPage() {
 										{t("late_full_rat_stab")}
 										{" "}
 										<InlineLink href={urls.settings.appearance}>
-											{t("check_it_out")}
+											{t("check_this_out_for_free")}
 										</InlineLink>
 									</span>
 								</li>
@@ -165,6 +164,7 @@ export default async function SubscriptionPage() {
 					{t("drab_lucky_lemming_feel", {
 						number: formatter.number(userCount)
 					})}
+					{" "}
 					{subscription
 						? t("basic_wide_ape_buy")
 						: t("loved_many_raven_pout")}

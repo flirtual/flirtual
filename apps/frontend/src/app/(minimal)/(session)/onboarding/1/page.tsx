@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations();
 
 	return {
-		title: t("about_me")
+		title: t("about_you")
 	};
 }
 
@@ -32,7 +32,7 @@ export default async function Onboarding1Page() {
 			branded
 			miniFooter
 			className="shrink-0 desktop:max-w-2xl"
-			title={t("about_me")}
+			title={t("about_you")}
 		>
 			<SWRConfig
 				value={{

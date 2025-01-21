@@ -64,6 +64,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 				"formErrorMessages",
 				"requireChange",
 				"renderCaptcha",
+				"captchaTabIndex",
 				"withCaptcha",
 				"withGlobalId"
 			])}

@@ -20,16 +20,16 @@ export const playlistPlatforms = [
 		embed: (id: string, theme: Theme, locale: PreferenceLanguage) => {
 			const locales = {
 				en: "us",
-				de: "de",
-				es: "es",
-				fr: "fr",
-				ja: "jp",
-				ko: "kr",
-				nl: "nl",
-				pt: "pt",
-				"pt-BR": "br",
-				ru: "ru",
-				sv: "se"
+				// de: "de",
+				// es: "es",
+				// fr: "fr",
+				ja: "jp"// ,
+				// ko: "kr",
+				// nl: "nl",
+				// pt: "pt",
+				// "pt-BR": "br",
+				// ru: "ru",
+				// sv: "se"
 			};
 
 			return `https://embed.music.apple.com/${locales[locale]}/playlist/${id}?theme=${theme}`;

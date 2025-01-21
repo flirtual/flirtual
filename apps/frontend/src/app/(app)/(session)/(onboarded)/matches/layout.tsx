@@ -52,8 +52,8 @@ export default async function ConversationsLayout({
 							title={t("matches")}
 						>
 							<h1 className="text-2xl font-semibold">{t("just_loud_orangutan_dash")}</h1>
-							<p>{t("born_green_lion_tend")}</p>
 							<p>{t("antsy_great_spider_drum")}</p>
+							<p>{t("born_green_lion_tend")}</p>
 							<details>
 								<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 									{t("tips")}

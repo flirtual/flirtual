@@ -104,7 +104,7 @@ function getContentSecurityPolicy() {
 		"frame-src": [
 			apiOrigin,
 			...playlistPlatforms.map(
-				({ embed }) => new URL(embed("example", "light")).origin
+				({ embed }) => new URL(embed("example", "light", "en")).origin
 			),
 			// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
 			"https://challenges.cloudflare.com",
@@ -122,11 +122,11 @@ function getContentSecurityPolicy() {
 		"upgrade-insecure-requests": [],
 		...(reportTo
 			? {
-					"report-uri": [reportTo],
-					"report-to": ["csp"]
-				}
+				"report-uri": [reportTo],
+				"report-to": ["csp"]
+			}
 			: {
-				})
+			})
 	};
 
 	return {

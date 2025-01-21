@@ -40,7 +40,7 @@ export const getInternationalization = cache(async (override?: PreferenceLanguag
 
 	const session = await Authentication.getOptionalSession();
 
-	const preferred = session?.user.preferences?.language || browser || "en";
+	const preferred = session?.user.preferences?.language /* || browser */ || "en";
 
 	if (override === preferred || (override && !languages.includes(override)))
 		override = undefined;

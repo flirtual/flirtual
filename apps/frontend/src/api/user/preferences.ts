@@ -6,7 +6,8 @@ export type PrivacyPreferenceOption = (typeof PrivacyPreferenceOptions)[number];
 export const PreferenceThemes = ["light", "dark", "system"] as const;
 export type PreferenceTheme = (typeof PreferenceThemes)[number];
 
-export const PreferenceLanguages = ["en", "de", "es", "fr", "ja", "ko", "nl", "pt", "pt-BR", "ru", "sv"] as const;
+// export const PreferenceLanguages = ["en", "de", "es", "fr", "ja", "ko", "nl", "pt", "pt-BR", "ru", "sv"] as const;
+export const PreferenceLanguages = ["en", "ja"] as const;
 export type PreferenceLanguage = (typeof PreferenceLanguages)[number];
 
 export interface PrivacyPreferences {

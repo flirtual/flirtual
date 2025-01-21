@@ -31,16 +31,16 @@ async function getLanguageMessages(locale: PreferenceLanguage) {
 	// @uppy/locales/en_US
 	const uppy = (await import(`@uppy/locales/lib/${{
 		en: "en_US",
-		de: "de_DE",
-		es: "es_ES",
-		fr: "fr_FR",
-		ja: "ja_JP",
-		ko: "ko_KR",
-		nl: "nl_NL",
-		pt: "pt_PT",
-		"pt-BR": "pt_BR",
-		ru: "ru_RU",
-		sv: "sv_SE"
+		// de: "de_DE",
+		// es: "es_ES",
+		// fr: "fr_FR",
+		ja: "ja_JP"// ,
+		// ko: "ko_KR",
+		// nl: "nl_NL",
+		// pt: "pt_PT",
+		// "pt-BR": "pt_BR",
+		// ru: "ru_RU",
+		// sv: "sv_SE"
 	}[locale]}`)).default.strings;
 
 	return {

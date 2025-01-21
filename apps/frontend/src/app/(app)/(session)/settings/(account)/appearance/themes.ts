@@ -12,12 +12,7 @@ export const defaultProfileColors: Record<Theme, ProfileColors> = {
 	}
 };
 
-export const recommendedThemes: Array<
-	{
-		name: string;
-		description?: string;
-	} & ProfileColors
-> = [
+export const recommendedThemes = [
 	{
 		name: "peachy_petal",
 		color1: "#f9c58d",
@@ -93,4 +88,9 @@ export const recommendedThemes: Array<
 		color1: "#000000",
 		color2: "#000000"
 	}
-];
+] as const satisfies Array<
+	{
+		name: string;
+		description?: string;
+	} & ProfileColors
+>;

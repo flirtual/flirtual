@@ -3,16 +3,7 @@
 	"sourceLanguageTag": "en",
 	"languageTags": [
 		"en",
-		"de",
-		"es",
-		"fr",
-		"ja",
-		"ko",
-		"nl",
-		"pt",
-		"pt-BR",
-		"ru",
-		"sv"
+		"ja"
 	],
 	"modules": [
 		"https://cdn.jsdelivr.net/npm/@inlang/plugin-next-intl@latest/dist/index.js"

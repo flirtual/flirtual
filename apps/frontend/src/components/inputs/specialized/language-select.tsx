@@ -53,22 +53,24 @@ export const InputLanguageSelect: React.FC<{ className?: string; tabIndex?: numb
 		}
 	);
 
+	if (!session?.user.tags?.includes("debugger")) return null;
+
 	return (
 		<InputSelect
 			options={PreferenceLanguages.map((value) => ({
 				id: value,
 				name: {
 					en: "English",
-					de: "Deutsch",
-					es: "Español",
-					fr: "Français",
-					ja: "日本語",
-					ko: "한국어",
-					nl: "Nederlands",
-					pt: "Português",
-					"pt-BR": "Português (Brasil)",
-					ru: "Русский",
-					sv: "Svenska"
+					// de: "Deutsch",
+					// es: "Español",
+					// fr: "Français",
+					ja: "日本語"// ,
+					// ko: "한국어",
+					// nl: "Nederlands",
+					// pt: "Português",
+					// "pt-BR": "Português (Brasil)",
+					// ru: "Русский",
+					// sv: "Svenska"
 				}[value] ?? value
 			}))}
 			className={className}

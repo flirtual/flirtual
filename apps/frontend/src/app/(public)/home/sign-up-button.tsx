@@ -140,7 +140,7 @@ export const SignUpButton: FC<{ tabIndex?: number }> = ({ tabIndex }) => {
 					setSqueakCount(squeakCount + 1);
 				}}
 			/>
-			<ButtonLink className="isolate" href={urls.register} kind="primary" tabIndex={tabIndex}>
+			<ButtonLink className="isolate" href={urls.register} kind="primary" size="sm" tabIndex={tabIndex}>
 				{t("sign_up")}
 			</ButtonLink>
 		</div>

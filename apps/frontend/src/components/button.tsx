@@ -112,7 +112,7 @@ export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps
 				<Icon
 					className={twMerge(
 						"shrink-0",
-						size === "sm" ? "h-4" : "h-6",
+						size === "sm" ? "h-4" : "h-4",
 						iconClassName
 					)}
 				/>

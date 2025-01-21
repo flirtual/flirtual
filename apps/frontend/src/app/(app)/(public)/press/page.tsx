@@ -52,43 +52,44 @@ export default async function PressPage() {
 				</span>
 				<div className="flex flex-col gap-4">
 					{[
-						language === "ko" && ({
-							name: "데이트 시장까지 노리는 메타버스 … 새로운 트렌드 만들까?",
-							href: "https://www.metanews.co.kr/news/articleView.html?idxno=16941",
-							site: "페타뉴스",
-							date: new Date("25 August 2022")
-						}),
+						// language === "ko" && ({
+						// 	name: "데이트 시장까지 노리는 메타버스 … 새로운 트렌드 만들까?",
+						// 	href: "https://www.metanews.co.kr/news/articleView.html?idxno=16941",
+						// 	site: "페타뉴스",
+						// 	date: new Date("25 August 2022")
+						// }),
 						{
 							name: "‘Phantom Touch’ and the (Real) Pleasures of Virtual Dating",
 							href: "https://www.nytimes.com/2022/08/18/style/virtual-dating-metaverse.html",
 							site: "The New York Times",
 							date: new Date("18 August 2022")
 						},
-						language === "es"
-							? {
-									name: "Amor en el metaverso: compañías de citas se meten de lleno en la realidad virtual",
-									href: "https://forbes.pe/negocios/2022-08-12/amor-en-el-metaverso-companias-de-citas-se-meten-de-lleno-en-la-realidad-virtual-%ef%bf%bc",
-									site: "Forbes",
-									date: new Date("12 August 2022")
-								}
-							: {
-									name: "Looking For Love In The Metaverse",
-									href: "https://www.forbes.com/sites/davidwestenhaver/2022/08/07/looking-for-love-in-the-metaverse/",
-									site: "Forbes",
-									date: new Date("7 August 2022")
-								},
+						// language === "es"
+						// 	? {
+						// 			name: "Amor en el metaverso: compañías de citas se meten de lleno en la realidad virtual",
+						// 			href: "https://forbes.pe/negocios/2022-08-12/amor-en-el-metaverso-companias-de-citas-se-meten-de-lleno-en-la-realidad-virtual-%ef%bf%bc",
+						// 			site: "Forbes",
+						// 			date: new Date("12 August 2022")
+						// 		}
+						// : {
+						{
+							name: "Looking For Love In The Metaverse",
+							href: "https://www.forbes.com/sites/davidwestenhaver/2022/08/07/looking-for-love-in-the-metaverse/",
+							site: "Forbes",
+							date: new Date("7 August 2022")
+						},
 						{
 							name: "Flirt-ual reality: How people are dating in the Metaverse",
 							href: "https://www.today.com/video/how-people-are-looking-for-love-in-the-metaverse-145313861770",
 							site: "The Today Show",
 							date: new Date("2 August 2022")
 						},
-						language === "fr" && ({
-							name: "J'ai interviewé un des créateurs de Flirtual, le premier site de rencontre en VR",
-							href: "https://www.tiktok.com/@l_nny/video/7104206153416051974",
-							site: "L_nny",
-							date: new Date("1 June 2022")
-						}),
+						// language === "fr" && ({
+						// 	name: "J'ai interviewé un des créateurs de Flirtual, le premier site de rencontre en VR",
+						// 	href: "https://www.tiktok.com/@l_nny/video/7104206153416051974",
+						// 	site: "L_nny",
+						// 	date: new Date("1 June 2022")
+						// }),
 						{
 							name: "Flirt in the Metaverse and Hook Up in the Real World With ‘Flirtual’ Dating App",
 							href: "https://virtualrealitytimes.com/2022/05/06/flirt-in-the-meta…erse-and-hook-up-in-the-real-world-with-flirtual-dating-app/",

@@ -71,23 +71,28 @@ export const Onboarding2Form: FC = () => {
 				<>
 					<FormField name="gender">
 						{(field) => (
-							<InputCheckboxList
-								{...field.props}
-								items={genders.map((gender) => {
-									const { name, plural } = (tAttribute[
-										gender.id
-									] as AttributeTranslation<"gender">) ?? {
-										name: gender.id
-									};
+							<>
+								<InputLabel {...field.labelProps}>
+									{t("im_interested_in")}
+								</InputLabel>
+								<InputCheckboxList
+									{...field.props}
+									items={genders.map((gender) => {
+										const { name, plural } = (tAttribute[
+											gender.id
+										] as AttributeTranslation<"gender">) ?? {
+											name: gender.id
+										};
 
-									return {
-										key: gender.id,
-										label: gender.fallback
-											? t("other_genders")
-											: (plural ?? name)
-									};
-								})}
-							/>
+										return {
+											key: gender.id,
+											label: gender.fallback
+												? t("other_genders")
+												: (plural ?? name)
+										};
+									})}
+								/>
+							</>
 						)}
 					</FormField>
 					<FormField name="age">

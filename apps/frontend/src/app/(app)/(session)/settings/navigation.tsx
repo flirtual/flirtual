@@ -14,12 +14,12 @@ import {
 	PenSquare,
 	Search,
 	ShieldAlert,
-	Skull,
 	SlidersHorizontal,
 	Sparkles,
 	Tag,
 	Users,
-	VenetianMask
+	VenetianMask,
+	X
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
@@ -89,13 +89,12 @@ export const SettingsNavigation: FC = () => {
 					)}
 					<NavigationCategory name={t("profile")}>
 						<NavigationLink
-							newBadge
 							href={urls.settings.matchmaking()}
 							Icon={SlidersHorizontal}
 						>
 							{t("matchmaking")}
 						</NavigationLink>
-						<NavigationLink newBadge href={urls.settings.bio} Icon={PenSquare}>
+						<NavigationLink href={urls.settings.bio} Icon={PenSquare}>
 							{t("bio_pics")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.info()} Icon={Contact}>
@@ -110,6 +109,12 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.settings.nsfw} Icon={Flame}>
 							{t("nsfw")}
 						</NavigationLink>
+						<NavigationLink
+							href={urls.settings.connections}
+							Icon={Users}
+						>
+							{t("connections")}
+						</NavigationLink>
 					</NavigationCategory>
 					<NavigationCategory name={t("account")}>
 						{/* <NavigationLink href={urls.settings.referral} Icon={Gift}>
@@ -117,13 +122,6 @@ export const SettingsNavigation: FC = () => {
 					</NavigationLink> */}
 						<NavigationLink href={urls.subscription.default} Icon={Sparkles}>
 							{t("premium")}
-						</NavigationLink>
-						<NavigationLink
-							newBadge
-							href={urls.settings.connections}
-							Icon={Users}
-						>
-							{t("connections")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.appearance} Icon={Paintbrush}>
 							{t("appearance")}
@@ -140,7 +138,7 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.settings.password} Icon={KeyRound}>
 							{t("password_passkeys")}
 						</NavigationLink>
-						<NavigationLink href={urls.settings.deactivateAccount} Icon={Skull}>
+						<NavigationLink href={urls.settings.deactivateAccount} Icon={X}>
 							{t("deactivate_account")}
 						</NavigationLink>
 						<NavigationLink Icon={LogOut} onClick={logout}>

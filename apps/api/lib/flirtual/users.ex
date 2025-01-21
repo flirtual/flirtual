@@ -494,9 +494,6 @@ defmodule Flirtual.Users do
   end
 
   def create(attrs, options \\ []) do
-    IO.inspect(attrs)
-    IO.inspect(options)
-
     Repo.transaction(fn ->
       with {:ok, attrs} <-
              cast_arbitrary(
@@ -506,7 +503,7 @@ defmodule Flirtual.Users do
                  service_agreement: :boolean,
                  notifications: :boolean,
                  captcha: :string,
-                 language: :string,
+                 # language: :string,
                  url: :string
                },
                attrs
@@ -515,11 +512,11 @@ defmodule Flirtual.Users do
                :email,
                :password,
                :service_agreement,
-               :language,
+               # :language,
                :notifications
              ])
              |> validate_acceptance(:service_agreement)
-             |> validate_inclusion(:language, Languages.list(:preference))
+             # |> validate_inclusion(:language, Languages.list(:preference))
              |> then(
                &if(Keyword.get(options, :captcha, true),
                  do: &1 |> validate_captcha(),
@@ -545,7 +542,7 @@ defmodule Flirtual.Users do
              |> Repo.update(),
            {:ok, preferences} <-
              Ecto.build_assoc(user, :preferences, %{
-               language: attrs[:language]
+               # language: attrs[:language]
              })
              |> Repo.insert(),
            {:ok, _} <-
