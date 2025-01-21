@@ -41,7 +41,7 @@ async function getLanguageMessages(locale: PreferenceLanguage) {
 		// "pt-BR": "pt_BR",
 		// ru: "ru_RU",
 		// sv: "sv_SE"
-	}[locale]}`)).default.strings;
+	}[locale]}.js`)).default.strings;
 
 	return {
 		...messages,
