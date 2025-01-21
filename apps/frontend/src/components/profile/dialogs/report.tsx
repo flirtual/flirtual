@@ -36,7 +36,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	children
 }) => {
 	const [session] = useSession();
-	const t = useTranslations("profile.dialogs.report");
+	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 
 	const toasts = useToast();
@@ -52,7 +52,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 			{children}
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>{t("title")}</DialogTitle>
+					<DialogTitle>{t("report_profile")}</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
 					<Form
@@ -126,7 +126,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 									{(field) => (
 										<>
 											<InputLabel {...field.labelProps}>
-												{t("active_any_jannes_type")}
+												{t("details")}
 											</InputLabel>
 											<InputTextArea
 												{...field.props}
@@ -149,7 +149,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 												)}
 
 											>
-												{t("formal_nimble_dog_reside")}
+												{t("attachments")}
 											</InputLabel>
 											<InputImageSet type="report" {...field.props} />
 										</>

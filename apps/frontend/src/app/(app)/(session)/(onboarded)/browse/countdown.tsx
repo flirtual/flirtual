@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 
 import { useInterval } from "~/hooks/use-interval";
@@ -44,20 +45,21 @@ interface CountdownProps {
 }
 
 export const Countdown: React.FC<CountdownProps> = ({ date, onComplete }) => {
+	const t = useTranslations();
 	const { hours, minutes, seconds } = useCountdown(date, onComplete);
 
 	return (
 		<div className="grid grid-cols-3 overflow-hidden rounded-xl text-black-80">
 			<div className="flex w-full flex-col border-r-2 border-dashed border-black-80/10 bg-white-20 p-4">
-				<span className="opacity-75">hours</span>
+				<span className="opacity-75">{t("hours")}</span>
 				<span className="text-2xl tabular-nums">{hours}</span>
 			</div>
 			<div className="flex w-full flex-col border-r-2 border-dashed border-black-80/10 bg-white-20 p-4">
-				<span className="opacity-75">minutes</span>
+				<span className="opacity-75">{t("minutes")}</span>
 				<span className="text-2xl tabular-nums">{minutes}</span>
 			</div>
 			<div className="flex w-full flex-col bg-white-20 p-4">
-				<span className="opacity-75">seconds</span>
+				<span className="opacity-75">{t("seconds")}</span>
 				<span className="text-2xl tabular-nums">{seconds}</span>
 			</div>
 		</div>

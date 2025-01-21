@@ -7,7 +7,7 @@ import { Tile, TileAnchor, type TileProps } from "..";
 import { ProfileMessage } from "./message";
 
 export function AvatarProfiles({ id }: TileProps) {
-	const t = useTranslations("landing.profiles");
+	const t = useTranslations();
 
 	return (
 		<Tile className="content-center px-4 pt-8 desktop:px-28" id={id}>

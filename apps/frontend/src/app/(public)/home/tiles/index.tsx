@@ -71,7 +71,7 @@ export const TileAnchor: FC<PropsWithChildren<TileProps>> = ({
 
 export const TileGuide: FC<{ tileCount: number }> = ({ tileCount }) => {
 	const { tile } = use(TileContext);
-	const t = useTranslations("landing");
+	const t = useTranslations();
 
 	return (
 		<div className="pointer-events-none fixed inset-x-0 bottom-0 z-10 flex h-36 flex-col items-center justify-center gap-4 px-8 pb-16 desktop:inset-y-0 desktop:left-0 desktop:right-auto desktop:h-auto desktop:px-16 desktop:py-8">

@@ -16,6 +16,7 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -23,8 +24,9 @@ export const NsfwForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
-	const kinks = useAttributes("kink");
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
+	const kinks = useAttributes("kink");
 
 	if (!session) return null;
 	const { user } = session;
@@ -50,7 +52,7 @@ export const NsfwForm: React.FC = () => {
 					})
 				]);
 
-				toasts.add("Saved NSFW preferences");
+				toasts.add(t("born_sweet_nils_thrive"));
 
 				await mutateSession({
 					...session,
@@ -70,9 +72,9 @@ export const NsfwForm: React.FC = () => {
 								<InputLabel
 									{...field.labelProps}
 									inline
-									hint="Choose whether to display NSFW tags on other people's profiles."
+									hint={t("show_nsfw_hint")}
 								>
-									Show NSFW tags on profiles?
+									{t("show_nsfw")}
 								</InputLabel>
 								<InputSwitch {...field.props} />
 							</>
@@ -83,16 +85,12 @@ export const NsfwForm: React.FC = () => {
 							<FormField name="domsub">
 								{(field) => (
 									<>
-										<InputLabel {...field.labelProps}>I am...</InputLabel>
+										<InputLabel {...field.labelProps}>{t("i_am")}</InputLabel>
 										<InputRadioList
 											{...field.props}
 											items={ProfileDomsubList.map((value) => ({
 												key: value,
-												label: {
-													dominant: "Dominant",
-													submissive: "Submissive",
-													switch: "Switch"
-												}[value]
+												label: t(value)
 											}))}
 										/>
 									</>
@@ -101,7 +99,7 @@ export const NsfwForm: React.FC = () => {
 							<FormField name="kinks">
 								{(field) => (
 									<>
-										<InputLabel {...field.labelProps}>Kinks</InputLabel>
+										<InputLabel {...field.labelProps}>{t("kinks")}</InputLabel>
 										<InputAutocomplete
 											{...field.props}
 											options={kinks.map(({ id, definitionLink }) => {
@@ -126,8 +124,8 @@ export const NsfwForm: React.FC = () => {
 							<FormField name="kinksPrivacy">
 								{(field) => (
 									<>
-										<InputLabel inline hint="Who can see your NSFW tags?">
-											NSFW privacy
+										<InputLabel inline hint={t("nsfw_privacy_hint")}>
+											{t("nsfw_privacy")}
 										</InputLabel>
 										<InputPrivacySelect {...field.props} />
 									</>
@@ -135,7 +133,7 @@ export const NsfwForm: React.FC = () => {
 							</FormField>
 						</>
 					)}
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { unstable_serialize } from "swr";
 
 import { Attribute } from "~/api/attributes";
@@ -8,11 +9,17 @@ import { attributeKey } from "~/swr";
 
 import { InfoForm } from "./form";
 
-export const metadata: Metadata = {
-	title: "Basic info"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
+
+	return {
+		title: t("basic_info")
+	};
+}
 
 export default async function SettingsProfileInfoPage() {
+	const t = await getTranslations();
+
 	const [games, platforms, sexualities, genders, languages, countries]
 		= await Promise.all([
 			Attribute.list("game"),
@@ -27,7 +34,7 @@ export default async function SettingsProfileInfoPage() {
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
 			inset={false}
-			title="Basic info"
+			title={t("basic_info")}
 		>
 			<SWRConfig
 				value={{

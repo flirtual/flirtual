@@ -2,6 +2,8 @@ import { create as setupAcceptLanguage } from "accept-language";
 import { headers as getHeaders } from "next/headers";
 import { cache } from "react";
 
+import type { PreferenceLanguage } from "~/api/user/preferences";
+
 import settings from "../../project.inlang/settings.json";
 import { Authentication } from "../api/auth";
 import { polyfill } from "./polyfill";
@@ -25,22 +27,20 @@ function getTimezone(headers: Headers) {
 	return timezone || "America/New_York";
 }
 
-export const getInternationalization = cache(async (override?: string) => {
+export const getInternationalization = cache(async (override?: PreferenceLanguage) => {
 	const headers = await getHeaders();
 
-	override ||= headers.get("language") ?? undefined;
+	override ||= headers.get("language") as PreferenceLanguage ?? undefined;
 
 	const al = setupAcceptLanguage();
 	al.languages(languages);
 
 	const accept = headers.get("accept-language");
-	const browser = al.get(accept);
+	const browser = al.get(accept) as PreferenceLanguage;
 
 	const session = await Authentication.getOptionalSession();
-	const translating
-		= headers.has("translating") || session?.user.tags?.includes("translating");
 
-	const preferred = session?.user.language || browser || sourceLanguageTag;
+	const preferred = session?.user.preferences?.language /* || browser */ || "en";
 
 	if (override === preferred || (override && !languages.includes(override)))
 		override = undefined;
@@ -57,10 +57,9 @@ export const getInternationalization = cache(async (override?: string) => {
 		locale: {
 			browser,
 			current,
-			fallback: sourceLanguageTag,
+			fallback: "en" as const,
 			override,
 			preferred
-		},
-		translating
+		}
 	};
 });

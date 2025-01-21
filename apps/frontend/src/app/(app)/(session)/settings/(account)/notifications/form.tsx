@@ -9,6 +9,7 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -16,6 +17,7 @@ export const NotificationsForm: React.FC = () => {
 	const user = useCurrentUser();
 	const toasts = useToast();
 	const router = useRouter();
+	const t = useTranslations();
 
 	if (!user || !user.preferences) return null;
 	const { preferences } = user;
@@ -47,7 +49,7 @@ export const NotificationsForm: React.FC = () => {
 					)
 				});
 
-				toasts.add("Saved notification preferences");
+				toasts.add(t("merry_smart_snake_boil"));
 				router.refresh();
 			}}
 		>
@@ -59,28 +61,28 @@ export const NotificationsForm: React.FC = () => {
 							<TooltipTrigger asChild>
 								<Mail width="32" />
 							</TooltipTrigger>
-							<TooltipContent>Emails</TooltipContent>
+							<TooltipContent>{t("emails")}</TooltipContent>
 						</Tooltip>
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<Smartphone width="32" />
 							</TooltipTrigger>
-							<TooltipContent>Mobile notifications</TooltipContent>
+							<TooltipContent>{t("mobile_notifications")}</TooltipContent>
 						</Tooltip>
 
 						<div className="flex flex-col gap-2">
 							{[
-								"Match notifications",
-								"Message notifications",
-								"Weekly likes summary",
-								"Tips and reminders",
-								"Product updates"
+								"match_notifications",
+								"message_notifications",
+								"weekly_likes_summary",
+								"tips_and_reminders",
+								"product_updates"
 							].map((type) => (
 								<div
 									className="flex h-8 items-center text-lg leading-4"
 									key={type}
 								>
-									{type}
+									{t(type as any)}
 								</div>
 							))}
 						</div>
@@ -114,7 +116,7 @@ export const NotificationsForm: React.FC = () => {
 							)}
 						</FormField>
 					</div>
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>

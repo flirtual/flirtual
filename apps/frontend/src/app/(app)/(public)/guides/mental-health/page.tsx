@@ -5,23 +5,23 @@ import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("mentalhealth");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("mental_health")
 	};
 }
 
 export default async function MentalHealthPage() {
-	const t = await getTranslations("mentalhealth");
+	const t = await getTranslations();
 	// TODO: This page should be localized, as the content itself cannot be translated while being meaningful.
 
 	return (
-		<ModelCard className="w-full desktop:max-w-2xl" title={t("title_long")}>
+		<ModelCard className="w-full desktop:max-w-2xl" title={t("mental_health_resources")}>
 			<div className="flex flex-col gap-8">
 				<div className="flex flex-col gap-4">
 					<h1 className="text-2xl font-semibold">
-						{t("early_lazy_squid_advise")}
+						{t("crisis_hotlines")}
 					</h1>
 					<ul className="select-children">
 						<li>
@@ -87,8 +87,9 @@ export default async function MentalHealthPage() {
 						<InlineLink href="https://discord.gg/advice">
 							Chill & Advice
 						</InlineLink>
-						: Relationship and general advice, peer support or 1-on-1 with
-						vetted advisors.
+						:
+						{" "}
+						{t("equal_quaint_swallow_dial")}
 					</p>
 				</div>
 				<div className="flex flex-col gap-4">
@@ -96,7 +97,8 @@ export default async function MentalHealthPage() {
 					<p className="select-children">
 						<InlineLink href="https://www.inner.world/">Innerworld</InlineLink>
 						:
-						Peer support mental health groups in VR.
+						{" "}
+						{t("awake_solid_slug_flop")}
 					</p>
 				</div>
 			</div>

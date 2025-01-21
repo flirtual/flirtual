@@ -267,7 +267,13 @@ defmodule Flirtual.Profiles do
              Update.transform(profile, attrs |> Map.from_struct()) |> Repo.update(),
            user = User.get(profile.user_id),
            {:ok, _} <- User.update_status(user),
-           {:ok, _} <- ObanWorkers.update_user(profile.user_id) do
+           {:ok, _} <-
+             ObanWorkers.update_user(profile.user_id, [
+               :elasticsearch,
+               :listmonk,
+               :premium_reset,
+               :talkjs
+             ]) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)

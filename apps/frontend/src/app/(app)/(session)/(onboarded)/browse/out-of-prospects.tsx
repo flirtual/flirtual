@@ -4,6 +4,7 @@ import type { ProspectKind } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { urls } from "~/urls";
 
 export interface OutOfProspectsErrorProps {
@@ -11,10 +12,12 @@ export interface OutOfProspectsErrorProps {
 }
 
 export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
+	const t = useTranslations();
+
 	return (
 		<ModelCard
 			branded
-			title="Out of profiles"
+			title={t("out_of_profiles")}
 			titleProps={{ className: "desktop:text-3xl" }}
 		>
 			<div className="flex flex-col gap-8">
@@ -23,35 +26,33 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 						love: (
 							<>
 								<div className="flex flex-col gap-4">
-									<p>You&apos;ve seen everyone that matches your preferences.</p>
+									<p>{t("full_zesty_finch_exhale")}</p>
 									<p>
-										To see more people, try expanding your
-										{" "}
-										<InlineLink href={urls.settings.matchmaking()}>
-											matchmaking filters
-										</InlineLink>
-										.
+										{t.rich("round_stout_iguana_stab", {
+											link: (children) => (
+												<InlineLink href={urls.settings.matchmaking()}>
+													{children}
+												</InlineLink>
+											)
+										})}
 									</p>
+									<p>{t("sea_giant_anteater_slurp")}</p>
 									<p>
-										Or check back later. Each week hundreds of new Flirtual
-										profiles are created. Invite your friends to try Flirtual!
-									</p>
-									<p>
-										You can also continue in
-										{" "}
-										<InlineLink href={urls.browse("friend")}>
-											Homie Mode
-										</InlineLink>
-										, where you can meet new friends (without matchmaking
-										filters).
+										{t.rich("main_large_goat_succeed", {
+											link: (children) => (
+												<InlineLink href={urls.browse("friend")}>
+													{children}
+												</InlineLink>
+											)
+										})}
 									</p>
 								</div>
 								<div className="flex gap-4">
 									<ButtonLink href={urls.settings.matchmaking()} size="sm">
-										Filters
+										{t("filters")}
 									</ButtonLink>
 									<ButtonLink href={urls.browse("friend")} size="sm">
-										Homie Mode
+										{t("homie_mode")}
 									</ButtonLink>
 								</div>
 							</>
@@ -59,15 +60,14 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 						friend: (
 							<>
 								<div className="flex flex-col gap-4">
-									<p>You&apos;ve seen everyone.</p>
+									<p>{t("pretty_last_shrike_bend")}</p>
 									<p>
-										Come back later! Each week hundreds of new Flirtual profiles
-										are created. Invite your friends to try Flirtual!
+										{t("stout_tired_warbler_inspire")}
 									</p>
 								</div>
 								<div className="flex gap-4">
 									<ButtonLink href={urls.browse()} size="sm">
-										Leave Homie Mode
+										{t("sharp_gray_sloth_clasp")}
 									</ButtonLink>
 								</div>
 							</>
@@ -80,17 +80,19 @@ export const OutOfProspectsError: FC<OutOfProspectsErrorProps> = ({ mode }) => {
 };
 
 export const FinishProfileError: React.FC = () => {
+	const t = useTranslations();
+
 	return (
 		<ModelCard
 			branded
-			title="Complete your profile"
+			title={t("complete_your_profile")}
 			titleProps={{ className: "desktop:text-3xl" }}
 		>
 			<div className="flex flex-col gap-4">
-				<p>Your profile is currently hidden. Finish setting up your profile so that you can match with other users!</p>
+				<p>{t("silly_petty_meerkat_hug")}</p>
 				<div className="flex gap-4">
 					<ButtonLink href={urls.finish(1)} size="sm">
-						Finish profile
+						{t("finish_profile")}
 					</ButtonLink>
 				</div>
 			</div>
@@ -99,19 +101,21 @@ export const FinishProfileError: React.FC = () => {
 };
 
 export const ConfirmEmailError: React.FC = () => {
+	const t = useTranslations();
+
 	return (
 		<ModelCard
 			branded
-			title="Confirm your email"
+			title={t("confirm_your_email")}
 			titleProps={{ className: "desktop:text-3xl" }}
 		>
 			<div className="flex flex-col gap-4">
 				<p>
-					Your profile is currently hidden. Confirm your email to secure your account and continue using Flirtual.
+					{t("heroic_big_firefox_enrich")}
 				</p>
 				<div className="flex gap-4">
 					<ButtonLink href={urls.confirmEmail()} size="sm">
-						Confirm email
+						{t("confirm_email")}
 					</ButtonLink>
 				</div>
 			</div>

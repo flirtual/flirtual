@@ -22,7 +22,7 @@ export type InputTextProps = {
 export const InputText: React.FC<InputTextProps> = (props) => {
 	const inputReference = useRef<HTMLInputElement>(null);
 	const [inputVisible, setInputVisible] = useState(props.type !== "password");
-	const t = useTranslations("inputs.text");
+	const t = useTranslations();
 
 	const type = inputVisible
 		? props.type === "date" || props.type === "password"
@@ -77,6 +77,7 @@ export const InputText: React.FC<InputTextProps> = (props) => {
 					<TooltipTrigger asChild>
 						<button
 							className="mr-4"
+							tabIndex={-1}
 							type="button"
 							onClick={() => setInputVisible((inputVisible) => !inputVisible)}
 						>

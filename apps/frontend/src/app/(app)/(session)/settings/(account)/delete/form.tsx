@@ -1,6 +1,7 @@
 "use client";
 
 import { InAppReview } from "@capacitor-community/in-app-review";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
@@ -13,14 +14,16 @@ import { InputLabel, InputSelect, InputText } from "~/components/inputs";
 import { InputTextArea } from "~/components/inputs/textarea";
 import { SupportButton } from "~/components/layout/support-button";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const DeleteForm: FC = () => {
 	const router = useRouter();
-
-	const deleteReasons = useAttributes("delete-reason");
+	const { native } = useDevice();
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
+	const deleteReasons = useAttributes("delete-reason");
 
 	const [session] = useSession();
 	if (!session) return null;
@@ -47,28 +50,20 @@ export const DeleteForm: FC = () => {
 					&& ["android", "ios"].includes(subscription.platform) && (
 						<div className="rounded-lg bg-brand-gradient px-6 py-4">
 							<span className="font-montserrat text-white-10">
-								⚠️ Warning: You have an active subscription that will not be
-								canceled automatically if you delete your account.
+								⚠️
+								{" "}
+								{t("stock_wacky_guppy_pull")}
 								<br />
 								<br />
-								Please cancel your subscription in
-								{" "}
-								{subscription.platform === "ios"
-									? "the App Store"
-									: "Google Play"}
-								{" "}
-								before deleting your account.
+								{t(subscription.platform === "ios" ? "alert_dark_leopard_tap" : "helpful_basic_snail_relish")}
 							</span>
 						</div>
 					)}
-					<span>
-						We&apos;re sorry to see you go. Would you mind telling us why
-						you&apos;re deleting your account so we can improve?
-					</span>
+					<span>{t("antsy_calm_mallard_expand")}</span>
 					<FormField name="reasonId">
 						{(field) => (
 							<>
-								<InputLabel>Reason</InputLabel>
+								<InputLabel>{t("reason")}</InputLabel>
 								<InputSelect
 									{...field.props}
 									options={deleteReasons.map((attribute) => {
@@ -81,30 +76,30 @@ export const DeleteForm: FC = () => {
 											name
 										};
 									})}
-									placeholder="Select a reason"
+									placeholder={t("select_a_reason")}
 									onChange={(value) => {
 										field.props.onChange(value);
-										if (value === "jrAqzBkasZwqfjSPAazNq3")
+										if (value === "jrAqzBkasZwqfjSPAazNq3" && native)
 											void InAppReview.requestReview();
 									}}
 								/>
 								{field.props.value === "sQcEHRLCffbLfcgM4zAELf"
 									? (
 											<p>
-												Taking a break? You can
+												{t.rich("brave_bald_bison_trim", {
+													link: (children) => (
+														<InlineLink href={urls.settings.deactivateAccount}>
+															{children}
+														</InlineLink>
+													)
+												})}
 												{" "}
-												<InlineLink href={urls.settings.deactivateAccount}>
-													temporarily deactivate your account
-												</InlineLink>
-												{" "}
-												instead! No one can see your profile while it&apos;s
-												deactivated.
 											</p>
 										)
 									: field.props.value === "J3vVp9PWZQi5cEuk8G8wij"
 										? (
 												<p>
-													Need help?
+													{t("need_help")}
 													{" "}
 													<SupportButton />
 													.
@@ -117,13 +112,13 @@ export const DeleteForm: FC = () => {
 					<FormField name="comment">
 						{(field) => (
 							<>
-								<InputLabel>Comment</InputLabel>
+								<InputLabel>{t("comment")}</InputLabel>
 								<InputTextArea
 									{...field.props}
 									placeholder={
 										fields.reasonId.props.value === "jrAqzBkasZwqfjSPAazNq3"
-											? "We're always looking for success stories! Would you like to share one? By doing so, you agree that we may share your story."
-											: "If you'd like to share more information, please leave us a comment here!"
+											? t("odd_blue_clownfish_gleam")
+											: t("dirty_pink_puffin_flow")
 									}
 									rows={4}
 								/>
@@ -133,7 +128,7 @@ export const DeleteForm: FC = () => {
 					<FormField name="currentPassword">
 						{(field) => (
 							<>
-								<InputLabel>Confirm current password</InputLabel>
+								<InputLabel>{t("confirm_current_password")}</InputLabel>
 								<InputText
 									{...field.props}
 									autoComplete="current-password"
@@ -144,15 +139,14 @@ export const DeleteForm: FC = () => {
 					</FormField>
 					<div className="flex flex-col gap-4">
 						<span>
-							Are you sure you want to delete your account?
-							{" "}
-							<span className="font-semibold">This action is irreversible</span>
-							.
+							{t.rich("teary_cuddly_midge_sew", {
+								strong: (children) => <strong>{children}</strong>
+							})}
 						</span>
 					</div>
-					<FormButton>Delete account</FormButton>
+					<FormButton>{t("delete_account")}</FormButton>
 					<FormAlternativeActionLink href={urls.settings.deactivateAccount}>
-						Temporarily deactivate your account instead?
+						{t("white_tasty_trout_gleam")}
 					</FormAlternativeActionLink>
 				</>
 			)}

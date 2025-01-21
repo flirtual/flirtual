@@ -24,6 +24,7 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 import { queueKey, userKey } from "~/swr";
 
@@ -33,6 +34,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 
 	const reasons = useAttributes("ban-reason");
 	const defaultReason = reasons[0] as string;
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation("ban-reason");
 
 	const [open, setOpen] = useState(false);
@@ -73,7 +75,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 							if (ProspectKind.includes(kind))
 								mutate(queueKey(kind), optimisticQueueMove("forward"));
 
-							toasts.add("Account banned");
+							toasts.add(t("account_banned"));
 							setOpen(false);
 						}}
 					>

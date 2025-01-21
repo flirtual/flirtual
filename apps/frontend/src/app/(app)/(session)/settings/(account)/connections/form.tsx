@@ -11,6 +11,7 @@ import { InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { ProfilePlaylist } from "~/components/profile/playlist";
 import { useDevice } from "~/hooks/use-device";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -21,6 +22,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
 		null
 	);
+	const t = useTranslations();
 
 	if (!session) return null;
 
@@ -30,7 +32,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
 			inset={false}
-			title="Connections"
+			title={t("connections")}
 		>
 			{error && (
 				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
@@ -64,7 +66,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 						playlist: playlist.trim() || null
 					});
 
-					toasts.add("Saved connections");
+					toasts.add(t("merry_arable_alligator_coax"));
 
 					await mutateSession({
 						...session,
@@ -81,14 +83,8 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 					<>
 						<div className="flex flex-col gap-4">
 							<div className="flex flex-col gap-2">
-								<span className="flex text-xl">
-									Add accounts to your profile
-								</span>
-								<span className="text-black-50 vision:text-white-50 dark:text-white-50">
-									People can see your accounts after you match, to help you meet
-									up. You&apos;ll also be able to log in to Flirtual with your
-									Discord account.
-								</span>
+								<span className="flex text-xl">{t("drab_game_myna_yell")}</span>
+								<span className="text-black-50 vision:text-white-50 dark:text-white-50">{t("empty_petty_bullock_drop")}</span>
 							</div>
 							<div className="grid gap-4 wide:grid-cols-2">
 								<AddConnectionButton type="discord" />
@@ -121,7 +117,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 											<InputText
 												Icon={FaceTimeIcon}
 												iconColor="#34da4f"
-												placeholder="FaceTime number"
+												placeholder={t("facetime_number")}
 												type="number"
 												{...field.props}
 											/>
@@ -134,20 +130,19 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 							<div className="flex flex-col gap-2">
 								<div className="flex gap-2">
 									<span className="flex text-xl">
-										Add a playlist to your profile
+										{t("tough_plain_squirrel_persist")}
 									</span>
 									<NewBadge />
 								</div>
 								<span className="text-black-50 vision:text-white-50 dark:text-white-50">
-									Share your favorite music on your profile by adding a Spotify,
-									Apple Music, Tidal, Amazon Music, or Deezer playlist.
+									{t("proof_knotty_cockroach_commend")}
 								</span>
 							</div>
 							<FormField className="col-span-2 wide:col-span-1" name="playlist">
 								{(field) => (
 									<InputText
 										iconColor="#095d6a"
-										placeholder="Playlist link (e.g. https://open.spotify.com/playlist/...)"
+										placeholder={t("last_broad_warbler_nail")}
 										{...field.props}
 									/>
 								)}
@@ -155,39 +150,32 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 							{playlistSubmitted === "deezer.page.link"
 								? (
 										<span className="italic text-red-600">
-											Sorry, deezer.page.link links are not supported. Please
-											provide a deezer.com link. You can find this by following your
-											link and copying the URL from your browser.
+											{t("drab_white_lionfish_nurture")}
 										</span>
 									)
 								: playlistSubmitted === "youtube"
 									? (
 											<span className="italic text-red-600">
-												Sorry, YouTube Music playlists are not supported.
+												{t("trite_alive_orangutan_foster")}
 											</span>
 										)
 									: playlistSubmitted === "other"
 										? (
 												<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
-													If your playlist doesn&apos;t appear below, ensure you have
-													provided a valid
-													{" "}
-													<strong>public playlist</strong>
-													{" "}
-													link. Songs,
-													albums, and private playlists are not supported.
+													{t.rich("main_civil_jaguar_peel", { strong: (children) => (
+														<strong>{children}</strong>
+													) })}
 												</span>
 											)
 										: null}
 							<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
-								Be careful: if your real name or other personal information is
-								on your music streaming profile, it will be public.
+								{t("warm_gray_poodle_reap")}
 							</span>
 							{user.profile.playlist && (
 								<ProfilePlaylist playlist={user.profile.playlist} />
 							)}
 						</div>
-						<FormButton className="col-span-2 mt-4">Update</FormButton>
+						<FormButton className="col-span-2 mt-4">{t("update")}</FormButton>
 					</>
 				)}
 			</Form>

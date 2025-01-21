@@ -22,7 +22,7 @@ import { InputText } from "../inputs";
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const [session, mutateSession] = useSession();
-	const t = useTranslations("profile");
+	const t = useTranslations();
 	const toasts = useToast();
 	const { share, canShare } = useShare();
 	const [shareVisible, setShareVisible] = useState(false);
@@ -38,7 +38,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				Icon={Pencil}
 				size="sm"
 			>
-				{t("crazy_large_hound_grace")}
+				{t("edit")}
 			</ButtonLink>
 			<DrawerOrDialog open={shareVisible} onOpenChange={setShareVisible}>
 				<>
@@ -84,14 +84,15 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											</FormField>
 										</div>
 										<FormButton kind="secondary" size="sm">
-											{t("sleek_simple_puma_find")}
+											{t("update")}
 										</FormButton>
 									</div>
 								)}
 							</Form>
-							<div className="grid grid-cols-2 gap-2">
+							<div className="flex w-full gap-2">
 								{canShare && (
 									<Button
+										className="grow"
 										Icon={ShareIcon}
 										size="sm"
 										onClick={async () => {
@@ -104,18 +105,19 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											});
 										}}
 									>
-										{t("spare_short_tapir_dream")}
+										{t("share")}
 									</Button>
 								)}
 								<CopyClick
 									value={toAbsoluteUrl(urls.profile(profileLink)).toString()}
 								>
 									<Button
+										className="grow"
 										Icon={Link}
 										kind={canShare ? "secondary" : "primary"}
 										size="sm"
 									>
-										{t("mealy_any_javelina_hint")}
+										{t("copy_link")}
 									</Button>
 								</CopyClick>
 							</div>
@@ -129,7 +131,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				size="sm"
 				onClick={() => setShareVisible(true)}
 			>
-				{t("spare_short_tapir_dream")}
+				{t("share")}
 			</Button>
 		</div>
 	);

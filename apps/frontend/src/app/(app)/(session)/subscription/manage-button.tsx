@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type FC, useState, useTransition } from "react";
 
 import { Subscription } from "~/api/subscription";
@@ -32,6 +33,7 @@ export const ManageButton: FC = () => {
 	const toasts = useToast();
 	const { purchase } = usePurchase();
 	const [pending, startTransition] = useTransition();
+	const t = useTranslations();
 
 	const [manageUrl, setManageUrl] = useState<string | null>(null);
 	if (!session) return null;
@@ -43,73 +45,6 @@ export const ManageButton: FC = () => {
 	)
 		return null;
 
-	if (subscription.platform === "stripe" && subscription.active) {
-		return (
-			<>
-				<div>
-					<AlertDialog>
-						<AlertDialogTrigger asChild>
-							<Button kind="primary" size="sm">
-								Cancel
-							</Button>
-						</AlertDialogTrigger>
-						<AlertDialogContent>
-							<AlertDialogHeader>
-								<AlertDialogTitle>Are you sure?</AlertDialogTitle>
-							</AlertDialogHeader>
-							<AlertDialogDescription>
-								Your subscription will be canceled at the end of your billing
-								cycle.
-							</AlertDialogDescription>
-							<DialogFooter>
-								<AlertDialogCancel asChild>
-									<Button kind="tertiary" size="sm">
-										Never mind
-									</Button>
-								</AlertDialogCancel>
-								<AlertDialogAction asChild>
-									<Button
-										size="sm"
-										onClick={async () => {
-											await Subscription.cancel()
-												.then(() => {
-													return toasts.add({
-														duration: "long",
-														value:
-															"Your subscription has successfully been scheduled for cancellation."
-													});
-												})
-												.catch(() => {
-													toasts.add({
-														type: "error",
-														value:
-															"Failed to cancel subscription, please contact us for assistance."
-													});
-												});
-										}}
-									>
-										Cancel subscription
-									</Button>
-								</AlertDialogAction>
-							</DialogFooter>
-						</AlertDialogContent>
-					</AlertDialog>
-				</div>
-				<div className="font-bold">
-					Subscription management is temporarily unavailable. If you need to
-					update your billing details, first cancel your current subscription
-					and then resubscribe. Please
-					{" "}
-					<InlineLink href={urls.resources.contactDirect}>
-						contact us
-					</InlineLink>
-					{" "}
-					if you need any assistance. Thank you for your understanding.
-				</div>
-			</>
-		);
-	}
-
 	return (
 		<>
 			{manageUrl && (
@@ -120,7 +55,7 @@ export const ManageButton: FC = () => {
 						setManageUrl(null);
 					}}
 				>
-					<DialogTitle className="sr-only">Manage subscription</DialogTitle>
+					<DialogTitle className="sr-only">{t("manage_subscription")}</DialogTitle>
 					<DialogContent className="w-fit overflow-hidden p-0">
 						{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
 						<iframe
@@ -147,7 +82,7 @@ export const ManageButton: FC = () => {
 						});
 					}}
 				>
-					{subscription.cancelledAt ? "Resubscribe" : "Manage"}
+					{t(subscription.cancelledAt ? "resubscribe" : "manage")}
 				</Button>
 			</div>
 		</>

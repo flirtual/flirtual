@@ -34,9 +34,9 @@ import "~/css/index.css";
 const defaultLanguages = [defaultLanguage, "x-default"];
 
 export async function generateMetadata(): Promise<Metadata> {
-	const [t, { locale: { current } }] = await Promise.all([getTranslations("meta"), getInternationalization()]);
+	const [t, { locale: { current } }] = await Promise.all([getTranslations(), getInternationalization()]);
 
-	const appName = t("name");
+	const appName = t("flirtual");
 
 	const canonical = new URL("/", siteOrigin);
 	if (!defaultLanguages.includes(current))
@@ -45,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return {
 		title: {
 			default: appName,
-			template: t("title")
+			template: t("page_title")
 		},
 		applicationName: appName,
 		description: t("knotty_direct_mongoose_bend"),

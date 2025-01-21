@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 import { ButtonLink } from "~/components/button";
 import { DownloadButton } from "~/components/download-button";
@@ -10,6 +9,7 @@ import {
 	MicrosoftIcon
 } from "~/components/icons";
 import { Footer } from "~/components/layout/footer";
+import { Link } from "~/components/link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
@@ -26,8 +26,8 @@ export function CallToAction({ id }: TileProps) {
 					<div className="flex flex-col items-center gap-4">
 						<FlirtualLogo className="w-56" />
 						<TileAnchor id={id}>
-							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-5xl desktop:tall:text-8xl">
-								{t.rich("landing.cta.few_grassy_hyena_adapt", {
+							<h1 className="max-w-screen-wide text-balance text-center text-4xl font-bold text-white-10 desktop:text-6xl desktop:tall:text-7xl">
+								{t.rich("few_grassy_hyena_adapt", {
 									highlight: (children) => (
 										<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent wide:block">
 											{children}
@@ -39,27 +39,27 @@ export function CallToAction({ id }: TileProps) {
 					</div>
 					<div className="hidden grid-cols-2 flex-col gap-2 desktop:grid">
 						<SignUpButton />
-						<ButtonLink href={urls.login()} kind="secondary">
-							{t("landing.log_in")}
+						<ButtonLink href={urls.login()} kind="secondary" size="sm">
+							{t("login")}
 						</ButtonLink>
 					</div>
 					<div className="flex flex-col items-center gap-4 native:hidden vision:hidden">
 						<div className="flex w-fit flex-wrap justify-center gap-4 gap-y-2 desktop:grid desktop:grid-cols-2">
 							<DownloadButton
 								className="hidden apple:flex desktop:flex"
-								platform="apple"
+								platform="app_store"
 							/>
 							<DownloadButton
 								className="hidden android:flex desktop:flex"
-								platform="google"
+								platform="google_play"
 							/>
 							<DownloadButton
 								className="hidden desktop:flex"
-								platform="microsoft"
+								platform="microsoft_store"
 							/>
 							<DownloadButton
 								className="hidden desktop:flex"
-								platform="side_quest"
+								platform="sidequest"
 							/>
 						</div>
 						<div className="flex gap-2 desktop:hidden">

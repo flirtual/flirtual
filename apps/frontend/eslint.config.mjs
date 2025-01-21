@@ -11,6 +11,7 @@ export default configure({
 	ignores: [
 		"next-env.d.ts",
 		"paraglide/",
+		"src/paraglide/",
 		"messages/",
 		"android/",
 		"ios/",
@@ -19,5 +20,12 @@ export default configure({
 	rules: {
 		"node/prefer-global/buffer": "off",
 		"node/prefer-global/process": "off",
+		"no-restricted-imports": [
+			"error",
+			{
+				name: "next/link",
+				message: "Import from `~/components/link` instead."
+			}
+		]
 	}
 });

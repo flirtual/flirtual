@@ -10,21 +10,21 @@ import { ColorBlock } from "./color-block";
 import { ImageList } from "./image-list";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("branding");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("branding")
 	};
 }
 
 export default async function BrandingPage() {
-	const t = await getTranslations("branding");
+	const t = await getTranslations();
 
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-xl"
 			containerProps={{ className: "gap-8" }}
-			title={t("title")}
+			title={t("branding")}
 		>
 			<p>
 				{t.rich("lime_soft_shad_skip", {
@@ -35,7 +35,7 @@ export default async function BrandingPage() {
 			</p>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
-					{t("brave_early_weasel_arise")}
+					{t("our_logo")}
 				</span>
 				<span>{t("flaky_same_grizzly_snap")}</span>
 				<ImageList
@@ -58,7 +58,7 @@ export default async function BrandingPage() {
 			</div>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
-					{t("mild_spry_hamster_persist")}
+					{t("mark_only")}
 				</span>
 				<span>{t("such_pink_jan_spur")}</span>
 				<ImageList
@@ -86,25 +86,25 @@ export default async function BrandingPage() {
 			</div>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">
-					{t("tasty_last_pony_transform")}
+					{t("colors")}
 				</span>
 				<div className="flex flex-wrap gap-2 text-white-20">
 					<ColorBlock
-						name={t("gross_red_earthworm_reside")}
+						name={t("gradient")}
 						value="linear-gradient(to right, #FF8975, #E9658B)"
 					/>
 					<ColorBlock
-						name={t("fair_yummy_penguin_harbor")}
+						name={t("dark_mode")}
 						value="linear-gradient(to right, #B24592, #E9658B)"
 					/>
 					<ColorBlock
-						name={t("empty_sharp_sheep_list")}
+						name={t("homie_mode")}
 						value="linear-gradient(to right, #82BF72, #4D8888)"
 					/>
-					<ColorBlock name={t("whole_round_penguin_pet")} value="#E9658B" />
+					<ColorBlock name={t("pink")} value="#E9658B" />
 					<ColorBlock
 						invert
-						name={t("known_trick_raven_sew")}
+						name={t("cream")}
 						value="#FFFAF0"
 					/>
 				</div>
@@ -118,8 +118,9 @@ export default async function BrandingPage() {
 					download
 					className="w-fit"
 					href={urls.media("presskit.zip", "files")}
+					size="sm"
 				>
-					{t("tired_extra_bear_forgive")}
+					{t("download")}
 				</ButtonLink>
 			</div>
 		</ModelCard>

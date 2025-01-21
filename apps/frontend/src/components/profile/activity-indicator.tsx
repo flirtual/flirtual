@@ -10,7 +10,7 @@ const twoWeeksInMilliseconds = 1.21e9;
 export const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
 	lastActiveAt
 }) => {
-	const t = useTranslations("profile");
+	const t = useTranslations();
 
 	const timeSince = Date.now() - lastActiveAt.getTime();
 	if (timeSince > twoWeeksInMilliseconds) return null;
@@ -20,8 +20,8 @@ export const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
 			<div className="size-4 rounded-full bg-green-500" />
 			<span className="text-shadow-brand font-montserrat font-semibold">
 				{timeSince < oneDayInMilliseconds
-					? t("brief_lower_crow_hug")
-					: t("flat_cool_larva_roar")}
+					? t("active_today")
+					: t("active_recently")}
 			</span>
 		</div>
 	);

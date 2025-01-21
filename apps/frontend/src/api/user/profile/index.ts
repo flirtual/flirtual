@@ -21,12 +21,6 @@ export const ProfileRelationshipList = [
 	"hookups",
 	"friends"
 ] as const;
-export const ProfileRelationshipLabel = {
-	serious: "Serious dating (meet in-person eventually)",
-	vr: "Casual dating (VR-only dating)",
-	hookups: "Casual fun",
-	friends: "New friends"
-};
 export type ProfileRelationship = (typeof ProfileRelationshipList)[number];
 
 export const ProfileDomsubList = ["dominant", "submissive", "switch"] as const;
@@ -61,8 +55,8 @@ export type Profile = {
 	prompts: Array<ProfilePrompt>;
 	queueResetLoveAt?: string;
 	queueResetFriendAt?: string;
-	color_1?: string;
-	color_2?: string;
+	color1?: string;
+	color2?: string;
 } & Partial<UpdatedAtModel>;
 
 export const ProfileAttributes = [
@@ -100,8 +94,8 @@ export type UpdateProfileOptions = {
 
 // eslint-disable-next-line ts/consistent-type-definitions
 export type ProfileColors = {
-	color_1: string;
-	color_2: string;
+	color1: string;
+	color2: string;
 };
 
 export const CustomWeightList = [

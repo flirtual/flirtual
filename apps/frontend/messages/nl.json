@@ -5,60 +5,6 @@
 		"knotty_direct_mongoose_bend": "Ontmoet nieuwe mensen in Virtual Reality! Flirtual helpt je op dates te gaan in VR en VRChat.",
 		"green_plain_mongoose_lend": "De eerste VR-datingapp. Doe mee met duizenden anderen voor dates in VR-apps zoals VRChat."
 	},
-	"about": {
-		"timeline": {
-			"2018": {
-				"title": "2018 🐣",
-				"image": "88bb9381-87ed-499d-9667-cd61eff96938"
-			},
-			"2019": {
-				"title": "🏆 2019",
-				"image": "c373b72d-16a0-479c-b834-ccb7041bc615"
-			},
-			"2020": {
-				"title": "2020 🧪",
-				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86"
-			},
-			"2021": {
-				"title": "✌️ 2021",
-				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f"
-			},
-			"2022": {
-				"title": "2022 😻",
-				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
-			},
-			"2023": {
-				"title": "✨ 2023",
-				"image": "36446ecb-9103-4b6d-b221-7c657f17323d"
-			}
-		},
-		"images": {
-			"0": {
-				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
-				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
-			},
-			"1": {
-				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
-				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
-			},
-			"2": {
-				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
-				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
-			},
-			"3": {
-				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
-				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
-			},
-			"4": {
-				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
-				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
-			},
-			"5": {
-				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
-				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
-			}
-		}
-	},
 	"download": {
 		"platform": {
 			"apple": "App Store",
@@ -66,11 +12,6 @@
 			"microsoft": "Microsoft Store",
 			"side_quest": "SideQuest"
 		}
-	},
-	"privacy": {
-		"title": "Privacybeleid",
-		"title_superseded": "Privacybeleid (verouderd)",
-		"content": "<p>Uw gebruikersnaam, uw weergavenaam, uw profielfoto’s, uw biografie, uw leeftijd, uw geslacht, uw matchmaking-voorkeuren, uw persoonlijke interesse-tags, uw geselecteerde VR-apps/spellen en of u nieuw bent in VR, zullen zichtbaar zijn voor andere gebruikers. Uw aanvullende profielinformatie (inclusief uw seksualiteit, NSFW-tags, land, gekoppelde accounts, enz.) zal zichtbaar of verborgen zijn voor andere gebruikers afhankelijk van uw <settings-privacy>privacy-instellingen</settings-privacy>, die u op elk moment kunt wijzigen. Uw persoonlijkheidskenmerken (die wij identificeren op basis van uw antwoorden op onze persoonlijkheidsvragenlijst) zullen zichtbaar of verborgen zijn voor andere gebruikers afhankelijk van uw <settings-privacy>privacy-instellingen</settings-privacy>, maar uw specifieke vragenlijstantwoorden zullen niet zichtbaar zijn.</p><p>We gebruiken eigen, on-premises data-analyse. We kunnen geanonimiseerde statistieken over Flirtual delen (bijvoorbeeld het aantal gebruikers dat een bepaalde Social VR-app of spel gebruikt). U kunt zich afmelden voor deze statistieken in uw <settings-privacy>privacy-instellingen</settings-privacy>.</p><p>Uw berichten en berichtgeschiedenis met andere gebruikers worden gehost en gedeeld met TalkJS, maar zullen niet worden gedeeld met andere derden.</p><p>Uw account-e-mailadres zal niet aan andere gebruikers worden getoond. Uw account-e-mailadres kan door derden worden benaderd om transactionele, marketing- en ondersteuningsberichten te leveren volgens uw voorkeuren. U kunt zich afmelden voor <settings-notifications>e-mailnotificaties voor berichten</settings-notifications>, waardoor uw e-mailadres uit de gegevens van TalkJS wordt verwijderd.</p><p>Als u vermoedt dat uw account is gecompromitteerd, <settings-password>wijzig dan onmiddellijk uw wachtwoord</settings-password> en <contact>meld het probleem</contact> met 'DRINGEND' in de onderwerpregel. Vermeld in het bericht uw gebruikersnaam, de laatste keer dat u de site hebt bezocht, en eventuele details die u ertoe brachten te vermoeden dat er een inbraak is geweest.</p><p>Uw wachtwoord wordt gehasht en gezouten opgeslagen.</p><p>We maken gebruik van bepaalde vertrouwde derden die diensten aan Flirtual leveren. We kunnen persoonlijke gebruikersgegevens delen met deze derden, maar alleen voor het doel van het leveren van hun diensten. Voor meer informatie en voorbeelden, zie hieronder.</p><p><strong>Cloud Hosting-diensten:</strong> om een betrouwbare en veilige infrastructuur te bieden voor het beheren en opereren van ons platform (bijvoorbeeld Fly.io en Vercel).</p><p><strong>In-App Functionaliteitsdiensten:</strong> om belangrijke functies zoals berichten en geoptimaliseerde beeldhosting binnen onze app te faciliteren (bijvoorbeeld TalkJS).</p><p><strong>Facturatiediensten:</strong> om betalingen en abonnementen te beheren (bijvoorbeeld Stripe).</p><p><strong>Social Media-diensten:</strong> om gebruikers in staat te stellen hun accounts met ons platform te verbinden en sociale interacties te vergemakkelijken (bijvoorbeeld Discord).</p><p><strong>Beveiligings- en prestatiediensten:</strong> om ons platform te beschermen, onze gebruikers te beveiligen en de algehele prestaties te verbeteren (bijvoorbeeld Cloudflare).</p><p><strong>Inzicht- en verbeteringsdiensten:</strong> om gebruikersfeedback te verzamelen en analyses uit te voeren voor de voortdurende verbetering van ons platform (bijvoorbeeld Canny).</p><p><strong>Communicatiediensten:</strong> om te helpen met het verzenden van transactionele en marketingcommunicatie naar gebruikers (bijvoorbeeld Amazon Web Services).</p><p><strong>Moderatieservices:</strong> om gepast gedrag binnen de app te waarborgen en de gemeenschapsnormen te handhaven (bijvoorbeeld Google Cloud).</p><p><strong>IT-diensten:</strong> om te assisteren bij verschillende operaties van ons bedrijf, zoals wanneer een gebruiker contact opneemt met onze ondersteuningsdiensten, wat kan betekenen dat persoonlijke gegevens van gebruikers worden verwerkt (bijvoorbeeld Freshworks).</p><p>We beoordelen de derden met wie we samenwerken om ervoor te zorgen dat zij adequate gegevensbeschermings- en informatieveiligheidsmaatregelen hebben. We nemen maatregelen om gegevens te beschermen en te anonimiseren die met derden worden gedeeld, passend bij de aard van de geleverde diensten. We verstrekken alleen de noodzakelijke persoonlijke gegevens aan vertrouwde derden voor de diensten die zij leveren.</p><p>Als u een kwetsbaarheid of privacylek ontdekt, meld dit dan discreet via <vulnerability>GitHub</vulnerability> of <contact>e-mail</contact>.</p><p>U kunt de gegevens die wij in ons bestand hebben inzien in uw <settings>accountinstellingen</settings> en in uw berichten. U kunt alle gegevens opvragen die wij in ons bestand hebben door ons een e-mail te sturen, en u ontvangt deze binnen 30 dagen.</p>"
 	},
 	"superseded_policy": {
 		"fancy_noisy_grizzly_hint": "Dit beleid was van kracht van {range} en is niet langer actief. Bekijk de <current>meest recente versie van dit beleid</current>."
@@ -188,5 +129,64 @@
 			"5": "Wilt u wat tips?",
 			"6": "Je kunt nieuwe vrienden vinden in de Homie-modus ✌️"
 		}
+	},
+	"about": {
+		"timeline": {
+			"2018": {
+				"title": "2018 🐣",
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938"
+			},
+			"2019": {
+				"title": "🏆 2019",
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615"
+			},
+			"2020": {
+				"title": "2020 🧪",
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86"
+			},
+			"2021": {
+				"title": "✌️ 2021",
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f"
+			},
+			"2022": {
+				"title": "2022 😻",
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
+			},
+			"2023": {
+				"title": "✨ 2023",
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d"
+			}
+		},
+		"images": {
+			"0": {
+				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
+			},
+			"1": {
+				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
+				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
+			},
+			"2": {
+				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
+			},
+			"3": {
+				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
+			},
+			"4": {
+				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
+			},
+			"5": {
+				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
+			}
+		}
+	},
+	"privacy": {
+		"title": "Privacybeleid",
+		"title_superseded": "Privacybeleid (verouderd)",
+		"content": "<p>Uw gebruikersnaam, uw weergavenaam, uw profielfoto’s, uw biografie, uw leeftijd, uw geslacht, uw matchmaking-voorkeuren, uw persoonlijke interesse-tags, uw geselecteerde VR-apps/spellen en of u nieuw bent in VR, zullen zichtbaar zijn voor andere gebruikers. Uw aanvullende profielinformatie (inclusief uw seksualiteit, NSFW-tags, land, gekoppelde accounts, enz.) zal zichtbaar of verborgen zijn voor andere gebruikers afhankelijk van uw <settings-privacy>privacy-instellingen</settings-privacy>, die u op elk moment kunt wijzigen. Uw persoonlijkheidskenmerken (die wij identificeren op basis van uw antwoorden op onze persoonlijkheidsvragenlijst) zullen zichtbaar of verborgen zijn voor andere gebruikers afhankelijk van uw <settings-privacy>privacy-instellingen</settings-privacy>, maar uw specifieke vragenlijstantwoorden zullen niet zichtbaar zijn.</p><p>We gebruiken eigen, on-premises data-analyse. We kunnen geanonimiseerde statistieken over Flirtual delen (bijvoorbeeld het aantal gebruikers dat een bepaalde Social VR-app of spel gebruikt). U kunt zich afmelden voor deze statistieken in uw <settings-privacy>privacy-instellingen</settings-privacy>.</p><p>Uw berichten en berichtgeschiedenis met andere gebruikers worden gehost en gedeeld met TalkJS, maar zullen niet worden gedeeld met andere derden.</p><p>Uw account-e-mailadres zal niet aan andere gebruikers worden getoond. Uw account-e-mailadres kan door derden worden benaderd om transactionele, marketing- en ondersteuningsberichten te leveren volgens uw voorkeuren. U kunt zich afmelden voor <settings-notifications>e-mailnotificaties voor berichten</settings-notifications>, waardoor uw e-mailadres uit de gegevens van TalkJS wordt verwijderd.</p><p>Als u vermoedt dat uw account is gecompromitteerd, <settings-password>wijzig dan onmiddellijk uw wachtwoord</settings-password> en <contact>meld het probleem</contact> met 'DRINGEND' in de onderwerpregel. Vermeld in het bericht uw gebruikersnaam, de laatste keer dat u de site hebt bezocht, en eventuele details die u ertoe brachten te vermoeden dat er een inbraak is geweest.</p><p>Uw wachtwoord wordt gehasht en gezouten opgeslagen.</p><p>We maken gebruik van bepaalde vertrouwde derden die diensten aan Flirtual leveren. We kunnen persoonlijke gebruikersgegevens delen met deze derden, maar alleen voor het doel van het leveren van hun diensten. Voor meer informatie en voorbeelden, zie hieronder.</p><p><strong>Cloud Hosting-diensten:</strong> om een betrouwbare en veilige infrastructuur te bieden voor het beheren en opereren van ons platform (bijvoorbeeld Fly.io en Vercel).</p><p><strong>In-App Functionaliteitsdiensten:</strong> om belangrijke functies zoals berichten en geoptimaliseerde beeldhosting binnen onze app te faciliteren (bijvoorbeeld TalkJS).</p><p><strong>Facturatiediensten:</strong> om betalingen en abonnementen te beheren (bijvoorbeeld Stripe).</p><p><strong>Social Media-diensten:</strong> om gebruikers in staat te stellen hun accounts met ons platform te verbinden en sociale interacties te vergemakkelijken (bijvoorbeeld Discord).</p><p><strong>Beveiligings- en prestatiediensten:</strong> om ons platform te beschermen, onze gebruikers te beveiligen en de algehele prestaties te verbeteren (bijvoorbeeld Cloudflare).</p><p><strong>Inzicht- en verbeteringsdiensten:</strong> om gebruikersfeedback te verzamelen en analyses uit te voeren voor de voortdurende verbetering van ons platform (bijvoorbeeld Canny).</p><p><strong>Communicatiediensten:</strong> om te helpen met het verzenden van transactionele en marketingcommunicatie naar gebruikers (bijvoorbeeld Amazon Web Services).</p><p><strong>Moderatieservices:</strong> om gepast gedrag binnen de app te waarborgen en de gemeenschapsnormen te handhaven (bijvoorbeeld Google Cloud).</p><p><strong>IT-diensten:</strong> om te assisteren bij verschillende operaties van ons bedrijf, zoals wanneer een gebruiker contact opneemt met onze ondersteuningsdiensten, wat kan betekenen dat persoonlijke gegevens van gebruikers worden verwerkt (bijvoorbeeld Freshworks).</p><p>We beoordelen de derden met wie we samenwerken om ervoor te zorgen dat zij adequate gegevensbeschermings- en informatieveiligheidsmaatregelen hebben. We nemen maatregelen om gegevens te beschermen en te anonimiseren die met derden worden gedeeld, passend bij de aard van de geleverde diensten. We verstrekken alleen de noodzakelijke persoonlijke gegevens aan vertrouwde derden voor de diensten die zij leveren.</p><p>Als u een kwetsbaarheid of privacylek ontdekt, meld dit dan discreet via <vulnerability>GitHub</vulnerability> of <contact>e-mail</contact>.</p><p>U kunt de gegevens die wij in ons bestand hebben inzien in uw <settings>accountinstellingen</settings> en in uw berichten. U kunt alle gegevens opvragen die wij in ons bestand hebben door ons een e-mail te sturen, en u ontvangt deze binnen 30 dagen.</p>"
 	}
 }

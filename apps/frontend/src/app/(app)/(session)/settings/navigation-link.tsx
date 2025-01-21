@@ -1,11 +1,12 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
+import { NewBadge } from "~/components/badge";
 import type { IconComponent } from "~/components/icons";
+import { Link } from "~/components/link";
 import { isInternalHref, toAbsoluteUrl } from "~/urls";
 
 export type NavigationLinkProps = {
@@ -38,16 +39,7 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 						{Icon && <Icon className="w-6" />}
 						{children}
 						{"newBadge" in props && (
-							<span
-								className={twMerge(
-									"rounded-full px-2 pt-[0.4rem] text-xs font-bold leading-none text-white-20",
-									toAbsoluteUrl(props.href).pathname === pathname
-										? "bg-white-20 text-black-80"
-										: "bg-brand-gradient text-white-20 shadow-brand-1"
-								)}
-							>
-								NEW
-							</span>
+							<NewBadge small white={toAbsoluteUrl(props.href).pathname === pathname} />
 						)}
 					</div>
 					<ChevronRight className="w-6 shrink-0" />

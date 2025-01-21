@@ -5,6 +5,7 @@ import type { FC } from "react";
 import { Authentication } from "~/api/auth";
 import { displayName, type User } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -12,6 +13,7 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 	const [session] = useSession();
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
 
 	if (!session || !session.user.tags?.includes("admin")) return null;
 
@@ -29,14 +31,14 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 					if (session?.sudoerId) {
 						await Authentication.revokeImpersonate();
 
-						toasts.add(`No longer impersonating ${displayName(user)}`);
+						toasts.add(t("no_longer_impersonating_name", { name: displayName(user) }));
 						router.refresh();
 						return;
 					}
 
 					await Authentication.impersonate(user.id);
 
-					toasts.add(`Impersonating ${displayName(user)}`);
+					toasts.add(t("impersonating_name", { name: displayName(user) }));
 					router.refresh();
 				}}
 			>

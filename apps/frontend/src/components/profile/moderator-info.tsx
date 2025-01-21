@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 
 import { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -22,6 +23,7 @@ export const ProfileModeratorInfo: FC<{
 }> = ({ userId }) => {
 	const [session] = useSession();
 	const toasts = useToast();
+	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 	const user = useUser(userId);
 
@@ -69,14 +71,14 @@ export const ProfileModeratorInfo: FC<{
 										await User.deleteNote(user.id).catch(toasts.addError);
 										mutate(userKey(user.id));
 
-										toasts.add("Note deleted");
+										toasts.add(t("note_deleted"));
 										return;
 									}
 
 									await User.note(user.id, { message }).catch(toasts.addError);
 									mutate(userKey(user.id));
 
-									toasts.add("Note updated");
+									toasts.add(t("note_updated"));
 								}}
 							>
 								{user.moderatorNote || "None"}

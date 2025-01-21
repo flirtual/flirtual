@@ -10,7 +10,6 @@ import { ShepherdProvider } from "~/components/shepherd";
 import { SWRConfig } from "~/components/swr";
 import { NotificationProvider } from "~/hooks/use-notifications";
 import { PurchaseProvider } from "~/hooks/use-purchase";
-import { TalkjsProvider } from "~/hooks/use-talkjs";
 
 export default async function AuthenticatedLayout({
 	children

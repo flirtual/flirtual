@@ -8,31 +8,17 @@ import { urls } from "~/urls";
 import { Tile, TileAnchor, type TileProps } from ".";
 
 export async function Testimonial({ id }: TileProps) {
-	const [userCount, messages, t, format] = await Promise.all([
+	const [userCount, messages, t] = await Promise.all([
 		User.getApproximateCount(),
 		getMessages(),
-		getTranslations("landing.testimonial"),
+		getTranslations(),
 		getFormatter()
 	]);
 
 	const {
-		landing: {
-			testimonial: { images: _images, brands }
-		}
-	} = messages as unknown as {
-		landing: {
-			testimonial: {
-				images: Record<number, string>;
-				brands: Record<
-					number,
-					{
-						name: string;
-						image: string;
-					}
-				>;
-			};
-		};
-	};
+		flaky_thunder_red_flap: _images,
+		acidic_advertisement_request_cough: brands
+	} = messages as unknown as IntlMessages;
 
 	const images = Object.values(_images);
 
@@ -42,7 +28,7 @@ export async function Testimonial({ id }: TileProps) {
 				<TileAnchor id={id}>
 					<span className="font-montserrat text-3xl font-extrabold desktop:text-4xl">
 						{t("even_major_hare_believe", {
-							userCount: format.number(userCount)
+							userCount
 						})}
 					</span>
 				</TileAnchor>

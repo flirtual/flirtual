@@ -6,14 +6,14 @@ import { useRouter } from "next/navigation";
 import { entries } from "remeda";
 
 import { Profile } from "~/api/user/profile";
-import {
-	personalityQuestionLabels,
-	type ProfilePersonality
+import type {
+	ProfilePersonality
 } from "~/api/user/profile/personality";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -21,6 +21,7 @@ export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 	personality
 }) => {
 	const router = useRouter();
+	const t = useTranslations();
 
 	const [session] = useSession();
 
@@ -33,7 +34,7 @@ export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 			fields={personality}
 			requireChange={false}
 			onSubmit={async (body) => {
-				await Promise.all([Profile.Personality.update(user.id, body)]);
+				await Profile.Personality.update(user.id, body);
 
 				router.push(urls.finish(5));
 			}}
@@ -41,8 +42,7 @@ export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 			{({ FormField }) => (
 				<>
 					<InputLabel>
-						This helps us match you with people you&apos;ll vibe with, based on
-						the Big 5 Personality Test.
+						{t("quiet_gross_skate_honor")}
 					</InputLabel>
 					{shuffle(
 						Number.parseInt(user.talkjsId.slice(0, 8), 16),
@@ -52,7 +52,7 @@ export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 							{(field) => (
 								<div className="flex items-center justify-between gap-4">
 									<InputLabel {...field.labelProps} inline>
-										{personalityQuestionLabels[Number.parseInt(name.slice(-1))]}
+										{t(`personality_questions.${Number.parseInt(name.slice(-1))}` as any)}
 									</InputLabel>
 									<InputSwitch {...field.props} />
 								</div>
@@ -67,9 +67,9 @@ export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
 							size="sm"
 						>
 							<MoveLeft className="size-5" />
-							<span>Back</span>
+							<span>{t("back")}</span>
 						</ButtonLink>
-						<FormButton className="w-36" size="sm" />
+						<FormButton className="min-w-36" size="sm" />
 					</div>
 				</>
 			)}

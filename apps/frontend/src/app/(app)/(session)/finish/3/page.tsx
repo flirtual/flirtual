@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { unstable_serialize } from "swr";
 
 import { Attribute } from "~/api/attributes";
@@ -9,11 +10,17 @@ import { attributeKey } from "~/swr";
 import { FinishProgress } from "../progress";
 import { Finish3Form } from "./form";
 
-export const metadata: Metadata = {
-	title: "Interests"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
+
+	return {
+		title: t("interests")
+	};
+}
 
 export default async function Finish3Page() {
+	const t = await getTranslations();
+
 	const [interests, interestCategories] = await Promise.all([
 		Attribute.list("interest"),
 		Attribute.list("interest-category")
@@ -32,7 +39,7 @@ export default async function Finish3Page() {
 			<FinishProgress page={3} />
 			<ModelCard
 				className="shrink-0 pb-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),6rem)] desktop:max-w-2xl desktop:pb-0"
-				title="Interests"
+				title={t("interests")}
 			>
 				<Finish3Form />
 			</ModelCard>

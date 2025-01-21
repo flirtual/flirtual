@@ -9,6 +9,7 @@ import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Image } from "~/components/image";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -29,6 +30,7 @@ function useLikes() {
 export const LikesYouButton: FC = () => {
 	const [session] = useSession();
 	const likes = useLikes();
+	const t = useTranslations();
 
 	if (!session) return null;
 	const { user } = session;
@@ -62,7 +64,7 @@ export const LikesYouButton: FC = () => {
 						&& "flex flex-col items-center"
 					)}
 				>
-					See who likes you
+					{t("see_who_likes_you")}
 					{" "}
 					<span data-mask className="whitespace-nowrap">
 						{likes.count.love && (

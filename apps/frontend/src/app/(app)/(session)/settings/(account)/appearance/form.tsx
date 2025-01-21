@@ -12,8 +12,12 @@ import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile, type ProfileColors } from "~/api/user/profile";
 import { PremiumBadge } from "~/components/badge";
 import { Form, FormButton } from "~/components/forms";
-import { InputLabel } from "~/components/inputs";
+import { InlineLink } from "~/components/inline-link";
+import { InputLabel, InputLabelHint } from "~/components/inputs";
+import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useFormContext } from "~/hooks/use-input-form";
+import { useInternationalization, useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
@@ -58,15 +62,15 @@ export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ 
 };
 
 export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<ProfileColors> }> = ({ value, onChange }) => {
-	const { color_1, color_2 } = value;
+	const { color1, color2 } = value;
 
 	const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-	const selectedColor = selectedColorIndex === 0 ? color_1 : color_2;
+	const selectedColor = selectedColorIndex === 0 ? color1 : color2;
 
 	function change(newColor: string) {
 		const value = selectedColorIndex === 0
-			? { color_1: newColor, color_2 }
-			: { color_1, color_2: newColor };
+			? { color1: newColor, color2 }
+			: { color1, color2: newColor };
 
 		onChange(value);
 	}
@@ -79,7 +83,7 @@ export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<Pr
 						"focusable size-8 rounded-md",
 						selectedColorIndex === 0 && "focused"
 					)}
-					style={{ backgroundColor: color_1 }}
+					style={{ backgroundColor: color1 }}
 					type="button"
 					onClick={() => setSelectedColorIndex(0)}
 				/>
@@ -88,7 +92,7 @@ export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<Pr
 						"focusable size-8 rounded-md",
 						selectedColorIndex === 1 && "focused"
 					)}
-					style={{ backgroundColor: color_2 }}
+					style={{ backgroundColor: color2 }}
 					type="button"
 					onClick={() => setSelectedColorIndex(1)}
 				/>
@@ -100,18 +104,18 @@ export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<Pr
 
 const ProfileColorEditor: FC = () => {
 	const {
-		fields: { color_1, color_2 }
+		fields: { color1, color2 }
 	} = useFormContext<ProfileColors>();
 
 	return (
 		<InputProfileColor
 			value={{
-				color_1: color_1.props.value,
-				color_2: color_2.props.value
+				color1: color1.props.value,
+				color2: color2.props.value
 			}}
 			onChange={(value) => {
-				color_1.props.onChange(value.color_1);
-				color_2.props.onChange(value.color_2);
+				color1.props.onChange(value.color1);
+				color2.props.onChange(value.color2);
 			}}
 		/>
 	);
@@ -119,16 +123,17 @@ const ProfileColorEditor: FC = () => {
 
 const ReccommendedProfileThemes: FC = () => {
 	const {
-		fields: { color_1, color_2 }
+		fields: { color1, color2 }
 	} = useFormContext<ProfileColors>();
 	const { theme } = useTheme();
+	const t = useTranslations();
 
 	const defaultTheme = defaultProfileColors[theme];
 
 	return (
 		<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
 			{[
-				{ name: "Flirtual", description: "default", ...defaultTheme },
+				{ name: "flirtual" as const, description: t("default"), ...defaultTheme },
 				...recommendedThemes
 			].map((theme) => (
 				<button
@@ -137,15 +142,15 @@ const ReccommendedProfileThemes: FC = () => {
 					type="button"
 					onClick={() => {
 						flushSync(() => {
-							color_1.props.onChange(theme.color_1);
-							color_2.props.onChange(theme.color_2);
+							color1.props.onChange(theme.color1);
+							color2.props.onChange(theme.color2);
 						});
 					}}
 				>
 					<div className="flex w-fit items-baseline gap-2">
-						<span>{theme.name}</span>
-						{theme.description && (
-							<span className="text-sm text-black-50 vision:text-white-40 dark:text-white-40">
+						<span className="ja:text-sm">{t(theme.name)}</span>
+						{"description" in theme && (
+							<span className="text-sm text-black-50 vision:text-white-40 ja:text-xs dark:text-white-40">
 								{theme.description}
 							</span>
 						)}
@@ -153,12 +158,12 @@ const ReccommendedProfileThemes: FC = () => {
 					<div
 						className={twMerge(
 							"h-8 w-full rounded-md",
-							color_1.props.value === theme.color_1
-							&& color_2.props.value === theme.color_2
+							color1.props.value === theme.color1
+							&& color2.props.value === theme.color2
 							&& "focused border-2"
 						)}
 						style={{
-							backgroundImage: `linear-gradient(to right, ${theme.color_1}, ${theme.color_2})`
+							backgroundImage: `linear-gradient(to right, ${theme.color1}, ${theme.color2})`
 						}}
 					/>
 				</button>
@@ -169,22 +174,28 @@ const ReccommendedProfileThemes: FC = () => {
 
 const SaveButton: FC = () => {
 	const [session] = useSession();
+	const t = useTranslations();
 	const { changes } = useFormContext<ProfileColors>();
 
 	if (!session) return null;
 	const disabled
 		= (!session.user.subscription || !session.user.subscription.active)
-		&& (changes.includes("color_1") || changes.includes("color_2"));
+		&& (changes.includes("color1") || changes.includes("color2"));
 
 	return (
 		<FormButton disabled={disabled}>
-			Save
-			{disabled && " (Premium required)"}
+			{t("save")}
+			{" "}
+			{disabled && t("premium_required")}
 		</FormButton>
 	);
 };
 
 export const AppearanceForm: FC = () => {
+	const { locale: { current: language } } = useInternationalization();
+	const t = useTranslations();
+	const tAttribute = useAttributeTranslation();
+
 	const { theme } = useTheme();
 	const defaultTheme = defaultProfileColors[theme];
 
@@ -196,8 +207,8 @@ export const AppearanceForm: FC = () => {
 	return (
 		<Form
 			fields={{
-				color_1: session.user.profile.color_1 || defaultTheme.color_1,
-				color_2: session.user.profile.color_2 || defaultTheme.color_2
+				color1: session.user.profile.color1 || defaultTheme.color1,
+				color2: session.user.profile.color2 || defaultTheme.color2
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async (values) => {
@@ -205,12 +216,38 @@ export const AppearanceForm: FC = () => {
 					await Profile.updateColors(session.user.id, values);
 				}
 
-				toasts.add("Saved appearance");
+				toasts.add(t("neat_plane_slug_savor"));
 				router.refresh();
 			}}
 		>
+			{session.user.tags?.includes("debugger") && (
+				<div className="flex flex-col gap-2">
+					<InputLabel
+						inline
+						hint={(
+							<InputLabelHint>
+								{t.rich(language === "en"
+									? "help_translate_others"
+									: "help_translate", {
+									language: tAttribute[language]?.name || language,
+									link: (children) => (
+										<InlineLink
+											href={`https://hosted.weblate.org/projects/flirtual/flirtual/${language === "en" ? "" : language}`}
+										>
+											{children}
+										</InlineLink>
+									)
+								})}
+							</InputLabelHint>
+						)}
+					>
+						{t("language")}
+					</InputLabel>
+					<InputLanguageSelect />
+				</div>
+			)}
 			<div className="flex flex-col gap-2 vision:hidden">
-				<InputLabel>Theme</InputLabel>
+				<InputLabel>{t("theme")}</InputLabel>
 				<div className="grid grid-cols-3 gap-4">
 					{PreferenceThemes.map((theme) => (
 						<ThemePreview key={theme} theme={theme} />
@@ -221,7 +258,7 @@ export const AppearanceForm: FC = () => {
 				<div className="flex w-full flex-col justify-between gap-8 wide:flex-row">
 					<div className="flex shrink-0 flex-col gap-2">
 						<InputLabel className="flex items-center gap-2">
-							<span>Profile colors</span>
+							<span>{t("profile_colors")}</span>
 							<PremiumBadge />
 						</InputLabel>
 						<ProfileColorEditor />

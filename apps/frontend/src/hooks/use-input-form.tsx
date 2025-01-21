@@ -22,6 +22,7 @@ export type InputFormSubmitFunction<T extends FormFieldsDefault> = (
 export interface InputFormOptions<T extends FormFieldsDefault> {
 	requireChange?: Array<keyof T> | boolean;
 	withCaptcha?: boolean;
+	captchaTabIndex?: number;
 	withGlobalId?: boolean;
 	captchaRef: RefObject<FormCaptchaReference | null>;
 	onSubmit: InputFormSubmitFunction<T>;

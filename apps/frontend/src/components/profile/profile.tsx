@@ -41,7 +41,7 @@ export function Profile(props: ProfileProps) {
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
 
-	const t = useTranslations("profile");
+	const t = useTranslations();
 
 	if (!session || !user) return null;
 
@@ -55,13 +55,13 @@ export function Profile(props: ProfileProps) {
 	return (
 		<div
 			style={
-				user.profile.color_1 && user.profile.color_2
+				user.profile.color1 && user.profile.color2
 					? ({
-							"--theme-1": user.profile.color_1,
-							"--theme-2": user.profile.color_2,
+							"--theme-1": user.profile.color1,
+							"--theme-2": user.profile.color2,
 							"--theme-text": gradientTextColor(
-								user.profile.color_1,
-								user.profile.color_2
+								user.profile.color1,
+								user.profile.color2
 							)
 						} as CSSProperties)
 					: {}
@@ -91,7 +91,7 @@ export function Profile(props: ProfileProps) {
 									</span>
 									{user.tags?.includes("verified") && (
 										<ProfileVerificationBadge
-											tooltip={t("sound_whole_jaguar_charm")}
+											tooltip={t("age_verified")}
 										/>
 									)}
 								</div>
@@ -149,7 +149,7 @@ export function Profile(props: ProfileProps) {
 									})}
 									{discordConnection && (
 										<ProfileVerificationBadge
-											tooltip={t("smart_just_scallop_reside")}
+											tooltip={t("discord_verified")}
 										/>
 									)}
 								</div>
@@ -196,7 +196,7 @@ export function Profile(props: ProfileProps) {
 									: (
 											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
 												{t("fuzzy_calm_ant_nudge", {
-													displayName: displayName(user)
+													name: displayName(user)
 												})}
 											</span>
 										)

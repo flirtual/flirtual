@@ -31,6 +31,7 @@ import {
 import { Pill } from "~/components/profile/pill/pill";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -163,26 +164,22 @@ export const InterestSelectCustomInput: FC<{
 	onChange: Dispatch<Array<string>>;
 }> = ({ value, onChange }) => {
 	const { platform } = useDevice();
+	const t = useTranslations();
 
 	return (
 		<>
 			<InputLabel
 				className="flex flex-row items-center gap-2"
-				hint="(optional)"
+				hint={t("optional")}
 			>
 				<Pencil />
 				{" "}
-				Custom interests
+				{t("custom_interests")}
 			</InputLabel>
 			<InputLabelHint className="-mt-2">
-				Press
-				{" "}
-				{platform === "apple" ? "Return" : "Enter"}
-				{" "}
-				<small>⏎</small>
-				{" "}
-				after
-				each interest
+				{t.rich(platform === "apple" ? "wide_shy_loris_gleam" : "born_game_pony_empower", {
+					small: (children) => <small>{children}</small>
+				})}
 			</InputLabelHint>
 			<InputAutocomplete
 				supportArbitrary
@@ -192,7 +189,7 @@ export const InterestSelectCustomInput: FC<{
 				}))}
 				dropdown={false}
 				limit={10}
-				placeholder="Type your custom interests..."
+				placeholder={t("type_your_custom_interests")}
 				value={value}
 				onChange={(value) =>
 					onChange(
@@ -241,6 +238,7 @@ export const InterestsForm: FC = () => {
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
+	const t = useTranslations();
 
 	if (!session) return null;
 	const { user } = session;
@@ -259,7 +257,7 @@ export const InterestsForm: FC = () => {
 					customInterests,
 					interestId: defaultInterests
 				}).then(() => {
-					toasts.add("Saved interests");
+					toasts.add(t("bad_tangy_lynx_tend"));
 					return router.refresh();
 				});
 			}}
@@ -280,16 +278,13 @@ export const InterestsForm: FC = () => {
 
 				return (
 					<>
-						<InputLabel>
-							Choose up to 10 interests. You can add your own custom interests
-							at the bottom of the page.
-						</InputLabel>
+						<InputLabel>{t("chunky_weak_tadpole_relish")}</InputLabel>
 						<FormField name="filter">
 							{(field) => (
 								<InputText
 									{...field.props}
 									Icon={Search}
-									placeholder="Search interests..."
+									placeholder={t("search_interests")}
 								/>
 							)}
 						</FormField>
@@ -308,7 +303,7 @@ export const InterestsForm: FC = () => {
 										)
 											return toasts.add({
 												type: "warning",
-												value: "You've reached the maximum of 10 interests"
+												value: t("inclusive_silly_ibex_succeed")
 											});
 
 										onChange(newValues);
@@ -327,7 +322,7 @@ export const InterestsForm: FC = () => {
 										)
 											return toasts.add({
 												type: "warning",
-												value: "You've reached the maximum of 10 interests"
+												value: t("inclusive_silly_ibex_succeed")
 											});
 
 										onChange(newValues);
@@ -335,7 +330,7 @@ export const InterestsForm: FC = () => {
 								/>
 							)}
 						</FormField>
-						<FormButton>Update</FormButton>
+						<FormButton>{t("update")}</FormButton>
 						<InterestSelectCount
 							current={totalInterests}
 							maximum={maximumInterests}

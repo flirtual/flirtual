@@ -26,7 +26,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 ) => {
 	const { editable, user, attributes, session } = props;
 	const [expanded, setExpanded] = useState(false);
-	const t = useTranslations("profile");
+	const t = useTranslations();
 
 	const kinks = useAttributes("kink");
 	const activeKinkIds = useMemo(
@@ -65,7 +65,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 								className="vision:bg-white-30/70"
 								href={editable ? urls.settings.matchmaking() : undefined}
 							>
-								{t("brave_funny_vulture_sail", { value: user.profile.monopoly })}
+								{t(user.profile.monopoly)}
 							</Pill>
 						</div>
 					)}

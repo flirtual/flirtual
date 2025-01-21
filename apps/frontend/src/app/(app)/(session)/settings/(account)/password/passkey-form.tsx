@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { Authentication } from "~/api/auth";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -31,6 +32,8 @@ export const PasswordPasskeyForm: React.FC = () => {
 	const { native } = useDevice();
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
+
 	const [passkeysAvailable, setPasskeysAvailable] = useState(false);
 	const { data: aaguidData = {} } = useSWR("aaguid", async () => {
 		const response = await fetch(AAGUID_DATABASE);
@@ -59,15 +62,15 @@ export const PasswordPasskeyForm: React.FC = () => {
 	return (
 		<>
 			<div className="flex flex-col gap-4">
-				<span className="text-2xl font-semibold">Passkeys</span>
+				<span className="text-2xl font-semibold">{t("passkeys")}</span>
 				<span className="text-black-50 vision:text-white-50 dark:text-white-50">
-					Passkeys let you log in conveniently and securely with your
-					fingerprint, face, device PIN or security key instead of your
-					password. Only add passkeys on trusted devices.
+					{t("broad_upper_ox_drum")}
 				</span>
 				{native && (
 					<span className="text-black-50 dark:text-white-50">
-						⚠️ Passkeys are not yet supported on mobile.
+						⚠️
+						{" "}
+						{t("large_simple_penguin_learn")}
 					</span>
 				)}
 			</div>
@@ -99,7 +102,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 							if (reason instanceof Error && reason.name === "InvalidStateError") {
 								toasts.add({
 									type: "warning",
-									value: "You've already added this passkey."
+									value: t("level_nice_cheetah_drum")
 								});
 							}
 						})) as PublicKeyCredential;
@@ -131,9 +134,10 @@ export const PasswordPasskeyForm: React.FC = () => {
 						});
 				}}
 			>
-				Add passkey
+				{t("add_passkey")}
+				{" "}
 				{!passkeysAvailable
-				&& (native ? " (unsupported device)" : " (unsupported browser)")}
+				&& (native ? t("unsupported_device") : t("unsupported_browser"))}
 			</Button>
 		</>
 	);

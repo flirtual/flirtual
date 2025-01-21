@@ -11,12 +11,14 @@ import {
 	FormButton
 } from "~/components/forms";
 import { ModelCard } from "~/components/model-card";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
 
 	const deactivated = !!user.deactivatedAt;
 
@@ -24,7 +26,7 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
 			inset={false}
-			title={deactivated ? "Reactivate account" : "Deactivate account"}
+			title={t(deactivated ? "reactivate_account" : "deactivate_account")}
 		>
 			<Form
 				className="flex flex-col gap-8"
@@ -34,7 +36,7 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 					await (
 						deactivated ? User.reactivate(user.id) : User.deactivate(user.id)
 					).then(() =>
-						toasts.add(`${deactivated ? "Reactivated" : "Deactivated"} account`)
+						toasts.add(t(deactivated ? "reactivated_account" : "deactivated_account"))
 					);
 					router.refresh();
 				}}
@@ -44,8 +46,9 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 						{deactivated && user.subscription?.active && (
 							<div className="mb-8 flex flex-col items-start gap-2">
 								<p>
-									⚠️ Your Premium subscription is still active while your
-									account is deactivated and will be renewed automatically.
+									⚠️
+									{" "}
+									{t("trite_awful_marten_lend")}
 								</p>
 								<ButtonLink
 									href={Subscription.manageUrl()}
@@ -53,21 +56,21 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 									size="sm"
 									target="_self"
 								>
-									Manage subscription
+									{t("manage_subscription")}
 								</ButtonLink>
 							</div>
 						)}
 						<span>
 							{deactivated
-								? "This will make your profile visible to other people again."
-								: "This will temporarily remove you from matchmaking and hide your profile from other people until you come back here and reactivate your account."}
+								? t("smart_bland_husky_scold")
+								: t("less_drab_larva_assure")}
 						</span>
 						<div className="flex flex-col gap-4">
 							<FormButton>
-								{deactivated ? "Reactivate account" : "Deactivate account"}
+								{t(deactivated ? "reactivate_account" : "deactivate_account")}
 							</FormButton>
 							<FormAlternativeActionLink href={urls.settings.deleteAccount}>
-								Permanently delete your account instead?
+								{t("low_slow_platypus_taste")}
 							</FormAlternativeActionLink>
 						</div>
 					</>

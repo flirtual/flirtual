@@ -3,6 +3,8 @@
 
 const plugin = require("tailwindcss/plugin");
 
+const { languageTags } = require("./project.inlang/settings.json");
+
 const colors = {
 	"theme-overlay": "var(--theme-text, #F5F5F5)",
 	coral: "#FF8975",
@@ -162,9 +164,12 @@ module.exports = {
 			addVariant("native", `:is([data-native] &)`);
 			addVariant("vision", `:is([data-vision] &)`);
 
-			for (const platform of ["web", "android", "apple"]) {
+			for (const platform of ["web", "android", "apple"])
 				addVariant(platform, `:is([data-platform="${platform}"] &)`);
-			}
+
+			// Language specific variants
+			for (const language of languageTags)
+				addVariant(language, `:is([lang="${language}"] &)`);
 
 			addComponents({
 				".focused": {

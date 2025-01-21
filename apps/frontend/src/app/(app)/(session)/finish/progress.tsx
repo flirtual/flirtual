@@ -3,6 +3,7 @@
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "~/components/inline-link";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { type FinishPage, urls } from "~/urls";
 
 const ProgressLink: React.FC<{
@@ -26,6 +27,8 @@ const ProgressLink: React.FC<{
 };
 
 export const FinishProgress: React.FC<{ page: FinishPage }> = ({ page }) => {
+	const t = useTranslations();
+
 	return (
 		<div className="fixed inset-x-0 bottom-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5.25rem)] isolate z-10 flex h-7 w-full px-4 vision:bottom-3 vision:mx-4 vision:w-[calc(100%-2rem)] desktop:relative desktop:inset-0 desktop:mb-8 desktop:h-9 desktop:max-w-2xl">
 			<div className="absolute inset-0 -right-4 left-4 desktop:max-w-2xl">
@@ -45,11 +48,11 @@ export const FinishProgress: React.FC<{ page: FinishPage }> = ({ page }) => {
 				</div>
 			</div>
 			<div className="grid h-6 w-full grid-cols-3 items-center justify-center rounded-full bg-white-30 shadow-brand-1 vision:bg-white-30/70 dark:bg-black-60 desktop:h-9 desktop:max-w-2xl desktop:grid-cols-5">
-				<ProgressLink current={page} name="Bio & pics" page={1} />
-				<ProgressLink current={page} name="Details" page={2} />
-				<ProgressLink current={page} name="Interests" page={3} />
-				<ProgressLink current={page} name="Personality" page={4} />
-				<ProgressLink current={page} name="Connections" page={5} />
+				<ProgressLink current={page} name={t("bio_pics")} page={1} />
+				<ProgressLink current={page} name={t("details")} page={2} />
+				<ProgressLink current={page} name={t("interests")} page={3} />
+				<ProgressLink current={page} name={t("personality")} page={4} />
+				<ProgressLink current={page} name={t("connections")} page={5} />
 			</div>
 		</div>
 	);

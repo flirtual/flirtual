@@ -1,3 +1,4 @@
+import { useLocale } from "next-intl";
 import { useCallback, useEffect } from "react";
 
 import { displayName } from "~/api/user";
@@ -18,6 +19,8 @@ declare global {
 let loaded = false;
 
 export function useFreshworks() {
+	const locale = useLocale();
+
 	const loadFreshworks = useCallback(() => {
 		if (loaded) return;
 
@@ -40,8 +43,8 @@ export function useFreshworks() {
 			);
 		}
 
-		window.fwSettings = { widget_id: freshworksWidgetId };
-	}, [loadFreshworks]);
+		window.fwSettings = { widget_id: freshworksWidgetId, locale };
+	}, [loadFreshworks, locale]);
 
 	const user = useCurrentUser();
 

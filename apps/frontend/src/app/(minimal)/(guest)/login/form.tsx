@@ -22,6 +22,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
 	const t = useTranslations();
+	const tError = useTranslations("errors");
 
 	useEffect(() => {
 		async function webAuthnAuthenticate() {
@@ -77,7 +78,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						})
 						.catch((reason) => {
 							if (isWretchError(reason)) {
-								toasts.addError(t(`errors.${reason.json.error}` as any));
+								toasts.addError(tError(reason.json.error as any));
 							}
 							else {
 								toasts.addError(reason);
@@ -88,7 +89,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 			}
 		}
 		void webAuthnAuthenticate();
-	}, [router, toasts, next, t]);
+	}, [router, toasts, next, tError]);
 
 	return (
 		<>
@@ -99,13 +100,15 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					password: "",
 					rememberMe: false
 				}}
+				captchaTabIndex={7}
 				className="flex flex-col gap-8"
 				formErrorMessages={false}
+				renderCaptcha={false}
 				onSubmit={async (body) => {
 					const value = await Authentication.login(body);
 					if ("error" in value) {
 						if (value.error === "invalid_credentials") {
-							throw t.rich("errors.invalid_credentials_complex", {
+							throw tError.rich("invalid_credentials_complex", {
 								help: (children) => (
 									<InlineLink
 										className="underline"
@@ -127,7 +130,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 							});
 						}
 						if (value.error === "leaked_login_password") {
-							throw t.rich("errors.leaked_login_password", {
+							throw tError.rich("leaked_login_password", {
 								reset: (children) => (
 									<InlineLink
 										className="underline"
@@ -140,7 +143,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 							});
 						}
 						if (value.error === "login_rate_limit") {
-							throw t.rich("errors.login_rate_limit", {
+							throw tError.rich("login_rate_limit", {
 								reset: (children) => (
 									<InlineLink
 										className="underline"
@@ -154,25 +157,26 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 						}
 
 						// eslint-disable-next-line no-throw-literal
-						throw [t(`errors.${value.error}`)];
+						throw [tError(value.error)];
 					}
 
 					router.push(next ?? urls.browse());
 					router.refresh();
 				}}
 			>
-				{({ errors, FormField }) => (
+				{({ errors, FormField, Captcha }) => (
 					<>
 						<FormField name="login">
 							{({ props, labelProps }) => (
 								<>
-									<InputLabel {...labelProps}>Email address</InputLabel>
+									<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
 									<InputText
 										{...props}
 										autoCapitalize="none"
 										autoComplete="username webauthn"
 										autoCorrect="off"
 										spellCheck="false"
+										tabIndex={1}
 										type="text"
 									/>
 								</>
@@ -185,32 +189,35 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 										{...labelProps}
 										hint={(
 											<InputLabelHint>
-												<InlineLink href={urls.forgotPassword}>Forgot your password?</InlineLink>
+												<InlineLink href={urls.forgotPassword} tabIndex={6}>{t("forgot_your_password")}</InlineLink>
 											</InputLabelHint>
 										)}
 									>
-										Password
+										{t("password")}
 									</InputLabel>
 									<InputText
 										{...props}
 										autoComplete="current-password"
+										tabIndex={2}
 										type="password"
 									/>
 								</>
 							)}
 						</FormField>
+						<Captcha />
 						<div className="flex flex-col gap-4">
 							<div className="flex gap-2 desktop:flex-row-reverse">
-								<FormButton className="w-44" size="sm">
-									Log in
+								<FormButton className="min-w-44" size="sm" tabIndex={3}>
+									{t("log_in")}
 								</FormButton>
 								<ButtonLink
 									className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
 									href={urls.register}
 									kind="tertiary"
 									size="sm"
+									tabIndex={4}
 								>
-									<span>or sign up</span>
+									<span>{t("or_sign_up")}</span>
 									<MoveRight className="size-5 desktop:rotate-180" />
 								</ButtonLink>
 							</div>
@@ -224,11 +231,11 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 			<div className="flex flex-col gap-2">
 				<div className="inline-flex items-center justify-center">
 					<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
-						or
+						{t("or")}
 					</span>
 					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 				</div>
-				<LoginConnectionButton type="discord" />
+				<LoginConnectionButton tabIndex={5} type="discord" />
 				{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />

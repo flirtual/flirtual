@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { unstable_serialize } from "swr";
 
 import { Attribute } from "~/api/attributes";
@@ -9,11 +10,17 @@ import { attributeKey } from "~/swr";
 import { FinishProgress } from "../progress";
 import { Finish2Form } from "./form";
 
-export const metadata: Metadata = {
-	title: "More details"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
+
+	return {
+		title: t("more_details")
+	};
+}
 
 export default async function Finish2Page() {
+	const t = await getTranslations();
+
 	const [platforms, sexualities, languages] = await Promise.all([
 		Attribute.list("platform"),
 		Attribute.list("sexuality"),
@@ -25,7 +32,7 @@ export default async function Finish2Page() {
 			<FinishProgress page={2} />
 			<ModelCard
 				className="shrink-0 pb-[max(calc(env(safe-area-inset-bottom,0rem)-0.5rem),1rem)] desktop:max-w-2xl desktop:pb-0"
-				title="More details"
+				title={t("more_details")}
 			>
 				<SWRConfig
 					value={{

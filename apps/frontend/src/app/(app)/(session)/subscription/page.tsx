@@ -1,13 +1,12 @@
 import { Sparkles } from "lucide-react";
 import type { Metadata } from "next";
-import { getFormatter } from "next-intl/server";
+import { getFormatter, getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { Authentication } from "~/api/auth";
 import { User } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
-import { formatDate } from "~/date";
 import { urls } from "~/urls";
 
 import { ManageButton } from "./manage-button";
@@ -18,11 +17,17 @@ import {
 } from "./platform-mismatch";
 import { SuccessMessage } from "./success-message";
 
-export const metadata: Metadata = {
-	title: "Premium"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
+
+	return {
+		title: t("premium")
+	};
+}
 
 export default async function SubscriptionPage() {
+	const t = await getTranslations();
+
 	const [
 		{
 			user: { emailConfirmedAt, subscription }
@@ -42,26 +47,24 @@ export default async function SubscriptionPage() {
 		<ModelCard
 			className="desktop:max-w-3xl"
 			containerProps={{ className: "gap-8" }}
-			title="Flirtual Premium"
+			title={t("flirtual_premium")}
 		>
 			<SuccessMessage />
 			<PlatformMismatchMessage />
 			{subscription && (
 				<div data-mask className="flex flex-col gap-4">
 					<h1 className="text-2xl font-semibold">
-						{subscription.active ? "Active" : "Inactive"}
-						{" "}
-						Subscription
+						{t(subscription.active ? "active_subscription" : "inactive_subscription")}
 					</h1>
 					<div className="flex flex-col">
 						<div className="flex items-center gap-2">
 							<Sparkles className="inline size-5" />
-							<span>{subscription.plan.name}</span>
+							<span>{t(`attributes.${subscription.plan.id}.name` as any)}</span>
 						</div>
 						<span className="ml-5 pl-2 text-sm text-black-30 vision:text-white-50 dark:text-white-50">
 							{subscription.cancelledAt
-								? `Canceled on ${formatDate(subscription.cancelledAt)}`
-								: `Since ${formatDate(subscription.updatedAt)}`}
+								? t("canceled_on_date", { date: new Date(subscription.cancelledAt) })
+								: t("since_date", { date: new Date(subscription.createdAt) })}
 						</span>
 					</div>
 				</div>
@@ -77,28 +80,28 @@ export default async function SubscriptionPage() {
 									👀
 									{" "}
 									<InlineLink href={urls.likes}>
-										See who likes you before you match
+										{t("many_direct_chipmunk_sew")}
 									</InlineLink>
 								</li>
 								<li>
 									♾️
 									{" "}
 									<InlineLink href={urls.browse()}>
-										Browse unlimited profiles
+										{t("civil_active_nils_value")}
 									</InlineLink>
 								</li>
 								<li>
 									🎚️
 									{" "}
 									<InlineLink href={urls.settings.matchmaking()}>
-										Control your matchmaking priorities
+										{t("sharp_calm_stork_cry")}
 									</InlineLink>
 								</li>
 								<li>
-									💅
+									💃
 									{" "}
 									<InlineLink href={urls.settings.appearance}>
-										Customize your profile colors
+										{t("many_top_quail_embrace")}
 									</InlineLink>
 								</li>
 							</ul>
@@ -107,42 +110,45 @@ export default async function SubscriptionPage() {
 							<ul className="flex flex-col gap-4">
 								<li className="flex flex-col">
 									<span className="text-lg font-semibold">
-										👀 See who likes you before you match
+										👀
+										{" "}
+										{t("many_direct_chipmunk_sew")}
 									</span>
-									No more guesswork. Discover who&apos;s already interested in you,
-									match faster and never miss a potential connection.
+									{t("brave_late_dolphin_dart")}
 								</li>
 								<li className="flex flex-col">
 									<span className="text-lg font-semibold">
-										♾️ Browse unlimited profiles
+										♾️
+										{" "}
+										{t("civil_active_nils_value")}
 									</span>
-									Can&apos;t get enough of us? Remove the daily limit and browse a
-									wider range of profiles, whenever you want.
+									{t("flat_topical_hornet_nourish")}
 								</li>
 								<li className="flex flex-col">
 									<span className="text-lg font-semibold">
-										🎚️ Control your matchmaking priorities
+										🎚️
+										{" "}
+										{t("sharp_calm_stork_cry")}
 									</span>
 									<span>
-										Sometimes one size doesn&apos;t fit all. Customize your
-										algorithm to find exactly the right people for you.
+										{t("stock_zany_puma_gulp")}
 										{" "}
 										<InlineLink href={urls.settings.matchmaking()}>
-											(Check&nbsp;it&nbsp;out)
+											{t("check_this_out_for_free")}
 										</InlineLink>
 									</span>
 								</li>
 								<li className="flex flex-col">
 									<span className="text-lg font-semibold">
-										💅 Customize your profile colors
+										💃
+										{" "}
+										{t("many_top_quail_embrace")}
 									</span>
 									<span>
-										Stand out from the crowd! Pick a custom color scheme for your
-										profile to show off your style and make a memorable first
-										impression.
+										{t("late_full_rat_stab")}
 										{" "}
 										<InlineLink href={urls.settings.appearance}>
-											(Check&nbsp;it&nbsp;out)
+											{t("check_this_out_for_free")}
 										</InlineLink>
 									</span>
 								</li>
@@ -155,42 +161,21 @@ export default async function SubscriptionPage() {
 			</div>
 			<div className="flex flex-col gap-4">
 				<p>
-					Flirtual is still in its early days: we have
-					{" "}
-					<span className="font-semibold">
-						{formatter.number(userCount)}
-						{" "}
-						users
-					</span>
-					{" "}
-					and growing, and we&apos;re always releasing new features and
-					improving the platform. Offering Premium helps us pay for development
-					and cover hosting costs.
+					{t("drab_lucky_lemming_feel", {
+						number: formatter.number(userCount)
+					})}
 					{" "}
 					{subscription
-						? "Thank you for supporting us!"
-						: "If you like what we're doing, consider supporting us by subscribing!"}
+						? t("basic_wide_ape_buy")
+						: t("loved_many_raven_pout")}
 				</p>
-				{subscription?.active && subscription.platform === "stripe"
-					? (
-							<p>
-								You can cancel your subscription at any time by pressing the
-								&quot;Cancel&quot; button above.
-							</p>
-						)
-					: (
-							<p>
-								You can modify or cancel your subscription at any time by
-								{" "}
-								{!subscription?.active && <>coming back to this page and</>}
-								{" "}
-								pressing the &quot;Manage&quot; button.
-							</p>
-						)}
+				<p>
+					{t(subscription?.active ? "lost_spare_millipede_nurture" : "cute_smug_ocelot_flip")}
+				</p>
 			</div>
 			<div className="text-center">
 				<InlineLink href={urls.resources.paymentTerms}>
-					Payment Terms and Refund Policy
+					{t("payment_terms_and_refund_policy")}
 				</InlineLink>
 			</div>
 		</ModelCard>

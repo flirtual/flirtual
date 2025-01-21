@@ -1,5 +1,4 @@
 import { Search, ShieldCheck } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC, PropsWithChildren } from "react";
 
@@ -12,6 +11,8 @@ import {
 	DropdownMenuSub,
 	DropdownMenuSubContent
 } from "~/components/dropdown";
+import { Link } from "~/components/link";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
@@ -23,6 +24,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
 
 	return (
 		<DropdownMenuSub>
@@ -60,9 +62,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 						onClick={async () => {
 							await Report.clearAll(user.id)
 								.then(({ count }) => {
-									toasts.add(
-										`Cleared ${count} report${count === 1 ? "" : "s"}`
-									);
+									toasts.add(t("cleared_count_reports", { count }));
 									return router.refresh();
 								})
 								.catch(toasts.addError);

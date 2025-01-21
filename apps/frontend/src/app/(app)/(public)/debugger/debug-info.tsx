@@ -15,7 +15,7 @@ import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const DebugInfo: React.FC = () => {
-	const t = useTranslations("debugger");
+	const t = useTranslations();
 
 	const {
 		platform,
@@ -41,7 +41,7 @@ export const DebugInfo: React.FC = () => {
 	return (
 		<>
 			<div className="select-children flex flex-col">
-				<span className="text-lg font-bold">{t("spicy_pretty_tiger_pet")}</span>
+				<span className="text-lg font-bold">{t("device")}</span>
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">
 						{t("lucky_sound_opossum_absorb")}
@@ -88,7 +88,7 @@ export const DebugInfo: React.FC = () => {
 			</div>
 			<div className="select-children flex flex-col">
 				<span className="text-lg font-bold">
-					{t("mushy_muddy_warthog_win")}
+					{t("session")}
 				</span>
 				<div className="flex justify-between gap-8 text-sm">
 					<span className="shrink-0">

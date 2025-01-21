@@ -74,10 +74,9 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon }: B
 
 export const AppBanner: FC = () => {
 	const [session] = useSession();
-	const t = useTranslations("banners");
-	const tPreferred = useTranslations("_preferred.banners");
+	const t = useTranslations();
 
-	const { locale, translating, } = useInternationalization();
+	const { locale } = useInternationalization();
 
 	if (!session) return null;
 
@@ -88,7 +87,7 @@ export const AppBanner: FC = () => {
 	if (!["finished_profile", "visible"].includes(session.user.status)) {
 		return (
 			<Banner>
-				{t.rich("finish_profile", {
+				{t.rich("nutritious_challenge_blue_end", {
 					link: (children) => (
 						<BannerLink
 							href={
@@ -108,21 +107,9 @@ export const AppBanner: FC = () => {
 	if (!session.user.emailConfirmedAt) {
 		return (
 			<Banner>
-				{t.rich("confirm_email", {
+				{t.rich("exuberant_green_horse_fowl", {
 					link: (children) => (
 						<BannerLink href="/confirm-email">{children}</BannerLink>
-					)
-				})}
-			</Banner>
-		);
-	}
-
-	if (translating) {
-		return (
-			<Banner>
-				{t.rich("translating", {
-					link: (children) => (
-						<SelfLink query={{ translating: null }}>{children}</SelfLink>
 					)
 				})}
 			</Banner>
@@ -132,7 +119,7 @@ export const AppBanner: FC = () => {
 	if (locale.current !== locale.preferred) {
 		return (
 			<Banner>
-				{tPreferred.rich("language", {
+				{t.rich("pleasant_ugliest_expert_camera", {
 					current: languageNames.of(locale.current),
 					preferred: languageNames.of(locale.preferred),
 					link: (children) => (

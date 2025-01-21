@@ -5,161 +5,15 @@
 		"knotty_direct_mongoose_bend": "Rencontrez de nouvelles personnes dans la Réalité Virtuelle ! Flirtual vous aide à organiser des recontres en VR et dans VRChat.",
 		"green_plain_mongoose_lend": "La première appli de rencontre en VR. Rejoignez des milliers pour des rendez-vous dans les applis VR telles que VRChat."
 	},
-	"about": {
-		"title": "À propos de nous",
-		"team": {
-			"image_alt": "Avatar de {name}",
-			"roles": {
-				"kfarwell": "Développeur en chef",
-				"existony": "Partenariat, Conception et Sécurité",
-				"aries": "Développeur Logiciel",
-				"moderator": "Modérateur",
-				"event_host": "Hôte d'événement",
-				"social": "Réseaux Sociaux",
-				"community_advisor": "Conseiller Communautaire",
-				"katten": "Conseiller Communautaire",
-				"syrmor": "Conseiller en Marketing",
-				"faxmashine": "Créateur de Monde VRChat",
-				"juice": "Créateur d'Avatar VRChat"
-			}
-		},
-		"timeline": {
-			"2018": {
-				"title": "2018 🐣",
-				"description": "La première appli de rencontre VR est née.",
-				"image": "88bb9381-87ed-499d-9667-cd61eff96938",
-				"image_alt": "Flirtual en 2018"
-			},
-			"2019": {
-				"title": "🏆 2019",
-				"description": "VRLFP est désignée la meilleure nouvelle technologie aux iDate Awards.",
-				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
-				"image_alt": "Flirtual en 2019"
-			},
-			"2020": {
-				"title": "2020 🧪",
-				"description": "Quelques concepts farfelus qui ont finalement donné naissance au Flirtual que vous connaissez et aimez aujourd'hui. Merci de nous avoir laissé mijoter.",
-				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
-				"image_alt": "Flirtual en 2020"
-			},
-			"2021": {
-				"title": "✌️ 2021",
-				"description": "ROVR est lancé, une appli de jumelage social pour les amis et groupes en VR. Son esprit réside dans le Mode Copain.",
-				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
-				"image_alt": "Flirtual en 2021"
-			},
-			"2022": {
-				"title": "2022 😻",
-				"description": "VRLFP devient Flirtual. Peut-être que les gens sauront maintenant comment épeler notre nom.",
-				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
-				"image_alt": "Flirtual en 2022"
-			},
-			"2023": {
-				"title": "✨ 2023",
-				"description": "Nouveaux concepts, applications mobiles et d'énormes améliorations derrière les rideaux.",
-				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
-				"image_alt": "Flirtual en 2023"
-			}
-		},
-		"images": {
-			"0": {
-				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
-				"image_alt": "Fête de lancement de Flirtual pour la Saint-Valentin 2022, d'une durée de 12 heures, avec Vanguard",
-				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
-			},
-			"1": {
-				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
-				"image_alt": "Rencontres Éclair Flirtual dans VRChat",
-				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
-			},
-			"2": {
-				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
-				"image_alt": "Soirée DJ Flirtual dans VRChat",
-				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
-			},
-			"3": {
-				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
-				"image_alt": "Flirtual à VRCon 2022",
-				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
-			},
-			"4": {
-				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
-				"image_alt": "Flirtual apparaît dans le Today Show",
-				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
-			},
-			"5": {
-				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
-				"image_alt": "Flirtual au Vket Été 2023",
-				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
-			}
-		}
-	},
-	"branding": {
-		"title": "Marque",
-		"lime_soft_shad_skip": "Vous souhaitez utiliser notre art ? Le voici. Merci de le garder approprié et <contact>contactez-nous</contact> pour obtenir l’approbation.",
-		"brave_early_weasel_arise": "Notre logo",
-		"flaky_same_grizzly_snap": "Merci de ne pas éditer, changer, déformer, recolorer ou reconfigurer le logo de Flirtual.",
-		"mild_spry_hamster_persist": "Marque seule",
-		"such_pink_jan_spur": "Utilisez-les uniquement lorsque la marque Flirtual est clairement visible ou bien établie ailleurs sur la page ou dans le design.",
-		"tasty_last_pony_transform": "Couleurs",
-		"gross_red_earthworm_reside": "Gradient",
-		"fair_yummy_penguin_harbor": "Mode Sombre",
-		"empty_sharp_sheep_list": "Mode Copain",
-		"whole_round_penguin_pet": "Rose",
-		"known_trick_raven_sew": "Crème",
-		"wise_great_crow_foster": "Besoins de plus ?",
-		"ornate_upper_guppy_mend": "Téléchargez notre kit complet de presse pour plus de graphiques et d'information.",
-		"tired_extra_bear_forgive": "Télécharger"
-	},
-	"debugger": {
-		"title": "Information de debug",
-		"spicy_pretty_tiger_pet": "Appareil",
-		"lucky_sound_opossum_absorb": "Plateforme de l'application :",
-		"vexed_yummy_tadpole_grow": "Fureteur :",
-		"known_spare_mantis_pet": "Système :",
-		"mushy_muddy_warthog_win": "Session",
-		"wacky_spry_haddock_jump": "Profil de l'utilisateur :",
-		"spry_polite_elk_grace": "Objet de l'utilisateur :",
-		"brief_neat_kestrel_ascend": "Non disponible",
-		"flat_civil_goat_absorb": "Objet du Sudoer :",
-		"north_crisp_fly_dart": "Âge :",
-		"dark_wild_mouse_roar": "Build",
-		"swift_short_koala_fond": "Environnement :",
-		"each_zippy_millipede_pop": "Version :"
-	},
 	"download": {
-		"title": "Télécharger",
 		"best_topical_mayfly_tap": "Télécharger sur",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
 			"microsoft": "Microsoft Store",
 			"side_quest": "SideQuest"
-		}
-	},
-	"events": {
-		"title": "Événements",
-		"gross_loose_stork_vent": "Invitation VRChat",
-		"fun_still_clownfish_arrive": "SI un événement est en cours, ce bouton vous y conduira !",
-		"elegant_bald_parakeet_animate": "Lancez VRChat d'abord, puis cliquez sur \"invite-moi\" à la page suivante. Vous recevrez une invitation de votre part dans le jeu. <joining>Besoins d'aide pour rejoindre?</joining>",
-		"arable_nice_puma_comfort": "Rejoindre l'événement",
-		"top_big_tern_twist": "Événements à venir",
-		"nimble_equal_loris_foster": "Nous organisons des événements rencontres éclair et des soirées DJ chaque fin de semaine dans VRChat. Vous êtes invité !",
-		"flaky_early_shad_nourish": "Pour consulter notre calendrier des événements et les annonces, <discord>rejoignez notre serveur Discord</discord>.",
-		"quiet_lazy_marten_amuse": "Mondes VRChat",
-		"blue_calm_chipmunk_spark": "Nos événements hebdomadaires se déroulent dans nos mondes VRChat, mais vous pouvez les rejoindre à tout moment ! N'hésitez pas à les utiliser pour vos propres événements.",
-		"tidy_wise_robin_urge": "Rencontres Éclair Flirtual",
-		"careful_wise_bumblebee_walk": "Rencontrez des personnes lors de séances de rencontre éclair/création d’amitiés en tête-à-tête. Chaque séance dure 3 minutes (l’hôte peut choisir une durée de 3 à 7 minutes). Des sujets de conversation, des tags d'intérêt et un mode nocturne sont inclus.",
-		"flat_ok_penguin_vent": "Rencontres Éclair Flirtual",
-		"inclusive_simple_alligator_zap": "Le Flirtual Club",
-		"sweet_mellow_ant_hunt": "Un festival de musique en plein air avec audiolink. Faites la fête.",
-		"fine_low_deer_propel": "Le Flirtual Club",
-		"dry_inclusive_ox_trust": "Créé par <faxmashine>Faxmashine</faxmashine>, nos mondes sont compatibles avec PCVR, Quest et Desktop. Nouveau sur VRChat ? <vrchat>Inscrivez-vous gratuitement.</vrchat>"
-	},
-	"privacy": {
-		"title": "Politique de Confidentialité",
-		"title_superseded": "Politique de Confidentialité (obsolète)",
-		"content": "<p>Votre nom d'utilisateur, votre nom affiché, vos photos de profil, votre biographie, votre âge, votre sexe, vos préférences de matchmaking, vos tags d'intérêt personnel, vos applications/jeux VR sélectionnés, et si vous êtes nouveau dans la VR seront visibles pour les autres utilisateurs. Vos informations de profil supplémentaires (y compris votre sexualité, tags NSFW, pays, comptes liés, etc.) seront visibles ou cachées pour les autres utilisateurs en fonction de vos <settings-privacy>paramètres de confidentialité</settings-privacy>, que vous pouvez modifier à tout moment. Vos traits de personnalité (que nous identifions en fonction de vos réponses à notre questionnaire de personnalité) seront visibles ou cachés pour les autres utilisateurs selon vos <settings-privacy>paramètres de confidentialité</settings-privacy>, mais vos réponses spécifiques au questionnaire ne seront pas visibles.</p><p>Nous utilisons des analyses de données internes sur site. Nous pouvons partager des statistiques anonymisées sur Flirtual (par exemple, le nombre d'utilisateurs qui utilisent une application ou un jeu de Social VR particulier). Vous pouvez vous désinscrire de ces statistiques dans vos <settings-privacy>paramètres de confidentialité</settings-privacy>.</p><p>Vos messages et votre historique de messages avec d'autres utilisateurs sont hébergés et partagés avec TalkJS, mais ne seront pas partagés avec des tiers.</p><p>Votre adresse e-mail de compte ne sera pas visible par les autres utilisateurs. Votre adresse e-mail de compte peut être accessible par des tiers pour livrer des messages transactionnels, marketing et de support selon vos préférences. Vous pouvez désactiver les <settings-notifications>notifications de messages par e-mail</settings-notifications>, ce qui retirera votre adresse e-mail des enregistrements de TalkJS.</p><p>Si vous suspectez que votre compte a été compromis, veuillez <settings-password>changer votre mot de passe</settings-password> immédiatement et <contact>signaler le problème</contact> avec le mot \"URGENT\" dans l'objet. Dans le message, incluez votre nom d'utilisateur, la dernière fois que vous avez accédé au site, et tous les détails qui vous ont conduit à soupçonner une intrusion.</p><p>Votre mot de passe est stocké de manière hachée et salée.</p><p>Nous utilisons certains tiers de confiance qui fournissent des services à Flirtual. Nous pouvons partager les données personnelles des utilisateurs avec ces tiers, mais uniquement dans le but de fournir leurs services. Pour plus d'informations et d'exemples, voir ci-dessous.</p><p><strong>Services d'hébergement cloud :</strong> pour fournir une infrastructure fiable et sécurisée pour la gestion et l'exploitation de notre plateforme (par exemple, Fly.io et Vercel).</p><p><strong>Services de fonctionnalité dans l'application :</strong> pour faciliter des fonctionnalités clés telles que la messagerie et l'hébergement optimisé d'images dans notre application (par exemple, TalkJS).</p><p><strong>Services de facturation :</strong> pour gérer les paiements et les abonnements (par exemple, Stripe).</p><p><strong>Services de réseaux sociaux :</strong> pour permettre aux utilisateurs de connecter leurs comptes avec notre plateforme et faciliter les interactions sociales (par exemple, Discord).</p><p><strong>Services de sécurité et de performance :</strong> pour protéger notre plateforme, sécuriser nos utilisateurs et améliorer la performance générale (par exemple, Cloudflare).</p><p><strong>Services de retour d'information et d'amélioration :</strong> pour recueillir les retours des utilisateurs et effectuer des analyses pour l'amélioration continue de notre plateforme (par exemple, Canny).</p><p><strong>Services de communication :</strong> pour aider à l'envoi de communications transactionnelles et marketing aux utilisateurs (par exemple, Amazon Web Services).</p><p><strong>Services de modération :</strong> pour garantir une conduite appropriée au sein de l'application et maintenir les standards de la communauté (par exemple, Google Cloud).</p><p><strong>Services informatiques :</strong> pour assister dans diverses opérations de notre entreprise, comme lorsque l'utilisateur interagit avec nos services d'assistance, ce qui peut impliquer le traitement des données personnelles des utilisateurs (par exemple, Freshworks).</p><p>Nous examinons les tiers avec lesquels nous travaillons pour nous assurer qu'ils disposent de mesures adéquates de protection des données et de sécurité de l'information. Nous prenons des mesures pour protéger et anonymiser les données partagées avec des tiers, comme il convient en fonction de la nature des services fournis. Nous fournissons uniquement aux tiers de confiance les données personnelles nécessaires au service qu'ils fournissent.</p><p>Si vous découvrez une vulnérabilité ou une fuite de confidentialité, veuillez nous en informer discrètement via <vulnerability>GitHub</vulnerability> ou <contact>email</contact>.</p><p>Vous pouvez consulter les données que nous avons en fichier dans vos <settings>paramètres de compte</settings> et dans vos messages. Vous pouvez demander toutes les données que nous avons en fichier en nous envoyant un e-mail, et vous les recevrez dans un délai de 30 jours.</p>"
+		},
+		"title": "Télécharger"
 	},
 	"superseded_policy": {
 		"fancy_noisy_grizzly_hint": "Cette politique était en vigueur {range} et n'est plus active. Veuillez consulter la <current>dernière version de cette politique</current>."
@@ -277,5 +131,150 @@
 			"5": "Vous voulez des conseils ?",
 			"6": "Vous pouvez trouver de nouveaux amis en mode Homie ✌️"
 		}
+	},
+	"about": {
+		"title": "À propos de nous",
+		"team": {
+			"image_alt": "Avatar de {name}",
+			"roles": {
+				"kfarwell": "Développeur en chef",
+				"aries": "Développeur Logiciel",
+				"moderator": "Modérateur",
+				"existony": "Partenariat, Conception et Sécurité",
+				"event_host": "Hôte d'événement",
+				"social": "Réseaux Sociaux",
+				"katten": "Conseiller Communautaire",
+				"syrmor": "Conseiller en Marketing",
+				"faxmashine": "Créateur de Monde VRChat",
+				"juice": "Créateur d'Avatar VRChat"
+			}
+		},
+		"timeline": {
+			"2018": {
+				"title": "2018 🐣",
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938",
+				"image_alt": "Flirtual en 2018",
+				"description": "La première appli de rencontre VR est née."
+			},
+			"2019": {
+				"title": "🏆 2019",
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
+				"image_alt": "Flirtual en 2019",
+				"description": "VRLFP est désignée la meilleure nouvelle technologie aux iDate Awards."
+			},
+			"2020": {
+				"title": "2020 🧪",
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
+				"image_alt": "Flirtual en 2020",
+				"description": "Quelques concepts farfelus qui ont finalement donné naissance au Flirtual que vous connaissez et aimez aujourd'hui. Merci de nous avoir laissé mijoter."
+			},
+			"2021": {
+				"title": "✌️ 2021",
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
+				"image_alt": "Flirtual en 2021",
+				"description": "ROVR est lancé, une appli de jumelage social pour les amis et groupes en VR. Son esprit réside dans le Mode Copain."
+			},
+			"2022": {
+				"title": "2022 😻",
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
+				"image_alt": "Flirtual en 2022",
+				"description": "VRLFP devient Flirtual. Peut-être que les gens sauront maintenant comment épeler notre nom."
+			},
+			"2023": {
+				"title": "✨ 2023",
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
+				"image_alt": "Flirtual en 2023",
+				"description": "Nouveaux concepts, applications mobiles et d'énormes améliorations derrière les rideaux."
+			}
+		},
+		"images": {
+			"0": {
+				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395",
+				"image_alt": "Fête de lancement de Flirtual pour la Saint-Valentin 2022, d'une durée de 12 heures, avec Vanguard"
+			},
+			"1": {
+				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
+				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539",
+				"image_alt": "Rencontres Éclair Flirtual dans VRChat"
+			},
+			"2": {
+				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4",
+				"image_alt": "Soirée DJ Flirtual dans VRChat"
+			},
+			"3": {
+				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c",
+				"image_alt": "Flirtual à VRCon 2022"
+			},
+			"4": {
+				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg",
+				"image_alt": "Flirtual apparaît dans le Today Show"
+			},
+			"5": {
+				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788",
+				"image_alt": "Flirtual au Vket Été 2023"
+			}
+		}
+	},
+	"branding": {
+		"brave_early_weasel_arise": "Notre logo",
+		"tasty_last_pony_transform": "Couleurs",
+		"gross_red_earthworm_reside": "Gradient",
+		"fair_yummy_penguin_harbor": "Mode Sombre",
+		"whole_round_penguin_pet": "Rose",
+		"known_trick_raven_sew": "Crème",
+		"tired_extra_bear_forgive": "Télécharger",
+		"title": "Marque",
+		"lime_soft_shad_skip": "Vous souhaitez utiliser notre art ? Le voici. Merci de le garder approprié et <contact>contactez-nous</contact> pour obtenir l’approbation.",
+		"flaky_same_grizzly_snap": "Merci de ne pas éditer, changer, déformer, recolorer ou reconfigurer le logo de Flirtual.",
+		"mild_spry_hamster_persist": "Marque seule",
+		"such_pink_jan_spur": "Utilisez-les uniquement lorsque la marque Flirtual est clairement visible ou bien établie ailleurs sur la page ou dans le design.",
+		"empty_sharp_sheep_list": "Mode Copain",
+		"wise_great_crow_foster": "Besoins de plus ?",
+		"ornate_upper_guppy_mend": "Téléchargez notre kit complet de presse pour plus de graphiques et d'information."
+	},
+	"debugger": {
+		"spicy_pretty_tiger_pet": "Appareil",
+		"lucky_sound_opossum_absorb": "Plateforme de l'application :",
+		"vexed_yummy_tadpole_grow": "Fureteur :",
+		"known_spare_mantis_pet": "Système :",
+		"mushy_muddy_warthog_win": "Session",
+		"wacky_spry_haddock_jump": "Profil de l'utilisateur :",
+		"spry_polite_elk_grace": "Objet de l'utilisateur :",
+		"brief_neat_kestrel_ascend": "Non disponible",
+		"north_crisp_fly_dart": "Âge :",
+		"swift_short_koala_fond": "Environnement :",
+		"each_zippy_millipede_pop": "Version :",
+		"title": "Information de debug",
+		"flat_civil_goat_absorb": "Objet du Sudoer :",
+		"dark_wild_mouse_roar": "Build"
+	},
+	"events": {
+		"title": "Événements",
+		"top_big_tern_twist": "Événements à venir",
+		"quiet_lazy_marten_amuse": "Mondes VRChat",
+		"gross_loose_stork_vent": "Invitation VRChat",
+		"fun_still_clownfish_arrive": "SI un événement est en cours, ce bouton vous y conduira !",
+		"elegant_bald_parakeet_animate": "Lancez VRChat d'abord, puis cliquez sur \"invite-moi\" à la page suivante. Vous recevrez une invitation de votre part dans le jeu. <joining>Besoins d'aide pour rejoindre?</joining>",
+		"arable_nice_puma_comfort": "Rejoindre l'événement",
+		"flaky_early_shad_nourish": "Pour consulter notre calendrier des événements et les annonces, <discord>rejoignez notre serveur Discord</discord>.",
+		"blue_calm_chipmunk_spark": "Nos événements hebdomadaires se déroulent dans nos mondes VRChat, mais vous pouvez les rejoindre à tout moment ! N'hésitez pas à les utiliser pour vos propres événements.",
+		"nimble_equal_loris_foster": "Nous organisons des événements rencontres éclair et des soirées DJ chaque fin de semaine dans VRChat. Vous êtes invité !",
+		"tidy_wise_robin_urge": "Rencontres Éclair Flirtual",
+		"careful_wise_bumblebee_walk": "Rencontrez des personnes lors de séances de rencontre éclair/création d’amitiés en tête-à-tête. Chaque séance dure 3 minutes (l’hôte peut choisir une durée de 3 à 7 minutes). Des sujets de conversation, des tags d'intérêt et un mode nocturne sont inclus.",
+		"flat_ok_penguin_vent": "Rencontres Éclair Flirtual",
+		"inclusive_simple_alligator_zap": "Le Flirtual Club",
+		"sweet_mellow_ant_hunt": "Un festival de musique en plein air avec audiolink. Faites la fête.",
+		"fine_low_deer_propel": "Le Flirtual Club",
+		"dry_inclusive_ox_trust": "Créé par <faxmashine>Faxmashine</faxmashine>, nos mondes sont compatibles avec PCVR, Quest et Desktop. Nouveau sur VRChat ? <vrchat>Inscrivez-vous gratuitement.</vrchat>"
+	},
+	"privacy": {
+		"title": "Politique de Confidentialité",
+		"title_superseded": "Politique de Confidentialité (obsolète)",
+		"content": "<p>Votre nom d'utilisateur, votre nom affiché, vos photos de profil, votre biographie, votre âge, votre sexe, vos préférences de matchmaking, vos tags d'intérêt personnel, vos applications/jeux VR sélectionnés, et si vous êtes nouveau dans la VR seront visibles pour les autres utilisateurs. Vos informations de profil supplémentaires (y compris votre sexualité, tags NSFW, pays, comptes liés, etc.) seront visibles ou cachées pour les autres utilisateurs en fonction de vos <settings-privacy>paramètres de confidentialité</settings-privacy>, que vous pouvez modifier à tout moment. Vos traits de personnalité (que nous identifions en fonction de vos réponses à notre questionnaire de personnalité) seront visibles ou cachés pour les autres utilisateurs selon vos <settings-privacy>paramètres de confidentialité</settings-privacy>, mais vos réponses spécifiques au questionnaire ne seront pas visibles.</p><p>Nous utilisons des analyses de données internes sur site. Nous pouvons partager des statistiques anonymisées sur Flirtual (par exemple, le nombre d'utilisateurs qui utilisent une application ou un jeu de Social VR particulier). Vous pouvez vous désinscrire de ces statistiques dans vos <settings-privacy>paramètres de confidentialité</settings-privacy>.</p><p>Vos messages et votre historique de messages avec d'autres utilisateurs sont hébergés et partagés avec TalkJS, mais ne seront pas partagés avec des tiers.</p><p>Votre adresse e-mail de compte ne sera pas visible par les autres utilisateurs. Votre adresse e-mail de compte peut être accessible par des tiers pour livrer des messages transactionnels, marketing et de support selon vos préférences. Vous pouvez désactiver les <settings-notifications>notifications de messages par e-mail</settings-notifications>, ce qui retirera votre adresse e-mail des enregistrements de TalkJS.</p><p>Si vous suspectez que votre compte a été compromis, veuillez <settings-password>changer votre mot de passe</settings-password> immédiatement et <contact>signaler le problème</contact> avec le mot \"URGENT\" dans l'objet. Dans le message, incluez votre nom d'utilisateur, la dernière fois que vous avez accédé au site, et tous les détails qui vous ont conduit à soupçonner une intrusion.</p><p>Votre mot de passe est stocké de manière hachée et salée.</p><p>Nous utilisons certains tiers de confiance qui fournissent des services à Flirtual. Nous pouvons partager les données personnelles des utilisateurs avec ces tiers, mais uniquement dans le but de fournir leurs services. Pour plus d'informations et d'exemples, voir ci-dessous.</p><p><strong>Services d'hébergement cloud :</strong> pour fournir une infrastructure fiable et sécurisée pour la gestion et l'exploitation de notre plateforme (par exemple, Fly.io et Vercel).</p><p><strong>Services de fonctionnalité dans l'application :</strong> pour faciliter des fonctionnalités clés telles que la messagerie et l'hébergement optimisé d'images dans notre application (par exemple, TalkJS).</p><p><strong>Services de facturation :</strong> pour gérer les paiements et les abonnements (par exemple, Stripe).</p><p><strong>Services de réseaux sociaux :</strong> pour permettre aux utilisateurs de connecter leurs comptes avec notre plateforme et faciliter les interactions sociales (par exemple, Discord).</p><p><strong>Services de sécurité et de performance :</strong> pour protéger notre plateforme, sécuriser nos utilisateurs et améliorer la performance générale (par exemple, Cloudflare).</p><p><strong>Services de retour d'information et d'amélioration :</strong> pour recueillir les retours des utilisateurs et effectuer des analyses pour l'amélioration continue de notre plateforme (par exemple, Canny).</p><p><strong>Services de communication :</strong> pour aider à l'envoi de communications transactionnelles et marketing aux utilisateurs (par exemple, Amazon Web Services).</p><p><strong>Services de modération :</strong> pour garantir une conduite appropriée au sein de l'application et maintenir les standards de la communauté (par exemple, Google Cloud).</p><p><strong>Services informatiques :</strong> pour assister dans diverses opérations de notre entreprise, comme lorsque l'utilisateur interagit avec nos services d'assistance, ce qui peut impliquer le traitement des données personnelles des utilisateurs (par exemple, Freshworks).</p><p>Nous examinons les tiers avec lesquels nous travaillons pour nous assurer qu'ils disposent de mesures adéquates de protection des données et de sécurité de l'information. Nous prenons des mesures pour protéger et anonymiser les données partagées avec des tiers, comme il convient en fonction de la nature des services fournis. Nous fournissons uniquement aux tiers de confiance les données personnelles nécessaires au service qu'ils fournissent.</p><p>Si vous découvrez une vulnérabilité ou une fuite de confidentialité, veuillez nous en informer discrètement via <vulnerability>GitHub</vulnerability> ou <contact>email</contact>.</p><p>Vous pouvez consulter les données que nous avons en fichier dans vos <settings>paramètres de compte</settings> et dans vos messages. Vous pouvez demander toutes les données que nous avons en fichier en nous envoyant un e-mail, et vous les recevrez dans un délai de 30 jours.</p>"
 	}
 }

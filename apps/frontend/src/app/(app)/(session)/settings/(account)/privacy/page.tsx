@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { ModelCard } from "~/components/model-card";
 
 import { PrivacyForm } from "./form";
 
-export const metadata: Metadata = {
-	title: "Privacy"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
 
-export default function SettingsAccountPrivacyPage() {
+	return {
+		title: t("privacy")
+	};
+}
+
+export default async function SettingsAccountPrivacyPage() {
+	const t = await getTranslations();
+
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
 			inset={false}
-			title="Privacy"
+			title={t("privacy")}
 		>
 			<PrivacyForm />
 		</ModelCard>

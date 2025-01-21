@@ -131,7 +131,7 @@ defmodule Flirtual.Chargebee do
   # User isn't an existing Chargebee Customer, create one.
   def update_customer(%User{chargebee_id: nil} = user) do
     with {:ok, customer} <-
-           Chargebeex.Customer.create(%{email: user.email}),
+           Chargebeex.Customer.create(%{email: user.email, locale: user.preferences.language}),
          {:ok, _} <-
            change(user, %{chargebee_id: customer.id})
            |> Repo.update() do
@@ -141,7 +141,10 @@ defmodule Flirtual.Chargebee do
 
   # User is an existing Chargebee Customer, update their customer details.
   def update_customer(%User{chargebee_id: chargebee_id} = user) when is_binary(chargebee_id) do
-    Chargebeex.Customer.update(chargebee_id, %{email: user.email})
+    Chargebeex.Customer.update(chargebee_id, %{
+      email: user.email,
+      locale: user.preferences.language
+    })
   end
 
   # User isn't an existing Chargebee Customer, do nothing.

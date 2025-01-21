@@ -14,12 +14,12 @@ import {
 	PenSquare,
 	Search,
 	ShieldAlert,
-	Skull,
 	SlidersHorizontal,
 	Sparkles,
 	Tag,
 	Users,
-	VenetianMask
+	VenetianMask,
+	X
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
@@ -62,16 +62,16 @@ export const SettingsNavigation: FC = () => {
 							{session?.user.tags?.includes("moderator") && (
 								<>
 									<NavigationLink href={urls.moderation.reports()} Icon={ShieldAlert}>
-										{t("navigation.reports")}
+										{t("reports")}
 									</NavigationLink>
 									<NavigationLink href={urls.moderation.search} Icon={Search}>
-										{t("navigation.search")}
+										{t("search")}
 									</NavigationLink>
 								</>
 							)}
 							{session?.user.tags?.includes("admin") && (
 								<NavigationLink href={urls.admin.stats} Icon={LineChart}>
-									{t("navigation.stats")}
+									{t("stats")}
 								</NavigationLink>
 							)}
 							{session?.sudoerId && (
@@ -82,129 +82,125 @@ export const SettingsNavigation: FC = () => {
 										router.refresh();
 									}}
 								>
-									{t("navigation.unsudo")}
+									{t("unsudo")}
 								</NavigationLink>
 							)}
 						</NavigationCategory>
 					)}
-					<NavigationCategory name="Profile">
+					<NavigationCategory name={t("profile")}>
 						<NavigationLink
-							newBadge
 							href={urls.settings.matchmaking()}
 							Icon={SlidersHorizontal}
 						>
-							Matchmaking
+							{t("matchmaking")}
 						</NavigationLink>
-						<NavigationLink newBadge href={urls.settings.bio} Icon={PenSquare}>
-							Bio & pics
+						<NavigationLink href={urls.settings.bio} Icon={PenSquare}>
+							{t("bio_pics")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.info()} Icon={Contact}>
-							Basic info
+							{t("basic_info")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.interests} Icon={Tag}>
-							Interests
+							{t("interests")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.personality} Icon={Brain}>
-							Personality
+							{t("personality")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.nsfw} Icon={Flame}>
-							NSFW
+							{t("nsfw")}
+						</NavigationLink>
+						<NavigationLink
+							href={urls.settings.connections}
+							Icon={Users}
+						>
+							{t("connections")}
 						</NavigationLink>
 					</NavigationCategory>
-					<NavigationCategory name="Account">
+					<NavigationCategory name={t("account")}>
 						{/* <NavigationLink href={urls.settings.referral} Icon={Gift}>
 						Refer a friend
 					</NavigationLink> */}
 						<NavigationLink href={urls.subscription.default} Icon={Sparkles}>
-							Premium
-						</NavigationLink>
-						<NavigationLink
-							newBadge
-							href={urls.settings.connections}
-							Icon={Users}
-						>
-							Connections
+							{t("premium")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.appearance} Icon={Paintbrush}>
-							Appearance
+							{t("appearance")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.privacy} Icon={EyeOff}>
-							Privacy
+							{t("privacy")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.notifications} Icon={Bell}>
-							Notifications
+							{t("notifications")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.email} Icon={AtSign}>
-							Email
+							{t("email")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.password} Icon={KeyRound}>
-							Password &amp; passkeys
+							{t("password_passkeys")}
 						</NavigationLink>
-						<NavigationLink href={urls.settings.deactivateAccount} Icon={Skull}>
-							Deactivate account
+						<NavigationLink href={urls.settings.deactivateAccount} Icon={X}>
+							{t("deactivate_account")}
 						</NavigationLink>
 						<NavigationLink Icon={LogOut} onClick={logout}>
-							Logout
+							{t("logout")}
 						</NavigationLink>
 					</NavigationCategory>
 					<div className="desktop:hidden">
-						<NavigationCategory name="Social">
+						<NavigationCategory name={t("social")}>
 							<NavigationLink href={urls.resources.events}>
-								Events
+								{t("events")}
 							</NavigationLink>
 							<NavigationLink href={urls.socials.discord}>
-								Discord server
+								{t("discord_server")}
 							</NavigationLink>
 							<NavigationLink href={urls.socials.vrchat}>
-								VRChat group
+								{t("vrchat_group")}
 							</NavigationLink>
 							<NavigationLink href={urls.socials.twitter}>
-								Twitter
+								{t("twitter")}
 							</NavigationLink>
 						</NavigationCategory>
 					</div>
 					<div className="desktop:hidden">
-						<NavigationCategory name="Help">
-							<NavigationLink onClick={openFreshworks}>Support</NavigationLink>
+						<NavigationCategory name={t("help")}>
+							<NavigationLink onClick={openFreshworks}>{t("support")}</NavigationLink>
 							<NavigationLink onClick={useCanny().openFeedback}>
-								Feedback
+								{t("feedback")}
 							</NavigationLink>
 							<NavigationLink href={urls.resources.networkStatus}>
-								Status
+								{t("network_status")}
 							</NavigationLink>
 						</NavigationCategory>
 					</div>
 					<div className="desktop:hidden">
-						<NavigationCategory name="Info">
+						<NavigationCategory name={t("info")}>
 							<NavigationLink href={urls.resources.about}>
-								About
+								{t("about")}
 							</NavigationLink>
-							<NavigationLink href={urls.resources.press}>Press</NavigationLink>
+							<NavigationLink href={urls.resources.press}>
+								{t("press")}
+							</NavigationLink>
 							<NavigationLink href={urls.resources.branding}>
-								Branding
+								{t("branding")}
 							</NavigationLink>
 							<NavigationLink href={urls.resources.developers}>
-								Developers
+								{t("developers")}
 							</NavigationLink>
 						</NavigationCategory>
 					</div>
 					<div className="desktop:hidden">
-						<NavigationCategory name="Legal">
+						<NavigationCategory name={t("legal")}>
 							<NavigationLink href={urls.resources.communityGuidelines}>
-								Community Guidelines
+								{t("community_guidelines")}
 							</NavigationLink>
 							<NavigationLink href={urls.resources.termsOfService}>
-								Terms of Service
+								{t("terms_of_service")}
 							</NavigationLink>
 							<NavigationLink href={urls.resources.privacyPolicy}>
-								Privacy Policy
+								{t("privacy_policy")}
 							</NavigationLink>
 							<div className="px-6 py-2 vision:text-white-20">
-								&copy;
-								{" "}
-								{new Date().getFullYear()}
-								{" "}
-								Flirtual
+								{t("copyright", { year: new Date().getFullYear() })}
 							</div>
 						</NavigationCategory>
 					</div>
@@ -212,9 +208,7 @@ export const SettingsNavigation: FC = () => {
 						className="-mt-4 self-center text-black-10 no-underline vision:text-white-20"
 						href={urls.debugger}
 					>
-						Flirtual
-						{" "}
-						{gitCommitSha?.slice(0, 8)}
+						{t("version", { version: gitCommitSha?.slice(0, 8) })}
 					</InlineLink>
 				</nav>
 			</div>

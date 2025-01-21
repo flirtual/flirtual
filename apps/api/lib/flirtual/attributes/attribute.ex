@@ -82,7 +82,7 @@ defmodule Flirtual.Attribute do
       %Attribute{
         id: "hookups",
         type: "relationship"
-        # name: "Casual fun"
+        # name: "Hookups"
       },
       %Attribute{
         id: "friends",

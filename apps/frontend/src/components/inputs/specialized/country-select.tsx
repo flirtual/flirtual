@@ -55,7 +55,7 @@ export type InputCountrySelectProps = Omit<
 >;
 
 export function InputCountrySelect(props: InputCountrySelectProps) {
-	const t = useTranslations("inputs.country_select");
+	const t = useTranslations();
 	const countries = useAttributes("country");
 	const tAttribute = useAttributeTranslation();
 
@@ -91,7 +91,7 @@ export function InputCountrySelect(props: InputCountrySelectProps) {
 			optional
 			Item={CountrySelectItem}
 			options={options}
-			placeholder={t("placeholder")}
+			placeholder={t("select_a_country")}
 		/>
 	);
 }

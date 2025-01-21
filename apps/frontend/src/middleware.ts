@@ -104,7 +104,7 @@ function getContentSecurityPolicy() {
 		"frame-src": [
 			apiOrigin,
 			...playlistPlatforms.map(
-				({ embed }) => new URL(embed("example", "light")).origin
+				({ embed }) => new URL(embed("example", "light", "en")).origin
 			),
 			// https://developers.cloudflare.com/turnstile/reference/content-security-policy/
 			"https://challenges.cloudflare.com",
@@ -122,11 +122,11 @@ function getContentSecurityPolicy() {
 		"upgrade-insecure-requests": [],
 		...(reportTo
 			? {
-					"report-uri": [reportTo],
-					"report-to": ["csp"]
-				}
+				"report-uri": [reportTo],
+				"report-to": ["csp"]
+			}
 			: {
-				})
+			})
 	};
 
 	return {
@@ -153,12 +153,6 @@ export function middleware(request: NextRequest) {
 		// Support explicit theme override via URL query parameter.
 		// for example: https://flirtu.al/browse?theme=dark
 		request.headers.set("theme", searchParams.get("theme")!);
-	}
-
-	if (searchParams.has("translating")) {
-		// Support explicit translation opt-in via URL query parameter.
-		// for example: https://flirtu.al/browse?translating
-		request.headers.set("translating", "yes");
 	}
 
 	// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy

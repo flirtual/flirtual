@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { User } from "~/api/user";
@@ -11,6 +12,7 @@ import { useSession } from "~/hooks/use-session";
 export const PasswordChangeForm: React.FC = () => {
 	const [session] = useSession();
 	const router = useRouter();
+	const t = useTranslations();
 
 	if (!session) return null;
 
@@ -31,12 +33,12 @@ export const PasswordChangeForm: React.FC = () => {
 			{({ FormField }) => (
 				<>
 					<InputLabel className="text-2xl font-semibold">
-						Change password
+						{t("change_password")}
 					</InputLabel>
 					<FormField name="currentPassword">
 						{(field) => (
 							<>
-								<InputLabel>Confirm current password</InputLabel>
+								<InputLabel>{t("confirm_current_password")}</InputLabel>
 								<InputText
 									{...field.props}
 									autoComplete="current-password"
@@ -48,7 +50,7 @@ export const PasswordChangeForm: React.FC = () => {
 					<FormField name="password">
 						{(field) => (
 							<>
-								<InputLabel>New password</InputLabel>
+								<InputLabel>{t("new_password")}</InputLabel>
 								<InputText
 									{...field.props}
 									autoComplete="new-password"
@@ -60,7 +62,7 @@ export const PasswordChangeForm: React.FC = () => {
 					<FormField name="passwordConfirmation">
 						{(field) => (
 							<>
-								<InputLabel>Confirm new password</InputLabel>
+								<InputLabel>{t("confirm_new_password")}</InputLabel>
 								<InputText
 									{...field.props}
 									autoComplete="new-password"
@@ -69,7 +71,7 @@ export const PasswordChangeForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>

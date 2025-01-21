@@ -9,6 +9,7 @@ import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { SortableGrid, SortableItem } from "~/components/forms/sortable";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 
 import { NewBadge } from "../badge";
 import {
@@ -37,6 +38,7 @@ const EditPromptDialog: FC<{
 	const filteredPrompts = useAttributes("prompt").filter(
 		(promptId) => !excludedPrompts?.includes(promptId)
 	);
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	return (
@@ -44,9 +46,7 @@ const EditPromptDialog: FC<{
 			<>
 				<DialogHeader>
 					<DialogTitle>
-						{initialValue ? "Edit" : "Add a"}
-						{" "}
-						prompt
+						{t(initialValue ? "edit_prompt" : "add_a_prompt")}
 					</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
@@ -56,7 +56,7 @@ const EditPromptDialog: FC<{
 							id: promptId,
 							name: tAttribute[promptId]?.name ?? promptId
 						}))}
-						placeholder="Select a prompt"
+						placeholder={t("select_a_prompt")}
 						value={value?.promptId}
 						onChange={(id) => {
 							const promptId = filteredPrompts.find(
@@ -96,7 +96,7 @@ const EditPromptDialog: FC<{
 							setValue(null);
 						}}
 					>
-						Add
+						{t("add")}
 					</Button>
 				</DialogBody>
 			</>
@@ -114,6 +114,7 @@ interface InputPromptsProps {
 export const InputPrompts: FC<InputPromptsProps> = (props) => {
 	const [promptDialogOpen, setPromptDialogOpen] = useState(false);
 	const [editingPrompt, setEditingPrompt] = useState<string | null>(null);
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	return (
@@ -129,14 +130,14 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 							setPromptDialogOpen(true);
 						}}
 					>
-						<span className="text-sm">Add</span>
+						<span className="text-sm">{t("add")}</span>
 						<Plus className="size-5" />
 					</Button>
 				)}
 				className="items-center"
 				htmlFor={props.labelId}
 			>
-				Prompts
+				{t("prompts")}
 				{" "}
 				{props.newBadge && <NewBadge />}
 			</InputLabel>

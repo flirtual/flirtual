@@ -83,7 +83,7 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 };
 
 const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
-	const t = useTranslations("profile");
+	const t = useTranslations();
 	const formatter = useFormatter();
 
 	const toasts = useToast();
@@ -107,7 +107,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 							<Search className="size-5" strokeWidth={2} />
 						</button>
 					</TooltipTrigger>
-					<TooltipContent>{t("sea_proof_eel_fade")}</TooltipContent>
+					<TooltipContent>{t("search_image")}</TooltipContent>
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -117,13 +117,13 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 								await ProfileImage.delete(image.id).catch(toasts.addError);
 								mutate(userKey(user.id));
 
-								toasts.add(t("super_quick_alpaca_empower"));
+								toasts.add(t("image_deleted"));
 							}}
 						>
 							<Trash2 className="size-5" />
 						</button>
 					</TooltipTrigger>
-					<TooltipContent>{t("still_due_tuna_dazzle")}</TooltipContent>
+					<TooltipContent>{t("delete_image")}</TooltipContent>
 				</Tooltip>
 			</div>
 		</div>
@@ -139,6 +139,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
 	const [session] = useSession();
+	const t = useTranslations();
 
 	const [imageId, setImageId] = useState(firstImageId);
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
@@ -238,7 +239,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 								border={false}
 								className="max-w-full overflow-hidden rounded-none desktop:max-w-[95svw] desktop:rounded-xl"
 							>
-								<DialogTitle className="sr-only">View image</DialogTitle>
+								<DialogTitle className="sr-only">{t("view_image")}</DialogTitle>
 								<div className="relative max-h-[80vh] w-full bg-black-90">
 									{images.length > 1 && (
 										<div className="absolute z-10 flex size-full">

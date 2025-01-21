@@ -9,6 +9,7 @@ import ImageEditor from "@uppy/image-editor";
 import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
 import RemoteSources from "@uppy/remote-sources";
 import { ImagePlus } from "lucide-react";
+import { useMessages, useTranslations } from "next-intl";
 import {
 	type Dispatch,
 	type FC,
@@ -89,6 +90,8 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
+	const { uppy: uppyLocale } = useMessages() as { uppy: Record<string, string> };
+	const t = useTranslations();
 
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
@@ -123,19 +126,23 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			},
 			locale: {
 				strings: {
+					...uppyLocale,
+					save: t("save"),
+					rotate: t("rotate_90"),
+					dropHereOr: native ? t("cute_male_chipmunk_agree") : t("stock_topical_mouse_inspire"),
 					dropPasteFiles: native
 						? "%{browseFiles}"
-						: "Drop files here or %{browseFiles}",
+						: t("gross_known_deer_sprout", { browseFiles: "%{browseFiles}" }),
 					dropPasteImportFiles: native
 						? ""
-						: "Drop files here, %{browseFiles}, or import from:",
+						: t("kind_tangy_marten_fear", { browseFiles: "%{browseFiles}" }),
 					browseFiles: native
 						? type === "report"
-							? "Select files..."
-							: "Select pictures..."
-						: "browse"
+							? t("cute_male_chipmunk_agree")
+							: t("patient_proof_octopus_revive")
+						: uppyLocale.browse!
 				},
-				pluralize: (n) => n
+				pluralize: (n) => n === 1 ? 0 : 1
 			}
 		})
 			.use(DropTarget, {
@@ -193,7 +200,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		}
 
 		setUppy(uppyInstance);
-	}, [user, handleUppyComplete, type, native]);
+	}, [user, handleUppyComplete, type, native, t, uppyLocale]);
 
 	const sortableItems = value.map(({ id }, index) => id || index);
 
@@ -249,7 +256,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 									>
 										<DialogContent>
 											<DialogHeader>
-												<DialogTitle>Upload pictures</DialogTitle>
+												<DialogTitle>{t("upload_pictures")}</DialogTitle>
 											</DialogHeader>
 											<DialogBody>
 												<Dashboard
@@ -260,7 +267,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 												/>
 												{platform === "android" && native && (
 													<span className="text-sm opacity-75">
-														We&apos;re aware of issues uploading some images from the Android app. If you&apos;re encountering errors, please try again through your web browser at www.flirtu.al.
+														{t("patchy_flaky_giraffe_dream")}
 													</span>
 												)}
 											</DialogBody>
@@ -315,12 +322,14 @@ const ArrangeableImageDialog: React.FC<{
 	image: ImageSetValue;
 	onOpenChange: Dispatch<boolean>;
 }> = ({ image, onOpenChange }) => {
+	const t = useTranslations();
+
 	return (
 		<Dialog open onOpenChange={onOpenChange}>
 			<DialogContent className="pointer-events-none w-fit max-w-[95svw] overflow-hidden p-0 desktop:max-w-[95svw]">
 				<UserImage
 					fill
-					alt="Profile image"
+					alt={t("profile_picture")}
 					className="!relative mx-auto aspect-auto !size-auto max-h-[80vh] rounded-[1.25rem] object-cover"
 					src={image.fullSrc}
 				/>

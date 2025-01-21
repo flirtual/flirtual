@@ -5,60 +5,6 @@
 		"knotty_direct_mongoose_bend": "가상 현실에서 새로운 사람을 만나보세요! Flirtual은 VR과 VRChat에서 데이트를 할 수 있도록 도와줍니다.",
 		"green_plain_mongoose_lend": "최초의 VR 데이트 앱. VRChat과 같은 VR 앱에서 수천 명의 데이트에 참여하세요."
 	},
-	"about": {
-		"timeline": {
-			"2018": {
-				"title": "2018 🐣",
-				"image": "88bb9381-87ed-499d-9667-cd61eff96938"
-			},
-			"2019": {
-				"title": "🏆 2019",
-				"image": "c373b72d-16a0-479c-b834-ccb7041bc615"
-			},
-			"2020": {
-				"title": "2020 🧪",
-				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86"
-			},
-			"2021": {
-				"title": "✌️ 2021",
-				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f"
-			},
-			"2022": {
-				"title": "2022 😻",
-				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
-			},
-			"2023": {
-				"title": "✨ 2023",
-				"image": "36446ecb-9103-4b6d-b221-7c657f17323d"
-			}
-		},
-		"images": {
-			"0": {
-				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
-				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
-			},
-			"1": {
-				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
-				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
-			},
-			"2": {
-				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
-				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
-			},
-			"3": {
-				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
-				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
-			},
-			"4": {
-				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
-				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
-			},
-			"5": {
-				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
-				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
-			}
-		}
-	},
 	"download": {
 		"platform": {
 			"apple": "App Store",
@@ -66,11 +12,6 @@
 			"microsoft": "Microsoft Store",
 			"side_quest": "SideQuest"
 		}
-	},
-	"privacy": {
-		"title": "개인정보 처리방침",
-		"title_superseded": "개인정보 처리방침 (구버전)",
-		"content": "<p>사용자 이름, 표시 이름, 프로필 사진, 자기 소개, 나이, 성별, 매칭 선호 사항, 개인 관심 태그, 선택한 VR 앱/게임 및 VR에 새로 왔는지 여부가 다른 사용자에게 표시됩니다. 추가 프로필 정보(성적 취향, NSFW 태그, 국가, 연결된 계정 등)는 <settings-privacy>개인정보 설정</settings-privacy>에 따라 다른 사용자에게 표시되거나 숨겨질 수 있으며, 이 설정은 언제든지 수정할 수 있습니다. 성격 테스트 답변에 기반하여 식별한 성격 특성은 <settings-privacy>개인정보 설정</settings-privacy>에 따라 다른 사용자에게 표시되거나 숨겨질 수 있지만, 특정 질문에 대한 답변은 표시되지 않습니다.</p><p>우리는 자체적인 현장 데이터 분석을 사용합니다. 특정 Social VR 앱이나 게임을 사용하는 사용자 수와 같은 Flirtual에 대한 익명화된 통계를 공유할 수 있습니다. 이러한 통계에서 제외하려면 <settings-privacy>개인정보 설정</settings-privacy>에서 설정할 수 있습니다.</p><p>다른 사용자와의 메시지 및 메시지 기록은 TalkJS에 의해 호스팅되며 공유되지만, 다른 제3자와는 공유되지 않습니다.</p><p>계정 이메일은 다른 사용자에게 표시되지 않습니다. 계정 이메일은 사용자의 선호에 따라 거래, 마케팅 및 지원 메시지를 제공하기 위해 제3자가 액세스할 수 있습니다. <settings-notifications>이메일 메시지 알림</settings-notifications>을 해제할 수 있으며, TalkJS 기록에서 이메일 주소가 제거됩니다.</p><p>계정이 침해된 것으로 의심되는 경우 즉시 <settings-password>비밀번호를 변경</settings-password>하고 <contact>문제를 보고</contact>할 때 제목에 '긴급'을 기입하여 보내주시기 바랍니다. 메시지에는 사용자 이름, 사이트에 마지막으로 액세스한 시간, 침해가 의심되는 이유를 포함해 주세요.</p><p>비밀번호는 해시 및 솔트로 저장됩니다.</p><p>Flirtual은 서비스를 제공하기 위해 신뢰할 수 있는 특정 제3자를 사용합니다. 이러한 제3자와 사용자 개인 데이터를 공유할 수 있지만, 이는 서비스 제공 목적으로만 사용됩니다. 자세한 정보와 예시는 아래를 참조하세요.</p><p><strong>클라우드 호스팅 서비스:</strong> 플랫폼을 관리하고 운영하기 위한 신뢰성 있고 안전한 인프라 제공 (예: Fly.io 및 Vercel).</p><p><strong>앱 내 기능 서비스:</strong> 메시징 및 이미지 최적화 호스팅과 같은 핵심 기능을 앱 내에서 제공 (예: TalkJS).</p><p><strong>결제 서비스:</strong> 결제 및 구독을 관리하기 위함 (예: Stripe).</p><p><strong>소셜 미디어 서비스:</strong> 사용자 계정을 플랫폼과 연결하고 소셜 상호작용을 촉진하기 위함 (예: Discord).</p><p><strong>보안 및 성능 서비스:</strong> 플랫폼을 보호하고 사용자 안전을 보장하며 전체 성능을 개선하기 위함 (예: Cloudflare).</p><p><strong>통찰 및 개선 서비스:</strong> 사용자 피드백 수집 및 분석을 통해 플랫폼의 지속적인 개선을 도모하기 위함 (예: Canny).</p><p><strong>커뮤니케이션 서비스:</strong> 사용자에게 거래 및 마케팅 메시지를 보내는 데 도움을 주기 위함 (예: Amazon Web Services).</p><p><strong>중재 서비스:</strong> 앱 내 적절한 행동을 보장하고 커뮤니티 표준을 유지하기 위함 (예: Google Cloud).</p><p><strong>IT 서비스:</strong> 고객 지원과 같은 비즈니스 운영에서 사용자의 개인 데이터를 처리할 때 다양한 도움을 제공하기 위함 (예: Freshworks).</p><p>우리는 제3자가 적절한 데이터 보호 및 정보 보안 조치를 갖추고 있는지 검토합니다. 서비스의 성격에 따라 적절한 수준의 데이터 보호와 익명화 조치를 취하여 제3자와 데이터를 공유합니다. 신뢰할 수 있는 제3자에게는 필요한 개인 데이터만 제공합니다.</p><p>보안 취약점이나 개인정보 누출을 발견한 경우 <vulnerability>GitHub</vulnerability> 또는 <contact>이메일</contact>을 통해 신중하게 보고해 주세요.</p><p>보유 중인 데이터는 <settings>계정 설정</settings>과 메시지에서 검토할 수 있습니다. 보유 중인 모든 데이터를 이메일로 요청하시면 30일 이내에 제공됩니다.</p>"
 	},
 	"superseded_policy": {
 		"fancy_noisy_grizzly_hint": "이 정책은 {range} 동안 유효했으며 더 이상 활성 상태가 아닙니다. <current>최신 버전의 정책</current>을 참조하세요."
@@ -187,5 +128,64 @@
 			"5": "몇 가지 팁을 원하시나요?",
 			"6": "Homie Mode에서 새로운 친구를 만나 보세요 ✌️"
 		}
+	},
+	"about": {
+		"timeline": {
+			"2018": {
+				"title": "2018 🐣",
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938"
+			},
+			"2019": {
+				"title": "🏆 2019",
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615"
+			},
+			"2020": {
+				"title": "2020 🧪",
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86"
+			},
+			"2021": {
+				"title": "✌️ 2021",
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f"
+			},
+			"2022": {
+				"title": "2022 😻",
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
+			},
+			"2023": {
+				"title": "✨ 2023",
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d"
+			}
+		},
+		"images": {
+			"0": {
+				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
+			},
+			"1": {
+				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
+				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
+			},
+			"2": {
+				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
+			},
+			"3": {
+				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
+			},
+			"4": {
+				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
+			},
+			"5": {
+				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
+			}
+		}
+	},
+	"privacy": {
+		"title": "개인정보 처리방침",
+		"title_superseded": "개인정보 처리방침 (구버전)",
+		"content": "<p>사용자 이름, 표시 이름, 프로필 사진, 자기 소개, 나이, 성별, 매칭 선호 사항, 개인 관심 태그, 선택한 VR 앱/게임 및 VR에 새로 왔는지 여부가 다른 사용자에게 표시됩니다. 추가 프로필 정보(성적 취향, NSFW 태그, 국가, 연결된 계정 등)는 <settings-privacy>개인정보 설정</settings-privacy>에 따라 다른 사용자에게 표시되거나 숨겨질 수 있으며, 이 설정은 언제든지 수정할 수 있습니다. 성격 테스트 답변에 기반하여 식별한 성격 특성은 <settings-privacy>개인정보 설정</settings-privacy>에 따라 다른 사용자에게 표시되거나 숨겨질 수 있지만, 특정 질문에 대한 답변은 표시되지 않습니다.</p><p>우리는 자체적인 현장 데이터 분석을 사용합니다. 특정 Social VR 앱이나 게임을 사용하는 사용자 수와 같은 Flirtual에 대한 익명화된 통계를 공유할 수 있습니다. 이러한 통계에서 제외하려면 <settings-privacy>개인정보 설정</settings-privacy>에서 설정할 수 있습니다.</p><p>다른 사용자와의 메시지 및 메시지 기록은 TalkJS에 의해 호스팅되며 공유되지만, 다른 제3자와는 공유되지 않습니다.</p><p>계정 이메일은 다른 사용자에게 표시되지 않습니다. 계정 이메일은 사용자의 선호에 따라 거래, 마케팅 및 지원 메시지를 제공하기 위해 제3자가 액세스할 수 있습니다. <settings-notifications>이메일 메시지 알림</settings-notifications>을 해제할 수 있으며, TalkJS 기록에서 이메일 주소가 제거됩니다.</p><p>계정이 침해된 것으로 의심되는 경우 즉시 <settings-password>비밀번호를 변경</settings-password>하고 <contact>문제를 보고</contact>할 때 제목에 '긴급'을 기입하여 보내주시기 바랍니다. 메시지에는 사용자 이름, 사이트에 마지막으로 액세스한 시간, 침해가 의심되는 이유를 포함해 주세요.</p><p>비밀번호는 해시 및 솔트로 저장됩니다.</p><p>Flirtual은 서비스를 제공하기 위해 신뢰할 수 있는 특정 제3자를 사용합니다. 이러한 제3자와 사용자 개인 데이터를 공유할 수 있지만, 이는 서비스 제공 목적으로만 사용됩니다. 자세한 정보와 예시는 아래를 참조하세요.</p><p><strong>클라우드 호스팅 서비스:</strong> 플랫폼을 관리하고 운영하기 위한 신뢰성 있고 안전한 인프라 제공 (예: Fly.io 및 Vercel).</p><p><strong>앱 내 기능 서비스:</strong> 메시징 및 이미지 최적화 호스팅과 같은 핵심 기능을 앱 내에서 제공 (예: TalkJS).</p><p><strong>결제 서비스:</strong> 결제 및 구독을 관리하기 위함 (예: Stripe).</p><p><strong>소셜 미디어 서비스:</strong> 사용자 계정을 플랫폼과 연결하고 소셜 상호작용을 촉진하기 위함 (예: Discord).</p><p><strong>보안 및 성능 서비스:</strong> 플랫폼을 보호하고 사용자 안전을 보장하며 전체 성능을 개선하기 위함 (예: Cloudflare).</p><p><strong>통찰 및 개선 서비스:</strong> 사용자 피드백 수집 및 분석을 통해 플랫폼의 지속적인 개선을 도모하기 위함 (예: Canny).</p><p><strong>커뮤니케이션 서비스:</strong> 사용자에게 거래 및 마케팅 메시지를 보내는 데 도움을 주기 위함 (예: Amazon Web Services).</p><p><strong>중재 서비스:</strong> 앱 내 적절한 행동을 보장하고 커뮤니티 표준을 유지하기 위함 (예: Google Cloud).</p><p><strong>IT 서비스:</strong> 고객 지원과 같은 비즈니스 운영에서 사용자의 개인 데이터를 처리할 때 다양한 도움을 제공하기 위함 (예: Freshworks).</p><p>우리는 제3자가 적절한 데이터 보호 및 정보 보안 조치를 갖추고 있는지 검토합니다. 서비스의 성격에 따라 적절한 수준의 데이터 보호와 익명화 조치를 취하여 제3자와 데이터를 공유합니다. 신뢰할 수 있는 제3자에게는 필요한 개인 데이터만 제공합니다.</p><p>보안 취약점이나 개인정보 누출을 발견한 경우 <vulnerability>GitHub</vulnerability> 또는 <contact>이메일</contact>을 통해 신중하게 보고해 주세요.</p><p>보유 중인 데이터는 <settings>계정 설정</settings>과 메시지에서 검토할 수 있습니다. 보유 중인 모든 데이터를 이메일로 요청하시면 30일 이내에 제공됩니다.</p>"
 	}
 }

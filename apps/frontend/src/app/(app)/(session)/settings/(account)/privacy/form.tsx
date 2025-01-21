@@ -8,6 +8,7 @@ import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
@@ -15,6 +16,7 @@ import { urls } from "~/urls";
 export const PrivacyForm: React.FC = () => {
 	const user = useCurrentUser();
 	const toasts = useToast();
+	const t = useTranslations();
 
 	if (!user || !user.preferences) return null;
 
@@ -26,7 +28,7 @@ export const PrivacyForm: React.FC = () => {
 				const privacy = await Preferences.updatePrivacy(user.id, body);
 				reset(privacy);
 
-				toasts.add("Saved privacy preferences");
+				toasts.add(t("blue_lost_quail_support"));
 			}}
 		>
 			{({ FormField }) => (
@@ -34,8 +36,8 @@ export const PrivacyForm: React.FC = () => {
 					<FormField name="personality">
 						{(field) => (
 							<>
-								<InputLabel inline hint="Who can see your personality traits?">
-									Personality privacy
+								<InputLabel inline hint={t("personality_privacy_hint")}>
+									{t("personality_privacy")}
 								</InputLabel>
 								<InputPrivacySelect {...field.props} />
 							</>
@@ -44,8 +46,8 @@ export const PrivacyForm: React.FC = () => {
 					<FormField name="sexuality">
 						{(field) => (
 							<>
-								<InputLabel inline hint="Who can see your sexuality?">
-									Sexuality privacy
+								<InputLabel inline hint={t("sexuality_privacy_hint")}>
+									{t("sexuality_privacy")}
 								</InputLabel>
 								<InputPrivacySelect {...field.props} />
 							</>
@@ -54,8 +56,8 @@ export const PrivacyForm: React.FC = () => {
 					<FormField name="country">
 						{(field) => (
 							<>
-								<InputLabel inline hint="Who can see your country?">
-									Country privacy
+								<InputLabel inline hint={t("country_privacy_hint")}>
+									{t("country_privacy")}
 								</InputLabel>
 								<InputPrivacySelect {...field.props} />
 							</>
@@ -65,8 +67,8 @@ export const PrivacyForm: React.FC = () => {
 						<FormField name="kinks">
 							{(field) => (
 								<>
-									<InputLabel inline hint="Who can see your NSFW tags?">
-										NSFW privacy
+									<InputLabel inline hint={t("nsfw_privacy_hint")}>
+										{t("nsfw_privacy")}
 									</InputLabel>
 									<InputPrivacySelect {...field.props} />
 								</>
@@ -85,18 +87,18 @@ export const PrivacyForm: React.FC = () => {
 												href={urls.resources.privacyPolicy}
 											>
 												<HelpCircle className="w-4 shrink-0" />
-												<span>Learn more</span>
+												<span>{t("learn_more")}</span>
 											</InlineLink>
 										</InputLabelHint>
 									)}
 								>
-									Opt-out of anonymous statistics?
+									{t("tangy_front_anaconda_dash")}
 								</InputLabel>
 								<InputSwitch {...field.props} value={!field.props.value} onChange={(value) => field.props.onChange(!value)} />
 							</>
 						)}
 					</FormField>
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>

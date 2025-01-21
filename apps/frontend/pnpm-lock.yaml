@@ -162,6 +162,9 @@ importers:
       '@uppy/image-editor':
         specifier: ^3.2.0
         version: 3.2.0(@uppy/core@4.2.3)
+      '@uppy/locales':
+        specifier: ^4.5.0
+        version: 4.5.0
       '@uppy/progress-bar':
         specifier: ^4.0.1
         version: 4.0.1(@uppy/core@4.2.3)
@@ -2653,6 +2656,9 @@ packages:
     peerDependencies:
       '@uppy/core': ^4.2.3
 
+  '@uppy/locales@4.5.0':
+    resolution: {integrity: sha512-A4LAwIlZe+HhWqIZ/Du3DQ4nL6LGqBEMsnlMCUvyGYQa8LeXMQMD0XTnLzprI505XNxVsrfCgY4/e1HwKcDciw==}
+
   '@uppy/onedrive@4.1.1':
     resolution: {integrity: sha512-uc0tZrj0zZH6gRIl7mklTlMQh1GcIiH+tBmsh5kwZbX4gqvuR72TVqmSlxr9aa9v97VqIajQjqo7x4dfqhaWfw==}
     peerDependencies:
@@ -2720,6 +2726,9 @@ packages:
 
   '@uppy/utils@6.0.4':
     resolution: {integrity: sha512-EIp1//8+cw7DHPGix8sTp1G1OVopJlC2+p9upKrXXrmvRLFM00n1Xcd2JIZRE89PsrXgQzWdGYeeosCzoPZB2w==}
+
+  '@uppy/utils@6.1.1':
+    resolution: {integrity: sha512-60guVvz+TXvN1gEgbTjDAfleo6HeTGE02/9T+tycv7hVqIkzLbYsJBgVFhVY/Y2fBW0fOX/lzKc1kN4YZQtvpA==}
 
   '@uppy/zoom@3.1.1':
     resolution: {integrity: sha512-PCulI2Ukv22MLoT9cyfUs6aOHN/hvpsgvYDlDsyrKR/aRJDn10ypvP0AElmQ2Q83YVuSAtbgXVIqRutEf+pnIw==}
@@ -8965,7 +8974,7 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/companion-client@4.1.1(@uppy/core@4.2.3)':
     dependencies:
@@ -9027,7 +9036,7 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/facebook@4.1.1(@uppy/core@4.2.3)':
     dependencies:
@@ -9035,7 +9044,7 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/file-input@4.0.3(@uppy/core@4.2.3)':
     dependencies:
@@ -9055,7 +9064,7 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/google-photos@0.3.1(@uppy/core@4.2.3)':
     dependencies:
@@ -9063,7 +9072,7 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/image-editor@3.2.0(@uppy/core@4.2.3)':
     dependencies:
@@ -9076,7 +9085,7 @@ snapshots:
     dependencies:
       '@uppy/core': 4.2.3
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/instagram@4.1.1(@uppy/core@4.2.3)':
     dependencies:
@@ -9084,7 +9093,11 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
+
+  '@uppy/locales@4.5.0':
+    dependencies:
+      '@uppy/utils': 6.1.1
 
   '@uppy/onedrive@4.1.1(@uppy/core@4.2.3)':
     dependencies:
@@ -9092,7 +9105,7 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/progress-bar@4.0.1(@uppy/core@4.2.3)':
     dependencies:
@@ -9107,7 +9120,7 @@ snapshots:
       classnames: 2.5.1
       nanoid: 5.0.8
       p-queue: 8.0.1
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/react@4.0.3(@uppy/core@4.2.3)(@uppy/dashboard@4.1.2(@uppy/core@4.2.3))(@uppy/drag-drop@4.0.4(@uppy/core@4.2.3))(@uppy/file-input@4.0.3(@uppy/core@4.2.3))(@uppy/progress-bar@4.0.1(@uppy/core@4.2.3))(@uppy/status-bar@4.0.4(@uppy/core@4.2.3))(react@19.0.0-rc-65a56d0e-20241020)':
     dependencies:
@@ -9159,7 +9172,7 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/url@4.1.1(@uppy/core@4.2.3)':
     dependencies:
@@ -9167,12 +9180,17 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/utils': 6.0.4
       nanoid: 5.0.8
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@uppy/utils@6.0.4':
     dependencies:
       lodash: 4.17.21
-      preact: 10.24.3
+      preact: 10.25.0
+
+  '@uppy/utils@6.1.1':
+    dependencies:
+      lodash: 4.17.21
+      preact: 10.25.0
 
   '@uppy/zoom@3.1.1(@uppy/core@4.2.3)':
     dependencies:
@@ -9180,7 +9198,7 @@ snapshots:
       '@uppy/core': 4.2.3
       '@uppy/provider-views': 4.0.2(@uppy/core@4.2.3)
       '@uppy/utils': 6.0.4
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@vitest/eslint-plugin@1.1.11(@typescript-eslint/utils@8.16.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2))(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)':
     dependencies:

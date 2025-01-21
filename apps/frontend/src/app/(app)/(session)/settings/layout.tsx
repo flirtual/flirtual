@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { SettingsNavigation } from "./navigation";
 
-export const metadata: Metadata = {
-	title: {
-		default: "Settings",
-		template: "%s - Flirtual"
-	}
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
+
+	return {
+		title: {
+			default: t("settings"),
+			template: t("page_title")
+		}
+	};
+}
 
 export default async function SettingsLayout({
 	children

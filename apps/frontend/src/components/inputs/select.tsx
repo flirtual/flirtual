@@ -17,8 +17,10 @@ const SelectValue = SelectPrimitive.Value;
 
 const SelectTrigger = React.forwardRef<
 	React.ComponentRef<typeof SelectPrimitive.Trigger>,
-	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, reference) => (
+	{
+		Icon?: FC<React.ComponentProps<"svg">>;
+	} & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
+>(({ className, children, Icon = ChevronsUpDown, ...props }, reference) => (
 	<SelectPrimitive.Trigger
 		asChild
 		className={twMerge(
@@ -30,7 +32,7 @@ const SelectTrigger = React.forwardRef<
 	>
 		<div className="relative cursor-pointer" tabIndex={0}>
 			<SelectPrimitive.Icon className="flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2">
-				<ChevronsUpDown className="size-6 text-white-20" />
+				<Icon className="size-6 text-white-20" />
 			</SelectPrimitive.Icon>
 			{children}
 		</div>
@@ -184,18 +186,22 @@ export interface InputSelectProps<T> {
 	options: Array<InputSelectOption>;
 	Item?: FC<{ value: NonNullable<T> }>;
 	className?: string;
+	Icon?: FC<React.ComponentProps<"svg">>;
+	tabIndex?: number;
 }
 
 export function InputSelect<K>(props: InputSelectProps<K>) {
-	const t = useTranslations("inputs.select");
+	const t = useTranslations();
 
 	const {
 		value,
 		// eslint-disable-next-line react/no-unstable-default-props
-		placeholder = t("placeholder"),
+		placeholder = t("select_an_option"),
 		optional = false,
 		options = emptyArray,
-		className
+		className,
+		Icon,
+		tabIndex
 	} = props;
 
 	const activeOption = options.find((option) => option.id === value);
@@ -209,7 +215,7 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 
 	return (
 		<Select value={(value || "") as string} onValueChange={onChange}>
-			<SelectTrigger className={className}>
+			<SelectTrigger className={className} Icon={Icon} tabIndex={tabIndex}>
 				<span
 					className={twMerge(
 						"truncate",

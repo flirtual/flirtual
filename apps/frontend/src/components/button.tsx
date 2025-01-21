@@ -2,14 +2,12 @@
 
 import type { HTMLMotionProps } from "motion/react";
 import { motion } from "motion/react";
-import type { LinkProps } from "next/link";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { isInternalHref } from "~/urls";
-
 import type { IconComponent } from "./icons";
+import type { LinkProps } from "./link";
+import { Link } from "./link";
 
 const defaultClassName = twMerge(
 	"group/button focusable flex shrink-0 items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:opacity-75"
@@ -85,7 +83,6 @@ export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps
 		size = "base",
 		kind = "primary",
 		disabled,
-		target,
 		href,
 		Icon,
 		iconClassName,
@@ -105,7 +102,6 @@ export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps
 			)}
 			aria-disabled={disabled}
 			href={href}
-			target={(target ?? isInternalHref(href)) ? "_self" : "_blank"}
 			whileTap={{ scale: disabled ? 1 : 0.97 }}
 			onClick={(event) => {
 				if (disabled) return event.preventDefault();
@@ -116,7 +112,7 @@ export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps
 				<Icon
 					className={twMerge(
 						"shrink-0",
-						size === "sm" ? "h-4" : "h-6",
+						size === "sm" ? "h-4" : "h-4",
 						iconClassName
 					)}
 				/>

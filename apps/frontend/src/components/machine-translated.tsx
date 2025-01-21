@@ -9,7 +9,7 @@ export const MachineTranslatedLegal: FC<{
 	intended?: string;
 	original: string;
 }> = ({ intended = "en", original }) => {
-	const t = useTranslations("machine-translated");
+	const t = useTranslations();
 	const locale = useLocale();
 
 	if (intended === locale.split("-")[0]) return null;

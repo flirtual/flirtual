@@ -248,7 +248,7 @@ defmodule Flirtual.Flag do
         flagged_categories =
           categories
           |> Enum.reject(fn {category, _} -> category == "sexual" end)
-          |> Enum.filter(fn {category, _} -> scores[category] >= 0.5 end)
+          |> Enum.filter(fn {category, _} -> scores[category] >= 0.9 end)
 
         if Enum.any?(flagged_categories) do
           flags =

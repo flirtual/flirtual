@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { Authentication } from "~/api/auth";
 import { Personality } from "~/api/user/profile/personality";
@@ -6,11 +7,16 @@ import { ModelCard } from "~/components/model-card";
 
 import { PersonalityForm } from "./form";
 
-export const metadata: Metadata = {
-	title: "Personality"
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations();
+
+	return {
+		title: t("personality")
+	};
+}
 
 export default async function SettingsProfilePersonalityPage() {
+	const t = await getTranslations();
 	const session = await Authentication.getSession();
 	const personality = await Personality.get(session.user.id);
 
@@ -18,7 +24,7 @@ export default async function SettingsProfilePersonalityPage() {
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"
 			inset={false}
-			title="Personality"
+			title={t("personality")}
 		>
 			<PersonalityForm personality={personality} />
 		</ModelCard>

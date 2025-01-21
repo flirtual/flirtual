@@ -17,7 +17,7 @@ import { ProfileModeratorInfo } from "./moderator-info";
 
 export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> = ({ user, hideModeratorInfo }) => {
 	const [session] = useSession();
-	const t = useTranslations("profile");
+	const t = useTranslations();
 
 	if (
 		!session
@@ -42,8 +42,8 @@ export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> =
 							<BlockDialog user={user}>
 								<AlertDialogTrigger asChild>
 									<Button className="gap-2 p-0" kind="tertiary" size="sm">
-										<Ban className="size-full" />
-										{t("teary_new_meerkat_scoop")}
+										<Ban className="size-6" />
+										{t("block")}
 									</Button>
 								</AlertDialogTrigger>
 							</BlockDialog>
@@ -51,7 +51,7 @@ export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> =
 								<DialogTrigger asChild>
 									<Button className="gap-2 p-0" kind="tertiary" size="sm">
 										<Flag className="size-6" />
-										{t("busy_tiny_hamster_support")}
+										{t("report")}
 									</Button>
 								</DialogTrigger>
 							</ReportDialog>

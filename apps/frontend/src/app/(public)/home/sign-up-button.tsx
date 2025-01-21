@@ -10,116 +10,116 @@ import { FlirtualMark } from "~/components/mark";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
-export const SignUpButton: FC = () => {
-	const t = useTranslations("landing");
-	const { landing: { flitty_messages: flittyMessages } } = useMessages() as unknown as { landing: { flitty_messages: Record<string, string> } };
+export const SignUpButton: FC<{ tabIndex?: number }> = ({ tabIndex }) => {
+	const t = useTranslations();
+	const { receptive_fairies_legal_thumb: flittyMessages } = useMessages() as unknown as IntlMessages;
 	const toasts = useToast();
 
 	const [squeak] = useSound(urls.media("squeak.mp3"));
 	const [squeakCount, setSqueakCount] = useState(0);
 
 	/*
-	t("flitty_messages.0");
-	t("flitty_messages.1");
-	t("flitty_messages.2");
-	t("flitty_messages.3");
-	t("flitty_messages.4");
-	t("flitty_messages.5");
-	t("flitty_messages.6");
-	t("flitty_messages.7");
-	t("flitty_messages.8");
-	t("flitty_messages.9");
-	t("flitty_messages.10");
-	t("flitty_messages.11");
-	t("flitty_messages.12");
-	t("flitty_messages.13");
-	t("flitty_messages.14");
-	t("flitty_messages.15");
-	t("flitty_messages.16");
-	t("flitty_messages.17");
-	t("flitty_messages.18");
-	t("flitty_messages.19");
-	t("flitty_messages.20");
-	t("flitty_messages.21");
-	t("flitty_messages.22");
-	t("flitty_messages.23");
-	t("flitty_messages.24");
-	t("flitty_messages.25");
-	t("flitty_messages.26");
-	t("flitty_messages.27");
-	t("flitty_messages.28");
-	t("flitty_messages.29");
-	t("flitty_messages.30");
-	t("flitty_messages.31");
-	t("flitty_messages.32");
-	t("flitty_messages.33");
-	t("flitty_messages.34");
-	t("flitty_messages.35");
-	t("flitty_messages.36");
-	t("flitty_messages.37");
-	t("flitty_messages.38");
-	t("flitty_messages.39");
-	t("flitty_messages.40");
-	t("flitty_messages.41");
-	t("flitty_messages.42");
-	t("flitty_messages.43");
-	t("flitty_messages.44");
-	t("flitty_messages.45");
-	t("flitty_messages.46");
-	t("flitty_messages.47");
-	t("flitty_messages.48");
-	t("flitty_messages.49");
-	t("flitty_messages.50");
-	t("flitty_messages.51");
-	t("flitty_messages.52");
-	t("flitty_messages.53");
-	t("flitty_messages.54");
-	t("flitty_messages.55");
-	t("flitty_messages.56");
-	t("flitty_messages.57");
-	t("flitty_messages.58");
-	t("flitty_messages.59");
-	t("flitty_messages.60");
-	t("flitty_messages.61");
-	t("flitty_messages.62");
-	t("flitty_messages.63");
-	t("flitty_messages.64");
-	t("flitty_messages.65");
-	t("flitty_messages.66");
-	t("flitty_messages.67");
-	t("flitty_messages.68");
-	t("flitty_messages.69");
-	t("flitty_messages.70");
-	t("flitty_messages.71");
-	t("flitty_messages.72");
-	t("flitty_messages.73");
-	t("flitty_messages.74");
-	t("flitty_messages.75");
-	t("flitty_messages.76");
-	t("flitty_messages.77");
-	t("flitty_messages.78");
-	t("flitty_messages.79");
-	t("flitty_messages.80");
-	t("flitty_messages.81");
-	t("flitty_messages.82");
-	t("flitty_messages.83");
-	t("flitty_messages.84");
-	t("flitty_messages.85");
-	t("flitty_messages.86");
-	t("flitty_messages.87");
-	t("flitty_messages.88");
-	t("flitty_messages.89");
-	t("flitty_messages.90");
-	t("flitty_messages.91");
-	t("flitty_messages.92");
-	t("flitty_messages.93");
-	t("flitty_messages.94");
-	t("flitty_messages.95");
-	t("flitty_messages.96");
-	t("flitty_messages.97");
-	t("flitty_messages.98");
-	t("flitty_messages.99");
-	t("flitty_messages.100");
+	t("receptive_fairies_legal_thumb.0");
+	t("receptive_fairies_legal_thumb.1");
+	t("receptive_fairies_legal_thumb.2");
+	t("receptive_fairies_legal_thumb.3");
+	t("receptive_fairies_legal_thumb.4");
+	t("receptive_fairies_legal_thumb.5");
+	t("receptive_fairies_legal_thumb.6");
+	t("receptive_fairies_legal_thumb.7");
+	t("receptive_fairies_legal_thumb.8");
+	t("receptive_fairies_legal_thumb.9");
+	t("receptive_fairies_legal_thumb.10");
+	t("receptive_fairies_legal_thumb.11");
+	t("receptive_fairies_legal_thumb.12");
+	t("receptive_fairies_legal_thumb.13");
+	t("receptive_fairies_legal_thumb.14");
+	t("receptive_fairies_legal_thumb.15");
+	t("receptive_fairies_legal_thumb.16");
+	t("receptive_fairies_legal_thumb.17");
+	t("receptive_fairies_legal_thumb.18");
+	t("receptive_fairies_legal_thumb.19");
+	t("receptive_fairies_legal_thumb.20");
+	t("receptive_fairies_legal_thumb.21");
+	t("receptive_fairies_legal_thumb.22");
+	t("receptive_fairies_legal_thumb.23");
+	t("receptive_fairies_legal_thumb.24");
+	t("receptive_fairies_legal_thumb.25");
+	t("receptive_fairies_legal_thumb.26");
+	t("receptive_fairies_legal_thumb.27");
+	t("receptive_fairies_legal_thumb.28");
+	t("receptive_fairies_legal_thumb.29");
+	t("receptive_fairies_legal_thumb.30");
+	t("receptive_fairies_legal_thumb.31");
+	t("receptive_fairies_legal_thumb.32");
+	t("receptive_fairies_legal_thumb.33");
+	t("receptive_fairies_legal_thumb.34");
+	t("receptive_fairies_legal_thumb.35");
+	t("receptive_fairies_legal_thumb.36");
+	t("receptive_fairies_legal_thumb.37");
+	t("receptive_fairies_legal_thumb.38");
+	t("receptive_fairies_legal_thumb.39");
+	t("receptive_fairies_legal_thumb.40");
+	t("receptive_fairies_legal_thumb.41");
+	t("receptive_fairies_legal_thumb.42");
+	t("receptive_fairies_legal_thumb.43");
+	t("receptive_fairies_legal_thumb.44");
+	t("receptive_fairies_legal_thumb.45");
+	t("receptive_fairies_legal_thumb.46");
+	t("receptive_fairies_legal_thumb.47");
+	t("receptive_fairies_legal_thumb.48");
+	t("receptive_fairies_legal_thumb.49");
+	t("receptive_fairies_legal_thumb.50");
+	t("receptive_fairies_legal_thumb.51");
+	t("receptive_fairies_legal_thumb.52");
+	t("receptive_fairies_legal_thumb.53");
+	t("receptive_fairies_legal_thumb.54");
+	t("receptive_fairies_legal_thumb.55");
+	t("receptive_fairies_legal_thumb.56");
+	t("receptive_fairies_legal_thumb.57");
+	t("receptive_fairies_legal_thumb.58");
+	t("receptive_fairies_legal_thumb.59");
+	t("receptive_fairies_legal_thumb.60");
+	t("receptive_fairies_legal_thumb.61");
+	t("receptive_fairies_legal_thumb.62");
+	t("receptive_fairies_legal_thumb.63");
+	t("receptive_fairies_legal_thumb.64");
+	t("receptive_fairies_legal_thumb.65");
+	t("receptive_fairies_legal_thumb.66");
+	t("receptive_fairies_legal_thumb.67");
+	t("receptive_fairies_legal_thumb.68");
+	t("receptive_fairies_legal_thumb.69");
+	t("receptive_fairies_legal_thumb.70");
+	t("receptive_fairies_legal_thumb.71");
+	t("receptive_fairies_legal_thumb.72");
+	t("receptive_fairies_legal_thumb.73");
+	t("receptive_fairies_legal_thumb.74");
+	t("receptive_fairies_legal_thumb.75");
+	t("receptive_fairies_legal_thumb.76");
+	t("receptive_fairies_legal_thumb.77");
+	t("receptive_fairies_legal_thumb.78");
+	t("receptive_fairies_legal_thumb.79");
+	t("receptive_fairies_legal_thumb.80");
+	t("receptive_fairies_legal_thumb.81");
+	t("receptive_fairies_legal_thumb.82");
+	t("receptive_fairies_legal_thumb.83");
+	t("receptive_fairies_legal_thumb.84");
+	t("receptive_fairies_legal_thumb.85");
+	t("receptive_fairies_legal_thumb.86");
+	t("receptive_fairies_legal_thumb.87");
+	t("receptive_fairies_legal_thumb.88");
+	t("receptive_fairies_legal_thumb.89");
+	t("receptive_fairies_legal_thumb.90");
+	t("receptive_fairies_legal_thumb.91");
+	t("receptive_fairies_legal_thumb.92");
+	t("receptive_fairies_legal_thumb.93");
+	t("receptive_fairies_legal_thumb.94");
+	t("receptive_fairies_legal_thumb.95");
+	t("receptive_fairies_legal_thumb.96");
+	t("receptive_fairies_legal_thumb.97");
+	t("receptive_fairies_legal_thumb.98");
+	t("receptive_fairies_legal_thumb.99");
+	t("receptive_fairies_legal_thumb.100");
 	*/
 
 	return (
@@ -129,7 +129,7 @@ export const SignUpButton: FC = () => {
 				onClick={() => {
 					squeak();
 
-					const message = flittyMessages[squeakCount / 5];
+					const message = flittyMessages[(squeakCount / 5).toString() as keyof typeof flittyMessages];
 					if (message)
 						toasts.add({
 							value: message,
@@ -140,7 +140,7 @@ export const SignUpButton: FC = () => {
 					setSqueakCount(squeakCount + 1);
 				}}
 			/>
-			<ButtonLink className="isolate" href={urls.register} kind="primary">
+			<ButtonLink className="isolate" href={urls.register} kind="primary" size="sm" tabIndex={tabIndex}>
 				{t("sign_up")}
 			</ButtonLink>
 		</div>

@@ -15,6 +15,7 @@ import {
 } from "../common";
 import type { Connection } from "../connections";
 import type { Subscription } from "../subscription";
+import type { PreferenceLanguage } from "./preferences";
 import { Preferences } from "./preferences";
 import type { Profile } from "./profile";
 import type { Relationship } from "./relationship";
@@ -58,7 +59,6 @@ export type UserStatus = (typeof UserStatuses)[number];
 export type User = {
 	email: string;
 	slug: string;
-	language?: string;
 	talkjsId: string;
 	talkjsSignature?: string;
 	apnsToken?: string;
@@ -130,7 +130,7 @@ export interface SearchOptions {
 }
 
 export type UpdateUserOptions = Partial<
-	Pick<User, "bornAt" | "language" | "slug" | "tnsDiscordInBiography">
+	Pick<User, "bornAt" | "slug" | "tnsDiscordInBiography">
 >;
 
 export interface UpdateUserEmailOptions {
@@ -154,6 +154,7 @@ export const User = {
 		notifications: boolean;
 		serviceAgreement: boolean;
 		captcha: string;
+		language: PreferenceLanguage;
 	}) {
 		return this.api.json(options).post().json<User>();
 	},
@@ -183,8 +184,6 @@ export const User = {
 			.json<Relationship | null>();
 	},
 	getBySlug(slug: string) {
-		if (slug.length < 3) return null;
-
 		return this.api
 			.url(`/${slug.slice(0, 20)}/name`)
 			.get()

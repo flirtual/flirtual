@@ -1,8 +1,11 @@
 defmodule Flirtual.ObanWorkers do
-  alias Flirtual.ObanWorkers.{Elasticsearch, Listmonk, PremiumReset, Talkjs}
+  alias Flirtual.ObanWorkers.{Chargebee, Elasticsearch, Listmonk, PremiumReset, Talkjs}
   alias Flirtual.User
 
-  def update_user(user_ids, workers \\ [:elasticsearch, :listmonk, :premium_reset, :talkjs])
+  def update_user(
+        user_ids,
+        workers \\ [:chargebee, :elasticsearch, :listmonk, :premium_reset, :talkjs]
+      )
 
   def update_user(%User{id: user_id}, workers) do
     update_user(user_id, workers)
@@ -25,6 +28,7 @@ defmodule Flirtual.ObanWorkers do
       |> Enum.map(fn worker ->
         job =
           case worker do
+            :chargebee -> Chargebee.new(args)
             :elasticsearch -> Elasticsearch.new(args)
             :listmonk -> Listmonk.new(args)
             :premium_reset -> PremiumReset.new(args)

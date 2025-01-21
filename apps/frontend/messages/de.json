@@ -5,89 +5,15 @@
 		"knotty_direct_mongoose_bend": "Lerne neue Leute in der virtuellen Realität kennen! Flirtual hilft dir bei Dates in VR und VRChat.",
 		"green_plain_mongoose_lend": "Die erste VR-Dating-App. Verabreden Sie sich mit Tausenden in VR-Apps wie VRChat."
 	},
-	"about": {
-		"title": "Über uns",
-		"team": {
-			"image_alt": "Avatar von {name}",
-			"roles": {
-				"kfarwell": "Hauptentwickler",
-				"aries": "Softwareentwickler",
-				"moderator": "Moderator"
-			}
-		},
-		"timeline": {
-			"2018": {
-				"title": "2018 🐣",
-				"image": "88bb9381-87ed-499d-9667-cd61eff96938",
-				"image_alt": "Flirtual in 2018"
-			},
-			"2019": {
-				"title": "🏆 2019",
-				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
-				"image_alt": "Flirtual in 2019"
-			},
-			"2020": {
-				"title": "2020 🧪",
-				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
-				"image_alt": "Flirtual in 2020"
-			},
-			"2021": {
-				"title": "✌️ 2021",
-				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
-				"image_alt": "Flirtual in 2021"
-			},
-			"2022": {
-				"title": "2022 😻",
-				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
-				"image_alt": "Flirtual in 2022"
-			},
-			"2023": {
-				"title": "✨ 2023",
-				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
-				"image_alt": "Flirtual in 2023"
-			}
-		},
-		"images": {
-			"0": {
-				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
-				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
-			},
-			"1": {
-				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
-				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
-			},
-			"2": {
-				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
-				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
-			},
-			"3": {
-				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
-				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
-			},
-			"4": {
-				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
-				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
-			},
-			"5": {
-				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
-				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
-			}
-		}
-	},
 	"download": {
+		"best_topical_mayfly_tap": "Herunterladen auf",
 		"platform": {
 			"apple": "App Store",
 			"google": "Google Play",
 			"microsoft": "Microsoft Store",
 			"side_quest": "SideQuest"
 		},
-		"title": "Herunterladen",
-		"best_topical_mayfly_tap": "Herunterladen auf"
-	},
-	"privacy": {
-		"title": "Datenschutzerklärung",
-		"title_superseded": "Datenschutzerklärung (veraltet)",
-		"content": "<p>Ihr Benutzername, Ihr Anzeigename, Ihre Profilbilder, Ihre Bio, Ihr Alter, Ihr Geschlecht, Ihre Vermittlungspräferenzen, Ihre persönlichen Interessentags, Ihre ausgewählten VR-Apps/Spiele und ob Sie neu in VR sind, werden anderen Nutzern sichtbar sein. Ihre zusätzlichen Profilinformationen (einschließlich Ihrer Sexualität, NSFW-Tags, Ihres Landes, verlinkter Konten usw.) werden anderen Benutzern je nach Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy>, die Sie jederzeit ändern können, sichtbar oder verborgen sein. Ihre Persönlichkeitsmerkmale (die wir basierend auf Ihren Antworten auf unseren Persönlichkeitsfragebogen identifizieren) werden anderen Benutzern je nach Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy> sichtbar oder verborgen sein, aber Ihre spezifischen Fragebogenantworten werden nicht sichtbar sein.</p><p>Wir verwenden eine eigene, lokal installierte Datenanalyse. Wir können anonymisierte Statistiken über Flirtual teilen (zum Beispiel die Anzahl der Benutzer, die eine bestimmte Social VR-App oder ein Spiel verwenden). Sie können sich in Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy> von diesen Statistiken abmelden.</p><p>Ihre Nachrichten und Nachrichtenhistorie mit anderen Benutzern werden von TalkJS gehostet und geteilt, jedoch nicht mit anderen Dritten geteilt.</p><p>Ihre Kontaktemail wird anderen Benutzern nicht angezeigt. Ihre Kontaktemail kann von Drittanbietern abgerufen werden, um Transaktions-, Marketing- und Supportnachrichten gemäß Ihren Präferenzen zu liefern. Sie können sich von <settings-notifications>Benachrichtigungen per E-Mail</settings-notifications> abmelden, was Ihre E-Mail-Adresse aus den Aufzeichnungen von TalkJS entfernt.</p><p>Wenn Sie vermuten, dass Ihr Konto kompromittiert wurde, ändern Sie bitte sofort Ihr <settings-password>Passwort</settings-password> und <contact>melden Sie das Problem</contact> mit dem Wort „DRINGEND“ in der Betreffzeile. Geben Sie im Nachrichtentext Ihren Benutzernamen, den Zeitpunkt des letzten Zugriffs auf die Seite und alle Details an, die Sie zu der Annahme einer Sicherheitsverletzung geführt haben.</p><p>Ihr Passwort wird gehasht und gesalzen gespeichert.</p><p>Wir verwenden bestimmte vertrauenswürdige Dritte, die Dienste für Flirtual bereitstellen. Wir können personenbezogene Daten von Nutzern mit diesen Dritten teilen, jedoch nur zum Zweck der Bereitstellung ihrer Dienste. Weitere Informationen und Beispiele finden Sie unten.</p><p><strong>Cloud-Hosting-Dienste:</strong> um eine zuverlässige und sichere Infrastruktur für die Verwaltung und den Betrieb unserer Plattform bereitzustellen (zum Beispiel Fly.io und Vercel).</p><p><strong>In-App-Funktionalitätsdienste:</strong> um wichtige Funktionen wie Messaging und optimiertes Bild-Hosting innerhalb unserer App zu erleichtern (zum Beispiel TalkJS).</p><p><strong>Abrechnungsdienste:</strong> um Zahlungen und Abonnements zu verwalten (zum Beispiel Stripe).</p><p><strong>Social Media-Dienste:</strong> um es Nutzern zu ermöglichen, ihre Konten mit unserer Plattform zu verknüpfen und soziale Interaktionen zu erleichtern (zum Beispiel Discord).</p><p><strong>Sicherheits- und Leistungsdienste:</strong> um unsere Plattform zu schützen, unsere Nutzer zu schützen und die Gesamtleistung zu verbessern (zum Beispiel Cloudflare).</p><p><strong>Einblicks- und Verbesserungsdienste:</strong> um Benutzerfeedback zu sammeln und Analysen zur kontinuierlichen Verbesserung unserer Plattform durchzuführen (zum Beispiel Canny).</p><p><strong>Kommunikationsdienste:</strong> um bei der Übermittlung von Transaktions- und Marketingnachrichten an Benutzer zu unterstützen (zum Beispiel Amazon Web Services).</p><p><strong>Moderationsdienste:</strong> um angemessenes Verhalten innerhalb der App zu gewährleisten und Gemeinschaftsstandards aufrechtzuerhalten (zum Beispiel Google Cloud).</p><p><strong>IT-Dienste:</strong> um verschiedene Betriebsabläufe unseres Unternehmens zu unterstützen, beispielsweise wenn ein Benutzer mit unseren Supportdiensten interagiert, was die Verarbeitung personenbezogener Daten der Benutzer beinhalten kann (zum Beispiel Freshworks).</p><p>Wir überprüfen die Dritten, mit denen wir zusammenarbeiten, um sicherzustellen, dass sie über angemessene Datenschutz- und Informationssicherheitsmaßnahmen verfügen. Wir ergreifen Maßnahmen, um Daten, die an Dritte weitergegeben werden, zu schützen und zu anonymisieren, soweit dies angesichts der Art der erbrachten Dienste angemessen ist. Wir stellen den vertrauenswürdigen Dritten nur die für den von ihnen erbrachten Dienst notwendigen personenbezogenen Daten zur Verfügung.</p><p>Wenn Sie eine Sicherheitslücke oder ein Datenschutzleck entdecken, melden Sie es uns bitte diskret über <vulnerability>GitHub</vulnerability> oder <contact>Email</contact>.</p><p>Sie können die bei uns gespeicherten Daten in Ihren <settings>Kontoeinstellungen</settings> und in Ihren Nachrichten überprüfen. Sie können alle Daten anfordern, die wir gespeichert haben, indem Sie uns eine E-Mail senden; Sie erhalten diese innerhalb von 30 Tagen.</p>"
+		"title": "Herunterladen"
 	},
 	"superseded_policy": {
 		"fancy_noisy_grizzly_hint": "Diese Richtlinie war in Kraft {range} und ist nicht mehr aktiv. Bitte sehen Sie sich die <current>neueste Version dieser Richtlinie</current> an."
@@ -118,8 +44,8 @@
 					"image": "1e084a7b-d532-4f82-8bf1-4a51cec55e9e"
 				},
 				"1": {
-					"image": "a137add7-ecc1-425a-9313-e6862d43e00c",
-					"title": "Schwimmen… mit Haien"
+					"title": "Schwimmen… mit Haien",
+					"image": "a137add7-ecc1-425a-9313-e6862d43e00c"
 				},
 				"2": {
 					"image": "40d6b065-7249-463c-8c31-f74ad922a0e6"
@@ -128,12 +54,12 @@
 					"image": "d9a2206c-7624-4551-bc78-3a9fc15eef74"
 				},
 				"4": {
-					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66",
-					"title": "Gras berühren"
+					"title": "Gras berühren",
+					"image": "1049fc02-6e6b-4178-b762-b46e56f9fa66"
 				},
 				"5": {
-					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e",
-					"title": "Gemeinsam malen"
+					"title": "Gemeinsam malen",
+					"image": "99f9bdc0-b55a-462d-9614-d895d14b690e"
 				},
 				"6": {
 					"image": "4677372a-c0b9-4ad6-870b-aff66ec4ca9d"
@@ -209,7 +135,6 @@
 			"5": "Möchten Sie Tipps?",
 			"6": "Im Homie-Modus kannst du neue Freunde finden ✌️",
 			"7": "Sei du selbst!",
-			"60": "Du hast 300 Mal auf mich geklickt.",
 			"19": "Warum bist du noch hier?",
 			"26": "VRLFP wurde am 4. Juli 2018 geboren.",
 			"29": ":3",
@@ -218,8 +143,78 @@
 			"49": "Kennst du den Weg?",
 			"53": "Kannst du das?",
 			"59": "Geh duschen!",
+			"60": "Du hast 300 Mal auf mich geklickt.",
 			"61": "Ich bin eine Katze. Das ist eine Katzenweisheit.",
 			"69": "Miau."
+		}
+	},
+	"about": {
+		"title": "Über uns",
+		"team": {
+			"image_alt": "Avatar von {name}",
+			"roles": {
+				"kfarwell": "Hauptentwickler",
+				"aries": "Softwareentwickler",
+				"moderator": "Moderator"
+			}
+		},
+		"timeline": {
+			"2018": {
+				"title": "2018 🐣",
+				"image": "88bb9381-87ed-499d-9667-cd61eff96938",
+				"image_alt": "Flirtual in 2018"
+			},
+			"2019": {
+				"title": "🏆 2019",
+				"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
+				"image_alt": "Flirtual in 2019"
+			},
+			"2020": {
+				"title": "2020 🧪",
+				"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
+				"image_alt": "Flirtual in 2020"
+			},
+			"2021": {
+				"title": "✌️ 2021",
+				"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
+				"image_alt": "Flirtual in 2021"
+			},
+			"2022": {
+				"title": "2022 😻",
+				"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
+				"image_alt": "Flirtual in 2022"
+			},
+			"2023": {
+				"title": "✨ 2023",
+				"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
+				"image_alt": "Flirtual in 2023"
+			}
+		},
+		"images": {
+			"0": {
+				"image": "273de50f-7a03-4918-bd7c-331e11a00949",
+				"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
+			},
+			"1": {
+				"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
+				"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
+			},
+			"2": {
+				"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
+				"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
+			},
+			"3": {
+				"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
+				"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
+			},
+			"4": {
+				"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
+				"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
+			},
+			"5": {
+				"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
+				"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
+			}
 		}
 	},
 	"branding": {
@@ -256,6 +251,11 @@
 	},
 	"payments": {
 		"title": "Zahlungsbedingungen"
+	},
+	"privacy": {
+		"title": "Datenschutzerklärung",
+		"title_superseded": "Datenschutzerklärung (veraltet)",
+		"content": "<p>Ihr Benutzername, Ihr Anzeigename, Ihre Profilbilder, Ihre Bio, Ihr Alter, Ihr Geschlecht, Ihre Vermittlungspräferenzen, Ihre persönlichen Interessentags, Ihre ausgewählten VR-Apps/Spiele und ob Sie neu in VR sind, werden anderen Nutzern sichtbar sein. Ihre zusätzlichen Profilinformationen (einschließlich Ihrer Sexualität, NSFW-Tags, Ihres Landes, verlinkter Konten usw.) werden anderen Benutzern je nach Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy>, die Sie jederzeit ändern können, sichtbar oder verborgen sein. Ihre Persönlichkeitsmerkmale (die wir basierend auf Ihren Antworten auf unseren Persönlichkeitsfragebogen identifizieren) werden anderen Benutzern je nach Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy> sichtbar oder verborgen sein, aber Ihre spezifischen Fragebogenantworten werden nicht sichtbar sein.</p><p>Wir verwenden eine eigene, lokal installierte Datenanalyse. Wir können anonymisierte Statistiken über Flirtual teilen (zum Beispiel die Anzahl der Benutzer, die eine bestimmte Social VR-App oder ein Spiel verwenden). Sie können sich in Ihren <settings-privacy>Datenschutzeinstellungen</settings-privacy> von diesen Statistiken abmelden.</p><p>Ihre Nachrichten und Nachrichtenhistorie mit anderen Benutzern werden von TalkJS gehostet und geteilt, jedoch nicht mit anderen Dritten geteilt.</p><p>Ihre Kontaktemail wird anderen Benutzern nicht angezeigt. Ihre Kontaktemail kann von Drittanbietern abgerufen werden, um Transaktions-, Marketing- und Supportnachrichten gemäß Ihren Präferenzen zu liefern. Sie können sich von <settings-notifications>Benachrichtigungen per E-Mail</settings-notifications> abmelden, was Ihre E-Mail-Adresse aus den Aufzeichnungen von TalkJS entfernt.</p><p>Wenn Sie vermuten, dass Ihr Konto kompromittiert wurde, ändern Sie bitte sofort Ihr <settings-password>Passwort</settings-password> und <contact>melden Sie das Problem</contact> mit dem Wort „DRINGEND“ in der Betreffzeile. Geben Sie im Nachrichtentext Ihren Benutzernamen, den Zeitpunkt des letzten Zugriffs auf die Seite und alle Details an, die Sie zu der Annahme einer Sicherheitsverletzung geführt haben.</p><p>Ihr Passwort wird gehasht und gesalzen gespeichert.</p><p>Wir verwenden bestimmte vertrauenswürdige Dritte, die Dienste für Flirtual bereitstellen. Wir können personenbezogene Daten von Nutzern mit diesen Dritten teilen, jedoch nur zum Zweck der Bereitstellung ihrer Dienste. Weitere Informationen und Beispiele finden Sie unten.</p><p><strong>Cloud-Hosting-Dienste:</strong> um eine zuverlässige und sichere Infrastruktur für die Verwaltung und den Betrieb unserer Plattform bereitzustellen (zum Beispiel Fly.io und Vercel).</p><p><strong>In-App-Funktionalitätsdienste:</strong> um wichtige Funktionen wie Messaging und optimiertes Bild-Hosting innerhalb unserer App zu erleichtern (zum Beispiel TalkJS).</p><p><strong>Abrechnungsdienste:</strong> um Zahlungen und Abonnements zu verwalten (zum Beispiel Stripe).</p><p><strong>Social Media-Dienste:</strong> um es Nutzern zu ermöglichen, ihre Konten mit unserer Plattform zu verknüpfen und soziale Interaktionen zu erleichtern (zum Beispiel Discord).</p><p><strong>Sicherheits- und Leistungsdienste:</strong> um unsere Plattform zu schützen, unsere Nutzer zu schützen und die Gesamtleistung zu verbessern (zum Beispiel Cloudflare).</p><p><strong>Einblicks- und Verbesserungsdienste:</strong> um Benutzerfeedback zu sammeln und Analysen zur kontinuierlichen Verbesserung unserer Plattform durchzuführen (zum Beispiel Canny).</p><p><strong>Kommunikationsdienste:</strong> um bei der Übermittlung von Transaktions- und Marketingnachrichten an Benutzer zu unterstützen (zum Beispiel Amazon Web Services).</p><p><strong>Moderationsdienste:</strong> um angemessenes Verhalten innerhalb der App zu gewährleisten und Gemeinschaftsstandards aufrechtzuerhalten (zum Beispiel Google Cloud).</p><p><strong>IT-Dienste:</strong> um verschiedene Betriebsabläufe unseres Unternehmens zu unterstützen, beispielsweise wenn ein Benutzer mit unseren Supportdiensten interagiert, was die Verarbeitung personenbezogener Daten der Benutzer beinhalten kann (zum Beispiel Freshworks).</p><p>Wir überprüfen die Dritten, mit denen wir zusammenarbeiten, um sicherzustellen, dass sie über angemessene Datenschutz- und Informationssicherheitsmaßnahmen verfügen. Wir ergreifen Maßnahmen, um Daten, die an Dritte weitergegeben werden, zu schützen und zu anonymisieren, soweit dies angesichts der Art der erbrachten Dienste angemessen ist. Wir stellen den vertrauenswürdigen Dritten nur die für den von ihnen erbrachten Dienst notwendigen personenbezogenen Daten zur Verfügung.</p><p>Wenn Sie eine Sicherheitslücke oder ein Datenschutzleck entdecken, melden Sie es uns bitte diskret über <vulnerability>GitHub</vulnerability> oder <contact>Email</contact>.</p><p>Sie können die bei uns gespeicherten Daten in Ihren <settings>Kontoeinstellungen</settings> und in Ihren Nachrichten überprüfen. Sie können alle Daten anfordern, die wir gespeichert haben, indem Sie uns eine E-Mail senden; Sie erhalten diese innerhalb von 30 Tagen.</p>"
 	},
 	"press": {
 		"title": "Presse",

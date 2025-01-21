@@ -42,15 +42,9 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 		if (!openness || !conscientiousness || !agreeableness) return [];
 
 		return [
-			t("profile.personality.openness", {
-				value: openness > 0 ? "high" : "low"
-			}),
-			t("profile.personality.conscientiousness", {
-				value: conscientiousness > 0 ? "high" : "low"
-			}),
-			t("profile.personality.agreeableness", {
-				value: agreeableness > 0 ? "high" : "low"
-			})
+			t(openness > 0 ? "open_minded" : "practical"),
+			t(conscientiousness > 0 ? "reliable" : "free_spirited"),
+			t(agreeableness > 0 ? "friendly" : "straightforward")
 		];
 	}
 
@@ -139,7 +133,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 						}
 						href={editable ? urls.settings.nsfw : undefined}
 					>
-						{t("profile.dark_level_goat_gulp", { value: user.profile.domsub })}
+						{t(user.profile.domsub)}
 					</Pill>
 				</div>
 			)}

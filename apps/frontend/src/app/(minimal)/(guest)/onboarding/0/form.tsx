@@ -1,6 +1,7 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
@@ -15,9 +16,12 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
+import { useInternationalization } from "~/hooks/use-internationalization";
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
+	const t = useTranslations();
+	const { locale: { current } } = useInternationalization();
 	const router = useRouter();
 
 	return (
@@ -30,34 +34,38 @@ export const Onboarding0Form: FC = () => {
 				serviceAgreement: false,
 				notifications: true
 			}}
+			captchaTabIndex={10}
 			className="flex flex-col gap-8"
 			formErrorMessages={false}
+			renderCaptcha={false}
 			requireChange={false}
 			onSubmit={async ({ ...values }, { captcha }) => {
 				await User.create({
 					...values,
-					captcha
+					captcha,
+					language: current
 				});
 
 				router.refresh();
 				router.push(urls.onboarding(1));
 			}}
 		>
-			{({ errors, FormField }) => (
+			{({ errors, Captcha, FormField }) => (
 				<>
 					<FormField name="email">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>Email address</InputLabel>
-								<InputText {...props} autoComplete="email" type="email" />
+								<InputLabel {...labelProps}>{t("email_address")}</InputLabel>
+								<InputText {...props} autoComplete="email" tabIndex={1} type="email" />
 							</>
 						)}
 					</FormField>
 					<FormField name="password">
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>Password</InputLabel>
+								<InputLabel {...labelProps}>{t("password")}</InputLabel>
 								<InputText
+									tabIndex={2}
 									{...props}
 									autoComplete="new-password"
 									type="password"
@@ -72,7 +80,7 @@ export const Onboarding0Form: FC = () => {
 					>
 						{({ props, labelProps }) => (
 							<>
-								<InputLabel {...labelProps}>URL</InputLabel>
+								<InputLabel {...labelProps}>{t("url")}</InputLabel>
 								<InputText {...props} autoComplete="nope" tabIndex={-1} />
 							</>
 						)}
@@ -80,37 +88,38 @@ export const Onboarding0Form: FC = () => {
 					<FormField name="serviceAgreement">
 						{({ props, labelProps }) => (
 							<div className="flex items-center gap-4">
-								<InputCheckbox {...props} />
+								<InputCheckbox {...props} tabIndex={4} />
 								<InputLabel
 									{...labelProps}
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											to the
-											{" "}
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href={urls.resources.termsOfService}
-											>
-												Terms of Service
-											</InlineLink>
-											{" "}
-											&
-											{" "}
-											<InlineLink
-												className="underline"
-												highlight={false}
-												href={urls.resources.privacyPolicy}
-											>
-												Privacy Policy
-											</InlineLink>
-											{" "}
-											and I&apos;m at least 18 years of age
+											{t.rich("pickle_capricious_cemetery_name", {
+												terms: (children) => (
+													<InlineLink
+														className="underline"
+														highlight={false}
+														href={urls.resources.termsOfService}
+														tabIndex={8}
+													>
+														{children}
+													</InlineLink>
+												),
+												privacy: (children) => (
+													<InlineLink
+														className="underline"
+														highlight={false}
+														href={urls.resources.privacyPolicy}
+														tabIndex={9}
+													>
+														{children}
+													</InlineLink>
+												)
+											})}
 										</InputLabelHint>
 									)}
 								>
-									I agree
+									{t("i_agree")}
 								</InputLabel>
 							</div>
 						)}
@@ -118,35 +127,35 @@ export const Onboarding0Form: FC = () => {
 					<FormField name="notifications">
 						{({ props, labelProps }) => (
 							<div className="flex items-center gap-4">
-								<InputCheckbox {...props} />
+								<InputCheckbox {...props} tabIndex={5} />
 								<InputLabel
 									{...labelProps}
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											with new features, changes, and offers
-											<br />
-											(we won&apos;t spam you)
+											{t.rich("spade_mindless_furry_jeans", { br: () => <br /> })}
 										</InputLabelHint>
 									)}
 								>
-									Get Flirtual updates
+									{t("acidic_temporary_fill_cracker")}
 								</InputLabel>
 							</div>
 						)}
 					</FormField>
+					<Captcha />
 					<div className="flex flex-col gap-4">
 						<div className="flex gap-2 desktop:flex-row-reverse">
-							<FormButton className="w-44" size="sm">
-								Create account
+							<FormButton className="min-w-44" size="sm" tabIndex={6}>
+								{t("create_account")}
 							</FormButton>
 							<ButtonLink
 								className="flex w-fit flex-row gap-2 opacity-75 desktop:flex-row-reverse"
 								href={urls.login()}
 								kind="tertiary"
 								size="sm"
+								tabIndex={7}
 							>
-								<span>or log in</span>
+								<span>{t("or_log_in")}</span>
 								<MoveRight className="size-5 desktop:rotate-180" />
 							</ButtonLink>
 						</div>

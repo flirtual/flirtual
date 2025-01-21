@@ -20,32 +20,27 @@ export type ConnectionType = (typeof ConnectionType)[number];
 
 export const ConnectionMetadata: Record<
 	ConnectionType,
-	{ Icon: IconComponent; iconClassName?: string; label: string; color: string }
+	{ Icon: IconComponent; iconClassName?: string; color: string }
 > = {
 	google: {
 		Icon: GoogleIcon,
-		label: "Google",
 		color: "#dd4b39"
 	},
 	apple: {
 		Icon: AppleIcon,
-		label: "Apple",
 		color: "#000000"
 	},
 	meta: {
 		Icon: MetaIcon,
-		label: "Meta",
 		color: "#0082fb"
 	},
 	discord: {
 		Icon: DiscordIcon,
-		label: "Discord",
 		color: "#5865f2"
 	},
 	vrchat: {
 		Icon: VRChatIcon,
 		iconClassName: "text-black-90",
-		label: "VRChat",
 		color: "#095d6a"
 	}
 };
@@ -85,9 +80,9 @@ export const Connection = {
 			.url(this.authorizeUrl({ ...options, json: true }), true)
 			.get()
 			.json<{
-			state: string;
-			authorizeUrl: string;
-		}>();
+				state: string;
+				authorizeUrl: string;
+			}>();
 	},
 	grant(options: ConnectionGrantOptions) {
 		return this.api.url("/grant").query(options).get().res();

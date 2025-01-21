@@ -8,7 +8,7 @@ export const SupersededPolicy: FC<{
 	superseded: Date;
 	current: string;
 }> = ({ introduced, superseded, current }) => {
-	const t = useTranslations("superseded_policy");
+	const t = useTranslations();
 	const { dateTimeRange } = useFormatter();
 
 	return (

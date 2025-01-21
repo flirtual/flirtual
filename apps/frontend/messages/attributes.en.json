@@ -2236,7 +2236,7 @@
 			"name": "Casual dating"
 		},
 		"hookups": {
-			"name": "Casual fun"
+			"name": "Hookups"
 		},
 		"friends": {
 			"name": "New friends"
@@ -2949,6 +2949,50 @@
 		},
 		"ssp": {
 			"name": "Spanish Sign Language"
+		}
+	},
+	"plans": {
+		"w4WDwDWKtmLSqkn8oNqCN3": {
+			"name": "Legacy Premium (US$24.99/3mo)"
+		},
+		"Wt4aFY7jVzvSNFK9qcYAr5": {
+			"name": "Premium (every 6 months)"
+		},
+		"fBDvWjdgvG6zEZMj6ZfyNG": {
+			"name": "Premium (every 3 months)"
+		},
+		"6xZywHRc432o5H9PqFFoyG": {
+			"name": "Legacy Premium (US$9.99/mo)"
+		},
+		"rFxKcnAZGQtwckWUQbrG9J": {
+			"name": "Fallback Premium"
+		},
+		"PQZuLuEmXRwuRhiQisgkPM": {
+			"name": "Legacy Premium (US$39.99/6mo)"
+		},
+		"PHpCmDBMX6wCkuXXr36foQ": {
+			"name": "Early Premium (US$24.99/3mo)"
+		},
+		"Di7Sypboma4ryhy6MUagyS": {
+			"name": "Lifetime"
+		},
+		"43V699voRpLqskJEM42Vsa": {
+			"name": "Early Supporter"
+		},
+		"CJv2NQ7AiEimvDoZJ3uQTe": {
+			"name": "Early Lifetime"
+		},
+		"2nAci9TWPaMaYFzVASVgme": {
+			"name": "Early Premium (US$9.99/mo)"
+		},
+		"5NcKBUELrTmZr6JQQFespf": {
+			"name": "Early Premium (US$39.99/6mo)"
+		},
+		"LVjvu5YE7PjUJxVrkfsnMi": {
+			"name": "Premium (monthly)"
+		},
+		"QQd364odDmzV69gsaKTYwm": {
+			"name": "Legacy Lifetime"
 		}
 	}
 }

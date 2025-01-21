@@ -19,12 +19,16 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 	variant = "profile",
 	...props
 }) => {
-	const t = useTranslations("profile");
+	const t = useTranslations();
 
 	return (
 		<UserImage
 			{...props}
-			alt={t("happy_yummy_otter_climb", { displayName: user ? displayName(user) : "anonymous" })}
+			alt={t("extra_moving_jackdaw_twist", {
+				name: user
+					? displayName(user)
+					: t("anonymous")
+			})}
 			draggable={false}
 			src={urls.userAvatar(user, variant)}
 		/>

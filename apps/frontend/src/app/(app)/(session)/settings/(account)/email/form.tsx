@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { User } from "~/api/user";
@@ -12,6 +13,7 @@ import { urls } from "~/urls";
 export const EmailForm: React.FC = () => {
 	const [session, mutateSession] = useSession();
 	const router = useRouter();
+	const t = useTranslations();
 
 	if (!session) return null;
 	const { user } = session;
@@ -37,7 +39,7 @@ export const EmailForm: React.FC = () => {
 					<FormField name="email">
 						{(field) => (
 							<>
-								<InputLabel>New email address</InputLabel>
+								<InputLabel>{t("new_email_address")}</InputLabel>
 								<InputText {...field.props} type="email" />
 							</>
 						)}
@@ -45,7 +47,7 @@ export const EmailForm: React.FC = () => {
 					<FormField name="emailConfirmation">
 						{(field) => (
 							<>
-								<InputLabel>Confirm new email address</InputLabel>
+								<InputLabel>{t("confirm_new_email_address")}</InputLabel>
 								<InputText {...field.props} type="email" />
 							</>
 						)}
@@ -53,7 +55,7 @@ export const EmailForm: React.FC = () => {
 					<FormField name="currentPassword">
 						{(field) => (
 							<>
-								<InputLabel>Confirm current password</InputLabel>
+								<InputLabel>{t("confirm_current_password")}</InputLabel>
 								<InputText
 									{...field.props}
 									autoComplete="current-password"
@@ -62,7 +64,7 @@ export const EmailForm: React.FC = () => {
 							</>
 						)}
 					</FormField>
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>

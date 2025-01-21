@@ -1,14 +1,15 @@
 "use client";
 
 import { CheckCheck, ChevronLeft, X } from "lucide-react";
-import Link from "next/link";
-import { type FC, Suspense, useLayoutEffect } from "react";
+import { type FC, Fragment, Suspense, useLayoutEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
 import { Button } from "~/components/button";
+import { Link } from "~/components/link";
 import { useConversations } from "~/hooks/use-conversations";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
@@ -25,6 +26,7 @@ export interface ConversationAsideProps {
 
 export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const toasts = useToast();
+	const t = useTranslations();
 
 	const { activeConversationId } = props;
 	const HeaderIcon = activeConversationId ? ChevronLeft : X;
@@ -56,7 +58,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 				>
 					<HeaderIcon className="w-6" />
 				</Link>
-				<span className="font-montserrat text-2xl font-extrabold">Matches</span>
+				<span className="font-montserrat text-2xl font-extrabold">{t("matches")}</span>
 			</div>
 			<div className="h-full desktop:p-1 desktop:pt-0">
 				<div
@@ -77,16 +79,13 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 										.catch(toasts.addError);
 								}}
 							>
-								Mark all as read
+								{t("mark_all_as_read")}
 							</Button>
 						)}
 					</div>
 					<div className="flex flex-col gap-2">
 						{data.map(({ data: conversations, metadata }, dataIndex) => (
-							<div
-								className="flex flex-col gap-2"
-								key={metadata.cursor.self.page}
-							>
+							<Fragment key={metadata.cursor.self.page}>
 								{conversations.map((conversation, conversationIndex) => (
 									<Suspense
 										fallback={<ConversationListItemSkeleton />}
@@ -102,7 +101,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 										/>
 									</Suspense>
 								))}
-							</div>
+							</Fragment>
 						))}
 					</div>
 				</div>

@@ -14,7 +14,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { ReportDialog } from "./dialogs/report";
 
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
-	const t = useTranslations("profile");
+	const t = useTranslations();
 	const toasts = useToast();
 
 	return (
@@ -27,11 +27,11 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 					mutate(relationshipKey(user.id));
 
 					toasts.add(
-						t("top_sweet_macaw_pet", { displayName: displayName(user) })
+						t("unblocked_name", { name: displayName(user) })
 					);
 				}}
 			>
-				{t("polite_spicy_hamster_create")}
+				{t("unblock")}
 			</Button>
 			<Tooltip>
 				<ReportDialog user={user}>
@@ -43,7 +43,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 						</DialogTrigger>
 					</TooltipTrigger>
 				</ReportDialog>
-				<TooltipContent>{t("neat_lower_shell_tend")}</TooltipContent>
+				<TooltipContent>{t("report_profile")}</TooltipContent>
 			</Tooltip>
 		</div>
 	);

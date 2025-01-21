@@ -15,21 +15,11 @@ export type ProfilePersonality = {
 	question8: boolean | null;
 };
 
-export const personalityQuestionLabels = [
-	"I daydream a lot",
-	"I find many things beautiful",
-	"I dislike it when things change",
-	"I plan my life out",
-	"Rules are important to follow",
-	"I often do spontaneous things",
-	"Deep down most people are good people",
-	"I love helping people",
-	"The truth is more important than people's feelings"
-];
+const personalityQuestionCount = 9;
 
 export const DefaultProfilePersonality = Object.freeze<ProfilePersonality>(
 	Object.fromEntries(
-		personalityQuestionLabels.map((_, questionIndex) => [
+		Array.from({ length: personalityQuestionCount }, (_, questionIndex) => [
 			`question${questionIndex}`,
 			null
 		])

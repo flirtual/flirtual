@@ -2,6 +2,7 @@
 
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 
 import { useFreshworks } from "~/hooks/use-freshworks";
 
@@ -9,8 +10,10 @@ import { InlineButton } from "../inline-button";
 import { FooterListIconLink, FooterListLink } from "./footer";
 
 export const FooterSupportLink: React.FC = () => {
+	const t = useTranslations();
+
 	return (
-		<FooterListLink label="Support" onClick={useFreshworks().openFreshworks} />
+		<FooterListLink label={t("support")} onClick={useFreshworks().openFreshworks} />
 	);
 };
 
@@ -23,8 +26,9 @@ export const FooterIconSupportLink: React.FC = () => {
 	);
 };
 
-export const SupportButton: React.FC<{ className?: string }> = ({
-	className
+export const SupportButton: React.FC<{ className?: string; children?: ReactNode }> = ({
+	className,
+	children
 }) => {
 	const t = useTranslations();
 
@@ -33,7 +37,7 @@ export const SupportButton: React.FC<{ className?: string }> = ({
 			className={className}
 			onClick={useFreshworks().openFreshworks}
 		>
-			{t("busy_direct_cockroach_hush")}
+			{children || t("contact_us")}
 		</InlineButton>
 	);
 };

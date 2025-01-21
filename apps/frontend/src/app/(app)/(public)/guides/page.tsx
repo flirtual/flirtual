@@ -6,22 +6,22 @@ import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("guides");
+	const t = await getTranslations();
 
 	return {
-		title: t("title")
+		title: t("guides")
 	};
 }
 
 export default async function GuidesPage() {
-	const t = await getTranslations("guides");
+	const t = await getTranslations();
 
 	return (
-		<ModelCard className="w-full desktop:max-w-2xl" title={t("title")}>
+		<ModelCard className="w-full desktop:max-w-2xl" title={t("guides")}>
 			<ul className="list-disc text-xl">
 				<li>
 					<InlineLink href={urls.guides.mentalHealth}>
-						{t("ago_patchy_chipmunk_find")}
+						{t("mental_health_resources")}
 					</InlineLink>
 				</li>
 			</ul>

@@ -1,6 +1,7 @@
 "use client";
 
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
@@ -16,6 +17,7 @@ import { useLocation } from "~/hooks/use-location";
 
 export interface AddConnectionButtonProps {
 	type: ConnectionType;
+	tabIndex?: number;
 }
 
 const label = {
@@ -27,8 +29,10 @@ const label = {
 };
 
 export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
-	type
+	type,
+	tabIndex
 }) => {
+	const t = useTranslations();
 	const location = useLocation();
 	location.search = "";
 
@@ -50,6 +54,7 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 			href={href}
 			size="sm"
 			style={{ backgroundColor: color }}
+			tabIndex={tabIndex}
 			target="_self"
 			onClick={async () => {
 				if (!native) return;
@@ -95,9 +100,7 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 		>
 			<Icon className={twMerge("size-6", iconClassName)} />
 			<span className="font-montserrat text-lg font-semibold">
-				Log in with
-				{" "}
-				{label[type]}
+				{t("log_in_with", { type: label[type] })}
 			</span>
 		</Component>
 	);

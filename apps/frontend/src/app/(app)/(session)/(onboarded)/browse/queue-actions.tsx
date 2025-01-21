@@ -40,6 +40,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { UserAvatar } from "~/components/user-avatar";
 import { useDevice } from "~/hooks/use-device";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
@@ -86,6 +87,7 @@ const QueueActions_: FC<{
 }> = ({ queue, explicitUserId, kind: mode }) => {
 	const [session] = useSession();
 	const { native } = useDevice();
+	const t = useTranslations();
 
 	useEffect(() => {
 		if (!session?.user.createdAt || !native) return;
@@ -215,9 +217,7 @@ const QueueActions_: FC<{
 						>
 							<>
 								<DialogHeader>
-									<DialogTitle>
-										Come back tomorrow!
-									</DialogTitle>
+									<DialogTitle>{t("warm_ago_slug_leap")}</DialogTitle>
 									<DialogDescription className="sr-only" />
 								</DialogHeader>
 								<DialogBody>
@@ -225,39 +225,33 @@ const QueueActions_: FC<{
 										<div className="flex flex-col gap-4">
 											<div className="flex max-w-md flex-col gap-4 font-nunito">
 												<p>
-													You can
-													{" "}
-													<InlineLink href={urls.subscription.default}>
-														upgrade to Premium
-													</InlineLink>
-													{" "}
-													to
-													{" "}
-													<em>browse unlimited profiles</em>
-													{" "}
-													and
-													{" "}
-													<em>see who&apos;s already liked you</em>
-													.
+													{t.rich("cozy_such_jannes_laugh", {
+														link: (children) => (
+															<InlineLink href={urls.subscription.default}>
+																{children}
+															</InlineLink>
+														),
+														strong: (children) => <strong>{children}</strong>
+													})}
 												</p>
 												{mode === "love" && (
 													<p>
-														You can also continue in
-														{" "}
-														<InlineLink href={urls.browse("friend")}>
-															Homie Mode
-														</InlineLink>
-														, where you can meet new friends (without
-														matchmaking filters).
+														{t.rich("small_drab_rooster_drum", {
+															link: (children) => (
+																<InlineLink href={urls.browse("friend")}>
+																	{children}
+																</InlineLink>
+															)
+														})}
 													</p>
 												)}
-												<p className="font-semibold">New profiles in:</p>
+												<p className="font-semibold">{t("tense_loose_felix_beam")}</p>
 												<Countdown date={reset_at} onComplete={reset} />
 											</div>
 										</div>
 										<div className="flex flex-col gap-2">
 											<ButtonLink href={urls.subscription.default} size="sm">
-												Get Premium
+												{t("get_premium")}
 											</ButtonLink>
 											<ButtonLink
 												href={
@@ -268,7 +262,7 @@ const QueueActions_: FC<{
 												kind="tertiary"
 												size="sm"
 											>
-												{mode === "love" ? "Homie Mode" : "Leave Homie Mode"}
+												{t(mode === "love" ? "homie_mode" : "leave_homie_mode")}
 											</ButtonLink>
 										</div>
 									</div>
@@ -296,7 +290,7 @@ const QueueActions_: FC<{
 										</button>
 									</TooltipTrigger>
 									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-										<span className="pt-1">Undo</span>
+										<span className="pt-1">{t("undo")}</span>
 										<Key label="H" />
 									</TooltipContent>
 								</Tooltip>
@@ -318,7 +312,7 @@ const QueueActions_: FC<{
 											</button>
 										</TooltipTrigger>
 										<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-											<span className="pt-1">Like</span>
+											<span className="pt-1">{t("like")}</span>
 											<Key label="J" />
 										</TooltipContent>
 									</Tooltip>
@@ -338,7 +332,7 @@ const QueueActions_: FC<{
 										</button>
 									</TooltipTrigger>
 									<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-										<span className="pt-1">Homie</span>
+										<span className="pt-1">{t("homie")}</span>
 										<Key label={mode === "love" ? "K" : "J"} />
 									</TooltipContent>
 								</Tooltip>
@@ -355,7 +349,7 @@ const QueueActions_: FC<{
 									</button>
 								</TooltipTrigger>
 								<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-									<span className="pt-1">Pass</span>
+									<span className="pt-1">{t("pass")}</span>
 									<Key label="L" />
 								</TooltipContent>
 							</Tooltip>
@@ -380,6 +374,8 @@ const MatchDialog: FC<{
 	const router = useRouter();
 	const [session] = useSession();
 	const user = useUser(userId);
+	const t = useTranslations();
+
 	if (!session || !user) return null;
 
 	const Icon = kind === "love" ? HeartIcon : PeaceIcon;
@@ -393,19 +389,15 @@ const MatchDialog: FC<{
 		>
 			<>
 				<DialogHeader>
-					<DialogTitle>It&apos;s a match!</DialogTitle>
+					<DialogTitle>{t("its_a_match")}</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
 				<DialogBody>
 					<div className="flex flex-col justify-between gap-4">
 						<span>
-							You and
-							{" "}
-							<InlineLink data-block href={urls.profile(user)}>
-								{displayName(user)}
-							</InlineLink>
-							{" "}
-							liked each other!
+							{t.rich("green_aqua_ibex_value", {
+								name: () => <InlineLink data-block href={urls.profile(user)}>{displayName(user)}</InlineLink>
+							})}
 						</span>
 						<div className="flex items-center justify-center gap-4">
 							<UserAvatar
@@ -432,10 +424,10 @@ const MatchDialog: FC<{
 										)
 									)}
 							>
-								Send a message
+								{t("send_a_message")}
 							</Button>
 							<Button kind="tertiary" size="sm" onClick={onClose}>
-								Continue browsing
+								{t("continue_browsing")}
 							</Button>
 						</div>
 					</div>

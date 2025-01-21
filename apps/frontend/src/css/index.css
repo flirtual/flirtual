@@ -9,6 +9,11 @@
   overscroll-behavior: none;
 }
 
+* {
+  /* @apply ja:not-italic ko:not-italic ru:not-italic; */
+  @apply ja:not-italic;
+}
+
 *:not(input) {
   user-select: none;
 }
@@ -219,6 +224,11 @@ iframe {
 .uppy-DragDrop-container {
   background: none !important;
   border: none !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+.uppy-DragDrop-inner {
+  padding: 0 20px !important;
 }
 
 .uppy-DragDrop-inner>svg {

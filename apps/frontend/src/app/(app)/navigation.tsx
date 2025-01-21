@@ -61,7 +61,7 @@ export async function Navigation() {
 								<NavigationalSwitch>
 									<NavigationalSwitchItem
 										className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-										href={urls.default}
+										href={urls.landing}
 										icon={<HomeIcon />}
 									/>
 									<NavigationalSwitchItem

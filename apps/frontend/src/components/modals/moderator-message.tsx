@@ -20,6 +20,7 @@ export const ModerationMessageDialog: FC = () => {
 	const [session] = useSession();
 	const toasts = useToast();
 	const router = useRouter();
+	const t = useTranslations();
 
 	if (!session?.user.moderatorMessage) return null;
 
@@ -28,7 +29,7 @@ export const ModerationMessageDialog: FC = () => {
 			onAcknowledge={() =>
 				User.acknowledgeWarn(session.user.id)
 					.then(() => {
-						toasts.add("Message acknowledged");
+						toasts.add(t("message_acknowledged"));
 						return router.refresh();
 					})
 					.catch(toasts.addError)}
@@ -42,6 +43,7 @@ export const DiscordSpamDialog: FC = () => {
 	const [session] = useSession();
 	const router = useRouter();
 	const toasts = useToast();
+	const t = useTranslations();
 
 	const remindMeLater = async (quiet: boolean = false) => {
 		if (!session) return;
@@ -50,15 +52,16 @@ export const DiscordSpamDialog: FC = () => {
 			tnsDiscordInBiography: new Date(Date.now() + ms("30d")).toISOString()
 		});
 
-		if (!quiet) toasts.add("You will be reminded in 30 days.");
+		if (!quiet) toasts.add(t("you_will_be_reminded_in_number_days", { number: 30 }));
 	};
 
 	return (
 		<TrustAndSafetyDialog
 			closable
 			actions={(
-				<div className="grid grid-cols-2 gap-2">
+				<div className="flex gap-2">
 					<Button
+						className="grow"
 						size="sm"
 						onClick={async () => {
 							await remindMeLater(true);
@@ -67,10 +70,10 @@ export const DiscordSpamDialog: FC = () => {
 							router.refresh();
 						}}
 					>
-						Edit profile
+						{t("edit_profile")}
 					</Button>
 					<Button
-						className="text-sm"
+						className="grow text-sm"
 						kind="tertiary"
 						size="sm"
 						onClick={async () => {
@@ -78,7 +81,7 @@ export const DiscordSpamDialog: FC = () => {
 							router.refresh();
 						}}
 					>
-						Remind me later
+						{t("remind_me_later")}
 					</Button>
 				</div>
 			)}
@@ -89,16 +92,10 @@ export const DiscordSpamDialog: FC = () => {
 				router.refresh();
 			}}
 		>
-			It looks like you&apos;ve mentioned your Discord username on your profile. For your privacy, we strongly recommend removing your Discord from your bio or display name and
-			{" "}
-			<InlineLink href={urls.settings.connections}>
-				connecting your Discord account
-			</InlineLink>
-			{" "}
-			instead.
-			<br />
-			<br />
-			This helps protect you from spam and unwanted messages by only sharing your Discord with your matches.
+			{t.rich("tense_active_gibbon_dare", {
+				link: (children) => <InlineLink href={urls.settings.connections}>{children}</InlineLink>,
+				br: () => <br />
+			})}
 		</TrustAndSafetyDialog>
 	);
 };
@@ -121,20 +118,20 @@ export const TrustAndSafetyDialog: FC<{
 				<DialogHeader>
 					<DialogTitle className="flex h-full items-center gap-2">
 						<Image
-							alt={t("meta.name")}
+							alt={t("flirtual")}
 							className="hidden h-fit w-24 dark:block desktop:block"
 							height={1000}
 							src={urls.media("flirtual-white.svg", "files")}
 							width={3468}
 						/>
 						<Image
-							alt={t("meta.name")}
+							alt={t("flirtual")}
 							className="block h-fit w-24 dark:hidden desktop:hidden"
 							height={1000}
 							src={urls.media("flirtual-black.svg", "files")}
 							width={3468}
 						/>
-						<span>{t("dialogs.trust_and_safety.title")}</span>
+						<span>{t("trust_and_safety")}</span>
 					</DialogTitle>
 				</DialogHeader>
 				<DialogBody>
@@ -147,15 +144,15 @@ export const TrustAndSafetyDialog: FC<{
 						<div className="flex flex-col gap-2">
 							{actions || (
 								<Button size="sm" onClick={onAcknowledge}>
-									{t("dialogs.trust_and_safety.acknowledge")}
+									{t("i_acknowledge")}
 								</Button>
 							)}
 							<span className="flex flex-row justify-center gap-4 font-nunito text-xs">
 								<InlineLink href={urls.resources.communityGuidelines}>
-									{t("dialogs.trust_and_safety.lofty_day_snail_treasure")}
+									{t("community_guidelines")}
 								</InlineLink>
 								<InlineLink href={urls.resources.contactDirect}>
-									{t("dialogs.trust_and_safety.jolly_nimble_crow_taste")}
+									{t("contact_us")}
 								</InlineLink>
 							</span>
 						</div>

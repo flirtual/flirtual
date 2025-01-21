@@ -10,7 +10,6 @@ import {
 	useReactTable
 } from "@tanstack/react-table";
 import { Eye, EyeOff, Gavel, Gem, Search, ShieldEllipsis } from "lucide-react";
-import Link from "next/link";
 import { type FC, Suspense, useDeferredValue, useEffect, useState } from "react";
 import { capitalize } from "remeda";
 import useSWR from "swr";
@@ -28,6 +27,7 @@ import {
 import { Button } from "~/components/button";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { InputSelect, InputSwitch, InputText } from "~/components/inputs";
+import { Link } from "~/components/link";
 import { ModelCard } from "~/components/model-card";
 import { ProfileDropdown } from "~/components/profile/dropdown";
 import {

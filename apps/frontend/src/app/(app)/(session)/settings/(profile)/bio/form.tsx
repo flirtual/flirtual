@@ -16,6 +16,7 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useTranslations } from "~/hooks/use-internationalization";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
@@ -25,6 +26,7 @@ export const BiographyForm: FC = () => {
 	const [session, mutateSession] = useSession();
 	const toasts = useToast();
 
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
@@ -34,7 +36,7 @@ export const BiographyForm: FC = () => {
 
 	const favoriteGameId = (user.profile.attributes.game || []).filter(
 		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
-	)[0];
+	)[0] || "mkyAHUgKDWFiqkZcgZD6pS";
 
 	return (
 		<Form
@@ -68,7 +70,7 @@ export const BiographyForm: FC = () => {
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
-				toasts.add("Saved bio & pics");
+				toasts.add(t("cuddly_few_llama_catch"));
 
 				await mutateSession({
 					...session,
@@ -90,10 +92,10 @@ export const BiographyForm: FC = () => {
 							<>
 								<InputLabel
 									inline
-									hint="For your privacy, please do not put your Discord username here (or any other usernames that you use). This helps you avoid unwanted messages on other platforms!"
+									hint={t("factual_curly_fly_pop")}
 									{...field.labelProps}
 								>
-									Display name
+									{t("display_name")}
 								</InputLabel>
 								<InputText {...field.props} />
 							</>
@@ -107,24 +109,17 @@ export const BiographyForm: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint>
-											Upload your avatar pictures from VRChat,
-											{" "}
-											{tAttribute[favoriteGameId || ""]?.name
-											?? "Horizon Worlds"}
-											, or another social VR app. Aim for 3+ avatar pictures to
-											get more matches.
+											{t("known_antsy_gull_savor", { game: tAttribute[favoriteGameId]!.name })}
 											<details>
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-													Guidelines
+													{t("guidelines")}
 												</summary>
-												Don&apos;t include nude/NSFW, disturbing, or off-topic
-												content, and don&apos;t use other people&apos;s
-												pictures.
+												{t("formal_icy_hound_type")}
 											</details>
 										</InputLabelHint>
 									)}
 								>
-									Profile pictures
+									{t("profile_pictures")}
 								</InputLabel>
 								<InputImageSet {...field.props} />
 							</>
@@ -137,21 +132,18 @@ export const BiographyForm: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint>
-											A great bio shows your personality and interests, maybe
-											your sense of humor and what you&apos;re looking for.
+											{t("proof_east_termite_pave")}
 											<details>
 												<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
-													Guidelines
+													{t("guidelines")}
 												</summary>
-												Be respectful and don&apos;t include spam, soliciting,
-												excessive self-promotion, graphic NSFW descriptions,
-												hateful or controversial content.
+												{t("tame_weird_termite_zap")}
 											</details>
 										</InputLabelHint>
 									)}
 									{...field.labelProps}
 								>
-									Bio
+									{t("bio")}
 								</InputLabel>
 								<InputEditor {...field.props} />
 							</>
@@ -166,7 +158,7 @@ export const BiographyForm: FC = () => {
 							/>
 						)}
 					</FormField>
-					<FormButton>Update</FormButton>
+					<FormButton>{t("update")}</FormButton>
 				</>
 			)}
 		</Form>

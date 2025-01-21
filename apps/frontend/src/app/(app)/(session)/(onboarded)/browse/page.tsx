@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { unstable_serialize } from "swr";
 
@@ -16,11 +17,13 @@ interface BrowsePageProps {
 }
 
 export async function generateMetadata(props: BrowsePageProps) {
+	const t = await getTranslations();
+
 	const { kind = "love" } = (await props.searchParams) || {};
 	if (!ProspectKind.includes(kind)) return redirect(urls.browse());
 
 	return {
-		title: kind === "friend" ? "Homie Mode" : "Browse"
+		title: kind === "friend" ? t("homie_mode") : t("browse")
 	};
 }
 

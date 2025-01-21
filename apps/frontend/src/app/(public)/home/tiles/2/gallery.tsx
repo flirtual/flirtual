@@ -9,22 +9,18 @@ import { urls } from "~/urls";
 
 export const CarouselGallery: FC = () => {
 	const {
-		landing: {
-			carousel: { images: _images }
-		}
-	} = useMessages() as unknown as {
-		landing: {
-			carousel: {
-				images: Record<
-					number,
-					{
-						title: string;
-						image: string;
-					}
-				>;
-			};
-		};
-	};
+		bounce_knot_legs_bell: _images
+	} = useMessages() as unknown as IntlMessages;
+
+	/*
+	t("bounce_knot_legs_bell.0.title")"
+	t("bounce_knot_legs_bell.1.title")"
+	t("bounce_knot_legs_bell.2.title")"
+	t("bounce_knot_legs_bell.3.title")"
+	t("bounce_knot_legs_bell.4.title")"
+	t("bounce_knot_legs_bell.5.title")"
+	t("bounce_knot_legs_bell.6.title")"
+	*/
 
 	const images = Object.values(_images);
 	const [activeIndex, setActiveIndex] = useState(0);

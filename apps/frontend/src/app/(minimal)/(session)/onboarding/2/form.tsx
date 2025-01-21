@@ -1,6 +1,7 @@
 "use client";
 
 import { MoveLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
@@ -30,6 +31,7 @@ export const Onboarding2Form: FC = () => {
 		({ simple, fallback }) => simple || fallback
 	);
 
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
@@ -69,23 +71,28 @@ export const Onboarding2Form: FC = () => {
 				<>
 					<FormField name="gender">
 						{(field) => (
-							<InputCheckboxList
-								{...field.props}
-								items={genders.map((gender) => {
-									const { name, plural } = (tAttribute[
-										gender.id
-									] as AttributeTranslation<"gender">) ?? {
-										name: gender.id
-									};
+							<>
+								<InputLabel {...field.labelProps}>
+									{t("im_interested_in")}
+								</InputLabel>
+								<InputCheckboxList
+									{...field.props}
+									items={genders.map((gender) => {
+										const { name, plural } = (tAttribute[
+											gender.id
+										] as AttributeTranslation<"gender">) ?? {
+											name: gender.id
+										};
 
-									return {
-										key: gender.id,
-										label: gender.fallback
-											? "Other genders"
-											: (plural ?? name)
-									};
-								})}
-							/>
+										return {
+											key: gender.id,
+											label: gender.fallback
+												? t("other_genders")
+												: (plural ?? name)
+										};
+									})}
+								/>
+							</>
 						)}
 					</FormField>
 					<FormField name="age">
@@ -98,15 +105,15 @@ export const Onboarding2Form: FC = () => {
 										{...labelProps}
 										hint={
 											min === absMinAge && max === absMaxAge
-												? "any age"
+												? t("any_age")
 												: max === absMaxAge
-													? `${min}+`
+													? t("number_plus", { number: min })
 													: min === max
 														? min
-														: `${min}-${max}`
+														: t("number_range", { from: min, to: max })
 										}
 									>
-										Age range
+										{t("age_range")}
 									</InputLabel>
 									<Slider
 										{...props}
@@ -127,11 +134,9 @@ export const Onboarding2Form: FC = () => {
 							size="sm"
 						>
 							<MoveLeft className="size-5 shrink-0" />
-							<span>Back</span>
+							<span>{t("back")}</span>
 						</ButtonLink>
-						<FormButton className="w-36" size="sm">
-							Finish
-						</FormButton>
+						<FormButton className="min-w-36" size="sm">{t("finish")}</FormButton>
 					</div>
 				</>
 			)}
