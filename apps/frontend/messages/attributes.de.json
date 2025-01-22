@@ -2713,6 +2713,9 @@
 		"HWte4cB6TUzzXZoJeuxJuf": {
 			"name": "Transen Frau",
 			"definition": "Eine Frau, die männlich bei der Geburt zugewiesen wurde."
+		},
+		"jAL62ePbibxaG4FPu7S8LG": {
+			"name": "Sonstige"
 		}
 	},
 	"interest-category": {
@@ -3003,6 +3006,24 @@
 		},
 		"ymWd4JdTqpnBLmGSLmJRvY": {
 			"name": "Nude oder NSFW Bilder"
+		},
+		"MyexHAyY8gzQjBQ6agCSx3": {
+			"name": "Betrug, Schadsoftware oder schädliche Links"
+		},
+		"vTzgZw4Eexx7fehzCM9PQY": {
+			"name": "Inhalte über Selbstverletzung"
+		},
+		"9iwmQ8huhkngyY9BgLDE9W": {
+			"name": "Sonstige"
+		},
+		"BtJvp62cJ5vm6CeuCPTP5H": {
+			"name": "Rechtswidriger Inhalt"
+		},
+		"wFkctcaaf5B4Ef5i3ggY3G": {
+			"name": "Hasserfüllte Inhalte"
+		},
+		"AFe9ijRg9MYGubm2Efi4Ki": {
+			"name": "Belästigung"
 		}
 	},
 	"plans": {
