@@ -138,7 +138,6 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				</div>
 			)}
 			<PillCollectionExpansion
-				attributes={{}}
 				editable={editable}
 				session={session}
 				user={user}

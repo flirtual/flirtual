@@ -24,7 +24,7 @@ export interface PillCollectionExpansionProps {
 export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 	props
 ) => {
-	const { editable, user, attributes, session } = props;
+	const { editable, user, session } = props;
 	const [expanded, setExpanded] = useState(false);
 	const t = useTranslations();
 
@@ -45,9 +45,10 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 
 	if (
 		!user.profile.monopoly
-		&& !attributes.kink
-		&& !attributes.language
-		&& !attributes.platform
+		&& !user.profile.attributes.kink
+		&& !user.profile.attributes.language
+		&& !user.profile.attributes.platform
+		&& !user.profile.playlist
 	) {
 		return null;
 	}
