@@ -17,7 +17,6 @@ import { Pill } from "./pill";
 export interface PillCollectionExpansionProps {
 	user: User;
 	editable: boolean;
-	attributes: Record<string, Array<MinimalAttribute<AttributeType>>>;
 	session: Session;
 }
 
