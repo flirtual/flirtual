@@ -33,6 +33,7 @@ config :flirtual, Flirtual.Discord,
   access_token: System.fetch_env!("DISCORD_ACCESS_TOKEN"),
   webhook_moderation_reports: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_REPORTS"),
   webhook_moderation_flags: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_FLAGS"),
+  webhook_moderation_duplicates: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_DUPLICATES"),
   webhook_moderation_pics: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_PICS"),
   webhook_moderation_actions: System.fetch_env!("DISCORD_WEBHOOK_MODERATION_ACTIONS"),
   webhook_moderation_acknowledgements:
