@@ -935,5 +935,12 @@
 	"welcome_to_flirtual": "Flirtualへようこそ",
 	"same_honest_seal_renew": "バーチャルデート、<highlight>本当のつながり</highlight>",
 	"copy": "コピー",
-	"connection": "繋がり"
+	"connection": "繋がり",
+	"profile_link": "プロフィールリンク",
+	"user_id": "ユーザーID",
+	"legacy_user_id": "レガシーユーザーID",
+	"ios": "iOS",
+	"android": "Android",
+	"less_drab_larva_assure": "この場合、ここに戻ってアカウントを再有効化するまで、あなたのプロフィールは他の人から隠されます。また、マッチメイキングからも削除されます。",
+	"royal_house_peacock_roar": "興味がおありですか？"
 }
