@@ -715,7 +715,7 @@
 	"you_will_be_reminded_in_number_days": "You will be reminded in {number} days.",
 	"note_deleted": "Note deleted",
 	"note_updated": "Note updated",
-	"impersonating_name": "Impersonating {name",
+	"impersonating_name": "Impersonating {name}",
 	"no_longer_impersonating_name": "No longer impersonating {name}",
 	"not_implemented": "Not implemented",
 	"user_unshadowbanned": "User unshadowbanned",

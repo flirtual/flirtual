@@ -11,7 +11,7 @@ defmodule Flirtual.Discord do
   alias Flirtual.User
   alias Flirtual.User.Profile.Image
 
-  @default_color 255
+  @default_color 8_421_504
   @destructive_color 16_711_680
   @warn_color 16_636_429
   @success_color 65_280
@@ -480,12 +480,31 @@ defmodule Flirtual.Discord do
     })
   end
 
-  def deliver_webhook(:flagged_text, user: %User{} = user, flags: flags) do
+  def deliver_webhook(:flagged_keyword, user: %User{} = user, flags: flags) do
     webhook(:moderation_flags, %{
       embeds: [
         %{
           author: webhook_author(user),
-          title: "Profile auto-flagged",
+          title: "Keyword flagged",
+          fields: [
+            %{
+              name: "Flags",
+              value: flags
+            }
+          ],
+          color: @warn_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
+  def deliver_webhook(:flagged_bio, user: %User{} = user, flags: flags) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Bio content flagged",
           fields: [
             %{
               name: "Flags",
@@ -499,17 +518,43 @@ defmodule Flirtual.Discord do
     })
   end
 
+  def deliver_webhook(:honeypot, user: %User{} = user) do
+    webhook(:moderation_flags, %{
+      embeds: [
+        %{
+          author: webhook_author(user),
+          title: "Registration honeypot tripped",
+          color: @default_color,
+          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ]
+    })
+  end
+
   def deliver_webhook(:flagged_duplicate,
         user: %User{} = user,
         duplicates: duplicates,
         type: type,
         text: text
       ) do
-    webhook(:moderation_flags, %{
+    color =
+      cond do
+        duplicates == "Banned user" ->
+          @warn_color
+
+        type in ["email", "APNS token", "FCM token", "Discord ID"] or
+            String.ends_with?(type, "(connection updated)") ->
+          @destructive_color
+
+        true ->
+          @default_color
+      end
+
+    webhook(:moderation_duplicates, %{
       embeds: [
         %{
           author: webhook_author(user),
-          title: "Potential duplicate auto-flagged",
+          title: "Potential duplicate",
           fields: [
             %{
               name: "Duplicates",
@@ -520,7 +565,7 @@ defmodule Flirtual.Discord do
               value: text
             }
           ],
-          color: @default_color,
+          color: color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
       ]
@@ -564,19 +609,6 @@ defmodule Flirtual.Discord do
             #     |> Enum.map_join(", ", fn {k, _} -> k end)
             # }
           ],
-          color: @default_color,
-          timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
-        }
-      ]
-    })
-  end
-
-  def deliver_webhook(:honeypot, user: %User{} = user) do
-    webhook(:moderation_flags, %{
-      embeds: [
-        %{
-          author: webhook_author(user),
-          title: "Registration honeypot tripped",
           color: @default_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }

@@ -712,7 +712,7 @@
 	"you_will_be_reminded_in_number_days": "{number}日後に通知されます。",
 	"note_deleted": "メモを削除しました",
 	"note_updated": "メモを更新しました",
-	"impersonating_name": "{name になりすましている",
+	"impersonating_name": "{name} になりすましている",
 	"no_longer_impersonating_name": "{name}のなりすましはなくなりました",
 	"not_implemented": "実装されていません",
 	"user_unshadowbanned": "ユーザーのシャドウバン解除",
