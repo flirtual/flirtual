@@ -110,7 +110,8 @@
 		"2022": {
 			"title": "2022 😻",
 			"description": "VRLFP se torna Flirtual. Talvez agora as pessoas se lembrarão como soletrar nosso nome.",
-			"image_alt": "Flirtual em 2022"
+			"image_alt": "Flirtual em 2022",
+			"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be"
 		}
 	},
 	"price_listen_wise_communicate": {
@@ -501,5 +502,8 @@
 	"comment": "Comentário",
 	"edit_profile": "Editar perfil",
 	"same_honest_seal_renew": "Datas virtuais, <highlight> conexões reais</highlight>",
-	"select_interests": "Selecione seus interesses.."
+	"select_interests": "Selecione seus interesses..",
+	"dark_theme_image": "794de6d9-9687-41f1-9d14-9d912f33d9e2",
+	"light_theme_image": "52f7a831-8f7d-46c3-aace-4a99d1f4792d",
+	"system_theme_image": "b64a38d7-4a94-42bc-8f7d-476f4e63e55f"
 }
