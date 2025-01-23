@@ -93,9 +93,10 @@ defmodule Flirtual.Flag do
     discord_connection = Connection.get(user_id, :discord)
     discord_display_name = discord_connection[:display_name] || discord
 
-    if (discord_display_name !== nil &&
+    if (discord_display_name !== nil && discord_display_name !== "" &&
           String.contains?(biography_downcased, discord_display_name)) ||
-         (discord_display_name === nil && String.contains?(biography_downcased, "discord")) do
+         ((discord_display_name === nil || discord_display_name === "") &&
+            String.contains?(biography_downcased, "discord")) do
       now = DateTime.utc_now() |> DateTime.truncate(:second)
 
       User
