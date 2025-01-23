@@ -159,7 +159,7 @@ const emojis: Array<{ name: string; type: "gif" | "png"; hidden?: boolean }> = [
 	{ name: "yonk", type: "png" }
 ];
 
-const customEmojis = Object.fromEntries(
+export const customEmojis = Object.fromEntries(
 	emojis.map(({ name, type, hidden = false }) => [
 		`:${name}:`,
 		{
