@@ -7,10 +7,12 @@ import type { Conversation } from "~/api/conversations";
 import { displayName } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
+import { Image } from "~/components/image";
 import { Link } from "~/components/link";
 import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar } from "~/components/user-avatar";
 import { useTranslations } from "~/hooks/use-internationalization";
+import { customEmojis } from "~/hooks/use-talkjs";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -18,6 +20,24 @@ export type ConversationListItemProps = {
 	active?: boolean;
 	lastItem?: boolean;
 } & Conversation;
+
+function replaceEmojis(message: string) {
+	return message.split(/(:\w+:)/g).map((part, index) => {
+		return customEmojis[part]
+			? (
+					<Image
+						alt={part}
+						className="inline-block"
+						height={24}
+						// eslint-disable-next-line react/no-array-index-key
+						key={index}
+						src={customEmojis[part].url}
+						width={24}
+					/>
+				)
+			: part;
+	});
+}
 
 export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 	const {
@@ -83,9 +103,9 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 							{lastMessage && !(lastMessage.system && lastMessage.content === "It's a match!")
 								? (
 										<>
-											{(lastMessage?.senderId !== userId && !lastMessage.system)
+											{replaceEmojis((lastMessage?.senderId !== userId && !lastMessage.system)
 												? t("level_orange_stingray_fulfill", { message: lastMessage.content })
-												: lastMessage.content}
+												: lastMessage.content)}
 										</>
 									)
 								: (
