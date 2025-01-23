@@ -43,7 +43,8 @@
 			"flirtual"
 		],
 		"java.configuration.updateBuildConfiguration": "automatic",
-		"typescript.tsdk": "🖥️ Frontend/node_modules/typescript/lib"
+		"typescript.tsdk": "🖥️ Frontend/node_modules/typescript/lib",
+		"files.insertFinalNewline": true
 	},
 	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"eslint.format.enable": true,
