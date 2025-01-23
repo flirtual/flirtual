@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useMessages, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
 	createContext,
@@ -25,7 +25,6 @@ import { emptyArray } from "~/utilities";
 
 import { getConversationsKey } from "./use-conversations.shared";
 import { useDevice } from "./use-device";
-import { useTranslations } from "./use-internationalization";
 import { warnOnce } from "./use-log";
 import { useNotifications } from "./use-notifications";
 import { useSession } from "./use-session";
@@ -180,7 +179,7 @@ export const ConversationChatbox: React.FC<
 
 	const { sessionTheme } = useTheme();
 	const { platform, native, vision } = useDevice();
-	const t = useTranslations();
+	const { talkjs_match_message, talkjs_input_placeholder } = useMessages();
 	const locale = useLocale();
 
 	const chatbox = useMemo(() => {
@@ -198,14 +197,14 @@ export const ConversationChatbox: React.FC<
 				name: theme,
 				custom: {
 					language: locale,
-					matchMessage: t("talkjs_match_message"),
-					inputPlaceholder: t("talkjs_input_placeholder", { name: "{name}" })
+					matchMessage: talkjs_match_message,
+					inputPlaceholder: talkjs_input_placeholder
 				}
 			},
 			messageField: { spellcheck: true, enterSendsMessage: !native },
 			customEmojis
 		} as ChatboxOptions);
-	}, [session, sessionTheme, vision, locale, t, native]);
+	}, [session, sessionTheme, vision, locale, talkjs_match_message, talkjs_input_placeholder, native]);
 
 	const conversation = useMemo(() => {
 		if (!session || !conversationId) return null;
