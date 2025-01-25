@@ -183,6 +183,4 @@ export const Authentication = {
 	}
 };
 
-Authentication.getOptionalSession = cache(
-	Authentication.getOptionalSession.bind(Authentication)
-);
+Authentication.getOptionalSession = cache(Authentication.getOptionalSession.bind(Authentication));
