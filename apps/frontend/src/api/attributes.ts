@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { gitCommitSha } from "~/const";
 import type { Expand } from "~/utilities";
 
@@ -103,7 +105,7 @@ export const Attribute = {
 			.options({
 				credentials: "omit",
 				next: {
-					revalidate: false
+					revalidate: false,
 				}
 			})
 			.get()
@@ -114,3 +116,5 @@ export const Attribute = {
 		return values.find((value) => value.id === id) ?? null;
 	}
 };
+
+Attribute.list = cache(Attribute.list.bind(Attribute));

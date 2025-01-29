@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import {
 	api,
 	type Issue,
@@ -93,3 +95,5 @@ export const Matchmaking = {
 		}>();
 	}
 };
+
+Matchmaking.queue = cache(Matchmaking.queue.bind(Matchmaking));

@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { api, type CreatedAtModel } from "./common";
 import type { ProspectKind } from "./matchmaking";
 
@@ -59,3 +61,6 @@ export const Conversation = {
 		return this.api.url("/observe").json(options).post().res();
 	}
 };
+
+Conversation.get = cache(Conversation.get.bind(Conversation));
+Conversation.list = cache(Conversation.list.bind(Conversation));

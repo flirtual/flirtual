@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { gitCommitSha } from "~/const";
 
 import { api, type DatedModel, type UuidModel } from "./common";
@@ -32,3 +34,5 @@ export const Plan = {
 			.json<Array<Plan>>();
 	}
 };
+
+Plan.list = cache(Plan.list.bind(Plan));
