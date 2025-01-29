@@ -92,11 +92,9 @@ defmodule Flirtual.Matchmaking do
 
   def queue_information(%User{} = user, mode) do
     {:ok, existing_next_prospects} = next_prospects(user, mode)
-    # fields = get_queue_fields(user.profile, mode)
-    profiles_seen = user.likes_count + user.passes_count
 
     if(
-      profiles_seen >= 40 &&
+      (user.likes_count + user.passes_count >= 15 || user.likes_count >= 7) &&
         (user.status in [:registered, :onboarded] ||
            (user.status == :finished_profile && is_nil(user.email_confirmed_at)))
     ) do
