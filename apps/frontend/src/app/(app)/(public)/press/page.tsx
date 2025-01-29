@@ -52,6 +52,12 @@ export default async function PressPage() {
 				</span>
 				<div className="flex flex-col gap-4">
 					{[
+						{
+							name: "How to find love in a virtual world",
+							href: "https://www.cbc.ca/newsinteractives/features/ottawa-metaverse-vr-dating",
+							site: "CBC News",
+							date: new Date("5 December 2022")
+						},
 						// language === "ko" && ({
 						// 	name: "데이트 시장까지 노리는 메타버스 … 새로운 트렌드 만들까?",
 						// 	href: "https://www.metanews.co.kr/news/articleView.html?idxno=16941",
@@ -92,7 +98,7 @@ export default async function PressPage() {
 						// }),
 						{
 							name: "Flirt in the Metaverse and Hook Up in the Real World With ‘Flirtual’ Dating App",
-							href: "https://virtualrealitytimes.com/2022/05/06/flirt-in-the-meta…erse-and-hook-up-in-the-real-world-with-flirtual-dating-app/",
+							href: "https://virtualrealitytimes.com/2022/05/06/flirt-in-the-metaverse-and-hook-up-in-the-real-world-with-flirtual-dating-app/",
 							site: "Virtual Reality Times",
 							date: new Date("6 May 2022")
 						},
@@ -113,12 +119,6 @@ export default async function PressPage() {
 							href: "https://futureofsex.net/dating-relationships/what-will-make-virtual-reality-dating-go-mainstream/",
 							site: "Future of Sex",
 							date: new Date("22 April 2021")
-						},
-						{
-							name: "Festive 5G hugs... Whatever Next?",
-							href: "https://www.samsung.com/uk/explore/kings-cross/innovation/5g-podcast/festive-5g-hugs/",
-							site: "Samsung Whatever Next",
-							date: new Date("18 December 2020")
 						},
 						{
 							name: "Bond Touch Bracelets and the New Frontiers of Digital Dating",
