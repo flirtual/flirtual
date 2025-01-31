@@ -191,6 +191,7 @@ defmodule Flirtual.Profiles do
       validate_change(changeset, :playlist, fn :playlist, playlist ->
         patterns = [
           ~r/^https?:\/\/open\.spotify\.com\/playlist\/[\dA-Za-z]+/,
+          ~r/^https?:\/\/music\.youtube\.com\/playlist\?list=[\dA-Za-z-]+/,
           ~r/^https?:\/\/music\.apple\.com\/(?:[a-z]{2}\/)?playlist\/pl\.[\dA-Za-z-]+/,
           ~r/^https?:\/\/(www\.|listen\.)?tidal\.com\/(browse\/)?playlist\/[\dA-Za-z-]+/,
           ~r/^https?:\/\/music\.amazon\.[.a-z]+\/(user-)?playlists\/[\dA-Za-z]+/,
