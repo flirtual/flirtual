@@ -47,10 +47,13 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 				}}
 				className="flex flex-col gap-8"
 				onSubmit={async ({ vrchat, facetime, playlist }) => {
-					if (/deezer\.page\.link/.test(playlist)) {
+					if (playlist.includes("deezer.page.link")) {
 						setPlaylistSubmitted("deezer.page.link");
 					}
-					else if (/youtu\.?be/.test(playlist)) {
+					else if (
+						(playlist.includes("youtube.com") || playlist.includes("youtu.be"))
+						&& !playlist.includes("music.youtube.com")
+					) {
 						setPlaylistSubmitted("youtube");
 					}
 					else if (playlist === "") {

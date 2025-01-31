@@ -15,6 +15,11 @@ export const playlistPlatforms = [
 			`https://open.spotify.com/embed/playlist/${id}?locale=${locale}`
 	},
 	{
+		pattern: /^https?:\/\/music\.youtube\.com\/playlist\?list=([\dA-Za-z-]+)/,
+		embed: (id: string, theme: Theme, locale: PreferenceLanguage) =>
+			`https://www.youtube.com/embed/?listType=playlist&color=white&fs=0&iv_load_policy=3&playsinline=1&rel=0&list=${id}&hl=${locale}`
+	},
+	{
 		pattern:
 			/^https?:\/\/music\.apple\.com\/(?:[a-z]{2}\/)?playlist\/(pl\.[\dA-Za-z-]+)/,
 		embed: (id: string, theme: Theme, locale: PreferenceLanguage) => {
