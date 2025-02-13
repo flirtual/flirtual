@@ -942,5 +942,6 @@
 	"log_in": "Log in",
 	"sign_up": "Registre-se",
 	"new_friends": "Novos amigos",
-	"preview_tag_4": "VRChat"
+	"preview_tag_4": "VRChat",
+	"its_currently_time_for_name": "Atualmente é {time} para {name}"
 }
