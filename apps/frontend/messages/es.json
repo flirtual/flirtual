@@ -942,5 +942,6 @@
 	"wise_great_crow_foster": "¿Necesitas más?",
 	"log_in": "Acceso",
 	"sign_up": "Inscribirse",
-	"vrchat": "VRChat"
+	"vrchat": "VRChat",
+	"its_currently_time_for_name": "Actualmente es {hora} para {nombre}."
 }
