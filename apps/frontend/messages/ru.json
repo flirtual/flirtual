@@ -942,5 +942,6 @@
 	"terms_of_service": "Условия использования",
 	"privacy_policy": "Политика конфиденциальности",
 	"developers": "Разработчики",
-	"support": "Поддерживать"
+	"support": "Поддерживать",
+	"its_currently_time_for_name": "Сейчас {время} для {имя}"
 }
