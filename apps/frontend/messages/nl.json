@@ -942,5 +942,6 @@
 	"privacy_policy": "Privacybeleid",
 	"developers": "Ontwikkelaars",
 	"copyright": "© {year} Flirtual",
-	"preview_tag_4": "VRChat"
+	"preview_tag_4": "VRChat",
+	"its_currently_time_for_name": "Het is momenteel {tijd} voor {naam}"
 }
