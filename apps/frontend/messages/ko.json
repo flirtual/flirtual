@@ -942,5 +942,6 @@
 	"privacy_policy": "개인정보 처리방침",
 	"copyright": "© {year} Flirtual",
 	"vrchat": "VRChat",
-	"preview_tag_4": "VRChat"
+	"preview_tag_4": "VRChat",
+	"its_currently_time_for_name": "현재 {이름}의 {시간}입니다."
 }
