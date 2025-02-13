@@ -942,5 +942,6 @@
 		"1": "Avatarer hjälper dig att uttrycka dig själv, utan att känna dig självmedveten.",
 		"2": "Efter en VR-dejt eller två, gå på ett videosamtal eller träffas i verkligheten!"
 	},
-	"few_grassy_hyena_adapt": "Bli kär i en<highlight> helt ny dimension</highlight>"
+	"few_grassy_hyena_adapt": "Bli kär i en<highlight> helt ny dimension</highlight>",
+	"its_currently_time_for_name": "Det är för närvarande {tid} för {namn}"
 }
