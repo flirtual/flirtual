@@ -942,5 +942,6 @@
 	"welcome_to_flirtual": "Flirtualへようこそ",
 	"same_honest_seal_renew": "バーチャルデート、<highlight>本当のつながり</highlight>",
 	"copy": "コピー",
-	"connection": "繋がり"
+	"connection": "繋がり",
+	"its_currently_time_for_name": "現在、{name} の {time} です"
 }

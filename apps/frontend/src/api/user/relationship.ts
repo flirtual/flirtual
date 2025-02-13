@@ -5,6 +5,7 @@ export type Relationship = {
 	likedMe?: ProspectKind;
 	type?: ProspectRespondType;
 	kind?: ProspectKind;
+	timeDiff?: number;
 } & (
 	| {
 		matched: false;

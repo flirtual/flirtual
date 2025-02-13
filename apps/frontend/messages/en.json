@@ -942,5 +942,6 @@
 	"welcome_to_flirtual": "Welcome to Flirtual",
 	"same_honest_seal_renew": "Virtual dates, <highlight>real connections</highlight>",
 	"copy": "Copy",
-	"connection": "Connection"
+	"connection": "Connection",
+	"its_currently_time_for_name": "It's currently {time} for {name}"
 }

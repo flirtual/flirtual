@@ -74,6 +74,7 @@ defmodule Flirtual.Profiles do
                 :facetime,
                 :playlist,
                 :languages,
+                :timezone,
                 :custom_interests
               ] ++ @attribute_keys ++ @attribute_types
 
@@ -91,6 +92,7 @@ defmodule Flirtual.Profiles do
       field(:relationships, {:array, :string})
       field(:new, :boolean)
       field(:languages, {:array, Ecto.Enum}, values: Languages.list(:bcp_47))
+      field(:timezone, :string)
       field(:custom_interests, {:array, :string})
 
       @attribute_keys |> Enum.map(fn key -> field(key, {:array, :string}) end)
@@ -111,6 +113,7 @@ defmodule Flirtual.Profiles do
         relationships: profile.relationships,
         new: profile.new,
         languages: if(profile.languages === [], do: nil, else: profile.languages),
+        timezone: profile.timezone,
         custom_interests: profile.custom_interests
       }
     end
@@ -170,6 +173,7 @@ defmodule Flirtual.Profiles do
       |> validate_attributes(:platform_id, "platform")
       |> validate_length(:platform, max: 8)
       |> validate_attributes(:interest_id, "interest")
+      |> validate_inclusion(:timezone, Timex.timezones())
       |> then(fn changeset ->
         if not changed?(changeset, :interest_id) and not changed?(changeset, :custom_interests) do
           changeset
@@ -233,6 +237,7 @@ defmodule Flirtual.Profiles do
         domsub: transform_value(attrs.domsub, profile.domsub),
         monopoly: transform_value(attrs.monopoly, profile.monopoly),
         languages: transform_value(attrs.languages, profile.languages),
+        timezone: transform_value(attrs.timezone, profile.timezone),
         custom_interests:
           if not is_nil(attrs.interest) do
             attrs.interest

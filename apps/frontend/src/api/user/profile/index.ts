@@ -46,6 +46,7 @@ export type Profile = {
 	conscientiousness?: number;
 	agreeableness?: number;
 	languages: Array<string>;
+	timezone?: string;
 	attributes: GroupedAttributeCollection;
 	customInterests: Array<string>;
 	preferences?: ProfilePreferences;
@@ -88,6 +89,7 @@ export type UpdateProfileOptions = {
 		| "new"
 		| "playlist"
 		| "relationships"
+		| "timezone"
 		| "vrchat"
 	>
 >;

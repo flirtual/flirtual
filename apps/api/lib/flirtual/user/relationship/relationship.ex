@@ -17,6 +17,7 @@ defmodule Flirtual.User.Relationship do
     field(:type, :string)
     field(:kind, :string)
     field(:liked_me, :map)
+    field(:time_diff, :integer)
   end
 
   defp liked_me(%LikesAndPasses{type: :like, kind: kind}), do: kind
@@ -43,7 +44,8 @@ defmodule Flirtual.User.Relationship do
         if(matched,
           do: Talkjs.new_conversation_id(user_id, target_id),
           else: nil
-        )
+        ),
+      time_diff: User.time_diff(user_id, target_id)
     }
   end
 
@@ -64,7 +66,8 @@ defmodule Flirtual.User.Relationship do
           else: lap[:kind]
         ),
       liked_me: liked_me(opposite_lap),
-      conversation_id: if(matched, do: Talkjs.new_conversation_id(user, target), else: nil)
+      conversation_id: if(matched, do: Talkjs.new_conversation_id(user, target), else: nil),
+      time_diff: User.time_diff(user, target)
     }
   end
 
@@ -76,7 +79,8 @@ defmodule Flirtual.User.Relationship do
         :type,
         :kind,
         :liked_me,
-        :conversation_id
+        :conversation_id,
+        :time_diff
       ]
   end
 

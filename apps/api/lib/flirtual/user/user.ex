@@ -25,7 +25,7 @@ defmodule Flirtual.User do
   }
 
   alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
-  alias Flirtual.User.{Relationship, Session}
+  alias Flirtual.User.{Profile, Relationship, Session}
 
   @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp, :translating]
 
@@ -259,6 +259,30 @@ defmodule Flirtual.User do
 
   def blocked?(user_id, target_id) do
     Block.exists?(user_id: user_id, target_id: target_id)
+  end
+
+  def time_diff(%User{} = user, %User{} = target) do
+    case {user.profile.timezone, target.profile.timezone} do
+      {nil, _} -> nil
+      {_, nil} -> nil
+      {user_tz, target_tz} ->
+        Timex.Timezone.get(user_tz).offset_utc - Timex.Timezone.get(target_tz).offset_utc
+    end
+  end
+
+  def time_diff(user_id, target_id) do
+    timezones = Repo.all(
+      from p in Profile,
+      where: p.user_id in ^[user_id, target_id],
+      select: {p.user_id, p.timezone}
+    ) |> Map.new()
+
+    case {timezones[user_id], timezones[target_id]} do
+      {nil, _} -> nil
+      {_, nil} -> nil
+      {user_tz, target_tz} ->
+        Timex.Timezone.get(user_tz).offset_utc - Timex.Timezone.get(target_tz).offset_utc
+    end
   end
 
   def relationship(%User{} = user, %User{} = target) do

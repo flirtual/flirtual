@@ -26,6 +26,7 @@ import { GenderPills } from "./pill/genders";
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfilePrompts } from "./prompts";
 import { RelationActions } from "./relation-actions";
+import { TimeDiff } from "./time-diff";
 import { ProfileVerificationBadge } from "./verification-badge";
 
 export type ProfileProps = {
@@ -109,9 +110,14 @@ export function Profile(props: ProfileProps) {
 								/>
 							)}
 						</div>
-						{user.activeAt && (
-							<ActivityIndicator lastActiveAt={new Date(user.activeAt)} />
-						)}
+						<div className="flex gap-4">
+							{user.activeAt && (
+								<ActivityIndicator lastActiveAt={new Date(user.activeAt)} />
+							)}
+							{relationship?.timeDiff && user.profile.timezone && (
+								<TimeDiff diff={relationship.timeDiff} displayName={displayName(user)} timezone={user.profile.timezone} />
+							)}
+						</div>
 					</div>
 				</ProfileImageDisplay>
 				<div className="h-1 shrink-0 bg-brand-gradient desktop:hidden" />
