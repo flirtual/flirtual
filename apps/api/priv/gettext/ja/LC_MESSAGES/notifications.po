@@ -8,8 +8,15 @@
 ### to merge POT files into PO files.
 msgid ""
 msgstr ""
+"PO-Revision-Date: 2025-02-17 21:27+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/emails/"
+"ja/>\n"
 "Language: ja\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.10.1-dev\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: lib/flirtual/mailer.ex:48
 #: lib/flirtual/mailer.ex:295
@@ -43,8 +50,8 @@ msgstr "アカウントが無効になりました"
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_html"
 msgstr ""
-"<p>あと少しです。以下のボタンをタップしてメールアドレスを確認してください。確認"
-"が完了すると、すぐにマッチメイキングを開始できます！</p>\n"
+"<p>あと少しです。以下のボタンをタップしてメールアドレスを確認してください。確"
+"認が完了すると、すぐにマッチメイキングを開始できます！</p>\n"
 "\n"
 "<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>"
 
@@ -67,13 +74,13 @@ msgstr "アカウントを確認してください"
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_html"
 msgstr ""
-"<p>あと少しです。以下のボタンをタップしてパスワードをリセットしてください。完了"
-"すると、ログインできるようになります！</p>\n"
+"<p>あと少しです。以下のボタンをタップしてパスワードをリセットしてください。完"
+"了すると、ログインできるようになります！</p>\n"
 "\n"
 "<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>\n"
 "\n"
-"<p>このリクエストに心当たりがない場合は、本メールを無視していただいて構いません。"
-"</p>"
+"<p>このリクエストに心当たりがない場合は、本メールを無視していただいて構いませ"
+"ん。</p>"
 
 #: lib/flirtual/user/email.ex:86
 #, elixir-autogen, elixir-format
@@ -84,7 +91,8 @@ msgstr ""
 "\n"
 "%{action_url}\n"
 "\n"
-"このリクエストに心当たりがない場合は、このメールを無視していただいて構いません。"
+"このリクエストに心当たりがない場合は、このメールを無視していただいて構いませ"
+"ん。"
 
 #: lib/flirtual/user/email.ex:81
 #: lib/flirtual/user/email.ex:94
@@ -96,29 +104,29 @@ msgstr "パスワードリセットのリクエスト"
 #, elixir-autogen, elixir-format
 msgid "suspended.body_html"
 msgstr ""
-"<p>Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると判断"
-"しました。</p>\n"
+"<p>Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると"
+"判断しました。</p>\n"
 "\n"
 "<p><strong>理由</strong>: %{message}</p>\n"
 "\n"
-"<p>お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立てた"
-"い場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメッセージ"
-"に返信してください。30日以内に申し立てに対する返答がない場合は、審査され、却下さ"
-"れたものとみなします。</p><p>Flirtualチーム</p>"
+"<p>お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立"
+"てたい場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメ"
+"ッセージに返信してください。30日以内に申し立てに対する返答がない場合は、審査"
+"され、却下されたものとみなします。</p><p>Flirtualチーム</p>"
 
 #: lib/flirtual/user/email.ex:15
 #, elixir-autogen, elixir-format
 msgid "suspended.body_text"
 msgstr ""
-"Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると判断し"
-"ました。\n"
+"Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると判"
+"断しました。\n"
 "\n"
 "違反理由: %{message}\n"
 "\n"
-"お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立てたい"
-"場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメッセージに"
-"返信してください。30日以内に申し立てに対する返答がない場合は、審査され、却下され"
-"たものとみなします。\n"
+"お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立て"
+"たい場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメッ"
+"セージに返信してください。30日以内に申し立てに対する返答がない場合は、審査さ"
+"れ、却下されたものとみなします。\n"
 "\n"
 "Flirtualチーム"
 
