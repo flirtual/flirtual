@@ -21,10 +21,12 @@ defmodule FlirtualWeb.SessionController do
     end
   end
 
+  @fifteen_minutes 900_000
+
   def login(%Plug.Conn{} = conn, params) do
     ip = get_conn_ip(conn)
 
-    case ExRated.check_rate("login:#{ip}", 900_000, 5) do
+    case ExRated.check_rate("login:#{ip}", @fifteen_minutes, 5) do
       {:ok, _} ->
         with {:ok, attrs} <-
                cast_arbitrary(
@@ -52,7 +54,7 @@ defmodule FlirtualWeb.SessionController do
             {:error, {:unauthorized, :account_banned}}
 
           leak_count when is_integer(leak_count) ->
-            deliver_leaked_password_alert(params["login"], get_conn_ip(conn))
+            # deliver_leaked_password_alert(params["login"], get_conn_ip(conn))
             {:error, {:unauthorized, :leaked_login_password}}
 
           _ ->
@@ -62,21 +64,6 @@ defmodule FlirtualWeb.SessionController do
       {:error, _} ->
         {:error, {:unauthorized, :login_rate_limit}}
     end
-  end
-
-  defp deliver_leaked_password_alert(login, ip) do
-    %{
-      "recipient" => "security@flirtu.al",
-      "subject" => "Login attempted with leaked password",
-      "body_text" => """
-      Attempted login to #{login} from #{ip}.
-      """,
-      "body_html" => """
-      <p>Attempted login to #{login} from #{ip}.</p>
-      """
-    }
-    |> Flirtual.ObanWorkers.Email.new()
-    |> Oban.insert()
   end
 
   def sudo(conn, %{"user_id" => user_id}) do
