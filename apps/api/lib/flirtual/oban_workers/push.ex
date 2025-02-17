@@ -14,9 +14,10 @@ defmodule Flirtual.ObanWorkers.Push do
         scheduled_at: scheduled_at
       }) do
     user = User.get(user_id)
+    is_match_notification? = Map.get(user.preferences, "match_notification", false)
 
     if is_nil(user.banned_at) and is_nil(user.deactivated_at) and
-         (title !== "Your daily profiles are ready!" or
+         (!is_match_notification? or
             DateTime.before?(user.active_at, DateTime.add(scheduled_at, -7 * 60 * 60))) do
       PushNotification.send(user, title, message, url)
     else

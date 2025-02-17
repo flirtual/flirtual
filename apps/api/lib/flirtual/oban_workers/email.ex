@@ -46,7 +46,7 @@ defmodule Flirtual.ObanWorkers.Email do
   def perform(%Oban.Job{
         args:
           %{
-            "recipient" => recipient,
+            "to" => to,
             "subject" => subject,
             "body_text" => body_text,
             "body_html" => body_html
@@ -62,7 +62,7 @@ defmodule Flirtual.ObanWorkers.Email do
         language = Map.get(args, "language")
 
         Mailer.send(
-          recipient,
+          to,
           from: from,
           language: language,
           subject: subject,

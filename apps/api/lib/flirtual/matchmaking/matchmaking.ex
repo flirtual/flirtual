@@ -200,18 +200,7 @@ defmodule Flirtual.Matchmaking do
   def schedule_reset_notification(user, reset_at) do
     if user.preferences.push_notifications.reminders and
          (not is_nil(user.apns_token) or not is_nil(user.fcm_token)) do
-      %{
-        "user_id" => user.id,
-        "title" => "Your daily profiles are ready!",
-        "message" =>
-          "We've worked our matchmaking magic on a fresh batch of profiles just for you. Tap to check them out!",
-        "url" => "flirtual://browse"
-      }
-      |> Flirtual.ObanWorkers.Push.new(
-        scheduled_at: DateTime.add(reset_at, 6 * 60 * 60),
-        unique: [timestamp: :scheduled_at]
-      )
-      |> Oban.insert()
+      User.Push.deliver(user, :daily_profiles_ready, reset_at)
     else
       {:ok, :disabled}
     end
@@ -219,14 +208,6 @@ defmodule Flirtual.Matchmaking do
 
   def deliver_match_notification(user, target_user, match_kind) do
     conversation_id = Talkjs.new_conversation_id(user, target_user)
-
-    action_url =
-      Application.fetch_env!(:flirtual, :frontend_origin)
-      |> URI.merge("/matches/" <> conversation_id)
-      |> URI.to_string()
-
-    thumbnail = target_user |> User.avatar_url("icon")
-    pronouns = target_user |> User.pronouns()
 
     send_email =
       user.preferences.email_notifications.matches and is_nil(user.banned_at) and
@@ -239,79 +220,22 @@ defmodule Flirtual.Matchmaking do
     if target_user.status == :visible and (send_email or send_push) do
       email_result =
         if send_email do
-          %{
-            "user_id" => user.id,
-            "subject" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
-            "action_url" => action_url,
-            "body_text" => """
-            #{if(match_kind == :love,
-            do: "#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!",
-            else: "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!")}
-
-            Looking for date ideas? Check out the #date-worlds channel in our Discord server: https://discord.gg/flirtual
-
-            #{action_url}
-            """,
-            "body_html" => """
-            #{if(match_kind == :love,
-            do: "<p>#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!</p>",
-            else: "<p>#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!</p>")}
-
-            <p>Looking for date ideas? Check out the #date-worlds channel in our <a href="https://discord.gg/flirtual">Discord server</a>.</p>
-
-            <p>
-              <a href="#{action_url}" class="btn" style="display: inline-block; padding: 12px 16px; font-size: 18px">
-                <img src="#{thumbnail}" style="margin-right: 10px; width: 38px; height: 38px; border-radius: 50%; vertical-align: middle" />
-                <span style="vertical-align: middle">Message</span>
-              </a>
-            </p>
-
-            <script type="application/ld+json">
-            {
-              "@context": "http://schema.org",
-              "@type": "EmailMessage",
-              "description": "Send #{pronouns.objective} a message",
-              "potentialAction": {
-                "@type": "ViewAction",
-                "url": "#{action_url}",
-                "name": "Message"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "Flirtual",
-                "url": "https://flirtu.al/"
-              }
-            }
-            </script>
-            """,
-            "type" => "marketing"
-          }
-          |> Flirtual.ObanWorkers.Email.new(
-            unique: [period: 60 * 60, states: [:available, :scheduled, :executing, :completed]]
+          User.Email.deliver(user, :new_match,
+            conversation_id: conversation_id,
+            match_kind: match_kind,
+            target_user: target_user
           )
-          |> Oban.insert()
         else
           {:ok, :disabled}
         end
 
       push_result =
         if send_push do
-          %{
-            "user_id" => user.id,
-            "title" => if(match_kind == :love, do: "It's a match! 💞", else: "It's a match! ✌️"),
-            "message" =>
-              if(match_kind == :love,
-                do:
-                  "#{User.display_name(target_user)} liked you back. Send #{pronouns.objective} a message!",
-                else:
-                  "#{User.display_name(target_user)} homied you back. Send #{pronouns.objective} a message!"
-              ),
-            "url" => "flirtual://matches/" <> conversation_id
-          }
-          |> Flirtual.ObanWorkers.Push.new(
-            unique: [period: 60 * 60, states: [:available, :scheduled, :executing, :completed]]
+          User.Push.deliver(user, :new_match,
+            conversation_id: conversation_id,
+            match_kind: match_kind,
+            target_user: target_user
           )
-          |> Oban.insert()
         else
           {:ok, :disabled}
         end
@@ -417,7 +341,7 @@ defmodule Flirtual.Matchmaking do
                  )
                  |> then(
                    &if(get_field(&1, :profile_id) === get_field(&1, :target_id)) do
-                     add_error(&1, :user_id, "Cannot respond to yourself")
+                     add_error(&1, :user_id, "cannot_like_self")
                    else
                      &1
                    end

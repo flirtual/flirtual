@@ -39,7 +39,7 @@ msgstr "X（旧Twitter）"
 msgid "suspended.subject"
 msgstr "アカウントが無効になりました"
 
-#: lib/flirtual/user/email.ex:42
+#: lib/flirtual/user/email.ex:43
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_html"
 msgstr ""
@@ -48,7 +48,7 @@ msgstr ""
 "\n"
 "<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>"
 
-#: lib/flirtual/user/email.ex:40
+#: lib/flirtual/user/email.ex:41
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_text"
 msgstr ""
@@ -58,12 +58,12 @@ msgstr ""
 "%{action_url}"
 
 #: lib/flirtual/user/email.ex:36
-#: lib/flirtual/user/email.ex:48
+#: lib/flirtual/user/email.ex:49
 #, elixir-autogen, elixir-format
 msgid "confirm_email.subject"
 msgstr "アカウントを確認してください"
 
-#: lib/flirtual/user/email.ex:86
+#: lib/flirtual/user/email.ex:88
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_html"
 msgstr ""
@@ -75,7 +75,7 @@ msgstr ""
 "<p>このリクエストに心当たりがない場合は、本メールを無視していただいて構いません。"
 "</p>"
 
-#: lib/flirtual/user/email.ex:84
+#: lib/flirtual/user/email.ex:86
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_text"
 msgstr ""
@@ -86,8 +86,8 @@ msgstr ""
 "\n"
 "このリクエストに心当たりがない場合は、このメールを無視していただいて構いません。"
 
-#: lib/flirtual/user/email.ex:80
-#: lib/flirtual/user/email.ex:92
+#: lib/flirtual/user/email.ex:81
+#: lib/flirtual/user/email.ex:94
 #, elixir-autogen, elixir-format
 msgid "reset_password.subject"
 msgstr "パスワードリセットのリクエスト"
@@ -122,38 +122,143 @@ msgstr ""
 "\n"
 "Flirtualチーム"
 
-#: lib/flirtual/user/email.ex:52
-#: lib/flirtual/user/email.ex:96
+#: lib/flirtual/user/email.ex:53
+#: lib/flirtual/user/email.ex:98
+#: lib/flirtual/user/email.ex:310
 #, elixir-autogen, elixir-format
 msgid "continue"
 msgstr "続行"
 
-#: lib/flirtual/user/email.ex:160
+#: lib/flirtual/user/email.ex:154
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:159
+#: lib/flirtual/user/email.ex:153
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_text"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:158
+#: lib/flirtual/user/email.ex:152
 #, elixir-autogen, elixir-format
 msgid "email_changed.subject"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:130
+#: lib/flirtual/user/email.ex:134
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_html"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:129
+#: lib/flirtual/user/email.ex:132
 #, elixir-autogen, elixir-format
 msgid "password_changed.body_text"
 msgstr ""
 
-#: lib/flirtual/user/email.ex:128
+#: lib/flirtual/user/email.ex:130
 #, elixir-autogen, elixir-format
 msgid "password_changed.subject"
 msgstr ""
+
+#: lib/flirtual/user/email.ex:205
+#: lib/flirtual/user/email.ex:217
+#, elixir-autogen, elixir-format
+msgid "message"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:191
+#, elixir-autogen, elixir-format
+msgid "new_match.looking_for_date_ideas"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:200
+#, elixir-autogen, elixir-format
+msgid "new_match.looking_for_date_ideas_html"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:213
+#, elixir-autogen, elixir-format
+msgid "send_them_a_message"
+msgstr ""
+
+#: lib/flirtual/user/push.ex:13
+#, elixir-autogen, elixir-format
+msgid "daily_profiles_ready"
+msgstr ""
+
+#: lib/flirtual/user/push.ex:15
+#, elixir-autogen, elixir-format
+msgid "daily_profiles_ready_message"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:189
+#: lib/flirtual/user/email.ex:198
+#: lib/flirtual/user/push.ex:46
+#, elixir-autogen, elixir-format
+msgid "homied_you"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:182
+#: lib/flirtual/user/push.ex:40
+#, elixir-autogen, elixir-format
+msgid "its_a_match"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:183
+#: lib/flirtual/user/push.ex:41
+#, elixir-autogen, elixir-format
+msgid "its_a_match_homie"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:188
+#: lib/flirtual/user/email.ex:197
+#: lib/flirtual/user/push.ex:45
+#, elixir-autogen, elixir-format
+msgid "liked_you"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:276
+#: lib/flirtual/user/push.ex:68
+#, elixir-autogen, elixir-format
+msgid "someone_liked_you"
+msgid_plural "x_people_liked_you"
+msgstr[0] ""
+
+#: lib/flirtual/user/email.ex:285
+#: lib/flirtual/user/push.ex:76
+#, elixir-autogen, elixir-format
+msgid "browse_profiles_to_see_if_its_a_match"
+msgstr ""
+
+#: lib/flirtual/user/push.ex:74
+#, elixir-autogen, elixir-format
+msgid "see_who_likes_you_and_match"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:306
+#, elixir-autogen, elixir-format, fuzzy
+msgid "browse_profiles"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:295
+#, elixir-autogen, elixir-format, fuzzy
+msgid "browse_profiles_to_see_if_its_a_match_html"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:288
+#, elixir-autogen, elixir-format
+msgid "or_upgrade_to_premium"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:284
+#: lib/flirtual/user/email.ex:294
+#: lib/flirtual/user/email.ex:305
+#, elixir-autogen, elixir-format, fuzzy
+msgid "see_who_likes_you"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:281
+#: lib/flirtual/user/email.ex:291
+#, elixir-autogen, elixir-format, fuzzy
+msgid "this_week_1_person_liked_you"
+msgid_plural "this_week_x_people_liked_you"
+msgstr[0] ""

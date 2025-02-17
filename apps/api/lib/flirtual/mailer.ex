@@ -44,9 +44,9 @@ defmodule Flirtual.Mailer do
     ---
     #{urls.home}
 
-    #{dgettext("emails", "x")}: #{urls.x}
-    #{dgettext("emails", "discord")}: #{urls.discord}
-    #{dgettext("emails", "unsubscribe")}: #{urls.unsubscribe}
+    #{dgettext("notifications", "x")}: #{urls.x}
+    #{dgettext("notifications", "discord")}: #{urls.discord}
+    #{dgettext("notifications", "unsubscribe")}: #{urls.unsubscribe}
 
     © #{Date.utc_today().year} #{@company}
     #{@company_address}
@@ -288,12 +288,12 @@ defmodule Flirtual.Mailer do
         </div>
         <div class="footer">
           #{if action_url !== nil,
-      do: "<p class=\"action-link\">#{dgettext("emails", "if_the_link_does_not_work")}<br /><a href=\"#{action_url}\">#{action_url}</a></p>",
+      do: "<p class=\"action-link\">#{dgettext("notifications", "if_the_link_does_not_work")}<br /><a href=\"#{action_url}\">#{action_url}</a></p>",
       else: ""}
           <p>
-            <a href="#{urls.x}">#{dgettext("emails", "x")}</a>
-            <a href="#{urls.discord}">#{dgettext("emails", "discord")}</a><br />
-            <a href="#{urls.unsubscribe}">#{dgettext("emails", "unsubscribe")}</a>
+            <a href="#{urls.x}">#{dgettext("notifications", "x")}</a>
+            <a href="#{urls.discord}">#{dgettext("notifications", "discord")}</a><br />
+            <a href="#{urls.unsubscribe}">#{dgettext("notifications", "unsubscribe")}</a>
           </p>
           <p>
             &copy; #{Date.utc_today().year} #{@company}<br />
