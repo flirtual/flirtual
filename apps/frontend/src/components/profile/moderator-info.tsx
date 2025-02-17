@@ -149,6 +149,11 @@ export const ProfileModeratorInfo: FC<{
 								</CopyClick>
 							</span>
 						)}
+						<span>
+							<span className="font-bold">Date of birth:</span>
+							{" "}
+							<span>{user.bornAt}</span>
+						</span>
 					</div>
 					<div className="flex flex-col">
 						<span>
@@ -332,11 +337,6 @@ export const ProfileModeratorInfo: FC<{
 					</span>
 					{session.user.tags.includes("admin") && (
 						<div className="flex flex-col">
-							<span>
-								<span className="font-bold">Date of birth:</span>
-								{" "}
-								<span>{user.bornAt}</span>
-							</span>
 							<span>
 								<span className="font-bold">Chargebee customer:</span>
 								{" "}
