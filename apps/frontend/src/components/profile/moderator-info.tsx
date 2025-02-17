@@ -1,6 +1,7 @@
 import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
-import type { FC } from "react";
+import { useLocale } from "next-intl";
+import { type FC, useMemo } from "react";
 import { capitalize } from "remeda";
 import { mutate } from "swr";
 import { twMerge } from "tailwind-merge";
@@ -26,6 +27,12 @@ export const ProfileModeratorInfo: FC<{
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 	const user = useUser(userId);
+	const systemLanguage = useLocale();
+
+	const languageNames = useMemo(
+		() => new Intl.DisplayNames(systemLanguage, { type: "language" }),
+		[systemLanguage]
+	);
 
 	const [shown, setShown] = usePreferences(
 		"profile-moderator-info-visible",
@@ -105,6 +112,15 @@ export const ProfileModeratorInfo: FC<{
 							{" "}
 							<CopyClick value={user.slug}>
 								<span className="hover:underline">{user.slug}</span>
+							</CopyClick>
+						</span>
+						<span>
+							<span className="font-bold">Email:</span>
+							{" "}
+							<CopyClick value={user.email}>
+								<span className="cursor-pointer hover:underline">
+									{user.email}
+								</span>
 							</CopyClick>
 						</span>
 					</div>
@@ -301,17 +317,21 @@ export const ProfileModeratorInfo: FC<{
 								.join(", ")}
 						</span>
 					</span>
+					<span>
+						<span className="font-bold">Language:</span>
+						{" "}
+						<span>
+							{
+								user.preferences?.language
+									? (tAttributes[user.preferences.language]?.name
+										?? languageNames.of(user.preferences.language)
+										?? user.preferences.language)
+									: "None"
+							}
+						</span>
+					</span>
 					{session.user.tags.includes("admin") && (
 						<div className="flex flex-col">
-							<span>
-								<span className="font-bold">Email:</span>
-								{" "}
-								<CopyClick value={user.email}>
-									<span className="cursor-pointer hover:underline">
-										{user.email}
-									</span>
-								</CopyClick>
-							</span>
 							<span>
 								<span className="font-bold">Date of birth:</span>
 								{" "}

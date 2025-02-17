@@ -1,6 +1,7 @@
 defmodule Flirtual.User.Preferences.Policy do
   use Flirtual.Policy, reference_key: :user
 
+  alias Flirtual.User
   alias Flirtual.User.Preferences
 
   # The current session can read their own preferences.
@@ -18,6 +19,19 @@ defmodule Flirtual.User.Preferences.Policy do
         }
       ),
       do: true
+
+  def authorize(
+        :read,
+        %Plug.Conn{
+          assigns: %{
+            session: %{
+              user: %User{} = user
+            }
+          }
+        },
+        _
+      ),
+      do: :moderator in user.tags
 
   # Any other action, or credentials are disallowed.
   def authorize(_, _, _), do: false

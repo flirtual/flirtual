@@ -234,6 +234,7 @@ defmodule Flirtual.User.Policy do
       do: user[key]
 
   @moderator_property_keys [
+    :email,
     :moderator_message,
     :moderator_note,
     :shadowbanned_at,
