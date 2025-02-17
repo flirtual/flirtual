@@ -21,10 +21,10 @@ defmodule Flirtual.ObanWorkers.Email do
          ) do
       {:ok, _} ->
         user = User.get(user_id)
-        language = Map.get(args, "language", user.preferences.language || "en")
+        language = Map.get(args, "language", user.preferences.language)
 
-        from = Map.get(args, "from", "noreply@flirtu.al")
-        action_url = Map.get(args, "action_url", nil)
+        from = Map.get(args, "from")
+        action_url = Map.get(args, "action_url")
 
         Mailer.send(
           user,
@@ -58,8 +58,8 @@ defmodule Flirtual.ObanWorkers.Email do
            Application.get_env(:flirtual, Flirtual.ObanWorkers)[:email_rate_limit]
          ) do
       {:ok, _} ->
-        from = Map.get(args, "from", "noreply@flirtu.al")
-        language = Map.get(args, "language", "en")
+        from = Map.get(args, "from")
+        language = Map.get(args, "language")
 
         Mailer.send(
           recipient,

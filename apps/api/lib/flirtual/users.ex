@@ -126,34 +126,13 @@ defmodule Flirtual.Users do
       with {:ok, attrs} <- UpdatePassword.apply(attrs, context: %{user: user}),
            {:ok, user} <-
              User.update_password(user, attrs.password),
-           {:ok, _} <- deliver_changed_password_alert(user) do
+           {:ok, _} <- User.Email.deliver(user, :password_changed) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
       end
     end)
-  end
-
-  defp deliver_changed_password_alert(%User{} = user) do
-    %{
-      "user_id" => user.id,
-      "from" => "security@flirtu.al",
-      "subject" => "Your password was changed",
-      "body_text" => """
-        The password on your Flirtual account has been changed.
-
-        If you did not make this request, please reset your password immediately at https://flirtu.al/forgot or reply to this email if you need assistance.
-      """,
-      "body_html" => """
-        <p>The password on your Flirtual account has been changed.</p>
-
-        <p>If you did not make this request, please <a href="https://flirtu.al/forgot">reset your password</a> immediately or reply to this email if you need assistance.</p>
-      """,
-      "type" => "transactional"
-    }
-    |> Flirtual.ObanWorkers.Email.new()
-    |> Oban.insert()
   end
 
   def reset_password(%User{} = user) do
@@ -201,7 +180,7 @@ defmodule Flirtual.Users do
     Repo.transaction(fn ->
       with {:ok, attrs} <- ConfirmResetPassword.apply(attrs),
            {:ok, user} <- User.update_password(attrs.user, attrs.password),
-           {:ok, _} <- deliver_changed_password_alert(user) do
+           {:ok, _} <- User.Email.deliver(user, :password_changed) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -293,35 +272,13 @@ defmodule Flirtual.Users do
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
              ObanWorkers.update_user(user.id, [:chargebee, :elasticsearch, :listmonk, :talkjs]),
-           {:ok, _} <- deliver_changed_email_alert(user) do
+           {:ok, _} <- User.Email.deliver(user, :email_changed) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
       end
     end)
-  end
-
-  defp deliver_changed_email_alert(%User{previous_email: nil}), do: {:ok, :no_previous_email}
-
-  defp deliver_changed_email_alert(%User{} = user) do
-    %{
-      "recipient" => user.previous_email,
-      "from" => "security@flirtu.al",
-      "subject" => "Your email address was changed",
-      "body_text" => """
-        The email address on your Flirtual account has been changed to #{user.email}.
-
-        If you did not make this request, please reply to this email immediately so we can secure your account.
-      """,
-      "body_html" => """
-        <p>The email address on your Flirtual account has been changed to #{user.email}.</p>
-
-        <p>If you did not make this request, please reply to this email immediately so we can secure your account.</p>
-      """
-    }
-    |> Flirtual.ObanWorkers.Email.new()
-    |> Oban.insert()
   end
 
   def update_preferences(%Preferences{} = preferences, attrs) do

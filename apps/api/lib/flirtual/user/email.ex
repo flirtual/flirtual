@@ -34,6 +34,7 @@ defmodule Flirtual.User.Email do
       %{
         "user_id" => user.id,
         "subject" => dgettext("emails", "confirm_email.subject"),
+        "language" => language,
         "type" => "transactional",
         "action_url" => action_url,
         "body_text" => dgettext("emails", "confirm_email.body_text", action_url: action_url),
@@ -77,6 +78,7 @@ defmodule Flirtual.User.Email do
       %{
         "user_id" => user.id,
         "subject" => dgettext("emails", "reset_password.subject"),
+        "language" => language,
         "type" => "transactional",
         "action_url" => action_url,
         "body_text" => dgettext("emails", "reset_password.body_text", action_url: action_url),
@@ -101,6 +103,51 @@ defmodule Flirtual.User.Email do
         }
         </script>
         """
+      }
+      |> Flirtual.ObanWorkers.Email.new()
+      |> Oban.insert()
+    end)
+  end
+
+  def deliver(%User{} = user, :password_changed) do
+    language = user.preferences.language || "en"
+
+    action_url =
+      Application.fetch_env!(:flirtual, :frontend_origin)
+      |> URI.merge("/forgot")
+      |> URI.append_query("language=#{language}")
+      |> URI.to_string()
+
+    Gettext.with_locale(language, fn ->
+      %{
+        "user_id" => user.id,
+        "from" => "security@flirtu.al",
+        "language" => language,
+        "type" => "transactional",
+        "action_url" => action_url,
+        "subject" => dgettext("emails", "password_changed.subject"),
+        "body_text" => dgettext("emails", "password_changed.body_text", action_url: action_url),
+        "body_html" => dgettext("emails", "password_changed.body_html", action_url: action_url)
+      }
+      |> Flirtual.ObanWorkers.Email.new()
+      |> Oban.insert()
+    end)
+  end
+
+  def deliver(%User{previous_email: nil}, :email_changed), do: {:ok, nil}
+
+  def deliver(%User{} = user, :email_changed) do
+    language = user.preferences.language || "en"
+
+    Gettext.with_locale(language, fn ->
+      %{
+        "recipient" => user.previous_email,
+        "from" => "security@flirtu.al",
+        "language" => language,
+        "type" => "transactional",
+        "subject" => dgettext("emails", "email_changed.subject"),
+        "body_text" => dgettext("emails", "email_changed.body_text", email: user.email),
+        "body_html" => dgettext("emails", "email_changed.body_html", email: user.email)
       }
       |> Flirtual.ObanWorkers.Email.new()
       |> Oban.insert()

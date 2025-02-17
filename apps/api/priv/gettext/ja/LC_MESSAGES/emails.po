@@ -39,7 +39,7 @@ msgstr "X（旧Twitter）"
 msgid "suspended.subject"
 msgstr "アカウントが無効になりました"
 
-#: lib/flirtual/user/email.ex:36
+#: lib/flirtual/user/email.ex:42
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_html"
 msgstr ""
@@ -48,7 +48,7 @@ msgstr ""
 "\n"
 "<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>"
 
-#: lib/flirtual/user/email.ex:34
+#: lib/flirtual/user/email.ex:40
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_text"
 msgstr ""
@@ -57,13 +57,13 @@ msgstr ""
 "\n"
 "%{action_url}"
 
-#: lib/flirtual/user/email.ex:31
-#: lib/flirtual/user/email.ex:42
+#: lib/flirtual/user/email.ex:36
+#: lib/flirtual/user/email.ex:48
 #, elixir-autogen, elixir-format
 msgid "confirm_email.subject"
 msgstr "アカウントを確認してください"
 
-#: lib/flirtual/user/email.ex:74
+#: lib/flirtual/user/email.ex:86
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_html"
 msgstr ""
@@ -75,7 +75,7 @@ msgstr ""
 "<p>このリクエストに心当たりがない場合は、本メールを無視していただいて構いません。"
 "</p>"
 
-#: lib/flirtual/user/email.ex:72
+#: lib/flirtual/user/email.ex:84
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_text"
 msgstr ""
@@ -86,8 +86,8 @@ msgstr ""
 "\n"
 "このリクエストに心当たりがない場合は、このメールを無視していただいて構いません。"
 
-#: lib/flirtual/user/email.ex:69
 #: lib/flirtual/user/email.ex:80
+#: lib/flirtual/user/email.ex:92
 #, elixir-autogen, elixir-format
 msgid "reset_password.subject"
 msgstr "パスワードリセットのリクエスト"
@@ -122,8 +122,38 @@ msgstr ""
 "\n"
 "Flirtualチーム"
 
-#: lib/flirtual/user/email.ex:46
-#: lib/flirtual/user/email.ex:84
+#: lib/flirtual/user/email.ex:52
+#: lib/flirtual/user/email.ex:96
 #, elixir-autogen, elixir-format
 msgid "continue"
 msgstr "続行"
+
+#: lib/flirtual/user/email.ex:160
+#, elixir-autogen, elixir-format
+msgid "email_changed.body_html"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:159
+#, elixir-autogen, elixir-format
+msgid "email_changed.body_text"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:158
+#, elixir-autogen, elixir-format
+msgid "email_changed.subject"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:130
+#, elixir-autogen, elixir-format
+msgid "password_changed.body_html"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:129
+#, elixir-autogen, elixir-format
+msgid "password_changed.body_text"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:128
+#, elixir-autogen, elixir-format
+msgid "password_changed.subject"
+msgstr ""
