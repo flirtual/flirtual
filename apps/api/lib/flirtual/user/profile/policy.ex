@@ -287,7 +287,7 @@ defmodule Flirtual.User.Profile.Policy do
       when key in @nsfw_keys,
       do: profile[key]
 
-  @admin_property_keys [
+  @moderator_property_keys [
     :preferences
   ]
 
@@ -300,8 +300,8 @@ defmodule Flirtual.User.Profile.Policy do
         },
         %Profile{} = profile
       )
-      when key in @admin_property_keys do
-    if :admin in session.user.tags, do: profile[key], else: nil
+      when key in @moderator_property_keys do
+    if :moderator in session.user.tags, do: profile[key], else: nil
   end
 
   def transform(key, _, _) when key in @own_property_keys, do: nil
