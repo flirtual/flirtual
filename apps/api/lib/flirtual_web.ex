@@ -22,7 +22,6 @@ defmodule FlirtualWeb do
       use Phoenix.Controller, namespace: FlirtualWeb
 
       import Plug.Conn
-      import FlirtualWeb.Gettext
       alias FlirtualWeb.Router.Helpers, as: Routes
     end
   end

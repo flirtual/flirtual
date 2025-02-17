@@ -1,0 +1,88 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: lib/flirtual/mailer.ex:48
+#: lib/flirtual/mailer.ex:295
+#, elixir-autogen, elixir-format, fuzzy
+msgid "discord"
+msgstr "Discord"
+
+#: lib/flirtual/mailer.ex:291
+#, elixir-autogen, elixir-format
+msgid "if_the_link_does_not_work"
+msgstr "If the link above doesn't work, try copying this URL into your browser:"
+
+#: lib/flirtual/mailer.ex:49
+#: lib/flirtual/mailer.ex:296
+#, elixir-autogen, elixir-format, fuzzy
+msgid "unsubscribe"
+msgstr "Unsubscribe"
+
+#: lib/flirtual/mailer.ex:47
+#: lib/flirtual/mailer.ex:294
+#, elixir-autogen, elixir-format
+msgid "x"
+msgstr "X (Twitter)"
+
+#: lib/flirtual/user/email.ex:12
+#, elixir-autogen, elixir-format
+msgid "suspended.subject"
+msgstr "Account disabled"
+
+#: lib/flirtual/user/email.ex:36
+#, elixir-autogen, elixir-format
+msgid "confirm_email.body_html"
+msgstr "<p>Almost done—confirm your email address by tapping the button below. Once you do, you’ll be all set to start matchmaking!</p>\n\n<p><a href=\"%{action_url}\" class=\"btn\">Continue</a></p>"
+
+#: lib/flirtual/user/email.ex:34
+#, elixir-autogen, elixir-format
+msgid "confirm_email.body_text"
+msgstr "Almost done—confirm your email address by opening the link below.\nOnce you do, you’ll be all set to start matchmaking!\n\n%{action_url}"
+
+#: lib/flirtual/user/email.ex:31
+#: lib/flirtual/user/email.ex:42
+#, elixir-autogen, elixir-format
+msgid "confirm_email.subject"
+msgstr "Confirm your account"
+
+#: lib/flirtual/user/email.ex:74
+#, elixir-autogen, elixir-format
+msgid "reset_password.body_html"
+msgstr "<p>Almost done—reset your password by tapping the button below. Once you do, you’ll be ready to login!</p>\n\n<p><a href=\"%{action_url}\" class=\"btn\">Continue</a></p>\n\n<p>If you didn't request this, you can safely ignore this email.</p>"
+
+#: lib/flirtual/user/email.ex:72
+#, elixir-autogen, elixir-format
+msgid "reset_password.body_text"
+msgstr "Almost done—reset your password by opening the link below.\nOnce you do, you’ll be ready to login!\n\n%{action_url}\n\nIf you didn't request this, you can safely ignore this email."
+
+#: lib/flirtual/user/email.ex:69
+#: lib/flirtual/user/email.ex:80
+#, elixir-autogen, elixir-format
+msgid "reset_password.subject"
+msgstr "Password reset request"
+
+#: lib/flirtual/user/email.ex:16
+#, elixir-autogen, elixir-format
+msgid "suspended.body_html"
+msgstr "<p>Our moderation team has found your Flirtual account in violation of our rules.</p>\n\n<p><strong>Reason</strong>: %{message}</p>\n\n<p>Your account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision to unban your account, or if you would like us to delete your account immediately. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.</p><p>The Flirtual Team</p>"
+
+#: lib/flirtual/user/email.ex:15
+#, elixir-autogen, elixir-format
+msgid "suspended.body_text"
+msgstr "Our moderation team has found your Flirtual account in violation of our rules.\n\nReason: %{message}\n\nYour account data will be kept for 30 days. Please reply to this message within 30 days if you would like to appeal this moderation decision to unban your account, or if you would like us to delete your account immediately. If you have not received a response to your appeal within 30 days, it has been reviewed and denied.\n\nThe Flirtual Team"
+
+#: lib/flirtual/user/email.ex:46
+#: lib/flirtual/user/email.ex:84
+#, elixir-autogen, elixir-format
+msgid "continue"
+msgstr "Continue"

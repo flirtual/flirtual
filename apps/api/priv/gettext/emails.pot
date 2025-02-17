@@ -1,0 +1,88 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new messages manually only if they're dynamic
+## messages that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here has no
+## effect: edit them in PO (.po) files instead.
+#
+msgid ""
+msgstr ""
+
+#: lib/flirtual/mailer.ex:48
+#: lib/flirtual/mailer.ex:295
+#, elixir-autogen, elixir-format
+msgid "discord"
+msgstr ""
+
+#: lib/flirtual/mailer.ex:291
+#, elixir-autogen, elixir-format
+msgid "if_the_link_does_not_work"
+msgstr ""
+
+#: lib/flirtual/mailer.ex:49
+#: lib/flirtual/mailer.ex:296
+#, elixir-autogen, elixir-format
+msgid "unsubscribe"
+msgstr ""
+
+#: lib/flirtual/mailer.ex:47
+#: lib/flirtual/mailer.ex:294
+#, elixir-autogen, elixir-format
+msgid "x"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:12
+#, elixir-autogen, elixir-format
+msgid "suspended.subject"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:36
+#, elixir-autogen, elixir-format
+msgid "confirm_email.body_html"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:34
+#, elixir-autogen, elixir-format
+msgid "confirm_email.body_text"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:31
+#: lib/flirtual/user/email.ex:42
+#, elixir-autogen, elixir-format
+msgid "confirm_email.subject"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:74
+#, elixir-autogen, elixir-format
+msgid "reset_password.body_html"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:72
+#, elixir-autogen, elixir-format
+msgid "reset_password.body_text"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:69
+#: lib/flirtual/user/email.ex:80
+#, elixir-autogen, elixir-format
+msgid "reset_password.subject"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:16
+#, elixir-autogen, elixir-format
+msgid "suspended.body_html"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:15
+#, elixir-autogen, elixir-format
+msgid "suspended.body_text"
+msgstr ""
+
+#: lib/flirtual/user/email.ex:46
+#: lib/flirtual/user/email.ex:84
+#, elixir-autogen, elixir-format
+msgid "continue"
+msgstr ""

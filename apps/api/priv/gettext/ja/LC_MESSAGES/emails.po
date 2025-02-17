@@ -1,0 +1,129 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: lib/flirtual/mailer.ex:48
+#: lib/flirtual/mailer.ex:295
+#, elixir-autogen, elixir-format, fuzzy
+msgid "discord"
+msgstr "Discord"
+
+#: lib/flirtual/mailer.ex:291
+#, elixir-autogen, elixir-format
+msgid "if_the_link_does_not_work"
+msgstr "上のリンクが機能しない場合は、このURLをブラウザにコピーしてお試しください:"
+
+#: lib/flirtual/mailer.ex:49
+#: lib/flirtual/mailer.ex:296
+#, elixir-autogen, elixir-format, fuzzy
+msgid "unsubscribe"
+msgstr "購読解除"
+
+#: lib/flirtual/mailer.ex:47
+#: lib/flirtual/mailer.ex:294
+#, elixir-autogen, elixir-format
+msgid "x"
+msgstr "X（旧Twitter）"
+
+#: lib/flirtual/user/email.ex:12
+#, elixir-autogen, elixir-format
+msgid "suspended.subject"
+msgstr "アカウントが無効になりました"
+
+#: lib/flirtual/user/email.ex:36
+#, elixir-autogen, elixir-format
+msgid "confirm_email.body_html"
+msgstr ""
+"<p>あと少しです。以下のボタンをタップしてメールアドレスを確認してください。確認"
+"が完了すると、すぐにマッチメイキングを開始できます！</p>\n"
+"\n"
+"<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>"
+
+#: lib/flirtual/user/email.ex:34
+#, elixir-autogen, elixir-format
+msgid "confirm_email.body_text"
+msgstr ""
+"あと少しです。以下のリンクを開き、メールアドレスを確認してください。\n"
+"確認が完了すると、すぐにマッチメイキングを開始できます！\n"
+"\n"
+"%{action_url}"
+
+#: lib/flirtual/user/email.ex:31
+#: lib/flirtual/user/email.ex:42
+#, elixir-autogen, elixir-format
+msgid "confirm_email.subject"
+msgstr "アカウントを確認してください"
+
+#: lib/flirtual/user/email.ex:74
+#, elixir-autogen, elixir-format
+msgid "reset_password.body_html"
+msgstr ""
+"<p>あと少しです。以下のボタンをタップしてパスワードをリセットしてください。完了"
+"すると、ログインできるようになります！</p>\n"
+"\n"
+"<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>\n"
+"\n"
+"<p>このリクエストに心当たりがない場合は、本メールを無視していただいて構いません。"
+"</p>"
+
+#: lib/flirtual/user/email.ex:72
+#, elixir-autogen, elixir-format
+msgid "reset_password.body_text"
+msgstr ""
+"あと少しです。以下のリンクを開き、パスワードをリセットしてください。\n"
+"リセットが完了すると、ログインできるようになります！\n"
+"\n"
+"%{action_url}\n"
+"\n"
+"このリクエストに心当たりがない場合は、このメールを無視していただいて構いません。"
+
+#: lib/flirtual/user/email.ex:69
+#: lib/flirtual/user/email.ex:80
+#, elixir-autogen, elixir-format
+msgid "reset_password.subject"
+msgstr "パスワードリセットのリクエスト"
+
+#: lib/flirtual/user/email.ex:16
+#, elixir-autogen, elixir-format
+msgid "suspended.body_html"
+msgstr ""
+"<p>Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると判断"
+"しました。</p>\n"
+"\n"
+"<p><strong>理由</strong>: %{message}</p>\n"
+"\n"
+"<p>お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立てた"
+"い場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメッセージ"
+"に返信してください。30日以内に申し立てに対する返答がない場合は、審査され、却下さ"
+"れたものとみなします。</p><p>Flirtualチーム</p>"
+
+#: lib/flirtual/user/email.ex:15
+#, elixir-autogen, elixir-format
+msgid "suspended.body_text"
+msgstr ""
+"Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると判断し"
+"ました。\n"
+"\n"
+"違反理由: %{message}\n"
+"\n"
+"お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立てたい"
+"場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメッセージに"
+"返信してください。30日以内に申し立てに対する返答がない場合は、審査され、却下され"
+"たものとみなします。\n"
+"\n"
+"Flirtualチーム"
+
+#: lib/flirtual/user/email.ex:46
+#: lib/flirtual/user/email.ex:84
+#, elixir-autogen, elixir-format
+msgid "continue"
+msgstr "続行"

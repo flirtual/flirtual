@@ -1,7 +1,9 @@
 defmodule Flirtual.Mailer do
   use Swoosh.Mailer, otp_app: :flirtual
+  # use Gettext, otp_app: :flirtual, backend: Flirtual.Gettext
 
   import Swoosh.Email
+  import Flirtual.Gettext
 
   defp get_origin() do
     Application.fetch_env!(:flirtual, :frontend_origin)
@@ -9,28 +11,42 @@ defmodule Flirtual.Mailer do
 
   defp get_urls() do
     origin = get_origin()
+    locale = Gettext.get_locale()
 
-    x_url = "https://x.com/getflirtual"
-    discord_url = origin |> URI.merge("/discord") |> URI.to_string()
-    unsubscribe_url = origin |> URI.merge("/settings/notifications") |> URI.to_string()
-
-    %{x_url: x_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url}
+    %{
+      home:
+        origin
+        |> URI.append_query("language=#{locale}")
+        |> URI.to_string(),
+      x: "https://x.com/getflirtual",
+      discord:
+        origin
+        |> URI.merge("/discord")
+        |> URI.append_query("language=#{locale}")
+        |> URI.to_string(),
+      unsubscribe:
+        origin
+        |> URI.merge("/settings/notifications")
+        |> URI.append_query("language=#{locale}")
+        |> URI.to_string()
+    }
   end
 
   @company "Flirtual"
   @company_address "6d - 7398 Yonge St, #776 | Thornhill, ON | L4J 8J2 | Canada"
 
   defp format_text_body(body_text) do
-    %{x_url: x_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
-      get_urls()
+    urls = get_urls()
 
     """
     #{body_text}
 
     ---
-    X: #{x_url}
-    Discord: #{discord_url}
-    Unsubscribe: #{unsubscribe_url}
+    #{urls.home}
+
+    #{dgettext("emails", "x")}: #{urls.x}
+    #{dgettext("emails", "discord")}: #{urls.discord}
+    #{dgettext("emails", "unsubscribe")}: #{urls.unsubscribe}
 
     © #{Date.utc_today().year} #{@company}
     #{@company_address}
@@ -38,8 +54,7 @@ defmodule Flirtual.Mailer do
   end
 
   defp format_html_body(body_html, subject, action_url) do
-    %{x_url: x_url, discord_url: discord_url, unsubscribe_url: unsubscribe_url} =
-      get_urls()
+    urls = get_urls()
 
     """
     <!doctype html>
@@ -49,14 +64,27 @@ defmodule Flirtual.Mailer do
         <meta http-equiv="Content-Type" content="text/html; charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <base target="_blank">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
         <style>
           body {
             background-color: #fffaf0;
-            font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;
-            font-size: 15px;
+            font-family: "Nunito", 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;
+            font-size: 16px;
             line-height: 26px;
             margin: 0;
             color: #444;
+          }
+
+          .montserrat, h1, .btn {
+            font-family: "Montserrat", 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;
+          }
+
+          h1 {
+            font-size: 20px;
+            margin: 0;
+            padding: 0;
           }
 
           pre {
@@ -122,7 +150,7 @@ defmodule Flirtual.Mailer do
           }
 
           .gutter {
-            padding: 30px;
+            padding: 24px 32px;
           }
 
           img {
@@ -179,13 +207,30 @@ defmodule Flirtual.Mailer do
           }
 
           .gradient {
-            padding: 30px;
+            padding: 24px 32px;
             border-radius: 12px 12px 0 0;
             background-color: #ff8975;
             background-image: linear-gradient(to right, #ff8975, #e9658b);
+            color: white;
+          }
+
+          .light-only {
+            display: inline;
+          }
+
+          .dark-only {
+            display: none;
           }
 
           @media (prefers-color-scheme: dark) {
+            .light-only {
+              display: none;
+            }
+
+            .dark-only {
+              display: inline;
+            }
+
             body {
               background-color: #111;
               color: #f5f5f5;
@@ -216,23 +261,39 @@ defmodule Flirtual.Mailer do
       </head>
       <body>
         <div class="gutter">&nbsp;</div>
+        <a
+          style="display: block; text-align: center; margin: auto; margin-bottom: 16px"
+          href="#{urls.home}"
+        >
+          <img
+            style="max-height: 48px"
+            class="dark-only"
+            src="https://files.flirtu.al/flirtual-white.png"
+            alt="Flirtual"
+          />
+          <img
+            style="max-height: 48px"
+            class="light-only"
+            src="https://files.flirtu.al/flirtual-black.png"
+            alt="Flirtual"
+          />
+        </a>
         <div class="main">
           <div class="gradient">
-            <a href="https://flirtu.al">
-              <img src="https://media.news.flirtu.al/flirtual-white.png" alt="Flirtual" />
-            </a>
+            <h1>#{subject}</h1>
           </div>
           <div class="wrap">
-            <h1>#{subject}</h1>
             #{body_html}
           </div>
         </div>
         <div class="footer">
-          #{if action_url !== nil, do: "<p class=\"action-link\">If the link above doesn't work, try copying this URL into your browser:<br /><a href=\"#{action_url}\">#{action_url}</a></p>", else: ""}
+          #{if action_url !== nil,
+      do: "<p class=\"action-link\">#{dgettext("emails", "if_the_link_does_not_work")}<br /><a href=\"#{action_url}\">#{action_url}</a></p>",
+      else: ""}
           <p>
-            <a href="#{x_url}">X</a>
-            <a href="#{discord_url}">Discord</a><br />
-            <a href="#{unsubscribe_url}">Unsubscribe</a>
+            <a href="#{urls.x}">#{dgettext("emails", "x")}</a>
+            <a href="#{urls.discord}">#{dgettext("emails", "discord")}</a><br />
+            <a href="#{urls.unsubscribe}">#{dgettext("emails", "unsubscribe")}</a>
           </p>
           <p>
             &copy; #{Date.utc_today().year} #{@company}<br />
@@ -251,39 +312,47 @@ defmodule Flirtual.Mailer do
     subject = Keyword.fetch!(options, :subject)
     action_url = Keyword.get(options, :action_url)
     unsubscribe_token = Keyword.get(options, :unsubscribe_token)
+    language = Keyword.get(options, :language, "en")
 
-    email =
-      new()
-      |> to(recipient)
-      |> from({"Flirtual", from})
-      |> subject(subject)
-      |> text_body(
-        Keyword.fetch!(options, :body_text)
-        |> format_text_body()
-      )
-      |> html_body(
-        Keyword.fetch!(options, :body_html)
-        |> format_html_body(
-          subject,
-          action_url
+    Gettext.with_locale(language, fn ->
+      email =
+        new()
+        |> to(recipient)
+        |> from({"Flirtual", from})
+        |> subject(subject)
+        |> text_body(
+          Keyword.fetch!(options, :body_text)
+          |> format_text_body()
         )
-      )
+        |> html_body(
+          Keyword.fetch!(options, :body_html)
+          |> format_html_body(
+            subject,
+            action_url
+          )
+        )
 
-    email =
-      if unsubscribe_token do
-        email
-        |> header(
-          "List-Unsubscribe",
-          "<https://api.flirtu.al/v1/unsubscribe?token=" <> unsubscribe_token <> ">"
-        )
-        |> header("List-Unsubscribe-Post", "List-Unsubscribe=One-Click")
-      else
-        email
+      email =
+        if unsubscribe_token do
+          email
+          |> header(
+            "List-Unsubscribe",
+            "<" <>
+              (Application.fetch_env!(:flirtual, :origin)
+               |> URI.merge("/v1/unsubscribe")
+               |> URI.append_query("token=#{unsubscribe_token}")
+               |> URI.to_string()) <>
+              ">"
+          )
+          |> header("List-Unsubscribe-Post", "List-Unsubscribe=One-Click")
+        else
+          email
+        end
+
+      with {:ok, _metadata} <-
+             deliver(email) do
+        {:ok, email}
       end
-
-    with {:ok, _metadata} <-
-           deliver(email) do
-      {:ok, email}
-    end
+    end)
   end
 end

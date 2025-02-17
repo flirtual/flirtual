@@ -1,4 +1,4 @@
-defmodule FlirtualWeb.Gettext do
+defmodule Flirtual.Gettext do
   @moduledoc """
   A module providing Internationalization with a gettext-based API.
 

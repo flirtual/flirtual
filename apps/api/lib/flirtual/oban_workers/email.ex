@@ -21,12 +21,15 @@ defmodule Flirtual.ObanWorkers.Email do
          ) do
       {:ok, _} ->
         user = User.get(user_id)
+        language = Map.get(args, "language", user.preferences.language || "en")
+
         from = Map.get(args, "from", "noreply@flirtu.al")
         action_url = Map.get(args, "action_url", nil)
 
         Mailer.send(
           user,
           from: from,
+          language: language,
           subject: subject,
           action_url: action_url,
           unsubscribe_token: if(type === "marketing", do: user.unsubscribe_token, else: nil),
@@ -56,10 +59,12 @@ defmodule Flirtual.ObanWorkers.Email do
          ) do
       {:ok, _} ->
         from = Map.get(args, "from", "noreply@flirtu.al")
+        language = Map.get(args, "language", "en")
 
         Mailer.send(
           recipient,
           from: from,
+          language: language,
           subject: subject,
           body_text: body_text,
           body_html: body_html
