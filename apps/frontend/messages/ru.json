@@ -943,5 +943,6 @@
 	"privacy_policy": "Политика конфиденциальности",
 	"developers": "Разработчики",
 	"support": "Поддерживать",
-	"its_currently_time_for_name": "Сейчас {время} для {имя}"
+	"its_currently_time_for_name": "Сейчас {время} для {имя}",
+	"formal_dark_camel_hunt": "Ваш пароль был изменен. Теперь вы можете войти в систему с новым паролем."
 }
