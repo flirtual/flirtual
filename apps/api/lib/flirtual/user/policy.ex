@@ -290,7 +290,7 @@ defmodule Flirtual.User.Policy do
         %User{born_at: born_at}
       )
       when not is_nil(born_at) do
-    if :admin in session.user.tags,
+    if :moderator in session.user.tags,
       do: born_at,
       else: truncate_date(born_at)
   end
