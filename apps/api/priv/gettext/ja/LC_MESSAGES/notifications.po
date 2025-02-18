@@ -9,7 +9,8 @@
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2025-02-18 01:09+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/"
 "notifications/ja/>\n"
 "Language: ja\n"
@@ -188,9 +189,9 @@ msgstr "パスワードが変更されました"
 
 #: lib/flirtual/user/email.ex:205
 #: lib/flirtual/user/email.ex:217
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "message"
-msgstr ""
+msgstr "メッセージ"
 
 #: lib/flirtual/user/email.ex:191
 #, elixir-autogen, elixir-format, fuzzy
@@ -269,7 +270,7 @@ msgstr "誰があなたを好きか見て、一致する。"
 #: lib/flirtual/user/email.ex:306
 #, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles"
-msgstr ""
+msgstr "プロフィールを閲覧する"
 
 #: lib/flirtual/user/email.ex:295
 #, elixir-autogen, elixir-format, fuzzy
@@ -294,7 +295,7 @@ msgstr ""
 #: lib/flirtual/user/email.ex:305
 #, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you"
-msgstr ""
+msgstr "いいねした人を見る"
 
 #: lib/flirtual/user/email.ex:281
 #: lib/flirtual/user/email.ex:291
