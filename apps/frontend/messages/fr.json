@@ -943,5 +943,6 @@
 	"system_theme_image": "b64a38d7-4a94-42bc-8f7d-476f4e63e55f",
 	"light_theme_image": "52f7a831-8f7d-46c3-aace-4a99d1f4792d",
 	"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
-	"its_currently_time_for_name": "Il est actuellement {heure} pour {nom}"
+	"its_currently_time_for_name": "Il est actuellement {heure} pour {nom}",
+	"formal_dark_camel_hunt": "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
 }
