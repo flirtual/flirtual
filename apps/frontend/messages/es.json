@@ -943,5 +943,6 @@
 	"log_in": "Acceso",
 	"sign_up": "Inscribirse",
 	"vrchat": "VRChat",
-	"its_currently_time_for_name": "Actualmente es {hora} para {nombre}."
+	"its_currently_time_for_name": "Actualmente es {hora} para {nombre}.",
+	"formal_dark_camel_hunt": "Tu contraseña ha sido restablecida. Ahora puedes iniciar sesión con tu nueva contraseña."
 }
