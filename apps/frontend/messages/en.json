@@ -943,5 +943,6 @@
 	"same_honest_seal_renew": "Virtual dates, <highlight>real connections</highlight>",
 	"copy": "Copy",
 	"connection": "Connection",
-	"its_currently_time_for_name": "It's currently {time} for {name}"
+	"its_currently_time_for_name": "It's currently {time} for {name}",
+	"formal_dark_camel_hunt": "Your password has been reset. You can now login with your new password."
 }

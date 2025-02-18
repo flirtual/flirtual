@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Authentication } from "~/api/auth";
@@ -19,6 +20,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 	email
 }) => {
 	const [success, setSuccess] = useState(false);
+	const t = useTranslations();
 
 	return (
 		<Form
@@ -39,12 +41,11 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 					? (
 							<>
 								<p>
-									Your password has been reset. You can now login with your new
-									password.
+									{t("formal_dark_camel_hunt")}
 								</p>
 								<div className="flex gap-4">
 									<ButtonLink className="w-fit" href={urls.login()} size="sm">
-										Login
+										{t("login")}
 									</ButtonLink>
 								</div>
 							</>
@@ -54,7 +55,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 								<FormField name="email">
 									{(field) => (
 										<>
-											<InputLabel>Email</InputLabel>
+											<InputLabel>{t("email")}</InputLabel>
 											<InputText
 												{...field.props}
 												disabled
@@ -67,7 +68,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 								<FormField name="password">
 									{(field) => (
 										<>
-											<InputLabel>New password</InputLabel>
+											<InputLabel>{t("new_password")}</InputLabel>
 											<InputText
 												{...field.props}
 												autoFocus
@@ -80,7 +81,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 								<FormField name="passwordConfirmation">
 									{(field) => (
 										<>
-											<InputLabel>Confirm new password</InputLabel>
+											<InputLabel>{t("confirm_new_password")}</InputLabel>
 											<InputText
 												{...field.props}
 												autoFocus
@@ -90,7 +91,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 										</>
 									)}
 								</FormField>
-								<FormButton>Submit</FormButton>
+								<FormButton />
 							</>
 						)}
 		</Form>
