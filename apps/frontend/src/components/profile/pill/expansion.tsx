@@ -7,7 +7,7 @@ import { type FC, useMemo, useState } from "react";
 import type { AttributeType, MinimalAttribute } from "~/api/attributes";
 import type { Session } from "~/api/auth";
 import type { User } from "~/api/user";
-import { useAttributes } from "~/hooks/use-attribute";
+import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { urls } from "~/urls";
 
 import { ProfilePlaylist } from "../playlist";
@@ -26,6 +26,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 	const { editable, user, session } = props;
 	const [expanded, setExpanded] = useState(false);
 	const t = useTranslations();
+	const tAttribute = useAttributeTranslation();
 
 	const kinks = useAttributes("kink");
 	const activeKinkIds = useMemo(
@@ -78,7 +79,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 					<PillAttributeList
 						activeIds={session.user.profile.languages}
 						attributes={user.profile.languages}
-						getName={(id) => languageNames.of(id) || id}
+						getName={(id) => tAttribute[id]?.name ?? languageNames.of(id) ?? id}
 						href={editable ? urls.settings.info("language") : undefined}
 						user={user}
 					/>
