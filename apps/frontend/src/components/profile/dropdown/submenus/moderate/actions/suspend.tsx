@@ -1,9 +1,11 @@
-import { Gavel } from "lucide-react";
+import { Gavel, Languages } from "lucide-react";
+import { useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { type FC, useState } from "react";
+import { type FC, type PropsWithChildren, use, useMemo, useState } from "react";
 import { mutate } from "swr";
 
 import { ProspectKind } from "~/api/matchmaking";
+import { OpenAI } from "~/api/openai";
 import { displayName, User } from "~/api/user";
 import { optimisticQueueMove } from "~/app/(app)/(session)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
@@ -17,7 +19,7 @@ import {
 	DialogTrigger
 } from "~/components/dialog/dialog";
 import { DropdownMenuItem } from "~/components/dropdown";
-import { Form, FormButton } from "~/components/forms";
+import { Form, FormButton, FormMessage } from "~/components/forms";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import {
@@ -26,11 +28,18 @@ import {
 } from "~/hooks/use-attribute";
 import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
+import { withSuspense } from "~/hooks/with-suspense";
 import { queueKey, userKey } from "~/swr";
 
-export const SuspendAction: FC<{ user: User }> = ({ user }) => {
+const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {
 	const toasts = useToast();
 	const query = useSearchParams();
+	const locale = useLocale();
+
+	const languageNames = useMemo(
+		() => new Intl.DisplayNames(locale, { type: "language" }),
+		[locale]
+	);
 
 	const reasons = useAttributes("ban-reason");
 	const defaultReason = reasons[0] as string;
@@ -39,20 +48,14 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 
 	const [open, setOpen] = useState(false);
 
+	const expectedLanguageName = tAttribute[user.preferences?.language ?? "en"]?.name
+		?? languageNames.of(user.preferences?.language ?? "en")
+		?? user.preferences?.language;
+
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<DropdownMenuItem
-					asChild
-					className="text-red-500"
-					disabled={!!user.bannedAt}
-					onSelect={(event) => event.preventDefault()}
-				>
-					<button className="w-full gap-2" type="button">
-						<Gavel className="size-5" />
-						Ban
-					</button>
-				</DropdownMenuItem>
+				{children}
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
@@ -67,8 +70,20 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 						}}
 						className="flex flex-col gap-8"
 						requireChange={false}
-						onSubmit={async ({ targetId, ...body }) => {
-							await User.suspend(targetId, body);
+						onSubmit={async ({ targetId, reasonId, message }) => {
+							const messageChanged = message !== tAttribute[reasonId]?.details;
+
+							if (!messageChanged) {
+								const { "ban-reason": banReasons = {} } = (await import(`~/../messages/attributes.${user.preferences?.language}.json`).catch(() => ({
+									default: {}
+								}))
+								).default as Record<string, Record<string, unknown>>;
+
+								// @ts-expect-error: yes.
+								message = banReasons[reasonId]?.details || message;
+							}
+
+							await User.suspend(targetId, { reasonId, message });
 							mutate(userKey(user.id));
 
 							const kind = (query.get("kind") || "love") as ProspectKind;
@@ -79,7 +94,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 							setOpen(false);
 						}}
 					>
-						{({ FormField, fields: { message } }) => (
+						{({ FormField, fields: { message, reasonId } }) => (
 							<>
 								<FormField name="targetId">
 									{(field) => (
@@ -117,7 +132,7 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 											onChange={(value) => {
 												props.onChange(value);
 												message.props.onChange(
-													tAttribute[value]?.details || value
+													tAttribute[value]?.details || ""
 												);
 											}}
 										/>
@@ -135,6 +150,33 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 										</>
 									)}
 								</FormField>
+								{message.props.value !== tAttribute[reasonId.props.value]?.details && user.preferences?.language !== locale && (
+									<div className="flex flex-col gap-4">
+										<FormMessage size="sm" type="warning">
+											Custom messages are not automatically translated.
+											{" "}
+											Please translate to the user's preferred language (
+											{expectedLanguageName}
+											) before sending. Double check the translation for accuracy!
+										</FormMessage>
+										<Button
+											Icon={Languages}
+											size="sm"
+											onClick={async () => {
+												const { text } = await OpenAI.translate({
+													language: user.preferences?.language ?? "en",
+													text: message.props.value
+												});
+
+												message.props.onChange(text);
+											}}
+										>
+											Translate to
+											{" "}
+											{expectedLanguageName}
+										</Button>
+									</div>
+								)}
 								<DialogFooter>
 									<Button
 										kind="tertiary"
@@ -151,5 +193,25 @@ export const SuspendAction: FC<{ user: User }> = ({ user }) => {
 				</DialogBody>
 			</DialogContent>
 		</Dialog>
+	);
+}, {
+	fallback: ({ children }) => children
+});
+
+export const SuspendAction: FC<{ user: User }> = ({ user }) => {
+	return (
+		<SuspendDialog user={user}>
+			<DropdownMenuItem
+				asChild
+				className="text-red-500"
+				disabled={!!user.bannedAt}
+				onSelect={(event) => event.preventDefault()}
+			>
+				<button className="w-full gap-2" type="button">
+					<Gavel className="size-5" />
+					Ban
+				</button>
+			</DropdownMenuItem>
+		</SuspendDialog>
 	);
 };

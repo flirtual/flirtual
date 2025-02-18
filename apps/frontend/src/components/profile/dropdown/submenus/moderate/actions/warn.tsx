@@ -1,7 +1,9 @@
-import { MailWarning } from "lucide-react";
-import { type FC, useState } from "react";
+import { Languages, MailWarning } from "lucide-react";
+import { useLocale } from "next-intl";
+import { type FC, useMemo, useState } from "react";
 import { mutate } from "swr";
 
+import { OpenAI } from "~/api/openai";
 import { displayName, User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
@@ -17,6 +19,7 @@ import { DropdownMenuItem } from "~/components/dropdown";
 import { Form, FormButton, FormMessage } from "~/components/forms";
 import { InputCheckbox, InputLabel, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useTranslations } from "~/hooks/use-internationalization";
 import { useToast } from "~/hooks/use-toast";
 import { userKey } from "~/swr";
@@ -24,6 +27,17 @@ import { userKey } from "~/swr";
 export const WarnAction: FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
 	const t = useTranslations();
+	const locale = useLocale();
+
+	const languageNames = useMemo(
+		() => new Intl.DisplayNames(locale, { type: "language" }),
+		[locale]
+	);
+
+	const tAttribute = useAttributeTranslation();
+	const expectedLanguageName = tAttribute[user.preferences?.language ?? "en"]?.name
+		?? languageNames.of(user.preferences?.language ?? "en")
+		?? user.preferences?.language;
 
 	const [open, setOpen] = useState(false);
 
@@ -102,6 +116,31 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 										</>
 									)}
 								</FormField>
+								{user.preferences?.language !== locale && (
+									<div className="flex flex-col gap-4">
+										<FormMessage size="sm" type="warning">
+											Please translate to the user's preferred language (
+											{expectedLanguageName}
+											) before sending. Double check the translation for accuracy!
+										</FormMessage>
+										<Button
+											Icon={Languages}
+											size="sm"
+											onClick={async () => {
+												const { text } = await OpenAI.translate({
+													language: user.preferences?.language ?? "en",
+													text: message.props.value
+												});
+
+												message.props.onChange(text);
+											}}
+										>
+											Translate to
+											{" "}
+											{expectedLanguageName}
+										</Button>
+									</div>
+								)}
 								<FormField name="shadowban">
 									{(field) => (
 										<div className="flex items-center gap-4">
