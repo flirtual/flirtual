@@ -943,5 +943,6 @@
 	"developers": "Ontwikkelaars",
 	"copyright": "© {year} Flirtual",
 	"preview_tag_4": "VRChat",
-	"its_currently_time_for_name": "Het is momenteel {tijd} voor {naam}"
+	"its_currently_time_for_name": "Het is momenteel {tijd} voor {naam}",
+	"formal_dark_camel_hunt": "Je wachtwoord is opnieuw ingesteld. Je kunt nu inloggen met je nieuwe wachtwoord."
 }
