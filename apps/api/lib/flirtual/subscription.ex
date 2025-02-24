@@ -271,7 +271,6 @@ defmodule Flirtual.Subscription do
                do:
                  user.profile.custom_weights
                  |> change(%{
-                   country: 1.0,
                    monopoly: 1.0,
                    games: 1.0,
                    default_interests: 1.0,
