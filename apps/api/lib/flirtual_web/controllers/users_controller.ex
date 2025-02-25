@@ -9,7 +9,7 @@ defmodule FlirtualWeb.UsersController do
   import Ecto.Query
 
   import FlirtualWeb.Utilities
-  import Flirtual.Attribute, only: [validate_attribute: 3]P
+  import Flirtual.Attribute, only: [validate_attribute: 3]
 
   alias Flirtual.{ObanWorkers, Policy, Repo, User, Users}
   alias Flirtual.User.Profile.Block
