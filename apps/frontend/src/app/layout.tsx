@@ -143,7 +143,7 @@ export default async function RootLayout({
 	preconnect(apiOrigin);
 	imageOrigins.map((origin) => preconnect(origin));
 
-	const session = await Authentication.getOptionalSession();
+	const session = await Authentication.getOptionalSession().catch(() => null);
 
 	const headers = await getHeaders();
 	const device = getDevice(headers);
