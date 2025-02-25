@@ -114,7 +114,8 @@ export const Authentication = {
 			.get()
 			.fetchError(() => null)
 			.unauthorized(() => null)
-			.json<Session | null>();
+			.json<Session | null>()
+			.catch(() => null);
 	},
 	async getSession() {
 		const session = await this.getOptionalSession();

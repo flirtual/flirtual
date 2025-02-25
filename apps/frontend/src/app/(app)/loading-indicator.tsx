@@ -1,10 +1,11 @@
 import Image from "next/image";
+import type { PropsWithChildren } from "react";
 
 import { urls } from "~/urls";
 
-export function LoadingIndicator() {
+export function LoadingIndicator({ children }: PropsWithChildren) {
 	return (
-		<div className="flex min-h-screen w-full items-center justify-center opacity-75">
+		<div className="flex min-h-screen w-full flex-col items-center justify-center opacity-75">
 			<Image
 				priority
 				alt=""
@@ -23,6 +24,7 @@ export function LoadingIndicator() {
 				src={urls.media("flirtual-black.svg", "files")}
 				width={3468}
 			/>
+			{children}
 		</div>
 	);
 }
