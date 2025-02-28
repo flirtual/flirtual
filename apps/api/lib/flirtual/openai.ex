@@ -1,8 +1,4 @@
 defmodule Flirtual.OpenAI do
-  @moduledoc """
-  OpenAI methods
-  """
-
   def translate(language, text) do
     case OpenAI.chat_completion(
            model: "gpt-4o",
