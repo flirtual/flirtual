@@ -179,7 +179,8 @@ defmodule Flirtual.User do
   end
 
   def update_status(%User{} = user) do
-    new_status = get_status(Repo.preload(user, User.default_assoc()))
+    user = Repo.preload(user, User.default_assoc())
+    new_status = get_status(user)
 
     user
     |> change(%{status: new_status})
