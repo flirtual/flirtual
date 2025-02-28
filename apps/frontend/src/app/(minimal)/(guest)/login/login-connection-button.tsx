@@ -13,11 +13,12 @@ import {
 } from "~/api/connections";
 import { Button, ButtonLink } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
-import { useLocation } from "~/hooks/use-location";
+import { toAbsoluteUrl } from "~/urls";
 
-export interface AddConnectionButtonProps {
+export interface LoginConnectionButtonProps {
 	type: ConnectionType;
 	tabIndex?: number;
+	next?: string;
 }
 
 const label = {
@@ -28,13 +29,12 @@ const label = {
 	vrchat: "VRChat"
 };
 
-export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
+export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	type,
-	tabIndex
+	tabIndex,
+	next = "/"
 }) => {
 	const t = useTranslations();
-	const location = useLocation();
-	location.search = "";
 
 	const router = useRouter();
 	const { native } = useDevice();
@@ -45,7 +45,7 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 	const href = Connection.authorizeUrl({
 		type,
 		prompt: "consent",
-		next: location.href
+		next: toAbsoluteUrl(next).href
 	});
 
 	return (
@@ -62,7 +62,7 @@ export const LoginConnectionButton: FC<AddConnectionButtonProps> = ({
 				const { authorizeUrl } = await Connection.authorize({
 					type,
 					prompt: "consent",
-					next: location.href
+					next: toAbsoluteUrl(next).href
 				});
 
 				await InAppBrowser.addListener("urlChangeEvent", async (event) => {

@@ -235,7 +235,7 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 					</span>
 					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 				</div>
-				<LoginConnectionButton tabIndex={5} type="discord" />
+				<LoginConnectionButton tabIndex={5} type="discord" next={next} />
 				{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />

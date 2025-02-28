@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
@@ -121,6 +120,9 @@ export const Authentication = {
 		const session = await this.getOptionalSession();
 
 		if (!session) {
+			if (typeof window !== "undefined") return redirect(urls.login(urls.default));
+
+			const { headers } = await import("next/headers");
 			const _url = (await headers()).get("url");
 			const url = new URL(_url || urls.default);
 
