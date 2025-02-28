@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
@@ -118,7 +119,15 @@ export const Authentication = {
 	},
 	async getSession() {
 		const session = await this.getOptionalSession();
-		if (!session) return redirect(urls.login());
+
+		if (!session) {
+			const _url = (await headers()).get("url");
+			const url = new URL(_url || urls.default);
+
+			const next = url.href.replace(url.origin, "");
+
+			return redirect(urls.login(next));
+		}
 
 		return session;
 	},
