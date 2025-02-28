@@ -91,12 +91,12 @@ msgstr "Continue"
 #: lib/flirtual/user/email.ex:154
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_html"
-msgstr "<p>The email address on your Flirtual account has been changed to %{user.email}.</p>\n\n <p>If you did not make this request, please reply to this email immediately so we can secure your account.</p>"
+msgstr "<p>The email address on your Flirtual account has been changed to %{email}.</p>\n\n <p>If you did not make this request, please reply to this email immediately so we can secure your account.</p>"
 
 #: lib/flirtual/user/email.ex:153
 #, elixir-autogen, elixir-format
 msgid "email_changed.body_text"
-msgstr "The email address on your Flirtual account has been changed to %{user.email}.\n\nIf you did not make this request, please reply to this email immediately so we can secure your account."
+msgstr "The email address on your Flirtual account has been changed to %{email}.\n\nIf you did not make this request, please reply to this email immediately so we can secure your account."
 
 #: lib/flirtual/user/email.ex:152
 #, elixir-autogen, elixir-format
