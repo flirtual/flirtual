@@ -18,7 +18,7 @@ defmodule FlirtualWeb.UsersController do
   action_fallback(FlirtualWeb.FallbackController)
 
   def create(conn, params) do
-    with {:ok, user} <- Users.create(params) |> IO.inspect(label: "User created"),
+    with {:ok, user} <- Users.create(params),
          {_, conn} = SessionController.create(conn, user) do
       conn
       |> put_status(:created)
