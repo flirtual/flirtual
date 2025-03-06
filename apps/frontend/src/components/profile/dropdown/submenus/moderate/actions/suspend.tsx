@@ -150,7 +150,8 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 										</>
 									)}
 								</FormField>
-								{message.props.value !== tAttribute[reasonId.props.value]?.details && user.preferences?.language !== locale && (
+								{message.props.value !== tAttribute[reasonId.props.value]?.details
+								&& user.preferences?.language && user.preferences?.language !== locale && (
 									<div className="flex flex-col gap-4">
 										<FormMessage size="sm" type="warning">
 											Custom messages are not automatically translated.
