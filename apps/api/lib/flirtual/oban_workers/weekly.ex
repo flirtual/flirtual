@@ -49,8 +49,7 @@ defmodule Flirtual.ObanWorkers.Weekly do
               is_nil(user.deactivated_at) and
               (email_notif.likes == true or
                  (push_notif.likes == true and
-                    (not is_nil(user.apns_token) or
-                       not is_nil(user.fcm_token)))),
+                    (user.apns_tokens != [] or user.fcm_tokens != []))),
           select: user.id,
           distinct: true
         )

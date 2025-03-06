@@ -27,6 +27,7 @@ dependencies {
     implementation project(':capawesome-capacitor-app-update')
     implementation project(':capgo-inappbrowser')
     implementation project(':revenuecat-purchases-capacitor')
+    implementation project(':capacitor-native-settings')
 
 }
 

@@ -199,7 +199,7 @@ defmodule Flirtual.Matchmaking do
 
   def schedule_reset_notification(user, reset_at) do
     if user.preferences.push_notifications.reminders and
-         (not is_nil(user.apns_token) or not is_nil(user.fcm_token)) do
+         (user.apns_tokens != [] or user.fcm_tokens != []) do
       User.Push.deliver(user, :daily_profiles_ready, reset_at)
     else
       {:ok, :disabled}
@@ -215,7 +215,7 @@ defmodule Flirtual.Matchmaking do
 
     send_push =
       user.preferences.push_notifications.matches and
-        (not is_nil(user.apns_token) or not is_nil(user.fcm_token))
+        (user.apns_tokens != [] or user.fcm_tokens != [])
 
     if target_user.status == :visible and (send_email or send_push) do
       email_result =

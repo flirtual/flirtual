@@ -23,7 +23,7 @@ defmodule Flirtual.ObanWorkers.LikeDigest do
       end
 
       if user.preferences.push_notifications.likes and
-           (not is_nil(user.apns_token) or not is_nil(user.fcm_token)) do
+           (user.apns_tokens != [] or user.fcm_tokens != []) do
         User.Push.deliver(user, :like_digest, like_count: like_count)
       end
     end

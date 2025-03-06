@@ -326,7 +326,12 @@ defmodule Flirtual.Users do
     with {:ok, notification_preferences} <-
            notification_preferences
            |> Preferences.PushNotifications.update_changeset(attrs)
-           |> Repo.update() do
+           |> Repo.update(),
+         %User{} = user <- User.get(notification_preferences.preferences_id),
+         if(notification_preferences.messages,
+           do: Talkjs.update_push_tokens(user),
+           else: Talkjs.remove_push_tokens(user)
+         ) do
       {:ok, notification_preferences}
     else
       {:error, reason} -> Repo.rollback(reason)
@@ -532,9 +537,9 @@ defmodule Flirtual.Users do
            :ok <- Flag.check_honeypot(user.id, attrs[:url]),
            :ok <- Flag.check_email_flags(user.id, attrs[:email]),
            :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
-           {:ok, _} <- Talkjs.update_user(user) |> IO.inspect(label: "Talkjs.update_user"),
+           {:ok, _} <- Talkjs.update_user(user),
            {:ok, _} <-
-             Listmonk.create_subscriber(user) |> IO.inspect(label: "Listmonk.create_subscriber"),
+             Listmonk.create_subscriber(user),
            {:ok, _} <- deliver_email_confirmation(user) do
         user
       else

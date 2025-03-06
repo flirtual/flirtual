@@ -21,6 +21,7 @@ defmodule Flirtual.User do
     Repo,
     Report,
     Subscription,
+    Talkjs,
     User
   }
 
@@ -55,8 +56,8 @@ defmodule Flirtual.User do
     field(:talkjs_signature, :string, redact: true)
     field(:listmonk_id, :integer)
     field(:unsubscribe_token, Ecto.ShortUUID)
-    field(:apns_token, :string)
-    field(:fcm_token, :string)
+    field(:apns_tokens, {:array, :string})
+    field(:fcm_tokens, {:array, :string})
     field(:platforms, {:array, :string})
     field(:push_count, :integer)
     field(:rating_prompts, :integer)
@@ -835,14 +836,76 @@ defmodule Flirtual.User do
     end)
   end
 
-  def update_push_tokens(%User{} = user, attrs) do
+  def add_push_token(%User{} = user, :apns, token) do
+    if token in user.apns_tokens do
+      {:ok, user}
+    else
+      Repo.transaction(fn ->
+        with :ok <- Hash.check_hash(user.id, "APNS token", token),
+             {:ok, user} <-
+               user
+               |> change(%{apns_tokens: user.apns_tokens ++ [token]})
+               |> Repo.update(),
+             {:ok, _} <-
+               if(user.preferences.push_notifications.messages,
+                 do: Talkjs.add_push_token(user, :apns, token),
+                 else: {:ok, nil}
+               ) do
+          user
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      end)
+    end
+  end
+
+  def add_push_token(%User{} = user, :fcm, token) do
+    if token in user.fcm_tokens do
+      {:ok, user}
+    else
+      Repo.transaction(fn ->
+        with :ok <- Hash.check_hash(user.id, "FCM token", token),
+             {:ok, user} <-
+               user
+               |> change(%{fcm_tokens: user.fcm_tokens ++ [token]})
+               |> Repo.update(),
+             {:ok, _} <-
+               if(user.preferences.push_notifications.messages,
+                 do: Talkjs.add_push_token(user, :fcm, token),
+                 else: {:ok, nil}
+               ) do
+          user
+        else
+          {:error, reason} -> Repo.rollback(reason)
+          reason -> Repo.rollback(reason)
+        end
+      end)
+    end
+  end
+
+  def remove_push_token(%User{} = user, :apns, token) do
     Repo.transaction(fn ->
       with {:ok, user} <-
              user
-             |> change(%{apns_token: attrs["apns_token"], fcm_token: attrs["fcm_token"]})
+             |> change(%{apns_tokens: Enum.reject(user.apns_tokens, &(&1 == token))})
              |> Repo.update(),
-           :ok <- Hash.check_hash(user.id, "APNS token", attrs["apns_token"]),
-           :ok <- Hash.check_hash(user.id, "FCM token", attrs["fcm_token"]) do
+           {:ok, _} <- Talkjs.remove_push_token(user, :apns, token) do
+        user
+      else
+        {:error, reason} -> Repo.rollback(reason)
+        reason -> Repo.rollback(reason)
+      end
+    end)
+  end
+
+  def remove_push_token(%User{} = user, :fcm, token) do
+    Repo.transaction(fn ->
+      with {:ok, user} <-
+             user
+             |> change(%{fcm_tokens: Enum.reject(user.fcm_tokens, &(&1 == token))})
+             |> Repo.update(),
+           {:ok, _} <- Talkjs.remove_push_token(user, :fcm, token) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -1123,8 +1186,8 @@ defimpl Jason.Encoder, for: Flirtual.User do
       :moderator_message,
       :moderator_note,
       :talkjs_signature,
-      :apns_token,
-      :fcm_token,
+      :apns_tokens,
+      :fcm_tokens,
       :platforms,
       :push_count,
       :rating_prompts,

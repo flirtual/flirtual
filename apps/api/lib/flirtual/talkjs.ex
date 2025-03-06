@@ -84,6 +84,22 @@ defmodule Flirtual.Talkjs do
     end
   end
 
+  def get_user(user_id) do
+    case fetch(:get, "users/" <> ShortUUID.decode!(user_id)) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
+        {:error, :not_found}
+
+      {:error, :not_configured} ->
+        {:ok, nil}
+
+      _ ->
+        {:error, :unknown}
+    end
+  end
+
   def update_user(%User{} = user) do
     update_user(user.id, %{
       name: User.display_name(user),
@@ -94,13 +110,71 @@ defmodule Flirtual.Talkjs do
     })
   end
 
+  def add_push_token(%User{} = user, type, token) do
+    push_key = "#{type}:#{token}"
+
+    update_user(user.id, %{
+      pushTokens: %{
+        push_key => true
+      }
+    })
+  end
+
+  def remove_push_token(%User{} = user, type, token) do
+    push_key = "#{type}:#{token}"
+
+    update_user(user.id, %{
+      pushTokens: %{
+        push_key => nil
+      }
+    })
+  end
+
+  def remove_push_tokens(%User{} = user) do
+    update_user(user.id, %{
+      pushTokens: nil
+    })
+  end
+
+  def update_push_tokens(%User{} = user) do
+    with {:ok, %{"pushTokens" => push_tokens}} <- get_user(user.id) do
+      local_tokens =
+        (for(token <- user.apns_tokens, do: {"apns:#{token}", true}) ++
+           for(token <- user.fcm_tokens, do: {"fcm:#{token}", true}))
+        |> Map.new()
+
+      talkjs_tokens =
+        push_tokens
+        |> Enum.filter(fn {_token, registered} -> registered == true end)
+        |> Map.new()
+
+      additions = Map.drop(local_tokens, Map.keys(talkjs_tokens))
+
+      removals =
+        Map.drop(talkjs_tokens, Map.keys(local_tokens))
+        |> Enum.map(fn {token, _registered} -> {token, nil} end)
+        |> Map.new()
+
+      diff = Map.merge(additions, removals)
+
+      if map_size(diff) > 0 do
+        update_user(user.id, %{
+          pushTokens: diff
+        })
+      else
+        {:ok, nil}
+      end
+    end
+  end
+
   def delete_user(%User{} = user) do
     with {:ok, talkjs_user} <-
            update_user(user.id, %{
              name: User.display_name(user, deleted: true),
              email: nil,
              photoUrl: nil,
-             role: nil
+             role: nil,
+             pushTokens: nil
            }),
          {:ok, _} <- delete_user_conversations(user.id) do
       {:ok, talkjs_user}

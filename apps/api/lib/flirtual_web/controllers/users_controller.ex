@@ -9,6 +9,7 @@ defmodule FlirtualWeb.UsersController do
   import Ecto.Query
 
   import FlirtualWeb.Utilities
+  import Flirtual.Utilities
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
   alias Flirtual.{ObanWorkers, Policy, Repo, User, Users}
@@ -18,7 +19,7 @@ defmodule FlirtualWeb.UsersController do
   action_fallback(FlirtualWeb.FallbackController)
 
   def create(conn, params) do
-    with {:ok, user} <- Users.create(params) |> IO.inspect(label: "User created"),
+    with {:ok, user} <- Users.create(params),
          {_, conn} = SessionController.create(conn, user) do
       conn
       |> put_status(:created)
@@ -544,7 +545,9 @@ defmodule FlirtualWeb.UsersController do
     end
   end
 
-  def update_push_tokens(conn, %{"user_id" => user_id} = params) do
+  def add_push_token(conn, %{"user_id" => user_id, "type" => type, "token" => token}) do
+    type = to_atom(type)
+
     user =
       if(conn.assigns[:session].user.id === user_id,
         do: conn.assigns[:session].user,
@@ -554,7 +557,7 @@ defmodule FlirtualWeb.UsersController do
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, user} <- User.update_push_tokens(user, params) do
+      with {:ok, user} <- User.add_push_token(user, type, token) do
         conn |> json(Policy.transform(conn, user))
       end
     end

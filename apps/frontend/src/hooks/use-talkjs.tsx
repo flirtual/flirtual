@@ -26,7 +26,6 @@ import { emptyArray } from "~/utilities";
 import { getConversationsKey } from "./use-conversations.shared";
 import { useDevice } from "./use-device";
 import { warnOnce } from "./use-log";
-import { useNotifications } from "./use-notifications";
 import { useSession } from "./use-session";
 import { useTheme } from "./use-theme";
 
@@ -36,15 +35,12 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 );
 
 const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
-	const { platform } = useDevice();
-
 	const [ready, setReady] = useState(false);
 	const [authSession] = useSession();
 
 	const router = useRouter();
 	const { mutate } = useSWRConfig();
 
-	const { pushRegistrationId } = useNotifications();
 	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>([]);
 
 	useEffect(() => void Talk.ready.then(() => setReady(true)), []);
@@ -61,26 +57,6 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 			me: new Talk.User(talkjsUserId)
 		});
 	}, [talkjsUserId, talkjsSignature, ready]);
-
-	useEffect(() => {
-		if (!session || !pushRegistrationId || authSession?.sudoerId) return;
-
-		void (async () => {
-			await session.clearPushRegistrations();
-			if (authSession?.user.preferences?.pushNotifications.messages)
-				await session.setPushRegistration({
-					provider: platform === "apple" ? "apns" : "fcm",
-					pushRegistrationId
-				});
-		})();
-	}, [
-		session,
-		authSession,
-		pushRegistrationId,
-		platform,
-		router,
-		authSession?.user.preferences?.pushNotifications.messages
-	]);
 
 	useEffect(() => {
 		setUnreadConversations([]);
