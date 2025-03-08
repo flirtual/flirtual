@@ -60,6 +60,10 @@
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_notification"
         />
+        <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements"
+        />
     </application>
 
     <!-- Permissions -->

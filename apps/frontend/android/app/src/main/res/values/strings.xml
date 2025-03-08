@@ -5,4 +5,9 @@
     <string name="package_name">zone.homie.flirtual.pwa</string>
     <string name="custom_url_scheme">flirtual</string>
     <string name="default_notification_channel_id">flirtual</string>
+    <string name="asset_statements" translatable="false">
+        [{
+            \"include\": \"https://flirtu.al/.well-known/assetlinks.json\"
+        }]
+    </string>
 </resources>
