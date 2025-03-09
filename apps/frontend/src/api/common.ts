@@ -4,7 +4,7 @@ import QueryAddon from "wretch/addons/queryString";
 import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
 
-import { cloudflareInternalIdentifier, environment } from "~/const";
+import { cloudflareInternalIdentifier, environment, maintenance } from "~/const";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 
@@ -40,7 +40,7 @@ const relevantHeaderNames = ["cookie", "authorization"];
 // All status codes that are retriable by the browser, except 5xx which are always retried.
 const retriableStatusCodes = [408, 429];
 
-const maximumRetries = environment === "development" ? 0 : 3;
+const maximumRetries = environment === "development" || maintenance ? 0 : 3;
 
 export const api = wretch(urls.api)
 	.addon(QueryAddon)
