@@ -3,7 +3,7 @@
 import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 
-import { maintenance } from "~/const";
+// import { maintenance } from "~/const";
 import { urls } from "~/urls";
 
 import { LoadingIndicator } from "./(app)/loading-indicator";
@@ -21,6 +21,8 @@ const fontClassNames = twMerge(montserrat.variable, nunito.variable);
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 export default function GlobalError(props: ErrorProps) {
+	const maintenance = true;
+
 	return (
 		<html>
 			<body className={twMerge(fontClassNames, "flex min-h-screen grow flex-col items-center bg-white-20 font-nunito text-black-80 vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:flex-col desktop:bg-cream desktop:dark:bg-black-80",)}>
