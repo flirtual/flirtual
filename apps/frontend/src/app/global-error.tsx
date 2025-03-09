@@ -3,7 +3,7 @@
 import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 
-// import { maintenance } from "~/const";
+import { maintenance } from "~/const";
 import { urls } from "~/urls";
 
 import { LoadingIndicator } from "./(app)/loading-indicator";
@@ -21,11 +21,9 @@ const fontClassNames = twMerge(montserrat.variable, nunito.variable);
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 export default function GlobalError(props: ErrorProps) {
-	const maintenance = true;
-
 	return (
 		<html>
-			<body className={twMerge(fontClassNames, "flex min-h-screen grow flex-col items-center bg-white-20 font-nunito text-black-80 vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:flex-col desktop:bg-cream desktop:dark:bg-black-80",)}>
+			<body className={twMerge(fontClassNames, "flex min-h-screen grow flex-col items-center bg-white-20 p-4 text-center font-nunito text-black-80 vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:flex-col desktop:bg-cream desktop:dark:bg-black-80",)}>
 				<LoadingIndicator>
 					{maintenance
 						? (
@@ -37,16 +35,12 @@ export default function GlobalError(props: ErrorProps) {
 											Refresh
 										</span>
 										{" ⋅ "}
-										<a className="text-theme-2" href={urls.landing}>
-											Home
-										</a>
-										{" ⋅ "}
 										<a className="text-theme-2" href={urls.socials.discord}>
-											Discord community
+											Discord Community
 										</a>
 										{" ⋅ "}
 										<a className="text-theme-2" href={urls.resources.contact}>
-											Contact support
+											Contact Support
 										</a>
 									</div>
 								</>
@@ -60,16 +54,12 @@ export default function GlobalError(props: ErrorProps) {
 											Try again
 										</span>
 										{" ⋅ "}
-										<a className="text-theme-2" href={urls.landing}>
-											Home
-										</a>
-										{" ⋅ "}
 										<a className="text-theme-2" href={urls.socials.discord}>
-											Discord community
+											Discord Community
 										</a>
 										{" ⋅ "}
 										<a className="text-theme-2" href={urls.resources.contact}>
-											Contact support
+											Contact Support
 										</a>
 									</div>
 								</>
