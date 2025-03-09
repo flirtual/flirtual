@@ -74,7 +74,7 @@ config :flirtual, Flirtual.APNS,
 config :flirtual, Flirtual.FCM,
   adapter: Pigeon.FCM,
   project_id: System.fetch_env!("FCM_PROJECT_ID"),
-  service_account_json: System.fetch_env!("FCM_SERVICE_ACCOUNT")
+  auth: Flirtual.Goth
 
 config :joken, default_signer: System.fetch_env!("JOKEN_SECRET")
 

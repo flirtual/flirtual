@@ -29,6 +29,7 @@ def capacitor_pods
   pod 'CapawesomeCapacitorAppUpdate', :path => '../../node_modules/.pnpm/@capawesome+capacitor-app-update@6.1.0_@capacitor+core@6.2.0/node_modules/@capawesome/capacitor-app-update'
   pod 'CapgoInappbrowser', :path => '../../node_modules/.pnpm/@capgo+inappbrowser@6.9.18_@capacitor+core@6.2.0/node_modules/@capgo/inappbrowser'
   pod 'RevenuecatPurchasesCapacitor', :path => '../../node_modules/.pnpm/@revenuecat+purchases-capacitor@8.0.0-beta.4_@capacitor+core@6.2.0/node_modules/@revenuecat/purchases-capacitor'
+  pod 'CapacitorNativeSettings', :path => '../../node_modules/.pnpm/capacitor-native-settings@6.0.5_@capacitor+core@6.2.0/node_modules/capacitor-native-settings'
 end
 
 target 'Flirtual' do

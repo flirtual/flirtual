@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { ModelCard } from "~/components/model-card";
 
 import { LoginForm } from "./form";
+import { ensureRelativeUrl, isInternalHref } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations();
@@ -21,7 +22,7 @@ export interface LoginPageProps {
 }
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
-	const { error, next } = (await searchParams) || {};
+	const { error, next = "/" } = (await searchParams) || {};
 	const t = await getTranslations();
 
 	return (
@@ -33,7 +34,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 					</span>
 				</div>
 			)}
-			<LoginForm next={next} />
+			<LoginForm next={isInternalHref(next) ? next : "/"} />
 		</ModelCard>
 	);
 }

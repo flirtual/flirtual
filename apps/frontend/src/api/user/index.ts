@@ -46,7 +46,7 @@ export type UserTags = (typeof userTags)[number];
 export type UserPasskey = {
 	aaguid: string;
 } &
-DatedModel & UuidModel;
+	DatedModel & UuidModel;
 
 export const UserStatuses = [
 	"registered",
@@ -62,8 +62,8 @@ export type User = {
 	slug: string;
 	talkjsId: string;
 	talkjsSignature?: string;
-	apnsToken?: string;
-	fcmToken?: string;
+	apnsTokens?: Array<string>;
+	fcmTokens?: Array<string>;
 	platforms?: Array<string>;
 	pushCount?: number;
 	ratingPrompts?: number;
@@ -90,7 +90,7 @@ export type User = {
 	connections?: Array<Connection>;
 	passkeys?: Array<UserPasskey>;
 } &
-Partial<DatedModel> & UuidModel;
+	Partial<DatedModel> & UuidModel;
 
 export interface UserPreview {
 	id: string;
@@ -306,12 +306,12 @@ export const User = {
 	deleteNote(userId: string) {
 		return this.api.url(`/${userId}/note`).delete().json<User>();
 	},
-	updatePushTokens(
+	addPushToken(
 		userId: string,
-		options: { apnsToken?: string; fcmToken?: string }
+		options: { type: "apns" | "fcm"; token?: string }
 	) {
 		return this.api
-			.url(`/${userId}/push-tokens`)
+			.url(`/${userId}/push-token`)
 			.json(options)
 			.post()
 			.json<User>();

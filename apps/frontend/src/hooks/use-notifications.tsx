@@ -20,7 +20,6 @@ import { useSession } from "./use-session";
 
 export interface NotificationContext {
 	status: PermissionStatus["receive"];
-	pushRegistrationId?: string;
 }
 
 const NotificationContext = createContext({} as NotificationContext);
@@ -37,7 +36,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			|| !session.user.pushCount
 		)
 			return;
-		return User.resetPushCount(session?.user.id);
+		return User.resetPushCount(session.user.id);
 	});
 
 	const { data: status = "denied" } = useSWR(
@@ -53,17 +52,19 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		}
 	);
 
-	const pushRegistrationId
-		= (platform === "apple" && session?.user.apnsToken)
-		|| (platform === "android" && session?.user.fcmToken)
-		|| undefined;
+	const pushRegistrationIds = useMemo(() => {
+		if (!session) return [];
+		if (platform === "apple") return session.user.apnsTokens ?? [];
+		if (platform === "android") return session.user.fcmTokens ?? [];
+		return [];
+	}, [platform, session]);
 
 	useSWR(
 		native && [
 			"notifications-listeners",
-			{ userId: session?.user.id, status, pushRegistrationId }
+			{ userId: session?.user.id, status, pushRegistrationIds }
 		],
-		async ([, { status, pushRegistrationId }]) => {
+		async ([, { status, pushRegistrationIds }]) => {
 			if (status !== "granted") return;
 
 			const registrationListener = await PushNotifications.addListener(
@@ -73,7 +74,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 						!session
 						|| session.sudoerId
 						|| platform === "web"
-						|| pushRegistrationId === newPushRegistrationId
+						|| pushRegistrationIds.includes(newPushRegistrationId)
 					)
 						return;
 
@@ -82,18 +83,10 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 						registrationErrorListener.remove()
 					]);
 
-					await User.updatePushTokens(
-						session.user.id,
-						platform === "apple"
-							? {
-									apnsToken: newPushRegistrationId,
-									fcmToken: session.user.fcmToken
-								}
-							: {
-									apnsToken: session.user.apnsToken,
-									fcmToken: newPushRegistrationId
-								}
-					);
+					await User.addPushToken(session.user.id, {
+						type: platform === "apple" ? "apns" : "fcm",
+						token: newPushRegistrationId
+					});
 					router.refresh();
 				}
 			);
@@ -103,7 +96,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 				async ({ error }) => {
 					console.error("push registration error", {
 						platform,
-						pushRegistrationId,
+						pushRegistrationIds,
 						error
 					});
 
@@ -121,11 +114,8 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 	return (
 		<NotificationContext
 			value={useMemo<NotificationContext>(
-				() => ({
-					status,
-					pushRegistrationId
-				}),
-				[status, pushRegistrationId]
+				() => ({ status }),
+				[status]
 			)}
 		>
 			{children}

@@ -143,6 +143,8 @@ function getContentSecurityPolicy() {
 export function middleware(request: NextRequest) {
 	const { searchParams } = request.nextUrl;
 
+	request.headers.set("url", request.url);
+
 	if (searchParams.get("language")) {
 		// Support explicit language override via URL query parameter.
 		// for example: https://flirtu.al/home?language=ja

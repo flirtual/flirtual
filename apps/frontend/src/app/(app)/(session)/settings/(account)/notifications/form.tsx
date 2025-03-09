@@ -1,5 +1,7 @@
 "use client";
 
+import { PushNotifications } from "@capacitor/push-notifications";
+import { IOSSettings, NativeSettings } from "capacitor-native-settings";
 import { Mail, Smartphone } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { fromEntries, keys } from "remeda";
@@ -9,6 +11,7 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { useDevice } from "~/hooks/use-device";
 import { useTranslations } from "~/hooks/use-internationalization";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -17,6 +20,7 @@ export const NotificationsForm: React.FC = () => {
 	const user = useCurrentUser();
 	const toasts = useToast();
 	const router = useRouter();
+	const { native, platform } = useDevice();
 	const t = useTranslations();
 
 	if (!user || !user.preferences) return null;
@@ -49,7 +53,23 @@ export const NotificationsForm: React.FC = () => {
 					)
 				});
 
+				if (values.push.length > 0 && native) {
+					const { receive } = await PushNotifications.requestPermissions();
+
+					if (receive === "granted") {
+						await PushNotifications.register();
+					}
+					else if (platform === "apple") {
+						toasts.add(t("main_fit_lark_imagine"));
+						await new Promise((resolve) => {
+							setTimeout(resolve, 2000);
+						});
+						NativeSettings.openIOS({ option: IOSSettings.App });
+					}
+				}
+
 				toasts.add(t("merry_smart_snake_boil"));
+
 				router.refresh();
 			}}
 		>

@@ -308,11 +308,11 @@ defmodule Flirtual.Mailer do
 
   # subject, body_text, body_html, action_url \\ nil
   def send(recipient, options) do
-    from = Keyword.get(options, :from, "noreply@flirtu.al")
+    from = Keyword.get(options, :from) || "noreply@flirtu.al"
     subject = Keyword.fetch!(options, :subject)
     action_url = Keyword.get(options, :action_url)
     unsubscribe_token = Keyword.get(options, :unsubscribe_token)
-    language = Keyword.get(options, :language, "en")
+    language = Keyword.get(options, :language) || "en"
 
     Gettext.with_locale(language, fn ->
       email =

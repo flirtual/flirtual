@@ -112,13 +112,23 @@ export const Authentication = {
 		return this.api
 			.url("/session")
 			.get()
-			.fetchError(() => null)
 			.unauthorized(() => null)
 			.json<Session | null>();
 	},
 	async getSession() {
 		const session = await this.getOptionalSession();
-		if (!session) return redirect(urls.login());
+
+		if (!session) {
+			if (typeof window !== "undefined") return redirect(urls.login(urls.default));
+
+			const { headers } = await import("next/headers");
+			const _url = (await headers()).get("url");
+			const url = new URL(_url || urls.default);
+
+			const next = url.href.replace(url.origin, "");
+
+			return redirect(urls.login(next));
+		}
 
 		return session;
 	},

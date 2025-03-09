@@ -1,3 +1,4 @@
+import { PushNotifications } from "@capacitor/push-notifications";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import useSWR, { type SWRConfiguration } from "swr";
@@ -7,8 +8,12 @@ import type { User } from "~/api/user";
 import { sessionKey } from "~/swr";
 import { urls } from "~/urls";
 
+import { useDevice } from "./use-device";
+
 export function useSession(options: SWRConfiguration<Session | null> = {}) {
 	const router = useRouter();
+	const { native } = useDevice();
+
 	const { data: session = null, mutate } = useSWR(
 		sessionKey(),
 		Authentication.getOptionalSession,
@@ -27,10 +32,11 @@ export function useSession(options: SWRConfiguration<Session | null> = {}) {
 	);
 
 	const logout = useCallback(async () => {
+		if (native) await PushNotifications.unregister();
 		await Authentication.logout().catch(() => null);
 		router.push(urls.login());
 		router.refresh();
-	}, [router]);
+	}, [native, router]);
 
 	return [session, update, logout] as const;
 }

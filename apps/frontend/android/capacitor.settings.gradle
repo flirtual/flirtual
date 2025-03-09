@@ -55,3 +55,6 @@ project(':capgo-inappbrowser').projectDir = new File('../node_modules/.pnpm/@cap
 
 include ':revenuecat-purchases-capacitor'
 project(':revenuecat-purchases-capacitor').projectDir = new File('../node_modules/.pnpm/@revenuecat+purchases-capacitor@8.0.0-beta.4_@capacitor+core@6.2.0/node_modules/@revenuecat/purchases-capacitor/android')
+
+include ':capacitor-native-settings'
+project(':capacitor-native-settings').projectDir = new File('../node_modules/.pnpm/capacitor-native-settings@6.0.5_@capacitor+core@6.2.0/node_modules/capacitor-native-settings/android')

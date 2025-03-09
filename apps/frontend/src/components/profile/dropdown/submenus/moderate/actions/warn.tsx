@@ -116,7 +116,7 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 										</>
 									)}
 								</FormField>
-								{user.preferences?.language !== locale && (
+								{user.preferences?.language && user.preferences.language !== locale && (
 									<div className="flex flex-col gap-4">
 										<FormMessage size="sm" type="warning">
 											Please translate to the user's preferred language (

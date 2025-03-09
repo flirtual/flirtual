@@ -18,6 +18,8 @@ PODS:
     - Capacitor
   - CapacitorLocalNotifications (6.1.1):
     - Capacitor
+  - CapacitorNativeSettings (6.0.5):
+    - Capacitor
   - CapacitorPreferences (6.0.3):
     - Capacitor
   - CapacitorPushNotifications (6.0.3):
@@ -54,6 +56,7 @@ DEPENDENCIES:
   - "CapacitorDialog (from `../../node_modules/.pnpm/@capacitor+dialog@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/dialog`)"
   - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/keyboard`)"
   - "CapacitorLocalNotifications (from `../../node_modules/.pnpm/@capacitor+local-notifications@6.1.1_@capacitor+core@6.2.0/node_modules/@capacitor/local-notifications`)"
+  - "CapacitorNativeSettings (from `../../node_modules/.pnpm/capacitor-native-settings@6.0.5_@capacitor+core@6.2.0/node_modules/capacitor-native-settings`)"
   - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/preferences`)"
   - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/push-notifications`)"
   - "CapacitorScreenOrientation (from `../../node_modules/.pnpm/@capacitor+screen-orientation@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/screen-orientation`)"
@@ -91,6 +94,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+keyboard@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/keyboard"
   CapacitorLocalNotifications:
     :path: "../../node_modules/.pnpm/@capacitor+local-notifications@6.1.1_@capacitor+core@6.2.0/node_modules/@capacitor/local-notifications"
+  CapacitorNativeSettings:
+    :path: "../../node_modules/.pnpm/capacitor-native-settings@6.0.5_@capacitor+core@6.2.0/node_modules/capacitor-native-settings"
   CapacitorPreferences:
     :path: "../../node_modules/.pnpm/@capacitor+preferences@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/preferences"
   CapacitorPushNotifications:
@@ -113,29 +118,30 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@8.0.0-beta.4_@capacitor+core@6.2.0/node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
-  AashuDubeyCapacitorStatusbarSafeArea: b32e282503c277e7e6bd2b030feef16658476b5b
-  Capacitor: 1f3c7b9802d958cd8c4eb63895fff85dff2e1eea
-  CapacitorApp: 2a8c3a0b0814322e5e6e15fe595f02c3808f0f8b
-  CapacitorClipboard: 55e0a514f1e97b1409d533266c119dcbff3e78c3
-  CapacitorCommunityInAppReview: c69a9392f39a10f28092d823cfa979637f4fa079
+  AashuDubeyCapacitorStatusbarSafeArea: a33a5d9dd9f08c0aa68e7ee6c261767c67694a9a
+  Capacitor: 05d35014f4425b0740fc8776481f6a369ad071bf
+  CapacitorApp: e1e6b7d05e444d593ca16fd6d76f2b7c48b5aea7
+  CapacitorClipboard: 4443c3cdb7c77b1533dfe3ff0f9f7756aa8579df
+  CapacitorCommunityInAppReview: e5c93959637a956ce993134734d7df90390ea167
   CapacitorCordova: b33e7f4aa4ed105dd43283acdd940964374a87d9
-  CapacitorDevice: 1a215717f0b5061503b21a03508b0ec458a57d78
-  CapacitorDialog: e966e2261e1c74a8a502e610dd66b4f97ec6fcca
-  CapacitorKeyboard: 460c6f9ec5e52c84f2742d5ce2e67bbc7ab0ebb0
-  CapacitorLocalNotifications: 113dcab0b40781e8463bfdbbd6b54c6116361644
-  CapacitorPreferences: 9f9935bce493977183511362131a93f7b260191a
-  CapacitorPushNotifications: 2912e63470b895aefadff55c49f1fb8d82769423
-  CapacitorScreenOrientation: 3bb823f5d265190301cdc5d58a568a287d98972a
-  CapacitorShare: 7af6ca761ce62030e8e9fbd2eb82416f5ceced38
-  CapacitorStatusBar: 3b9ac7d0684770522c532d1158a1434512ab1477
-  CapacitorToast: 048d8cbefa6651509ed29c3e7262e9e64abe251d
-  CapawesomeCapacitorAppUpdate: a0e57d43ee5ed4b19a52024241c3b177cbb1c463
-  CapawesomeTeamCapacitorDatetimePicker: 0d8edf585f13d73507d7a2059e208c23451b9963
-  CapgoInappbrowser: 4701b5f85ca51f33b30c7e8d70584d0c84ad4281
+  CapacitorDevice: 9efd479d71d1baad74b75df531184c3f730eaa48
+  CapacitorDialog: 25878ac91f5ffaca62ce78884b6e1473e75596e1
+  CapacitorKeyboard: e89189ad398b815b6ff7e52271f0fb4f911a0a0a
+  CapacitorLocalNotifications: cd2aca61d90f278562f3afe921964232046911b8
+  CapacitorNativeSettings: 921a1014b6d20ec05280cde0a083a31cca0cefd3
+  CapacitorPreferences: f3eadae2369ac3ab8e21743a2959145b0d1286a3
+  CapacitorPushNotifications: 9b178e010634d2f7bfca97b81478503463f86b6c
+  CapacitorScreenOrientation: fa1032f30ed22ec9083973b8f584ea94f4fe45c6
+  CapacitorShare: d2a742baec21c8f3b92b361a2fbd2401cdd8288e
+  CapacitorStatusBar: b16799a26320ffa52f6c8b01737d5a95bbb8f3eb
+  CapacitorToast: 325d1815e2c2b556257909df7ef1e25eb96cd0c5
+  CapawesomeCapacitorAppUpdate: 385ad62a9f529cdedaca5df3599b9b7f6d03e880
+  CapawesomeTeamCapacitorDatetimePicker: 833341abe71c6ca84ab8f47bedccafb8f48200bd
+  CapgoInappbrowser: 83f0ddd9f1cc4e76a4d9802e32969766e6fb4442
   PurchasesHybridCommon: dff07d838f74ac859a6ce20f0fbee527ba61e035
   RevenueCat: 39f2fbf5eda66f0f87bb72329406f45488f6916e
-  RevenuecatPurchasesCapacitor: 78998932ed46addad851e9d559d12f6e521a2145
+  RevenuecatPurchasesCapacitor: 11db19841b77f02d95d8d88544da09803ad70604
 
-PODFILE CHECKSUM: 1c8d8dad48bb917bfabbb424aaa64ea1795c88ae
+PODFILE CHECKSUM: 6c0330861231a0af56d352e417ad0ad5212dd87b
 
 COCOAPODS: 1.16.2

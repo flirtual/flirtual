@@ -30,10 +30,10 @@ defmodule Flirtual.Application do
               nil,
           else: Flirtual.APNS
         ),
-        if(Application.get_env(:flirtual, Flirtual.FCM)[:key] in [nil, ""],
+        if(Application.get_env(:flirtual, Flirtual.FCM)[:project_id] in [nil, ""],
           do:
             Logger.warning("Flirtual.FCM not configured, excluding from supervision tree.") && nil,
-          else: Flirtual.FCM
+          else: [{Goth, name: Flirtual.Goth}, Flirtual.FCM]
         ),
         # Start the Telemetry supervisor
         FlirtualWeb.Telemetry,
@@ -46,6 +46,7 @@ defmodule Flirtual.Application do
         # {Flirtual.Worker, arg}
         Flirtual.AttributeOrderWorker
       ]
+      |> List.flatten()
       |> Enum.reject(&is_nil/1)
 
     # See https://hexdocs.pm/elixir/Supervisor.html
