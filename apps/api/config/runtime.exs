@@ -92,6 +92,8 @@ config :flirtual, FlirtualWeb.ChargebeeController,
 
 config :flirtual, FlirtualWeb.RevenueCatController,
   api_key: System.fetch_env!("REVENUECAT_ACCESS_TOKEN"),
+  apple_key: System.fetch_env!("REVENUECAT_APPLE_KEY"),
+  google_key: System.fetch_env!("REVENUECAT_GOOGLE_KEY"),
   signing_secret: System.fetch_env!("REVENUECAT_SIGNING_SECRET")
 
 config :openai,

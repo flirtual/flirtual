@@ -1,9 +1,7 @@
 defmodule Flirtual.RevenueCat do
   use Flirtual.Logger, :revenuecat
 
-  alias Flirtual.Plan
-  alias Flirtual.Subscription
-  alias Flirtual.User
+  alias Flirtual.{Plan, Subscription, User}
 
   defp config(key) do
     Application.get_env(:flirtual, FlirtualWeb.RevenueCatController)[key]
@@ -15,16 +13,33 @@ defmodule Flirtual.RevenueCat do
     |> URI.to_string()
   end
 
-  def fetch(method, pathname, body \\ nil, options \\ []) do
+  def fetch(method, pathname, body \\ nil, options \\ [], key \\ :private, platform \\ nil) do
     raw_body = if(is_nil(body), do: "", else: Poison.encode!(body))
     url = new_url(pathname, Keyword.get(options, :query))
 
+    headers = [
+      {"authorization",
+       "Bearer " <>
+         config(
+           case {key, platform} do
+             {:private, _} -> :api_key
+             {:public, "ios"} -> :apple_key
+             {:public, "android"} -> :google_key
+           end
+         )},
+      {"content-type", "application/json"}
+    ]
+
+    headers =
+      if platform do
+        [{"x-platform", platform} | headers]
+      else
+        headers
+      end
+
     log(:debug, [method, url], body)
 
-    HTTPoison.request(method, url, raw_body, [
-      {"authorization", "Bearer " <> config(:api_key)},
-      {"content-type", "application/json"}
-    ])
+    HTTPoison.request(method, url, raw_body, headers)
   end
 
   def handle_event(%{
@@ -95,6 +110,33 @@ defmodule Flirtual.RevenueCat do
       :ok
     else
       {:ok, %HTTPoison.Response{status_code: 404}} -> :ok
+    end
+  end
+
+  def transfer_purchase(
+        %User{revenuecat_id: revenuecat_id},
+        %Plan{apple_id: apple_id, google_id: google_id},
+        platform,
+        receipt
+      ) do
+    with {:ok, %HTTPoison.Response{status_code: 200}} <-
+           fetch(
+             :post,
+             "receipts",
+             %{
+               "app_user_id" => revenuecat_id,
+               "fetch_token" => receipt,
+               "product_id" =>
+                 case platform do
+                   "ios" -> apple_id
+                   "android" -> google_id
+                 end
+             },
+             [],
+             :public,
+             platform
+           ) do
+      :ok
     end
   end
 end
