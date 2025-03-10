@@ -69,4 +69,4 @@ export const picoAppId = process.env
 export const region = process.env.VERCEL_REGION as string;
 export const cloudflareInternalIdentifier = process.env.CLOUDFLARE_INTERNAL_IDENTIFIER as string;
 
-export const maintenance = true; // process.env.MAINTENANCE === "true";
+export const maintenance = false;
