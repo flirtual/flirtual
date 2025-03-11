@@ -13,7 +13,8 @@ defmodule Flirtual.User.Push do
         "title" => dgettext("notifications", "daily_profiles_ready"),
         # "We've worked our matchmaking magic on a fresh batch of profiles just for you. Tap to check them out!",
         "message" => dgettext("notifications", "daily_profiles_ready_message"),
-        "url" => "flirtual://browse"
+        "url" => "flirtual://browse",
+        "daily_profiles_ready_notification" => true
       }
       |> Flirtual.ObanWorkers.Push.new(
         scheduled_at: DateTime.add(reset_at, 6 * 60 * 60),
