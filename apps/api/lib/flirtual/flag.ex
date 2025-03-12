@@ -228,11 +228,18 @@ defmodule Flirtual.Flag do
     keywords =
       "(?:alumno|escola|escolas|escuela|escuelas|estudante|estudantes|estudiante|estudiantes|k12|school|schools|scoala|scuola|scuole|skola|skolas|stu|student|students)"
 
-    if Regex.match?(~r/@#{keywords}|@.*\.#{keywords}|@.*#{keywords}\./, email) and
+    if Regex.match?(~r/@#{keywords}|@.*\.#{keywords}|@.*#{keywords}\./i, email) and
          not String.ends_with?(email, ".edu") do
       Discord.deliver_webhook(:flagged_keyword,
         user: user,
         flags: email |> String.split("@") |> List.last()
+      )
+    end
+
+    if Regex.match?(~r/^(?!.*\+flirtual).*flirtual.*@/i, email) do
+      Discord.deliver_webhook(:flagged_keyword,
+        user: user,
+        flags: email |> String.split("@") |> List.first()
       )
     end
 
