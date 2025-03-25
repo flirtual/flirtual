@@ -6,6 +6,7 @@ import {
 	FileJson,
 	Flag,
 	Gem,
+	Headset,
 	Shield,
 	ShieldEllipsis,
 	Tags
@@ -87,6 +88,17 @@ export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
 							</DropdownMenuSubTrigger>
 						</ProfileDropdownTagsSubmenu>
 						<ImpersonateAction user={user} />
+						<DropdownMenuItem asChild>
+							<Link
+								className="gap-2"
+								href={`https://hello.flirtu.al/a/search/customers?term=${user.email}`}
+								target="_blank"
+							>
+								<Headset className="size-5" />
+								Search helpdesk
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
 						<DropdownMenuItem asChild disabled={!user.chargebeeId}>
 							<Link
 								className="gap-2"
