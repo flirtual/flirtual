@@ -10,8 +10,10 @@ export function useInterval(callback: () => void, every: number | string) {
 	);
 
 	const clear = useCallback(() => {
-		if (reference.current === null) return;
-		clearInterval(reference.current);
+		const { current } = reference;
+		if (!current) return;
+
+		clearInterval(current);
 	}, []);
 
 	const reset = useCallback(() => {
