@@ -17,7 +17,7 @@ import {
 import { imageOrigins } from "./urls";
 
 function getContentSecurityPolicy() {
-	const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+	const nonce = Buffer.from(crypto.getRandomValues(new Uint8Array(8))).toString("base64url");
 	const reportTo = sentryEnabled ? sentryReportTo : undefined;
 
 	const value = {
@@ -165,7 +165,7 @@ export function middleware(request: NextRequest) {
 		request
 	});
 
-	response.headers.set("Content-Security-Policy-Report-Only", contentSecurityPolicy);
+	response.headers.set("content-security-policy", contentSecurityPolicy);
 	return response;
 }
 
