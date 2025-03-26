@@ -13,7 +13,8 @@ export function useInterval(callback: () => void, every: number | string) {
 		const { current } = reference;
 		if (!current) return;
 
-		clearInterval(current);
+		// ???
+		clearInterval(current as unknown as number);
 	}, []);
 
 	const reset = useCallback(() => {
