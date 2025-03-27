@@ -87,11 +87,7 @@ iframe {
 
 #canny-changelog-iframe,
 #freshworks-frame-wrapper>iframe {
-  @apply android:pt-[var(--safe-area-inset-top)];
-  padding-top: env(safe-area-inset-top);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
+  @apply p-[var(--safe-area-inset-top)_var(--safe-area-inset-right)_var(--safe-area-inset-bottom)_var(--safe-area-inset-left)];
 }
 
 .Canny_Badge {

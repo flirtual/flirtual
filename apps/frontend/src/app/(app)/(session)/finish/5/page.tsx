@@ -26,7 +26,7 @@ export default async function Finish5Page({ searchParams }: {
 		<>
 			<FinishProgress page={5} />
 			<ModelCard
-				className="shrink-0 pb-[max(calc(env(safe-area-inset-bottom,0rem)-0.5rem),1rem)] desktop:max-w-2xl desktop:pb-0"
+				className="shrink-0 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.5rem),1rem)] desktop:max-w-2xl desktop:pb-0"
 				title={t("connections")}
 			>
 				<Finish5Form error={error} />

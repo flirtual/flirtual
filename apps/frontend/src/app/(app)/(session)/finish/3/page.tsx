@@ -38,7 +38,7 @@ export default async function Finish3Page() {
 		>
 			<FinishProgress page={3} />
 			<ModelCard
-				className="shrink-0 pb-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),6rem)] desktop:max-w-2xl desktop:pb-0"
+				className="shrink-0 pb-[max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),6rem)] desktop:max-w-2xl desktop:pb-0"
 				title={t("interests")}
 			>
 				<Finish3Form />

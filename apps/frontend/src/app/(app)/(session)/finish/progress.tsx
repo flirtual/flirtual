@@ -30,7 +30,7 @@ export const FinishProgress: React.FC<{ page: FinishPage }> = ({ page }) => {
 	const t = useTranslations();
 
 	return (
-		<div className="fixed inset-x-0 bottom-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5.25rem)] isolate z-10 flex h-7 w-full px-4 vision:bottom-3 vision:mx-4 vision:w-[calc(100%-2rem)] desktop:relative desktop:inset-0 desktop:mb-8 desktop:h-9 desktop:max-w-2xl">
+		<div className="fixed inset-x-0 bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),5.25rem)] isolate z-10 flex h-7 w-full px-4 vision:bottom-3 vision:mx-4 vision:w-[calc(100%-2rem)] desktop:relative desktop:inset-0 desktop:mb-8 desktop:h-9 desktop:max-w-2xl">
 			<div className="absolute inset-0 -right-4 left-4 desktop:max-w-2xl">
 				<div
 					className={twMerge(

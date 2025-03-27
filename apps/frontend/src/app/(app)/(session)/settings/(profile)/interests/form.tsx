@@ -220,7 +220,7 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 					(current / maximum) * 360
 				}deg, transparent 0deg)`
 			}}
-			className={twMerge("pointer-events-none fixed bottom-[max(calc(env(safe-area-inset-bottom,0rem)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4", className)}
+			className={twMerge("pointer-events-none fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4", className)}
 		>
 			<div className="flex size-12 flex-col items-center justify-center rounded-full bg-white-20 text-sm font-extrabold text-theme-1 dark:bg-black-70">
 				{current}

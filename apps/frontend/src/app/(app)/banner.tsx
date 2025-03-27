@@ -62,7 +62,7 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon }: B
 			)}
 			ref={ref}
 		>
-			<div className="relative flex w-full items-center justify-center px-8 py-4 pt-[max(calc(env(safe-area-inset-top,0rem)+0.5rem),1rem)]">
+			<div className="relative flex w-full items-center justify-center px-8 py-4 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)]">
 				<div className="relative flex items-center gap-4 font-montserrat leading-none desktop:text-lg">
 					{icon && <Slot className="mt-[0.15rem] w-6 shrink-0 animate-bounce-x">{icon}</Slot>}
 					<span>{children}</span>

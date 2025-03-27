@@ -23,6 +23,7 @@ import {
 	AlertDialogTitle
 } from "./dialog/alert";
 import { DialogFooter } from "./dialog/dialog";
+import { SafeArea } from "@capacitor-community/safe-area";
 
 const NativeStartup: React.FC = () => {
 	const t = useTranslations();
@@ -51,12 +52,15 @@ const NativeStartup: React.FC = () => {
 	}, [updateInformation]);
 
 	useEffect(() => {
-		void import("@capacitor/status-bar")
-			.then(({ StatusBar }) => StatusBar.setOverlaysWebView({ overlay: true }))
-			.catch(() => {});
-
-		void import("@aashu-dubey/capacitor-statusbar-safe-area")
-			.then(({ SafeAreaController, }) => SafeAreaController.injectCSSVariables())
+		void import("@capacitor-community/safe-area")
+			.then(({ SafeArea }) => SafeArea.enable({
+				config: {
+					customColorsForSystemBars: true,
+					statusBarColor: "#00000000",
+					navigationBarColor: "#00000000",
+					offset: 10
+				}
+			}))
 			.catch(() => {});
 	}, []);
 

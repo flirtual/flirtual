@@ -1,72 +1,72 @@
 PODS:
-  - AashuDubeyCapacitorStatusbarSafeArea (3.0.0):
-    - Capacitor
-  - Capacitor (6.2.0):
+  - Capacitor (7.1.0):
     - CapacitorCordova
-  - CapacitorApp (6.0.2):
+  - CapacitorApp (7.0.0):
     - Capacitor
-  - CapacitorClipboard (6.0.2):
+  - CapacitorClipboard (7.0.0):
     - Capacitor
-  - CapacitorCommunityInAppReview (6.0.0):
+  - CapacitorCommunityInAppReview (7.0.0):
     - Capacitor
-  - CapacitorCordova (6.2.0)
-  - CapacitorDevice (6.0.2):
+  - CapacitorCommunitySafeArea (7.0.0-alpha.1):
     - Capacitor
-  - CapacitorDialog (6.0.2):
+  - CapacitorCordova (7.1.0)
+  - CapacitorDevice (7.0.0):
     - Capacitor
-  - CapacitorKeyboard (6.0.3):
+  - CapacitorDialog (7.0.0):
     - Capacitor
-  - CapacitorLocalNotifications (6.1.1):
+  - CapacitorKeyboard (7.0.0):
     - Capacitor
-  - CapacitorNativeSettings (6.0.5):
+  - CapacitorLocalNotifications (7.0.0):
     - Capacitor
-  - CapacitorPreferences (6.0.3):
+  - CapacitorNativeSettings (7.0.1):
     - Capacitor
-  - CapacitorPushNotifications (6.0.3):
+  - CapacitorPreferences (7.0.0):
     - Capacitor
-  - CapacitorScreenOrientation (6.0.3):
+  - CapacitorPushNotifications (7.0.0):
     - Capacitor
-  - CapacitorShare (6.0.3):
+  - CapacitorScreenOrientation (7.0.0):
     - Capacitor
-  - CapacitorStatusBar (6.0.2):
+  - CapacitorShare (7.0.0):
     - Capacitor
-  - CapacitorToast (6.0.3):
+  - CapacitorStatusBar (7.0.0):
     - Capacitor
-  - CapawesomeCapacitorAppUpdate (6.1.0):
+  - CapacitorToast (7.0.0):
     - Capacitor
-  - CapawesomeTeamCapacitorDatetimePicker (6.0.0):
+  - CapawesomeCapacitorAppUpdate (7.0.1):
     - Capacitor
-  - CapgoInappbrowser (6.9.18):
+  - CapawesomeTeamCapacitorDatetimePicker (7.0.1):
     - Capacitor
-  - PurchasesHybridCommon (10.8.0):
-    - RevenueCat (= 4.42.0)
-  - RevenueCat (4.42.0)
-  - RevenuecatPurchasesCapacitor (8.0.0-beta.4):
+  - CapgoInappbrowser (7.6.8):
     - Capacitor
-    - PurchasesHybridCommon (= 10.8.0)
+  - PurchasesHybridCommon (13.25.0):
+    - RevenueCat (= 5.19.0)
+  - RevenueCat (5.19.0)
+  - RevenuecatPurchasesCapacitor (10.2.1):
+    - Capacitor
+    - PurchasesHybridCommon (= 13.25.0)
 
 DEPENDENCIES:
-  - "AashuDubeyCapacitorStatusbarSafeArea (from `../../node_modules/.pnpm/@aashu-dubey+capacitor-statusbar-safe-area@3.0.0_@capacitor+core@6.2.0/node_modules/@aashu-dubey/capacitor-statusbar-safe-area`)"
-  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@6.2.0_@capacitor+core@6.2.0/node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/app`)"
-  - "CapacitorClipboard (from `../../node_modules/.pnpm/@capacitor+clipboard@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/clipboard`)"
-  - "CapacitorCommunityInAppReview (from `../../node_modules/.pnpm/@capacitor-community+in-app-review@6.0.0_@capacitor+core@6.2.0/node_modules/@capacitor-community/in-app-review`)"
-  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@6.2.0_@capacitor+core@6.2.0/node_modules/@capacitor/ios`)"
-  - "CapacitorDevice (from `../../node_modules/.pnpm/@capacitor+device@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/device`)"
-  - "CapacitorDialog (from `../../node_modules/.pnpm/@capacitor+dialog@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/dialog`)"
-  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/keyboard`)"
-  - "CapacitorLocalNotifications (from `../../node_modules/.pnpm/@capacitor+local-notifications@6.1.1_@capacitor+core@6.2.0/node_modules/@capacitor/local-notifications`)"
-  - "CapacitorNativeSettings (from `../../node_modules/.pnpm/capacitor-native-settings@6.0.5_@capacitor+core@6.2.0/node_modules/capacitor-native-settings`)"
-  - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/preferences`)"
-  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/push-notifications`)"
-  - "CapacitorScreenOrientation (from `../../node_modules/.pnpm/@capacitor+screen-orientation@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/screen-orientation`)"
-  - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/share`)"
-  - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/status-bar`)"
-  - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/toast`)"
-  - "CapawesomeCapacitorAppUpdate (from `../../node_modules/.pnpm/@capawesome+capacitor-app-update@6.1.0_@capacitor+core@6.2.0/node_modules/@capawesome/capacitor-app-update`)"
-  - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@6.0.0_@capacitor+core@6.2.0/node_modules/@capawesome-team/capacitor-datetime-picker`)"
-  - "CapgoInappbrowser (from `../../node_modules/.pnpm/@capgo+inappbrowser@6.9.18_@capacitor+core@6.2.0/node_modules/@capgo/inappbrowser`)"
-  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@8.0.0-beta.4_@capacitor+core@6.2.0/node_modules/@revenuecat/purchases-capacitor`)"
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/app`)"
+  - "CapacitorClipboard (from `../../node_modules/.pnpm/@capacitor+clipboard@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/clipboard`)"
+  - "CapacitorCommunityInAppReview (from `../../node_modules/.pnpm/@capacitor-community+in-app-review@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor-community/in-app-review`)"
+  - "CapacitorCommunitySafeArea (from `../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-alpha.1_@capacitor+core@7.1.0/node_modules/@capacitor-community/safe-area`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios`)"
+  - "CapacitorDevice (from `../../node_modules/.pnpm/@capacitor+device@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/device`)"
+  - "CapacitorDialog (from `../../node_modules/.pnpm/@capacitor+dialog@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/dialog`)"
+  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/keyboard`)"
+  - "CapacitorLocalNotifications (from `../../node_modules/.pnpm/@capacitor+local-notifications@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/local-notifications`)"
+  - "CapacitorNativeSettings (from `../../node_modules/.pnpm/capacitor-native-settings@7.0.1_@capacitor+core@7.1.0/node_modules/capacitor-native-settings`)"
+  - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/preferences`)"
+  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/push-notifications`)"
+  - "CapacitorScreenOrientation (from `../../node_modules/.pnpm/@capacitor+screen-orientation@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/screen-orientation`)"
+  - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/share`)"
+  - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/status-bar`)"
+  - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/toast`)"
+  - "CapawesomeCapacitorAppUpdate (from `../../node_modules/.pnpm/@capawesome+capacitor-app-update@7.0.1_@capacitor+core@7.1.0/node_modules/@capawesome/capacitor-app-update`)"
+  - "CapawesomeTeamCapacitorDatetimePicker (from `../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@7.0.1_@capacitor+core@7.1.0/node_modules/@capawesome-team/capacitor-datetime-picker`)"
+  - "CapgoInappbrowser (from `../../node_modules/.pnpm/@capgo+inappbrowser@7.6.8_@capacitor+core@7.1.0/node_modules/@capgo/inappbrowser`)"
+  - "RevenuecatPurchasesCapacitor (from `../../node_modules/.pnpm/@revenuecat+purchases-capacitor@10.2.1_@capacitor+core@7.1.0/node_modules/@revenuecat/purchases-capacitor`)"
 
 SPEC REPOS:
   trunk:
@@ -74,74 +74,74 @@ SPEC REPOS:
     - RevenueCat
 
 EXTERNAL SOURCES:
-  AashuDubeyCapacitorStatusbarSafeArea:
-    :path: "../../node_modules/.pnpm/@aashu-dubey+capacitor-statusbar-safe-area@3.0.0_@capacitor+core@6.2.0/node_modules/@aashu-dubey/capacitor-statusbar-safe-area"
   Capacitor:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@6.2.0_@capacitor+core@6.2.0/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../node_modules/.pnpm/@capacitor+app@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/app"
+    :path: "../../node_modules/.pnpm/@capacitor+app@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/app"
   CapacitorClipboard:
-    :path: "../../node_modules/.pnpm/@capacitor+clipboard@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/clipboard"
+    :path: "../../node_modules/.pnpm/@capacitor+clipboard@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/clipboard"
   CapacitorCommunityInAppReview:
-    :path: "../../node_modules/.pnpm/@capacitor-community+in-app-review@6.0.0_@capacitor+core@6.2.0/node_modules/@capacitor-community/in-app-review"
+    :path: "../../node_modules/.pnpm/@capacitor-community+in-app-review@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor-community/in-app-review"
+  CapacitorCommunitySafeArea:
+    :path: "../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-alpha.1_@capacitor+core@7.1.0/node_modules/@capacitor-community/safe-area"
   CapacitorCordova:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@6.2.0_@capacitor+core@6.2.0/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios"
   CapacitorDevice:
-    :path: "../../node_modules/.pnpm/@capacitor+device@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/device"
+    :path: "../../node_modules/.pnpm/@capacitor+device@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/device"
   CapacitorDialog:
-    :path: "../../node_modules/.pnpm/@capacitor+dialog@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/dialog"
+    :path: "../../node_modules/.pnpm/@capacitor+dialog@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/dialog"
   CapacitorKeyboard:
-    :path: "../../node_modules/.pnpm/@capacitor+keyboard@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/keyboard"
+    :path: "../../node_modules/.pnpm/@capacitor+keyboard@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/keyboard"
   CapacitorLocalNotifications:
-    :path: "../../node_modules/.pnpm/@capacitor+local-notifications@6.1.1_@capacitor+core@6.2.0/node_modules/@capacitor/local-notifications"
+    :path: "../../node_modules/.pnpm/@capacitor+local-notifications@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/local-notifications"
   CapacitorNativeSettings:
-    :path: "../../node_modules/.pnpm/capacitor-native-settings@6.0.5_@capacitor+core@6.2.0/node_modules/capacitor-native-settings"
+    :path: "../../node_modules/.pnpm/capacitor-native-settings@7.0.1_@capacitor+core@7.1.0/node_modules/capacitor-native-settings"
   CapacitorPreferences:
-    :path: "../../node_modules/.pnpm/@capacitor+preferences@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/preferences"
+    :path: "../../node_modules/.pnpm/@capacitor+preferences@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/preferences"
   CapacitorPushNotifications:
-    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/push-notifications"
+    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/push-notifications"
   CapacitorScreenOrientation:
-    :path: "../../node_modules/.pnpm/@capacitor+screen-orientation@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/screen-orientation"
+    :path: "../../node_modules/.pnpm/@capacitor+screen-orientation@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/screen-orientation"
   CapacitorShare:
-    :path: "../../node_modules/.pnpm/@capacitor+share@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/share"
+    :path: "../../node_modules/.pnpm/@capacitor+share@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/share"
   CapacitorStatusBar:
-    :path: "../../node_modules/.pnpm/@capacitor+status-bar@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/status-bar"
+    :path: "../../node_modules/.pnpm/@capacitor+status-bar@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/status-bar"
   CapacitorToast:
-    :path: "../../node_modules/.pnpm/@capacitor+toast@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/toast"
+    :path: "../../node_modules/.pnpm/@capacitor+toast@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/toast"
   CapawesomeCapacitorAppUpdate:
-    :path: "../../node_modules/.pnpm/@capawesome+capacitor-app-update@6.1.0_@capacitor+core@6.2.0/node_modules/@capawesome/capacitor-app-update"
+    :path: "../../node_modules/.pnpm/@capawesome+capacitor-app-update@7.0.1_@capacitor+core@7.1.0/node_modules/@capawesome/capacitor-app-update"
   CapawesomeTeamCapacitorDatetimePicker:
-    :path: "../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@6.0.0_@capacitor+core@6.2.0/node_modules/@capawesome-team/capacitor-datetime-picker"
+    :path: "../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@7.0.1_@capacitor+core@7.1.0/node_modules/@capawesome-team/capacitor-datetime-picker"
   CapgoInappbrowser:
-    :path: "../../node_modules/.pnpm/@capgo+inappbrowser@6.9.18_@capacitor+core@6.2.0/node_modules/@capgo/inappbrowser"
+    :path: "../../node_modules/.pnpm/@capgo+inappbrowser@7.6.8_@capacitor+core@7.1.0/node_modules/@capgo/inappbrowser"
   RevenuecatPurchasesCapacitor:
-    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@8.0.0-beta.4_@capacitor+core@6.2.0/node_modules/@revenuecat/purchases-capacitor"
+    :path: "../../node_modules/.pnpm/@revenuecat+purchases-capacitor@10.2.1_@capacitor+core@7.1.0/node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
-  AashuDubeyCapacitorStatusbarSafeArea: a33a5d9dd9f08c0aa68e7ee6c261767c67694a9a
-  Capacitor: 05d35014f4425b0740fc8776481f6a369ad071bf
-  CapacitorApp: e1e6b7d05e444d593ca16fd6d76f2b7c48b5aea7
-  CapacitorClipboard: 4443c3cdb7c77b1533dfe3ff0f9f7756aa8579df
-  CapacitorCommunityInAppReview: e5c93959637a956ce993134734d7df90390ea167
-  CapacitorCordova: b33e7f4aa4ed105dd43283acdd940964374a87d9
-  CapacitorDevice: 9efd479d71d1baad74b75df531184c3f730eaa48
-  CapacitorDialog: 25878ac91f5ffaca62ce78884b6e1473e75596e1
-  CapacitorKeyboard: e89189ad398b815b6ff7e52271f0fb4f911a0a0a
-  CapacitorLocalNotifications: cd2aca61d90f278562f3afe921964232046911b8
-  CapacitorNativeSettings: 921a1014b6d20ec05280cde0a083a31cca0cefd3
-  CapacitorPreferences: f3eadae2369ac3ab8e21743a2959145b0d1286a3
-  CapacitorPushNotifications: 9b178e010634d2f7bfca97b81478503463f86b6c
-  CapacitorScreenOrientation: fa1032f30ed22ec9083973b8f584ea94f4fe45c6
-  CapacitorShare: d2a742baec21c8f3b92b361a2fbd2401cdd8288e
-  CapacitorStatusBar: b16799a26320ffa52f6c8b01737d5a95bbb8f3eb
-  CapacitorToast: 325d1815e2c2b556257909df7ef1e25eb96cd0c5
-  CapawesomeCapacitorAppUpdate: 385ad62a9f529cdedaca5df3599b9b7f6d03e880
-  CapawesomeTeamCapacitorDatetimePicker: 833341abe71c6ca84ab8f47bedccafb8f48200bd
-  CapgoInappbrowser: 83f0ddd9f1cc4e76a4d9802e32969766e6fb4442
-  PurchasesHybridCommon: dff07d838f74ac859a6ce20f0fbee527ba61e035
-  RevenueCat: 39f2fbf5eda66f0f87bb72329406f45488f6916e
-  RevenuecatPurchasesCapacitor: 11db19841b77f02d95d8d88544da09803ad70604
+  Capacitor: bceb785fb78f5e81e4a9e37843bc1c24bd9c7194
+  CapacitorApp: 9cb31064a6c6bb2b1438583733a7bf45557fc1da
+  CapacitorClipboard: 007d79cd6c104002b274546d13873526ca20beb7
+  CapacitorCommunityInAppReview: f84baf01f45e8698e34585b71740ba967ec8cd10
+  CapacitorCommunitySafeArea: 3f049619072ab5d0da2529bcb05b358ff6c13dc1
+  CapacitorCordova: 866217f32c1d25b326c568a10ea3ed0c36b13e29
+  CapacitorDevice: 069faf433b3a99c3d5f0e500fbe634f60a8c6a84
+  CapacitorDialog: 6dc6bdd5d285118ff3732470b9f169c14fc564a7
+  CapacitorKeyboard: 4db71e694e7afb5d7c0be09b05495c19f7d6c914
+  CapacitorLocalNotifications: c9577978cd598af5e2b5615548b8222b3b10d7e2
+  CapacitorNativeSettings: bef37b3c7e2184da7416a3f162c71de19fd27593
+  CapacitorPreferences: 8e4bef1f937fc991a19d7ea99330c36a62edd24b
+  CapacitorPushNotifications: 2e0132cd2f1a5d696bcbfc3725c2b6ffcb9275d4
+  CapacitorScreenOrientation: 45e36e1121cdba1634eb12077c5e99391055116f
+  CapacitorShare: d94c53d7656f1ce8f6712ae8d19ab0c18a69259f
+  CapacitorStatusBar: a8c4c83ed2e973bdafb979e80e4b00d027832cb7
+  CapacitorToast: 788a8adeba7d0b39a4201af004997578932b453b
+  CapawesomeCapacitorAppUpdate: d1f04c1c870388248889908cf2ca960c7fdbf0ef
+  CapawesomeTeamCapacitorDatetimePicker: efbcc48bc69fbc550502235513691302871c9fad
+  CapgoInappbrowser: 07f56b0891cdcc211f8d4c6a788c915a6ddfca0c
+  PurchasesHybridCommon: f27e7fe57a9934319373b10c260db5d6c10bbb64
+  RevenueCat: 4be87c151dff652d2a5b7af46073db11f01ad93f
+  RevenuecatPurchasesCapacitor: 85b6f9412913f2688169e0baebf42b773be5d119
 
-PODFILE CHECKSUM: 6c0330861231a0af56d352e417ad0ad5212dd87b
+PODFILE CHECKSUM: 2259618b5a44f50dd35edcaaee657fe09ba7fa2c
 
 COCOAPODS: 1.16.2

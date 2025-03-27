@@ -46,7 +46,7 @@ export function Tile({ className, children, id, ...props }: Omit<React.Component
 		<section
 			{...props}
 			className={twMerge(
-				"group h-screen min-h-screen w-screen min-w-[100vw] snap-start snap-always pb-[env(safe-area-inset-bottom,0rem)] pl-[env(safe-area-inset-left,0rem)] pr-[env(safe-area-inset-right,0rem)] pt-[env(safe-area-inset-top,0rem)] android:pt-[var(--safe-area-inset-top,0rem)]",
+				"group h-screen min-h-screen w-screen min-w-[100vw] snap-start snap-always p-[var(--safe-area-inset-top,0rem)_var(--safe-area-inset-right,0rem)_var(--safe-area-inset-bottom,0rem)_var(--safe-area-inset-left,0rem)]",
 				className
 			)}
 			data-tile={id}
