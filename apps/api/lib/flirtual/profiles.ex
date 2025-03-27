@@ -196,10 +196,12 @@ defmodule Flirtual.Profiles do
         patterns = [
           ~r/^https?:\/\/open\.spotify\.com\/playlist\/[\dA-Za-z]+/,
           ~r/^https?:\/\/music\.youtube\.com\/playlist\?list=[\dA-Za-z-]+/,
-          ~r/^https?:\/\/music\.apple\.com\/(?:[a-z]{2}\/)?playlist\/pl\.[\dA-Za-z-]+/,
+          ~r/^https?:\/\/music\.apple\.com\/(?:[a-z]{2}\/)?playlist(?:\/[^\/]+)?\/pl\.[\dA-Za-z-]+/,
           ~r/^https?:\/\/(www\.|listen\.)?tidal\.com\/(browse\/)?playlist\/[\dA-Za-z-]+/,
           ~r/^https?:\/\/music\.amazon\.[.a-z]+\/(user-)?playlists\/[\dA-Za-z]+/,
           ~r/^https?:\/\/(www\.)?deezer\.com\/(?:[a-z]{2}\/)?playlist\/[\dA-Za-z-]+/,
+          ~r/^https?:\/\/(www\.)?soundcloud\.com\/[\dA-Za-z-_]+\/sets\/[\dA-Za-z-_]+/,
+          ~r/^https?:\/\/(www\.)?mixcloud\.com\/[\dA-Za-z-_]+\/(?:playlists\/)?[\dA-Za-z-_]+/,
           ~r/^$/
         ]
 
