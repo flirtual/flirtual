@@ -73,7 +73,7 @@ export const playlistPlatforms = [
 	{
 		name: "Mixcloud",
 		pattern:
-			/^https?:\/\/(www\.)?mixcloud\.com\/([\dA-Za-z-_]+\/(?:playlists\/)?[\dA-Za-z-_]+)/,
+			/^https?:\/\/(www\.)?mixcloud\.com\/([\d\p{L}\-_]+\/(?:playlists\/)?[\d\p{L}\-_]+)/u,
 		embed: (id: string, theme: Theme) =>
 			`https://player-widget.mixcloud.com/widget/iframe/?light=${theme === "dark" ? 0 : 1}&feed=%2F${id}%2F`
 	}

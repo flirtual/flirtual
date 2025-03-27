@@ -201,7 +201,7 @@ defmodule Flirtual.Profiles do
           ~r/^https?:\/\/music\.amazon\.[.a-z]+\/(user-)?playlists\/[\dA-Za-z]+/,
           ~r/^https?:\/\/(www\.)?deezer\.com\/(?:[a-z]{2}\/)?playlist\/[\dA-Za-z-]+/,
           ~r/^https?:\/\/(www\.)?soundcloud\.com\/[\dA-Za-z-_]+\/sets\/[\dA-Za-z-_]+/,
-          ~r/^https?:\/\/(www\.)?mixcloud\.com\/[\dA-Za-z-_]+\/(?:playlists\/)?[\dA-Za-z-_]+/,
+          ~r/^https?:\/\/(www\.)?mixcloud\.com\/[\d\p{L}\-_]+\/(?:playlists\/)?[\d\p{L}\-_]+/u,
           ~r/^$/
         ]
 
