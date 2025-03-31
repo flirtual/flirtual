@@ -1,5 +1,6 @@
 defmodule FlirtualWeb.SessionController do
   use FlirtualWeb, :controller
+  use Tracing
   require Logger
 
   import Plug.Conn
@@ -160,41 +161,47 @@ defmodule FlirtualWeb.SessionController do
   end
 
   defp renew_session(conn) do
-    conn
-    |> configure_session(renew: true)
-    |> clear_session()
+    span do
+      conn
+      |> configure_session(renew: true)
+      |> clear_session()
+    end
   end
 
   def fetch_current_session(conn, _) do
-    with {token, conn} when not is_nil(token) <- ensure_session_token(conn),
-         %Session{} = session <- Session.get(token: token),
-         {:ok, session} <- Session.maybe_update_activity(session),
-         %User{} = user <- session.user do
-      Sentry.Context.set_user_context(%{
-        id: user.id
-      })
+    span do
+      with {token, conn} when not is_nil(token) <- ensure_session_token(conn),
+           %Session{} = session <- Session.get(token: token),
+           {:ok, session} <- Session.maybe_update_activity(session),
+           %User{} = user <- session.user do
+        Sentry.Context.set_user_context(%{
+          id: user.id
+        })
 
-      conn
-      |> assign(:session, session)
-      |> assign(:user, user)
-    else
-      _ ->
         conn
-        |> assign(:session, nil)
-        |> assign(:user, nil)
+        |> assign(:session, session)
+        |> assign(:user, user)
+      else
+        _ ->
+          conn
+          |> assign(:session, nil)
+          |> assign(:user, nil)
+      end
     end
   end
 
   defp ensure_session_token(conn) do
-    if token = get_session(conn, :token) do
-      {token, conn}
-    else
-      conn = fetch_cookies(conn, signed: [@remember_me_cookie])
-
-      if token = conn.cookies[@remember_me_cookie] do
-        {token, put_session(conn, :token, token)}
+    span do
+      if token = get_session(conn, :token) do
+        {token, conn}
       else
-        {nil, conn}
+        conn = fetch_cookies(conn, signed: [@remember_me_cookie])
+
+        if token = conn.cookies[@remember_me_cookie] do
+          {token, put_session(conn, :token, token)}
+        else
+          {nil, conn}
+        end
       end
     end
   end
