@@ -1,0 +1,24 @@
+server:
+  http_listen_port: 3200
+search_enabled: true
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        http:
+          endpoint: "0.0.0.0:4318"
+storage:
+  trace:
+    backend: local
+    block:
+      bloom_filter_false_positive: .05
+      index_downsample_bytes: 1000
+      encoding: zstd
+    wal:
+      path: /tmp/tempo/wal
+      encoding: snappy
+    local:
+      path: /tmp/tempo/blocks
+    pool:
+      max_workers: 100
+      queue_depth: 10000

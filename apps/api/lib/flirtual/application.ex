@@ -8,10 +8,25 @@ defmodule Flirtual.Application do
 
   @impl true
   def start(_type, _args) do
+    if System.get_env("ECTO_IPV6") do
+      :httpc.set_option(:ipfamily, :inet6fb4)
+    end
+
     topologies = Application.get_env(:libcluster, :topologies) || []
 
     Oban.Telemetry.attach_default_logger()
     Flirtual.ObanReporter.attach()
+
+    OpentelemetryOban.setup()
+
+    :ok = :opentelemetry_cowboy.setup()
+    :ok = OpentelemetryBandit.setup()
+    :ok = OpentelemetryPhoenix.setup(adapter: :bandit)
+
+    :ok =
+      Flirtual.Repo.config()
+      |> Keyword.fetch!(:telemetry_prefix)
+      |> OpentelemetryEcto.setup()
 
     children =
       [
@@ -20,7 +35,7 @@ defmodule Flirtual.Application do
         # Start the Ecto repository
         Flirtual.Repo,
         # Start Oban
-        {Oban, Application.fetch_env!(:flirtual, Oban)},
+        # {Oban, Application.fetch_env!(:flirtual, Oban)},
         # Start Elasticsearch
         Flirtual.Elasticsearch,
         # Start the push notification dispatchers

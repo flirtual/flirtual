@@ -14,7 +14,7 @@ defmodule Flirtual.Users do
     Flag,
     Hash,
     Jwt,
-    Languages,
+    # Languages,
     Listmonk,
     ObanWorkers,
     Repo,

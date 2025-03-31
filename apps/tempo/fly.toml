@@ -1,0 +1,4 @@
+app = "flirtual-tempo"
+
+[build]
+dockerfile = "./Dockerfile"

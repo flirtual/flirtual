@@ -23,11 +23,27 @@ config :flirtual, FlirtualWeb.Endpoint,
     layout: false
   ]
 
+config :opentelemetry,
+  resource_detectors: [
+    :otel_resource_env_var,
+    :otel_resource_app_env
+  ],
+  resource: %{
+    service: %{
+      name: "flirtual"
+    },
+    deployment: %{
+      environment: "development"
+    }
+  }
+
 # render_errors: [
 #   view: FlirtualWeb.ErrorView,
 #   formats: "json",
 #   accepts: ~w(json)
 # ]
+
+config :flirtual, Flirtual.Repo, telemetry_prefix: [:flirtual, :repo]
 
 config :flirtual, Oban,
   repo: Flirtual.Repo,
