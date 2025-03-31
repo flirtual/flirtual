@@ -35,7 +35,7 @@ defmodule Flirtual.Application do
         # Start the Ecto repository
         Flirtual.Repo,
         # Start Oban
-        # {Oban, Application.fetch_env!(:flirtual, Oban)},
+        {Oban, Application.fetch_env!(:flirtual, Oban)},
         # Start Elasticsearch
         Flirtual.Elasticsearch,
         # Start the push notification dispatchers
