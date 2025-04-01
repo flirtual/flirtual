@@ -1,5 +1,6 @@
 "use client";
 
+import { Preferences } from "@capacitor/preferences";
 import {
 	AtSign,
 	Bell,
@@ -11,6 +12,7 @@ import {
 	LineChart,
 	LogOut,
 	Paintbrush,
+	Paperclip,
 	PenSquare,
 	Search,
 	ShieldAlert,
@@ -32,6 +34,7 @@ import { gitCommitSha } from "~/const";
 import { useCanny } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
+import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -46,6 +49,18 @@ export const SettingsNavigation: FC = () => {
 	const { vision } = useDevice();
 	const router = useRouter();
 	const t = useTranslations();
+
+	const [flittyVisible, setFlittyVisible] = usePreferences(
+		"flitty_visible",
+		true
+	);
+	const [, setFlittyPosition] = usePreferences(
+		"flitty_position",
+		{
+			top: 20,
+			left: 20,
+		}
+	);
 
 	return (
 		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
@@ -86,6 +101,17 @@ export const SettingsNavigation: FC = () => {
 								</NavigationLink>
 							)}
 						</NavigationCategory>
+					)}
+					{flittyVisible === false && (
+						<NavigationLink
+							Icon={Paperclip}
+							onClick={() => {
+								setFlittyVisible(true);
+								setFlittyPosition(null);
+							}}
+						>
+							Resurrect Flitty
+						</NavigationLink>
 					)}
 					<NavigationCategory name={t("profile")}>
 						<NavigationLink

@@ -25,9 +25,15 @@ export function usePreferences<T>(key: string, defaultValue: T) {
 	useDebugValue(key);
 
 	const set = useCallback(
-		async (newValue: T) => {
-			await Preferences.set({ key, value: JSON.stringify(newValue) });
-			await mutate(newValue);
+		async (newValue: T | null) => {
+			if (newValue == null) {
+				await Preferences.remove({ key });
+				await mutate(null);
+			}
+			else {
+				await Preferences.set({ key, value: JSON.stringify(newValue) });
+				await mutate(newValue);
+			}
 		},
 		[key, mutate]
 	);
