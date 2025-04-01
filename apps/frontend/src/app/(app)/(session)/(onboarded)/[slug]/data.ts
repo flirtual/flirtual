@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
 
 import type { AttributeType } from "~/api/attributes";
@@ -19,7 +19,7 @@ export const getProfile = cache(async (username: string) => {
 		? await User.get(username)
 		: await User.getBySlug(username);
 
-	if (!user) redirect(urls.default);
+	if (!user) notFound();
 	return user;
 });
 

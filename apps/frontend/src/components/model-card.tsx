@@ -4,9 +4,7 @@ import { useTranslations } from "next-intl";
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { InlineLink } from "~/components/inline-link";
 import { useSession } from "~/hooks/use-session";
-import { urls } from "~/urls";
 import { emptyObject } from "~/utilities";
 
 import { InputLanguageSelect } from "./inputs/specialized/language-select";
@@ -14,7 +12,7 @@ import { SupportButton } from "./layout/support-button";
 import { FlirtualLogo } from "./logo";
 
 export type ModelCardProps = {
-	title: React.ReactNode;
+	title?: React.ReactNode;
 	titleProps?: React.ComponentProps<"div">;
 	containerProps?: React.ComponentProps<"div">;
 	branded?: boolean;
@@ -47,18 +45,20 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 					props.className
 				)}
 			>
-				<div
-					{...titleProps}
-					className={twMerge(
-						"w-full bg-brand-gradient py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 desktop:w-full desktop:rounded-t-2xl desktop:px-8 desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
-						inset
-						&& "pt-[max(calc(env(safe-area-inset-top,0rem)+1rem),1.75rem)] android:pt-[max(calc(var(--safe-area-inset-top,0rem)+1rem),1.75rem)]",
-						titleProps.className
-					)}
-				>
-					{title}
-				</div>
-				<div className="h-full vision:bg-none desktop:rounded-2xl desktop:rounded-t-none desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
+				{title && (
+					<div
+						{...titleProps}
+						className={twMerge(
+							"w-full bg-brand-gradient py-7 text-center font-montserrat text-3xl font-extrabold text-white-20 desktop:w-full desktop:rounded-t-2xl desktop:px-8 desktop:pb-4 desktop:pt-[1.125rem] desktop:text-2xl android:desktop:pt-[1.125rem]",
+							inset
+							&& "pt-[max(calc(env(safe-area-inset-top,0rem)+1rem),1.75rem)] android:pt-[max(calc(var(--safe-area-inset-top,0rem)+1rem),1.75rem)]",
+							titleProps.className
+						)}
+					>
+						{title}
+					</div>
+				)}
+				<div className={twMerge("h-full vision:bg-none desktop:rounded-2xl desktop:bg-brand-gradient desktop:p-1", title && "desktop:rounded-t-none desktop:pt-0")}>
 					<div
 						{...containerProps}
 						className={twMerge(
