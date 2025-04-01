@@ -45,6 +45,7 @@ export async function Navigation() {
 											}
 											className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 											href={urls.browse()}
+											id="date-mode-switch"
 										/>
 										<NavigationalSwitchItem
 											icon={
@@ -52,6 +53,7 @@ export async function Navigation() {
 											}
 											className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
 											href={urls.browse("friend")}
+											id="homie-mode-switch"
 										/>
 									</NavigationalSwitch>
 									<NavigationItemMessage />
