@@ -3,7 +3,6 @@ import { unstable_serialize } from "swr";
 import { Authentication } from "~/api/auth";
 import { Plan } from "~/api/plan";
 import GlobalError from "~/app/global-error";
-import Flitty from "~/components/flitty";
 import {
 	DiscordSpamDialog,
 	ModerationMessageDialog
@@ -39,7 +38,6 @@ export default async function AuthenticatedLayout({
 						&& new Date(user.tnsDiscordInBiography).getTime() < Date.now() && (
 							<DiscordSpamDialog />
 						)}
-						<Flitty />
 					</NotificationProvider>
 				</ShepherdProvider>
 			</PurchaseProvider>
