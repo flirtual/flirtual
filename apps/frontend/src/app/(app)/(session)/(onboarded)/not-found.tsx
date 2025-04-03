@@ -20,10 +20,7 @@ export default function ProfileNotFoundPage() {
 			</span>
 			<div className="flex gap-2">
 				<ButtonLink href={urls.browse()} size="sm">
-					{t("browse_profiles")}
-				</ButtonLink>
-				<ButtonLink href={urls.settings.list()} kind="tertiary" size="sm">
-					{t("settings")}
+					{t("back_to_browsing")}
 				</ButtonLink>
 			</div>
 		</ModelCard>
