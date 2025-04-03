@@ -21,6 +21,7 @@ import { useInternationalization, useTranslations } from "~/hooks/use-internatio
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
+import { urls } from "~/urls";
 
 import { ProfileColorPreview } from "./profile-preview";
 import { ThemePreview } from "./theme-preview";
@@ -127,8 +128,12 @@ const ReccommendedProfileThemes: FC = () => {
 	} = useFormContext<ProfileColors>();
 	const { theme } = useTheme();
 	const t = useTranslations();
+	const router = useRouter();
 
 	const defaultTheme = defaultProfileColors[theme];
+
+	const [grassTouched, setGrassTouched] = useState(0);
+	const [touchingGrass, setTouchingGrass] = useState(false);
 
 	return (
 		<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
@@ -137,10 +142,26 @@ const ReccommendedProfileThemes: FC = () => {
 				...recommendedThemes
 			].map((theme) => (
 				<button
-					className="flex flex-col"
+					className="relative flex flex-col"
 					key={theme.name}
 					type="button"
-					onClick={() => {
+					onClick={async () => {
+						if (theme.name === "touch_grass") {
+							if (!touchingGrass) {
+								setTouchingGrass(true);
+								if (grassTouched >= 4) {
+									await new Promise((resolve) => {
+										setTimeout(resolve, 800);
+									});
+									router.push(urls.settings.fun);
+								}
+								setGrassTouched(grassTouched + 1);
+							}
+						}
+						else {
+							setGrassTouched(0);
+						}
+
 						flushSync(() => {
 							color1.props.onChange(theme.color1);
 							color2.props.onChange(theme.color2);
@@ -166,6 +187,16 @@ const ReccommendedProfileThemes: FC = () => {
 							backgroundImage: `linear-gradient(to right, ${theme.color1}, ${theme.color2})`
 						}}
 					/>
+					{theme.name === "touch_grass" && touchingGrass && (
+						<span
+							className="absolute left-0 top-7 animate-touch-grass -scale-x-100"
+							onAnimationEnd={() => {
+								setTouchingGrass(false);
+							}}
+						>
+							🫳
+						</span>
+					)}
 				</button>
 			))}
 		</div>
@@ -180,7 +211,7 @@ const SaveButton: FC = () => {
 	if (!session) return null;
 	const disabled
 		= (!session.user.subscription || !session.user.subscription.active)
-		&& (changes.includes("color1") || changes.includes("color2"));
+			&& (changes.includes("color1") || changes.includes("color2"));
 
 	return (
 		<FormButton disabled={disabled}>
