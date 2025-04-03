@@ -14,7 +14,6 @@ export const FormButton: React.FC<Parameters<typeof Button>[0]> = ({ children, .
 		<Button
 			{...buttonProps as HTMLMotionProps<"button">}
 			{...props}
-			disabled={submitting}
 			Icon={submitting ? Loader2 : props.Icon}
 			iconClassName={submitting ? "animate-spin" : props.iconClassName}
 			type="submit"

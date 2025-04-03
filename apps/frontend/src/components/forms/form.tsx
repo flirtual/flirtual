@@ -1,5 +1,5 @@
 /* eslint-disable react/prefer-destructuring-assignment */
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { omit } from "remeda";
 
 import {
@@ -28,7 +28,7 @@ export type FormProps<T extends FormFieldsDefault> = {
 } &
 Omit<InputFormOptions<T>, "captchaRef"> & Omit<
 	React.ComponentProps<"form">,
-	"children" | "onSubmit"
+		"children" | "onSubmit"
 >;
 
 export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
@@ -37,7 +37,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 	props = Object.assign({ formErrorMessages: true, renderCaptcha: true }, props);
 	const form = useInputForm({ ...props, captchaRef: captchaReference });
 
-	const captcha = props.withCaptcha && (
+	const Captcha = useCallback(() => props.withCaptcha && (
 		<div className="flex flex-col gap-2">
 			<FormCaptcha ref={captchaReference} tabIndex={props.captchaTabIndex} />
 			<FormInputMessages
@@ -45,14 +45,14 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 				messages={form.fields.captcha?.errors.map((value) => ({ type: "error", value }))}
 			/>
 		</div>
-	);
+	), [form.fields.captcha?.errors, props.captchaTabIndex, props.withCaptcha]);
 
 	const children
 		= typeof props.children === "function"
 			? props.children({
-				...form,
-				Captcha: () => captcha
-			})
+					...form,
+					Captcha
+				})
 			: props.children;
 
 	return (
@@ -76,7 +76,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 						messages={form.errors.map((value) => ({ type: "error", value }))}
 					/>
 				)}
-				{props.renderCaptcha && captcha}
+				{props.renderCaptcha && <Captcha />}
 			</FormContext>
 		</form>
 	);
