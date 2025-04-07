@@ -945,5 +945,11 @@
 	"trite_alive_orangutan_foster": "Desculpe, mas não há suporte para listas de reprodução do YouTube. Forneça um link do YouTube Music.",
 	"its_currently_time_for_name": "Atualmente, é {time} para {name}",
 	"formal_dark_camel_hunt": "Sua senha foi redefinida. Agora você pode fazer login com sua nova senha.",
-	"main_fit_lark_imagine": "Permita notificações para o Flirtual"
+	"main_fit_lark_imagine": "Permita notificações para o Flirtual",
+	"enable_assistant": "Habilitar assistente",
+	"enable_ranked_mode": "Ativar o modo classificado",
+	"april_fools_year": "Dia da Mentira {ano}",
+	"round_crazy_haddock_mix": "Ops! Não conseguimos encontrar o que você está procurando. Ele pode ter sido movido ou você se deparou com um perfil excluído ou oculto.",
+	"fun_stuff": "Coisas divertidas",
+	"have_fun": "Divirta-se!"
 }
