@@ -945,5 +945,11 @@
 	"vrchat": "VRChat",
 	"its_currently_time_for_name": "Actualmente es {hora} para {nombre}.",
 	"formal_dark_camel_hunt": "Tu contraseña ha sido restablecida. Ahora puedes iniciar sesión con tu nueva contraseña.",
-	"main_fit_lark_imagine": "Permitir notificaciones para Flirtual"
+	"main_fit_lark_imagine": "Permitir notificaciones para Flirtual",
+	"enable_assistant": "Habilitar asistente",
+	"round_crazy_haddock_mix": "¡Uy! No hemos podido encontrar lo que buscas. Puede que se haya movido, o que te hayas topado con un perfil eliminado u oculto.",
+	"fun_stuff": "Diversión",
+	"have_fun": "¡Diviértete!",
+	"enable_ranked_mode": "Activar el modo clasificado",
+	"april_fools_year": "April Fools {año}"
 }
