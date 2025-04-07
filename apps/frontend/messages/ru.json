@@ -945,5 +945,11 @@
 	"support": "Поддерживать",
 	"its_currently_time_for_name": "Сейчас {время} для {имя}",
 	"formal_dark_camel_hunt": "Ваш пароль был изменен. Теперь вы можете войти в систему с новым паролем.",
-	"main_fit_lark_imagine": "Пожалуйста, разрешите уведомления для Flirtual"
+	"main_fit_lark_imagine": "Пожалуйста, разрешите уведомления для Flirtual",
+	"round_crazy_haddock_mix": "Упс! Мы не смогли найти то, что вы ищете. Возможно, он переехал, или вы наткнулись на удаленный или скрытый профиль.",
+	"fun_stuff": "Веселые штучки",
+	"have_fun": "Веселитесь!",
+	"enable_assistant": "Включите помощника",
+	"enable_ranked_mode": "Включить рейтинговый режим",
+	"april_fools_year": "April Fools {год}"
 }
