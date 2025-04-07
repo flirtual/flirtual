@@ -945,5 +945,11 @@
 	"quick_happy_lobster_hush": "303e4ab2-b72f-4947-829e-e818514be4d9",
 	"its_currently_time_for_name": "Il est actuellement {heure} pour {nom}",
 	"formal_dark_camel_hunt": "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
-	"main_fit_lark_imagine": "Veuillez autoriser les notifications pour Flirtual"
+	"main_fit_lark_imagine": "Veuillez autoriser les notifications pour Flirtual",
+	"enable_assistant": "Activer l'assistant",
+	"round_crazy_haddock_mix": "Oups ! Nous n'avons pas trouvé ce que vous cherchiez. Il a peut-être déménagé, ou vous êtes tombé sur un profil supprimé ou caché.",
+	"fun_stuff": "Des choses amusantes",
+	"have_fun": "Amusez-vous bien !",
+	"enable_ranked_mode": "Activer le mode classé",
+	"april_fools_year": "Poisson d'avril {année}"
 }
