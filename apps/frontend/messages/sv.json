@@ -945,5 +945,11 @@
 	"few_grassy_hyena_adapt": "Bli kär i en<highlight> helt ny dimension</highlight>",
 	"its_currently_time_for_name": "Det är för närvarande {tid} för {namn}",
 	"formal_dark_camel_hunt": "Ditt lösenord har återställts. Du kan nu logga in med ditt nya lösenord.",
-	"main_fit_lark_imagine": "Vänligen tillåt meddelanden för Flirtual"
+	"main_fit_lark_imagine": "Vänligen tillåt meddelanden för Flirtual",
+	"round_crazy_haddock_mix": "Oops! Vi kunde inte hitta det du letade efter. Den kan ha flyttats, eller så har du snubblat över en raderad eller dold profil.",
+	"fun_stuff": "Roliga saker",
+	"have_fun": "Ha det så kul!",
+	"enable_assistant": "Aktivera assistent",
+	"enable_ranked_mode": "Aktivera rankat läge",
+	"april_fools_year": "Aprilskämt {år}"
 }
