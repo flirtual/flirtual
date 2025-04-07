@@ -75,12 +75,17 @@ module.exports = {
 			},
 			animation: {
 				"scroll-x-screen": "scroll-x-screen 60s linear infinite",
+				"touch-grass": "touch-grass 0.8s ease-in-out forwards",
 				"bounce-x": "bounceX 1s infinite"
 			},
 			keyframes: {
 				"scroll-x-screen": {
 					from: { transform: "translateX(0)" },
 					to: { transform: "translateX(-100%)" }
+				},
+				"touch-grass": {
+					"0%": { left: "0.75rem" },
+					"100%": { left: "calc(100% - 2rem)" }
 				},
 				"fade-in": {
 					"0%": { opacity: "0%" },

@@ -11,6 +11,7 @@ import {
 	LineChart,
 	LogOut,
 	Paintbrush,
+	Paperclip,
 	PenSquare,
 	Search,
 	ShieldAlert,

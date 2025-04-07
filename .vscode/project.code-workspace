@@ -32,6 +32,14 @@
 			"name": "🛡️ Image Classification",
 			"path": "../apps/image-classification"
 		},
+		{
+			"name": "📊 Grafana",
+			"path": "../apps/grafana"
+		},
+		{
+			"name": "📊 Tempo",
+			"path": "../apps/tempo"
+		}
 	],
 	"settings": {
 		"files.exclude": {

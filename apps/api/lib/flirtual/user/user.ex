@@ -16,7 +16,7 @@ defmodule Flirtual.User do
     Discord,
     Flag,
     Hash,
-    Languages,
+    # Languages,
     ObanWorkers,
     Repo,
     Report,

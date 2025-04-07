@@ -2,6 +2,7 @@ defmodule FlirtualWeb.Router do
   use FlirtualWeb, :router
   use Plug.ErrorHandler
   use Flirtual.Logger, :router
+  use Tracing
 
   import Phoenix.Router
   import Plug.Conn
@@ -14,39 +15,45 @@ defmodule FlirtualWeb.Router do
   end
 
   def require_authenticated_user(conn, _opts) do
-    if conn.assigns[:session] do
-      conn
-    else
-      conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
+    span do
+      if conn.assigns[:session] do
+        conn
+      else
+        conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
+      end
     end
   end
 
   def fetch_authorization_token(conn, _) do
-    with authorization_header when is_list(authorization_header) <-
-           get_req_header(conn, "authorization"),
-         authorization_value when is_binary(authorization_value) <-
-           List.first(authorization_header),
-         [token_type, token] <- String.split(authorization_value, " ") do
-      conn
-      |> assign(:authorization_token_type, token_type)
-      |> assign(:authorization_token, token)
-    else
-      _ ->
+    span do
+      with authorization_header when is_list(authorization_header) <-
+             get_req_header(conn, "authorization"),
+           authorization_value when is_binary(authorization_value) <-
+             List.first(authorization_header),
+           [token_type, token] <- String.split(authorization_value, " ") do
         conn
-        |> put_error(:unauthorized, :invalid_credentials)
-        |> halt()
+        |> assign(:authorization_token_type, token_type)
+        |> assign(:authorization_token, token)
+      else
+        _ ->
+          conn
+          |> put_error(:unauthorized, :invalid_credentials)
+          |> halt()
+      end
     end
   end
 
   def require_valid_user(conn, _opts) do
-    user = conn.assigns[:session].user
+    span do
+      user = conn.assigns[:session].user
 
-    if user.deactivated_at !== nil do
-      conn
-      |> put_error(:forbidden, :account_deactivated)
-      |> halt()
-    else
-      conn
+      if user.deactivated_at !== nil do
+        conn
+        |> put_error(:forbidden, :account_deactivated)
+        |> halt()
+      else
+        conn
+      end
     end
   end
 

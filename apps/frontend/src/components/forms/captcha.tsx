@@ -3,12 +3,11 @@
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { LoaderCircle, ShieldAlert, ShieldCheck } from "lucide-react";
 import type { RefAttributes } from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { turnstileSiteKey } from "~/const";
 import { useInternationalization, useTranslations } from "~/hooks/use-internationalization";
-import { warnOnce } from "~/hooks/use-log";
 import { useTheme } from "~/hooks/use-theme";
 
 export type FormCaptchaReference = TurnstileInstance;
@@ -26,13 +25,8 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 
 	const [success, setSuccess] = useState<boolean>(false);
 
-	if (!turnstileSiteKey) {
-		warnOnce("Turnstile was not properly configured. If this is unintentional, set the \"NEXT_PUBLIC_TURNSTILE_SITE_KEY\" environment variable.");
-		return null;
-	}
-
 	return (
-		<div className="relative mx-auto flex h-[64px] w-[300px] items-center justify-center overflow-hidden rounded-xl border border-[#e0e0e0] bg-[#fafafa] text-[#232323] shadow-sm dark:border-[#797979]/5 dark:bg-[#232323] dark:text-white-10">
+		<div className="relative mx-auto flex h-[64px] w-[300px] items-center justify-center overflow-hidden rounded-xl border border-[#e0e0e0] bg-[#fafafa] text-[#232323] shadow-sm transition-all dark:border-[#797979]/5 dark:bg-[#232323] dark:text-white-10">
 			<div className="flex items-center gap-2 text-sm">
 				{success
 					? (
@@ -78,14 +72,14 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 							)}
 			</div>
 			<Turnstile
-				options={{
+				options={useMemo(() => ({
 					theme,
 					tabIndex,
 					language,
 					size: "normal",
 					appearance: "interaction-only",
 					retryInterval: 500
-				}}
+				}), [language, tabIndex, theme])}
 				className={twMerge("absolute -inset-px", success && "pointer-events-none opacity-0")}
 				ref={ref}
 				siteKey={turnstileSiteKey}

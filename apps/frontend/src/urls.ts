@@ -138,7 +138,8 @@ export const urls = {
 		email: "/settings/email",
 		password: "/settings/password",
 		deactivateAccount: "/settings/deactivate",
-		deleteAccount: "/settings/delete"
+		deleteAccount: "/settings/delete",
+		fun: "/settings/fun"
 	},
 
 	moderation: {
