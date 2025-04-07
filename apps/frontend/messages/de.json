@@ -945,5 +945,11 @@
 	"extra_moving_jackdaw_twist": "Avatar von {name}",
 	"its_currently_time_for_name": "Es ist gerade {Zeit} für {Name}",
 	"formal_dark_camel_hunt": "Ihr Passwort wurde zurückgesetzt. Sie können sich jetzt mit Ihrem neuen Passwort anmelden.",
-	"main_fit_lark_imagine": "Bitte erlauben Sie Benachrichtigungen für Flirtual"
+	"main_fit_lark_imagine": "Bitte erlauben Sie Benachrichtigungen für Flirtual",
+	"round_crazy_haddock_mix": "Huch! Wir konnten nicht finden, wonach du gesucht hast. Vielleicht ist es umgezogen, oder du bist über ein gelöschtes oder verstecktes Profil gestolpert.",
+	"fun_stuff": "Spaßige Sachen",
+	"have_fun": "Viel Spaß!",
+	"enable_assistant": "Assistent freischalten",
+	"enable_ranked_mode": "Aktivieren Sie den Ranglisten-Modus",
+	"april_fools_year": "Aprilscherz {Jahr}"
 }
