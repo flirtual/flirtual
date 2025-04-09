@@ -75,11 +75,11 @@ defmodule Flirtual.Application do
   end
 
   defp oban_config do
-    # if System.fetch_env!("PRIMARY_REGION") == System.fetch_env!("FLY_REGION") do
-    #   Application.fetch_env!(:flirtual, Oban)
-    # else
-    [repo: Flirtual.Repo, queues: false, plugins: false]
-    # end
+    if System.fetch_env!("PRIMARY_REGION") == System.fetch_env!("FLY_REGION") do
+      Application.fetch_env!(:flirtual, Oban)
+    else
+      [repo: Flirtual.Repo, notifier: Oban.Notifiers.PG, queues: false, plugins: false]
+    end
   end
 
   # Tell Phoenix to update the endpoint configuration
