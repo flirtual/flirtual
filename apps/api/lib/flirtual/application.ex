@@ -24,7 +24,7 @@ defmodule Flirtual.Application do
     :ok = OpentelemetryPhoenix.setup(adapter: :bandit)
 
     :ok =
-      Flirtual.Repo.config()
+      Flirtual.Repo.Local.config()
       |> Keyword.fetch!(:telemetry_prefix)
       |> OpentelemetryEcto.setup(db_statement: :enabled)
 
@@ -32,8 +32,12 @@ defmodule Flirtual.Application do
       [
         # Start the Cluster supervisor
         {Cluster.Supervisor, [topologies, [name: Flirtual.ClusterSupervisor]]},
+        # Start the Fly RPC server
+        {Fly.RPC, []},
         # Start the Ecto repository
-        Flirtual.Repo,
+        Flirtual.Repo.Local,
+        # Start the supervisor for LSN tracking
+        {Fly.Postgres.LSN.Supervisor, repo: Flirtual.Repo.Local},
         # Start Oban
         {Oban, Application.fetch_env!(:flirtual, Oban)},
         # Start Elasticsearch

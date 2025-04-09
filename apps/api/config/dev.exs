@@ -1,7 +1,7 @@
 import Config
 
 # Configure your database
-config :flirtual, Flirtual.Repo,
+config :flirtual, Flirtual.Repo.Local,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",

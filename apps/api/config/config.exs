@@ -8,7 +8,7 @@
 import Config
 
 config :flirtual,
-  ecto_repos: [Flirtual.Repo]
+  ecto_repos: [Flirtual.Repo.Local]
 
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
