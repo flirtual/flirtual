@@ -8,7 +8,7 @@
 import Config
 
 config :flirtual,
-  ecto_repos: [Flirtual.Repo.Local]
+  ecto_repos: [Flirtual.Repo]
 
 # Configures the endpoint
 config :flirtual, FlirtualWeb.Endpoint,
@@ -47,7 +47,6 @@ config :flirtual, Flirtual.Repo.Local, telemetry_prefix: [:flirtual, :repo]
 
 config :flirtual, Oban,
   repo: Flirtual.Repo,
-  notifier: Oban.Notifiers.PG,
   plugins: [
     {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 7},
     {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)},
