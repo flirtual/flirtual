@@ -39,7 +39,7 @@ defmodule Flirtual.Application do
         # Start the supervisor for LSN tracking
         {Fly.Postgres.LSN.Supervisor, repo: Flirtual.Repo.Local},
         # Start Oban
-        {Oban, Application.fetch_env!(:flirtual, Oban)},
+        {Oban, oban_config()},
         # Start Elasticsearch
         Flirtual.Elasticsearch,
         # Start the push notification dispatchers
@@ -72,6 +72,14 @@ defmodule Flirtual.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Flirtual.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp oban_config do
+    if System.fetch_env!("PRIMARY_REGION") == System.fetch_env!("FLY_REGION") do
+      Application.fetch_env!(:flirtual, Oban)
+    else
+      [repo: Flirtual.Repo, queues: false, plugins: false]
+    end
   end
 
   # Tell Phoenix to update the endpoint configuration

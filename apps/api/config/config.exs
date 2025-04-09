@@ -43,7 +43,7 @@ config :opentelemetry,
 #   accepts: ~w(json)
 # ]
 
-config :flirtual, Flirtual.Repo, telemetry_prefix: [:flirtual, :repo]
+config :flirtual, Flirtual.Repo.Local, telemetry_prefix: [:flirtual, :repo]
 
 config :flirtual, Oban,
   repo: Flirtual.Repo,
