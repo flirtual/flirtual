@@ -27,7 +27,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 	const [error, setError] = useState<string | null>(null);
 
 	const [success, setSuccess] = useState<boolean>(false);
-	const { fields } = useFormContext();
+	const { fields, setFieldErrors } = useFormContext();
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -99,6 +99,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 					onSuccess={() => {
 						setError(null);
 						setSuccess(true);
+						setFieldErrors((previous) => ({ ...previous, captcha: [] }));
 					}}
 				/>
 			</div>
