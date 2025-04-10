@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { ModelCard } from "~/components/model-card";
+import { isInternalHref } from "~/urls";
 
 import { LoginForm } from "./form";
-import { ensureRelativeUrl, isInternalHref } from "~/urls";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations();

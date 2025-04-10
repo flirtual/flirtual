@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -10,7 +10,6 @@ import { InlineLink } from "~/components/inline-link";
 import { TimeRelative } from "~/components/time-relative";
 import { environment, gitCommitSha } from "~/const";
 import { useDevice } from "~/hooks/use-device";
-import { useInternationalization } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -24,9 +23,9 @@ export const DebugInfo: React.FC = () => {
 		userAgent: { browser, engine, os }
 	} = useDevice();
 
-	const { locale } = useInternationalization();
+	const locale = useLocale();
 
-	const languageNames = new Intl.DisplayNames(locale.current, {
+	const languageNames = new Intl.DisplayNames(locale, {
 		type: "language"
 	});
 
@@ -78,10 +77,10 @@ export const DebugInfo: React.FC = () => {
 						{" "}
 					</span>
 					<span className="truncate font-mono text-sm">
-						{languageNames.of(locale.current)}
+						{languageNames.of(locale)}
 						{" "}
 						(
-						{locale.current}
+						{locale}
 						)
 					</span>
 				</div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
@@ -16,12 +16,12 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { useInternationalization } from "next-intl";
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
 	const t = useTranslations();
-	const { locale: { current } } = useInternationalization();
+	const locale = useLocale();
+
 	const router = useRouter();
 
 	return (
@@ -43,7 +43,7 @@ export const Onboarding0Form: FC = () => {
 				await User.create({
 					...values,
 					captcha,
-					language: current
+					language: locale
 				});
 
 				router.refresh();

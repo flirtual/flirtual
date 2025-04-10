@@ -3,8 +3,8 @@ import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { PreferenceLanguage } from "~/api/user/preferences";
-import { useInternationalization } from "next-intl";
 import { useTheme } from "~/hooks/use-theme";
+import type { Locale } from "~/i18n/routing";
 import type { Theme } from "~/theme";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -24,7 +24,7 @@ export const playlistPlatforms = [
 	{
 		name: "Apple Music",
 		pattern:
-			/^https?:\/\/music\.apple\.com\/(?:[a-z]{2}\/)?playlist(?:\/[^\/]+)?\/(pl\.[\dA-Za-z-]+)/,
+			/^https?:\/\/music\.apple\.com\/(?:[a-z]{2}\/)?playlist(?:\/[^/]+)?\/(pl\.[\dA-Za-z-]+)/,
 		embed: (id: string, theme: Theme, locale: PreferenceLanguage) => {
 			const locales = {
 				en: "us",
@@ -66,7 +66,7 @@ export const playlistPlatforms = [
 	{
 		name: "SoundCloud",
 		pattern:
-			/^https?:\/\/(www\.)?soundcloud\.com\/([\dA-Za-z-_]+\/sets\/[\dA-Za-z-_]+)/,
+			/^https?:\/\/(www\.)?soundcloud\.com\/([\w-]+\/sets\/[\w-]+)/,
 		embed: (id: string) =>
 			`https://w.soundcloud.com/player/?url=https://soundcloud.com/${id}?buying=false&sharing=false&download=false&show_artwork=true&show_comments=false&show_teaser=false&visual=false`
 	},
@@ -84,7 +84,7 @@ export const ProfilePlaylist: FC<{
 	className?: string;
 }> = ({ playlist, className }) => {
 	const { theme } = useTheme();
-	const { locale: { current: locale } } = useInternationalization();
+	const locale = useLocale() as Locale;
 
 	const matchedPlatform = playlistPlatforms.find(({ pattern }) => pattern.test(playlist));
 	const match = matchedPlatform?.pattern.exec(playlist);

@@ -16,7 +16,7 @@ import {
 } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
-import { useCurrentUser, useSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 
 const Pageview = dynamic(() => Promise.resolve(() => {
 	const location = useLocation();
@@ -99,10 +99,10 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 
 	return (
 		<>
-			{/* <Suspense>
+			<Suspense>
 				<Pageview />
 				<Identity />
-			</Suspense> */}
+			</Suspense>
 			{environment !== "development" && (
 				<Script
 					defer

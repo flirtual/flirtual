@@ -21,9 +21,7 @@ export default async function TermsPage() {
 	return (
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("terms_of_service")}>
 			<div className="flex flex-col gap-4">
-				<MachineTranslatedLegal
-					original={`${urls.resources.termsOfService}?language=en`}
-				/>
+				<MachineTranslatedLegal original={urls.resources.termsOfService} />
 				{t.rich("committee_trucks_welcome_approval", {
 					section: (children: ReactNode) => (
 						<section className="select-children flex flex-col gap-2">

@@ -28,7 +28,7 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 );
 
 export async function Navigation() {
-	const session = await Authentication.getOptionalSession();
+	const session = null//await Authentication.getOptionalSession();
 
 	return (
 		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col text-white-20 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
@@ -36,46 +36,46 @@ export async function Navigation() {
 				<div className="flex size-full items-center justify-evenly gap-4 px-5 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.625rem),0.5rem)] pt-2 font-nunito text-white-20 desktop:w-auto desktop:pb-2">
 					{session
 						? (
-								<>
-									<NavigationItemProfile />
-									<NavigationalSwitch id="browse-mode-switch">
-										<NavigationalSwitchItem
-											icon={
-												<HeartIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
-											}
-											className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-											href={urls.browse()}
-											id="date-mode-switch"
-										/>
-										<NavigationalSwitchItem
-											icon={
-												<PeaceIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
-											}
-											className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
-											href={urls.browse("friend")}
-											id="homie-mode-switch"
-										/>
-									</NavigationalSwitch>
-									<NavigationItemMessage />
-								</>
-							)
-						: (
-								<NavigationalSwitch>
+							<>
+								<NavigationItemProfile />
+								<NavigationalSwitch id="browse-mode-switch">
 									<NavigationalSwitchItem
+										icon={
+											<HeartIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
+										}
 										className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-										href={urls.landing}
-										icon={<HomeIcon />}
+										href={urls.browse()}
+										id="date-mode-switch"
 									/>
 									<NavigationalSwitchItem
 										icon={
-											<LoginIcon className="group-data-[active]:fill-current" />
+											<PeaceIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
 										}
-										className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-										href={urls.login()}
-										strict={false}
+										className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
+										href={urls.browse("friend")}
+										id="homie-mode-switch"
 									/>
 								</NavigationalSwitch>
-							)}
+								<NavigationItemMessage />
+							</>
+						)
+						: (
+							<NavigationalSwitch>
+								<NavigationalSwitchItem
+									className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
+									href={urls.landing}
+									icon={<HomeIcon />}
+								/>
+								<NavigationalSwitchItem
+									icon={
+										<LoginIcon className="group-data-[active]:fill-current" />
+									}
+									className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
+									href={urls.login()}
+									strict={false}
+								/>
+							</NavigationalSwitch>
+						)}
 				</div>
 			</div>
 		</header>

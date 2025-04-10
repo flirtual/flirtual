@@ -17,7 +17,7 @@ import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useFormContext } from "~/hooks/use-input-form";
-import { useInternationalization, useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
@@ -26,6 +26,7 @@ import { urls } from "~/urls";
 import { ProfileColorPreview } from "./profile-preview";
 import { ThemePreview } from "./theme-preview";
 import { defaultProfileColors, recommendedThemes } from "./themes";
+import { defaultLocale } from "~/i18n/routing";
 
 export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ value, onChange }) => {
 	return (
@@ -223,8 +224,8 @@ const SaveButton: FC = () => {
 };
 
 export const AppearanceForm: FC = () => {
-	const { locale: { current: language } } = useInternationalization();
 	const t = useTranslations();
+	const locale = useLocale();
 	const tAttribute = useAttributeTranslation();
 
 	const { theme } = useTheme();
@@ -257,13 +258,13 @@ export const AppearanceForm: FC = () => {
 						inline
 						hint={(
 							<InputLabelHint>
-								{t.rich(language === "en"
+								{t.rich(locale === defaultLocale
 									? "help_translate_others"
 									: "help_translate", {
-									language: tAttribute[language]?.name || language,
+									language: tAttribute[locale]?.name || locale,
 									link: (children) => (
 										<InlineLink
-											href={`https://hosted.weblate.org/projects/flirtual/flirtual/${language === "en" ? "" : language}`}
+											href={`https://hosted.weblate.org/projects/flirtual/flirtual/${locale === defaultLocale ? "" : locale}`}
 										>
 											{children}
 										</InlineLink>

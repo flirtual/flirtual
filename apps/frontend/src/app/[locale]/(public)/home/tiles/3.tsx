@@ -61,7 +61,7 @@ export async function Testimonial({ id }: TileProps) {
 				{Object.values(brands).map(({ name, image }, index) => (
 					<Image
 						alt={name}
-						className="h-fit w-20 desktop:tall:w-32"
+						className="h-auto w-20 desktop:tall:w-32"
 						height={128}
 						key={image}
 						src={urls.media(image)}

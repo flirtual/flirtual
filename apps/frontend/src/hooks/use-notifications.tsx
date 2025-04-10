@@ -4,7 +4,6 @@ import {
 	type PermissionStatus,
 	PushNotifications
 } from "@capacitor/push-notifications";
-import { useRouter } from "next/navigation";
 import {
 	createContext,
 	type PropsWithChildren,
@@ -14,6 +13,7 @@ import {
 import useSWR from "swr";
 
 import { User } from "~/api/user";
+import { useRouter } from "~/i18n/navigation";
 
 import { useDevice } from "./use-device";
 import { useSession } from "./use-session";
@@ -118,7 +118,9 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 				[status]
 			)}
 		>
-			{children}
+			<>
+				{children}
+			</>
 		</NotificationContext>
 	);
 }

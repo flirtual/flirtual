@@ -6,8 +6,8 @@ import { mutate } from "swr";
 import useMutation from "swr/mutation";
 
 import type { PreferenceLanguage } from "~/api/user/preferences";
-import { PreferenceLanguages, Preferences } from "~/api/user/preferences";
-import { useInternationalization, useTranslations } from "next-intl";
+import { Preferences } from "~/api/user/preferences";
+import { useLocale, useTranslations } from "next-intl";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -15,14 +15,17 @@ import { withSuspense } from "~/hooks/with-suspense";
 import { sessionKey } from "~/swr";
 
 import { InputSelect } from "../select";
+import { Locale, locales } from "~/i18n/routing";
 
 const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> = ({ className, tabIndex }) => {
-	const { locale: { current: language } } = useInternationalization();
-	const toasts = useToast();
+	const locale = useLocale();
+	const t = useTranslations("errors");
+
 	const [session] = useSession();
+
+	const toasts = useToast();
 	const router = useRouter();
 	const location = useLocation();
-	const t = useTranslations("errors");
 
 	const { trigger } = useMutation(
 		"change-language",
@@ -58,7 +61,7 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 
 	return (
 		<InputSelect
-			options={PreferenceLanguages.map((value) => ({
+			options={locales.map((value) => ({
 				id: value,
 				name: {
 					en: "English",
@@ -77,8 +80,8 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 			className={className}
 			Icon={Languages}
 			tabIndex={tabIndex}
-			value={language}
-			onChange={(newLanguage) => trigger(newLanguage)}
+			value={locale}
+			onChange={(newLanguage) => trigger(newLanguage as Locale)}
 		/>
 	);
 };

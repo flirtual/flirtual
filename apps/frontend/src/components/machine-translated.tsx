@@ -23,7 +23,7 @@ export const MachineTranslatedLegal: FC<{
 							className="underline"
 							highlight={false}
 							href={original}
-							lang="en"
+							locale="en"
 						>
 							{children}
 						</InlineLink>

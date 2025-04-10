@@ -3,12 +3,13 @@
 import ms from "ms";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import type { Dispatch, FC, ReactNode } from "react";
 
 import { User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { withSuspense } from "~/hooks/with-suspense";
+import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { Button } from "../button";
@@ -16,10 +17,12 @@ import { DialogBody, DialogHeader, DialogTitle } from "../dialog/dialog";
 import { DrawerOrDialog } from "../drawer-or-dialog";
 import { InlineLink } from "../inline-link";
 
-export const ModerationMessageDialog: FC = () => {
+export const ModerationMessageDialog: FC = withSuspense(() => {
 	const [session] = useSession();
+
 	const toasts = useToast();
 	const router = useRouter();
+
 	const t = useTranslations();
 
 	if (!session?.user.moderatorMessage) return null;
@@ -37,12 +40,14 @@ export const ModerationMessageDialog: FC = () => {
 			{session.user.moderatorMessage}
 		</TrustAndSafetyDialog>
 	);
-};
+});
 
-export const DiscordSpamDialog: FC = () => {
+export const DiscordSpamDialog: FC = withSuspense(() => {
 	const [session] = useSession();
+
 	const router = useRouter();
 	const toasts = useToast();
+
 	const t = useTranslations();
 
 	const remindMeLater = async (quiet: boolean = false) => {
@@ -54,6 +59,9 @@ export const DiscordSpamDialog: FC = () => {
 
 		if (!quiet) toasts.add(t("you_will_be_reminded_in_number_days", { number: 30 }));
 	};
+
+	if (!session?.user.tnsDiscordInBiography || new Date(session?.user.tnsDiscordInBiography).getTime() > Date.now())
+		return null;
 
 	return (
 		<TrustAndSafetyDialog
@@ -98,7 +106,7 @@ export const DiscordSpamDialog: FC = () => {
 			})}
 		</TrustAndSafetyDialog>
 	);
-};
+});
 
 export const TrustAndSafetyDialog: FC<{
 	children: ReactNode;

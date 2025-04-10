@@ -11,16 +11,12 @@ import {
 	getCountryName
 } from "~/components/profile/pill/country";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { useInternationalization } from "next-intl";
 
 import { InputSelect, type InputSelectProps, SelectItem } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 	const tAttribute = useAttributeTranslation();
 	const locale = useLocale();
-
-	let { country: systemCountry = "us" } = useInternationalization();
-	if (!systemCountry) systemCountry = "us";
 
 	const [reference, viewed] = useInView({ triggerOnce: true });
 
@@ -52,17 +48,17 @@ const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 export type InputCountrySelectProps = Omit<
 	InputSelectProps<string | null>,
 	"Item" | "options"
->;
+> & {
+	prefer?: string
+}
 
-export function InputCountrySelect(props: InputCountrySelectProps) {
+export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySelectProps) {
+	const locale = useLocale();
+
 	const t = useTranslations();
-	const countries = useAttributes("country");
 	const tAttribute = useAttributeTranslation();
 
-	let { country: systemCountry } = useInternationalization();
-	if (!systemCountry) systemCountry = "us";
-
-	const locale = useLocale();
+	const countries = useAttributes("country");
 
 	const options = useMemo(
 		() =>
@@ -77,12 +73,12 @@ export function InputCountrySelect(props: InputCountrySelectProps) {
 					};
 				})
 				.sort((a, b) => {
-					if (a.id === systemCountry) return -1;
-					if (b.id === systemCountry) return 1;
+					if (a.id === prefer) return -1;
+					if (b.id === prefer) return 1;
 
 					return a.name.localeCompare(b.name, locale);
 				}),
-		[countries, locale, systemCountry, tAttribute]
+		[countries, locale, prefer, tAttribute]
 	);
 
 	return (

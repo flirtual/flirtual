@@ -2,11 +2,11 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import { MoveRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren, ReactNode, RefAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink, type InlineLinkProps } from "~/components/inline-link";
-import { useInternationalization, useTranslations } from "next-intl";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
 
@@ -76,13 +76,7 @@ export const AppBanner: FC = () => {
 	const [session] = useSession();
 	const t = useTranslations();
 
-	const { locale } = useInternationalization();
-
 	if (!session) return null;
-
-	const languageNames = new Intl.DisplayNames(locale.preferred, {
-		type: "language"
-	});
 
 	if (!["finished_profile", "visible"].includes(session.user.status)) {
 		return (
@@ -110,20 +104,6 @@ export const AppBanner: FC = () => {
 				{t.rich("exuberant_green_horse_fowl", {
 					link: (children) => (
 						<BannerLink href="/confirm-email">{children}</BannerLink>
-					)
-				})}
-			</Banner>
-		);
-	}
-
-	if (locale.current !== locale.preferred) {
-		return (
-			<Banner>
-				{t.rich("pleasant_ugliest_expert_camera", {
-					current: languageNames.of(locale.current),
-					preferred: languageNames.of(locale.preferred),
-					link: (children) => (
-						<SelfLink lang={locale.preferred}>{children}</SelfLink>
 					)
 				})}
 			</Banner>

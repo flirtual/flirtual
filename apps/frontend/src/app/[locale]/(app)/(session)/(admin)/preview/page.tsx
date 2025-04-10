@@ -70,7 +70,7 @@ export default function FakeProfilePage() {
 			setViewer(viewer);
 		}
 		// eslint-disable-next-line unused-imports/no-unused-vars
-		catch (reason) {}
+		catch (reason) { }
 	}, []);
 
 	const data = useMemo(() => ({ relationship, user, viewer }), [relationship, user, viewer]);
@@ -365,7 +365,7 @@ export default function FakeProfilePage() {
 								setViewer(viewer);
 							}
 							// eslint-disable-next-line unused-imports/no-unused-vars
-							catch (reason) {}
+							catch (reason) { }
 						}}
 					/>
 				</div>

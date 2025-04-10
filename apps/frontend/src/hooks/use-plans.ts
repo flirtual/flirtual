@@ -6,7 +6,8 @@ export function usePlans() {
 	const { data: plans } = useSWR("plans", () => Plan.list(), {
 		revalidateOnFocus: false,
 		revalidateIfStale: false,
-		suspense: true
+		suspense: true,
+		fallbackData: []
 	});
 
 	return plans;

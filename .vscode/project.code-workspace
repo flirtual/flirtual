@@ -52,7 +52,10 @@
 		],
 		"java.configuration.updateBuildConfiguration": "automatic",
 		"typescript.tsdk": "🖥️ Frontend/node_modules/typescript/lib",
-		"files.insertFinalNewline": true
+		"files.insertFinalNewline": true,
+		"typescript.format.enable": false,
+		"javascript.format.enable": false,
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
 	},
 	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"eslint.format.enable": true,

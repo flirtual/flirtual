@@ -1,11 +1,11 @@
 import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
 import { unstable_serialize } from "swr";
 
 import { Attribute } from "~/api/attributes";
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { SWRConfig } from "~/components/swr";
+import { redirect } from "~/i18n/navigation";
 import { attributeKey, queueKey, relationshipKey, userKey } from "~/swr";
 import { urls } from "~/urls";
 
@@ -14,27 +14,29 @@ import { Queue } from "./queue";
 
 interface BrowsePageProps {
 	searchParams: Promise<{ kind?: ProspectKind }>;
+	params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata(props: BrowsePageProps) {
-	const t = await getTranslations();
+export async function generateMetadata({ searchParams }: BrowsePageProps) {
+	const { kind = "love" } = (await searchParams) || {};
 
-	const { kind = "love" } = (await props.searchParams) || {};
-	if (!ProspectKind.includes(kind)) return redirect(urls.browse());
+	const t = await getTranslations();
 
 	return {
 		title: kind === "friend" ? t("homie_mode") : t("browse")
 	};
 }
 
-export default async function BrowsePage(props: BrowsePageProps) {
-	const { kind = "love" } = (await props.searchParams) || {};
-	if (!ProspectKind.includes(kind)) return redirect(urls.browse());
+export default async function BrowsePage({ params, searchParams }: BrowsePageProps) {
+	const { locale } = await params;
 
-	const queue = await Matchmaking.queue(kind);
+	const { kind = "love" } = (await searchParams) || {};
+	if (!ProspectKind.includes(kind)) return redirect({ href: urls.browse(), locale });
+
+	// const queue = await Matchmaking.queue(kind);
 
 	return (
-		<SWRConfig
+		/*<SWRConfig
 			value={{
 				fallback: {
 					[unstable_serialize(queueKey(kind))]: queue,
@@ -53,8 +55,8 @@ export default async function BrowsePage(props: BrowsePageProps) {
 					)
 				}
 			}}
-		>
-			<Queue kind={kind} />
-		</SWRConfig>
+		>*/
+		<Queue kind={kind} />
+		/*</SWRConfig>*/
 	);
 }

@@ -25,6 +25,14 @@ export default configure({
 			{
 				name: "next/link",
 				message: "Import from `~/components/link` instead."
+			},
+			{
+				name: "next/router",
+				message: "Import from `~/i18n/navigation` instead."
+			},
+			{
+				name: "next/navigation",
+				message: "Import from `~/i18n/navigation` instead."
 			}
 		]
 	}

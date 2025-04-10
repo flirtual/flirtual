@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { turnstileSiteKey } from "~/const";
-import { useInternationalization, useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "~/hooks/use-theme";
 
 export type FormCaptchaReference = TurnstileInstance;
@@ -17,8 +17,8 @@ interface FormCaptchaProps extends RefAttributes<TurnstileInstance> {
 }
 
 export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
-	const { locale: { current: language } } = useInternationalization();
 	const t = useTranslations();
+	const locale = useLocale();
 
 	const { theme } = useTheme();
 	const [error, setError] = useState<string | null>(null);
@@ -75,11 +75,11 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 				options={useMemo(() => ({
 					theme,
 					tabIndex,
-					language,
+					language: locale,
 					size: "normal",
 					appearance: "interaction-only",
 					retryInterval: 500
-				}), [language, tabIndex, theme])}
+				}), [locale, tabIndex, theme])}
 				className={twMerge("absolute -inset-px", success && "pointer-events-none opacity-0")}
 				ref={ref}
 				siteKey={turnstileSiteKey}

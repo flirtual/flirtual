@@ -5,6 +5,8 @@ import {
 	type Issue,
 	isWretchError
 } from "./common";
+import { redirect } from "~/i18n/navigation";
+import { urls } from "~/urls";
 
 export const ProspectKind = ["love", "friend"] as const;
 export type ProspectKind = (typeof ProspectKind)[number];
@@ -52,6 +54,8 @@ export type QueueResponse = Queue | QueueIssue;
 
 export const Matchmaking = {
 	queue(kind: ProspectKind) {
+		console.log("Matchmaking.queue", { kind });
+
 		return api
 			.url("queue")
 			.query({ kind })

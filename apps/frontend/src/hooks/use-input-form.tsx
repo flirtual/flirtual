@@ -111,17 +111,29 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 	// const deferredValues = useDeferredValue(values);
 
 	const submit: UseInputForm<T>["submit"] = async (_values: T = values) => {
-		setSubmitting(true);
-
 		const captcha
 			= withCaptcha && captchaRef.current
 				? captchaRef.current.getResponse()
 				: "";
 
-		setCaptcha(captcha || "");
+		if (withCaptcha && !captcha) {
+			const errors: Array<string> = [];
+			const fieldErrors = {
+				captcha: [t("errors.turnstile_required")]
+			} as FieldErrors<T>;
 
-		// setFieldErrors({});
-		// setErrors([]);
+			setErrors(errors);
+			setFieldErrors(fieldErrors);
+
+			return {
+				errors,
+				fieldErrors,
+				fields: _values
+			};
+		}
+
+		setSubmitting(true);
+		setCaptcha(captcha || "");
 
 		const result = await onSubmit(_values, { ...form, captcha: captcha || "", submit })
 			.then(() => {
@@ -135,6 +147,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 				if (isWretchError(reason, "invalid_properties")) {
 					const { details: properties } = reason.json;
 
+					const errors: Array<string> = [];
+
 					const fieldErrors = Object.fromEntries(
 						Object.entries(properties).map(
 							([key, issues]) =>
@@ -147,10 +161,14 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 						)
 					) as FieldErrors<T>;
 
-					setErrors([]);
+					setErrors(errors);
 					setFieldErrors(fieldErrors);
 
-					return { errors: [], fieldErrors, fields: _values };
+					return {
+						errors,
+						fieldErrors,
+						fields: _values
+					};
 				}
 
 				if (reason instanceof WretchError) {
@@ -163,10 +181,12 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 						)
 					];
 
-					setErrors(errors);
-					setFieldErrors({});
+					const fieldErrors = {};
 
-					return { errors, fieldErrors: {}, fields: _values };
+					setErrors(errors);
+					setFieldErrors(fieldErrors);
+
+					return { errors, fieldErrors, fields: _values };
 				}
 
 				const errors = Array.isArray(reason)
@@ -174,10 +194,12 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					// @ts-expect-error reason is unknown
 					: [reason.message];
 
-				setErrors(errors);
-				setFieldErrors({});
+				const fieldErrors = {};
 
-				return { errors, fieldErrors: {}, fields: _values };
+				setErrors(errors);
+				setFieldErrors(fieldErrors);
+
+				return { errors, fieldErrors, fields: _values };
 			});
 
 		if (withCaptcha)

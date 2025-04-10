@@ -35,7 +35,7 @@ export type PaginateOptions<T> = {
 	page?: number;
 } & T;
 
-const relevantHeaderNames = ["cookie", "authorization"];
+// const relevantHeaderNames = ["cookie", "authorization"];
 
 // All status codes that are retriable by the browser, except 5xx which are always retried.
 const retriableStatusCodes = [408, 429];
@@ -54,36 +54,36 @@ export const api = wretch(urls.api)
 				return async (url, options) => {
 					options.headers ??= {};
 
+					if (typeof window === "undefined")
+						throw new Error("API calls may not be made on the server.");
+
 					if (environment === "development")
 						// Artificially slow requests in development, ensuring we can see loading/pending states.
 						await new Promise((resolve) => setTimeout(resolve, 2000 * Math.random() * (options.method === "GET" ? 1 : 2)));
 
-					if (typeof window === "undefined")
-						throw new Error("Must be run in a browser context");
-
-					if (
-						typeof window === "undefined"
-						// We can't use `headers` with `unstable_cache` which caches across requests,
-						// so when we're using `credentials: "omit"`, we'll exclude the headers.
-						&& options.credentials !== "omit"
-					) {
-						const { headers: getHeaders } = await import("next/headers");
-						const headers = await getHeaders();
-
-						const relevantHeaders = Object.fromEntries(
-							[...headers.entries()].filter(([key]) =>
-								relevantHeaderNames.includes(key)
-							)
-						);
-
-						if (headers.has("user-agent"))
-							relevantHeaders["x-forwarded-user-agent"] = headers.get("user-agent")!;
-
-						options.headers = {
-							...options.headers,
-							...relevantHeaders,
-						};
-					}
+					// if (
+					// 	typeof window === "undefined"
+					// 	// We can't use `headers` with `unstable_cache` which caches across requests,
+					// 	// so when we're using `credentials: "omit"`, we'll exclude the headers.
+					// 	&& options.credentials !== "omit"
+					// ) {
+					// 	const { headers: getHeaders } = await import("next/headers");
+					// 	const headers = await getHeaders();
+					//
+					// 	const relevantHeaders = Object.fromEntries(
+					// 		[...headers.entries()].filter(([key]) =>
+					// 			relevantHeaderNames.includes(key)
+					// 		)
+					// 	);
+					//
+					// 	if (headers.has("user-agent"))
+					// 		relevantHeaders["x-forwarded-user-agent"] = headers.get("user-agent")!;
+					//
+					// 	options.headers = {
+					// 		...options.headers,
+					// 		...relevantHeaders,
+					// 	};
+					// }
 
 					const headers = new Headers(options.headers);
 					if (cloudflareInternalIdentifier)

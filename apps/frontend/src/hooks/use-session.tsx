@@ -19,6 +19,7 @@ export function useSession(options: SWRConfiguration<Session | null> = {}) {
 		Authentication.getOptionalSession,
 		{
 			suspense: true,
+			fallbackData: null,
 			...options
 		}
 	);
