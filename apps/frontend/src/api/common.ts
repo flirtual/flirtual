@@ -56,7 +56,10 @@ export const api = wretch(urls.api)
 
 					if (environment === "development")
 						// Artificially slow requests in development, ensuring we can see loading/pending states.
-						await new Promise((resolve) => setTimeout(resolve, options.method === "GET" ? 100 : 200));
+						await new Promise((resolve) => setTimeout(resolve, 2000 * Math.random() * (options.method === "GET" ? 1 : 2)));
+
+					if (typeof window === "undefined")
+						throw new Error("Must be run in a browser context");
 
 					if (
 						typeof window === "undefined"

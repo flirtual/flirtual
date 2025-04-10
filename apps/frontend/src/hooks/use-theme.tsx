@@ -31,7 +31,19 @@ export interface ThemeProviderProps extends PropsWithChildren, RefAttributes<HTM
 }
 
 export function ThemeProvider({ children, theme: sessionTheme, ...props }: ThemeProviderProps) {
-	const [session, mutateSession] = useSession();
+	return (
+		<Context
+			value={useMemo(() => ({
+				theme: "light",
+				sessionTheme: "light",
+				setTheme: () => { }
+			}), [])}
+		>
+			{children}
+		</Context>
+	);
+
+	/*const [session, mutateSession] = useSession();
 	const { vision } = useDevice();
 	const router = useRouter();
 
@@ -80,7 +92,7 @@ export function ThemeProvider({ children, theme: sessionTheme, ...props }: Theme
 		Object.assign(document.documentElement.dataset, { themeStyle });
 	}, [pathname, kind]);
 
-	useEffect(() => {}, [theme]);
+	useEffect(() => { }, [theme]);
 
 	return (
 		<Context
@@ -94,7 +106,7 @@ export function ThemeProvider({ children, theme: sessionTheme, ...props }: Theme
 				{children}
 			</Slot>
 		</Context>
-	);
+	);*/
 }
 
 ThemeProvider.displayName = "ThemeProvider";

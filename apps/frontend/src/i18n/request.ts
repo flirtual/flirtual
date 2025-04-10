@@ -10,7 +10,7 @@ import { cache } from "react";
 
 import type { PreferenceLanguage } from "~/api/user/preferences";
 
-import { getInternationalization } from ".";
+import { routing } from "./routing";
 
 export type MessageKeys = NamespaceKeys<
 	IntlMessages,
@@ -52,35 +52,39 @@ async function getLanguageMessages(locale: PreferenceLanguage) {
 	};
 }
 
-const getMessages = cache(async (): Promise<AbstractIntlMessages> => {
-	const { locale } = await getInternationalization();
-
-	const fallback = await getLanguageMessages(locale.fallback);
+const getMessages = cache(async (locale: PreferenceLanguage): Promise<AbstractIntlMessages> => {
+	const fallback = await getLanguageMessages(routing.defaultLocale);
 
 	const current
-		= locale.current === locale.fallback
+		= locale === routing.defaultLocale
 			? fallback
-			: await getLanguageMessages(locale.current);
+			: await getLanguageMessages(locale);
 
-	const preferred
-		= locale.current === locale.preferred
-			? current
-			: await getLanguageMessages(locale.preferred);
+	// const preferred
+	// 	= locale === locale.preferred
+	// 		? current
+	// 		: await getLanguageMessages(locale.preferred);
 
 	const messages = deepmerge(fallback, current) as any;
 
 	return {
 		...messages,
-		pleasant_ugliest_expert_camera: preferred.pleasant_ugliest_expert_camera
+		// pleasant_ugliest_expert_camera: preferred.pleasant_ugliest_expert_camera
 	};
 });
 
-export default getRequestConfig(async () => {
-	const { locale } = await getInternationalization();
-	const messages = await getMessages();
+export default getRequestConfig(async ({ requestLocale: requestLocalePromise }) => {
+	const requestLocale = (await requestLocalePromise) as PreferenceLanguage;
+
+	const locale = routing.locales.includes(requestLocale)
+		? requestLocale
+		: routing.defaultLocale;
+
+	// const { locale } = await getInternationalization();
+	const messages = await getMessages(locale);
 
 	return {
-		locale: locale.current,
+		locale,
 		messages,
 		onError: captureException
 	};

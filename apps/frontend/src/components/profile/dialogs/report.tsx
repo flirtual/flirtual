@@ -6,7 +6,7 @@ import { mutate } from "swr";
 import { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
 import { displayName, type User } from "~/api/user";
-import { optimisticQueueMove } from "~/app/(app)/(session)/(onboarded)/browse/queue-actions";
+import { optimisticQueueMove } from "~/app/[locale]/(app)/(session)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -112,7 +112,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 											{...field.props}
 											options={reasons.map((reason) => {
 												const id
-														= typeof reason === "object" ? reason.id : reason;
+													= typeof reason === "object" ? reason.id : reason;
 
 												return {
 													id,

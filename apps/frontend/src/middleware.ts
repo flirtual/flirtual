@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
 import type { NextRequest } from "next/server";
 
 import { playlistPlatforms } from "./components/profile/playlist";
@@ -14,6 +14,7 @@ import {
 	uppyBucketOrigin,
 	uppyCompanionUrl
 } from "./const";
+import { routing } from "./i18n/routing";
 import { imageOrigins } from "./urls";
 
 function getContentSecurityPolicy() {
@@ -140,16 +141,18 @@ function getContentSecurityPolicy() {
 	};
 }
 
+const nextIntl = createMiddleware(routing);
+
 export function middleware(request: NextRequest) {
 	const { searchParams } = request.nextUrl;
 
 	request.headers.set("url", request.url);
 
-	if (searchParams.get("language")) {
-		// Support explicit language override via URL query parameter.
-		// for example: https://flirtu.al/home?language=ja
-		request.headers.set("language", searchParams.get("language")!);
-	}
+	// if (searchParams.get("language")) {
+	// 	// Support explicit language override via URL query parameter.
+	// 	// for example: https://flirtu.al/home?language=ja
+	// 	request.headers.set("language", searchParams.get("language")!);
+	// }
 
 	if (searchParams.get("theme")) {
 		// Support explicit theme override via URL query parameter.
@@ -161,9 +164,7 @@ export function middleware(request: NextRequest) {
 	const { nonce, value: contentSecurityPolicy } = getContentSecurityPolicy();
 	request.headers.set("x-nonce", nonce);
 
-	const response = NextResponse.next({
-		request
-	});
+	const response = nextIntl(request);
 
 	response.headers.set("content-security-policy", contentSecurityPolicy);
 	return response;
@@ -171,5 +172,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
 	matcher:
-		"/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)"
+		"/((?!_next|_vercel|.*\\..*).*)"
 };

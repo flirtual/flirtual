@@ -12,7 +12,7 @@ import {
 	type ConnectionType
 } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
-import { useTranslations } from "~/hooks/use-internationalization";
+import { useTranslations } from "next-intl";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";

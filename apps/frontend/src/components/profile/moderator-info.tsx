@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 
 import { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useTranslations } from "~/hooks/use-internationalization";
+import { useTranslations } from "next-intl";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
@@ -174,18 +174,18 @@ export const ProfileModeratorInfo: FC<{
 								{capitalize(user.status).replace("_", " ")}
 								{user.status === "visible"
 									? (
-											<>
-												<Eye />
-												{user.tnsDiscordInBiography && (
-													<span className="text-red-600">
-														(hidden from non-visible users)
-													</span>
-												)}
-											</>
-										)
+										<>
+											<Eye />
+											{user.tnsDiscordInBiography && (
+												<span className="text-red-600">
+													(hidden from non-visible users)
+												</span>
+											)}
+										</>
+									)
 									: (
-											<EyeOff />
-										)}
+										<EyeOff />
+									)}
 							</span>
 						</span>
 						<span>
@@ -193,113 +193,113 @@ export const ProfileModeratorInfo: FC<{
 							{" "}
 							{user.bannedAt
 								? (
-										<CopyClick value={user.bannedAt}>
-											<DateTimeRelative
-												className="text-red-600 hover:underline"
-												value={user.bannedAt}
-											/>
-										</CopyClick>
-									)
+									<CopyClick value={user.bannedAt}>
+										<DateTimeRelative
+											className="text-red-600 hover:underline"
+											value={user.bannedAt}
+										/>
+									</CopyClick>
+								)
 								: (
-										<span>No</span>
-									)}
+									<span>No</span>
+								)}
 						</span>
 						<span>
 							<span className="font-bold">Shadowbanned:</span>
 							{" "}
 							{user.shadowbannedAt
 								? (
-										<CopyClick value={user.shadowbannedAt}>
-											<DateTimeRelative
-												className="text-red-600 hover:underline"
-												value={user.shadowbannedAt}
-											/>
-										</CopyClick>
-									)
+									<CopyClick value={user.shadowbannedAt}>
+										<DateTimeRelative
+											className="text-red-600 hover:underline"
+											value={user.shadowbannedAt}
+										/>
+									</CopyClick>
+								)
 								: (
-										<span>No</span>
-									)}
+									<span>No</span>
+								)}
 						</span>
 						<span>
 							<span className="font-bold">Indef. shadowbanned:</span>
 							{" "}
 							{user.indefShadowbannedAt
 								? (
-										<CopyClick value={user.indefShadowbannedAt}>
-											<DateTimeRelative
-												className="text-red-600 hover:underline"
-												value={user.indefShadowbannedAt}
-											/>
-										</CopyClick>
-									)
+									<CopyClick value={user.indefShadowbannedAt}>
+										<DateTimeRelative
+											className="text-red-600 hover:underline"
+											value={user.indefShadowbannedAt}
+										/>
+									</CopyClick>
+								)
 								: (
-										<span>No</span>
-									)}
+									<span>No</span>
+								)}
 						</span>
 						<span>
 							<span className="font-bold">Deactivated:</span>
 							{" "}
 							{user.deactivatedAt
 								? (
-										<CopyClick value={user.deactivatedAt}>
-											<DateTimeRelative
-												className="text-red-600 hover:underline"
-												value={user.deactivatedAt}
-											/>
-										</CopyClick>
-									)
+									<CopyClick value={user.deactivatedAt}>
+										<DateTimeRelative
+											className="text-red-600 hover:underline"
+											value={user.deactivatedAt}
+										/>
+									</CopyClick>
+								)
 								: (
-										<span>No</span>
-									)}
+									<span>No</span>
+								)}
 						</span>
 						<span>
 							<span className="font-bold">Premium:</span>
 							{" "}
 							{user.subscription?.active
 								? (
-										<span className="text-green-600">
-											{user.subscription.plan.name}
-										</span>
-									)
+									<span className="text-green-600">
+										{user.subscription.plan.name}
+									</span>
+								)
 								: (
-										<span>No</span>
-									)}
+									<span>No</span>
+								)}
 						</span>
 						<span>
 							<span className="font-bold">Payments banned:</span>
 							{" "}
 							{user.paymentsBannedAt
 								? (
-										<CopyClick value={user.paymentsBannedAt}>
-											<DateTimeRelative
-												className="text-red-600"
-												value={user.paymentsBannedAt}
-											/>
-										</CopyClick>
-									)
+									<CopyClick value={user.paymentsBannedAt}>
+										<DateTimeRelative
+											className="text-red-600"
+											value={user.paymentsBannedAt}
+										/>
+									</CopyClick>
+								)
 								: (
-										<span>No</span>
-									)}
+									<span>No</span>
+								)}
 						</span>
 						<span>
 							<span className="font-bold">Discord in bio:</span>
 							{" "}
 							{user.tnsDiscordInBiography
 								? (
-										<CopyClick value={user.tnsDiscordInBiography}>
-											<DateTimeRelative
-												className={
-													new Date(user.tnsDiscordInBiography).getTime() > Date.now()
-														? "text-orange-600"
-														: "text-red-600"
-												}
-												value={user.tnsDiscordInBiography}
-											/>
-										</CopyClick>
-									)
+									<CopyClick value={user.tnsDiscordInBiography}>
+										<DateTimeRelative
+											className={
+												new Date(user.tnsDiscordInBiography).getTime() > Date.now()
+													? "text-orange-600"
+													: "text-red-600"
+											}
+											value={user.tnsDiscordInBiography}
+										/>
+									</CopyClick>
+								)
 								: (
-										<span>No</span>
-									)}
+									<span>No</span>
+								)}
 						</span>
 					</div>
 					<span>

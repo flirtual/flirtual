@@ -7,15 +7,16 @@ import useMutation from "swr/mutation";
 
 import type { PreferenceLanguage } from "~/api/user/preferences";
 import { PreferenceLanguages, Preferences } from "~/api/user/preferences";
-import { useInternationalization, useTranslations } from "~/hooks/use-internationalization";
+import { useInternationalization, useTranslations } from "next-intl";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { withSuspense } from "~/hooks/with-suspense";
 import { sessionKey } from "~/swr";
 
 import { InputSelect } from "../select";
 
-export const InputLanguageSelect: React.FC<{ className?: string; tabIndex?: number }> = ({ className, tabIndex }) => {
+const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> = ({ className, tabIndex }) => {
 	const { locale: { current: language } } = useInternationalization();
 	const toasts = useToast();
 	const [session] = useSession();
@@ -81,3 +82,5 @@ export const InputLanguageSelect: React.FC<{ className?: string; tabIndex?: numb
 		/>
 	);
 };
+
+export const InputLanguageSelect = withSuspense(InputLanguageSelect_);

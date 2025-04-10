@@ -20,7 +20,7 @@ import { Form, FormButton, FormMessage } from "~/components/forms";
 import { InputCheckbox, InputLabel, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useTranslations } from "~/hooks/use-internationalization";
+import { useTranslations } from "next-intl";
 import { useToast } from "~/hooks/use-toast";
 import { userKey } from "~/swr";
 

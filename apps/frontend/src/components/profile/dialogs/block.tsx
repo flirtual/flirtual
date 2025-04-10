@@ -5,7 +5,7 @@ import { mutate } from "swr";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
-import { optimisticQueueMove } from "~/app/(app)/(session)/(onboarded)/browse/queue-actions";
+import { optimisticQueueMove } from "~/app/[locale]/(app)/(session)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
 import { useToast } from "~/hooks/use-toast";

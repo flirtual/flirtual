@@ -9,7 +9,7 @@ import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { SortableGrid, SortableItem } from "~/components/forms/sortable";
 import { InputLabel, InputSelect, InputTextArea } from "~/components/inputs";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { useTranslations } from "~/hooks/use-internationalization";
+import { useTranslations } from "next-intl";
 
 import { NewBadge } from "../badge";
 import {
@@ -32,77 +32,77 @@ const EditPromptDialog: FC<{
 	onDialogOpen,
 	excludedPrompts
 }) => {
-	const [value, setValue] = useState(initialValue);
-	useEffect(() => setValue(initialValue), [initialValue]);
+		const [value, setValue] = useState(initialValue);
+		useEffect(() => setValue(initialValue), [initialValue]);
 
-	const filteredPrompts = useAttributes("prompt").filter(
-		(promptId) => !excludedPrompts?.includes(promptId)
-	);
-	const t = useTranslations();
-	const tAttribute = useAttributeTranslation();
+		const filteredPrompts = useAttributes("prompt").filter(
+			(promptId) => !excludedPrompts?.includes(promptId)
+		);
+		const t = useTranslations();
+		const tAttribute = useAttributeTranslation();
 
-	return (
-		<DrawerOrDialog open={dialogOpen} onOpenChange={onDialogOpen}>
-			<>
-				<DialogHeader>
-					<DialogTitle>
-						{t(initialValue ? "edit_prompt" : "add_a_prompt")}
-					</DialogTitle>
-					<DialogDescription className="sr-only" />
-				</DialogHeader>
-				<DialogBody className="grid w-full gap-4">
-					<InputSelect
-						options={filteredPrompts.map((promptId) => ({
-							id: promptId,
-							name: tAttribute[promptId]?.name ?? promptId
-						}))}
-						placeholder={t("select_a_prompt")}
-						value={value?.promptId}
-						onChange={(id) => {
-							const promptId = filteredPrompts.find(
-								(promptId) => promptId === id
-							);
-							if (!promptId) return;
+		return (
+			<DrawerOrDialog open={dialogOpen} onOpenChange={onDialogOpen}>
+				<>
+					<DialogHeader>
+						<DialogTitle>
+							{t(initialValue ? "edit_prompt" : "add_a_prompt")}
+						</DialogTitle>
+						<DialogDescription className="sr-only" />
+					</DialogHeader>
+					<DialogBody className="grid w-full gap-4">
+						<InputSelect
+							options={filteredPrompts.map((promptId) => ({
+								id: promptId,
+								name: tAttribute[promptId]?.name ?? promptId
+							}))}
+							placeholder={t("select_a_prompt")}
+							value={value?.promptId}
+							onChange={(id) => {
+								const promptId = filteredPrompts.find(
+									(promptId) => promptId === id
+								);
+								if (!promptId) return;
 
-							setValue((value) => ({
-								...(value || { response: "" }),
-								promptId
-							}));
-						}}
-					/>
-					<InputTextArea
-						className="resize-none"
-						maxLength={1500}
-						rows={8}
-						value={value?.response || ""}
-						onChange={(response) =>
-							setValue(
-								(value) =>
-									({
-										...(value || { prompt: null }),
-										response
-									}) as any
-							)}
-					/>
-					<Button
-						className="ml-auto"
-						disabled={!value || !value.promptId || !value.response}
-						size="sm"
-						onClick={() => {
-							if (!value || !value.promptId || !value.response) return;
+								setValue((value) => ({
+									...(value || { response: "" }),
+									promptId
+								}));
+							}}
+						/>
+						<InputTextArea
+							className="resize-none"
+							maxLength={1500}
+							rows={8}
+							value={value?.response || ""}
+							onChange={(response) =>
+								setValue(
+									(value) =>
+										({
+											...(value || { prompt: null }),
+											response
+										}) as any
+								)}
+						/>
+						<Button
+							className="ml-auto"
+							disabled={!value || !value.promptId || !value.response}
+							size="sm"
+							onClick={() => {
+								if (!value || !value.promptId || !value.response) return;
 
-							onDialogOpen(false);
-							onChange(value);
-							setValue(null);
-						}}
-					>
-						{t("add")}
-					</Button>
-				</DialogBody>
-			</>
-		</DrawerOrDialog>
-	);
-};
+								onDialogOpen(false);
+								onChange(value);
+								setValue(null);
+							}}
+						>
+							{t("add")}
+						</Button>
+					</DialogBody>
+				</>
+			</DrawerOrDialog>
+		);
+	};
 
 interface InputPromptsProps {
 	value: Array<ProfilePrompt>;

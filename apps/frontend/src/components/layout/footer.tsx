@@ -12,7 +12,6 @@ import { gitCommitSha, gitCommitUrl } from "~/const";
 import { urls } from "~/urls";
 
 import { InlineLink } from "../inline-link";
-import { InputLanguageSelect } from "../inputs/specialized/language-select";
 import { Link } from "../link";
 import { FlirtualLogo } from "../logo";
 import { FooterCannyLink } from "./canny-button";
@@ -114,7 +113,7 @@ export const Footer: React.FC<FooterProps> = ({
 							/>
 						</div>
 					</div>
-					<InputLanguageSelect className="w-56 shrink-0" />
+					{/* <InputLanguageSelect className="w-56 shrink-0" /> */}
 				</div>
 				<div className="grid max-w-screen-desktop grid-cols-3 gap-x-4 desktop:justify-center">
 					<ul>

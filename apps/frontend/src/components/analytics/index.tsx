@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Script from "next/script";
 import posthog from "posthog-js";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
-import { type PropsWithChildren, useCallback, useEffect } from "react";
+import { type PropsWithChildren, Suspense, useCallback, useEffect } from "react";
 
 import {
 	cloudflareBeaconId,
@@ -77,8 +77,6 @@ function Identity() {
 }
 
 export function AnalyticsProvider({ children }: PropsWithChildren) {
-	const current = useCurrentUser();
-
 	useEffect(() => {
 		if (!posthogEnabled) return;
 
@@ -101,9 +99,11 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 
 	return (
 		<>
-			<Pageview />
-			<Identity />
-			{environment !== "development" && (!current || current.preferences?.privacy.analytics) && (
+			{/* <Suspense>
+				<Pageview />
+				<Identity />
+			</Suspense> */}
+			{environment !== "development" && (
 				<Script
 					defer
 					data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}

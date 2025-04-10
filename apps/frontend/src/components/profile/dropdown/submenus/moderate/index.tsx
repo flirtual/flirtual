@@ -23,7 +23,7 @@ import {
 	DropdownMenuSubContent
 } from "~/components/dropdown";
 import { InlineLink } from "~/components/inline-link";
-import { useTranslations } from "~/hooks/use-internationalization";
+import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { userKey } from "~/swr";
@@ -50,39 +50,39 @@ export const ProfileDropdownModerateSubmenu: FC<
 					<WarnAction user={user} />
 					{user.indefShadowbannedAt
 						? (
-								<DropdownMenuItem
-									asChild
-									className="text-red-500"
-									onClick={async () => {
-										await User.unindefShadowban(user.id).catch(toasts.addError);
-										mutate(userKey(user.id));
+							<DropdownMenuItem
+								asChild
+								className="text-red-500"
+								onClick={async () => {
+									await User.unindefShadowban(user.id).catch(toasts.addError);
+									mutate(userKey(user.id));
 
-										toasts.add(t("user_unshadowbanned"));
-									}}
-								>
-									<button className="w-full gap-2" type="button">
-										<EyeOff className="size-5" />
-										Remove indef. shadowban
-									</button>
-								</DropdownMenuItem>
-							)
+									toasts.add(t("user_unshadowbanned"));
+								}}
+							>
+								<button className="w-full gap-2" type="button">
+									<EyeOff className="size-5" />
+									Remove indef. shadowban
+								</button>
+							</DropdownMenuItem>
+						)
 						: (
-								<DropdownMenuItem
-									asChild
-									className="text-red-500"
-									onClick={async () => {
-										await User.indefShadowban(user.id).catch(toasts.addError);
-										mutate(userKey(user.id));
+							<DropdownMenuItem
+								asChild
+								className="text-red-500"
+								onClick={async () => {
+									await User.indefShadowban(user.id).catch(toasts.addError);
+									mutate(userKey(user.id));
 
-										toasts.add(t("user_indefinitely_shadowbanned"));
-									}}
-								>
-									<button className="w-full gap-2" type="button">
-										<EyeOff className="size-5" />
-										Indef. shadowban
-									</button>
-								</DropdownMenuItem>
-							)}
+									toasts.add(t("user_indefinitely_shadowbanned"));
+								}}
+							>
+								<button className="w-full gap-2" type="button">
+									<EyeOff className="size-5" />
+									Indef. shadowban
+								</button>
+							</DropdownMenuItem>
+						)}
 					{session?.user.tags?.includes("admin") && (
 						<>
 							<DropdownMenuSeparator />
@@ -104,39 +104,39 @@ export const ProfileDropdownModerateSubmenu: FC<
 							</DropdownMenuItem>
 							{user.paymentsBannedAt
 								? (
-										<DropdownMenuItem
-											asChild
-											className="text-red-500"
-											onClick={async () => {
-												await User.paymentsUnban(user.id).catch(toasts.addError);
-												mutate(userKey(user.id));
+									<DropdownMenuItem
+										asChild
+										className="text-red-500"
+										onClick={async () => {
+											await User.paymentsUnban(user.id).catch(toasts.addError);
+											mutate(userKey(user.id));
 
-												toasts.add(t("user_payments_unbanned"));
-											}}
-										>
-											<button className="w-full gap-2" type="button">
-												<CreditCard className="size-5" />
-												Remove payments ban
-											</button>
-										</DropdownMenuItem>
-									)
+											toasts.add(t("user_payments_unbanned"));
+										}}
+									>
+										<button className="w-full gap-2" type="button">
+											<CreditCard className="size-5" />
+											Remove payments ban
+										</button>
+									</DropdownMenuItem>
+								)
 								: (
-										<DropdownMenuItem
-											asChild
-											className="text-red-500"
-											onClick={async () => {
-												await User.paymentsBan(user.id).catch(toasts.addError);
-												mutate(userKey(user.id));
+									<DropdownMenuItem
+										asChild
+										className="text-red-500"
+										onClick={async () => {
+											await User.paymentsBan(user.id).catch(toasts.addError);
+											mutate(userKey(user.id));
 
-												toasts.add(t("user_payments_banned"));
-											}}
-										>
-											<button className="w-full gap-2" type="button">
-												<CreditCard className="size-5" />
-												Payments ban
-											</button>
-										</DropdownMenuItem>
-									)}
+											toasts.add(t("user_payments_banned"));
+										}}
+									>
+										<button className="w-full gap-2" type="button">
+											<CreditCard className="size-5" />
+											Payments ban
+										</button>
+									</DropdownMenuItem>
+								)}
 							<AlertDialog>
 								<AlertDialogTrigger asChild>
 									<DropdownMenuItem

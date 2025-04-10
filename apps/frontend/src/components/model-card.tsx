@@ -80,7 +80,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 					<SupportButton className="whitespace-nowrap">{t("need_help")}</SupportButton>
 					{session?.user.tags?.includes("debugger") && (
 						<div className="w-[168px]">
-							<InputLanguageSelect className="w-56 origin-left scale-75" />
+							{/* <InputLanguageSelect className="w-56 origin-left scale-75" /> */}
 						</div>
 					)}
 				</footer>

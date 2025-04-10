@@ -1,10 +1,10 @@
 import { useLocale } from "next-intl";
 import { useCallback, useEffect } from "react";
+import { unstable_serialize, useSWRConfig } from "swr";
 
 import { displayName } from "~/api/user";
 import { freshworksWidgetId } from "~/const";
-
-import { useCurrentUser } from "./use-session";
+import { sessionKey } from "~/swr";
 
 declare global {
 	interface Window {
@@ -19,6 +19,7 @@ declare global {
 let loaded = false;
 
 export function useFreshworks() {
+	const { cache } = useSWRConfig();
 	const locale = useLocale();
 
 	const loadFreshworks = useCallback(() => {
@@ -46,17 +47,17 @@ export function useFreshworks() {
 		window.fwSettings = { widget_id: freshworksWidgetId, locale };
 	}, [loadFreshworks, locale]);
 
-	const user = useCurrentUser();
-
 	const openFreshworks = useCallback(() => {
+		const { data: session } = cache.get(unstable_serialize(sessionKey())) || {};
+
 		window.FreshworksWidget("identify", "ticketForm", {
-			name: user ? displayName(user) : "",
-			email: user?.email || ""
+			name: session?.user ? displayName(session?.user) : "",
+			email: session?.user?.email || ""
 		});
 
 		window.FreshworksWidget("open");
 		window.FreshworksWidget("hide", "launcher");
-	}, [user]);
+	}, [cache]);
 
 	const hideFreshworks = useCallback(() => window.FreshworksWidget("hide"), []);
 

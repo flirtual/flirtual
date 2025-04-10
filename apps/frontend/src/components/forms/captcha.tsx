@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { turnstileSiteKey } from "~/const";
-import { useInternationalization, useTranslations } from "~/hooks/use-internationalization";
+import { useInternationalization, useTranslations } from "next-intl";
 import { useTheme } from "~/hooks/use-theme";
 
 export type FormCaptchaReference = TurnstileInstance;
@@ -30,46 +30,46 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 			<div className="flex items-center gap-2 text-sm">
 				{success
 					? (
-							<div className="motion-preset-fade flex items-center gap-2 text-sm">
-								<ShieldCheck className="size-4" />
-								<span>
-									{t("home_wild_marten_wave")}
-								</span>
-							</div>
-						)
+						<div className="motion-preset-fade flex items-center gap-2 text-sm">
+							<ShieldCheck className="size-4" />
+							<span>
+								{t("home_wild_marten_wave")}
+							</span>
+						</div>
+					)
 					: error
 						? (
-								<button
-									className="motion-preset-fade flex items-center gap-2 text-left"
-									type="button"
-									onClick={() => {
-										setError(null);
-										setSuccess(false);
+							<button
+								className="motion-preset-fade flex items-center gap-2 text-left"
+								type="button"
+								onClick={() => {
+									setError(null);
+									setSuccess(false);
 
-										if (ref && "current" in ref) ref.current?.reset();
-									}}
-								>
-									<ShieldAlert className="size-4" />
-									<span>
-										{{
-											110500: "Unsupported device."
-										}[error] || "Couldn't verify your device."}
-										{" "}
-										<span className="text-xs opacity-80">
-											{error}
-										</span>
+									if (ref && "current" in ref) ref.current?.reset();
+								}}
+							>
+								<ShieldAlert className="size-4" />
+								<span>
+									{{
+										110500: "Unsupported device."
+									}[error] || "Couldn't verify your device."}
+									{" "}
+									<span className="text-xs opacity-80">
+										{error}
 									</span>
+								</span>
 
-								</button>
-							)
+							</button>
+						)
 						: (
-								<>
-									<span>
-										{t("jolly_this_crow_hug")}
-									</span>
-									<LoaderCircle className="size-4 animate-spin" />
-								</>
-							)}
+							<>
+								<span>
+									{t("jolly_this_crow_hug")}
+								</span>
+								<LoaderCircle className="size-4 animate-spin" />
+							</>
+						)}
 			</div>
 			<Turnstile
 				options={useMemo(() => ({

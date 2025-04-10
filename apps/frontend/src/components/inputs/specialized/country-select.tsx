@@ -11,7 +11,7 @@ import {
 	getCountryName
 } from "~/components/profile/pill/country";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { useInternationalization } from "~/hooks/use-internationalization";
+import { useInternationalization } from "next-intl";
 
 import { InputSelect, type InputSelectProps, SelectItem } from "../select";
 

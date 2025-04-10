@@ -1,12 +1,13 @@
 import { useCallback } from "react";
+import { unstable_serialize, useSWRConfig } from "swr";
 
 import { displayName, type User } from "~/api/user";
 import { cannyAppId } from "~/const";
+import { sessionKey } from "~/swr";
 import { resolveTheme } from "~/theme";
 import { urls } from "~/urls";
 
 import { useScreenBreakpoint } from "./use-screen-breakpoint";
-import { useCurrentUser } from "./use-session";
 import { useTheme } from "./use-theme";
 
 declare global {
@@ -64,20 +65,24 @@ function identify(user: User) {
 const closeChangelog = () => Canny("closeChangelog");
 
 export function useCanny() {
-	const user = useCurrentUser();
+	const { cache } = useSWRConfig();
 	const { sessionTheme } = useTheme();
 	const isMobile = !useScreenBreakpoint("desktop");
 
 	const openFeedback = useCallback(async () => {
 		await load();
-		if (user) await identify(user);
+
+		const { data: session } = cache.get(unstable_serialize(sessionKey())) || {};
+		if (session?.user) await identify(session.user);
 
 		location.href = urls.resources.feedback;
-	}, [user]);
+	}, [cache]);
 
 	const openChangelog = useCallback(async () => {
 		await load();
-		if (user) await identify(user);
+
+		const { data: session } = cache.get(unstable_serialize(sessionKey())) || {};
+		if (session?.user) await identify(session.user);
 
 		Canny("initChangelog", {
 			appID: cannyAppId,
@@ -85,7 +90,7 @@ export function useCanny() {
 			align: "left",
 			theme: resolveTheme(sessionTheme)
 		});
-	}, [user, isMobile, sessionTheme]);
+	}, [cache, isMobile, sessionTheme]);
 
 	return { openFeedback, openChangelog, closeChangelog };
 }

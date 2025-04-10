@@ -19,7 +19,7 @@ import {
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger
 } from "~/components/dropdown";
-import { useTranslations } from "~/hooks/use-internationalization";
+import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urls } from "~/urls";
 

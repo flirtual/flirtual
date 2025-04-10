@@ -8,7 +8,7 @@ import {
 	DropdownMenuSub,
 	DropdownMenuSubContent
 } from "~/components/dropdown";
-import { useTranslations } from "~/hooks/use-internationalization";
+import { useTranslations } from "next-intl";
 import { useToast } from "~/hooks/use-toast";
 
 export const ProfileDropdownTagsSubmenu: FC<

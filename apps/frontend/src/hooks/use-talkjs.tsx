@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 "use client";
 
-import { useLocale, useMessages, useTranslations } from "next-intl";
+import { useLocale, useMessages } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
 	createContext,
@@ -154,7 +154,7 @@ export const ConversationChatbox: React.FC<
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
 	const { sessionTheme } = useTheme();
-	const { platform, native, vision } = useDevice();
+	const { native, vision } = useDevice();
 	const { talkjs_match_message, talkjs_input_placeholder } = useMessages();
 	const locale = useLocale();
 
@@ -193,7 +193,7 @@ export const ConversationChatbox: React.FC<
 		return vision
 			? `calc(100${unit} - 8.125rem)`
 			: `calc(100${unit} - max(calc(var(--safe-area-inset-top, 0rem) + 0.5rem), 1rem) - max(calc(var(--safe-area-inset-bottom, 0rem) - 0.625rem), 0.5rem) - 11.125rem)`;
-	}, [element, platform, vision]);
+	}, [element, vision]);
 
 	useEffect(() => {
 		if (!chatbox || !conversation) return;

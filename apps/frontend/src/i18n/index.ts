@@ -38,7 +38,7 @@ export const getInternationalization = cache(async (override?: PreferenceLanguag
 	const accept = headers.get("accept-language");
 	const browser = al.get(accept) as PreferenceLanguage;
 
-	const session = await Authentication.getOptionalSession();
+	const session = null // await Authentication.getOptionalSession();
 
 	const preferred = session?.user.preferences?.language /* || browser */ || "en";
 

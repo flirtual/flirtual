@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { PreferenceLanguage } from "~/api/user/preferences";
-import { useInternationalization } from "~/hooks/use-internationalization";
+import { useInternationalization } from "next-intl";
 import { useTheme } from "~/hooks/use-theme";
 import type { Theme } from "~/theme";
 
