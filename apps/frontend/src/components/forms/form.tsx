@@ -37,21 +37,17 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 	props = Object.assign({ formErrorMessages: true, renderCaptcha: true }, props);
 	const form = useInputForm({ ...props, captchaRef: captchaReference });
 
-	const Captcha = useCallback(() => props.withCaptcha && (
-		<div className="flex flex-col gap-2">
-			<FormCaptcha ref={captchaReference} tabIndex={props.captchaTabIndex} />
-			<FormInputMessages
-				className="desktop:mx-auto desktop:w-fit desktop:text-center"
-				messages={form.fields.captcha?.errors.map((value) => ({ type: "error", value }))}
-			/>
-		</div>
-	), [form.fields.captcha?.errors, props.captchaTabIndex, props.withCaptcha]);
+	const CaptchaWithReference = useCallback(() => {
+		if (!props.withCaptcha) return null;
+
+		return (<FormCaptcha ref={captchaReference} tabIndex={props.captchaTabIndex} />);
+	}, [props.captchaTabIndex, props.withCaptcha]);
 
 	const children
 		= typeof props.children === "function"
 			? props.children({
 					...form,
-					Captcha
+					Captcha: CaptchaWithReference
 				})
 			: props.children;
 
@@ -76,7 +72,7 @@ export function Form<T extends { [s: string]: unknown }>(props: FormProps<T>) {
 						messages={form.errors.map((value) => ({ type: "error", value }))}
 					/>
 				)}
-				{props.renderCaptcha && <Captcha />}
+				{props.renderCaptcha && <CaptchaWithReference />}
 			</FormContext>
 		</form>
 	);
