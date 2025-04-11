@@ -47,9 +47,7 @@ export function useAttributeTranslation<
 	T extends AttributeType = AttributeType
 // eslint-disable-next-line unused-imports/no-unused-vars
 >(type?: T): Record<string, AttributeTranslation<T>> {
-	const { attributes: tAttributes } = useMessages() as {
-		attributes: Record<string, AttributeTranslation<T>>;
-	};
+	const { attributes: tAttributes } = useMessages();
 
-	return tAttributes;
+	return tAttributes as Record<string, AttributeTranslation<T>>;
 }

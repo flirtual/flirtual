@@ -4,6 +4,7 @@ import { useMessages, useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
 
 import type { User } from "~/api/user";
+import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -27,10 +28,9 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 	const { user } = props;
 
 	const [session] = useSession();
+
 	const t = useTranslations();
-	const { attributes: tAttributes } = useMessages() as {
-		attributes: Record<string, { name: string; definition?: string }>;
-	};
+	const tAttributes = useAttributeTranslation();
 
 	if (!session) return null;
 

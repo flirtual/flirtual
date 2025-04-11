@@ -6,7 +6,7 @@ import type { ProspectKind } from "~/api/matchmaking";
 import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
-import type { ConfirmEmailPageProps as ConfirmEmailPageProperties } from "./app/(app)/(public)/confirm-email/page";
+import type { ConfirmEmailPageProps } from "./app/[locale]/(app)/(public)/confirm-email/page";
 import { siteOrigin } from "./const";
 import { escapeVRChat } from "./vrchat";
 
@@ -113,7 +113,7 @@ export const urls = {
 		success: url("/subscription", { success: "yes" })
 	},
 	confirmEmail: (
-		query: Awaited<ConfirmEmailPageProperties["searchParams"]> = {}
+		query: Awaited<ConfirmEmailPageProps["searchParams"]> = {}
 	) => url("/confirm-email", query),
 
 	settings: {

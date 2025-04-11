@@ -137,7 +137,7 @@ export function Profile(props: ProfileProps) {
 									<DiscordIcon className="size-6 shrink-0" />
 									{t.rich("that_proud_butterfly_find", {
 										name:
-											discordConnection?.displayName || user.profile.discord,
+											discordConnection?.displayName || user.profile.discord!,
 										copy: (children) => (
 											<CopyClick
 												value={

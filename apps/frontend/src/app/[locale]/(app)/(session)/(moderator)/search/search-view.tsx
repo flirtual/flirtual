@@ -271,9 +271,9 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 								{header.isPlaceholder
 									? null
 									: flexRender(
-										header.column.columnDef.header,
-										header.getContext()
-									)}
+											header.column.columnDef.header,
+											header.getContext()
+										)}
 							</TableHead>
 						))}
 					</TableRow>

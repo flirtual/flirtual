@@ -2,7 +2,6 @@
 
 import { MoveLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
 import { Profile } from "~/api/user/profile";
@@ -18,6 +17,7 @@ import {
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
+import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 const absMinAge = 18;
@@ -97,7 +97,7 @@ export const Onboarding2Form: FC = () => {
 					</FormField>
 					<FormField name="age">
 						{({ labelProps, props: { value, onChange, ...props } }) => {
-							const [min, max] = value;
+							const [min, max] = value as [number, number];
 
 							return (
 								<>

@@ -8,9 +8,7 @@ import { useInterval } from "~/hooks/use-interval";
 import { urls } from "~/urls";
 
 export const CarouselGallery: FC = () => {
-	const {
-		bounce_knot_legs_bell: _images
-	} = useMessages() as unknown as IntlMessages;
+	const { bounce_knot_legs_bell: _images } = useMessages();
 
 	/*
 	t("bounce_knot_legs_bell.0.title")"

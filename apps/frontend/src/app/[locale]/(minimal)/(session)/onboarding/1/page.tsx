@@ -5,6 +5,7 @@ import { unstable_serialize } from "swr";
 import { Attribute } from "~/api/attributes";
 import { ModelCard } from "~/components/model-card";
 import { SWRConfig } from "~/components/swr";
+import { getCountry } from "~/i18n";
 import { attributeKey } from "~/swr";
 
 import { Onboarding1Form } from "./form";
@@ -19,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Onboarding1Page() {
 	const t = await getTranslations();
+	const country = await getCountry();
 
 	const [games, interests, genders, countries] = await Promise.all([
 		Attribute.list("game"),
@@ -44,7 +46,7 @@ export default async function Onboarding1Page() {
 					}
 				}}
 			>
-				<Onboarding1Form />
+				<Onboarding1Form systemCountry={country || undefined} />
 			</SWRConfig>
 		</ModelCard>
 	);

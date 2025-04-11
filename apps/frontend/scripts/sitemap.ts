@@ -17,7 +17,8 @@ import { EnumChangefreq, SitemapStream, streamToPromise, } from "sitemap";
 import xmlFormat from "xml-formatter";
 
 import { siteOrigin } from "~/const";
-import { supportedLanguages } from "~/i18n";
+import { getPathname } from "~/i18n/navigation";
+import { locales } from "~/i18n/routing";
 import { tryJsonParse } from "~/utilities";
 
 async function getPages() {
@@ -25,7 +26,7 @@ async function getPages() {
 
 	const [pathRouteManifest, prerenderManifest, routeManifest] = await Promise.all([
 		await fs.readFile(path.join(buildOutput, "app-path-routes-manifest.json"), "utf-8").catch(() => "{}").then((value) => tryJsonParse<Record<string, string>>(value, {})),
-		await fs.readFile(path.join(buildOutput, "prerender-manifest.json"), "utf-8").catch(() => "{}").then((value) => tryJsonParse<{ routes: Record<string, unknown> }>(value, { routes: {} })),
+		await fs.readFile(path.join(buildOutput, "prerender-manifest.json"), "utf-8").catch(() => "{ routes: {} }").then((value) => tryJsonParse<{ routes: Record<string, unknown> }>(value, { routes: {} })),
 		await fs.readFile(path.join(buildOutput, "routes-manifest.json"), "utf-8").catch(() => "{}").then((value) => tryJsonParse<{ redirects: Array<{ source: string; destination: string }>; staticRoutes: Array<{ page: string }> }>(value, { redirects: [], staticRoutes: [] })),
 	]);
 
@@ -77,16 +78,18 @@ async function generate() {
 			}[pathname] ?? 0.5,
 			links: excludeAlternates
 				? []
-				: supportedLanguages.map((language) => {
-					const url = new URL(pathname, siteOrigin);
-					url.searchParams.set("language", language);
+				: locales.map((locale) => {
+						const url = getPathname({
+							href: new URL(pathname, siteOrigin),
+							locale
+						});
 
-					return {
-						url: url.href,
-						lang: language,
-						hreflang: language
-					};
-				})
+						return {
+							url,
+							lang: locale,
+							hreflang: locale
+						};
+					})
 		};
 	}).sort((a, b) => {
 		// Sort by priority, then by URL.

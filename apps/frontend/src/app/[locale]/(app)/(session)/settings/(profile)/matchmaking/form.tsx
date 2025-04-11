@@ -173,7 +173,7 @@ export const MatchmakingForm: FC = () => {
 					</FormField>
 					<FormField name="age">
 						{({ labelProps, props: { value, onChange, ...props } }) => {
-							const [min, max] = value;
+							const [min, max] = value as [number, number];
 
 							return (
 								<>

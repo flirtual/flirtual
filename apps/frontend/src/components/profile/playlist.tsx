@@ -1,10 +1,9 @@
+import type { Locale } from "next-intl";
 import { useLocale } from "next-intl";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import type { PreferenceLanguage } from "~/api/user/preferences";
 import { useTheme } from "~/hooks/use-theme";
-import type { Locale } from "~/i18n/routing";
 import type { Theme } from "~/theme";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -12,20 +11,20 @@ export const playlistPlatforms = [
 	{
 		name: "Spotify",
 		pattern: /^https?:\/\/open\.spotify\.com\/playlist\/([\dA-Za-z]+)/,
-		embed: (id: string, theme: Theme, locale: PreferenceLanguage) =>
+		embed: (id: string, theme: Theme, locale: Locale) =>
 			`https://open.spotify.com/embed/playlist/${id}?locale=${locale}`
 	},
 	{
 		name: "YouTube Music",
 		pattern: /^https?:\/\/music\.youtube\.com\/playlist\?list=([\dA-Za-z-]+)/,
-		embed: (id: string, theme: Theme, locale: PreferenceLanguage) =>
+		embed: (id: string, theme: Theme, locale: Locale) =>
 			`https://www.youtube.com/embed/?listType=playlist&color=white&fs=0&iv_load_policy=3&playsinline=1&rel=0&list=${id}&hl=${locale}`
 	},
 	{
 		name: "Apple Music",
 		pattern:
 			/^https?:\/\/music\.apple\.com\/(?:[a-z]{2}\/)?playlist(?:\/[^/]+)?\/(pl\.[\dA-Za-z-]+)/,
-		embed: (id: string, theme: Theme, locale: PreferenceLanguage) => {
+		embed: (id: string, theme: Theme, locale: Locale) => {
 			const locales = {
 				en: "us",
 				// de: "de",

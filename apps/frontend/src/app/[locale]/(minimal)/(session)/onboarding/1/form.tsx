@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { fromEntries } from "remeda";
 
@@ -22,15 +21,14 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useInternationalization } from "next-intl";
 import { useSession } from "~/hooks/use-session";
+import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 
-export const Onboarding1Form: FC = () => {
+export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry }) => {
 	const [session, mutateSession] = useSession();
-	const { country: systemCountry } = useInternationalization();
 	const t = useTranslations();
 	const router = useRouter();
 
@@ -50,7 +48,7 @@ export const Onboarding1Form: FC = () => {
 				bornAt: user.bornAt
 					? new Date(user.bornAt.replaceAll("-", "/"))
 					: new Date(),
-				country: user.profile.country ?? systemCountry,
+				country: user.profile.country ?? systemCountry ?? null,
 				game: profile.attributes.game || [],
 				gender: profile.attributes.gender || [],
 				interest: profile.attributes.interest || []
@@ -168,7 +166,7 @@ export const Onboarding1Form: FC = () => {
 						{(field) => (
 							<>
 								<InputLabel hint={t("optional")}>{t("location")}</InputLabel>
-								<InputCountrySelect {...field.props} />
+								<InputCountrySelect {...field.props} prefer={systemCountry} />
 							</>
 						)}
 					</FormField>

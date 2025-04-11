@@ -4,7 +4,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-import { sentryEnabled, sentryOrganization, sentryProject } from "~/const";
+import { sentryEnabled, sentryOrganization, sentryProject, siteOrigin } from "~/const";
 
 // eslint-disable-next-line import/no-mutable-exports
 let nextConfig: NextConfig = {
@@ -15,10 +15,12 @@ let nextConfig: NextConfig = {
 		},
 		reactCompiler: true,
 	},
+	turbopack: {},
 	sassOptions: {
 		// https://github.com/vercel/next.js/discussions/67931
 		silenceDeprecations: ["legacy-js-api"]
 	},
+	allowedDevOrigins: [new URL(siteOrigin).host],
 	logging: {
 		fetches: {
 			fullUrl: false,

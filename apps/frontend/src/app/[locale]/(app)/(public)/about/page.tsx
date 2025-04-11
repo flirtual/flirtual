@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getMessages, getTranslations } from "next-intl/server";
+import { useMessages, useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
@@ -18,11 +19,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function AboutPage() {
-	const t = await getTranslations();
-	const tTeam = await getTranslations("copy_frighten_wobble_futuristic");
+export default function AboutPage() {
+	const t = useTranslations();
+	const tTeam = useTranslations("copy_frighten_wobble_futuristic");
 
-	const { price_listen_wise_communicate: images } = (await getMessages()) as unknown as IntlMessages;
+	const { price_listen_wise_communicate: images } = useMessages();
 
 	return (
 		<ModelCard

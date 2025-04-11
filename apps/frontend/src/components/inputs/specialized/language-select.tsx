@@ -1,21 +1,21 @@
 "use client";
 
 import { Languages } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { mutate } from "swr";
 import useMutation from "swr/mutation";
 
 import type { PreferenceLanguage } from "~/api/user/preferences";
 import { Preferences } from "~/api/user/preferences";
-import { useLocale, useTranslations } from "next-intl";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { withSuspense } from "~/hooks/with-suspense";
+import { useRouter } from "~/i18n/navigation";
+import { locales } from "~/i18n/routing";
 import { sessionKey } from "~/swr";
 
 import { InputSelect } from "../select";
-import { Locale, locales } from "~/i18n/routing";
 
 const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> = ({ className, tabIndex }) => {
 	const locale = useLocale();
@@ -81,7 +81,7 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 			Icon={Languages}
 			tabIndex={tabIndex}
 			value={locale}
-			onChange={(newLanguage) => trigger(newLanguage as Locale)}
+			onChange={(newLanguage) => trigger(newLanguage)}
 		/>
 	);
 };

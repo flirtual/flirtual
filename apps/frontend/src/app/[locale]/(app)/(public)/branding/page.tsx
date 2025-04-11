@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
 import { ButtonLink } from "~/components/button";
@@ -17,8 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function BrandingPage() {
-	const t = await getTranslations();
+export default function BrandingPage() {
+	const t = useTranslations();
 
 	return (
 		<ModelCard

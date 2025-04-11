@@ -20,7 +20,6 @@ export const sentryConfig: Parameters<typeof init>[0] = {
 	profilesSampleRate: 1,
 	replaysOnErrorSampleRate: 1,
 	replaysSessionSampleRate: 0,
-	enableTracing: true,
 	tracePropagationTargets: [
 		siteOrigin,
 		apiOrigin,

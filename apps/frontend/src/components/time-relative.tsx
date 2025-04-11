@@ -1,5 +1,6 @@
 "use client";
 
+import type { StringValue } from "ms";
 import { type createFormatter, useFormatter } from "next-intl";
 import { type ComponentProps, type FC, useCallback, useMemo, useState } from "react";
 
@@ -12,7 +13,7 @@ type RelativeTimeFormatOptions = Exclude<
 
 interface TimeRelativeProps extends RelativeTimeFormatOptions {
 	elementProps?: ComponentProps<"span">;
-	every?: number | string;
+	every?: StringValue | number;
 	value: string;
 }
 

@@ -93,7 +93,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 			<span>
 				{t.rich("strong_trite_squid_grasp", {
 					uploaded: formatter.relativeTime(new Date(image.createdAt)),
-					scanned: image.scanned,
+					scanned: (!!image.scanned).toString(),
 					bold: (children) => <span className="font-bold">{children}</span>
 				})}
 			</span>

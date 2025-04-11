@@ -8,4 +8,9 @@ export const routing = defineRouting({
 });
 
 export const { defaultLocale, locales } = routing;
-export type Locale = typeof locales[number];
+
+declare module "next-intl" {
+	interface AppConfig {
+		Locale: typeof locales[number];
+	}
+}

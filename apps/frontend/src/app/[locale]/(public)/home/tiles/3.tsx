@@ -2,7 +2,6 @@ import { getFormatter, getMessages, getTranslations } from "next-intl/server";
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 
-import { User } from "~/api/user";
 import { urls } from "~/urls";
 
 import { Tile, TileAnchor, type TileProps } from ".";
@@ -18,7 +17,7 @@ export async function Testimonial({ id }: TileProps) {
 	const {
 		flaky_thunder_red_flap: _images,
 		acidic_advertisement_request_cough: brands
-	} = messages as unknown as IntlMessages;
+	} = messages;
 
 	const images = Object.values(_images);
 

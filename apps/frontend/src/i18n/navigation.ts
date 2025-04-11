@@ -4,6 +4,7 @@ import { routing } from "./routing";
 
 export const {
 	Link,
+	permanentRedirect,
 	redirect,
 	usePathname,
 	useRouter,

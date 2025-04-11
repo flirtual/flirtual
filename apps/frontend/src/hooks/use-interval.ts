@@ -1,7 +1,8 @@
+import type { StringValue } from "ms";
 import ms from "ms";
 import { useCallback, useDebugValue, useEffect, useMemo, useRef } from "react";
 
-export function useInterval(callback: () => void, every: number | string) {
+export function useInterval(callback: () => void, every: StringValue | number) {
 	const reference = useRef<ReturnType<typeof setInterval> | null>(null);
 
 	const interval = useMemo(

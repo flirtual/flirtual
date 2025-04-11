@@ -43,14 +43,18 @@ export const PlatformMismatchMessage: FC = () => {
 			<span className="font-montserrat text-lg text-white-10">
 				{(platform !== "web" && !["chargebee", "stripe"].includes(subscription.platform))
 					? t("caring_smug_felix_gleam", {
-						currentPlatform: t(osName[platform]),
-						// @ts-expect-error: "chargebee" is not assignable.
-						otherPlatform: t(subscription.platform)
-					})
-					: (platform !== "web" && ["chargebee", "stripe"].includes(subscription.platform))
-							? t("gross_each_cobra_talk", { platform: t(osName[platform]) })
+							currentPlatform: t(osName[platform]),
 							// @ts-expect-error: "chargebee" is not assignable.
-							: t("elegant_chunky_frog_soar", { platform: t(subscription.platform) })}
+							otherPlatform: t(subscription.platform)
+						})
+					: (platform !== "web" && ["chargebee", "stripe"].includes(subscription.platform))
+							? t("gross_each_cobra_talk", {
+									platform: t(osName[platform])
+								})
+							: t("elegant_chunky_frog_soar", {
+									// @ts-expect-error: "chargebee" is not assignable.
+									platform: t(subscription.platform)
+								})}
 			</span>
 		</div>
 	);

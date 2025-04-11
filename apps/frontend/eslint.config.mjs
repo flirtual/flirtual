@@ -24,15 +24,15 @@ export default configure({
 			"error",
 			{
 				name: "next/link",
-				message: "Import from `~/components/link` instead."
+				message: "Use '~/components/link' instead."
 			},
 			{
 				name: "next/router",
-				message: "Import from `~/i18n/navigation` instead."
+				message: "Use '~/i18n/navigation' instead."
 			},
 			{
 				name: "next/navigation",
-				message: "Import from `~/i18n/navigation` instead."
+				message: "Use '~/i18n/navigation' instead."
 			}
 		]
 	}

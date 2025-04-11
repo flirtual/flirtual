@@ -12,7 +12,7 @@ import { urls } from "~/urls";
 
 export const SignUpButton: FC<{ tabIndex?: number }> = ({ tabIndex }) => {
 	const t = useTranslations();
-	const { receptive_fairies_legal_thumb: flittyMessages } = useMessages() as unknown as IntlMessages;
+	const { receptive_fairies_legal_thumb: flittyMessages } = useMessages();
 	const toasts = useToast();
 
 	const [squeak] = useSound(urls.media("squeak.mp3"));
@@ -125,7 +125,7 @@ export const SignUpButton: FC<{ tabIndex?: number }> = ({ tabIndex }) => {
 	return (
 		<div className="group/mark relative">
 			<FlirtualMark
-				className="absolute right-1 top-0 w-16 origin-[bottom_center] rotate-[14deg] cursor-grab transition-all active:scale-x-110 active:scale-y-90 active:cursor-grabbing group-hocus-within/mark:-top-9"
+				className="group-hocus-within/mark:-top-9 absolute right-1 top-0 w-16 origin-[bottom_center] rotate-[14deg] cursor-grab transition-all active:scale-x-110 active:scale-y-90 active:cursor-grabbing"
 				onClick={() => {
 					squeak();
 

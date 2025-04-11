@@ -1,9 +1,10 @@
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import type { Metadata, Viewport } from "next";
-import { hasLocale, InternationalizationProvider, NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Montserrat, Nunito } from "next/font/google";
-import { headers as getHeaders } from "next/headers";
+// eslint-disable-next-line no-restricted-imports
 import { notFound } from "next/navigation";
 import { userAgentFromString } from "next/server";
 import { Suspense } from "react";
@@ -11,21 +12,18 @@ import { preconnect } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
-import { Authentication } from "~/api/auth";
 import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
 import { AnalyticsProvider } from "~/components/analytics";
 import AppUrlListener from "~/components/app-url-listener";
 import { InsetPreview } from "~/components/inset-preview";
 import NativeStartup from "~/components/native-startup";
-import { SessionProvider } from "~/components/session-provider";
 import { TooltipProvider } from "~/components/tooltip";
 import { apiOrigin, environment, siteOrigin } from "~/const";
 import type { DeviceContext, DevicePlatform } from "~/hooks/use-device";
 import { DeviceProvider } from "~/hooks/use-device";
 import { ThemeProvider } from "~/hooks/use-theme";
 import { ToastProvider } from "~/hooks/use-toast";
-import { defaultLanguage, getInternationalization, supportedLanguages } from "~/i18n";
-import { routing } from "~/i18n/routing";
+import { locales } from "~/i18n/routing";
 import { resolveTheme } from "~/theme";
 import { imageOrigins, urls } from "~/urls";
 
@@ -34,18 +32,18 @@ import { StagingBanner } from "./staging-banner";
 
 import "~/css/index.css";
 
-const defaultLanguages = [defaultLanguage, "x-default"];
+// eslint-disable-next-line unicorn/prevent-abbreviations
+export function generateStaticParams() {
+	return locales.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata(): Promise<Metadata> {
-	const [t, { locale: { current } }] = await Promise.all([getTranslations(), getInternationalization()]);
+	const t = await getTranslations();
 
 	const appName = t("flirtual");
 
-	const canonical = new URL("/", siteOrigin);
-	if (!defaultLanguages.includes(current))
-		canonical.searchParams.set("language", current);
-
 	return {
+		metadataBase: new URL(siteOrigin),
 		title: {
 			default: appName,
 			template: t("page_title")
@@ -53,17 +51,6 @@ export async function generateMetadata(): Promise<Metadata> {
 		applicationName: appName,
 		description: t("knotty_direct_mongoose_bend"),
 		category: "technology",
-		alternates: {
-			canonical,
-			languages: Object.fromEntries([...defaultLanguages, ...supportedLanguages].map((language) => {
-				const url = new URL("/", siteOrigin);
-
-				if (!defaultLanguages.includes(language))
-					url.searchParams.set("language", language);
-
-				return [language, url];
-			}))
-		},
 		appLinks: {
 			android: {
 				package: "zone.homie.flirtual.pwa",
@@ -85,7 +72,6 @@ export async function generateMetadata(): Promise<Metadata> {
 			appId: "6450485324"
 		},
 		manifest: "/manifest.json",
-		metadataBase: new URL(siteOrigin),
 		openGraph: {
 			description: t("green_plain_mongoose_lend"),
 			title: appName,
@@ -143,9 +129,11 @@ function getDevice(headers: Headers): DeviceContext {
 export default async function RootLayout({
 	children,
 	params
-}: React.PropsWithChildren<{ params: Promise<{ locale: string }> }>) {
+}: React.PropsWithChildren<{ params: Promise<{ locale: Locale }> }>) {
 	const { locale } = await params;
-	if (!routing.locales.includes(locale)) notFound();
+	if (!hasLocale(locales, locale)) notFound();
+
+	setRequestLocale(locale);
 
 	preconnect(apiOrigin);
 	imageOrigins.map((origin) => preconnect(origin));
@@ -161,7 +149,7 @@ export default async function RootLayout({
 
 	const theme
 		= themeOverride
-		|| (device.vision ? "light" : "light" /* (session?.user.preferences?.theme ?? "light") */);
+			|| (device.vision ? "light" : "light" /* (session?.user.preferences?.theme ?? "light") */);
 
 	const messages = await getMessages();
 

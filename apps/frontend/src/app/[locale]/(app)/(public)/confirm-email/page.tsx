@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import type { Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
 
 import { Authentication } from "~/api/auth";
 import { ModelCard } from "~/components/model-card";
+import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { ConfirmTokenForm } from "./confirm-token-form";
@@ -18,16 +19,19 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export interface ConfirmEmailPageProps {
+	params: Promise<{ locale: Locale }>;
 	searchParams?: Promise<{ to?: string; token?: string }>;
 }
 
-export default async function ConfirmEmailPage({ searchParams }: ConfirmEmailPageProps) {
-	const t = await getTranslations();
+export default async function ConfirmEmailPage({ params, searchParams }: ConfirmEmailPageProps) {
+	const { locale } = await params;
 	const { to, token } = (await searchParams) || {};
+
+	const t = await getTranslations();
 	const session = await Authentication.getOptionalSession();
 
-	if (session?.user.emailConfirmedAt && !token) redirect(to ?? urls.browse());
-	if (!session?.user && !token) redirect(urls.login(to));
+	if (session?.user.emailConfirmedAt && !token) redirect({ href: to ?? urls.browse(), locale });
+	if (!session?.user && !token) redirect({ href: urls.login(to), locale });
 
 	if (token) return <ConfirmTokenForm token={token} />;
 

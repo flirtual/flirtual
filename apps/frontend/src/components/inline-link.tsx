@@ -7,7 +7,7 @@ export type InlineLinkProps = {
 	href: Url | null;
 	highlight?: boolean;
 	asChild?: boolean;
-} & Omit<Parameters<typeof Link>[0], "href">;
+} & Parameters<typeof Link>[0];
 
 export const InlineLink: React.FC<InlineLinkProps> = ({
 	highlight = true,

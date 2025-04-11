@@ -1,20 +1,11 @@
 import { getTranslations } from "next-intl/server";
-import { unstable_serialize } from "swr";
 
-import { Attribute } from "~/api/attributes";
-import { Matchmaking, ProspectKind } from "~/api/matchmaking";
-import { User } from "~/api/user";
-import { SWRConfig } from "~/components/swr";
-import { redirect } from "~/i18n/navigation";
-import { attributeKey, queueKey, relationshipKey, userKey } from "~/swr";
-import { urls } from "~/urls";
+import { ProspectKind } from "~/api/matchmaking";
 
-import { profileRequiredAttributes } from "../[slug]/data";
 import { Queue } from "./queue";
 
 interface BrowsePageProps {
 	searchParams: Promise<{ kind?: ProspectKind }>;
-	params: Promise<{ locale: string }>;
 }
 
 export async function generateMetadata({ searchParams }: BrowsePageProps) {
@@ -27,16 +18,14 @@ export async function generateMetadata({ searchParams }: BrowsePageProps) {
 	};
 }
 
-export default async function BrowsePage({ params, searchParams }: BrowsePageProps) {
-	const { locale } = await params;
-
-	const { kind = "love" } = (await searchParams) || {};
-	if (!ProspectKind.includes(kind)) return redirect({ href: urls.browse(), locale });
+export default async function BrowsePage({ searchParams }: BrowsePageProps) {
+	let { kind = "love" } = (await searchParams) || {};
+	if (!ProspectKind.includes(kind)) kind = "love";
 
 	// const queue = await Matchmaking.queue(kind);
 
 	return (
-		/*<SWRConfig
+		/* <SWRConfig
 			value={{
 				fallback: {
 					[unstable_serialize(queueKey(kind))]: queue,
@@ -55,8 +44,8 @@ export default async function BrowsePage({ params, searchParams }: BrowsePagePro
 					)
 				}
 			}}
-		>*/
+		> */
 		<Queue kind={kind} />
-		/*</SWRConfig>*/
+		/* </SWRConfig> */
 	);
 }

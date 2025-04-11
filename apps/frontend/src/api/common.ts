@@ -4,7 +4,12 @@ import QueryAddon from "wretch/addons/queryString";
 import { retry } from "wretch/middlewares/retry";
 import { WretchError } from "wretch/resolver";
 
-import { cloudflareInternalIdentifier, environment, maintenance } from "~/const";
+import {
+	cloudflareInternalIdentifier,
+	duringBuild,
+	environment,
+	maintenance
+} from "~/const";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 
@@ -35,12 +40,12 @@ export type PaginateOptions<T> = {
 	page?: number;
 } & T;
 
-// const relevantHeaderNames = ["cookie", "authorization"];
+const relevantHeaderNames = ["cookie", "authorization"];
 
 // All status codes that are retriable by the browser, except 5xx which are always retried.
 const retriableStatusCodes = [408, 429];
 
-const maximumRetries = environment === "development" || maintenance ? 0 : 3;
+const maximumRetries = (environment === "development" || maintenance || duringBuild) ? 0 : 3;
 
 export const api = wretch(urls.api)
 	.addon(QueryAddon)
@@ -54,36 +59,37 @@ export const api = wretch(urls.api)
 				return async (url, options) => {
 					options.headers ??= {};
 
-					if (typeof window === "undefined")
-						throw new Error("API calls may not be made on the server.");
-
-					if (environment === "development")
+					if (environment === "development" && !duringBuild)
 						// Artificially slow requests in development, ensuring we can see loading/pending states.
 						await new Promise((resolve) => setTimeout(resolve, 2000 * Math.random() * (options.method === "GET" ? 1 : 2)));
 
-					// if (
-					// 	typeof window === "undefined"
-					// 	// We can't use `headers` with `unstable_cache` which caches across requests,
-					// 	// so when we're using `credentials: "omit"`, we'll exclude the headers.
-					// 	&& options.credentials !== "omit"
-					// ) {
-					// 	const { headers: getHeaders } = await import("next/headers");
-					// 	const headers = await getHeaders();
-					//
-					// 	const relevantHeaders = Object.fromEntries(
-					// 		[...headers.entries()].filter(([key]) =>
-					// 			relevantHeaderNames.includes(key)
-					// 		)
-					// 	);
-					//
-					// 	if (headers.has("user-agent"))
-					// 		relevantHeaders["x-forwarded-user-agent"] = headers.get("user-agent")!;
-					//
-					// 	options.headers = {
-					// 		...options.headers,
-					// 		...relevantHeaders,
-					// 	};
-					// }
+					if (typeof window === "undefined") {
+						// TODO: We're removing API calls from the server, & this will eventually error instead.
+						console.warn(`[todo] Remove server-side API call to ${options.method} ${url}.`);
+
+						if (
+							// We can't use `headers` with `unstable_cache` which caches across requests,
+							// so when we're using `credentials: "omit"`, we'll exclude the headers.
+							options.credentials !== "omit"
+						) {
+							const { headers: getHeaders } = await import("next/headers");
+							const headers = await getHeaders();
+
+							const relevantHeaders = Object.fromEntries(
+								[...headers.entries()].filter(([key]) =>
+									relevantHeaderNames.includes(key)
+								)
+							);
+
+							if (headers.has("user-agent"))
+								relevantHeaders["x-forwarded-user-agent"] = headers.get("user-agent")!;
+
+							options.headers = {
+								...options.headers,
+								...relevantHeaders,
+							};
+						}
+					}
 
 					const headers = new Headers(options.headers);
 					if (cloudflareInternalIdentifier)
@@ -132,7 +138,7 @@ export const api = wretch(urls.api)
 						options.method,
 						url.replace(origin, ""),
 						`x${retryCount + 1}`,
-						response?.status
+						response?.status,
 					);
 					return { url, options };
 				},

@@ -22,8 +22,8 @@ const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 
 	const countryName
 		= tAttribute[countryId.toUpperCase()]?.name
-		?? getCountryName(locale, countryId)
-		?? countryId;
+			?? getCountryName(locale, countryId)
+			?? countryId;
 
 	if (!countryId) return null;
 
@@ -45,12 +45,12 @@ const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 	);
 };
 
-export type InputCountrySelectProps = Omit<
+export type InputCountrySelectProps = {
+	prefer?: string;
+} & Omit<
 	InputSelectProps<string | null>,
 	"Item" | "options"
-> & {
-	prefer?: string
-}
+>;
 
 export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySelectProps) {
 	const locale = useLocale();

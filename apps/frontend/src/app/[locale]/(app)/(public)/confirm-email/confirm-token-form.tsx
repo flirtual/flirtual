@@ -1,13 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { mutate } from "swr";
 import useMutation from "swr/mutation";
 
 import { User } from "~/api/user";
-import { useTranslations } from "next-intl";
 import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "~/i18n/navigation";
 import { sessionKey } from "~/swr";
 import { urls } from "~/urls";
 

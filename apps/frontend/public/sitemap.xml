@@ -1,919 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
-    <loc>https://127.0.0.1:3000/</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/home</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/home?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/home?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/home?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/home?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/home?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/home?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/home?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/home?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/home?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/home?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/home?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/about</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/about?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/about?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/about?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/about?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/about?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/about?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/about?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/about?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/about?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/about?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/about?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/events</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/events?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/events?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/events?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/events?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/events?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/events?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/events?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/events?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/events?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/events?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/events?language=sv" />
-  </url>
-  <url>
     <loc>https://127.0.0.1:3000/.well-known/security.txt</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/apple-icon.png</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/branding</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/branding?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/branding?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/branding?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/branding?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/branding?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/branding?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/branding?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/branding?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/branding?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/branding?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/branding?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/browse</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/browse?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/browse?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/browse?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/browse?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/browse?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/browse?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/browse?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/browse?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/browse?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/browse?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/browse?language=sv" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/browse?kind=friend</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/browse?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/browse?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/browse?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/browse?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/browse?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/browse?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/browse?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/browse?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/browse?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/browse?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/browse?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/confirm-email</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/confirm-email?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/confirm-email?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/confirm-email?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/confirm-email?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/confirm-email?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/confirm-email?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/confirm-email?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/confirm-email?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/confirm-email?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/confirm-email?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/confirm-email?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/browse" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/browse" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/download</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/download?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/download?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/download?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/download?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/download?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/download?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/download?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/download?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/download?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/download?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/download?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/download" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/download" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/favicon.ico</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/finish/1</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/finish/1?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/finish/1?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/finish/1?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/finish/1?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/finish/1?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/finish/1?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/finish/1?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/finish/1?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/finish/1?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/finish/1?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/finish/1?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/finish/2</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/finish/2?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/finish/2?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/finish/2?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/finish/2?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/finish/2?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/finish/2?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/finish/2?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/finish/2?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/finish/2?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/finish/2?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/finish/2?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/finish/3</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/finish/3?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/finish/3?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/finish/3?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/finish/3?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/finish/3?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/finish/3?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/finish/3?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/finish/3?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/finish/3?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/finish/3?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/finish/3?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/finish/4</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/finish/4?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/finish/4?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/finish/4?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/finish/4?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/finish/4?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/finish/4?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/finish/4?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/finish/4?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/finish/4?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/finish/4?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/finish/4?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/finish/5</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/finish/5?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/finish/5?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/finish/5?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/finish/5?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/finish/5?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/finish/5?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/finish/5?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/finish/5?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/finish/5?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/finish/5?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/finish/5?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/forgot</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/forgot?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/forgot?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/forgot?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/forgot?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/forgot?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/forgot?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/forgot?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/forgot?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/forgot?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/forgot?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/forgot?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/guidelines</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/guidelines?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/guidelines?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/guidelines?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/guidelines?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/guidelines?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/guidelines?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/guidelines?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/guidelines?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/guidelines?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/guidelines?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/guidelines?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/guides</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/guides?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/guides?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/guides?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/guides?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/guides?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/guides?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/guides?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/guides?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/guides?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/guides?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/guides?language=sv" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/guides/mental-health</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/guides/mental-health?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/guides/mental-health?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/guides/mental-health?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/guides/mental-health?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/guides/mental-health?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/guides/mental-health?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/guides/mental-health?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/guides/mental-health?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/guides/mental-health?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/guides/mental-health?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/guides/mental-health?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/guides/mental-health" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/guides/mental-health" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/icon.svg</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/icon2.png</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/icon3.png</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/likes</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/likes?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/likes?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/likes?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/likes?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/likes?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/likes?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/likes?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/likes?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/likes?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/likes?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/likes?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/login</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/login?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/login?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/login?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/login?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/login?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/login?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/login?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/login?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/login?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/login?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/login?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/manifest.json</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/matches</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/matches?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/matches?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/matches?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/matches?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/matches?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/matches?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/matches?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/matches?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/matches?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/matches?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/matches?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/me</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/me?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/me?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/me?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/me?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/me?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/me?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/me?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/me?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/me?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/me?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/me?language=sv" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/onboarding/0</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/onboarding/0?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/onboarding/0?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/onboarding/0?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/onboarding/0?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/onboarding/0?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/onboarding/0?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/onboarding/0?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/onboarding/0?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/onboarding/0?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/onboarding/0?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/onboarding/0?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/onboarding/1</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/onboarding/1?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/onboarding/1?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/onboarding/1?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/onboarding/1?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/onboarding/1?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/onboarding/1?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/onboarding/1?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/onboarding/1?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/onboarding/1?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/onboarding/1?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/onboarding/1?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/onboarding/2</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/onboarding/2?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/onboarding/2?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/onboarding/2?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/onboarding/2?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/onboarding/2?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/onboarding/2?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/onboarding/2?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/onboarding/2?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/onboarding/2?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/onboarding/2?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/onboarding/2?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/onboarding/0" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/onboarding/0" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/opengraph-image.png</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/payments</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/payments?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/payments?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/payments?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/payments?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/payments?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/payments?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/payments?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/payments?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/payments?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/payments?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/payments?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/pico_authentication.json</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/press</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/press?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/press?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/press?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/press?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/press?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/press?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/press?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/press?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/press?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/press?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/press?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/preview</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/preview?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/preview?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/preview?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/preview?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/preview?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/preview?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/preview?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/preview?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/preview?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/preview?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/preview?language=sv" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/privacy</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/privacy?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/privacy?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/privacy?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/privacy?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/privacy?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/privacy?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/privacy?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/privacy?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/privacy?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/privacy?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/privacy?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/privacy-20221022</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/privacy-20221022?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/privacy-20221022?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/privacy-20221022?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/privacy-20221022?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/privacy-20221022?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/privacy-20221022?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/privacy-20221022?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/privacy-20221022?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/privacy-20221022?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/privacy-20221022?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/privacy-20221022?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/privacy" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/privacy" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/robots.txt</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/search</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/search?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/search?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/search?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/search?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/search?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/search?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/search?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/search?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/search?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/search?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/search?language=sv" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/appearance</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/appearance?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/appearance?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/appearance?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/appearance?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/appearance?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/appearance?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/appearance?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/appearance?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/appearance?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/appearance?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/appearance?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/bio</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/bio?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/bio?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/bio?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/bio?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/bio?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/bio?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/bio?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/bio?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/bio?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/bio?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/bio?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/connections</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/connections?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/connections?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/connections?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/connections?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/connections?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/connections?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/connections?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/connections?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/connections?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/connections?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/connections?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/settings" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/deactivate</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/deactivate?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/deactivate?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/deactivate?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/deactivate?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/deactivate?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/deactivate?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/deactivate?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/deactivate?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/deactivate?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/deactivate?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/deactivate?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/deactivate" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/settings/deactivate" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/delete</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/delete?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/delete?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/delete?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/delete?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/delete?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/delete?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/delete?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/delete?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/delete?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/delete?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/delete?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/delete" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/settings/delete" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/email</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/email?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/email?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/email?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/email?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/email?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/email?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/email?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/email?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/email?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/email?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/email?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/email" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/settings/email" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/info</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/info?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/info?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/info?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/info?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/info?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/info?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/info?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/info?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/info?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/info?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/info?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/interests</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/interests?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/interests?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/interests?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/interests?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/interests?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/interests?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/interests?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/interests?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/interests?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/interests?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/interests?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/matchmaking</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/matchmaking?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/matchmaking?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/matchmaking?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/matchmaking?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/matchmaking?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/matchmaking?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/matchmaking?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/matchmaking?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/matchmaking?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/matchmaking?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/matchmaking?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/notifications</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/notifications?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/notifications?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/notifications?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/notifications?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/notifications?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/notifications?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/notifications?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/notifications?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/notifications?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/notifications?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/notifications?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/nsfw</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/nsfw?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/nsfw?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/nsfw?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/nsfw?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/nsfw?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/nsfw?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/nsfw?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/nsfw?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/nsfw?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/nsfw?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/nsfw?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/info" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/settings/info" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/password</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/password?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/password?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/password?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/password?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/password?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/password?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/password?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/password?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/password?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/password?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/password?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/personality</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/personality?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/personality?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/personality?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/personality?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/personality?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/personality?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/personality?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/personality?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/personality?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/personality?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/personality?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/privacy</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/privacy?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/privacy?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/privacy?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/privacy?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/privacy?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/privacy?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/privacy?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/privacy?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/privacy?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/privacy?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/privacy?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/settings/referral</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/settings/referral?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/referral?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/settings/referral?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/settings/referral?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/settings/referral?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/settings/referral?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/settings/referral?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/settings/referral?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/settings/referral?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/settings/referral?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/settings/referral?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/sitemap.xml</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/password" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/settings/password" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/subscription</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/subscription?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/subscription?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/subscription?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/subscription?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/subscription?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/subscription?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/subscription?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/subscription?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/subscription?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/subscription?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/subscription?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/subscription" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/subscription" />
   </url>
   <url>
     <loc>https://127.0.0.1:3000/terms</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
+    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/terms?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/terms?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/terms?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/terms?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/terms?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/terms?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/terms?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/terms?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/terms?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/terms?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/terms?language=sv" />
-  </url>
-  <url>
-    <loc>https://127.0.0.1:3000/terms-20230530</loc>
-    <lastmod>2024-12-14T10:56:51.166Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://127.0.0.1:3000/terms-20230530?language=de" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/terms-20230530?language=en" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://127.0.0.1:3000/terms-20230530?language=es" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://127.0.0.1:3000/terms-20230530?language=fr" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/terms-20230530?language=ja" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://127.0.0.1:3000/terms-20230530?language=ko" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://127.0.0.1:3000/terms-20230530?language=nl" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://127.0.0.1:3000/terms-20230530?language=pt" />
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://127.0.0.1:3000/terms-20230530?language=pt-BR" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://127.0.0.1:3000/terms-20230530?language=ru" />
-    <xhtml:link rel="alternate" hreflang="sv" href="https://127.0.0.1:3000/terms-20230530?language=sv" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/terms" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/terms" />
   </url>
 </urlset>

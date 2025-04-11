@@ -1,19 +1,19 @@
-import { create as setupAcceptLanguage } from "accept-language";
+import type { Locale } from "next-intl";
 import { headers as getHeaders } from "next/headers";
-import { cache } from "react";
 
-import type { PreferenceLanguage } from "~/api/user/preferences";
+import type { messages } from "./request";
+import type { locales } from "./routing";
 
-import settings from "../../project.inlang/settings.json";
-import { Authentication } from "../api/auth";
-import { polyfill } from "./polyfill";
+declare module "next-intl" {
+	interface AppConfig {
+		Locale: (typeof locales)[number];
+		Messages: typeof messages[Locale];
+	}
+}
 
-const { languageTags: languages, sourceLanguageTag } = settings;
+export async function getCountry() {
+	const headers = await getHeaders();
 
-export const supportedLanguages = languages;
-export const defaultLanguage = sourceLanguageTag;
-
-function getCountry(headers: Headers) {
 	const country
 		= headers.get("cf-ipcountry") || headers.get("x-vercel-ip-country");
 
@@ -22,12 +22,14 @@ function getCountry(headers: Headers) {
 		: null;
 }
 
-function getTimezone(headers: Headers) {
+export async function getTimezone() {
+	const headers = await getHeaders();
+
 	const timezone = headers.get("x-vercel-ip-timezone");
 	return timezone || "America/New_York";
 }
 
-export const getInternationalization = cache(async (override?: PreferenceLanguage) => {
+/* export const getInternationalization = cache(async (override?: PreferenceLanguage) => {
 	const headers = await getHeaders();
 
 	override ||= headers.get("language") as PreferenceLanguage ?? undefined;
@@ -38,9 +40,9 @@ export const getInternationalization = cache(async (override?: PreferenceLanguag
 	const accept = headers.get("accept-language");
 	const browser = al.get(accept) as PreferenceLanguage;
 
-	const session = null // await Authentication.getOptionalSession();
+	const session = null; // await Authentication.getOptionalSession();
 
-	const preferred = session?.user.preferences?.language /* || browser */ || "en";
+	const preferred = session?.user.preferences?.language  || browser  || "en";
 
 	if (override === preferred || (override && !languages.includes(override)))
 		override = undefined;
@@ -62,4 +64,4 @@ export const getInternationalization = cache(async (override?: PreferenceLanguag
 			preferred
 		}
 	};
-});
+}); */

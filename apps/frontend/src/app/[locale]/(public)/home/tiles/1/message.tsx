@@ -6,16 +6,12 @@ import { keys } from "remeda";
 
 import { useInterval } from "~/hooks/use-interval";
 
-type ProfileMessageKey = keyof IntlMessages["motionless_absorbed_scintillating_rightful"];
-
 export const ProfileMessage: FC = () => {
 	const {
 		motionless_absorbed_scintillating_rightful: messages
-	} = useMessages() as unknown as IntlMessages;
+	} = useMessages();
 
-	const [current, setCurrent] = useState(
-		Object.keys(messages)[0] as ProfileMessageKey
-	);
+	const [current, setCurrent] = useState(Object.keys(messages)[0] as keyof typeof messages);
 
 	/*
 	t("motionless_absorbed_scintillating_rightful.0")"
@@ -29,7 +25,7 @@ export const ProfileMessage: FC = () => {
 				const messageKeys = keys(messages);
 				return messageKeys[
 					(messageKeys.indexOf(current.toString()) + 1) % messageKeys.length
-				] as ProfileMessageKey;
+				]!;
 			});
 		}, [messages]),
 		5000

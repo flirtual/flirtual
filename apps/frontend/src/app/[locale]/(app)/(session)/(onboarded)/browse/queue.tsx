@@ -33,7 +33,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 		});
 	}, [queue]);
 
-	if (!session) return null;
+	if (!session || !queue) return null;
 
 	if ("error" in queue) {
 		if (queue.error === "finish_profile") return <FinishProfileError />;

@@ -1,23 +1,25 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import { forwardRef } from "react";
+import type { Ref } from "react";
 
 import { Link as NextIntlLink } from "~/i18n/navigation";
-import { isInternalHref, toAbsoluteUrl } from "~/urls";
+import { isInternalHref } from "~/urls";
 
 export type LinkProps = {
 	asChild?: boolean;
-} & Parameters<typeof NextIntlLink>[0];
+} & {
+	href: Parameters<typeof NextIntlLink>[0]["href"] | null;
+} & Omit<Parameters<typeof NextIntlLink>[0], "href">;
 
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>(({
+export function Link({
+	ref: reference,
 	href,
 	asChild = false,
 	target,
 	...props
-}, reference) => {
-	const url = toAbsoluteUrl(href?.toString() ?? "#");
-	const internal = isInternalHref(url);
+}: { ref?: Ref<HTMLAnchorElement> | null } & LinkProps) {
+	const internal = isInternalHref(href || "#");
 
 	const Component = asChild
 		? Slot
@@ -29,9 +31,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(({
 		<Component
 			{...props}
 			data-external={internal ? undefined : ""}
-			href={href}
+			href={href || "#"}
 			ref={reference}
 			target={target || (internal ? undefined : "_blank")}
 		/>
 	);
-});
+}

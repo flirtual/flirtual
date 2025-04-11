@@ -1,91 +1,55 @@
 import { captureException } from "@sentry/nextjs";
+import englishUppyMessages from "@uppy/locales/lib/en_US.js";
+import japaneseUppyMessages from "@uppy/locales/lib/ja_JP.js";
 import deepmerge from "deepmerge";
 import type {
 	AbstractIntlMessages,
+	Locale,
+	Messages,
 	NamespaceKeys,
 	NestedKeyOf
 } from "next-intl";
+import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
-import { cache } from "react";
 
-import type { PreferenceLanguage } from "~/api/user/preferences";
+import englishAttributeMessages from "~/../messages/attributes.en.json";
+import japaneseAttributeMessages from "~/../messages/attributes.ja.json";
+import englishMessages from "~/../messages/en.json";
+import japaneseMessages from "~/../messages/ja.json";
 
-import { routing } from "./routing";
+import { defaultLocale, routing } from "./routing";
 
-export type MessageKeys = NamespaceKeys<
-	IntlMessages,
-	NestedKeyOf<IntlMessages>
->;
-
-async function getLanguageMessages(locale: PreferenceLanguage) {
-	const { default: messages } = await import(
-		`../../messages/${locale}.json`
-	).catch(() => ({}));
-
-	const attributes = (
-		await import(`../../messages/attributes.${locale}.json`).catch(() => ({
-			default: {}
-		}))
-	).default as Record<string, Record<string, unknown>>;
-
-	// @uppy/locales/en_US
-	const uppy = (await import(`@uppy/locales/lib/${{
-		en: "en_US",
-		// de: "de_DE",
-		// es: "es_ES",
-		// fr: "fr_FR",
-		ja: "ja_JP"// ,
-		// ko: "ko_KR",
-		// nl: "nl_NL",
-		// pt: "pt_PT",
-		// "pt-BR": "pt_BR",
-		// ru: "ru_RU",
-		// sv: "sv_SE"
-	}[locale]}.js`)).default.strings;
-
-	return {
-		...messages,
-		uppy,
-		attributes: Object.values(attributes).reduce((previous, current) => {
-			return { ...previous, ...current };
-		}, {})
-	};
+function flat1<T extends Record<string, Record<string, AbstractIntlMessages>>>(value: T) {
+	return Object.values(value).reduce((previous, current) => {
+		return { ...previous, ...current };
+	}, {});
 }
 
-const getMessages = cache(async (locale: PreferenceLanguage): Promise<AbstractIntlMessages> => {
-	const fallback = await getLanguageMessages(routing.defaultLocale);
+export const messages = {
+	en: {
+		...englishMessages,
+		attributes: flat1(englishAttributeMessages),
+		uppy: englishUppyMessages.strings
+	},
+	ja: {
+		...japaneseMessages,
+		attributes: flat1(japaneseAttributeMessages),
+		uppy: japaneseUppyMessages.strings
+	}
+} satisfies Record<Locale, AbstractIntlMessages>;
 
-	const current
-		= locale === routing.defaultLocale
-			? fallback
-			: await getLanguageMessages(locale);
-
-	// const preferred
-	// 	= locale === locale.preferred
-	// 		? current
-	// 		: await getLanguageMessages(locale.preferred);
-
-	const messages = deepmerge(fallback, current) as any;
-
-	return {
-		...messages,
-		// pleasant_ugliest_expert_camera: preferred.pleasant_ugliest_expert_camera
-	};
-});
+export type MessageKeys = NamespaceKeys<Messages, NestedKeyOf<Messages>>;
 
 export default getRequestConfig(async ({ requestLocale: requestLocalePromise }) => {
-	const requestLocale = (await requestLocalePromise) as PreferenceLanguage;
+	const requestLocale = (await requestLocalePromise) as Locale;
 
-	const locale = routing.locales.includes(requestLocale)
+	const locale = hasLocale(routing.locales, requestLocale)
 		? requestLocale
 		: routing.defaultLocale;
 
-	// const { locale } = await getInternationalization();
-	const messages = await getMessages(locale);
-
 	return {
 		locale,
-		messages,
+		messages: deepmerge(messages[defaultLocale], messages[locale]),
 		onError: captureException
 	};
 });

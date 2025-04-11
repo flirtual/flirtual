@@ -36,7 +36,7 @@ const hearts = [
 
 export const MadeWithLove: React.FC = () => {
 	const t = useTranslations();
-	const [heart, setHeart] = useState(hearts[0]);
+	const [heart, setHeart] = useState(hearts[0]!);
 
 	const updateHeart = () =>
 		setHeart(hearts[Math.floor(Math.random() * hearts.length)]!);

@@ -70,3 +70,4 @@ export const region = process.env.VERCEL_REGION as string;
 export const cloudflareInternalIdentifier = process.env.CLOUDFLARE_INTERNAL_IDENTIFIER as string;
 
 export const maintenance = false;
+export const duringBuild = process.env.BUILD === "1";
