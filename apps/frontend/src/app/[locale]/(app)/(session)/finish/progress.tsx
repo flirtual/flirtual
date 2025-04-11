@@ -1,9 +1,9 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "~/components/inline-link";
-import { useTranslations } from "next-intl";
 import { type FinishPage, urls } from "~/urls";
 
 const ProgressLink: React.FC<{

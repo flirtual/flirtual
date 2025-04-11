@@ -18,7 +18,7 @@ import {
 } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { InputLabel, InputTextArea } from "~/components/inputs";
-import { environment, gitCommitSha, maintenance } from "~/const";
+import { gitCommitSha, maintenance } from "~/const";
 import { urls } from "~/urls";
 
 export type ErrorWithDigest = { digest?: string } & Error;

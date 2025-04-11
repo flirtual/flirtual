@@ -3,7 +3,6 @@
 import type { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { Authentication } from "~/api/auth";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { HomeIcon } from "~/components/icons/gradient/home";
 import { LoginIcon } from "~/components/icons/gradient/login";

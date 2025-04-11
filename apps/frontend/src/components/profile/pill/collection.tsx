@@ -1,6 +1,6 @@
 "use client";
 
-import { useMessages, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
 
 import type { User } from "~/api/user";

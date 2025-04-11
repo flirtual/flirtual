@@ -1,12 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import {
 	InputLabel,
 	InputSwitch
 } from "~/components/inputs";
-import { useTranslations } from "next-intl";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useToast } from "~/hooks/use-toast";
 

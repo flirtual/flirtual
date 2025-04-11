@@ -3,6 +3,7 @@
 import { PushNotifications } from "@capacitor/push-notifications";
 import { IOSSettings, NativeSettings } from "capacitor-native-settings";
 import { Mail, Smartphone } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { fromEntries, keys } from "remeda";
 
@@ -12,7 +13,6 @@ import { FormButton } from "~/components/forms/button";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useDevice } from "~/hooks/use-device";
-import { useTranslations } from "next-intl";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 

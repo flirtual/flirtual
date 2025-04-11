@@ -1,11 +1,10 @@
 "use client";
 
 import { Key, X } from "lucide-react";
-import { useFormatter } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { Authentication } from "~/api/auth";
-import { useTranslations } from "next-intl";
 import { useToast } from "~/hooks/use-toast";
 
 export interface PasskeyButtonProps {
@@ -27,11 +26,11 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 				{icon
 					? (
 						// eslint-disable-next-line @next/next/no-img-element
-						<img className="size-7" src={icon} />
-					)
+							<img className="size-7" src={icon} />
+						)
 					: (
-						<Key className="size-7" />
-					)}
+							<Key className="size-7" />
+						)}
 			</div>
 			<div className="flex flex-col overflow-hidden whitespace-nowrap p-2 text-left font-nunito leading-none vision:text-black-80">
 				{name || t("passkey")}

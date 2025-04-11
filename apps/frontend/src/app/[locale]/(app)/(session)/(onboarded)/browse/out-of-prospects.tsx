@@ -1,10 +1,10 @@
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
-import { useTranslations } from "next-intl";
 import { urls } from "~/urls";
 
 export interface OutOfProspectsErrorProps {

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Preferences } from "~/api/user/preferences";
 import { Profile, ProfileDomsubList } from "~/api/user/profile";
 import { Form } from "~/components/forms";
@@ -16,7 +18,6 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 

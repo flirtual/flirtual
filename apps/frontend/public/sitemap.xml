@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://127.0.0.1:3000/.well-known/security.txt</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/apple-icon.png</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/browse?kind=friend</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/browse" />
@@ -22,21 +22,101 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/download</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/download" />
     <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/download" />
   </url>
   <url>
+    <loc>https://127.0.0.1:3000/en/empty</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/empty" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/empty" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/finish/1</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/finish/1" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/finish/1" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/home</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/home" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/home" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/press</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/press" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/press" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/preview</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/preview" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/preview" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/reports</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/reports" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/reports" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/search</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/search" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/search" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/settings</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/settings" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/settings" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/settings/referral</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/settings/referral" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/settings/referral" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/en/stats</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/en/stats" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/en/stats" />
+  </url>
+  <url>
     <loc>https://127.0.0.1:3000/favicon.ico</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/guides/mental-health</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/guides/mental-health" />
@@ -44,25 +124,105 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/icon.svg</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/icon2.png</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/icon3.png</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://127.0.0.1:3000/ja/empty</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/empty" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/empty" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/finish/1</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/finish/1" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/finish/1" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/home</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/home" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/home" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/press</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/press" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/press" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/preview</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/preview" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/preview" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/reports</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/reports" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/reports" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/search</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/search" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/search" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/settings</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/settings" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/settings" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/settings/referral</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/settings/referral" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/settings/referral" />
+  </url>
+  <url>
+    <loc>https://127.0.0.1:3000/ja/stats</loc>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/ja/stats" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://127.0.0.1:3000/ja/ja/stats" />
+  </url>
+  <url>
     <loc>https://127.0.0.1:3000/onboarding/0</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/onboarding/0" />
@@ -70,13 +230,13 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/opengraph-image.png</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/privacy</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/privacy" />
@@ -84,13 +244,13 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/robots.txt</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings" />
@@ -98,7 +258,7 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/deactivate</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/deactivate" />
@@ -106,7 +266,7 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/delete</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/delete" />
@@ -114,7 +274,7 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/email</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/email" />
@@ -122,7 +282,7 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/info</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/info" />
@@ -130,7 +290,7 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/settings/password</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/settings/password" />
@@ -138,7 +298,7 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/subscription</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/subscription" />
@@ -146,7 +306,7 @@
   </url>
   <url>
     <loc>https://127.0.0.1:3000/terms</loc>
-    <lastmod>2025-04-11T00:41:26.818Z</lastmod>
+    <lastmod>2025-04-11T01:09:35.440Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://127.0.0.1:3000/terms" />

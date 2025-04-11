@@ -3,6 +3,7 @@
 import { InAppReview } from "@capacitor-community/in-app-review";
 import { Undo2, X } from "lucide-react";
 import ms from "ms";
+import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import {
@@ -40,7 +41,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { UserAvatar } from "~/components/user-avatar";
 import { useDevice } from "~/hooks/use-device";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";

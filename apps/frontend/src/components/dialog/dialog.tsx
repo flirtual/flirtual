@@ -20,55 +20,46 @@ const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = DialogPrimitive.Portal;
 
-const DialogOverlay = React.forwardRef<
-	React.ComponentRef<typeof DialogPrimitive.Overlay>,
-	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, reference) => (
-	<DialogPrimitive.Overlay
-		className={twMerge(dialogOverlayClassName, className)}
-		ref={reference}
-		{...props}
-	/>
-));
+function DialogOverlay({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DialogPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>) {
+	return (
+		<DialogPrimitive.Overlay
+			className={twMerge(dialogOverlayClassName, className)}
+			ref={reference}
+			{...props}
+		/>
+	);
+}
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-const DialogContent = React.forwardRef<
-	React.ComponentRef<typeof DialogPrimitive.Content>,
-	{
-		closable?: boolean;
-		border?: boolean;
-	} & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(
-	(
-		{ className, children, closable = true, border = true, ...props },
-		reference
-	) => {
-		let content = (
-			<DialogPrimitive.Content
-				aria-describedby={undefined}
-				className={twMerge(dialogContentClassName, className)}
-				ref={reference}
-				{...props}
-			>
-				{children}
-				{closable && (
-					<DialogPrimitive.Close className="absolute right-5 top-4 z-10 rounded-sm text-white-10 opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none dark:text-white-20">
-						<X className="size-5" />
-						<span className="sr-only">Close</span>
-					</DialogPrimitive.Close>
-				)}
-			</DialogPrimitive.Content>
-		);
-		if (border) {
-			content = <ThemedBorder asChild>{content}</ThemedBorder>;
-		}
-		return (
-			<DialogPortal>
-				<DialogOverlay>{content}</DialogOverlay>
-			</DialogPortal>
-		);
+function DialogContent({ ref: reference, className, children, closable = true, border = true, ...props }: {
+	closable?: boolean;
+	border?: boolean;
+} & { ref?: React.RefObject<React.ComponentRef<typeof DialogPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>) {
+	let content = (
+		<DialogPrimitive.Content
+			aria-describedby={undefined}
+			className={twMerge(dialogContentClassName, className)}
+			ref={reference}
+			{...props}
+		>
+			{children}
+			{closable && (
+				<DialogPrimitive.Close className="absolute right-5 top-4 z-10 rounded-sm text-white-10 opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none dark:text-white-20">
+					<X className="size-5" />
+					<span className="sr-only">Close</span>
+				</DialogPrimitive.Close>
+			)}
+		</DialogPrimitive.Content>
+	);
+	if (border) {
+		content = <ThemedBorder asChild>{content}</ThemedBorder>;
 	}
-);
+	return (
+		<DialogPortal>
+			<DialogOverlay>{content}</DialogOverlay>
+		</DialogPortal>
+	);
+}
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 function DialogHeader({
@@ -103,28 +94,26 @@ function DialogFooter({
 }
 DialogFooter.displayName = "DialogFooter";
 
-const DialogTitle = React.forwardRef<
-	React.ComponentRef<typeof DialogPrimitive.Title>,
-	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, reference) => (
-	<DialogPrimitive.Title
-		className={twMerge(dialogTitleClassName, className)}
-		ref={reference}
-		{...props}
-	/>
-));
+function DialogTitle({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DialogPrimitive.Title> | null> } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) {
+	return (
+		<DialogPrimitive.Title
+			className={twMerge(dialogTitleClassName, className)}
+			ref={reference}
+			{...props}
+		/>
+	);
+}
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
-const DialogDescription = React.forwardRef<
-	React.ComponentRef<typeof DialogPrimitive.Description>,
-	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, reference) => (
-	<DialogPrimitive.Description
-		className={twMerge(dialogDescriptionClassName, className)}
-		ref={reference}
-		{...props}
-	/>
-));
+function DialogDescription({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DialogPrimitive.Description> | null> } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>) {
+	return (
+		<DialogPrimitive.Description
+			className={twMerge(dialogDescriptionClassName, className)}
+			ref={reference}
+			{...props}
+		/>
+	);
+}
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 function DialogBody({

@@ -4,7 +4,6 @@ import { MoreHorizontal } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type FC, useMemo, useState } from "react";
 
-import type { AttributeType, MinimalAttribute } from "~/api/attributes";
 import type { Session } from "~/api/auth";
 import type { User } from "~/api/user";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";

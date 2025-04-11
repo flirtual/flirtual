@@ -66,11 +66,11 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 			: originalWebPrice;
 	const discount
 		= originalDiscount
-		?? Math.round(((originalPrice - price) / originalPrice) * 100);
+			?? Math.round(((originalPrice - price) / originalPrice) * 100);
 
 	const activePlan
 		= (user.subscription?.active && user.subscription.plan.id === id)
-		?? false;
+			?? false;
 
 	const containerClassName = "grow shadow-brand-1";
 

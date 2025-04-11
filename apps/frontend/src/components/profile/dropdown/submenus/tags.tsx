@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
 
 import { type User, userTagNames, userTags } from "~/api/user";
@@ -8,7 +9,6 @@ import {
 	DropdownMenuSub,
 	DropdownMenuSubContent
 } from "~/components/dropdown";
-import { useTranslations } from "next-intl";
 import { useToast } from "~/hooks/use-toast";
 
 export const ProfileDropdownTagsSubmenu: FC<

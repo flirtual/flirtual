@@ -2,6 +2,7 @@
 
 import shuffle from "fast-shuffle";
 import { MoveLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { entries } from "remeda";
 
@@ -13,7 +14,6 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 

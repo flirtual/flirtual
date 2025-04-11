@@ -1,12 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 

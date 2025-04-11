@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { Subscription } from "~/api/subscription";
@@ -11,7 +12,6 @@ import {
 	FormButton
 } from "~/components/forms";
 import { ModelCard } from "~/components/model-card";
-import { useTranslations } from "next-intl";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 

@@ -23,7 +23,6 @@ import {
 	AlertDialogTitle
 } from "./dialog/alert";
 import { DialogFooter } from "./dialog/dialog";
-import { SafeArea } from "@capacitor-community/safe-area";
 
 const NativeStartup: React.FC = () => {
 	const t = useTranslations();

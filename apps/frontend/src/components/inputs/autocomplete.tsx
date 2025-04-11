@@ -50,22 +50,22 @@ export function InputAutocomplete<K extends string>(
 			options.length === 0
 				? []
 				: values
-					.map((value) => {
-						const option
+						.map((value) => {
+							const option
 								= options.find((option) => option.key === value)
-								?? (supportArbitrary
-									? {
-											key: value,
-											label: value,
-											definition: value,
-											definitionLink: value,
-											hidden: false
-										}
-									: undefined);
+									?? (supportArbitrary
+										? {
+												key: value,
+												label: value,
+												definition: value,
+												definitionLink: value,
+												hidden: false
+											}
+										: undefined);
 
-						return !option?.hidden && option;
-					})
-					.filter(Boolean),
+							return !option?.hidden && option;
+						})
+						.filter(Boolean),
 		[options, values, supportArbitrary]
 	);
 
@@ -93,8 +93,8 @@ export function InputAutocomplete<K extends string>(
 		() =>
 			inputValue
 				? fuzzySearch(inputValue, potentialOptions, {
-					keySelector: (option) => option.label
-				})
+						keySelector: (option) => option.label
+					})
 				: potentialOptions,
 		[inputValue, potentialOptions]
 	);

@@ -1,4 +1,5 @@
 import { Search, ShieldCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC, PropsWithChildren } from "react";
 
@@ -12,7 +13,6 @@ import {
 	DropdownMenuSubContent
 } from "~/components/dropdown";
 import { Link } from "~/components/link";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";

@@ -44,13 +44,13 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 			)}
 			data-active={active ? "" : undefined}
 		>
-			<Slot className="aspect-square h-6 group-hocus:fill-white-20 desktop:h-8">
+			<Slot className="group-hocus:fill-white-20 aspect-square h-6 desktop:h-8">
 				{icon}
 			</Slot>
 			{(rankedMode && (props.id === "date-mode-switch" || props.id === "homie-mode-switch") && (
 				<span className={twMerge(
 					"pr-2",
-					active ? "text-white-20" : "hidden text-black-70 group-hocus:text-white-20 dark:text-white-20 desktop:block"
+					active ? "text-white-20" : "group-hocus:text-white-20 hidden text-black-70 dark:text-white-20 desktop:block"
 				)}
 				>
 					{props.id === "date-mode-switch" ? "Ranked" : "Casual"}

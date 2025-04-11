@@ -1,6 +1,7 @@
 "use client";
 
 import { MoveLeft, Search } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
@@ -9,7 +10,6 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
@@ -63,7 +63,7 @@ export const Finish3Form: FC = () => {
 			}) => {
 				const totalInterests
 					= defaultInterests.props.value.length
-					+ customInterests.props.value.length;
+						+ customInterests.props.value.length;
 
 				return (
 					<>

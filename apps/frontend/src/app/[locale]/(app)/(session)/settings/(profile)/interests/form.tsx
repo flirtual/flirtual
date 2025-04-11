@@ -14,6 +14,7 @@ import {
 	Trophy,
 	User
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { Dispatch, FC } from "react";
 import { groupBy } from "remeda";
@@ -31,7 +32,6 @@ import {
 import { Pill } from "~/components/profile/pill/pill";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -217,7 +217,7 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 		<div
 			style={{
 				backgroundImage: `conic-gradient(var(--theme-1) ${(current / maximum) * 360
-					}deg, transparent 0deg)`
+				}deg, transparent 0deg)`
 			}}
 			className={twMerge("pointer-events-none fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),5.5rem)] right-4 flex size-14 items-center justify-center rounded-full vision:bottom-4 desktop:bottom-4", className)}
 		>
@@ -273,7 +273,7 @@ export const InterestsForm: FC = () => {
 			}) => {
 				const totalInterests
 					= defaultInterests.props.value.length
-					+ customInterests.props.value.length;
+						+ customInterests.props.value.length;
 
 				return (
 					<>

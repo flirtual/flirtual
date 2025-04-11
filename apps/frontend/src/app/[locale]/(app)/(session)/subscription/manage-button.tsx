@@ -4,29 +4,15 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type FC, useState, useTransition } from "react";
 
-import { Subscription } from "~/api/subscription";
 import { Button } from "~/components/button";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger
-} from "~/components/dialog/alert";
 import {
 	Dialog,
 	DialogContent,
-	DialogFooter,
 	DialogTitle
 } from "~/components/dialog/dialog";
-import { InlineLink } from "~/components/inline-link";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { urls } from "~/urls";
 
 export const ManageButton: FC = () => {
 	const [session] = useSession();

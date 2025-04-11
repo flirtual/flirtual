@@ -7,7 +7,6 @@ import { twMerge } from "tailwind-merge";
 import { useSession } from "~/hooks/use-session";
 import { emptyObject } from "~/utilities";
 
-import { InputLanguageSelect } from "./inputs/specialized/language-select";
 import { SupportButton } from "./layout/support-button";
 import { FlirtualLogo } from "./logo";
 

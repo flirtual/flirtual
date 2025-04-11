@@ -1,6 +1,7 @@
 "use client";
 
 import { MoveLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
@@ -17,7 +18,6 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 

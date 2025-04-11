@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import useSWR from "swr";
 import { twMerge } from "tailwind-merge";
@@ -9,7 +10,6 @@ import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Image } from "~/components/image";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 

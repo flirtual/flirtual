@@ -66,8 +66,8 @@ export const Preferences = {
 			.json(options)
 			.post()
 			.json<{
-				email: NotificationPreferences;
-				push: NotificationPreferences;
-			}>();
+			email: NotificationPreferences;
+			push: NotificationPreferences;
+		}>();
 	}
 };

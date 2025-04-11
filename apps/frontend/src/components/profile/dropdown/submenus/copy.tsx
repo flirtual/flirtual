@@ -7,9 +7,10 @@ import {
 	Link2,
 	Share2
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
 
-import { ConnectionMetadata, type ConnectionType } from "~/api/connections";
+import type { ConnectionType } from "~/api/connections";
 import { displayName, type User } from "~/api/user";
 import {
 	DropdownMenuItem,
@@ -19,7 +20,6 @@ import {
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger
 } from "~/components/dropdown";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urls } from "~/urls";
 

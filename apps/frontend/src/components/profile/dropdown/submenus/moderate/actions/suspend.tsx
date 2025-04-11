@@ -1,7 +1,7 @@
 import { Gavel, Languages } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { type FC, type PropsWithChildren, use, useMemo, useState } from "react";
+import { type FC, type PropsWithChildren, useMemo, useState } from "react";
 import { mutate } from "swr";
 
 import { ProspectKind } from "~/api/matchmaking";
@@ -26,7 +26,6 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useTranslations } from "next-intl";
 import { useToast } from "~/hooks/use-toast";
 import { withSuspense } from "~/hooks/with-suspense";
 import { queueKey, userKey } from "~/swr";
@@ -151,33 +150,33 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 									)}
 								</FormField>
 								{message.props.value !== tAttribute[reasonId.props.value]?.details
-									&& user.preferences?.language && user.preferences?.language !== locale && (
-										<div className="flex flex-col gap-4">
-											<FormMessage size="sm" type="warning">
-												Custom messages are not automatically translated.
-												{" "}
-												Please translate to the user's preferred language (
-												{expectedLanguageName}
-												) before sending. Double check the translation for accuracy!
-											</FormMessage>
-											<Button
-												Icon={Languages}
-												size="sm"
-												onClick={async () => {
-													const { text } = await OpenAI.translate({
-														language: user.preferences?.language ?? "en",
-														text: message.props.value
-													});
+								&& user.preferences?.language && user.preferences?.language !== locale && (
+									<div className="flex flex-col gap-4">
+										<FormMessage size="sm" type="warning">
+											Custom messages are not automatically translated.
+											{" "}
+											Please translate to the user's preferred language (
+											{expectedLanguageName}
+											) before sending. Double check the translation for accuracy!
+										</FormMessage>
+										<Button
+											Icon={Languages}
+											size="sm"
+											onClick={async () => {
+												const { text } = await OpenAI.translate({
+													language: user.preferences?.language ?? "en",
+													text: message.props.value
+												});
 
-													message.props.onChange(text);
-												}}
-											>
-												Translate to
-												{" "}
-												{expectedLanguageName}
-											</Button>
-										</div>
-									)}
+												message.props.onChange(text);
+											}}
+										>
+											Translate to
+											{" "}
+											{expectedLanguageName}
+										</Button>
+									</div>
+								)}
 								<DialogFooter>
 									<Button
 										kind="tertiary"

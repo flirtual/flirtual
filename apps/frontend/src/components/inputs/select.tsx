@@ -15,72 +15,66 @@ const Select = SelectPrimitive.Root;
 const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
-const SelectTrigger = React.forwardRef<
-	React.ComponentRef<typeof SelectPrimitive.Trigger>,
-	{
-		Icon?: FC<React.ComponentProps<"svg">>;
-	} & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, Icon = ChevronsUpDown, ...props }, reference) => (
-	<SelectPrimitive.Trigger
-		asChild
-		className={twMerge(
-			"focusable flex h-11 w-full items-center gap-4 overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 data-[state=open]:focused disabled:cursor-not-allowed disabled:opacity-50 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20",
-			className
-		)}
-		ref={reference}
-		{...props}
-	>
-		<div className="relative cursor-pointer" tabIndex={0}>
-			<SelectPrimitive.Icon className="flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2">
-				<Icon className="size-6 text-white-20" />
-			</SelectPrimitive.Icon>
-			{children}
-		</div>
-	</SelectPrimitive.Trigger>
-));
+function SelectTrigger({ ref: reference, className, children, Icon = ChevronsUpDown, ...props }: {
+	Icon?: FC<React.ComponentProps<"svg">>;
+} & { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Trigger> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>) {
+	return (
+		<SelectPrimitive.Trigger
+			asChild
+			className={twMerge(
+				"focusable flex h-11 w-full items-center gap-4 overflow-hidden rounded-xl bg-white-40 text-black-80 shadow-brand-1 data-[state=open]:focused disabled:cursor-not-allowed disabled:opacity-50 vision:bg-white-40/70 dark:bg-black-60 dark:text-white-20",
+				className
+			)}
+			ref={reference}
+			{...props}
+		>
+			<div className="relative cursor-pointer" tabIndex={0}>
+				<SelectPrimitive.Icon className="flex aspect-square h-full shrink-0 items-center justify-center bg-brand-gradient p-2">
+					<Icon className="size-6 text-white-20" />
+				</SelectPrimitive.Icon>
+				{children}
+			</div>
+		</SelectPrimitive.Trigger>
+	);
+}
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
-const SelectScrollUpButton = React.forwardRef<
-	React.ComponentRef<typeof SelectPrimitive.ScrollUpButton>,
-	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, reference) => (
-	<SelectPrimitive.ScrollUpButton
-		className={twMerge(
-			"absolute inset-x-0 top-0 z-10 flex h-7 cursor-default items-center justify-center bg-gradient-to-b from-black-90/5 to-transparent py-1",
-			className
-		)}
-		ref={reference}
-		{...props}
-	>
-		<ChevronUp className="size-4 text-black-90 dark:text-white-10" />
-	</SelectPrimitive.ScrollUpButton>
-));
+function SelectScrollUpButton({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.ScrollUpButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>) {
+	return (
+		<SelectPrimitive.ScrollUpButton
+			className={twMerge(
+				"absolute inset-x-0 top-0 z-10 flex h-7 cursor-default items-center justify-center bg-gradient-to-b from-black-90/5 to-transparent py-1",
+				className
+			)}
+			ref={reference}
+			{...props}
+		>
+			<ChevronUp className="size-4 text-black-90 dark:text-white-10" />
+		</SelectPrimitive.ScrollUpButton>
+	);
+}
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
-const SelectScrollDownButton = React.forwardRef<
-	React.ComponentRef<typeof SelectPrimitive.ScrollDownButton>,
-	React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, reference) => (
-	<SelectPrimitive.ScrollDownButton
-		className={twMerge(
-			"absolute inset-x-0 bottom-0 z-10 flex h-7 cursor-default items-center justify-center bg-gradient-to-t from-black-90/5 to-transparent py-1",
-			className
-		)}
-		ref={reference}
-		{...props}
-	>
-		<ChevronDown className="size-4 text-black-90 dark:text-white-10" />
-	</SelectPrimitive.ScrollDownButton>
-));
+function SelectScrollDownButton({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.ScrollDownButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>) {
+	return (
+		<SelectPrimitive.ScrollDownButton
+			className={twMerge(
+				"absolute inset-x-0 bottom-0 z-10 flex h-7 cursor-default items-center justify-center bg-gradient-to-t from-black-90/5 to-transparent py-1",
+				className
+			)}
+			ref={reference}
+			{...props}
+		>
+			<ChevronDown className="size-4 text-black-90 dark:text-white-10" />
+		</SelectPrimitive.ScrollDownButton>
+	);
+}
 SelectScrollDownButton.displayName
 	= SelectPrimitive.ScrollDownButton.displayName;
 
-const SelectContent = React.forwardRef<
-	React.ComponentRef<typeof SelectPrimitive.Content>,
-	{
-		rows?: number;
-	} & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->((props, reference) => {
+function SelectContent({ ref: reference, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Content> | null> } & {
+	rows?: number;
+} & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>) {
 	const {
 		className,
 		children,
@@ -117,48 +111,45 @@ const SelectContent = React.forwardRef<
 			</SelectPrimitive.Content>
 		</SelectPrimitive.Portal>
 	);
-});
+}
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
-const SelectLabel = React.forwardRef<
-	React.ComponentRef<typeof SelectPrimitive.Label>,
-	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, reference) => (
-	<SelectPrimitive.Label
-		className={twMerge("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
-		ref={reference}
-		{...props}
-	/>
-));
+function SelectLabel({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Label> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>) {
+	return (
+		<SelectPrimitive.Label
+			className={twMerge("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
+			ref={reference}
+			{...props}
+		/>
+	);
+}
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
-const SelectItem = React.forwardRef<
-	React.ComponentRef<typeof SelectPrimitive.Item>,
-	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, reference) => (
-	<SelectPrimitive.Item
-		className={twMerge(
-			"relative flex w-full cursor-pointer items-center px-4 py-2 text-left font-nunito text-black-70 focus:outline-none data-[disabled]:pointer-events-none data-[state=checked]:bg-brand-gradient data-[state=checked]:text-white-10 data-[disabled]:opacity-50 hocus:bg-white-40 hocus:outline-none dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20",
-			className
-		)}
-		ref={reference}
-		{...props}
-	>
-		{children}
-	</SelectPrimitive.Item>
-));
+function SelectItem({ ref: reference, className, children, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Item> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>) {
+	return (
+		<SelectPrimitive.Item
+			className={twMerge(
+				"relative flex w-full cursor-pointer items-center px-4 py-2 text-left font-nunito text-black-70 focus:outline-none data-[disabled]:pointer-events-none data-[state=checked]:bg-brand-gradient data-[state=checked]:text-white-10 data-[disabled]:opacity-50 hocus:bg-white-40 hocus:outline-none dark:text-white-20 dark:hocus:bg-black-80/50 dark:hocus:text-white-20",
+				className
+			)}
+			ref={reference}
+			{...props}
+		>
+			{children}
+		</SelectPrimitive.Item>
+	);
+}
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
-const SelectSeparator = React.forwardRef<
-	React.ComponentRef<typeof SelectPrimitive.Separator>,
-	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, reference) => (
-	<SelectPrimitive.Separator
-		className={twMerge("-mx-1 my-1 h-px bg-black-60", className)}
-		ref={reference}
-		{...props}
-	/>
-));
+function SelectSeparator({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Separator> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>) {
+	return (
+		<SelectPrimitive.Separator
+			className={twMerge("-mx-1 my-1 h-px bg-black-60", className)}
+			ref={reference}
+			{...props}
+		/>
+	);
+}
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {

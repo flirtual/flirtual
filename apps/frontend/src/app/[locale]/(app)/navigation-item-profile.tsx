@@ -17,6 +17,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { DiscordOutlineIcon } from "~/components/icons";
+import { ProfileNavigationCannyButton } from "~/components/layout/canny-button";
 import { Link } from "~/components/link";
 import { UserAvatar } from "~/components/user-avatar";
 import { useCanny } from "~/hooks/use-canny";
@@ -26,8 +27,6 @@ import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
-
-import { ProfileNavigationCannyButton } from "~/components/layout/canny-button";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
 	{ className?: string } & (
@@ -45,11 +44,11 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 
 	return "href" in props
 		? (
-			<Link {...props} className={className} />
-		)
+				<Link {...props} className={className} />
+			)
 		: (
-			<button {...props} className={className} type="button" />
-		);
+				<button {...props} className={className} type="button" />
+			);
 };
 
 export const NavigationItemProfile: FC = () => {
@@ -121,7 +120,7 @@ export const NavigationItemProfile: FC = () => {
 							href={urls.user.me}
 						>
 							<UserAvatar
-								className="mt-1.5 size-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 desktop:mb-2 desktop:mt-0"
+								className="group-hocus:brightness-90 mt-1.5 size-8 scale-125 rounded-full transition-transform desktop:mb-2 desktop:mt-0"
 								height={40}
 								user={user}
 								variant="icon"

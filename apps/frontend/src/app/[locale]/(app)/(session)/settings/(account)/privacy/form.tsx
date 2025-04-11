@@ -1,6 +1,7 @@
 "use client";
 
 import { HelpCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Preferences } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
@@ -8,7 +9,6 @@ import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
-import { useTranslations } from "next-intl";
 import { useCurrentUser } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";

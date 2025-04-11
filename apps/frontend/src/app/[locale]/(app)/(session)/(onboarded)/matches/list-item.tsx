@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { FC, RefAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -11,7 +12,6 @@ import { Image } from "~/components/image";
 import { Link } from "~/components/link";
 import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar } from "~/components/user-avatar";
-import { useTranslations } from "next-intl";
 import { customEmojis } from "~/hooks/use-talkjs";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
@@ -25,16 +25,16 @@ function replaceEmojis(message: string) {
 	return message.split(/(:\w+:)/g).map((part, index) => {
 		return customEmojis[part]
 			? (
-				<Image
-					alt={part}
-					className="inline-block"
-					height={24}
-					// eslint-disable-next-line react/no-array-index-key
-					key={index}
-					src={customEmojis[part].url}
-					width={24}
-				/>
-			)
+					<Image
+						alt={part}
+						className="inline-block"
+						height={24}
+						// eslint-disable-next-line react/no-array-index-key
+						key={index}
+						src={customEmojis[part].url}
+						width={24}
+					/>
+				)
 			: part;
 	});
 }
@@ -92,25 +92,25 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						</span>
 						{kind === "love"
 							? (
-								<HeartIcon className="inline h-5" />
-							)
+									<HeartIcon className="inline h-5" />
+								)
 							: (
-								<PeaceIcon className="inline h-5" />
-							)}
+									<PeaceIcon className="inline h-5" />
+								)}
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
 						<span data-mask className="w-full truncate text-black-50 dark:text-white-40">
 							{lastMessage && !(lastMessage.system && lastMessage.content === "It's a match!")
 								? (
-									<>
-										{replaceEmojis((lastMessage?.senderId !== userId && !lastMessage.system)
-											? t("level_orange_stingray_fulfill", { message: lastMessage.content })
-											: lastMessage.content)}
-									</>
-								)
+										<>
+											{replaceEmojis((lastMessage?.senderId !== userId && !lastMessage.system)
+												? t("level_orange_stingray_fulfill", { message: lastMessage.content })
+												: lastMessage.content)}
+										</>
+									)
 								: (
-									<span className="truncate">{t("talkjs_match_message")}</span>
-								)}
+										<span className="truncate">{t("talkjs_match_message")}</span>
+									)}
 						</span>
 						{lastMessage && (
 							<TimeRelative

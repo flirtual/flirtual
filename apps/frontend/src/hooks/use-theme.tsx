@@ -1,16 +1,10 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { PropsWithChildren, RefAttributes } from "react";
-import { createContext, use, useCallback, useEffect, useMemo } from "react";
+import { createContext, use, useMemo } from "react";
 
-import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
-import { resolveTheme, type Theme } from "~/theme";
-
-import { useDevice } from "./use-device";
-import { useMediaQuery } from "./use-media-query";
-import { useSession } from "./use-session";
+import type { PreferenceTheme } from "~/api/user/preferences";
+import type { Theme } from "~/theme";
 
 const Context = createContext(
 	{} as {
@@ -43,7 +37,7 @@ export function ThemeProvider({ children, theme: sessionTheme, ...props }: Theme
 		</Context>
 	);
 
-	/*const [session, mutateSession] = useSession();
+	/* const [session, mutateSession] = useSession();
 	const { vision } = useDevice();
 	const router = useRouter();
 
@@ -106,7 +100,7 @@ export function ThemeProvider({ children, theme: sessionTheme, ...props }: Theme
 				{children}
 			</Slot>
 		</Context>
-	);*/
+	); */
 }
 
 ThemeProvider.displayName = "ThemeProvider";

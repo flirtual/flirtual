@@ -80,9 +80,9 @@ export const Connection = {
 			.url(this.authorizeUrl({ ...options, json: true }), true)
 			.get()
 			.json<{
-				state: string;
-				authorizeUrl: string;
-			}>();
+			state: string;
+			authorizeUrl: string;
+		}>();
 	},
 	grant(options: ConnectionGrantOptions) {
 		return this.api.url("/grant").query(options).get().res();

@@ -19,35 +19,33 @@ const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
 const AlertDialogPortal = AlertDialogPrimitive.Portal;
 
-const AlertDialogOverlay = React.forwardRef<
-	React.ComponentRef<typeof AlertDialogPrimitive.Overlay>,
-	React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>
->(({ className, ...props }, reference) => (
-	<AlertDialogPrimitive.Overlay
-		className={twMerge(dialogOverlayClassName, className)}
-		{...props}
-		ref={reference}
-	/>
-));
+function AlertDialogOverlay({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>) {
+	return (
+		<AlertDialogPrimitive.Overlay
+			className={twMerge(dialogOverlayClassName, className)}
+			{...props}
+			ref={reference}
+		/>
+	);
+}
 AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
 
-const AlertDialogContent = React.forwardRef<
-	React.ComponentRef<typeof AlertDialogPrimitive.Content>,
-	React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
->(({ className, children, ...props }, reference) => (
-	<AlertDialogPortal>
-		<AlertDialogOverlay />
-		<ThemedBorder asChild>
-			<AlertDialogPrimitive.Content
-				className={twMerge(dialogContentClassName, className)}
-				ref={reference}
-				{...props}
-			>
-				<div className={dialogContentInnerClassName}>{children}</div>
-			</AlertDialogPrimitive.Content>
-		</ThemedBorder>
-	</AlertDialogPortal>
-));
+function AlertDialogContent({ ref: reference, className, children, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>) {
+	return (
+		<AlertDialogPortal>
+			<AlertDialogOverlay />
+			<ThemedBorder asChild>
+				<AlertDialogPrimitive.Content
+					className={twMerge(dialogContentClassName, className)}
+					ref={reference}
+					{...props}
+				>
+					<div className={dialogContentInnerClassName}>{children}</div>
+				</AlertDialogPrimitive.Content>
+			</ThemedBorder>
+		</AlertDialogPortal>
+	);
+}
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName;
 
 function AlertDialogHeader({
@@ -66,49 +64,43 @@ function AlertDialogHeader({
 }
 AlertDialogHeader.displayName = "AlertDialogHeader";
 
-const AlertDialogTitle = React.forwardRef<
-	React.ComponentRef<typeof AlertDialogPrimitive.Title>,
-	React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
->(({ className, ...props }, reference) => (
-	<AlertDialogPrimitive.Title
-		className={twMerge(dialogTitleClassName, className)}
-		ref={reference}
-		{...props}
-	/>
-));
+function AlertDialogTitle({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Title> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>) {
+	return (
+		<AlertDialogPrimitive.Title
+			className={twMerge(dialogTitleClassName, className)}
+			ref={reference}
+			{...props}
+		/>
+	);
+}
 AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName;
 
-const AlertDialogDescription = React.forwardRef<
-	React.ComponentRef<typeof AlertDialogPrimitive.Description>,
-	React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
->(({ className, ...props }, reference) => (
-	<AlertDialogPrimitive.Description
-		className={twMerge(dialogDescriptionClassName, className)}
-		ref={reference}
-		{...props}
-	/>
-));
+function AlertDialogDescription({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Description> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>) {
+	return (
+		<AlertDialogPrimitive.Description
+			className={twMerge(dialogDescriptionClassName, className)}
+			ref={reference}
+			{...props}
+		/>
+	);
+}
 AlertDialogDescription.displayName
 	= AlertDialogPrimitive.Description.displayName;
 
-const AlertDialogAction = React.forwardRef<
-	React.ComponentRef<typeof AlertDialogPrimitive.Action>,
-	React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
->(({ className, ...props }, reference) => (
-	<AlertDialogPrimitive.Action
-		className={className}
-		ref={reference}
-		{...props}
-	/>
-));
+function AlertDialogAction({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Action> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>) {
+	return (
+		<AlertDialogPrimitive.Action
+			className={className}
+			ref={reference}
+			{...props}
+		/>
+	);
+}
 AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 
-const AlertDialogCancel = React.forwardRef<
-	React.ComponentRef<typeof AlertDialogPrimitive.Cancel>,
-	React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
->(({ ...props }, reference) => (
-	<AlertDialogPrimitive.Cancel ref={reference} {...props} />
-));
+function AlertDialogCancel({ ref: reference, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Cancel> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>) {
+	return <AlertDialogPrimitive.Cancel ref={reference} {...props} />;
+}
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 
 export {

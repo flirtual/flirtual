@@ -1,6 +1,7 @@
 "use client";
 
 import { MoveLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { Profile } from "~/api/user/profile";
@@ -10,7 +11,6 @@ import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { InputText } from "~/components/inputs";
 import { useDevice } from "~/hooks/use-device";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 

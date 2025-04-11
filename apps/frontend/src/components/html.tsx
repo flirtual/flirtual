@@ -8,7 +8,7 @@ export type HtmlProps = {
 } & Omit<React.ComponentProps<"span">, "children">;
 
 export const Html: React.FC<HtmlProps> = ({ children, ...props }) => (
-	// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+
 	<span
 		data-mask
 		className={twMerge(

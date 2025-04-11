@@ -119,91 +119,91 @@ export function useDefaultTour(enabled: boolean = true) {
 			({ next, back, cancel }) =>
 				enabled
 					? [
-						{
-							id: "introduction",
-							title: t("welcome_to_flirtual"),
-							text: `
+							{
+								id: "introduction",
+								title: t("welcome_to_flirtual"),
+								text: `
 					${t("tidy_known_whale_imagine")}
 					`,
-							buttons: [
-								{
-									text: t("exit"),
-									action: cancel
-								},
-								{
-									classes: "primary shadow-brand-1",
-									text: t("continue"),
-									action: next
-								}
-							]
-						},
-						{
-							id: "like",
-							title: t("royal_house_peacock_roar"),
-							text: t("helpful_petty_peacock_hunt"),
-							attachTo: { element: "#like-button", on: "top" },
-							modalOverlayOpeningRadius: 33
-						},
-						{
-							id: "friend",
-							title: t("royal_house_peacock_roar"),
-							text: t("light_flat_racoon_buzz"),
-							attachTo: { element: "#friend-button", on: "top" },
-							modalOverlayOpeningRadius: 33
-						},
-						{
-							id: "pass",
-							title: t("bad_ideal_stingray_amuse"),
-							text: t("away_lime_hound_launch"),
-							attachTo: { element: "#pass-button", on: "top" },
-							modalOverlayOpeningRadius: 26
-						},
-						{
-							id: "undo",
-							title: t("mean_such_flamingo_drop"),
-							text: t("aloof_caring_niklas_fade"),
-							attachTo: { element: "#undo-button", on: "top" },
-							modalOverlayOpeningRadius: 26
-						},
-						{
-							id: "conversations",
-							title: t("basic_tense_mayfly_devour"),
-							text: t("mushy_sound_nils_fetch"),
-							attachTo: {
-								element: "#conversation-button",
-								on: "top"
+								buttons: [
+									{
+										text: t("exit"),
+										action: cancel
+									},
+									{
+										classes: "primary shadow-brand-1",
+										text: t("continue"),
+										action: next
+									}
+								]
 							},
-							modalOverlayOpeningRadius: 20,
-							modalOverlayOpeningPadding: 4
-						},
-						{
-							id: "browse-mode",
-							title: t("minor_gaudy_seal_ask"),
-							text: `
+							{
+								id: "like",
+								title: t("royal_house_peacock_roar"),
+								text: t("helpful_petty_peacock_hunt"),
+								attachTo: { element: "#like-button", on: "top" },
+								modalOverlayOpeningRadius: 33
+							},
+							{
+								id: "friend",
+								title: t("royal_house_peacock_roar"),
+								text: t("light_flat_racoon_buzz"),
+								attachTo: { element: "#friend-button", on: "top" },
+								modalOverlayOpeningRadius: 33
+							},
+							{
+								id: "pass",
+								title: t("bad_ideal_stingray_amuse"),
+								text: t("away_lime_hound_launch"),
+								attachTo: { element: "#pass-button", on: "top" },
+								modalOverlayOpeningRadius: 26
+							},
+							{
+								id: "undo",
+								title: t("mean_such_flamingo_drop"),
+								text: t("aloof_caring_niklas_fade"),
+								attachTo: { element: "#undo-button", on: "top" },
+								modalOverlayOpeningRadius: 26
+							},
+							{
+								id: "conversations",
+								title: t("basic_tense_mayfly_devour"),
+								text: t("mushy_sound_nils_fetch"),
+								attachTo: {
+									element: "#conversation-button",
+									on: "top"
+								},
+								modalOverlayOpeningRadius: 20,
+								modalOverlayOpeningPadding: 4
+							},
+							{
+								id: "browse-mode",
+								title: t("minor_gaudy_seal_ask"),
+								text: `
 					${t("chunky_zany_leopard_peek")}
 					<br/><br/>
 					${t("honest_loud_felix_favor")}`,
-							attachTo: {
-								element: "#browse-mode-switch",
-								on: "top"
+								attachTo: {
+									element: "#browse-mode-switch",
+									on: "top"
+								},
+								modalOverlayOpeningRadius: mobile ? 28 : 33
 							},
-							modalOverlayOpeningRadius: mobile ? 28 : 33
-						},
-						{
-							id: "profile-dropdown",
-							title: t("nice_wise_ibex_accept"),
-							text: t("sad_spare_grizzly_twirl"),
-							attachTo: {
-								element: "#profile-dropdown-button",
-								on: "top"
+							{
+								id: "profile-dropdown",
+								title: t("nice_wise_ibex_accept"),
+								text: t("sad_spare_grizzly_twirl"),
+								attachTo: {
+									element: "#profile-dropdown-button",
+									on: "top"
+								},
+								modalOverlayOpeningRadius: 20,
+								modalOverlayOpeningPadding: 4
 							},
-							modalOverlayOpeningRadius: 20,
-							modalOverlayOpeningPadding: 4
-						},
-						{
-							id: "conclusion",
-							title: t("every_agent_sloth_advise"),
-							text: `
+							{
+								id: "conclusion",
+								title: t("every_agent_sloth_advise"),
+								text: `
 					${t("mealy_lime_mayfly_support")}
 					<br/><br/>
 					${t("dry_tame_sloth_yell")}
@@ -211,21 +211,21 @@ export function useDefaultTour(enabled: boolean = true) {
 					${t("chunky_lost_parrot_roam")}
 					<br/>
 					${t("that_active_seal_nail")}`,
-							modalOverlayOpeningRadius: 20,
-							modalOverlayOpeningPadding: 4,
-							buttons: [
-								{
-									text: t("back"),
-									action: back
-								},
-								{
-									classes: "primary shadow-brand-1",
-									text: t("start_matching"),
-									action: next
-								}
-							]
-						}
-					]
+								modalOverlayOpeningRadius: 20,
+								modalOverlayOpeningPadding: 4,
+								buttons: [
+									{
+										text: t("back"),
+										action: back
+									},
+									{
+										classes: "primary shadow-brand-1",
+										text: t("start_matching"),
+										action: next
+									}
+								]
+							}
+						]
 					: [],
 			[enabled, mobile, t]
 		),

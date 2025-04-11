@@ -146,11 +146,11 @@ export const DebugInfo: React.FC = () => {
 					<span className="font-mono">
 						{session
 							? (
-								<TimeRelative value={session.createdAt} />
-							)
+									<TimeRelative value={session.createdAt} />
+								)
 							: (
-								t("brief_neat_kestrel_ascend")
-							)}
+									t("brief_neat_kestrel_ascend")
+								)}
 					</span>
 				</div>
 			</div>

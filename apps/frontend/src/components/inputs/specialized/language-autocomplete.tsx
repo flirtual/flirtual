@@ -32,8 +32,8 @@ export const InputLanguageAutocomplete: React.FC<
 				.map((languageId) => {
 					const label
 						= tAttribute[languageId]?.name
-						?? languageNames.of(languageId)
-						?? languageId;
+							?? languageNames.of(languageId)
+							?? languageId;
 
 					return {
 						key: languageId,

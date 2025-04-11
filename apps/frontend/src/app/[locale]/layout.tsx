@@ -32,6 +32,8 @@ import { StagingBanner } from "./staging-banner";
 
 import "~/css/index.css";
 
+export const dynamic = "error";
+
 // eslint-disable-next-line unicorn/prevent-abbreviations
 export function generateStaticParams() {
 	return locales.map((locale) => ({ locale }));

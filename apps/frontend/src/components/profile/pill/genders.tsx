@@ -42,15 +42,15 @@ export const GenderPills: FC<GenderPillsProps> = ({
 		...new Set(
 			simple
 				? profileGenders
-					.map((gender) =>
-						gender.aliasOf
-							? keyedGenders[gender.aliasOf] ?? gender
-							: gender
-					)
-					.filter((gender) => {
-						if (simple) return gender.simple || gender.fallback;
-						return true;
-					})
+						.map((gender) =>
+							gender.aliasOf
+								? keyedGenders[gender.aliasOf] ?? gender
+								: gender
+						)
+						.filter((gender) => {
+							if (simple) return gender.simple || gender.fallback;
+							return true;
+						})
 				: profileGenders
 		)
 	];

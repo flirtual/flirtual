@@ -1,6 +1,7 @@
 "use client";
 
 import { Hash, X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useState } from "react";
@@ -17,16 +18,15 @@ import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useFormContext } from "~/hooks/use-input-form";
-import { useLocale, useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
+import { defaultLocale } from "~/i18n/routing";
 import { urls } from "~/urls";
 
 import { ProfileColorPreview } from "./profile-preview";
 import { ThemePreview } from "./theme-preview";
 import { defaultProfileColors, recommendedThemes } from "./themes";
-import { defaultLocale } from "~/i18n/routing";
 
 export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ value, onChange }) => {
 	return (
@@ -190,7 +190,7 @@ const ReccommendedProfileThemes: FC = () => {
 					/>
 					{theme.name === "touch_grass" && touchingGrass && (
 						<span
-							className="absolute left-0 top-7 animate-touch-grass -scale-x-100"
+							className="absolute left-0 top-7 -scale-x-100 animate-touch-grass"
 							onAnimationEnd={() => {
 								setTouchingGrass(false);
 							}}
@@ -212,7 +212,7 @@ const SaveButton: FC = () => {
 	if (!session) return null;
 	const disabled
 		= (!session.user.subscription || !session.user.subscription.active)
-		&& (changes.includes("color1") || changes.includes("color2"));
+			&& (changes.includes("color1") || changes.includes("color2"));
 
 	return (
 		<FormButton disabled={disabled}>

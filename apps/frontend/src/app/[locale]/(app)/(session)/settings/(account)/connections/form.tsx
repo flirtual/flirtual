@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Profile } from "~/api/user/profile";
@@ -11,7 +12,6 @@ import { InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { ProfilePlaylist } from "~/components/profile/playlist";
 import { useDevice } from "~/hooks/use-device";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -152,26 +152,26 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 							</FormField>
 							{playlistSubmitted === "deezer.page.link"
 								? (
-									<span className="italic text-red-600">
-										{t("drab_white_lionfish_nurture")}
-									</span>
-								)
-								: playlistSubmitted === "youtube"
-									? (
 										<span className="italic text-red-600">
-											{t("trite_alive_orangutan_foster")}
+											{t("drab_white_lionfish_nurture")}
 										</span>
 									)
-									: playlistSubmitted === "other"
-										? (
-											<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
-												{t.rich("main_civil_jaguar_peel", {
-													strong: (children) => (
-														<strong>{children}</strong>
-													)
-												})}
+								: playlistSubmitted === "youtube"
+									? (
+											<span className="italic text-red-600">
+												{t("trite_alive_orangutan_foster")}
 											</span>
 										)
+									: playlistSubmitted === "other"
+										? (
+												<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
+													{t.rich("main_civil_jaguar_peel", {
+														strong: (children) => (
+															<strong>{children}</strong>
+														)
+													})}
+												</span>
+											)
 										: null}
 							<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
 								{t("warm_gray_poodle_reap")}

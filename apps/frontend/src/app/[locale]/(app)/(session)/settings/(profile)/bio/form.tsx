@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 
 import { displayName } from "~/api/user";
@@ -16,7 +17,6 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";

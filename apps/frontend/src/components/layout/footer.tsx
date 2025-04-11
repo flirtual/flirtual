@@ -156,6 +156,7 @@ export const Footer: React.FC<FooterProps> = ({
 					<MadeWithLove />
 					<div className="flex flex-col items-end">
 						<span>{t("copyright", { year: new Date().getFullYear() })}</span>
+						{" "}
 						<InlineLink
 							className="text-sm opacity-75"
 							highlight={false}

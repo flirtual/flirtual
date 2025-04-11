@@ -1,6 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -8,7 +9,6 @@ import useSWR from "swr";
 import { Authentication } from "~/api/auth";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -137,7 +137,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 				{t("add_passkey")}
 				{" "}
 				{!passkeysAvailable
-					&& (native ? t("unsupported_device") : t("unsupported_browser"))}
+				&& (native ? t("unsupported_device") : t("unsupported_browser"))}
 			</Button>
 		</>
 	);

@@ -10,7 +10,6 @@ import { Form, FormInputMessages } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputText } from "~/components/inputs";
-import { SupportButton } from "~/components/layout/support-button";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { urls } from "~/urls";
 

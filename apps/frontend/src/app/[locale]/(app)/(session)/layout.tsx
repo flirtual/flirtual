@@ -20,7 +20,6 @@ export default function AuthenticatedLayout({
 	// const { user } = await Authentication.getSession();
 
 	return (
-
 		<PurchaseProvider>
 			<ShepherdProvider>
 				<NotificationProvider>

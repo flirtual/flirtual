@@ -2,6 +2,7 @@
 
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
@@ -12,7 +13,6 @@ import {
 	type ConnectionType
 } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
-import { useTranslations } from "next-intl";
 import { useLocation } from "~/hooks/use-location";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";

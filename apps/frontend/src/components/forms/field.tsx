@@ -36,11 +36,13 @@ export function FormField<K extends keyof T, T extends FormFieldsDefault>({
 
 	useEffect(() => {
 		if (!autofocus) return;
-		setTimeout(() => {
+		const timeout = setTimeout(() => {
 			if (!reference.current) return;
 			reference.current.scrollIntoView();
 			reference.current.focus();
 		}, 1);
+
+		return () => clearTimeout(timeout);
 	}, [autofocus]);
 
 	return (

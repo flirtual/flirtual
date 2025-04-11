@@ -1,6 +1,7 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
 
@@ -11,7 +12,6 @@ import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
-import { useTranslations } from "next-intl";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import shuffle from "fast-shuffle";
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { entries } from "remeda";
 
@@ -11,7 +12,6 @@ import {
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
-import { useTranslations } from "next-intl";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 

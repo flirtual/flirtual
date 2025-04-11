@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCheck, ChevronLeft, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type FC, Fragment, Suspense, useLayoutEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { twMerge } from "tailwind-merge";
@@ -9,7 +10,6 @@ import { Conversation } from "~/api/conversations";
 import { Button } from "~/components/button";
 import { Link } from "~/components/link";
 import { useConversations } from "~/hooks/use-conversations";
-import { useTranslations } from "next-intl";
 import { useUnreadConversations } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";

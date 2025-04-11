@@ -46,7 +46,7 @@ export type UserTags = (typeof userTags)[number];
 export type UserPasskey = {
 	aaguid: string;
 } &
-	DatedModel & UuidModel;
+DatedModel & UuidModel;
 
 export const UserStatuses = [
 	"registered",
@@ -90,7 +90,7 @@ export type User = {
 	connections?: Array<Connection>;
 	passkeys?: Array<UserPasskey>;
 } &
-	Partial<DatedModel> & UuidModel;
+Partial<DatedModel> & UuidModel;
 
 export interface UserPreview {
 	id: string;
