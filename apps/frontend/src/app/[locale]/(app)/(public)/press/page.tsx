@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { type Locale, useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
@@ -16,9 +17,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function PressPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = await params;
-	const t = await getTranslations();
+export default function PressPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
+	const t = useTranslations();
 
 	return (
 		<ModelCard

@@ -19,7 +19,7 @@ const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
 function DropdownMenuSubTrigger({ ref: reference, className, inset, children, ...props }: {
 	inset?: boolean;
-} & { ref?: React.RefObject<React.ComponentRef<typeof DropdownMenuPrimitive.SubTrigger> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger>) {
+} & { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.SubTrigger> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger>) {
 	return (
 		<DropdownMenuPrimitive.SubTrigger
 			className={twMerge(
@@ -38,7 +38,7 @@ function DropdownMenuSubTrigger({ ref: reference, className, inset, children, ..
 DropdownMenuSubTrigger.displayName
 	= DropdownMenuPrimitive.SubTrigger.displayName;
 
-function DropdownMenuSubContent({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DropdownMenuPrimitive.SubContent> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>) {
+function DropdownMenuSubContent({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.SubContent> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>) {
 	return (
 		<DropdownMenuPrimitive.SubContent
 			className={twMerge(
@@ -53,7 +53,7 @@ function DropdownMenuSubContent({ ref: reference, className, ...props }: { ref?:
 DropdownMenuSubContent.displayName
 	= DropdownMenuPrimitive.SubContent.displayName;
 
-function DropdownMenuContent({ ref: reference, className, sideOffset = 3, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DropdownMenuPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>) {
+function DropdownMenuContent({ ref: reference, className, sideOffset = 3, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>) {
 	return (
 		<DropdownMenuPrimitive.Portal>
 			<DropdownMenuPrimitive.Content
@@ -72,7 +72,7 @@ DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
 function DropdownMenuItem({ ref: reference, className, inset, ...props }: {
 	inset?: boolean;
-} & { ref?: React.RefObject<React.ComponentRef<typeof DropdownMenuPrimitive.Item> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>) {
+} & { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.Item> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>) {
 	return (
 		<DropdownMenuPrimitive.Item
 			className={twMerge(
@@ -87,7 +87,7 @@ function DropdownMenuItem({ ref: reference, className, inset, ...props }: {
 }
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
-function DropdownMenuCheckboxItem({ ref: reference, className, children, checked, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DropdownMenuPrimitive.CheckboxItem> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>) {
+function DropdownMenuCheckboxItem({ ref: reference, className, children, checked, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.CheckboxItem> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>) {
 	return (
 		<DropdownMenuPrimitive.CheckboxItem
 			className={twMerge(
@@ -110,7 +110,7 @@ function DropdownMenuCheckboxItem({ ref: reference, className, children, checked
 DropdownMenuCheckboxItem.displayName
 	= DropdownMenuPrimitive.CheckboxItem.displayName;
 
-function DropdownMenuRadioItem({ ref: reference, className, children, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DropdownMenuPrimitive.RadioItem> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>) {
+function DropdownMenuRadioItem({ ref: reference, className, children, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.RadioItem> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>) {
 	return (
 		<DropdownMenuPrimitive.RadioItem
 			className={twMerge(
@@ -133,7 +133,7 @@ DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;
 
 function DropdownMenuLabel({ ref: reference, className, inset, ...props }: {
 	inset?: boolean;
-} & { ref?: React.RefObject<React.ComponentRef<typeof DropdownMenuPrimitive.Label> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>) {
+} & { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.Label> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>) {
 	return (
 		<DropdownMenuPrimitive.Label
 			className={twMerge(
@@ -148,7 +148,7 @@ function DropdownMenuLabel({ ref: reference, className, inset, ...props }: {
 }
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
-function DropdownMenuSeparator({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DropdownMenuPrimitive.Separator> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>) {
+function DropdownMenuSeparator({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.Separator> | null> } & React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>) {
 	return (
 		<DropdownMenuPrimitive.Separator
 			className={twMerge("my-1 h-0.5 bg-white-30 dark:bg-black-50", className)}

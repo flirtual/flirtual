@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import type { Locale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ModelCard } from "~/components/model-card";
 
@@ -9,7 +12,10 @@ export const metadata: Metadata = {
 	title: "Refer a homie"
 };
 
-export default function SettingsAccountReferralPage() {
+export default function SettingsAccountReferralPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"

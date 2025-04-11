@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import type { Locale } from "next-intl";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
@@ -18,7 +20,10 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function BrandingPage() {
+export default function BrandingPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
 	const t = useTranslations();
 
 	return (

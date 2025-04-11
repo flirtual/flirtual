@@ -17,7 +17,7 @@ const SelectValue = SelectPrimitive.Value;
 
 function SelectTrigger({ ref: reference, className, children, Icon = ChevronsUpDown, ...props }: {
 	Icon?: FC<React.ComponentProps<"svg">>;
-} & { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Trigger> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>) {
+} & { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.Trigger> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>) {
 	return (
 		<SelectPrimitive.Trigger
 			asChild
@@ -39,7 +39,7 @@ function SelectTrigger({ ref: reference, className, children, Icon = ChevronsUpD
 }
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
-function SelectScrollUpButton({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.ScrollUpButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>) {
+function SelectScrollUpButton({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.ScrollUpButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>) {
 	return (
 		<SelectPrimitive.ScrollUpButton
 			className={twMerge(
@@ -55,7 +55,7 @@ function SelectScrollUpButton({ ref: reference, className, ...props }: { ref?: R
 }
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
-function SelectScrollDownButton({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.ScrollDownButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>) {
+function SelectScrollDownButton({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.ScrollDownButton> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>) {
 	return (
 		<SelectPrimitive.ScrollDownButton
 			className={twMerge(
@@ -72,7 +72,7 @@ function SelectScrollDownButton({ ref: reference, className, ...props }: { ref?:
 SelectScrollDownButton.displayName
 	= SelectPrimitive.ScrollDownButton.displayName;
 
-function SelectContent({ ref: reference, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Content> | null> } & {
+function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.Content> | null> } & {
 	rows?: number;
 } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>) {
 	const {
@@ -114,7 +114,7 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.RefObject<Rea
 }
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
-function SelectLabel({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Label> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>) {
+function SelectLabel({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.Label> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>) {
 	return (
 		<SelectPrimitive.Label
 			className={twMerge("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
@@ -125,7 +125,7 @@ function SelectLabel({ ref: reference, className, ...props }: { ref?: React.RefO
 }
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
-function SelectItem({ ref: reference, className, children, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Item> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>) {
+function SelectItem({ ref: reference, className, children, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.Item> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>) {
 	return (
 		<SelectPrimitive.Item
 			className={twMerge(
@@ -141,7 +141,7 @@ function SelectItem({ ref: reference, className, children, ...props }: { ref?: R
 }
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
-function SelectSeparator({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof SelectPrimitive.Separator> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>) {
+function SelectSeparator({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof SelectPrimitive.Separator> | null> } & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>) {
 	return (
 		<SelectPrimitive.Separator
 			className={twMerge("-mx-1 my-1 h-px bg-black-60", className)}

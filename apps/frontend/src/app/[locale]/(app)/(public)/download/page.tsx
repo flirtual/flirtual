@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import type { Locale } from "next-intl";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { DownloadButton } from "~/components/download-button";
 import { ModelCard } from "~/components/model-card";
@@ -13,7 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function DownloadPage() {
+export default function DownloadPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
 	const t = useTranslations();
 
 	return (

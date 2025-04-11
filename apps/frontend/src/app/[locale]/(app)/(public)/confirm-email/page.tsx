@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { Authentication } from "~/api/auth";
 import { ModelCard } from "~/components/model-card";
@@ -25,6 +25,8 @@ export interface ConfirmEmailPageProps {
 
 export default async function ConfirmEmailPage({ params, searchParams }: ConfirmEmailPageProps) {
 	const { locale } = await params;
+	setRequestLocale(locale);
+
 	const { to, token } = (await searchParams) || {};
 
 	const t = await getTranslations();

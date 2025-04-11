@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ConnectionsForm } from "./form";
 
@@ -11,11 +13,15 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function SettingsAccountConnectionsPage({ searchParams }: {
-	searchParams?: Promise<{
+export default function SettingsAccountConnectionsPage({ params, searchParams }: {
+	params: Promise<{ locale: Locale }>;
+	searchParams: Promise<{
 		error?: string;
 	}>;
 }) {
-	const { error } = (await searchParams) || {};
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
+	const { error } = use(searchParams);
 	return <ConnectionsForm error={error} />;
 }

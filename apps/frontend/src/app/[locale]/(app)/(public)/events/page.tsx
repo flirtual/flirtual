@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ButtonLink } from "~/components/button";
 import { Image } from "~/components/image";
@@ -18,8 +21,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function EventsPage() {
-	const t = await getTranslations();
+export default function EventsPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
+	const t = useTranslations();
 
 	return (
 		<ModelCard

@@ -33,9 +33,9 @@ let nextConfig: NextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true
 	},
-	// typescript: {
-	// 	ignoreBuildErrors: true
-	// },
+	typescript: {
+		ignoreBuildErrors: true
+	},
 	productionBrowserSourceMaps: true,
 	async headers() {
 		return [

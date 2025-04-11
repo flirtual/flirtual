@@ -23,7 +23,7 @@ const DrawerPortal = DrawerPrimitive.Portal;
 
 const DrawerClose = DrawerPrimitive.Close;
 
-function DrawerOverlay({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DrawerPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>) {
+function DrawerOverlay({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DrawerPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>) {
 	return (
 		<DrawerPrimitive.Overlay
 			className={twMerge("fixed inset-0 z-50 bg-black-80/80", className)}
@@ -34,7 +34,7 @@ function DrawerOverlay({ ref: reference, className, ...props }: { ref?: React.Re
 }
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
-function DrawerContent({ ref: reference, className, children, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DrawerPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>) {
+function DrawerContent({ ref: reference, className, children, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DrawerPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>) {
 	return (
 		<DrawerPortal>
 			<DrawerOverlay />
@@ -83,7 +83,7 @@ function DrawerFooter({
 }
 DrawerFooter.displayName = "DrawerFooter";
 
-function DrawerTitle({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DrawerPrimitive.Title> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>) {
+function DrawerTitle({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DrawerPrimitive.Title> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>) {
 	return (
 		<DrawerPrimitive.Title
 			className={twMerge(
@@ -97,7 +97,7 @@ function DrawerTitle({ ref: reference, className, ...props }: { ref?: React.RefO
 }
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
 
-function DrawerDescription({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof DrawerPrimitive.Description> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>) {
+function DrawerDescription({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof DrawerPrimitive.Description> | null> } & React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>) {
 	return (
 		<DrawerPrimitive.Description
 			className={twMerge("text-sm opacity-75", className)}

@@ -15,6 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
+export const dynamic = "auto";
+
 export default async function SettingsAccountDeactivatePage() {
 	const session = await Authentication.getSession();
 

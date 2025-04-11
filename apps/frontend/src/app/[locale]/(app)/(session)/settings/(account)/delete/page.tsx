@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import { unstable_serialize } from "swr";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
-import { Attribute } from "~/api/attributes";
 import { ModelCard } from "~/components/model-card";
-import { SWRConfig } from "~/components/swr";
-import { attributeKey } from "~/swr";
 
 import { DeleteForm } from "./form";
 
@@ -17,9 +16,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function SettingsAccountDeactivatePage() {
-	const t = await getTranslations();
-	const deleteReasons = await Attribute.list("delete-reason");
+export default function SettingsAccountDeactivatePage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
+	const t = useTranslations();
 
 	return (
 		<ModelCard
@@ -27,15 +28,7 @@ export default async function SettingsAccountDeactivatePage() {
 			inset={false}
 			title={t("delete_account")}
 		>
-			<SWRConfig
-				value={{
-					fallback: {
-						[unstable_serialize(attributeKey("delete-reason"))]: deleteReasons
-					}
-				}}
-			>
-				<DeleteForm />
-			</SWRConfig>
+			<DeleteForm />
 		</ModelCard>
 	);
 }

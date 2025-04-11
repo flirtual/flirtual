@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import type { Locale } from "next-intl";
 import { useMessages, useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
@@ -19,7 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function AboutPage() {
+export default function AboutPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
 	const t = useTranslations();
 	const tTeam = useTranslations("copy_frighten_wobble_futuristic");
 

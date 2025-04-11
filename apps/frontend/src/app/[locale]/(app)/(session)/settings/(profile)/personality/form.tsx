@@ -4,10 +4,10 @@ import shuffle from "fast-shuffle";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { entries } from "remeda";
+import useSWR from "swr";
 
 import {
 	Personality,
-	type ProfilePersonality
 } from "~/api/user/profile/personality";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -15,14 +15,17 @@ import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
-export const PersonalityForm: FC<{ personality: ProfilePersonality }> = ({
-	personality
-}) => {
+export const PersonalityForm: FC = () => {
 	const [session, mutateSession] = useSession();
+
+	const { data: personality } = useSWR(session ? "personality" : null, () => Personality.get(session!.user.id), {
+		suspense: true
+	});
+
 	const toasts = useToast();
 	const t = useTranslations();
 
-	if (!session || !personality) return null;
+	if (!session) return null;
 	const { user } = session;
 
 	return (

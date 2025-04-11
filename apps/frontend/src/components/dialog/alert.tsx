@@ -19,7 +19,7 @@ const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
 const AlertDialogPortal = AlertDialogPrimitive.Portal;
 
-function AlertDialogOverlay({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>) {
+function AlertDialogOverlay({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof AlertDialogPrimitive.Overlay> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay>) {
 	return (
 		<AlertDialogPrimitive.Overlay
 			className={twMerge(dialogOverlayClassName, className)}
@@ -30,7 +30,7 @@ function AlertDialogOverlay({ ref: reference, className, ...props }: { ref?: Rea
 }
 AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
 
-function AlertDialogContent({ ref: reference, className, children, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>) {
+function AlertDialogContent({ ref: reference, className, children, ...props }: { ref?: React.Ref<React.ComponentRef<typeof AlertDialogPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>) {
 	return (
 		<AlertDialogPortal>
 			<AlertDialogOverlay />
@@ -64,7 +64,7 @@ function AlertDialogHeader({
 }
 AlertDialogHeader.displayName = "AlertDialogHeader";
 
-function AlertDialogTitle({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Title> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>) {
+function AlertDialogTitle({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof AlertDialogPrimitive.Title> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>) {
 	return (
 		<AlertDialogPrimitive.Title
 			className={twMerge(dialogTitleClassName, className)}
@@ -75,7 +75,7 @@ function AlertDialogTitle({ ref: reference, className, ...props }: { ref?: React
 }
 AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName;
 
-function AlertDialogDescription({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Description> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>) {
+function AlertDialogDescription({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof AlertDialogPrimitive.Description> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>) {
 	return (
 		<AlertDialogPrimitive.Description
 			className={twMerge(dialogDescriptionClassName, className)}
@@ -87,7 +87,7 @@ function AlertDialogDescription({ ref: reference, className, ...props }: { ref?:
 AlertDialogDescription.displayName
 	= AlertDialogPrimitive.Description.displayName;
 
-function AlertDialogAction({ ref: reference, className, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Action> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>) {
+function AlertDialogAction({ ref: reference, className, ...props }: { ref?: React.Ref<React.ComponentRef<typeof AlertDialogPrimitive.Action> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>) {
 	return (
 		<AlertDialogPrimitive.Action
 			className={className}
@@ -98,7 +98,7 @@ function AlertDialogAction({ ref: reference, className, ...props }: { ref?: Reac
 }
 AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 
-function AlertDialogCancel({ ref: reference, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof AlertDialogPrimitive.Cancel> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>) {
+function AlertDialogCancel({ ref: reference, ...props }: { ref?: React.Ref<React.ComponentRef<typeof AlertDialogPrimitive.Cancel> | null> } & React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>) {
 	return <AlertDialogPrimitive.Cancel ref={reference} {...props} />;
 }
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;

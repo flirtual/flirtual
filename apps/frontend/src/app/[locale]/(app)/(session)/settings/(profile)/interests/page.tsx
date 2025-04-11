@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import { unstable_serialize } from "swr";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
-import { Attribute } from "~/api/attributes";
 import { ModelCard } from "~/components/model-card";
-import { SWRConfig } from "~/components/swr";
-import { attributeKey } from "~/swr";
 
 import { InterestsForm } from "./form";
 
@@ -17,13 +16,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function SettingsProfileInterestsPage() {
-	const t = await getTranslations();
+export default function SettingsProfileInterestsPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
 
-	const [interests, interestCategories] = await Promise.all([
-		Attribute.list("interest"),
-		Attribute.list("interest-category")
-	]);
+	const t = useTranslations();
 
 	return (
 		<ModelCard
@@ -31,17 +28,7 @@ export default async function SettingsProfileInterestsPage() {
 			inset={false}
 			title={t("interests")}
 		>
-			<SWRConfig
-				value={{
-					fallback: {
-						[unstable_serialize(attributeKey("interest"))]: interests,
-						[unstable_serialize(attributeKey("interest-category"))]:
-							interestCategories
-					}
-				}}
-			>
-				<InterestsForm />
-			</SWRConfig>
+			<InterestsForm />
 		</ModelCard>
 	);
 }

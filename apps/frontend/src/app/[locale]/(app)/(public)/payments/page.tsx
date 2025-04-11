@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import type { ReactNode } from "react";
+import { type Locale, useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { type ReactNode, use } from "react";
 
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
@@ -15,8 +16,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function PaymentsPage() {
-	const t = await getTranslations();
+export default function PaymentsPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
+	const t = useTranslations();
 
 	return (
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("payment_terms")}>

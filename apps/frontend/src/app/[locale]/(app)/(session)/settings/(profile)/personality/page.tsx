@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
-import { Authentication } from "~/api/auth";
-import { Personality } from "~/api/user/profile/personality";
 import { ModelCard } from "~/components/model-card";
 
 import { PersonalityForm } from "./form";
@@ -15,10 +16,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function SettingsProfilePersonalityPage() {
-	const t = await getTranslations();
-	const session = await Authentication.getSession();
-	const personality = await Personality.get(session.user.id);
+export default function SettingsProfilePersonalityPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
+	const t = useTranslations();
 
 	return (
 		<ModelCard
@@ -26,7 +28,7 @@ export default async function SettingsProfilePersonalityPage() {
 			inset={false}
 			title={t("personality")}
 		>
-			<PersonalityForm personality={personality} />
+			<PersonalityForm />
 		</ModelCard>
 	);
 }

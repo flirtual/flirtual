@@ -10,7 +10,7 @@ const Tooltip = TooltipPrimitive.Root;
 
 const TooltipTrigger = TooltipPrimitive.Trigger;
 
-function TooltipContent({ ref: reference, className, sideOffset = 4, ...props }: { ref?: React.RefObject<React.ComponentRef<typeof TooltipPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>) {
+function TooltipContent({ ref: reference, className, sideOffset = 4, ...props }: { ref?: React.Ref<React.ComponentRef<typeof TooltipPrimitive.Content> | null> } & React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>) {
 	return (
 		<TooltipPrimitive.Content
 			className={twMerge(
