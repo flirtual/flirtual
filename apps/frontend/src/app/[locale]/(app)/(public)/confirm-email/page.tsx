@@ -18,6 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
+export const dynamic = "force-dynamic";
+
 export interface ConfirmEmailPageProps {
 	params: Promise<{ locale: Locale }>;
 	searchParams?: Promise<{ to?: string; token?: string }>;

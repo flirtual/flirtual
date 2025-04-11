@@ -1,49 +1,30 @@
-import { getTranslations } from "next-intl/server";
-import type { PropsWithChildren } from "react";
-import { fromEntries } from "remeda";
-import { unstable_serialize } from "swr";
-import { unstable_serialize as unstable_serialize_infinite } from "swr/infinite";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { type PropsWithChildren, use } from "react";
 
-import { Conversation } from "~/api/conversations";
-import { Matchmaking } from "~/api/matchmaking";
-import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
-import { SWRConfig } from "~/components/swr";
-import { getConversationsKey } from "~/hooks/use-conversations.shared";
-import { userKey } from "~/swr";
 import { urls } from "~/urls";
 
 import { LikesYouButton } from "./likes-you-button";
 
-export default async function ConversationsLayout({
+export default function ConversationsLayout({
+	params,
 	children
-}: PropsWithChildren) {
-	const t = await getTranslations();
+}: PropsWithChildren<{ params: Promise<{ locale: Locale }> }>) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
 
-	const [{ data: conversations, metadata }, likes] = await Promise.all([
-		Conversation.list(),
-		Matchmaking.likesYou()
-	]);
+	// const { data: conversations } = useConversations();
+	const t = useTranslations();
 
-	const userIds = conversations.map(({ userId }) => userId);
-	const userById = fromEntries((await User.getMany(userIds)).filter(Boolean).map((user) => [user.id, user]));
+	// TODO:
+	return children;
 
 	return (
-		<SWRConfig
-			value={{
-				fallback: {
-					...fromEntries(
-						userIds.map((userId) => [unstable_serialize(userKey(userId)), userById[userId] || null])
-					),
-					[unstable_serialize("likes")]: likes,
-					[unstable_serialize_infinite(getConversationsKey)]: [
-						{ data: conversations, metadata }
-					]
-				}
-			}}
-		>
+		<>
 			{conversations.length === 0
 				? (
 						<ModelCard
@@ -71,6 +52,6 @@ export default async function ConversationsLayout({
 						</ModelCard>
 					)
 				: children}
-		</SWRConfig>
+		</>
 	);
 }

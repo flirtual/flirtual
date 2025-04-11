@@ -1,9 +1,16 @@
+import type { Locale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { use } from "react";
+
 import { ModelCard } from "~/components/model-card";
 
 import { FinishProgress } from "../progress";
 import { Finish1Form } from "./form";
 
-export default async function Finish1Page() {
+export default function Finish1Page({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
 	return (
 		<>
 			<FinishProgress page={1} />

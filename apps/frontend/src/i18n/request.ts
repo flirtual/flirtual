@@ -10,7 +10,7 @@ import type {
 	NestedKeyOf
 } from "next-intl";
 import { hasLocale } from "next-intl";
-import { getRequestConfig } from "next-intl/server";
+import { getRequestConfig, setRequestLocale } from "next-intl/server";
 
 import englishAttributeMessages from "~/../messages/attributes.en.json";
 import japaneseAttributeMessages from "~/../messages/attributes.ja.json";
@@ -46,6 +46,8 @@ export default getRequestConfig(async ({ requestLocale: requestLocalePromise }) 
 	const locale = hasLocale(routing.locales, requestLocale)
 		? requestLocale
 		: routing.defaultLocale;
+
+	setRequestLocale(locale);
 
 	return {
 		locale,

@@ -2,7 +2,8 @@
 
 import { MoveLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+// eslint-disable-next-line no-restricted-imports
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
@@ -14,7 +15,10 @@ import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
-export const Finish5Form: React.FC<{ error?: string }> = ({ error }) => {
+export const Finish5Form: React.FC = () => {
+	const query = useSearchParams();
+	const error = query.get("error") || undefined;
+
 	const { vision } = useDevice();
 	const router = useRouter();
 	const [session] = useSession();

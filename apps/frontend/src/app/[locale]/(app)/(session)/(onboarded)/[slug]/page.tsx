@@ -6,7 +6,7 @@ import { Profile } from "~/components/profile/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";
 
 import { QueueActions } from "../browse/queue-actions";
-import type { ProfilePageProps } from "./layout";
+import type { ProfilePageProps } from "./_layout";
 
 const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 	const user = useUser(userId);
@@ -25,6 +25,8 @@ const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 		/>
 	);
 };
+
+export const dynamic = "force-dynamic";
 
 export default function ProfilePage({ params }: ProfilePageProps) {
 	const { slug } = use(params);

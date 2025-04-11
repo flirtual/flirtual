@@ -3,27 +3,25 @@
 import shuffle from "fast-shuffle";
 import { MoveLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { entries } from "remeda";
 
 import { Profile } from "~/api/user/profile";
-import type {
-	ProfilePersonality
-} from "~/api/user/profile/personality";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
+import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
-export const Finish4Form: React.FC<{ personality: ProfilePersonality }> = ({
-	personality
-}) => {
+import { usePersonality } from "../../settings/(profile)/personality/form";
+
+export const Finish4Form: React.FC = () => {
 	const router = useRouter();
 	const t = useTranslations();
 
 	const [session] = useSession();
+	const personality = usePersonality();
 
 	if (!session || !personality) return null;
 	const { user } = session;

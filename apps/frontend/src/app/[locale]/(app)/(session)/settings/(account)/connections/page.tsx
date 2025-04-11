@@ -13,6 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
+export const dynamic = "force-dynamic";
+
 export default function SettingsAccountConnectionsPage({ params, searchParams }: {
 	params: Promise<{ locale: Locale }>;
 	searchParams: Promise<{

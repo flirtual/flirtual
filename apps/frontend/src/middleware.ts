@@ -161,12 +161,12 @@ export function middleware(request: NextRequest) {
 	}
 
 	// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
-	const { nonce, value: contentSecurityPolicy } = getContentSecurityPolicy();
-	request.headers.set("x-nonce", nonce);
+	// const { nonce, value: contentSecurityPolicy } = getContentSecurityPolicy();
+	// request.headers.set("x-nonce", nonce);
 
 	const response = nextIntl(request);
 
-	response.headers.set("content-security-policy", contentSecurityPolicy);
+	// response.headers.set("content-security-policy", contentSecurityPolicy);
 	return response;
 }
 

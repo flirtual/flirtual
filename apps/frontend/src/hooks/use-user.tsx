@@ -1,30 +1,16 @@
 "use client";
 
-import useSWR, { unstable_serialize, useSWRConfig } from "swr";
+import useSWR from "swr";
 import type { WretchOptions } from "wretch";
 
 import type { User } from "~/api/user";
 import type { Relationship } from "~/api/user/relationship";
 import { relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/swr";
-import { isUid } from "~/utilities";
 
 import { useCurrentUser } from "./use-session";
 
-export function useUser(_userId: string, options: WretchOptions = {}): User | null {
-	const { fallback } = useSWRConfig();
+export function useUser(userId: string, options: WretchOptions = {}): User | null {
 	const self = useCurrentUser();
-
-	// If we've received a slug, we must find the related user from
-	// SWR's fallback cache, because we don't have the user's ID yet.
-	const userId = _userId
-		? isUid(_userId)
-			? _userId
-			: ((Object.entries(fallback).find(([key, value]) => {
-					return value
-						&& key.startsWith(unstable_serialize(["user"]))
-						&& (value as User).slug.toLowerCase() === _userId.toLowerCase();
-				})?.[1]) as User).id
-		: null;
 
 	const { data } = useSWR(
 		userId
@@ -34,7 +20,8 @@ export function useUser(_userId: string, options: WretchOptions = {}): User | nu
 			: null,
 		userFetcher,
 		{
-			suspense: true
+			suspense: true,
+			fallbackData: null,
 		}
 	);
 

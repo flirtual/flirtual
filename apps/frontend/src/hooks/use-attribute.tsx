@@ -14,10 +14,11 @@ export function useAttributes<T extends AttributeType>(type: T) {
 		attributeKey(type),
 		([, type]) => Attribute.list<T>(type),
 		{
-			revalidateOnFocus: false,
-			revalidateIfStale: false,
+			// revalidateOnFocus: false,
+			// revalidateIfStale: false,
 			keepPreviousData: true,
-			suspense: true
+			suspense: true,
+			fallbackData: []
 		}
 	);
 

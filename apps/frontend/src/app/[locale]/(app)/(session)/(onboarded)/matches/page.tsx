@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ConversationAside } from "./aside";
 
@@ -11,6 +13,9 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function ConversationListPage() {
+export default function ConversationListPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
 	return <ConversationAside />;
 }

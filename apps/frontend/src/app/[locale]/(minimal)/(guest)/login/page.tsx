@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ModelCard } from "~/components/model-card";
-import { isInternalHref } from "~/urls";
 
 import { LoginForm } from "./form";
 
@@ -14,27 +16,15 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export interface LoginPageProps {
-	searchParams?: Promise<{
-		next?: string;
-		error?: string;
-	}>;
-}
+export default function LoginPage({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
 
-export default async function LoginPage({ searchParams }: LoginPageProps) {
-	const { error, next = "/" } = (await searchParams) || {};
-	const t = await getTranslations();
+	const t = useTranslations();
 
 	return (
 		<ModelCard branded miniFooter className="shrink-0 desktop:max-w-xl" title={t("log_in")}>
-			{error && error !== "access_denied" && (
-				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
-					<span className="font-montserrat text-lg text-white-10">
-						{t(`errors.${error}` as any)}
-					</span>
-				</div>
-			)}
-			<LoginForm next={isInternalHref(next) ? next : "/"} />
+			<LoginForm />
 		</ModelCard>
 	);
 }

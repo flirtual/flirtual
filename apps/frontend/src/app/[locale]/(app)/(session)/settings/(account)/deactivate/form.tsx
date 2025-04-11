@@ -34,7 +34,9 @@ export const ActivationForm: React.FC<{ user: User }> = ({ user }) => {
 				requireChange={false}
 				onSubmit={async () => {
 					await (
-						deactivated ? User.reactivate(user.id) : User.deactivate(user.id)
+						deactivated
+							? User.reactivate(user.id)
+							: User.deactivate(user.id)
 					).then(() =>
 						toasts.add(t(deactivated ? "reactivated_account" : "deactivated_account"))
 					);

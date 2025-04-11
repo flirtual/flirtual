@@ -1,10 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+// eslint-disable-next-line no-restricted-imports
+import { useSearchParams } from "next/navigation";
 import { type FC, useEffect } from "react";
 import { preload } from "swr";
 
-import type { ProspectKind } from "~/api/matchmaking";
+import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { useQueue } from "~/hooks/use-queue";
@@ -20,8 +22,14 @@ import { QueueActions } from "./queue-actions";
 
 export type QueueAnimationDirection = "backward" | "forward";
 
-export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
+export const Queue: FC = () => {
 	const [session] = useSession();
+
+	const query = useSearchParams();
+
+	let kind = (query.get("kind") as ProspectKind) || "love";
+	if (!ProspectKind.includes(kind)) kind = "love";
+
 	const { data: queue } = useQueue(kind);
 
 	useEffect(() => {

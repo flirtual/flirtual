@@ -2,7 +2,8 @@
 
 import { MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+// eslint-disable-next-line no-restricted-imports
+import { useRouter, useSearchParams } from "next/navigation";
 import { type FC, useEffect, useRef } from "react";
 
 import { Authentication } from "~/api/auth";
@@ -13,11 +14,18 @@ import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useToast } from "~/hooks/use-toast";
-import { urls } from "~/urls";
+import { isInternalHref, urls } from "~/urls";
 
 import { LoginConnectionButton } from "./login-connection-button";
 
-export const LoginForm: FC<{ next?: string }> = ({ next }) => {
+export const LoginForm: FC = () => {
+	const query = useSearchParams();
+
+	const error = query.get("error");
+
+	let next = query.get("next") ?? "/";
+	if (!isInternalHref(next)) next = "/";
+
 	const router = useRouter();
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
@@ -93,6 +101,13 @@ export const LoginForm: FC<{ next?: string }> = ({ next }) => {
 
 	return (
 		<>
+			{error && error !== "access_denied" && (
+				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
+					<span className="font-montserrat text-lg text-white-10">
+						{t(`errors.${error}` as any)}
+					</span>
+				</div>
+			)}
 			<Form
 				withCaptcha
 				fields={{

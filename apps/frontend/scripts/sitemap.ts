@@ -48,7 +48,6 @@ async function getPages() {
 			if ([
 				"/:path+",
 				"/debugger",
-				"/empty",
 				"/reports",
 				"/sso/canny",
 				"/stats"

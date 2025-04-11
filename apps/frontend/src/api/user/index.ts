@@ -184,9 +184,10 @@ export const User = {
 			.notFound(() => null)
 			.json<Relationship | null>();
 	},
-	getBySlug(slug: string) {
+	getBySlug(slug: string, options: WretchOptions = {}) {
 		return this.api
 			.url(`/${slug.slice(0, 20)}/name`)
+			.options(options)
 			.get()
 			.badRequest(() => null)
 			.notFound(() => null)

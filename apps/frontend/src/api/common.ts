@@ -59,13 +59,13 @@ export const api = wretch(urls.api)
 				return async (url, options) => {
 					options.headers ??= {};
 
-					if (environment === "development" && !duringBuild)
+					if (!duringBuild)
 						// Artificially slow requests in development, ensuring we can see loading/pending states.
 						await new Promise((resolve) => setTimeout(resolve, 2000 * Math.random() * (options.method === "GET" ? 1 : 2)));
 
 					if (typeof window === "undefined") {
 						// TODO: We're removing API calls from the server, & this will eventually error instead.
-						console.warn(`[todo] Remove server-side API call to ${options.method} ${url}.`);
+						console.error(new Error(`Server-side API call to ${options.method} ${url}.`));
 
 						if (
 							// We can't use `headers` with `unstable_cache` which caches across requests,

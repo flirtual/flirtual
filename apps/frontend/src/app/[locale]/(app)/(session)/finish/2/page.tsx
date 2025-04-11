@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ModelCard } from "~/components/model-card";
 
@@ -14,8 +17,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function Finish2Page() {
-	const t = await getTranslations();
+export default function Finish2Page({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
+
+	const t = useTranslations();
 
 	return (
 		<>

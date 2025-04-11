@@ -52,8 +52,6 @@ export type QueueResponse = Queue | QueueIssue;
 
 export const Matchmaking = {
 	queue(kind: ProspectKind) {
-		console.log("Matchmaking.queue", { kind });
-
 		return api
 			.url("queue")
 			.query({ kind })

@@ -15,12 +15,20 @@ import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
-export const PersonalityForm: FC = () => {
-	const [session, mutateSession] = useSession();
+// eslint-disable-next-line react-refresh/only-export-components
+export function usePersonality() {
+	const [session] = useSession();
 
 	const { data: personality } = useSWR(session ? "personality" : null, () => Personality.get(session!.user.id), {
 		suspense: true
 	});
+
+	return personality;
+}
+
+export const PersonalityForm: FC = () => {
+	const [session, mutateSession] = useSession();
+	const personality = usePersonality();
 
 	const toasts = useToast();
 	const t = useTranslations();

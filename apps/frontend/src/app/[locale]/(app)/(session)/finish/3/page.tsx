@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import { unstable_serialize } from "swr";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
-import { Attribute } from "~/api/attributes";
 import { ModelCard } from "~/components/model-card";
-import { SWRConfig } from "~/components/swr";
-import { attributeKey } from "~/swr";
 
 import { FinishProgress } from "../progress";
 import { Finish3Form } from "./form";
@@ -18,24 +17,14 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function Finish3Page() {
-	const t = await getTranslations();
+export default function Finish3Page({ params }: { params: Promise<{ locale: Locale }> }) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
 
-	const [interests, interestCategories] = await Promise.all([
-		Attribute.list("interest"),
-		Attribute.list("interest-category")
-	]);
+	const t = useTranslations();
 
 	return (
-		<SWRConfig
-			value={{
-				fallback: {
-					[unstable_serialize(attributeKey("interest"))]: interests,
-					[unstable_serialize(attributeKey("interest-category"))]:
-						interestCategories
-				}
-			}}
-		>
+		<>
 			<FinishProgress page={3} />
 			<ModelCard
 				className="shrink-0 pb-[max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),6rem)] desktop:max-w-2xl desktop:pb-0"
@@ -43,6 +32,6 @@ export default async function Finish3Page() {
 			>
 				<Finish3Form />
 			</ModelCard>
-		</SWRConfig>
+		</>
 	);
 }
