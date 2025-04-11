@@ -20,7 +20,11 @@ function useLikes() {
 			return Matchmaking.likesYou();
 		},
 		{
-			suspense: true
+			suspense: true,
+			fallbackData: {
+				count: { love: 0, friend: 0 },
+				items: []
+			}
 		}
 	);
 

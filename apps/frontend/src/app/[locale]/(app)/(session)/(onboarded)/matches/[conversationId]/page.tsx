@@ -18,6 +18,8 @@ export interface ConversationPageProps {
 	}>;
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata(
 	props: ConversationPageProps
 ): Promise<Metadata> {

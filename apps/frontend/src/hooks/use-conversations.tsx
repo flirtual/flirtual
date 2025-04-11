@@ -16,7 +16,8 @@ export function useConversations() {
 		getConversationsKey,
 		async ([, cursor]: [unknown, string]) => Conversation.list(cursor),
 		{
-			suspense: true
+			suspense: true,
+			fallbackData: []
 		}
 	);
 
