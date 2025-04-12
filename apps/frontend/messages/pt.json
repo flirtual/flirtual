@@ -951,5 +951,6 @@
 	"have_fun": "Diverte-te!",
 	"enable_assistant": "Ativar assistente",
 	"enable_ranked_mode": "Ativar o modo de classificação",
-	"april_fools_year": "Dia das Mentiras {ano}"
+	"april_fools_year": "Dia das Mentiras {ano}",
+	"bad_jumpy_sheep_gasp": "Este contém informações de depuração sensíveis que podem ser utilizadas para o ajudar a interagir com o suporte."
 }
