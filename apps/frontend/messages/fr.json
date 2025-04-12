@@ -951,5 +951,6 @@
 	"fun_stuff": "Des choses amusantes",
 	"have_fun": "Amusez-vous bien !",
 	"enable_ranked_mode": "Activer le mode classé",
-	"april_fools_year": "Poisson d'avril {année}"
+	"april_fools_year": "Poisson d'avril {année}",
+	"bad_jumpy_sheep_gasp": "Elle contient des informations de débogage sensibles qui peuvent être utilisées pour vous aider à interagir avec l'assistance."
 }
