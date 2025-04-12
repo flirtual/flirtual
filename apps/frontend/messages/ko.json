@@ -951,5 +951,6 @@
 	"have_fun": "즐겨보세요!",
 	"enable_assistant": "어시스턴트 사용",
 	"enable_ranked_mode": "랭킹 모드 활성화",
-	"april_fools_year": "만우절 {연도}"
+	"april_fools_year": "만우절 {연도}",
+	"bad_jumpy_sheep_gasp": "여기에는 지원팀과 상호 작용하는 데 도움이 될 수 있는 민감한 디버그 정보가 포함되어 있습니다."
 }
