@@ -7,13 +7,13 @@ import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 export const UserForms: React.FC = () => {
 	const router = useRouter();
 	const toasts = useToast();
-	const [session] = useSession({
+	const [session] = useOptionalSession({
 		refreshInterval: 1000
 	});
 	const t = useTranslations();

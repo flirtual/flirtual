@@ -20,13 +20,13 @@ import {
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger
 } from "~/components/dropdown";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urls } from "~/urls";
 
 export const ProfileDropdownCopySubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 
 	const connections: Array<{ type: ConnectionType; value: string | null }> = [

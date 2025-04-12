@@ -6,7 +6,7 @@ import Image from "next/image";
 import type { Dispatch, FC, ReactNode } from "react";
 
 import { User } from "~/api/user";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { withSuspense } from "~/hooks/with-suspense";
 import { useRouter } from "~/i18n/navigation";
@@ -18,7 +18,7 @@ import { DrawerOrDialog } from "../drawer-or-dialog";
 import { InlineLink } from "../inline-link";
 
 export const ModerationMessageDialog: FC = withSuspense(() => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	const toasts = useToast();
 	const router = useRouter();
@@ -43,7 +43,7 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 });
 
 export const DiscordSpamDialog: FC = withSuspense(() => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	const router = useRouter();
 	const toasts = useToast();
@@ -115,7 +115,7 @@ export const TrustAndSafetyDialog: FC<{
 	actions?: ReactNode;
 	closable?: boolean;
 }> = ({ children, actions, closable = false, onAcknowledge, onOpenChange }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 
 	if (!session) return null;

@@ -1,47 +1,77 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
-import type { userAgentFromString } from "next/server";
-import type { PropsWithChildren, RefAttributes } from "react";
-import { createContext, use, useMemo } from "react";
+import type { DeviceId, DeviceInfo } from "@capacitor/device";
+import { Device } from "@capacitor/device";
+import { userAgentFromString } from "next/server";
+import { use } from "react";
+
+import { gitCommitSha, isServer } from "~/const";
+
+import { usePostpone } from "./use-postpone";
 
 export type DevicePlatform = "android" | "apple" | "web";
 export type UserAgent = ReturnType<typeof userAgentFromString>;
 
-export interface DeviceContext {
-	userAgent: UserAgent;
-	platform: DevicePlatform;
-	native: boolean;
-	vision: boolean;
+export function useUserAgent(): UserAgent {
+	usePostpone("useUserAgent()");
+	return userAgentFromString(navigator.userAgent);
 }
 
-const DeviceContext = createContext<DeviceContext>({} as DeviceContext);
+const platforms: Record<string, DevicePlatform> = {
+	android: "android",
+	ios: "apple",
+	"mac os": "apple"
+};
 
-export interface DeviceProviderProps extends PropsWithChildren, RefAttributes<HTMLHtmlElement>, Pick<DeviceContext, "native" | "platform" | "userAgent" | "vision"> {}
+const deviceInfoPromise = isServer
+	? Promise.resolve({} as unknown as DeviceInfo)
+	: Device.getInfo();
 
-export function DeviceProvider({ children, native, platform, userAgent, vision, ...props }: DeviceProviderProps) {
-	return (
-		<DeviceContext
-			value={useMemo(() => ({
-				native,
-				platform,
-				userAgent,
-				vision
-			}), [native, platform, userAgent, vision])}
-		>
-			<Slot
-				{...props}
-				data-native={native ? "" : undefined}
-				data-platform={platform}
-				data-vision={vision ? "" : undefined}
-			>
-				{children}
-			</Slot>
-		</DeviceContext>
-	);
-}
+const deviceIdPromise = isServer
+	? Promise.resolve({} as unknown as DeviceId)
+	: Device.getId();
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function useDevice() {
-	return use(DeviceContext);
+	usePostpone("useDevice()");
+
+	const userAgent = useUserAgent();
+	const { os, ua } = userAgent;
+
+	const {
+		platform: nativePlatform,
+		operatingSystem,
+		webViewVersion,
+		androidSDKVersion,
+		iOSVersion,
+		osVersion,
+	} = use(deviceInfoPromise);
+
+	const { identifier: deviceId } = use(deviceIdPromise);
+
+	const platform: DevicePlatform
+		= platforms[os.name?.toLowerCase() ?? ""] || "web";
+
+	const vision = ua.includes("Flirtual-Vision");
+
+	// const native = ua.includes("Flirtual-Native");
+	const native = nativePlatform !== "web";
+
+	return {
+		userAgent,
+		platform,
+		nativePlatform,
+		native,
+		vision,
+		deviceId,
+		operatingSystem,
+		versions: {
+			gitCommit: gitCommitSha,
+			operatingSystem: osVersion,
+			webView: webViewVersion,
+			android: androidSDKVersion,
+			iOS: iOSVersion,
+		}
+	} as const;
 }
+
+export type Device = ReturnType<typeof useDevice>;

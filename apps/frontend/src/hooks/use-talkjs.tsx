@@ -14,7 +14,7 @@ import {
 	useState
 } from "react";
 import type React from "react";
-import { useSWRConfig } from "swr";
+import { useSWRConfig } from "~/swr";
 import { unstable_serialize } from "swr/infinite";
 import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
@@ -26,7 +26,7 @@ import { emptyArray } from "~/utilities";
 import { getConversationsKey } from "./use-conversations.shared";
 import { useDevice } from "./use-device";
 import { warnOnce } from "./use-log";
-import { useSession } from "./use-session";
+import { useOptionalSession } from "./use-session";
 import { useTheme } from "./use-theme";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
@@ -36,7 +36,7 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 
 const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [ready, setReady] = useState(false);
-	const [authSession] = useSession();
+	const [authSession] = useOptionalSession();
 
 	const router = useRouter();
 	const { mutate } = useSWRConfig();

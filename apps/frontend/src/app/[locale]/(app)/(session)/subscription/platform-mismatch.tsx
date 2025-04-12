@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
 
 import { useDevice } from "~/hooks/use-device";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 const osName = {
 	apple: "ios",
@@ -13,7 +13,7 @@ const osName = {
 
 export const PlatformMismatchMessage: FC = () => {
 	const { platform, native, vision } = useDevice();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 
 	if (!session) return null;
@@ -64,7 +64,7 @@ export const MatchSubscriptionPlatform: FC<PropsWithChildren> = ({
 	children
 }) => {
 	const { platform, native, vision } = useDevice();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	if (vision) return null;
 	if (!session) return children;

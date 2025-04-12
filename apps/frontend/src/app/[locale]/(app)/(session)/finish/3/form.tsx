@@ -10,7 +10,7 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
@@ -22,7 +22,7 @@ import {
 } from "../../settings/(profile)/interests/form";
 
 export const Finish3Form: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const toasts = useToast();
 	const router = useRouter();
 	const t = useTranslations();

@@ -11,11 +11,11 @@ import {
 	DialogTitle
 } from "~/components/dialog/dialog";
 import { usePurchase } from "~/hooks/use-purchase";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 export const ManageButton: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const toasts = useToast();
 	const { purchase } = usePurchase();
 	const [pending, startTransition] = useTransition();

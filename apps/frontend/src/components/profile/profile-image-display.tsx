@@ -5,13 +5,13 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
 import { useSwipeable } from "react-swipeable";
-import { mutate } from "swr";
+import { mutate } from "~/swr";
 import { twMerge } from "tailwind-merge";
 
 import type { User } from "~/api/user";
 import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { userKey } from "~/swr";
 import { urls } from "~/urls";
@@ -138,7 +138,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const { images } = user.profile;
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 
 	const [imageId, setImageId] = useState(firstImageId);

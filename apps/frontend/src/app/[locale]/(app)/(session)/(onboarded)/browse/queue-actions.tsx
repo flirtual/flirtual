@@ -12,7 +12,7 @@ import {
 	useCallback,
 	useEffect
 } from "react";
-import { type Key, mutate } from "swr";
+import { type Key, mutate } from "~/swr";
 import useMutation from "swr/mutation";
 import { match, P } from "ts-pattern";
 
@@ -41,7 +41,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { UserAvatar } from "~/components/user-avatar";
 import { useDevice } from "~/hooks/use-device";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
 import { queueKey, relationshipKey } from "~/swr";
@@ -60,7 +60,7 @@ function Key({ label }: { label: string }) {
 }
 
 function DefaultTour() {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const { vision } = useDevice();
 	useDefaultTour(!session?.user.moderatorMessage && !vision);
 
@@ -85,7 +85,7 @@ const QueueActions_: FC<{
 	explicitUserId?: string;
 	kind: ProspectKind;
 }> = ({ queue, explicitUserId, kind: mode }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const { native } = useDevice();
 	const t = useTranslations();
 
@@ -372,7 +372,7 @@ const MatchDialog: FC<{
 	onClose: () => void;
 }> = ({ userId, kind, onClose }) => {
 	const router = useRouter();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const user = useUser(userId);
 	const t = useTranslations();
 

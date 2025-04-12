@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-restricted-imports
 import { usePathname, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 

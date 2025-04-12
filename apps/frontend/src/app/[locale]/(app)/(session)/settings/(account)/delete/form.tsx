@@ -26,7 +26,6 @@ export const DeleteForm: FC = () => {
 	const deleteReasons = useAttributes("delete-reason");
 
 	const [session] = useSession();
-	if (!session) return null;
 
 	const { subscription } = session.user;
 

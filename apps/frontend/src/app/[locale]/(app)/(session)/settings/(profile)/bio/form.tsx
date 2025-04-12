@@ -17,13 +17,13 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
 import { urls } from "~/urls";
 
 export const BiographyForm: FC = () => {
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const toasts = useToast();
 
 	const t = useTranslations();

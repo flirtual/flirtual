@@ -32,7 +32,7 @@ import {
 import { Pill } from "~/components/profile/pill/pill";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -234,7 +234,7 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 export const maximumInterests = 10;
 
 export const InterestsForm: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const toasts = useToast();
 	const router = useRouter();
 	const t = useTranslations();

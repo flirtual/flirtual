@@ -54,7 +54,7 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 				defaultClassName,
 				size && sizes[size],
 				kind && kinds[kind],
-				Icon && "flex gap-4",
+				Icon && "flex gap-2",
 				elementProps.className
 			)}
 			aria-disabled={disabled}
@@ -62,6 +62,7 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 			type={elementProps.type ?? "button"}
 			whileTap={{ scale: disabled ? 1 : 0.97 }}
 		>
+			{children as ReactNode}
 			{Icon && (
 				<Icon
 					className={twMerge(
@@ -71,7 +72,6 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 					)}
 				/>
 			)}
-			{children as ReactNode}
 		</motion.button>
 	);
 };
@@ -97,7 +97,7 @@ export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps
 				defaultClassName,
 				size && sizes[size],
 				kind && kinds[kind],
-				Icon && "flex gap-4",
+				Icon && "flex gap-2",
 				elementProps.className
 			)}
 			aria-disabled={disabled}
@@ -108,6 +108,7 @@ export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps
 				if (elementProps.onClick) elementProps.onClick(event);
 			}}
 		>
+			{children as ReactNode}
 			{Icon && (
 				<Icon
 					className={twMerge(
@@ -117,7 +118,6 @@ export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps
 					)}
 				/>
 			)}
-			{children as ReactNode}
 		</MotionLink>
 	);
 };

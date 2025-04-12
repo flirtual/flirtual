@@ -1,17 +1,17 @@
 import { PushNotifications } from "@capacitor/push-notifications";
-import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import { useCallback } from "react";
-import useSWR, { type SWRConfiguration } from "swr";
 
 import { Authentication, type Session } from "~/api/auth";
 import type { User } from "~/api/user";
+import { redirect } from "~/i18n/navigation";
+import { type SWRConfiguration, useSWR } from "~/swr";
 import { sessionKey } from "~/swr";
 import { urls } from "~/urls";
 
 import { useDevice } from "./use-device";
 
-export function useSession(options: SWRConfiguration<Session | null> = {}) {
-	const router = useRouter();
+export function useOptionalSession(options: SWRConfiguration<Session | null> = {}) {
 	const { native } = useDevice();
 
 	const { data: session = null, mutate } = useSWR(
@@ -19,30 +19,29 @@ export function useSession(options: SWRConfiguration<Session | null> = {}) {
 		Authentication.getOptionalSession,
 		{
 			suspense: true,
-			fallbackData: null,
 			...options
 		}
 	);
 
-	const update = useCallback(
-		async (session?: Session | null, refresh: boolean = true) => {
-			await mutate(session || undefined, { revalidate: false });
-			if (refresh) router.refresh();
-		},
-		[mutate, router]
-	);
-
 	const logout = useCallback(async () => {
 		if (native) await PushNotifications.unregister();
-		await Authentication.logout().catch(() => null);
-		router.push(urls.login());
-		router.refresh();
-	}, [native, router]);
 
-	return [session, update, logout] as const;
+		await Authentication.logout().catch(() => null);
+	}, [native]);
+
+	return [session, mutate, logout] as const;
 }
 
 export function useCurrentUser(): User | null {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	return session?.user ?? null;
+}
+
+export function useSession() {
+	const [session, mutate, logout] = useOptionalSession();
+	const locale = useLocale();
+
+	if (!session) return redirect({ href: urls.login(), locale });
+
+	return [session, mutate, logout] as const;
 }

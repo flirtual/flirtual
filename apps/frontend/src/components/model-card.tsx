@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { emptyObject } from "~/utilities";
 
 import { SupportButton } from "./layout/support-button";
@@ -30,7 +30,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	...props
 }) => {
 	const t = useTranslations();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	return (
 		<>

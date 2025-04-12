@@ -2,10 +2,9 @@
 
 import { useMessages } from "next-intl";
 import { useDebugValue } from "react";
-import useSWR from "swr";
 
 import { Attribute, type AttributeType } from "~/api/attributes";
-import { attributeKey } from "~/swr";
+import { attributeKey, useSWR } from "~/swr";
 
 export function useAttributes<T extends AttributeType>(type: T) {
 	useDebugValue(type);
@@ -17,8 +16,7 @@ export function useAttributes<T extends AttributeType>(type: T) {
 			// revalidateOnFocus: false,
 			// revalidateIfStale: false,
 			keepPreviousData: true,
-			suspense: true,
-			fallbackData: []
+			suspense: true
 		}
 	);
 

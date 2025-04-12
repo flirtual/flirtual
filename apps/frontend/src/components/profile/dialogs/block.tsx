@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import type { FC, PropsWithChildren } from "react";
-import { mutate } from "swr";
+import { mutate } from "~/swr";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";

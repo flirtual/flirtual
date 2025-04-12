@@ -12,12 +12,12 @@ import { InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { ProfilePlaylist } from "~/components/profile/playlist";
 import { useDevice } from "~/hooks/use-device";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const toasts = useToast();
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
 		null

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { User } from "~/api/user";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useShare } from "~/hooks/use-share";
 import { useToast } from "~/hooks/use-toast";
 import { toAbsoluteUrl, urls } from "~/urls";
@@ -21,7 +21,7 @@ import { InputText } from "../inputs";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const t = useTranslations();
 	const toasts = useToast();
 	const { share, canShare } = useShare();

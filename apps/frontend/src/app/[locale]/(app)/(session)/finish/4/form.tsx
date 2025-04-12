@@ -10,7 +10,7 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
@@ -20,7 +20,7 @@ export const Finish4Form: React.FC = () => {
 	const router = useRouter();
 	const t = useTranslations();
 
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const personality = usePersonality();
 
 	if (!session || !personality) return null;

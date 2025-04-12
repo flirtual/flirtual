@@ -7,7 +7,7 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { HomeIcon } from "~/components/icons/gradient/home";
 import { LoginIcon } from "~/components/icons/gradient/login";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { NavigationalSwitchItem } from "./navigation-item";
@@ -30,7 +30,7 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 );
 
 export function Navigation() {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	return (
 		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col text-white-20 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">

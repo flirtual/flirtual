@@ -8,7 +8,7 @@ import type { User } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 import { Pill } from "./pill";
 
@@ -27,7 +27,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	activeIds,
 	getName
 }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 

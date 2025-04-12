@@ -2,7 +2,7 @@
 
 import { Preferences } from "@capacitor/preferences";
 import { useCallback, useDebugValue } from "react";
-import useSWR from "swr";
+import { useSWR } from "~/swr";
 
 export function getPreference<T>(key: string) {
 	return Preferences.get({ key }).then(({ value: localValue }) =>

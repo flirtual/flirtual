@@ -4,11 +4,11 @@ import WidgetBot from "@widgetbot/react-embed";
 import dynamic from "next/dynamic";
 
 import { displayName } from "~/api/user";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 const DiscordEmbed_: React.FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	return (
 		<WidgetBot

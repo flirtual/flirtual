@@ -8,9 +8,9 @@ import {
 import ms from "ms";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
-import useSWR from "swr";
 
 import { useDevice } from "~/hooks/use-device";
+import { useSWR } from "~/swr";
 
 import { Button } from "./button";
 import {
@@ -34,7 +34,7 @@ const NativeStartup: React.FC = () => {
 		{
 			fallbackData: null,
 			refreshInterval: ms("1m"),
-			refreshWhenHidden: false
+			refreshWhenHidden: true
 		}
 	);
 

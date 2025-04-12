@@ -21,14 +21,14 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 
 export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry }) => {
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const t = useTranslations();
 	const router = useRouter();
 

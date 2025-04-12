@@ -18,7 +18,7 @@ import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useFormContext } from "~/hooks/use-input-form";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
 import { defaultLocale } from "~/i18n/routing";
@@ -205,7 +205,7 @@ const ReccommendedProfileThemes: FC = () => {
 };
 
 const SaveButton: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 	const { changes } = useFormContext<ProfileColors>();
 
@@ -234,7 +234,6 @@ export const AppearanceForm: FC = () => {
 	const toasts = useToast();
 	const router = useRouter();
 	const [session] = useSession();
-	if (!session) return null;
 
 	return (
 		<Form

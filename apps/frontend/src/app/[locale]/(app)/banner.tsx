@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 
 import { InlineLink, type InlineLinkProps } from "~/components/inline-link";
 import { useLocation } from "~/hooks/use-location";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 export const BannerLink: FC<PropsWithChildren<InlineLinkProps>> = ({
 	href,
@@ -73,7 +73,7 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon }: B
 }
 
 export const AppBanner: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 
 	if (!session) return null;

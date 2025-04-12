@@ -5,7 +5,7 @@ import type { FC, PropsWithChildren } from "react";
 
 import type { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { PillAttributeList } from "./attribute-list";
@@ -27,7 +27,7 @@ const PillGroup: FC<PropsWithChildren> = ({ children }) => {
 export const PillCollection: FC<{ user: User }> = (props) => {
 	const { user } = props;
 
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();

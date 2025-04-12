@@ -4,13 +4,13 @@ import { AnimatePresence, motion } from "motion/react";
 // eslint-disable-next-line no-restricted-imports
 import { useSearchParams } from "next/navigation";
 import { type FC, useEffect } from "react";
-import { preload } from "swr";
+import { preload } from "~/swr";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { useQueue } from "~/hooks/use-queue";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { userKey } from "~/swr";
 
 import {
@@ -23,7 +23,7 @@ import { QueueActions } from "./queue-actions";
 export type QueueAnimationDirection = "backward" | "forward";
 
 export const Queue: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	const query = useSearchParams();
 

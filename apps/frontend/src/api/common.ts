@@ -65,7 +65,9 @@ export const api = wretch(urls.api)
 
 					if (typeof window === "undefined") {
 						// TODO: We're removing API calls from the server, & this will eventually error instead.
-						console.error(new Error(`Server-side API call to ${options.method} ${url}.`));
+						// const error = new Error(`Server-side API call to ${options.method} ${url}.`);
+						// error.stack = error.stack?.split("\n").slice(3).join("\n");
+						// console.error(error);
 
 						if (
 							// We can't use `headers` with `unstable_cache` which caches across requests,

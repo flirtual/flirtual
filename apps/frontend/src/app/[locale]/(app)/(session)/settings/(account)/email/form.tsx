@@ -7,11 +7,11 @@ import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const EmailForm: React.FC = () => {
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const router = useRouter();
 	const t = useTranslations();
 

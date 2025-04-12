@@ -6,7 +6,7 @@ import type { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import { FaceTimeIcon } from "~/components/icons";
 import { useDevice } from "~/hooks/use-device";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 export interface FaceTimeButtonProps {
 	user: User;
@@ -15,7 +15,7 @@ export interface FaceTimeButtonProps {
 export const FaceTimeButton: FC<FaceTimeButtonProps> = (props) => {
 	const { user } = props;
 	const { platform, vision } = useDevice();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	if (
 		!vision

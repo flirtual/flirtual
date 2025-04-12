@@ -7,10 +7,10 @@ import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 export const PasswordChangeForm: React.FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const router = useRouter();
 	const t = useTranslations();
 

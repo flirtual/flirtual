@@ -16,7 +16,7 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
@@ -24,7 +24,7 @@ const absMinAge = 18;
 const absMaxAge = 60;
 
 export const Onboarding2Form: FC = () => {
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const router = useRouter();
 
 	const genders = useAttributes("gender").filter(

@@ -4,27 +4,20 @@ import type { Locale } from "next-intl";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Montserrat, Nunito } from "next/font/google";
-// eslint-disable-next-line no-restricted-imports
 import { notFound } from "next/navigation";
-import { userAgentFromString } from "next/server";
 import { Suspense } from "react";
 import { preconnect } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
-import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
 import { AnalyticsProvider } from "~/components/analytics";
 import AppUrlListener from "~/components/app-url-listener";
 import { InsetPreview } from "~/components/inset-preview";
 import NativeStartup from "~/components/native-startup";
 import { TooltipProvider } from "~/components/tooltip";
 import { apiOrigin, environment, siteOrigin } from "~/const";
-import type { DeviceContext, DevicePlatform } from "~/hooks/use-device";
-import { DeviceProvider } from "~/hooks/use-device";
-import { ThemeProvider } from "~/hooks/use-theme";
 import { ToastProvider } from "~/hooks/use-toast";
 import { locales } from "~/i18n/routing";
-import { resolveTheme } from "~/theme";
 import { imageOrigins, urls } from "~/urls";
 
 import { LoadingIndicator } from "./(app)/loading-indicator";
@@ -101,12 +94,6 @@ export const viewport: Viewport = {
 	width: "device-width"
 };
 
-const platforms: Record<string, DevicePlatform> = {
-	android: "android",
-	ios: "apple",
-	"mac os": "apple"
-};
-
 const montserrat = Montserrat({
 	variable: "--font-montserrat",
 	subsets: ["latin"]
@@ -114,19 +101,6 @@ const montserrat = Montserrat({
 const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 
 const fontClassNames = twMerge(montserrat.variable, nunito.variable);
-
-function getDevice(headers: Headers): DeviceContext {
-	const userAgent = userAgentFromString(headers.get("user-agent")!);
-	const { os, ua } = userAgent;
-
-	const platform: DevicePlatform
-		= platforms[os.name?.toLowerCase() ?? ""] || "web";
-
-	const native = ua.includes("Flirtual-Native");
-	const vision = ua.includes("Flirtual-Vision");
-
-	return { native, platform, userAgent, vision };
-}
 
 export default async function RootLayout({
 	children,
@@ -140,18 +114,9 @@ export default async function RootLayout({
 	preconnect(apiOrigin);
 	imageOrigins.map((origin) => preconnect(origin));
 
-	// const session = await Authentication.getOptionalSession().catch(() => null);
-
-	const headers = new Headers();// await getHeaders();
-	const device = getDevice(headers);
-
-	let themeOverride = headers.get("theme") as PreferenceTheme | null;
-	if (themeOverride && !PreferenceThemes.includes(themeOverride))
-		themeOverride = null;
-
-	const theme
-		= themeOverride
-			|| (device.vision ? "light" : "light" /* (session?.user.preferences?.theme ?? "light") */);
+	// const theme = "light";
+	//	= themeOverride
+	//		|| (device.vision ? "light" : "light" /* (session?.user.preferences?.theme ?? "light") */);
 
 	const messages = await getMessages();
 
@@ -159,8 +124,7 @@ export default async function RootLayout({
 		<html suppressHydrationWarning lang={locale}>
 			<head suppressHydrationWarning>
 				<meta name="darkreader-lock" />
-				{theme === "system" && (
-
+				{/* {theme === "system" && (
 					<script
 						// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
 						dangerouslySetInnerHTML={{
@@ -178,40 +142,35 @@ export default async function RootLayout({
 						`.trim()
 						}}
 					/>
-				)}
+				)} */}
 				<link
 					color="#e9658b"
 					href={SafariPinnedTabImage.src}
 					rel="mask-icon"
 				/>
-				<AppUrlListener />
 			</head>
 			<body className={fontClassNames} data-theme="light">
-				<NextIntlClientProvider messages={messages}>
-					<DeviceProvider {...device}>
-						{/* <SessionProvider session={session}> */}
-						<ThemeProvider theme={theme}>
-							{environment === "preview" && <StagingBanner />}
-							{environment === "development" && <InsetPreview />}
-							<NextTopLoader
-								color={["#FF8975", "#E9658B"]}
-								height={5}
-								showSpinner={false}
-							/>
-							<AnalyticsProvider>
-								<NativeStartup />
-								<ToastProvider>
-									<Suspense fallback={<LoadingIndicator />}>
-										<TooltipProvider>
-											{children}
-										</TooltipProvider>
-									</Suspense>
-								</ToastProvider>
-							</AnalyticsProvider>
-						</ThemeProvider>
-						{/* </SessionProvider> */}
-					</DeviceProvider>
-				</NextIntlClientProvider>
+				<Suspense fallback={<LoadingIndicator />}>
+
+					<AppUrlListener />
+					<NextIntlClientProvider messages={messages}>
+						{environment === "preview" && <StagingBanner />}
+						{environment === "development" && <InsetPreview />}
+						<NextTopLoader
+							color={["#FF8975", "#E9658B"]}
+							height={5}
+							showSpinner={false}
+						/>
+						<AnalyticsProvider>
+							<NativeStartup />
+							<ToastProvider>
+								<TooltipProvider>
+									{children}
+								</TooltipProvider>
+							</ToastProvider>
+						</AnalyticsProvider>
+					</NextIntlClientProvider>
+				</Suspense>
 			</body>
 		</html>
 

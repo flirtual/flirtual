@@ -1,11 +1,16 @@
 "use client";
 
-import useSWR from "swr";
 import type { WretchOptions } from "wretch";
 
 import type { User } from "~/api/user";
 import type { Relationship } from "~/api/user/relationship";
-import { relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/swr";
+import {
+	relationshipFetcher,
+	relationshipKey,
+	userFetcher,
+	userKey,
+	useSWR
+} from "~/swr";
 
 import { useCurrentUser } from "./use-session";
 
@@ -21,7 +26,6 @@ export function useUser(userId: string, options: WretchOptions = {}): User | nul
 		userFetcher,
 		{
 			suspense: true,
-			fallbackData: null,
 		}
 	);
 

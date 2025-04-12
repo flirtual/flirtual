@@ -16,7 +16,7 @@ import {
 } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 const Pageview = dynamic(() => Promise.resolve(() => {
 	const location = useLocation();
@@ -31,7 +31,7 @@ const Pageview = dynamic(() => Promise.resolve(() => {
 }), { ssr: false });
 
 function Identity() {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const { native, vision } = useDevice();
 	const posthog = usePostHog();
 

@@ -1,6 +1,6 @@
 import { useLocale } from "next-intl";
 import { useCallback, useEffect } from "react";
-import { unstable_serialize, useSWRConfig } from "swr";
+import { unstable_serialize, useSWRConfig } from "~/swr";
 
 import { displayName } from "~/api/user";
 import { freshworksWidgetId } from "~/const";

@@ -20,7 +20,7 @@ import {
 	useState
 } from "react";
 import { entries, groupBy, prop, sortBy } from "remeda";
-import useSWR from "swr";
+import { useSWR } from "~/swr";
 import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
@@ -36,7 +36,7 @@ import { ProfileDropdown } from "~/components/profile/dropdown";
 import { TimeRelative } from "~/components/time-relative";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
@@ -100,7 +100,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 		string | null
 	>(null);
 	const toasts = useToast();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 

@@ -1,6 +1,7 @@
 import { Share, type ShareOptions, type ShareResult } from "@capacitor/share";
 import { useCallback } from "react";
-import useSWR from "swr";
+
+import { useSWR } from "~/swr";
 
 export function useShare() {
 	const { data: canShare } = useSWR(

@@ -1,9 +1,8 @@
 import { useCallback } from "react";
-import { unstable_serialize, useSWRConfig } from "swr";
 
 import { displayName, type User } from "~/api/user";
 import { cannyAppId } from "~/const";
-import { sessionKey } from "~/swr";
+import { sessionKey, unstable_serialize, useSWRConfig } from "~/swr";
 import { resolveTheme } from "~/theme";
 import { urls } from "~/urls";
 

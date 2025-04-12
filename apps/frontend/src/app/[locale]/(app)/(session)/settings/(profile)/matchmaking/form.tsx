@@ -38,14 +38,14 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 const absMinAge = 18;
 const absMaxAge = 60;
 
 export const MatchmakingForm: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const router = useRouter();
 	const toasts = useToast();
 	const t = useTranslations();

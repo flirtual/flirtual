@@ -71,3 +71,5 @@ export const cloudflareInternalIdentifier = process.env.CLOUDFLARE_INTERNAL_IDEN
 
 export const maintenance = false;
 export const duringBuild = process.env.BUILD === "1";
+export const isServer = typeof window === "undefined";
+export const isClient = !isServer;

@@ -4,13 +4,13 @@ import { useTranslations } from "next-intl";
 import { type FC, useState } from "react";
 
 import { useDevice } from "~/hooks/use-device";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 import { PlanCard } from "./plan-card";
 
 export const PlanList: FC = () => {
 	const { native, vision } = useDevice();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const [purchasePending, setPurchasePending] = useState(false);
 	const t = useTranslations();
 

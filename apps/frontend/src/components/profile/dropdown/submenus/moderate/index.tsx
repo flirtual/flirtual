@@ -1,7 +1,7 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type FC, type PropsWithChildren, Suspense } from "react";
-import { mutate } from "swr";
+import { mutate } from "~/swr";
 
 import { displayName, User } from "~/api/user";
 import { Button } from "~/components/button";
@@ -24,7 +24,7 @@ import {
 	DropdownMenuSubContent
 } from "~/components/dropdown";
 import { InlineLink } from "~/components/inline-link";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { userKey } from "~/swr";
 import { urls } from "~/urls";
@@ -35,7 +35,7 @@ import { WarnAction } from "./actions/warn";
 export const ProfileDropdownModerateSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const toasts = useToast();
 	const t = useTranslations();
 

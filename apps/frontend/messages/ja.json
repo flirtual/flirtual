@@ -951,5 +951,6 @@
 	"have_fun": "楽しんでくれ！",
 	"enable_assistant": "アシスタントを有効にする",
 	"enable_ranked_mode": "ランク・モードを有効にする",
-	"april_fools_year": "{year}年エイプリルフール"
+	"april_fools_year": "{year}年エイプリルフール",
+	"bad_jumpy_sheep_gasp": "これには、サポートとのやりとりに役立つ機密のデバッグ情報が含まれています。"
 }

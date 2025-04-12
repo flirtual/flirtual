@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { type FC, useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -25,7 +24,8 @@ import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
+import { useRouter } from "~/i18n/navigation";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
@@ -52,7 +52,7 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 };
 
 export const NavigationItemProfile: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 	const router = useRouter();
 
@@ -117,7 +117,7 @@ export const NavigationItemProfile: FC = () => {
 					>
 						<Link
 							className="group flex shrink-0 items-center gap-2 hover:text-theme-2"
-							href={urls.user.me}
+							href={urls.profile(user)}
 						>
 							<UserAvatar
 								className="group-hocus:brightness-90 mt-1.5 size-8 scale-125 rounded-full transition-transform desktop:mb-2 desktop:mt-0"

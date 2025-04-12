@@ -3,13 +3,13 @@ import { Eye, EyeOff } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type FC, useMemo } from "react";
 import { capitalize } from "remeda";
-import { mutate } from "swr";
+import { mutate } from "~/swr";
 import { twMerge } from "tailwind-merge";
 
 import { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { usePreferences } from "~/hooks/use-preferences";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
 import { userKey } from "~/swr";
@@ -21,7 +21,7 @@ import { InlineLink } from "../inline-link";
 export const ProfileModeratorInfo: FC<{
 	userId: string;
 }> = ({ userId }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const toasts = useToast();
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();

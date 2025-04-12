@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import { usePlans } from "~/hooks/use-plans";
 import { usePurchase } from "~/hooks/use-purchase";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 import { PlanButtonLink } from "./plan-button-link";
 
@@ -35,7 +35,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		highlight,
 		description
 	} = props;
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 
 	const { packages } = usePurchase();

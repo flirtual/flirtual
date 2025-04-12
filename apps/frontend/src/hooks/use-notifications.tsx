@@ -10,13 +10,13 @@ import {
 	use,
 	useMemo
 } from "react";
-import useSWR from "swr";
+import { useSWR } from "~/swr";
 
 import { User } from "~/api/user";
 import { useRouter } from "~/i18n/navigation";
 
 import { useDevice } from "./use-device";
-import { useSession } from "./use-session";
+import { useOptionalSession } from "./use-session";
 
 export interface NotificationContext {
 	status: PermissionStatus["receive"];
@@ -26,7 +26,7 @@ const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
 	const { platform, native } = useDevice();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const router = useRouter();
 
 	useSWR("notifications-reset-count", () => {

@@ -32,7 +32,7 @@ import { gitCommitSha } from "~/const";
 import { useCanny } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -42,7 +42,7 @@ import { NavigationLink } from "./navigation-link";
 export const SettingsNavigation: FC = () => {
 	const layoutSegment = useSelectedLayoutSegment();
 	const { openFreshworks } = useFreshworks();
-	const [session, , logout] = useSession();
+	const [session, , logout] = useOptionalSession();
 	const { vision } = useDevice();
 	const router = useRouter();
 	const t = useTranslations();

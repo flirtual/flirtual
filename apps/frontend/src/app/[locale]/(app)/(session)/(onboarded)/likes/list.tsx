@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC } from "react";
-import useSWR from "swr";
+import { useSWR } from "~/swr";
 
 import { Matchmaking } from "~/api/matchmaking";
 import { likesYouKey } from "~/swr";

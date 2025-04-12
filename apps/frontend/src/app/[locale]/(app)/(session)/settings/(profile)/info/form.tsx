@@ -25,7 +25,7 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 const AttributeKeys = [
@@ -33,7 +33,7 @@ const AttributeKeys = [
 ];
 
 export const InfoForm: FC = () => {
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const toasts = useToast();
 
 	const games = useAttributes("game");

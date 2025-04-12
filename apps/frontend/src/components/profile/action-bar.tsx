@@ -6,7 +6,7 @@ import type { FC } from "react";
 
 import type { User } from "~/api/user";
 import { DialogTrigger } from "~/components/dialog/dialog";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 
 import { Button } from "../button";
 import { AlertDialogTrigger } from "../dialog/alert";
@@ -16,7 +16,7 @@ import { ProfileDropdown } from "./dropdown";
 import { ProfileModeratorInfo } from "./moderator-info";
 
 export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> = ({ user, hideModeratorInfo }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 
 	if (

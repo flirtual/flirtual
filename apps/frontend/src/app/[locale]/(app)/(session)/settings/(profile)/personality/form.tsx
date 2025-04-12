@@ -4,7 +4,7 @@ import shuffle from "fast-shuffle";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { entries } from "remeda";
-import useSWR from "swr";
+import { useSWR } from "~/swr";
 
 import {
 	Personality,
@@ -12,12 +12,12 @@ import {
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function usePersonality() {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	const { data: personality } = useSWR(session ? "personality" : null, () => Personality.get(session!.user.id), {
 		suspense: true
@@ -27,7 +27,7 @@ export function usePersonality() {
 }
 
 export const PersonalityForm: FC = () => {
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const personality = usePersonality();
 
 	const toasts = useToast();

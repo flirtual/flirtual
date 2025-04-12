@@ -23,14 +23,14 @@ import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const Finish2Form: FC = () => {
 	const platforms = useAttributes("platform");
 	const sexualities = useAttributes("sexuality");
 
-	const [session, mutateSession] = useSession();
+	const [session, mutateSession] = useOptionalSession();
 	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 

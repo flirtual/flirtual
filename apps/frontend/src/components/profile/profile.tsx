@@ -9,7 +9,7 @@ import { displayName } from "~/api/user";
 import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
 import { yearsAgo } from "~/date";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -38,7 +38,7 @@ export type ProfileProps = {
 export function Profile(props: ProfileProps) {
 	const { userId, direct = false, hideModeratorInfo = false, className, id, ...elementProps } = props;
 
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
 

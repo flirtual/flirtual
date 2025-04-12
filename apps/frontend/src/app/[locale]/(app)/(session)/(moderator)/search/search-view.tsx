@@ -12,7 +12,7 @@ import {
 import { Eye, EyeOff, Gavel, Gem, Search, ShieldEllipsis } from "lucide-react";
 import { type FC, Suspense, useDeferredValue, useEffect, useState } from "react";
 import { capitalize } from "remeda";
-import useSWR from "swr";
+import { useSWR } from "~/swr";
 import { twMerge } from "tailwind-merge";
 
 import {

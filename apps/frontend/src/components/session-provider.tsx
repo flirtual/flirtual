@@ -3,7 +3,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import type { PropsWithChildren, RefAttributes } from "react";
 import { useEffect } from "react";
-import { mutate, SWRConfig } from "swr";
+import { mutate, SWRConfig } from "~/swr";
 
 import type { Session } from "~/api/auth";
 import { sessionKey } from "~/swr";

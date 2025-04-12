@@ -1,7 +1,7 @@
 import { Languages, MailWarning } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type FC, useMemo, useState } from "react";
-import { mutate } from "swr";
+import { mutate } from "~/swr";
 
 import { OpenAI } from "~/api/openai";
 import { displayName, User } from "~/api/user";

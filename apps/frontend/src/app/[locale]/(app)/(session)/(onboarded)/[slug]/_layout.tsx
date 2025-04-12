@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
-import { unstable_serialize } from "swr";
+import { unstable_serialize } from "~/swr";
 
 import { Attribute } from "~/api/attributes";
 import { displayName, User } from "~/api/user";

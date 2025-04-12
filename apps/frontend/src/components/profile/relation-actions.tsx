@@ -3,7 +3,7 @@
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { mutate } from "swr";
+import { mutate } from "~/swr";
 
 import { Matchmaking } from "~/api/matchmaking";
 import { displayName } from "~/api/user";

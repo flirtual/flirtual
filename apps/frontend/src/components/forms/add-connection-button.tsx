@@ -14,7 +14,7 @@ import {
 } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 export interface ConnectionButtonProps {
@@ -25,7 +25,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const { type } = props;
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 	const location = useLocation();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const router = useRouter();
 	const toasts = useToast();
 	const { native } = useDevice();

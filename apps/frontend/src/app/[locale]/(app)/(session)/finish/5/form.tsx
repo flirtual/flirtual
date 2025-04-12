@@ -12,7 +12,7 @@ import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { InputText } from "~/components/inputs";
 import { useDevice } from "~/hooks/use-device";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const Finish5Form: React.FC = () => {
@@ -21,7 +21,7 @@ export const Finish5Form: React.FC = () => {
 
 	const { vision } = useDevice();
 	const router = useRouter();
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const t = useTranslations();
 
 	if (!session) return null;

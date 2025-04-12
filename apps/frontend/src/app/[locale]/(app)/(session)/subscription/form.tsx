@@ -5,7 +5,7 @@ import { useFormatter, useLocale, useTranslations } from "next-intl";
 import type { FC } from "react";
 
 import { InlineLink } from "~/components/inline-link";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
@@ -23,7 +23,7 @@ export const SubscriptionForm: FC = () => {
 	const t = useTranslations();
 	const formatter = useFormatter();
 
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const userCount = 1000; // TODO: Replace with actual user count
 
 	if (!session) return null;

@@ -23,7 +23,7 @@ import {
 	DropdownMenuTrigger
 } from "~/components/dropdown";
 import { Link } from "~/components/link";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -38,7 +38,7 @@ export interface ProfileDropdownProps {
 }
 
 export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	const user = useUser(userId);
 	if (!user) return null;

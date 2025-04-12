@@ -18,11 +18,11 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const Finish1Form: FC = () => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 	const router = useRouter();
 
 	const t = useTranslations();

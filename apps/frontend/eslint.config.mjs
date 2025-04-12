@@ -33,7 +33,11 @@ export default configure({
 			{
 				name: "next/navigation",
 				message: "Use '~/i18n/navigation' instead."
-			}
+			},
+			{
+				name: "swr",
+				message: "Use '~/swr' instead."
+			},
 		]
 	}
 });

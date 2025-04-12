@@ -13,14 +13,14 @@ import {
 	DropdownMenuSubContent
 } from "~/components/dropdown";
 import { Link } from "~/components/link";
-import { useSession } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 export const ProfileDropdownReportsSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
-	const [session] = useSession();
+	const [session] = useOptionalSession();
 
 	const router = useRouter();
 	const toasts = useToast();
