@@ -951,5 +951,6 @@
 	"have_fun": "Veel plezier!",
 	"enable_assistant": "Assistent inschakelen",
 	"enable_ranked_mode": "Gerangschikte modus inschakelen",
-	"april_fools_year": "1 april {jaar}"
+	"april_fools_year": "1 april {jaar}",
+	"bad_jumpy_sheep_gasp": "Dit bevat gevoelige debug-informatie die kan worden gebruikt voor interactie met ondersteuning."
 }
