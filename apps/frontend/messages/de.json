@@ -951,5 +951,6 @@
 	"have_fun": "Viel Spaß!",
 	"enable_assistant": "Assistent freischalten",
 	"enable_ranked_mode": "Aktivieren Sie den Ranglisten-Modus",
-	"april_fools_year": "Aprilscherz {Jahr}"
+	"april_fools_year": "Aprilscherz {Jahr}",
+	"bad_jumpy_sheep_gasp": "Dies enthält sensible Debug-Informationen, die Ihnen bei der Interaktion mit dem Support helfen können."
 }
