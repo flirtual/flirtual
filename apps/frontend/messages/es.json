@@ -951,5 +951,6 @@
 	"fun_stuff": "Diversión",
 	"have_fun": "¡Diviértete!",
 	"enable_ranked_mode": "Activar el modo clasificado",
-	"april_fools_year": "April Fools {año}"
+	"april_fools_year": "April Fools {año}",
+	"bad_jumpy_sheep_gasp": "Contiene información sensible de depuración que puede utilizarse para ayudarle a interactuar con el soporte."
 }
