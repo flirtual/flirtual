@@ -2,7 +2,6 @@
 
 import { CheckCircle2, MoveLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 
 import {
@@ -24,13 +23,15 @@ import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useRouter } from "~/i18n/navigation";
+import { mutate, sessionKey } from "~/swr";
 import { urls } from "~/urls";
 
 export const Finish2Form: FC = () => {
 	const platforms = useAttributes("platform");
 	const sexualities = useAttributes("sexuality");
 
-	const [session, mutateSession] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
@@ -61,7 +62,7 @@ export const Finish2Form: FC = () => {
 					new: values.new
 				});
 
-				await mutateSession({
+				await mutate(sessionKey(), {
 					...session,
 					user: {
 						...user,

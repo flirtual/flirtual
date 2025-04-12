@@ -12,21 +12,18 @@ import {
 	useSWR
 } from "~/swr";
 
-import { useCurrentUser } from "./use-session";
+import { useSession } from "./use-session";
 
 export function useUser(userId: string, options: WretchOptions = {}): User | null {
-	const self = useCurrentUser();
+	const { user: self } = useSession();
 
-	const { data } = useSWR(
+	const { data = null } = useSWR(
 		userId
 			? self?.id !== userId
 				? userKey(userId, options)
 				: null
 			: null,
 		userFetcher,
-		{
-			suspense: true,
-		}
 	);
 
 	// If the user is the current user, return the session user instead.
@@ -36,15 +33,13 @@ export function useUser(userId: string, options: WretchOptions = {}): User | nul
 }
 
 export function useRelationship(userId: string): Relationship | null {
-	const self = useCurrentUser();
-	const { data } = useSWR(
+	const { user: self } = useSession();
+
+	const { data = null } = useSWR(
 		self?.id !== userId
 			? relationshipKey(userId)
 			: null,
 		relationshipFetcher,
-		{
-			suspense: true
-		}
 	);
 
 	return data;

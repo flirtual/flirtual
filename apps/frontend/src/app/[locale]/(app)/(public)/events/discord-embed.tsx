@@ -8,7 +8,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 const DiscordEmbed_: React.FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	return (
 		<WidgetBot

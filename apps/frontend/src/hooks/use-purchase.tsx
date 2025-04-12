@@ -4,7 +4,6 @@ import {
 	Purchases,
 	type PurchasesPackage
 } from "@revenuecat/purchases-capacitor";
-import { useRouter } from "next/navigation";
 import {
 	createContext,
 	type FC,
@@ -18,11 +17,12 @@ import {
 
 import { Subscription } from "~/api/subscription";
 import { rcAppleKey, rcGoogleKey } from "~/const";
+import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { useDevice } from "./use-device";
 import { usePlans } from "./use-plans";
-import { useCurrentUser } from "./use-session";
+import { useSession } from "./use-session";
 import { useToast } from "./use-toast";
 
 interface PurchaseContext {
@@ -45,7 +45,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 	const [packages, setPackages] = useState<Array<PurchasesPackage>>([]);
 
-	const user = useCurrentUser();
+	const { user } = useSession();
 	const plans = usePlans();
 
 	useEffect(() => {

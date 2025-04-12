@@ -2,7 +2,7 @@
 
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 

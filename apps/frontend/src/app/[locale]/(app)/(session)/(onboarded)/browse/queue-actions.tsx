@@ -5,7 +5,7 @@ import { Undo2, X } from "lucide-react";
 import ms from "ms";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import {
 	type FC,
 	Suspense,
@@ -60,7 +60,7 @@ function Key({ label }: { label: string }) {
 }
 
 function DefaultTour() {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const { vision } = useDevice();
 	useDefaultTour(!session?.user.moderatorMessage && !vision);
 
@@ -85,7 +85,7 @@ const QueueActions_: FC<{
 	explicitUserId?: string;
 	kind: ProspectKind;
 }> = ({ queue, explicitUserId, kind: mode }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const { native } = useDevice();
 	const t = useTranslations();
 
@@ -372,7 +372,7 @@ const MatchDialog: FC<{
 	onClose: () => void;
 }> = ({ userId, kind, onClose }) => {
 	const router = useRouter();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const user = useUser(userId);
 	const t = useTranslations();
 

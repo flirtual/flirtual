@@ -15,7 +15,7 @@ export interface FaceTimeButtonProps {
 export const FaceTimeButton: FC<FaceTimeButtonProps> = (props) => {
 	const { user } = props;
 	const { platform, vision } = useDevice();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	if (
 		!vision

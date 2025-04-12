@@ -26,7 +26,7 @@ const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
 	const { platform, native } = useDevice();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const router = useRouter();
 
 	useSWR("notifications-reset-count", () => {

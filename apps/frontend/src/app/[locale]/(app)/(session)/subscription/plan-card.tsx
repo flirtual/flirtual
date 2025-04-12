@@ -35,7 +35,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		highlight,
 		description
 	} = props;
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 
 	const { packages } = usePurchase();

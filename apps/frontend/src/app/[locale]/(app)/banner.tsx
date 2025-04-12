@@ -73,7 +73,7 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon }: B
 }
 
 export const AppBanner: FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 
 	if (!session) return null;

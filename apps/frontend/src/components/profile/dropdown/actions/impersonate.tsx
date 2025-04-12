@@ -1,6 +1,6 @@
 import { VenetianMask } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
 
 import { Authentication } from "~/api/auth";
@@ -10,7 +10,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const router = useRouter();
 	const toasts = useToast();
 	const t = useTranslations();

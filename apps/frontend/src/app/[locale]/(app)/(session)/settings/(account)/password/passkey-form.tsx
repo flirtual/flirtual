@@ -2,7 +2,7 @@
 
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import { useEffect, useState } from "react";
 import { useSWR } from "~/swr";
 
@@ -28,7 +28,7 @@ const AAGUID_DATABASE
 	= "https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json";
 
 export const PasswordPasskeyForm: React.FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const { native } = useDevice();
 	const router = useRouter();
 	const toasts = useToast();

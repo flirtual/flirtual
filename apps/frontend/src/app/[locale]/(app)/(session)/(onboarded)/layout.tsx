@@ -1,6 +1,20 @@
+"use client";
+
+import { useLocale } from "next-intl";
 import type { PropsWithChildren } from "react";
 
-export default async function OnboardedLayout({ children }: PropsWithChildren) {
-	// await Authentication.getOnboardedSession();
+import { useSession } from "~/hooks/use-session";
+import { redirect } from "~/i18n/navigation";
+import { urls } from "~/urls";
+
+export function OnboardedLayout({ children }: PropsWithChildren) {
+	const { user } = useSession();
+	const locale = useLocale();
+
+	if (user.status === "registered")
+		return redirect({ href: urls.onboarding(1), locale });
+	if (user.deactivatedAt)
+		return redirect({ href: urls.settings.deactivateAccount, locale });
+
 	return <>{children}</>;
 }

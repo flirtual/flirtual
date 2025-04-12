@@ -2,15 +2,14 @@
 
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { mutate } from "~/swr";
 
 import { Matchmaking } from "~/api/matchmaking";
 import { displayName } from "~/api/user";
-import { useCurrentUser } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { relationshipKey } from "~/swr";
+import { useRouter } from "~/i18n/navigation";
+import { mutate, relationshipKey } from "~/swr";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
@@ -21,7 +20,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 }) => {
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
-	const current = useCurrentUser();
+	const { user: current } = useSession();
 
 	const t = useTranslations();
 	const toasts = useToast();

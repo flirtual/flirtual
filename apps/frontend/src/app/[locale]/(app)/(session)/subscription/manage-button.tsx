@@ -15,7 +15,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 export const ManageButton: FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const toasts = useToast();
 	const { purchase } = usePurchase();
 	const [pending, startTransition] = useTransition();

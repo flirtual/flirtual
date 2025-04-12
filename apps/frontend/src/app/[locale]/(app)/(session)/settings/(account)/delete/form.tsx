@@ -2,7 +2,7 @@
 
 import { InAppReview } from "@capacitor-community/in-app-review";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
 
 import { User } from "~/api/user";

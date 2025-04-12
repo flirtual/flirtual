@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
-import { useCurrentUser } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export interface TeamMemberProps {
@@ -18,9 +18,10 @@ export interface TeamMemberProps {
 }
 
 export const TeamMember: React.FC<TeamMemberProps> = (props) => {
-	const t = useTranslations();
 	const { name, role, avatar, url, extra_url } = props;
-	const currentUser = useCurrentUser();
+
+	const session = useOptionalSession();
+	const t = useTranslations();
 
 	return (
 		<div
@@ -42,7 +43,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 						"font-montserrat text-lg font-semibold text-pink",
 						!url && "cursor-default hocus:no-underline"
 					)}
-					href={(currentUser && url) ?? null}
+					href={(session && url) ?? null}
 				>
 					{name}
 				</InlineLink>

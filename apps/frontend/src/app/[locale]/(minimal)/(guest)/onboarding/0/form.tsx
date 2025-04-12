@@ -2,7 +2,7 @@
 
 import { MoveRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
 
 import { User } from "~/api/user";

@@ -22,7 +22,7 @@ function useLikes() {
 }
 
 export const LikesYouButton: FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const likes = useLikes();
 	const t = useTranslations();
 

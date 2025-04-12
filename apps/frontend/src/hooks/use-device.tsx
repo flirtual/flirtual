@@ -31,10 +31,8 @@ const deviceIdPromise = isServer
 	? Promise.resolve({} as unknown as DeviceId)
 	: Device.getId();
 
-export function useDevice() {
-	usePostpone("useDevice()");
-
-	const userAgent = useUserAgent();
+export async function getDevice() {
+	const userAgent = userAgentFromString(navigator.userAgent);
 	const { os, ua } = userAgent;
 
 	const {
@@ -44,9 +42,9 @@ export function useDevice() {
 		androidSDKVersion,
 		iOSVersion,
 		osVersion,
-	} = use(deviceInfoPromise);
+	} = await deviceInfoPromise;
 
-	const { identifier: deviceId } = use(deviceIdPromise);
+	const { identifier: deviceId } = await deviceIdPromise;
 
 	const platform: DevicePlatform
 		= platforms[os.name?.toLowerCase() ?? ""] || "web";
@@ -74,4 +72,13 @@ export function useDevice() {
 	} as const;
 }
 
-export type Device = ReturnType<typeof useDevice>;
+export type Device = ReturnType<typeof getDevice>;
+
+export const devicePromise = isServer
+	? Promise.resolve({} as unknown as Device)
+	: getDevice();
+
+export function useDevice() {
+	usePostpone("useDevice()");
+	return use(devicePromise);
+}

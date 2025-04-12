@@ -1,6 +1,6 @@
 import { Search, ShieldCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import type { FC, PropsWithChildren } from "react";
 
 import { Report } from "~/api/report";
@@ -20,7 +20,7 @@ import { urls } from "~/urls";
 export const ProfileDropdownReportsSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const router = useRouter();
 	const toasts = useToast();

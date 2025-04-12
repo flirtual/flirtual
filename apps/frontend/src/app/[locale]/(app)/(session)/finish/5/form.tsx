@@ -21,7 +21,7 @@ export const Finish5Form: React.FC = () => {
 
 	const { vision } = useDevice();
 	const router = useRouter();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 
 	if (!session) return null;

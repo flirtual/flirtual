@@ -22,7 +22,7 @@ import { twMerge } from "tailwind-merge";
 
 import { uppyCompanionUrl } from "~/const";
 import { useDevice } from "~/hooks/use-device";
-import { useCurrentUser } from "~/hooks/use-session";
+import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
 
@@ -81,12 +81,11 @@ type UploadedMultipartFile = {
 
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile" } = props;
-	const user = useCurrentUser();
+
+	const session = useOptionalSession();
 	const { theme } = useTheme();
 	const { platform, native } = useDevice();
-	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(
-		null
-	);
+	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(null);
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
@@ -97,7 +96,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	const handleUppyComplete = useCallback(
 		async (fileKeys: Array<string>) => {
-			if (!user) return;
+			if (!session) return;
 
 			onChange([
 				...value,
@@ -108,11 +107,11 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				}))
 			]);
 		},
-		[onChange, user, value]
+		[onChange, session, value]
 	);
 
 	useEffect(() => {
-		if (!user) return;
+		if (!session) return;
 
 		const uppyInstance = new Uppy<UppyfileMeta, UppyfileData>({
 			autoProceed: type === "report",
@@ -174,7 +173,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			uppyInstance
 				.use(RemoteSources, {
 					companionUrl: uppyCompanionUrl,
-					sources: user.tags?.includes("debugger") ? ["Facebook"] : []
+					sources: session.user.tags?.includes("debugger") ? ["Facebook"] : []
 				})
 				.use(ImageEditor, {
 					actions: {
@@ -200,7 +199,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		}
 
 		setUppy(uppyInstance);
-	}, [user, handleUppyComplete, type, native, t, uppyLocale]);
+	}, [session, handleUppyComplete, type, native, t, uppyLocale]);
 
 	const sortableItems = value.map(({ id }, index) => id || index);
 

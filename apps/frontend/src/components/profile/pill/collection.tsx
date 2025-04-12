@@ -27,7 +27,7 @@ const PillGroup: FC<PropsWithChildren> = ({ children }) => {
 export const PillCollection: FC<{ user: User }> = (props) => {
 	const { user } = props;
 
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();

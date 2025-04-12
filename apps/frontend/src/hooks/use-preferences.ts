@@ -2,12 +2,17 @@
 
 import { Preferences } from "@capacitor/preferences";
 import { useCallback, useDebugValue } from "react";
+
 import { useSWR } from "~/swr";
 
-export function getPreference<T>(key: string) {
-	return Preferences.get({ key }).then(({ value: localValue }) =>
-		localValue ? (JSON.parse(localValue) as T) : null
-	);
+import { usePostpone } from "./use-postpone";
+
+export async function getPreference<T>(key: string) {
+	const { value: localValue } = await Preferences.get({ key });
+
+	return localValue
+		? (JSON.parse(localValue) as T)
+		: null;
 }
 
 /**
@@ -15,11 +20,16 @@ export function getPreference<T>(key: string) {
  *
  * @see [Capacitor.js Preferences Plugin](https://capacitorjs.com/docs/apis/preferences)
  */
-export function usePreferences<T>(key: string, defaultValue: T) {
-	const { isLoading, data = null, mutate } = useSWR(
+export function usePreferences<T>(key: string, defaultValue?: T) {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	if (defaultValue === undefined) usePostpone("usePreferences() without defaultValue");
+
+	const { data = null, mutate } = useSWR(
 		["preferences", key] as const,
 		([, key]) => getPreference<T>(key),
-		{}
+		{
+			fallbackData: defaultValue
+		}
 	);
 
 	useDebugValue(key);
@@ -38,5 +48,5 @@ export function usePreferences<T>(key: string, defaultValue: T) {
 		[key, mutate]
 	);
 
-	return [isLoading ? null : (data ?? defaultValue), set] as const;
+	return [(data ?? defaultValue), set] as const;
 }

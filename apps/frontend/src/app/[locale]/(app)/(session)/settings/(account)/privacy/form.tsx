@@ -9,16 +9,16 @@ import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
-import { useCurrentUser } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 export const PrivacyForm: React.FC = () => {
-	const user = useCurrentUser();
+	const { user } = useSession();
 	const toasts = useToast();
 	const t = useTranslations();
 
-	if (!user || !user.preferences) return null;
+	if (!user.preferences) return null;
 
 	return (
 		<Form

@@ -1,9 +1,11 @@
-import { redirect } from "next/navigation";
 import { cache } from "react";
 
-import { urls } from "~/urls";
-
-import { api, type DatedModel, type Issue, isWretchError } from "./common";
+import {
+	api,
+	type DatedModel,
+	type Issue,
+	isWretchError
+} from "./common";
 import type { User } from "./user";
 
 export type Session = {
@@ -91,46 +93,12 @@ function convertPublicKey(publicKey: PublicKeyCredentialCreationOptionsBase64): 
 
 export const Authentication = {
 	api: api.url("auth"),
-	async assertGuest() {
-		const session = await this.getOptionalSession();
-		if (session) return redirect(urls.default);
-	},
-	confirmResetPassword(options: ConfirmResetPasswordOptions) {
-		return this.api.url("/password/reset").json(options).post().res();
-	},
-	async getOnboardedSession() {
-		const session = await this.getSession();
-
-		if (session.user.status === "registered")
-			return redirect(urls.onboarding(1));
-		if (session.user.deactivatedAt)
-			return redirect(urls.settings.deactivateAccount);
-
-		return session;
-	},
 	async getOptionalSession() {
 		return this.api
 			.url("/session")
 			.get()
 			.unauthorized(() => null)
 			.json<Session | null>();
-	},
-	async getSession() {
-		const session = await this.getOptionalSession();
-
-		if (!session) {
-			if (typeof window !== "undefined") return redirect(urls.login(urls.default));
-
-			const { headers } = await import("next/headers");
-			const _url = (await headers()).get("url");
-			const url = new URL(_url || urls.default);
-
-			const next = url.href.replace(url.origin, "");
-
-			return redirect(urls.login(next));
-		}
-
-		return session;
 	},
 	impersonate(userId: string) {
 		return this.api.url("/sudo").json({ userId }).post().json<Session>();
@@ -147,6 +115,9 @@ export const Authentication = {
 	},
 	logout() {
 		return this.api.url("/session").delete().res();
+	},
+	confirmResetPassword(options: ConfirmResetPasswordOptions) {
+		return this.api.url("/password/reset").json(options).post().res();
 	},
 	passkey: {
 		api: api.url("auth/passkey"),

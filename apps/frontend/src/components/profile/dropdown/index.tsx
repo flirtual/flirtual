@@ -38,7 +38,7 @@ export interface ProfileDropdownProps {
 }
 
 export const ProfileDropdown: FC<ProfileDropdownProps> = ({ userId }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const user = useUser(userId);
 	if (!user) return null;

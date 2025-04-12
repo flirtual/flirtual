@@ -2,7 +2,7 @@
 
 import { Hash, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
@@ -205,7 +205,7 @@ const ReccommendedProfileThemes: FC = () => {
 };
 
 const SaveButton: FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 	const { changes } = useFormContext<ProfileColors>();
 

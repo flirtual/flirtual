@@ -9,7 +9,7 @@ import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 const AssertGuest = withSuspense(() => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const locale = useLocale();
 
 	// If the user is logged in, redirect them to the browse page.

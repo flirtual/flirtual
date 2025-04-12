@@ -27,7 +27,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	activeIds,
 	getName
 }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 

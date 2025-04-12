@@ -30,7 +30,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	...props
 }) => {
 	const t = useTranslations();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	return (
 		<>

@@ -35,7 +35,7 @@ import { WarnAction } from "./actions/warn";
 export const ProfileDropdownModerateSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const toasts = useToast();
 	const t = useTranslations();
 

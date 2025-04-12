@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 import { useDevice } from "~/hooks/use-device";
+import { withSuspense } from "~/hooks/with-suspense";
 import { useSWR } from "~/swr";
 
 import { Button } from "./button";
@@ -24,7 +25,7 @@ import {
 } from "./dialog/alert";
 import { DialogFooter } from "./dialog/dialog";
 
-const NativeStartup: React.FC = () => {
+export const NativeStartup: React.FC = withSuspense(() => {
 	const t = useTranslations();
 	const { native } = useDevice();
 
@@ -41,8 +42,7 @@ const NativeStartup: React.FC = () => {
 	useEffect(() => {
 		if (
 			!updateInformation
-			|| updateInformation.updateAvailability
-			!== AppUpdateAvailability.UPDATE_AVAILABLE
+			|| updateInformation.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE
 		)
 			return;
 
@@ -66,8 +66,7 @@ const NativeStartup: React.FC = () => {
 	if (
 		!native
 		|| !updateInformation
-		|| updateInformation.updateAvailability
-		!== AppUpdateAvailability.UPDATE_AVAILABLE
+		|| updateInformation.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE
 		|| updateInformation.flexibleUpdateAllowed
 	)
 		return null;
@@ -96,6 +95,4 @@ const NativeStartup: React.FC = () => {
 			</AlertDialogContent>
 		</AlertDialog>
 	);
-};
-
-export default NativeStartup;
+});

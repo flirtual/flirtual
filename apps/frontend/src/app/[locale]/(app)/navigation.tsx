@@ -30,7 +30,7 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 );
 
 export function Navigation() {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	return (
 		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col text-white-20 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">

@@ -23,13 +23,13 @@ export const DebugInfo: React.FC = () => {
 	} = useDevice();
 	const locale = useLocale();
 
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const data = JSON.stringify({
 		at: new Date().toISOString(),
 		environment,
 		locale,
-		user: session?.user.id,
+		user: session?.user.id || null,
 		sudoerId: session?.sudoerId,
 		deviceId,
 		agent: ua,

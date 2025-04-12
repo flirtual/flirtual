@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 
 import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";

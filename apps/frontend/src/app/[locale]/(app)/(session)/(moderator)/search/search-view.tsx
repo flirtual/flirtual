@@ -12,7 +12,6 @@ import {
 import { Eye, EyeOff, Gavel, Gem, Search, ShieldEllipsis } from "lucide-react";
 import { type FC, Suspense, useDeferredValue, useEffect, useState } from "react";
 import { capitalize } from "remeda";
-import { useSWR } from "~/swr";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -46,8 +45,9 @@ import {
 	TooltipTrigger
 } from "~/components/tooltip";
 import { UserThumbnail } from "~/components/user-avatar";
-import { useCurrentUser } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
+import { useSWR } from "~/swr";
 import { urls } from "~/urls";
 
 const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
@@ -341,7 +341,7 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 };
 
 export const SearchView: React.FC = () => {
-	const user = useCurrentUser();
+	const { user } = useSession();
 
 	const [searchOptions, setSearchOptions] = useState({
 		search: "",

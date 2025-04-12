@@ -52,7 +52,7 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 };
 
 export const NavigationItemProfile: FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 	const router = useRouter();
 

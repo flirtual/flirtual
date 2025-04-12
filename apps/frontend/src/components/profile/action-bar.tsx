@@ -16,7 +16,7 @@ import { ProfileDropdown } from "./dropdown";
 import { ProfileModeratorInfo } from "./moderator-info";
 
 export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> = ({ user, hideModeratorInfo }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 
 	if (

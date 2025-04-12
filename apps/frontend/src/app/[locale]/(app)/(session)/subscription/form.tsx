@@ -23,7 +23,7 @@ export const SubscriptionForm: FC = () => {
 	const t = useTranslations();
 	const formatter = useFormatter();
 
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const userCount = 1000; // TODO: Replace with actual user count
 
 	if (!session) return null;

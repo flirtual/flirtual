@@ -138,7 +138,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const { images } = user.profile;
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 
 	const [imageId, setImageId] = useState(firstImageId);

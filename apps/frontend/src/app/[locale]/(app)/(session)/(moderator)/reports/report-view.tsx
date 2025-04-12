@@ -100,7 +100,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 		string | null
 	>(null);
 	const toasts = useToast();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 

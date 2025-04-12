@@ -17,7 +17,7 @@ import { useToast } from "~/hooks/use-toast";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function usePersonality() {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const { data: personality } = useSWR(session ? "personality" : null, () => Personality.get(session!.user.id), {
 		suspense: true

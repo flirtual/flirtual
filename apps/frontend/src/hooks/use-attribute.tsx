@@ -9,17 +9,7 @@ import { attributeKey, useSWR } from "~/swr";
 export function useAttributes<T extends AttributeType>(type: T) {
 	useDebugValue(type);
 
-	const { data: attributes = [] } = useSWR(
-		attributeKey(type),
-		([, type]) => Attribute.list<T>(type),
-		{
-			// revalidateOnFocus: false,
-			// revalidateIfStale: false,
-			keepPreviousData: true,
-			suspense: true
-		}
-	);
-
+	const { data: attributes = [] } = useSWR(attributeKey(type), ([, type]) => Attribute.list<T>(type),);
 	return attributes;
 }
 

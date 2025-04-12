@@ -35,7 +35,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
 	children
 }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();
 

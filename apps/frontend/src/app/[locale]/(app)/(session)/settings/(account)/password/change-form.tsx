@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 
 import { User } from "~/api/user";
 import { Form } from "~/components/forms";
@@ -10,7 +10,7 @@ import { InputLabel, InputText } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
 
 export const PasswordChangeForm: React.FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const router = useRouter();
 	const t = useTranslations();
 

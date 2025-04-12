@@ -23,7 +23,7 @@ import { QueueActions } from "./queue-actions";
 export type QueueAnimationDirection = "backward" | "forward";
 
 export const Queue: FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const query = useSearchParams();
 

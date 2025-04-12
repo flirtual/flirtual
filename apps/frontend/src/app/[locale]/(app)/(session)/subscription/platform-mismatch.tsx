@@ -13,7 +13,7 @@ const osName = {
 
 export const PlatformMismatchMessage: FC = () => {
 	const { platform, native, vision } = useDevice();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 
 	if (!session) return null;
@@ -64,7 +64,7 @@ export const MatchSubscriptionPlatform: FC<PropsWithChildren> = ({
 	children
 }) => {
 	const { platform, native, vision } = useDevice();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	if (vision) return null;
 	if (!session) return children;

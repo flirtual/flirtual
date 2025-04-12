@@ -38,7 +38,7 @@ export type ProfileProps = {
 export function Profile(props: ProfileProps) {
 	const { userId, direct = false, hideModeratorInfo = false, className, id, ...elementProps } = props;
 
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
 

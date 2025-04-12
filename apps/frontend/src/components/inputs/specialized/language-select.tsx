@@ -21,7 +21,7 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 	const locale = useLocale();
 	const t = useTranslations("errors");
 
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const toasts = useToast();
 	const router = useRouter();

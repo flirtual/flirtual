@@ -2,7 +2,6 @@
 "use client";
 
 import { useLocale, useMessages } from "next-intl";
-import { useRouter } from "next/navigation";
 import {
 	createContext,
 	type CSSProperties,
@@ -14,12 +13,13 @@ import {
 	useState
 } from "react";
 import type React from "react";
-import { useSWRConfig } from "~/swr";
 import { unstable_serialize } from "swr/infinite";
 import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
+import { useRouter } from "~/i18n/navigation";
+import { useSWRConfig } from "~/swr";
 import { resolveTheme } from "~/theme";
 import { emptyArray } from "~/utilities";
 
@@ -36,7 +36,7 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 
 const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [ready, setReady] = useState(false);
-	const [authSession] = useOptionalSession();
+	const authSession = useOptionalSession();
 
 	const router = useRouter();
 	const { mutate } = useSWRConfig();

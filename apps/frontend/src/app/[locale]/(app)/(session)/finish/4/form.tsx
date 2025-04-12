@@ -20,7 +20,7 @@ export const Finish4Form: React.FC = () => {
 	const router = useRouter();
 	const t = useTranslations();
 
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const personality = usePersonality();
 
 	if (!session || !personality) return null;

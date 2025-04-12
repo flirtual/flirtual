@@ -21,7 +21,7 @@ import { InlineLink } from "../inline-link";
 export const ProfileModeratorInfo: FC<{
 	userId: string;
 }> = ({ userId }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const toasts = useToast();
 	const t = useTranslations();
 	const tAttributes = useAttributeTranslation();

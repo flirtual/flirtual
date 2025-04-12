@@ -16,7 +16,7 @@ import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
 
-import { useDevice } from "./use-device";
+import { devicePromise } from "./use-device";
 
 export type ToastType = "error" | "success" | "warning";
 export type ToastDuration = "long" | "short";
@@ -40,8 +40,8 @@ export interface Toast {
 export interface ToastContext {
 	toasts: Array<Toast>;
 
-	add: (toast: CreateToast | string) => Toast;
-	addError: (reason: unknown) => void;
+	add: (toast: CreateToast | string) => Promise<void>;
+	addError: (reason: unknown) => Promise<void>;
 
 	remove: (toast: Pick<Toast, "id">) => void;
 }
@@ -82,18 +82,30 @@ export interface AddErrorOptions {
 export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 	const t = useTranslations();
 	const [toasts, setToasts] = useState<Array<Toast>>([]);
-	const { native } = useDevice();
 
 	const remove = useCallback((toast: Pick<Toast, "id">) => {
 		setToasts((toasts) => toasts.filter(({ id }) => id !== toast.id));
 	}, []);
 
 	const add = useCallback(
-		(options: CreateToast | string) => {
+		async (options: CreateToast | string) => {
 			if (typeof options === "string") options = { value: options };
 			const { type = "success", icon, duration = "short", value } = options;
 
-			// Match duration of native toasts.
+			const { native } = await devicePromise;
+			if (native)
+				return NativeToast.show({
+					duration,
+					text:
+						type === "success"
+							? value
+							: type === "warning"
+								? `warning: ${value}`
+								: `Error: ${value}`,
+					// Android only supports bottom position.
+					position: "bottom"
+				});
+
 			// See https://capacitorjs.com/docs/apis/toast
 			const ttl = duration === "short" ? 2000 : 3500;
 
@@ -109,25 +121,9 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			};
 
 			if (toast.ttl) setTimeout(() => toast.remove(), toast.ttl);
-
-			if (native)
-				void NativeToast.show({
-					duration,
-					text:
-						type === "success"
-							? value
-							: type === "warning"
-								? `warning: ${value}`
-								: `Error: ${value}`,
-					// Android only supports bottom position.
-					position: "bottom"
-				});
-
 			setToasts((toasts) => [toast, ...toasts]);
-
-			return toast;
 		},
-		[remove, native]
+		[remove]
 	);
 
 	const addError = useCallback(
@@ -164,7 +160,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			)}
 		>
 			{children}
-			{!native && toasts.length > 0 && (
+			{toasts.length > 0 && (
 				<div className="pointer-events-none fixed bottom-16 right-0 z-[999] flex flex-col-reverse gap-2 p-8 px-4 desktop:bottom-[unset] desktop:top-16 desktop:px-8">
 					{toasts.map((toast) => (
 						<ToastItem {...toast} key={toast.id} />

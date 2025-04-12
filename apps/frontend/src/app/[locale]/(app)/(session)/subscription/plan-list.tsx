@@ -10,7 +10,7 @@ import { PlanCard } from "./plan-card";
 
 export const PlanList: FC = () => {
 	const { native, vision } = useDevice();
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const [purchasePending, setPurchasePending] = useState(false);
 	const t = useTranslations();
 

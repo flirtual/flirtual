@@ -18,7 +18,7 @@ import { DrawerOrDialog } from "../drawer-or-dialog";
 import { InlineLink } from "../inline-link";
 
 export const ModerationMessageDialog: FC = withSuspense(() => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const toasts = useToast();
 	const router = useRouter();
@@ -43,7 +43,7 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 });
 
 export const DiscordSpamDialog: FC = withSuspense(() => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 
 	const router = useRouter();
 	const toasts = useToast();
@@ -115,7 +115,7 @@ export const TrustAndSafetyDialog: FC<{
 	actions?: ReactNode;
 	closable?: boolean;
 }> = ({ children, actions, closable = false, onAcknowledge, onOpenChange }) => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 
 	if (!session) return null;

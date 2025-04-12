@@ -4,6 +4,7 @@ import type { Locale } from "next-intl";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Montserrat, Nunito } from "next/font/google";
+// eslint-disable-next-line no-restricted-imports
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { preconnect } from "react-dom";
@@ -13,7 +14,7 @@ import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { AnalyticsProvider } from "~/components/analytics";
 import AppUrlListener from "~/components/app-url-listener";
 import { InsetPreview } from "~/components/inset-preview";
-import NativeStartup from "~/components/native-startup";
+import { NativeStartup } from "~/components/native-startup";
 import { TooltipProvider } from "~/components/tooltip";
 import { apiOrigin, environment, siteOrigin } from "~/const";
 import { ToastProvider } from "~/hooks/use-toast";
@@ -150,27 +151,26 @@ export default async function RootLayout({
 				/>
 			</head>
 			<body className={fontClassNames} data-theme="light">
-				<Suspense fallback={<LoadingIndicator />}>
-
-					<AppUrlListener />
-					<NextIntlClientProvider messages={messages}>
-						{environment === "preview" && <StagingBanner />}
-						{environment === "development" && <InsetPreview />}
-						<NextTopLoader
-							color={["#FF8975", "#E9658B"]}
-							height={5}
-							showSpinner={false}
-						/>
-						<AnalyticsProvider>
-							<NativeStartup />
-							<ToastProvider>
-								<TooltipProvider>
-									{children}
-								</TooltipProvider>
-							</ToastProvider>
-						</AnalyticsProvider>
-					</NextIntlClientProvider>
-				</Suspense>
+				{/* <Suspense fallback={<LoadingIndicator />}> */}
+				<AppUrlListener />
+				<NextIntlClientProvider messages={messages}>
+					{environment === "preview" && <StagingBanner />}
+					{environment === "development" && <InsetPreview />}
+					<NextTopLoader
+						color={["#FF8975", "#E9658B"]}
+						height={5}
+						showSpinner={false}
+					/>
+					<AnalyticsProvider>
+						<NativeStartup />
+						<ToastProvider>
+							<TooltipProvider>
+								{children}
+							</TooltipProvider>
+						</ToastProvider>
+					</AnalyticsProvider>
+				</NextIntlClientProvider>
+				{/* </Suspense> */}
 			</body>
 		</html>
 

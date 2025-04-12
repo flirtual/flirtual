@@ -22,6 +22,7 @@ import {
 	X
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+// eslint-disable-next-line no-restricted-imports
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
@@ -32,7 +33,7 @@ import { gitCommitSha } from "~/const";
 import { useCanny } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
-import { useOptionalSession } from "~/hooks/use-session";
+import { logout, useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -42,7 +43,7 @@ import { NavigationLink } from "./navigation-link";
 export const SettingsNavigation: FC = () => {
 	const layoutSegment = useSelectedLayoutSegment();
 	const { openFreshworks } = useFreshworks();
-	const [session, , logout] = useOptionalSession();
+	const session = useOptionalSession();
 	const { vision } = useDevice();
 	const router = useRouter();
 	const t = useTranslations();

@@ -4,7 +4,6 @@ import { PushNotifications } from "@capacitor/push-notifications";
 import { IOSSettings, NativeSettings } from "capacitor-native-settings";
 import { Mail, Smartphone } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { fromEntries, keys } from "remeda";
 
 import { Preferences } from "~/api/user/preferences";
@@ -13,11 +12,12 @@ import { FormButton } from "~/components/forms/button";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useDevice } from "~/hooks/use-device";
-import { useCurrentUser } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "~/i18n/navigation";
 
 export const NotificationsForm: React.FC = () => {
-	const user = useCurrentUser();
+	const { user } = useSession();
 	const toasts = useToast();
 	const router = useRouter();
 	const { native, platform } = useDevice();

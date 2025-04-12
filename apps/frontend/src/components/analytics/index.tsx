@@ -31,7 +31,7 @@ const Pageview = dynamic(() => Promise.resolve(() => {
 }), { ssr: false });
 
 function Identity() {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const { native, vision } = useDevice();
 	const posthog = usePostHog();
 

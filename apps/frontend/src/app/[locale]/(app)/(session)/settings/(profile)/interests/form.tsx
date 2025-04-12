@@ -15,7 +15,7 @@ import {
 	User
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "~/i18n/navigation";
 import type { Dispatch, FC } from "react";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
@@ -234,7 +234,7 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 export const maximumInterests = 10;
 
 export const InterestsForm: FC = () => {
-	const [session] = useOptionalSession();
+	const session = useOptionalSession();
 	const toasts = useToast();
 	const router = useRouter();
 	const t = useTranslations();
