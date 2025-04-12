@@ -951,5 +951,6 @@
 	"have_fun": "Ha det så kul!",
 	"enable_assistant": "Aktivera assistent",
 	"enable_ranked_mode": "Aktivera rankat läge",
-	"april_fools_year": "Aprilskämt {år}"
+	"april_fools_year": "Aprilskämt {år}",
+	"bad_jumpy_sheep_gasp": "Detta innehåller känslig felsökningsinformation som kan användas för att hjälpa dig att interagera med support."
 }
