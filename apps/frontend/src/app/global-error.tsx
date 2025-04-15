@@ -1,6 +1,5 @@
 "use client";
 
-import { Montserrat, Nunito } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 
 import { maintenance } from "~/const";
@@ -8,16 +7,9 @@ import { urls } from "~/urls";
 
 import type { ErrorProps } from "./[locale]/(app)/error-dialog";
 import { LoadingIndicator } from "./[locale]/(app)/loading-indicator";
+import { fontClassNames } from "./fonts";
 
-import "~/css/index.css";
-
-const montserrat = Montserrat({
-	variable: "--font-montserrat",
-	subsets: ["latin"]
-});
-const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
-
-const fontClassNames = twMerge(montserrat.variable, nunito.variable);
+import "./index.css";
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 export default function GlobalError(props: ErrorProps) {

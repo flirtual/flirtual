@@ -10,10 +10,10 @@ import {
 	use,
 	useMemo
 } from "react";
-import { useSWR } from "~/swr";
 
 import { User } from "~/api/user";
 import { useRouter } from "~/i18n/navigation";
+import { useLazySWR, useSWR } from "~/swr";
 
 import { useDevice } from "./use-device";
 import { useOptionalSession } from "./use-session";
@@ -25,21 +25,32 @@ export interface NotificationContext {
 const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
+	return (
+		<>
+			{children}
+		</>
+	);
+
 	const { platform, native } = useDevice();
 	const session = useOptionalSession();
 	const router = useRouter();
 
-	useSWR("notifications-reset-count", () => {
+	useLazySWR("notifications-reset-count", async () => {
 		if (
 			!session?.user.id
 			|| document.visibilityState === "hidden"
 			|| !session.user.pushCount
 		)
 			return;
-		return User.resetPushCount(session.user.id);
+
+		await	User.resetPushCount(session.user.id);
+		return null;
+	}, {
+		suspense: false,
+		fallbackData: null
 	});
 
-	const { data: status = "denied" } = useSWR(
+	const { data: status = "denied" } = useLazySWR(
 		native && "notification-permissions",
 		async () => {
 			const { receive } = await PushNotifications.checkPermissions();
@@ -49,6 +60,10 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			}
 
 			return receive;
+		},
+		{
+			suspense: false,
+			fallbackData: "denied"
 		}
 	);
 
@@ -59,13 +74,13 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		return [];
 	}, [platform, session]);
 
-	useSWR(
+	useLazySWR(
 		native && [
 			"notifications-listeners",
 			{ userId: session?.user.id, status, pushRegistrationIds }
 		],
 		async ([, { status, pushRegistrationIds }]) => {
-			if (status !== "granted") return;
+			if (status !== "granted") return null;
 
 			const registrationListener = await PushNotifications.addListener(
 				"registration",
@@ -108,6 +123,11 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			);
 
 			await PushNotifications.register();
+			return null;
+		},
+		{
+			suspense: false,
+			fallbackData: null,
 		}
 	);
 

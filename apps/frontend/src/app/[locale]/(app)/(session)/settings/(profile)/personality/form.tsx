@@ -4,7 +4,6 @@ import shuffle from "fast-shuffle";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { entries } from "remeda";
-import { useSWR } from "~/swr";
 
 import {
 	Personality,
@@ -12,29 +11,32 @@ import {
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import {
+	mutate,
+	personalityFetcher,
+	personalityKey,
+	sessionKey,
+	useSWR
+} from "~/swr";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function usePersonality() {
-	const session = useOptionalSession();
+	const session = useSession();
 
-	const { data: personality } = useSWR(session ? "personality" : null, () => Personality.get(session!.user.id), {
-		suspense: true
-	});
-
+	const { data: personality } = useSWR(personalityKey(session.user.id), personalityFetcher);
 	return personality;
 }
 
 export const PersonalityForm: FC = () => {
-	const [session, mutateSession] = useOptionalSession();
+	const session = useSession();
+	const { user } = session;
+
 	const personality = usePersonality();
 
 	const toasts = useToast();
 	const t = useTranslations();
-
-	if (!session) return null;
-	const { user } = session;
 
 	return (
 		<Form
@@ -45,7 +47,7 @@ export const PersonalityForm: FC = () => {
 
 				toasts.add(t("wide_stock_skate_radiate"));
 
-				await mutateSession({
+				await mutate(sessionKey(), {
 					...session,
 					user: {
 						...session.user,

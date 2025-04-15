@@ -79,8 +79,6 @@ nextjs-portal {
   @apply select-children;
 }
 
-
-
 iframe {
   user-select: none;
 }

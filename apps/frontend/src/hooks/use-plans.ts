@@ -1,11 +1,8 @@
-import { Plan } from "~/api/plan";
-import { useSWR } from "~/swr";
+import { plansFetcher, plansKey, useSWR } from "~/swr";
 
 export function usePlans() {
-	const { data: plans } = useSWR("plans", () => Plan.list(), {
-		revalidateOnFocus: false,
-		revalidateIfStale: false,
-		suspense: true
+	const { data: plans } = useSWR(plansKey(), plansFetcher, {
+		revalidateOnFocus: false
 	});
 
 	return plans;

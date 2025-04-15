@@ -1,18 +1,12 @@
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import type { Metadata, Viewport } from "next";
 import type { Locale } from "next-intl";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { Montserrat, Nunito } from "next/font/google";
-// eslint-disable-next-line no-restricted-imports
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { preconnect } from "react-dom";
-import { twMerge } from "tailwind-merge";
 
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { AnalyticsProvider } from "~/components/analytics";
-import AppUrlListener from "~/components/app-url-listener";
 import { InsetPreview } from "~/components/inset-preview";
 import { NativeStartup } from "~/components/native-startup";
 import { TooltipProvider } from "~/components/tooltip";
@@ -21,10 +15,10 @@ import { ToastProvider } from "~/hooks/use-toast";
 import { locales } from "~/i18n/routing";
 import { imageOrigins, urls } from "~/urls";
 
-import { LoadingIndicator } from "./(app)/loading-indicator";
+import { fontClassNames } from "../fonts";
 import { StagingBanner } from "./staging-banner";
 
-import "~/css/index.css";
+import "../index.css";
 
 export const dynamic = "error";
 
@@ -95,21 +89,11 @@ export const viewport: Viewport = {
 	width: "device-width"
 };
 
-const montserrat = Montserrat({
-	variable: "--font-montserrat",
-	subsets: ["latin"]
-});
-const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
-
-const fontClassNames = twMerge(montserrat.variable, nunito.variable);
-
 export default async function RootLayout({
 	children,
 	params
 }: React.PropsWithChildren<{ params: Promise<{ locale: Locale }> }>) {
 	const { locale } = await params;
-	if (!hasLocale(locales, locale)) notFound();
-
 	setRequestLocale(locale);
 
 	preconnect(apiOrigin);
@@ -123,7 +107,7 @@ export default async function RootLayout({
 
 	return (
 		<html suppressHydrationWarning lang={locale}>
-			<head suppressHydrationWarning>
+			<head>
 				<meta name="darkreader-lock" />
 				{/* {theme === "system" && (
 					<script
@@ -151,18 +135,17 @@ export default async function RootLayout({
 				/>
 			</head>
 			<body className={fontClassNames} data-theme="light">
+				<NextTopLoader
+					color={["#FF8975", "#E9658B"]}
+					height={5}
+					showSpinner={false}
+				/>
 				{/* <Suspense fallback={<LoadingIndicator />}> */}
-				<AppUrlListener />
 				<NextIntlClientProvider messages={messages}>
 					{environment === "preview" && <StagingBanner />}
 					{environment === "development" && <InsetPreview />}
-					<NextTopLoader
-						color={["#FF8975", "#E9658B"]}
-						height={5}
-						showSpinner={false}
-					/>
+					<NativeStartup />
 					<AnalyticsProvider>
-						<NativeStartup />
 						<ToastProvider>
 							<TooltipProvider>
 								{children}
@@ -173,6 +156,5 @@ export default async function RootLayout({
 				{/* </Suspense> */}
 			</body>
 		</html>
-
 	);
 }

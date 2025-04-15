@@ -16,7 +16,7 @@ import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
 
-import { devicePromise } from "./use-device";
+import { device } from "./use-device";
 
 export type ToastType = "error" | "success" | "warning";
 export type ToastDuration = "long" | "short";
@@ -92,8 +92,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			if (typeof options === "string") options = { value: options };
 			const { type = "success", icon, duration = "short", value } = options;
 
-			const { native } = await devicePromise;
-			if (native)
+			if (device.native)
 				return NativeToast.show({
 					duration,
 					text:

@@ -3,7 +3,12 @@
 import { Preferences } from "@capacitor/preferences";
 import { useCallback, useDebugValue } from "react";
 
-import { useSWR } from "~/swr";
+import {
+	mutate,
+	preferencesFetcher,
+	preferencesKey,
+	useSWR
+} from "~/swr";
 
 import { usePostpone } from "./use-postpone";
 
@@ -15,38 +20,37 @@ export async function getPreference<T>(key: string) {
 		: null;
 }
 
+export async function setPreference<T>(key: string, value: T | null): Promise<void> {
+	await mutate(preferencesKey(key), async () => {
+		if (value == null) {
+			await Preferences.remove({ key });
+			return null;
+		}
+
+		await Preferences.set({ key, value: JSON.stringify(value) });
+		return value;
+	}, {
+		optimisticData: null,
+		revalidate: false
+	});
+}
+
 /**
  * A hook for getting and setting preferences.
  *
  * @see [Capacitor.js Preferences Plugin](https://capacitorjs.com/docs/apis/preferences)
  */
 export function usePreferences<T>(key: string, defaultValue?: T) {
+	useDebugValue(key);
+
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	if (defaultValue === undefined) usePostpone("usePreferences() without defaultValue");
 
-	const { data = null, mutate } = useSWR(
-		["preferences", key] as const,
-		([, key]) => getPreference<T>(key),
-		{
-			fallbackData: defaultValue
-		}
-	);
+	const { data = null } = useSWR(preferencesKey(key), preferencesFetcher, {
+		fallbackData: defaultValue
+	});
 
-	useDebugValue(key);
-
-	const set = useCallback(
-		async (newValue: T | null) => {
-			if (newValue == null) {
-				await Preferences.remove({ key });
-				await mutate(null);
-			}
-			else {
-				await Preferences.set({ key, value: JSON.stringify(newValue) });
-				await mutate(newValue);
-			}
-		},
-		[key, mutate]
-	);
+	const set = useCallback(async (newValue: T | null) => setPreference(key, newValue), [key]);
 
 	return [(data ?? defaultValue), set] as const;
 }

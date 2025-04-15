@@ -1,21 +1,13 @@
 "use client";
 
 import type { FC } from "react";
-import { useSWR } from "~/swr";
 
-import { Matchmaking } from "~/api/matchmaking";
-import { likesYouKey } from "~/swr";
+import { useLikesYou } from "~/hooks/use-likes-you";
 
 import { LikeListItem } from "./list-item";
 
-function useLikesYou() {
-	const { data } = useSWR(likesYouKey(), async () => Matchmaking.likesYou(), { suspense: true });
-	return data;
-}
-
 export const LikesList: FC = () => {
 	const { items, count } = useLikesYou();
-
 	const total = (count.love ?? 0) + (count.friend ?? 0);
 
 	if (items.length === 0) return (

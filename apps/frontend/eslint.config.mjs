@@ -20,6 +20,7 @@ export default configure({
 	rules: {
 		"node/prefer-global/buffer": "off",
 		"node/prefer-global/process": "off",
+		"antfu/no-top-level-await": "off",
 		"no-restricted-imports": [
 			"error",
 			{

@@ -3,13 +3,13 @@
 import { useMessages } from "next-intl";
 import { useDebugValue } from "react";
 
-import { Attribute, type AttributeType } from "~/api/attributes";
-import { attributeKey, useSWR } from "~/swr";
+import type { AttributeType } from "~/api/attributes";
+import { attributeFetcher, attributeKey, useSWR } from "~/swr";
 
 export function useAttributes<T extends AttributeType>(type: T) {
 	useDebugValue(type);
 
-	const { data: attributes = [] } = useSWR(attributeKey(type), ([, type]) => Attribute.list<T>(type),);
+	const { data: attributes = [] } = useSWR(attributeKey(type), attributeFetcher);
 	return attributes;
 }
 

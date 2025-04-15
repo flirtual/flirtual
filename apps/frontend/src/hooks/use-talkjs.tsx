@@ -13,17 +13,15 @@ import {
 	useState
 } from "react";
 import type React from "react";
-import { unstable_serialize } from "swr/infinite";
 import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
 import { useRouter } from "~/i18n/navigation";
-import { useSWRConfig } from "~/swr";
+import { conversationsKey, useSWRConfig } from "~/swr";
 import { resolveTheme } from "~/theme";
 import { emptyArray } from "~/utilities";
 
-import { getConversationsKey } from "./use-conversations.shared";
 import { useDevice } from "./use-device";
 import { warnOnce } from "./use-log";
 import { useOptionalSession } from "./use-session";
@@ -63,8 +61,8 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 		if (!session) return;
 
 		const messageSubscription = session.onMessage(async () => {
-			await mutate(unstable_serialize(getConversationsKey));
-			router.refresh();
+			await mutate(conversationsKey);
+			// router.refresh();
 		});
 
 		const unreadSubscription = session.unreads.onChange(setUnreadConversations);

@@ -8,19 +8,19 @@ import { api } from "./common";
 export type KinkAttributeKind = "dominant" | "submissive" | null;
 
 export const attributeTypes = [
-	"kink",
+	"ban-reason",
+	"country",
 	"delete-reason",
+	"game",
 	"gender",
 	"interest",
 	"interest-category",
-	"ban-reason",
-	"report-reason",
-	"prompt",
-	"platform",
-	"relationship",
+	"kink",
 	"language",
-	"country",
-	"game",
+	"platform",
+	"prompt",
+	"relationship",
+	"report-reason",
 	"sexuality"
 ] as const;
 

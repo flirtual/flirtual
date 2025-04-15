@@ -4,26 +4,17 @@ import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { Matchmaking } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Image } from "~/components/image";
+import { useLikesYou } from "~/hooks/use-likes-you";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useSWR } from "~/swr";
 import { urls } from "~/urls";
-
-function useLikes() {
-	const { data: likes } = useSWR("likes", () => Matchmaking.likesYou(), {
-		suspense: true
-	});
-
-	return likes;
-}
 
 export const LikesYouButton: FC = () => {
 	const session = useOptionalSession();
-	const likes = useLikes();
+	const likes = useLikesYou();
 	const t = useTranslations();
 
 	if (!session) return null;

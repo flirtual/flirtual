@@ -21,7 +21,9 @@ let nextConfig: NextConfig = {
 		ppr: true,
 		reactCompiler: true,
 	},
-	turbopack: {},
+	turbopack: {
+
+	},
 	sassOptions: {
 		// https://github.com/vercel/next.js/discussions/67931
 		silenceDeprecations: ["legacy-js-api"]
@@ -90,19 +92,20 @@ let nextConfig: NextConfig = {
 		return [
 			{
 				source: "/register",
-				destination: "/onboarding/0",
-				permanent: true
-			},
-			{
-				source: "/sign-up",
-				destination: "/onboarding/0",
+				destination: "/sign-up",
 				permanent: true
 			},
 			{
 				source: "/signup",
-				destination: "/onboarding/0",
+				destination: "/sign-up",
 				permanent: true
 			},
+			{
+				source: "/onboarding/0",
+				destination: "/sign-up",
+				permanent: true
+			},
+			
 			{
 				source: "/discord",
 				destination: "https://discord.gg/flirtual",

@@ -7,7 +7,7 @@ import { useSession } from "~/hooks/use-session";
 import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
-export function OnboardedLayout({ children }: PropsWithChildren) {
+export default function OnboardedLayout({ children }: PropsWithChildren) {
 	const { user } = useSession();
 	const locale = useLocale();
 

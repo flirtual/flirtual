@@ -7,6 +7,7 @@ import {
 } from "./common";
 
 export const ProspectKind = ["love", "friend"] as const;
+export const prospectKinds = ProspectKind;
 export type ProspectKind = (typeof ProspectKind)[number];
 
 export type ProspectRespondType = "like" | "pass";

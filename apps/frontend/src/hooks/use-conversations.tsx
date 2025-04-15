@@ -3,9 +3,7 @@
 import { useCallback } from "react";
 import useSWRInfinite from "swr/infinite";
 
-import { Conversation } from "~/api/conversations";
-
-import { getConversationsKey } from "./use-conversations.shared";
+import { conversationsFetcher, conversationsKey } from "~/swr";
 
 export function useConversations() {
 	const {
@@ -13,8 +11,8 @@ export function useConversations() {
 		mutate,
 		setSize
 	} = useSWRInfinite(
-		getConversationsKey,
-		async ([, cursor]: [unknown, string]) => Conversation.list(cursor),
+		conversationsKey(),
+		conversationsFetcher,
 		{
 			suspense: true,
 			fallbackData: []

@@ -26,8 +26,8 @@ import {
 import { DialogFooter } from "./dialog/dialog";
 
 export const NativeStartup: React.FC = withSuspense(() => {
-	const t = useTranslations();
 	const { native } = useDevice();
+	const t = useTranslations();
 
 	const { data: updateInformation = null } = useSWR<AppUpdateInfo | null>(
 		native && "native-app-update",
@@ -49,19 +49,6 @@ export const NativeStartup: React.FC = withSuspense(() => {
 		if (updateInformation.flexibleUpdateAllowed)
 			void AppUpdate.startFlexibleUpdate();
 	}, [updateInformation]);
-
-	useEffect(() => {
-		void import("@capacitor-community/safe-area")
-			.then(({ SafeArea }) => SafeArea.enable({
-				config: {
-					customColorsForSystemBars: true,
-					statusBarColor: "#00000000",
-					navigationBarColor: "#00000000",
-					offset: 10
-				}
-			}))
-			.catch(() => {});
-	}, []);
 
 	if (
 		!native
