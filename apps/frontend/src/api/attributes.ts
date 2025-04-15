@@ -1,4 +1,5 @@
 import { cache } from "react";
+import type { WretchOptions } from "wretch";
 
 import { gitCommitSha } from "~/const";
 import type { Expand } from "~/utilities";
@@ -98,16 +99,11 @@ export type GroupedAttributeCollection = Record<
 
 export const Attribute = {
 	api: api.url("attributes"),
-	list<T extends AttributeType>(type: T) {
+	list<T extends AttributeType>(type: T, options: WretchOptions = {}) {
 		return this.api
 			.url(`/${type}`)
 			.query({ v: gitCommitSha })
-			.options({
-				credentials: "omit",
-				next: {
-					revalidate: false,
-				}
-			})
+			.options(options)
 			.get()
 			.json<AttributeCollection<T>>();
 	},

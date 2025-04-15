@@ -47,7 +47,7 @@ import {
 import { UserThumbnail } from "~/components/user-avatar";
 import { useSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
-import { useSWR } from "~/swr";
+import { useQuery } from "~/swr";
 import { urls } from "~/urls";
 
 const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
@@ -359,32 +359,20 @@ export const SearchView: React.FC = () => {
 	// Reset page when the search options change.
 	useEffect(() => setPage(1), [deferredOptions]);
 
-	const { data, isLoading } = useSWR(
-		["users/search", deferredOptions, { page: deferredPage }],
-		([, searchOptions, { page }]) => {
+	const { data, isLoading } = useQuery({
+		queryKey: ["users/search", deferredOptions, { page: deferredPage }],
+		queryFn: () => {
 			return User.search(
 				Object.fromEntries(
 					Object.entries({
-						...searchOptions,
-						tags: searchOptions.tags?.join(","),
+						...deferredOptions,
+						tags: deferredOptions.tags?.join(","),
 						page
 					}).filter(([, value]) => !!value)
 				)
 			);
-		},
-		{
-			suspense: true,
-			keepPreviousData: true,
-			fallbackData: {
-				entries: [],
-				metadata: {
-					page: 1,
-					limit: 10,
-					total: 0
-				}
-			}
 		}
-	);
+	});
 
 	return (
 		<ModelCard

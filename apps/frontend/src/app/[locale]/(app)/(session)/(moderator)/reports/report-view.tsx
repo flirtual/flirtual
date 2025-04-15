@@ -20,7 +20,6 @@ import {
 	useState
 } from "react";
 import { entries, groupBy, prop, sortBy } from "remeda";
-import { useSWR } from "~/swr";
 import { twMerge } from "tailwind-merge";
 
 import { Conversation } from "~/api/conversations";
@@ -41,6 +40,7 @@ import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
 import { withSuspense } from "~/hooks/with-suspense";
+import { useQuery } from "~/swr";
 import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";
 
@@ -50,10 +50,11 @@ interface ProfileReportViewProps {
 }
 
 function useReports(options: ListReportOptions = {}) {
-	return useSWR(
-		["reports", options],
-		([, listOptions]) => Report.list(listOptions)
-	);
+	return useQuery({
+		queryKey: ["reports", options],
+		queryFn: () => Report.list(options),
+		placeholderData: []
+	});
 }
 
 const UserDisplayName: FC<{ userId?: string } & ComponentProps<"span">> = withSuspense(({ userId = "", ...props }) => {

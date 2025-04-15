@@ -2,15 +2,15 @@
 
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import { useEffect, useState } from "react";
-import { useSWR } from "~/swr";
 
 import { Authentication } from "~/api/auth";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "~/i18n/navigation";
+import { useQuery } from "~/swr";
 
 import { PasskeyButton } from "./passkey-button";
 
@@ -24,8 +24,18 @@ interface AAGUIDData {
 	[key: string]: AAGUUIDInfo;
 }
 
-const AAGUID_DATABASE
-	= "https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json";
+function useAaguid() {
+	const { data } = useQuery({
+		queryKey: ["aaguid"],
+		queryFn: async () => {
+			const response = await fetch("https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json");
+			return (await response.json()) as AAGUIDData;
+		},
+		placeholderData: {}
+	});
+
+	return data;
+}
 
 export const PasswordPasskeyForm: React.FC = () => {
 	const session = useOptionalSession();
@@ -35,11 +45,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 	const t = useTranslations();
 
 	const [passkeysAvailable, setPasskeysAvailable] = useState(false);
-	const { data: aaguidData = {} } = useSWR("aaguid", async () => {
-		const response = await fetch(AAGUID_DATABASE);
-		const data = (await response.json()) as AAGUIDData;
-		return data;
-	});
+	const aaguidData = useAaguid();
 
 	useEffect(() => {
 		if (

@@ -17,22 +17,21 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
+import { mutate, sessionKey } from "~/swr";
 import { urls } from "~/urls";
 
 export const BiographyForm: FC = () => {
-	const [session, mutateSession] = useOptionalSession();
+	const session = useSession();
+	const { user } = session;
+	const { profile } = user;
+
 	const toasts = useToast();
 
 	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
-
-	if (!session) return null;
-
-	const { user } = session;
-	const { profile } = user;
 
 	const favoriteGameId = (user.profile.attributes.game || []).filter(
 		(gameId) => gameId !== "3nzcXDoMySRrPn6jHC8n3o"
@@ -72,7 +71,7 @@ export const BiographyForm: FC = () => {
 
 				toasts.add(t("cuddly_few_llama_catch"));
 
-				await mutateSession({
+				await mutate(sessionKey(), {
 					...session,
 					user: {
 						...user,

@@ -13,7 +13,7 @@ import {
 
 import { User } from "~/api/user";
 import { useRouter } from "~/i18n/navigation";
-import { useLazySWR, useSWR } from "~/swr";
+import { useLazySWR } from "~/swr";
 
 import { useDevice } from "./use-device";
 import { useOptionalSession } from "./use-session";

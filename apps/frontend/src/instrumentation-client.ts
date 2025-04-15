@@ -10,7 +10,7 @@ import { device } from "./hooks/use-device";
 
 // We want to begin sending requests as soon as possible, so we can use them later.
 // If we didn't, we'd end up with water-falling requests, which would be bad for performance.
-await preloadAll();
+// await preloadAll();
 
 console.log(
 	`%cWant to contribute to Flirtual?\n${urls.resources.developers}`,

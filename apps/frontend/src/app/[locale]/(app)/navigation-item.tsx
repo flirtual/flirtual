@@ -29,10 +29,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 		return urlEqual(toAbsoluteUrl(props.href), location, strict);
 	}, [location, props.href, strict]);
 
-	const [rankedMode] = usePreferences(
-		"ranked_mode",
-		false
-	);
+	const [rankedMode] = usePreferences("ranked_mode", false);
 
 	return (
 		<Link

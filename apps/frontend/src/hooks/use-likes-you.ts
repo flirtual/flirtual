@@ -1,10 +1,14 @@
 import {
 	likesYouFetcher,
 	likesYouKey,
-	useSWR
+	useQuery,
 } from "~/swr";
 
 export function useLikesYou() {
-	const { data } = useSWR(likesYouKey(), likesYouFetcher);
+	const { data } = useQuery({
+		queryKey: likesYouKey(),
+		queryFn: likesYouFetcher,
+	});
+	
 	return data;
 }

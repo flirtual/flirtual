@@ -1,4 +1,5 @@
 import { cache } from "react";
+import type { WretchOptions } from "wretch";
 
 import {
 	api,
@@ -52,10 +53,11 @@ export type QueueIssue = Issue<"confirm_email" | "finish_profile">;
 export type QueueResponse = Queue | QueueIssue;
 
 export const Matchmaking = {
-	queue(kind: ProspectKind) {
+	queue(kind: ProspectKind, options: WretchOptions = {}) {
 		return api
 			.url("queue")
 			.query({ kind })
+			.options(options)
 			.get()
 			.forbidden((reason) => {
 				if (isWretchError(reason)) return reason.json;

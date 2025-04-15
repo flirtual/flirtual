@@ -1,4 +1,5 @@
 import { cache } from "react";
+import type { WretchOptions } from "wretch";
 
 import {
 	api,
@@ -93,9 +94,10 @@ function convertPublicKey(publicKey: PublicKeyCredentialCreationOptionsBase64): 
 
 export const Authentication = {
 	api: api.url("auth"),
-	async getOptionalSession() {
+	async getOptionalSession(options: WretchOptions = {}) {
 		return this.api
 			.url("/session")
+			.options(options)
 			.get()
 			.unauthorized(() => null)
 			.json<Session | null>();

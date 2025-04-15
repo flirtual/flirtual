@@ -38,14 +38,14 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
 const absMinAge = 18;
 const absMaxAge = 60;
 
 export const MatchmakingForm: FC = () => {
-	const session = useOptionalSession();
+	const session = useSession();
 	const router = useRouter();
 	const toasts = useToast();
 	const t = useTranslations();
@@ -57,7 +57,6 @@ export const MatchmakingForm: FC = () => {
 
 	const [passesPending, setPassesPending] = useState(false);
 
-	if (!session) return null;
 	const { user } = session;
 	const { preferences, customWeights = DefaultProfileCustomWeights }
 		= user.profile;

@@ -22,6 +22,6 @@ export default {
 	plugins: {
 		Keyboard: {
 			resizeOnFullScreen: true
-		}
+		},
 	}
 } satisfies CapacitorConfig;

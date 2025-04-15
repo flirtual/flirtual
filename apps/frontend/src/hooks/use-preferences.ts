@@ -7,10 +7,12 @@ import {
 	mutate,
 	preferencesFetcher,
 	preferencesKey,
-	useSWR
+	useQuery,
 } from "~/swr";
 
 import { usePostpone } from "./use-postpone";
+
+await Preferences.configure({ group: "" });
 
 export async function getPreference<T>(key: string) {
 	const { value: localValue } = await Preferences.get({ key });
@@ -46,8 +48,10 @@ export function usePreferences<T>(key: string, defaultValue?: T) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	if (defaultValue === undefined) usePostpone("usePreferences() without defaultValue");
 
-	const { data = null } = useSWR(preferencesKey(key), preferencesFetcher, {
-		fallbackData: defaultValue
+	const { data = null } = useQuery({
+		queryKey: preferencesKey(key),
+		queryFn: preferencesFetcher<T>,
+		placeholderData: defaultValue,
 	});
 
 	const set = useCallback(async (newValue: T | null) => setPreference(key, newValue), [key]);

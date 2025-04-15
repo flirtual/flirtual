@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "motion/react";
 // eslint-disable-next-line no-restricted-imports
 import { useSearchParams } from "next/navigation";
 import { type FC, useEffect } from "react";
-import { preload } from "~/swr";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
@@ -36,9 +35,10 @@ export const Queue: FC = () => {
 		if (!Array.isArray(queue)) return;
 
 		// Optimistically preload the next and previous profiles.
-		queue.filter(Boolean).forEach((userId) => {
-			preload(userKey(userId), ([, userId]) => User.get(userId));
-		});
+		// TODO:
+		// queue.filter(Boolean).forEach((userId) => {
+		// 	preload(userKey(userId), ([, userId]) => User.get(userId));
+		// });
 	}, [queue]);
 
 	if (!session || !queue) return null;

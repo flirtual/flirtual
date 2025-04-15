@@ -3,10 +3,12 @@
 import ms from "ms";
 
 import type { ProspectKind } from "~/api/matchmaking";
-import { queueFetcher, queueKey, useSWR } from "~/swr";
+import { queueFetcher, queueKey, useQuery } from "~/swr";
 
 export function useQueue(kind: ProspectKind) {
-	return useSWR(queueKey(kind), queueFetcher, {
-		refreshInterval: ms("1m"),
+	return useQuery({
+		queryKey: queueKey(kind),
+		queryFn: queueFetcher,
+		refetchInterval: ms("1m"),
 	});
 }

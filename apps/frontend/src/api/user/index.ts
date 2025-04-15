@@ -174,11 +174,12 @@ export const User = {
 			.notFound(() => null)
 			.json<User | null>();
 	},
-	getRelationship(userId: string | null) {
+	getRelationship(userId: string | null, options: WretchOptions = {}) {
 		if (!userId || !isUid(userId)) return Promise.resolve(null);
 
 		return this.api
 			.url(`/${userId}/relationship`)
+			.options(options)
 			.get()
 			.badRequest(() => null)
 			.notFound(() => null)

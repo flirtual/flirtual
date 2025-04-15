@@ -11,7 +11,6 @@ import { useEffect } from "react";
 
 import { useDevice } from "~/hooks/use-device";
 import { withSuspense } from "~/hooks/with-suspense";
-import { useSWR } from "~/swr";
 
 import { Button } from "./button";
 import {
@@ -24,20 +23,18 @@ import {
 	AlertDialogTitle
 } from "./dialog/alert";
 import { DialogFooter } from "./dialog/dialog";
+import { useQuery } from "~/swr";
 
 export const NativeStartup: React.FC = withSuspense(() => {
 	const { native } = useDevice();
 	const t = useTranslations();
 
-	const { data: updateInformation = null } = useSWR<AppUpdateInfo | null>(
-		native && "native-app-update",
-		() => AppUpdate.getAppUpdateInfo(),
-		{
-			fallbackData: null,
-			refreshInterval: ms("1m"),
-			refreshWhenHidden: true
-		}
-	);
+	const { data: updateInformation = null } = useQuery<AppUpdateInfo | null>({
+		queryKey: ["update-information"],
+		queryFn: () => AppUpdate.getAppUpdateInfo(),
+		enabled: native,
+		refetchInterval: ms("1m"),
+	})
 
 	useEffect(() => {
 		if (

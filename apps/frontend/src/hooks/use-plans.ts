@@ -1,8 +1,9 @@
-import { plansFetcher, plansKey, useSWR } from "~/swr";
+import { plansFetcher, plansKey, useQuery } from "~/swr";
 
 export function usePlans() {
-	const { data: plans } = useSWR(plansKey(), plansFetcher, {
-		revalidateOnFocus: false
+	const { data: plans } = useQuery({
+		queryKey: plansKey(),
+		queryFn: plansFetcher
 	});
 
 	return plans;

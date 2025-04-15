@@ -1,10 +1,9 @@
 import { PushNotifications } from "@capacitor/push-notifications";
 import { useLocale } from "next-intl";
 
-import { Authentication, type Session } from "~/api/auth";
+import { Authentication } from "~/api/auth";
 import { redirect } from "~/i18n/navigation";
-import { sessionFetcher, type SWRConfiguration, useLazySWR, useSWR } from "~/swr";
-import { sessionKey } from "~/swr";
+import { sessionFetcher, sessionKey, useQuery } from "~/swr";
 import { urls } from "~/urls";
 
 import { device } from "./use-device";
@@ -17,22 +16,26 @@ export async function logout() {
 	await Authentication.logout().catch(() => null);
 }
 
-export function useOptionalSession(options: SWRConfiguration<Session | null> = {}) {
-	const { data: session = null } = useLazySWR(sessionKey(), sessionFetcher, {
-		fallbackData: null,
-		...options
+export function useOptionalSession() {
+	const { data } = useQuery({
+		queryKey: sessionKey(),
+		queryFn: sessionFetcher,
+		placeholderData: null,
 	});
 
-	return session;
+	return data;
 }
 
-export function useSession(options: SWRConfiguration<Session | null> = {}) {
+export function useSession() {
 	usePostpone("useSession()");
 
-	const { data: session } = useSWR(sessionKey(), sessionFetcher, options);
+	const { data } = useQuery({
+		queryKey: sessionKey(),
+		queryFn: sessionFetcher
+	});
 
 	const locale = useLocale();
-	if (!session) return redirect({ href: urls.login(), locale });
+	if (!data) return redirect({ href: urls.login(), locale });
 
-	return session;
+	return data;
 }
