@@ -356,10 +356,9 @@ export default function Flitty() {
 					setVisible(false);
 				}}
 			/>
-
 			<Image
 				alt="Flitty"
-				className="cursor-grab select-none active:cursor-grabbing"
+				className="pettable cursor-grab select-none active:cursor-grabbing"
 				draggable={false}
 				height={150}
 				src={urls.media("flitty.png", "files")}
