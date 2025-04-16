@@ -9,7 +9,7 @@ import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { useRouter } from "~/i18n/navigation";
-import { mutate, relationshipKey } from "~/swr";
+import { mutate, relationshipKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";

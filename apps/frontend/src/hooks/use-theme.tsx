@@ -37,7 +37,7 @@ export function ThemeProvider({ children, theme: sessionTheme, ...props }: Theme
 		</Context>
 	);
 
-	/* const [session, mutateSession] = useOptionalSession();
+	/* const session = useOptionalSession();
 	const { vision } = useDevice();
 	const router = useRouter();
 

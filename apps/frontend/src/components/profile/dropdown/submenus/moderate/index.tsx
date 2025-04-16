@@ -1,7 +1,7 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type FC, type PropsWithChildren, Suspense } from "react";
-import { mutate } from "~/swr";
+import { mutate } from "~/query";
 
 import { displayName, User } from "~/api/user";
 import { Button } from "~/components/button";
@@ -26,7 +26,7 @@ import {
 import { InlineLink } from "~/components/inline-link";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { userKey } from "~/swr";
+import { userKey } from "~/query";
 import { urls } from "~/urls";
 
 import { SuspendAction } from "./actions/suspend";

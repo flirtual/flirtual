@@ -1,14 +1,14 @@
 import { Share, type ShareOptions, type ShareResult } from "@capacitor/share";
 import { useCallback } from "react";
 
-import { useLazySWR } from "~/swr";
+import { useQuery } from "~/query";
 
 export function useShare() {
-	const { data: canShare } = useLazySWR(
-		"canShare",
-		async () => (await Share.canShare().catch(() => ({ value: false }))).value,
-		{ fallbackData: false }
-	);
+	const canShare = useQuery({
+		queryKey: ["canShare"],
+		queryFn: async () => (await Share.canShare().catch(() => ({ value: false }))).value,
+		placeholderData: false,
+	});
 
 	return {
 		canShare,

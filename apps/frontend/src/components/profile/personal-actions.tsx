@@ -2,13 +2,13 @@
 
 import { Link, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import { useState } from "react";
 
 import { User } from "~/api/user";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useShare } from "~/hooks/use-share";
 import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "~/i18n/navigation";
 import { toAbsoluteUrl, urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
@@ -21,7 +21,7 @@ import { InputText } from "../inputs";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
-	const [session, mutateSession] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 	const toasts = useToast();
 	const { share, canShare } = useShare();

@@ -40,7 +40,7 @@ import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
 import { withSuspense } from "~/hooks/with-suspense";
-import { useQuery } from "~/swr";
+import { useQuery } from "~/query";
 import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";
 

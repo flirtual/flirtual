@@ -17,7 +17,6 @@ export type Session = {
 export interface LoginOptions {
 	login: string;
 	password: string;
-	rememberMe: boolean;
 }
 
 export interface ConfirmResetPasswordOptions {

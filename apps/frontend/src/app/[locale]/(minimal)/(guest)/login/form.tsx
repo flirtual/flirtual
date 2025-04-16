@@ -1,6 +1,6 @@
 "use client";
 
-import { MoveRight } from "lucide-react";
+import { Loader2, MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 // eslint-disable-next-line no-restricted-imports
 import { useRouter, useSearchParams } from "next/navigation";
@@ -8,28 +8,32 @@ import { type FC, Suspense, useEffect, useRef } from "react";
 
 import { Authentication } from "~/api/auth";
 import { isWretchError } from "~/api/common";
-import { ButtonLink } from "~/components/button";
+import { Button, ButtonLink } from "~/components/button";
 import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useToast } from "~/hooks/use-toast";
+import { withSuspense } from "~/hooks/with-suspense";
+import { invalidate, mutate, sessionKey, useMutation } from "~/query";
 import { isInternalHref, urls } from "~/urls";
 
 import { LoginConnectionButton } from "./login-connection-button";
 
-export const LoginForm: FC = () => {
-	const query = useSearchParams();
+function next() {
+	const defaultNext = urls.browse();
 
-	const error = query.get("error");
+	const next = new URL(location.href).searchParams.get("next") || defaultNext;
+	if (!isInternalHref(next)) return defaultNext;
 
-	let next = query.get("next") ?? "/";
-	if (!isInternalHref(next)) next = "/";
+	return next;
+}
 
+function useKylesWebAuthnImplementation() {
 	const router = useRouter();
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
-	const t = useTranslations();
+
 	const tError = useTranslations("errors");
 
 	useEffect(() => {
@@ -81,7 +85,7 @@ export const LoginForm: FC = () => {
 							}
 						})
 						.then(() => {
-							router.push(next ?? urls.browse());
+							router.push(next());
 							return router.refresh();
 						})
 						.catch((reason) => {
@@ -97,23 +101,64 @@ export const LoginForm: FC = () => {
 			}
 		}
 		void webAuthnAuthenticate();
-	}, [router, toasts, next, tError]);
+	}, [router, toasts, tError]);
+}
+
+const OAuthError: FC = withSuspense(() => {
+	const query = useSearchParams();
+	const error = query.get("error");
+
+	const tError = useTranslations("errors");
+
+	if (!error || error === "access_denied") return null;
+
+	return (
+		<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
+			<span className="font-montserrat text-lg text-white-10">
+				{tError(error as any)}
+			</span>
+		</div>
+	);
+});
+
+export const LoginForm: FC = () => {
+	const router = useRouter();
+
+	const { mutate, isPending } = useMutation({
+		mutationKey: sessionKey(),
+		mutationFn: async () => {
+			const value = await Authentication.login({ login: "...", password: "..." });
+			if ("error" in value) throw value.error;
+
+			return value;
+		}
+	});
 
 	return (
 		<>
-			{error && error !== "access_denied" && (
-				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
-					<span className="font-montserrat text-lg text-white-10">
-						{t(`errors.${error}` as any)}
-					</span>
-				</div>
-			)}
+			<Button
+				Icon={isPending ? Loader2 : undefined}
+				iconClassName={isPending ? "animate-spin" : ""}
+				onClick={() => mutate()}
+			>
+				Login
+			</Button>
+		</>
+	);
+
+	const t = useTranslations();
+	const tError = useTranslations("errors");
+
+	useKylesWebAuthnImplementation();
+
+	return (
+		<>
+			<OAuthError />
 			<Form
 				withCaptcha
 				fields={{
 					login: "",
-					password: "",
-					rememberMe: false
+					password: ""
 				}}
 				captchaTabIndex={7}
 				className="flex flex-col gap-8"
@@ -121,6 +166,7 @@ export const LoginForm: FC = () => {
 				renderCaptcha={false}
 				onSubmit={async (body) => {
 					const value = await Authentication.login(body);
+
 					if ("error" in value) {
 						if (value.error === "invalid_credentials") {
 							throw tError.rich("invalid_credentials_complex", {
@@ -175,8 +221,9 @@ export const LoginForm: FC = () => {
 						throw [tError(value.error)];
 					}
 
-					router.push(next ?? urls.browse());
-					router.refresh();
+					await invalidate();
+					router.push(next());
+					// await mutate(sessionKey(), value);
 				}}
 			>
 				{({ errors, FormField, Captcha }) => (
@@ -244,16 +291,16 @@ export const LoginForm: FC = () => {
 				)}
 			</Form>
 			<Suspense>
-			<div className="flex flex-col gap-2">
-				<div className="inline-flex items-center justify-center">
-					<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
-						{t("or")}
-					</span>
-					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
-				</div>
-				
-				<LoginConnectionButton next={next} tabIndex={5} type="discord" />
-				{/* {platform === "apple" ? (
+				<div className="flex flex-col gap-2">
+					<div className="inline-flex items-center justify-center">
+						<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+							{t("or")}
+						</span>
+						<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+					</div>
+
+					<LoginConnectionButton next={next} tabIndex={5} type="discord" />
+					{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />
 							<LoginConnectionButton type="google" />
@@ -265,8 +312,8 @@ export const LoginForm: FC = () => {
 						</>
 					)}
 					<LoginConnectionButton type="meta" /> */}
-				{/* <LoginConnectionButton type="vrchat" /> */}
-			</div>
+					{/* <LoginConnectionButton type="vrchat" /> */}
+				</div>
 			</Suspense>
 		</>
 	);

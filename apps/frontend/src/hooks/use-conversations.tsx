@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import useSWRInfinite from "swr/infinite";
 
-import { conversationsFetcher, conversationsKey } from "~/swr";
+import { conversationsFetcher, conversationsKey } from "~/query";
 
 export function useConversations() {
 	const {

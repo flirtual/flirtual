@@ -1,11 +1,12 @@
 import Image from "next/image";
 import type { PropsWithChildren } from "react";
+import { twMerge } from "tailwind-merge";
 
 import { urls } from "~/urls";
 
-export function LoadingIndicator({ children }: PropsWithChildren) {
+export function LoadingIndicator({ className, children }: PropsWithChildren<{ className?: string }>) {
 	return (
-		<div className="flex min-h-screen w-full flex-col items-center justify-center opacity-75">
+		<div className={twMerge("flex min-h-screen w-full flex-col items-center justify-center opacity-75", className)}>
 			<Image
 				priority
 				alt=""

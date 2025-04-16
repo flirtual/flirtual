@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import type { FC, PropsWithChildren } from "react";
-import { mutate } from "~/swr";
+import { mutate } from "~/query";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
@@ -9,7 +9,7 @@ import { optimisticQueueMove } from "~/app/[locale]/(app)/(session)/(onboarded)/
 import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
 import { useToast } from "~/hooks/use-toast";
-import { queueKey, userKey } from "~/swr";
+import { queueKey, userKey } from "~/query";
 
 import {
 	AlertDialog,

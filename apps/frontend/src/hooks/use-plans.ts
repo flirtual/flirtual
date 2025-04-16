@@ -1,10 +1,8 @@
-import { plansFetcher, plansKey, useQuery } from "~/swr";
+import { plansFetcher, plansKey, useQuery } from "~/query";
 
 export function usePlans() {
-	const { data: plans } = useQuery({
+	return useQuery({
 		queryKey: plansKey(),
 		queryFn: plansFetcher
 	});
-
-	return plans;
 }

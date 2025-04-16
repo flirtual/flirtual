@@ -2,7 +2,7 @@ import { Gavel, Languages } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { type FC, type PropsWithChildren, useMemo, useState } from "react";
-import { mutate } from "~/swr";
+import { mutate } from "~/query";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { OpenAI } from "~/api/openai";
@@ -28,7 +28,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useToast } from "~/hooks/use-toast";
 import { withSuspense } from "~/hooks/with-suspense";
-import { queueKey, userKey } from "~/swr";
+import { queueKey, userKey } from "~/query";
 
 const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {
 	const toasts = useToast();

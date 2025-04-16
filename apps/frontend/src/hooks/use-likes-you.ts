@@ -2,13 +2,11 @@ import {
 	likesYouFetcher,
 	likesYouKey,
 	useQuery,
-} from "~/swr";
+} from "~/query";
 
 export function useLikesYou() {
-	const { data } = useQuery({
+	return useQuery({
 		queryKey: likesYouKey(),
 		queryFn: likesYouFetcher,
 	});
-	
-	return data;
 }

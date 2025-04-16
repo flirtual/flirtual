@@ -47,7 +47,7 @@ import {
 import { UserThumbnail } from "~/components/user-avatar";
 import { useSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
-import { useQuery } from "~/swr";
+import { useQuery } from "~/query";
 import { urls } from "~/urls";
 
 const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {

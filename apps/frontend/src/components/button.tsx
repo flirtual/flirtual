@@ -15,7 +15,7 @@ const defaultClassName = twMerge(
 
 const sizes = {
 	sm: "px-6 py-2",
-	base: "py-4 px-8 text-xl"
+	// base: "py-4 px-8 text-xl"
 } as const;
 
 export type ButtonSize = false | keyof typeof sizes;
@@ -38,7 +38,7 @@ export interface ButtonProps {
 
 export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 	const {
-		size = "base",
+		size = "sm",
 		kind = "primary",
 		disabled,
 		Icon,
@@ -80,7 +80,7 @@ const MotionLink = motion.create(Link);
 
 export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps) {
 	const {
-		size = "base",
+		size = "sm",
 		kind = "primary",
 		disabled,
 		href,

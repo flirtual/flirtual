@@ -3,7 +3,7 @@
 import ms from "ms";
 
 import type { ProspectKind } from "~/api/matchmaking";
-import { queueFetcher, queueKey, useQuery } from "~/swr";
+import { queueFetcher, queueKey, useQuery } from "~/query";
 
 export function useQueue(kind: ProspectKind) {
 	return useQuery({

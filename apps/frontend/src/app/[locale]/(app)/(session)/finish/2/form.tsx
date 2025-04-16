@@ -24,7 +24,7 @@ import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
-import { mutate, sessionKey } from "~/swr";
+import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Finish2Form: FC = () => {

@@ -18,7 +18,7 @@ import {
 } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { InputLabel, InputTextArea } from "~/components/inputs";
-import { gitCommitSha, maintenance } from "~/const";
+import { environment, gitCommitSha, maintenance } from "~/const";
 import { urls } from "~/urls";
 
 export type ErrorWithDigest = { digest?: string } & Error;
@@ -73,6 +73,9 @@ export type ErrorDialogProps = { userId?: string } & ErrorProps;
 const errors = new Map<string, number>();
 
 export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
+	// Bail out to the Next.js error dialog in development, more useful for debugging.
+	if (environment === "development") throw error;
+
 	const t = useTranslations();
 
 	const errorKey = error.digest || error.message;
@@ -265,9 +268,10 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 															className="absolute -left-5 top-7 size-5 bg-white-10"
 															style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 														/>
-														<p>
-															{t("quiet_quaint_whale_rest")}
-														</p>
+														<p>I found an error</p>
+														<pre className="whitespace-pre-wrap text-xs">
+															{error.message}
+														</pre>
 													</motion.div>
 												</div>
 												<ul className="ml-4 flex list-disc flex-col gap-2">
@@ -321,7 +325,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 													>
 														{t("try_again")}
 													</Button>
-													<Button
+													{/* <Button
 														className="w-fit px-2"
 														kind="tertiary"
 														size="sm"
@@ -329,7 +333,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 													>
 														{t("add_details")}
 														<MoveRight className="ml-2 size-5 shrink-0" />
-													</Button>
+													</Button> */}
 												</div>
 											</>
 										)}

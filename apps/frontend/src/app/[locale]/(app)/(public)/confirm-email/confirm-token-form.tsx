@@ -7,7 +7,7 @@ import useMutation from "swr/mutation";
 import { User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "~/i18n/navigation";
-import { mutate, sessionKey } from "~/swr";
+import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import { LoadingIndicator } from "../../loading-indicator";
@@ -40,5 +40,5 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	);
 
 	useEffect(() => void trigger(token), [trigger, token]);
-	return <LoadingIndicator />;
+	return <LoadingIndicator className="absolute inset-0" />;
 };

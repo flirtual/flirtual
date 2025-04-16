@@ -1,7 +1,7 @@
 import { Languages, MailWarning } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type FC, useMemo, useState } from "react";
-import { mutate } from "~/swr";
+import { mutate } from "~/query";
 
 import { OpenAI } from "~/api/openai";
 import { displayName, User } from "~/api/user";
@@ -21,7 +21,7 @@ import { InputCheckbox, InputLabel, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useToast } from "~/hooks/use-toast";
-import { userKey } from "~/swr";
+import { userKey } from "~/query";
 
 export const WarnAction: FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();

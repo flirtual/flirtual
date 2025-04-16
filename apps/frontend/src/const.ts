@@ -12,6 +12,9 @@ export const apiOrigin = new URL(apiUrl).origin;
 export const environment = (process.env.NEXT_PUBLIC_VERCEL_ENV
 	|| process.env.NODE_ENV) as "development" | "preview" | "production";
 
+export const development = environment === "development";
+export const production = !development;
+
 // Git build information
 export const gitOrganization = process.env
 	.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER as string;
@@ -35,7 +38,7 @@ export const talkjsAppId = process.env.NEXT_PUBLIC_TALKJS_APP_ID as string;
 export const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN as string;
 export const sentryOrganization = process.env.NEXT_PUBLIC_SENTRY_ORGANIZATION as string;
 export const sentryProject = process.env.SENTRY_PROJECT as string;
-export const sentryProjectId = Number.parseInt(process.env.NEXT_PUBLIC_SENTRY_PROJECT_ID as string);
+export const sentryProjectId = Number.parseInt(process.env.NEXT_PUBLIC_SENTRY_PROJECT_ID as string || "0");
 export const sentryReportTo = process.env.NEXT_PUBLIC_SENTRY_REPORT_TO as string;
 
 export const sentryEnabled = environment !== "development"
@@ -71,5 +74,5 @@ export const cloudflareInternalIdentifier = process.env.CLOUDFLARE_INTERNAL_IDEN
 
 export const maintenance = false;
 export const duringBuild = process.env.BUILD === "1";
-export const isServer = typeof window === "undefined";
-export const isClient = !isServer;
+export const server = typeof window === "undefined";
+export const client = !server;

@@ -24,7 +24,7 @@ const absMinAge = 18;
 const absMaxAge = 60;
 
 export const Onboarding2Form: FC = () => {
-	const [session, mutateSession] = useOptionalSession();
+	const session = useOptionalSession();
 	const router = useRouter();
 
 	const genders = useAttributes("gender").filter(

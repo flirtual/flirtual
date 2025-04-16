@@ -10,7 +10,7 @@ import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "~/i18n/navigation";
-import { useQuery } from "~/swr";
+import { useQuery } from "~/query";
 
 import { PasskeyButton } from "./passkey-button";
 
@@ -25,7 +25,7 @@ interface AAGUIDData {
 }
 
 function useAaguid() {
-	const { data } = useQuery({
+	return useQuery({
 		queryKey: ["aaguid"],
 		queryFn: async () => {
 			const response = await fetch("https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json");
@@ -33,8 +33,6 @@ function useAaguid() {
 		},
 		placeholderData: {}
 	});
-
-	return data;
 }
 
 export const PasswordPasskeyForm: React.FC = () => {

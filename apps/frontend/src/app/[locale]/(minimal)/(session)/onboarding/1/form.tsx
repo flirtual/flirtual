@@ -28,7 +28,7 @@ import { urls } from "~/urls";
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 
 export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry }) => {
-	const [session, mutateSession] = useOptionalSession();
+	const session = useOptionalSession();
 	const t = useTranslations();
 	const router = useRouter();
 

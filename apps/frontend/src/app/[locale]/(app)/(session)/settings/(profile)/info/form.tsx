@@ -33,7 +33,7 @@ const AttributeKeys = [
 ];
 
 export const InfoForm: FC = () => {
-	const [session, mutateSession] = useOptionalSession();
+	const session = useOptionalSession();
 	const toasts = useToast();
 
 	const games = useAttributes("game");

@@ -8,7 +8,7 @@ import {
 	preferencesFetcher,
 	preferencesKey,
 	useQuery,
-} from "~/swr";
+} from "~/query";
 
 import { usePostpone } from "./use-postpone";
 
@@ -22,19 +22,25 @@ export async function getPreference<T>(key: string) {
 		: null;
 }
 
-export async function setPreference<T>(key: string, value: T | null): Promise<void> {
-	await mutate(preferencesKey(key), async () => {
-		if (value == null) {
-			await Preferences.remove({ key });
-			return null;
-		}
+interface SetPreferenceOptions {
+	mutate?: boolean;
+}
 
-		await Preferences.set({ key, value: JSON.stringify(value) });
-		return value;
-	}, {
-		optimisticData: null,
-		revalidate: false
-	});
+export async function setPreference<T>(key: string, value: T | null, { mutate: doMutate = true }: SetPreferenceOptions = {}): Promise<void> {
+	if (value == null) {
+		await Preferences.remove({ key });
+		if (doMutate) mutate(preferencesKey(key), null);
+
+		return;
+	}
+
+	await Preferences.set({ key, value: JSON.stringify(value) });
+	if (doMutate) mutate(preferencesKey(key), value);
+}
+
+export async function listPreferences(): Promise<Array<string>> {
+	const { keys } = await Preferences.keys();
+	return keys;
 }
 
 /**
@@ -48,7 +54,7 @@ export function usePreferences<T>(key: string, defaultValue?: T) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	if (defaultValue === undefined) usePostpone("usePreferences() without defaultValue");
 
-	const { data = null } = useQuery({
+	const data = useQuery({
 		queryKey: preferencesKey(key),
 		queryFn: preferencesFetcher<T>,
 		placeholderData: defaultValue,

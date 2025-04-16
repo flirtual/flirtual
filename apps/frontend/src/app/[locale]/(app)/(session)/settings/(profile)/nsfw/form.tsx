@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
+import type { Session } from "~/api/auth";
 import { Preferences } from "~/api/user/preferences";
 import { Profile, ProfileDomsubList } from "~/api/user/profile";
 import { Form } from "~/components/forms";
@@ -18,11 +19,12 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { mutate, sessionKey } from "~/query";
 
 export const NsfwForm: React.FC = () => {
-	const [session, mutateSession] = useOptionalSession();
+	const session = useSession();
 	const toasts = useToast();
 
 	const t = useTranslations();
@@ -55,14 +57,14 @@ export const NsfwForm: React.FC = () => {
 
 				toasts.add(t("born_sweet_nils_thrive"));
 
-				await mutateSession({
+				await mutate<Session>(sessionKey(), (session) => ({
 					...session,
 					user: {
 						...session.user,
 						profile: newProfile,
 						preferences: newPreferences
 					}
-				});
+				}));
 			}}
 		>
 			{({ FormField, fields }) => (

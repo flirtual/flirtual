@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { type FC, type PropsWithChildren, useState } from "react";
-import { mutate } from "~/swr";
+import { mutate } from "~/query";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
@@ -29,7 +29,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { queueKey, userKey } from "~/swr";
+import { queueKey, userKey } from "~/query";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,

@@ -2,7 +2,7 @@
 
 import { Languages } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { mutate } from "~/swr";
+import { mutate } from "~/query";
 import useMutation from "swr/mutation";
 
 import type { PreferenceLanguage } from "~/api/user/preferences";
@@ -13,7 +13,7 @@ import { useToast } from "~/hooks/use-toast";
 import { withSuspense } from "~/hooks/with-suspense";
 import { useRouter } from "~/i18n/navigation";
 import { locales } from "~/i18n/routing";
-import { sessionKey } from "~/swr";
+import { sessionKey } from "~/query";
 
 import { InputSelect } from "../select";
 

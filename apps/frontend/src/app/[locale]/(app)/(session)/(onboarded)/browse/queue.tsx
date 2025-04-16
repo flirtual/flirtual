@@ -9,8 +9,8 @@ import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
 import { Profile } from "~/components/profile/profile";
 import { useQueue } from "~/hooks/use-queue";
-import { useOptionalSession } from "~/hooks/use-session";
-import { userKey } from "~/swr";
+import { useOptionalSession, useSession } from "~/hooks/use-session";
+import { userKey } from "~/query";
 
 import {
 	ConfirmEmailError,
@@ -22,7 +22,7 @@ import { QueueActions } from "./queue-actions";
 export type QueueAnimationDirection = "backward" | "forward";
 
 export const Queue: FC = () => {
-	const session = useOptionalSession();
+	const session = useSession();
 
 	const query = useSearchParams();
 

@@ -13,7 +13,7 @@ import {
 
 import { User } from "~/api/user";
 import { useRouter } from "~/i18n/navigation";
-import { useLazySWR } from "~/swr";
+import { useQuery } from "~/query";
 
 import { useDevice } from "./use-device";
 import { useOptionalSession } from "./use-session";
@@ -25,34 +25,29 @@ export interface NotificationContext {
 const NotificationContext = createContext({} as NotificationContext);
 
 export function NotificationProvider({ children }: PropsWithChildren) {
-	return (
-		<>
-			{children}
-		</>
-	);
-
 	const { platform, native } = useDevice();
 	const session = useOptionalSession();
 	const router = useRouter();
 
-	useLazySWR("notifications-reset-count", async () => {
-		if (
-			!session?.user.id
-			|| document.visibilityState === "hidden"
-			|| !session.user.pushCount
-		)
-			return;
+	useQuery({
+		queryKey: ["notifications-reset-count"],
+		queryFn: async () => {
+			if (
+				!session?.user.id
+				|| document.visibilityState === "hidden"
+				|| !session.user.pushCount
+			)
+				return null;
 
-		await	User.resetPushCount(session.user.id);
-		return null;
-	}, {
-		suspense: false,
-		fallbackData: null
+			await	User.resetPushCount(session.user.id);
+			return null;
+		},
+		placeholderData: null
 	});
 
-	const { data: status = "denied" } = useLazySWR(
-		native && "notification-permissions",
-		async () => {
+	const status = useQuery({
+		queryKey: ["notifications-permissions"],
+		queryFn: async () => {
 			const { receive } = await PushNotifications.checkPermissions();
 			if (receive === "prompt" || receive === "prompt-with-rationale") {
 				const { receive } = await PushNotifications.requestPermissions();
@@ -61,11 +56,9 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 
 			return receive;
 		},
-		{
-			suspense: false,
-			fallbackData: "denied"
-		}
-	);
+		placeholderData: "denied" as const,
+		enabled: native,
+	});
 
 	const pushRegistrationIds = useMemo(() => {
 		if (!session) return [];
@@ -74,12 +67,9 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		return [];
 	}, [platform, session]);
 
-	useLazySWR(
-		native && [
-			"notifications-listeners",
-			{ userId: session?.user.id, status, pushRegistrationIds }
-		],
-		async ([, { status, pushRegistrationIds }]) => {
+	useQuery({
+		queryKey: ["notifications-listeners", { userId: session?.user.id, status, pushRegistrationIds }] as const,
+		queryFn: async ({ queryKey: [, { status, pushRegistrationIds }] }) => {
 			if (status !== "granted") return null;
 
 			const registrationListener = await PushNotifications.addListener(
@@ -125,11 +115,8 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			await PushNotifications.register();
 			return null;
 		},
-		{
-			suspense: false,
-			fallbackData: null,
-		}
-	);
+		placeholderData: null
+	});
 
 	return (
 		<NotificationContext

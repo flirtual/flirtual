@@ -18,7 +18,6 @@ import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
 import { useRouter } from "~/i18n/navigation";
-import { conversationsKey, useSWRConfig } from "~/swr";
 import { resolveTheme } from "~/theme";
 import { emptyArray } from "~/utilities";
 
@@ -37,7 +36,6 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const authSession = useOptionalSession();
 
 	const router = useRouter();
-	const { mutate } = useSWRConfig();
 
 	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>([]);
 
@@ -61,7 +59,8 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 		if (!session) return;
 
 		const messageSubscription = session.onMessage(async () => {
-			await mutate(conversationsKey);
+			// todo:
+			// await mutate(conversationsKey);
 			// router.refresh();
 		});
 
@@ -71,7 +70,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 			unreadSubscription.unsubscribe();
 			messageSubscription.unsubscribe();
 		};
-	}, [session, router, mutate]);
+	}, [session, router]);
 
 	// useEffect(() => {
 	// 	return () => session?.destroy();

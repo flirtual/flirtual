@@ -2,11 +2,11 @@
 
 import { Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { mutate } from "~/swr";
+import { mutate } from "~/query";
 
 import { displayName, User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
-import { relationshipKey } from "~/swr";
+import { relationshipKey } from "~/query";
 
 import { Button } from "../button";
 import { DialogTrigger } from "../dialog/dialog";

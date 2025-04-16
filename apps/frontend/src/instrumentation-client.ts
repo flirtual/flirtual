@@ -1,31 +1,38 @@
-/* eslint-disable no-console */
-
 import { SafeArea } from "@capacitor-community/safe-area";
 import { App } from "@capacitor/app";
 
-import { preloadAll } from "~/swr";
 import { urls } from "~/urls";
 
-import { device } from "./hooks/use-device";
+import {
+	preloadAll,
+	restoreQueries,
+	saveQueries
+} from "./query";
 
-// We want to begin sending requests as soon as possible, so we can use them later.
-// If we didn't, we'd end up with water-falling requests, which would be bad for performance.
-// await preloadAll();
-
+// eslint-disable-next-line no-console
 console.log(
 	`%cWant to contribute to Flirtual?\n${urls.resources.developers}`,
-	"padding: 1rem 2rem; background-color: black; color: white; white-space: pre; display: block; text-align: center;",
-	device
+	"padding: 1rem 2rem; background-image: linear-gradient(to right, #ff8975, #e9658b); color: white; white-space: pre; display: block; text-align: center; font-weight: bold; border-radius: .5rem",
 );
 
-await App.addListener("appUrlOpen", async (event) => {
+await restoreQueries();
+
+window.addEventListener("beforeunload", saveQueries);
+document.addEventListener("visibilitychange", () => {
+	if (document.visibilityState === "visible") return;
+	saveQueries();
+});
+
+preloadAll();
+
+App.addListener("appUrlOpen", async (event) => {
 	const url = new URL(event.url);
 	const pathname = url.href.replace(url.origin, "");
 
 	location.href = pathname;
 });
 
-await SafeArea.enable({
+SafeArea.enable({
 	config: {
 		customColorsForSystemBars: true,
 		statusBarColor: "#00000000",

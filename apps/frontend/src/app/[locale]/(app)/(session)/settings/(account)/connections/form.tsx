@@ -17,7 +17,7 @@ import { useToast } from "~/hooks/use-toast";
 
 export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 	const { vision } = useDevice();
-	const [session, mutateSession] = useOptionalSession();
+	const session = useOptionalSession();
 	const toasts = useToast();
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
 		null

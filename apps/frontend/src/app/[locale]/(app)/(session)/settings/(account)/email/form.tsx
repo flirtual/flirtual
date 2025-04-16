@@ -11,7 +11,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
 export const EmailForm: React.FC = () => {
-	const [session, mutateSession] = useOptionalSession();
+	const session = useOptionalSession();
 	const router = useRouter();
 	const t = useTranslations();
 

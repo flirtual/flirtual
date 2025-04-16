@@ -3,7 +3,6 @@
 import {
 	AppUpdate,
 	AppUpdateAvailability,
-	type AppUpdateInfo
 } from "@capawesome/capacitor-app-update";
 import ms from "ms";
 import { useTranslations } from "next-intl";
@@ -11,6 +10,7 @@ import { useEffect } from "react";
 
 import { useDevice } from "~/hooks/use-device";
 import { withSuspense } from "~/hooks/with-suspense";
+import { useQuery } from "~/query";
 
 import { Button } from "./button";
 import {
@@ -23,18 +23,19 @@ import {
 	AlertDialogTitle
 } from "./dialog/alert";
 import { DialogFooter } from "./dialog/dialog";
-import { useQuery } from "~/swr";
 
-export const NativeStartup: React.FC = withSuspense(() => {
+export const UpdateInformation: React.FC = withSuspense(() => {
 	const { native } = useDevice();
 	const t = useTranslations();
 
-	const { data: updateInformation = null } = useQuery<AppUpdateInfo | null>({
+	const updateInformation = useQuery({
 		queryKey: ["update-information"],
 		queryFn: () => AppUpdate.getAppUpdateInfo(),
 		enabled: native,
 		refetchInterval: ms("1m"),
-	})
+		staleTime: 0,
+		placeholderData: null,
+	});
 
 	useEffect(() => {
 		if (

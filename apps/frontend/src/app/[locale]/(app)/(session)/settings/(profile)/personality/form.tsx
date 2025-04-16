@@ -19,18 +19,16 @@ import {
 	personalityKey,
 	sessionKey,
 	useQuery,
-} from "~/swr";
+} from "~/query";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function usePersonality() {
 	const session = useSession();
 
-	const { data: personality } = useQuery({
+	return useQuery({
 		queryKey: personalityKey(session.user.id),
 		queryFn: personalityFetcher
 	});
-
-	return personality;
 }
 
 export const PersonalityForm: FC = () => {

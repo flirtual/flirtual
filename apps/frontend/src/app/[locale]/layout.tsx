@@ -3,19 +3,22 @@ import type { Metadata, Viewport } from "next";
 import type { Locale } from "next-intl";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { preconnect } from "react-dom";
+import { twMerge } from "tailwind-merge";
 
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
 import { AnalyticsProvider } from "~/components/analytics";
 import { InsetPreview } from "~/components/inset-preview";
-import { NativeStartup } from "~/components/native-startup";
 import { TooltipProvider } from "~/components/tooltip";
+import { UpdateInformation } from "~/components/update-information";
 import { apiOrigin, environment, siteOrigin } from "~/const";
 import { ToastProvider } from "~/hooks/use-toast";
 import { locales } from "~/i18n/routing";
 import { imageOrigins, urls } from "~/urls";
 
 import { fontClassNames } from "../fonts";
+import { LoadingIndicator } from "./(app)/loading-indicator";
 import { StagingBanner } from "./staging-banner";
 
 import "../index.css";
@@ -134,26 +137,26 @@ export default async function RootLayout({
 					rel="mask-icon"
 				/>
 			</head>
-			<body className={fontClassNames} data-theme="light">
+			<body className={twMerge(fontClassNames, "bg-cream")} data-theme="light">
 				<NextTopLoader
 					color={["#FF8975", "#E9658B"]}
 					height={5}
 					showSpinner={false}
 				/>
-				{/* <Suspense fallback={<LoadingIndicator />}> */}
-				<NextIntlClientProvider messages={messages}>
-					{environment === "preview" && <StagingBanner />}
-					{environment === "development" && <InsetPreview />}
-					<NativeStartup />
-					<AnalyticsProvider>
-						<ToastProvider>
-							<TooltipProvider>
-								{children}
-							</TooltipProvider>
-						</ToastProvider>
-					</AnalyticsProvider>
-				</NextIntlClientProvider>
-				{/* </Suspense> */}
+				<Suspense fallback={<LoadingIndicator />}>
+					<NextIntlClientProvider messages={messages}>
+						{environment === "preview" && <StagingBanner />}
+						{environment === "development" && <InsetPreview />}
+						<UpdateInformation />
+						<AnalyticsProvider>
+							<ToastProvider>
+								<TooltipProvider>
+									{children}
+								</TooltipProvider>
+							</ToastProvider>
+						</AnalyticsProvider>
+					</NextIntlClientProvider>
+				</Suspense>
 			</body>
 		</html>
 	);

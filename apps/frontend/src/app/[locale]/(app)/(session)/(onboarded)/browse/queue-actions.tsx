@@ -12,7 +12,7 @@ import {
 	useCallback,
 	useEffect
 } from "react";
-import { type Key, mutate } from "~/swr";
+import { type Key, mutate } from "~/query";
 import useMutation from "swr/mutation";
 import { match, P } from "ts-pattern";
 
@@ -44,7 +44,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
-import { queueKey, relationshipKey } from "~/swr";
+import { queueKey, relationshipKey } from "~/query";
 import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";
 

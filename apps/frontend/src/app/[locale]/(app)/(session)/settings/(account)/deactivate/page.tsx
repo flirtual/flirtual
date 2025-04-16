@@ -7,7 +7,7 @@ import { ActivationForm } from "./form";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations();
-	const session = await Authentication.getSession();
+	const session = await Authentication.getOptionalSession();
 	const deactivated = !!session.user.deactivatedAt;
 
 	return {
@@ -15,10 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export const dynamic = "auto";
+export const dynamic = "force-dynamic";
 
 export default async function SettingsAccountDeactivatePage() {
-	const session = await Authentication.getSession();
+	const session = await Authentication.getOptionalSession();
 
 	return <ActivationForm user={session.user} />;
 }

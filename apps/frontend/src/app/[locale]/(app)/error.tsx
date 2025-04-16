@@ -11,7 +11,7 @@ export default function AppError(props: ErrorProps) {
 
 	return (
 		<>
-			<LoadingIndicator />
+			<LoadingIndicator className="absolute inset-0" />
 			<ErrorDialog {...props} userId={session?.user?.id} />
 		</>
 	);

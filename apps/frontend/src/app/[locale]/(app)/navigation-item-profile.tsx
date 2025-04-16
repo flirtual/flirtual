@@ -24,7 +24,7 @@ import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 
@@ -52,7 +52,9 @@ const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 };
 
 export const NavigationItemProfile: FC = () => {
-	const session = useOptionalSession();
+	const session = useSession();
+	const { user } = session;
+
 	const t = useTranslations();
 	const router = useRouter();
 
@@ -80,9 +82,6 @@ export const NavigationItemProfile: FC = () => {
 	}, [openChangelog, closeChangelog, visible]);
 
 	const isDesktop = useScreenBreakpoint("desktop");
-
-	if (!session) return null;
-	const { user } = session;
 
 	return (
 		<div className="relative aspect-square shrink-0">

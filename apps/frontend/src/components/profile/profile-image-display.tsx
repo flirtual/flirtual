@@ -5,7 +5,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
 import { useSwipeable } from "react-swipeable";
-import { mutate } from "~/swr";
+import { mutate } from "~/query";
 import { twMerge } from "tailwind-merge";
 
 import type { User } from "~/api/user";
@@ -13,7 +13,7 @@ import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { userKey } from "~/swr";
+import { userKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Dialog, DialogContent, DialogTitle } from "../dialog/dialog";
