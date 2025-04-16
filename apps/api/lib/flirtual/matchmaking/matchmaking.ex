@@ -15,6 +15,8 @@ defmodule Flirtual.Matchmaking do
   alias Flirtual.User.Profile.Prospect
   alias Flirtual.{Attribute, Repo, User}
 
+  @simple_genders ["jAL62ePbibxaG4FPu7S8LG", "rhw3rcbheU7vc9vcSy6W6V", "tpkW7r8PZ2RUuYGUSYi82N"]
+
   def next_reset_at() do
     now = DateTime.utc_now()
     today_9am = DateTime.new!(Date.utc_today(), Time.new!(9, 0, 0, 0))
@@ -553,28 +555,47 @@ defmodule Flirtual.Matchmaking do
   def filter(:gender, %User{} = user) do
     %{profile: %{attributes: attributes, preferences: preferences}} = user
 
-    [
-      # $b must be looking for one or more of $a’s genders.
-      %{
-        "terms" => %{
-          "attributes_lf" =>
-            attributes
-            |> filter_by(:type, "gender")
-            |> Attribute.normalize_aliases()
-            |> Enum.map(& &1.id)
+    genders =
+      attributes
+      |> filter_by(:type, "gender")
+      |> Attribute.normalize_aliases()
+      |> Enum.map(& &1.id)
+      |> Enum.sort()
+
+    preferences_genders =
+      preferences.attributes
+      |> filter_by(:type, "gender")
+      |> Attribute.normalize_aliases()
+      |> Enum.map(& &1.id)
+      |> Enum.sort()
+
+    # $b must be looking for one or more of $a’s genders.
+    filter =
+      if genders != @simple_genders do
+        [
+          %{
+            "terms" => %{
+              "attributes_lf" => genders
+            }
+          }
+        ]
+      else
+        []
+      end
+
+    # $a must be looking for one or more of $b’s genders.
+    if preferences_genders != @simple_genders do
+      [
+        %{
+          "terms" => %{
+            "attributes" => preferences_genders
+          }
         }
-      },
-      # $a must be looking for one or more of $b’s genders.
-      %{
-        "terms" => %{
-          "attributes" =>
-            preferences.attributes
-            |> filter_by(:type, "gender")
-            |> Attribute.normalize_aliases()
-            |> Enum.map(& &1.id)
-        }
-      }
-    ]
+        | filter
+      ]
+    else
+      filter
+    end
   end
 
   def filter(:hidden, %User{status: :visible}) do
