@@ -36,6 +36,7 @@ export const Personality = {
 	update(userId: string, options: ProfilePersonality) {
 		return api
 			.url(`users/${userId}/profile/personality`)
+			.options({ transformRequest: false })
 			.json(options)
 			.post()
 			.json<Profile>();

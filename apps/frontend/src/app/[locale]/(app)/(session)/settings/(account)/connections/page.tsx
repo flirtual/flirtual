@@ -13,17 +13,11 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export const dynamic = "force-dynamic";
-
-export default function SettingsAccountConnectionsPage({ params, searchParams }: {
+export default function SettingsAccountConnectionsPage({ params }: {
 	params: Promise<{ locale: Locale }>;
-	searchParams: Promise<{
-		error?: string;
-	}>;
 }) {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 
-	const { error } = use(searchParams);
-	return <ConnectionsForm error={error} />;
+	return <ConnectionsForm />;
 }

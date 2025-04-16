@@ -1,11 +1,12 @@
 "use client";
 
-import { Key, X } from "lucide-react";
+import { Key, Loader2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
+import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { useToast } from "~/hooks/use-toast";
+import { invalidate, sessionKey, useMutation } from "~/query";
 
 export interface PasskeyButtonProps {
 	id: string;
@@ -17,8 +18,17 @@ export interface PasskeyButtonProps {
 export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 	const { id, name, icon, date } = props;
 	const toasts = useToast();
-	const router = useRouter();
 	const t = useTranslations();
+
+	const { mutate, isPending } = useMutation({
+		mutationKey: sessionKey(),
+		mutationFn: async () => {
+			await Authentication.passkey.delete(id);
+			await invalidate({ queryKey: sessionKey() });
+		},
+		onSuccess: () => toasts.add(name ? t("removed_item", { item: name }) : t("removed_passkey")),
+		onError: toasts.addError
+	});
 
 	return (
 		<div className="flex w-full gap-2 rounded-xl bg-white-40 shadow-brand-1  dark:bg-black-60 dark:text-white-20">
@@ -38,20 +48,18 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 					{t("added_date", { date })}
 				</span>
 			</div>
-			<div
-				className="ml-auto cursor-pointer self-center p-3 opacity-50 hover:text-red-400 hover:opacity-100 vision:text-black-80"
-				onClick={() => {
-					void Authentication.passkey
-						.delete(id)
-						.then(() => {
-							toasts.add(name ? t("removed_item", { item: name }) : t("removed_passkey"));
-							return router.refresh();
-						})
-						.catch(toasts.addError);
-				}}
+			<button
+				className={twMerge(
+					"ml-auto cursor-pointer self-center p-3 opacity-50 vision:text-black-80",
+					!isPending && "hover:text-red-400 hover:opacity-100"
+				)}
+				type="button"
+				onClick={() => mutate()}
 			>
-				<X />
-			</div>
+				{isPending
+					? <Loader2 className="animate-spin" />
+					: <X />}
+			</button>
 		</div>
 	);
 };

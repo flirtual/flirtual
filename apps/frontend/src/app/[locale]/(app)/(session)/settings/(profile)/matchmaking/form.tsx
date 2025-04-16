@@ -2,11 +2,11 @@
 
 import { Loader2, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import { type FC, startTransition, useState } from "react";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import type { Session } from "~/api/auth";
 import { Matchmaking } from "~/api/matchmaking";
 import {
 	CustomWeightList,
@@ -40,6 +40,8 @@ import {
 } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "~/i18n/navigation";
+import { invalidate, mutate, sessionKey } from "~/query";
 
 const absMinAge = 18;
 const absMaxAge = 60;
@@ -128,7 +130,7 @@ export const MatchmakingForm: FC = () => {
 						: [])
 				]);
 
-				startTransition(() => router.refresh());
+				await invalidate({ queryKey: sessionKey() });
 				toasts.add(t("east_low_niklas_list"));
 			}}
 		>

@@ -15,11 +15,11 @@ import {
 	User
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import type { Dispatch, FC } from "react";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -32,8 +32,9 @@ import {
 import { Pill } from "~/components/profile/pill/pill";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { mutate, sessionKey } from "~/query";
 
 const categoryIcons: Record<string, React.ReactNode> = {
 	iiCe39JvGQAAtsrTqnLddb: <Star />,
@@ -234,12 +235,10 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 export const maximumInterests = 10;
 
 export const InterestsForm: FC = () => {
-	const session = useOptionalSession();
+	const session = useSession();
 	const toasts = useToast();
-	const router = useRouter();
 	const t = useTranslations();
 
-	if (!session) return null;
 	const { user } = session;
 	const { profile } = user;
 
@@ -252,13 +251,19 @@ export const InterestsForm: FC = () => {
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async ({ defaultInterests, customInterests }) => {
-				await Profile.update(user.id, {
+				const profile = await Profile.update(user.id, {
 					customInterests,
 					interestId: defaultInterests
-				}).then(() => {
-					toasts.add(t("bad_tangy_lynx_tend"));
-					return router.refresh();
 				});
+
+				await mutate<Session>(sessionKey(), (session) => ({
+					...session,
+					user: {
+						...session.user,
+						profile
+					}
+				}));
+				toasts.add(t("bad_tangy_lynx_tend"));
 			}}
 		>
 			{({

@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import type { HTMLMotionProps } from "motion/react";
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
@@ -14,7 +15,7 @@ const defaultClassName = twMerge(
 );
 
 const sizes = {
-	sm: "px-6 py-2",
+	sm: "px-6 h-11",
 	// base: "py-4 px-8 text-xl"
 } as const;
 
@@ -34,6 +35,7 @@ export interface ButtonProps {
 	disabled?: boolean;
 	Icon?: IconComponent;
 	iconClassName?: string;
+	pending?: boolean;
 }
 
 export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
@@ -41,11 +43,15 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 		size = "sm",
 		kind = "primary",
 		disabled,
-		Icon,
-		iconClassName,
+		pending = false,
+		Icon: _Icon,
+		iconClassName: _iconClassName,
 		children,
 		...elementProps
 	} = props;
+
+	const Icon = pending ? Loader2 : _Icon;
+	const iconClassName = pending ? "animate-spin" : _iconClassName;
 
 	return (
 		<motion.button

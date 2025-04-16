@@ -2,7 +2,6 @@
 
 import { MoveLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
 
 import { Profile } from "~/api/user/profile";
@@ -19,6 +18,7 @@ import {
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 export const Finish1Form: FC = () => {
@@ -107,7 +107,7 @@ export const Finish1Form: FC = () => {
 								>
 									{t("profile_pictures")}
 								</InputLabel>
-								<InputImageSet {...field.props} />
+								<InputImageSet {...field.props} max={15} />
 							</>
 						)}
 					</FormField>

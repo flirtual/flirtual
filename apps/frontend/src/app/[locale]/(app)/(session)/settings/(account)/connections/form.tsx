@@ -1,8 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+// eslint-disable-next-line no-restricted-imports
+import { useSearchParams } from "next/navigation";
+import type { FC } from "react";
 import { useState } from "react";
 
+import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
 import { NewBadge } from "~/components/badge";
 import { Form, FormButton } from "~/components/forms";
@@ -14,8 +18,27 @@ import { ProfilePlaylist } from "~/components/profile/playlist";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { withSuspense } from "~/hooks/with-suspense";
+import { mutate, sessionKey } from "~/query";
 
-export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
+const ConnectionError: FC = withSuspense(() => {
+	const query = useSearchParams();
+	const error = query.get("error");
+
+	const tError = useTranslations("errors");
+
+	if (!error || error === "access_denied") return null;
+
+	return (
+		<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
+			<span className="font-montserrat text-lg text-white-10">
+				{tError(error as any)}
+			</span>
+		</div>
+	);
+});
+
+export const ConnectionsForm: FC = () => {
 	const { vision } = useDevice();
 	const session = useOptionalSession();
 	const toasts = useToast();
@@ -34,11 +57,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 			inset={false}
 			title={t("connections")}
 		>
-			{error && (
-				<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
-					<span className="font-montserrat text-lg text-white-10">{error}</span>
-				</div>
-			)}
+			<ConnectionError />
 			<Form
 				fields={{
 					vrchat: user.profile.vrchat || "",
@@ -71,7 +90,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 
 					toasts.add(t("merry_arable_alligator_coax"));
 
-					await mutateSession({
+					await mutate<Session>(sessionKey(), (session) => ({
 						...session,
 						user: {
 							...user,
@@ -79,7 +98,7 @@ export const ConnectionsForm: React.FC<{ error?: string }> = ({ error }) => {
 								...profile
 							}
 						}
-					});
+					}));
 				}}
 			>
 				{({ FormField }) => (

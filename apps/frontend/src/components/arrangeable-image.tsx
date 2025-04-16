@@ -12,6 +12,7 @@ import { UserImage } from "./user-avatar";
 export interface ArrangeableImageProps {
 	src: string;
 	id: string;
+	className?: string;
 	onDelete: () => void;
 	onFullscreen: () => void;
 }
@@ -33,14 +34,14 @@ export const ArrangeableImagePreview: React.FC<
 	);
 };
 
-export function ArrangeableImage({ src, id, onDelete, onFullscreen, ...props }: ArrangeableImageProps & RefAttributes<HTMLDivElement>) {
+export function ArrangeableImage({ src, id, className, onDelete, onFullscreen, ...props }: ArrangeableImageProps & RefAttributes<HTMLDivElement>) {
 	const t = useTranslations();
 	const currentId = useCurrentSortableItem();
 	const dragging = currentId === id;
 
 	return (
 		<div
-			className="group relative aspect-square max-h-full w-full shrink-0"
+			className={twMerge("group relative aspect-square max-h-full w-full shrink-0", className)}
 			{...props}
 		>
 			<ArrangeableImagePreview

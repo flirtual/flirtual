@@ -114,7 +114,7 @@ export function Profile(props: ProfileProps) {
 							{user.activeAt && (
 								<ActivityIndicator lastActiveAt={new Date(user.activeAt)} />
 							)}
-							{relationship?.timeDiff && user.profile.timezone && (
+							{relationship?.timeDiff !== undefined && user.profile.timezone && (
 								<TimeDiff diff={relationship.timeDiff} displayName={displayName(user)} timezone={user.profile.timezone} />
 							)}
 						</div>

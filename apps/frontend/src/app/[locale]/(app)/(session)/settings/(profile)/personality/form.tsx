@@ -14,10 +14,9 @@ import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import {
-	mutate,
+	invalidate,
 	personalityFetcher,
 	personalityKey,
-	sessionKey,
 	useQuery,
 } from "~/query";
 
@@ -45,17 +44,9 @@ export const PersonalityForm: FC = () => {
 			className="flex flex-col gap-8"
 			fields={personality}
 			onSubmit={async (body) => {
-				const newProfile = await Personality.update(user.id, body);
-
+				await Personality.update(user.id, body);
+				await invalidate({ queryKey: personalityKey(user.id) });
 				toasts.add(t("wide_stock_skate_radiate"));
-
-				await mutate(sessionKey(), {
-					...session,
-					user: {
-						...session.user,
-						profile: newProfile
-					}
-				});
 			}}
 		>
 			{({ FormField }) => (

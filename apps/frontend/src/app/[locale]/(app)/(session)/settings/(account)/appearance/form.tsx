@@ -2,7 +2,6 @@
 
 import { Hash, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
@@ -21,6 +20,7 @@ import { useFormContext } from "~/hooks/use-input-form";
 import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "~/i18n/navigation";
 import { defaultLocale } from "~/i18n/routing";
 import { urls } from "~/urls";
 
@@ -233,7 +233,7 @@ export const AppearanceForm: FC = () => {
 
 	const toasts = useToast();
 	const router = useRouter();
-	const [session] = useSession();
+	const session = useSession();
 
 	return (
 		<Form

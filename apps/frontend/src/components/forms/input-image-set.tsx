@@ -63,6 +63,7 @@ export interface InputImageSetProps {
 	onChange: Dispatch<Array<ImageSetValue>>;
 	id?: string;
 	type?: "profile" | "report";
+	max?: number;
 }
 
 type UppyfileMeta = Record<string, unknown>;
@@ -80,7 +81,7 @@ type UploadedMultipartFile = {
 } & MultipartFile;
 
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
-	const { value, onChange, type = "profile" } = props;
+	const { value, onChange, type = "profile", max } = props;
 
 	const session = useOptionalSession();
 	const { theme } = useTheme();
@@ -222,6 +223,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 						? (
 								<SortableItem id={image.id} key={image.id}>
 									<ArrangeableImage
+										className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
 										id={image.id}
 										src={image.src}
 										onDelete={() => {

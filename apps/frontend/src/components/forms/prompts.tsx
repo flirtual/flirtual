@@ -87,7 +87,6 @@ const EditPromptDialog: FC<{
 					<Button
 						className="ml-auto"
 						disabled={!value || !value.promptId || !value.response}
-						size="sm"
 						onClick={() => {
 							if (!value || !value.promptId || !value.response) return;
 
@@ -124,7 +123,6 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 					<Button
 						className="ml-auto gap-2"
 						disabled={props.value.length >= 5}
-						size="sm"
 						onClick={() => {
 							setEditingPrompt(null);
 							setPromptDialogOpen(true);
@@ -165,9 +163,9 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 											onTouchStart={(event) => event.stopPropagation()}
 										>
 											<Button
-												className="p-0 opacity-75 transition-all hocus:text-pink hocus:opacity-100"
+												className="opacity-75 transition-all hocus:text-pink hocus:opacity-100"
 												kind="tertiary"
-												size="sm"
+												size={false}
 												onClick={() => {
 													setEditingPrompt(promptId);
 													setPromptDialogOpen(true);
@@ -176,9 +174,9 @@ export const InputPrompts: FC<InputPromptsProps> = (props) => {
 												<Pencil className="size-5" />
 											</Button>
 											<Button
-												className="p-0 opacity-75 transition-all hocus:text-red-500 hocus:opacity-100"
+												className="opacity-75 transition-all hocus:text-red-500 hocus:opacity-100"
 												kind="tertiary"
-												size="sm"
+												size={false}
 												onClick={() =>
 													props.onChange(
 														props.value.filter(

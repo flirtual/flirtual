@@ -1,4 +1,3 @@
-import { Loader2 } from "lucide-react";
 import type { HTMLMotionProps } from "motion/react";
 import { useTranslations } from "next-intl";
 
@@ -14,8 +13,7 @@ export const FormButton: React.FC<Parameters<typeof Button>[0]> = ({ children, .
 		<Button
 			{...buttonProps as HTMLMotionProps<"button">}
 			{...props}
-			Icon={submitting ? Loader2 : props.Icon}
-			iconClassName={submitting ? "animate-spin" : props.iconClassName}
+			pending={submitting}
 			type="submit"
 		>
 			{!submitting && (children ?? t("continue"))}

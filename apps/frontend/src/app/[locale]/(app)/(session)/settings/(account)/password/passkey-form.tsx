@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 import { Authentication } from "~/api/auth";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "~/i18n/navigation";
-import { useQuery } from "~/query";
+import { invalidate, sessionKey, useMutation, useQuery } from "~/query";
 
 import { PasskeyButton } from "./passkey-button";
 
@@ -31,14 +31,13 @@ function useAaguid() {
 			const response = await fetch("https://raw.githubusercontent.com/passkeydeveloper/passkey-authenticator-aaguids/main/combined_aaguid.json");
 			return (await response.json()) as AAGUIDData;
 		},
-		placeholderData: {}
+		placeholderData: {} as AAGUIDData
 	});
 }
 
 export const PasswordPasskeyForm: React.FC = () => {
-	const session = useOptionalSession();
+	const session = useSession();
 	const { native } = useDevice();
-	const router = useRouter();
 	const toasts = useToast();
 	const t = useTranslations();
 
@@ -61,7 +60,50 @@ export const PasswordPasskeyForm: React.FC = () => {
 		}
 	}, [session]);
 
-	if (!session) return null;
+	const { mutate, isPending } = useMutation({
+		mutationKey: sessionKey(),
+		mutationFn: async () => {
+			const challenge
+						= await Authentication.passkey.registrationChallenge(false);
+
+			const credential = (await navigator.credentials
+				.create(challenge)
+				.catch((reason) => {
+					if (reason instanceof Error && reason.name === "InvalidStateError") {
+						toasts.add({
+							type: "warning",
+							value: t("level_nice_cheetah_drum")
+						});
+					}
+				})) as PublicKeyCredential;
+			if (!credential) return;
+
+			const response
+						= credential.response as AuthenticatorAttestationResponse;
+
+			await Authentication.passkey
+				.create({
+					rawId: btoa(
+						String.fromCharCode(...new Uint8Array(credential.rawId))
+					),
+					response: {
+						attestationObject: btoa(
+							String.fromCharCode(
+								...new Uint8Array(response.attestationObject)
+							)
+						),
+						clientDataJSON: btoa(
+							String.fromCharCode(
+								...new Uint8Array(response.clientDataJSON)
+							)
+						)
+					}
+				});
+
+			await invalidate({ queryKey: sessionKey() });
+		},
+		onError: toasts.addError
+	});
 
 	return (
 		<>
@@ -95,48 +137,9 @@ export const PasswordPasskeyForm: React.FC = () => {
 			<Button
 				{...(!passkeysAvailable && { disabled: true })}
 				Icon={Plus}
+				pending={isPending}
 				type="button"
-				onClick={async () => {
-					const challenge
-						= await Authentication.passkey.registrationChallenge(false);
-
-					const credential = (await navigator.credentials
-						.create(challenge)
-						.catch((reason) => {
-							if (reason instanceof Error && reason.name === "InvalidStateError") {
-								toasts.add({
-									type: "warning",
-									value: t("level_nice_cheetah_drum")
-								});
-							}
-						})) as PublicKeyCredential;
-					if (!credential) return;
-
-					const response
-						= credential.response as AuthenticatorAttestationResponse;
-
-					await Authentication.passkey
-						.create({
-							rawId: btoa(
-								String.fromCharCode(...new Uint8Array(credential.rawId))
-							),
-							response: {
-								attestationObject: btoa(
-									String.fromCharCode(
-										...new Uint8Array(response.attestationObject)
-									)
-								),
-								clientDataJSON: btoa(
-									String.fromCharCode(
-										...new Uint8Array(response.clientDataJSON)
-									)
-								)
-							}
-						})
-						.then(() => {
-							return router.refresh();
-						});
-				}}
+				onClick={() => mutate()}
 			>
 				{t("add_passkey")}
 				{" "}

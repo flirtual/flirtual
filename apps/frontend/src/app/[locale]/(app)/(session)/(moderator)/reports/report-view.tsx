@@ -158,7 +158,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 											onClick={() =>
 												Report.clearAll(targetId)
 													.then(({ count }) =>
-														toasts.add(t("cleared_count_reports", { number: count }))
+														toasts.add(t("cleared_count_reports", { count }))
 													)
 													.catch(toasts.addError)
 													.finally(mutate)}

@@ -27,6 +27,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { mutate, sessionKey } from "~/query";
 
 const AttributeKeys = [
 	...(["gender", "sexuality", "platform", "game"] as const)
@@ -89,7 +90,7 @@ export const InfoForm: FC = () => {
 
 				toasts.add(t("awake_few_wren_skip"));
 
-				await mutateSession({
+				await mutate(sessionKey(), {
 					...session,
 					user: {
 						...newUser,

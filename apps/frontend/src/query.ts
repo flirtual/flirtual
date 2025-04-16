@@ -61,7 +61,7 @@ export const plansKey = () => ["plans"] as const;
 export const plansFetcher = () => Plan.list();
 
 export const personalityKey = (userId: string) => ["personality", userId] as const;
-export const personalityFetcher = ([, userId]: ReturnType<typeof personalityKey>) => Personality.get(userId);
+export const personalityFetcher = ({ queryKey: [, userId] }: QueryFunctionContext<ReturnType<typeof personalityKey>>) => Personality.get(userId);
 
 export const preferencesKey = (key: string) => ["preferences", key] as const;
 export function preferencesFetcher<T>({ queryKey: [, key] }: QueryFunctionContext<ReturnType<typeof preferencesKey>>) {
@@ -257,6 +257,9 @@ export function useQuery<
 
 export function useMutation<T = unknown, Variables = void>({
 	mutationKey,
+	onMutate,
+	onSuccess,
+	onError,
 	...options
 }: UseMutationOptions<T, Error, Variables, unknown>) {
 	useDebugValue(mutationKey);
@@ -264,14 +267,22 @@ export function useMutation<T = unknown, Variables = void>({
 	return _useMutation({
 		...options,
 		mutationKey,
-		onMutate: (variables) => log("onMutate(%o) => %o", mutationKey, variables),
-		onSuccess: (data) => {
+		onMutate: (variables) => {
+			log("onMutate(%o) => %o", mutationKey, variables);
+			return onMutate?.(variables);
+		},
+		onSuccess: (data, variables, context) => {
 			log("onSuccess(%o) => %o", mutationKey, data);
 
 			if (mutationKey && data !== undefined)
 				mutate(mutationKey, data);
+
+			return onSuccess?.(data, variables, context);
 		},
-		onError: (error) => console.error("onError(%o) => %o", mutationKey, error),
+		onError: (error, variables, context) => {
+			console.error("onError(%o) => %o", mutationKey, error);
+			return onError?.(error, variables, context);
+		},
 	}, queryClient);
 }
 

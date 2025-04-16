@@ -45,8 +45,8 @@ defmodule FlirtualWeb.ProfileController do
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, personality} <- Profiles.update_personality(profile, params) do
-        conn |> json(personality)
+      with {:ok, profile} <- Profiles.update_personality(profile, params) do
+        conn |> json(profile)
       end
     end
   end

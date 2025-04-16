@@ -44,7 +44,7 @@ export const NsfwForm: React.FC = () => {
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async ({ domsub, kinks, kinksPrivacy, nsfw }) => {
-				const [newProfile, newPreferences] = await Promise.all([
+				const [newProfile, newPreferences, newPrivacy] = await Promise.all([
 					Profile.update(user.id, {
 						domsub: domsub ?? "none",
 						kinkId: kinks
@@ -62,7 +62,10 @@ export const NsfwForm: React.FC = () => {
 					user: {
 						...session.user,
 						profile: newProfile,
-						preferences: newPreferences
+						preferences: {
+							...newPreferences,
+							privacy: newPrivacy
+						}
 					}
 				}));
 			}}

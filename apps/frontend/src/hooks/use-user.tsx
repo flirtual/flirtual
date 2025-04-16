@@ -15,12 +15,15 @@ import { useSession } from "./use-session";
 export function useUser(userId: string): User | null {
 	const { user: self } = useSession();
 
-	return useQuery({
+	const user = useQuery({
 		queryKey: userKey(userId),
 		queryFn: (context) => self.id === userId
 			? self
 			: userFetcher(context),
 	});
+
+	if (user?.id === self.id) return self;
+	return user;
 }
 
 export function useRelationship(userId: string): Relationship | null {

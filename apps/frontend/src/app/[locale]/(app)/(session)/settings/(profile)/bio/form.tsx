@@ -120,7 +120,7 @@ export const BiographyForm: FC = () => {
 								>
 									{t("profile_pictures")}
 								</InputLabel>
-								<InputImageSet {...field.props} />
+								<InputImageSet {...field.props} max={15} />
 							</>
 						)}
 					</FormField>

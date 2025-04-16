@@ -152,7 +152,7 @@ export const api = wretch(urls.api)
 	// .errorType("json")
 	.defer((wretch, _url, options) => {
 		const headers = new Headers(options.headers || {});
-		if (headers.get("content-type") === "application/json")
+		if (headers.get("content-type") === "application/json" && options.transformRequest !== false)
 			// @ts-expect-error: Type mismatch, look into this later.
 			options.body = JSON.stringify(toSnakeObject(JSON.parse(options.body)));
 
