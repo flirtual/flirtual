@@ -1,21 +1,21 @@
 "use client";
 
-import { Loader2, MoveRight } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 // eslint-disable-next-line no-restricted-imports
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FC, Suspense, useEffect, useRef } from "react";
+import { withSuspense } from "with-suspense";
 
 import { Authentication } from "~/api/auth";
 import { isWretchError } from "~/api/common";
-import { Button, ButtonLink } from "~/components/button";
+import { ButtonLink } from "~/components/button";
 import { Form, FormButton } from "~/components/forms";
 import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useToast } from "~/hooks/use-toast";
-import { withSuspense } from "~/hooks/with-suspense";
-import { invalidate, mutate, sessionKey, useMutation } from "~/query";
+import { invalidate, mutate, sessionKey } from "~/query";
 import { isInternalHref, urls } from "~/urls";
 
 import { LoginConnectionButton } from "./login-connection-button";
@@ -122,30 +122,6 @@ const OAuthError: FC = withSuspense(() => {
 });
 
 export const LoginForm: FC = () => {
-	const router = useRouter();
-
-	const { mutate, isPending } = useMutation({
-		mutationKey: sessionKey(),
-		mutationFn: async () => {
-			const value = await Authentication.login({ login: "...", password: "..." });
-			if ("error" in value) throw value.error;
-
-			return value;
-		}
-	});
-
-	return (
-		<>
-			<Button
-				Icon={isPending ? Loader2 : undefined}
-				iconClassName={isPending ? "animate-spin" : ""}
-				onClick={() => mutate()}
-			>
-				Login
-			</Button>
-		</>
-	);
-
 	const t = useTranslations();
 	const tError = useTranslations("errors");
 
@@ -221,9 +197,8 @@ export const LoginForm: FC = () => {
 						throw [tError(value.error)];
 					}
 
-					await invalidate();
-					router.push(next());
-					// await mutate(sessionKey(), value);
+					await invalidate({ refetchType: "none" });
+					await mutate(sessionKey(), value);
 				}}
 			>
 				{({ errors, FormField, Captcha }) => (
@@ -298,8 +273,7 @@ export const LoginForm: FC = () => {
 						</span>
 						<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
 					</div>
-
-					<LoginConnectionButton next={next} tabIndex={5} type="discord" />
+					<LoginConnectionButton tabIndex={5} type="discord" />
 					{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />

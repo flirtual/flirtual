@@ -127,7 +127,7 @@ const ReccommendedProfileThemes: FC = () => {
 	const {
 		fields: { color1, color2 }
 	} = useFormContext<ProfileColors>();
-	const { theme } = useTheme();
+	const [theme] = useTheme();
 	const t = useTranslations();
 	const router = useRouter();
 
@@ -228,7 +228,7 @@ export const AppearanceForm: FC = () => {
 	const locale = useLocale();
 	const tAttribute = useAttributeTranslation();
 
-	const { theme } = useTheme();
+	const [theme] = useTheme();
 	const defaultTheme = defaultProfileColors[theme];
 
 	const toasts = useToast();

@@ -4,8 +4,9 @@ import type { AppInfo } from "@capacitor/app";
 import { App } from "@capacitor/app";
 import type { DeviceId, DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
+import { omitBy } from "remeda";
 
-import { client, gitCommitSha } from "~/const";
+import { client, gitCommitSha, platformOverride } from "~/const";
 import { log as _log } from "~/log";
 
 import { usePostpone } from "./use-postpone";
@@ -45,7 +46,7 @@ const [
 // const userAgent = userAgentFromString(client ? navigator.userAgent : "");
 // const { os, ua } = userAgent;
 
-const platform: DevicePlatform = ({
+const platform: DevicePlatform = platformOverride || ({
 	android: "android",
 	mac: "apple",
 	ios: "apple",
@@ -78,9 +79,17 @@ export const device = {
 	}
 } as const;
 
-log(device);
-
 export type Device = typeof device;
+
+if (client) {
+	log(device);
+
+	Object.assign(document.documentElement.dataset, omitBy({
+		vision,
+		native,
+		platform
+	}, (value) => !value));
+}
 
 export function useDevice() {
 	usePostpone("useDevice()");

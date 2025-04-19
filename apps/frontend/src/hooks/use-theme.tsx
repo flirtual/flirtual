@@ -1,106 +1,48 @@
 "use client";
 
-import type { PropsWithChildren, RefAttributes } from "react";
-import { createContext, use, useMemo } from "react";
+import { setPath } from "remeda";
 
-import type { PreferenceTheme } from "~/api/user/preferences";
-import type { Theme } from "~/theme";
+import type { Session } from "~/api/auth";
+import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
+import { mutate, sessionKey, useMutation } from "~/query";
 
-const Context = createContext(
-	{} as {
-		theme: Theme;
-		sessionTheme: PreferenceTheme;
-		setTheme: (theme: PreferenceTheme) => void;
-	}
-);
+import { useMediaQuery } from "./use-media-query";
+import { usePostpone } from "./use-postpone";
+import { useOptionalSession } from "./use-session";
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
-	return use(Context);
+	usePostpone("useTheme()");
+
+	const session = useOptionalSession();
+	const sessionTheme = session?.user.preferences?.theme || "system";
+
+	const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+
+	const theme = sessionTheme === "system"
+		? prefersDark
+			? "dark"
+			: "light"
+		: sessionTheme;
+
+	document.documentElement.dataset.theme = theme;
+
+	const { mutateAsync } = useMutation({
+		mutationKey: sessionKey(),
+		mutationFn: async (theme: PreferenceTheme) => {
+			if (!session || theme === sessionTheme) return;
+
+			// await mutate(sessionKey(), { ...session, user: { ...session.user, preferences: { ...session.user.preferences, theme } } });
+			const preferences = await Preferences.update(session.user.id, { theme });
+			return { ...session, user: { ...session.user, preferences } };
+		}
+	});
+
+	return [
+		theme,
+		mutateAsync,
+		{
+			prefersDark,
+			sessionTheme
+		}
+	] as const;
 }
-
-export interface ThemeProviderProps extends PropsWithChildren, RefAttributes<HTMLHtmlElement> {
-	children: React.ReactNode;
-	theme: PreferenceTheme;
-}
-
-export function ThemeProvider({ children, theme: sessionTheme, ...props }: ThemeProviderProps) {
-	return (
-		<Context
-			value={useMemo(() => ({
-				theme: "light",
-				sessionTheme: "light",
-				setTheme: () => { }
-			}), [])}
-		>
-			{children}
-		</Context>
-	);
-
-	/* const session = useOptionalSession();
-	const { vision } = useDevice();
-	const router = useRouter();
-
-	const browserTheme = useMediaQuery("(prefers-color-scheme: dark)")
-		? "dark"
-		: "light";
-
-	const theme = vision
-		? "light"
-		: sessionTheme === "system"
-			? browserTheme
-			: sessionTheme;
-
-	const pathname = usePathname();
-	const searchParameters = useSearchParams();
-
-	const kind = searchParameters.get("kind");
-
-	const setTheme = useCallback(
-		async (theme: PreferenceTheme) => {
-			if (!session) return;
-
-			Object.assign(document.documentElement.dataset, {
-				theme: resolveTheme(theme)
-			});
-
-			await mutateSession({
-				...session,
-				user: {
-					...session.user,
-					preferences: await Preferences.update(session.user.id, {
-						theme
-					})
-				}
-			});
-
-			router.refresh();
-		},
-		[session, router, mutateSession]
-	);
-
-	useEffect(() => {
-		const themeStyle
-			= pathname === "/browse" && kind === "friend" ? "friend" : "love";
-
-		Object.assign(document.documentElement.dataset, { themeStyle });
-	}, [pathname, kind]);
-
-	useEffect(() => { }, [theme]);
-
-	return (
-		<Context
-			value={useMemo(() => ({
-				theme,
-				sessionTheme,
-				setTheme
-			}), [sessionTheme, setTheme, theme])}
-		>
-			<Slot {...props} data-theme={theme}>
-				{children}
-			</Slot>
-		</Context>
-	); */
-}
-
-ThemeProvider.displayName = "ThemeProvider";

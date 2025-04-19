@@ -1,29 +1,39 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { useDebugValue, useEffect, useState } from "react";
 
-export function useMediaQuery(media: string, defaultValue: boolean = false) {
-	const [value, setValue] = useState(defaultValue);
-	useMediaQueryEvent(media, setValue);
+import { server } from "~/const";
+
+import { usePostpone } from "./use-postpone";
+
+export function useMediaQuery(media: string, defaultValue?: boolean) {
+	useDebugValue(media);
+
+	if (server) {
+		if (defaultValue === undefined)
+			usePostpone("useMediaQuery() without defaultValue");
+
+		return defaultValue;
+	}
+
+	const [value, setValue] = useState(defaultValue ?? matchMedia(media).matches);
+	useMediaQueryCallback(media, ({ matches }) => setValue(matches));
 
 	return value;
 }
 
-export function useMediaQueryEvent(
+export function useMediaQueryCallback(
 	media: string,
-	callback: (matches: boolean) => void
+	callback: (event: Pick<MediaQueryListEvent, "matches">) => void
 ) {
 	useDebugValue(media);
 
 	useEffect(() => {
 		const queryList = matchMedia(media);
-		callback(queryList.matches);
+		callback(queryList);
 
-		function onChange(event: MediaQueryListEvent) {
-			callback(event.matches);
-		}
-
-		queryList.addEventListener("change", onChange);
-		return () => queryList.removeEventListener("change", onChange);
+		queryList.addEventListener("change", callback);
+		return () => queryList.removeEventListener("change", callback);
 	}, [media, callback]);
 }

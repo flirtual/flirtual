@@ -12,9 +12,10 @@ import { AnalyticsProvider } from "~/components/analytics";
 import { InsetPreview } from "~/components/inset-preview";
 import { TooltipProvider } from "~/components/tooltip";
 import { UpdateInformation } from "~/components/update-information";
-import { apiOrigin, environment, siteOrigin } from "~/const";
+import { apiOrigin, environment, platformOverride, siteOrigin } from "~/const";
 import { ToastProvider } from "~/hooks/use-toast";
 import { locales } from "~/i18n/routing";
+import { resolveTheme } from "~/theme";
 import { imageOrigins, urls } from "~/urls";
 
 import { fontClassNames } from "../fonts";
@@ -92,7 +93,7 @@ export const viewport: Viewport = {
 	width: "device-width"
 };
 
-export default async function RootLayout({
+export default async function LocaleLayout({
 	children,
 	params
 }: React.PropsWithChildren<{ params: Promise<{ locale: Locale }> }>) {
@@ -102,62 +103,47 @@ export default async function RootLayout({
 	preconnect(apiOrigin);
 	imageOrigins.map((origin) => preconnect(origin));
 
-	// const theme = "light";
-	//	= themeOverride
-	//		|| (device.vision ? "light" : "light" /* (session?.user.preferences?.theme ?? "light") */);
-
 	const messages = await getMessages();
 
 	return (
-		<html suppressHydrationWarning lang={locale}>
-			<head>
-				<meta name="darkreader-lock" />
-				{/* {theme === "system" && (
-					<script
-						// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-						dangerouslySetInnerHTML={{
-							__html: `(() => {
-  const resolveTheme = ${resolveTheme.toString()};
-
-  const url = new URL(location);
-  const themeStyle = url.pathname === "/browse" && url.searchParams.get("kind") === "friend" ? "friend" : "love";
-
-  Object.assign(document.documentElement.dataset, {
-    theme: resolveTheme("system"),
-    themeStyle,
-  });
-})()
-						`.trim()
-						}}
-					/>
-				)} */}
-				<link
-					color="#e9658b"
-					href={SafariPinnedTabImage.src}
-					rel="mask-icon"
-				/>
-			</head>
-			<body className={twMerge(fontClassNames, "bg-cream")} data-theme="light">
-				<NextTopLoader
-					color={["#FF8975", "#E9658B"]}
-					height={5}
-					showSpinner={false}
-				/>
-				<Suspense fallback={<LoadingIndicator />}>
-					<NextIntlClientProvider messages={messages}>
-						{environment === "preview" && <StagingBanner />}
-						{environment === "development" && <InsetPreview />}
-						<UpdateInformation />
-						<AnalyticsProvider>
+		<NextIntlClientProvider messages={messages}>
+			<AnalyticsProvider>
+				<html
+					suppressHydrationWarning
+					data-platform={platformOverride || undefined}
+					lang={locale}
+				>
+					<head>
+						<meta name="darkreader-lock" />
+						<link
+							color="#e9658b"
+							href={SafariPinnedTabImage.src}
+							rel="mask-icon"
+						/>
+						<script>
+							{`const theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+Object.assign(document.documentElement.dataset, { theme });`}
+						</script>
+					</head>
+					<body className={twMerge(fontClassNames, "bg-white-20 font-nunito text-black-80 antialiased vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:bg-cream desktop:dark:bg-black-80")}>
+						<NextTopLoader
+							color={["#FF8975", "#E9658B"]}
+							height={5}
+							showSpinner={false}
+						/>
+						<Suspense fallback={<LoadingIndicator />}>
+							{environment === "preview" && <StagingBanner />}
+							{environment === "development" && <InsetPreview />}
+							<UpdateInformation />
 							<ToastProvider>
 								<TooltipProvider>
 									{children}
 								</TooltipProvider>
 							</ToastProvider>
-						</AnalyticsProvider>
-					</NextIntlClientProvider>
-				</Suspense>
-			</body>
-		</html>
+						</Suspense>
+					</body>
+				</html>
+			</AnalyticsProvider>
+		</NextIntlClientProvider>
 	);
 }

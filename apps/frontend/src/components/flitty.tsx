@@ -126,10 +126,7 @@ const clickTriggers: Record<string, Array<[string, string]>> = {
 };
 
 export default function Flitty() {
-	const [visible, setVisible] = usePreferences(
-		"assistant_visible",
-		false
-	);
+	const [visible, setVisible] = usePreferences("assistant_visible", false);
 	const [position, setPosition] = usePreferences(
 		"assistant_position",
 		{
@@ -144,10 +141,7 @@ export default function Flitty() {
 			left: number | string;
 		}
 	);
-	const [dialogueIndex, setDialogueIndex] = usePreferences(
-		"assistant_dialogue_index",
-		0
-	);
+	const [dialogueIndex, setDialogueIndex] = usePreferences("assistant_dialogue_index", 0);
 
 	const flittyReference = useRef<HTMLDivElement>(null);
 	const dragData = useRef<{ offsetX: number; offsetY: number; dragging: boolean }>({
@@ -266,9 +260,9 @@ export default function Flitty() {
 		event.preventDefault();
 
 		setPosition({
-			top: Math.max(0, event.clientY - dragData.current.offsetY),
+			top: Math.floor(Math.max(0, event.clientY - dragData.current.offsetY)),
 			bottom: "auto",
-			left: Math.max(0, event.clientX - dragData.current.offsetX),
+			left: Math.floor(Math.max(0, event.clientX - dragData.current.offsetX)),
 			right: "auto",
 		});
 	}

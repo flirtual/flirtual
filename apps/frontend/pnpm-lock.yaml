@@ -312,6 +312,9 @@ importers:
       vaul:
         specifier: ^1.1.2
         version: 1.1.2(react-dom@19.2.0-canary-1d6c8168-20250411(react@19.2.0-canary-1d6c8168-20250411))(react@19.2.0-canary-1d6c8168-20250411)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
+      with-suspense:
+        specifier: ^1.0.5
+        version: 1.0.5(react@19.2.0-canary-1d6c8168-20250411)
       wretch:
         specifier: ^2.11.0
         version: 2.11.0
@@ -6830,6 +6833,11 @@ packages:
 
   wildcard@1.1.2:
     resolution: {integrity: sha512-DXukZJxpHA8LuotRwL0pP1+rS6CS7FF2qStDDE1C7DDg2rLud2PXRMuEDYIPhgEezwnlHNL4c+N6MfMTjCGTng==}
+
+  with-suspense@1.0.5:
+    resolution: {integrity: sha512-14MNJ01390zEOBV7tRs8bCDsDZgSMuWpJ08z4SJgfOTOy5ypM+e9AakVBb1HJUwSoGk+NsPOATOXG4L+txiD9g==}
+    peerDependencies:
+      react: ^16.6.0
 
   word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
@@ -14331,6 +14339,10 @@ snapshots:
       isexe: 2.0.0
 
   wildcard@1.1.2: {}
+
+  with-suspense@1.0.5(react@19.2.0-canary-1d6c8168-20250411):
+    dependencies:
+      react: 19.2.0-canary-1d6c8168-20250411
 
   word-wrap@1.2.5: {}
 

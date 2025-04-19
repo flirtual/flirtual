@@ -27,7 +27,7 @@ import {
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
 import { useToast } from "~/hooks/use-toast";
-import { withSuspense } from "~/hooks/with-suspense";
+import { withSuspense } from "with-suspense";
 import { queueKey, userKey } from "~/query";
 
 const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {

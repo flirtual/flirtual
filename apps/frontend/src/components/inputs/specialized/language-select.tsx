@@ -10,7 +10,7 @@ import { Preferences } from "~/api/user/preferences";
 import { useLocation } from "~/hooks/use-location";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { withSuspense } from "~/hooks/with-suspense";
+import { withSuspense } from "with-suspense";
 import { useRouter } from "~/i18n/navigation";
 import { locales } from "~/i18n/routing";
 import { sessionKey } from "~/query";

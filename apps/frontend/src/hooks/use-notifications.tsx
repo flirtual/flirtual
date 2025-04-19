@@ -42,7 +42,10 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			await	User.resetPushCount(session.user.id);
 			return null;
 		},
-		placeholderData: null
+		placeholderData: null,
+		meta: {
+			maxAge: 0
+		}
 	});
 
 	const status = useQuery({
@@ -56,8 +59,11 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 
 			return receive;
 		},
-		placeholderData: "denied" as const,
 		enabled: native,
+		placeholderData: "denied" as const,
+		meta: {
+			maxAge: 0
+		}
 	});
 
 	const pushRegistrationIds = useMemo(() => {
@@ -115,7 +121,10 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			await PushNotifications.register();
 			return null;
 		},
-		placeholderData: null
+		placeholderData: null,
+		meta: {
+			maxAge: 0
+		}
 	});
 
 	return (

@@ -84,7 +84,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile", max } = props;
 
 	const session = useOptionalSession();
-	const { theme } = useTheme();
+	const [theme] = useTheme();
 	const { platform, native } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(null);
 	const [uppyVisible, setUppyVisible] = useState(false);

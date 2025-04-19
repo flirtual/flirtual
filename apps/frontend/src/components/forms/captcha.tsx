@@ -1,11 +1,15 @@
 "use client";
 
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import type { TurnstileInstance, TurnstileProps } from "@marsidev/react-turnstile";
+import {
+	Turnstile as _Turnstile
+} from "@marsidev/react-turnstile";
 import { LoaderCircle, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import type { RefAttributes } from "react";
+import type { FC, RefAttributes } from "react";
 import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { withSuspense } from "with-suspense";
 
 import { turnstileSiteKey } from "~/const";
 import { useFormContext } from "~/hooks/use-input-form";
@@ -21,9 +25,7 @@ interface FormCaptchaProps extends RefAttributes<TurnstileInstance> {
 
 export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 	const t = useTranslations();
-	const locale = useLocale();
 
-	const { theme } = useTheme();
 	const [error, setError] = useState<string | null>(null);
 
 	const [success, setSuccess] = useState<boolean>(false);
@@ -77,17 +79,9 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 								)}
 				</div>
 				<Turnstile
-					options={useMemo(() => ({
-						theme,
-						tabIndex,
-						language: locale,
-						size: "normal",
-						appearance: "interaction-only",
-						retryInterval: 500
-					}), [locale, tabIndex, theme])}
 					className={twMerge("absolute -inset-px", success && "pointer-events-none opacity-0")}
 					ref={ref}
-					siteKey={turnstileSiteKey}
+					tabIndex={tabIndex}
 					onBeforeInteractive={() => {
 						setError(null);
 						setSuccess(false);
@@ -110,3 +104,23 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 		</div>
 	);
 }
+
+const Turnstile: FC<{ tabIndex?: number } & Omit<TurnstileProps, "options" | "siteKey"> & RefAttributes<TurnstileInstance>> = withSuspense(({ tabIndex, ...props }) => {
+	const locale = useLocale();
+	const [theme] = useTheme();
+
+	return (
+		<_Turnstile
+			{...props}
+			options={useMemo(() => ({
+				theme,
+				tabIndex,
+				language: locale,
+				size: "normal",
+				appearance: "interaction-only",
+				retryInterval: 500
+			}), [locale, tabIndex, theme])}
+			siteKey={turnstileSiteKey}
+		/>
+	);
+});

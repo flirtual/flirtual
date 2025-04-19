@@ -18,7 +18,7 @@ import { ProfilePlaylist } from "~/components/profile/playlist";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { withSuspense } from "~/hooks/with-suspense";
+import { withSuspense } from "with-suspense";
 import { mutate, sessionKey } from "~/query";
 
 const ConnectionError: FC = withSuspense(() => {

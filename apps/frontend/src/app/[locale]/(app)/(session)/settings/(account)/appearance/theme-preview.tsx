@@ -11,19 +11,14 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useTheme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
 
-const ThemeImage = {
-	light: "52f7a831-8f7d-46c3-aace-4a99d1f4792d",
-	dark: "794de6d9-9687-41f1-9d14-9d912f33d9e2",
-	system: "b64a38d7-4a94-42bc-8f7d-476f4e63e55f"
-};
-
 export interface ThemePreviewProps {
 	theme: PreferenceTheme;
 }
 
 export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 	const t = useTranslations();
-	const { setTheme, sessionTheme } = useTheme();
+
+	const [, setTheme, { sessionTheme }] = useTheme();
 	const active = theme === sessionTheme;
 
 	return (

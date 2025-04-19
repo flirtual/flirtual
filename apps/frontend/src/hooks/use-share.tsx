@@ -8,6 +8,9 @@ export function useShare() {
 		queryKey: ["canShare"],
 		queryFn: async () => (await Share.canShare().catch(() => ({ value: false }))).value,
 		placeholderData: false,
+		meta: {
+			maxAge: 0
+		}
 	});
 
 	return {

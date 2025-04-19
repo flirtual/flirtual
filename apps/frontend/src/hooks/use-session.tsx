@@ -2,7 +2,7 @@ import { PushNotifications } from "@capacitor/push-notifications";
 import { useLocale } from "next-intl";
 
 import { Authentication } from "~/api/auth";
-import { redirect } from "~/i18n/navigation";
+import { redirect, useSearchParams } from "~/i18n/navigation";
 import {
 	invalidate,
 	mutate,
@@ -10,7 +10,7 @@ import {
 	sessionKey,
 	useQuery
 } from "~/query";
-import { toRelativeUrl, urls } from "~/urls";
+import { toAbsoluteUrl, toRelativeUrl, urls } from "~/urls";
 
 import { device } from "./use-device";
 import { usePostpone } from "./use-postpone";
@@ -33,16 +33,24 @@ export function useOptionalSession() {
 	});
 }
 
+export function useGuest() {
+	const locale = useLocale();
+	const session = useOptionalSession();
+
+	const next = toRelativeUrl(toAbsoluteUrl(useSearchParams().get("next") || urls.browse()));
+	if (session) redirect({ href: next, locale });
+}
+
 export function useSession() {
 	usePostpone("useSession()");
 
-	const data = useQuery({
+	const locale = useLocale();
+	const session = useQuery({
 		queryKey: sessionKey(),
 		queryFn: sessionFetcher
 	});
 
-	const locale = useLocale();
-	if (!data) return redirect({ href: urls.login(toRelativeUrl(location)), locale });
+	if (!session) return redirect({ href: urls.login(toRelativeUrl(location)), locale });
 
-	return data;
+	return session;
 }

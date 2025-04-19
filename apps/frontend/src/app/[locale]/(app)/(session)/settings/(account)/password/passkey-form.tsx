@@ -9,7 +9,6 @@ import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
 import { invalidate, sessionKey, useMutation, useQuery } from "~/query";
 
 import { PasskeyButton } from "./passkey-button";

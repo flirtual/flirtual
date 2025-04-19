@@ -7,9 +7,9 @@ import {
 import ms from "ms";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import { withSuspense, } from "with-suspense";
 
 import { useDevice } from "~/hooks/use-device";
-import { withSuspense } from "~/hooks/with-suspense";
 import { useQuery } from "~/query";
 
 import { Button } from "./button";

@@ -1,12 +1,12 @@
 "use client";
 
 import { Preferences } from "@capacitor/preferences";
-import { useCallback, useDebugValue } from "react";
+import { useDebugValue } from "react";
 
 import {
-	mutate,
 	preferencesFetcher,
 	preferencesKey,
+	useMutation,
 	useQuery,
 } from "~/query";
 
@@ -22,20 +22,16 @@ export async function getPreference<T>(key: string) {
 		: null;
 }
 
-interface SetPreferenceOptions {
-	mutate?: boolean;
-}
-
-export async function setPreference<T>(key: string, value: T | null, { mutate: doMutate = true }: SetPreferenceOptions = {}): Promise<void> {
+export async function setPreference<T>(key: string, value: T | null): Promise<void> {
 	if (value == null) {
 		await Preferences.remove({ key });
-		if (doMutate) mutate(preferencesKey(key), null);
-
 		return;
 	}
 
-	await Preferences.set({ key, value: JSON.stringify(value) });
-	if (doMutate) mutate(preferencesKey(key), value);
+	await Preferences.set({
+		key,
+		value: JSON.stringify(value)
+	});
 }
 
 export async function listPreferences(): Promise<Array<string>> {
@@ -54,13 +50,21 @@ export function usePreferences<T>(key: string, defaultValue?: T) {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	if (defaultValue === undefined) usePostpone("usePreferences() without defaultValue");
 
+	const queryKey = preferencesKey(key);
+
 	const data = useQuery({
-		queryKey: preferencesKey(key),
+		queryKey,
 		queryFn: preferencesFetcher<T>,
 		placeholderData: defaultValue,
 	});
 
-	const set = useCallback(async (newValue: T | null) => setPreference(key, newValue), [key]);
+	const { mutateAsync } = useMutation({
+		mutationKey: queryKey,
+		mutationFn: async (newValue: T | null) => {
+			await setPreference(key, newValue);
+			return newValue;
+		},
+	});
 
-	return [(data ?? defaultValue), set] as const;
+	return [(data ?? defaultValue), mutateAsync] as const;
 }

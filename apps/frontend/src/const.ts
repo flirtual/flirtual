@@ -1,3 +1,5 @@
+import type { DevicePlatform } from "./hooks/use-device";
+
 function assert(condition: any, message: string): asserts condition {
 	if (!condition) throw new Error(message);
 }
@@ -71,6 +73,9 @@ export const picoAppId = process.env
 
 export const region = process.env.VERCEL_REGION as string;
 export const cloudflareInternalIdentifier = process.env.CLOUDFLARE_INTERNAL_IDENTIFIER as string;
+
+export const platformOverride = process.env.NEXT_PUBLIC_PLATFORM_OVERRIDE as DevicePlatform | undefined;
+export const nativeOverride = platformOverride ? platformOverride !== "web" : undefined;
 
 export const maintenance = false;
 export const duringBuild = process.env.BUILD === "1";

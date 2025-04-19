@@ -7,4 +7,4 @@ if (environment.client) debug.selectColor = () => "pink";
 
 export const log = debug("app");
 
-log.extend("environment")({ ...environment });
+if (environment.client) log.extend("environment")({ ...environment });

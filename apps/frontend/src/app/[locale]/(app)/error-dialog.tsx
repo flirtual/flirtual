@@ -74,7 +74,7 @@ const errors = new Map<string, number>();
 
 export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 	// Bail out to the Next.js error dialog in development, more useful for debugging.
-	if (environment === "development") throw error;
+	// if (environment === "development") throw error;
 
 	const t = useTranslations();
 
