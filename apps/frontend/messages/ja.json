@@ -952,5 +952,11 @@
 	"enable_assistant": "アシスタントを有効にする",
 	"enable_ranked_mode": "ランク・モードを有効にする",
 	"april_fools_year": "{year}年エイプリルフール",
-	"bad_jumpy_sheep_gasp": "これには、サポートとのやりとりに役立つ機密のデバッグ情報が含まれています。"
+	"bad_jumpy_sheep_gasp": "これには、サポートとのやりとりに役立つ機密のデバッグ情報が含まれています。",
+	"close_cozy_salmon_praise": "あなたのシステムテーマに自動的にマッチ",
+	"light_theme": "ライトテーマ",
+	"dark_theme": "ダークテーマ",
+	"light_theme_preview": "ライトテーマプレビュー",
+	"dark_theme_preview": "ダークテーマのプレビュー",
+	"system_theme_preview": "システムテーマのプレビュー"
 }
