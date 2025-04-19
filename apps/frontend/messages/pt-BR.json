@@ -952,5 +952,11 @@
 	"round_crazy_haddock_mix": "Ops! Não conseguimos encontrar o que você está procurando. Ele pode ter sido movido ou você se deparou com um perfil excluído ou oculto.",
 	"fun_stuff": "Coisas divertidas",
 	"have_fun": "Divirta-se!",
-	"bad_jumpy_sheep_gasp": "Ele contém informações de depuração confidenciais que podem ser usadas para ajudá-lo a interagir com o suporte."
+	"bad_jumpy_sheep_gasp": "Ele contém informações de depuração confidenciais que podem ser usadas para ajudá-lo a interagir com o suporte.",
+	"close_cozy_salmon_praise": "Corresponde automaticamente ao tema de seu sistema",
+	"light_theme": "Tema leve",
+	"dark_theme": "Tema escuro",
+	"light_theme_preview": "Visualização do tema light",
+	"dark_theme_preview": "Visualização do tema escuro",
+	"system_theme_preview": "Visualização do tema do sistema"
 }
