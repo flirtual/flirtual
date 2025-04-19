@@ -952,5 +952,11 @@
 	"enable_assistant": "Assistent inschakelen",
 	"enable_ranked_mode": "Gerangschikte modus inschakelen",
 	"april_fools_year": "1 april {jaar}",
-	"bad_jumpy_sheep_gasp": "Dit bevat gevoelige debug-informatie die kan worden gebruikt voor interactie met ondersteuning."
+	"bad_jumpy_sheep_gasp": "Dit bevat gevoelige debug-informatie die kan worden gebruikt voor interactie met ondersteuning.",
+	"dark_theme_preview": "Voorbeeld donker thema",
+	"system_theme_preview": "Voorbeeld systeemthema",
+	"close_cozy_salmon_praise": "Past automatisch bij je systeemthema",
+	"light_theme": "Licht thema",
+	"dark_theme": "Donker thema",
+	"light_theme_preview": "Voorbeeld licht thema"
 }
