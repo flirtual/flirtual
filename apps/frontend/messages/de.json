@@ -952,5 +952,11 @@
 	"enable_assistant": "Assistent freischalten",
 	"enable_ranked_mode": "Aktivieren Sie den Ranglisten-Modus",
 	"april_fools_year": "Aprilscherz {Jahr}",
-	"bad_jumpy_sheep_gasp": "Dies enthält sensible Debug-Informationen, die Ihnen bei der Interaktion mit dem Support helfen können."
+	"bad_jumpy_sheep_gasp": "Dies enthält sensible Debug-Informationen, die Ihnen bei der Interaktion mit dem Support helfen können.",
+	"close_cozy_salmon_praise": "Automatische Anpassung an Ihr Systemthema",
+	"light_theme": "Thema Licht",
+	"dark_theme": "Dunkles Thema",
+	"light_theme_preview": "Vorschau des hellen Themas",
+	"dark_theme_preview": "Vorschau des dunklen Themas",
+	"system_theme_preview": "Vorschau des Systemthemas"
 }
