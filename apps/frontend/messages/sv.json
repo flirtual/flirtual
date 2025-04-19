@@ -952,5 +952,11 @@
 	"enable_assistant": "Aktivera assistent",
 	"enable_ranked_mode": "Aktivera rankat läge",
 	"april_fools_year": "Aprilskämt {år}",
-	"bad_jumpy_sheep_gasp": "Detta innehåller känslig felsökningsinformation som kan användas för att hjälpa dig att interagera med support."
+	"bad_jumpy_sheep_gasp": "Detta innehåller känslig felsökningsinformation som kan användas för att hjälpa dig att interagera med support.",
+	"dark_theme_preview": "Förhandsgranskning av mörkt tema",
+	"system_theme_preview": "Förhandsgranskning av systemtema",
+	"close_cozy_salmon_praise": "Matchar automatiskt ditt systemtema",
+	"light_theme": "Ljust tema",
+	"dark_theme": "Mörkt tema",
+	"light_theme_preview": "Förhandsgranskning av ljustema"
 }
