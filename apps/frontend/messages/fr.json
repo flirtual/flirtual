@@ -952,5 +952,11 @@
 	"have_fun": "Amusez-vous bien !",
 	"enable_ranked_mode": "Activer le mode classé",
 	"april_fools_year": "Poisson d'avril {année}",
-	"bad_jumpy_sheep_gasp": "Elle contient des informations de débogage sensibles qui peuvent être utilisées pour vous aider à interagir avec l'assistance."
+	"bad_jumpy_sheep_gasp": "Elle contient des informations de débogage sensibles qui peuvent être utilisées pour vous aider à interagir avec l'assistance.",
+	"close_cozy_salmon_praise": "Correspondance automatique avec le thème de votre système",
+	"light_theme": "Thème lumineux",
+	"dark_theme": "Thème sombre",
+	"light_theme_preview": "Aperçu du thème de la lumière",
+	"dark_theme_preview": "Aperçu du thème sombre",
+	"system_theme_preview": "Aperçu du thème du système"
 }
