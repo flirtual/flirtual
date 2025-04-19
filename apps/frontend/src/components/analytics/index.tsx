@@ -32,6 +32,10 @@ const Pageview = dynamic(() => Promise.resolve(() => {
 
 function Identity() {
 	const session = useOptionalSession();
+
+	const userId = session?.user.id || null;
+	const optIn = session?.user.preferences?.privacy.analytics || true;
+
 	const { native, vision } = useDevice();
 	const posthog = usePostHog();
 
@@ -50,16 +54,12 @@ function Identity() {
 	}, [posthog]);
 
 	useEffect(() => {
-		if (!session) return reset();
-
-		const { preferences } = session.user;
-
-		if (!preferences?.privacy.analytics) return reset();
+		if (!userId || !optIn) return reset();
 		if (posthogOptIn) posthog?.opt_in_capturing();
 
-		posthog?.identify(session.user.id);
-		setUser({ id: session.user.id });
-	}, [posthog, session, posthogOptIn, reset]);
+		posthog?.identify(userId);
+		setUser({ id: userId });
+	}, [posthog, userId, optIn, posthogOptIn, reset]);
 
 	useEffect(() => {
 		if (posthog) posthog.capture("$set", {

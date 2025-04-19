@@ -5,27 +5,22 @@ import type { ProfileColors } from "~/api/user/profile";
 import { gradientTextColor } from "~/colors";
 import { Pill } from "~/components/profile/pill/pill";
 import { ThemedBorder } from "~/components/themed-border";
-import { useFormContext } from "~/hooks/use-input-form";
 
-export const ProfileColorPreview: FC = () => {
+export const ProfileColorPreview: FC<ProfileColors> = ({ color1, color2 }) => {
 	const t = useTranslations();
 
-	const {
-		fields: { color1, color2 }
-	} = useFormContext<ProfileColors>();
-
-	const textColor = gradientTextColor(color1.props.value, color2.props.value);
+	const textColor = gradientTextColor(color1, color2);
 
 	return (
 		<ThemedBorder
 			style={
 				{
-					"--theme-1": color1.props.value,
-					"--theme-2": color2.props.value,
+					"--theme-1": color1,
+					"--theme-2": color2,
 					"--theme-text": textColor
 				} as CSSProperties
 			}
-			className="flex flex-col gap-1 rounded-lg"
+			className="flex gap-1 rounded-lg desktop:flex-col"
 		>
 			<div className="flex size-full flex-col gap-4 rounded bg-white-20 px-3 py-2 text-black-70">
 				<span>{t("legal_such_sloth_type")}</span>

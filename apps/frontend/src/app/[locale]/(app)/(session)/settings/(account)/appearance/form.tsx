@@ -3,17 +3,18 @@
 import { Hash, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import type { CSSProperties, Dispatch, FC } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { flushSync } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
+import type { Session } from "~/api/auth";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile, type ProfileColors } from "~/api/user/profile";
 import { PremiumBadge } from "~/components/badge";
 import { Form, FormButton } from "~/components/forms";
 import { InlineLink } from "~/components/inline-link";
-import { InputLabel, InputLabelHint } from "~/components/inputs";
+import { InputLabel, InputLabelHint, InputRadioList } from "~/components/inputs";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useFormContext } from "~/hooks/use-input-form";
@@ -22,6 +23,7 @@ import { useTheme } from "~/hooks/use-theme";
 import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "~/i18n/navigation";
 import { defaultLocale } from "~/i18n/routing";
+import { mutate, sessionKey, useMutation } from "~/query";
 import { urls } from "~/urls";
 
 import { ProfileColorPreview } from "./profile-preview";
@@ -63,147 +65,6 @@ export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ 
 	);
 };
 
-export const InputProfileColor: FC<{ value: ProfileColors; onChange: Dispatch<ProfileColors> }> = ({ value, onChange }) => {
-	const { color1, color2 } = value;
-
-	const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-	const selectedColor = selectedColorIndex === 0 ? color1 : color2;
-
-	function change(newColor: string) {
-		const value = selectedColorIndex === 0
-			? { color1: newColor, color2 }
-			: { color1, color2: newColor };
-
-		onChange(value);
-	}
-
-	return (
-		<div className="flex flex-col gap-4">
-			<div className="flex gap-2">
-				<button
-					className={twMerge(
-						"focusable size-8 rounded-md",
-						selectedColorIndex === 0 && "focused"
-					)}
-					style={{ backgroundColor: color1 }}
-					type="button"
-					onClick={() => setSelectedColorIndex(0)}
-				/>
-				<button
-					className={twMerge(
-						"focusable size-8 rounded-md",
-						selectedColorIndex === 1 && "focused"
-					)}
-					style={{ backgroundColor: color2 }}
-					type="button"
-					onClick={() => setSelectedColorIndex(1)}
-				/>
-			</div>
-			<InputColor value={selectedColor} onChange={change} />
-		</div>
-	);
-};
-
-const ProfileColorEditor: FC = () => {
-	const {
-		fields: { color1, color2 }
-	} = useFormContext<ProfileColors>();
-
-	return (
-		<InputProfileColor
-			value={{
-				color1: color1.props.value,
-				color2: color2.props.value
-			}}
-			onChange={(value) => {
-				color1.props.onChange(value.color1);
-				color2.props.onChange(value.color2);
-			}}
-		/>
-	);
-};
-
-const ReccommendedProfileThemes: FC = () => {
-	const {
-		fields: { color1, color2 }
-	} = useFormContext<ProfileColors>();
-	const [theme] = useTheme();
-	const t = useTranslations();
-	const router = useRouter();
-
-	const defaultTheme = defaultProfileColors[theme];
-
-	const [grassTouched, setGrassTouched] = useState(0);
-	const [touchingGrass, setTouchingGrass] = useState(false);
-
-	return (
-		<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
-			{[
-				{ name: "flirtual" as const, description: t("default"), ...defaultTheme },
-				...recommendedThemes
-			].map((theme) => (
-				<button
-					className="relative flex flex-col"
-					key={theme.name}
-					type="button"
-					onClick={async () => {
-						if (theme.name === "touch_grass") {
-							if (!touchingGrass) {
-								setTouchingGrass(true);
-								if (grassTouched >= 4) {
-									await new Promise((resolve) => {
-										setTimeout(resolve, 800);
-									});
-									router.push(urls.settings.fun);
-								}
-								setGrassTouched(grassTouched + 1);
-							}
-						}
-						else {
-							setGrassTouched(0);
-						}
-
-						flushSync(() => {
-							color1.props.onChange(theme.color1);
-							color2.props.onChange(theme.color2);
-						});
-					}}
-				>
-					<div className="flex w-fit items-baseline gap-2">
-						<span className="ja:text-sm">{t(theme.name)}</span>
-						{"description" in theme && (
-							<span className="text-sm text-black-50 vision:text-white-40 ja:text-xs dark:text-white-40">
-								{theme.description}
-							</span>
-						)}
-					</div>
-					<div
-						className={twMerge(
-							"h-8 w-full rounded-md",
-							color1.props.value === theme.color1
-							&& color2.props.value === theme.color2
-							&& "focused border-2"
-						)}
-						style={{
-							backgroundImage: `linear-gradient(to right, ${theme.color1}, ${theme.color2})`
-						}}
-					/>
-					{theme.name === "touch_grass" && touchingGrass && (
-						<span
-							className="absolute left-0 top-7 -scale-x-100 animate-touch-grass"
-							onAnimationEnd={() => {
-								setTouchingGrass(false);
-							}}
-						>
-							🫳
-						</span>
-					)}
-				</button>
-			))}
-		</div>
-	);
-};
-
 const SaveButton: FC = () => {
 	const session = useOptionalSession();
 	const t = useTranslations();
@@ -223,21 +84,192 @@ const SaveButton: FC = () => {
 	);
 };
 
-export const AppearanceForm: FC = () => {
+const ProfileColorSelect: FC = () => {
+	const [theme] = useTheme();
+	const { user } = useSession();
+	const router = useRouter();
+
+	const defaultColors = defaultProfileColors[theme];
+	const colors: ProfileColors = (user.profile as unknown as { previewColors: ProfileColors }).previewColors || {
+		color1: user.profile.color1 || defaultColors.color1,
+		color2: user.profile.color2 || defaultColors.color2
+	};
+
+	const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+	const selectedColor = selectedColorIndex === 0 ? colors.color1 : colors.color2;
+
+	const [grassTouched, setGrassTouched] = useState(0);
+	const [touchingGrass, setTouchingGrass] = useState(false);
+
+	const { mutateAsync, reset } = useMutation({
+		mutationKey: sessionKey(),
+
+		onMutate: async (colors: ProfileColors) => {
+			await mutate<Session | null>(sessionKey(), (session) => {
+				if (!session) return session;
+
+				return {
+					...session,
+					user: {
+						...session.user,
+						profile: user.subscription?.active
+							? {
+									...session.user.profile,
+									color1: colors.color1,
+									color2: colors.color2
+								}
+							: {
+									...session.user.profile,
+									previewColors: colors
+								}
+					}
+				};
+			});
+		},
+		mutationFn: async (colors: ProfileColors) => {
+			if (!user.subscription?.active) return;
+			await Profile.updateColors(user.id, colors);
+		}
+	});
+
+	useEffect(() => () => {
+		mutate<Session | null>(sessionKey(), (session) => {
+			if (!session) return session;
+
+			return {
+				...session,
+				user: {
+					...session.user,
+					profile: {
+						...session.user.profile,
+						// On unmount, reset the preview colors.
+						previewColors: undefined
+					}
+				}
+			};
+		});
+	}, [reset]);
+
 	const t = useTranslations();
+
+	return (
+		<div className="flex w-full flex-col gap-8">
+			<div className="flex w-full flex-col justify-between gap-8 wide:flex-row">
+				<div className="flex shrink-0 flex-col gap-2">
+					<InputLabel className="flex items-center gap-2">
+						<span>{t("profile_colors")}</span>
+						<PremiumBadge />
+					</InputLabel>
+					<div className="flex flex-col gap-4">
+						<div className="flex gap-2">
+							<button
+								className={twMerge(
+									"focusable size-8 rounded-md",
+									selectedColorIndex === 0 && "focused"
+								)}
+								style={{ backgroundColor: colors.color1 }}
+								type="button"
+								onClick={() => setSelectedColorIndex(0)}
+							/>
+							<button
+								className={twMerge(
+									"focusable size-8 rounded-md",
+									selectedColorIndex === 1 && "focused"
+								)}
+								style={{ backgroundColor: colors.color2 }}
+								type="button"
+								onClick={() => setSelectedColorIndex(1)}
+							/>
+						</div>
+						<InputColor
+							value={selectedColor}
+							onChange={(newColor) => {
+								const value = selectedColorIndex === 0
+									? { color1: newColor, color2: colors.color2 }
+									: { color1: colors.color1, color2: newColor };
+
+								mutateAsync(value);
+							}}
+						/>
+					</div>
+				</div>
+				<ProfileColorPreview {...colors} />
+			</div>
+			<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
+				{[
+					{ name: "flirtual" as const, description: t("default"), ...defaultColors },
+					...recommendedThemes
+				].map((theme) => (
+					<button
+						className="relative flex flex-col"
+						key={theme.name}
+						type="button"
+						onClick={async () => {
+							if (theme.name === "touch_grass") {
+								if (!touchingGrass) {
+									setTouchingGrass(true);
+									if (grassTouched >= 4) {
+										await new Promise((resolve) => {
+											setTimeout(resolve, 800);
+										});
+										router.push(urls.settings.fun);
+									}
+									setGrassTouched(grassTouched + 1);
+								}
+							}
+							else {
+								setGrassTouched(0);
+							}
+
+							mutateAsync(theme);
+						}}
+					>
+						<div className="flex w-fit items-baseline gap-2">
+							<span className="ja:text-sm">{t(theme.name)}</span>
+							{"description" in theme && (
+								<span className="text-sm text-black-50 vision:text-white-40 ja:text-xs dark:text-white-40">
+									{theme.description}
+								</span>
+							)}
+						</div>
+						<div
+							className={twMerge(
+								"h-8 w-full rounded-md",
+								colors.color1 === theme.color1 && colors.color2 === theme.color2
+								&& "focused border-2"
+							)}
+							style={{
+								backgroundImage: `linear-gradient(to right, ${theme.color1}, ${theme.color2})`
+							}}
+						/>
+						{theme.name === "touch_grass" && touchingGrass && (
+							<span
+								className="absolute left-0 top-7 -scale-x-100 animate-touch-grass"
+								onAnimationEnd={() => {
+									setTouchingGrass(false);
+								}}
+							>
+								🫳
+							</span>
+						)}
+					</button>
+				))}
+			</div>
+		</div>
+	);
+};
+
+export const AppearanceForm: FC = () => {
 	const locale = useLocale();
+	const session = useSession();
+
+	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	const [theme] = useTheme();
-	const defaultTheme = defaultProfileColors[theme];
 
-	const toasts = useToast();
-	const router = useRouter();
-	const session = useSession();
-
-	return (
-		<Form
-			fields={{
+	/*
+	fields={{
 				color1: session.user.profile.color1 || defaultTheme.color1,
 				color2: session.user.profile.color2 || defaultTheme.color2
 			}}
@@ -250,7 +282,10 @@ export const AppearanceForm: FC = () => {
 				toasts.add(t("neat_plane_slug_savor"));
 				router.refresh();
 			}}
-		>
+				*/
+
+	return (
+		<div className="flex flex-col gap-8">
 			{session.user.tags?.includes("debugger") && (
 				<div className="flex flex-col gap-2">
 					<InputLabel
@@ -285,20 +320,7 @@ export const AppearanceForm: FC = () => {
 					))}
 				</div>
 			</div>
-			<div className="flex w-full flex-col gap-8">
-				<div className="flex w-full flex-col justify-between gap-8 wide:flex-row">
-					<div className="flex shrink-0 flex-col gap-2">
-						<InputLabel className="flex items-center gap-2">
-							<span>{t("profile_colors")}</span>
-							<PremiumBadge />
-						</InputLabel>
-						<ProfileColorEditor />
-					</div>
-					<ProfileColorPreview />
-				</div>
-				<ReccommendedProfileThemes />
-			</div>
-			<SaveButton />
-		</Form>
+			<ProfileColorSelect />
+		</div>
 	);
 };

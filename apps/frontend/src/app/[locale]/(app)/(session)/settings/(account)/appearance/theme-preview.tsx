@@ -2,7 +2,6 @@
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
-import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import type { PreferenceTheme } from "~/api/user/preferences";
@@ -33,10 +32,10 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 					onClick={() => setTheme(theme)}
 				>
 					<Image
-						alt={`${capitalize(theme)} theme preview`}
+						alt={t(`${theme}_theme_preview`)}
 						className="rounded-lg"
 						height={206}
-						src={urls.media(t(`${theme}_theme_image` as any))}
+						src={urls.media(t(`${theme}_theme_image`))}
 						width={320}
 					/>
 					{active && (
@@ -46,8 +45,8 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 			</TooltipTrigger>
 			<TooltipContent>
 				{theme === "system"
-					? "Automatically match your system theme"
-					: `${capitalize(theme)} theme`}
+					? t("close_cozy_salmon_praise")
+					: t(`${theme}_theme`)}
 			</TooltipContent>
 		</Tooltip>
 	);

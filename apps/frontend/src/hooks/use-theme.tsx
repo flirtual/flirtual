@@ -28,13 +28,26 @@ export function useTheme() {
 
 	const { mutateAsync } = useMutation({
 		mutationKey: sessionKey(),
-		mutationFn: async (theme: PreferenceTheme) => {
+		onMutate: async (theme: PreferenceTheme) => {
 			if (!session || theme === sessionTheme) return;
 
-			// await mutate(sessionKey(), { ...session, user: { ...session.user, preferences: { ...session.user.preferences, theme } } });
-			const preferences = await Preferences.update(session.user.id, { theme });
-			return { ...session, user: { ...session.user, preferences } };
-		}
+			await mutate(sessionKey(), {
+				...session,
+				user: {
+					...session.user,
+					preferences: {
+						...session.user.preferences,
+						theme
+					}
+				}
+			});
+		},
+		mutationFn: async (theme) => {
+			if (!session || theme === sessionTheme) return session;
+
+			await Preferences.update(session.user.id, { theme });
+			// return { ...session, user: { ...session.user, preferences } };
+		},
 	});
 
 	return [

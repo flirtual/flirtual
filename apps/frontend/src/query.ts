@@ -1,12 +1,12 @@
 import type { FetchQueryOptions, QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
-import { useMutation as _useMutation, useQuery as _useQuery, QueryClient } from "@tanstack/react-query";
+import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient } from "@tanstack/react-query";
 import ms from "ms";
 import type { Dispatch } from "react";
 import { use, useDebugValue } from "react";
 
 import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
-import { Authentication, Session } from "./api/auth";
+import { Authentication } from "./api/auth";
 import { Conversation, type ConversationList } from "./api/conversations";
 import { Matchmaking, type ProspectKind } from "./api/matchmaking";
 import { Plan } from "./api/plan";
@@ -144,7 +144,6 @@ export async function saveQueries() {
 		queryKey,
 		queryHash,
 		state,
-		options,
 		meta: { maxAge = defaultMaxAge } = {}
 	}) => {
 		if (!queryKey || !queryHash || !state.dataUpdatedAt || maxAge === 0) return;
@@ -246,30 +245,28 @@ export function useQuery<
 	return use(promise);
 }
 
-export function useMutation<T = unknown, Variables = void>({
+export function useMutation<T = unknown, Variables = void, Context = unknown>({
 	mutationKey,
-	onMutate,
 	onSuccess,
-	onError,
 	...options
-}: UseMutationOptions<T, Error, Variables, unknown>) {
+}: UseMutationOptions<T, Error, Variables, Context>) {
 	useDebugValue(mutationKey);
 
 	return _useMutation({
 		...options,
 		mutationKey,
-		onMutate: (variables) => {
-			return onMutate?.(variables);
-		},
+		scope: mutationKey
+			? {
+					// We're using the `mutationKey` as the scope to ensure that all
+					// mutations with the same key are sent sequentially.
+					id: hashKey(mutationKey),
+				}
+			: undefined,
 		onSuccess: (data, variables, context) => {
 			if (mutationKey && data !== undefined)
 				mutate(mutationKey, data);
 
 			return onSuccess?.(data, variables, context);
-		},
-		onError: (error, variables, context) => {
-			console.error("onError(%o) => %o", mutationKey, error);
-			return onError?.(error, variables, context);
 		},
 	}, queryClient);
 }
