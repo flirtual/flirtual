@@ -952,5 +952,11 @@
 	"have_fun": "¡Diviértete!",
 	"enable_ranked_mode": "Activar el modo clasificado",
 	"april_fools_year": "April Fools {año}",
-	"bad_jumpy_sheep_gasp": "Contiene información sensible de depuración que puede utilizarse para ayudarle a interactuar con el soporte."
+	"bad_jumpy_sheep_gasp": "Contiene información sensible de depuración que puede utilizarse para ayudarle a interactuar con el soporte.",
+	"close_cozy_salmon_praise": "Se adapta automáticamente al tema de tu sistema",
+	"light_theme": "Tema luminoso",
+	"dark_theme": "Tema oscuro",
+	"light_theme_preview": "Vista previa del tema Light",
+	"dark_theme_preview": "Vista previa del tema oscuro",
+	"system_theme_preview": "Vista previa del tema del sistema"
 }
