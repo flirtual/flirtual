@@ -174,6 +174,7 @@ export interface InputSelectProps<T> {
 	placeholder?: string;
 	value: T;
 	onChange: Dispatch<T>;
+	onItemHover?: (value: T) => void;
 	options: Array<InputSelectOption>;
 	Item?: FC<{ value: NonNullable<T> }>;
 	className?: string;
@@ -236,6 +237,7 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 						disabled={option.disabled}
 						key={option.id}
 						value={option.id as K & string}
+						onPointerEnter={() => props.onItemHover?.(option.id)}
 					>
 						<SelectItemText>{option.name}</SelectItemText>
 					</Item>

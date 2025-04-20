@@ -15,7 +15,6 @@ import { UpdateInformation } from "~/components/update-information";
 import { apiOrigin, environment, platformOverride, siteOrigin } from "~/const";
 import { ToastProvider } from "~/hooks/use-toast";
 import { locales } from "~/i18n/routing";
-import { resolveTheme } from "~/theme";
 import { imageOrigins, urls } from "~/urls";
 
 import { fontClassNames } from "../fonts";

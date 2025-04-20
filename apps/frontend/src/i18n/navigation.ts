@@ -22,4 +22,7 @@ export function redirect(options: Parameters<typeof _redirect>[0]) {
 	return _redirect(options);
 }
 
-export { useSearchParams } from "next/navigation";
+export {
+	useParams,
+	useSearchParams
+} from "next/navigation";

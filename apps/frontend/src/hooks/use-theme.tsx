@@ -1,9 +1,10 @@
 "use client";
 
-import { setPath } from "remeda";
+import { useLocale } from "next-intl";
+import { useLayoutEffect } from "react";
 
-import type { Session } from "~/api/auth";
 import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
+import { log } from "~/log";
 import { mutate, sessionKey, useMutation } from "~/query";
 
 import { useMediaQuery } from "./use-media-query";
@@ -12,6 +13,8 @@ import { useOptionalSession } from "./use-session";
 
 export function useTheme() {
 	usePostpone("useTheme()");
+
+	const locale = useLocale();
 
 	const session = useOptionalSession();
 	const sessionTheme = session?.user.preferences?.theme || "system";
@@ -24,7 +27,11 @@ export function useTheme() {
 			: "light"
 		: sessionTheme;
 
-	document.documentElement.dataset.theme = theme;
+	useLayoutEffect(() => {
+		document.documentElement.dataset.theme = theme;
+		// On `locale` change, we any modifications to the document element,
+		// so we'll need to re-apply the theme.
+	}, [theme, locale]);
 
 	const { mutateAsync } = useMutation({
 		mutationKey: sessionKey(),

@@ -39,9 +39,7 @@ async function getPackage(revenuecatId: string) {
 }
 
 export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
-	// const { platform, native } = useDevice();
-	const platform = "web";
-	const native = false;
+	const { platform, native } = useDevice();
 
 	const toasts = useToast();
 	const router = useRouter();

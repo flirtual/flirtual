@@ -266,24 +266,6 @@ export const AppearanceForm: FC = () => {
 	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
-	const [theme] = useTheme();
-
-	/*
-	fields={{
-				color1: session.user.profile.color1 || defaultTheme.color1,
-				color2: session.user.profile.color2 || defaultTheme.color2
-			}}
-			className="flex flex-col gap-8"
-			onSubmit={async (values) => {
-				if (session.user.subscription?.active) {
-					await Profile.updateColors(session.user.id, values);
-				}
-
-				toasts.add(t("neat_plane_slug_savor"));
-				router.refresh();
-			}}
-				*/
-
 	return (
 		<div className="flex flex-col gap-8">
 			{session.user.tags?.includes("debugger") && (

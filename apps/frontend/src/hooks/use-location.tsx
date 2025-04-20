@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-restricted-imports
-import { usePathname, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 
+import { usePathname, useSearchParams } from "~/i18n/navigation";
 import { toAbsoluteUrl } from "~/urls";
 
 export function useLocation() {

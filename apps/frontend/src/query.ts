@@ -291,9 +291,11 @@ export function preload<K extends QueryKey = QueryKey>(
  */
 export async function mutate<T>(queryKey: QueryKey, data: Dispatch<T> | T) {
 	await queryClient.cancelQueries({ queryKey });
-	queryClient.setQueryData(queryKey, data);
-
-	log("%s(%o) => %o", mutate.name, queryKey, data);
+	queryClient.setQueryData(queryKey, (previous) => {
+		const newData = typeof data === "function" ? data(previous) : data;
+		log("%s(%o) => %o", mutate.name, queryKey, newData);
+		return newData;
+	});
 }
 
 /**
