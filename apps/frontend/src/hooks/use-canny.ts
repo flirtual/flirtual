@@ -1,14 +1,10 @@
-import { useCallback } from "react";
-
 import type { Session } from "~/api/auth";
 import { displayName, type User } from "~/api/user";
 import { cannyAppId } from "~/const";
 import { queryClient, sessionKey } from "~/query";
-import { resolveTheme } from "~/theme";
 import { urls } from "~/urls";
 
-import { useScreenBreakpoint } from "./use-screen-breakpoint";
-import { useTheme } from "./use-theme";
+import { isDesktop } from "./use-screen-breakpoint";
 
 declare global {
 	// eslint-disable-next-line no-var, vars-on-top
@@ -62,34 +58,29 @@ function identify(user: User) {
 	);
 }
 
-const closeChangelog = () => Canny("closeChangelog");
+export async function openFeedback() {
+	await load();
 
-export function useCanny() {
-	const { sessionTheme } = useTheme();
-	const isMobile = !useScreenBreakpoint("desktop");
+	const session = queryClient.getQueryData<Session>(sessionKey());
+	if (session?.user) await identify(session.user);
 
-	const openFeedback = useCallback(async () => {
-		await load();
-
-		const session = queryClient.getQueryData<Session>(sessionKey());
-		if (session?.user) await identify(session.user);
-
-		location.href = urls.resources.feedback;
-	}, []);
-
-	const openChangelog = useCallback(async () => {
-		await load();
-
-		const session = queryClient.getQueryData<Session>(sessionKey());
-		if (session?.user) await identify(session.user);
-
-		Canny("initChangelog", {
-			appID: cannyAppId,
-			position: isMobile ? "top" : "bottom",
-			align: "left",
-			theme: resolveTheme(sessionTheme)
-		});
-	}, [isMobile, sessionTheme]);
-
-	return { openFeedback, openChangelog, closeChangelog };
+	location.href = urls.resources.feedback;
 }
+
+export async function openChangelog() {
+	await load();
+
+	const session = queryClient.getQueryData<Session>(sessionKey());
+	if (session?.user) await identify(session.user);
+
+	Canny("initChangelog", {
+		appID: cannyAppId,
+		position: isDesktop()
+			? "top"
+			: "bottom",
+		align: "left",
+		// theme: resolveTheme(sessionTheme)
+	});
+}
+
+export const closeChangelog = () => Canny("closeChangelog");

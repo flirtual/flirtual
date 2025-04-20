@@ -19,12 +19,12 @@ import { DiscordOutlineIcon } from "~/components/icons";
 import { ProfileNavigationCannyButton } from "~/components/layout/canny-button";
 import { Link } from "~/components/link";
 import { UserAvatar } from "~/components/user-avatar";
-import { useCanny } from "~/hooks/use-canny";
+import { closeChangelog, openChangelog } from "~/hooks/use-canny";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
-import { useOptionalSession, useSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 
@@ -62,7 +62,6 @@ export const NavigationItemProfile: FC = () => {
 	const elementReference = useRef<HTMLDivElement>(null);
 	const location = useLocation();
 	const active = urlEqual(toAbsoluteUrl(urls.user.me), location);
-	const { openChangelog, closeChangelog } = useCanny();
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
 	useGlobalEventListener(
@@ -79,7 +78,7 @@ export const NavigationItemProfile: FC = () => {
 	useEffect(() => {
 		if (visible) return void openChangelog();
 		closeChangelog();
-	}, [openChangelog, closeChangelog, visible]);
+	}, [visible]);
 
 	const isDesktop = useScreenBreakpoint("desktop");
 
@@ -130,11 +129,7 @@ export const NavigationItemProfile: FC = () => {
 							</span>
 						</Link>
 						<div className="flex flex-col-reverse px-1 pt-1 desktop:flex-col desktop:pt-0">
-							<ProfileNavigationItem
-								href={
-									isDesktop ? urls.settings.matchmaking() : urls.settings.list()
-								}
-							>
+							<ProfileNavigationItem href={isDesktop ? urls.settings.matchmaking() : urls.settings.list()}>
 								<Settings className="size-6 shrink-0" />
 								<span className="whitespace-nowrap">{t("settings")}</span>
 							</ProfileNavigationItem>

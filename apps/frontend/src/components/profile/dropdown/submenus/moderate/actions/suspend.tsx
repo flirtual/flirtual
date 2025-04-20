@@ -7,7 +7,7 @@ import { mutate } from "~/query";
 import { ProspectKind } from "~/api/matchmaking";
 import { OpenAI } from "~/api/openai";
 import { displayName, User } from "~/api/user";
-import { optimisticQueueMove } from "~/app/[locale]/(app)/(session)/(onboarded)/browse/queue-actions";
+import { optimisticQueueMove } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import {
 	Dialog,
