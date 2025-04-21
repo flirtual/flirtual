@@ -28,8 +28,7 @@ defmodule Flirtual.User.Email do
       action_url =
         Application.fetch_env!(:flirtual, :frontend_origin)
         |> URI.merge("/confirm-email")
-        |> URI.append_query("token=#{token}")
-        |> URI.append_query("language=#{language}")
+        |> URI.append_query("=#{token}")
         |> URI.to_string()
 
       %{
@@ -73,8 +72,8 @@ defmodule Flirtual.User.Email do
     Gettext.with_locale(language, fn ->
       action_url =
         Application.fetch_env!(:flirtual, :frontend_origin)
-        |> URI.merge("/forgot/" <> token)
-        |> URI.append_query("language=#{language}")
+        |> URI.merge("/forgot")
+        |> URI.append_query("=#{token}")
         |> URI.to_string()
 
       %{
@@ -118,7 +117,6 @@ defmodule Flirtual.User.Email do
     action_url =
       Application.fetch_env!(:flirtual, :frontend_origin)
       |> URI.merge("/forgot")
-      |> URI.append_query("language=#{language}")
       |> URI.to_string()
 
     Gettext.with_locale(language, fn ->

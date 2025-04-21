@@ -1,12 +1,11 @@
-"use client";
-
+import { Info } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 
-import { useOptionalSession } from "~/hooks/use-session";
 import { emptyObject } from "~/utilities";
 
+import { InlineLanguageSelect } from "./inputs/specialized/language-select";
 import { SupportButton } from "./layout/support-button";
 import { FlirtualLogo } from "./logo";
 
@@ -30,7 +29,6 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	...props
 }) => {
 	const t = useTranslations();
-	const session = useOptionalSession();
 
 	return (
 		<>
@@ -71,17 +69,15 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			</div>
 			{miniFooter && (
 				<footer className={twMerge(
-					"mb-4 mt-8 grid justify-center desktop:mb-0",
-					session?.user.tags?.includes("debugger")
-					&& "grid-cols-2"
+					"mb-4 mt-8 grid grid-cols-2 items-center justify-center gap-4 desktop:mb-0",
 				)}
 				>
-					<SupportButton className="whitespace-nowrap">{t("need_help")}</SupportButton>
-					{session?.user.tags?.includes("debugger") && (
-						<div className="w-[168px]">
-							{/* <InputLanguageSelect className="w-56 origin-left scale-75" /> */}
-						</div>
-					)}
+					<SupportButton className="flex items-center gap-0.5em whitespace-nowrap">
+						<Info className="inline-block size-em" />
+						{" "}
+						{t("need_help")}
+					</SupportButton>
+					<InlineLanguageSelect />
 				</footer>
 			)}
 		</>

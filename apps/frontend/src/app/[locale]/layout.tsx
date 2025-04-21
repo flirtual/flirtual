@@ -19,6 +19,7 @@ import { imageOrigins, urls } from "~/urls";
 
 import { fontClassNames } from "../fonts";
 import { LoadingIndicator } from "./(app)/loading-indicator";
+import { LazyLayout } from "./lazy-layout";
 import { StagingBanner } from "./staging-banner";
 
 import "../index.css";
@@ -105,26 +106,28 @@ export default async function LocaleLayout({
 	const messages = await getMessages();
 
 	return (
-		<NextIntlClientProvider messages={messages}>
-			<AnalyticsProvider>
-				<html
-					suppressHydrationWarning
-					data-platform={platformOverride || undefined}
-					lang={locale}
-				>
-					<head>
-						<meta name="darkreader-lock" />
-						<link
-							color="#e9658b"
-							href={SafariPinnedTabImage.src}
-							rel="mask-icon"
-						/>
-						<script>
-							{`const theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+		<html
+			suppressHydrationWarning
+			data-platform={platformOverride || undefined}
+			lang={locale}
+		>
+			<head>
+				<meta name="darkreader-lock" />
+				<link
+					color="#e9658b"
+					href={SafariPinnedTabImage.src}
+					rel="mask-icon"
+				/>
+				<script>
+					{`const theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 Object.assign(document.documentElement.dataset, { theme });`}
-						</script>
-					</head>
-					<body className={twMerge(fontClassNames, "bg-white-20 font-nunito text-black-80 antialiased vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:bg-cream desktop:dark:bg-black-80")}>
+				</script>
+			</head>
+			<body className={twMerge(fontClassNames, "bg-white-20 font-nunito text-black-80 antialiased vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:bg-cream desktop:dark:bg-black-80")}>
+				<NextIntlClientProvider messages={messages}>
+					<LazyLayout />
+					<AnalyticsProvider>
 						<NextTopLoader
 							color={["#FF8975", "#E9658B"]}
 							height={5}
@@ -140,9 +143,10 @@ Object.assign(document.documentElement.dataset, { theme });`}
 								</TooltipProvider>
 							</ToastProvider>
 						</Suspense>
-					</body>
-				</html>
-			</AnalyticsProvider>
-		</NextIntlClientProvider>
+					</AnalyticsProvider>
+				</NextIntlClientProvider>
+			</body>
+		</html>
+
 	);
 }

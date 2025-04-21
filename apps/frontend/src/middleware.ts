@@ -144,21 +144,7 @@ function getContentSecurityPolicy() {
 const nextIntl = createMiddleware(routing);
 
 export function middleware(request: NextRequest) {
-	const { searchParams } = request.nextUrl;
-
 	request.headers.set("url", request.url);
-
-	// if (searchParams.get("language")) {
-	// 	// Support explicit language override via URL query parameter.
-	// 	// for example: https://flirtu.al/home?language=ja
-	// 	request.headers.set("language", searchParams.get("language")!);
-	// }
-
-	if (searchParams.get("theme")) {
-		// Support explicit theme override via URL query parameter.
-		// for example: https://flirtu.al/browse?theme=dark
-		request.headers.set("theme", searchParams.get("theme")!);
-	}
 
 	// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 	// const { nonce, value: contentSecurityPolicy } = getContentSecurityPolicy();

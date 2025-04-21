@@ -14,20 +14,15 @@ defmodule Flirtual.Mailer do
     locale = Gettext.get_locale()
 
     %{
-      home:
-        origin
-        |> URI.append_query("language=#{locale}")
-        |> URI.to_string(),
+      home: URI.to_string(origin),
       x: "https://x.com/getflirtual",
       discord:
         origin
         |> URI.merge("/discord")
-        |> URI.append_query("language=#{locale}")
         |> URI.to_string(),
       unsubscribe:
         origin
         |> URI.merge("/settings/notifications")
-        |> URI.append_query("language=#{locale}")
         |> URI.to_string()
     }
   end

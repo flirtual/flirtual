@@ -8,11 +8,9 @@ import { queryClient } from "~/query";
 
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
-		<>
-			<QueryClientProvider client={queryClient}>
-				<ReactQueryDevtools />
-				{children}
-			</QueryClientProvider>
-		</>
+		<QueryClientProvider client={queryClient}>
+			<ReactQueryDevtools />
+			{children}
+		</QueryClientProvider>
 	);
 }

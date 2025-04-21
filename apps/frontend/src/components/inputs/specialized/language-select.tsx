@@ -1,43 +1,27 @@
 "use client";
 
-import { Languages } from "lucide-react";
+import { SelectTrigger as RadixSelectTrigger } from "@radix-ui/react-select";
+import { ChevronDown, Languages } from "lucide-react";
 import type { Locale } from "next-intl";
 import { useLocale } from "next-intl";
-import { type FC, useLayoutEffect } from "react";
+import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
-import { Link } from "~/components/link";
-import { useOptionalSession } from "~/hooks/use-session";
-import { useTheme } from "~/hooks/use-theme";
 import { usePathname, useRouter } from "~/i18n/navigation";
 import { localeNames, locales } from "~/i18n/routing";
 import { useMutation } from "~/query";
 
-import { InputSelect, SelectItem } from "../select";
-
-const InputLanguageSelectItem: FC<{ value: Locale }> = ({ value, children, ...props }) => {
-	const pathname = usePathname();
-
-	return (
-		<SelectItem {...props} asChild value={value}>
-			<Link href={pathname} locale={value}>
-				{children}
-			</Link>
-		</SelectItem>
-	);
-};
+import {
+	InputSelect,
+	Select,
+	SelectContent,
+	SelectItem
+} from "../select";
 
 const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> = ({ className, tabIndex }) => {
 	const locale = useLocale();
-	const [theme] = useTheme();
 
-	// useLayoutEffect(() => {
-	// 	document.documentElement.dataset.theme = theme;
-	// }, [theme, locale]);
-
-	const session = useOptionalSession();
 	const pathname = usePathname();
-
 	const router = useRouter();
 
 	const { mutateAsync } = useMutation({
@@ -45,8 +29,6 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 			router.push(pathname, { locale });
 		}
 	});
-
-	if (!session?.user.tags?.includes("debugger")) return null;
 
 	return (
 		<InputSelect
@@ -56,7 +38,6 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 			}))}
 			className={className}
 			Icon={Languages}
-			// Item={InputLanguageSelectItem}
 			tabIndex={tabIndex}
 			value={locale}
 			onChange={mutateAsync}
@@ -65,3 +46,33 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 };
 
 export const InputLanguageSelect = withSuspense(InputLanguageSelect_);
+
+export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ className }) => {
+	const locale = useLocale();
+
+	const pathname = usePathname();
+	const router = useRouter();
+
+	return (
+		<Select onValueChange={(locale: Locale) => router.push(pathname, { locale })}>
+			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap", className)}>
+				<Languages className="inline-block size-em" />
+				{" "}
+				{localeNames[locale]}
+				{" "}
+				<ChevronDown className="inline-block size-em" />
+			</RadixSelectTrigger>
+			<SelectContent>
+				{locales.map((value) => (
+					<SelectItem
+						className="flex w-full items-center gap-2"
+						key={value}
+						value={value}
+					>
+						{localeNames[value]}
+					</SelectItem>
+				))}
+			</SelectContent>
+		</Select>
+	);
+};

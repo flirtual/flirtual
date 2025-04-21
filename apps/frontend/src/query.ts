@@ -7,6 +7,7 @@ import { use, useDebugValue } from "react";
 import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
+import { Config } from "./api/config";
 import { Conversation, type ConversationList } from "./api/conversations";
 import { Matchmaking, type ProspectKind } from "./api/matchmaking";
 import { Plan } from "./api/plan";
@@ -17,6 +18,11 @@ import { usePostpone } from "./hooks/use-postpone";
 import { getPreference, listPreferences, setPreference } from "./hooks/use-preferences";
 import { log as _log } from "./log";
 import { isUid } from "./utilities";
+
+export const configKey = () => ["config"] as const;
+export function configFetcher({ signal }: QueryFunctionContext<ReturnType<typeof configKey>>) {
+	return Config.get({ ...signal });
+}
 
 export const sessionKey = () => ["session"] as const;
 export function sessionFetcher({ signal }: QueryFunctionContext<ReturnType<typeof sessionKey>>) {
@@ -73,6 +79,7 @@ export async function preloadAll() {
 
 	await Promise.all([
 		// `staleTime: 0` to force a refetch on every hard-reload.
+		preload(configKey(), configFetcher, { staleTime: 0 }),
 		preload(sessionKey(), sessionFetcher, { staleTime: 0 }),
 		preload(plansKey(), plansFetcher),
 		...([

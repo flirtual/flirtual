@@ -11,13 +11,19 @@ import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useFreshworks } from "~/hooks/use-freshworks";
+import { useSearchParams } from "~/i18n/navigation";
 import { urls } from "~/urls";
+
+import { ConfirmPasswordResetForm } from "./confirm-form";
 
 export const ForgotPasswordForm: React.FC = () => {
 	const t = useTranslations();
 
 	const [success, setSuccess] = useState(false);
 	const { openFreshworks } = useFreshworks();
+
+	const token = useSearchParams().get("");
+	if (token) return <ConfirmPasswordResetForm token={token} />;
 
 	return (
 		<Form

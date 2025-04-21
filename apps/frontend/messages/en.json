@@ -958,5 +958,6 @@
 	"dark_theme": "Dark theme",
 	"light_theme_preview": "Light theme preview",
 	"dark_theme_preview": "Dark theme preview",
-	"system_theme_preview": "System theme preview"
+	"system_theme_preview": "System theme preview",
+	"change_language": "Change language"
 }

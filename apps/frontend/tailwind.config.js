@@ -71,7 +71,9 @@ module.exports = {
 				full: "100%"
 			},
 			spacing: {
-				inherit: "inherit"
+				inherit: "inherit",
+				"0.5em": "0.5em",
+				em: "1em",
 			},
 			animation: {
 				"scroll-x-screen": "scroll-x-screen 60s linear infinite",

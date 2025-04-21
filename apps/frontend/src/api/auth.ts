@@ -94,8 +94,8 @@ function convertPublicKey(publicKey: PublicKeyCredentialCreationOptionsBase64): 
 export const Authentication = {
 	api: api.url("auth"),
 	async getOptionalSession(options: WretchOptions = {}) {
-		return this.api
-			.url("/session")
+		return api
+			.url("session")
 			.options(options)
 			.get()
 			.unauthorized(() => null)
@@ -105,8 +105,8 @@ export const Authentication = {
 		return this.api.url("/sudo").json({ userId }).post().json<Session>();
 	},
 	login(options: LoginOptions) {
-		return this.api
-			.url("/session")
+		return api
+			.url("session")
 			.json(options)
 			.post()
 			.unauthorized((reason) => {
@@ -115,7 +115,7 @@ export const Authentication = {
 			.json<Issue<"account_banned"> | Issue<"invalid_credentials"> | Issue<"leaked_login_password"> | Issue<"login_rate_limit"> | Session>();
 	},
 	logout() {
-		return this.api.url("/session").delete().res();
+		return api.url("session").delete().res();
 	},
 	confirmResetPassword(options: ConfirmResetPasswordOptions) {
 		return this.api.url("/password/reset").json(options).post().res();

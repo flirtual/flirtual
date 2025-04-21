@@ -61,6 +61,8 @@ defmodule FlirtualWeb.Router do
     pipe_through(:api)
 
     scope "/v1" do
+      get("/config", ConfigController, :get)
+
       scope "/attributes" do
         scope "/:attribute_type" do
           get("/", AttributeController, :list)
@@ -130,18 +132,18 @@ defmodule FlirtualWeb.Router do
       pipe_through([:fetch_session, :fetch_current_session])
 
       scope "/v1/" do
-        scope "/auth" do
-          scope "/session" do
-            post("/", SessionController, :login)
+        scope "/session" do
+          post("/", SessionController, :login)
 
-            scope "/" do
-              pipe_through(:require_authenticated_user)
+          scope "/" do
+            pipe_through(:require_authenticated_user)
 
-              get("/", SessionController, :get)
-              delete("/", SessionController, :delete)
-            end
+            get("/", SessionController, :get)
+            delete("/", SessionController, :delete)
           end
+        end
 
+        scope "/auth" do
           scope "/email/confirm" do
             post("/", UsersController, :confirm_email)
 
@@ -173,13 +175,6 @@ defmodule FlirtualWeb.Router do
 
             post("/", SessionController, :sudo)
             delete("/", SessionController, :revoke_sudo)
-          end
-
-          scope "/user" do
-            pipe_through(:require_authenticated_user)
-
-            get("/", UsersController, :get_current_user)
-            delete("/", UsersController, :delete)
           end
 
           scope "/sso" do

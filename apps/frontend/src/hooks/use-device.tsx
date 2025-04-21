@@ -81,15 +81,8 @@ export const device = {
 
 export type Device = typeof device;
 
-if (client) {
+if (client)
 	log(device);
-
-	Object.assign(document.documentElement.dataset, omitBy({
-		vision,
-		native,
-		platform
-	}, (value) => !value));
-}
 
 export function useDevice() {
 	usePostpone("useDevice()");

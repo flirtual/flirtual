@@ -1,20 +1,27 @@
 "use client";
 
-import { useLocale } from "next-intl";
-import { useLayoutEffect } from "react";
-
+import type { Session } from "~/api/auth";
 import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
-import { log } from "~/log";
-import { mutate, sessionKey, useMutation } from "~/query";
+import { mutate, queryClient, sessionKey, useMutation } from "~/query";
+import type { Theme } from "~/theme";
 
 import { useMediaQuery } from "./use-media-query";
 import { usePostpone } from "./use-postpone";
 import { useOptionalSession } from "./use-session";
 
+export function getTheme(): Theme {
+	const session = queryClient.getQueryData<Session | null>(sessionKey());
+	const sessionTheme = session?.user.preferences?.theme || "system";
+
+	if (sessionTheme !== "system") return sessionTheme;
+
+	return matchMedia("(prefers-color-scheme: dark)").matches
+		? "dark"
+		: "light";
+}
+
 export function useTheme() {
 	usePostpone("useTheme()");
-
-	const locale = useLocale();
 
 	const session = useOptionalSession();
 	const sessionTheme = session?.user.preferences?.theme || "system";
@@ -26,12 +33,6 @@ export function useTheme() {
 			? "dark"
 			: "light"
 		: sessionTheme;
-
-	useLayoutEffect(() => {
-		document.documentElement.dataset.theme = theme;
-		// On `locale` change, we any modifications to the document element,
-		// so we'll need to re-apply the theme.
-	}, [theme, locale]);
 
 	const { mutateAsync } = useMutation({
 		mutationKey: sessionKey(),

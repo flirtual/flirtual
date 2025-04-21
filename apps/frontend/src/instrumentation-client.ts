@@ -1,8 +1,8 @@
-import { SafeArea } from "@capacitor-community/safe-area";
 import { App } from "@capacitor/app";
 
 import { urls } from "~/urls";
 
+import { applyDocumentMutations } from "./app/[locale]/lazy-layout";
 import {
 	preloadAll,
 	restoreQueries,
@@ -16,6 +16,7 @@ console.log(
 );
 
 await restoreQueries();
+await applyDocumentMutations();
 
 window.addEventListener("beforeunload", saveQueries);
 document.addEventListener("visibilitychange", () => {
@@ -30,13 +31,4 @@ App.addListener("appUrlOpen", async (event) => {
 	const pathname = url.href.replace(url.origin, "");
 
 	location.href = pathname;
-});
-
-SafeArea.enable({
-	config: {
-		customColorsForSystemBars: true,
-		statusBarColor: "#00000000",
-		navigationBarColor: "#00000000",
-		offset: 10
-	}
 });

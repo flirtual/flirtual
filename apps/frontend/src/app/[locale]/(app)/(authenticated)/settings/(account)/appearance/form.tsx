@@ -261,39 +261,36 @@ const ProfileColorSelect: FC = () => {
 
 export const AppearanceForm: FC = () => {
 	const locale = useLocale();
-	const session = useSession();
 
 	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 
 	return (
 		<div className="flex flex-col gap-8">
-			{session.user.tags?.includes("debugger") && (
-				<div className="flex flex-col gap-2">
-					<InputLabel
-						inline
-						hint={(
-							<InputLabelHint>
-								{t.rich(locale === defaultLocale
-									? "help_translate_others"
-									: "help_translate", {
-									language: tAttribute[locale]?.name || locale,
-									link: (children) => (
-										<InlineLink
-											href={`https://hosted.weblate.org/projects/flirtual/flirtual/${locale === defaultLocale ? "" : locale}`}
-										>
-											{children}
-										</InlineLink>
-									)
-								})}
-							</InputLabelHint>
-						)}
-					>
-						{t("language")}
-					</InputLabel>
-					<InputLanguageSelect />
-				</div>
-			)}
+			<div className="flex flex-col gap-2">
+				<InputLabel
+					inline
+					hint={(
+						<InputLabelHint>
+							{t.rich(locale === defaultLocale
+								? "help_translate_others"
+								: "help_translate", {
+								language: tAttribute[locale]?.name || locale,
+								link: (children) => (
+									<InlineLink
+										href={`https://hosted.weblate.org/projects/flirtual/flirtual/${locale === defaultLocale ? "" : locale}`}
+									>
+										{children}
+									</InlineLink>
+								)
+							})}
+						</InputLabelHint>
+					)}
+				>
+					{t("language")}
+				</InputLabel>
+				<InputLanguageSelect />
+			</div>
 			<div className="flex flex-col gap-2 vision:hidden">
 				<InputLabel>{t("theme")}</InputLabel>
 				<div className="grid grid-cols-3 gap-4">

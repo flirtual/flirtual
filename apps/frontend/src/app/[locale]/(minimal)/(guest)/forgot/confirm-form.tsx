@@ -1,6 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { decode } from "jsonwebtoken";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Authentication } from "~/api/auth";
@@ -8,19 +9,19 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
+import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
-export interface ResetPasswordFormProps {
-	token: string;
-	email: string;
-}
-
-export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
-	token,
-	email
-}) => {
+export const ConfirmPasswordResetForm: React.FC<{ token: string }> = ({ token }) => {
 	const [success, setSuccess] = useState(false);
+
+	const locale = useLocale();
 	const t = useTranslations();
+
+	const payload = decode(token, { json: true });
+
+	const email = payload?.sub;
+	if (!email) return redirect({ href: urls.forgotPassword, locale });
 
 	return (
 		<Form
