@@ -36,7 +36,7 @@ export default function PressPage({ params }: { params: Promise<{ locale: Locale
 				<ButtonLink
 					download
 					className="w-fit"
-					href={urls.media("presskit.zip", "files")}
+					href={urls.media("presskit.zip", "static")}
 				>
 					{t("download")}
 				</ButtonLink>

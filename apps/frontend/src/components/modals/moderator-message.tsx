@@ -4,11 +4,11 @@ import ms from "ms";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { Dispatch, FC, ReactNode } from "react";
+import { withSuspense } from "with-suspense";
 
 import { User } from "~/api/user";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { withSuspense } from "with-suspense";
 import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
@@ -129,14 +129,14 @@ export const TrustAndSafetyDialog: FC<{
 							alt={t("flirtual")}
 							className="hidden h-fit w-24 dark:block desktop:block"
 							height={1000}
-							src={urls.media("flirtual-white.svg", "files")}
+							src={urls.media("flirtual-white.svg", "static")}
 							width={3468}
 						/>
 						<Image
 							alt={t("flirtual")}
 							className="block h-fit w-24 dark:hidden desktop:hidden"
 							height={1000}
-							src={urls.media("flirtual-black.svg", "files")}
+							src={urls.media("flirtual-black.svg", "static")}
 							width={3468}
 						/>
 						<span>{t("trust_and_safety")}</span>

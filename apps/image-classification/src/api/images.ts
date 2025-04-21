@@ -10,7 +10,7 @@ import { url } from ".";
 
 export const download = async (groupFile: string, imageId: string) => {
 	try {
-		const response = await fetch(`https://pfp.flirtu.al/${imageId}/full`, {
+		const response = await fetch(`https://content.flirtual.com/${imageId}/full`, {
 			headers: {
 				accept: "image/webp"
 			}

@@ -123,7 +123,7 @@ export default function BrandingPage({ params }: { params: Promise<{ locale: Loc
 				<ButtonLink
 					download
 					className="w-fit"
-					href={urls.media("presskit.zip", "files")}
+					href={urls.media("presskit.zip", "static")}
 					size="sm"
 				>
 					{t("download")}

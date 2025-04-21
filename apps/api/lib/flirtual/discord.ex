@@ -419,7 +419,7 @@ defmodule Flirtual.Discord do
                   value:
                     report.images
                     |> Enum.map(fn image ->
-                      "[📎 View file](https://pfpup.flirtu.al/#{image})"
+                      "[📎 View file](https://uploads.flirtual.com/#{image})"
                     end)
                     |> Enum.join("\n")
                 },
@@ -430,7 +430,7 @@ defmodule Flirtual.Discord do
           image:
             if(report.images !== [],
               do: %{
-                url: "https://pfpup.flirtu.al/#{report.images |> List.first()}"
+                url: "https://uploads.flirtual.com/#{report.images |> List.first()}"
               },
               else: nil
             ),

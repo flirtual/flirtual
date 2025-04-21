@@ -54,19 +54,19 @@ defmodule Flirtual.User.Profile.Image do
   def url(_, variant \\ "full")
 
   def url(%Image{blur_id: blur_id}, "blur") when is_binary(blur_id) do
-    URI.new!("https://pfp.flirtu.al/")
+    URI.new!("https://content.flirtual.com")
     |> URI.merge(blur_id <> "/blur")
     |> URI.to_string()
   end
 
   def url(%Image{external_id: external_id}, variant) when is_binary(external_id) do
-    URI.new!("https://pfp.flirtu.al/")
+    URI.new!("https://content.flirtual.com")
     |> URI.merge(external_id <> "/" <> variant)
     |> URI.to_string()
   end
 
   def url(%Image{original_file: original_file}, _) when is_binary(original_file) do
-    URI.new!("https://pfpup.flirtu.al/")
+    URI.new!("https://uploads.flirtual.com/")
     |> URI.merge(original_file |> URI.encode())
     |> URI.to_string()
   end

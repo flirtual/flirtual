@@ -136,7 +136,7 @@ export const customEmojis = Object.fromEntries(
 	emojis.map(({ name, type, hidden = false }) => [
 		`:${name}:`,
 		{
-			url: `https://img.flirtu.al/emoji/${name}.${type}`,
+			url: `https://static.flirtual.com/emoji/${name}.${type}`,
 			hidden
 		}
 	])

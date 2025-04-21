@@ -10,7 +10,7 @@ export interface ImageListItemProps {
 }
 
 function getUrl(name: string, kind: string) {
-	return urls.media(`flirtual-${name.replaceAll("/", "-")}.${kind}`, "files");
+	return urls.media(`flirtual-${name.replaceAll("/", "-")}.${kind}`, "static");
 }
 
 async function ImageListItem({ name, kinds, dark }: ImageListItemProps) {

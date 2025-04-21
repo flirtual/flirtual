@@ -37,7 +37,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 			className={twMerge(
 				"group flex shrink-0 items-center gap-2 rounded-full p-2 transition-colors focus:outline-none data-[active]:shadow-brand-1 hocus:shadow-brand-1",
 				className,
-				rankedMode && props.id === "date-mode-switch" && active && "!bg-[url('https://files.flirtu.al/ranked.jpg')] bg-cover bg-center"
+				rankedMode && props.id === "date-mode-switch" && active && "!bg-[url('https://static.flirtual.com/ranked.jpg')] bg-cover bg-center"
 			)}
 			data-active={active ? "" : undefined}
 		>

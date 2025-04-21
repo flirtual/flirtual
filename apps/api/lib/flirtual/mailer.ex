@@ -263,13 +263,13 @@ defmodule Flirtual.Mailer do
           <img
             style="max-height: 48px"
             class="dark-only"
-            src="https://files.flirtu.al/flirtual-white.png"
+            src="https://static.flirtual.com/flirtual-white.png"
             alt="Flirtual"
           />
           <img
             style="max-height: 48px"
             class="light-only"
-            src="https://files.flirtu.al/flirtual-black.png"
+            src="https://static.flirtual.com/flirtual-black.png"
             alt="Flirtual"
           />
         </a>

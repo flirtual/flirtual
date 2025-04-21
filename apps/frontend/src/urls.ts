@@ -59,27 +59,36 @@ export function isInternalHref(href: Url) {
 
 export type FinishPage = 1 | 2 | 3 | 4 | 5;
 
-export const imageOrigins = [
-	"https://files.flirtu.al",
-	"https://img.flirtu.al",
-	"https://pfp.flirtu.al",
-	"https://pfpup.flirtu.al"
-];
+export const bucketNames = [
+	"static",
+	"content",
+	"uploads"
+] as const;
+
+export type BucketName = typeof bucketNames[number];
+
+export const bucketOriginMap = {
+	static: "https://static.flirtual.com",
+	content: "https://content.flirtual.com",
+	uploads: "https://uploads.flirtual.com"
+} as const satisfies Record<BucketName, string>;
+
+export const bucketOrigins = Object.values(bucketOriginMap);
 
 export const urls = {
 	// internal
 	api: process.env.NEXT_PUBLIC_API_URL as string,
-	media: (id: string, bucket?: string, variant?: string) =>
-		`https://${bucket ?? "img"}.flirtu.al/${id}${variant ? `/${variant}` : ""}`,
-	pfp: (image: ProfileImage, variant: string = "profile") =>
+	media: (id: string, bucket: BucketName = "static", variant?: string) =>
+		`${bucketOriginMap[bucket]}/${id}${variant ? `/${variant}` : ""}`,
+	image: (image: ProfileImage, variant: string = "profile") =>
 		image.externalId
-			? urls.media(image.externalId, "pfp", variant)
+			? urls.media(image.externalId, "content", variant)
 			: image.originalFile
-				? urls.media(image.originalFile, "pfpup")
+				? urls.media(image.originalFile, "uploads")
 				: urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
 	userAvatar: (user: { profile: Pick<Profile, "images"> } | null, variant?: string) =>
 		user?.profile.images[0]
-			? urls.pfp(user.profile.images[0], variant)
+			? urls.image(user.profile.images[0], variant)
 			: urls.media("8d120672-c717-49d2-b9f3-2d4479bbacf6"),
 	vrchat: (username: string) =>
 		`https://vrchat.com/home/search/${encodeURIComponent(

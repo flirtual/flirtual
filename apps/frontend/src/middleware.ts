@@ -15,8 +15,9 @@ import {
 	uppyCompanionUrl
 } from "./const";
 import { routing } from "./i18n/routing";
-import { imageOrigins } from "./urls";
+import { bucketOrigins } from "./urls";
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 function getContentSecurityPolicy() {
 	const nonce = Buffer.from(crypto.getRandomValues(new Uint8Array(8))).toString("base64url");
 	const reportTo = sentryEnabled ? sentryReportTo : undefined;
@@ -55,7 +56,7 @@ function getContentSecurityPolicy() {
 			"'self'",
 			"blob:",
 			"data:",
-			...imageOrigins,
+			...bucketOrigins,
 			// Country flag icons.
 			"https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/flags/4x3/",
 			// ???
@@ -65,7 +66,7 @@ function getContentSecurityPolicy() {
 			"'self'",
 			"blob:",
 			"data:",
-			...imageOrigins,
+			...bucketOrigins,
 			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 			"https://*.talkjs.com",
 			// https://vrcdn.live/
@@ -75,7 +76,7 @@ function getContentSecurityPolicy() {
 			"'self'",
 			"blob:",
 			apiOrigin,
-			...imageOrigins,
+			...bucketOrigins,
 			uppyCompanionUrl,
 			uppyBucketOrigin,
 			// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/

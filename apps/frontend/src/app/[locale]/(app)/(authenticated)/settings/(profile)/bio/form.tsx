@@ -43,8 +43,8 @@ export const BiographyForm: FC = () => {
 				displayName: displayName(user),
 				images: profile.images.map((image) => ({
 					id: image.id,
-					src: urls.pfp(image),
-					fullSrc: urls.pfp(image, "full")
+					src: urls.image(image),
+					fullSrc: urls.image(image, "full")
 				})),
 				biography: user.profile.biography || "",
 				prompts: user.profile.prompts

@@ -301,7 +301,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 												<div className="flex flex-wrap gap-2">
 													{report.images.map((image) => (
 														<Link
-															href={urls.media(image, "pfpup")}
+															href={urls.media(image, "uploads")}
 															key={image}
 															target="_blank"
 														>
@@ -312,7 +312,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 																			alt="Report attachment"
 																			className="rounded-md"
 																			height={128}
-																			src={urls.media(image, "pfpup")}
+																			src={urls.media(image, "uploads")}
 																			width={128}
 																		/>
 																	)

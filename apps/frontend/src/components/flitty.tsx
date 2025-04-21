@@ -355,7 +355,7 @@ export default function Flitty() {
 				className="pettable cursor-grab select-none active:cursor-grabbing"
 				draggable={false}
 				height={150}
-				src={urls.media("flitty.png", "files")}
+				src={urls.media("flitty.png", "static")}
 				width={150}
 				onMouseDown={handleMouseDown}
 				onTouchStart={handleTouchStart}

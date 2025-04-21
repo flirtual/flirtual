@@ -1,6 +1,6 @@
 <div align="center">
 
-[![Flirtual](apps/frontend/public/images/brand/gradient.svg)](https://flirtu.al)
+[![Flirtual](https://static.flirtual.com/flirtual-background.svg)](https://flirtual.com)
 
 [![AGPL-3.0](https://img.shields.io/github/license/flirtual/flirtual?color=663366&label=%C2%A9%202018-2025%20Flirtual&logo=gnu)](LICENSE)
 [![Discord](https://img.shields.io/discord/455219574036496404?color=5865f2&label=Discord&logo=discord&logoColor=5865f2&style=flat)](https://discord.gg/flirtual)

@@ -15,13 +15,13 @@ export const BackgroundVideo: React.FC = () => {
 			muted
 			playsInline
 			className="absolute left-0 top-0 size-full object-cover brightness-50"
-			poster="https://img.flirtu.al/6be390d0-4479-4a98-8c7a-10257ea5585a"
+			poster="https://static.flirtual.com/6be390d0-4479-4a98-8c7a-10257ea5585a"
 		>
 			<source
-				src="https://img.flirtu.al/video.webm"
+				src="https://static.flirtual.com/video.webm"
 				type="video/webm; codecs=vp9"
 			/>
-			<source src="https://img.flirtu.al/video.mp4" type="video/mp4" />
+			<source src="https://static.flirtual.com/video.mp4" type="video/mp4" />
 			<Image
 				fill
 				priority

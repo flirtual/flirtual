@@ -103,8 +103,8 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				...value,
 				...fileKeys.map((key) => ({
 					id: key,
-					src: urls.media(key, "pfpup"),
-					fullSrc: urls.media(key, "pfpup")
+					src: urls.media(key, "uploads"),
+					fullSrc: urls.media(key, "uploads")
 				}))
 			]);
 		},

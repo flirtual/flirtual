@@ -15,7 +15,7 @@ import { UpdateInformation } from "~/components/update-information";
 import { apiOrigin, environment, platformOverride, siteOrigin } from "~/const";
 import { ToastProvider } from "~/hooks/use-toast";
 import { locales } from "~/i18n/routing";
-import { imageOrigins, urls } from "~/urls";
+import { bucketOrigins, urls } from "~/urls";
 
 import { fontClassNames } from "../fonts";
 import { LoadingIndicator } from "./(app)/loading-indicator";
@@ -101,7 +101,7 @@ export default async function LocaleLayout({
 	setRequestLocale(locale);
 
 	preconnect(apiOrigin);
-	imageOrigins.map((origin) => preconnect(origin));
+	bucketOrigins.map((origin) => preconnect(origin));
 
 	const messages = await getMessages();
 

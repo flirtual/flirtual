@@ -75,7 +75,7 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 			fill={large}
 			height={large ? undefined : 512}
 			priority={priority}
-			src={urls.pfp(image, large ? "full" : "profile")}
+			src={urls.image(image, large ? "full" : "profile")}
 			width={large ? undefined : 512}
 		/>
 	);
@@ -101,7 +101,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 					<TooltipTrigger asChild>
 						<button
 							type="button"
-							onClick={() => reverseSearch(urls.pfp(image, "full"))}
+							onClick={() => reverseSearch(urls.image(image, "full"))}
 						>
 							<Search className="size-5" strokeWidth={2} />
 						</button>
