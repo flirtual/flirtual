@@ -11,7 +11,7 @@ import type { LinkProps } from "./link";
 import { Link } from "./link";
 
 const defaultClassName = twMerge(
-	"group/button focusable flex shrink-0 items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:opacity-75"
+	"group/button focusable flex shrink-0 items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:brightness-75"
 );
 
 const sizes = {
@@ -73,8 +73,7 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 			{Icon && (
 				<Icon
 					className={twMerge(
-						"shrink-0",
-						size === "sm" ? "h-4" : "h-6",
+						"h-4 shrink-0",
 						iconClassName
 					)}
 				/>

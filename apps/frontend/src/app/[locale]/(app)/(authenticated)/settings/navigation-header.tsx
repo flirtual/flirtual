@@ -18,7 +18,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 	const Icon = navigationInner ? ChevronLeft : X;
 	const returnTo = ensureRelativeUrl(
 		query.get("return")
-		?? (navigationInner ? urls.settings.list() : urls.browse())
+		?? (navigationInner ? urls.settings.list() : urls.discover("love"))
 	);
 
 	return (

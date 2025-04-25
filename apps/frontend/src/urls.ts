@@ -1,11 +1,10 @@
 import type { Url } from "next/dist/shared/lib/router/router";
 import { entries, fromEntries } from "remeda";
 
-import type { ProspectKind } from "~/api/matchmaking";
-
 import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
+import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/[group]/page";
 import type { ConfirmEmailPageProps } from "./app/[locale]/(app)/(public)/confirm-email/page";
 import { siteOrigin } from "./const";
 import { escapeVRChat } from "./vrchat";
@@ -108,8 +107,9 @@ export const urls = {
 		if (!user) return "me";
 		return `/${typeof user === "string" ? user : user.slug}`;
 	},
-	browse: (kind?: ProspectKind) =>
-		url("/browse", { kind: kind === "love" ? undefined : kind }),
+	// browse: (kind?: ProspectKind) =>
+	// 	url("/browse", { kind: kind === "love" ? undefined : kind }),
+	discover: (group: DiscoverGroup) => url(`/discover/${group}`),
 	conversations: {
 		list: () => "/matches",
 		of: (conversationId: string) => `/matches/${conversationId}`

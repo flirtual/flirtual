@@ -71,7 +71,7 @@ export const SubscriptionForm: FC = () => {
 								<li>
 									♾️
 									{" "}
-									<InlineLink href={urls.browse()}>
+									<InlineLink href={urls.discover("love")}>
 										{t("civil_active_nils_value")}
 									</InlineLink>
 								</li>

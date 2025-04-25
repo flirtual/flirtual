@@ -54,7 +54,7 @@ export const Finish5Form: React.FC = () => {
 						});
 
 						router.push(
-							user.emailConfirmedAt ? urls.browse() : urls.confirmEmail()
+							user.emailConfirmedAt ? urls.discover("love") : urls.confirmEmail()
 						);
 					}}
 				>

@@ -47,7 +47,7 @@ export default function ConversationsLayout({
 							</details>
 							<div className="flex flex-col gap-2">
 								<LikesYouButton />
-								<ButtonLink href={urls.browse()} kind="tertiary" size="sm">{t("browse_profiles")}</ButtonLink>
+								<ButtonLink href={urls.discover("love")} kind="tertiary" size="sm">{t("browse_profiles")}</ButtonLink>
 							</div>
 						</ModelCard>
 					)

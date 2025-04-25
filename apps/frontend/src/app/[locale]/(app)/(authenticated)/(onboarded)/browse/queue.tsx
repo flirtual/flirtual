@@ -15,42 +15,17 @@ import { userKey } from "~/query";
 import {
 	ConfirmEmailError,
 	FinishProfileError,
-	OutOfProspectsError
+	OutOfProspects
 } from "./out-of-prospects";
 import { QueueActions } from "./queue-actions";
 
 export type QueueAnimationDirection = "backward" | "forward";
 
 export const Queue: FC = () => {
-	const session = useSession();
-
-	const query = useSearchParams();
-
-	let kind = (query.get("kind") as ProspectKind) || "love";
+	let kind = (useSearchParams().get("kind") as ProspectKind) || "love";
 	if (!ProspectKind.includes(kind)) kind = "love";
 
-	const { data: queue } = useQueue(kind);
-
-	useEffect(() => {
-		if (!Array.isArray(queue)) return;
-
-		// Optimistically preload the next and previous profiles.
-		// TODO:
-		// queue.filter(Boolean).forEach((userId) => {
-		// 	preload(userKey(userId), ([, userId]) => User.get(userId));
-		// });
-	}, [queue]);
-
-	if (!session || !queue) return null;
-
-	if ("error" in queue) {
-		if (queue.error === "finish_profile") return <FinishProfileError />;
-		if (queue.error === "confirm_email") return <ConfirmEmailError />;
-
-		return null;
-	}
-
-	const [, current] = queue;
+	const { next: [current] } = useQueue(kind);
 
 	return (
 		<>
@@ -67,41 +42,17 @@ export const Queue: FC = () => {
 								>
 									<Profile userId={current} />
 								</motion.div>
-								{/* {previous && (
-									<Suspense key={`${previous}-previous`}>
-										<motion.div
-											animate={{ opacity: 0 }}
-											className="absolute top-0"
-											exit={{ opacity: animationDirection === "backward" ? 1 : 0 }}
-											initial={{ opacity: 0 }}
-										>
-											<Profile userId={previous} />
-										</motion.div>
-									</Suspense>
-								)}
-								{next && (
-									<Suspense key={`${next}-next`}>
-										<motion.div
-											animate={{ opacity: 0 }}
-											className="absolute top-0"
-											exit={{ opacity: animationDirection === "forward" ? 1 : 0 }}
-											initial={{ opacity: 0 }}
-										>
-											<Profile userId={next} />
-										</motion.div>
-									</Suspense>
-								)} */}
 							</AnimatePresence>
 						)
 					: (
-							<OutOfProspectsError mode={kind} />
+							<OutOfProspects mode={kind} />
 						)}
 			</div>
 			{current && (
 				<QueueActions
+					explicitUserId={current}
 					key={kind}
 					kind={kind}
-					queue={queue}
 				/>
 			)}
 		</>

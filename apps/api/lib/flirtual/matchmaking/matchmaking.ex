@@ -113,14 +113,9 @@ defmodule Flirtual.Matchmaking do
           else: {:ok, existing_next_prospects}
         )
 
-      {:ok, previous} = previous_prospect(user, mode)
+      # {:ok, previous} = previous_prospect(user, mode)
 
-      {:ok,
-       [
-         previous[:target_id],
-         Enum.at(prospect_ids, 0),
-         Enum.at(prospect_ids, 1)
-       ]}
+      {:ok, prospect_ids}
     end
   end
 
@@ -181,7 +176,6 @@ defmodule Flirtual.Matchmaking do
           prospects
           |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
           |> Enum.map(&elem(&1, 0))
-          |> Enum.slice(0, 2)
 
         log(:debug, ["computing", user.id, kind], value)
         value

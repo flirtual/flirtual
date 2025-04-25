@@ -1,4 +1,4 @@
-import type { FetchQueryOptions, QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
+import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient } from "@tanstack/react-query";
 import ms from "ms";
 import type { Dispatch } from "react";
@@ -79,9 +79,9 @@ export async function preloadAll() {
 
 	await Promise.all([
 		// `staleTime: 0` to force a refetch on every hard-reload.
-		preload(configKey(), configFetcher, { staleTime: 0 }),
-		preload(sessionKey(), sessionFetcher, { staleTime: 0 }),
-		preload(plansKey(), plansFetcher),
+		preload({ queryKey: configKey(), queryFn: configFetcher, staleTime: 0 }),
+		preload({ queryKey: sessionKey(), queryFn: sessionFetcher, staleTime: 0 }),
+		preload({ queryKey: plansKey(), queryFn: plansFetcher }),
 		...([
 			"country",
 			"game",
@@ -95,7 +95,7 @@ export async function preloadAll() {
 			"relationship",
 			"report-reason",
 			"sexuality"
-		] as const).map((type) => preload(attributeKey(type), attributeFetcher))
+		] as const).map((type) => preload({ queryKey: attributeKey(type), queryFn: attributeFetcher }))
 	]).catch(() => {});
 }
 
@@ -290,21 +290,6 @@ export function useMutation<T = unknown, Variables = void, Context = unknown>({
 	}, queryClient);
 }
 
-export function preload<K extends QueryKey = QueryKey>(
-	queryKey: K,
-	// eslint-disable-next-line unicorn/prevent-abbreviations
-	queryFn: UseQueryOptions<unknown, unknown, unknown, K>["queryFn"],
-	options: Omit<FetchQueryOptions<unknown, unknown, unknown, K>, "queryFn" | "queryKey"> = {}
-) {
-	// log("%s(%o)", preload.name, queryKey);
-
-	return queryClient.prefetchQuery({
-		...options,
-		queryKey,
-		queryFn,
-	});
-}
-
 /**
  * @see https://tanstack.com/query/v5/docs/reference/QueryClient/#queryclientsetquerydata
  */
@@ -323,3 +308,8 @@ export async function mutate<T>(queryKey: QueryKey, data: Dispatch<T> | T) {
  * @see https://tanstack.com/query/v5/docs/reference/QueryClient/#queryclientinvalidatequeries
  */
 export const invalidate = queryClient.invalidateQueries.bind(queryClient);
+
+/**
+ * @see https://tanstack.com/query/v5/docs/reference/QueryClient/#queryclientprefetchquery
+ */
+export const preload = queryClient.prefetchQuery.bind(queryClient);

@@ -88,7 +88,12 @@ export function Profile({
 				>
 					<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8 text-white-10">
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
-							<span className={twMerge("text-shadow-brand text-4xl font-bold leading-none [word-break:break-all]", session.user.tags?.includes("moderator") && "select-text")}>
+							<span
+								className={twMerge(
+									"text-shadow-brand max-w-[95%] truncate text-4xl font-bold",
+									session.user.tags?.includes("moderator") && "select-text"
+								)}
+							>
 								{displayName(user)}
 							</span>
 							{user.bornAt && (
@@ -238,7 +243,11 @@ export function Profile({
 										})}
 									</span>
 								)
-							: null}
+							: (
+									<p>
+										No biography available.
+									</p>
+								)}
 					<ProfilePrompts prompts={user.profile.prompts} />
 					<PillCollection user={user} />
 				</div>

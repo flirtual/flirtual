@@ -64,7 +64,7 @@ export const Onboarding2Form: FC = () => {
 				});
 
 				await mutateSession();
-				router.push(urls.browse());
+				router.push(urls.discover("love"));
 			}}
 		>
 			{({ FormField }) => (

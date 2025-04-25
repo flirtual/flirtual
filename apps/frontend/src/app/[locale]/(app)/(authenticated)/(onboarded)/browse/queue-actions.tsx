@@ -39,7 +39,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { UserAvatar } from "~/components/user-avatar";
 import { useDevice } from "~/hooks/use-device";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
 import { useRouter } from "~/i18n/navigation";
@@ -84,12 +84,12 @@ const QueueActions_: FC<{
 	explicitUserId?: string;
 	kind: ProspectKind;
 }> = ({ queue, explicitUserId, kind: mode }) => {
-	const session = useOptionalSession();
+	const session = useSession();
 	const { native } = useDevice();
 	const t = useTranslations();
 
 	useEffect(() => {
-		if (!session?.user.createdAt || !native) return;
+		if (!session.user.createdAt || !native) return;
 
 		const ratingPrompts = session.user.ratingPrompts;
 		const monthsRegistered = Math.floor(
@@ -103,7 +103,11 @@ const QueueActions_: FC<{
 		) {
 			void InAppReview.requestReview();
 			void User.updateRatingPrompts(session.user.id, {
-				ratingPrompts: monthsRegistered >= 6 ? 3 : monthsRegistered >= 3 ? 2 : 1
+				ratingPrompts: monthsRegistered >= 6
+					? 3
+					: monthsRegistered >= 3
+						? 2
+						: 1
 			});
 		}
 	}, [native, session]);
@@ -237,7 +241,7 @@ const QueueActions_: FC<{
 													<p>
 														{t.rich("small_drab_rooster_drum", {
 															link: (children) => (
-																<InlineLink href={urls.browse("friend")}>
+																<InlineLink href={urls.discover("friends")}>
 																	{children}
 																</InlineLink>
 															)
@@ -255,8 +259,8 @@ const QueueActions_: FC<{
 											<ButtonLink
 												href={
 													mode === "love"
-														? urls.browse("friend")
-														: urls.browse()
+														? urls.discover("friends")
+														: urls.discover("love")
 												}
 												kind="tertiary"
 												size="sm"

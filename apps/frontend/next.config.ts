@@ -93,19 +93,34 @@ let nextConfig: NextConfig = {
 			{
 				source: "/register",
 				destination: "/sign-up",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/signup",
 				destination: "/sign-up",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/onboarding/0",
 				destination: "/sign-up",
-				permanent: true
+				permanent: false
 			},
-			
+			{
+				source: "/homies",
+				destination: "/discover/friends",
+				permanent: false
+			},
+			{
+				source: "/browse",
+				has: [{ type: "query", key: "kind", value: "friend" }],
+				destination: "/discover/friends",
+				permanent: false
+			},
+			{
+				source: "/browse",
+				destination: "/discover",
+				permanent: false
+			},
 			{
 				source: "/discord",
 				destination: "https://discord.gg/flirtual",
@@ -124,70 +139,65 @@ let nextConfig: NextConfig = {
 				permanent: false
 			},
 			{
-				source: "/homies",
-				destination: "/browse?kind=friend",
-				permanent: true
-			},
-			{
 				source: "/premium",
 				destination: "/subscription",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/settings/apps",
 				destination: "/download",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/ios",
 				destination:
 					"https://apps.apple.com/app/flirtual-vr-dating-app/id6450485324",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/settings/account",
 				destination: "/settings",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/settings/deactivateaccount",
 				destination: "/settings/deactivate",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/settings/deleteaccount",
 				destination: "/settings/delete",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/settings/change-email",
 				destination: "/settings/email",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/settings/change-password",
 				destination: "/settings/password",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/settings/tags",
 				destination: "/settings/info",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/mentalhealth",
 				destination: "/guides/mental-health",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/terms-20230605",
 				destination: "/terms",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/privacy-20230605",
 				destination: "/privacy",
-				permanent: true
+				permanent: false
 			},
 			{
 				source: "/.well-known/change-password",
@@ -197,7 +207,7 @@ let nextConfig: NextConfig = {
 			{
 				source: "/security.txt",
 				destination: "/.well-known/security.txt",
-				permanent: true
+				permanent: false
 			}
 		];
 	}

@@ -46,7 +46,7 @@ export function Navigation() {
 												<HeartIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
 											}
 											className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-											href={urls.browse()}
+											href={urls.discover("love")}
 											id="date-mode-switch"
 										/>
 										<NavigationalSwitchItem
@@ -54,7 +54,7 @@ export function Navigation() {
 												<PeaceIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
 											}
 											className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
-											href={urls.browse("friend")}
+											href={urls.discover("friends")}
 											id="homie-mode-switch"
 										/>
 									</NavigationalSwitch>

@@ -34,7 +34,7 @@ export default async function ConfirmEmailPage({ params, searchParams }: Confirm
 	const t = await getTranslations();
 	const session = await Authentication.getOptionalSession();
 
-	if (session?.user.emailConfirmedAt && !token) redirect({ href: to ?? urls.browse(), locale });
+	if (session?.user.emailConfirmedAt && !token) redirect({ href: to ?? urls.discover("love"), locale });
 	if (!session?.user && !token) redirect({ href: urls.login(to), locale });
 
 	if (token) return <ConfirmTokenForm token={token} />;

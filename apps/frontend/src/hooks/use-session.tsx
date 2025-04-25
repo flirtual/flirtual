@@ -37,7 +37,7 @@ export function useGuest() {
 	const locale = useLocale();
 	const session = useOptionalSession();
 
-	const next = toRelativeUrl(toAbsoluteUrl(useSearchParams().get("next") || urls.browse()));
+	const next = toRelativeUrl(toAbsoluteUrl(useSearchParams().get("next") || urls.discover("love")));
 	if (session) redirect({ href: next, locale });
 }
 
