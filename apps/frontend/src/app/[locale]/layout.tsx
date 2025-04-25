@@ -119,12 +119,17 @@ export default async function LocaleLayout({
 					href={SafariPinnedTabImage.src}
 					rel="mask-icon"
 				/>
-				<script>
-					{`const theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-Object.assign(document.documentElement.dataset, { theme });`}
-				</script>
 			</head>
-			<body className={twMerge(fontClassNames, "bg-white-20 font-nunito text-black-80 antialiased vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:bg-cream desktop:dark:bg-black-80")}>
+			<body className={twMerge(fontClassNames, "flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80")}>
+				<script>
+					{`const sessionTheme = JSON.parse(localStorage.getItem(".queries") || "{}").q?.find(({ k, s }) => k[0] === "session")?.s?.data?.user?.preferences?.theme || "system";
+const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+const theme = sessionTheme === "system" ? prefersDark : sessionTheme;
+const themeStyle = location.pathname === "/discover/friends" ? "friend" : "default";
+
+Object.assign(document.body.dataset, { theme, themeStyle });`}
+				</script>
 				<NextIntlClientProvider messages={messages}>
 					<LazyLayout />
 					<AnalyticsProvider>

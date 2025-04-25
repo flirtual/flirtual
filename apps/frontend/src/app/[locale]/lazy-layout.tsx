@@ -8,6 +8,7 @@ import { withSuspense } from "with-suspense";
 
 import { device } from "~/hooks/use-device";
 import { getTheme } from "~/hooks/use-theme";
+import { usePathname } from "~/i18n/navigation";
 import { log } from "~/log";
 
 const safeArea: SafeAreaConfig = {
@@ -22,12 +23,17 @@ export async function applyDocumentMutations() {
 	log("%s()", applyDocumentMutations.name);
 
 	const theme = getTheme();
+	const themeStyle = location.pathname === "/discover/friends"
+		? "friend"
+		: "default";
+
 	const { platform, native, vision } = device;
 
-	const { documentElement: element } = document;
+	const { body: element } = document;
 
 	Object.assign(element.dataset, omitBy({
 		theme,
+		themeStyle,
 		platform,
 		native,
 		vision
@@ -39,12 +45,13 @@ export async function applyDocumentMutations() {
 
 export const LazyLayout = withSuspense(() => {
 	const locale = useLocale();
+	const pathname = usePathname();
 
 	useLayoutEffect(() => {
 		applyDocumentMutations();
 		// On `locale` change, we lose any changes we've made to
 		// the document element, so we'll need to re-apply them.
-	}, [locale]);
+	}, [locale, pathname]);
 
 	return null;
 });

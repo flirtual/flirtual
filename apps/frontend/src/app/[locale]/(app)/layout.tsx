@@ -9,10 +9,7 @@ import { Navigation } from "./navigation";
 export default function AppLayout({ children }: PropsWithChildren) {
 	return (
 		<TalkjsProvider>
-			<div
-				className="flex min-h-screen grow flex-col items-center bg-white-20 font-nunito text-black-80 vision:bg-transparent dark:bg-black-70 dark:text-white-20 desktop:flex-col desktop:bg-cream desktop:dark:bg-black-80"
-				data-testid="app-layout"
-			>
+			<>
 				<AppBanner />
 				<Navigation />
 				<div
@@ -22,7 +19,7 @@ export default function AppLayout({ children }: PropsWithChildren) {
 					{children}
 				</div>
 				<Footer desktopOnly />
-			</div>
+			</>
 		</TalkjsProvider>
 	);
 }

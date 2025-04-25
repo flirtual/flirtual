@@ -44,7 +44,7 @@
   }
 }
 
-:root {
+body {
   /* Theme variables */
   --light-theme-1: #ff8975;
   --light-theme-2: #e9658b;
@@ -65,12 +65,12 @@
   --theme-2: var(--arc-theme-2, var(--brand-theme-2));
 }
 
-:root[data-theme="dark"] {
+body[data-theme="dark"] {
   --brand-theme-1: var(--dark-theme-1);
   --brand-theme-2: var(--dark-theme-2);
 }
 
-:root[data-theme-style="friend"] {
+body[data-theme-style="friend"] {
   --theme-1: var(--friend-theme-1);
   --theme-2: var(--friend-theme-2);
 }

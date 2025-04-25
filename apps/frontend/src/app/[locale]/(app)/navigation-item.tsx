@@ -1,7 +1,7 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
-import { type ComponentProps, type FC, type ReactNode, useMemo } from "react";
+import { motion } from "motion/react";
+import type { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { Link } from "~/components/link";
@@ -11,23 +11,20 @@ import { toAbsoluteUrl, urlEqual } from "~/urls";
 
 export interface NavigationalSwitchItemProps {
 	href: string;
-	icon: ReactNode;
+	Icon: FC<ComponentProps<"svg">>;
 	className?: string;
 	strict?: boolean;
 	id?: string;
 }
 
 export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
-	icon,
+	Icon,
 	className,
 	strict,
 	...props
 }) => {
 	const location = useLocation();
-	const active = useMemo(() => {
-		location.searchParams.delete("language");
-		return urlEqual(toAbsoluteUrl(props.href), location, strict);
-	}, [location, props.href, strict]);
+	const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
 
 	const [rankedMode] = usePreferences("ranked_mode", false);
 
@@ -35,18 +32,24 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 		<Link
 			{...props}
 			className={twMerge(
-				"group flex shrink-0 items-center gap-2 rounded-full p-2 transition-colors focus:outline-none data-[active]:shadow-brand-1 hocus:shadow-brand-1",
+				"group relative flex shrink-0 items-center gap-2 rounded-full p-2 focus:outline-none",
 				className,
-				rankedMode && props.id === "date-mode-switch" && active && "!bg-[url('https://static.flirtual.com/ranked.jpg')] bg-cover bg-center"
 			)}
 			data-active={active ? "" : undefined}
 		>
-			<Slot className="group-hocus:fill-white-20 aspect-square h-6 desktop:h-8">
-				{icon}
-			</Slot>
+			{active && (
+				<motion.div
+					className={twMerge(
+						"absolute inset-0 rounded-full bg-black-90 bg-brand-gradient shadow-brand-1 transition-colors",
+						rankedMode && props.id === "date-mode-switch" && "!bg-[url('https://static.flirtual.com/ranked.jpg')] bg-cover bg-center"
+					)}
+					layoutId="switch-indicator"
+				/>
+			)}
+			<Icon className={twMerge("z-10 aspect-square h-6 group-hover:fill-white-10 desktop:h-8", active && "fill-white-10")} />
 			{(rankedMode && (props.id === "date-mode-switch" || props.id === "homie-mode-switch") && (
 				<span className={twMerge(
-					"pr-2",
+					"z-10 pr-2",
 					active ? "text-white-20" : "group-hocus:text-white-20 hidden text-black-70 dark:text-white-20 desktop:block"
 				)}
 				>

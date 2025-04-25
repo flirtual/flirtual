@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
+
 import type { Session } from "~/api/auth";
 import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
+import { applyDocumentMutations } from "~/app/[locale]/lazy-layout";
 import { mutate, queryClient, sessionKey, useMutation } from "~/query";
 import type { Theme } from "~/theme";
 
@@ -33,6 +36,8 @@ export function useTheme() {
 			? "dark"
 			: "light"
 		: sessionTheme;
+
+	useEffect(() => void applyDocumentMutations(), [theme]);
 
 	const { mutateAsync } = useMutation({
 		mutationKey: sessionKey(),

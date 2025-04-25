@@ -18,67 +18,63 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 	children,
 	...elementProps
 }) => (
-	<div
-		{...elementProps}
-		className={twMerge(
-			"flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70",
-			elementProps.className
-		)}
-	>
-		{children}
+	<div className="relative">
+		<div
+			{...elementProps}
+			className={twMerge(
+				"isolate flex gap-4 rounded-full bg-white-10 p-2 shadow-brand-inset dark:bg-black-70",
+				elementProps.className
+			)}
+		>
+			{children}
+		</div>
 	</div>
 );
 
-export function Navigation() {
+const NavigationItems: FC = () => {
 	const session = useOptionalSession();
 
+	if (!session) return (
+		<NavigationalSwitch>
+			<NavigationalSwitchItem
+				className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
+				href={urls.landing}
+				Icon={HomeIcon}
+			/>
+			<NavigationalSwitchItem
+				className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
+				href={urls.login()}
+				Icon={LoginIcon}
+				strict={false}
+			/>
+		</NavigationalSwitch>
+	);
+
 	return (
-		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col text-white-20 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
-			<div className="z-10 flex w-full flex-col items-center justify-center bg-brand-gradient shadow-brand-1">
-				<div className="flex size-full items-center justify-evenly gap-4 px-5 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.625rem),0.5rem)] pt-2 font-nunito text-white-20 desktop:w-auto desktop:pb-2">
-					{session
-						? (
-								<>
-									<NavigationItemProfile />
-									<NavigationalSwitch id="browse-mode-switch">
-										<NavigationalSwitchItem
-											icon={
-												<HeartIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
-											}
-											className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-											href={urls.discover("love")}
-											id="date-mode-switch"
-										/>
-										<NavigationalSwitchItem
-											icon={
-												<PeaceIcon className="fill-[var(--fill)] group-data-[active]:fill-current" />
-											}
-											className="data-[active]:bg-brand-gradient-green hocus:bg-brand-gradient-green"
-											href={urls.discover("friends")}
-											id="homie-mode-switch"
-										/>
-									</NavigationalSwitch>
-									<NavigationItemMessage />
-								</>
-							)
-						: (
-								<NavigationalSwitch>
-									<NavigationalSwitchItem
-										className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-										href={urls.landing}
-										icon={<HomeIcon />}
-									/>
-									<NavigationalSwitchItem
-										icon={
-											<LoginIcon className="group-data-[active]:fill-current" />
-										}
-										className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-										href={urls.login()}
-										strict={false}
-									/>
-								</NavigationalSwitch>
-							)}
-				</div>
+		<>
+			<NavigationItemProfile />
+			<NavigationalSwitch id="browse-mode-switch">
+				<NavigationalSwitchItem
+					href={urls.discover("love")}
+					Icon={HeartIcon}
+					id="date-mode-switch"
+				/>
+				<NavigationalSwitchItem
+					href={urls.discover("friends")}
+					Icon={PeaceIcon}
+					id="homie-mode-switch"
+				/>
+			</NavigationalSwitch>
+			<NavigationItemMessage />
+		</>
+	);
+};
+
+export function Navigation() {
+	return (
+		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col items-center justify-center bg-brand-gradient text-white-20 shadow-brand-1 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
+			<div className="flex size-full items-center justify-evenly gap-4 px-5 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.625rem),0.5rem)] pt-2 font-nunito text-white-20 desktop:w-auto desktop:pb-2">
+				<NavigationItems />
 			</div>
 		</header>
 	);
