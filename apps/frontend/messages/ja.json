@@ -808,7 +808,7 @@
 	"domsubswitch_match": "ドム/サブ/スイッチマッチ",
 	"kink_compatibility": "キンクの互換性",
 	"people_who_have_liked_you": "あなたを気に入った人々",
-	"number_multiplier": "{number} x",
+	"number_multiplier": "{number}倍",
 	"gender": "性別",
 	"show_nsfw_hint": "他の人のプロフィールに NSFW タグを表示するかどうかを選択します。",
 	"show_nsfw": "プロフィールにNSFWタグを表示しますか?",
@@ -955,5 +955,6 @@
 	"casual": "気軽",
 	"april_fools_year": "{year}年エイプリルフール",
 	"bad_jumpy_sheep_gasp": "これには、サポートとのやりとりに役立つ機密のデバッグ情報が含まれています。",
-	"change_language": "言語を変更する"
+	"change_language": "言語を変更する",
+	"font_size": "文字サイズ"
 }

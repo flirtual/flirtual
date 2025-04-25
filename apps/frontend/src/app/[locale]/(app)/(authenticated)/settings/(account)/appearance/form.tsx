@@ -5,22 +5,19 @@ import { useLocale, useTranslations } from "next-intl";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useEffect, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
-import { flushSync } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile, type ProfileColors } from "~/api/user/profile";
 import { PremiumBadge } from "~/components/badge";
-import { Form, FormButton } from "~/components/forms";
 import { InlineLink } from "~/components/inline-link";
-import { InputLabel, InputLabelHint, InputRadioList } from "~/components/inputs";
+import { InputLabel, InputLabelHint } from "~/components/inputs";
+import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useFormContext } from "~/hooks/use-input-form";
-import { useOptionalSession, useSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
-import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "~/i18n/navigation";
 import { defaultLocale } from "~/i18n/routing";
 import { mutate, sessionKey, useMutation } from "~/query";
@@ -62,25 +59,6 @@ export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ 
 				)}
 			</div>
 		</div>
-	);
-};
-
-const SaveButton: FC = () => {
-	const session = useOptionalSession();
-	const t = useTranslations();
-	const { changes } = useFormContext<ProfileColors>();
-
-	if (!session) return null;
-	const disabled
-		= (!session.user.subscription || !session.user.subscription.active)
-			&& (changes.includes("color1") || changes.includes("color2"));
-
-	return (
-		<FormButton disabled={disabled}>
-			{t("save")}
-			{" "}
-			{disabled && t("premium_required")}
-		</FormButton>
 	);
 };
 
@@ -259,6 +237,39 @@ const ProfileColorSelect: FC = () => {
 	);
 };
 
+const defaultFontSize = 16;
+
+const InputFontSize: FC = () => {
+	const [fontSize, setFontSize] = useState(defaultFontSize);
+	const fontMultiplier = fontSize / defaultFontSize;
+
+	const t = useTranslations();
+	document.documentElement.style.setProperty("font-size", `${fontSize}px`);
+
+	return (
+		<div className="flex flex-col gap-2">
+			<InputLabel hint={(
+				<InputLabelHint
+					className="ml-auto cursor-pointer"
+					onClick={() => setFontSize(defaultFontSize)}
+				>
+					{t("number_multiplier", { number: Math.round(fontMultiplier * 100) / 100 })}
+				</InputLabelHint>
+			)}
+			>
+				{t("font_size")}
+			</InputLabel>
+			<Slider
+				defaultValue={[fontSize]}
+				max={18}
+				min={14}
+				step={0.25}
+				onValueChange={([value]) => setFontSize(value!)}
+			/>
+		</div>
+	);
+};
+
 export const AppearanceForm: FC = () => {
 	const locale = useLocale();
 
@@ -299,6 +310,7 @@ export const AppearanceForm: FC = () => {
 					))}
 				</div>
 			</div>
+			<InputFontSize />
 			<ProfileColorSelect />
 		</div>
 	);

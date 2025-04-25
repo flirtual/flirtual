@@ -1,3 +1,4 @@
+import { Slot } from "@radix-ui/react-slot";
 import { twMerge } from "tailwind-merge";
 
 export type InputLabelProps = {
@@ -5,11 +6,13 @@ export type InputLabelProps = {
 	hint?: React.ReactNode;
 } & React.ComponentProps<"label">;
 
-export const InputLabelHint: React.FC<React.ComponentProps<"span">> = (
-	{ className, ...props }
+export const InputLabelHint: React.FC<{ asChild?: boolean } & React.ComponentProps<"span">> = (
+	{ className, asChild = false, ...props }
 ) => {
+	const Component = asChild ? Slot : "span";
+
 	return (
-		<span
+		<Component
 			{...props}
 			className={twMerge(
 				"text-base text-black-50 vision:text-white-50 dark:text-white-50",
