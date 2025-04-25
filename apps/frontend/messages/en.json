@@ -951,6 +951,8 @@
 	"have_fun": "Have fun!",
 	"enable_assistant": "Enable assistant",
 	"enable_ranked_mode": "Enable ranked mode",
+	"ranked": "Ranked",
+	"casual": "Casual",
 	"april_fools_year": "April Fools {year}",
 	"bad_jumpy_sheep_gasp": "This contains sensitive debug information that can be used to help you interact with support.",
 	"close_cozy_salmon_praise": "Automatically match your system theme",

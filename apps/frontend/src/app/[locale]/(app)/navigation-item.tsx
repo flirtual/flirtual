@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import type { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -27,6 +28,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
 
 	const [rankedMode] = usePreferences("ranked_mode", false);
+	const t = useTranslations();
 
 	return (
 		<Link
@@ -46,14 +48,14 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 					layoutId="switch-indicator"
 				/>
 			)}
-			<Icon className={twMerge("z-10 aspect-square h-6 group-hover:fill-white-10 desktop:h-8", active && "fill-white-10")} />
+			<Icon className={twMerge("z-10 aspect-square h-6 desktop:h-8", active && "fill-white-10")} />
 			{(rankedMode && (props.id === "date-mode-switch" || props.id === "homie-mode-switch") && (
 				<span className={twMerge(
 					"z-10 pr-2",
 					active ? "text-white-20" : "group-hocus:text-white-20 hidden text-black-70 dark:text-white-20 desktop:block"
 				)}
 				>
-					{props.id === "date-mode-switch" ? "Ranked" : "Casual"}
+					{t(props.id === "date-mode-switch" ? "ranked" : "casual")}
 				</span>
 			))}
 		</Link>
