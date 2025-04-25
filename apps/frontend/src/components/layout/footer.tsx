@@ -8,7 +8,7 @@ import {
 	type IconComponent,
 	TwitterIcon
 } from "~/components/icons";
-import { gitCommitSha, gitCommitUrl } from "~/const";
+import { gitCommitSha } from "~/const";
 import { urls } from "~/urls";
 
 import { InlineLink } from "../inline-link";
@@ -161,7 +161,7 @@ export const Footer: React.FC<FooterProps> = ({
 						<InlineLink
 							className="text-sm opacity-75"
 							highlight={false}
-							href={gitCommitUrl}
+							href={urls.debugger}
 						>
 							{gitCommitSha.slice(0, 8)}
 						</InlineLink>

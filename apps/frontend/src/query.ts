@@ -2,7 +2,7 @@ import type { FetchQueryOptions, QueryFunctionContext, QueryKey, QueryState, Use
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient } from "@tanstack/react-query";
 import ms from "ms";
 import type { Dispatch } from "react";
-import { use, useDebugValue } from "react";
+import { use, useDebugValue, useEffect, useState } from "react";
 
 import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
@@ -15,8 +15,8 @@ import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
 import { environment, gitCommitSha, server } from "./const";
 import { usePostpone } from "./hooks/use-postpone";
-import { getPreference, listPreferences, setPreference } from "./hooks/use-preferences";
 import { log as _log } from "./log";
+import { getPreferences, setPreferences } from "./preferences";
 import { isUid } from "./utilities";
 
 export const configKey = () => ["config"] as const;
@@ -71,7 +71,7 @@ export const personalityFetcher = ({ queryKey: [, userId] }: QueryFunctionContex
 
 export const preferencesKey = (key: string) => ["preferences", key] as const;
 export function preferencesFetcher<T>({ queryKey: [, key] }: QueryFunctionContext<ReturnType<typeof preferencesKey>>) {
-	return getPreference<T>(key);
+	return getPreferences<T>(key);
 }
 
 export async function preloadAll() {
@@ -107,7 +107,7 @@ export const queryClient = new QueryClient({
 			experimental_prefetchInRender: true,
 			retry: environment !== "development",
 			staleTime: ms("5m"),
-			gcTime: ms("24h"),
+			gcTime: ms("8h"),
 		},
 	},
 });
@@ -115,7 +115,7 @@ export const queryClient = new QueryClient({
 const queryCache = queryClient.getQueryCache();
 
 interface Meta extends Record<string, unknown> {
-	maxAge?: number;
+	cacheTime?: number;
 }
 
 declare module "@tanstack/react-query" {
@@ -125,81 +125,81 @@ declare module "@tanstack/react-query" {
 	}
 }
 
-interface PersistedQuery {
-	k: QueryKey;
-	h: string;
+interface QueryPreference {
 	v: string;
-	a: number;
-	s: QueryState;
+	q: Array<{
+		k: QueryKey;
+		h: string;
+		a?: number;
+		s: QueryState;
+	}>;
 }
 
 const cacheVersion = gitCommitSha;
-const defaultMaxAge = ms("7d");
-
-const persistedQueryKey = (queryHash: string) => `query.${queryHash}` as const;
-
-async function evictQuery({ queryKey, queryHash }: { queryKey: QueryKey; queryHash: string }, reason?: string) {
-	await setPreference(persistedQueryKey(queryHash), null);
-	log(`%o was evicted${reason ? ` due to ${reason}` : ""}.`, queryKey);
-}
+const defaultCacheTime = ms("1d");
 
 export async function saveQueries() {
 	log("%s()", saveQueries.name);
 	const queries = queryCache.getAll();
 
-	await Promise.all(queries.map(async ({
+	const eligibleQueries = queries.filter(({
 		queryKey,
 		queryHash,
 		state,
-		meta: { maxAge = defaultMaxAge } = {}
+		meta: { cacheTime = defaultCacheTime } = {}
 	}) => {
-		if (!queryKey || !queryHash || !state.dataUpdatedAt || maxAge === 0) return;
-		if (state.status !== "success") {
-			await evictQuery({ queryKey, queryHash }, "status");
-			return;
-		}
+		if (!queryKey || !queryHash || !state.dataUpdatedAt || cacheTime === 0) return false;
+		if (state.status !== "success") return false;
 
-		await setPreference<PersistedQuery>(persistedQueryKey(queryHash), {
-			k: queryKey,
-			h: queryHash,
-			v: cacheVersion,
-			a: maxAge,
-			s: state
-		});
+		return true;
+	}).map(({
+		queryKey,
+		queryHash,
+		state,
+		meta: { cacheTime } = {}
+	}) => ({
+		k: queryKey,
+		h: queryHash,
+		a: cacheTime,
+		s: state
 	}));
+
+	await setPreferences<QueryPreference>("queries", {
+		v: cacheVersion,
+		q: eligibleQueries
+	});
+}
+
+export async function evictQueries() {
+	log("%s()", evictQueries.name);
+	await setPreferences("queries", null);
 }
 
 export async function restoreQueries() {
 	log("%s()", restoreQueries.name);
 
-	const keys = (await listPreferences())
-		.filter((key) => key.startsWith(persistedQueryKey("")))
-		.sort();
+	const { v: version, q: potentialQueries } = await getPreferences<QueryPreference>("queries") || { v: cacheVersion, q: [] };
 
-	await Promise.all(keys.map(async (key) => {
-		const {
-			k: queryKey,
-			h: queryHash,
-			v: version,
-			a: maxAge,
-			s: state
-		} = (await getPreference<PersistedQuery>(key))!;
+	if (version !== cacheVersion) {
+		log("Cache version mismatch.");
+		await evictQueries();
 
-		if (!version || version !== cacheVersion) {
-			await evictQuery({ queryKey, queryHash }, "version mismatch");
-			return;
-		}
+		return;
+	}
 
-		if (!maxAge || Date.now() - state.dataUpdatedAt > maxAge) {
-			await evictQuery({ queryKey, queryHash }, "age");
-			return;
-		}
+	const queries = potentialQueries.map(({
+		k: queryKey,
+		h: queryHash,
+		a: cacheTime = defaultCacheTime,
+		s: state
+	}) => {
+		if (Date.now() - state.dataUpdatedAt > Math.min(cacheTime, defaultCacheTime)) return null;
+		if (state.status !== "success") return null;
 
-		queryCache.build(queryClient, { queryKey, queryHash }, state);
-		// log("%o was restored: %o", queryKey, state.data);
-	}));
+		return queryCache.build(queryClient, { queryKey, queryHash }, state);
+	}).filter(Boolean);
 
-	log("%s() => %O", restoreQueries.name, new Map(queryCache.getAll().map(({ queryKey, state: { data } }) => [queryKey, data])));
+	log("%s() => %O", restoreQueries.name, new Map(queries.map(({ queryKey, state: { data } }) => [queryKey, data])));
 }
 
 let usedQuery = false;
@@ -252,6 +252,18 @@ export function useQuery<
 	return use(promise);
 }
 
+export function useQueryState(queryKey: QueryKey) {
+	const queryHash = hashKey(queryKey);
+	const [state, setState] = useState(() => queryClient.getQueryState(queryKey));
+
+	useEffect(() => queryCache.subscribe(({ query, }) => {
+		if (query.queryHash !== queryHash) return;
+		setState(query.state);
+	}));
+
+	return state;
+}
+
 export function useMutation<T = unknown, Variables = void, Context = unknown>({
 	mutationKey,
 	onSuccess,
@@ -284,7 +296,7 @@ export function preload<K extends QueryKey = QueryKey>(
 	queryFn: UseQueryOptions<unknown, unknown, unknown, K>["queryFn"],
 	options: Omit<FetchQueryOptions<unknown, unknown, unknown, K>, "queryFn" | "queryKey"> = {}
 ) {
-	log("%s(%o)", preload.name, queryKey);
+	// log("%s(%o)", preload.name, queryKey);
 
 	return queryClient.prefetchQuery({
 		...options,
@@ -298,9 +310,11 @@ export function preload<K extends QueryKey = QueryKey>(
  */
 export async function mutate<T>(queryKey: QueryKey, data: Dispatch<T> | T) {
 	await queryClient.cancelQueries({ queryKey });
-	queryClient.setQueryData(queryKey, (previous) => {
-		const newData = typeof data === "function" ? data(previous) : data;
+
+	queryClient.setQueryData<T>(queryKey, (previous) => {
+		const newData = typeof data === "function" ? (data as any)(previous) : data;
 		log("%s(%o) => %o", mutate.name, queryKey, newData);
+
 		return newData;
 	});
 }

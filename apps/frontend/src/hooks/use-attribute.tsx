@@ -14,7 +14,7 @@ export function useAttributes<T extends AttributeType>(type: T): AttributeCollec
 		queryKey: attributeKey(type),
 		queryFn: attributeFetcher<T>,
 		meta: {
-			maxAge: ms("30d")
+			cacheTime: ms("30d")
 		}
 	});
 }

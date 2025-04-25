@@ -150,7 +150,7 @@ export const ConversationChatbox: React.FC<
 	const session = useTalkjs();
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
-	const { sessionTheme } = useTheme();
+	const [,,{ sessionTheme }] = useTheme();
 	const { native, vision } = useDevice();
 	const { talkjs_match_message, talkjs_input_placeholder } = useMessages();
 	const locale = useLocale();

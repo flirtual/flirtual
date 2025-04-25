@@ -23,6 +23,7 @@ export function redirect(options: Parameters<typeof _redirect>[0]) {
 }
 
 export {
+	notFound,
 	useParams,
 	useSearchParams
 } from "next/navigation";

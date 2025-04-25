@@ -1,3 +1,4 @@
+import { P } from "ts-pattern";
 import wretch, { type ConfiguredMiddleware } from "wretch";
 import AbortAddon from "wretch/addons/abort";
 import QueryAddon from "wretch/addons/queryString";
@@ -34,6 +35,14 @@ export interface Paginate<T> {
 		limit: number;
 	};
 }
+
+export const emptyPaginate: Paginate<unknown> = {
+	entries: [],
+	metadata: {
+		page: 0,
+		limit: 0
+	}
+};
 
 export type PaginateOptions<T> = {
 	limit?: number;

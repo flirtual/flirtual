@@ -21,6 +21,7 @@ import {
 } from "react";
 import { entries, groupBy, prop, sortBy } from "remeda";
 import { twMerge } from "tailwind-merge";
+import { withSuspense } from "with-suspense";
 
 import { Conversation } from "~/api/conversations";
 import { type ListReportOptions, Report } from "~/api/report";
@@ -39,8 +40,7 @@ import { useOptionalSession } from "~/hooks/use-session";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
-import { withSuspense } from "with-suspense";
-import { useQuery } from "~/query";
+import { invalidate, useMutation, useQuery } from "~/query";
 import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";
 
@@ -49,11 +49,17 @@ interface ProfileReportViewProps {
 	reports: Array<Report>;
 }
 
-function useReports(options: ListReportOptions = {}) {
+const reportsKey = (options: ListReportOptions) => ["reports", options] as const;
+
+function useReports(options: ListReportOptions = {}): Array<Report> {
 	return useQuery({
-		queryKey: ["reports", options],
-		queryFn: () => Report.list(options),
-		placeholderData: []
+		queryKey: reportsKey(options),
+		queryFn: ({ queryKey: [, options] }) => Report.list(options),
+		placeholderData: [],
+		staleTime: 0,
+		meta: {
+			cacheTime: 0
+		}
 	});
 }
 
@@ -109,7 +115,20 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 
 	const activeReports = reports.filter((report) => !report.reviewedAt);
 
-	const { mutate } = useReports();
+	const { mutateAsync: clearAll } = useMutation({
+		mutationFn: () => Report.clearAll(targetId!),
+		onSuccess: ({ count }) =>
+			toasts.add(t("cleared_count_reports", { count })),
+		onError: toasts.addError,
+		onSettled: () => invalidate({ queryKey: ["reports"] })
+	});
+
+	const { mutateAsync: clear } = useMutation({
+		mutationFn: (reportId: string) => Report.clear(reportId),
+		onSuccess: () => toasts.add(t("cleared_single_report")),
+		onError: toasts.addError,
+		onSettled: () => invalidate({ queryKey: ["reports"] })
+	});
 
 	return (
 		<>
@@ -155,13 +174,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 										<button
 											className="h-fit"
 											type="button"
-											onClick={() =>
-												Report.clearAll(targetId)
-													.then(({ count }) =>
-														toasts.add(t("cleared_count_reports", { count }))
-													)
-													.catch(toasts.addError)
-													.finally(mutate)}
+											onClick={() => clearAll()}
 										>
 											<ShieldCheck className="size-6 text-green-600" />
 										</button>
@@ -251,12 +264,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 															<TooltipTrigger asChild>
 																<button
 																	type="button"
-																	onClick={async () => {
-																		await Report.clear(report.id);
-
-																		toasts.add(t("cleared_single_report"));
-																		await mutate();
-																	}}
+																	onClick={() => clear(report.id)}
 																>
 																	<Check className="size-5 text-green-600" />
 																</button>
@@ -339,7 +347,7 @@ export const ReportView: React.FC = () => {
 		indefShadowbanned: false
 	});
 
-	const { data: reports = [] } = useReports(options);
+	const reports = useReports(options);
 
 	const grouped = useMemo(
 		() => groupBy(reports, ({ targetId }) => targetId),

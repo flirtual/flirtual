@@ -44,7 +44,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		},
 		placeholderData: null,
 		meta: {
-			maxAge: 0
+			cacheTime: 0
 		}
 	});
 
@@ -62,7 +62,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		enabled: native,
 		placeholderData: "denied" as const,
 		meta: {
-			maxAge: 0
+			cacheTime: 0
 		}
 	});
 
@@ -123,7 +123,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		},
 		placeholderData: null,
 		meta: {
-			maxAge: 0
+			cacheTime: 0
 		}
 	});
 

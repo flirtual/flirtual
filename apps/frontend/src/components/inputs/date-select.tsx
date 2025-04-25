@@ -165,7 +165,7 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 	max
 }) => {
 	const [selectedDate, setSelectedDate] = useState(value);
-	const { sessionTheme } = useTheme();
+	const [,,{ sessionTheme }] = useTheme();
 
 	const openDatePicker = async () => {
 		try {

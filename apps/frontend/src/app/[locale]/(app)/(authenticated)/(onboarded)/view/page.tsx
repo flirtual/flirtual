@@ -1,10 +1,10 @@
 "use client";
 
-import { type FC, Suspense, use } from "react";
+import type { FC } from "react";
 
 import { Profile } from "~/components/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { notFound } from "~/i18n/navigation";
+import { notFound, useSearchParams } from "~/i18n/navigation";
 
 import { QueueActions } from "../browse/queue-actions";
 
@@ -26,20 +26,14 @@ const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 	);
 };
 
-export const dynamic = "force-dynamic";
-
-export default function ProfilePage({ params }: { params: Promise<{ slug: string }> }) {
-	const { slug } = use(params);
-
-	const user = useUser(slug);
-	if (!user) return notFound();
+export default function ProfilePage() {
+	const userId = useSearchParams().get("");
+	if (!userId) notFound();
 
 	return (
 		<>
-			<Profile direct userId={user.id} />
-			<Suspense>
-				<ProfileQueueActions userId={user.id} />
-			</Suspense>
+			<Profile direct userId={userId} />
+			<ProfileQueueActions userId={userId} />
 		</>
 	);
 }

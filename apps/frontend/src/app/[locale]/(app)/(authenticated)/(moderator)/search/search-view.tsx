@@ -14,6 +14,8 @@ import { type FC, Suspense, useDeferredValue, useEffect, useState } from "react"
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
+import type { Paginate } from "~/api/common";
+import { emptyPaginate } from "~/api/common";
 import {
 	displayName,
 	type SearchOptions,
@@ -249,11 +251,10 @@ export const columns: Array<ColumnDef<string>> = [
 	}
 ];
 
-const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pending: boolean }> = ({
+const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number }> = ({
 	data,
 	admin,
-	limit,
-	pending
+	limit
 }) => {
 	const table = useReactTable({
 		data,
@@ -285,17 +286,14 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 							<>
 								{table.getRowModel().rows.map((row) => (
 									<TableRow
-										className={twMerge("h-20", pending && "opacity-50")}
+										className="h-20"
 										data-state={row.getIsSelected() && "selected"}
 										key={row.id}
 									>
 										<Suspense fallback={(
 											<TableCell colSpan={row.getVisibleCells().length}>
 												<span className="truncate text-xs brightness-75">
-													Loading profile:
-													{" "}
 													{row.original}
-													...
 												</span>
 											</TableCell>
 										)}
@@ -308,13 +306,6 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number; pendin
 										</Suspense>
 									</TableRow>
 								))}
-								{pending && (
-									<tr>
-										<td className="absolute inset-0 flex items-center justify-center">
-											<span>Loading...</span>
-										</td>
-									</tr>
-								)}
 							</>
 						)
 					: (
@@ -359,8 +350,8 @@ export const SearchView: React.FC = () => {
 	// Reset page when the search options change.
 	useEffect(() => setPage(1), [deferredOptions]);
 
-	const { data, isLoading } = useQuery({
-		queryKey: ["users/search", deferredOptions, { page: deferredPage }],
+	const data = useQuery({
+		queryKey: ["users", deferredOptions, { page: deferredPage }],
 		queryFn: () => {
 			return User.search(
 				Object.fromEntries(
@@ -371,6 +362,11 @@ export const SearchView: React.FC = () => {
 					}).filter(([, value]) => !!value)
 				)
 			);
+		},
+		placeholderData: emptyPaginate as Paginate<string>,
+		staleTime: 0,
+		meta: {
+			cacheTime: 0
 		}
 	});
 
@@ -470,7 +466,6 @@ export const SearchView: React.FC = () => {
 					admin={user?.tags?.includes("admin") ?? false}
 					data={data.entries}
 					limit={data.metadata.limit}
-					pending={isLoading}
 				/>
 				<div className="flex items-center justify-end gap-2">
 					<div className="grow brightness-75">

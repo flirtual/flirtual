@@ -5,14 +5,12 @@ import { Undo2, X } from "lucide-react";
 import ms from "ms";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import { useRouter } from "~/i18n/navigation";
 import {
 	type FC,
 	Suspense,
 	useCallback,
 	useEffect
 } from "react";
-import { type Key, mutate } from "~/query";
 import useMutation from "swr/mutation";
 import { match, P } from "ts-pattern";
 
@@ -44,6 +42,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useDefaultTour } from "~/hooks/use-tour";
 import { useUser } from "~/hooks/use-user";
+import { useRouter } from "~/i18n/navigation";
 import { queueKey, relationshipKey } from "~/query";
 import { urls } from "~/urls";
 import { newConversationId } from "~/utilities";

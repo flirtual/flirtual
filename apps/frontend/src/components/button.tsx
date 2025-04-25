@@ -15,6 +15,7 @@ const defaultClassName = twMerge(
 );
 
 const sizes = {
+	xs: "px-3 h-8 text-xs",
 	sm: "px-6 h-11",
 	// base: "py-4 px-8 text-xl"
 } as const;

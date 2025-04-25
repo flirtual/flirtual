@@ -1,43 +1,16 @@
 "use client";
 
-import { Preferences } from "@capacitor/preferences";
 import { useDebugValue } from "react";
 
+import { setPreferences } from "~/preferences";
 import {
 	preferencesFetcher,
 	preferencesKey,
 	useMutation,
-	useQuery,
+	useQuery
 } from "~/query";
 
 import { usePostpone } from "./use-postpone";
-
-await Preferences.configure({ group: "" });
-
-export async function getPreference<T>(key: string) {
-	const { value: localValue } = await Preferences.get({ key });
-
-	return localValue
-		? (JSON.parse(localValue) as T)
-		: null;
-}
-
-export async function setPreference<T>(key: string, value: T | null): Promise<void> {
-	if (value == null) {
-		await Preferences.remove({ key });
-		return;
-	}
-
-	await Preferences.set({
-		key,
-		value: JSON.stringify(value)
-	});
-}
-
-export async function listPreferences(): Promise<Array<string>> {
-	const { keys } = await Preferences.keys();
-	return keys;
-}
 
 /**
  * A hook for getting and setting preferences.
@@ -56,12 +29,15 @@ export function usePreferences<T>(key: string, defaultValue?: T) {
 		queryKey,
 		queryFn: preferencesFetcher<T>,
 		placeholderData: defaultValue,
+		meta: {
+			cacheTime: 0,
+		}
 	});
 
 	const { mutateAsync } = useMutation({
 		mutationKey: queryKey,
 		mutationFn: async (newValue: T | null) => {
-			await setPreference(key, newValue);
+			await setPreferences(key, newValue);
 			return newValue;
 		},
 	});

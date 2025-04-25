@@ -9,7 +9,7 @@ export function useShare() {
 		queryFn: async () => (await Share.canShare().catch(() => ({ value: false }))).value,
 		placeholderData: false,
 		meta: {
-			maxAge: 0
+			cacheTime: 0
 		}
 	});
 

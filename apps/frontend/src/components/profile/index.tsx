@@ -9,7 +9,7 @@ import { displayName } from "~/api/user";
 import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
 import { yearsAgo } from "~/date";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
@@ -35,16 +35,22 @@ export type ProfileProps = {
 	hideModeratorInfo?: boolean;
 } & ComponentProps<"div">;
 
-export function Profile(props: ProfileProps) {
-	const { userId, direct = false, hideModeratorInfo = false, className, id, ...elementProps } = props;
+export function Profile({
+	userId,
+	direct = false,
+	hideModeratorInfo = false,
+	className,
+	id,
+	...elementProps
+}: ProfileProps) {
+	const session = useSession();
 
-	const session = useOptionalSession();
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
 
 	const t = useTranslations();
 
-	if (!session || !user) return null;
+	if (!user) return null;
 
 	if (relationship?.blocked) return <BlockedProfile user={user} />;
 	const myProfile = session.user.id === user.id;

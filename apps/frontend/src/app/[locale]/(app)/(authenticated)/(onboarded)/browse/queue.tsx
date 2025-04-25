@@ -7,7 +7,7 @@ import { type FC, useEffect } from "react";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { User } from "~/api/user";
-import { Profile } from "~/components/profile/profile";
+import { Profile } from "~/components/profile";
 import { useQueue } from "~/hooks/use-queue";
 import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { userKey } from "~/query";

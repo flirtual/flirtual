@@ -19,7 +19,7 @@ const safeArea: SafeAreaConfig = {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function applyDocumentMutations() {
-	log(applyDocumentMutations.name);
+	log("%s()", applyDocumentMutations.name);
 
 	const theme = getTheme();
 	const { platform, native, vision } = device;
