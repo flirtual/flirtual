@@ -956,5 +956,11 @@
 	"april_fools_year": "{year}年エイプリルフール",
 	"bad_jumpy_sheep_gasp": "これには、サポートとのやりとりに役立つ機密のデバッグ情報が含まれています。",
 	"change_language": "言語を変更する",
-	"font_size": "文字サイズ"
+	"font_size": "文字サイズ",
+	"tiny": "小さい",
+	"extra_small": "特小",
+	"small": "小さい",
+	"large": "大きい",
+	"extra_large": "特大",
+	"huge": "巨大"
 }

@@ -239,17 +239,26 @@ const ProfileColorSelect: FC = () => {
 	);
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const defaultFontSize = 16;
+const fontSizeNamed = {
+	12: "tiny",
+	13.33: "extra_small",
+	14.67: "small",
+	[defaultFontSize]: "default",
+	17.33: "large",
+	18.67: "extra_large",
+	20: "huge"
+} as const;
+
+type FontSize = keyof typeof fontSizeNamed;
+type NamedFontSize = typeof fontSizeNamed[FontSize];
 
 const InputFontSize: FC = () => {
-	const [fontSize, setFontSize] = usePreferences("font_size", defaultFontSize);
-	const fontMultiplier = fontSize / defaultFontSize;
+	const [fontSize, setFontSize] = usePreferences<FontSize>("font_size", defaultFontSize);
+	const namedSize = fontSizeNamed[fontSize] as NamedFontSize;
 
 	const t = useTranslations();
-
-	useEffect(() => {
-		applyDocumentMutations();
-	}, [fontSize]);
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -258,18 +267,21 @@ const InputFontSize: FC = () => {
 					className="ml-auto cursor-pointer"
 					onClick={() => setFontSize(defaultFontSize)}
 				>
-					{t("number_multiplier", { number: Math.round(fontMultiplier * 100) / 100 })}
+					{t(namedSize)}
 				</InputLabelHint>
 			)}
 			>
 				{t("font_size")}
 			</InputLabel>
 			<Slider
-				defaultValue={[fontSize]}
 				max={20}
 				min={12}
 				step={1.3333}
-				onValueCommit={([value]) => setFontSize(value!)}
+				value={[fontSize]}
+				onValueChange={async ([value]) => {
+					await setFontSize((Math.round(value! * 100) / 100) as FontSize);
+					await applyDocumentMutations();
+				}}
 			/>
 		</div>
 	);

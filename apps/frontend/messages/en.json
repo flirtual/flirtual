@@ -832,7 +832,7 @@
 	"warm_gray_poodle_reap": "Be careful: if your real name or other personal information is on your music streaming profile, it will be public.",
 	"profile_colors": "Profile colors",
 	"theme": "Theme",
-	"default": "default",
+	"default": "Default",
 	"peachy_petal": "Peachy Petal",
 	"minty_fresh": "Minty Fresh",
 	"3d_movie": "3D Movie",
@@ -962,5 +962,11 @@
 	"dark_theme_preview": "Dark theme preview",
 	"system_theme_preview": "System theme preview",
 	"change_language": "Change language",
-	"font_size": "Font size"
+	"font_size": "Font size",
+	"tiny": "Tiny",
+	"extra_small": "Extra small",
+	"small": "Small",
+	"large": "Large",
+	"extra_large": "Extra large",
+	"huge": "Huge"
 }
