@@ -70,7 +70,7 @@ export const QueueActions: FC<{
 		<div className="flex h-32 w-full items-center justify-center">
 			<div className="fixed bottom-24 z-20 flex flex-col items-center justify-center gap-2">
 				<QueueDebugger kind={mode} />
-				<div className="flex gap-2">
+				<div className="flex items-center gap-2 text-white-10">
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<motion.button

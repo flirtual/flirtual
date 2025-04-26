@@ -172,6 +172,7 @@ export async function saveQueries() {
 
 export async function evictQueries() {
 	log("%s()", evictQueries.name);
+	queryCache.clear();
 	await setPreferences("queries", null);
 }
 
