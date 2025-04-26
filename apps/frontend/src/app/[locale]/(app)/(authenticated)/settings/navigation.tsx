@@ -22,8 +22,6 @@ import {
 	X
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-// eslint-disable-next-line no-restricted-imports
-import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -33,7 +31,8 @@ import { gitCommitSha } from "~/const";
 import { openFeedback } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
-import { logout, useOptionalSession } from "~/hooks/use-session";
+import { logout, useSession } from "~/hooks/use-session";
+import { useRouter, useSelectedLayoutSegment } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -41,11 +40,13 @@ import { NavigationHeader } from "./navigation-header";
 import { NavigationLink } from "./navigation-link";
 
 export const SettingsNavigation: FC = () => {
-	const layoutSegment = useSelectedLayoutSegment();
-	const { openFreshworks } = useFreshworks();
-	const session = useOptionalSession();
+	const session = useSession();
 	const { vision } = useDevice();
+
 	const router = useRouter();
+	const layoutSegment = useSelectedLayoutSegment();
+
+	const { openFreshworks } = useFreshworks();
 	const t = useTranslations();
 
 	return (
@@ -124,7 +125,7 @@ export const SettingsNavigation: FC = () => {
 						<NavigationLink href={urls.subscription.default} Icon={Sparkles}>
 							{t("premium")}
 						</NavigationLink>
-						<NavigationLink href={urls.settings.appearance} Icon={Paintbrush}>
+						<NavigationLink newBadge href={urls.settings.appearance} Icon={Paintbrush}>
 							{t("appearance")}
 						</NavigationLink>
 						<NavigationLink href={urls.settings.privacy} Icon={EyeOff}>

@@ -25,5 +25,6 @@ export function redirect(options: Parameters<typeof _redirect>[0]) {
 export {
 	notFound,
 	useParams,
-	useSearchParams
+	useSearchParams,
+	useSelectedLayoutSegment
 } from "next/navigation";

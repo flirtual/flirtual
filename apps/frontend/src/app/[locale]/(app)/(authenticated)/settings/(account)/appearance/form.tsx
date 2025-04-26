@@ -11,7 +11,7 @@ import type { Session } from "~/api/auth";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile, type ProfileColors } from "~/api/user/profile";
 import { applyDocumentMutations } from "~/app/[locale]/lazy-layout";
-import { PremiumBadge } from "~/components/badge";
+import { NewBadge, PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
@@ -272,6 +272,8 @@ const InputFontSize: FC = () => {
 			)}
 			>
 				{t("font_size")}
+				{" "}
+				<NewBadge className="inline-block" />
 			</InputLabel>
 			<Slider
 				max={20}
@@ -315,7 +317,11 @@ export const AppearanceForm: FC = () => {
 						</InputLabelHint>
 					)}
 				>
-					{t("language")}
+					<span>
+						{t("language")}
+						{" "}
+						<NewBadge className="inline-block" />
+					</span>
 				</InputLabel>
 				<InputLanguageSelect />
 			</div>
