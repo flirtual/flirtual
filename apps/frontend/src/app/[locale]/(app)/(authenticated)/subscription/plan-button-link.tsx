@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogTitle } from "~/components/dialog/dialog";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useToast } from "~/hooks/use-toast";
 
+import { LoadingIndicator } from "../../loading-indicator";
 import type { PlanCardProps } from "./plan-card";
 
 export const PlanButtonLink: FC<
@@ -38,19 +39,22 @@ export const PlanButtonLink: FC<
 					}}
 				>
 					<DialogTitle className="sr-only">{t("purchase")}</DialogTitle>
-					<DialogContent className="w-fit overflow-hidden p-0">
-						{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
-						<iframe
-							className="max-h-[90vh] max-w-full rounded-[1.25rem] bg-[#f4f5f9]"
-							height={561}
-							src={purchaseUrl}
-							width={479}
-						/>
+					<DialogContent className="max-w-[min(489px,95svw)] overflow-hidden desktop:w-fit" closable={false}>
+						<div className="flex items-center justify-center rounded-[1.25rem] bg-white-10">
+							<LoadingIndicator className="absolute min-h-0" />
+							{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
+							<iframe
+								className="z-10 max-h-[90vh] max-w-full rounded-[1.25rem] bg-transparent"
+								height={561}
+								src={purchaseUrl}
+								width={479}
+							/>
+						</div>
 					</DialogContent>
 				</Dialog>
 			)}
 			<Button
-				className={twMerge("relative my-auto flex h-fit", !highlight && "vision:bg-white-10")}
+				className={twMerge("relative my-auto flex", !highlight && "vision:bg-white-10")}
 				disabled={disabled || pending}
 				Icon={pending ? Loader2 : undefined}
 				iconClassName="animate-spin absolute left-2 h-5"
