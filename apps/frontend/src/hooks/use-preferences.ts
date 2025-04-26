@@ -17,7 +17,9 @@ import { usePostpone } from "./use-postpone";
  *
  * @see [Capacitor.js Preferences Plugin](https://capacitorjs.com/docs/apis/preferences)
  */
-export function usePreferences<T>(key: string, defaultValue?: T) {
+export function usePreferences<T>(key: string): [T | null, (value: T | null) => Promise<T | null>];
+export function usePreferences<T>(key: string, defaultValue: T): [T, (value: T | null) => Promise<T | null>];
+export function usePreferences<T>(key: string, defaultValue?: T): [T | null, (value: T | null) => Promise<T | null>] {
 	useDebugValue(key);
 
 	// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -42,5 +44,5 @@ export function usePreferences<T>(key: string, defaultValue?: T) {
 		},
 	});
 
-	return [(data ?? defaultValue), mutateAsync] as const;
+	return [(data ?? defaultValue ?? null), mutateAsync] as const;
 }
