@@ -13,6 +13,8 @@ export const {
 	locales
 } = routing;
 
+export const localePathnameRegex = new RegExp(`^/(${locales.join("|")})`);
+
 export const localeNames: Record<Locale, string> = {
 	en: "English",
 	// de: "Deutsch",

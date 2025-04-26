@@ -9,6 +9,7 @@ import { withSuspense } from "with-suspense";
 import { device } from "~/hooks/use-device";
 import { getTheme } from "~/hooks/use-theme";
 import { usePathname } from "~/i18n/navigation";
+import { localePathnameRegex } from "~/i18n/routing";
 import { log } from "~/log";
 import { getPreferences } from "~/preferences";
 
@@ -26,11 +27,9 @@ export async function applyDocumentMutations() {
 	log("%s()", applyDocumentMutations.name);
 
 	const theme = getTheme();
-	const themeStyle = location.pathname === "/discover/friends"
-		? "friend"
-		: "default";
+	const themeStyle = location.pathname.replace(localePathnameRegex, "") === "/discover/friends" 
+	? "friend" : "default";
 
-	// const fontSize = await getPreferences<number>("font_size") || defaultFontSize;
 	const fontSize = await getPreferences<number>("font_size") || 16;
 	document.documentElement.style.setProperty("font-size", `${fontSize}px`);
 
