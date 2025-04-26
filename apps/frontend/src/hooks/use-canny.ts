@@ -76,8 +76,8 @@ export async function openChangelog() {
 	Canny("initChangelog", {
 		appID: cannyAppId,
 		position: isDesktop()
-			? "top"
-			: "bottom",
+			? "bottom"
+			: "top",
 		align: "left",
 		// theme: resolveTheme(sessionTheme)
 	});
