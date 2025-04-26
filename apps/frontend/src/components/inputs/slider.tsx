@@ -13,7 +13,7 @@ export function Slider({ className, ...props }: React.ComponentProps<typeof Slid
 			)}
 			{...props}
 		>
-			<SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-black-50 shadow-brand-1">
+			<SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-white-40 shadow-brand-1 dark:bg-black-50">
 				<SliderPrimitive.Range className="absolute h-full bg-brand-gradient data-[disabled]:bg-black-20 data-[disabled]:bg-none" />
 			</SliderPrimitive.Track>
 			{(props.value || props.defaultValue)?.map((_, index) => (
