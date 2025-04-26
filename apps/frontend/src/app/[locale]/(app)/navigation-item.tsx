@@ -45,6 +45,12 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 						"absolute inset-0 rounded-full bg-black-90 bg-brand-gradient shadow-brand-1 transition-colors",
 						rankedMode && props.id === "date-mode-switch" && "!bg-[url('https://static.flirtual.com/ranked.jpg')] bg-cover bg-center"
 					)}
+					transition={{
+						type: "spring",
+						duration: 0.5,
+						ease: "easeInOut",
+						bounce: 0.25
+					}}
 					layoutId="switch-indicator"
 				/>
 			)}

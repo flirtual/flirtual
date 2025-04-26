@@ -48,6 +48,12 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 							? "start"
 							: "end"
 					}}
+					transition={{
+						type: "spring",
+						duration: 0.3,
+						ease: "easeInOut",
+						bounce: 0.25
+					}}
 					className="absolute inset-0 w-1/2 rounded-xl bg-brand-gradient"
 				/>
 			)}
