@@ -10,6 +10,9 @@ import { device } from "~/hooks/use-device";
 import { getTheme } from "~/hooks/use-theme";
 import { usePathname } from "~/i18n/navigation";
 import { log } from "~/log";
+import { getPreferences } from "~/preferences";
+
+// import { defaultFontSize } from "./(app)/(authenticated)/settings/(account)/appearance/form";
 
 const safeArea: SafeAreaConfig = {
 	customColorsForSystemBars: true,
@@ -26,6 +29,10 @@ export async function applyDocumentMutations() {
 	const themeStyle = location.pathname === "/discover/friends"
 		? "friend"
 		: "default";
+
+	// const fontSize = await getPreferences<number>("font_size") || defaultFontSize;
+	const fontSize = await getPreferences<number>("font_size") || 16;
+	document.documentElement.style.setProperty("font-size", `${fontSize}px`);
 
 	const { platform, native, vision } = device;
 

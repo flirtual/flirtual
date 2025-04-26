@@ -10,12 +10,14 @@ import { twMerge } from "tailwind-merge";
 import type { Session } from "~/api/auth";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile, type ProfileColors } from "~/api/user/profile";
+import { applyDocumentMutations } from "~/app/[locale]/lazy-layout";
 import { PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
 import { useRouter } from "~/i18n/navigation";
@@ -237,14 +239,17 @@ const ProfileColorSelect: FC = () => {
 	);
 };
 
-const defaultFontSize = 16;
+export const defaultFontSize = 16;
 
 const InputFontSize: FC = () => {
-	const [fontSize, setFontSize] = useState(defaultFontSize);
+	const [fontSize, setFontSize] = usePreferences("font_size", defaultFontSize);
 	const fontMultiplier = fontSize / defaultFontSize;
 
 	const t = useTranslations();
-	document.documentElement.style.setProperty("font-size", `${fontSize}px`);
+
+	useEffect(() => {
+		applyDocumentMutations();
+	}, [fontSize]);
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -261,10 +266,10 @@ const InputFontSize: FC = () => {
 			</InputLabel>
 			<Slider
 				defaultValue={[fontSize]}
-				max={18}
-				min={14}
-				step={0.25}
-				onValueChange={([value]) => setFontSize(value!)}
+				max={20}
+				min={12}
+				step={1.3333}
+				onValueCommit={([value]) => setFontSize(value!)}
 			/>
 		</div>
 	);

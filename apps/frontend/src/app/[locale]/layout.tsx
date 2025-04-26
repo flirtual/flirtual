@@ -128,7 +128,10 @@ const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" 
 const theme = sessionTheme === "system" ? prefersDark : sessionTheme;
 const themeStyle = location.pathname === "/discover/friends" ? "friend" : "default";
 
-Object.assign(document.body.dataset, { theme, themeStyle });`}
+Object.assign(document.body.dataset, { theme, themeStyle });
+
+const fontSize = JSON.parse(localStorage.getItem(".font_size") || "16") || 16;
+document.documentElement.style.setProperty("font-size", fontSize + "px");`}
 				</script>
 				<NextIntlClientProvider messages={messages}>
 					<LazyLayout />
