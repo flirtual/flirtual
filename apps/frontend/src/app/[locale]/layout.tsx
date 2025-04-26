@@ -20,6 +20,7 @@ import { bucketOrigins, urls } from "~/urls";
 import { fontClassNames } from "../fonts";
 import { LoadingIndicator } from "./(app)/loading-indicator";
 import { LazyLayout } from "./lazy-layout";
+import { LocalizationPolyfill } from "./localization-polyfill";
 import { StagingBanner } from "./staging-banner";
 
 import "../index.css";
@@ -119,6 +120,7 @@ export default async function LocaleLayout({
 					href={SafariPinnedTabImage.src}
 					rel="mask-icon"
 				/>
+				<LocalizationPolyfill />
 			</head>
 			<body
 				suppressHydrationWarning
@@ -129,7 +131,7 @@ export default async function LocaleLayout({
 const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 const theme = sessionTheme === "system" ? prefersDark : sessionTheme;
-const themeStyle = location.pathname === "/discover/friends" ? "friend" : "default";
+const themeStyle = location.pathname === ${JSON.stringify(urls.discover("friends"))} ? "friend" : "default";
 
 Object.assign(document.body.dataset, { theme, themeStyle });
 
