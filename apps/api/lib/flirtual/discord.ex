@@ -49,7 +49,7 @@ defmodule Flirtual.Discord do
   defp deliver_webhook(name, body, token) do
     with {:ok, %HTTPoison.Response{status_code: 204}} <-
            HTTPoison.post(
-             url("webhooks/" <> token),
+             url("webhooks/" <> token <> "?with_components=true"),
              Poison.encode!(body),
              [{"content-type", "application/json"}]
            ) do
@@ -221,6 +221,19 @@ defmodule Flirtual.Discord do
           footer: webhook_author_footer(moderator),
           timestamp: DateTime.to_iso8601(user.banned_at)
         }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
       ]
     })
   end
@@ -237,6 +250,19 @@ defmodule Flirtual.Discord do
           color: @success_color,
           footer: webhook_author_footer(moderator),
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
         }
       ]
     })
@@ -282,6 +308,19 @@ defmodule Flirtual.Discord do
           footer: webhook_author_footer(moderator),
           timestamp: DateTime.to_iso8601(user.indef_shadowbanned_at)
         }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
       ]
     })
   end
@@ -319,6 +358,19 @@ defmodule Flirtual.Discord do
           footer: webhook_author_footer(moderator),
           timestamp: warned_at |> DateTime.to_iso8601()
         }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
       ]
     })
   end
@@ -354,6 +406,19 @@ defmodule Flirtual.Discord do
           description: "Warning: " <> message,
           color: @success_color,
           timestamp: warn_acknowledged_at |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
         }
       ]
     })
@@ -437,6 +502,19 @@ defmodule Flirtual.Discord do
           color: @default_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(report.target) |> URI.to_string()
+            }
+          ]
+        }
       ]
     })
   end
@@ -495,6 +573,19 @@ defmodule Flirtual.Discord do
           color: @warn_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
       ]
     })
   end
@@ -514,6 +605,19 @@ defmodule Flirtual.Discord do
           color: @default_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
         }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
+        }
       ]
     })
   end
@@ -526,6 +630,19 @@ defmodule Flirtual.Discord do
           title: "Registration honeypot tripped",
           color: @default_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
         }
       ]
     })
@@ -567,6 +684,19 @@ defmodule Flirtual.Discord do
           ],
           color: color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
         }
       ]
     })
@@ -611,6 +741,19 @@ defmodule Flirtual.Discord do
           ],
           color: @default_color,
           timestamp: DateTime.utc_now() |> DateTime.to_iso8601()
+        }
+      ],
+      components: [
+        %{
+          type: 1,
+          components: [
+            %{
+              type: 2,
+              label: "View profile",
+              style: 5,
+              url: User.url(user) |> URI.to_string()
+            }
+          ]
         }
       ]
     })
