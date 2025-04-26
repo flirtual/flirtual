@@ -26,6 +26,8 @@ export async function logout() {
 }
 
 export function useOptionalSession() {
+	usePostpone("useOptionalSession()");
+
 	return useQuery({
 		queryKey: sessionKey(),
 		queryFn: sessionFetcher,
