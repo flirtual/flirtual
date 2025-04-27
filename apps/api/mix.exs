@@ -74,7 +74,6 @@ defmodule Flirtual.MixProject do
       {:joken, "~> 2.5"},
       {:sentry, "~> 10.6.2"},
       {:bandit, "~> 1.6"},
-      {:plug_cowboy, "~> 2.5"},
       {:libcluster, "~> 3.3"},
       {:floki, "~> 0.36.0"},
       {:fast_html, "~> 2.0"},
@@ -86,8 +85,7 @@ defmodule Flirtual.MixProject do
       {:opentelemetry, "~> 1.0"},
       {:opentelemetry_api, "~> 1.0"},
       {:opentelemetry_ecto, "~> 1.0"},
-      {:opentelemetry_phoenix, "~> 1.0"},
-      {:opentelemetry_cowboy, "~> 0.2"},
+      {:opentelemetry_phoenix, "~> 2.0"},
       {:opentelemetry_bandit, "~> 0.2"},
       {:opentelemetry_oban, "~> 1.1"}
     ]

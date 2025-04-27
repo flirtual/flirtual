@@ -1,9 +1,8 @@
 defmodule Flirtual.Mailer do
   use Swoosh.Mailer, otp_app: :flirtual
-  # use Gettext, otp_app: :flirtual, backend: Flirtual.Gettext
+  use Gettext, backend: Flirtual.Gettext
 
   import Swoosh.Email
-  import Flirtual.Gettext
 
   defp get_origin() do
     Application.fetch_env!(:flirtual, :frontend_origin)

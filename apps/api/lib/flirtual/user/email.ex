@@ -1,7 +1,8 @@
 defmodule Flirtual.User.Email do
+  use Gettext, backend: Flirtual.Gettext
+
   alias Flirtual.Subscription
   alias Flirtual.User
-  import Flirtual.Gettext
 
   def deliver(%User{} = user, :suspended, message) do
     language = user.preferences.language || "en"

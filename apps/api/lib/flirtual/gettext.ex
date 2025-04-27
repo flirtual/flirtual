@@ -20,5 +20,5 @@ defmodule Flirtual.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :flirtual
+  use Gettext.Backend, otp_app: :flirtual
 end
