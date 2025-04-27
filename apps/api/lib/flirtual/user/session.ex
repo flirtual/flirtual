@@ -39,11 +39,6 @@ defmodule Flirtual.User.Session do
     |> DateTime.truncate(:second)
   end
 
-  def expired?(%Session{expire_at: expire_at, created_at: created_at}) do
-    now = DateTime.utc_now()
-    expire_at > now and created_at < DateTime.add(now, max_age(:absolute), :second)
-  end
-
   @hash_algorithm :sha256
   @rand_size 32
 
@@ -133,12 +128,12 @@ defmodule Flirtual.User.Session do
 
   def where_not_expired(query) do
     now = DateTime.utc_now()
-    absolute_expire_at = DateTime.add(now, max_age(:absolute), :second)
+    absolute_expire_at = DateTime.add(now, -max_age(:absolute), :second)
 
     query
     |> where(
       [session],
-      session.expire_at > ^now and session.created_at < ^absolute_expire_at
+      session.expire_at > ^now and session.created_at > ^absolute_expire_at
     )
   end
 

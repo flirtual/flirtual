@@ -19,7 +19,6 @@ defmodule Flirtual.Application do
 
     OpentelemetryOban.setup()
 
-    :ok = :opentelemetry_cowboy.setup()
     :ok = OpentelemetryBandit.setup()
     :ok = OpentelemetryPhoenix.setup(adapter: :bandit)
 
