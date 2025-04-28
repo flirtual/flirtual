@@ -3,6 +3,40 @@ defmodule Flirtual.ObanWorkers.Email do
 
   alias Flirtual.{Mailer, User}
 
+  defp send_email(recipient, options) do
+    with {:ok, _} <-
+           ExRated.check_rate(
+             "email",
+             1000,
+             Application.get_env(:flirtual, Flirtual.ObanWorkers)[:email_rate_limit]
+           ),
+         address <-
+           (case recipient do
+              %User{email: address} -> address
+              address when is_binary(address) -> address
+            end),
+         {:ok, tokens, _} <- :smtp_rfc5322_scan.string(String.to_charlist(address)),
+         {:ok, _} <- :smtp_rfc5322_parse.parse(tokens),
+         {:ok, email} <- Mailer.send(recipient, options) do
+      {:ok, email}
+    else
+      {:error, limit} when is_integer(limit) ->
+        {:snooze, 1}
+
+      {:error, %{code: "InvalidParameterValue", message: reason}} ->
+        {:cancel, reason}
+
+      {:error, {_, :smtp_rfc5322_parse, reason}} ->
+        {:cancel, reason}
+
+      {:error, reason} ->
+        {:error, reason}
+
+      reason ->
+        reason
+    end
+  end
+
   @impl Oban.Worker
   def perform(%Oban.Job{
         args:
@@ -14,32 +48,18 @@ defmodule Flirtual.ObanWorkers.Email do
             "type" => type
           } = args
       }) do
-    case ExRated.check_rate(
-           "email",
-           1000,
-           Application.get_env(:flirtual, Flirtual.ObanWorkers)[:email_rate_limit]
-         ) do
-      {:ok, _} ->
-        user = User.get(user_id)
-        language = Map.get(args, "language", user.preferences.language)
+    user = User.get(user_id)
 
-        from = Map.get(args, "from")
-        action_url = Map.get(args, "action_url")
-
-        Mailer.send(
-          user,
-          from: from,
-          language: language,
-          subject: subject,
-          action_url: action_url,
-          unsubscribe_token: if(type === "marketing", do: user.unsubscribe_token, else: nil),
-          body_text: body_text,
-          body_html: body_html
-        )
-
-      {:error, _} ->
-        {:snooze, 1}
-    end
+    send_email(
+      user,
+      from: Map.get(args, "from"),
+      language: Map.get(args, "language", user.preferences.language),
+      subject: subject,
+      action_url: Map.get(args, "action_url"),
+      unsubscribe_token: if(type === "marketing", do: user.unsubscribe_token),
+      body_text: body_text,
+      body_html: body_html
+    )
   end
 
   @impl Oban.Worker
@@ -52,26 +72,13 @@ defmodule Flirtual.ObanWorkers.Email do
             "body_html" => body_html
           } = args
       }) do
-    case ExRated.check_rate(
-           "email",
-           1000,
-           Application.get_env(:flirtual, Flirtual.ObanWorkers)[:email_rate_limit]
-         ) do
-      {:ok, _} ->
-        from = Map.get(args, "from")
-        language = Map.get(args, "language")
-
-        Mailer.send(
-          to,
-          from: from,
-          language: language,
-          subject: subject,
-          body_text: body_text,
-          body_html: body_html
-        )
-
-      {:error, _} ->
-        {:snooze, 1}
-    end
+    send_email(
+      to,
+      from: Map.get(args, "from"),
+      language: Map.get(args, "language"),
+      subject: subject,
+      body_text: body_text,
+      body_html: body_html
+    )
   end
 end
