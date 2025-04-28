@@ -173,7 +173,7 @@ export const urls = {
 		download: "/download",
 		events: "/events",
 		invite: "/invite",
-		networkStatus: "https://status.flirtu.al",
+		networkStatus: "https://status.flirtual.net",
 		press: "/press",
 		pressEmail: "mailto:press@flirtu.al",
 		branding: "/branding",
