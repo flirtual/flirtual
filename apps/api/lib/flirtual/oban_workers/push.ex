@@ -14,17 +14,26 @@ defmodule Flirtual.ObanWorkers.Push do
           } = args,
         scheduled_at: scheduled_at
       }) do
-    user = User.get(user_id)
+    case User.get(user_id) do
+      nil ->
+        {:cancel, "deleted"}
 
-    is_daily_profiles_ready_notification? =
-      Map.get(args, "daily_profiles_ready_notification", false)
+      %User{banned_at: banned} when not is_nil(banned) ->
+        {:cancel, "banned"}
 
-    if is_nil(user.banned_at) and is_nil(user.deactivated_at) and
-         (!is_daily_profiles_ready_notification? or
-            DateTime.before?(user.active_at, DateTime.add(scheduled_at, -7 * 60 * 60))) do
-      PushNotification.send(user, title, message, url)
-    else
-      :ok
+      %User{deactivated_at: deactivated} when not is_nil(deactivated) ->
+        {:cancel, "deactivated"}
+
+      %User{} = user ->
+        is_daily_profiles_ready_notification? =
+          Map.get(args, "daily_profiles_ready_notification", false)
+
+        if is_daily_profiles_ready_notification? and
+             DateTime.after?(user.active_at, DateTime.add(scheduled_at, -7 * 60 * 60)) do
+          {:cancel, "seen"}
+        else
+          PushNotification.send(user, title, message, url)
+        end
     end
   end
 end
