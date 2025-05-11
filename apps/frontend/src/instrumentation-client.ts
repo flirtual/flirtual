@@ -11,8 +11,9 @@ import {
 
 // eslint-disable-next-line no-console
 console.log(
-	`%cWant to contribute to Flirtual?\n${urls.resources.developers}`,
+	`%cWant to contribute to Flirtual?`,
 	"padding: 1rem 2rem; background-image: linear-gradient(to right, #ff8975, #e9658b); color: white; white-space: pre; display: block; text-align: center; font-weight: bold; border-radius: .5rem",
+	urls.resources.developers
 );
 
 await restoreQueries();
