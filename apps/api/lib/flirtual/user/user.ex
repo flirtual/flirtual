@@ -116,9 +116,18 @@ defmodule Flirtual.User do
     |> Image.url(variant)
   end
 
-  def url(%User{} = user) do
+  def url(%User{} = user, :id) do
+    Application.fetch_env!(:flirtual, :frontend_origin)
+    |> URI.merge("/#{user.id}")
+  end
+
+  def url(%User{} = user, :slug) do
     Application.fetch_env!(:flirtual, :frontend_origin)
     |> URI.merge("/#{user.slug}")
+  end
+
+  def url(%User{} = user) do
+    url(user, :id)
   end
 
   def display_name(%User{} = user) do
