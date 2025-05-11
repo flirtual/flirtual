@@ -6,6 +6,7 @@ import Script from "next/script";
 import posthog from "posthog-js";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { type PropsWithChildren, Suspense, useCallback, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import {
 	cloudflareBeaconId,
@@ -99,10 +100,12 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 
 	return (
 		<>
-			<Suspense>
-				<Pageview />
-				<Identity />
-			</Suspense>
+			<ErrorBoundary fallback={null}>
+				<Suspense>
+					<Pageview />
+					<Identity />
+				</Suspense>
+			</ErrorBoundary>
 			{environment !== "development" && (
 				<Script
 					defer
