@@ -72,7 +72,7 @@ export type ErrorDialogProps = { userId?: string } & ErrorProps;
 
 const errors = new Map<string, number>();
 
-export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
+export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 	// Bail out to the Next.js error dialog in development, more useful for debugging.
 	// if (environment === "development") throw error;
 
@@ -83,7 +83,6 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 	const eventId = useMemo(() => captureException(error, { tags: { digest: error.digest } }), [error]);
 	const [squeak] = useSound(urls.media("squeak.mp3"));
 
-	const [addDetails, setAddDetails] = useState(false);
 	const throwCount = (errors.get(errorKey) || 0) + 1;
 
 	const native = navigator.userAgent.includes("Flirtual-Native") || navigator.userAgent.includes("Flirtual-Vision");
@@ -190,153 +189,85 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, userId, reset }) => {
 								<DialogDescription className="sr-only" />
 							</DialogHeader>
 							<DialogBody className="flex flex-col">
-								{addDetails
-									? (
-											<>
-												<p>{t("seemly_busy_vulture_skip")}</p>
-												<div data-vaul-no-drag className="select-children flex flex-col whitespace-pre-wrap font-mono text-xs">
-													<span className="mb-2 font-bold">{t("odd_dull_turkey_grip")}</span>
-													<ErrorDetails digest={error.digest} eventId={eventId} />
-													<span className="mt-2">{error.message}</span>
-												</div>
-												<form
-													className="flex flex-col gap-4"
-													onSubmit={async ({ currentTarget: { elements } }) => {
-														const message = (elements.namedItem("message") as HTMLTextAreaElement).value;
-														if (userId) setUser({ id: userId });
-
-														captureFeedback(
-															{
-																message,
-																associatedEventId: eventId,
-															},
-															{
-																includeReplay: true,
-																originalException: error
-															}
-														);
-													}}
+								<CopyClick value={eventId}>{eventId}</CopyClick>
+								<div className="relative flex gap-8">
+									<Image
+										priority
+										alt=""
+										className="pettable mt-5 h-8 w-fit shrink-0 rotate-[10deg] desktop:mt-1 desktop:h-12"
+										draggable={false}
+										height={345}
+										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
+										width={412}
+										onClick={() => squeak()}
+									/>
+									<motion.div
+										animate={{ scale: 1, opacity: 1 }}
+										className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80"
+										initial={{ scale: 0.8, opacity: 0.5 }}
+									>
+										<div
+											className="absolute -left-5 top-7 size-5 bg-white-10"
+											style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
+										/>
+										<p>I found an error</p>
+										<pre className="whitespace-pre-wrap text-xs">
+											{error.message}
+										</pre>
+									</motion.div>
+								</div>
+								<ul className="ml-4 flex list-disc flex-col gap-2">
+									<li>
+										<button
+											className="underline"
+											type="button"
+											onClick={() => location.reload()}
+										>
+											<RotateCw className="mr-1 inline-block size-4 shrink-0" />
+											{t(native ? "refresh_the_app" : "refresh_the_page")}
+										</button>
+										.
+									</li>
+									{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
+									<li>
+										{t.rich(native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe", {
+											"browser-icon": () => <Chrome className="mr-1 inline-block size-4 shrink-0" />,
+											"device-icon": () => <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
+										})}
+									</li>
+									<li>
+										{t.rich("tough_sleek_wasp_reside", {
+											icon: () => <WifiOff className="mr-1 inline-block size-4 shrink-0" />
+										})}
+									</li>
+									<li>
+										{t.rich("yummy_salty_porpoise_greet", {
+											contact: (children) => (
+												<a
+													className="whitespace-nowrap lowercase underline"
+													href={urls.resources.contact}
 												>
-													<div className="flex flex-col gap-2">
-														<InputLabel>
-															{t("sunny_giant_cougar_taste")}
-														</InputLabel>
-														<InputTextArea name="message" rows={5} />
-													</div>
-													<div className="flex gap-2">
-														<Button
-															className="w-fit"
-															kind="secondary"
-															size="sm"
-															type="submit"
-														>
-															{t("submit")}
-														</Button>
-														<Button
-															className="w-fit px-2"
-															kind="tertiary"
-															size="sm"
-															onClick={() => setAddDetails(false)}
-														>
-															{t("back")}
-															<MoveRight className="ml-2 size-5 shrink-0" />
-														</Button>
-													</div>
-												</form>
-											</>
-										)
-									: (
-											<>
-												<CopyClick value={eventId}>{eventId}</CopyClick>
-												<div className="relative flex gap-8">
-													<Image
-														priority
-														alt=""
-														className="pettable mt-5 h-8 w-fit shrink-0 rotate-[10deg] desktop:mt-1 desktop:h-12"
-														draggable={false}
-														height={345}
-														src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
-														width={412}
-														onClick={() => squeak()}
-													/>
-													<motion.div
-														animate={{ scale: 1, opacity: 1 }}
-														className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80"
-														initial={{ scale: 0.8, opacity: 0.5 }}
-													>
-														<div
-															className="absolute -left-5 top-7 size-5 bg-white-10"
-															style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
-														/>
-														<p>I found an error</p>
-														<pre className="whitespace-pre-wrap text-xs">
-															{error.message}
-														</pre>
-													</motion.div>
-												</div>
-												<ul className="ml-4 flex list-disc flex-col gap-2">
-													<li>
-														<button
-															className="underline"
-															type="button"
-															onClick={() => location.reload()}
-														>
-															<RotateCw className="mr-1 inline-block size-4 shrink-0" />
-															{t(native ? "refresh_the_app" : "refresh_the_page")}
-														</button>
-														.
-													</li>
-													{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
-													<li>
-														{t.rich(native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe", {
-															"browser-icon": () => <Chrome className="mr-1 inline-block size-4 shrink-0" />,
-															"device-icon": () => <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
-														})}
-													</li>
-													<li>
-														{t.rich("tough_sleek_wasp_reside", {
-															icon: () => <WifiOff className="mr-1 inline-block size-4 shrink-0" />
-														})}
-													</li>
-													<li>
-														{t.rich("yummy_salty_porpoise_greet", {
-															contact: (children) => (
-																<a
-																	className="whitespace-nowrap lowercase underline"
-																	href={urls.resources.contact}
-																>
-																	<Send className="mr-1 inline-block size-4 shrink-0" />
-																	{children}
-																</a>
-															)
-														})}
+													<Send className="mr-1 inline-block size-4 shrink-0" />
+													{children}
+												</a>
+											)
+										})}
 
-													</li>
-												</ul>
-												<div data-vaul-no-drag className="select-children flex max-w-sm flex-col whitespace-pre-wrap font-mono text-xs">
-													<ErrorDetails digest={error.digest} eventId={eventId} />
-												</div>
-												<div className="flex flex-wrap gap-2">
-													<Button
-														autoFocus
-														className="w-fit"
-														size="sm"
-														onClick={tryAgain}
-													>
-														{t("try_again")}
-													</Button>
-													{/* <Button
-														className="w-fit px-2"
-														kind="tertiary"
-														size="sm"
-														onClick={() => setAddDetails((addDetails) => !addDetails)}
-													>
-														{t("add_details")}
-														<MoveRight className="ml-2 size-5 shrink-0" />
-													</Button> */}
-												</div>
-											</>
-										)}
+									</li>
+								</ul>
+								<div data-vaul-no-drag className="select-children flex max-w-sm flex-col whitespace-pre-wrap font-mono text-xs">
+									<ErrorDetails digest={error.digest} eventId={eventId} />
+								</div>
+								<div className="flex flex-wrap gap-2">
+									<Button
+										autoFocus
+										className="w-fit"
+										size="sm"
+										onClick={tryAgain}
+									>
+										{t("try_again")}
+									</Button>
+								</div>
 								<div className="mt-auto flex flex-col">
 									<div className="flex gap-2">
 										<a href={urls.resources.networkStatus}>

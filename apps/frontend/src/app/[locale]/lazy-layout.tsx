@@ -27,8 +27,9 @@ export async function applyDocumentMutations() {
 	log("%s()", applyDocumentMutations.name);
 
 	const theme = getTheme();
-	const themeStyle = location.pathname.replace(localePathnameRegex, "") === "/discover/friends" 
-	? "friend" : "default";
+	const themeStyle = location.pathname.replace(localePathnameRegex, "") === "/discover/friends"
+		? "friend"
+		: "default";
 
 	const fontSize = await getPreferences<number>("font_size") || 16;
 	document.documentElement.style.setProperty("font-size", `${fontSize}px`);
