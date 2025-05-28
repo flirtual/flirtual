@@ -6,6 +6,7 @@ import Image from "next/image";
 import { type PropsWithChildren, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { device } from "~/hooks/use-device";
 import { useTimeout } from "~/hooks/use-interval";
 import { urls } from "~/urls";
 
@@ -14,7 +15,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 	useTimeout(() => setProbablyErrored(true), "10s");
 
 	const t = useTranslations();
-	const native = false; // navigator.userAgent.includes("Flirtual-Native") || navigator.userAgent.includes("Flirtual-Vision");
+	const native = device.native;
 
 	return (
 		<div className={twMerge("flex min-h-screen w-full flex-col items-center justify-center opacity-75", className)}>
