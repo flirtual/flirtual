@@ -41,11 +41,11 @@ export function ArrangeableImage({ src, id, className, onDelete, onFullscreen, .
 
 	return (
 		<div
-			className={twMerge("group relative aspect-square max-h-full w-full shrink-0", className)}
+			className={twMerge("group relative aspect-square max-h-full w-full shrink-0", className, dragging && "invisible")}
 			{...props}
 		>
 			<ArrangeableImagePreview
-				className={twMerge("transition-all", dragging && "brightness-50")}
+				className="transition-all"
 				src={src}
 			/>
 			<div
