@@ -11,7 +11,7 @@ import type { LinkProps } from "./link";
 import { Link } from "./link";
 
 const defaultClassName = twMerge(
-	"group/button focusable flex shrink-0 items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:brightness-75"
+	"group/button focusable flex shrink-0 items-center justify-center rounded-xl text-center font-montserrat font-semibold aria-disabled:dark:brightness-75"
 );
 
 const sizes = {
