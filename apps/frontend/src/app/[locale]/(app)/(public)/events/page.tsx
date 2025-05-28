@@ -35,24 +35,6 @@ export default function EventsPage({ params }: { params: Promise<{ locale: Local
 		>
 			<Livestream />
 			<div className="flex flex-col gap-4">
-				<h1 className="text-2xl font-semibold">
-					{t("vrchat_invite")}
-				</h1>
-				<p>{t("fun_still_clownfish_arrive")}</p>
-				<p>
-					{t.rich("elegant_bald_parakeet_animate", {
-						joining: (children) => (
-							<InlineLink href="https://discord.com/channels/455219574036496404/829507992743444531/1018385627022106715">
-								{children}
-							</InlineLink>
-						)
-					})}
-				</p>
-				<ButtonLink href={urls.resources.invite}>
-					{t("arable_nice_puma_comfort")}
-				</ButtonLink>
-			</div>
-			<div className="flex flex-col gap-4">
 				<h1 className="text-2xl font-semibold">{t("top_big_tern_twist")}</h1>
 				<p>{t("nimble_equal_loris_foster")}</p>
 				<p>
@@ -63,6 +45,11 @@ export default function EventsPage({ params }: { params: Promise<{ locale: Local
 					})}
 				</p>
 				<DiscordEmbed />
+			</div>
+			<div className="flex flex-col gap-4">
+				<h1 className="text-2xl font-semibold">{t("vrchat_group")}</h1>
+				<p>{t("day_crazy_tortoise_read")}</p>
+				<ButtonLink href={urls.socials.vrchat} target="_blank">{t("join_group")}</ButtonLink>
 			</div>
 			<div className="flex flex-col gap-4">
 				<h1 className="text-2xl font-semibold">

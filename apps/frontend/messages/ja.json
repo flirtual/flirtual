@@ -109,10 +109,6 @@
 	"google_play": "Google Play",
 	"microsoft_store": "Microsoft Store",
 	"sidequest": "SideQuest",
-	"vrchat_invite": "VRChat招待",
-	"fun_still_clownfish_arrive": "イベントが現在進行中の場合、このボタンで参加できます！",
-	"elegant_bald_parakeet_animate": "まずVRChatを起動し、その後次のページで「招待する」をクリックしてください。ゲーム内で自分からの招待が届きます。<joining>参加方法について助けが必要ですか？</joining>",
-	"arable_nice_puma_comfort": "イベントに参加",
 	"top_big_tern_twist": "今後のイベント",
 	"nimble_equal_loris_foster": "毎週末VRChatでスピードマッチングやDJイベントを開催しています。ぜひご参加ください！",
 	"flaky_early_shad_nourish": "イベントスケジュールやお知らせについては、<discord>Discordサーバーに参加</discord>してください。",
@@ -963,5 +959,7 @@
 	"large": "大きい",
 	"extra_large": "特大",
 	"huge": "巨大",
-	"crisp_lime_raven_arise": "いつもより時間がかかっている...。"
+	"crisp_lime_raven_arise": "いつもより時間がかかっている...。",
+	"day_crazy_tortoise_read": "VRChatグループに参加して、イベントの開催をお知らせしたり、グループインスタンスに参加しましょう。",
+	"join_group": "グループに参加する"
 }
