@@ -96,7 +96,9 @@ export async function preloadAll() {
 			"report-reason",
 			"sexuality"
 		] as const).map((type) => preload({ queryKey: attributeKey(type), queryFn: attributeFetcher }))
-	]).catch(() => {});
+	]).catch((reason) => {
+		log("preloadAll() failed: %o", reason);
+	});
 }
 
 const log = _log.extend("query");
@@ -250,7 +252,16 @@ export function useQuery<
 		...options
 	}, queryClient);
 
-	return use(promise);
+	try {
+		return use(promise);
+	}
+	catch (reason) {
+		if (reason instanceof Error && reason.message.includes("Suspense Exception"))
+			throw reason;
+
+		log("useQuery(%o) failed: %o", queryKey, reason);
+		throw reason;
+	}
 }
 
 export function useQueryState(queryKey: QueryKey) {
