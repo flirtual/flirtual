@@ -107,7 +107,10 @@ export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			experimental_prefetchInRender: true,
-			retry: environment !== "development",
+			// retry: environment !== "development",
+			throwOnError: true,
+			retry: true,
+			retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 60000),
 			staleTime: ms("5m"),
 			gcTime: ms("8h"),
 		},
