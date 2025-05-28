@@ -37,7 +37,8 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 				width={3468}
 			/>
 			{probablyErrored && (
-				<div className="w-full max-w-md px-4 pt-8">
+				<div className="flex w-full max-w-md flex-col gap-4 px-4 pt-8">
+					<p className="font-semibold">{t("crisp_lime_raven_arise")}</p>
 					<ul className="ml-4 flex list-disc flex-col gap-2">
 						<li>
 							<button
@@ -53,13 +54,13 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 						{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
 						<li>
 							{t.rich(native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe", {
-								"browser-icon": () => <Chrome className="mr-1 inline-block size-4 shrink-0" />,
-								"device-icon": () => <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
+								"browser-icon": () => <Chrome className="inline-block size-4 shrink-0" />,
+								"device-icon": () => <Smartphone className="inline-block size-4 shrink-0" />
 							})}
 						</li>
 						<li>
 							{t.rich("tough_sleek_wasp_reside", {
-								icon: () => <WifiOff className="mr-1 inline-block size-4 shrink-0" />
+								icon: () => <WifiOff className="inline-block size-4 shrink-0" />
 							})}
 						</li>
 						<li>

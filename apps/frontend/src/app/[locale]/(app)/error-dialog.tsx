@@ -190,7 +190,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 							</DialogHeader>
 							<DialogBody className="flex flex-col">
 								<CopyClick value={eventId}>{eventId}</CopyClick>
-								<div className="relative flex gap-8">
+								<div className="select-children relative flex gap-8 ">
 									<Image
 										priority
 										alt=""
@@ -210,7 +210,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 											className="absolute -left-5 top-7 size-5 bg-white-10"
 											style={{ clipPath: "polygon(100% 0, 0 60%, 100% 100%)" }}
 										/>
-										<p>I found an error</p>
+										<p>{t("quiet_quaint_whale_rest")}</p>
 										<pre className="whitespace-pre-wrap text-xs">
 											{error.message}
 										</pre>
