@@ -13,7 +13,7 @@ import { Matchmaking, type ProspectKind } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
-import { environment, gitCommitSha, server } from "./const";
+import { gitCommitSha, server } from "./const";
 import { usePostpone } from "./hooks/use-postpone";
 import { log as _log } from "./log";
 import { getPreferences, setPreferences } from "./preferences";
