@@ -26,5 +26,6 @@ export {
 	notFound,
 	useParams,
 	useSearchParams,
-	useSelectedLayoutSegment
+	useSelectedLayoutSegment,
+	useSelectedLayoutSegments
 } from "next/navigation";
