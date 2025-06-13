@@ -1,8 +1,12 @@
 import { PushNotifications } from "@capacitor/push-notifications";
 import { useLocale } from "next-intl";
 
+import type { Session } from "~/api/auth";
 import { Authentication } from "~/api/auth";
 import { redirect, useSearchParams } from "~/i18n/navigation";
+import type {
+	MinimalQueryOptions
+} from "~/query";
 import {
 	invalidate,
 	mutate,
@@ -25,13 +29,12 @@ export async function logout() {
 	await invalidate();
 }
 
-export function useOptionalSession() {
-	usePostpone("useOptionalSession()");
-
+export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | null> = {}): Session | null {
 	return useQuery({
+		placeholderData: null,
+		...queryOptions,
 		queryKey: sessionKey(),
 		queryFn: sessionFetcher,
-		placeholderData: null,
 	});
 }
 
@@ -43,11 +46,12 @@ export function useGuest() {
 	if (session) redirect({ href: next, locale });
 }
 
-export function useSession() {
+export function useSession(queryOptions: MinimalQueryOptions<Session | null> = {}) {
 	postpone("useSession()");
 
 	const locale = useLocale();
 	const session = useQuery({
+		...queryOptions,
 		queryKey: sessionKey(),
 		queryFn: sessionFetcher
 	});
