@@ -148,16 +148,14 @@ document.documentElement.style.setProperty("font-size", fontSize + "px");`}
 							height={5}
 							showSpinner={false}
 						/>
-						<Suspense fallback={<LoadingIndicator />}>
-							{environment === "preview" && <StagingBanner />}
-							{environment === "development" && <InsetPreview />}
-							<UpdateInformation />
-							<ToastProvider>
-								<TooltipProvider>
-									{children}
-								</TooltipProvider>
-							</ToastProvider>
-						</Suspense>
+						{environment === "preview" && <StagingBanner />}
+						{environment === "development" && <InsetPreview />}
+						<UpdateInformation />
+						<ToastProvider>
+							<TooltipProvider>
+								{children}
+							</TooltipProvider>
+						</ToastProvider>
 					</NextIntlClientProvider>
 				</body>
 			</html>
