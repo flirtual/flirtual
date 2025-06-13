@@ -7,7 +7,7 @@ import useMutation from "swr/mutation";
 import { User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "~/i18n/navigation";
-import { mutate, sessionKey } from "~/query";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import { LoadingIndicator } from "../../loading-indicator";
@@ -33,7 +33,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 			onSuccess: async () => {
 				toasts.add(t("royal_home_leopard_tickle"));
 
-				await mutate(sessionKey());
+				await invalidate({ queryKey: sessionKey() });
 				router.push(urls.default);
 			}
 		}
