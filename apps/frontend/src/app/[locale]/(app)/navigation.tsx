@@ -2,7 +2,6 @@
 
 import type { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
-import { withSuspense } from "with-suspense";
 
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { HomeIcon } from "~/components/icons/gradient/home";
@@ -34,28 +33,25 @@ const NavigationalSwitch: FC<ComponentProps<"div">> = ({
 	</div>
 );
 
-const GuestNavigationItems: FC = () => (
-	<NavigationalSwitch>
-		<NavigationalSwitchItem
-			className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-			href={urls.landing}
-			Icon={HomeIcon}
-		/>
-		<NavigationalSwitchItem
-			className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
-			href={urls.login()}
-			Icon={LoginIcon}
-			strict={false}
-		/>
-	</NavigationalSwitch>
-
-);
-
-const guestNavigationItems = <GuestNavigationItems />;
-
-const NavigationContent = withSuspense(() => {
+const NavigationContent: FC = () => {
 	const session = useOptionalSession();
-	if (!session) return guestNavigationItems;
+
+	if (!session)
+		return (
+			<NavigationalSwitch>
+				<NavigationalSwitchItem
+					className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
+					href={urls.landing}
+					Icon={HomeIcon}
+				/>
+				<NavigationalSwitchItem
+					className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
+					href={urls.login()}
+					Icon={LoginIcon}
+					strict={false}
+				/>
+			</NavigationalSwitch>
+		);
 
 	return (
 		<>
@@ -75,9 +71,7 @@ const NavigationContent = withSuspense(() => {
 			<NavigationItemMessage />
 		</>
 	);
-}, {
-	fallback: guestNavigationItems
-});
+};
 
 export function Navigation() {
 	const { deviceId, userAgent, native, versions: { commit, version } } = device;
