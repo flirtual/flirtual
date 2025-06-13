@@ -14,7 +14,7 @@ import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
 import { gitCommitSha, server } from "./const";
-import { usePostpone } from "./hooks/use-postpone";
+import { postpone } from "./hooks/use-postpone";
 import { log as _log } from "./log";
 import { getPreferences, setPreferences } from "./preferences";
 import { isUid } from "./utilities";
@@ -238,8 +238,7 @@ export function useQuery<
 
 	if (server) {
 		if (placeholderData === undefined)
-			// eslint-disable-next-line react-hooks/rules-of-hooks
-			usePostpone("useQuery() without placeholderData");
+			postpone("useQuery() without placeholderData");
 
 		return placeholderData as T;
 	}

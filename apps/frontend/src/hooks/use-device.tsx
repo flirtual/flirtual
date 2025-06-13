@@ -9,7 +9,7 @@ import { omitBy } from "remeda";
 import { client, gitCommitSha, platformOverride } from "~/const";
 import { log as _log } from "~/log";
 
-import { usePostpone } from "./use-postpone";
+import { postpone } from "./use-postpone";
 
 export type DevicePlatform = "android" | "apple" | "web";
 
@@ -85,6 +85,6 @@ if (client)
 	log(device);
 
 export function useDevice() {
-	usePostpone("useDevice()");
+	postpone("useDevice()");
 	return device;
 }

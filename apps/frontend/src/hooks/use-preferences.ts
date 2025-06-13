@@ -10,7 +10,7 @@ import {
 	useQuery
 } from "~/query";
 
-import { usePostpone } from "./use-postpone";
+import { postpone } from "./use-postpone";
 
 /**
  * A hook for getting and setting preferences.
@@ -23,7 +23,7 @@ export function usePreferences<T>(key: string, defaultValue?: T): [T | null, (va
 	useDebugValue(key);
 
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	if (defaultValue === undefined) usePostpone("usePreferences() without defaultValue");
+	if (defaultValue === undefined) postpone("usePreferences() without defaultValue");
 
 	const queryKey = preferencesKey(key);
 

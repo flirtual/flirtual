@@ -13,7 +13,7 @@ import {
 import { toAbsoluteUrl, toRelativeUrl, urls } from "~/urls";
 
 import { device } from "./use-device";
-import { usePostpone } from "./use-postpone";
+import { postpone } from "./use-postpone";
 
 export async function logout() {
 	await mutate(sessionKey(), null);
@@ -44,7 +44,7 @@ export function useGuest() {
 }
 
 export function useSession() {
-	usePostpone("useSession()");
+	postpone("useSession()");
 
 	const locale = useLocale();
 	const session = useQuery({
