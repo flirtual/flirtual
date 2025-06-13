@@ -1,22 +1,22 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 
+import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
+import { useRouter } from "~/i18n/navigation";
+import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const EmailForm: React.FC = () => {
-	const session = useOptionalSession();
-	const router = useRouter();
 	const t = useTranslations();
+	const router = useRouter();
 
-	if (!session) return null;
-	const { user } = session;
+	const { user } = useSession();
 
 	return (
 		<Form
@@ -27,10 +27,9 @@ export const EmailForm: React.FC = () => {
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async (body) => {
-				await mutateSession({
-					...session,
-					user: await User.updateEmail(user.id, body)
-				});
+				const newUser = await User.updateEmail(user.id, body);
+				await mutate<Session>(sessionKey(), (session) => ({ ...session, user: newUser }));
+
 				router.push(urls.confirmEmail({ to: urls.settings.list() }));
 			}}
 		>
