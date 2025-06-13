@@ -1,7 +1,5 @@
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { type FC, type PropsWithChildren, useState } from "react";
-import { mutate } from "~/query";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
@@ -29,7 +27,8 @@ import {
 } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { queueKey, userKey } from "~/query";
+import { useSearchParams } from "~/i18n/navigation";
+import { invalidate, mutate, queueKey, userKey } from "~/query";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
@@ -69,13 +68,16 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 						requireChange={false}
 						onSubmit={async ({ reasonId, targetId, message, ...values }) => {
 							if (!reasonId) return;
+
 							await Report.create({
 								reasonId,
 								targetId,
 								message,
 								images: values.images.map((image) => image.id).filter(Boolean)
 							});
-							mutate(userKey(user.id));
+
+							await invalidate({ queryKey: userKey(user.id) });
+
 							const kind = (query.get("kind") || "love") as ProspectKind;
 							if (ProspectKind.includes(kind))
 								mutate(queueKey(kind), optimisticQueueMove("forward"));

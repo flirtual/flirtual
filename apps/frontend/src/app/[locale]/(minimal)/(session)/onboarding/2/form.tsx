@@ -16,15 +16,18 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 const absMinAge = 18;
 const absMaxAge = 60;
 
 export const Onboarding2Form: FC = () => {
-	const session = useOptionalSession();
+	const { user } = useSession();
+	const { preferences } = user.profile;
+
 	const router = useRouter();
 
 	const genders = useAttributes("gender").filter(
@@ -33,9 +36,6 @@ export const Onboarding2Form: FC = () => {
 
 	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
-
-	if (!session) return null;
-	const { preferences } = session.user.profile;
 
 	return (
 		<Form
@@ -53,7 +53,7 @@ export const Onboarding2Form: FC = () => {
 				const { gender: _, ...preferenceAttributes }
 					= preferences?.attributes ?? {};
 
-				await Profile.updatePreferences(session.user.id, {
+				await Profile.updatePreferences(user.id, {
 					requiredAttributes: ["gender"],
 					agemin: agemin === absMinAge ? null : agemin,
 					agemax: agemax === absMaxAge ? null : agemax,
@@ -63,7 +63,7 @@ export const Onboarding2Form: FC = () => {
 					]
 				});
 
-				await mutateSession();
+				await invalidate({ queryKey: sessionKey() });
 				router.push(urls.discover("love"));
 			}}
 		>

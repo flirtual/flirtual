@@ -1,24 +1,24 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 
 import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useInterval } from "~/hooks/use-interval";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { invalidate, sessionKey } from "~/query";
 
 export const UserForms: React.FC = () => {
-	const router = useRouter();
+	const { user } = useSession();
+
 	const toasts = useToast();
-	const [session] = useOptionalSession({
-		refreshInterval: 1000
-	});
 	const t = useTranslations();
 
-	if (!session) return null;
+	// Re-check against the API every second to see if the user has confirmed their email.
+	useInterval(() => invalidate({ queryKey: sessionKey() }), "1s");
 
 	return (
 		<>
@@ -28,11 +28,10 @@ export const UserForms: React.FC = () => {
 				requireChange={false}
 				onSubmit={async () => {
 					await User.resendConfirmEmail()
-						.then(() => {
-							toasts.add(t("salty_novel_octopus_surge"));
-							return router.refresh();
-						})
+						.then(() => toasts.add(t("salty_novel_octopus_surge")))
 						.catch(toasts.addError);
+
+					await invalidate({ queryKey: sessionKey() });
 				}}
 			>
 				<div className="flex flex-col gap-2">
@@ -42,13 +41,13 @@ export const UserForms: React.FC = () => {
 					<span className="text-lg">
 						{t.rich("maroon_polite_butterfly_boil", {
 							copy: (children) => (
-								<CopyClick value={session.user.email}>
+								<CopyClick value={user.email}>
 									<span data-mask className="select-all font-semibold">
 										{children}
 									</span>
 								</CopyClick>
 							),
-							email: session.user.email
+							email: user.email
 						})}
 					</span>
 				</div>
@@ -56,19 +55,18 @@ export const UserForms: React.FC = () => {
 			</Form>
 			<Form
 				fields={{
-					email: session.user.email,
+					email: user.email,
 					emailConfirmation: "",
 					currentPassword: ""
 				}}
 				className="mt-8"
 				requireChange={["email", "emailConfirmation", "currentPassword"]}
 				onSubmit={async (body) => {
-					await User.updateEmail(session.user.id, body)
-						.then(() => {
-							toasts.add(t("email_changed"));
-							return router.refresh();
-						})
+					await User.updateEmail(user.id, body)
+						.then(() => toasts.add(t("email_changed")))
 						.catch(toasts.addError);
+
+					await invalidate({ queryKey: sessionKey() });
 				}}
 			>
 				{({ FormField }) => (

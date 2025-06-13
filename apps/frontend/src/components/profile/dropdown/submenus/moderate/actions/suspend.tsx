@@ -1,8 +1,7 @@
 import { Gavel, Languages } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { type FC, type PropsWithChildren, useMemo, useState } from "react";
-import { mutate } from "~/query";
+import { withSuspense } from "with-suspense";
 
 import { ProspectKind } from "~/api/matchmaking";
 import { OpenAI } from "~/api/openai";
@@ -27,8 +26,8 @@ import {
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
 import { useToast } from "~/hooks/use-toast";
-import { withSuspense } from "with-suspense";
-import { queueKey, userKey } from "~/query";
+import { useSearchParams } from "~/i18n/navigation";
+import { mutate, queueKey, userKey } from "~/query";
 
 const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {
 	const toasts = useToast();
@@ -82,8 +81,8 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 								message = banReasons[reasonId]?.details || message;
 							}
 
-							await User.suspend(targetId, { reasonId, message });
-							mutate(userKey(user.id));
+							const newTarget = await User.suspend(targetId, { reasonId, message });
+							await mutate(userKey(user.id), newTarget);
 
 							const kind = (query.get("kind") || "love") as ProspectKind;
 							if (ProspectKind.includes(kind))

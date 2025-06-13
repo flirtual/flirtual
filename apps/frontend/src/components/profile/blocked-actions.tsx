@@ -2,11 +2,10 @@
 
 import { Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { mutate } from "~/query";
 
 import { displayName, User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
-import { relationshipKey } from "~/query";
+import { invalidate, relationshipKey } from "~/query";
 
 import { Button } from "../button";
 import { DialogTrigger } from "../dialog/dialog";
@@ -23,12 +22,11 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 				className="w-fit"
 				size="sm"
 				onClick={async () => {
-					await User.unblock(user.id).catch(toasts.addError);
-					mutate(relationshipKey(user.id));
+					await User.unblock(user.id)
+						.then(() => toasts.add(t("unblocked_name", { name: displayName(user) })))
+						.catch(toasts.addError);
 
-					toasts.add(
-						t("unblocked_name", { name: displayName(user) })
-					);
+					await invalidate({ queryKey: relationshipKey(user.id) });
 				}}
 			>
 				{t("unblock")}

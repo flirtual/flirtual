@@ -25,7 +25,7 @@ export function Link({
 	const location = useLocation();
 
 	const internal = isInternalHref(href || "#");
-	const active = urlEqual(toAbsoluteUrl(href), location);
+	const active = href ? urlEqual(toAbsoluteUrl(href.toString()), location) : false;
 
 	const Component = asChild
 		? Slot

@@ -237,7 +237,7 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 						disabled={option.disabled}
 						key={option.id}
 						value={option.id as K & string}
-						onPointerEnter={() => props.onItemHover?.(option.id)}
+						onPointerEnter={() => props.onItemHover?.(option.id as K & string)}
 					>
 						<SelectItemText>{option.name}</SelectItemText>
 					</Item>

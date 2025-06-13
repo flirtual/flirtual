@@ -21,14 +21,17 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 
 export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry }) => {
-	const session = useOptionalSession();
+	const { user } = useSession();
+	const { profile } = user;
+
 	const t = useTranslations();
 	const router = useRouter();
 
@@ -37,10 +40,6 @@ export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry 
 	const interests = useAttributes("interest");
 
 	const tAttribute = useAttributeTranslation();
-
-	if (!session) return null;
-	const { user } = session;
-	const { profile } = user;
 
 	return (
 		<Form
@@ -56,7 +55,7 @@ export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry 
 			className="flex flex-col gap-8"
 			requireChange={false}
 			onSubmit={async ({ bornAt, ...values }) => {
-				const [newUser, newProfile] = await Promise.all([
+				await Promise.all([
 					User.update(user.id, {
 						bornAt: bornAt.toISOString(),
 						required: ["bornAt"]
@@ -76,13 +75,7 @@ export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry 
 					})
 				]);
 
-				await mutateSession({
-					...session,
-					user: {
-						...newUser,
-						profile: newProfile
-					}
-				});
+				await invalidate({ queryKey: sessionKey() });
 
 				router.push(urls.onboarding(2));
 			}}

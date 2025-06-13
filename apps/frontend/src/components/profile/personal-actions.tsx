@@ -4,11 +4,13 @@ import { Link, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
+import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useShare } from "~/hooks/use-share";
 import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "~/i18n/navigation";
+import { mutate, sessionKey } from "~/query";
 import { toAbsoluteUrl, urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
@@ -21,14 +23,12 @@ import { InputText } from "../inputs";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
-	const session = useOptionalSession();
+	const session = useSession();
 	const t = useTranslations();
 	const toasts = useToast();
 	const { share, canShare } = useShare();
 	const [shareVisible, setShareVisible] = useState(false);
-	const [profileLink, setProfileLink] = useState(session?.user.slug);
-
-	if (!session) return null;
+	const [profileLink, setProfileLink] = useState(session.user.slug);
 
 	return (
 		<div className="flex gap-4">
@@ -56,12 +56,15 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 									await User.update(user.id, {
 										slug
 									})
-										.then((user) => {
+										.then(async (user) => {
 											setProfileLink(slug);
+
+											await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 											router.push(urls.profile(slug));
-											mutateSession({ ...session, user });
+
 											return toasts.add(t("odd_mad_dog_nurture"));
-										});
+										})
+										.catch(toasts.addError);
 								}}
 							>
 								{({ FormField }) => (

@@ -3,7 +3,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type FC, useMemo } from "react";
 import { capitalize } from "remeda";
-import { mutate } from "~/query";
 import { twMerge } from "tailwind-merge";
 
 import { User } from "~/api/user";
@@ -12,7 +11,7 @@ import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
-import { userKey } from "~/query";
+import { invalidate, userKey } from "~/query";
 
 import { CopyClick } from "../copy-click";
 import { DateTimeRelative } from "../datetime-relative";
@@ -74,17 +73,19 @@ export const ProfileModeratorInfo: FC<{
 									if (cancelled) return;
 
 									if (!message && !!user.moderatorNote) {
-										await User.deleteNote(user.id).catch(toasts.addError);
-										mutate(userKey(user.id));
+										await User.deleteNote(user.id)
+											.then(() => toasts.add(t("note_deleted")))
+											.catch(toasts.addError);
 
-										toasts.add(t("note_deleted"));
+										await invalidate({ queryKey: userKey(user.id) });
 										return;
 									}
 
-									await User.note(user.id, { message }).catch(toasts.addError);
-									mutate(userKey(user.id));
+									await User.note(user.id, { message })
+										.then(() => toasts.add(t("note_updated")))
+										.catch(toasts.addError);
 
-									toasts.add(t("note_updated"));
+									await invalidate({ queryKey: userKey(user.id) });
 								}}
 							>
 								{user.moderatorNote || "None"}

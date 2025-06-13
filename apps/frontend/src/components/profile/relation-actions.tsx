@@ -8,8 +8,7 @@ import { displayName } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { useRouter } from "~/i18n/navigation";
-import { mutate, relationshipKey } from "~/query";
+import { invalidate, relationshipKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
@@ -24,7 +23,6 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 
 	const t = useTranslations();
 	const toasts = useToast();
-	const router = useRouter();
 
 	if (!user || !relationship) return null;
 
@@ -44,15 +42,11 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					size="sm"
 					type="button"
 					onClick={async () => {
-						await Matchmaking.unmatch(user.id).catch(toasts.addError);
-						mutate(relationshipKey(user.id));
+						await Matchmaking.unmatch(user.id)
+							.then(() => toasts.add(t("unmatched_name", { name: displayName(user) })))
+							.catch(toasts.addError);
 
-						toasts.add(
-							t("unmatched_name", {
-								name: displayName(user)
-							})
-						);
-						router.refresh();
+						await invalidate({ queryKey: relationshipKey(user.id) });
 					}}
 				>
 					{t("unmatch")}
@@ -80,9 +74,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					size="sm"
 					onClick={async () => {
 						await Matchmaking.unmatch(user.id).catch(toasts.addError);
-						mutate(relationshipKey(user.id));
-
-						router.refresh();
+						await invalidate({ queryKey: relationshipKey(user.id) });
 					}}
 				>
 					Undo

@@ -12,7 +12,7 @@ import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { mutate, userKey } from "~/query";
+import { invalidate, userKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Dialog, DialogContent, DialogTitle } from "../dialog/dialog";
@@ -113,10 +113,11 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 						<button
 							type="button"
 							onClick={async () => {
-								await ProfileImage.delete(image.id).catch(toasts.addError);
-								mutate(userKey(user.id));
+								await ProfileImage.delete(image.id)
+									.then(() => toasts.add(t("image_deleted")))
+									.catch(toasts.addError);
 
-								toasts.add(t("image_deleted"));
+								await invalidate({ queryKey: userKey(user.id) });
 							}}
 						>
 							<Trash2 className="size-5" />

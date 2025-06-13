@@ -1,7 +1,6 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type FC, type PropsWithChildren, Suspense } from "react";
-import { mutate } from "~/query";
 
 import { displayName, User } from "~/api/user";
 import { Button } from "~/components/button";
@@ -26,7 +25,7 @@ import {
 import { InlineLink } from "~/components/inline-link";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { userKey } from "~/query";
+import { invalidate, userKey } from "~/query";
 import { urls } from "~/urls";
 
 import { SuspendAction } from "./actions/suspend";
@@ -54,10 +53,11 @@ export const ProfileDropdownModerateSubmenu: FC<
 									asChild
 									className="text-red-500"
 									onClick={async () => {
-										await User.unindefShadowban(user.id).catch(toasts.addError);
-										mutate(userKey(user.id));
+										await User.unindefShadowban(user.id)
+											.then(() => toasts.add(t("user_unshadowbanned")))
+											.catch(toasts.addError);
 
-										toasts.add(t("user_unshadowbanned"));
+										await invalidate({ queryKey: userKey(user.id) });
 									}}
 								>
 									<button className="w-full gap-2" type="button">
@@ -71,10 +71,11 @@ export const ProfileDropdownModerateSubmenu: FC<
 									asChild
 									className="text-red-500"
 									onClick={async () => {
-										await User.indefShadowban(user.id).catch(toasts.addError);
-										mutate(userKey(user.id));
+										await User.indefShadowban(user.id)
+											.then(() => toasts.add(t("user_indefinitely_shadowbanned")))
+											.catch(toasts.addError);
 
-										toasts.add(t("user_indefinitely_shadowbanned"));
+										await invalidate({ queryKey: userKey(user.id) });
 									}}
 								>
 									<button className="w-full gap-2" type="button">
@@ -91,10 +92,11 @@ export const ProfileDropdownModerateSubmenu: FC<
 								className="text-green-500"
 								disabled={!user.bannedAt}
 								onClick={async () => {
-									await User.unsuspend(user.id).catch(toasts.addError);
-									mutate(userKey(user.id));
+									await User.unsuspend(user.id)
+										.then(() => toasts.add(t("user_unbanned")))
+										.catch(toasts.addError);
 
-									toasts.add(t("user_unbanned"));
+									await invalidate({ queryKey: userKey(user.id) });
 								}}
 							>
 								<button className="w-full gap-2" type="button">
@@ -108,10 +110,11 @@ export const ProfileDropdownModerateSubmenu: FC<
 											asChild
 											className="text-red-500"
 											onClick={async () => {
-												await User.paymentsUnban(user.id).catch(toasts.addError);
-												mutate(userKey(user.id));
+												await User.paymentsUnban(user.id)
+													.then(() => toasts.add(t("user_payments_unbanned")))
+													.catch(toasts.addError);
 
-												toasts.add(t("user_payments_unbanned"));
+												await invalidate({ queryKey: userKey(user.id) });
 											}}
 										>
 											<button className="w-full gap-2" type="button">
@@ -125,10 +128,11 @@ export const ProfileDropdownModerateSubmenu: FC<
 											asChild
 											className="text-red-500"
 											onClick={async () => {
-												await User.paymentsBan(user.id).catch(toasts.addError);
-												mutate(userKey(user.id));
+												await User.paymentsBan(user.id)
+													.then(() => toasts.add(t("user_payments_banned")))
+													.catch(toasts.addError);
 
-												toasts.add(t("user_payments_banned"));
+												await invalidate({ queryKey: userKey(user.id) });
 											}}
 										>
 											<button className="w-full gap-2" type="button">
