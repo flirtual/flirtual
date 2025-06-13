@@ -21,6 +21,7 @@ let nextConfig: NextConfig = {
 		ppr: true,
 		reactCompiler: true,
 	},
+	devIndicators: false,
 	turbopack: {
 
 	},
