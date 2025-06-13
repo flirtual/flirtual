@@ -2,7 +2,6 @@
 
 import { InAppReview } from "@capacitor-community/in-app-review";
 import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
 
 import { User } from "~/api/user";
@@ -16,18 +15,16 @@ import { SupportButton } from "~/components/layout/support-button";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const DeleteForm: FC = () => {
-	const router = useRouter();
 	const { native } = useDevice();
 	const t = useTranslations();
 	const tAttribute = useAttributeTranslation();
 	const deleteReasons = useAttributes("delete-reason");
 
-	const [session] = useSession();
-
-	const { subscription } = session.user;
+	const { user: { subscription } } = useSession();
 
 	return (
 		<Form
@@ -40,7 +37,7 @@ export const DeleteForm: FC = () => {
 			className="flex flex-col gap-8"
 			onSubmit={async (body, { captcha }) => {
 				await User.deleteSelf({ ...body, captcha });
-				router.refresh();
+				await invalidate({ queryKey: sessionKey() });
 			}}
 		>
 			{({ FormField, fields }) => (
