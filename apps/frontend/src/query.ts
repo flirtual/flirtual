@@ -112,7 +112,7 @@ export const queryClient = new QueryClient({
 			retry: true,
 			retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 60000),
 			staleTime: ms("5m"),
-			gcTime: ms("8h"),
+			gcTime: ms("1h"),
 		},
 	},
 });
@@ -139,6 +139,8 @@ interface QueryPreference {
 		s: QueryState;
 	}>;
 }
+
+export type MinimalQueryOptions<T> = Pick<UseQueryOptions<T, Error, T, QueryKey>, "placeholderData">;
 
 const cacheVersion = gitCommitSha;
 const defaultCacheTime = ms("1d");
