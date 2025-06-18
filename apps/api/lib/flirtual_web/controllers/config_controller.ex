@@ -10,10 +10,31 @@ defmodule FlirtualWeb.ConfigController do
   action_fallback(FlirtualWeb.FallbackController)
 
   def get(conn, _) do
+    json_with_etag(conn, %{})
+  end
+
+  def get_device(conn, _) do
+    country =
+      conn
+      |> get_req_header("cf-ipcountry")
+      |> List.first()
+      |> case do
+        "XX" ->
+          nil
+
+        "T1" ->
+          nil
+
+        country when is_binary(country) ->
+          String.downcase(country)
+
+        _ ->
+          nil
+      end
+
     conn
-    # |> cache_control([:public, :immutable, {"max-age", [minute: 5]}])
     |> json_with_etag(%{
-      cache_version: 1_745_196_165_945
+      country: country
     })
   end
 end

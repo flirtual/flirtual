@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Locale } from "next-intl";
+import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { use } from "react";
 
 import { ModelCard } from "~/components/model-card";
-import { getCountry } from "~/i18n";
 
 import { Onboarding1Form } from "./form";
 
@@ -14,11 +16,13 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export const dynamic = "force-dynamic";
+export default function Onboarding1Page({ params }: {
+	params: Promise<{ locale: Locale }>;
+}) {
+	const { locale } = use(params);
+	setRequestLocale(locale);
 
-export default async function Onboarding1Page() {
-	const t = await getTranslations();
-	const country = await getCountry();
+	const t = useTranslations();
 
 	return (
 		<ModelCard
@@ -27,7 +31,7 @@ export default async function Onboarding1Page() {
 			className="shrink-0 desktop:max-w-2xl"
 			title={t("about_you")}
 		>
-			<Onboarding1Form systemCountry={country || undefined} />
+			<Onboarding1Form />
 		</ModelCard>
 	);
 }
