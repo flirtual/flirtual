@@ -2,8 +2,9 @@
 "use client";
 
 import { DatetimePicker } from "@capawesome-team/capacitor-datetime-picker";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
+import { useClickOutside } from "~/hooks/use-click-outside";
 import { useDevice } from "~/hooks/use-device";
 import { useTheme } from "~/hooks/use-theme";
 import { resolveTheme } from "~/theme";
@@ -49,6 +50,8 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	const [inputValue, setInputValue] = useState(toDateString(props.value));
 	const [drawerVisible, setDrawerVisible] = useState(false);
 
+	const reference = useRef<HTMLDivElement>(null);
+
 	const progressDate = useCallback(
 		(type: number, direction: -1 | 1) => {
 			const value = new globalThis.Date(
@@ -63,11 +66,13 @@ export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 		[props.value, props.onChange]
 	);
 
+	useClickOutside(reference, () => setDrawerVisible(false), drawerVisible);
+
 	if (native) return <InputDateSelectNative {...props} />;
 
 	return (
 		<Popover open={drawerVisible} onOpenChange={setDrawerVisible}>
-			<div className="flex size-full justify-center">
+			<div className="flex size-full justify-center" ref={reference}>
 				<InputCalendar
 					className="w-fit shadow-brand-1"
 					{...props}
