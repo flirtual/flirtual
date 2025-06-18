@@ -62,7 +62,6 @@ defmodule FlirtualWeb.Router do
 
     scope "/v1" do
       get("/config", ConfigController, :get)
-      get("/device", ConfigController, :get_device)
 
       scope "/attributes" do
         scope "/:attribute_type" do

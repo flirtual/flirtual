@@ -31,8 +31,9 @@ export async function applyDocumentMutations() {
 		? "friend"
 		: "default";
 
-	const fontSize = await getPreferences<number>("font_size") || 16;
-	document.documentElement.style.setProperty("font-size", `${fontSize}px`);
+	const fontSizePromise = getPreferences<number>("font_size").then((fontSize) => {
+		document.documentElement.style.setProperty("font-size", `${fontSize || 16}px`);
+	});
 
 	const { platform, native, vision } = device;
 
@@ -47,7 +48,12 @@ export async function applyDocumentMutations() {
 	}, (value) => !value));
 
 	if (!element.style.getPropertyValue("--safe-area-inset-top")) initializeSafeArea();
-	await SafeArea.enable({ config: safeArea });
+	const safeAreaPromise = SafeArea.enable({ config: safeArea });
+
+	await Promise.all([
+		fontSizePromise,
+		safeAreaPromise
+	]);
 }
 
 export const LazyLayout = withSuspense(() => {

@@ -50,7 +50,6 @@ export const Onboarding0Form: FC = () => {
 				});
 
 				await mutate<Session>(sessionKey(), { user, updatedAt: now, createdAt: now });
-				router.push(urls.onboarding(1));
 			}}
 		>
 			{({ errors, Captcha, FormField }) => (

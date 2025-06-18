@@ -21,6 +21,7 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import { useConfig } from "~/hooks/use-config";
 import { useSession } from "~/hooks/use-session";
 import { useRouter } from "~/i18n/navigation";
 import { invalidate, sessionKey } from "~/query";
@@ -28,12 +29,14 @@ import { urls } from "~/urls";
 
 const AttributeKeys = [...(["gender", "game", "interest"] as const)];
 
-export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry }) => {
+export const Onboarding1Form: FC = () => {
 	const { user } = useSession();
 	const { profile } = user;
 
 	const t = useTranslations();
 	const router = useRouter();
+
+	const { country } = useConfig();
 
 	const games = useAttributes("game");
 	const genders = useAttributes("gender");
@@ -47,7 +50,7 @@ export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry 
 				bornAt: user.bornAt
 					? new Date(user.bornAt.replaceAll("-", "/"))
 					: new Date(),
-				country: user.profile.country ?? systemCountry ?? null,
+				country: user.profile.country ?? country ?? null,
 				game: profile.attributes.game || [],
 				gender: profile.attributes.gender || [],
 				interest: profile.attributes.interest || []
@@ -73,9 +76,9 @@ export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry 
 							})
 						)
 					})
-				]);
-
-				await invalidate({ queryKey: sessionKey() });
+				]).finally(async () => {
+					await invalidate({ queryKey: sessionKey() });
+				});
 
 				router.push(urls.onboarding(2));
 			}}
@@ -159,7 +162,7 @@ export const Onboarding1Form: FC<{ systemCountry?: string }> = ({ systemCountry 
 						{(field) => (
 							<>
 								<InputLabel hint={t("optional")}>{t("location")}</InputLabel>
-								<InputCountrySelect {...field.props} prefer={systemCountry} />
+								<InputCountrySelect {...field.props} prefer={country ?? "us"} />
 							</>
 						)}
 					</FormField>

@@ -4,7 +4,6 @@ import type { AppInfo } from "@capacitor/app";
 import { App } from "@capacitor/app";
 import type { DeviceId, DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
-import { omitBy } from "remeda";
 
 import { client, gitCommitSha, platformOverride } from "~/const";
 import { log as _log } from "~/log";

@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next";
 import type { Locale } from "next-intl";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { preconnect } from "react-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import { twMerge } from "tailwind-merge";
@@ -20,7 +19,6 @@ import { bucketOrigins, urls } from "~/urls";
 
 import { fontClassNames } from "../fonts";
 import GlobalError from "../global-error";
-import { LoadingIndicator } from "./(app)/loading-indicator";
 import { LazyLayout } from "./lazy-layout";
 import { LocalizationPolyfill } from "./localization-polyfill";
 import { StagingBanner } from "./staging-banner";

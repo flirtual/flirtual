@@ -10,10 +10,6 @@ defmodule FlirtualWeb.ConfigController do
   action_fallback(FlirtualWeb.FallbackController)
 
   def get(conn, _) do
-    json_with_etag(conn, %{})
-  end
-
-  def get_device(conn, _) do
     country =
       conn
       |> get_req_header("cf-ipcountry")
@@ -32,8 +28,7 @@ defmodule FlirtualWeb.ConfigController do
           nil
       end
 
-    conn
-    |> json_with_etag(%{
+    json_with_etag(conn, %{
       country: country
     })
   end
