@@ -33,7 +33,7 @@ const [
 	}
 ] = await Promise.all([
 	client
-		? App.getInfo().catch(() => ({} as AppInfo))
+		? App.getInfo().catch(() => ({} as Partial<AppInfo>))
 		: {} as AppInfo,
 	client
 		? Device.getInfo()
