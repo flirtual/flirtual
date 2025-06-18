@@ -56,6 +56,7 @@ export interface UseInputForm<T extends FormFieldsDefault> {
 	props: React.ComponentProps<"form">;
 	buttonProps: React.ComponentProps<"button">;
 	submitting: boolean;
+	submitCount: number;
 	changes: Array<keyof T>;
 	FormField: FormFieldFC<T>;
 	setFieldErrors: React.Dispatch<React.SetStateAction<FieldErrors<T>>>;
@@ -102,6 +103,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 	const [errors, setErrors] = useState<Array<string>>([]);
 	const [fieldErrors, setFieldErrors] = useState<FieldErrors<T>>({});
 	const [submitting, setSubmitting] = useState(false);
+	const [submitCount, setSubmitCount] = useState(0);
 
 	/* useEffect(() => {
 		setValues(options.fields);
@@ -124,6 +126,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 			setErrors(errors);
 			setFieldErrors(fieldErrors);
+			setSubmitCount((count) => count + 1);
 
 			return {
 				errors,
@@ -163,6 +166,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 					setErrors(errors);
 					setFieldErrors(fieldErrors);
+					setSubmitCount((count) => count + 1);
 
 					return {
 						errors,
@@ -185,6 +189,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 					setErrors(errors);
 					setFieldErrors(fieldErrors);
+					setSubmitCount((count) => count + 1);
 
 					return { errors, fieldErrors, fields: _values };
 				}
@@ -198,6 +203,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 				setErrors(errors);
 				setFieldErrors(fieldErrors);
+				setSubmitCount((count) => count + 1);
 
 				return { errors, fieldErrors, fields: _values };
 			});
@@ -290,7 +296,8 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 		setErrors,
 		setSubmitting,
 		submit,
-		submitting
+		submitting,
+		submitCount
 	};
 
 	return form;

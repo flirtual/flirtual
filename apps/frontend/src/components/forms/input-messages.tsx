@@ -3,6 +3,8 @@ import { motion } from "motion/react";
 import { type FC, type PropsWithChildren, useLayoutEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { useFormContext } from "~/hooks/use-input-form";
+
 import type { IconComponent } from "../icons";
 
 export type FormMessageType = "error" | "informative" | "success" | "warning";
@@ -41,6 +43,7 @@ const formMessageIconSize: Record<FormMessageSize, string> = {
 export type FormMessageProps = PropsWithChildren<{ className?: string } & Omit<FormMessage, "value">>;
 
 export const FormMessage: FC<FormMessageProps> = (props) => {
+	const { submitCount } = useFormContext();
 	const { type, size = "md", className, children } = props;
 	const Icon = formMessageIcon[type];
 
@@ -52,7 +55,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 			block: "center",
 			inline: "center"
 		});
-	}, [children]);
+	}, [children, submitCount]);
 
 	return (
 		<motion.div
