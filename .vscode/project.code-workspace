@@ -51,6 +51,10 @@
 			"flirtual"
 		],
 		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.project.resourceFilters": [
+			"node_modules",
+			".git"
+		],
 		"typescript.tsdk": "🖥️ Frontend/node_modules/typescript/lib",
 		"files.insertFinalNewline": true,
 		"typescript.format.enable": false,
