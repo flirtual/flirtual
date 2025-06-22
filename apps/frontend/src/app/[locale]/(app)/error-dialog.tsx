@@ -1,15 +1,14 @@
-import { Clipboard } from "@capacitor/clipboard";
-import { Slot } from "@radix-ui/react-slot";
-import { captureException, captureFeedback, setUser } from "@sentry/nextjs";
-import { Chrome, MoveRight, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import { captureException } from "@sentry/nextjs";
+import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import type { FC, PropsWithChildren } from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import type { FC } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import useSound from "use-sound";
 
 import { Button } from "~/components/button";
+import { CopyClick } from "~/components/copy-click";
 import {
 	DialogBody,
 	DialogDescription,
@@ -17,27 +16,12 @@ import {
 	DialogTitle
 } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
-import { InputLabel, InputTextArea } from "~/components/inputs";
-import { environment, gitCommitSha, maintenance } from "~/const";
+import { gitCommitSha, maintenance } from "~/const";
 import { urls } from "~/urls";
 
 export type ErrorWithDigest = { digest?: string } & Error;
 
 export interface ErrorProps { error: ErrorWithDigest; reset: () => void };
-
-/**
- * An re-implemented version of the CopyClick component from `~/components/copy-click` that doesn't
- * use the APIs which aren't available when rendering the global-error page.
- */
-const CopyClick: FC<PropsWithChildren<{ value: string }>> = ({ value, children }) => (
-	<Slot
-		data-copy-click
-		className="cursor-pointer"
-		onClick={() => Clipboard.write({ string: value })}
-	>
-		{children}
-	</Slot>
-);
 
 const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, eventId }) => {
 	const t = useTranslations();

@@ -59,7 +59,7 @@ export const api = wretch(urls.api)
 
 					if (!duringBuild && environment === "development")
 						// Artificially slow requests in development, ensuring we can see loading/pending states.
-						await new Promise((resolve) => setTimeout(resolve, 2000 * Math.random() * (options.method === "GET" ? 1 : 2)));
+						await new Promise((resolve) => setTimeout(resolve, 500 * Math.random() * (options.method === "GET" ? 1 : 2)));
 
 					return next(url, options);
 				};

@@ -2,9 +2,9 @@
 
 import { MoveRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
 
+import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { ButtonLink } from "~/components/button";
 import { Form, FormButton } from "~/components/forms";
@@ -16,6 +16,8 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
+import { useRouter } from "~/i18n/navigation";
+import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
@@ -40,14 +42,14 @@ export const Onboarding0Form: FC = () => {
 			renderCaptcha={false}
 			requireChange={false}
 			onSubmit={async ({ ...values }, { captcha }) => {
-				await User.create({
+				const now = new Date().toISOString();
+				const user = await User.create({
 					...values,
 					captcha,
 					language: locale
 				});
 
-				router.refresh();
-				router.push(urls.onboarding(1));
+				await mutate<Session>(sessionKey(), { user, updatedAt: now, createdAt: now });
 			}}
 		>
 			{({ errors, Captcha, FormField }) => (

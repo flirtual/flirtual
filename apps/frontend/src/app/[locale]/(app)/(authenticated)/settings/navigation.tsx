@@ -21,7 +21,7 @@ import {
 	VenetianMask,
 	X
 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -32,7 +32,7 @@ import { openFeedback } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
-import { useRouter, useSelectedLayoutSegment } from "~/i18n/navigation";
+import { redirect, useRouter, useSelectedLayoutSegment } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -40,14 +40,17 @@ import { NavigationHeader } from "./navigation-header";
 import { NavigationLink } from "./navigation-link";
 
 export const SettingsNavigation: FC = () => {
-	const session = useSession();
+	const { user, sudoerId } = useSession();
 	const { vision } = useDevice();
 
 	const router = useRouter();
+	const locale = useLocale();
 	const layoutSegment = useSelectedLayoutSegment();
 
 	const { openFreshworks } = useFreshworks();
 	const t = useTranslations();
+
+	if (user.status === "onboarded") redirect({ href: urls.finish(1), locale });
 
 	return (
 		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
@@ -59,9 +62,9 @@ export const SettingsNavigation: FC = () => {
 						layoutSegment ? "hidden desktop:flex" : "flex"
 					)}
 				>
-					{vision && (session?.user.tags?.includes("moderator") || session?.user.tags?.includes("admin") || session?.sudoerId) && (
+					{vision && (user.tags?.includes("moderator") || user.tags?.includes("admin") || sudoerId) && (
 						<NavigationCategory name="Staff">
-							{session?.user.tags?.includes("moderator") && (
+							{user.tags?.includes("moderator") && (
 								<>
 									<NavigationLink href={urls.moderation.reports()} Icon={ShieldAlert}>
 										{t("reports")}
@@ -71,12 +74,12 @@ export const SettingsNavigation: FC = () => {
 									</NavigationLink>
 								</>
 							)}
-							{session?.user.tags?.includes("admin") && (
+							{user.tags?.includes("admin") && (
 								<NavigationLink href={urls.admin.stats} Icon={LineChart}>
 									{t("stats")}
 								</NavigationLink>
 							)}
-							{session?.sudoerId && (
+							{sudoerId && (
 								<NavigationLink
 									Icon={VenetianMask}
 									onClick={async () => {

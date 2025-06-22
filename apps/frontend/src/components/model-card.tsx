@@ -69,7 +69,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			</div>
 			{miniFooter && (
 				<footer className={twMerge(
-					"mb-4 mt-8 grid grid-cols-2 items-center justify-center gap-4 desktop:mb-0",
+					"mb-8 mt-auto grid grid-cols-2 items-center justify-center gap-4 desktop:mb-0 desktop:mt-8",
 				)}
 				>
 					<SupportButton className="flex items-center gap-0.5em whitespace-nowrap">

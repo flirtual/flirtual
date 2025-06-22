@@ -17,7 +17,6 @@ import {
 import { toAbsoluteUrl, toRelativeUrl, urls } from "~/urls";
 
 import { device } from "./use-device";
-import { postpone } from "./use-postpone";
 
 export async function logout() {
 	await mutate(sessionKey(), null);
@@ -42,13 +41,17 @@ export function useGuest() {
 	const locale = useLocale();
 	const session = useOptionalSession();
 
-	const next = toRelativeUrl(toAbsoluteUrl(useSearchParams().get("next") || urls.discover("love")));
+	const next = toRelativeUrl(
+		toAbsoluteUrl(useSearchParams().get("next")
+			|| (session?.user.status === "registered"
+				? urls.onboarding(1)
+				: urls.discover("love")))
+	);
+
 	if (session) redirect({ href: next, locale });
 }
 
 export function useSession(queryOptions: MinimalQueryOptions<Session | null> = {}) {
-	postpone("useSession()");
-
 	const locale = useLocale();
 	const session = useQuery({
 		...queryOptions,

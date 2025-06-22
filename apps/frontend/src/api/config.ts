@@ -3,7 +3,7 @@ import type { WretchOptions } from "wretch";
 import { api } from "./common";
 
 export interface Config {
-	cacheVersion: string;
+	country: string | null;
 }
 
 export const Config = {
@@ -13,5 +13,5 @@ export const Config = {
 			.options(options)
 			.get()
 			.json<Config>();
-	},
+	}
 };

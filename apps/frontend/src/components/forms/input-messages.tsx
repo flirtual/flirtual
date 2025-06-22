@@ -1,7 +1,9 @@
 import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import type { FC, PropsWithChildren } from "react";
+import { motion } from "motion/react";
+import { type FC, type PropsWithChildren, useLayoutEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
+
+import { useFormContext } from "~/hooks/use-input-form";
 
 import type { IconComponent } from "../icons";
 
@@ -41,26 +43,32 @@ const formMessageIconSize: Record<FormMessageSize, string> = {
 export type FormMessageProps = PropsWithChildren<{ className?: string } & Omit<FormMessage, "value">>;
 
 export const FormMessage: FC<FormMessageProps> = (props) => {
+	const { submitCount } = useFormContext();
 	const { type, size = "md", className, children } = props;
 	const Icon = formMessageIcon[type];
+
+	const reference = useRef<HTMLDivElement>(null);
+
+	useLayoutEffect(() => {
+		reference.current?.scrollIntoView({
+			behavior: "smooth",
+			block: "center",
+			inline: "center"
+		});
+	}, [children, submitCount]);
 
 	return (
 		<motion.div
 			className={twMerge(
-				"select-children flex gap-2 font-nunito",
+				"motion-preset-rebound select-children flex gap-2 font-nunito motion-duration-200",
 				formMessageStyle[type],
 				formMessageSize[size],
 				className
 			)}
-			ref={(element) =>
-				element?.scrollIntoView({
-					behavior: "smooth",
-					block: "center",
-					inline: "center"
-				})}
-			animate={{ opacity: 1, height: "auto" }}
-			exit={{ opacity: 0, height: 0 }}
-			initial={{ opacity: 0, height: 0 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0 }}
+			initial={{ opacity: 0, y: -10 }}
+			ref={reference}
 		>
 			<Icon className={twMerge("shrink-0", formMessageIconSize[size])} />
 			<span>{children}</span>
@@ -80,12 +88,12 @@ export const FormInputMessages: React.FC<FormInputMessagesProps> = ({
 	const message = messages?.[0];
 
 	return (
-		<AnimatePresence>
+		<>
 			{message && (
 				<FormMessage {...message} className={className}>
 					{message.value}
 				</FormMessage>
 			)}
-		</AnimatePresence>
+		</>
 	);
 };
