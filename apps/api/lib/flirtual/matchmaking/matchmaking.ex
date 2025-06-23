@@ -641,11 +641,15 @@ defmodule Flirtual.Matchmaking do
     %{profile: %{custom_weights: custom_weights}} = user
 
     %{
-      "term" => %{
-        "liked" => %{
-          "value" => user.id,
-          "boost" => 15 * (Map.get(custom_weights, :likes) || 1)
-        }
+      "constant_score" => %{
+        "filter" => %{
+          "term" => %{
+            "liked" => %{
+              "value" => user.id
+            }
+          }
+        },
+        "boost" => 15 * (Map.get(custom_weights, :likes) || 1)
       }
     }
   end
@@ -663,11 +667,15 @@ defmodule Flirtual.Matchmaking do
       Enum.map(
         grouped_interests[0] || [],
         &%{
-          "term" => %{
-            "attributes" => %{
-              "value" => &1.id,
-              "boost" => 3 * (Map.get(custom_weights, :default_interests) || 1)
-            }
+          "constant_score" => %{
+            "filter" => %{
+              "term" => %{
+                "attributes" => %{
+                  "value" => &1.id
+                }
+              }
+            },
+            "boost" => 3 * (Map.get(custom_weights, :default_interests) || 1)
           }
         }
       ),
@@ -675,11 +683,15 @@ defmodule Flirtual.Matchmaking do
       Enum.map(
         grouped_interests[1] || [],
         &%{
-          "term" => %{
-            "attributes" => %{
-              "value" => &1.id,
-              "boost" => 5 * (Map.get(custom_weights, :default_interests) || 1)
-            }
+          "constant_score" => %{
+            "filter" => %{
+              "term" => %{
+                "attributes" => %{
+                  "value" => &1.id
+                }
+              }
+            },
+            "boost" => 5 * (Map.get(custom_weights, :default_interests) || 1)
           }
         }
       ),
@@ -687,11 +699,15 @@ defmodule Flirtual.Matchmaking do
       Enum.map(
         grouped_interests[2] || [],
         &%{
-          "term" => %{
-            "attributes" => %{
-              "value" => &1.id,
-              "boost" => 20 * (Map.get(custom_weights, :default_interests) || 1)
-            }
+          "constant_score" => %{
+            "filter" => %{
+              "term" => %{
+                "attributes" => %{
+                  "value" => &1.id
+                }
+              }
+            },
+            "boost" => 20 * (Map.get(custom_weights, :default_interests) || 1)
           }
         }
       )
@@ -705,14 +721,18 @@ defmodule Flirtual.Matchmaking do
     Enum.map(
       custom_interests,
       &%{
-        "term" => %{
-          "custom_interests" => %{
-            "value" =>
-              &1
-              |> String.downcase()
-              |> String.replace(~r/[^[:alnum:]]/u, ""),
-            "boost" => 25 * (Map.get(custom_weights, :custom_interests) || 1)
-          }
+        "constant_score" => %{
+          "filter" => %{
+            "term" => %{
+              "custom_interests" => %{
+                "value" =>
+                  &1
+                  |> String.downcase()
+                  |> String.replace(~r/[^[:alnum:]]/u, "")
+              }
+            }
+          },
+          "boost" => 25 * (Map.get(custom_weights, :custom_interests) || 1)
         }
       }
     )
@@ -726,11 +746,15 @@ defmodule Flirtual.Matchmaking do
     Enum.map(
       games,
       &%{
-        "term" => %{
-          "attributes" => %{
-            "value" => &1.id,
-            "boost" => 1 * (Map.get(custom_weights, :games) || 1)
-          }
+        "constant_score" => %{
+          "filter" => %{
+            "term" => %{
+              "attributes" => %{
+                "value" => &1.id
+              }
+            }
+          },
+          "boost" => 1 * (Map.get(custom_weights, :games) || 1)
         }
       }
     )
@@ -742,11 +766,15 @@ defmodule Flirtual.Matchmaking do
     # Are $a and $b from the same country?
     if(country,
       do: %{
-        "term" => %{
-          "country" => %{
-            "value" => country,
-            "boost" => 20 * (Map.get(custom_weights, :country) || 1)
-          }
+        "constant_score" => %{
+          "filter" => %{
+            "term" => %{
+              "country" => %{
+                "value" => country
+              }
+            }
+          },
+          "boost" => 20 * (Map.get(custom_weights, :country) || 1)
         }
       },
       else: []
@@ -759,11 +787,15 @@ defmodule Flirtual.Matchmaking do
     # Are $a and $b both monogamous, or both non-monogamous?
     if(monopoly,
       do: %{
-        "term" => %{
-          "monopoly" => %{
-            "value" => monopoly,
-            "boost" => 5 * (Map.get(custom_weights, :monopoly) || 1)
-          }
+        "constant_score" => %{
+          "filter" => %{
+            "term" => %{
+              "monopoly" => %{
+                "value" => monopoly
+              }
+            }
+          },
+          "boost" => 5 * (Map.get(custom_weights, :monopoly) || 1)
         }
       },
       else: []
@@ -777,11 +809,15 @@ defmodule Flirtual.Matchmaking do
     Enum.map(
       relationships,
       &%{
-        "term" => %{
-          "relationships" => %{
-            "value" => &1,
-            "boost" => 2 * (Map.get(custom_weights, :relationships) || 1)
-          }
+        "constant_score" => %{
+          "filter" => %{
+            "term" => %{
+              "relationships" => %{
+                "value" => &1
+              }
+            }
+          },
+          "boost" => 2 * (Map.get(custom_weights, :relationships) || 1)
         }
       }
     )
@@ -792,8 +828,12 @@ defmodule Flirtual.Matchmaking do
 
     if(user.preferences.nsfw && domsub,
       do: %{
-        "terms" => %{
-          "domsub" => User.Profile.get_domsub_match(domsub),
+        "constant_score" => %{
+          "filter" => %{
+            "terms" => %{
+              "domsub" => User.Profile.get_domsub_match(domsub)
+            }
+          },
           "boost" => 3 * (Map.get(custom_weights, :domsub) || 1)
         }
       },
@@ -807,11 +847,15 @@ defmodule Flirtual.Matchmaking do
     Enum.map(
       languages,
       &%{
-        "term" => %{
-          "languages" => %{
-            "value" => &1,
-            "boost" => 1 * (Map.get(custom_weights, :languages) || 1)
-          }
+        "constant_score" => %{
+          "filter" => %{
+            "term" => %{
+              "languages" => %{
+                "value" => &1
+              }
+            }
+          },
+          "boost" => 1 * (Map.get(custom_weights, :languages) || 1)
         }
       }
     )
@@ -826,22 +870,30 @@ defmodule Flirtual.Matchmaking do
           Enum.map(
             filter_by(preferences.attributes, :type, "kink"),
             &%{
-              "term" => %{
-                "attributes" => %{
-                  "value" => &1.id,
-                  "boost" => 2 * (Map.get(custom_weights, :kinks) || 1)
-                }
+              "constant_score" => %{
+                "filter" => %{
+                  "term" => %{
+                    "attributes" => %{
+                      "value" => &1.id
+                    }
+                  }
+                },
+                "boost" => 2 * (Map.get(custom_weights, :kinks) || 1)
               }
             }
           ),
           Enum.map(
             filter_by(profile.attributes, :type, "kink"),
             &%{
-              "term" => %{
-                "attributes_lf" => %{
-                  "value" => &1.id,
-                  "boost" => 2 * (Map.get(custom_weights, :kinks) || 1)
-                }
+              "constant_score" => %{
+                "filter" => %{
+                  "term" => %{
+                    "attributes_lf" => %{
+                      "value" => &1.id
+                    }
+                  }
+                },
+                "boost" => 2 * (Map.get(custom_weights, :kinks) || 1)
               }
             }
           )
