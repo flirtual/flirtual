@@ -43,10 +43,22 @@ defmodule FlirtualWeb.MatchmakingController do
   end
 
   def inspect_query(conn, %{"kind" => kind}) do
+    user = conn.assigns[:session].user
+    kind_atom = to_atom(kind, :love)
+
+    query = Matchmaking.generate_query(user, kind_atom, explain: true)
+
+    results =
+      case Flirtual.Elasticsearch.search(:users, query) do
+        {:ok, response} -> response
+        {:error, error} -> %{"error" => error}
+      end
+
     conn
-    |> json_with_etag(
-      Matchmaking.generate_query(conn.assigns[:session].user, to_atom(kind, :love))
-    )
+    |> json_with_etag(%{
+      query: query,
+      results: results
+    })
   end
 
   def response(conn, params) do

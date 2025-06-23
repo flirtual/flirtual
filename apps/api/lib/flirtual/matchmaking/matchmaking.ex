@@ -415,7 +415,7 @@ defmodule Flirtual.Matchmaking do
     end)
   end
 
-  def generate_query(%User{} = user, kind) do
+  def generate_query(%User{} = user, kind, opts \\ []) do
     user =
       user
       |> then(
@@ -431,7 +431,7 @@ defmodule Flirtual.Matchmaking do
     profile = user.profile
 
     %{
-      "explain" => false,
+      "explain" => Keyword.get(opts, :explain, false),
       "_source" => false,
       "size" => 31,
       "query" => %{
