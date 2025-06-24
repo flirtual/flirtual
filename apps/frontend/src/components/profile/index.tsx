@@ -172,7 +172,7 @@ export function Profile({
 								</div>
 							)}
 							{user.profile.vrchat && (() => {
-								const directLink = user.profile.vrchat.match(/^(?:https?:\/\/)?vrchat\.com\/home\/user\/(usr_[a-f0-9-]+)$/);
+								const directLink = user.profile.vrchat.match(/^(?:https?:\/\/)?vrchat\.com\/home\/user\/([^/?#]+)$/);
 								const name = directLink?.[1] ?? user.profile.vrchat;
 								const url = directLink ? `https://vrchat.com/home/user/${name}` : urls.vrchatSearch(user.profile.vrchat);
 
