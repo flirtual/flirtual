@@ -171,35 +171,41 @@ export function Profile({
 									)}
 								</div>
 							)}
-							{user.profile.vrchat && (
-								<div className="flex items-center gap-2">
-									<VRChatOutlineIcon className="size-6 shrink-0 text-black-90" />
-									{t.rich("zany_salty_cheetah_lead", {
-										name: user.profile.vrchat,
-										copy: (children) => (
-											<div className="group flex items-center justify-center gap-1">
-												<InlineLink
-													className="underline"
-													highlight={false}
-													href={urls.vrchat(user.profile.vrchat!)}
-												>
-													{children}
-												</InlineLink>
-												{session.user.status === "visible" && (
-													<CopyClick value={user.profile.vrchat!}>
-														<button
-															className="p-2 opacity-0 transition-opacity group-hover:opacity-100"
-															type="button"
-														>
-															<Copy className="size-4 shrink-0" />
-														</button>
-													</CopyClick>
-												)}
-											</div>
-										)
-									})}
-								</div>
-							)}
+							{user.profile.vrchat && (() => {
+								const directLink = user.profile.vrchat.match(/^(?:https?:\/\/)?vrchat\.com\/home\/user\/(usr_[a-f0-9-]+)$/);
+								const name = directLink?.[1] ?? user.profile.vrchat;
+								const url = directLink ? `https://vrchat.com/home/user/${name}` : urls.vrchatSearch(user.profile.vrchat);
+
+								return (
+									<div className="flex items-center gap-2">
+										<VRChatOutlineIcon className="size-6 shrink-0 text-black-90" />
+										{t.rich("zany_salty_cheetah_lead", {
+											name,
+											copy: (children) => (
+												<div className="group flex items-center justify-center gap-1">
+													<InlineLink
+														className="underline"
+														highlight={false}
+														href={url}
+													>
+														{children}
+													</InlineLink>
+													{session.user.status === "visible" && (
+														<CopyClick value={user.profile.vrchat!}>
+															<button
+																className="p-2 opacity-0 transition-opacity group-hover:opacity-100"
+																type="button"
+															>
+																<Copy className="size-4 shrink-0" />
+															</button>
+														</CopyClick>
+													)}
+												</div>
+											)
+										})}
+									</div>
+								);
+							})()}
 						</div>
 					)}
 					{user.profile.new && !myProfile
