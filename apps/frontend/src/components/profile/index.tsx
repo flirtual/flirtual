@@ -172,9 +172,17 @@ export function Profile({
 								</div>
 							)}
 							{user.profile.vrchat && (() => {
-								const directLink = user.profile.vrchat.match(/^(?:https?:\/\/)?vrchat\.com\/home\/user\/([^/?#]+)$/);
-								const name = directLink?.[1] ?? user.profile.vrchat;
-								const url = directLink ? `https://vrchat.com/home/user/${name}` : urls.vrchatSearch(user.profile.vrchat);
+								const idMatch = user.profile.vrchat.match(/^usr_([a-f0-9]{8})-?([a-f0-9]{4})-?([a-f0-9]{4})-?([a-f0-9]{4})-?([a-f0-9]{12})$/i);
+								const profileMatch = user.profile.vrchat.match(/^(?:https?:\/\/)?vrchat\.com\/home\/user\/([^/?#]+)$/);
+								const searchMatch = user.profile.vrchat.match(/^(?:https?:\/\/)?vrchat\.com\/home\/search\/([^/?#]+)$/);
+
+								const name = idMatch
+									? `usr_${idMatch.slice(1).join("-")}`
+									: profileMatch?.[1] ?? searchMatch?.[1] ?? user.profile.vrchat;
+
+								const url = (idMatch || profileMatch)
+									? `https://vrchat.com/home/user/${name}`
+									: urls.vrchatSearch(name);
 
 								return (
 									<div className="flex items-center gap-2">
