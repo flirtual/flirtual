@@ -194,8 +194,6 @@ defmodule FlirtualWeb.Router do
 
         scope "/vrchat" do
           pipe_through([:require_authenticated_user])
-
-          get("/search", VRChatController, :search)
         end
 
         scope "/connections" do

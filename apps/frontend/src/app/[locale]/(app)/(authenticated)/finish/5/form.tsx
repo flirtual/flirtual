@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 // eslint-disable-next-line no-restricted-imports
 import { useRouter, useSearchParams } from "next/navigation";
 
+import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
 import { Form, FormButton } from "~/components/forms";
@@ -12,7 +13,8 @@ import { AddConnectionButton } from "~/components/forms/add-connection-button";
 import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { InputText } from "~/components/inputs";
 import { useDevice } from "~/hooks/use-device";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
+import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Finish5Form: React.FC = () => {
@@ -21,12 +23,8 @@ export const Finish5Form: React.FC = () => {
 
 	const { vision } = useDevice();
 	const router = useRouter();
-	const session = useOptionalSession();
+	const { user } = useSession();
 	const t = useTranslations();
-
-	if (!session) return null;
-
-	const { user } = session;
 
 	return (
 		<>
@@ -42,16 +40,24 @@ export const Finish5Form: React.FC = () => {
 				</div>
 				<Form
 					fields={{
-						vrchat: user.profile.vrchat || "",
+						vrchat: user.profile.vrchatName || "",
 						facetime: user.profile.facetime || ""
 					}}
 					className="flex flex-col gap-8"
 					requireChange={false}
-					onSubmit={async ({ vrchat, facetime }) => {
-						await Profile.update(user.id, {
-							vrchat: vrchat.trim() || null,
+					onSubmit={async ({ vrchat, facetime }, form) => {
+						const profile = await Profile.update(user.id, {
+							vrchat: form.fields.vrchat.changed ? (vrchat.trim() || null) : undefined,
 							facetime: facetime.trim() || null
 						});
+
+						await mutate<Session>(sessionKey(), (session) => ({
+							...session,
+							user: {
+								...user,
+								profile
+							}
+						}));
 
 						router.push(
 							user.emailConfirmedAt ? urls.discover("love") : urls.confirmEmail()
@@ -85,7 +91,7 @@ export const Finish5Form: React.FC = () => {
 										/>
 									)}
 								</FormField>
-								{vision && session.user.tags?.includes("debugger") && (
+								{vision && user.tags?.includes("debugger") && (
 									<FormField
 										name="facetime"
 									>

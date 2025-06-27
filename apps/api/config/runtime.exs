@@ -44,6 +44,11 @@ config :flirtual, Flirtual.Apple,
   client_id: System.fetch_env!("APPLE_CLIENT_ID"),
   client_secret: System.fetch_env!("APPLE_CLIENT_SECRET")
 
+config :flirtual, Flirtual.VRChat,
+  username: System.fetch_env!("VRCHAT_USERNAME"),
+  password: System.fetch_env!("VRCHAT_PASSWORD"),
+  totp_secret: System.fetch_env!("VRCHAT_TOTP_SECRET")
+
 config :wax_,
   origin: System.fetch_env!("FRONTEND_ORIGIN"),
   rp_id: :auto

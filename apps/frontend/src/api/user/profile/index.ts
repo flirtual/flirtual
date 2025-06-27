@@ -39,6 +39,7 @@ export type Profile = {
 	monopoly?: ProfileMonopoly;
 	country?: string;
 	vrchat?: string | null;
+	vrchatName?: string | null;
 	discord?: string | null;
 	facetime?: string | null;
 	playlist?: string | null;

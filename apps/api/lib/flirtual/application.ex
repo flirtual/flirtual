@@ -58,7 +58,9 @@ defmodule Flirtual.Application do
         {Finch, name: Swoosh.Finch},
         # Start a worker by calling: Flirtual.Worker.start_link(arg)
         # {Flirtual.Worker, arg}
-        Flirtual.AttributeOrderWorker
+        Flirtual.AttributeOrderWorker,
+        # Start VRChat session manager
+        Flirtual.VRChatSession
       ]
       |> List.flatten()
       |> Enum.reject(&is_nil/1)

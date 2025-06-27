@@ -89,9 +89,11 @@ export const urls = {
 		user?.profile.images[0]
 			? urls.image(user.profile.images[0], variant)
 			: urls.media("8d120672-c717-49d2-b9f3-2d4479bbacf6"),
-	vrchatSearch: (username: string) =>
+	vrchatProfile: (userId: string) =>
+		`https://vrchat.com/home/user/${userId}`,
+	vrchatSearch: (name: string) =>
 		`https://vrchat.com/home/search/${encodeURIComponent(
-			escapeVRChat(username)
+			escapeVRChat(name)
 		)}`,
 
 	// pages

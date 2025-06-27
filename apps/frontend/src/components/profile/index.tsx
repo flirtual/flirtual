@@ -140,7 +140,7 @@ export function Profile({
 						|| relationship?.matched)
 					&& (discordConnection
 						|| user.profile.discord
-						|| user.profile.vrchat)
+						|| user.profile.vrchatName)
 					&& (
 						<div className="flex flex-col gap-2 vision:text-white-20">
 							{(discordConnection || user.profile.discord) && (
@@ -171,17 +171,10 @@ export function Profile({
 									)}
 								</div>
 							)}
-							{user.profile.vrchat && (() => {
-								const idMatch = user.profile.vrchat.match(/^usr_([a-f0-9]{8})-?([a-f0-9]{4})-?([a-f0-9]{4})-?([a-f0-9]{4})-?([a-f0-9]{12})$/i);
-								const profileMatch = user.profile.vrchat.match(/^(?:https?:\/\/)?vrchat\.com\/home\/user\/([^/?#]+)$/);
-								const searchMatch = user.profile.vrchat.match(/^(?:https?:\/\/)?vrchat\.com\/home\/search\/([^/?#]+)$/);
-
-								const name = idMatch
-									? `usr_${idMatch.slice(1).join("-")}`
-									: profileMatch?.[1] ?? searchMatch?.[1] ?? user.profile.vrchat;
-
-								const url = (idMatch || profileMatch)
-									? `https://vrchat.com/home/user/${name}`
+							{user.profile.vrchatName && (() => {
+								const name = user.profile.vrchatName;
+								const url = user.profile.vrchat
+									? urls.vrchatProfile(user.profile.vrchat)
 									: urls.vrchatSearch(name);
 
 								return (
@@ -199,7 +192,7 @@ export function Profile({
 														{children}
 													</InlineLink>
 													{session.user.status === "visible" && (
-														<CopyClick value={user.profile.vrchat!}>
+														<CopyClick value={name}>
 															<button
 																className="p-2 opacity-0 transition-opacity group-hover:opacity-100"
 																type="button"

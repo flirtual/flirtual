@@ -80,6 +80,7 @@ defmodule Flirtual.MixProject do
       {:ex_check, "~> 0.16.0", only: [:dev], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:kadabra, "~> 0.6"},
+      {:vrchat, "~> 1.20.0"},
       {:opentelemetry_semantic_conventions, "~> 1.27", override: true},
       {:opentelemetry_exporter, "~> 1.0"},
       {:opentelemetry, "~> 1.0"},

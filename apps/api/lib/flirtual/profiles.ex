@@ -70,6 +70,7 @@ defmodule Flirtual.Profiles do
                 :relationships,
                 :new,
                 :vrchat,
+                :vrchat_name,
                 :discord,
                 :facetime,
                 :playlist,
@@ -83,6 +84,7 @@ defmodule Flirtual.Profiles do
       field(:biography, :string)
       field(:biography_fragment, :map)
       field(:vrchat, :string, default: "")
+      field(:vrchat_name, :string, default: "")
       field(:discord, :string, default: "")
       field(:facetime, :string, default: "")
       field(:playlist, :string, default: "")
@@ -104,6 +106,7 @@ defmodule Flirtual.Profiles do
         display_name: profile.display_name,
         biography: profile.biography,
         vrchat: profile.vrchat,
+        vrchat_name: profile.vrchat_name,
         discord: profile.discord,
         facetime: profile.facetime,
         playlist: profile.playlist,
@@ -189,6 +192,7 @@ defmodule Flirtual.Profiles do
       end)
       |> validate_length(:interest, min: 1, max: 10)
       |> validate_playlist()
+      |> validate_vrchat()
     end
 
     defp validate_playlist(changeset) do
@@ -212,6 +216,39 @@ defmodule Flirtual.Profiles do
       end)
     end
 
+    defp validate_vrchat(changeset) do
+      case get_change(changeset, :vrchat) do
+        nil ->
+          changeset
+
+        "" ->
+          changeset
+          |> put_change(:vrchat, "")
+          |> put_change(:vrchat_name, "")
+
+        vrchat_input ->
+          case Flirtual.VRChat.resolve_input(vrchat_input) do
+            {:ok, %{id: id, display_name: display_name}} ->
+              changeset
+              |> put_change(:vrchat, id)
+              |> put_change(:vrchat_name, display_name)
+
+            {:error, :not_found} ->
+              changeset
+              |> put_change(:vrchat, "")
+              |> put_change(:vrchat_name, vrchat_input)
+
+            {:error, :api_error} ->
+              changeset
+              |> put_change(:vrchat, "")
+              |> put_change(:vrchat_name, vrchat_input)
+
+            {:error, :invalid_input} ->
+              add_error(changeset, :vrchat, "invalid_vrchat")
+          end
+      end
+    end
+
     def transform_value(value, default) do
       if value === :none do
         nil
@@ -231,6 +268,7 @@ defmodule Flirtual.Profiles do
         biography: transform_value(attrs.biography, profile.biography),
         relationships: transform_value(attrs.relationships, profile.relationships),
         vrchat: transform_value(attrs.vrchat, profile.vrchat),
+        vrchat_name: transform_value(attrs.vrchat_name, profile.vrchat_name),
         discord: transform_value(attrs.discord, profile.discord),
         facetime: transform_value(attrs.facetime, profile.facetime),
         playlist: transform_value(attrs.playlist, profile.playlist),

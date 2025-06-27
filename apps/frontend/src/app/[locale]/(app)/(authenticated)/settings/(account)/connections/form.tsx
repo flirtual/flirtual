@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import type { FC } from "react";
 import { useState } from "react";
+import { withSuspense } from "with-suspense";
 
 import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
@@ -16,9 +17,8 @@ import { InputText } from "~/components/inputs";
 import { ModelCard } from "~/components/model-card";
 import { ProfilePlaylist } from "~/components/profile/playlist";
 import { useDevice } from "~/hooks/use-device";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { withSuspense } from "with-suspense";
 import { mutate, sessionKey } from "~/query";
 
 const ConnectionError: FC = withSuspense(() => {
@@ -40,16 +40,12 @@ const ConnectionError: FC = withSuspense(() => {
 
 export const ConnectionsForm: FC = () => {
 	const { vision } = useDevice();
-	const session = useOptionalSession();
+	const { user } = useSession();
 	const toasts = useToast();
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
 		null
 	);
 	const t = useTranslations();
-
-	if (!session) return null;
-
-	const { user } = session;
 
 	return (
 		<ModelCard
@@ -60,12 +56,12 @@ export const ConnectionsForm: FC = () => {
 			<ConnectionError />
 			<Form
 				fields={{
-					vrchat: user.profile.vrchat || "",
+					vrchat: user.profile.vrchatName || "",
 					facetime: user.profile.facetime || "",
 					playlist: user.profile.playlist || ""
 				}}
 				className="flex flex-col gap-8"
-				onSubmit={async ({ vrchat, facetime, playlist }) => {
+				onSubmit={async ({ vrchat, facetime, playlist }, form) => {
 					if (playlist.includes("deezer.page.link")) {
 						setPlaylistSubmitted("deezer.page.link");
 					}
@@ -83,7 +79,7 @@ export const ConnectionsForm: FC = () => {
 					}
 
 					const profile = await Profile.update(user.id, {
-						vrchat: vrchat.trim() || null,
+						vrchat: form.fields.vrchat.changed ? (vrchat.trim() || null) : undefined,
 						facetime: facetime.trim() || null,
 						playlist: playlist.trim() || null
 					});
@@ -94,9 +90,7 @@ export const ConnectionsForm: FC = () => {
 						...session,
 						user: {
 							...user,
-							profile: {
-								...profile
-							}
+							profile
 						}
 					}));
 				}}
@@ -133,7 +127,7 @@ export const ConnectionsForm: FC = () => {
 										/>
 									)}
 								</FormField>
-								{vision && session.user.tags?.includes("debugger") && (
+								{vision && user.tags?.includes("debugger") && (
 									<FormField name="facetime">
 										{(field) => (
 											<InputText
