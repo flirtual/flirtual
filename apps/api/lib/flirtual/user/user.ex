@@ -1000,8 +1000,7 @@ defmodule Flirtual.User do
     changeset
     |> validate_required([:password])
     |> validate_length(:password, min: 8, max: 72, count: :bytes)
-
-    # |> check_for_leaked_password()
+    |> check_for_leaked_password()
   end
 
   defp check_for_leaked_password(%Changeset{changes: %{password: password}} = changeset) do
