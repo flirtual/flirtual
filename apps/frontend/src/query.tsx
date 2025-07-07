@@ -1,7 +1,11 @@
+/* eslint-disable react-refresh/only-export-components */
+"use client";
+
 import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
-import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient } from "@tanstack/react-query";
+import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ms from "ms";
-import type { Dispatch } from "react";
+import type { Dispatch, PropsWithChildren } from "react";
 import { use, useDebugValue, useEffect, useState } from "react";
 
 import type { AttributeType } from "./api/attributes";
@@ -13,7 +17,7 @@ import { Matchmaking, type ProspectKind } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
-import { gitCommitSha, server } from "./const";
+import { development, gitCommitSha, server } from "./const";
 import { postpone } from "./hooks/use-postpone";
 import { log as _log } from "./log";
 import { getPreferences, setPreferences } from "./preferences";
@@ -329,3 +333,12 @@ export const invalidate = queryClient.invalidateQueries.bind(queryClient);
  * @see https://tanstack.com/query/v5/docs/reference/QueryClient/#queryclientprefetchquery
  */
 export const preload = queryClient.prefetchQuery.bind(queryClient);
+
+export function QueryProvider({ children }: PropsWithChildren) {
+	return (
+		<QueryClientProvider client={queryClient}>
+			{development && <ReactQueryDevtools client={queryClient} />}
+			{children}
+		</QueryClientProvider>
+	);
+}

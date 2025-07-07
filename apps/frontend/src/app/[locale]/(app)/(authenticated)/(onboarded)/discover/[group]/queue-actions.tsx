@@ -80,7 +80,7 @@ export const QueueActions: FC<{
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								onClick={() => undo}
+								onClick={() => undo()}
 							>
 								<Undo2 className="size-7" strokeWidth={3} />
 							</motion.button>

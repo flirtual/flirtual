@@ -3,10 +3,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { type FC, type PropsWithChildren, useMemo, useState } from "react";
 import { withSuspense } from "with-suspense";
 
-import { ProspectKind } from "~/api/matchmaking";
+import type { ProspectKind } from "~/api/matchmaking";
 import { OpenAI } from "~/api/openai";
 import { displayName, User } from "~/api/user";
-import { optimisticQueueMove } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -25,13 +24,19 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
 import { useSearchParams } from "~/i18n/navigation";
-import { mutate, queueKey, userKey } from "~/query";
+import { mutate, userKey } from "~/query";
 
 const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {
 	const toasts = useToast();
+
 	const query = useSearchParams();
+	const kind = (query.get("kind") || "love") as ProspectKind;
+
+	const { forward: forwardQueue } = useQueue(kind);
+
 	const locale = useLocale();
 
 	const languageNames = useMemo(
@@ -82,11 +87,9 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 							}
 
 							const newTarget = await User.suspend(targetId, { reasonId, message });
-							await mutate(userKey(user.id), newTarget);
 
-							const kind = (query.get("kind") || "love") as ProspectKind;
-							if (ProspectKind.includes(kind))
-								mutate(queueKey(kind), optimisticQueueMove("forward"));
+							await mutate(userKey(user.id), newTarget);
+							await forwardQueue();
 
 							toasts.add(t("account_banned"));
 							setOpen(false);

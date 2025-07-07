@@ -62,7 +62,7 @@ export const Matchmaking = {
 			.forbidden((reason) => {
 				if (isWretchError(reason)) return reason.json;
 			})
-			.json<QueueResponse>();
+			.json<Queue>();
 	},
 	queueAction(body: RespondProspectBody) {
 		return api.url("queue").json(body).post().json<RespondProspect>();

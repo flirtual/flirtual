@@ -1,14 +1,14 @@
 import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
 
-import { ProspectKind } from "~/api/matchmaking";
+import type { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
-import { optimisticQueueMove } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
+import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
 import { useSearchParams } from "~/i18n/navigation";
-import { invalidate, mutate, queueKey, userKey } from "~/query";
+import { invalidate, userKey } from "~/query";
 
 import {
 	AlertDialog,
@@ -26,7 +26,11 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 }) => {
 	const t = useTranslations();
 	const toasts = useToast();
+
 	const query = useSearchParams();
+	const kind = (query.get("kind") || "love") as ProspectKind;
+
+	const { forward: forwardQueue } = useQueue(kind);
 
 	return (
 		<AlertDialog>
@@ -55,10 +59,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 									.catch(toasts.addError);
 
 								await invalidate({ queryKey: userKey(user.id) });
-
-								const kind = (query.get("kind") || "love") as ProspectKind;
-								if (ProspectKind.includes(kind))
-									mutate(queueKey(kind), optimisticQueueMove("forward"));
+								await forwardQueue();
 							}}
 						>
 							{t("block")}

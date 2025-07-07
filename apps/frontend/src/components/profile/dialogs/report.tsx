@@ -1,10 +1,9 @@
 import { useTranslations } from "next-intl";
 import { type FC, type PropsWithChildren, useState } from "react";
 
-import { ProspectKind } from "~/api/matchmaking";
+import type { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
 import { displayName, type User } from "~/api/user";
-import { optimisticQueueMove } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/browse/queue-actions";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -25,10 +24,11 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import { useQueue } from "~/hooks/use-queue";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useSearchParams } from "~/i18n/navigation";
-import { invalidate, mutate, queueKey, userKey } from "~/query";
+import { invalidate, userKey } from "~/query";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
@@ -39,7 +39,11 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	const tAttributes = useAttributeTranslation();
 
 	const toasts = useToast();
+
 	const query = useSearchParams();
+	const kind = (query.get("kind") || "love") as ProspectKind;
+
+	const { forward: forwardQueue } = useQueue(kind);
 
 	const reasons = useAttributes("report-reason");
 	const defaultReason = reasons[0]!;
@@ -77,10 +81,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 							});
 
 							await invalidate({ queryKey: userKey(user.id) });
-
-							const kind = (query.get("kind") || "love") as ProspectKind;
-							if (ProspectKind.includes(kind))
-								mutate(queueKey(kind), optimisticQueueMove("forward"));
+							await forwardQueue();
 
 							toasts.add(t("day_front_cat_cry"));
 							setOpen(false);

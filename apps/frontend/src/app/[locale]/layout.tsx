@@ -15,6 +15,7 @@ import { UpdateInformation } from "~/components/update-information";
 import { apiOrigin, environment, platformOverride, siteOrigin } from "~/const";
 import { ToastProvider } from "~/hooks/use-toast";
 import { locales } from "~/i18n/routing";
+import { QueryProvider } from "~/query";
 import { bucketOrigins, urls } from "~/urls";
 
 import { fontClassNames } from "../fonts";
@@ -138,23 +139,25 @@ Object.assign(document.body.dataset, { theme, themeStyle });
 const fontSize = JSON.parse(localStorage.getItem(".font_size") || "16") || 16;
 document.documentElement.style.setProperty("font-size", fontSize + "px");`}
 					</script>
-					<NextIntlClientProvider messages={messages}>
-						<LazyLayout />
-						<AnalyticsProvider />
-						<NextTopLoader
-							color={["#FF8975", "#E9658B"]}
-							height={5}
-							showSpinner={false}
-						/>
-						{environment === "preview" && <StagingBanner />}
-						{environment === "development" && <InsetPreview />}
-						<UpdateInformation />
-						<ToastProvider>
-							<TooltipProvider>
-								{children}
-							</TooltipProvider>
-						</ToastProvider>
-					</NextIntlClientProvider>
+					<QueryProvider>
+						<NextIntlClientProvider messages={messages}>
+							<LazyLayout />
+							<AnalyticsProvider />
+							<NextTopLoader
+								color={["#FF8975", "#E9658B"]}
+								height={5}
+								showSpinner={false}
+							/>
+							{environment === "preview" && <StagingBanner />}
+							{environment === "development" && <InsetPreview />}
+							<UpdateInformation />
+							<ToastProvider>
+								<TooltipProvider>
+									{children}
+								</TooltipProvider>
+							</ToastProvider>
+						</NextIntlClientProvider>
+					</QueryProvider>
 				</body>
 			</html>
 		</ErrorBoundary>

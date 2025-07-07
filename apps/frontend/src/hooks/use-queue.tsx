@@ -3,7 +3,7 @@
 import ms from "ms";
 import { useCallback } from "react";
 
-import type { ProspectKind } from "~/api/matchmaking";
+import { Matchmaking, ProspectKind } from "~/api/matchmaking";
 import { log } from "~/log";
 import { mutate, queueKey, useMutation, useQuery } from "~/query";
 
@@ -13,17 +13,26 @@ interface Queue {
 }
 
 export function useQueue(mode: ProspectKind = "love") {
+	if (!ProspectKind.includes(mode)) mode = "love";
 	const queryKey = queueKey(mode);
 
-	const { history, next } = useQuery<Queue>({
+	const { history, next } = useQuery<Queue, typeof queryKey>({
 		queryKey,
-		queryFn: () => ({
-			history: [],
-			next: [
-				"W8a9gvC9vVt4EzS7zxnLJJ",
-				"t8p8NedKpcZps2Z5w7tyxR",
-			]
-		}),
+		queryFn: async ({ queryKey: [, mode] }) => {
+			const [previous, current, next] = await Matchmaking.queue(mode);
+
+			return ({
+				history: previous
+					? [
+							previous
+						]
+					: [],
+				next: [
+					current,
+					next
+				].filter(Boolean)
+			});
+		},
 
 		refetchInterval: ms("1m"),
 		staleTime: 0,
@@ -60,7 +69,11 @@ export function useQueue(mode: ProspectKind = "love") {
 
 	const { mutateAsync } = useMutation({
 		mutationKey: queryKey,
-		// onMutate: forward,
+		onMutate: ({ action }) => ({
+			like: forward,
+			pass: forward,
+			undo: backward
+		})[action](),
 		mutationFn: async ({
 			action,
 			userId,
@@ -70,7 +83,7 @@ export function useQueue(mode: ProspectKind = "love") {
 			userId: string;
 			kind: ProspectKind;
 		}) => {
-			log("like", { action, userId, kind, mode });
+			log(action, { userId, kind, mode });
 		}
 	});
 

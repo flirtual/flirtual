@@ -57,7 +57,6 @@ export const DebugInfo: React.FC = () => {
 				Internal tools, avoid touching this unless you know what you're doing. You may break something.
 			</p>
 			<div className="flex flex-wrap gap-2">
-
 				<Button
 					className="bg-red-500"
 					size="xs"

@@ -52,6 +52,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 		queryKey: ["notifications-permissions"],
 		queryFn: async () => {
 			const { receive } = await PushNotifications.checkPermissions();
+
 			if (receive === "prompt" || receive === "prompt-with-rationale") {
 				const { receive } = await PushNotifications.requestPermissions();
 				return receive;
@@ -122,6 +123,7 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 			return null;
 		},
 		placeholderData: null,
+		enabled: native,
 		meta: {
 			cacheTime: 0
 		}

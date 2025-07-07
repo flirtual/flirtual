@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
 import { maintenance } from "~/const";
+import { useInterval } from "~/hooks/use-interval";
 import { defaultLocale, locales } from "~/i18n/routing";
 import { urls } from "~/urls";
 
@@ -12,36 +13,46 @@ import { fontClassNames } from "./fonts";
 
 import "./index.css";
 
+const translations = {
+	en: {
+		title: maintenance
+			? "Flirtual is temporarily unavailable."
+			: "It looks like we're having issues",
+		subtitle: maintenance
+			? "But we'll be right back—check back soon!"
+			: undefined,
+		reload: "Reload",
+		discord: "Discord Community",
+		contact: "Contact Support",
+	},
+	ja: {
+		title: maintenance
+			? "Firtualは定期メンテナンスのため一時的にオフラインになっています。"
+			: "問題を抱えているようだ",
+		subtitle: maintenance
+			? "でも、またすぐに戻ってきますから、すぐにチェックしてください！"
+			: undefined,
+		reload: "リロード",
+		discord: "Discordコミュニティ",
+		contact: "サポートに連絡",
+	},
+} as const;
+
 export default function GlobalError() {
+	// NextIntlClientProvider is not available here, so we need to manually determine
+	// the locale, then embed all translations in this file.
+
 	const [, maybeLocale] = location.pathname.split("/");
 	const locale = maybeLocale && locales.includes(maybeLocale)
 		? maybeLocale as Locale
 		: defaultLocale;
 
-	const translations = {
-		en: {
-			title: maintenance
-				? "Flirtual is temporarily unavailable."
-				: "It looks like we're having issues",
-			subtitle: maintenance
-				? "But we'll be right back—check back soon!"
-				: undefined,
-			reload: "Reload",
-			discord: "Discord Community",
-			contact: "Contact Support",
-		},
-		ja: {
-			title: maintenance
-				? "Firtualは定期メンテナンスのため一時的にオフラインになっています。"
-				: "問題を抱えているようだ",
-			subtitle: maintenance
-				? "でも、またすぐに戻ってきますから、すぐにチェックしてください！"
-				: undefined,
-			reload: "リロード",
-			discord: "Discordコミュニティ",
-			contact: "サポートに連絡",
-		},
-	}[locale];
+	const t = translations[locale];
+
+	const reload = () => location.reload();
+
+	// Automatic retry, as eventually, we'll be back online.
+	useInterval(reload, "30s");
 
 	return (
 		<html>
@@ -56,19 +67,19 @@ export default function GlobalError() {
 						src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 						width={412}
 					/>
-					<h1>{translations.title}</h1>
-					{translations.subtitle && <h2 className="mb-2 text-sm">{translations.subtitle}</h2>}
+					<h1>{t.title}</h1>
+					{t.subtitle && <h2 className="mb-2 text-sm">{t.subtitle}</h2>}
 					<div className="flex flex-wrap gap-2 text-center text-xs">
-						<span className="cursor-pointer text-theme-2" onClick={() => location.reload()}>
-							{translations.reload}
+						<span className="cursor-pointer text-theme-2" onClick={reload}>
+							{t.reload}
 						</span>
 						{" ⋅ "}
 						<a className="text-theme-2" href={urls.socials.discord}>
-							{translations.discord}
+							{t.discord}
 						</a>
 						{" ⋅ "}
 						<a className="text-theme-2" href={urls.resources.contact}>
-							{translations.contact}
+							{t.contact}
 						</a>
 					</div>
 				</div>

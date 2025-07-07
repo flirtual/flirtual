@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 import { Conversation } from "~/api/conversations";
 import { displayName } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { UserAvatar } from "~/components/user-avatar";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
+import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
-import { getProfile } from "../../[slug]/data";
 import { ConversationAside } from "../aside";
 import { FaceTimeButton } from "./facetime-button";
 
