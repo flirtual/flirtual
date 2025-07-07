@@ -17,6 +17,7 @@ import {
 import { toAbsoluteUrl, toRelativeUrl, urls } from "~/urls";
 
 import { device } from "./use-device";
+import { postpone } from "./use-postpone";
 
 export async function logout() {
 	await mutate(sessionKey(), null);
@@ -29,6 +30,8 @@ export async function logout() {
 }
 
 export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | null> = {}): Session | null {
+	postpone(useOptionalSession.name);
+
 	return useQuery({
 		placeholderData: null,
 		...queryOptions,

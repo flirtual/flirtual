@@ -108,27 +108,26 @@ export default async function LocaleLayout({
 	const messages = await getMessages();
 
 	return (
-		<ErrorBoundary fallback={<GlobalError />}>
-			<html
+		<html
+			suppressHydrationWarning
+			data-platform={platformOverride || undefined}
+			lang={locale}
+		>
+			<head>
+				<meta name="darkreader-lock" />
+				<link
+					color="#e9658b"
+					href={SafariPinnedTabImage.src}
+					rel="mask-icon"
+				/>
+				<LocalizationPolyfill />
+			</head>
+			<body
 				suppressHydrationWarning
-				data-platform={platformOverride || undefined}
-				lang={locale}
+				className={twMerge(fontClassNames, "flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80")}
 			>
-				<head>
-					<meta name="darkreader-lock" />
-					<link
-						color="#e9658b"
-						href={SafariPinnedTabImage.src}
-						rel="mask-icon"
-					/>
-					<LocalizationPolyfill />
-				</head>
-				<body
-					suppressHydrationWarning
-					className={twMerge(fontClassNames, "flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80")}
-				>
-					<script>
-						{`const sessionTheme = JSON.parse(localStorage.getItem(".queries") || "{}").q?.find(({ k, s }) => k[0] === "session")?.s?.data?.user?.preferences?.theme || "system";
+				<script>
+					{`const sessionTheme = JSON.parse(localStorage.getItem(".queries") || "{}").q?.find(({ k, s }) => k[0] === "session")?.s?.data?.user?.preferences?.theme || "system";
 const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 const theme = sessionTheme === "system" ? prefersDark : sessionTheme;
@@ -138,28 +137,27 @@ Object.assign(document.body.dataset, { theme, themeStyle });
 
 const fontSize = JSON.parse(localStorage.getItem(".font_size") || "16") || 16;
 document.documentElement.style.setProperty("font-size", fontSize + "px");`}
-					</script>
-					<QueryProvider>
-						<NextIntlClientProvider messages={messages}>
-							<LazyLayout />
-							<AnalyticsProvider />
-							<NextTopLoader
-								color={["#FF8975", "#E9658B"]}
-								height={5}
-								showSpinner={false}
-							/>
-							{environment === "preview" && <StagingBanner />}
-							{environment === "development" && <InsetPreview />}
-							<UpdateInformation />
-							<ToastProvider>
-								<TooltipProvider>
-									{children}
-								</TooltipProvider>
-							</ToastProvider>
-						</NextIntlClientProvider>
-					</QueryProvider>
-				</body>
-			</html>
-		</ErrorBoundary>
+				</script>
+				<QueryProvider>
+					<NextIntlClientProvider messages={messages}>
+						<LazyLayout />
+						<AnalyticsProvider />
+						<NextTopLoader
+							color={["#FF8975", "#E9658B"]}
+							height={5}
+							showSpinner={false}
+						/>
+						{environment === "preview" && <StagingBanner />}
+						{environment === "development" && <InsetPreview />}
+						<UpdateInformation />
+						<ToastProvider>
+							<TooltipProvider>
+								{children}
+							</TooltipProvider>
+						</ToastProvider>
+					</NextIntlClientProvider>
+				</QueryProvider>
+			</body>
+		</html>
 	);
 }

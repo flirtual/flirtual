@@ -6,7 +6,7 @@ import { Profile } from "~/components/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { notFound, useSearchParams } from "~/i18n/navigation";
 
-import { QueueActions } from "../browse/queue-actions";
+import { QueueActions } from "../discover/[group]/queue-actions";
 
 const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 	const user = useUser(userId);
@@ -20,7 +20,7 @@ const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 
 	return (
 		<QueueActions
-			explicitUserId={userId}
+			// explicitUserId={userId}
 			kind="love"
 		/>
 	);

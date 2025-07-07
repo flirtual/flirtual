@@ -11,7 +11,9 @@ export default function AppLayout({ children }: PropsWithChildren) {
 	return (
 		<TalkjsProvider>
 			<>
-				<AppBanner />
+				<Suspense>
+					<AppBanner />
+				</Suspense>
 				<Navigation />
 				<div
 					className="flex min-h-[calc(100svh-max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),5rem))] w-full grow flex-col items-center desktop:p-8"

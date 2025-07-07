@@ -99,9 +99,12 @@ export async function preloadAll() {
 			"relationship",
 			"report-reason",
 			"sexuality"
-		] as const).map((type) => preload({ queryKey: attributeKey(type), queryFn: attributeFetcher }))
+		] as const).map((type) => preload({
+			queryKey: attributeKey(type),
+			queryFn: attributeFetcher
+		}))
 	]).catch((reason) => {
-		log("preloadAll() failed: %o", reason);
+		log("%s() failed: %o", preloadAll.name, reason);
 	});
 }
 

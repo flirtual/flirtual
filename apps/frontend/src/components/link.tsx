@@ -2,8 +2,9 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import type { Ref } from "react";
+import { useState } from "react";
 
-import { useLocation } from "~/hooks/use-location";
+import { useHydratedCallback } from "~/hooks/use-hydrated";
 import { Link as NextIntlLink } from "~/i18n/navigation";
 import { isInternalHref, toAbsoluteUrl, urlEqual } from "~/urls";
 
@@ -22,10 +23,14 @@ export function Link({
 	target,
 	...props
 }: { ref?: Ref<HTMLAnchorElement> | null } & LinkProps) {
-	const location = useLocation();
+	// todo: I don't think this works.
+	const [location, setLocation] = useState<URL>();
+	useHydratedCallback(() => setLocation(new URL(window.location.href)));
 
 	const internal = isInternalHref(href || "#");
-	const active = href ? urlEqual(toAbsoluteUrl(href.toString()), location) : false;
+	const active = (location && href)
+		? urlEqual(toAbsoluteUrl(href.toString()), location)
+		: false;
 
 	const Component = asChild
 		? Slot

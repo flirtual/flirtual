@@ -9,8 +9,6 @@ import { Carousel } from "./tiles/2";
 import { Testimonial } from "./tiles/3";
 import { CallToAction } from "./tiles/4";
 
-// export const dynamic = "force-static";
-
 const tiles = [Hero, AvatarProfiles, Carousel, Testimonial, CallToAction];
 
 export default function RootIndexPage({ params }: { params: Promise<{ locale: Locale }> }) {

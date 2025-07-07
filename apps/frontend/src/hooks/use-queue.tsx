@@ -5,12 +5,14 @@ import { useCallback } from "react";
 
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
 import { log } from "~/log";
-import { mutate, queueKey, useMutation, useQuery } from "~/query";
+import { invalidate, mutate, preload, queueKey, useMutation, useQuery, userFetcher, userKey } from "~/query";
 
 interface Queue {
 	history: Array<string>;
 	next: Array<string>;
 }
+
+export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
 export function useQueue(mode: ProspectKind = "love") {
 	if (!ProspectKind.includes(mode)) mode = "love";
@@ -33,13 +35,17 @@ export function useQueue(mode: ProspectKind = "love") {
 				].filter(Boolean)
 			});
 		},
-
 		refetchInterval: ms("1m"),
 		staleTime: 0,
 		meta: {
 			cacheTime: 0
 		}
 	});
+
+	Promise.all(next.map((userId) => preload({
+		queryKey: userKey(userId),
+		queryFn: userFetcher
+	})));
 
 	const [current] = next;
 
@@ -93,6 +99,7 @@ export function useQueue(mode: ProspectKind = "love") {
 		like: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "like", userId, kind }),
 		pass: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "pass", userId, kind }),
 		undo: (kind: ProspectKind = mode) => mutateAsync({ action: "undo", userId: current!, kind }),
+		invalidate: () => invalidateQueue(mode),
 		forward,
 		backward
 	};
