@@ -84,6 +84,6 @@ if (client)
 	log(device);
 
 export function useDevice() {
-	postpone("useDevice()");
+	postpone(useDevice.name);
 	return device;
 }

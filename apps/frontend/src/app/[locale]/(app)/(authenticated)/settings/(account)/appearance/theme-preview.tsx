@@ -1,11 +1,19 @@
 "use client";
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { SelectTrigger as RadixSelectTrigger } from "@radix-ui/react-select";
+import { ChevronDown, Moon, Palette, Sun, SunMoon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
-import type { PreferenceTheme } from "~/api/user/preferences";
+import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
 import { Image } from "~/components/image";
+import {
+	InputSelect,
+	Select,
+	SelectContent,
+	SelectItem
+} from "~/components/inputs/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useTheme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
@@ -49,5 +57,39 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 					: t(`${theme}_theme`)}
 			</TooltipContent>
 		</Tooltip>
+	);
+};
+
+export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className }) => {
+	const t = useTranslations();
+
+	const [, setTheme, { sessionTheme: theme }] = useTheme();
+	const ThemeIcon = {
+		dark: Moon,
+		light: Sun,
+		system: SunMoon,
+	}[theme];
+
+	return (
+		<Select onValueChange={(theme: PreferenceTheme) => setTheme(theme)}>
+			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap", className)}>
+				<ThemeIcon className="inline-block size-em" />
+				{" "}
+				{t(theme)}
+				{" "}
+				<ChevronDown className="inline-block size-em" />
+			</RadixSelectTrigger>
+			<SelectContent>
+				{PreferenceThemes.map((value) => (
+					<SelectItem
+						className="flex w-full items-center gap-2"
+						key={value}
+						value={value}
+					>
+						{t(value)}
+					</SelectItem>
+				))}
+			</SelectContent>
+		</Select>
 	);
 };

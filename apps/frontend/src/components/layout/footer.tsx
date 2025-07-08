@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
+import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
 import {
 	DiscordIcon,
 	type IconComponent,
@@ -126,7 +127,10 @@ export const Footer: React.FC<FooterProps> = ({
 							/>
 						</div>
 					</div>
-					<InlineLanguageSelect />
+					<div className="flex items-center gap-4">
+						<InlineThemeSelect />
+						<InlineLanguageSelect />
+					</div>
 				</div>
 				<div className="grid max-w-screen-desktop grid-cols-3 gap-x-4 desktop:justify-center">
 					<ul>
