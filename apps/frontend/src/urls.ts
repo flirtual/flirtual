@@ -7,6 +7,7 @@ import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/[group]/page";
 import type { ConfirmEmailPageProps } from "./app/[locale]/(app)/(public)/confirm-email/page";
 import { siteOrigin } from "./const";
+import type { EmojiType } from "./hooks/use-talkjs";
 import { escapeVRChat } from "./vrchat";
 
 export function ensureRelativeUrl(pathname: string) {
@@ -77,8 +78,10 @@ export const bucketOrigins = Object.values(bucketOriginMap);
 export const urls = {
 	// internal
 	api: process.env.NEXT_PUBLIC_API_URL as string,
-	media: (id: string, bucket: BucketName = "static", variant?: string) =>
-		`${bucketOriginMap[bucket]}/${id}${variant ? `/${variant}` : ""}`,
+	media: (id: string, bucket: BucketName = "static", variant: string = "", folder: string = "") =>
+		`${bucketOriginMap[bucket]}/${folder}${id}${variant ? `/${variant}` : ""}`,
+	emoji: (name: string, type: EmojiType) =>
+		urls.media(`${name}.${type}`, "static", "", "emoji"),
 	image: (image: ProfileImage, variant: string = "profile") =>
 		image.externalId
 			? urls.media(image.externalId, "content", variant)

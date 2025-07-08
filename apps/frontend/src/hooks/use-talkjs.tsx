@@ -19,6 +19,7 @@ import type { ChatboxOptions } from "talkjs/types/talk.types";
 import { talkjsAppId } from "~/const";
 import { useRouter } from "~/i18n/navigation";
 import { resolveTheme } from "~/theme";
+import { urls } from "~/urls";
 import { emptyArray } from "~/utilities";
 
 import { useDevice } from "./use-device";
@@ -111,7 +112,9 @@ export function useUnreadConversations() {
 	return use(UnreadConversationContext);
 }
 
-const emojis: Array<{ name: string; type: "gif" | "png"; hidden?: boolean }> = [
+export type EmojiType = "gif" | "png";
+
+const emojis: Array<{ name: string; type: EmojiType; hidden?: boolean }> = [
 	{ name: "bonk", type: "gif" },
 	{ name: "chad", type: "png" },
 	{ name: "cool", type: "png" },
@@ -136,7 +139,7 @@ export const customEmojis = Object.fromEntries(
 	emojis.map(({ name, type, hidden = false }) => [
 		`:${name}:`,
 		{
-			url: `https://static.flirtual.com/emoji/${name}.${type}`,
+			url: urls.emoji(name, type),
 			hidden
 		}
 	])
