@@ -1,7 +1,7 @@
 {
 	"packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
 	"scripts": {
-		"build": "BUILD=1 next build --no-lint --turbopack",
+		"build": "BUILD=1 next build --turbopack",
 		"dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev --turbopack -H 0.0.0.0 --experimental-https --experimental-https-key ./certificates/localhost-key.pem --experimental-https-cert ./certificates/localhost.pem",
 		"dev-inspect": "NODE_OPTIONS='--inspect' pnpm dev",
 		"android-build": "cap sync android && cd ./android && ./gradlew build",
