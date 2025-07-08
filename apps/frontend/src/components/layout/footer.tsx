@@ -55,11 +55,23 @@ type FooterListLinkProps = LinkOrButtonProps<{
 }>;
 
 export const FooterListLink: React.FC<FooterListLinkProps> = ({ label, ...props }) => (
-	<li className="cursor-pointer hover:underline">
+	<li>
 		{"href" in props
-			? (<Link href={props.href || null} {...props}>{label}</Link>)
+			? (
+					<Link
+						{...props}
+						className="hover:underline data-[active]:font-bold hover:data-[active]:no-underline"
+						href={props.href || null}
+					>
+						{label}
+					</Link>
+				)
 			: (
-					<button {...props} className="hover:underline" type="button">
+					<button
+						{...props}
+						className="cursor-pointer hover:underline"
+						type="button"
+					>
 						{label}
 					</button>
 				)}
