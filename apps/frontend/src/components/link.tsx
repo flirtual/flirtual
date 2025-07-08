@@ -2,13 +2,13 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import type { Ref } from "react";
-import { useState } from "react";
 
-import { useHydratedCallback } from "~/hooks/use-hydrated";
-import { Link as NextIntlLink } from "~/i18n/navigation";
+import { siteOrigin } from "~/const";
+import { Link as NextIntlLink, usePathname } from "~/i18n/navigation";
 import { isInternalHref, toAbsoluteUrl, urlEqual } from "~/urls";
 
 export type LinkProps = {
+	active?: boolean;
 	asChild?: boolean;
 	as?: string;
 } & {
@@ -18,19 +18,20 @@ export type LinkProps = {
 export function Link({
 	ref: reference,
 	href,
+	active: _active,
 	asChild = false,
 	as = "span",
 	target,
 	...props
 }: { ref?: Ref<HTMLAnchorElement> | null } & LinkProps) {
-	// todo: I don't think this works.
-	const [location, setLocation] = useState<URL>();
-	useHydratedCallback(() => setLocation(new URL(window.location.href)));
+	// Doesn't respect search parameters, as both the `useLocation` and `useSearchParams` hooks
+	// require a suspense boundary. Consider manually passing `active` as an argument if needed.
+	const location = new URL(usePathname(), siteOrigin);
 
 	const internal = isInternalHref(href || "#");
-	const active = (location && href)
-		? urlEqual(toAbsoluteUrl(href.toString()), location)
-		: false;
+	const active = (_active === undefined && location && href)
+		? urlEqual(toAbsoluteUrl(href.toString()), location, false)
+		: _active || false;
 
 	const Component = asChild
 		? Slot
@@ -40,9 +41,9 @@ export function Link({
 
 	return (
 		<Component
-			{...props}
 			data-active={active ? "" : undefined}
 			data-external={internal ? undefined : ""}
+			{...props}
 			href={href || "#"}
 			ref={reference}
 			target={target || (internal ? undefined : "_blank")}
