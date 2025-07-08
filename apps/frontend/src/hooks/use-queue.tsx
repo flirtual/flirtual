@@ -73,7 +73,11 @@ export function useQueue(mode: ProspectKind = "love") {
 		};
 	}), [queryKey]);
 
-	const { mutateAsync } = useMutation({
+	const { mutateAsync } = useMutation<Queue, {
+		action: "like" | "pass" | "undo";
+		userId: string;
+		kind: ProspectKind;
+	}>({
 		mutationKey: queryKey,
 		onMutate: ({ action }) => ({
 			like: forward,
@@ -84,12 +88,12 @@ export function useQueue(mode: ProspectKind = "love") {
 			action,
 			userId,
 			kind
-		}: {
-			action: "like" | "pass" | "undo";
-			userId: string;
-			kind: ProspectKind;
 		}) => {
 			log(action, { userId, kind, mode });
+			const { queue: [history, ...next] } = action === "undo"
+				? await Matchmaking.undo({ mode })
+				: await Matchmaking.queueAction({ type: action, kind, mode, userId });
+			return { history: [history], next };
 		}
 	});
 
