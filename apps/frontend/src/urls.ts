@@ -79,7 +79,7 @@ export const urls = {
 	// internal
 	api: process.env.NEXT_PUBLIC_API_URL as string,
 	media: (id: string, bucket: BucketName = "static", variant: string = "", folder: string = "") =>
-		`${bucketOriginMap[bucket]}/${folder}${id}${variant ? `/${variant}` : ""}`,
+		`${bucketOriginMap[bucket]}/${folder ? `${folder}/` : ""}${id}${variant ? `/${variant}` : ""}`,
 	emoji: (name: string, type: EmojiType) =>
 		urls.media(`${name}.${type}`, "static", "", "emoji"),
 	image: (image: ProfileImage, variant: string = "profile") =>
