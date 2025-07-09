@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 
+import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
 import { emptyObject } from "~/utilities";
 
 import { InlineLanguageSelect } from "./inputs/specialized/language-select";
@@ -69,7 +70,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			</div>
 			{miniFooter && (
 				<footer className={twMerge(
-					"mb-8 mt-auto grid grid-cols-2 items-center justify-center gap-4 desktop:mb-0 desktop:mt-8",
+					"mb-8 mt-auto grid grid-cols-3 items-center justify-center gap-4 desktop:mb-0 desktop:mt-8",
 				)}
 				>
 					<SupportButton className="flex items-center gap-0.5em whitespace-nowrap">
@@ -77,6 +78,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 						{" "}
 						{t("need_help")}
 					</SupportButton>
+					<InlineThemeSelect />
 					<InlineLanguageSelect />
 				</footer>
 			)}
