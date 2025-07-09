@@ -43,7 +43,7 @@ export async function GET() {
 		shortcuts: [
 			{
 				name: "Browse",
-				url: urls.discover("love"),
+				url: urls.discover("dates"),
 				description: "Find new dates",
 				icons: [
 					{
@@ -58,7 +58,7 @@ export async function GET() {
 			},
 			{
 				name: "Homies",
-				url: urls.discover("friends"),
+				url: urls.discover("dates"),
 				description: "Find new homies",
 				icons: [
 					{

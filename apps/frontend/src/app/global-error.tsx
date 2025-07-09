@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 import { Image } from "~/components/image";
 import { maintenance } from "~/const";
 import { useInterval } from "~/hooks/use-interval";
-import { defaultLocale, locales } from "~/i18n/routing";
+import { defaultLocale, guessLocale, locales } from "~/i18n/routing";
 import { urls } from "~/urls";
 
 import { fontClassNames } from "./fonts";
@@ -42,11 +42,7 @@ export default function GlobalError() {
 	// NextIntlClientProvider is not available here, so we need to manually determine
 	// the locale, then embed all translations in this file.
 
-	const [, maybeLocale] = location.pathname.split("/");
-	const locale = maybeLocale && locales.includes(maybeLocale)
-		? maybeLocale as Locale
-		: defaultLocale;
-
+	const locale = guessLocale();
 	const t = translations[locale];
 
 	const reload = () => location.reload();

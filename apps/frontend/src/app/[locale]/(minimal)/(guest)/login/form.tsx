@@ -21,7 +21,7 @@ import { isInternalHref, urls } from "~/urls";
 import { LoginConnectionButton } from "./login-connection-button";
 
 function next() {
-	const defaultNext = urls.discover("love");
+	const defaultNext = urls.discover("dates");
 
 	const next = new URL(location.href).searchParams.get("next") || defaultNext;
 	if (!isInternalHref(next)) return defaultNext;

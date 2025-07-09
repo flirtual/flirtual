@@ -131,7 +131,7 @@ export default async function LocaleLayout({
 const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 const theme = sessionTheme === "system" ? prefersDark : sessionTheme;
-const themeStyle = location.pathname.replace(/^\\/${locale}/, "") === ${JSON.stringify(urls.discover("friends"))} ? "friend" : "default";
+const themeStyle = location.pathname.replace(/^\\/${locale}/, "") === ${JSON.stringify(urls.discover("homies"))} ? "friend" : "default";
 
 Object.assign(document.body.dataset, { theme, themeStyle });
 

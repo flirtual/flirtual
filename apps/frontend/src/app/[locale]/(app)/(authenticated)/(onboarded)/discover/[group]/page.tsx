@@ -7,22 +7,22 @@ import { use } from "react";
 import { Queue } from "./queue";
 
 // eslint-disable-next-line unused-imports/no-unused-vars
-const discoverGroups = ["love", "friends"] as const;
+const discoverGroups = ["dates", "homies"] as const;
 export type DiscoverGroup = (typeof discoverGroups)[number];
 
 export function generateStaticParams() {
-	return [{ group: "love" }, { group: "friends" }];
+	return [{ group: "dates" }, { group: "homies" }];
 }
 
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ group: DiscoverGroup }> }) {
-	const { group = "love" } = await params;
+	const { group = "dates" } = await params;
 
 	const t = await getTranslations();
 
 	return {
-		title: group === "friends"
+		title: group === "homies"
 			? t("homie_mode")
 			: t("browse")
 	};
@@ -35,8 +35,8 @@ export default function DiscoverPage({ params }: { params: Promise<{ locale: Loc
 	return (
 		<Queue
 			kind={({
-				love: "love",
-				friends: "friend"
+				dates: "love",
+				homies: "friend"
 			} as const)[group]}
 		/>
 	);

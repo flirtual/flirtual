@@ -7,11 +7,17 @@ import type { ProspectKind } from "~/api/matchmaking";
 import { Profile } from "~/components/profile";
 import { useQueue } from "~/hooks/use-queue";
 
-import { OutOfProspects } from "./out-of-prospects";
+import { ConfirmEmailError, FinishProfileError, OutOfProspects } from "./out-of-prospects";
 import { QueueActions } from "./queue-actions";
 
 export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
-	const { next: [current] } = useQueue(kind);
+	const { error, next: [current] } = useQueue(kind);
+
+	if (error === "finish_profile")
+		return <FinishProfileError />
+
+	if (error === "confirm_email")
+		return <ConfirmEmailError />
 
 	return (
 		<>

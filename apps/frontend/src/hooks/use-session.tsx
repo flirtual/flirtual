@@ -8,6 +8,7 @@ import type {
 	MinimalQueryOptions
 } from "~/query";
 import {
+	evictQueries,
 	invalidate,
 	mutate,
 	sessionFetcher,
@@ -27,6 +28,8 @@ export async function logout() {
 
 	await Authentication.logout().catch(() => null);
 	await invalidate();
+
+	await evictQueries();
 }
 
 export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | null> = {}): Session | null {
@@ -48,7 +51,7 @@ export function useGuest() {
 		toAbsoluteUrl(useSearchParams().get("next")
 			|| (session?.user.status === "registered"
 				? urls.onboarding(1)
-				: urls.discover("love")))
+				: urls.discover("dates")))
 	);
 
 	if (session) redirect({ href: next, locale });

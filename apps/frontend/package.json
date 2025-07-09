@@ -71,6 +71,7 @@
 		"@widgetbot/react-embed": "^1.9.0",
 		"accept-language": "^3.0.20",
 		"babel-plugin-react-compiler": "19.0.0-beta-e993439-20250405",
+		"bert-elixir": "^1.0.4",
 		"capacitor-native-settings": "^7.0.2",
 		"chalk": "^5.4.1",
 		"csstype": "^3.1.3",

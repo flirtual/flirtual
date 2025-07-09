@@ -108,18 +108,18 @@ let nextConfig: NextConfig = {
 			},
 			{
 				source: "/homies",
-				destination: "/discover/friends",
+				destination: "/discover/homies",
 				permanent: false
 			},
 			{
 				source: "/browse",
 				has: [{ type: "query", key: "kind", value: "friend" }],
-				destination: "/discover/friends",
+				destination: "/discover/homies",
 				permanent: false
 			},
 			{
 				source: "/browse",
-				destination: "/discover",
+				destination: "/discover/dates",
 				permanent: false
 			},
 			{

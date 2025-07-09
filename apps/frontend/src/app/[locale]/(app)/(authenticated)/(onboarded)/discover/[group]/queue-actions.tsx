@@ -27,7 +27,7 @@ function Key({ label }: { label: string }) {
 const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const {
 		next: [current],
-		history: [previous],
+		previous,
 		forward,
 		backward,
 		invalidate
@@ -64,7 +64,7 @@ export const QueueActions: FC<{
 }> = ({ kind: mode }) => {
 	const t = useTranslations();
 	const {
-		history: [previous],
+		previous,
 		like,
 		pass,
 		undo

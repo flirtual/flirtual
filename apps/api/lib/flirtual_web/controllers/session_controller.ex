@@ -156,7 +156,9 @@ defmodule FlirtualWeb.SessionController do
     token && Session.delete(token: token)
 
     conn
-    |> renew_session()
+    |> clear_session()
+    |> configure_session(drop: true)
+    |> delete_resp_cookie("session")
     |> delete_resp_cookie(@remember_me_cookie)
   end
 

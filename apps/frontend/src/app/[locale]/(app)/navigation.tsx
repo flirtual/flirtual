@@ -58,12 +58,12 @@ const NavigationContent: FC = () => {
 			<NavigationItemProfile />
 			<NavigationalSwitch id="browse-mode-switch">
 				<NavigationalSwitchItem
-					href={urls.discover("love")}
+					href={urls.discover("dates")}
 					Icon={HeartIcon}
 					id="date-mode-switch"
 				/>
 				<NavigationalSwitchItem
-					href={urls.discover("friends")}
+					href={urls.discover("homies")}
 					Icon={PeaceIcon}
 					id="homie-mode-switch"
 				/>

@@ -29,6 +29,14 @@ export const localeNames: Record<Locale, string> = {
 	// sv: "Svenska"
 };
 
+export function guessLocale() {
+	const [, maybeLocale] = location.pathname.split("/");
+
+	return maybeLocale && locales.includes(maybeLocale)
+		? maybeLocale as Locale
+		: defaultLocale;
+}
+
 declare module "next-intl" {
 	interface AppConfig {
 		Locale: typeof locales[number];

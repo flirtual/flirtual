@@ -40,7 +40,7 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 									<p>
 										{t.rich("main_large_goat_succeed", {
 											link: (children) => (
-												<InlineLink href={urls.discover("friends")}>
+												<InlineLink href={urls.discover("homies")}>
 													{children}
 												</InlineLink>
 											)
@@ -51,7 +51,7 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 									<ButtonLink href={urls.settings.matchmaking()}>
 										{t("filters")}
 									</ButtonLink>
-									<ButtonLink className="px-0" href={urls.discover("friends")} kind="tertiary">
+									<ButtonLink className="px-0" href={urls.discover("homies")} kind="tertiary">
 										{t("homie_mode")}
 									</ButtonLink>
 								</div>
@@ -66,7 +66,7 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 									</p>
 								</div>
 								<div className="flex gap-4">
-									<ButtonLink href={urls.discover("love")}>
+									<ButtonLink href={urls.discover("dates")}>
 										{t("sharp_gray_sloth_clasp")}
 									</ButtonLink>
 								</div>

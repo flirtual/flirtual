@@ -195,6 +195,9 @@ importers:
       babel-plugin-react-compiler:
         specifier: 19.0.0-beta-e993439-20250405
         version: 19.0.0-beta-e993439-20250405
+      bert-elixir:
+        specifier: ^1.0.4
+        version: 1.0.4
       capacitor-native-settings:
         specifier: ^7.0.2
         version: 7.0.2(@capacitor/core@7.4.1)
@@ -3465,6 +3468,9 @@ packages:
 
   before-after-hook@2.2.3:
     resolution: {integrity: sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==}
+
+  bert-elixir@1.0.4:
+    resolution: {integrity: sha512-5RAb4ykMCSNmD3MafKIZUZzoyhSW/eEbVbw5c9mF2OF3IFx+wQoMaC8Fw2WjDkzrs5b+twvo1RVlirAKYYB35Q==}
 
   big-integer@1.6.52:
     resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
@@ -10799,6 +10805,8 @@ snapshots:
   bcp47@1.1.2: {}
 
   before-after-hook@2.2.3: {}
+
+  bert-elixir@1.0.4: {}
 
   big-integer@1.6.52: {}
 

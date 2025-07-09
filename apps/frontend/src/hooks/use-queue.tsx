@@ -2,15 +2,13 @@
 
 import ms from "ms";
 import { useCallback } from "react";
+import { Issue, isWretchError } from "~/api/common";
 
+import type { Queue, QueueIssue } from "~/api/matchmaking";
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
 import { log } from "~/log";
-import { invalidate, mutate, preload, queueKey, useMutation, useQuery, userFetcher, userKey } from "~/query";
-
-interface Queue {
-	history: Array<string>;
-	next: Array<string>;
-}
+import { 
+	invalidate, mutate, preload, queueKey, useMutation, useQuery, userFetcher, userKey } from "~/query";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
@@ -18,29 +16,29 @@ export function useQueue(mode: ProspectKind = "love") {
 	if (!ProspectKind.includes(mode)) mode = "love";
 	const queryKey = queueKey(mode);
 
-	const { history, next } = useQuery<Queue, typeof queryKey>({
+	const queue = useQuery<Queue | QueueIssue, typeof queryKey>({
 		queryKey,
-		queryFn: async ({ queryKey: [, mode] }) => {
-			const [previous, current, next] = await Matchmaking.queue(mode);
-
-			return ({
-				history: previous
-					? [
-							previous
-						]
-					: [],
-				next: [
-					current,
-					next
-				].filter(Boolean)
-			});
-		},
+		queryFn: async ({ queryKey: [, mode] }) =>
+			Matchmaking
+				.queue(mode)
+				.catch((reason) => {
+					if (!isWretchError(reason)) throw reason;
+					const issue = reason.json as Issue;
+					
+					if (!["confirm_email", "finish_profile"].includes(issue.error)) throw reason;
+					return issue as QueueIssue;
+		}),
 		refetchInterval: ms("1m"),
 		staleTime: 0,
 		meta: {
 			cacheTime: 0
 		}
 	});
+
+	const previous = "previous" in queue ? queue.previous : null;
+	const next = "next" in queue ? queue.next : [];
+
+	const error = "error" in queue ? queue.error : null;
 
 	Promise.all(next.map((userId) => preload({
 		queryKey: userKey(userId),
@@ -52,11 +50,13 @@ export function useQueue(mode: ProspectKind = "love") {
 	const forward = useCallback(() => mutate<Queue>(queryKey, (queue) => {
 		if (!queue) return queue;
 
-		const { history, next: [current, ...next] } = queue;
+		// x ... y ... z
+		// y <-- z ... ?
+		const { next: [current, ...next] } = queue;
 		if (!current) return queue;
 
 		return {
-			history: [current, ...history],
+			previous: current,
 			next,
 		};
 	}), [queryKey]);
@@ -64,12 +64,14 @@ export function useQueue(mode: ProspectKind = "love") {
 	const backward = useCallback(() => mutate<Queue>(queryKey, (queue) => {
 		if (!queue) return queue;
 
-		const { history: [current, ...history], next } = queue;
+		// x ... y ... z
+		// ? ... x --> y
+		const { previous, next: [current, ...next] } = queue;
 		if (!current) return queue;
 
 		return {
-			history,
-			next: [current, ...next],
+			previous: null,
+			next: [previous],
 		};
 	}), [queryKey]);
 
@@ -90,15 +92,18 @@ export function useQueue(mode: ProspectKind = "love") {
 			kind
 		}) => {
 			log(action, { userId, kind, mode });
-			const { queue: [history, ...next] } = action === "undo"
+
+			const { queue } = action === "undo"
 				? await Matchmaking.undo({ mode })
 				: await Matchmaking.queueAction({ type: action, kind, mode, userId });
-			return { history: [history], next };
+
+			return queue;
 		}
 	});
 
 	return {
-		history,
+		error,
+		previous,
 		next,
 		like: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "like", userId, kind }),
 		pass: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "pass", userId, kind }),

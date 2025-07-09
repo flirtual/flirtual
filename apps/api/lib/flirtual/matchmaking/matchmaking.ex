@@ -107,7 +107,7 @@ defmodule Flirtual.Matchmaking do
           _ -> :finish_profile
         end}}
     else
-      {:ok, prospect_ids} =
+      {:ok, prospects} =
         if(existing_next_prospects == [],
           do: compute_next_prospects(user, mode),
           else: {:ok, existing_next_prospects}
@@ -115,7 +115,19 @@ defmodule Flirtual.Matchmaking do
 
       # {:ok, previous} = previous_prospect(user, mode)
 
-      {:ok, prospect_ids}
+      grouped_prospects = Enum.group_by(prospects, & &1.completed)
+
+      {:ok,
+       %{
+         previous:
+           (grouped_prospects[true] || [])
+           |> Enum.at(0)
+           |> Map.get(:id),
+         next:
+           (grouped_prospects[false] || [])
+           |> Enum.take(2)
+           |> Enum.map(& &1.id)
+       }}
     end
   end
 
@@ -133,10 +145,16 @@ defmodule Flirtual.Matchmaking do
   defp next_prospects(user, kind) do
     prospects =
       Prospect
-      |> where(profile_id: ^user.id, kind: ^kind, completed: false)
-      |> order_by(desc: :score, desc: :target_id)
-      |> select([prospect], prospect.target_id)
-      |> limit(2)
+      # |> where(profile_id: ^user.id, kind: ^kind, completed: false)
+      |> where(profile_id: ^user.id, kind: ^kind)
+      |> order_by(desc: :completed, desc: :score, desc: :target_id)
+      |> select([prospect], %{
+        id: prospect.target_id,
+        score: prospect.score,
+        completed: prospect.completed
+      })
+      # |> select([prospect], prospect.target_id)
+      # |> limit(2)
       |> Repo.all()
 
     {:ok, prospects}

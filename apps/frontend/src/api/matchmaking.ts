@@ -43,11 +43,10 @@ export interface ReverseRespondProspectBody {
 	mode: ProspectKind;
 }
 
-export type Queue = [
-	previous: string | null,
-	current: string | null,
-	next: string | null
-];
+export interface Queue {
+	previous: string | null;
+	next: Array<string>;
+};
 
 export type QueueIssue = Issue<"confirm_email" | "finish_profile">;
 export type QueueResponse = Queue | QueueIssue;
@@ -59,9 +58,9 @@ export const Matchmaking = {
 			.query({ kind })
 			.options(options)
 			.get()
-			.forbidden((reason) => {
-				if (isWretchError(reason)) return reason.json;
-			})
+			// .forbidden((reason) => {
+			// 	if (isWretchError(reason)) return reason.json;
+			// })
 			.json<Queue>();
 	},
 	queueAction(body: RespondProspectBody) {

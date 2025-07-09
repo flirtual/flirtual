@@ -146,7 +146,7 @@ export const Finish1Form: FC = () => {
 					<div className="flex flex-wrap justify-end gap-2">
 						<ButtonLink
 							className="flex w-fit flex-row gap-2 opacity-75"
-							href={urls.discover("love")}
+							href={urls.discover("dates")}
 							kind="tertiary"
 							size="sm"
 						>

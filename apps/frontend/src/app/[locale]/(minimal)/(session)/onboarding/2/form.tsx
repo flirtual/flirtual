@@ -64,7 +64,7 @@ export const Onboarding2Form: FC = () => {
 				});
 
 				await invalidate({ queryKey: sessionKey() });
-				router.push(urls.discover("love"));
+				router.push(urls.discover("dates"));
 			}}
 		>
 			{({ FormField }) => (

@@ -19,7 +19,7 @@ export default function NotFoundPage() {
 				{t("round_crazy_haddock_mix")}
 			</span>
 			<div className="flex gap-2">
-				<ButtonLink href={urls.discover("love")} size="sm">
+				<ButtonLink href={urls.discover("dates")} size="sm">
 					{t("back_to_browsing")}
 				</ButtonLink>
 			</div>

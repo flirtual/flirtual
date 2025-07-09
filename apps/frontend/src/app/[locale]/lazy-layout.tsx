@@ -12,6 +12,7 @@ import { usePathname } from "~/i18n/navigation";
 import { localePathnameRegex } from "~/i18n/routing";
 import { log } from "~/log";
 import { getPreferences } from "~/preferences";
+import { urls } from "~/urls";
 
 // import { defaultFontSize } from "./(app)/(authenticated)/settings/(account)/appearance/form";
 
@@ -27,7 +28,7 @@ export async function applyDocumentMutations() {
 	log("%s()", applyDocumentMutations.name);
 
 	const theme = getTheme();
-	const themeStyle = location.pathname.replace(localePathnameRegex, "") === "/discover/friends"
+	const themeStyle = location.pathname.replace(localePathnameRegex, "") === urls.discover("homies")
 		? "friend"
 		: "default";
 

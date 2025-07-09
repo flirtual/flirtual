@@ -324,7 +324,7 @@ export const AppearanceForm: FC = () => {
 						</InputLabelHint>
 					)}
 				>
-					<span>
+					<span className="flex gap-2">
 						{t("language")}
 						{" "}
 						<NewBadge className="inline-block" />

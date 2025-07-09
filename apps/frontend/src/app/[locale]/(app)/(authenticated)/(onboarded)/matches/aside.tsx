@@ -52,7 +52,9 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 			<div className="flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] text-white-20 desktop:static desktop:bg-transparent desktop:pt-[1.125rem]">
 				<Link
 					href={
-						activeConversationId ? urls.conversations.list() : urls.discover("love")
+						activeConversationId
+							? urls.conversations.list()
+							: urls.discover("dates")
 					}
 					className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
 				>
