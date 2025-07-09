@@ -1,7 +1,10 @@
+"use client";
+
 import type { Metadata } from "next";
+import { use, useEffect, useState } from "react";
 
 import { Conversation } from "~/api/conversations";
-import { displayName } from "~/api/user";
+import { displayName, User } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { UserAvatar } from "~/components/user-avatar";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
@@ -9,7 +12,7 @@ import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { ConversationAside } from "../aside";
-import { FaceTimeButton } from "./facetime-button";
+import { VRChatButton } from "./vrchat-button";
 
 export interface ConversationPageProps {
 	params: Promise<{
@@ -17,33 +20,58 @@ export interface ConversationPageProps {
 	}>;
 }
 
-export const dynamic = "force-dynamic";
+export default function ConversationPage(props: ConversationPageProps) {
+	const { conversationId } = use(props.params);
+	const [conversation, setConversation] = useState<Awaited<ReturnType<typeof Conversation.get>> | undefined>();
+	const [user, setUser] = useState<Awaited<ReturnType<typeof User.get>> | undefined>();
+	const [loading, setLoading] = useState(true);
 
-export async function generateMetadata(
-	props: ConversationPageProps
-): Promise<Metadata> {
-	const { conversationId } = (await props.params) || {};
-	const conversation = await Conversation.get(conversationId);
-	if (!conversation) return redirect(urls.conversations.list());
+	useEffect(() => {
+		async function loadData() {
+			try {
+				const conversationData = await Conversation.get(conversationId);
+				if (!conversationData) {
+					return notFound();
+				}
 
-	const user = await getProfile(conversation.userId);
-	if (!user) return redirect(urls.conversations.list());
+				setConversation(conversationData);
 
-	return {
-		title: displayName(user)
-	};
-}
+				const userData = await User.get(conversationData.userId);
+				if (!userData) {
+					return notFound();
+				}
 
-export default async function ConversationPage(props: ConversationPageProps) {
-	const { conversationId } = (await props.params) || {};
+				setUser(userData);
+			}
+			catch (reason) {
+				console.error("Failed to load conversation data:", reason);
+				return notFound();
+			}
+			finally {
+				setLoading(false);
+			}
+		}
 
-	const conversation = await Conversation.get(conversationId);
-	if (!conversation) return redirect(urls.conversations.list());
+		loadData();
+	}, [conversationId]);
 
-	const user = await getProfile(conversation.userId);
+	if (loading) {
+		return (
+			<div className="flex w-full shrink-0 flex-col desktop:flex-row desktop:justify-center desktop:gap-4">
+				<ConversationAside activeConversationId={conversationId} />
+				<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
+					<div className="flex w-full items-center bg-brand-gradient p-3 vision:bg-none desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
+						<div className="size-10 animate-pulse rounded-full bg-white-20"></div>
+						<div className="ml-4 h-6 w-32 animate-pulse rounded bg-white-20"></div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
-	if (!user)
-		return redirect(urls.conversations.list());
+	if (!conversation || !user) {
+		return notFound();
+	}
 
 	return (
 		<div className="flex w-full shrink-0 flex-col desktop:flex-row desktop:justify-center desktop:gap-4">
@@ -65,7 +93,9 @@ export default async function ConversationPage(props: ConversationPageProps) {
 							{displayName(user)}
 						</span>
 					</InlineLink>
-					<FaceTimeButton user={user} />
+					<div className="ml-auto">
+						<VRChatButton conversationId={conversation.id} user={user} />
+					</div>
 				</div>
 				<ConversationChatbox conversationId={conversation.id} />
 			</div>

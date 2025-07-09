@@ -59,10 +59,10 @@ defmodule Flirtual.VRChatSession do
 
   defp authenticate(config, state) do
     case VRChat.Authentication.login(
-      username: config[:username],
-      password: config[:password],
-      totp_secret: config[:totp_secret]
-    ) do
+           username: config[:username],
+           password: config[:password],
+           totp_secret: config[:totp_secret]
+         ) do
       {:ok, connection, _} ->
         new_state = %{state | connection: connection}
 

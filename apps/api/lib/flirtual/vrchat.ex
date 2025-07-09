@@ -74,18 +74,14 @@ defmodule Flirtual.VRChat do
   end
 
   def resolve_input(input) when is_binary(input) do
-    IO.inspect("Resolving vrchat input")
     case classify_input(input) do
       {:user_id, user_id} ->
-        IO.inspect("Resolved to user ID: #{user_id}")
         resolve_by_user_id(user_id)
 
       {:profile_link, user_id} ->
-        IO.inspect("Resolved to profile link: #{user_id}")
         resolve_by_user_id(user_id)
 
       {:display_name, display_name} ->
-        IO.inspect("Resolved to display name: #{display_name}")
         resolve_by_display_name(display_name)
     end
   end
@@ -94,7 +90,10 @@ defmodule Flirtual.VRChat do
 
   def classify_input("usr_" <> _ = input) do
     # Most common user ID format: usr_<uuid>
-    if Regex.match?(~r/^usr_[a-f0-9]{8}-?[a-f0-9]{4}-?[a-f0-9]{4}-?[a-f0-9]{4}-?[a-f0-9]{12}$/i, input) do
+    if Regex.match?(
+         ~r/^usr_[a-f0-9]{8}-?[a-f0-9]{4}-?[a-f0-9]{4}-?[a-f0-9]{4}-?[a-f0-9]{12}$/i,
+         input
+       ) do
       {:user_id, normalize_user_id(input)}
     else
       {:display_name, input}
@@ -125,6 +124,7 @@ defmodule Flirtual.VRChat do
   # Fix user IDs with missing hyphens
   defp normalize_user_id("usr_" <> rest) do
     clean = String.replace(rest, "-", "")
+
     if String.length(clean) == 32 do
       "usr_#{String.slice(clean, 0, 8)}-#{String.slice(clean, 8, 4)}-#{String.slice(clean, 12, 4)}-#{String.slice(clean, 16, 4)}-#{String.slice(clean, 20, 12)}"
     else

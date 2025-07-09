@@ -29,7 +29,7 @@ export const FaceTimeButton: FC<FaceTimeButtonProps> = (props) => {
 		<>
 			{platform === "apple" && (
 				<ButtonLink
-					className="ml-auto bg-[#0ebe2c]"
+					className="bg-[#0ebe2c]"
 					href={`facetime://${user.profile.facetime}`}
 					Icon={FaceTimeIcon}
 					size="sm"
