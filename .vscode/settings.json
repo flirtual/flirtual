@@ -2,5 +2,5 @@
 	"files.exclude": {
 		"apps/": true
 	},
-	"elixirLS.projectDir": "apps/api"
+	"elixirLS.useCurrentRootFolderAsProjectDir": true
 }
