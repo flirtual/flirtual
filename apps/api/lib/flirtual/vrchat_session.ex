@@ -9,7 +9,7 @@ defmodule Flirtual.VRChatSession do
   end
 
   def get_connection do
-    GenServer.call(@name, :get_connection, 30_000)
+    GenServer.call(@name, :get_connection)
   end
 
   def invalidate_session do
@@ -39,7 +39,7 @@ defmodule Flirtual.VRChatSession do
         {:reply, {:ok, connection}, new_state}
 
       {:error, reason} ->
-        Logger.error("Failed to get VRChat connection: #{inspect(reason)}")
+        Logger.error("VRChat authentication failed: #{inspect(reason)}")
         {:reply, {:error, reason}, %{state | connection: nil}}
     end
   end
@@ -63,13 +63,14 @@ defmodule Flirtual.VRChatSession do
            password: config[:password],
            totp_secret: config[:totp_secret]
          ) do
+      {:ok, _, %{error: reason}} ->
+        {:error, reason}
+
       {:ok, connection, _} ->
         new_state = %{state | connection: connection}
-
         {:ok, connection, new_state}
 
       {:error, reason} ->
-        Logger.error("VRChat authentication failed: #{inspect(reason)}")
         {:error, reason}
     end
   end

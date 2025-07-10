@@ -8,11 +8,11 @@ defmodule Flirtual.VRChat do
 
   def profile_url(%Connection{uid: id}), do: "https://vrchat.com/home/user/#{id}"
 
-  def with_vrchat_api(api_call_fn) do
+  def with_session(api_call_fn) do
     case Flirtual.VRChatSession.get_connection() do
       {:ok, vrchat_conn} ->
         case api_call_fn.(vrchat_conn) do
-          {:error, %{status: 401}} ->
+          {:ok, %{error: %{status_code: 401}}} ->
             # Session expired, invalidate and retry
             Flirtual.VRChatSession.invalidate_session()
 
@@ -133,7 +133,7 @@ defmodule Flirtual.VRChat do
   end
 
   defp resolve_by_user_id(user_id) do
-    case with_vrchat_api(fn conn -> VRChat.Users.get_user(conn, user_id, []) end) do
+    case with_session(fn conn -> VRChat.Users.get_user(conn, user_id, []) end) do
       {:ok, user} ->
         {:ok, %{id: user.id, display_name: user.displayName}}
 
@@ -145,7 +145,7 @@ defmodule Flirtual.VRChat do
   defp resolve_by_display_name(display_name) do
     escaped_name = escape(display_name)
 
-    case with_vrchat_api(fn conn -> VRChat.Users.search_users(conn, search: escaped_name) end) do
+    case with_session(&VRChat.Users.search_users(&1, search: escaped_name)) do
       {:ok, users} ->
         case Enum.find(users, fn user -> user.displayName == escaped_name end) do
           %{id: id, displayName: display_name} ->

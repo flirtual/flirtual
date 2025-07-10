@@ -9,7 +9,7 @@ defmodule FlirtualWeb.VRChatController do
   action_fallback FlirtualWeb.FallbackController
 
   def get_categorized_worlds(conn, _params) do
-    case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+    case Flirtual.VRChat.with_session(fn vrchat_conn ->
            # Load all categories in parallel
            spotlight_task =
              Task.async(fn ->
@@ -57,6 +57,7 @@ defmodule FlirtualWeb.VRChatController do
              end)
 
            # Wait for all tasks to complete
+
            spotlight_result = Task.await(spotlight_task, 10_000)
            active_result = Task.await(active_task, 10_000)
            games_result = Task.await(games_task, 10_000)
@@ -140,7 +141,7 @@ defmodule FlirtualWeb.VRChatController do
 
     case category do
       "spotlight" ->
-        case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+        case Flirtual.VRChat.with_session(fn vrchat_conn ->
                VRChat.Worlds.search_worlds(vrchat_conn,
                  sort: "publicationDate",
                  tag: "admin_spotlight_xplat",
@@ -160,7 +161,7 @@ defmodule FlirtualWeb.VRChatController do
         end
 
       "active" ->
-        case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+        case Flirtual.VRChat.with_session(fn vrchat_conn ->
                VRChat.Worlds.get_active_worlds(vrchat_conn,
                  notag: "author_tag_game,admin_spotlight_xplat",
                  n: per_page,
@@ -179,7 +180,7 @@ defmodule FlirtualWeb.VRChatController do
         end
 
       "games" ->
-        case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+        case Flirtual.VRChat.with_session(fn vrchat_conn ->
                VRChat.Worlds.get_active_worlds(vrchat_conn,
                  tag: "author_tag_game",
                  notag: "admin_spotlight_xplat",
@@ -199,7 +200,7 @@ defmodule FlirtualWeb.VRChatController do
         end
 
       "new" ->
-        case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+        case Flirtual.VRChat.with_session(fn vrchat_conn ->
                VRChat.Worlds.search_worlds(vrchat_conn,
                  sort: "hotness",
                  tag: "system_published_recently",
@@ -220,7 +221,7 @@ defmodule FlirtualWeb.VRChatController do
         end
 
       "random" ->
-        case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+        case Flirtual.VRChat.with_session(fn vrchat_conn ->
                VRChat.Worlds.search_worlds(vrchat_conn,
                  sort: "shuffle",
                  notag: "admin_spotlight_xplat",
@@ -266,7 +267,7 @@ defmodule FlirtualWeb.VRChatController do
     per_page = 12
     offset = page * per_page
 
-    case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+    case Flirtual.VRChat.with_session(fn vrchat_conn ->
            # GET /worlds endpoint without search param shows active worlds
            VRChat.Worlds.search_worlds(vrchat_conn,
              featured: false,
@@ -294,11 +295,6 @@ defmodule FlirtualWeb.VRChatController do
         # If we got fewer than requested, there are no more pages
         has_more = length(worlds) == per_page
         json(conn, %{worlds: formatted_worlds, hasMore: has_more})
-
-      {:error, reason} ->
-        conn
-        |> put_status(:internal_server_error)
-        |> json(%{error: "Failed to fetch worlds", reason: inspect(reason)})
     end
   end
 
@@ -313,7 +309,7 @@ defmodule FlirtualWeb.VRChatController do
       |> put_status(:bad_request)
       |> json(%{error: "Search term is required"})
     else
-      case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+      case Flirtual.VRChat.with_session(fn vrchat_conn ->
              # GET /worlds endpoint with search parameter
              VRChat.Worlds.search_worlds(vrchat_conn,
                search: search_term,
@@ -358,7 +354,7 @@ defmodule FlirtualWeb.VRChatController do
          {:conversation_id, false} <-
            {:conversation_id, is_nil(conversation_id) or String.trim(conversation_id) == ""},
          user when not is_nil(user) <- conn.assigns[:session].user do
-      case Flirtual.VRChat.with_vrchat_api(fn vrchat_conn ->
+      case Flirtual.VRChat.with_session(fn vrchat_conn ->
              # Get current user ID for ownerId
              current_user =
                case VRChat.Authentication.get_current_user(vrchat_conn) do
