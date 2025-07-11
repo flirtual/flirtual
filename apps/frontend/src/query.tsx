@@ -345,3 +345,5 @@ export function QueryProvider({ children }: PropsWithChildren) {
 		</QueryClientProvider>
 	);
 }
+
+export { useInfiniteQuery } from "@tanstack/react-query";

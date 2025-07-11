@@ -1,83 +1,31 @@
 import { api } from "./common";
 
-export interface VRChatWorld {
+export interface World {
 	id: string;
 	name: string;
 	imageUrl: string;
 	thumbnailImageUrl: string;
+	authorId: string;
 	authorName: string;
-	tags: string[];
-	popularity: number;
-	heat: number;
 }
 
-export interface VRChatWorldsResponse {
-	worlds: VRChatWorld[];
-	hasMore: boolean;
-}
-
-export interface VRChatCategory {
-	title: string;
-	worlds: VRChatWorld[];
-	hasMore: boolean;
-}
-
-export interface VRChatCategoriesResponse {
-	categories: {
-		spotlight: VRChatCategory;
-		active: VRChatCategory;
-		new: VRChatCategory;
-		games: VRChatCategory;
-		random: VRChatCategory;
-	};
-}
-
-export interface VRChatInstance {
-	instanceId: string;
-	shortName: string;
-	worldId: string;
-	type: string;
-	region: string;
-	canRequestInvite: boolean;
-}
+export const worldCategories = [
+	"spotlight",
+	"active",
+	"new",
+	"games",
+	"random"
+] as const;
+export type WorldCategory = (typeof worldCategories)[number];
 
 export const VRChat = {
-	async getCategorizedWorlds(): Promise<VRChatCategoriesResponse> {
-		return api
-			.url("vrchat/worlds/categories")
-			.get()
-			.json();
-	},
+	api: api.url("vrchat"),
 
-	async getCategoryWorlds(category: string, page = 0): Promise<VRChatWorldsResponse> {
-		return api
-			.url(`vrchat/worlds/categories/${category}`)
+	getWorldsByCategory(category: WorldCategory, page = 0) {
+		return this.api
+			.url(`/worlds/${category}`)
 			.query({ page })
 			.get()
-			.json();
-	},
-
-	async getActiveWorlds(page = 0): Promise<VRChatWorldsResponse> {
-		return api
-			.url("vrchat/worlds/active")
-			.query({ page })
-			.get()
-			.json();
-	},
-
-	async searchWorlds(search: string, page = 0): Promise<VRChatWorldsResponse> {
-		return api
-			.url("vrchat/worlds/search")
-			.query({ search, page })
-			.get()
-			.json();
-	},
-
-	async createInstance(worldId: string, conversationId: string): Promise<VRChatInstance> {
-		return api
-			.url("vrchat/instances")
-			.json({ world_id: worldId, conversation_id: conversationId })
-			.post()
-			.json();
+			.json<Array<World>>();
 	}
 };

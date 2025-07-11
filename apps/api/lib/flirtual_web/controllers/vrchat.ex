@@ -4,346 +4,84 @@ defmodule FlirtualWeb.VRChatController do
   import Plug.Conn
   import Phoenix.Controller
 
+  import FlirtualWeb.Utilities
+
   require Logger
 
   action_fallback FlirtualWeb.FallbackController
 
-  def get_categorized_worlds(conn, _params) do
-    case Flirtual.VRChat.with_session(fn vrchat_conn ->
-           # Load all categories in parallel
-           spotlight_task =
-             Task.async(fn ->
-               VRChat.Worlds.search_worlds(vrchat_conn,
-                 sort: "publicationDate",
-                 tag: "admin_spotlight_xplat",
-                 n: 5
-               )
-             end)
-
-           active_task =
-             Task.async(fn ->
-               VRChat.Worlds.get_active_worlds(vrchat_conn,
-                 notag: "author_tag_game,admin_spotlight_xplat",
-                 n: 5
-               )
-             end)
-
-           games_task =
-             Task.async(fn ->
-               VRChat.Worlds.get_active_worlds(vrchat_conn,
-                 tag: "author_tag_game",
-                 notag: "admin_spotlight_xplat",
-                 n: 5
-               )
-             end)
-
-           new_task =
-             Task.async(fn ->
-               VRChat.Worlds.search_worlds(vrchat_conn,
-                 sort: "hotness",
-                 tag: "system_published_recently",
-                 notag: "admin_spotlight_xplat",
-                 n: 5
-               )
-             end)
-
-           random_task =
-             Task.async(fn ->
-               VRChat.Worlds.search_worlds(vrchat_conn,
-                 sort: "shuffle",
-                 notag: "admin_spotlight_xplat",
-                 n: 5
-               )
-             end)
-
-           # Wait for all tasks to complete
-
-           spotlight_result = Task.await(spotlight_task, 10_000)
-           active_result = Task.await(active_task, 10_000)
-           games_result = Task.await(games_task, 10_000)
-           new_result = Task.await(new_task, 10_000)
-           random_result = Task.await(random_task, 10_000)
-
-           {:ok,
-            %{
-              spotlight: spotlight_result,
-              active: active_result,
-              games: games_result,
-              new: new_result,
-              random: random_result
-            }}
-         end) do
-      {:ok,
-       %{
-         spotlight: {:ok, spotlight},
-         active: {:ok, active},
-         games: {:ok, games},
-         new: {:ok, new},
-         random: {:ok, random}
-       }} ->
-        format_worlds = fn worlds ->
-          Enum.map(worlds, fn world ->
-            %{
-              id: world.id,
-              name: world.name,
-              imageUrl: world.imageUrl,
-              thumbnailImageUrl: world.thumbnailImageUrl,
-              authorName: world.authorName,
-              tags: world.tags || [],
-              popularity: world.popularity || 0,
-              heat: world.heat || 0
-            }
-          end)
-        end
-
-        json(conn, %{
-          categories: %{
-            spotlight: %{
-              title: "Spotlight",
-              worlds: format_worlds.(spotlight),
-              hasMore: length(spotlight) == 5
-            },
-            active: %{
-              title: "Active",
-              worlds: format_worlds.(active),
-              hasMore: length(active) == 5
-            },
-            games: %{
-              title: "Games",
-              worlds: format_worlds.(games),
-              hasMore: length(games) == 5
-            },
-            new: %{
-              title: "New",
-              worlds: format_worlds.(new),
-              hasMore: length(new) == 5
-            },
-            random: %{
-              title: "Random",
-              worlds: format_worlds.(random),
-              hasMore: length(random) == 5
-            }
-          }
-        })
-
-      {:error, reason} ->
-        conn
-        |> put_status(:internal_server_error)
-        |> json(%{error: "Failed to fetch worlds", reason: inspect(reason)})
-    end
+  defp transform_worlds(worlds) do
+    Enum.map(worlds, &transform_world/1)
   end
 
-  def get_category_worlds(conn, params) do
-    category = Map.get(params, "category", "")
-    page = Map.get(params, "page", "0") |> String.to_integer()
-    per_page = 5
-    offset = page * per_page
-
-    case category do
-      "spotlight" ->
-        case Flirtual.VRChat.with_session(fn vrchat_conn ->
-               VRChat.Worlds.search_worlds(vrchat_conn,
-                 sort: "publicationDate",
-                 tag: "admin_spotlight_xplat",
-                 n: per_page,
-                 offset: offset
-               )
-             end) do
-          {:ok, worlds} ->
-            formatted_worlds = format_world_list(worlds)
-            has_more = length(worlds) == per_page
-            json(conn, %{worlds: formatted_worlds, hasMore: has_more})
-
-          {:error, reason} ->
-            conn
-            |> put_status(:internal_server_error)
-            |> json(%{error: "Failed to fetch worlds", reason: inspect(reason)})
-        end
-
-      "active" ->
-        case Flirtual.VRChat.with_session(fn vrchat_conn ->
-               VRChat.Worlds.get_active_worlds(vrchat_conn,
-                 notag: "author_tag_game,admin_spotlight_xplat",
-                 n: per_page,
-                 offset: offset
-               )
-             end) do
-          {:ok, worlds} ->
-            formatted_worlds = format_world_list(worlds)
-            has_more = length(worlds) == per_page
-            json(conn, %{worlds: formatted_worlds, hasMore: has_more})
-
-          {:error, reason} ->
-            conn
-            |> put_status(:internal_server_error)
-            |> json(%{error: "Failed to fetch worlds", reason: inspect(reason)})
-        end
-
-      "games" ->
-        case Flirtual.VRChat.with_session(fn vrchat_conn ->
-               VRChat.Worlds.get_active_worlds(vrchat_conn,
-                 tag: "author_tag_game",
-                 notag: "admin_spotlight_xplat",
-                 n: per_page,
-                 offset: offset
-               )
-             end) do
-          {:ok, worlds} ->
-            formatted_worlds = format_world_list(worlds)
-            has_more = length(worlds) == per_page
-            json(conn, %{worlds: formatted_worlds, hasMore: has_more})
-
-          {:error, reason} ->
-            conn
-            |> put_status(:internal_server_error)
-            |> json(%{error: "Failed to fetch worlds", reason: inspect(reason)})
-        end
-
-      "new" ->
-        case Flirtual.VRChat.with_session(fn vrchat_conn ->
-               VRChat.Worlds.search_worlds(vrchat_conn,
-                 sort: "hotness",
-                 tag: "system_published_recently",
-                 notag: "admin_spotlight_xplat",
-                 n: per_page,
-                 offset: offset
-               )
-             end) do
-          {:ok, worlds} ->
-            formatted_worlds = format_world_list(worlds)
-            has_more = length(worlds) == per_page
-            json(conn, %{worlds: formatted_worlds, hasMore: has_more})
-
-          {:error, reason} ->
-            conn
-            |> put_status(:internal_server_error)
-            |> json(%{error: "Failed to fetch worlds", reason: inspect(reason)})
-        end
-
-      "random" ->
-        case Flirtual.VRChat.with_session(fn vrchat_conn ->
-               VRChat.Worlds.search_worlds(vrchat_conn,
-                 sort: "shuffle",
-                 notag: "admin_spotlight_xplat",
-                 n: per_page,
-                 offset: offset
-               )
-             end) do
-          {:ok, worlds} ->
-            formatted_worlds = format_world_list(worlds)
-            has_more = length(worlds) == per_page
-            json(conn, %{worlds: formatted_worlds, hasMore: has_more})
-
-          {:error, reason} ->
-            conn
-            |> put_status(:internal_server_error)
-            |> json(%{error: "Failed to fetch worlds", reason: inspect(reason)})
-        end
-
-      _ ->
-        conn
-        |> put_status(:bad_request)
-        |> json(%{error: "Invalid category"})
-    end
+  defp transform_world(world) do
+    %{
+      id: world.id,
+      name: world.name,
+      authorName: world.authorName,
+      authorId: world.authorId,
+      imageUrl: world.imageUrl,
+      thumbnailImageUrl: world.thumbnailImageUrl
+    }
   end
 
-  defp format_world_list(worlds) do
-    Enum.map(worlds, fn world ->
-      %{
-        id: world.id,
-        name: world.name,
-        imageUrl: world.imageUrl,
-        thumbnailImageUrl: world.thumbnailImageUrl,
-        authorName: world.authorName,
-        tags: world.tags || [],
-        popularity: world.popularity || 0,
-        heat: world.heat || 0
-      }
-    end)
+  @world_categories [
+    "spotlight",
+    "active",
+    "games",
+    "new",
+    "random"
+  ]
+
+  @worlds_per_page 10
+
+  def format_world_params(params) do
+    page =
+      params
+      |> Map.get("page", "0")
+      |> String.to_integer()
+
+    [
+      n: @worlds_per_page,
+      offset: page * @worlds_per_page
+    ]
   end
 
-  def get_active_worlds(conn, params) do
-    page = Map.get(params, "page", "0") |> String.to_integer()
-    per_page = 12
-    offset = page * per_page
+  def get_worlds_by_category(conn, %{"category" => category} = params)
+      when category in @world_categories do
+    {:ok, worlds} =
+      Flirtual.VRChat.with_session(
+        &Flirtual.VRChat.get_worlds_by_category(
+          &1,
+          category,
+          format_world_params(params)
+        )
+      )
 
-    case Flirtual.VRChat.with_session(fn vrchat_conn ->
-           # GET /worlds endpoint without search param shows active worlds
-           VRChat.Worlds.search_worlds(vrchat_conn,
-             featured: false,
-             sort: "popularity",
-             order: "descending",
-             n: per_page,
-             offset: offset
-           )
-         end) do
-      {:ok, worlds} ->
-        formatted_worlds =
-          Enum.map(worlds, fn world ->
-            %{
-              id: world.id,
-              name: world.name,
-              imageUrl: world.imageUrl,
-              thumbnailImageUrl: world.thumbnailImageUrl,
-              authorName: world.authorName,
-              tags: world.tags || [],
-              popularity: world.popularity || 0,
-              heat: world.heat || 0
-            }
-          end)
-
-        # If we got fewer than requested, there are no more pages
-        has_more = length(worlds) == per_page
-        json(conn, %{worlds: formatted_worlds, hasMore: has_more})
-    end
+    conn
+    |> json_with_etag(transform_worlds(worlds))
   end
 
-  def search_worlds(conn, params) do
-    search_term = Map.get(params, "search", "")
-    page = Map.get(params, "page", "0") |> String.to_integer()
-    per_page = 12
-    offset = page * per_page
+  def search_worlds(conn, %{"query" => query} = params) do
+    params = format_world_params(params)
 
-    if String.trim(search_term) == "" do
-      conn
-      |> put_status(:bad_request)
-      |> json(%{error: "Search term is required"})
-    else
-      case Flirtual.VRChat.with_session(fn vrchat_conn ->
-             # GET /worlds endpoint with search parameter
-             VRChat.Worlds.search_worlds(vrchat_conn,
-               search: search_term,
-               featured: false,
-               sort: "relevance",
-               fuzzy: true,
-               order: "descending",
-               n: per_page,
-               offset: offset
-             )
-           end) do
-        {:ok, worlds} ->
-          formatted_worlds =
-            Enum.map(worlds, fn world ->
-              %{
-                id: world.id,
-                name: world.name,
-                imageUrl: world.imageUrl,
-                thumbnailImageUrl: world.thumbnailImageUrl,
-                authorName: world.authorName,
-                tags: world.tags || [],
-                popularity: world.popularity || 0,
-                heat: world.heat || 0
-              }
-            end)
+    {:ok, worlds} =
+      Flirtual.VRChat.with_session(
+        &VRChat.Worlds.search_worlds(
+          &1,
+          params
+          |> Keyword.merge(
+            search: query,
+            featured: false,
+            sort: "relevance",
+            fuzzy: true,
+            order: "descending"
+          )
+        )
+      )
 
-          # If we got fewer than requested, there are no more pages
-          has_more = length(worlds) == per_page
-          json(conn, %{worlds: formatted_worlds, hasMore: has_more})
-
-        {:error, reason} ->
-          {:error, :upstream}
-      end
-    end
+    conn
+    |> json_with_etag(transform_worlds(worlds))
   end
 
   def create_instance(conn, params) do
@@ -354,11 +92,11 @@ defmodule FlirtualWeb.VRChatController do
          {:conversation_id, false} <-
            {:conversation_id, is_nil(conversation_id) or String.trim(conversation_id) == ""},
          user when not is_nil(user) <- conn.assigns[:session].user do
-      case Flirtual.VRChat.with_session(fn vrchat_conn ->
+      case Flirtual.VRChat.with_session(fn vrchat ->
              # Get current user ID for ownerId
              current_user =
-               case VRChat.Authentication.get_current_user(vrchat_conn) do
-                 {:ok, _vrchat_conn, user} ->
+               case VRChat.Authentication.get_current_user(vrchat) do
+                 {:ok, _vrchat, user} ->
                    user.id
 
                  {:ok, user} ->
@@ -366,7 +104,7 @@ defmodule FlirtualWeb.VRChatController do
 
                  _ ->
                    # Try alternative approach - make the request directly through the conn
-                   case Tesla.get(vrchat_conn, "/auth/user") do
+                   case Tesla.get(vrchat, "/auth/user") do
                      {:ok, %Tesla.Env{status: 200, body: user}} -> user.id
                      _ -> nil
                    end
@@ -385,7 +123,7 @@ defmodule FlirtualWeb.VRChatController do
                }
 
                # Make the request using the VRChat Tesla client directly
-               case Tesla.post(vrchat_conn, "/instances", body) do
+               case Tesla.post(vrchat, "/instances", body) do
                  {:ok, %Tesla.Env{status: status, body: response}} when status in [200, 201] ->
                    # The response is a JSON string, we need to decode it
                    case Jason.decode(response) do

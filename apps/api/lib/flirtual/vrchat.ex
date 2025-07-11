@@ -33,6 +33,61 @@ defmodule Flirtual.VRChat do
     end
   end
 
+  def get_worlds_by_category(_, _, params \\ %{})
+
+  def get_worlds_by_category(vrchat, "spotlight", params) do
+    vrchat
+    |> VRChat.Worlds.search_worlds(
+      params
+      |> Keyword.merge(
+        sort: "publicationDate",
+        tag: "admin_spotlight_xplat"
+      )
+    )
+  end
+
+  def get_worlds_by_category(vrchat, "active", params) do
+    vrchat
+    |> VRChat.Worlds.get_active_worlds(
+      params
+      |> Keyword.merge(notag: ["author_tag_game", "admin_spotlight_xplat"])
+    )
+  end
+
+  def get_worlds_by_category(vrchat, "games", params) do
+    vrchat
+    |> VRChat.Worlds.get_active_worlds(
+      params
+      |> Keyword.merge(
+        tag: "author_tag_game",
+        notag: "admin_spotlight_xplat"
+      )
+    )
+  end
+
+  def get_worlds_by_category(vrchat, "new", params) do
+    vrchat
+    |> VRChat.Worlds.search_worlds(
+      params
+      |> Keyword.merge(
+        sort: "hotness",
+        tag: "system_published_recently",
+        notag: "admin_spotlight_xplat"
+      )
+    )
+  end
+
+  def get_worlds_by_category(vrchat, "random", params) do
+    vrchat
+    |> VRChat.Worlds.search_worlds(
+      params
+      |> Keyword.merge(
+        sort: "shuffle",
+        notag: "admin_spotlight_xplat"
+      )
+    )
+  end
+
   @character_map %{
     "@" => "＠",
     "#" => "＃",

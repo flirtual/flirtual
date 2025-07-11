@@ -195,11 +195,10 @@ defmodule FlirtualWeb.Router do
         scope "/vrchat" do
           pipe_through([:require_authenticated_user])
 
-          get("/worlds/categories", VRChatController, :get_categorized_worlds)
-          get("/worlds/categories/:category", VRChatController, :get_category_worlds)
-          get("/worlds/active", VRChatController, :get_active_worlds)
           get("/worlds/search", VRChatController, :search_worlds)
-          post("/instances", VRChatController, :create_instance)
+          get("/worlds/:category", VRChatController, :get_worlds_by_category)
+
+          # post("/instances", VRChatController, :create_instance)
         end
 
         scope "/connections" do
