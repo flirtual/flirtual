@@ -124,7 +124,7 @@ function DialogBody({
 		<div
 			className={twMerge(
 				dialogContentInnerClassName,
-				"group-data-[drawer]:overflow-visible group-data-[drawer]:rounded-none group-data-[drawer]:p-0 group-data-[drawer]:shadow-none",
+				"group-data-[drawer]:rounded-none group-data-[drawer]:p-0 group-data-[drawer]:shadow-none",
 				className
 			)}
 			{...props}

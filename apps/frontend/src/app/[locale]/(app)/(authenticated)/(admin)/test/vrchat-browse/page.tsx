@@ -2,7 +2,13 @@
 
 import type { InfiniteData } from "@tanstack/react-query";
 import { Cone, Dices, Ellipsis, Flame, Gamepad2, Sprout } from "lucide-react";
-import { type ComponentProps, type Dispatch, type DispatchWithoutAction, type FC, type JSX, use } from "react";
+import {
+	type ComponentProps,
+	type DispatchWithoutAction,
+	type FC,
+	use,
+	useRef
+} from "react";
 import { useInView } from "react-intersection-observer";
 import { capitalize, uniqueBy } from "remeda";
 import { twMerge } from "tailwind-merge";
@@ -11,12 +17,18 @@ import { withSuspense } from "with-suspense";
 import type { World, WorldCategory } from "~/api/vrchat";
 import { VRChat, worldCategories } from "~/api/vrchat";
 import { Button } from "~/components/button";
-import { DialogBody, DialogDescription, DialogHeader, DialogTitle } from "~/components/dialog/dialog";
+import {
+	DialogBody,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle
+} from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
 import { useInfiniteQuery } from "~/query";
 
 const worldCategoryIcons = {
+	recommended: Flame,
 	spotlight: Cone,
 	active: Flame,
 	games: Gamepad2,
@@ -86,15 +98,23 @@ const WorldCategory: FC<{ category: WorldCategory }> = ({ category }) => {
 		},
 	});
 
+	const reference = useRef<HTMLDivElement>(null);
+
 	const Icon = worldCategoryIcons[category];
 
 	return (
-		<div className="flex w-full flex-col gap-4">
-			<h2 className="flex items-center gap-2 font-bold">
+		<div className="flex w-full flex-col gap-4" ref={reference}>
+			<button
+				className="flex w-fit items-center gap-2"
+				type="button"
+				onClick={() => reference?.current?.scrollIntoView({ behavior: "smooth", block: "center" })}
+			>
 				<Icon className="inline-block size-5" />
-				{" "}
-				{capitalize(category)}
-			</h2>
+				<span className="font-bold">
+					{" "}
+					{capitalize(category)}
+				</span>
+			</button>
 			<div className="flex w-full snap-x snap-proximity gap-2 overflow-x-auto overflow-y-visible scroll-smooth desktop:gap-4">
 				<WorldCategoryContent
 					promise={promise}
@@ -155,7 +175,7 @@ export default function Test() {
 					</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody>
+				<DialogBody className="overflow-y-auto">
 					<div data-vaul-no-drag className="flex w-full flex-col gap-4">
 						{worldCategories.map((category) => (
 							<WorldCategory category={category} key={category} />

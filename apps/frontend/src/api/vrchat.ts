@@ -10,6 +10,7 @@ export interface World {
 }
 
 export const worldCategories = [
+	"recommended",
 	"spotlight",
 	"active",
 	"new",
