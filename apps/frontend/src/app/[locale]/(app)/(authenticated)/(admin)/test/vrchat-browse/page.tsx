@@ -1,7 +1,7 @@
 "use client";
 
 import type { InfiniteData } from "@tanstack/react-query";
-import { ArrowLeft, ArrowLeftToLine, ArrowRight, Cone, Dices, Ellipsis, Flame, Gamepad2, Sprout } from "lucide-react";
+import { ArrowLeft, ArrowLeftToLine, ArrowRight, Cone, Dices, Flame, Gamepad2, Map, Sprout } from "lucide-react";
 import {
 	type ComponentProps,
 	type DispatchWithoutAction,
@@ -40,7 +40,7 @@ const worldCategoryIcons = {
 
 const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ world, onInvite }) => {
 	return (
-		<div className="flex w-40 shrink-0 snap-start snap-always flex-col rounded-xl border bg-white-10 desktop:w-56">
+		<div className="flex w-40 shrink-0 snap-start snap-always flex-col rounded-xl bg-white-10 shadow-brand-1 desktop:w-56">
 			<Image
 				src={urls.arbitraryImage(world.thumbnailImageUrl, {
 					fit: "cover",
@@ -65,13 +65,13 @@ const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ wor
 				</div>
 				<div className="flex items-center gap-2">
 					{onInvite && (
-						<Button className="h-6 grow" onClick={onInvite}>
+						<Button className="h-fit grow rounded-lg py-1" onClick={onInvite}>
 							Invite
 						</Button>
 					)}
 					<Button
-						className="aspect-square h-6 shrink-0 p-0"
-						Icon={Ellipsis}
+						className="aspect-square h-fit shrink-0 rounded-lg p-0"
+						Icon={Map}
 						kind="tertiary"
 					/>
 				</div>
@@ -83,7 +83,7 @@ const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ wor
 
 const WorldItemSkeleton: FC<ComponentProps<"div">> = ({ className, ...props }) => {
 	return (
-		<div {...props} className={twMerge("flex w-40 shrink-0 snap-start snap-always flex-col rounded-xl border bg-white-10 desktop:w-56", className)}>
+		<div {...props} className={twMerge("flex w-40 shrink-0 snap-start snap-always flex-col rounded-xl bg-white-10 shadow-brand-1 desktop:w-56", className)}>
 			<div className="aspect-[256/192] animate-pulse rounded-xl rounded-b-none bg-gray-200" />
 			<div className="flex flex-col gap-3 p-2 desktop:p-4">
 				<div className="flex flex-col gap-1">
@@ -91,8 +91,8 @@ const WorldItemSkeleton: FC<ComponentProps<"div">> = ({ className, ...props }) =
 					<span className="h-4 w-3/4 animate-pulse rounded-sm bg-gray-200 opacity-75" />
 				</div>
 				<div className="flex items-center gap-2">
-					<span className="h-6 grow animate-pulse rounded-xl bg-gray-200" />
-					<span className="size-6 shrink-0 animate-pulse rounded-full bg-gray-200" />
+					<span className="h-8 grow animate-pulse rounded-xl bg-gray-200" />
+					<span className="size-8 shrink-0 animate-pulse rounded-full bg-gray-200" />
 				</div>
 			</div>
 		</div>
@@ -159,7 +159,7 @@ const WorldCategory: FC<{ category: WorldCategory }> = ({ category }) => {
 				</div>
 			</div>
 			<div
-				className="flex w-full snap-x snap-proximity scroll-px-4 gap-2 overflow-x-auto overflow-y-visible scroll-smooth px-4 desktop:gap-4"
+				className="-my-4 flex w-full snap-x snap-proximity scroll-px-4 gap-2 overflow-x-auto overflow-y-visible scroll-smooth p-4 desktop:gap-4"
 				ref={scrollContainer}
 				onScroll={({ currentTarget: { scrollLeft } }) => setScrollLeft(scrollLeft)}
 			>
@@ -222,7 +222,7 @@ export default function Test() {
 					</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody className="-mx-4 overflow-y-auto">
+				<DialogBody className="-mx-4 overflow-y-auto desktop:mx-0">
 					<div data-vaul-no-drag className="flex w-full snap-y snap-proximity flex-col gap-4">
 						{worldCategories.map((category) => (
 							<WorldCategory category={category} key={category} />
