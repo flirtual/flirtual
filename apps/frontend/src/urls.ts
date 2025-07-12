@@ -75,6 +75,8 @@ export const bucketOriginMap = {
 
 export const bucketOrigins = Object.values(bucketOriginMap);
 
+type ArbitraryImageOptions = Record<string, number | string>;
+
 export const urls = {
 	// internal
 	api: process.env.NEXT_PUBLIC_API_URL as string,
@@ -88,6 +90,15 @@ export const urls = {
 			: image.originalFile
 				? urls.media(image.originalFile, "uploads")
 				: urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
+	arbitraryImage: (urlOrPathname: string, options: ArbitraryImageOptions = { quality: 90 }) =>
+		`https://flirtual.com/cdn-cgi/image/${Object.entries(options).map(([key, value]) =>
+			`${{
+				width: "w",
+				height: "h",
+				format: "f",
+				quality: "q",
+				"slow-connection-quality": "scq"
+			}[key] || key}=${value}`).join(",")}/${urlOrPathname}`,
 	userAvatar: (user: { profile: Pick<Profile, "images"> } | null, variant?: string) =>
 		user?.profile.images[0]
 			? urls.image(user.profile.images[0], variant)

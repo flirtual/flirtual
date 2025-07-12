@@ -1,13 +1,14 @@
 "use client";
 
 import type { InfiniteData } from "@tanstack/react-query";
-import { Cone, Dices, Ellipsis, Flame, Gamepad2, Sprout } from "lucide-react";
+import { ArrowLeft, ArrowLeftToLine, ArrowRight, Cone, Dices, Ellipsis, Flame, Gamepad2, Sprout } from "lucide-react";
 import {
 	type ComponentProps,
 	type DispatchWithoutAction,
 	type FC,
 	use,
-	useRef
+	useRef,
+	useState
 } from "react";
 import { useInView } from "react-intersection-observer";
 import { capitalize, uniqueBy } from "remeda";
@@ -26,6 +27,7 @@ import {
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
 import { useInfiniteQuery } from "~/query";
+import { urls } from "~/urls";
 
 const worldCategoryIcons = {
 	recommended: Flame,
@@ -40,16 +42,22 @@ const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ wor
 	return (
 		<div className="flex w-40 shrink-0 snap-start snap-always flex-col rounded-xl border bg-white-10 desktop:w-56">
 			<Image
+				src={urls.arbitraryImage(world.thumbnailImageUrl, {
+					fit: "cover",
+					quality: 90,
+					"slow-connection-quality": 50,
+					width: 256,
+					height: 192,
+				})}
 				alt={world.name}
 				className="aspect-[256/192] rounded-xl rounded-b-none object-cover"
 				height={192}
-				src={world.thumbnailImageUrl}
 				width={256}
 			/>
 			<div className="flex flex-col gap-2 p-2 desktop:p-4">
 				<div className="flex flex-col">
 					<span className="truncate font-semibold">{world.name}</span>
-					<span className="truncate opacity-75">
+					<span className="truncate text-sm opacity-75">
 						by
 						{" "}
 						{world.authorName}
@@ -57,12 +65,12 @@ const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ wor
 				</div>
 				<div className="flex items-center gap-2">
 					{onInvite && (
-						<Button className="h-fit grow py-1" onClick={onInvite}>
+						<Button className="h-6 grow" onClick={onInvite}>
 							Invite
 						</Button>
 					)}
 					<Button
-						className="aspect-square h-fit shrink-0 p-1"
+						className="aspect-square h-6 shrink-0 p-0"
 						Icon={Ellipsis}
 						kind="tertiary"
 					/>
@@ -77,19 +85,22 @@ const WorldItemSkeleton: FC<ComponentProps<"div">> = ({ className, ...props }) =
 	return (
 		<div {...props} className={twMerge("flex w-40 shrink-0 snap-start snap-always flex-col rounded-xl border bg-white-10 desktop:w-56", className)}>
 			<div className="aspect-[256/192] animate-pulse rounded-xl rounded-b-none bg-gray-200" />
-			<div className="flex flex-col gap-2 p-2 desktop:p-4">
+			<div className="flex flex-col gap-3 p-2 desktop:p-4">
 				<div className="flex flex-col gap-1">
-					<span className="h-6 w-full animate-pulse rounded-sm bg-gray-200" />
-					<span className="h-5 w-3/4 animate-pulse rounded-sm bg-gray-200 opacity-75" />
+					<span className="h-5 w-full animate-pulse rounded-sm bg-gray-200" />
+					<span className="h-4 w-3/4 animate-pulse rounded-sm bg-gray-200 opacity-75" />
 				</div>
-				<span className="h-8 w-2/3 animate-pulse rounded-xl bg-gray-200" />
+				<div className="flex items-center gap-2">
+					<span className="h-6 grow animate-pulse rounded-xl bg-gray-200" />
+					<span className="size-6 shrink-0 animate-pulse rounded-full bg-gray-200" />
+				</div>
 			</div>
 		</div>
 	);
 };
 
 const WorldCategory: FC<{ category: WorldCategory }> = ({ category }) => {
-	const { promise, fetchNextPage } = useInfiniteQuery({
+	const { promise, fetchNextPage, } = useInfiniteQuery({
 		queryKey: ["vrchat", "worlds", category],
 		queryFn: ({ pageParam: page }) => VRChat.getWorldsByCategory(category, page),
 		initialPageParam: 0,
@@ -99,23 +110,59 @@ const WorldCategory: FC<{ category: WorldCategory }> = ({ category }) => {
 	});
 
 	const reference = useRef<HTMLDivElement>(null);
+	const scrollContainer = useRef<HTMLDivElement>(null);
+
+	const [scrollLeft, setScrollLeft] = useState(0);
 
 	const Icon = worldCategoryIcons[category];
 
 	return (
-		<div className="flex w-full flex-col gap-4" ref={reference}>
-			<button
-				className="flex w-fit items-center gap-2"
-				type="button"
-				onClick={() => reference?.current?.scrollIntoView({ behavior: "smooth", block: "center" })}
+		<div className="flex w-full snap-start snap-always flex-col gap-4" ref={reference}>
+			<div className="flex items-center justify-between gap-2 px-4">
+				<button
+					className="flex items-center gap-2"
+					type="button"
+					onClick={() => reference?.current?.scrollIntoView({ behavior: "smooth", block: "center" })}
+				>
+					<Icon className="inline-block size-5" />
+					<span className="font-bold">
+						{" "}
+						{capitalize(category)}
+					</span>
+				</button>
+				<div className="flex items-center gap-2">
+					<Button
+						className="aspect-square h-6 shrink-0 p-0 opacity-75 disabled:opacity-0 hocus:opacity-100"
+						disabled={scrollLeft <= 256}
+						Icon={ArrowLeftToLine}
+						kind="tertiary"
+						onClick={() => scrollContainer.current?.scrollTo({ left: 0, behavior: "smooth" })}
+					/>
+					<Button
+						className="aspect-square h-6 shrink-0 p-0 opacity-75 hocus:opacity-100"
+						Icon={ArrowLeft}
+						kind="tertiary"
+						onClick={() => scrollContainer.current?.scrollBy({
+							left: -256,
+							behavior: "smooth",
+						})}
+					/>
+					<Button
+						className="aspect-square h-6 shrink-0 p-0 opacity-75 hocus:opacity-100"
+						Icon={ArrowRight}
+						kind="tertiary"
+						onClick={() => scrollContainer.current?.scrollBy({
+							left: 256,
+							behavior: "smooth",
+						})}
+					/>
+				</div>
+			</div>
+			<div
+				className="flex w-full snap-x snap-proximity scroll-px-4 gap-2 overflow-x-auto overflow-y-visible scroll-smooth px-4 desktop:gap-4"
+				ref={scrollContainer}
+				onScroll={({ currentTarget: { scrollLeft } }) => setScrollLeft(scrollLeft)}
 			>
-				<Icon className="inline-block size-5" />
-				<span className="font-bold">
-					{" "}
-					{capitalize(category)}
-				</span>
-			</button>
-			<div className="flex w-full snap-x snap-proximity gap-2 overflow-x-auto overflow-y-visible scroll-smooth desktop:gap-4">
 				<WorldCategoryContent
 					promise={promise}
 					onEndVisible={() => fetchNextPage()}
@@ -175,8 +222,8 @@ export default function Test() {
 					</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody className="overflow-y-auto">
-					<div data-vaul-no-drag className="flex w-full flex-col gap-4">
+				<DialogBody className="-mx-4 overflow-y-auto">
+					<div data-vaul-no-drag className="flex w-full snap-y snap-proximity flex-col gap-4">
 						{worldCategories.map((category) => (
 							<WorldCategory category={category} key={category} />
 						))}
