@@ -35,6 +35,14 @@ defmodule Flirtual.VRChat do
 
   def get_worlds_by_category(_, _, params \\ %{})
 
+  def get_worlds_by_category(vrchat, "recommended", params) do
+    vrchat
+    |> VRChat.Worlds.get_favorited_worlds(
+      params
+      |> Keyword.merge(tag: "worlds1")
+    )
+  end
+
   def get_worlds_by_category(vrchat, "spotlight", params) do
     vrchat
     |> VRChat.Worlds.search_worlds(

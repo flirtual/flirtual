@@ -26,6 +26,7 @@ defmodule FlirtualWeb.VRChatController do
   end
 
   @world_categories [
+    "recommended",
     "spotlight",
     "active",
     "games",
