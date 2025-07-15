@@ -23,8 +23,8 @@ export const links: Route.LinksFunction = () => [
 	},
 	{
 		rel: "stylesheet",
-		href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-	},
+		href: "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+	}
 ];
 
 export function Layout({ children }: PropsWithChildren) {
@@ -36,7 +36,10 @@ export function Layout({ children }: PropsWithChildren) {
 				<Meta />
 				<Links />
 			</head>
-			<body suppressHydrationWarning>
+			<body
+				suppressHydrationWarning
+				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
+			>
 				<I18nextProvider i18n={i18n}>
 					{children}
 				</I18nextProvider>

@@ -155,6 +155,7 @@
 		"typescript": "^5.8.3",
 		"vite": "^7.0.4",
 		"vite-plugin-mkcert": "^1.17.8",
+		"vite-plugin-webfont-dl": "^3.11.0",
 		"vite-tsconfig-paths": "^5.1.4",
 		"xml-formatter": "^3.6.6"
 	}
