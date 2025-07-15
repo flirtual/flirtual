@@ -1,10 +1,13 @@
 import englishUppyMessages from "@uppy/locales/lib/en_US.js";
+import japaneseUppyMessages from "@uppy/locales/lib/ja_JP.js";
 import i18n, { type ResourceKey } from "i18next";
 import icu from "i18next-icu";
 import { initReactI18next, useTranslation } from "react-i18next";
 
 import englishAttributeMessages from "~/../messages/attributes.en.json";
+import japaneseAttributeMessages from "~/../messages/attributes.ja.json";
 import englishMessages from "~/../messages/en.json";
+import japaneseMessages from "~/../messages/ja.json";
 
 export const locales = ["en", "ja"];
 export type Locale = (typeof locales)[number];
@@ -59,6 +62,11 @@ export const translations = {
 		default: englishMessages,
 		attributes: flat1(englishAttributeMessages),
 		uppy: englishUppyMessages.strings,
+	},
+	ja: {
+		default: japaneseMessages,
+		attributes: flat1(japaneseAttributeMessages),
+		uppy: japaneseUppyMessages.strings,
 	}
 };
 
