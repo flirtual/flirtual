@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -19,7 +19,7 @@ import { urls } from "~/urls";
 export const DeactivationForm: React.FC = () => {
 	const { user } = useSession();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const locale = useLocale();
 
 	const toasts = useToast();

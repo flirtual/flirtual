@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
@@ -24,7 +24,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
 	children
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const toasts = useToast();
 
 	const query = useSearchParams();

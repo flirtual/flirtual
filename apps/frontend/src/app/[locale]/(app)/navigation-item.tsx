@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Link } from "~/components/link";
@@ -28,7 +28,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
 
 	const [rankedMode] = usePreferences("ranked_mode", false);
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Link

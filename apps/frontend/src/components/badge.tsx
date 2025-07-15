@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren, RefAttributes } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Link } from "~/components/link";
@@ -43,7 +43,7 @@ export function Badge({
 }
 
 export const PremiumBadge: FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Badge asChild>
@@ -55,7 +55,7 @@ export const PremiumBadge: FC = () => {
 };
 
 export const NewBadge: FC<BadgeProps> = ({ className, children, ...props }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Badge className={twMerge("uppercase", className)} {...props}>

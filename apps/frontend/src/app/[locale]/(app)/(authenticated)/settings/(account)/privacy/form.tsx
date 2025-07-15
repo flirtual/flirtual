@@ -1,7 +1,7 @@
 "use client";
 
 import { HelpCircle } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { Preferences } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
@@ -16,7 +16,7 @@ import { urls } from "~/urls";
 export const PrivacyForm: React.FC = () => {
 	const { user } = useSession();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!user.preferences) return null;
 

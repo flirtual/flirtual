@@ -2,14 +2,13 @@
 
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { SelectTrigger as RadixSelectTrigger } from "@radix-ui/react-select";
-import { ChevronDown, Moon, Palette, Sun, SunMoon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { ChevronDown, Moon, Sun, SunMoon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
 import { Image } from "~/components/image";
 import {
-	InputSelect,
 	Select,
 	SelectContent,
 	SelectItem
@@ -23,7 +22,7 @@ export interface ThemePreviewProps {
 }
 
 export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [, setTheme, { sessionTheme }] = useTheme();
 	const active = theme === sessionTheme;
@@ -61,7 +60,7 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 };
 
 export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [, setTheme, { sessionTheme: theme }] = useTheme();
 	const ThemeIcon = {

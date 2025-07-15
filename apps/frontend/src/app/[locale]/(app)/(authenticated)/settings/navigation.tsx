@@ -21,7 +21,7 @@ import {
 	VenetianMask,
 	X
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -48,7 +48,7 @@ export const SettingsNavigation: FC = () => {
 	const layoutSegment = useSelectedLayoutSegment();
 
 	const { openFreshworks } = useFreshworks();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (user.status === "onboarded") redirect({ href: urls.finish(1), locale });
 

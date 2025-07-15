@@ -1,8 +1,8 @@
 "use client";
 
 import { InAppReview } from "@capacitor-community/in-app-review";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { User } from "~/api/user";
 import { Form } from "~/components/forms";
@@ -20,7 +20,7 @@ import { urls } from "~/urls";
 
 export const DeleteForm: FC = () => {
 	const { native } = useDevice();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 	const deleteReasons = useAttributes("delete-reason");
 

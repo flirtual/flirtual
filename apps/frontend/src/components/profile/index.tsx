@@ -1,8 +1,8 @@
 "use client";
 
 import { Copy } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ComponentProps, CSSProperties } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { displayName } from "~/api/user";
@@ -48,7 +48,7 @@ export function Profile({
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!user) return null;
 

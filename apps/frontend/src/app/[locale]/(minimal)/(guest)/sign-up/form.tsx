@@ -1,7 +1,7 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { FC } from "react";
 
 import type { Session } from "~/api/auth";
@@ -21,7 +21,7 @@ import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const locale = useLocale();
 
 	const router = useRouter();

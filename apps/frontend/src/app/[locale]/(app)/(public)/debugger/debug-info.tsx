@@ -2,7 +2,7 @@
 
 import { Clipboard } from "@capacitor/clipboard";
 import { Copy } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { Button } from "~/components/button";
 import { environment } from "~/const";
@@ -11,7 +11,7 @@ import { logout, useOptionalSession } from "~/hooks/use-session";
 import { evictQueries, invalidate, restoreQueries, saveQueries } from "~/query";
 
 export const DebugInfo: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const {
 		userAgent,

@@ -1,12 +1,11 @@
 "use client";
 
-import type { Locale } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
 import { maintenance } from "~/const";
 import { useInterval } from "~/hooks/use-interval";
-import { defaultLocale, guessLocale, locales } from "~/i18n/routing";
+import { guessLocale } from "~/i18n/routing";
 import { urls } from "~/urls";
 
 import { fontClassNames } from "./fonts";

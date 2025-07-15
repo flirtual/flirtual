@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import { use, useEffect, useState } from "react";
 
 import { Conversation } from "~/api/conversations";
@@ -8,7 +7,6 @@ import { displayName, User } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { UserAvatar } from "~/components/user-avatar";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
-import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { ConversationAside } from "../aside";

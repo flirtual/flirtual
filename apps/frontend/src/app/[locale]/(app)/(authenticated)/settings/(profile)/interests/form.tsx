@@ -14,8 +14,8 @@ import {
 	Trophy,
 	User
 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { Dispatch, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -165,7 +165,7 @@ export const InterestSelectCustomInput: FC<{
 	onChange: Dispatch<Array<string>>;
 }> = ({ value, onChange }) => {
 	const { platform } = useDevice();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<>
@@ -231,13 +231,12 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 	);
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const maximumInterests = 10;
 
 export const InterestsForm: FC = () => {
 	const session = useSession();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const { user } = session;
 	const { profile } = user;

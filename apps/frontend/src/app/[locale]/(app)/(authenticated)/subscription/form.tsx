@@ -1,7 +1,7 @@
 "use client";
 
 import { Sparkles } from "lucide-react";
-import { useFormatter, useLocale, useTranslations } from "next-intl";
+import { useFormatter, useLocale } from "next-intl";
 import type { FC } from "react";
 
 import { InlineLink } from "~/components/inline-link";
@@ -20,7 +20,7 @@ import { SuccessMessage } from "./success-message";
 export const SubscriptionForm: FC = () => {
 	const locale = useLocale();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const formatter = useFormatter();
 
 	const session = useOptionalSession();

@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useMessages } from "next-intl";
 import { type FC, useCallback, useState } from "react";
 
 import { useInterval } from "~/hooks/use-interval";
+import { useMessages } from "~/i18n";
 import { urls } from "~/urls";
 
 export const CarouselGallery: FC = () => {

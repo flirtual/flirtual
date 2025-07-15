@@ -2,7 +2,7 @@
 "use client";
 
 import { SelectItemText } from "@radix-ui/react-select";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { type FC, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -55,7 +55,7 @@ export type InputCountrySelectProps = {
 export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySelectProps) {
 	const locale = useLocale();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	const countries = useAttributes("country");

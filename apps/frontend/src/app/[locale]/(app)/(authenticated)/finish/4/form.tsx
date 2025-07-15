@@ -2,7 +2,7 @@
 
 import shuffle from "fast-shuffle";
 import { MoveLeft } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 import { entries } from "remeda";
 
 import { Profile } from "~/api/user/profile";
@@ -18,7 +18,7 @@ import { usePersonality } from "../../settings/(profile)/personality/form";
 
 export const Finish4Form: React.FC = () => {
 	const router = useRouter();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const session = useOptionalSession();
 	const personality = usePersonality();

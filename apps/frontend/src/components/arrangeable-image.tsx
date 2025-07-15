@@ -1,8 +1,8 @@
 "use client";
 
 import { Expand, MoreHorizontal, Trash } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { RefAttributes } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { useCurrentSortableItem } from "./forms/sortable";
@@ -35,7 +35,7 @@ export const ArrangeableImagePreview: React.FC<
 };
 
 export function ArrangeableImage({ src, id, className, onDelete, onFullscreen, ...props }: ArrangeableImageProps & RefAttributes<HTMLDivElement>) {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const currentId = useCurrentSortableItem();
 	const dragging = currentId === id;
 

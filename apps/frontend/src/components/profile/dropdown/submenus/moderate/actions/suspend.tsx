@@ -1,5 +1,5 @@
 import { Gavel, Languages } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { type FC, type PropsWithChildren, useMemo, useState } from "react";
 import { withSuspense } from "with-suspense";
 
@@ -46,7 +46,7 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 
 	const reasons = useAttributes("ban-reason");
 	const defaultReason = reasons[0] as string;
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation("ban-reason");
 
 	const [open, setOpen] = useState(false);

@@ -2,14 +2,12 @@
 
 import { SelectTrigger as RadixSelectTrigger } from "@radix-ui/react-select";
 import { ChevronDown, Languages } from "lucide-react";
-import type { Locale } from "next-intl";
-import { useLocale } from "next-intl";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
-import { usePathname, useRouter } from "~/i18n/navigation";
-import { localeNames, locales } from "~/i18n/routing";
-import { useMutation } from "~/query";
+import type { Locale } from "~/i18n";
+import { localeNames, locales, useLocale } from "~/i18n";
 
 import {
 	InputSelect,
@@ -19,16 +17,8 @@ import {
 } from "../select";
 
 const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> = ({ className, tabIndex }) => {
+	const { i18n } = useTranslation();
 	const locale = useLocale();
-
-	const pathname = usePathname();
-	const router = useRouter();
-
-	const { mutateAsync } = useMutation({
-		mutationFn: async (locale: Locale) => {
-			router.push(pathname, { locale });
-		}
-	});
 
 	return (
 		<InputSelect
@@ -40,7 +30,7 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 			Icon={Languages}
 			tabIndex={tabIndex}
 			value={locale}
-			onChange={mutateAsync}
+			onChange={(locale) => i18n.changeLanguage(locale)}
 		/>
 	);
 };
@@ -48,13 +38,11 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 export const InputLanguageSelect = withSuspense(InputLanguageSelect_);
 
 export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ className }) => {
+	const { i18n } = useTranslation();
 	const locale = useLocale();
 
-	const pathname = usePathname();
-	const router = useRouter();
-
 	return (
-		<Select onValueChange={(locale: Locale) => router.push(pathname, { locale })}>
+		<Select onValueChange={(locale: Locale) => i18n.changeLanguage(locale)}>
 			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap", className)}>
 				<Languages className="inline-block size-em" />
 				{" "}

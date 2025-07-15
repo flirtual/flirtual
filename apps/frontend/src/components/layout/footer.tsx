@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
@@ -91,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({
 	logoClassName,
 	...props
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<footer

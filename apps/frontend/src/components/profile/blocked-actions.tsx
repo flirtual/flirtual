@@ -1,7 +1,7 @@
 "use client";
 
 import { Flag } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { displayName, User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
@@ -13,7 +13,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { ReportDialog } from "./dialogs/report";
 
 export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const toasts = useToast();
 
 	return (

@@ -4,7 +4,6 @@ import { Footer } from "~/components/layout/footer";
 import { TalkjsProvider } from "~/hooks/use-talkjs";
 
 import { AppBanner } from "./banner";
-import { LoadingIndicator } from "./loading-indicator";
 import { Navigation } from "./navigation";
 
 export default function AppLayout({ children }: PropsWithChildren) {

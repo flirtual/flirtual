@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import { Preferences } from "~/api/user/preferences";
@@ -27,7 +27,7 @@ export const NsfwForm: React.FC = () => {
 	const session = useSession();
 	const toasts = useToast();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 	const kinks = useAttributes("kink");
 

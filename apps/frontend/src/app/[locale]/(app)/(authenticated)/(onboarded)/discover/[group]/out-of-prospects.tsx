@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
@@ -12,7 +12,7 @@ export interface OutOfProspectsProps {
 }
 
 export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard
@@ -80,7 +80,7 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 };
 
 export const FinishProfileError: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard
@@ -101,7 +101,7 @@ export const FinishProfileError: React.FC = () => {
 };
 
 export const ConfirmEmailError: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard

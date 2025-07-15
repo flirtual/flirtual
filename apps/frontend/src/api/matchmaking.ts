@@ -3,8 +3,7 @@ import type { WretchOptions } from "wretch";
 
 import {
 	api,
-	type Issue,
-	isWretchError
+	type Issue
 } from "./common";
 
 export const ProspectKind = ["love", "friend"] as const;

@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { Dispatch, FC, SetStateAction } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { usePlans } from "~/hooks/use-plans";
@@ -36,7 +36,7 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 		description
 	} = props;
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const { packages } = usePurchase();
 	const plans = usePlans();

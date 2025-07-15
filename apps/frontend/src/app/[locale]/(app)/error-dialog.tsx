@@ -1,10 +1,9 @@
 import { captureException } from "@sentry/nextjs";
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import useSound from "use-sound";
 
 import { Button } from "~/components/button";
@@ -16,6 +15,7 @@ import {
 	DialogTitle
 } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
+import { Image } from "~/components/image";
 import { gitCommitSha, maintenance } from "~/const";
 import { urls } from "~/urls";
 
@@ -24,7 +24,7 @@ export type ErrorWithDigest = { digest?: string } & Error;
 export interface ErrorProps { error: ErrorWithDigest; reset: () => void };
 
 const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, eventId }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<>
@@ -60,7 +60,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 	// Bail out to the Next.js error dialog in development, more useful for debugging.
 	// if (environment === "development") throw error;
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const errorKey = error.digest || error.message;
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { Locale } from "next-intl";
+import type { Locale } from "~/i18n";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { ConfirmEmailForm } from "./form";
@@ -20,5 +20,5 @@ export default async function ConfirmEmailPage({ params }: ConfirmEmailPageProps
 	const { locale } = await params;
 	setRequestLocale(locale);
 
-	return <ConfirmEmailForm />
+	return <ConfirmEmailForm />;
 }

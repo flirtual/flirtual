@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -12,7 +12,7 @@ export const PlanList: FC = () => {
 	const { native, vision } = useDevice();
 	const session = useOptionalSession();
 	const [purchasePending, setPurchasePending] = useState(false);
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session || vision) return null;
 

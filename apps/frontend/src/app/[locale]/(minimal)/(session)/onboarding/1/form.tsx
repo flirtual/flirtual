@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { fromEntries } from "remeda";
 
 import { User } from "~/api/user";
@@ -33,7 +33,7 @@ export const Onboarding1Form: FC = () => {
 	const { user } = useSession();
 	const { profile } = user;
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const router = useRouter();
 
 	const { country } = useConfig();

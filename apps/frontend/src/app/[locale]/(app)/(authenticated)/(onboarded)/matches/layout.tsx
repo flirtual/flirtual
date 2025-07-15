@@ -1,7 +1,7 @@
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
+import type { Locale } from "~/i18n";
 import { setRequestLocale } from "next-intl/server";
 import { type PropsWithChildren, use } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
@@ -18,7 +18,7 @@ export default function ConversationsLayout({
 	setRequestLocale(locale);
 
 	// const { data: conversations } = useConversations();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	// TODO:
 	return children;

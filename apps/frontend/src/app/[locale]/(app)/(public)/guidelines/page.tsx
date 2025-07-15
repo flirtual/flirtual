@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
+import type { Locale } from "~/i18n";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { use } from "react";
+import { useTranslation } from "react-i18next";
 import { toKebabCase } from "remeda";
 
 import { InlineLink } from "~/components/inline-link";
@@ -21,7 +21,7 @@ export default function GuidelinesPage({ params }: { params: Promise<{ locale: L
 	const { locale } = use(params);
 	setRequestLocale(locale);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("community_guidelines")}>

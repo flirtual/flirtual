@@ -1,7 +1,7 @@
 import { configure } from "@ariesclark/eslint-config";
 
 export default configure({
-	next: true,
+	next: false,
 	tailwind: true,
 	settings: {
 		react: {

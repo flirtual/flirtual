@@ -1,4 +1,3 @@
-import { useTranslations } from "next-intl";
 import {
 	type ComponentProps,
 	type EventHandler,
@@ -11,6 +10,7 @@ import {
 	useEffect,
 	useRef
 } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "../inline-link";
@@ -86,7 +86,7 @@ function focusElementByKeydown({
 
 export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	const { option, elementProps } = props;
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Tooltip>

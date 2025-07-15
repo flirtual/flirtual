@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element, react-refresh/only-export-components  */
 
-import { useLocale } from "next-intl";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 
 import { Pill } from "./pill";
 

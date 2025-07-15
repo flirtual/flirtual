@@ -1,9 +1,9 @@
 "use client";
 
 import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
 import { Link } from "~/components/link";
@@ -11,7 +11,7 @@ import { urls } from "~/urls";
 
 export const SuccessMessage: React.FC = () => {
 	const searchParameters = useSearchParams();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!searchParameters.get("success")) return null;
 

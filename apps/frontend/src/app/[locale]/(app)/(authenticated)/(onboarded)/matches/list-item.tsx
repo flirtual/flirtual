@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { FC, RefAttributes } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { Conversation } from "~/api/conversations";
@@ -48,7 +48,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 		lastMessage,
 		isUnread,
 	} = props;
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const user = useUser(userId);
 	// const relationship = useRelationship(userId);

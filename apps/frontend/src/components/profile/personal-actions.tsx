@@ -1,8 +1,8 @@
 "use client";
 
 import { Link, Pencil } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -24,7 +24,7 @@ import { InputText } from "../inputs";
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const router = useRouter();
 	const session = useSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const toasts = useToast();
 	const { share, canShare } = useShare();
 	const [shareVisible, setShareVisible] = useState(false);

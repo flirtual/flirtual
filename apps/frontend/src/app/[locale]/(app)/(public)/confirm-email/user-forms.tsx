@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";
@@ -15,7 +15,7 @@ export const UserForms: React.FC = () => {
 	const { user } = useSession();
 
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	// Re-check against the API every second to see if the user has confirmed their email.
 	useInterval(() => invalidate({ queryKey: sessionKey() }), "1s");

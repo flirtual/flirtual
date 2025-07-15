@@ -7,7 +7,7 @@ import { urls } from "~/urls";
 import { isDesktop } from "./use-screen-breakpoint";
 
 declare global {
-	// eslint-disable-next-line no-var, vars-on-top
+	// eslint-disable-next-line vars-on-top
 	var Canny: {
 		(...arguments_: Array<unknown>): void;
 		q: Array<unknown>;

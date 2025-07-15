@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -13,7 +13,7 @@ import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const EmailForm: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const router = useRouter();
 
 	const { user } = useSession();

@@ -1,6 +1,6 @@
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import type { Metadata, Viewport } from "next";
-import type { Locale } from "next-intl";
+import type { Locale } from "~/i18n";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { preconnect } from "react-dom";
@@ -93,7 +93,6 @@ export const viewport: Viewport = {
 	width: "device-width"
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const experimental_ppr = true;
 
 export default async function LocaleLayout({

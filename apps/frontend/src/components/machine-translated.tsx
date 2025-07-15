@@ -1,4 +1,4 @@
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { FC } from "react";
 
 import { urls } from "~/urls";
@@ -9,7 +9,7 @@ export const MachineTranslatedLegal: FC<{
 	intended?: string;
 	original: string;
 }> = ({ intended = "en", original }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const locale = useLocale();
 
 	if (intended === locale.split("-")[0]) return null;

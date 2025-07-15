@@ -1,9 +1,9 @@
-import { useLocale } from "next-intl";
 import { useCallback, useEffect } from "react";
 
 import type { Session } from "~/api/auth";
 import { displayName } from "~/api/user";
 import { freshworksWidgetId } from "~/const";
+import { useLocale } from "~/i18n";
 import { queryClient, sessionKey } from "~/query";
 
 declare global {

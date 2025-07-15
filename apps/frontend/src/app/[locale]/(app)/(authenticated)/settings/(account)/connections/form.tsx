@@ -1,10 +1,10 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 // eslint-disable-next-line no-restricted-imports
 import { useSearchParams } from "next/navigation";
 import type { FC } from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
 import type { Session } from "~/api/auth";
@@ -45,7 +45,7 @@ export const ConnectionsForm: FC = () => {
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
 		null
 	);
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard

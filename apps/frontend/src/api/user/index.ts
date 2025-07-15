@@ -1,6 +1,3 @@
-import ms from "ms";
-import { unstable_cache } from "next/cache";
-import { cache } from "react";
 import { toSnakeCase } from "remeda";
 import type { WretchOptions } from "wretch";
 
@@ -195,17 +192,12 @@ export const User = {
 			.json<User | null>();
 	},
 	getCount() {
-		return unstable_cache(
-			() =>
-				this.api
-					.url("/count")
-					.options({ credentials: "omit" })
-					.get()
-					.fetchError(() => ({ count: 0 }))
-					.json<{ count: number }>(),
-			[],
-			{ revalidate: ms("1d") / 1000 }
-		)();
+		return this.api
+			.url("/count")
+			.options({ credentials: "omit" })
+			.get()
+			.fetchError(() => ({ count: 0 }))
+			.json<{ count: number }>();
 	},
 	async getApproximateCount() {
 		const { count } = await this.getCount();
@@ -340,9 +332,3 @@ export const User = {
 		return this.api.url(`/${userId}`).delete().json<User>();
 	}
 };
-
-User.get = cache(User.get.bind(User));
-User.getMany = cache(User.getMany.bind(User));
-User.getBySlug = cache(User.getBySlug.bind(User));
-User.preview = cache(User.preview.bind(User));
-User.getRelationship = cache(User.getRelationship.bind(User));

@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import useMutation from "swr/mutation";
 
 import { User } from "~/api/user";
@@ -15,7 +15,7 @@ import { LoadingIndicator } from "../../loading-indicator";
 export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	const toasts = useToast();
 	const router = useRouter();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const { trigger } = useMutation(
 		"confirm-email",

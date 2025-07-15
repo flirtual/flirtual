@@ -1,8 +1,8 @@
 "use client";
 
 import { MoveLeft } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
@@ -25,7 +25,7 @@ export const Finish1Form: FC = () => {
 	const session = useOptionalSession();
 	const router = useRouter();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;

@@ -1,10 +1,10 @@
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { Tile, TileAnchor, type TileProps } from "..";
 import { CarouselGallery } from "./gallery";
 
 export function Carousel({ id }: TileProps) {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Tile className="relative" id={id}>

@@ -1,8 +1,8 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Authentication } from "~/api/auth";
 import { Button, ButtonLink } from "~/components/button";
@@ -17,7 +17,7 @@ import { urls } from "~/urls";
 import { ConfirmPasswordResetForm } from "./confirm-form";
 
 export const ForgotPasswordForm: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [success, setSuccess] = useState(false);
 	const { openFreshworks } = useFreshworks();

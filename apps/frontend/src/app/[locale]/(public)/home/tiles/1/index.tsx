@@ -1,13 +1,13 @@
-import { useTranslations } from "next-intl";
-import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
+import { Image } from "~/components/image";
 import { urls } from "~/urls";
 
 import { Tile, TileAnchor, type TileProps } from "..";
 import { ProfileMessage } from "./message";
 
 export function AvatarProfiles({ id }: TileProps) {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Tile className="content-center px-4 pt-8 desktop:px-28" id={id}>

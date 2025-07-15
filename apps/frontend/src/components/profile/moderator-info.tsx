@@ -1,6 +1,6 @@
 import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { type FC, useMemo } from "react";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
@@ -22,7 +22,7 @@ export const ProfileModeratorInfo: FC<{
 }> = ({ userId }) => {
 	const session = useOptionalSession();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 	const user = useUser(userId);
 	const systemLanguage = useLocale();

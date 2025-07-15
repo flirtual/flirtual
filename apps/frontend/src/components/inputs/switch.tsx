@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 export type SwitchValue = boolean | null;
 
@@ -14,7 +14,7 @@ export interface InputSwitchProps {
 
 export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 	const { yes, no, value, onChange } = props;
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const ariaChecked = value === null ? "mixed" : value;
 

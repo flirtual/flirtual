@@ -1,4 +1,4 @@
-import { type TranslationValues, useTranslations } from "next-intl";
+import type { TranslationValues } from "next-intl";
 import { createContext, use, useId, useMemo, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 import type React from "react";
@@ -93,7 +93,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const reactId = useId();
 	const formId = withGlobalId ? "" : reactId;
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [initialValues, setInitialValues] = useState(options.fields);
 	const [values, setValues] = useState(initialValues);

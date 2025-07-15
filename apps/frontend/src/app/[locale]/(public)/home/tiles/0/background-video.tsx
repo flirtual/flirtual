@@ -1,10 +1,10 @@
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { Image } from "~/components/image";
 import { urls } from "~/urls";
 
 export const BackgroundVideo: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<video
@@ -23,7 +23,6 @@ export const BackgroundVideo: React.FC = () => {
 			/>
 			<source src="https://static.flirtual.com/video.mp4" type="video/mp4" />
 			<Image
-				fill
 				priority
 				alt={t("mellow_short_shark_propel")}
 				src={urls.media("6be390d0-4479-4a98-8c7a-10257ea5585a")}

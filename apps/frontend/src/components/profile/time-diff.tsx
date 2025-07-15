@@ -1,6 +1,6 @@
 import type { LucideProps } from "lucide-react";
 import { Clock1, Clock2, Clock3, Clock4, Clock5, Clock6, Clock7, Clock8, Clock9, Clock10, Clock11, Clock12 } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter } from "next-intl";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
@@ -28,7 +28,7 @@ const clockIcons: Array<React.FC<LucideProps> | null> = [
 
 export const TimeDiff: React.FC<TimeDiffProps> = ({ diff, timezone, displayName }) => {
 	const formatter = useFormatter();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const sign = diff < 0 ? "-" : "+";
 	const absDiff = Math.abs(diff);

@@ -2,8 +2,8 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import { MoveRight } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren, ReactNode, RefAttributes } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink, type InlineLinkProps } from "~/components/inline-link";
@@ -74,7 +74,7 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon }: B
 
 export const AppBanner: FC = () => {
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session) return null;
 

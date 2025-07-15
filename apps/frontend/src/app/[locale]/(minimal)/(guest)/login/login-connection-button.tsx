@@ -1,8 +1,8 @@
 "use client";
 
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -34,7 +34,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	tabIndex,
 	next = "/"
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const router = useRouter();
 	const { native } = useDevice();

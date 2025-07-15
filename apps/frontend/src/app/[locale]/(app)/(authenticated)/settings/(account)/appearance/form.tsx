@@ -1,7 +1,7 @@
 "use client";
 
 import { Hash, X } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useEffect, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
@@ -17,7 +17,7 @@ import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useEventListener, useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
@@ -131,7 +131,7 @@ const ProfileColorSelect: FC = () => {
 		});
 	}, [reset]);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<div className="flex w-full flex-col gap-8">
@@ -240,7 +240,6 @@ const ProfileColorSelect: FC = () => {
 	);
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const defaultFontSize = 16;
 const fontSizeNamed = {
 	12: "tiny",
@@ -259,7 +258,7 @@ const InputFontSize: FC = () => {
 	const [fontSize, setFontSize] = usePreferences<FontSize>("font_size", defaultFontSize);
 	const namedSize = fontSizeNamed[fontSize] as NamedFontSize;
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	// workaround for https://github.com/radix-ui/primitives/issues/1760
 	useGlobalEventListener("document", "pointerup", applyDocumentMutations);
@@ -299,7 +298,7 @@ const InputFontSize: FC = () => {
 export const AppearanceForm: FC = () => {
 	const locale = useLocale();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	return (

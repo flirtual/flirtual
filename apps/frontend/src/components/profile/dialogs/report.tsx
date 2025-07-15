@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import { type FC, type PropsWithChildren, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
@@ -35,7 +35,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	children
 }) => {
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 
 	const toasts = useToast();

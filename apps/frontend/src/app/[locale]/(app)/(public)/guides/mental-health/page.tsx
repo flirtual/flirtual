@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
+import type { Locale } from "~/i18n";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { use } from "react";
+import { useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
@@ -19,7 +19,7 @@ export default function MentalHealthPage({ params }: { params: Promise<{ locale:
 	const { locale } = use(params);
 	setRequestLocale(locale);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	// TODO: This page should be localized, as the content itself cannot be translated while being meaningful.
 
 	return (

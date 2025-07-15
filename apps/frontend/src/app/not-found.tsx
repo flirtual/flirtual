@@ -1,10 +1,9 @@
 "use client";
 
-// eslint-disable-next-line no-restricted-imports
-import { redirect } from "next/navigation";
+import { redirect } from "react-router";
 
 import { urls } from "~/urls";
 
-export default function NotFoundPage() {
+export default function NotFound() {
 	redirect(urls.landing);
 }

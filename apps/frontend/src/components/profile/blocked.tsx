@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { displayName, type User } from "~/api/user";
 
@@ -6,7 +6,7 @@ import { ModelCard } from "../model-card";
 import { BlockedActions } from "./blocked-actions";
 
 export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard

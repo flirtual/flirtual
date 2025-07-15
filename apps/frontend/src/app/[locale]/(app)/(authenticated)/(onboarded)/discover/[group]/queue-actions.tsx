@@ -2,10 +2,10 @@
 
 import { MoveLeft, MoveRight, RefreshCw, Undo2, X } from "lucide-react";
 import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
 import type {
 	FC,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 import type {
 	ProspectKind,
@@ -62,7 +62,7 @@ const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
 export const QueueActions: FC<{
 	kind: ProspectKind;
 }> = ({ kind: mode }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const {
 		previous,
 		like,

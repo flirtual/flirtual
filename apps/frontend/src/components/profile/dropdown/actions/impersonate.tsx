@@ -1,19 +1,19 @@
 import { VenetianMask } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Authentication } from "~/api/auth";
 import { displayName, type User } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "~/i18n/navigation";
 
 export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 	const session = useOptionalSession();
 	const router = useRouter();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session || !session.user.tags?.includes("admin")) return null;
 

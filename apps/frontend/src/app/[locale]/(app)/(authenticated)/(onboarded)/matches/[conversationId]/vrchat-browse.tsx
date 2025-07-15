@@ -37,7 +37,7 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 	const [searchMode, setSearchMode] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const observerReference = useRef<HTMLDivElement>(null);
-	const loadingCategoriesRef = useRef<Set<string>>(new Set());
+	const loadingCategoriesReference = useRef<Set<string>>(new Set());
 
 	const toast = useToast();
 
@@ -48,7 +48,8 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 				await VRChat.createInstance(worldId, conversationId);
 				toast.add({ type: "success", value: "Invite sent!" });
 				onClose();
-			} catch (reason) {
+			}
+			catch (reason) {
 				console.error("Failed to send invite:", reason);
 				toast.add({ type: "error", value: "Failed to send invite. Please try again later." });
 			}
@@ -101,13 +102,13 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 	const loadMoreCategoryWorlds = useCallback(async (categoryKey: string): Promise<void> => {
 		const currentState = categoryStates[categoryKey];
 		if (!currentState || !currentState.hasMore) return Promise.resolve();
-		
+
 		// Prevent concurrent loads for the same category
-		if (loadingCategoriesRef.current.has(categoryKey)) {
+		if (loadingCategoriesReference.current.has(categoryKey)) {
 			return Promise.resolve();
 		}
 
-		loadingCategoriesRef.current.add(categoryKey);
+		loadingCategoriesReference.current.add(categoryKey);
 
 		setCategoryStates((previous) => ({
 			...previous,
@@ -137,7 +138,7 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 			}));
 		}
 		finally {
-			loadingCategoriesRef.current.delete(categoryKey);
+			loadingCategoriesReference.current.delete(categoryKey);
 		}
 	}, [categoryStates]);
 
@@ -296,7 +297,7 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 		const categoryState = categoryStates[categoryKey];
 		const scrollReference = useRef<HTMLDivElement>(null);
 		const sentinelReference = useRef<HTMLDivElement>(null);
-		const worldsContainerRef = useRef<HTMLDivElement>(null);
+		const worldsContainerReference = useRef<HTMLDivElement>(null);
 
 		// Only show the initial worlds from React, additional ones will be added via DOM
 		const initialWorlds = category.worlds;
@@ -317,19 +318,19 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 		// Load more worlds by directly manipulating DOM
 		const loadMoreWorlds = useCallback(async () => {
 			const currentState = categoryStates[categoryKey];
-			if (!currentState || !currentState.hasMore || loadingCategoriesRef.current.has(categoryKey)) return;
+			if (!currentState || !currentState.hasMore || loadingCategoriesReference.current.has(categoryKey)) return;
 
-			loadingCategoriesRef.current.add(categoryKey);
+			loadingCategoriesReference.current.add(categoryKey);
 
 			try {
 				const nextPage = currentState.page + 1;
 				const response = await VRChat.getCategoryWorlds(categoryKey, nextPage);
 
 				// Add worlds directly to DOM without React re-render
-				if (worldsContainerRef.current) {
+				if (worldsContainerReference.current) {
 					response.worlds.forEach((world) => {
-						const worldDiv = document.createElement('div');
-						worldDiv.className = 'flex w-40 flex-shrink-0 flex-col gap-2 rounded-2xl bg-white-20 p-3 shadow-brand-1 dark:bg-black-60';
+						const worldDiv = document.createElement("div");
+						worldDiv.className = "flex w-40 flex-shrink-0 flex-col gap-2 rounded-2xl bg-white-20 p-3 shadow-brand-1 dark:bg-black-60";
 						worldDiv.innerHTML = `
 							<div class="aspect-video overflow-hidden rounded-lg">
 								<img alt="${world.name}" class="size-full object-cover" loading="lazy" src="${world.thumbnailImageUrl || world.imageUrl}" />
@@ -342,7 +343,7 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 								Invite
 							</button>
 						`;
-						worldsContainerRef.current.appendChild(worldDiv);
+						worldsContainerReference.current.appendChild(worldDiv);
 					});
 				}
 
@@ -360,7 +361,7 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 				console.error(`Failed to load more ${categoryKey} worlds:`, reason);
 			}
 			finally {
-				loadingCategoriesRef.current.delete(categoryKey);
+				loadingCategoriesReference.current.delete(categoryKey);
 			}
 		}, [categoryKey, categoryStates]);
 
@@ -466,7 +467,7 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 						}}
 					>
 						{/* Container for worlds - initial ones from React, additional ones from DOM */}
-						<div ref={worldsContainerRef} className="flex gap-4">
+						<div className="flex gap-4" ref={worldsContainerReference}>
 							{initialWorlds.map((world) => (
 								<WorldCard key={world.id} world={world} />
 							))}

@@ -1,9 +1,9 @@
-import type { Locale } from "next-intl";
-import { useLocale } from "next-intl";
+import type { Locale } from "~/i18n";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useTheme } from "~/hooks/use-theme";
+import { useLocale } from "~/i18n";
 import type { Theme } from "~/theme";
 
 // eslint-disable-next-line react-refresh/only-export-components

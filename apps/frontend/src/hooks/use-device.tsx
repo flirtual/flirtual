@@ -8,8 +8,6 @@ import { Device } from "@capacitor/device";
 import { client, gitCommitSha, platformOverride } from "~/const";
 import { log as _log } from "~/log";
 
-import { postpone } from "./use-postpone";
-
 export type DevicePlatform = "android" | "apple" | "web";
 
 const log = _log.extend("device");
@@ -84,6 +82,6 @@ if (client)
 	log(device);
 
 export function useDevice() {
-	postpone(useDevice.name);
+	// postpone(useDevice.name);
 	return device;
 }

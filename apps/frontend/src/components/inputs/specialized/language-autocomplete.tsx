@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useMemo } from "react";
 
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
@@ -14,7 +14,7 @@ import {
 export const InputLanguageAutocomplete: React.FC<
 	Omit<InputAutocompleteProps, "options">
 > = (props) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	const languages = useAttributes("language");

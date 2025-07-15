@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -13,7 +13,7 @@ import { useToast } from "~/hooks/use-toast";
 
 export const FunForm: React.FC = () => {
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [assistantVisible, setAssistantVisible] = usePreferences(
 		"assistant_visible",

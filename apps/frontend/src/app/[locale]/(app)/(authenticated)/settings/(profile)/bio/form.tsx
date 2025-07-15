@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { displayName } from "~/api/user";
 import { Profile } from "~/api/user/profile";
@@ -30,7 +30,7 @@ export const BiographyForm: FC = () => {
 
 	const toasts = useToast();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	const favoriteGameId = (user.profile.attributes.game || []).filter(

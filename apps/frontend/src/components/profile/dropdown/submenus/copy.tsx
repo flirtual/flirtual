@@ -7,8 +7,8 @@ import {
 	Link2,
 	Share2
 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { ConnectionType } from "~/api/connections";
 import { displayName, type User } from "~/api/user";
@@ -27,7 +27,7 @@ export const ProfileDropdownCopySubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const connections: Array<{ type: ConnectionType; value: string | null }> = [
 		{ type: "discord", value: user.profile.discord ?? null },

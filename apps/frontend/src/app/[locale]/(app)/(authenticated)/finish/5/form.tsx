@@ -1,9 +1,9 @@
 "use client";
 
 import { MoveLeft } from "lucide-react";
-import { useTranslations } from "next-intl";
 // eslint-disable-next-line no-restricted-imports
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
@@ -24,7 +24,7 @@ export const Finish5Form: React.FC = () => {
 	const { vision } = useDevice();
 	const router = useRouter();
 	const { user } = useSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<>

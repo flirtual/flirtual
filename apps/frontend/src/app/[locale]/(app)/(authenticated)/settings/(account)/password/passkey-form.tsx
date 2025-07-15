@@ -1,8 +1,8 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Authentication } from "~/api/auth";
 import { Button } from "~/components/button";
@@ -38,7 +38,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 	const session = useSession();
 	const { native } = useDevice();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [passkeysAvailable, setPasskeysAvailable] = useState(false);
 	const aaguidData = useAaguid();

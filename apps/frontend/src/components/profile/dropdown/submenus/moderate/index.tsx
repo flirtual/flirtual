@@ -1,6 +1,6 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { type FC, type PropsWithChildren, Suspense } from "react";
+import { useTranslation } from "react-i18next";
 
 import { displayName, User } from "~/api/user";
 import { Button } from "~/components/button";
@@ -36,7 +36,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 > = ({ user, children }) => {
 	const session = useOptionalSession();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<DropdownMenuSub>

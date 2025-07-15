@@ -1,4 +1,4 @@
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter } from "next-intl";
 import type { FC } from "react";
 
 import { InlineLink } from "./inline-link";
@@ -8,7 +8,7 @@ export const SupersededPolicy: FC<{
 	superseded: Date;
 	current: string;
 }> = ({ introduced, superseded, current }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const { dateTimeRange } = useFormatter();
 
 	return (

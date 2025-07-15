@@ -2,8 +2,8 @@
 
 import { Clipboard } from "@capacitor/clipboard";
 import { Slot } from "@radix-ui/react-slot";
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useToast } from "~/hooks/use-toast";
 
@@ -13,7 +13,7 @@ export const CopyClick: FC<CopyClickProps> = ({
 	value,
 	children
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const toasts = useToast();
 
 	if (value === null) return children;

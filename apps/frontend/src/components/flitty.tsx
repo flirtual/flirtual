@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
+import { Image } from "~/components/image";
 import { usePreferences } from "~/hooks/use-preferences";
 import { urls } from "~/urls";
 

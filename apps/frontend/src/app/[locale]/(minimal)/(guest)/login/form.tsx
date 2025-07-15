@@ -1,10 +1,10 @@
 "use client";
 
 import { MoveRight } from "lucide-react";
-import { useTranslations } from "next-intl";
 // eslint-disable-next-line no-restricted-imports
 import { useRouter, useSearchParams } from "next/navigation";
 import { type FC, Suspense, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
 import { Authentication } from "~/api/auth";
@@ -122,7 +122,7 @@ const OAuthError: FC = withSuspense(() => {
 });
 
 export const LoginForm: FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tError = useTranslations("errors");
 
 	useKylesWebAuthnImplementation();

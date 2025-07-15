@@ -5,14 +5,14 @@ import { useDebugValue, useEffect, useState } from "react";
 
 import { server } from "~/const";
 
-import { postpone } from "./use-postpone";
+// import { postpone } from "./use-postpone";
 
 export function useMediaQuery(media: string, defaultValue?: boolean) {
 	useDebugValue(media);
 
 	if (server) {
-		if (defaultValue === undefined)
-			postpone("useMediaQuery() without defaultValue");
+		// if (defaultValue === undefined)
+		// 	postpone("useMediaQuery() without defaultValue");
 
 		return defaultValue;
 	}

@@ -1,8 +1,8 @@
 "use client";
 
 import { Ban, Flag } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { User } from "~/api/user";
 import { DialogTrigger } from "~/components/dialog/dialog";
@@ -17,7 +17,7 @@ import { ProfileModeratorInfo } from "./moderator-info";
 
 export const ProfileActionBar: FC<{ user: User; hideModeratorInfo?: boolean }> = ({ user, hideModeratorInfo }) => {
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (
 		!session

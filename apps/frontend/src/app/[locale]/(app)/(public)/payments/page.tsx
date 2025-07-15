@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { type Locale, useTranslations } from "next-intl";
+import type { Locale } from "~/i18n";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { type ReactNode, use } from "react";
 
@@ -20,7 +20,7 @@ export default function PaymentsPage({ params }: { params: Promise<{ locale: Loc
 	const { locale } = use(params);
 	setRequestLocale(locale);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("payment_terms")}>

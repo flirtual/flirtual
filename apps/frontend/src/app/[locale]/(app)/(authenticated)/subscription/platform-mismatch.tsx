@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -14,7 +14,7 @@ const osName = {
 export const PlatformMismatchMessage: FC = () => {
 	const { platform, native, vision } = useDevice();
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session) return null;
 	const { subscription } = session.user;

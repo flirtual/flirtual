@@ -5,7 +5,7 @@ import {
 	Turnstile as _Turnstile
 } from "@marsidev/react-turnstile";
 import { LoaderCircle, ShieldAlert, ShieldCheck } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { FC, RefAttributes } from "react";
 import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -24,7 +24,7 @@ interface FormCaptchaProps extends RefAttributes<TurnstileInstance> {
 }
 
 export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [error, setError] = useState<string | null>(null);
 

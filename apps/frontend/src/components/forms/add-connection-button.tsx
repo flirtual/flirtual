@@ -2,9 +2,8 @@
 
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -16,6 +15,7 @@ import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useRouter } from "~/i18n/navigation";
 
 export interface ConnectionButtonProps {
 	type: ConnectionType;
@@ -29,7 +29,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const router = useRouter();
 	const toasts = useToast();
 	const { native } = useDevice();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const connection = useMemo(() => {
 		return session

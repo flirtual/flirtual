@@ -1,10 +1,10 @@
 "use client";
 
 import ms from "ms";
-import { useMessages } from "next-intl";
 import { useDebugValue } from "react";
 
 import type { AttributeCollection, AttributeType } from "~/api/attributes";
+import { useMessages } from "~/i18n";
 import { attributeFetcher, attributeKey, useQuery } from "~/query";
 
 export function useAttributes<T extends AttributeType>(type: T): AttributeCollection<T> {

@@ -1,8 +1,8 @@
 "use client";
 
 import shuffle from "fast-shuffle";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { entries } from "remeda";
 
 import {
@@ -37,7 +37,7 @@ export const PersonalityForm: FC = () => {
 	const personality = usePersonality();
 
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Form

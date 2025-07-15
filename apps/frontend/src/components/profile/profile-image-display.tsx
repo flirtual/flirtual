@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, Search, Trash2 } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
 import { useSwipeable } from "react-swipeable";
@@ -82,7 +82,7 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 };
 
 const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const formatter = useFormatter();
 
 	const toasts = useToast();
@@ -139,7 +139,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [imageId, setImageId] = useState(firstImageId);
 	useEffect(() => setImageId(firstImageId), [firstImageId]);

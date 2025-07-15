@@ -1,4 +1,4 @@
-import type { Locale } from "next-intl";
+import type { Locale } from "~/i18n";
 import { headers as getHeaders } from "next/headers";
 
 import type { messages } from "./request";

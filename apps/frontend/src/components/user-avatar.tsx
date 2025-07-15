@@ -1,6 +1,6 @@
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { displayName } from "~/api/user";
@@ -19,7 +19,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 	variant = "profile",
 	...props
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<UserImage

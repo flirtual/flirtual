@@ -1,8 +1,8 @@
 "use client";
 
 import { Cat } from "lucide-react";
-import { useMessages, useTranslations } from "next-intl";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import useSound from "use-sound";
 
 import { ButtonLink } from "~/components/button";
@@ -11,8 +11,8 @@ import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 export const SignUpButton: FC<{ tabIndex?: number }> = ({ tabIndex }) => {
-	const t = useTranslations();
-	const { receptive_fairies_legal_thumb: flittyMessages } = useMessages();
+	const { t } = useTranslation ();
+	const { receptive_fairies_legal_thumb: flittyMessages } = {};// useMessages();
 	const toasts = useToast();
 
 	const [squeak] = useSound(urls.media("squeak.mp3"));

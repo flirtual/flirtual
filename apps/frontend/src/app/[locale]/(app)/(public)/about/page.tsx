@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { Locale } from "next-intl";
+import type { Locale } from "~/i18n";
 import { useMessages, useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { use } from "react";
@@ -25,7 +25,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: Locale
 	const { locale } = use(params);
 	setRequestLocale(locale);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tTeam = useTranslations("copy_frighten_wobble_futuristic");
 
 	const { price_listen_wise_communicate: images } = useMessages();

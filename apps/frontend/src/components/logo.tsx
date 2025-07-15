@@ -1,19 +1,19 @@
 "use client";
 
 import type { FC } from "react";
+import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
-import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import type { IconComponentProps } from "./icons";
 
 export const FlirtualLogo: FC<IconComponentProps> = ({ className, ...props }) => {
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const handleSecondaryClick = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
 		event.preventDefault();
-		router.push(urls.resources.branding);
+		navigate(urls.resources.branding);
 	};
 
 	return (

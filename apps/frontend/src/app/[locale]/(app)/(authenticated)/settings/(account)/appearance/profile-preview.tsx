@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import type { CSSProperties, FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { ProfileColors } from "~/api/user/profile";
 import { gradientTextColor } from "~/colors";
@@ -7,7 +7,7 @@ import { Pill } from "~/components/profile/pill/pill";
 import { ThemedBorder } from "~/components/themed-border";
 
 export const ProfileColorPreview: FC<ProfileColors> = ({ color1, color2 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const textColor = gradientTextColor(color1, color2);
 

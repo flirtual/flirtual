@@ -10,8 +10,8 @@ import {
 	VenetianMask
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useTranslations } from "next-intl";
 import { type FC, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -55,7 +55,7 @@ export const NavigationItemProfile: FC = () => {
 	const session = useSession();
 	const { user } = session;
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const router = useRouter();
 
 	const [visible, setVisible] = useState(false);

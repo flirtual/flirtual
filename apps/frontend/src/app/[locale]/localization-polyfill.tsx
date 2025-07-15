@@ -1,5 +1,6 @@
-import { useLocale } from "next-intl";
 import Script from "next/script";
+
+import { useLocale } from "~/i18n";
 
 export function LocalizationPolyfill() {
 	const locale = useLocale();

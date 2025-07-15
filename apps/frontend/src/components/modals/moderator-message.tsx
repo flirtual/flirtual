@@ -1,12 +1,12 @@
 "use client";
 
 import ms from "ms";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
 import type { Dispatch, FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
 import { User } from "~/api/user";
+import { Image } from "~/components/image";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRouter } from "~/i18n/navigation";
@@ -23,7 +23,7 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 	const toasts = useToast();
 	const router = useRouter();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session?.user.moderatorMessage) return null;
 
@@ -48,7 +48,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 	const router = useRouter();
 	const toasts = useToast();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const remindMeLater = async (quiet: boolean = false) => {
 		if (!session) return;
@@ -116,7 +116,7 @@ export const TrustAndSafetyDialog: FC<{
 	closable?: boolean;
 }> = ({ children, actions, closable = false, onAcknowledge, onOpenChange }) => {
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session) return null;
 

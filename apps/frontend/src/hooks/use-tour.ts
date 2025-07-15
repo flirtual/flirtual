@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import { use, useCallback, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	type ShepherdOptionsWithType,
 	ShepherdTourContext,
@@ -28,7 +28,7 @@ export function useTour(
 ) {
 	const shepherd = useShepherd();
 	const [, setScrollLocked] = useScrollLock();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [completed, setCompleted] = usePreferences(
 		`tour-${name}-completed`,
@@ -110,7 +110,7 @@ export function useTour(
 
 export function useDefaultTour(enabled: boolean = true) {
 	const mobile = !useScreenBreakpoint("desktop");
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	useTour(
 		enabled,

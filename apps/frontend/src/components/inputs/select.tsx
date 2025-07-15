@@ -4,9 +4,9 @@
 import { SelectItemText } from "@radix-ui/react-select";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDown, ChevronsUpDown, ChevronUp, X } from "lucide-react";
-import { useTranslations } from "next-intl";
 import * as React from "react";
 import type { Dispatch, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { emptyArray } from "~/utilities";
@@ -183,7 +183,7 @@ export interface InputSelectProps<T> {
 }
 
 export function InputSelect<K>(props: InputSelectProps<K>) {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const {
 		value,

@@ -1,8 +1,8 @@
 "use client";
 
 import { CheckCheck, ChevronLeft, X } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { type FC, Fragment, Suspense, useLayoutEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
 import { twMerge } from "tailwind-merge";
 
@@ -26,7 +26,7 @@ export interface ConversationAsideProps {
 
 export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const { activeConversationId } = props;
 	const HeaderIcon = activeConversationId ? ChevronLeft : X;

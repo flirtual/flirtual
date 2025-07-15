@@ -9,7 +9,7 @@ import { mutate, queryClient, sessionKey, useMutation } from "~/query";
 import type { Theme } from "~/theme";
 
 import { useMediaQuery } from "./use-media-query";
-import { postpone } from "./use-postpone";
+// import { postpone } from "./use-postpone";
 import { useOptionalSession } from "./use-session";
 
 export function getTheme(): Theme {
@@ -24,7 +24,7 @@ export function getTheme(): Theme {
 }
 
 export function useTheme() {
-	postpone("useTheme()");
+	// postpone("useTheme()");
 
 	const session = useOptionalSession();
 	const sessionTheme = session?.user.preferences?.theme || "system";

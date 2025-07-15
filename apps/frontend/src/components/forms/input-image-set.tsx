@@ -9,7 +9,7 @@ import ImageEditor from "@uppy/image-editor";
 import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
 import RemoteSources from "@uppy/remote-sources";
 import { ImagePlus } from "lucide-react";
-import { useMessages, useTranslations } from "next-intl";
+import { useMessages } from "next-intl";
 import {
 	type Dispatch,
 	type FC,
@@ -91,7 +91,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const [dragging, setDragging] = useState(false);
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
 	const { uppy: uppyLocale } = useMessages() as { uppy: Record<string, string> };
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
@@ -323,7 +323,7 @@ const ArrangeableImageDialog: React.FC<{
 	image: ImageSetValue;
 	onOpenChange: Dispatch<boolean>;
 }> = ({ image, onOpenChange }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Dialog open onOpenChange={onOpenChange}>

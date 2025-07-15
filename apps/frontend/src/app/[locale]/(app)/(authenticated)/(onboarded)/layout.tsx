@@ -1,9 +1,9 @@
 "use client";
 
-import { useLocale } from "next-intl";
 import type { PropsWithChildren } from "react";
 
 import { useSession } from "~/hooks/use-session";
+import { useLocale } from "~/i18n";
 import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 

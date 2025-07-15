@@ -4,6 +4,8 @@ npm-debug.log
 node_modules
 .next
 .vercel
+build
+.react-router
 # Sentry Auth Token
 .sentryclirc
 

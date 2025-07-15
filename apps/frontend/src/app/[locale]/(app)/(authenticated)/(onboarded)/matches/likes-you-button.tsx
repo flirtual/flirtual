@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { ButtonLink } from "~/components/button";
@@ -15,7 +15,7 @@ import { urls } from "~/urls";
 export const LikesYouButton: FC = () => {
 	const session = useOptionalSession();
 	const likes = useLikesYou();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session) return null;
 	const { user } = session;

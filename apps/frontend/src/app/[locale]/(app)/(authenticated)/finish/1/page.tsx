@@ -1,4 +1,4 @@
-import type { Locale } from "next-intl";
+import type { Locale } from "~/i18n";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 

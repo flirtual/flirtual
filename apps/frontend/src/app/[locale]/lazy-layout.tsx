@@ -1,15 +1,18 @@
 "use client";
 
-import { initialize as initializeSafeArea, SafeArea, type Config as SafeAreaConfig } from "@capacitor-community/safe-area";
-import { useLocale } from "next-intl";
+import {
+	initialize as initializeSafeArea,
+	SafeArea,
+	type Config as SafeAreaConfig
+} from "@capacitor-community/safe-area";
 import { useLayoutEffect } from "react";
+import { useLocation } from "react-router";
 import { omitBy } from "remeda";
 import { withSuspense } from "with-suspense";
 
 import { device } from "~/hooks/use-device";
 import { getTheme } from "~/hooks/use-theme";
-import { usePathname } from "~/i18n/navigation";
-import { localePathnameRegex } from "~/i18n/routing";
+import { localePathnameRegex, useLocale } from "~/i18n";
 import { log } from "~/log";
 import { getPreferences } from "~/preferences";
 import { urls } from "~/urls";
@@ -59,13 +62,13 @@ export async function applyDocumentMutations() {
 
 export const LazyLayout = withSuspense(() => {
 	const locale = useLocale();
-	const pathname = usePathname();
+	const location = useLocation();
 
 	useLayoutEffect(() => {
 		applyDocumentMutations();
 		// On `locale` change, we lose any changes we've made to
 		// the document element, so we'll need to re-apply them.
-	}, [locale, pathname]);
+	}, [locale, location]);
 
 	return null;
 });

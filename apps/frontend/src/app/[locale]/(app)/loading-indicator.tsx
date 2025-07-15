@@ -2,11 +2,11 @@
 
 import { Chrome, Laptop, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { type PropsWithChildren, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
+import { Image } from "~/components/image";
 import { device } from "~/hooks/use-device";
 import { useTimeout } from "~/hooks/use-interval";
 import { urls } from "~/urls";
@@ -15,7 +15,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 	const [probablyErrored, setProbablyErrored] = useState(false);
 	useTimeout(() => setProbablyErrored(true), "5s");
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const native = device.native;
 
 	return (

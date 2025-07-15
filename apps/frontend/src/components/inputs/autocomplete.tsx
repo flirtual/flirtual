@@ -2,8 +2,8 @@
 
 import { fuzzy, search as fuzzySearch } from "fast-fuzzy";
 import { AnimatePresence, motion } from "motion/react";
-import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { emptyArray } from "~/utilities";
 
@@ -44,7 +44,7 @@ export function InputAutocomplete<K extends string>(
 		...elementProps
 	} = props;
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const visibleValueOptions = useMemo(
 		() =>
 			options.length === 0

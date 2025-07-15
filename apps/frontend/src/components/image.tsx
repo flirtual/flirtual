@@ -1,22 +1,17 @@
 "use client";
 
-import NextImage from "next/image";
-import type { FC } from "react";
+import type { ComponentProps, FC } from "react";
 
 import { notFoundImage } from "~/api/user/profile/images";
-import type { ImageOptions } from "~/image-loader";
 
 export type ImageProps = {
-	options?: ImageOptions;
 	src: string;
-} & Omit<
-	Parameters<typeof NextImage>[0],
-	"loader" | "quality" | "src"
->;
+	priority?: boolean;
+} & ComponentProps<"img">;
 
-export const Image: FC<ImageProps> = ({ src, ...props }) => {
+export const Image: FC<ImageProps> = ({ src, priority: _, ...props }) => {
 	return (
-		<NextImage
+		<img
 			{...props}
 			data-block
 			src={src}

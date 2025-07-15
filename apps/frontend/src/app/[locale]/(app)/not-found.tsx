@@ -1,13 +1,13 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";
 
 export default function NotFoundPage() {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard

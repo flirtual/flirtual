@@ -1,8 +1,8 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { type FC, useState, useTransition } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "~/components/button";
 import {
@@ -19,7 +19,7 @@ export const ManageButton: FC = () => {
 	const toasts = useToast();
 	const { purchase } = usePurchase();
 	const [pending, startTransition] = useTransition();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [manageUrl, setManageUrl] = useState<string | null>(null);
 	if (!session) return null;

@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { Trans, useTranslation } from "react-i18next";
 
 import { ButtonLink } from "~/components/button";
 import { DownloadButton } from "~/components/download-button";
@@ -17,7 +17,7 @@ import { Tile, TileAnchor, type TileProps } from ".";
 import { SignUpButton } from "../sign-up-button";
 
 export function CallToAction({ id }: TileProps) {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Tile className="h-auto !min-h-inherit content-center" id={id}>
@@ -27,13 +27,12 @@ export function CallToAction({ id }: TileProps) {
 						<FlirtualLogo className="w-56" />
 						<TileAnchor id={id}>
 							<h1 className="max-w-screen-wide text-balance text-center font-montserrat text-4xl font-bold text-white-10 desktop:text-6xl desktop:tall:text-7xl">
-								{t.rich("few_grassy_hyena_adapt", {
-									highlight: (children) => (
-										<span className="overflow-visible bg-brand-gradient bg-clip-text text-transparent wide:block">
-											{children}
-										</span>
-									)
-								})}
+								<Trans
+									components={{
+										highlight: <span className="bg-brand-gradient bg-clip-text text-transparent" />
+									}}
+									i18nKey="few_grassy_hyena_adapt"
+								/>
 							</h1>
 						</TileAnchor>
 					</div>

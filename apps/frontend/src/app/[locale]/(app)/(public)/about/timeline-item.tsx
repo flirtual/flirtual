@@ -1,8 +1,7 @@
-import { useTranslations } from "next-intl";
-import Image from "next/image";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { Image } from "~/components/image";
 import type { MessageKeys } from "~/i18n/request";
 import { urls } from "~/urls";
 

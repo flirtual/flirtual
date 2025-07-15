@@ -14,10 +14,10 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	const { error, next: [current] } = useQueue(kind);
 
 	if (error === "finish_profile")
-		return <FinishProfileError />
+		return <FinishProfileError />;
 
 	if (error === "confirm_email")
-		return <ConfirmEmailError />
+		return <ConfirmEmailError />;
 
 	return (
 		<>

@@ -1,23 +1,20 @@
-import { getFormatter, getMessages, getTranslations } from "next-intl/server";
-/* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
+import { Image } from "~/components/image";
+import { useMessages } from "~/i18n";
 import { urls } from "~/urls";
 
 import { Tile, TileAnchor, type TileProps } from ".";
 
-export async function Testimonial({ id }: TileProps) {
-	const [userCount, messages, t] = await Promise.all([
-		1000, // User.getApproximateCount(),
-		getMessages(),
-		getTranslations(),
-		getFormatter()
-	]);
+export function Testimonial({ id }: TileProps) {
+	const { t } = useTranslation();
+
+	const userCount = 1000;
 
 	const {
 		flaky_thunder_red_flap: _images,
 		acidic_advertisement_request_cough: brands
-	} = messages;
+	} = useMessages();
 
 	const images = Object.values(_images);
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { User } from "~/api/user";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
@@ -29,7 +29,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 
 	const session = useOptionalSession();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 
 	if (!session) return null;

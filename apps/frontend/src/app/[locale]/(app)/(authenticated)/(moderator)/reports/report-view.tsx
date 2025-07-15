@@ -8,8 +8,6 @@ import {
 	MessagesSquare,
 	ShieldCheck
 } from "lucide-react";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
 import type {
 	ComponentProps,
 	FC
@@ -19,6 +17,7 @@ import {
 	useMemo,
 	useState
 } from "react";
+import { useTranslation } from "react-i18next";
 import { entries, groupBy, prop, sortBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
@@ -28,6 +27,7 @@ import { type ListReportOptions, Report } from "~/api/report";
 import { displayName } from "~/api/user";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { Dialog, DialogContent } from "~/components/dialog/dialog";
+import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { InputCheckbox, InputLabel } from "~/components/inputs";
 import { Link } from "~/components/link";
@@ -108,7 +108,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 	>(null);
 	const toasts = useToast();
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 
 	const CollapseIcon = collapsed ? ChevronRight : ChevronDown;

@@ -6,7 +6,7 @@ import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/[group]/page";
 import type { ConfirmEmailPageProps } from "./app/[locale]/(app)/(public)/confirm-email/page";
-import { siteOrigin } from "./const";
+import { apiUrl, siteOrigin } from "./const";
 import type { EmojiType } from "./hooks/use-talkjs";
 import { escapeVRChat } from "./vrchat";
 
@@ -79,7 +79,7 @@ type ArbitraryImageOptions = Record<string, number | string>;
 
 export const urls = {
 	// internal
-	api: process.env.NEXT_PUBLIC_API_URL as string,
+	api: apiUrl,
 	media: (id: string, bucket: BucketName = "static", variant: string = "", folder: string = "") =>
 		`${bucketOriginMap[bucket]}/${folder ? `${folder}/` : ""}${id}${variant ? `/${variant}` : ""}`,
 	emoji: (name: string, type: EmojiType) =>

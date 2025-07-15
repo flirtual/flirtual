@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
 import { type User, userTagNames, userTags } from "~/api/user";
 import {
@@ -15,7 +15,7 @@ export const ProfileDropdownTagsSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<DropdownMenuSub>

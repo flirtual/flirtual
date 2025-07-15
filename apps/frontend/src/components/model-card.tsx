@@ -1,6 +1,6 @@
 import { Info } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
@@ -29,7 +29,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	inset = true,
 	...props
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<>
