@@ -88,10 +88,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 
 	useEffect(() => {
 		errors.set(errorKey, throwCount);
-
-		// Maybe recover from error automatically?
-		if (throwCount === 1) tryAgain();
-	}, [errorKey, throwCount, tryAgain]);
+	}, [errorKey, throwCount]);
 
 	return (
 		<DrawerOrDialog
