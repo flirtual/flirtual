@@ -3,6 +3,8 @@ import { api } from "./common";
 export interface World {
 	id: string;
 	name: string;
+	description: string;
+	tags: Array<string>;
 	imageUrl: string;
 	thumbnailImageUrl: string;
 	authorId: string;

@@ -5,22 +5,25 @@ import { Postpone } from "next/dist/server/app-render/dynamic-rendering";
 
 import { server } from "~/const";
 import { usePathname, useSelectedLayoutSegments } from "~/i18n/navigation";
-import { log as _log } from "~/log";
+import { logRendering } from "~/log";
 
-const log = _log.extend("rendering");
+const debug = false;
 
 export function postpone(reason: string) {
 	if (server) {
-		// eslint-disable-next-line unicorn/error-message
-		const error = new Error();
-
-		let methodNames = (parse(error.stack) as Array<{ methodName: string }>).map(({ methodName }) => methodName);
-		methodNames = methodNames.slice(1, methodNames.indexOf("react-stack-bottom-frame"));
-
 		const pathname = usePathname();
 		const route = useSelectedLayoutSegments().join("/") || pathname;
 
-		log(`${route} postponed rendering due to ${reason}:\n${methodNames.map((methodName) => `  at ${methodName}`).join("\n")}`);
+		if (debug) {
+			// eslint-disable-next-line unicorn/error-message
+			const error = new Error();
+
+			let methodNames = (parse(error.stack) as Array<{ methodName: string }>).map(({ methodName }) => methodName);
+			methodNames = methodNames.slice(1, methodNames.indexOf("react-stack-bottom-frame"));
+
+			logRendering(`${route} postponed rendering due to ${reason}:\n${methodNames.map((methodName) => `  at ${methodName}`).join("\n")}`);
+		}
+
 		Postpone({ reason, route });
 	}
 }

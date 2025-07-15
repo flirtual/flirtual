@@ -24,6 +24,7 @@ import {
 	DialogHeader,
 	DialogTitle
 } from "~/components/dialog/dialog";
+import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "~/components/drawer";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
 import { useInfiniteQuery } from "~/query";
@@ -69,11 +70,45 @@ const WorldItem: FC<{ world: World; onInvite?: DispatchWithoutAction }> = ({ wor
 							Invite
 						</Button>
 					)}
-					<Button
-						className="aspect-square h-fit shrink-0 rounded-lg p-0"
-						Icon={Map}
-						kind="tertiary"
-					/>
+					<Drawer>
+						<DrawerTrigger asChild>
+							<Button
+								className="aspect-square h-fit shrink-0 rounded-lg p-0"
+								Icon={Map}
+								kind="tertiary"
+							/>
+						</DrawerTrigger>
+						<DrawerContent>
+							<div className="grid grid-cols-2 gap-4">
+								<Image
+									src={urls.arbitraryImage(world.imageUrl, {
+										fit: "cover",
+										quality: 90,
+										"slow-connection-quality": 50,
+										width: 256,
+										height: 192,
+									})}
+									alt={world.name}
+									className="aspect-[256/192] rounded-xl object-cover"
+									height={192}
+									width={256}
+								/>
+								<div className="flex flex-col gap-2">
+									<DrawerTitle>
+										{world.name}
+									</DrawerTitle>
+									<DrawerDescription>
+										{world.description || "No description available."}
+									</DrawerDescription>
+								</div>
+							</div>
+							{onInvite && (
+								<Button className="h-fit grow rounded-lg py-1" onClick={onInvite}>
+									Invite
+								</Button>
+							)}
+						</DrawerContent>
+					</Drawer>
 				</div>
 			</div>
 
@@ -222,8 +257,8 @@ export default function Test() {
 					</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody className="-mx-4 overflow-y-auto desktop:mx-0">
-					<div data-vaul-no-drag className="flex w-full snap-y snap-proximity flex-col gap-4">
+				<DialogBody className="-mx-4 -mb-4 overflow-y-auto desktop:mx-0">
+					<div data-vaul-no-drag className="flex w-full snap-y snap-proximity flex-col gap-4 py-1">
 						{worldCategories.map((category) => (
 							<WorldCategory category={category} key={category} />
 						))}

@@ -15,13 +15,16 @@ import {
 let nextConfig: NextConfig = {
 	experimental: {
 		taint: true,
-		staleTimes: {
-			dynamic: 30
-		},
 		ppr: true,
+		browserDebugInfoInTerminal: true,
+		dynamicIO: true,
+		clientSegmentCache: true,
+		turbopackPersistentCaching: true,
+		devtoolSegmentExplorer: true,
+		prerenderEarlyExit: true,
 		reactCompiler: true,
 	},
-	devIndicators: false,
+	// devIndicators: false,
 	turbopack: {
 
 	},

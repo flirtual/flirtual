@@ -19,9 +19,7 @@ export default function AppLayout({ children }: PropsWithChildren) {
 					className="flex min-h-[calc(100svh-max(calc(var(--safe-area-inset-bottom,0rem)+4.5rem),5rem))] w-full grow flex-col items-center desktop:p-8"
 					// vaul-drawer-wrapper=""
 				>
-					<Suspense fallback={<LoadingIndicator className="absolute inset-0" />}>
-						{children}
-					</Suspense>
+					{children}
 				</div>
 				<Footer desktopOnly />
 			</>

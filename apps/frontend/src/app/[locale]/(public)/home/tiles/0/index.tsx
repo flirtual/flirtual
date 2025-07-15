@@ -14,17 +14,17 @@ export function Hero({ id }: TileProps) {
 
 	return (
 		<Tile
-			className="relative flex flex-col items-center justify-center font-montserrat"
+			className="relative flex flex-col items-center justify-center"
 			id={id}
 		>
 			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-32">
 				{/* <InputLanguageSelect className="!absolute top-8 w-[calc(100%-4rem)] desktop:right-4 desktop:top-4 desktop:w-56" tabIndex={3} /> */}
 				<FlirtualLogo className="mb-4 w-48 desktop:w-64" />
 				<TileAnchor id={id}>
-					<h2 className="max-w-4xl text-balance text-center text-4xl font-bold text-white-10 desktop:text-6xl desktop:tall:text-7xl">
+					<h2 className="max-w-4xl text-balance text-center font-montserrat text-4xl font-bold text-white-10 desktop:text-6xl desktop:tall:text-7xl">
 						{t.rich("same_honest_seal_renew", {
 							highlight: (children) => (
-								<span className="overflow-visible bg-brand-gradient bg-clip-text italic text-transparent wide:block">
+								<span className="overflow-visible bg-brand-gradient bg-clip-text text-transparent wide:block">
 									{children}
 								</span>
 							)

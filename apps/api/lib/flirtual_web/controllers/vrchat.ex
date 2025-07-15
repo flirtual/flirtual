@@ -18,6 +18,8 @@ defmodule FlirtualWeb.VRChatController do
     %{
       id: world.id,
       name: world.name,
+      description: Flirtual.VRChat.unescape(Map.get(world, :description, "")),
+      tags: world.tags,
       authorName: world.authorName,
       authorId: world.authorId,
       imageUrl: world.imageUrl,
@@ -50,17 +52,21 @@ defmodule FlirtualWeb.VRChatController do
 
   def get_worlds_by_category(conn, %{"category" => category} = params)
       when category in @world_categories do
-    {:ok, worlds} =
-      Flirtual.VRChat.with_session(
-        &Flirtual.VRChat.get_worlds_by_category(
-          &1,
-          category,
-          format_world_params(params)
-        )
-      )
+    case Flirtual.VRChat.with_session(
+           &Flirtual.VRChat.get_worlds_by_category(
+             &1,
+             category,
+             format_world_params(params)
+           )
+         ) do
+      {:ok, worlds} ->
+        conn
+        |> json_with_etag(transform_worlds(worlds))
 
-    conn
-    |> json_with_etag(transform_worlds(worlds))
+      {:error, %{status: 429}} ->
+        {:error, {:too_many_requests}}
+
+    end
   end
 
   def search_worlds(conn, %{"query" => query} = params) do

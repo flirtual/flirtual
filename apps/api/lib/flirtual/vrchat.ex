@@ -97,43 +97,59 @@ defmodule Flirtual.VRChat do
   end
 
   @character_map %{
-    "@" => "＠",
-    "#" => "＃",
-    "$" => "＄",
-    "%" => "％",
-    "&" => "＆",
-    "=" => "＝",
-    "+" => "＋",
-    "/" => "⁄",
-    "\\" => "＼",
-    ";" => ";",
-    ":" => "˸",
-    "," => "‚",
-    "?" => "?",
-    "!" => "ǃ",
-    ~c"\"" => "＂",
-    "<" => "≺",
-    ">" => "≻",
-    "." => "․",
-    "^" => "＾",
-    "{" => "｛",
-    "}" => "｝",
-    "[" => "［",
-    "]" => "］",
-    "(" => "（",
-    ")" => "）",
-    "|" => "｜",
-    "*" => "∗"
+    ~c"@" => ~c"＠",
+    ~c"#" => ~c"＃",
+    ~c"$" => ~c"＄",
+    ~c"%" => ~c"％",
+    ~c"&" => ~c"＆",
+    ~c"=" => ~c"＝",
+    ~c"+" => ~c"＋",
+    ~c"/" => ~c"⁄",
+    ~c"\\" => ~c"＼",
+    ~c";" => ~c";",
+    ~c":" => ~c"˸",
+    ~c"," => ~c"‚",
+    ~c"?" => ~c"?",
+    ~c"!" => ~c"ǃ",
+    ~c"\"" => ~c"＂",
+    ~c"<" => ~c"≺",
+    ~c">" => ~c"≻",
+    ~c"." => ~c"․",
+    ~c"^" => ~c"＾",
+    ~c"{" => ~c"｛",
+    ~c"}" => ~c"｝",
+    ~c"[" => ~c"［",
+    ~c"]" => ~c"］",
+    ~c"(" => ~c"（",
+    ~c")" => ~c"）",
+    ~c"|" => ~c"｜",
+    ~c"*" => ~c"∗"
   }
+
+  @reverse_character_map Map.new(@character_map, fn {k, v} -> {v, k} end)
 
   def escape(value) do
     value
-    |> String.replace(~r/.{1}/, fn char ->
-      case Map.get(@character_map, char) do
+    |> String.split("")
+    |> Enum.map(fn char ->
+      case Map.get(@character_map, String.to_charlist(char)) do
         nil -> char
         escaped -> escaped
       end
     end)
+    |> Enum.join("")
+  end
+
+  def unescape(value) do
+    value
+    |> String.split("")
+    |> Enum.map(fn char ->
+      case Map.get(@reverse_character_map, String.to_charlist(char)) do
+        nil -> char
+        unescaped -> unescaped
+      end
+    end)
+    |> Enum.join("")
   end
 
   def resolve_input(input) when is_binary(input) do
