@@ -10,6 +10,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { ErrorDialog } from "./app/[locale]/(app)/error-dialog";
 import { i18n } from "./i18n";
 
 import "./app/index.css";
@@ -71,15 +72,5 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 		stack = error.stack;
 	}
 
-	return (
-		<main className="container mx-auto p-4 pt-16">
-			<h1>{message}</h1>
-			<p>{details}</p>
-			{stack && (
-				<pre className="w-full overflow-x-auto p-4">
-					<code>{stack}</code>
-				</pre>
-			)}
-		</main>
-	);
+	return <ErrorDialog error={error} reset={() => location.reload()} />;
 }

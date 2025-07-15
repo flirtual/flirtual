@@ -1,9 +1,9 @@
-import { captureException } from "@sentry/nextjs";
+import { captureException } from "@sentry/react";
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { motion } from "motion/react";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import useSound from "use-sound";
 
 import { Button } from "~/components/button";
@@ -31,20 +31,26 @@ const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, event
 			{digest && (
 				<CopyClick value={digest}>
 					<span>
-						{t.rich("zany_watery_zebra_play", {
-							value: digest,
-							strong: (children) => <strong className="font-bold">{children}</strong>
-						})}
+						<Trans
+							components={{
+								strong: <strong className="font-bold" />
+							}}
+							i18nKey="zany_watery_zebra_play"
+							values={{ value: digest }}
+						/>
 					</span>
 				</CopyClick>
 			)}
 			{eventId && (
 				<CopyClick value={eventId}>
 					<span>
-						{t.rich("big_that_insect_slurp", {
-							value: eventId,
-							strong: (children) => <strong className="font-bold">{children}</strong>
-						})}
+						<Trans
+							components={{
+								strong: <strong className="font-bold" />
+							}}
+							i18nKey="big_that_insect_slurp"
+							values={{ value: eventId }}
+						/>
 					</span>
 				</CopyClick>
 			)}
@@ -214,28 +220,36 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									</li>
 									{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
 									<li>
-										{t.rich(native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe", {
-											"browser-icon": () => <Chrome className="mr-1 inline-block size-4 shrink-0" />,
-											"device-icon": () => <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
-										})}
+										<Trans
+											components={{
+												"browser-icon": <Chrome className="mr-1 inline-block size-4 shrink-0" />,
+												"device-icon": <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
+											}}
+											i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}
+										/>
 									</li>
 									<li>
-										{t.rich("tough_sleek_wasp_reside", {
-											icon: () => <WifiOff className="mr-1 inline-block size-4 shrink-0" />
-										})}
+										<Trans
+											components={{
+												icon: <WifiOff className="mr-1 inline-block size-4 shrink-0" />,
+											}}
+											i18nKey="tough_sleek_wasp_reside"
+										/>
 									</li>
 									<li>
-										{t.rich("yummy_salty_porpoise_greet", {
-											contact: (children) => (
-												<a
-													className="whitespace-nowrap lowercase underline"
-													href={urls.resources.contact}
-												>
-													<Send className="mr-1 inline-block size-4 shrink-0" />
-													{children}
-												</a>
-											)
-										})}
+										<Trans
+											components={{
+												contact: (
+													<a
+														className="whitespace-nowrap lowercase underline"
+														href={urls.resources.contact}
+													>
+														<Send className="mr-1 inline-block size-4 shrink-0" />
+													</a>
+												)
+											}}
+											i18nKey="yummy_salty_porpoise_greet"
+										/>
 
 									</li>
 								</ul>
