@@ -439,8 +439,8 @@ importers:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))
       tailwindcss-hocus:
-        specifier: ^1.0.0
-        version: 1.0.0(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3)))
+        specifier: ^0.0.7
+        version: 0.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3)))
       tailwindcss-motion:
         specifier: 1.1.0
         version: 1.1.0(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3)))
@@ -7102,10 +7102,10 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
-  tailwindcss-hocus@1.0.0:
-    resolution: {integrity: sha512-PLgBHiCHZOCgY/VtRuatNwsqzqf1aYa7GI2+ZxwUbh/U8A9yn9baow3G3HUc+bPALLxC/yDcDZhznRY8efwVKQ==}
+  tailwindcss-hocus@0.0.7:
+    resolution: {integrity: sha512-KY3jLlppAoPkCLRhDqbe503c1Ryq//G1bLQqFCZz1pnB0JFzHa3VK0bXvjTa8n/dwCxgkhi5uJm1d6gp8OzPhw==}
     peerDependencies:
-      tailwindcss: ^4.0.0
+      tailwindcss: ^3.0.0
 
   tailwindcss-motion@1.1.0:
     resolution: {integrity: sha512-0lK6rA4+367ffJdi1TtB72GlMCxJi2TP/xRiHc6An5pZSlU6WfIHhSvLxpcGilGZfBrOqc2q4woH1DEP/lCNbQ==}
@@ -15101,7 +15101,7 @@ snapshots:
     dependencies:
       tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))
 
-  tailwindcss-hocus@1.0.0(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))):
+  tailwindcss-hocus@0.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))):
     dependencies:
       tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3))
 
