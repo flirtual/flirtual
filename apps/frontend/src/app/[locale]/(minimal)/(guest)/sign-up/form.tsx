@@ -1,5 +1,3 @@
-"use client";
-
 import { MoveRight } from "lucide-react";
 import { useLocale } from "next-intl";
 import type { FC } from "react";

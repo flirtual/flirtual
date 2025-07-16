@@ -1,5 +1,3 @@
-"use client";
-
 import { Sparkles } from "lucide-react";
 import { useFormatter, useLocale } from "next-intl";
 import type { FC } from "react";

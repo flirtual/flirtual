@@ -1,5 +1,3 @@
-"use client";
-
 import { X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import type React from "react";

@@ -1,5 +1,3 @@
-"use client";
-
 import { decode } from "jsonwebtoken";
 import { useLocale } from "next-intl";
 import { useState } from "react";

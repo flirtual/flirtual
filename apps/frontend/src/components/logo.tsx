@@ -1,5 +1,3 @@
-"use client";
-
 import type { FC } from "react";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";

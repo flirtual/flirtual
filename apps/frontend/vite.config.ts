@@ -1,10 +1,14 @@
+import { cloudflare } from "@cloudflare/vite-plugin";
 import { reactRouter } from "@react-router/dev/vite";
+import sonda from "sonda/vite";
 // import basicSsl from "@vitejs/plugin-basic-ssl";
 import { defineConfig } from "vite";
-import webfontDownload from "vite-plugin-webfont-dl";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+	build: {
+		sourcemap: true
+	},
 	server: {
 		host: "0.0.0.0",
 		port: 3000,
@@ -18,6 +22,7 @@ export default defineConfig({
 		// }),
 		reactRouter(),
 		tsconfigPaths(),
-		webfontDownload()
+		cloudflare(),
+		sonda()
 	],
 });

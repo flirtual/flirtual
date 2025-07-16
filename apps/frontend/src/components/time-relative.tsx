@@ -1,5 +1,3 @@
-"use client";
-
 import type { StringValue } from "ms";
 import { type createFormatter, useFormatter } from "next-intl";
 import { type ComponentProps, type FC, useCallback, useMemo, useState } from "react";

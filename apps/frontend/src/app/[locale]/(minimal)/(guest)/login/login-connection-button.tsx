@@ -1,5 +1,3 @@
-"use client";
-
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";

@@ -1,5 +1,3 @@
-"use client";
-
 import { Slot } from "@radix-ui/react-slot";
 import { MoveRight } from "lucide-react";
 import type { FC, PropsWithChildren, ReactNode, RefAttributes } from "react";

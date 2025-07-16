@@ -1,5 +1,3 @@
-"use client";
-
 import { Loader2 } from "lucide-react";
 import type { HTMLMotionProps } from "motion/react";
 import { motion } from "motion/react";

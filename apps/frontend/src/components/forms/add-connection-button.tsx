@@ -1,5 +1,3 @@
-"use client";
-
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
 import { useMemo } from "react";

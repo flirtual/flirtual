@@ -1,5 +1,3 @@
-"use client";
-
 import ms from "ms";
 import type { Dispatch, FC, ReactNode } from "react";
 import { useTranslation } from "react-i18next";

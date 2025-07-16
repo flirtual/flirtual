@@ -1,5 +1,3 @@
-"use client";
-
 import { ChevronLeft, ChevronRight, Cone, Dices, Flame, Gamepad2, Loader2, Sprout } from "lucide-react";
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";

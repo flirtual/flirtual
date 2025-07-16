@@ -2,7 +2,10 @@ import debug from "debug";
 
 import * as environment from "./const";
 
-if (environment.development) debug.enable("*");
+if (environment.development) {
+	debug.enable("app:*,vite:*");
+}
+
 if (environment.client) debug.selectColor = () => "pink";
 
 export const log = debug("app");

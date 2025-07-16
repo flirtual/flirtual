@@ -1,5 +1,3 @@
-"use client";
-
 import { Slot } from "@radix-ui/react-slot";
 import type { Ref } from "react";
 import { Link as _Link } from "react-router";

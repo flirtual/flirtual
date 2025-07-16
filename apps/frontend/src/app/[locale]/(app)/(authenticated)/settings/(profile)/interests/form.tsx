@@ -1,5 +1,3 @@
-"use client";
-
 import {
 	Brain,
 	Dices,

@@ -1,5 +1,3 @@
-"use client";
-
 import type { InfiniteData } from "@tanstack/react-query";
 import { ArrowLeft, ArrowLeftToLine, ArrowRight, Cone, Dices, Flame, Gamepad2, Map, Sprout } from "lucide-react";
 import {

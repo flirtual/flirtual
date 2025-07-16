@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Trans } from "react-i18next";
 

@@ -1,5 +1,3 @@
-"use client";
-
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { SelectTrigger as RadixSelectTrigger } from "@radix-ui/react-select";
 import { ChevronDown, Moon, Sun, SunMoon } from "lucide-react";

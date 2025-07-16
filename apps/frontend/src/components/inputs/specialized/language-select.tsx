@@ -1,5 +1,3 @@
-"use client";
-
 import { SelectTrigger as RadixSelectTrigger } from "@radix-ui/react-select";
 import { ChevronDown, Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";

@@ -1,5 +1,3 @@
-"use client";
-
 import { ChevronLeft, ChevronRight, Search, Trash2 } from "lucide-react";
 import { useFormatter } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";

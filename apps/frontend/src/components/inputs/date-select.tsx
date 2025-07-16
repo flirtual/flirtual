@@ -1,6 +1,4 @@
 /* eslint-disable react/prefer-destructuring-assignment */
-"use client";
-
 import { DatetimePicker } from "@capawesome-team/capacitor-datetime-picker";
 import { useCallback, useRef, useState } from "react";
 

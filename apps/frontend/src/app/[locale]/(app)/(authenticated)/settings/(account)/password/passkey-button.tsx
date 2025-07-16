@@ -1,5 +1,3 @@
-"use client";
-
 import { Key, Loader2, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";

@@ -1,5 +1,3 @@
-"use client";
-
 import { type DateTimeFormatOptions, useFormatter } from "next-intl";
 import { type ComponentProps, type FC, useMemo } from "react";
 

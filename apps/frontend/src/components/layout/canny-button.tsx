@@ -1,5 +1,3 @@
-"use client";
-
 import { Newspaper } from "lucide-react";
 import { useTranslation } from "react-i18next";
 

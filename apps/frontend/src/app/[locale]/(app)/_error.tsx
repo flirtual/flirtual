@@ -1,5 +1,3 @@
-"use client";
-
 import type { ErrorProps } from "./error-dialog";
 import { ErrorDialog } from "./error-dialog";
 import { LoadingIndicator } from "./loading-indicator";

@@ -1,5 +1,3 @@
-"use client";
-
 import { PushNotifications } from "@capacitor/push-notifications";
 import { IOSSettings, NativeSettings } from "capacitor-native-settings";
 import { Mail, Smartphone } from "lucide-react";

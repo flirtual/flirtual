@@ -1,5 +1,3 @@
-"use client";
-
 import { setTag, setUser } from "@sentry/nextjs";
 import dynamic from "next/dynamic";
 import Script from "next/script";

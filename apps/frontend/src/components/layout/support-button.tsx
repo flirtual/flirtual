@@ -1,5 +1,3 @@
-"use client";
-
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";

@@ -1,5 +1,3 @@
-"use client";
-
 import { Link, Pencil } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";

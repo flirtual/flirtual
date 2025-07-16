@@ -1,5 +1,3 @@
-"use client";
-
 import { MoveLeft, MoveRight, RefreshCw, Undo2, X } from "lucide-react";
 import { motion } from "motion/react";
 import type {

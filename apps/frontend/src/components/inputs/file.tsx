@@ -1,5 +1,3 @@
-"use client";
-
 export type InputFileValue = Array<File>;
 
 export type InputFileProps = {

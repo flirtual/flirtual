@@ -1,6 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
-
 import { SelectItemText } from "@radix-ui/react-select";
 import { useLocale } from "next-intl";
 import { type FC, useMemo } from "react";

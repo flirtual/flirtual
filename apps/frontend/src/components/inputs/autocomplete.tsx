@@ -1,5 +1,3 @@
-"use client";
-
 import { fuzzy, search as fuzzySearch } from "fast-fuzzy";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

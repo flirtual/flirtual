@@ -5,6 +5,8 @@ node_modules
 .next
 .vercel
 build
+.sonda
+.wrangler
 .react-router
 # Sentry Auth Token
 .sentryclirc

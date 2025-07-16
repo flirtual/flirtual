@@ -1,5 +1,3 @@
-"use client";
-
 import type { FC, RefAttributes } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";

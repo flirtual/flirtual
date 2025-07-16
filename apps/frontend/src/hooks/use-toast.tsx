@@ -1,5 +1,3 @@
-"use client";
-
 import { Toast as NativeToast } from "@capacitor/toast";
 import { captureException } from "@sentry/react";
 import { AlertTriangle, Check } from "lucide-react";

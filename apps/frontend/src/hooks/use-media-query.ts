@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-"use client";
-
 import { useDebugValue, useEffect, useState } from "react";
 
 import { server } from "~/const";

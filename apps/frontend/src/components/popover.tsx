@@ -1,5 +1,3 @@
-"use client";
-
 import { Children, type Dispatch, useRef } from "react";
 
 import { useClickOutside } from "~/hooks/use-click-outside";

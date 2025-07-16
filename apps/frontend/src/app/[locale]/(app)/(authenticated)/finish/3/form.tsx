@@ -1,5 +1,3 @@
-"use client";
-
 import { MoveLeft, Search } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";

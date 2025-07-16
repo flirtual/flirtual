@@ -1,5 +1,3 @@
-"use client";
-
 import { InAppReview } from "@capacitor-community/in-app-review";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";

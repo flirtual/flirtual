@@ -1,5 +1,3 @@
-"use client";
-
 import AwsS3 from "@uppy/aws-s3";
 import Compressor from "@uppy/compressor";
 import Uppy, { type UppyFile } from "@uppy/core";

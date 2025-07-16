@@ -1,5 +1,3 @@
-"use client";
-
 import ms from "ms";
 import { useDebugValue } from "react";
 

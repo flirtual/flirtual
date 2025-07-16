@@ -1,5 +1,3 @@
-"use client";
-
 import { ChevronRight } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 

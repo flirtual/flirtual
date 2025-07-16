@@ -1,5 +1,3 @@
-"use client";
-
 import { useDebugValue } from "react";
 
 import { setPreferences } from "~/preferences";

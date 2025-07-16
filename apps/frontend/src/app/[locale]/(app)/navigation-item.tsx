@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import type { ComponentProps, FC } from "react";
 import { useTranslation } from "react-i18next";

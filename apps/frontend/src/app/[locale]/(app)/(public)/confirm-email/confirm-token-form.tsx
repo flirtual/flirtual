@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import useMutation from "swr/mutation";

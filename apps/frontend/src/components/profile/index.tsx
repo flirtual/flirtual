@@ -1,5 +1,3 @@
-"use client";
-
 import { Copy } from "lucide-react";
 import type { ComponentProps, CSSProperties } from "react";
 import { useTranslation } from "react-i18next";

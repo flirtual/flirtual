@@ -1,5 +1,3 @@
-"use client";
-
 import { type FC, Suspense, use } from "react";
 
 import { Profile } from "~/components/profile";

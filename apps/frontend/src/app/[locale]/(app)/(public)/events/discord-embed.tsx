@@ -1,5 +1,3 @@
-"use client";
-
 import WidgetBot from "@widgetbot/react-embed";
 import dynamic from "next/dynamic";
 

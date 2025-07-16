@@ -1,5 +1,3 @@
-"use client";
-
 import { Clipboard } from "@capacitor/clipboard";
 import { Slot } from "@radix-ui/react-slot";
 import type { FC, PropsWithChildren } from "react";

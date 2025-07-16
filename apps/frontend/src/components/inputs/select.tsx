@@ -1,6 +1,4 @@
 /* eslint-disable react/prefer-destructuring-assignment */
-"use client";
-
 import { SelectItemText } from "@radix-ui/react-select";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDown, ChevronsUpDown, ChevronUp, X } from "lucide-react";

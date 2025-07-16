@@ -1,5 +1,3 @@
-"use client";
-
 import type { TurnstileInstance, TurnstileProps } from "@marsidev/react-turnstile";
 import {
 	Turnstile as _Turnstile

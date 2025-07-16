@@ -1,5 +1,3 @@
-"use client";
-
 import { Expand, MoreHorizontal, Trash } from "lucide-react";
 import type { RefAttributes } from "react";
 import { useTranslation } from "react-i18next";

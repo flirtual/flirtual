@@ -1,5 +1,3 @@
-"use client";
-
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { indexBy, prop } from "remeda";

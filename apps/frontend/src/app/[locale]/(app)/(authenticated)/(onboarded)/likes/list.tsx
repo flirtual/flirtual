@@ -1,5 +1,3 @@
-"use client";
-
 import type { FC } from "react";
 
 import { useLikesYou } from "~/hooks/use-likes-you";

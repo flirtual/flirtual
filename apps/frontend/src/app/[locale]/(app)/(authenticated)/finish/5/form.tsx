@@ -1,5 +1,3 @@
-"use client";
-
 import { MoveLeft } from "lucide-react";
 // eslint-disable-next-line no-restricted-imports
 import { useRouter, useSearchParams } from "next/navigation";

@@ -1,5 +1,3 @@
-"use client";
-
 import { Ban, Flag } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";

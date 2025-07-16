@@ -1,5 +1,3 @@
-"use client";
-
 import { HelpCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 

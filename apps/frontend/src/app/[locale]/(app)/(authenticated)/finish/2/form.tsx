@@ -1,5 +1,3 @@
-"use client";
-
 import { CheckCircle2, MoveLeft } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";

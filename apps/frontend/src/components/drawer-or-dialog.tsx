@@ -1,5 +1,3 @@
-"use client";
-
 import { Children, type Dispatch } from "react";
 import { twMerge } from "tailwind-merge";
 

@@ -1,5 +1,3 @@
-"use client";
-
 import shuffle from "fast-shuffle";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";

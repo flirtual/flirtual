@@ -1,5 +1,3 @@
-"use client";
-
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import { useFormatter } from "next-intl";
 import type { FC } from "react";

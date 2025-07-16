@@ -1,22 +1,23 @@
-import englishUppyMessages from "@uppy/locales/lib/en_US.js";
-import japaneseUppyMessages from "@uppy/locales/lib/ja_JP.js";
 import i18n, { type ResourceKey } from "i18next";
 import icu from "i18next-icu";
+import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next, useTranslation } from "react-i18next";
 
-import englishAttributeMessages from "~/../messages/attributes.en.json";
-import japaneseAttributeMessages from "~/../messages/attributes.ja.json";
-import englishMessages from "~/../messages/en.json";
-import japaneseMessages from "~/../messages/ja.json";
-
-export const locales = ["en", "ja"];
+export const locales = ["en", "ja"] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale = "en";
 export type DefaultLocale = typeof defaultLocale;
 
-export type Resources = typeof translations[DefaultLocale];
+export type Resources = Awaited<ReturnType<typeof load>>;
 export type Namespace = keyof Resources;
+
+declare module "i18next" {
+	interface CustomTypeOptions {
+		defaultNS: "default";
+		resources: Resources;
+	}
+}
 
 export const localePathnameRegex = new RegExp(`^/(${locales.join("|")})`);
 
@@ -42,43 +43,45 @@ export function guessLocale() {
 		: defaultLocale;
 }
 
-declare module "i18next" {
-	interface CustomTypeOptions {
-		defaultNS: "default";
-		resources: Resources;
-	}
-}
-
 function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) {
 	return Object.values(value).reduce((previous, current) => {
 		return { ...previous, ...current };
 	}, {});
 }
 
-const locale = "en";
+async function load(locale: Locale) {
+	const [default_, attributes, uppy] = await Promise.all([
+		// Types are not available when using a dynamic import, so we default to English for type safety.
+		import(`../messages/${locale}.json`) as unknown as typeof import("../messages/en.json"),
+		import(`../messages/attributes.${locale}.json`)
+			.then(({ default: attributes }) => flat1(attributes)),
+		(async () => {
+			// https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+			switch (locale) {
+				case "en": return (await import("@uppy/locales/lib/en_US.js")).default.strings;
+				case "ja": return (await import("@uppy/locales/lib/ja_JP.js")).default.strings;
+				default: return {};
+			}
+		})(),
+	]);
 
-export const translations = {
-	en: {
-		default: englishMessages,
-		attributes: flat1(englishAttributeMessages),
-		uppy: englishUppyMessages.strings,
-	},
-	ja: {
-		default: japaneseMessages,
-		attributes: flat1(japaneseAttributeMessages),
-		uppy: japaneseUppyMessages.strings,
-	}
-};
+	return {
+		default: default_,
+		attributes,
+		uppy
+	};
+}
 
 i18n
+	.use(resourcesToBackend(load))
 	.use(icu)
 	.use(initReactI18next)
 	.init({
-		lng: locale,
 		fallbackLng: defaultLocale,
 		ns: ["default"],
 		defaultNS: "default",
-		resources: translations,
+		supportedLngs: locales,
+
 		interpolation: {
 			escapeValue: false
 		}

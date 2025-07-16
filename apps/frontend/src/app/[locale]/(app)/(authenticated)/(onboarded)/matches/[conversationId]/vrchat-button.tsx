@@ -1,5 +1,3 @@
-"use client";
-
 import { MailPlus } from "lucide-react";
 import type { FC } from "react";
 import { useState } from "react";

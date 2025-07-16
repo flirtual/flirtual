@@ -1,5 +1,3 @@
-"use client";
-
 import { redirect } from "react-router";
 
 import { urls } from "~/urls";

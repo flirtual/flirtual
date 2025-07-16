@@ -1,5 +1,3 @@
-"use client";
-
 import { Clipboard } from "@capacitor/clipboard";
 import { Copy } from "lucide-react";
 import { useLocale } from "next-intl";

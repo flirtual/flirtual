@@ -11,10 +11,9 @@ export const apiUrl = import.meta.env.VITE_API_URL as string;
 assert(apiUrl, "VITE_API_URL is required");
 export const apiOrigin = new URL(apiUrl).origin;
 
-export const environment = (import.meta.env.VITE_VERCEL_ENV
-	|| import.meta.env.NODE_ENV) as "development" | "preview" | "production";
+export const environment = (import.meta.env.NODE_ENV) as "development" | "preview" | "production";
 
-export const development = environment === "development";
+export const development = import.meta.env.DEV;
 export const production = !development;
 
 // Git build information
@@ -71,5 +70,5 @@ export const nativeOverride = platformOverride ? platformOverride !== "web" : un
 
 export const maintenance = false;
 export const duringBuild = import.meta.env.BUILD === "1";
-export const server = typeof window === "undefined";
+export const server = import.meta.env.SSR;
 export const client = !server;

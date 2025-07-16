@@ -1,5 +1,3 @@
-"use client";
-
 import { useLocale } from "next-intl";
 
 import type { Session } from "~/api/auth";

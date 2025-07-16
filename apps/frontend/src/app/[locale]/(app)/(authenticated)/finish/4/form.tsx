@@ -1,5 +1,3 @@
-"use client";
-
 import shuffle from "fast-shuffle";
 import { MoveLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";

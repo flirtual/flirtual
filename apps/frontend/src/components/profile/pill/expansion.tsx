@@ -1,5 +1,3 @@
-"use client";
-
 import { MoreHorizontal } from "lucide-react";
 import { useLocale } from "next-intl";
 import { type FC, useMemo, useState } from "react";

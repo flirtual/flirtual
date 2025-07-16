@@ -1,5 +1,3 @@
-"use client";
-
 import { Pencil } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { MouseEventHandler, PropsWithChildren, RefAttributes } from "react";

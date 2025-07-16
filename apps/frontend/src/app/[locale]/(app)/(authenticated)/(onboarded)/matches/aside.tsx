@@ -1,5 +1,3 @@
-"use client";
-
 import { CheckCheck, ChevronLeft, X } from "lucide-react";
 import { type FC, Fragment, Suspense, useLayoutEffect } from "react";
 import { useTranslation } from "react-i18next";

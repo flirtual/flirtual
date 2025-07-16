@@ -1,5 +1,3 @@
-"use client";
-
 import { Loader2 } from "lucide-react";
 import { type FC, useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";

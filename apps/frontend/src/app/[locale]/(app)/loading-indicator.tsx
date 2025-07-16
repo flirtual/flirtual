@@ -1,5 +1,3 @@
-"use client";
-
 import { Chrome, Laptop, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { type PropsWithChildren, useState } from "react";
@@ -20,14 +18,8 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 
 	return (
 		<div className={twMerge("flex min-h-screen w-full flex-col items-center justify-center opacity-75", className)}>
-			<motion.div
-				transition={{
-					repeat: Infinity,
-					duration: 2,
-					ease: "easeInOut"
-				}}
-				animate={{ opacity: [1, 0, 1] }}
-				className="w-2/3 max-w-sm desktop:w-1/2"
+			<div
+				className="w-2/3 max-w-sm desktop:w-1/2 animate-pulse"
 				// initial={{ opacity: 0 }}
 			>
 				<Image
@@ -48,7 +40,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 					src={urls.media("flirtual-black.svg", "static")}
 					width={3468}
 				/>
-			</motion.div>
+			</div>
 			<AnimatePresence>
 				{probablyErrored && (
 					<motion.div
