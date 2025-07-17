@@ -1,6 +1,7 @@
 import { Trans, useTranslation } from "react-i18next";
 
 import { ButtonLink } from "~/components/button";
+import { InlineLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
@@ -8,7 +9,6 @@ import { Tile, TileAnchor } from "..";
 import type { TileProps } from "..";
 import { SignUpButton } from "../../sign-up-button";
 import { BackgroundVideo } from "./background-video";
-import { InlineLanguageSelect } from "~/components/inputs/specialized/language-select";
 
 export function Hero({ id }: TileProps) {
 	const { t } = useTranslation();
@@ -18,7 +18,7 @@ export function Hero({ id }: TileProps) {
 			className="relative flex flex-col items-center justify-center"
 			id={id}
 		>
-			<InlineLanguageSelect className="absolute top-8 right-12 z-20" />
+			<InlineLanguageSelect className="absolute right-12 top-8 z-20 hidden desktop:block" />
 			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-32">
 				<FlirtualLogo className="mb-4 w-48 desktop:w-64" />
 				<TileAnchor id={id}>

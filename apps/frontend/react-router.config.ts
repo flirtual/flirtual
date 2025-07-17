@@ -4,12 +4,12 @@ const locales = ["en", "ja"];
 
 export default {
 	ssr: false,
-	// prerender: [
-	// 	// "/",
-	// 	"/home",
-	// 	// "/about",
-	// ]
-	// 	.map((path) => locales.map((locale) => `/${locale}${path}`))
-	// 	.flat(),
+	prerender: [
+		// "/",
+		"/home",
+		// "/about",
+	],
+	//	.map((path) => locales.map((locale) => `/${locale}${path}`))
+	//	.flat(),
 	appDirectory: "src"
 } satisfies Config;

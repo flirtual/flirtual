@@ -2,14 +2,13 @@ import { useEffect } from "react";
 
 import type { Session } from "~/api/auth";
 import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
-import { applyDocumentMutations } from "~/app/[locale]/lazy-layout";
+import { applyDocumentMutations } from "~/document";
 import { getPreferences } from "~/preferences";
-import { mutate, queryClient, sessionKey, useMutation } from "~/query";
+import { mutate, sessionKey, useMutation } from "~/query";
 import type { Theme } from "~/theme";
 
 import { useMediaQuery } from "./use-media-query";
 import { usePreferences } from "./use-preferences";
-// import { postpone } from "./use-postpone";
 import { useOptionalSession } from "./use-session";
 
 export async function getTheme(): Promise<Theme> {
@@ -27,7 +26,7 @@ export function useTheme() {
 	const session = useOptionalSession();
 	const sessionTheme = session?.user.preferences?.theme;
 
-	const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+	const prefersDark = useMediaQuery("(prefers-color-scheme: dark)", false);
 
 	const theme = localTheme === "system"
 		? prefersDark
@@ -57,10 +56,7 @@ export function useTheme() {
 						: null)
 			]);
 
-			console.log(applyDocumentMutations, "before");
 			await applyDocumentMutations();
-
-			console.log(applyDocumentMutations, "after");
 		},
 		mutationFn: async (theme) => {
 			if (!session || theme === sessionTheme) return;

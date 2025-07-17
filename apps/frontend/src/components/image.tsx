@@ -7,11 +7,13 @@ export type ImageProps = {
 	priority?: boolean;
 } & ComponentProps<"img">;
 
-export const Image: FC<ImageProps> = ({ src, priority: _, ...props }) => {
+export const Image: FC<ImageProps> = ({ src, priority, ...props }) => {
 	return (
 		<img
 			{...props}
 			data-block
+			fetchPriority={priority ? "high" : "low"}
+			loading={priority ? "eager" : "lazy"}
 			src={src}
 			onError={({ currentTarget }) => {
 				// If the image fails to load (doesn't exist), use a fallback.
