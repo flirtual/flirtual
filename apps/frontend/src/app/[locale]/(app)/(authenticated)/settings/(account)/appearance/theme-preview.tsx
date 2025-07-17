@@ -60,7 +60,7 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className }) => {
 	const { t } = useTranslation();
 
-	const [, setTheme, { sessionTheme: theme }] = useTheme();
+	const [, setTheme, { localTheme: theme }] = useTheme();
 	const ThemeIcon = {
 		dark: Moon,
 		light: Sun,
@@ -69,7 +69,7 @@ export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className 
 
 	return (
 		<Select onValueChange={(theme: PreferenceTheme) => setTheme(theme)}>
-			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap", className)}>
+			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
 				<ThemeIcon className="inline-block size-em" />
 				{" "}
 				{t(theme)}

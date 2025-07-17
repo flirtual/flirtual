@@ -6,11 +6,12 @@ import useSound from "use-sound";
 import { ButtonLink } from "~/components/button";
 import { FlirtualMark } from "~/components/mark";
 import { useToast } from "~/hooks/use-toast";
+import { useMessages } from "~/i18n";
 import { urls } from "~/urls";
 
 export const SignUpButton: FC<{ tabIndex?: number }> = ({ tabIndex }) => {
 	const { t } = useTranslation ();
-	const { receptive_fairies_legal_thumb: flittyMessages } = {};// useMessages();
+	const { receptive_fairies_legal_thumb: flittyMessages } = useMessages();
 	const toasts = useToast();
 
 	const [squeak] = useSound(urls.media("squeak.mp3"));
@@ -123,7 +124,7 @@ export const SignUpButton: FC<{ tabIndex?: number }> = ({ tabIndex }) => {
 	return (
 		<div className="group/mark relative">
 			<FlirtualMark
-				className="group-hocus-within/mark:-top-9 absolute right-1 top-0 w-16 origin-[bottom_center] rotate-[14deg] cursor-grab transition-all active:scale-x-110 active:scale-y-90 active:cursor-grabbing"
+				className="absolute right-1 top-0 w-16 origin-[bottom_center] rotate-[14deg] cursor-grab transition-all active:scale-x-110 active:scale-y-90 active:cursor-grabbing group-hocus-within/mark:-top-9"
 				onClick={() => {
 					squeak();
 

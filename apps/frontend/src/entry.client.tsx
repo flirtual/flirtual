@@ -3,15 +3,10 @@ import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-import { urls } from "~/urls";
 import { applyDocumentMutations } from "./app/[locale]/lazy-layout";
 import { i18n } from "./i18n";
-import { log, logRendering } from "./log";
-import {
-	preloadAll,
-	restoreQueries,
-	saveQueries
-} from "./query";
+import { preloadAll, restoreQueries, saveQueries } from "./query";
+import { urls } from "./urls";
 
 i18n.on("loaded", () => {
 	// eslint-disable-next-line no-console
@@ -40,17 +35,16 @@ App.addListener("appUrlOpen", async (event) => {
 	location.href = pathname;
 });
 
-logRendering("before transition");
-
 startTransition(() => {
-	logRendering("before hydrate");
-
 	hydrateRoot(
 		document,
 		<StrictMode>
 			<HydratedRouter />
-		</StrictMode>
-	)
-
-	logRendering("after hydrate");
+		</StrictMode>,
+		{
+			onCaughtError: (error) => console.error("onCaught", error),
+			onRecoverableError: (error) => console.error("onRecoverable", error),
+			onUncaughtError: (error) => console.error("onUncaught", error),
+		}
+	);
 });

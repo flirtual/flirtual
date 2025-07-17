@@ -3,18 +3,18 @@ import { useEffect } from "react";
 import type { Session } from "~/api/auth";
 import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
 import { applyDocumentMutations } from "~/app/[locale]/lazy-layout";
+import { getPreferences } from "~/preferences";
 import { mutate, queryClient, sessionKey, useMutation } from "~/query";
 import type { Theme } from "~/theme";
 
 import { useMediaQuery } from "./use-media-query";
+import { usePreferences } from "./use-preferences";
 // import { postpone } from "./use-postpone";
 import { useOptionalSession } from "./use-session";
 
-export function getTheme(): Theme {
-	const session = queryClient.getQueryData<Session | null>(sessionKey());
-	const sessionTheme = session?.user.preferences?.theme || "system";
-
-	if (sessionTheme !== "system") return sessionTheme;
+export async function getTheme(): Promise<Theme> {
+	const localTheme = await getPreferences<PreferenceTheme>("theme") || "system";
+	if (localTheme !== "system") return localTheme;
 
 	return matchMedia("(prefers-color-scheme: dark)").matches
 		? "dark"
@@ -22,42 +22,49 @@ export function getTheme(): Theme {
 }
 
 export function useTheme() {
-	// postpone("useTheme()");
+	const [localTheme, setLocalTheme] = usePreferences<PreferenceTheme>("theme", "system");
 
 	const session = useOptionalSession();
-	const sessionTheme = session?.user.preferences?.theme || "system";
+	const sessionTheme = session?.user.preferences?.theme;
 
 	const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
 
-	const theme = sessionTheme === "system"
+	const theme = localTheme === "system"
 		? prefersDark
 			? "dark"
 			: "light"
-		: sessionTheme;
+		: localTheme;
 
 	useEffect(() => void applyDocumentMutations(), [theme]);
 
 	const { mutateAsync } = useMutation({
 		mutationKey: sessionKey(),
 		onMutate: async (theme: PreferenceTheme) => {
-			if (!session || theme === sessionTheme) return;
+			await Promise.all([
+				setLocalTheme(theme),
+				mutate<Session | null>(sessionKey(), (session) =>
+					session
+						? ({
+								...session,
+								user: {
+									...session.user,
+									preferences: {
+										...session.user.preferences,
+										theme
+									}
+								}
+							})
+						: null)
+			]);
 
-			await mutate(sessionKey(), {
-				...session,
-				user: {
-					...session.user,
-					preferences: {
-						...session.user.preferences,
-						theme
-					}
-				}
-			});
+			console.log(applyDocumentMutations, "before");
+			await applyDocumentMutations();
+
+			console.log(applyDocumentMutations, "after");
 		},
 		mutationFn: async (theme) => {
-			if (!session || theme === sessionTheme) return session;
-
+			if (!session || theme === sessionTheme) return;
 			await Preferences.update(session.user.id, { theme });
-			// return { ...session, user: { ...session.user, preferences } };
 		},
 	});
 
@@ -66,7 +73,8 @@ export function useTheme() {
 		mutateAsync,
 		{
 			prefersDark,
-			sessionTheme
+			sessionTheme,
+			localTheme
 		}
 	] as const;
 }

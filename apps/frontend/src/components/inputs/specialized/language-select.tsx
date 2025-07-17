@@ -41,7 +41,7 @@ export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ classNa
 
 	return (
 		<Select onValueChange={(locale: Locale) => i18n.changeLanguage(locale)}>
-			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap", className)}>
+			<RadixSelectTrigger className={twMerge("focusable rounded-lg flex items-center gap-0.5em whitespace-nowrap", className)}>
 				<Languages className="inline-block size-em" />
 				{" "}
 				{localeNames[locale]}

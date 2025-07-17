@@ -28,7 +28,7 @@ const safeArea: SafeAreaConfig = {
 export async function applyDocumentMutations() {
 	log("%s()", applyDocumentMutations.name);
 
-	const theme = getTheme();
+	const theme = await getTheme();
 	const themeStyle = location.pathname.replace(localePathnameRegex, "") === urls.discover("homies")
 		? "friend"
 		: "default";

@@ -1,5 +1,6 @@
+import * as Sentry from "@sentry/react";
+import { LazyMotion } from "motion/react";
 import type { PropsWithChildren } from "react";
-import { I18nextProvider } from "react-i18next";
 import {
 	Links,
 	Meta,
@@ -10,13 +11,12 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import { ErrorDialog } from "./app/[locale]/(app)/error-dialog";
-import { i18n } from "./i18n";
+import { HavingIssues } from "./components/error";
+import { LoadingIndicator } from "./components/loading-indicator";
 
 import "@fontsource-variable/montserrat";
 import "@fontsource-variable/nunito";
 import "./app/index.css";
-import { LoadingIndicator } from "./components/loading-indicator";
 
 export const links: Route.LinksFunction = () => [];
 
@@ -25,9 +25,8 @@ export async function loader({ params: { locale } }: Route.LoaderArgs) {
 }
 
 export function Layout({ children }: PropsWithChildren) {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { locale } = useLoaderData<typeof loader>();
-	// await i18n.changeLanguage(locale);
+	// i18n.language = locale;
 
 	return (
 		<html suppressHydrationWarning lang={locale}>
@@ -41,9 +40,17 @@ export function Layout({ children }: PropsWithChildren) {
 				suppressHydrationWarning
 				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
 			>
-				<I18nextProvider i18n={i18n}>
-					{children}
-				</I18nextProvider>
+				<Sentry.ErrorBoundary
+					fallback={({ eventId }) => (
+						<div className="flex h-screen w-screen items-center justify-center">
+							<HavingIssues digest={eventId} />
+						</div>
+					)}
+				>
+					<LazyMotion strict features={async () => ((await import("./motion")).default)}>
+						{children}
+					</LazyMotion>
+				</Sentry.ErrorBoundary>
 				<ScrollRestoration />
 				<Scripts />
 			</body>
@@ -52,13 +59,9 @@ export function Layout({ children }: PropsWithChildren) {
 }
 
 export function HydrateFallback() {
-  return <LoadingIndicator/>
+	return <LoadingIndicator />;
 }
 
 export default function App() {
 	return <Outlet />;
-}
-
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-	return <ErrorDialog error={error as any} reset={() => location.reload()} />;
 }

@@ -1,6 +1,6 @@
 import { captureException } from "@sentry/react";
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -71,7 +71,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 	const errorKey = error.digest || error.message;
 
 	const eventId = useMemo(() => captureException(error, { tags: { digest: error.digest } }), [error]);
-	const [squeak] = useSound(urls.media("squeak.mp3"));
+	// const [squeak] = useSound(urls.media("squeak.mp3"));
 
 	const throwCount = (errors.get(errorKey) || 0) + 1;
 
@@ -116,9 +116,9 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										height={345}
 										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 										width={412}
-										onClick={() => squeak()}
+										// onClick={() => squeak()}
 									/>
-									<motion.div
+									<m.div
 										animate={{ scale: 1, opacity: 1 }}
 										className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80"
 										initial={{ scale: 0.8, opacity: 0.5 }}
@@ -130,7 +130,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										<p>
 											Flirtual is temporarily offline for scheduled maintenance. We'll be right back&mdash;check back soon!
 										</p>
-									</motion.div>
+									</m.div>
 								</div>
 								<div className="flex flex-wrap gap-2">
 									<Button
@@ -186,9 +186,9 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										height={345}
 										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 										width={412}
-										onClick={() => squeak()}
+										// onClick={() => squeak()}
 									/>
-									<motion.div
+									<m.div
 										animate={{ scale: 1, opacity: 1 }}
 										className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80"
 										initial={{ scale: 0.8, opacity: 0.5 }}
@@ -201,7 +201,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										<pre className="whitespace-pre-wrap text-xs">
 											{error.message}
 										</pre>
-									</motion.div>
+									</m.div>
 								</div>
 								<ul className="ml-4 flex list-disc flex-col gap-2">
 									<li>

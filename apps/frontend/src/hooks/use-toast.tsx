@@ -1,5 +1,5 @@
-import { Toast as NativeToast } from "@capacitor/toast";
-import { captureException } from "@sentry/react";
+// import { Toast as NativeToast } from "@capacitor/toast";
+// import { captureException } from "@sentry/react";
 import { AlertTriangle, Check } from "lucide-react";
 import {
 	createContext,
@@ -90,6 +90,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 			if (typeof options === "string") options = { value: options };
 			const { type = "success", icon, duration = "short", value } = options;
 
+			/*
 			if (device.native)
 				return NativeToast.show({
 					duration,
@@ -102,6 +103,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 					// Android only supports bottom position.
 					position: "bottom"
 				});
+				*/
 
 			// See https://capacitorjs.com/docs/apis/toast
 			const ttl = duration === "short" ? 2000 : 3500;
@@ -134,7 +136,7 @@ export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
 				|| (typeof reason === "string" && reason)
 				|| t("errors.internal_server_error");
 
-			if (!expected) captureException(reason);
+			// if (!expected) captureException(reason);
 
 			return add({
 				type: "error",

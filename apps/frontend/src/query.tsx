@@ -112,9 +112,8 @@ export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			experimental_prefetchInRender: true,
-			// retry: environment !== "development",
 			throwOnError: true,
-			retry: true,
+			retry: !development,
 			retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 60000),
 			staleTime: ms("5m"),
 			gcTime: ms("1h"),
@@ -243,12 +242,12 @@ export function useQuery<
 		usedQuery = true;
 	}
 
-	if (server) {
-		if (placeholderData === undefined)
-			postpone("useQuery() without placeholderData");
-
-		return placeholderData as T;
-	}
+	// if (server) {
+	// 	if (placeholderData === undefined)
+	// 		postpone("useQuery() without placeholderData");
+	//
+	// 	return placeholderData as T;
+	// }
 
 	if (!enabled && placeholderData === undefined)
 		throw new Error(`useQuery(${queryKey}) called without placeholderData while disabled. This will permanently suspend the component.`);

@@ -32,20 +32,20 @@ export function Testimonial({ id }: TileProps) {
 			<div className="flex h-[40vh] shrink-0 overflow-x-hidden desktop:tall:h-[50vh]">
 				<div className="grid min-w-max grid-cols-2 overflow-y-hidden">
 					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
-						{images.map((source, index) => (
+						{images.map((source) => (
 							<img
 								className="h-full object-cover"
-								fetchPriority={index === 0 ? "high" : "low"}
+								// fetchPriority={index === 0 ? "high" : "low"}
 								key={source}
 								src={urls.media(source)}
 							/>
 						))}
 					</div>
 					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
-						{images.map((source, index) => (
+						{images.map((source) => (
 							<img
 								className="h-full object-cover"
-								fetchPriority={index === 0 ? "high" : "low"}
+								// fetchPriority={index === 0 ? "high" : "low"}
 								key={source}
 								src={urls.media(source)}
 							/>

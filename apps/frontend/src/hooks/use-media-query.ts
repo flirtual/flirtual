@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useDebugValue, useEffect, useState } from "react";
 
 import { server } from "~/const";
@@ -8,12 +7,12 @@ import { server } from "~/const";
 export function useMediaQuery(media: string, defaultValue?: boolean) {
 	useDebugValue(media);
 
-	if (server) {
-		// if (defaultValue === undefined)
-		// 	postpone("useMediaQuery() without defaultValue");
-
-		return defaultValue;
-	}
+	// if (server) {
+	// 	// if (defaultValue === undefined)
+	// 	// 	postpone("useMediaQuery() without defaultValue");
+	//
+	// 	return defaultValue;
+	// }
 
 	const [value, setValue] = useState(defaultValue ?? matchMedia(media).matches);
 	useMediaQueryCallback(media, ({ matches }) => setValue(matches));

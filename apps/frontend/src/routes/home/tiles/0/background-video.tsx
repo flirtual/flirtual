@@ -19,11 +19,8 @@ export const BackgroundVideo: React.FC = () => {
 			className="absolute left-0 top-0 size-full object-cover brightness-50"
 			poster={posterUrl}
 		>
-			<source
-				src="https://static.flirtual.com/video.webm"
-				type="video/webm; codecs=vp9"
-			/>
-			<source src="https://static.flirtual.com/video.mp4" type="video/mp4" />
+			<source src={urls.media("video.webm")} type="video/webm; codecs=vp9" />
+			<source src={urls.media("video.mp4")} type="video/mp4" />
 			<Image
 				priority
 				alt={t("mellow_short_shark_propel")}

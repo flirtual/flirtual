@@ -1,3 +1,5 @@
+"use client";
+
 import type { AppInfo } from "@capacitor/app";
 import { App } from "@capacitor/app";
 import type { DeviceId, DeviceInfo } from "@capacitor/device";
@@ -5,6 +7,8 @@ import { Device } from "@capacitor/device";
 
 import { client, gitCommitSha, platformOverride } from "~/const";
 import { log as _log } from "~/log";
+
+import { postpone } from "./use-postpone";
 
 export type DevicePlatform = "android" | "apple" | "web";
 
@@ -80,6 +84,6 @@ if (client)
 	log(device);
 
 export function useDevice() {
-	// postpone(useDevice.name);
+	postpone(useDevice.name);
 	return device;
 }

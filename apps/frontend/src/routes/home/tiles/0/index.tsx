@@ -8,6 +8,7 @@ import { Tile, TileAnchor } from "..";
 import type { TileProps } from "..";
 import { SignUpButton } from "../../sign-up-button";
 import { BackgroundVideo } from "./background-video";
+import { InlineLanguageSelect } from "~/components/inputs/specialized/language-select";
 
 export function Hero({ id }: TileProps) {
 	const { t } = useTranslation();
@@ -17,6 +18,7 @@ export function Hero({ id }: TileProps) {
 			className="relative flex flex-col items-center justify-center"
 			id={id}
 		>
+			<InlineLanguageSelect className="absolute top-8 right-12 z-20" />
 			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-32">
 				<FlirtualLogo className="mb-4 w-48 desktop:w-64" />
 				<TileAnchor id={id}>

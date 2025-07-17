@@ -5,9 +5,50 @@ import sonda from "sonda/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+const moduleLanguageRegex = /(\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)(?<language>[a-z-_]+)\.(json|js)$/i;
+
+const moduleLanguageOverrides: Record<string, string> = {
+	en_US: "en",
+	ja_JP: "ja",
+};
+
+function getModuleLanguage(id: string): string | null {
+	const match = id.match(moduleLanguageRegex);
+	if (!match?.groups?.language) return null;
+
+	const language = moduleLanguageOverrides[match.groups.language] || match.groups.language;
+	return language;
+}
+
+const modulePackageNameRegex = /\/node_modules\/.+\/node_modules\/(?<name>(@[^\/]+\/)?[^\/]+)\//i;
+
+function getPackageName(id: string): string | null {
+	const match = id.match(modulePackageNameRegex);
+	if (!match?.groups?.name) return null;
+
+	return match.groups.name;
+}
+
 export default defineConfig({
 	build: {
-		sourcemap: true
+		sourcemap: true,
+		rollupOptions: {
+			output: {
+				hashCharacters: "base36",
+				assetFileNames: "chunks/[name].[hash:8][extname]",
+				chunkFileNames: "chunks/[name].[hash:8].js",
+				entryFileNames: "chunks/[name].[hash:8].js",
+				manualChunks: (id) => {
+					const language = getModuleLanguage(id);
+					if (language) return `languages/${language}`;
+
+					const packageName = getPackageName(id);
+					if (packageName?.startsWith("@capacitor")) return `capacitor`;
+
+					return null;
+				}
+			}
+		}
 	},
 	server: {
 		host: "0.0.0.0",
@@ -22,7 +63,13 @@ export default defineConfig({
 		// }),
 		reactRouter(),
 		tsconfigPaths(),
-		cloudflare(),
-		sonda()
+		cloudflare({
+			experimental:{ 
+				headersAndRedirectsDevModeSupport: true,
+			}
+		}),
+		sonda({
+			sources: true
+		})
 	],
 });

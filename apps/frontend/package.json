@@ -3,6 +3,7 @@
 	"packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
 	"scripts": {
 		"build": "BUILD=1 react-router build",
+		"clean": "rm node_modules/.vite .react-router build -rf",
 		"dev": "react-router dev",
 		"preview": "pnpm run -s build && vite preview",
 		"deploy": "pnpm run -s build && wrangler deploy",
@@ -40,8 +41,6 @@
 		"@formatjs/intl-displaynames": "^6.8.11",
 		"@formatjs/intl-durationformat": "^0.7.4",
 		"@heroicons/react": "^2.2.0",
-		"@inlang/paraglide-next": "0.8.1",
-		"@kfarwell/nextjs-toploader": "^1.4.6",
 		"@marsidev/react-turnstile": "^1.1.0",
 		"@radix-ui/react-alert-dialog": "^1.1.14",
 		"@radix-ui/react-dialog": "^1.1.14",
@@ -131,7 +130,7 @@
 		"@ariesclark/eslint-config": "^3.1.1",
 		"@capacitor/assets": "^3.0.5",
 		"@capacitor/cli": "^7.4.2",
-		"@cloudflare/vite-plugin": "^1.9.4",
+		"@cloudflare/vite-plugin": "^1.9.5",
 		"@cloudflare/workers-types": "^4.20250715.0",
 		"@eslint-react/eslint-plugin": "^1.52.3",
 		"@inlang/paraglide-js": "2.0.11",
@@ -152,7 +151,7 @@
 		"eslint": "^9.31.0",
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.20",
-		"eslint-plugin-tailwindcss": "^3.18.0",
+		"eslint-plugin-tailwindcss": "^3.18.2",
 		"native-run": "^2.0.1",
 		"postcss": "^8.5.6",
 		"sirv-cli": "^3.0.1",
@@ -166,7 +165,7 @@
 		"vite-plugin-mkcert": "^1.17.8",
 		"vite-plugin-webfont-dl": "^3.11.0",
 		"vite-tsconfig-paths": "^5.1.4",
-		"wrangler": "^4.24.3",
+		"wrangler": "^4.24.4",
 		"xml-formatter": "^3.6.6"
 	}
 }
