@@ -28,7 +28,16 @@ defmodule Flirtual.User do
   alias Flirtual.User.Profile.{Block, Image, LikesAndPasses}
   alias Flirtual.User.{Profile, Relationship, Session}
 
-  @tags [:admin, :moderator, :beta_tester, :debugger, :verified, :legacy_vrlfp, :translating]
+  @tags [
+    :admin,
+    :moderator,
+    :beta_tester,
+    :debugger,
+    :verified,
+    :legacy_vrlfp,
+    :translating,
+    :official
+  ]
 
   @statuses [
     "visible",

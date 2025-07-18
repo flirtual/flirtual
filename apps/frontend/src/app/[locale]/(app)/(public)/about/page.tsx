@@ -94,6 +94,12 @@ export default function AboutPage() {
 									url: urls.profile("uQt9hi63LxYP6Cok6Znuz3")
 								},
 								{
+									name: "FFHK",
+									role: tTeam("moderator"),
+									avatar: "47405223-1850-4116-a21a-4132fbed51ff",
+									url: urls.profile("fv2DHfXotnd26mS2yucwbX")
+								},
+								{
 									name: "Kart²",
 									role: tTeam("moderator"),
 									avatar: "18263ba2-f2e6-45b3-9e12-1cabbf3a1556",
@@ -112,10 +118,10 @@ export default function AboutPage() {
 									url: urls.profile("ZxqVfAQWSmRH3r3RG6MkMf")
 								},
 								{
-									name: "Ryu",
+									name: "Simon3373",
 									role: tTeam("moderator"),
-									avatar: "c42d25de-953a-4330-b44c-6d6c35d39987",
-									url: urls.profile("A2eQGb9azTPVAznaviKLcT")
+									avatar: "4c30da22-1438-45c9-968e-a2a3a67e9cc7",
+									url: urls.profile("WVhKhLx89bDbUweT4BhKaW")
 								},
 								{
 									name: "Starh",
@@ -130,51 +136,10 @@ export default function AboutPage() {
 									url: urls.profile("CtCeB3m7jSDTaKTu2GF6HN")
 								},
 								{
-									name: "Tip_The_Spartan",
-									role: `${tTeam("moderator")} & ${tTeam("event_host")}`,
-									avatar: "4b7e5902-c19d-4c35-ac2e-e9d534a7f7bf",
-									url: urls.profile("BrKN6eEdeF9gUEgD6xf8uB")
-								},
-								{
-									name: "noxatnight",
-									role: tTeam("event_host"),
-									avatar: "ebacda78-2516-40af-8cd6-2f812764df1b",
-									url: urls.profile("phzPP68JZq2m9HovbPeuZQ")
-								},
-								{
-									name: "Solo!!",
-									role: tTeam("event_host"),
-									avatar: "c2d09814-db3b-49ba-a502-e5421e4816b3",
-									url: urls.profile("QWnJPkY2SYZYZCPtSFDu4N")
-								},
-								{
-									name: "Xero_XIII",
-									role: tTeam("event_host"),
-									avatar: "8b85f8fc-6f0b-41df-8f7d-a829cb346b86",
-									url: urls.profile("nro9VuxaTPq7YLSVw6uZgk")
-								},
-								{
-									name: "Antithalice",
-									role: tTeam("social"),
-									avatar: "f7798643-968d-4a2f-8c1f-bae4f8342bf9",
-									url: urls.profile("djj7zNDxYPyCs3WmNJ5BBY")
-								},
-								{
-									name: "FuuGhoul",
-									role: tTeam("social"),
-									avatar: "0ebe531d-cb90-4c42-8294-37145c49a49a",
-									url: urls.profile("iCMu3yfBx5d9Yhmst3pBc3")
-								},
-								{
-									name: "Soda",
-									role: tTeam("social"),
-									avatar: "2456e7e3-d9c2-4053-8cc9-80fcd6bb34c9",
-									url: urls.profile("v3GGWajpcBNwhiZ5DdtBSk")
-								},
-								{
-									name: "Katten!",
-									role: tTeam("katten"),
-									avatar: "09aea7c6-38b5-4898-8098-fd7952f115cc"
+									name: "Zyp",
+									role: tTeam("moderator"),
+									avatar: "78830b45-2d17-4caa-80eb-6ce728b991bf",
+									url: urls.profile("Am4uyyviqQfEy7F44XsJz6")
 								},
 								{
 									name: "Syrmor",
@@ -203,7 +168,7 @@ export default function AboutPage() {
 					),
 					timeline: () => (
 						<div className="flex flex-col gap-6">
-							{(["2018", "2019", "2020", "2021", "2022", "2023"] as const).map(
+							{(["2018", "2019", "2020", "2021", "2022", "2023", "2024"] as const).map(
 								(year, index) => (
 									<TimelineItem index={index} key={year} year={year} />
 								)
