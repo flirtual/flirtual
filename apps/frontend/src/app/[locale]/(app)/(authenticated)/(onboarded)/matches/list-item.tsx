@@ -1,11 +1,13 @@
 "use client";
 
+import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { FC, RefAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { Conversation } from "~/api/conversations";
 import { displayName } from "~/api/user";
+import { Badge } from "~/components/badge";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Image } from "~/components/image";
@@ -90,13 +92,20 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 						<span data-mask className="truncate font-montserrat text-lg font-semibold leading-tight">
 							{displayName(user)}
 						</span>
-						{kind === "love"
+						{user.tags?.includes("official")
 							? (
-									<HeartIcon className="inline h-5" />
+									<Badge className="absolute right-2 top-2 shadow-none">
+										<Check className="inline size-4" />
+										Official
+									</Badge>
 								)
-							: (
-									<PeaceIcon className="inline h-5" />
-								)}
+							: kind === "love"
+								? (
+										<HeartIcon className="inline h-5" />
+									)
+								: (
+										<PeaceIcon className="inline h-5" />
+									)}
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
 						<span data-mask className="w-full truncate text-black-50 dark:text-white-40">
