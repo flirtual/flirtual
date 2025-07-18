@@ -51,10 +51,16 @@
 			"image_alt": "Flirtual in 2022"
 		},
 		"2023": {
-			"title": "✨ 2023",
-			"description": "New design, mobile apps, and big improvements behind the scenes.",
+			"title": "📱 2023",
+			"description": "Rebuilt from the ground up with a fresh new design, improved performance, and finally: mobile apps!",
 			"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
 			"image_alt": "Flirtual in 2023"
+		},
+		"2024": {
+			"title": "2024 💅",
+			"description": "More ways to express yourself with profile prompts, music playlists, 200+ new interests, chat emojis, and more.",
+			"image": "ce26852c-d7a2-439c-95aa-55543b1c7d23",
+			"image_alt": "Flirtual in 2024"
 		}
 	},
 	"price_listen_wise_communicate": {

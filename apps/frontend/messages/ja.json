@@ -51,10 +51,16 @@
 			"image_alt": "2022年のFlirtual"
 		},
 		"2023": {
-			"title": "✨ 2023",
-			"description": "新しいデザイン、モバイルアプリ、そして裏側での大幅な改良。",
+			"title": "📱 2023",
+			"description": "一から再構築され、新しいデザイン、性能の向上、そしてついにモバイルアプリが追加されました！",
 			"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
 			"image_alt": "2023年のFlirtual"
+		},
+		"2024": {
+			"title": "2024 💅",
+			"description": "プロフィールプロンプト、音楽プレイリスト、200種類以上の新しい興味、チャット絵文字など、自分を表現する新たな方法がさらに充実しました。",
+			"image": "ce26852c-d7a2-439c-95aa-55543b1c7d23",
+			"image_alt": "2024年のFlirtual"
 		}
 	},
 	"price_listen_wise_communicate": {
