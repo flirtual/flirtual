@@ -162,7 +162,7 @@ export default async function AboutPage() {
 					),
 					timeline: () => (
 						<div className="flex flex-col gap-6">
-							{(["2018", "2019", "2020", "2021", "2022", "2023"] as const).map(
+							{(["2018", "2019", "2020", "2021", "2022", "2023", "2024"] as const).map(
 								(year, index) => (
 									<TimelineItem index={index} key={year} year={year} />
 								)
