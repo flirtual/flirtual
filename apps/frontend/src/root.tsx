@@ -1,7 +1,6 @@
 import * as Sentry from "@sentry/react";
 import { LazyMotion } from "motion/react";
-import { type PropsWithChildren, startTransition, useEffect } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { type PropsWithChildren, useEffect } from "react";
 import { useSSR as useTranslateSSR } from "react-i18next";
 import {
 	Links,
@@ -9,7 +8,6 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	useNavigate,
 	useParams,
 	useRouteLoaderData,
 } from "react-router";
@@ -21,7 +19,7 @@ import { InsetPreview } from "./components/inset-preview";
 import { LoadingIndicator } from "./components/loading-indicator";
 import { TooltipProvider } from "./components/tooltip";
 import { UpdateInformation } from "./components/update-information";
-import { environment } from "./const";
+import { development } from "./const";
 import { ToastProvider } from "./hooks/use-toast";
 import { defaultLocale, i18n, locales } from "./i18n";
 import { QueryProvider } from "./query";
@@ -68,20 +66,20 @@ export function Layout({ children }: PropsWithChildren) {
 						</div>
 					)}
 				>
-					<AnalyticsProvider />
-					<LazyMotion strict features={async () => ((await import("./motion")).default)}>
-						<QueryProvider>
-							{environment === "development" && <InsetPreview />}
-							<UpdateInformation />
-							<ToastProvider>
-								<TooltipProvider>
-									<RedirectBoundary>
+					<RedirectBoundary>
+						<AnalyticsProvider />
+						<LazyMotion strict features={async () => ((await import("./motion")).default)}>
+							<QueryProvider>
+								{development && <InsetPreview />}
+								<UpdateInformation />
+								<ToastProvider>
+									<TooltipProvider>
 										{children}
-									</RedirectBoundary>
-								</TooltipProvider>
-							</ToastProvider>
-						</QueryProvider>
-					</LazyMotion>
+									</TooltipProvider>
+								</ToastProvider>
+							</QueryProvider>
+						</LazyMotion>
+					</RedirectBoundary>
 				</Sentry.ErrorBoundary>
 				<ScrollRestoration />
 				<Scripts />

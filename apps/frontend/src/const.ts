@@ -11,7 +11,7 @@ export const apiUrl = import.meta.env.VITE_API_URL as string;
 assert(apiUrl, "VITE_API_URL is required");
 export const apiOrigin = new URL(apiUrl).origin;
 
-export const environment = (import.meta.env.NODE_ENV) as "development" | "preview" | "production";
+// export const environment = (import.meta.env.NODE_ENV) as "development" | "preview" | "production";
 
 export const development = import.meta.env.DEV;
 export const production = !development;
@@ -38,7 +38,7 @@ export const sentryProject = import.meta.env.SENTRY_PROJECT as string;
 export const sentryProjectId = Number.parseInt(import.meta.env.VITE_SENTRY_PROJECT_ID as string || "0");
 export const sentryReportTo = import.meta.env.VITE_SENTRY_REPORT_TO as string;
 
-export const sentryEnabled = environment !== "development"
+export const sentryEnabled = development
 	&& !!sentryDsn
 	&& !!sentryOrganization
 	&& !!sentryProject

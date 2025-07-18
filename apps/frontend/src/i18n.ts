@@ -28,7 +28,8 @@ declare module "i18next" {
 	}
 }
 
-export const localePathnameRegex = new RegExp(`^/(${locales.join("|")})`);
+// eslint-disable-next-line regexp/no-optional-assertion
+export const localePathnameRegex = new RegExp(`^\/(${locales.join("|")})?(\/|$)?`);
 
 export const localeNames: Record<Locale, string> = {
 	en: "English",
@@ -107,7 +108,7 @@ export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Pro
 	const navigate = useNavigate();
 
 	const setLocale = useCallback(async (locale: Locale) => {
-		const pathname = location.pathname.replace(localePathnameRegex, `/${locale}`);
+		const pathname = location.pathname.replace(localePathnameRegex, locale === defaultLocale ? "/" : `/${locale}/`);
 		await navigate({ ...location, pathname }, { replace: true });
 	}, [location, navigate]);
 

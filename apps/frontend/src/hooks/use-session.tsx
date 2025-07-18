@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Authentication } from "~/api/auth";
-// import { redirect, useSearchParams } from "~/i18n/navigation";
 import type {
 	MinimalQueryOptions
 } from "~/query";

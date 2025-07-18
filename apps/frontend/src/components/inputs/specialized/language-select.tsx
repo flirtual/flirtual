@@ -40,7 +40,7 @@ export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ classNa
 			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
 				<Languages className="inline-block size-em" />
 				{" "}
-				{localeNames[locale]}
+				<span className="grow">{localeNames[locale]}</span>
 				{" "}
 				<ChevronDown className="inline-block size-em" />
 			</RadixSelectTrigger>

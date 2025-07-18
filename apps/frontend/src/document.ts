@@ -20,7 +20,7 @@ const safeArea: SafeAreaConfig = {
 };
 
 export async function applyDocumentMutations() {
-	log("%s()", applyDocumentMutations.name);
+	log("applyDocumentMutations()");
 
 	const { body: element } = document;
 	if (!element.style.getPropertyValue("--safe-area-inset-top")) initializeSafeArea();

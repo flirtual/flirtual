@@ -72,7 +72,7 @@ export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className 
 			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
 				<ThemeIcon className="inline-block size-em" />
 				{" "}
-				{t(theme)}
+				<span className="grow">{t(theme)}</span>
 				{" "}
 				<ChevronDown className="inline-block size-em" />
 			</RadixSelectTrigger>

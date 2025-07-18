@@ -16,7 +16,6 @@ import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
 import { development, gitCommitSha, server } from "./const";
-import { postpone } from "./hooks/use-postpone";
 import { log as _log } from "./log";
 import { getPreferences, setPreferences } from "./preferences";
 import { isUid } from "./utilities";
@@ -77,7 +76,7 @@ export function preferencesFetcher<T>({ queryKey: [, key] }: QueryFunctionContex
 }
 
 export async function preloadAll() {
-	log("%s()", preloadAll.name);
+	log("preloadAll()");
 
 	await Promise.all([
 		// `staleTime: 0` to force a refetch on every hard-reload.
@@ -102,7 +101,7 @@ export async function preloadAll() {
 			queryFn: attributeFetcher
 		}))
 	]).catch((reason) => {
-		log("%s() failed: %o", preloadAll.name, reason);
+		log("preloadAll() failed: %o", reason);
 	});
 }
 
@@ -150,7 +149,7 @@ const cacheVersion = gitCommitSha;
 const defaultCacheTime = ms("1d");
 
 export async function saveQueries() {
-	log("%s()", saveQueries.name);
+	log("saveQueries()");
 	const queries = queryCache.getAll();
 
 	const eligibleQueries = queries.filter(({
@@ -182,13 +181,13 @@ export async function saveQueries() {
 }
 
 export async function evictQueries() {
-	log("%s()", evictQueries.name);
+	log("evictQueries()");
 	queryCache.clear();
 	await setPreferences("queries", null);
 }
 
 export async function restoreQueries() {
-	log("%s()", restoreQueries.name);
+	log("restoreQueries()");
 
 	const { v: version, q: potentialQueries } = await getPreferences<QueryPreference>("queries") || { v: cacheVersion, q: [] };
 
@@ -211,7 +210,7 @@ export async function restoreQueries() {
 		return queryCache.build(queryClient, { queryKey, queryHash }, state);
 	}).filter(Boolean);
 
-	log("%s() => %O", restoreQueries.name, new Map(queries.map(({ queryKey, state: { data } }) => [queryKey, data])));
+	log("restoreQueries() => %O", new Map(queries.map(({ queryKey, state: { data } }) => [queryKey, data])));
 }
 
 let usedQuery = false;
@@ -242,12 +241,10 @@ export function useQuery<
 		usedQuery = true;
 	}
 
-	// if (server) {
-	// 	if (placeholderData === undefined)
-	// 		postpone("useQuery() without placeholderData");
-	//
-	// 	return placeholderData as T;
-	// }
+	if (server) {
+		if (placeholderData !== undefined)
+			return placeholderData as T;
+	}
 
 	if (!enabled && placeholderData === undefined)
 		throw new Error(`useQuery(${queryKey}) called without placeholderData while disabled. This will permanently suspend the component.`);

@@ -1,9 +1,8 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { reactRouter } from "@react-router/dev/vite";
-import mime from "mime/lite";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import sonda from "sonda/vite";
-// import basicSsl from "@vitejs/plugin-basic-ssl";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const moduleLanguageRegex = /(\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)(?<language>[a-z-_]+)\.(json|js)$/i;
@@ -30,45 +29,50 @@ function getPackageName(id: string): string | null {
 	return match.groups.name;
 }
 
-export default defineConfig({
-	build: {
-		sourcemap: true,
-		rollupOptions: {
-			output: {
-				hashCharacters: "hex",
-				entryFileNames: "chunks/[hash:8].js",
-				chunkFileNames: "chunks/[name].[hash:8].js",
-				assetFileNames: "chunks/[name].[hash:8].[ext]",
-				manualChunks: (id) => {
-					const language = getModuleLanguage(id);
-					if (language) return `languages/${language}`;
+export default defineConfig(({ mode }) => {
+	const { VITE_ORIGIN: origin } = loadEnv(mode, process.cwd(), "");
+	const { hostname } = new URL(origin);
 
-					const packageName = getPackageName(id);
-					if (packageName?.startsWith("@capacitor")) return `capacitor`;
+	return {
+		build: {
+			sourcemap: true,
+			rollupOptions: {
+				output: {
+					hashCharacters: "hex",
+					entryFileNames: "chunks/[hash:8].js",
+					chunkFileNames: "chunks/[name].[hash:8].js",
+					assetFileNames: "chunks/[name].[hash:8].[ext]",
+					manualChunks: (id) => {
+						const language = getModuleLanguage(id);
+						if (language) return `languages/${language}`;
 
-					return null;
+						const packageName = getPackageName(id);
+						if (packageName?.startsWith("@capacitor")) return `capacitor`;
+
+						return null;
+					}
 				}
 			}
-		}
-	},
-	server: {
-		host: "0.0.0.0",
-		port: 3000,
-		strictPort: true
-	},
-	plugins: [
-		// basicSsl({
-		// 	name: "flirtual",
-		// 	domains: ["*.custom.com"],
-		// 	certDir: "./certificates",
-		// }),
-		reactRouter(),
-		tsconfigPaths(),
-		cloudflare({
-			experimental: {
-				headersAndRedirectsDevModeSupport: true,
-			}
-		}),
-		sonda()
-	],
+		},
+		server: {
+			host: hostname,
+			port: 3000,
+			strictPort: true,
+		},
+		plugins: [
+			basicSsl({
+				name: "flirtual",
+				domains: [hostname],
+				certDir: "./certificates",
+			}),
+			reactRouter(),
+			tsconfigPaths(),
+			cloudflare({
+				experimental: {
+					headersAndRedirectsDevModeSupport: true,
+				}
+			}),
+			sonda()
+		],
+	};
 });

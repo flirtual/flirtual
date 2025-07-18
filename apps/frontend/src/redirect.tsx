@@ -25,7 +25,7 @@ export function RedirectBoundary({ children }: PropsWithChildren) {
 	return (
 		<ErrorBoundary
 			fallbackRender={({ error }) => {
-				if (isRedirectError(error)) throw error;
+				if (!isRedirectError(error)) throw error;
 				return <Navigate replace to={error.to} />;
 			}}
 			resetKeys={[location]}
