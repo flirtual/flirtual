@@ -1,5 +1,3 @@
-"use client";
-
 import type { AppInfo } from "@capacitor/app";
 import { App } from "@capacitor/app";
 import type { DeviceId, DeviceInfo } from "@capacitor/device";

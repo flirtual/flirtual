@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { SelectItemText } from "@radix-ui/react-select";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import { type FC, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -14,7 +14,7 @@ import { InputSelect, type InputSelectProps, SelectItem } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 	const tAttribute = useAttributeTranslation();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const [reference, viewed] = useInView({ triggerOnce: true });
 
@@ -51,7 +51,7 @@ export type InputCountrySelectProps = {
 >;
 
 export function InputCountrySelect({ prefer = "us", ...props }: InputCountrySelectProps) {
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();

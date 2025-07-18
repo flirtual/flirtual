@@ -7,7 +7,7 @@ import { User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { useShare } from "~/hooks/use-share";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { mutate, sessionKey } from "~/query";
 import { toAbsoluteUrl, urls } from "~/urls";
 
@@ -20,7 +20,7 @@ import { ShareIcon } from "../icons/share";
 import { InputText } from "../inputs";
 
 export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
-	const router = useRouter();
+	const navigate = useNavigate();
 	const session = useSession();
 	const { t } = useTranslation();
 	const toasts = useToast();
@@ -58,7 +58,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											setProfileLink(slug);
 
 											await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
-											router.push(urls.profile(slug));
+											navigate(urls.profile(slug)));
 
 											return toasts.add(t("odd_mad_dog_nurture"));
 										})

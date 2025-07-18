@@ -1,5 +1,5 @@
 import { MoveRight } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import type { FC } from "react";
 
 import type { Session } from "~/api/auth";
@@ -14,15 +14,15 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
 	const { t } = useTranslation();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	return (
 		<Form

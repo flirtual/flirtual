@@ -14,7 +14,7 @@ import {
 import { Link } from "~/components/link";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 export const ProfileDropdownReportsSubmenu: FC<
@@ -22,7 +22,7 @@ export const ProfileDropdownReportsSubmenu: FC<
 > = ({ user, children }) => {
 	const session = useOptionalSession();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 	const { t } = useTranslation();
 

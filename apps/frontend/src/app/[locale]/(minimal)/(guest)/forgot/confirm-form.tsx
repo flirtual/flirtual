@@ -1,5 +1,5 @@
 import { decode } from "jsonwebtoken";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import { useState } from "react";
 
 import { Authentication } from "~/api/auth";
@@ -13,7 +13,7 @@ import { urls } from "~/urls";
 export const ConfirmPasswordResetForm: React.FC<{ token: string }> = ({ token }) => {
 	const [success, setSuccess] = useState(false);
 
-	const locale = useLocale();
+	const [locale] = useLocale();
 	const { t } = useTranslation();
 
 	const payload = decode(token, { json: true });

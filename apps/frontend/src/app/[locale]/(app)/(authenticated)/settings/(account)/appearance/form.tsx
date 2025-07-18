@@ -1,5 +1,5 @@
 import { Hash, X } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useEffect, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
@@ -19,7 +19,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { defaultLocale } from "~/i18n/routing";
 import { mutate, sessionKey, useMutation } from "~/query";
 import { urls } from "~/urls";
@@ -66,7 +66,7 @@ export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ 
 const ProfileColorSelect: FC = () => {
 	const [theme] = useTheme();
 	const { user } = useSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const defaultColors = defaultProfileColors[theme];
 	const colors: ProfileColors = (user.profile as unknown as { previewColors: ProfileColors }).previewColors || {
@@ -191,7 +191,7 @@ const ProfileColorSelect: FC = () => {
 										await new Promise((resolve) => {
 											setTimeout(resolve, 800);
 										});
-										router.push(urls.settings.fun);
+										navigate(urls.settings.fun));
 									}
 									setGrassTouched(grassTouched + 1);
 								}
@@ -294,7 +294,7 @@ const InputFontSize: FC = () => {
 };
 
 export const AppearanceForm: FC = () => {
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();

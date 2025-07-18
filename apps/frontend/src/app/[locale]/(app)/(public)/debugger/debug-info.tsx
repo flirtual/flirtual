@@ -1,6 +1,6 @@
 import { Clipboard } from "@capacitor/clipboard";
 import { Copy } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 
 import { Button } from "~/components/button";
 import { environment } from "~/const";
@@ -20,7 +20,7 @@ export const DebugInfo: React.FC = () => {
 		deviceId,
 		versions,
 	} = useDevice();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const session = useOptionalSession();
 

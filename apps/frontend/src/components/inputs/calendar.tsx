@@ -5,11 +5,11 @@ import {
 	ChevronsLeft,
 	ChevronsRight
 } from "lucide-react";
-import { useFormatter } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
+import { useLocale } from "~/i18n";
 
 import {
 	type InputOptionEvent,
@@ -139,17 +139,19 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	} = props;
 	const [displayDate, setDisplayDate] = useState(value);
 
-	const formatter = useFormatter();
+	const [locale] = useLocale();
+
+	const monthNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+		month: "long"
+	}), [locale]);
 	const monthNames = useMemo(
 		() =>
 			Array.from({ length: 12 })
 				.fill(null)
 				.map((_, monthIndex) => {
-					return formatter.dateTime(new Date(2022, monthIndex, 1), {
-						month: "long"
-					});
+					return monthNameFormatter.format(new Date(2022, monthIndex, 1));
 				}),
-		[formatter]
+		[monthNameFormatter]
 	);
 
 	const now = useMemo(() => new Date(), []);
@@ -203,28 +205,35 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 			.reverse();
 	}, [now, offset, min, max]);
 
+	const yearNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+		year: "numeric"
+	}), [locale]);
 	const yearNames = useMemo(
 		() =>
 			years.map((year) => {
 				return {
 					year,
-					name: formatter.dateTime(new Date(year, 0, 1), {
-						year: "numeric"
-					})
+					name: yearNameFormatter.format(new Date(year, 0, 1))
 				};
 			}),
-		[years, formatter]
+		[years, yearNameFormatter]
 	);
 
+	const weakNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+		weekday: "narrow"
+	}), [locale]);
 	const weekNames = useMemo(
 		() =>
 			[...Array.from({ length: 7 }).keys()].map((day) => {
-				return formatter.dateTime(new Date(2021, 5, day - 1), {
-					weekday: "narrow"
-				});
+				return weakNameFormatter.format(new Date(2021, 5, day - 1));
 			}),
-		[formatter]
+		[weakNameFormatter]
 	);
+
+	const dayFormatter = useMemo(() => new Intl.NumberFormat(locale, {
+		minimumIntegerDigits: 2,
+		useGrouping: false
+	}), [locale]);
 
 	const doChange = useCallback<typeof onChange>(
 		(value) => onChange(clamp(value)),
@@ -307,7 +316,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								);
 							}}
 						>
-							{formatter.dateTime(displayDate, { month: "short" })}
+							{monthNameFormatter.format(displayDate)}
 						</LabelSelect>
 						<LabelSelect
 							options={yearNames.map(({ year, name }) => ({
@@ -326,7 +335,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								);
 							}}
 						>
-							{formatter.dateTime(displayDate, { year: "numeric" })}
+							{yearNameFormatter.format(displayDate)}
 						</LabelSelect>
 					</div>
 					<div className="flex shrink-0">
@@ -408,10 +417,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 																	onDateClick?.(event);
 																}}
 															>
-																{formatter.number(day, {
-																	minimumIntegerDigits: 2,
-																	useGrouping: false
-																})}
+																{dayFormatter.format(day)}
 															</button>
 														</td>
 													);

@@ -1,5 +1,5 @@
 import { MoreHorizontal } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import { type FC, useMemo, useState } from "react";
 
 import type { Session } from "~/api/auth";
@@ -34,7 +34,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 		[kinks, session.user.profile.attributes]
 	);
 
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const languageNames = new Intl.DisplayNames(locale, {
 		type: "language"

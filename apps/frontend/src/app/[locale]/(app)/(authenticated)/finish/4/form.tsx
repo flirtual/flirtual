@@ -9,13 +9,13 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 import { usePersonality } from "../../settings/(profile)/personality/form";
 
 export const Finish4Form: React.FC = () => {
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { t } = useTranslation();
 
 	const session = useOptionalSession();
@@ -32,7 +32,7 @@ export const Finish4Form: React.FC = () => {
 			onSubmit={async (body) => {
 				await Profile.Personality.update(user.id, body);
 
-				router.push(urls.finish(5));
+				navigate(urls.finish(5)));
 			}}
 		>
 			{({ FormField }) => (

@@ -1,18 +1,31 @@
 import * as Sentry from "@sentry/react";
 import { LazyMotion } from "motion/react";
-import type { PropsWithChildren } from "react";
+import { type PropsWithChildren, startTransition, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { useSSR as useTranslateSSR } from "react-i18next";
 import {
 	Links,
 	Meta,
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	useLoaderData,
+	useNavigate,
+	useParams,
+	useRouteLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { AnalyticsProvider } from "./analytics";
 import { HavingIssues } from "./components/error";
+import { InsetPreview } from "./components/inset-preview";
 import { LoadingIndicator } from "./components/loading-indicator";
+import { TooltipProvider } from "./components/tooltip";
+import { UpdateInformation } from "./components/update-information";
+import { environment } from "./const";
+import { ToastProvider } from "./hooks/use-toast";
+import { defaultLocale, i18n, locales } from "./i18n";
+import { QueryProvider } from "./query";
+import { RedirectBoundary } from "./redirect";
 
 import "@fontsource-variable/montserrat";
 import "@fontsource-variable/nunito";
@@ -20,13 +33,21 @@ import "./app/index.css";
 
 export const links: Route.LinksFunction = () => [];
 
-export async function loader({ params: { locale } }: Route.LoaderArgs) {
-	return { locale };
+export async function loader({ params: { locale = defaultLocale } }: Route.LoaderArgs) {
+	if (!locales.includes(locale)) locale = defaultLocale;
+	await i18n.changeLanguage(locale);
+
+	return { initialI18nStore: i18n.store.data };
 }
 
 export function Layout({ children }: PropsWithChildren) {
-	const { locale } = useLoaderData<typeof loader>();
-	// i18n.language = locale;
+	let { locale = defaultLocale } = useParams();
+	if (!locales.includes(locale)) locale = defaultLocale;
+
+	const { initialI18nStore = {} } = useRouteLoaderData<typeof loader>("root") || {};
+
+	useTranslateSSR(initialI18nStore, locale);
+	useEffect(() => void i18n.changeLanguage(locale), [locale]);
 
 	return (
 		<html suppressHydrationWarning lang={locale}>
@@ -47,8 +68,19 @@ export function Layout({ children }: PropsWithChildren) {
 						</div>
 					)}
 				>
+					<AnalyticsProvider />
 					<LazyMotion strict features={async () => ((await import("./motion")).default)}>
-						{children}
+						<QueryProvider>
+							{environment === "development" && <InsetPreview />}
+							<UpdateInformation />
+							<ToastProvider>
+								<TooltipProvider>
+									<RedirectBoundary>
+										{children}
+									</RedirectBoundary>
+								</TooltipProvider>
+							</ToastProvider>
+						</QueryProvider>
 					</LazyMotion>
 				</Sentry.ErrorBoundary>
 				<ScrollRestoration />

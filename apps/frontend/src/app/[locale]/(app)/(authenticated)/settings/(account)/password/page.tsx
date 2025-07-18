@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function SettingsAccountPasswordPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function SettingsAccountPasswordPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

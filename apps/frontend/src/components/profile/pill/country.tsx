@@ -31,7 +31,7 @@ export const CountryPill: FC<CountryPillProps> = ({
 	className
 }) => {
 	const tAttribute = useAttributeTranslation();
-	const locale = useLocale();
+	const [locale] = useLocale();
 	const countryName = tAttribute[id.toUpperCase()]?.name ?? getCountryName(locale, id) ?? id;
 
 	return (

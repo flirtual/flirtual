@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function BrandingPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function BrandingPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

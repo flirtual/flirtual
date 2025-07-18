@@ -20,7 +20,7 @@ export const Finish5Form: React.FC = () => {
 	const error = query.get("error") || undefined;
 
 	const { vision } = useDevice();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { user } = useSession();
 	const { t } = useTranslation();
 

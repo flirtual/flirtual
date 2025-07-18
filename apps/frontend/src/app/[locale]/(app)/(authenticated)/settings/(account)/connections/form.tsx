@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-restricted-imports
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "react-router";
 import type { FC } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";

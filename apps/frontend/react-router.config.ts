@@ -8,8 +8,11 @@ export default {
 		// "/",
 		"/home",
 		// "/about",
-	],
-	//	.map((path) => locales.map((locale) => `/${locale}${path}`))
-	//	.flat(),
+	]
+		.map((path) => [
+			path,
+			...locales.map((locale) => `/${locale}${path}`)
+		])
+		.flat(),
 	appDirectory: "src"
 } satisfies Config;

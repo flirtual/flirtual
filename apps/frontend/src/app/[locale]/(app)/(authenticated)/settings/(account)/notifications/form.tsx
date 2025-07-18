@@ -12,12 +12,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 
 export const NotificationsForm: React.FC = () => {
 	const { user } = useSession();
 	const toasts = useToast();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { native, platform } = useDevice();
 	const { t } = useTranslation();
 

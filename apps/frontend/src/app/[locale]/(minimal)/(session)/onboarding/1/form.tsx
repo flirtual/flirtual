@@ -21,7 +21,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useConfig } from "~/hooks/use-config";
 import { useSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -32,7 +32,7 @@ export const Onboarding1Form: FC = () => {
 	const { profile } = user;
 
 	const { t } = useTranslation();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const { country } = useConfig();
 
@@ -78,7 +78,7 @@ export const Onboarding1Form: FC = () => {
 					await invalidate({ queryKey: sessionKey() });
 				});
 
-				router.push(urls.onboarding(2));
+				navigate(urls.onboarding(2)));
 			}}
 		>
 			{({ FormField }) => (

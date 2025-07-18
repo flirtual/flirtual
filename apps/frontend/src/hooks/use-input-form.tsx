@@ -1,7 +1,7 @@
-import type { TranslationValues } from "next-intl";
 import { createContext, use, useId, useMemo, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { entries, fromEntries, toCamelCase } from "remeda";
 import { WretchError } from "wretch/resolver";
 
@@ -158,7 +158,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 								[
 									toCamelCase(key),
 									issues.map(({ error, details }) =>
-										t(`errors.${error}` as any, details as TranslationValues)
+										t(`errors.${error}` as any, details)
 									)
 								] as const
 						)
@@ -181,7 +181,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					const errors = [
 						t(
 							`errors.${error}` as any,
-							reason.json.details as TranslationValues
+							reason.json.details
 						)
 					];
 

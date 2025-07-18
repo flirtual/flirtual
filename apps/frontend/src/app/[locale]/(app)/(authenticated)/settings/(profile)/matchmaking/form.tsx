@@ -37,7 +37,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { invalidate, sessionKey } from "~/query";
 
 const absMinAge = 18;
@@ -45,7 +45,7 @@ const absMaxAge = 60;
 
 export const MatchmakingForm: FC = () => {
 	const session = useSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();

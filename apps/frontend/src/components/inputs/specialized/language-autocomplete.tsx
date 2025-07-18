@@ -1,4 +1,4 @@
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import { useMemo } from "react";
 
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";

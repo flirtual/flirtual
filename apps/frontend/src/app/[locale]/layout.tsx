@@ -1,26 +1,26 @@
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import type { Metadata, Viewport } from "next";
-import type { Locale } from "~/i18n";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { preconnect } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
 import SafariPinnedTabImage from "~/../public/safari-pinned-tab.svg";
-import { AnalyticsProvider } from "~/components/analytics";
+import { AnalyticsProvider } from "~/analytics";
 import { InsetPreview } from "~/components/inset-preview";
 import { TooltipProvider } from "~/components/tooltip";
 import { UpdateInformation } from "~/components/update-information";
 import { apiOrigin, environment, platformOverride, siteOrigin } from "~/const";
 import { ToastProvider } from "~/hooks/use-toast";
+import type { Locale } from "~/i18n";
 import { locales } from "~/i18n/routing";
 import { QueryProvider } from "~/query";
 import { bucketOrigins, urls } from "~/urls";
 
+import { StagingBanner } from "../../components/staging-banner";
 import { fontClassNames } from "../fonts";
 import { LazyLayout } from "./lazy-layout";
 import { LocalizationPolyfill } from "./localization-polyfill";
-import { StagingBanner } from "./staging-banner";
 
 import "../index.css";
 

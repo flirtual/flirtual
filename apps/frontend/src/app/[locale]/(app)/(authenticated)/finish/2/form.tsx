@@ -21,7 +21,7 @@ import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -33,7 +33,7 @@ export const Finish2Form: FC = () => {
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	if (!session) return null;
 	const { user } = session;
@@ -68,7 +68,7 @@ export const Finish2Form: FC = () => {
 					}
 				});
 
-				router.push(urls.finish(3));
+				navigate(urls.finish(3)));
 			}}
 		>
 			{({ FormField }) => (

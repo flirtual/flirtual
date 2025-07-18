@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function AboutPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function AboutPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

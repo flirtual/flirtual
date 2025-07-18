@@ -16,7 +16,7 @@ import {
 import { SuccessMessage } from "./success-message";
 
 export const SubscriptionForm: FC = () => {
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const { t } = useTranslation();
 	const formatter = useFormatter();

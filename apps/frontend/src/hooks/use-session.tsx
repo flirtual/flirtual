@@ -1,5 +1,5 @@
 import { PushNotifications } from "@capacitor/push-notifications";
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Authentication } from "~/api/auth";
@@ -15,10 +15,10 @@ import {
 	sessionKey,
 	useQuery
 } from "~/query";
+import { throwRedirect } from "~/redirect";
 import { toAbsoluteUrl, toRelativeUrl, urls } from "~/urls";
 
 import { device } from "./use-device";
-// import { postpone } from "./use-postpone";
 
 export async function logout() {
 	await mutate(sessionKey(), null);
@@ -45,9 +45,7 @@ export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | n
 
 export function useGuest() {
 	const session = useOptionalSession();
-
 	const [searchParameters] = useSearchParams();
-	const navigate = useNavigate();
 
 	const next = toRelativeUrl(
 		toAbsoluteUrl(searchParameters.get("next")
@@ -56,18 +54,16 @@ export function useGuest() {
 				: urls.discover("dates")))
 	);
 
-	if (session) navigate(next);
+	if (session) throwRedirect(next);
 }
 
 export function useSession(queryOptions: MinimalQueryOptions<Session | null> = {}) {
-	const navigate = useNavigate();
-
 	const session = useQuery({
 		...queryOptions,
 		queryKey: sessionKey(),
 		queryFn: sessionFetcher
 	});
 
-	if (!session) navigate(urls.login(toRelativeUrl(location)));
+	if (!session) throwRedirect(urls.login(toRelativeUrl(location)));
 	return session;
 }

@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function PrivacyPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function PrivacyPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

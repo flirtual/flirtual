@@ -74,7 +74,7 @@ export const TileGuide: FC<{ tileCount: number }> = ({ tileCount }) => {
 
 	return (
 		<div className="pointer-events-none fixed inset-x-0 bottom-0 z-10 flex h-36 flex-col items-center justify-center gap-4 px-8 pb-16 desktop:inset-y-0 desktop:left-0 desktop:right-auto desktop:h-auto desktop:px-16 desktop:py-8">
-			<div className="pointer-events-auto flex w-full flex-col items-center justify-center gap-4 desktop:hidden">
+			<div className="pointer-events-auto flex w-full flex-col items-center justify-center gap-6 desktop:hidden">
 				<InlineLanguageSelect className={twMerge("transition-all", tile === 0 ? "" : "pointer-events-none opacity-0")} />
 				<div className="grid w-full grid-cols-2 gap-2">
 					<ButtonLink href={urls.register} size="sm">

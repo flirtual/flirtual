@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function TermsPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function TermsPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

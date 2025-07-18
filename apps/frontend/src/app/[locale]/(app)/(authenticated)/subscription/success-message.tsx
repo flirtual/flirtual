@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "react-router";
 import type React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -8,7 +8,7 @@ import { Link } from "~/components/link";
 import { urls } from "~/urls";
 
 export const SuccessMessage: React.FC = () => {
-	const searchParameters = useSearchParams();
+	const [searchParameters] = useSearchParams();
 	const { t } = useTranslation();
 
 	if (!searchParameters.get("success")) return null;

@@ -9,7 +9,7 @@ import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 import {
@@ -22,7 +22,7 @@ import {
 export const Finish3Form: FC = () => {
 	const session = useOptionalSession();
 	const toasts = useToast();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { t } = useTranslation();
 
 	if (!session) return null;
@@ -44,7 +44,7 @@ export const Finish3Form: FC = () => {
 					interestId: defaultInterests
 				})
 					.then(() => {
-						return router.push(urls.finish(4));
+						return navigate(urls.finish(4)));
 					})
 					.catch(toasts.addError);
 			}}

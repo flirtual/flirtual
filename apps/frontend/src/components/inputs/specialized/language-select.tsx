@@ -1,10 +1,8 @@
 import { SelectTrigger as RadixSelectTrigger } from "@radix-ui/react-select";
 import { ChevronDown, Languages } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
-import type { Locale } from "~/i18n";
 import { localeNames, locales, useLocale } from "~/i18n";
 
 import {
@@ -15,8 +13,7 @@ import {
 } from "../select";
 
 const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> = ({ className, tabIndex }) => {
-	const { i18n } = useTranslation();
-	const locale = useLocale();
+	const [locale, setLocale] = useLocale();
 
 	return (
 		<InputSelect
@@ -28,7 +25,7 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 			Icon={Languages}
 			tabIndex={tabIndex}
 			value={locale}
-			onChange={(locale) => i18n.changeLanguage(locale)}
+			onChange={setLocale}
 		/>
 	);
 };
@@ -36,12 +33,11 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 export const InputLanguageSelect = withSuspense(InputLanguageSelect_);
 
 export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ className }) => {
-	const { i18n } = useTranslation();
-	const locale = useLocale();
+	const [locale, setLocale] = useLocale();
 
 	return (
-		<Select onValueChange={(locale: Locale) => i18n.changeLanguage(locale)}>
-			<RadixSelectTrigger className={twMerge("focusable rounded-lg flex items-center gap-0.5em whitespace-nowrap", className)}>
+		<Select onValueChange={setLocale}>
+			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
 				<Languages className="inline-block size-em" />
 				{" "}
 				{localeNames[locale]}

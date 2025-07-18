@@ -1,5 +1,5 @@
 import { Languages, MailWarning } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import { type FC, useMemo, useState } from "react";
 
 import { OpenAI } from "~/api/openai";
@@ -25,7 +25,7 @@ import { invalidate, userKey } from "~/query";
 export const WarnAction: FC<{ user: User }> = ({ user }) => {
 	const toasts = useToast();
 	const { t } = useTranslation();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const languageNames = useMemo(
 		() => new Intl.DisplayNames(locale, { type: "language" }),

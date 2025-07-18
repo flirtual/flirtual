@@ -1,7 +1,13 @@
 import i18n, { type ResourceKey } from "i18next";
 import icu from "i18next-icu";
 import resourcesToBackend from "i18next-resources-to-backend";
+import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router";
+
+import { log as _log } from "./log";
+
+const log = _log.extend("i18n");
 
 export const locales = ["en", "ja"] as const;
 export type Locale = (typeof locales)[number];
@@ -9,12 +15,15 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale = "en";
 export type DefaultLocale = typeof defaultLocale;
 
+export const defaultNamespace = "default";
+export type DefaultNamespace = typeof defaultNamespace;
+
 export type Resources = Awaited<ReturnType<typeof load>>;
 export type Namespace = keyof Resources;
 
 declare module "i18next" {
 	interface CustomTypeOptions {
-		defaultNS: "default";
+		defaultNS: DefaultNamespace;
 		resources: Resources;
 	}
 }
@@ -50,8 +59,11 @@ function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) 
 }
 
 async function load(locale: Locale) {
+	log("%s(%s)", load.name, locale);
+
+	// Aries: Keep this in sync with `getModuleLanguage` from `vite.config.ts`.
+	// For performance, we bundle all translations into a single file per locale.
 	const [default_, attributes, uppy] = await Promise.all([
-		// Types are not available when using a dynamic import, so we default to English for type safety.
 		import(`../messages/${locale}.json`) as unknown as typeof import("../messages/en.json"),
 		import(`../messages/attributes.${locale}.json`)
 			.then(({ default: attributes }) => flat1(attributes)),
@@ -77,25 +89,37 @@ i18n
 	.use(icu)
 	.use(initReactI18next)
 	.init({
-		fallbackLng: defaultLocale,
-		ns: ["default"],
-		defaultNS: "default",
+		// fallbackLng: defaultLocale,
 		supportedLngs: locales,
+
+		ns: [defaultNamespace],
+		defaultNS: defaultNamespace,
 
 		interpolation: {
 			escapeValue: false
 		}
 	});
 
-export function useLocale(): Locale {
+export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Promise<void>] {
 	const { i18n } = useTranslation();
-	return i18n.language as Locale;
+
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const setLocale = useCallback(async (locale: Locale) => {
+		const pathname = location.pathname.replace(localePathnameRegex, `/${locale}`);
+		await navigate({ ...location, pathname }, { replace: true });
+	}, [location, navigate]);
+
+	return [
+		i18n.language as Locale,
+		setLocale
+	];
 }
 
-// @ts-expect-error: Not applicable.
-export function useMessages<T extends Namespace = "default">(namespace: T = "default"): Resources[T] {
+export function useMessages<T extends Namespace = "default">(namespace: T = "default" as T): Resources[T] {
 	const { i18n } = useTranslation();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	return i18n.store.data[locale][namespace] as Resources[T];
 }

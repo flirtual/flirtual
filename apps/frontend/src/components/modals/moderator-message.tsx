@@ -7,7 +7,7 @@ import { User } from "~/api/user";
 import { Image } from "~/components/image";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 import { Button } from "../button";
@@ -19,7 +19,7 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 	const session = useOptionalSession();
 
 	const toasts = useToast();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const { t } = useTranslation();
 
@@ -43,7 +43,7 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 export const DiscordSpamDialog: FC = withSuspense(() => {
 	const session = useOptionalSession();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 
 	const { t } = useTranslation();
@@ -72,7 +72,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 						onClick={async () => {
 							await remindMeLater(true);
 
-							router.push(urls.settings.bio);
+							navigate(urls.settings.bio));
 							router.refresh();
 						}}
 					>

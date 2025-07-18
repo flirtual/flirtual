@@ -1,5 +1,5 @@
 import { ChevronLeft, X } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "react-router";
 import { useTranslation } from "react-i18next";
 
 import { Link } from "~/components/link";

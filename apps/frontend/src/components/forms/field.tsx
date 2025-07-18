@@ -1,5 +1,5 @@
-import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef } from "react";
+import { useSearchParams } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -31,7 +31,7 @@ export function FormField<K extends keyof T, T extends FormFieldsDefault>({
 	const form = useFormContext<T>();
 	const field = form.fields[name];
 
-	const searchParameters = useSearchParams();
+	const [searchParameters] = useSearchParams();
 	const autofocus = searchParameters.get("af") === field.props.id;
 
 	useEffect(() => {

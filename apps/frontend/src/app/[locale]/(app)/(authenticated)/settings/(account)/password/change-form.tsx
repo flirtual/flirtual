@@ -5,11 +5,11 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 
 export const PasswordChangeForm: React.FC = () => {
 	const session = useOptionalSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { t } = useTranslation();
 
 	if (!session) return null;

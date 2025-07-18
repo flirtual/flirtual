@@ -6,6 +6,7 @@ import { HydratedRouter } from "react-router/dom";
 import { applyDocumentMutations } from "./document";
 import { i18n } from "./i18n";
 import { preloadAll, restoreQueries, saveQueries } from "./query";
+import { isRedirectError } from "./redirect";
 import { urls } from "./urls";
 
 i18n.on("loaded", () => {
@@ -42,7 +43,10 @@ startTransition(() => {
 			<HydratedRouter />
 		</StrictMode>,
 		{
-			onCaughtError: (error) => console.error("onCaught", error),
+			onCaughtError: (error) => {
+				if (isRedirectError(error)) return;
+				console.error("onCaught", error);
+			},
 			onRecoverableError: (error) => console.error("onRecoverable", error),
 			onUncaughtError: (error) => console.error("onUncaught", error),
 		}

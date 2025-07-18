@@ -1,6 +1,4 @@
-import { setTag, setUser } from "@sentry/nextjs";
-import dynamic from "next/dynamic";
-import Script from "next/script";
+import { setTag, setUser } from "@sentry/react";
 import posthog from "posthog-js";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { type PropsWithChildren, Suspense, useCallback, useEffect } from "react";
@@ -8,26 +6,25 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import {
 	cloudflareBeaconId,
-	environment,
 	posthogEnabled,
 	posthogHost,
-	posthogKey
+	posthogKey,
+	production
 } from "~/const";
 import { useDevice } from "~/hooks/use-device";
-import { useLocation } from "~/hooks/use-location";
 import { useOptionalSession } from "~/hooks/use-session";
 
-const Pageview = dynamic(() => Promise.resolve(() => {
-	const location = useLocation();
-	const posthog = usePostHog();
-
-	useEffect(() => {
-		if (!location || !posthog) return;
-		posthog.capture("$pageview", { $current_url: location.href, });
-	}, [location, posthog]);
-
-	return null;
-}), { ssr: false });
+// const Pageview = lazy(() => Promise.resolve(() => {
+// 	const location = useLocation();
+// 	const posthog = usePostHog();
+//
+// 	useEffect(() => {
+// 		if (!location || !posthog) return;
+// 		posthog.capture("$pageview", { $current_url: location.href, });
+// 	}, [location, posthog]);
+//
+// 	return { default: () => <></> };
+// }));
 
 function Identity() {
 	const session = useOptionalSession();
@@ -100,12 +97,12 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 		<>
 			<ErrorBoundary fallback={null}>
 				<Suspense>
-					<Pageview />
+					{/* <Pageview /> */}
 					<Identity />
 				</Suspense>
 			</ErrorBoundary>
-			{environment !== "development" && (
-				<Script
+			{production && (
+				<script
 					defer
 					data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}
 					src="https://static.cloudflareinsights.com/beacon.min.js"

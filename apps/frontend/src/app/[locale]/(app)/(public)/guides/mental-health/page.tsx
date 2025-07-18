@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function MentalHealthPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function MentalHealthPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

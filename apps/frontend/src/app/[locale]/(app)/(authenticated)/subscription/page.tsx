@@ -15,7 +15,7 @@ import { SubscriptionForm } from "./form";
 // 	};
 // }
 
-export default function SubscriptionPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function SubscriptionPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

@@ -7,7 +7,7 @@ import { urls } from "~/urls";
 
 export default function OnboardedLayout({ children }: PropsWithChildren) {
 	const { user } = useSession();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	if (user.status === "registered")
 		return redirect({ href: urls.onboarding(1), locale });

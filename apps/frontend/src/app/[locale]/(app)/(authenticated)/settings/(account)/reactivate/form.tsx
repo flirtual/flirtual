@@ -1,4 +1,4 @@
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 
 import type { Session } from "~/api/auth";
 import { Subscription } from "~/api/subscription";
@@ -20,7 +20,7 @@ export const ReactivationForm: React.FC = () => {
 	const { user } = useSession();
 
 	const { t } = useTranslation();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const toasts = useToast();
 

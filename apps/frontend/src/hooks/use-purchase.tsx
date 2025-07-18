@@ -15,7 +15,7 @@ import {
 
 import { Subscription } from "~/api/subscription";
 import { rcAppleKey, rcGoogleKey } from "~/const";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 import { useDevice } from "./use-device";
@@ -40,7 +40,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { platform, native } = useDevice();
 
 	const toasts = useToast();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const [packages, setPackages] = useState<Array<PurchasesPackage>>([]);
 
@@ -98,7 +98,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			return Purchases.purchasePackage({ aPackage })
 				.then(() => {
 					router.refresh();
-					router.push(urls.subscription.success);
+					navigate(urls.subscription.success));
 					return null;
 				})
 				.catch((reason) => {

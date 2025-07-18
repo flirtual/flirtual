@@ -4,7 +4,7 @@ import { use } from "react";
 
 import { SearchView } from "./search-view";
 
-export default function SearchPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function SearchPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

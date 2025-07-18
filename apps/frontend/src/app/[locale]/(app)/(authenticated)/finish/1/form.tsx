@@ -16,12 +16,12 @@ import {
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 export const Finish1Form: FC = () => {
 	const session = useOptionalSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
@@ -66,7 +66,7 @@ export const Finish1Form: FC = () => {
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
-				router.push(urls.finish(2));
+				navigate(urls.finish(2)));
 			}}
 		>
 			{({ FormField }) => (

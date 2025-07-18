@@ -3,15 +3,16 @@ import {
 	Turnstile as _Turnstile
 } from "@marsidev/react-turnstile";
 import { LoaderCircle, ShieldAlert, ShieldCheck } from "lucide-react";
-import { useLocale } from "next-intl";
 import type { FC, RefAttributes } from "react";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
 import { turnstileSiteKey } from "~/const";
 import { useFormContext } from "~/hooks/use-input-form";
 import { useTheme } from "~/hooks/use-theme";
+import { useLocale } from "~/i18n";
 
 import { FormInputMessages } from "./input-messages";
 
@@ -104,7 +105,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 }
 
 const Turnstile: FC<{ tabIndex?: number } & Omit<TurnstileProps, "options" | "siteKey"> & RefAttributes<TurnstileInstance>> = withSuspense(({ tabIndex, ...props }) => {
-	const locale = useLocale();
+	const [locale] = useLocale();
 	const [theme] = useTheme();
 
 	return (

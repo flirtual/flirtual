@@ -15,7 +15,7 @@ import {
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -26,7 +26,7 @@ export const Onboarding2Form: FC = () => {
 	const { user } = useSession();
 	const { preferences } = user.profile;
 
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const genders = useAttributes("gender").filter(
 		({ simple, fallback }) => simple || fallback
@@ -62,7 +62,7 @@ export const Onboarding2Form: FC = () => {
 				});
 
 				await invalidate({ queryKey: sessionKey() });
-				router.push(urls.discover("dates"));
+				navigate(urls.discover("dates")));
 			}}
 		>
 			{({ FormField }) => (

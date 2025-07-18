@@ -10,7 +10,7 @@ import {
 } from "react";
 
 import { User } from "~/api/user";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { useQuery } from "~/query";
 
 import { useDevice } from "./use-device";
@@ -25,7 +25,7 @@ const NotificationContext = createContext({} as NotificationContext);
 export function NotificationProvider({ children }: PropsWithChildren) {
 	const { platform, native } = useDevice();
 	const session = useOptionalSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	useQuery({
 		queryKey: ["notifications-reset-count"],

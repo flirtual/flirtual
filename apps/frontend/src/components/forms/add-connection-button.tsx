@@ -13,7 +13,7 @@ import { useDevice } from "~/hooks/use-device";
 import { useLocation } from "~/hooks/use-location";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 
 export interface ConnectionButtonProps {
 	type: ConnectionType;
@@ -24,7 +24,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 	const location = useLocation();
 	const session = useOptionalSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 	const { native } = useDevice();
 	const { t } = useTranslation();
@@ -86,7 +86,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 								});
 
 								const next = response.headers.get("location");
-								if (next) router.push(next);
+								if (next) navigate(next));
 
 								router.refresh();
 

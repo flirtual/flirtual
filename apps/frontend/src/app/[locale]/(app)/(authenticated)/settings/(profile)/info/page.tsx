@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function SettingsProfileInfoPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function SettingsProfileInfoPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

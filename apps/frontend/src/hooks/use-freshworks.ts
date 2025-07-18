@@ -19,7 +19,7 @@ declare global {
 let loaded = false;
 
 export function useFreshworks() {
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const loadFreshworks = useCallback(() => {
 		if (loaded) return;

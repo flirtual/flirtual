@@ -7,11 +7,11 @@ import { displayName, type User } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 
 export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 	const session = useOptionalSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 	const { t } = useTranslation();
 

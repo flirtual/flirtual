@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 	title: "Stats"
 };
 
-export default function StatsPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function StatsPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

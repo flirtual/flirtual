@@ -4,7 +4,7 @@ import useMutation from "swr/mutation";
 
 import { User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -12,7 +12,7 @@ import { LoadingIndicator } from "../../loading-indicator";
 
 export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	const toasts = useToast();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { t } = useTranslation();
 
 	const { trigger } = useMutation(
@@ -20,7 +20,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 		(_, { arg: token }: { arg: string }) => User.confirmEmail(token),
 		{
 			onError: () => {
-				router.push(urls.confirmEmail());
+				navigate(urls.confirmEmail()));
 
 				toasts.add({
 					type: "error",
@@ -32,7 +32,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 				toasts.add(t("royal_home_leopard_tickle"));
 
 				await invalidate({ queryKey: sessionKey() });
-				router.push(urls.default);
+				navigate(urls.default));
 			}
 		}
 	);

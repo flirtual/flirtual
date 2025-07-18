@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function Finish3Page({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function Finish3Page() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

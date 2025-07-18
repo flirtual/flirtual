@@ -13,7 +13,6 @@ import { LoginForm } from "./form";
 // }
 
 export default function LoginPage() {
-	console.log("LoginPage");
 	const { t } = useTranslation();
 
 	return (

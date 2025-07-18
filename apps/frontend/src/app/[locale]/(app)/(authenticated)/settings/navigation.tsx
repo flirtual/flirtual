@@ -19,7 +19,7 @@ import {
 	VenetianMask,
 	X
 } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -41,7 +41,7 @@ export const SettingsNavigation: FC = () => {
 	const { user, sudoerId } = useSession();
 	const { vision } = useDevice();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 	const locale = useLocale();
 	const layoutSegment = useSelectedLayoutSegment();
 

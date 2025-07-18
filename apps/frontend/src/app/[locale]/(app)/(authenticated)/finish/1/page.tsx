@@ -7,7 +7,7 @@ import { ModelCard } from "~/components/model-card";
 import { FinishProgress } from "../progress";
 import { Finish1Form } from "./form";
 
-export default function Finish1Page({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function Finish1Page() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

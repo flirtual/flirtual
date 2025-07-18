@@ -1,5 +1,6 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { reactRouter } from "@react-router/dev/vite";
+import mime from "mime/lite";
 import sonda from "sonda/vite";
 // import basicSsl from "@vitejs/plugin-basic-ssl";
 import { defineConfig } from "vite";
@@ -20,7 +21,7 @@ function getModuleLanguage(id: string): string | null {
 	return language;
 }
 
-const modulePackageNameRegex = /\/node_modules\/.+\/node_modules\/(?<name>(@[^\/]+\/)?[^\/]+)\//i;
+const modulePackageNameRegex = /\/node_modules\/.+\/node_modules\/(?<name>(@[^/]+\/)?[^/]+)\//i;
 
 function getPackageName(id: string): string | null {
 	const match = id.match(modulePackageNameRegex);
@@ -34,10 +35,10 @@ export default defineConfig({
 		sourcemap: true,
 		rollupOptions: {
 			output: {
-				hashCharacters: "base36",
-				assetFileNames: "chunks/[name].[hash:8][extname]",
+				hashCharacters: "hex",
+				entryFileNames: "chunks/[hash:8].js",
 				chunkFileNames: "chunks/[name].[hash:8].js",
-				entryFileNames: "chunks/[name].[hash:8].js",
+				assetFileNames: "chunks/[name].[hash:8].[ext]",
 				manualChunks: (id) => {
 					const language = getModuleLanguage(id);
 					if (language) return `languages/${language}`;
@@ -64,12 +65,10 @@ export default defineConfig({
 		reactRouter(),
 		tsconfigPaths(),
 		cloudflare({
-			experimental:{ 
+			experimental: {
 				headersAndRedirectsDevModeSupport: true,
 			}
 		}),
-		sonda({
-			sources: true
-		})
+		sonda()
 	],
 });

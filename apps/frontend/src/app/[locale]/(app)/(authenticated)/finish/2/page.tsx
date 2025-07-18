@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function Finish2Page({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function Finish2Page() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

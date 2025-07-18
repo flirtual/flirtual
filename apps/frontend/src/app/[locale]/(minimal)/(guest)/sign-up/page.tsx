@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default function Onboarding0Page({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function Onboarding0Page() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

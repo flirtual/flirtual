@@ -37,7 +37,7 @@ const translations = {
 
 export function HavingIssues({ digest }: { digest?: string }) {
 	const { t } = useTranslation();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const t2 = translations[locale];
 

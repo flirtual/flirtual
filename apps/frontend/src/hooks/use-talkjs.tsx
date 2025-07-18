@@ -15,7 +15,7 @@ import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { resolveTheme } from "~/theme";
 import { urls } from "~/urls";
 import { emptyArray } from "~/utilities";
@@ -34,7 +34,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [ready, setReady] = useState(false);
 	const authSession = useOptionalSession();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>([]);
 
@@ -155,7 +155,7 @@ export const ConversationChatbox: React.FC<
 	const [,,{ sessionTheme }] = useTheme();
 	const { native, vision } = useDevice();
 	const { talkjs_match_message, talkjs_input_placeholder } = useMessages();
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const chatbox = useMemo(() => {
 		if (!session) return null;

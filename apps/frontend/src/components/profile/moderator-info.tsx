@@ -1,6 +1,6 @@
 import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import { type FC, useMemo } from "react";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";

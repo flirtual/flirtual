@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 	title: "Refer a homie"
 };
 
-export default function SettingsAccountReferralPage({ params }: { params: Promise<{ locale: Locale }> }) {
+export default function SettingsAccountReferralPage() {
 	const { locale } = use(params);
 	setRequestLocale(locale);
 

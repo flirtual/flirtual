@@ -23,7 +23,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
+import { useNavigate } from "react-router";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
@@ -54,7 +54,7 @@ export const NavigationItemProfile: FC = () => {
 	const { user } = session;
 
 	const { t } = useTranslation();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const [visible, setVisible] = useState(false);
 	const elementReference = useRef<HTMLDivElement>(null);

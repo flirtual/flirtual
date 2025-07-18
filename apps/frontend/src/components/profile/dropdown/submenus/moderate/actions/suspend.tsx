@@ -1,5 +1,5 @@
 import { Gavel, Languages } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import { type FC, type PropsWithChildren, useMemo, useState } from "react";
 import { withSuspense } from "with-suspense";
 
@@ -37,7 +37,7 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 
 	const { forward: forwardQueue } = useQueue(kind);
 
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const languageNames = useMemo(
 		() => new Intl.DisplayNames(locale, { type: "language" }),

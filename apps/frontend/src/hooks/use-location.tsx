@@ -4,7 +4,7 @@ import { usePathname, useSearchParams } from "~/i18n/navigation";
 import { toAbsoluteUrl } from "~/urls";
 
 export function useLocation() {
-	const searchParameters = useSearchParams();
+	const [searchParameters] = useSearchParams();
 	const pathname = usePathname();
 
 	return useMemo(

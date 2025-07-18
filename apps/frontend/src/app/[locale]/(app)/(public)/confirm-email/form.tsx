@@ -1,4 +1,4 @@
-import { useLocale } from "next-intl";
+import { useLocale } from "~/i18n";
 import type { FC } from "react";
 
 import { ModelCard } from "~/components/model-card";
@@ -10,12 +10,12 @@ import { ConfirmTokenForm } from "./confirm-token-form";
 import { UserForms } from "./user-forms";
 
 export const ConfirmEmailForm: FC = () => {
-	const searchParameters = useSearchParams();
+	const [searchParameters] = useSearchParams();
 
 	const to = searchParameters.get("to") || undefined;
 	const token = searchParameters.get("");
 
-	const locale = useLocale();
+	const [locale] = useLocale();
 	const { t } = useTranslation();
 
 	const session = useOptionalSession();

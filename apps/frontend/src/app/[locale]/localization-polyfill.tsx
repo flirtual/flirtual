@@ -3,7 +3,7 @@ import Script from "next/script";
 import { useLocale } from "~/i18n";
 
 export function LocalizationPolyfill() {
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const polyfills = [
 		"Intl",
