@@ -41,7 +41,7 @@ export const DeleteForm: FC = () => {
 			{({ FormField, fields }) => (
 				<>
 					{subscription?.active
-					&& ["android", "ios"].includes(subscription.platform) && (
+						&& ["android", "ios"].includes(subscription.platform) && (
 						<div className="rounded-lg bg-brand-gradient px-6 py-4">
 							<span className="font-montserrat text-white-10">
 								⚠️

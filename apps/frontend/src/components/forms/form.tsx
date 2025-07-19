@@ -1,32 +1,32 @@
-/* eslint-disable react/prefer-destructuring-assignment */
 import { useCallback, useRef } from "react";
 import { omit } from "remeda";
 
 import {
 	FormContext,
-	type FormFieldsDefault,
-	type InputFormOptions,
-	useInputForm,
-	type UseInputForm
-} from "~/hooks/use-input-form";
 
-import { FormCaptcha, type FormCaptchaReference } from "./captcha";
+	useInputForm
+
+} from "~/hooks/use-input-form";
+import type { FormFieldsDefault, InputFormOptions, UseInputForm } from "~/hooks/use-input-form";
+
+import { FormCaptcha } from "./captcha";
+import type { FormCaptchaReference } from "./captcha";
 import { FormInputMessages } from "./input-messages";
 
 export type FormChildrenFunction<T extends FormFieldsDefault> = (
 	form: { Captcha: () => React.ReactNode | null } & UseInputForm<T>
 ) => React.ReactNode;
 
-export type FormChildren<T extends FormFieldsDefault> =
-	| Array<React.ReactNode>
-	| FormChildrenFunction<T>;
+export type FormChildren<T extends FormFieldsDefault>
+	= | Array<React.ReactNode>
+		| FormChildrenFunction<T>;
 
 export type FormProps<T extends FormFieldsDefault> = {
 	children: FormChildren<T>;
 	formErrorMessages?: boolean;
 	renderCaptcha?: boolean;
-} &
-Omit<InputFormOptions<T>, "captchaRef"> & Omit<
+}
+& Omit<InputFormOptions<T>, "captchaRef"> & Omit<
 	React.ComponentProps<"form">,
 		"children" | "onSubmit"
 >;

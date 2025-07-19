@@ -1,5 +1,7 @@
-import { type DateTimeFormatOptions, useFormatter } from "next-intl";
-import { type ComponentProps, type FC, useMemo } from "react";
+import { useFormatter } from "next-intl";
+import type { DateTimeFormatOptions } from "next-intl";
+import { useMemo } from "react";
+import type { ComponentProps, FC } from "react";
 
 interface DateTimeRelativeProps {
 	value: string;

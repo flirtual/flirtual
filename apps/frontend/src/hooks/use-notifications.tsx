@@ -1,16 +1,18 @@
 import {
-	type PermissionStatus,
+
 	PushNotifications
 } from "@capacitor/push-notifications";
+import type { PermissionStatus } from "@capacitor/push-notifications";
 import {
 	createContext,
-	type PropsWithChildren,
+
 	use,
 	useMemo
 } from "react";
+import type { PropsWithChildren } from "react";
+import { useNavigate } from "react-router";
 
 import { User } from "~/api/user";
-import { useNavigate } from "react-router";
 import { useQuery } from "~/query";
 
 import { useDevice } from "./use-device";

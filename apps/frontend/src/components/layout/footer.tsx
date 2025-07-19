@@ -4,9 +4,10 @@ import { twMerge } from "tailwind-merge";
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
 import {
 	DiscordIcon,
-	type IconComponent,
+
 	TwitterIcon
 } from "~/components/icons";
+import type { IconComponent } from "~/components/icons";
 import { gitCommitSha } from "~/const";
 import { urls } from "~/urls";
 
@@ -18,8 +19,8 @@ import { FooterCannyLink } from "./canny-button";
 import { MadeWithLove } from "./made-with-love";
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 
-type LinkOrButtonProps<T> = T &
-	(
+type LinkOrButtonProps<T> = T
+	& (
 		| Pick<React.ComponentProps<"a">, "href">
 		| Pick<React.ComponentProps<"button">, "onClick">
 	);

@@ -1,5 +1,5 @@
 import { MoveLeft, MoveRight, RefreshCw, Undo2, X } from "lucide-react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import type {
 	FC,
 } from "react";
@@ -75,17 +75,17 @@ export const QueueActions: FC<{
 				<div className="flex items-center gap-2 text-white-10">
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<motion.button
+							<m.button
+								id="undo-button"
 								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
 								disabled={!previous}
-								id="undo-button"
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
 								onClick={() => undo()}
 							>
 								<Undo2 className="size-7" strokeWidth={3} />
-							</motion.button>
+							</m.button>
 						</TooltipTrigger>
 						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
 							<span className="pt-1">{t("undo")}</span>
@@ -95,9 +95,9 @@ export const QueueActions: FC<{
 					{mode === "love" && (
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<motion.button
-									className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:opacity-50"
+								<m.button
 									id="like-button"
+									className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:opacity-50"
 									type="button"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
@@ -107,7 +107,7 @@ export const QueueActions: FC<{
 										className="w-[2.125rem] shrink-0"
 										gradient={false}
 									/>
-								</motion.button>
+								</m.button>
 							</TooltipTrigger>
 							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
 								<span className="pt-1">{t("like")}</span>
@@ -117,9 +117,9 @@ export const QueueActions: FC<{
 					)}
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<motion.button
-								className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:opacity-50"
+							<m.button
 								id="friend-button"
+								className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:opacity-50"
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
@@ -129,7 +129,7 @@ export const QueueActions: FC<{
 									className="w-[2.125rem] shrink-0"
 									gradient={false}
 								/>
-							</motion.button>
+							</m.button>
 						</TooltipTrigger>
 						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
 							<span className="pt-1">{t("homie")}</span>
@@ -138,16 +138,16 @@ export const QueueActions: FC<{
 					</Tooltip>
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<motion.button
-								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
+							<m.button
 								id="pass-button"
+								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
 								onClick={() => pass()}
 							>
 								<X className="size-7" strokeWidth={3} />
-							</motion.button>
+							</m.button>
 						</TooltipTrigger>
 						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
 							<span className="pt-1">{t("pass")}</span>
@@ -188,8 +188,8 @@ export const QueueActions: FC<{
 							<Tooltip>
 								<TooltipTrigger asChild>
 									<button
-										className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:opacity-50"
 										id="like-button"
+										className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:opacity-50"
 										type="button"
 										onClick={() => like()}
 									>
@@ -208,8 +208,8 @@ export const QueueActions: FC<{
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<button
-									className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:opacity-50"
 									id="friend-button"
+									className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:opacity-50"
 									type="button"
 									onClick={() => like("friend")}
 								>
@@ -228,8 +228,8 @@ export const QueueActions: FC<{
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<button
-								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
 								id="pass-button"
+								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
 								type="button"
 								onClick={() => pass()}
 							>

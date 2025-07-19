@@ -1,6 +1,6 @@
 import { Gavel, Languages } from "lucide-react";
-import { useLocale } from "~/i18n";
-import { type FC, type PropsWithChildren, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import type { FC, PropsWithChildren } from "react";
 import { withSuspense } from "with-suspense";
 
 import type { ProspectKind } from "~/api/matchmaking";
@@ -26,6 +26,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { useSearchParams } from "~/i18n/navigation";
 import { mutate, userKey } from "~/query";
 
@@ -152,7 +153,7 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 									)}
 								</FormField>
 								{message.props.value !== tAttribute[reasonId.props.value]?.details
-								&& user.preferences?.language && user.preferences?.language !== locale && (
+									&& user.preferences?.language && user.preferences?.language !== locale && (
 									<div className="flex flex-col gap-4">
 										<FormMessage size="sm" type="warning">
 											Custom messages are not automatically translated.

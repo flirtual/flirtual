@@ -1,6 +1,6 @@
 import { MoveLeft } from "lucide-react";
 // eslint-disable-next-line no-restricted-imports
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";

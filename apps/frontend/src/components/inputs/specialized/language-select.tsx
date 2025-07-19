@@ -47,8 +47,8 @@ export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ classNa
 			<SelectContent>
 				{locales.map((value) => (
 					<SelectItem
-						className="flex w-full items-center gap-2"
 						key={value}
+						className="flex w-full items-center gap-2"
 						value={value}
 					>
 						{localeNames[value]}

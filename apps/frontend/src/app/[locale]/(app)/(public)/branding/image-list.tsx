@@ -32,9 +32,9 @@ async function ImageListItem({ name, kinds, dark }: ImageListItemProps) {
 			<div className="flex gap-2">
 				{kinds.map((kind) => (
 					<a
+						key={kind}
 						className="uppercase text-theme-2 hocus:underline hocus:outline-none"
 						href={getUrl(name, kind)}
-						key={kind}
 					>
 						{kind}
 					</a>

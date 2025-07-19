@@ -57,10 +57,10 @@ export const VRChatButton: FC<VRChatButtonProps> = (props) => {
 						VRChat
 					</DropdownMenuItem>
 					{vision
-					&& session?.user.tags?.includes("debugger")
-					&& session.user.profile.facetime
-					&& user.profile.facetime
-					&& platform === "apple" && (
+						&& session?.user.tags?.includes("debugger")
+						&& session.user.profile.facetime
+						&& user.profile.facetime
+						&& platform === "apple" && (
 						<DropdownMenuItem asChild>
 							<a
 								className="flex items-center gap-2"

@@ -63,7 +63,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 							</div>
 						</TooltipTrigger>
 						{metadata !== undefined
-						&& (meta.definition || meta.definitionLink) && (
+							&& (meta.definition || meta.definitionLink) && (
 							<TooltipContent>
 								{meta.definition}
 								{" "}

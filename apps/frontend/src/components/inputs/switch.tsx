@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useTranslation } from "react-i18next";
 
 export type SwitchValue = boolean | null;
@@ -31,7 +31,7 @@ export const InputSwitch: React.FC<InputSwitchProps> = (props) => {
 				onChange={({ target: { checked } }) => onChange(checked)}
 			/>
 			{value !== null && (
-				<motion.div
+				<m.div
 					layout
 					animate={{
 						scale: 1,

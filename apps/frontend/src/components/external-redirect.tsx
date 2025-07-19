@@ -1,5 +1,6 @@
 import { App } from "@capacitor/app";
-import { type FC, useEffect } from "react";
+import { useEffect } from "react";
+import type { FC } from "react";
 
 import { urls } from "~/urls";
 

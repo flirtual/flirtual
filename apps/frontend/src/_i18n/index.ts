@@ -1,5 +1,6 @@
-import type { Locale } from "~/i18n";
 import { headers as getHeaders } from "next/headers";
+
+import type { Locale } from "~/i18n";
 
 import type { messages } from "./request";
 import type { locales } from "./routing";

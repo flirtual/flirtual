@@ -1,9 +1,7 @@
 import type React from "react";
-import { lazy } from "react";
 
 import { editorColors } from "~/html";
-
-import { EditorSkeleton } from "./skeleton";
+import { lazy } from "~/lazy";
 
 import "./style.scss";
 

@@ -1,4 +1,5 @@
-import { TeamMember, type TeamMemberProps } from "./team-member";
+import { TeamMember } from "./team-member";
+import type { TeamMemberProps } from "./team-member";
 
 export interface TeamListProps {
 	children: Array<TeamMemberProps>;

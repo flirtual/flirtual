@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-destructuring-assignment */
 import { CalendarDays, Eye, EyeOff } from "lucide-react";
 import { useRef, useState } from "react";
 import type React from "react";

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { Locale } from "~/i18n";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 

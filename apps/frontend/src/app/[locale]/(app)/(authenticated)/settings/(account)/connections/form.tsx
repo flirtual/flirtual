@@ -1,8 +1,7 @@
-// eslint-disable-next-line no-restricted-imports
-import { useSearchParams } from "react-router";
 import type { FC } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
 import type { Session } from "~/api/auth";
@@ -152,7 +151,7 @@ export const ConnectionsForm: FC = () => {
 									{t("proof_knotty_cockroach_commend")}
 								</span>
 							</div>
-							<FormField className="col-span-2 wide:col-span-1" name="playlist">
+							<FormField name="playlist" className="col-span-2 wide:col-span-1">
 								{(field) => (
 									<InputText
 										iconColor="#095d6a"

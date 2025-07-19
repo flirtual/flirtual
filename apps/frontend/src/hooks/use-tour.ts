@@ -1,10 +1,11 @@
 import { use, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
-	type ShepherdOptionsWithType,
-	ShepherdTourContext,
-	type Tour
+
+	ShepherdTourContext
+
 } from "react-shepherd";
+import type { ShepherdOptionsWithType, Tour } from "react-shepherd";
 
 import { usePreferences } from "./use-preferences";
 import { useScreenBreakpoint } from "./use-screen-breakpoint";

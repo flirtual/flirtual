@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { Locale } from "~/i18n";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { useTranslation } from "react-i18next";
@@ -37,14 +36,14 @@ export default function GuidelinesPage() {
 						<div className="flex flex-col gap-1">{children}</div>
 					),
 					h1: (children) => (
-						<h1 className="text-2xl font-semibold" id={children ? toKebabCase(children.toString()) : undefined}>
+						<h1 id={children ? toKebabCase(children.toString()) : undefined} className="text-2xl font-semibold">
 							{children}
 						</h1>
 					),
 					h2: (children) => (
-						<h2 className="text-xl font-semibold" id={children ? toKebabCase(children.toString()) : undefined}>{children}</h2>
+						<h2 id={children ? toKebabCase(children.toString()) : undefined} className="text-xl font-semibold">{children}</h2>
 					),
-					h3: (children) => <h3 className="font-semibold" id={children ? toKebabCase(children.toString()) : undefined}>{children}</h3>,
+					h3: (children) => <h3 id={children ? toKebabCase(children.toString()) : undefined} className="font-semibold">{children}</h3>,
 					vulnerability: (children) => (
 						<InlineLink href={urls.resources.vulnerabilityReport}>
 							{children}

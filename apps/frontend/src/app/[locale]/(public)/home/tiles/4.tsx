@@ -13,14 +13,15 @@ import { Link } from "~/components/link";
 import { FlirtualLogo } from "~/components/logo";
 import { urls } from "~/urls";
 
-import { Tile, TileAnchor, type TileProps } from ".";
+import { Tile, TileAnchor } from ".";
+import type { TileProps } from ".";
 import { SignUpButton } from "../sign-up-button";
 
 export function CallToAction({ id }: TileProps) {
 	const { t } = useTranslation();
 
 	return (
-		<Tile className="h-auto !min-h-inherit content-center" id={id}>
+		<Tile id={id} className="h-auto !min-h-inherit content-center">
 			<div className="-mt-32 flex grow flex-col items-center px-8 pb-8 desktop:mt-0 desktop:px-24">
 				<div className="flex flex-col items-center gap-16 desktop:tall:mt-16">
 					<div className="flex flex-col items-center gap-4">

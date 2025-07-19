@@ -3,7 +3,8 @@ import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { User } from "~/api/user";
-import { VRChat, type VRChatCategory, type VRChatWorld } from "~/api/vrchat";
+import { VRChat } from "~/api/vrchat";
+import type { VRChatCategory, VRChatWorld } from "~/api/vrchat";
 import { Button } from "~/components/button";
 import { InputText } from "~/components/inputs";
 import { useToast } from "~/hooks/use-toast";
@@ -449,12 +450,12 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 
 					{/* Scrollable worlds container */}
 					<div
+						id={`worlds-${categoryKey}`}
 						style={{
 							scrollbarWidth: "none",
 							msOverflowStyle: "none"
 						}}
 						className="scrollbar-hide flex gap-4 overflow-x-scroll px-4 py-2"
-						id={`worlds-${categoryKey}`}
 						ref={scrollReference}
 						onScroll={handleScroll}
 						onWheel={(e) => {
@@ -516,7 +517,7 @@ export const VRChatBrowse: FC<VRChatBrowseProps> = (props) => {
 					{searchWorlds.length > 0 && (
 						<div className="grid grid-cols-2 gap-4 desktop:grid-cols-3">
 							{searchWorlds.map((world) => (
-								<div className="flex flex-col gap-2 rounded-2xl bg-white-20 p-3 shadow-brand-1 dark:bg-black-60" key={world.id}>
+								<div key={world.id} className="flex flex-col gap-2 rounded-2xl bg-white-20 p-3 shadow-brand-1 dark:bg-black-60">
 									<div className="aspect-video overflow-hidden rounded-lg">
 										<img
 											alt={world.name}

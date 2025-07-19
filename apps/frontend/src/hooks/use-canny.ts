@@ -1,5 +1,6 @@
 import type { Session } from "~/api/auth";
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 import { cannyAppId } from "~/const";
 import { queryClient, sessionKey } from "~/query";
 import { urls } from "~/urls";

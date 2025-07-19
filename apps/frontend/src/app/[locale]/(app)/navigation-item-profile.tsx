@@ -7,9 +7,11 @@ import {
 	Sparkles,
 	VenetianMask
 } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { type FC, useEffect, useRef, useState } from "react";
+import { AnimatePresence } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -23,7 +25,6 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
-import { useNavigate } from "react-router";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
@@ -36,7 +37,7 @@ type ProfileNavigationItemProps = React.PropsWithChildren<
 const ProfileNavigationItem: React.FC<ProfileNavigationItemProps> = (props) => {
 	const className = twMerge(
 		"flex w-full items-center gap-5 py-2 text-left font-montserrat text-lg font-semibold hover:text-theme-2",
-		// eslint-disable-next-line react/prefer-destructuring-assignment
+
 		props.className
 	);
 
@@ -83,13 +84,13 @@ export const NavigationItemProfile: FC = () => {
 	return (
 		<div className="relative aspect-square shrink-0">
 			<button
+				id="profile-dropdown-button"
 				className={twMerge(
 					"group rounded-full p-1 transition-all",
 					active
 						? "bg-white-20 shadow-brand-1"
 						: "bg-transparent hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1"
 				)}
-				id="profile-dropdown-button"
 				type="button"
 				onClick={() => setVisible(true)}
 			>
@@ -104,7 +105,7 @@ export const NavigationItemProfile: FC = () => {
 			</button>
 			<AnimatePresence>
 				{visible && (
-					<motion.div
+					<m.div
 						animate={{ opacity: 1 }}
 						className="absolute -left-2 bottom-[calc((var(--safe-area-inset-bottom,0rem)+0.65em)*-1)] z-10 flex min-w-44 flex-col-reverse overflow-hidden rounded-t-2xl bg-white-10 p-4 pb-[calc(var(--safe-area-inset-bottom,0rem)+1.2rem)] pt-2.5 text-black-80 shadow-brand-1 ja:min-w-48 desktop:bottom-inherit desktop:top-[-0.4rem] desktop:flex-col desktop:rounded-2xl desktop:pb-3 desktop:pt-[0.9375rem]"
 						exit={{ opacity: 0 }}
@@ -116,7 +117,7 @@ export const NavigationItemProfile: FC = () => {
 							href={urls.profile(user)}
 						>
 							<UserAvatar
-								className="group-hocus:brightness-90 mt-1.5 size-8 scale-125 rounded-full transition-transform desktop:mb-2 desktop:mt-0"
+								className="mt-1.5 size-8 scale-125 rounded-full transition-transform group-hocus:brightness-90 desktop:mb-2 desktop:mt-0"
 								height={40}
 								user={user}
 								variant="icon"
@@ -178,7 +179,7 @@ export const NavigationItemProfile: FC = () => {
 								</ProfileNavigationItem>
 							)}
 						</div>
-					</motion.div>
+					</m.div>
 				)}
 			</AnimatePresence>
 		</div>

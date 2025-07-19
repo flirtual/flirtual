@@ -1,6 +1,7 @@
 import AwsS3 from "@uppy/aws-s3";
 import Compressor from "@uppy/compressor";
-import Uppy, { type UppyFile } from "@uppy/core";
+import Uppy from "@uppy/core";
+import type { UppyFile } from "@uppy/core";
 import DropTarget from "@uppy/drop-target";
 import GoldenRetriever from "@uppy/golden-retriever";
 import ImageEditor from "@uppy/image-editor";
@@ -9,12 +10,12 @@ import RemoteSources from "@uppy/remote-sources";
 import { ImagePlus } from "lucide-react";
 import { useMessages } from "next-intl";
 import {
-	type Dispatch,
-	type FC,
+
 	useCallback,
 	useEffect,
 	useState
 } from "react";
+import type { Dispatch, FC } from "react";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -221,8 +222,8 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 						? (
 								<SortableItem id={image.id} key={image.id}>
 									<ArrangeableImage
-										className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
 										id={image.id}
+										className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
 										src={image.src}
 										onDelete={() => {
 											onChange?.(value.filter((_, index) => imageIndex !== index));
@@ -232,7 +233,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 								</SortableItem>
 							)
 						: (
-								<div className="m-auto" key={image.id}>
+								<div key={image.id} className="m-auto">
 									{image.id.split("-").pop()}
 								</div>
 							)

@@ -29,11 +29,11 @@ export const LikesYouButton: FC = () => {
 					<div className="flex items-center -space-x-2">
 						{likes.thumbnails?.map((thumbnail) => (
 							<Image
+								key={thumbnail}
 								alt="Like preview"
 								className="aspect-square rounded-full border-2 border-white-10 object-cover shadow-brand-1"
 								draggable={false}
 								height={34}
-								key={thumbnail}
 								src={thumbnail}
 								width={34}
 							/>

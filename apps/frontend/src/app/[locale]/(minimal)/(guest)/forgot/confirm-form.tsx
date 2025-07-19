@@ -1,5 +1,4 @@
 import { decode } from "jsonwebtoken";
-import { useLocale } from "~/i18n";
 import { useState } from "react";
 
 import { Authentication } from "~/api/auth";
@@ -7,6 +6,7 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
+import { useLocale } from "~/i18n";
 import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 

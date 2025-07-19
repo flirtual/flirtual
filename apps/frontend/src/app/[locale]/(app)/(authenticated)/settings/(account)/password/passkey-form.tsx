@@ -121,11 +121,11 @@ export const PasswordPasskeyForm: React.FC = () => {
 				<div className="flex flex-col gap-4">
 					{session.user.passkeys.map((passkey) => (
 						<PasskeyButton
-							date={new Date(passkey.createdAt)}
-							icon={aaguidData[passkey.aaguid]?.icon_dark}
 							id={passkey.id}
 							key={passkey.id}
 							name={aaguidData[passkey.aaguid]?.name}
+							date={new Date(passkey.createdAt)}
+							icon={aaguidData[passkey.aaguid]?.icon_dark}
 						/>
 					))}
 				</div>
@@ -141,7 +141,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 				{t("add_passkey")}
 				{" "}
 				{!passkeysAvailable
-				&& (native ? t("unsupported_device") : t("unsupported_browser"))}
+					&& (native ? t("unsupported_device") : t("unsupported_browser"))}
 			</Button>
 		</>
 	);

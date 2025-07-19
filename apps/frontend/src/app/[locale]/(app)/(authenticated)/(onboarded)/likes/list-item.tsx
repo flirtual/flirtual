@@ -20,7 +20,7 @@ export const LikeListItem: FC<LikeAndPassItem> = ({ kind, profileId: userId }) =
 	const Icon = kind === "love" ? HeartIcon : PeaceIcon;
 
 	return (
-		<Link className="flex items-center gap-4 bg-white-10 p-4 vision:bg-white-10/10 dark:bg-black-80 desktop:rounded-xl desktop:shadow-brand-1" href={urls.profile(user)} key={user.id}>
+		<Link key={user.id} className="flex items-center gap-4 bg-white-10 p-4 vision:bg-white-10/10 dark:bg-black-80 desktop:rounded-xl desktop:shadow-brand-1" href={urls.profile(user)}>
 			<UserAvatar
 				className="aspect-square h-16 rounded-lg"
 				height={64}
@@ -45,7 +45,7 @@ export const LikeListItem: FC<LikeAndPassItem> = ({ kind, profileId: userId }) =
 						className="vision:bg-white-30/70"
 					/>
 					{user.profile.country && (
-						<CountryPill flagOnly id={user.profile.country} />
+						<CountryPill id={user.profile.country} flagOnly />
 					)}
 				</div>
 			</div>

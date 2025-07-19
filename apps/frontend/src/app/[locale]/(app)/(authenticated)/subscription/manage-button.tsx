@@ -1,5 +1,6 @@
 import { Loader2 } from "lucide-react";
-import { type FC, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "~/components/button";

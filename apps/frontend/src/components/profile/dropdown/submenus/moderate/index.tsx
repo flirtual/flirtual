@@ -1,5 +1,6 @@
 import { CreditCard, EyeOff, Scale, Trash2 } from "lucide-react";
-import { type FC, type PropsWithChildren, Suspense } from "react";
+import { Suspense } from "react";
+import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
 import { displayName, User } from "~/api/user";

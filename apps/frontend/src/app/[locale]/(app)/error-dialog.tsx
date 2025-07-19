@@ -4,7 +4,6 @@ import { m } from "motion/react";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import useSound from "use-sound";
 
 import { Button } from "~/components/button";
 import { CopyClick } from "~/components/copy-click";

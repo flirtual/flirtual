@@ -59,6 +59,7 @@ export function Profile({
 
 	return (
 		<div
+			id={id}
 			style={
 				user.profile.color1 && user.profile.color2
 					? ({
@@ -71,7 +72,6 @@ export function Profile({
 						} as CSSProperties)
 					: {}
 			}
-			id={id}
 			{...elementProps}
 			data-mask
 			className={twMerge(
@@ -114,8 +114,8 @@ export function Profile({
 							/>
 							{user.profile.country && (
 								<CountryPill
-									className="!bg-opacity-70"
 									id={user.profile.country}
+									className="!bg-opacity-70"
 								/>
 							)}
 						</div>

@@ -1,4 +1,5 @@
-import wretch, { type ConfiguredMiddleware } from "wretch";
+import wretch from "wretch";
+import type { ConfiguredMiddleware } from "wretch";
 import AbortAddon from "wretch/addons/abort";
 import QueryAddon from "wretch/addons/queryString";
 import { WretchError } from "wretch/resolver";

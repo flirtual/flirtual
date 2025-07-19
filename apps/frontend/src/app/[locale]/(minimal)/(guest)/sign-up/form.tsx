@@ -1,6 +1,6 @@
 import { MoveRight } from "lucide-react";
-import { useLocale } from "~/i18n";
 import type { FC } from "react";
+import { useNavigate } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -14,7 +14,7 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { useNavigate } from "react-router";
+import { useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -74,9 +74,9 @@ export const Onboarding0Form: FC = () => {
 						)}
 					</FormField>
 					<FormField
+						name="url"
 						aria-hidden="true"
 						className="absolute left-[-9999px]"
-						name="url"
 					>
 						{({ props, labelProps }) => (
 							<>

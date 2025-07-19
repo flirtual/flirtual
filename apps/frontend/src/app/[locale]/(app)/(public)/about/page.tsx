@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { Locale } from "~/i18n";
 import { useMessages, useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { use } from "react";
@@ -170,7 +169,7 @@ export default function AboutPage() {
 						<div className="flex flex-col gap-6">
 							{(["2018", "2019", "2020", "2021", "2022", "2023", "2024"] as const).map(
 								(year, index) => (
-									<TimelineItem index={index} key={year} year={year} />
+									<TimelineItem key={year} index={index} year={year} />
 								)
 							)}
 						</div>

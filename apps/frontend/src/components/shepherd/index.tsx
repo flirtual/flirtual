@@ -1,5 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
-import { ShepherdTour, type Tour } from "react-shepherd";
+import { ShepherdTour } from "react-shepherd";
+import type { Tour } from "react-shepherd";
 
 import { emptyArray } from "~/utilities";
 

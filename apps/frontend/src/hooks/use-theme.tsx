@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 
 import type { Session } from "~/api/auth";
-import { Preferences, type PreferenceTheme } from "~/api/user/preferences";
+import { Preferences } from "~/api/user/preferences";
+import type { PreferenceTheme } from "~/api/user/preferences";
 import { applyDocumentMutations } from "~/document";
 import { getPreferences } from "~/preferences";
 import { mutate, sessionKey, useMutation } from "~/query";

@@ -15,8 +15,8 @@ export function Hero({ id }: TileProps) {
 
 	return (
 		<Tile
-			className="relative flex flex-col items-center justify-center"
 			id={id}
+			className="relative flex flex-col items-center justify-center"
 		>
 			<InlineLanguageSelect className="absolute right-12 top-8 z-20 hidden desktop:block" />
 			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-32">

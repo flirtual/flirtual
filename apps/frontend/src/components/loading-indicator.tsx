@@ -1,6 +1,7 @@
 import { Chrome, Laptop, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { type PropsWithChildren, useState } from "react";
+import { AnimatePresence } from "motion/react";
+import { useState } from "react";
+import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
@@ -18,7 +19,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 
 	return (
 		<div className={twMerge("flex min-h-screen w-full flex-col items-center justify-center opacity-75", className)}>
-			<div className="w-2/3 max-w-sm desktop:w-1/2 animate-pulse">
+			<div className="w-2/3 max-w-sm animate-pulse desktop:w-1/2">
 				<Image
 					priority
 					alt=""
@@ -40,11 +41,11 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 			</div>
 			<AnimatePresence>
 				{probablyErrored && (
-					<motion.div
+					<m.div
+						key="too-long"
 						animate={{ opacity: 1, y: 0 }}
 						className="flex w-full max-w-md flex-col gap-4 px-4 pt-8"
 						initial={{ opacity: 0, y: -20 }}
-						key="too-long"
 					>
 						<p className="font-semibold">{t("crisp_lime_raven_arise")}</p>
 						<ul className="ml-4 flex list-disc flex-col gap-2">
@@ -90,7 +91,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 								})}
 							</li>
 						</ul>
-					</motion.div>
+					</m.div>
 				)}
 			</AnimatePresence>
 			{children}

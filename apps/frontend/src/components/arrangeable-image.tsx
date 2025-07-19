@@ -51,8 +51,8 @@ export function ArrangeableImage({ src, id, className, onDelete, onFullscreen, .
 				onMouseDown={(event) => event.stopPropagation()}
 				onTouchStart={(event) => event.stopPropagation()}
 			>
-				<div className="group-hocus-within:bg-black-70 flex items-center justify-center rounded-md bg-black-70/80 p-1 transition-all">
-					<div className="group-hocus-within:w-fit group-hocus-within:pr-2 group-hocus-within:opacity-100 flex w-0 items-center justify-center gap-2 opacity-0 transition-all">
+				<div className="flex items-center justify-center rounded-md bg-black-70/80 p-1 transition-all group-hocus-within:bg-black-70">
+					<div className="flex w-0 items-center justify-center gap-2 opacity-0 transition-all group-hocus-within:w-fit group-hocus-within:pr-2 group-hocus-within:opacity-100">
 						<button
 							className="opacity-60 hocus:opacity-100"
 							type="button"

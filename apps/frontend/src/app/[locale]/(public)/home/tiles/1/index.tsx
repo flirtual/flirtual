@@ -3,14 +3,15 @@ import { useTranslation } from "react-i18next";
 import { Image } from "~/components/image";
 import { urls } from "~/urls";
 
-import { Tile, TileAnchor, type TileProps } from "..";
+import { Tile, TileAnchor } from "..";
+import type { TileProps } from "..";
 import { ProfileMessage } from "./message";
 
 export function AvatarProfiles({ id }: TileProps) {
 	const { t } = useTranslation();
 
 	return (
-		<Tile className="content-center px-4 pt-8 desktop:px-28" id={id}>
+		<Tile id={id} className="content-center px-4 pt-8 desktop:px-28">
 			<div className="mx-auto -mt-32 flex flex-col items-center justify-center gap-8 desktop:mt-0">
 				<Image
 					priority

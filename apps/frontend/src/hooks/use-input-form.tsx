@@ -7,7 +7,8 @@ import { WretchError } from "wretch/resolver";
 
 import { isWretchError } from "~/api/common";
 import type { FormCaptchaReference } from "~/components/forms/captcha";
-import { FormField, type FormFieldFC } from "~/components/forms/field";
+import { FormField } from "~/components/forms/field";
+import type { FormFieldFC } from "~/components/forms/field";
 
 export interface FormFieldsDefault {
 	[s: string]: unknown;

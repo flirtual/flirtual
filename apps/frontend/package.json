@@ -127,7 +127,7 @@
 		"wretch": "^2.11.0"
 	},
 	"devDependencies": {
-		"@ariesclark/eslint-config": "^3.1.1",
+		"@ariesclark/eslint-config": "3.2.1-canary.1",
 		"@capacitor/assets": "^3.0.5",
 		"@capacitor/cli": "^7.4.2",
 		"@cloudflare/vite-plugin": "^1.9.5",

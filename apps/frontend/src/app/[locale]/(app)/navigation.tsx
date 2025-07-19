@@ -56,14 +56,14 @@ const NavigationContent: FC = () => {
 			<NavigationItemProfile />
 			<NavigationalSwitch id="browse-mode-switch">
 				<NavigationalSwitchItem
+					id="date-mode-switch"
 					href={urls.discover("dates")}
 					Icon={HeartIcon}
-					id="date-mode-switch"
 				/>
 				<NavigationalSwitchItem
+					id="homie-mode-switch"
 					href={urls.discover("homies")}
 					Icon={PeaceIcon}
-					id="homie-mode-switch"
 				/>
 			</NavigationalSwitch>
 			<NavigationItemMessage />

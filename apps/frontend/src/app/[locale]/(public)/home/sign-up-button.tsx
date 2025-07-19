@@ -1,5 +1,6 @@
 import { Cat } from "lucide-react";
-import { type FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import useSound from "use-sound";
 

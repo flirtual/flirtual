@@ -1,9 +1,11 @@
-import { type FC, type PropsWithChildren, useState } from "react";
+import { useState } from "react";
+import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -15,9 +17,10 @@ import {
 } from "~/components/dialog/dialog";
 import { Form, FormButton } from "~/components/forms";
 import {
-	type ImageSetValue,
+
 	InputImageSet
 } from "~/components/forms/input-image-set";
+import type { ImageSetValue } from "~/components/forms/input-image-set";
 import { InputLabel, InputLabelHint, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import {

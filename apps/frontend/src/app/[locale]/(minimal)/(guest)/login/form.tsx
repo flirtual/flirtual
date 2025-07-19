@@ -1,5 +1,6 @@
 import { MoveRight } from "lucide-react";
-import { type FC, Suspense, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
@@ -258,16 +259,15 @@ export const LoginForm: FC = () => {
 					</>
 				)}
 			</Form>
-			<Suspense>
-				<div className="flex flex-col gap-2">
-					<div className="inline-flex items-center justify-center">
-						<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
-							{t("or")}
-						</span>
-						<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
-					</div>
-					<LoginConnectionButton tabIndex={5} type="discord" />
-					{/* {platform === "apple" ? (
+			<div className="flex flex-col gap-2">
+				<div className="inline-flex items-center justify-center">
+					<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+						{t("or")}
+					</span>
+					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+				</div>
+				<LoginConnectionButton tabIndex={5} type="discord" />
+				{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />
 							<LoginConnectionButton type="google" />
@@ -279,9 +279,8 @@ export const LoginForm: FC = () => {
 						</>
 					)}
 					<LoginConnectionButton type="meta" /> */}
-					{/* <LoginConnectionButton type="vrchat" /> */}
-				</div>
-			</Suspense>
+				{/* <LoginConnectionButton type="vrchat" /> */}
+			</div>
 		</>
 	);
 };

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { type FC, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
+import type { FC } from "react";
 
 import { useInterval } from "~/hooks/use-interval";
 import { useMessages } from "~/i18n";
@@ -34,9 +35,9 @@ export const CarouselGallery: FC = () => {
 		<div className="flex">
 			{images.map(({ title, image }, index) => (
 				<button
+					key={image}
 					className="pointer-events-none absolute flex h-screen w-screen shrink-0 snap-center snap-always opacity-0 transition-opacity duration-500 data-[active]:pointer-events-auto data-[active]:opacity-100"
 					data-active={activeIndex === index ? "" : undefined}
-					key={image}
 					type="button"
 					onClick={() => {
 						reset();

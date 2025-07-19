@@ -1,5 +1,6 @@
-import type { Locale } from "~/i18n";
 import { defineRouting } from "next-intl/routing";
+
+import type { Locale } from "~/i18n";
 
 export const routing = defineRouting({
 	locales: ["en", "ja"],

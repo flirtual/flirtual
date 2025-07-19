@@ -5,12 +5,10 @@ import { isUid } from "~/utilities";
 
 import type { Attribute } from "../attributes";
 import {
-	api,
-	type DatedModel,
-	type Paginate,
-	type PaginateOptions,
-	type UuidModel
+	api
+
 } from "../common";
+import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
 import type { Connection } from "../connections";
 import type { Subscription } from "../subscription";
 import type { PreferenceLanguage } from "./preferences";
@@ -44,8 +42,8 @@ export type UserTags = (typeof userTags)[number];
 
 export type UserPasskey = {
 	aaguid: string;
-} &
-DatedModel & UuidModel;
+}
+& DatedModel & UuidModel;
 
 export const UserStatuses = [
 	"registered",
@@ -88,8 +86,8 @@ export type User = {
 	tnsDiscordInBiography?: string;
 	connections?: Array<Connection>;
 	passkeys?: Array<UserPasskey>;
-} &
-Partial<DatedModel> & UuidModel;
+}
+& Partial<DatedModel> & UuidModel;
 
 export interface UserPreview {
 	id: string;

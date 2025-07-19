@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { Locale } from "~/i18n";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { useTranslation } from "react-i18next";
@@ -109,8 +108,8 @@ export default function BrandingPage() {
 					/>
 					<ColorBlock name={t("pink")} value="#E9658B" />
 					<ColorBlock
-						invert
 						name={t("cream")}
+						invert
 						value="#FFFAF0"
 					/>
 				</div>

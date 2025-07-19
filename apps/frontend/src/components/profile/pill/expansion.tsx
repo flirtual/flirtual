@@ -1,10 +1,11 @@
 import { MoreHorizontal } from "lucide-react";
-import { useLocale } from "~/i18n";
-import { type FC, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import type { FC } from "react";
 
 import type { Session } from "~/api/auth";
 import type { User } from "~/api/user";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 import { urls } from "~/urls";
 
 import { ProfilePlaylist } from "../playlist";

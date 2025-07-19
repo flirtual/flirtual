@@ -1,16 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react-hooks/rules-of-hooks */
-;
-"use no memo";
-
 import {
-	type ColumnDef,
+
 	flexRender,
 	getCoreRowModel,
 	useReactTable
 } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Eye, EyeOff, Gavel, Gem, Search, ShieldEllipsis } from "lucide-react";
-import { type FC, Suspense, useDeferredValue, useEffect, useState } from "react";
+import { Suspense, useDeferredValue, useEffect, useState } from "react";
+import type { FC } from "react";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -18,13 +17,14 @@ import type { Paginate } from "~/api/common";
 import { emptyPaginate } from "~/api/common";
 import {
 	displayName,
-	type SearchOptions,
+
 	searchSortKeys,
 	User,
 	UserStatuses,
-	type UserTags,
+
 	userTags
 } from "~/api/user";
+import type { SearchOptions, UserTags } from "~/api/user";
 import { Button } from "~/components/button";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { InputSelect, InputSwitch, InputText } from "~/components/inputs";
@@ -51,6 +51,9 @@ import { useSession } from "~/hooks/use-session";
 import { useUser } from "~/hooks/use-user";
 import { useQuery } from "~/query";
 import { urls } from "~/urls";
+
+;
+"use no memo";
 
 const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
 	const user = useUser(userId);
@@ -286,9 +289,9 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number }> = ({
 							<>
 								{table.getRowModel().rows.map((row) => (
 									<TableRow
+										key={row.id}
 										className="h-20"
 										data-state={row.getIsSelected() && "selected"}
-										key={row.id}
 									>
 										<Suspense fallback={(
 											<TableCell colSpan={row.getVisibleCells().length}>
@@ -299,7 +302,7 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number }> = ({
 										)}
 										>
 											{row.getVisibleCells().map((cell) => (
-												<TableCell className="select-children" key={cell.id}>
+												<TableCell key={cell.id} className="select-children">
 													{flexRender(cell.column.columnDef.cell, cell.getContext())}
 												</TableCell>
 											))}
@@ -312,7 +315,7 @@ const DataTable: FC<{ data: Array<string>; admin: boolean; limit: number }> = ({
 							<>
 								{Array.from({ length: limit }).map((_, index) => (
 								// eslint-disable-next-line react/no-array-index-key
-									<TableRow className="h-20"key={index}>
+									<TableRow key={index}className="h-20">
 										{columns.map((column) => (
 											<TableCell key={column.id} />
 										))}

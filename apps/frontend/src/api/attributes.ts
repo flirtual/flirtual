@@ -79,8 +79,8 @@ export type Attribute<T = unknown> = {
 
 // export type PartialAttribute = Pick<Attribute<unknown>, "id" | "type">;
 
-export type MinimalAttribute<T extends AttributeType> =
-	AttributeMetadata[T] extends infer A
+export type MinimalAttribute<T extends AttributeType>
+	= AttributeMetadata[T] extends infer A
 		? A extends undefined
 			? string
 			: Expand<Omit<Attribute<AttributeMetadata[T]>, "type">>

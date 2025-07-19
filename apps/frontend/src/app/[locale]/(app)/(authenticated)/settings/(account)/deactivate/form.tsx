@@ -1,5 +1,3 @@
-import { useLocale } from "~/i18n";
-
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import {
@@ -10,6 +8,7 @@ import {
 import { ModelCard } from "~/components/model-card";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { redirect } from "~/i18n/navigation";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";

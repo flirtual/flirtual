@@ -67,12 +67,12 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 				<PillGroup>
 					{personalityLabels.map((personalityLabel) => (
 						<Pill
+							key={personalityLabel}
 							active={
 								session.user.id !== user.id
 								&& sessionPersonalityLabels.includes(personalityLabel)
 							}
 							href={editable ? urls.settings.personality : undefined}
-							key={personalityLabel}
 						>
 							{personalityLabel}
 						</Pill>
@@ -85,9 +85,9 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 
 					return (
 						<Pill
+							key={id}
 							active={session.user.id !== user.id && session.user.profile.attributes.interest?.includes(id)}
 							href={editable ? urls.settings.interests : undefined}
-							key={id}
 						>
 							{name}
 						</Pill>
@@ -101,6 +101,7 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 
 					return (
 						<Pill
+							key={customInterest}
 							active={
 								session.user.id !== user.id
 								&& session.user.profile.customInterests
@@ -110,7 +111,6 @@ export const PillCollection: FC<{ user: User }> = (props) => {
 									.includes(customInterestId)
 							}
 							href={editable ? urls.settings.interests : undefined}
-							key={customInterest}
 						>
 							{customInterest}
 						</Pill>

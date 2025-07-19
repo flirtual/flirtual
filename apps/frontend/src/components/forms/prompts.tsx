@@ -1,6 +1,6 @@
-/* eslint-disable react/prefer-destructuring-assignment */
 import { Pencil, Plus, X } from "lucide-react";
-import { type Dispatch, type FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { Dispatch, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { groupBy, prop, uniqueBy } from "remeda";
 

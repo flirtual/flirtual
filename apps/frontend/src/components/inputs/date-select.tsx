@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-destructuring-assignment */
 import { DatetimePicker } from "@capawesome-team/capacitor-datetime-picker";
 import { useCallback, useRef, useState } from "react";
 
@@ -9,10 +8,10 @@ import { resolveTheme } from "~/theme";
 
 import { Popover } from "../popover";
 import {
-	InputCalendar,
-	type InputCalendarProps,
-	type MinmaxDate
+	InputCalendar
+
 } from "./calendar";
+import type { InputCalendarProps, MinmaxDate } from "./calendar";
 import { InputText } from "./text";
 
 /**

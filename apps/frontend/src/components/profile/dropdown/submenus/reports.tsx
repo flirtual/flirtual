@@ -1,6 +1,7 @@
 import { Search, ShieldCheck } from "lucide-react";
 import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import { Report } from "~/api/report";
 import type { User } from "~/api/user";
@@ -14,7 +15,6 @@ import {
 import { Link } from "~/components/link";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 export const ProfileDropdownReportsSubmenu: FC<

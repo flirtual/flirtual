@@ -1,5 +1,6 @@
-import { AnimatePresence, motion } from "motion/react";
-import { type FC, Suspense } from "react";
+import { AnimatePresence } from "motion/react";
+import { Suspense } from "react";
+import type { FC } from "react";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { Profile } from "~/components/profile";
@@ -24,15 +25,15 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 						<Suspense>
 							<div className="relative max-w-full gap-4 overflow-hidden">
 								<AnimatePresence initial={false}>
-									<motion.div
+									<m.div
+										key={current}
 										animate={{ opacity: 1 }}
 										className="relative top-0 z-10"
 										exit={{ opacity: 0, position: "absolute" }}
 										initial={{ opacity: 0 }}
-										key={current}
 									>
 										<Profile hideModeratorInfo userId={current} />
-									</motion.div>
+									</m.div>
 								</AnimatePresence>
 							</div>
 						</Suspense>

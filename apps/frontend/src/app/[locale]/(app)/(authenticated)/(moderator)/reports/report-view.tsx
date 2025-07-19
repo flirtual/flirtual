@@ -21,7 +21,8 @@ import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
 import { Conversation } from "~/api/conversations";
-import { type ListReportOptions, Report } from "~/api/report";
+import { Report } from "~/api/report";
+import type { ListReportOptions } from "~/api/report";
 import { displayName } from "~/api/user";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { Dialog, DialogContent } from "~/components/dialog/dialog";
@@ -211,7 +212,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 										.sort()
 										.map(([reasonId, reports]) => {
 											return (
-												<div className="flex gap-2" key={reasonId}>
+												<div key={reasonId} className="flex gap-2">
 													<span>{`${reports.length}x`}</span>
 													<span>{tAttributes[reasonId]?.name || reasonId}</span>
 												</div>
@@ -223,11 +224,11 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 								<div className="flex flex-col gap-2">
 									{sortBy(reports, prop("createdAt")).map((report) => (
 										<div
+											key={report.id}
 											className={twMerge(
 												"flex flex-col gap-2 rounded-xl bg-white-30 p-4 dark:bg-black-80",
 												report.reviewedAt && "brightness-75"
 											)}
-											key={report.id}
 										>
 											<div className="flex justify-between gap-4">
 												<div className="flex flex-col">
@@ -270,7 +271,7 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 															<TooltipContent>Clear single report</TooltipContent>
 														</Tooltip>
 														{session?.user.tags?.includes("admin")
-														&& report.userId && (
+															&& report.userId && (
 															<Tooltip>
 																<TooltipTrigger asChild>
 																	<button
@@ -307,12 +308,12 @@ const ProfileReportView: React.FC<ProfileReportViewProps> = ({
 												<div className="flex flex-wrap gap-2">
 													{report.images.map((image) => (
 														<Link
-															href={urls.media(image, "uploads")}
 															key={image}
+															href={urls.media(image, "uploads")}
 															target="_blank"
 														>
 															{!image.includes(".")
-															|| /\.(?:jpg|jpeg|png|gif|webm)$/i.test(image)
+																|| /\.(?:jpg|jpeg|png|gif|webm)$/i.test(image)
 																? (
 																		<Image
 																			alt="Report attachment"

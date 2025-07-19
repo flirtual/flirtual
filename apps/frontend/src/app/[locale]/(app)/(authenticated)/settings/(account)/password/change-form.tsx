@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useNavigate } from "react-router";
 
 export const PasswordChangeForm: React.FC = () => {
 	const session = useOptionalSession();

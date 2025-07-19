@@ -4,7 +4,8 @@ import { ChevronDown, Moon, Sun, SunMoon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
+import { PreferenceThemes } from "~/api/user/preferences";
+import type { PreferenceTheme } from "~/api/user/preferences";
 import { Image } from "~/components/image";
 import {
 	Select,
@@ -79,8 +80,8 @@ export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className 
 			<SelectContent>
 				{PreferenceThemes.map((value) => (
 					<SelectItem
-						className="flex w-full items-center gap-2"
 						key={value}
+						className="flex w-full items-center gap-2"
 						value={value}
 					>
 						{t(value)}

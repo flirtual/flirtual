@@ -88,10 +88,10 @@ export const TileGuide: FC<{ tileCount: number }> = ({ tileCount }) => {
 			<div className="pointer-events-auto flex items-center justify-center gap-4 p-2 desktop:flex-col">
 				{Array.from({ length: tileCount }).map((_, index) => (
 					<button
-						className="group flex size-5 items-center justify-center"
-						data-active={index === tile ? "" : undefined}
 						// eslint-disable-next-line react/no-array-index-key
 						key={index}
+						className="group flex size-5 items-center justify-center"
+						data-active={index === tile ? "" : undefined}
 						type="button"
 						onClick={() =>
 							document

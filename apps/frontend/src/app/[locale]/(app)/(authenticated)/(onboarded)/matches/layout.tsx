@@ -1,11 +1,12 @@
-import type { Locale } from "~/i18n";
 import { setRequestLocale } from "next-intl/server";
-import { type PropsWithChildren, use } from "react";
+import { use } from "react";
+import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
+import type { Locale } from "~/i18n";
 import { urls } from "~/urls";
 
 import { LikesYouButton } from "./likes-you-button";

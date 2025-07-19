@@ -61,7 +61,7 @@ const HighlightedText: FC<{ children: string; snippet: string }> = ({
 				if (part.toLowerCase() !== snippet.toLowerCase()) return part;
 				return (
 					// eslint-disable-next-line react/no-array-index-key
-					<span className="font-bold" key={`${part}-${index}`}>
+					<span key={`${part}-${index}`} className="font-bold">
 						{part}
 					</span>
 				);
@@ -113,7 +113,7 @@ export const InterestSelectList: FC<{
 				if (!filteredInterests || filteredInterests.length === 0) return null;
 
 				return (
-					<div className="flex flex-col gap-4" key={categoryId}>
+					<div key={categoryId} className="flex flex-col gap-4">
 						<InputLabel className="flex flex-row items-center gap-2">
 							{categoryIcon}
 							{" "}
@@ -128,6 +128,7 @@ export const InterestSelectList: FC<{
 
 								return (
 									<Pill
+										key={interestId}
 										className={twMerge(
 											"data-[active]:bg-brand-gradient",
 											!active && selected.length >= maximum
@@ -136,7 +137,6 @@ export const InterestSelectList: FC<{
 										)}
 										active={active}
 										hocusable={false}
-										key={interestId}
 										onClick={() =>
 											onSelected(
 												active

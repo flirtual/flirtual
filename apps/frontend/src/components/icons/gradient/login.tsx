@@ -20,8 +20,8 @@ export const LoginIcon: React.FC<GradientIconProps> = ({
 			{gradient && (
 				<defs>
 					<linearGradient
-						gradientUnits="userSpaceOnUse"
 						id={id}
+						gradientUnits="userSpaceOnUse"
 						x1="77.221"
 						x2="435.48"
 						y1="201.83"

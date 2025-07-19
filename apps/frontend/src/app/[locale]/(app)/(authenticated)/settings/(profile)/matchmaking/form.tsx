@@ -1,6 +1,8 @@
 import { Loader2, Trash2 } from "lucide-react";
-import { type FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -31,13 +33,13 @@ import { InputCheckbox, InputLabel, InputLabelHint, InputSelect } from "~/compon
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
 import {
-	type AttributeTranslation,
+
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useNavigate } from "react-router";
 import { invalidate, sessionKey } from "~/query";
 
 const absMinAge = 18;

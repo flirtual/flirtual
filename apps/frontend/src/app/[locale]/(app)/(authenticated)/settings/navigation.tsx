@@ -19,7 +19,6 @@ import {
 	VenetianMask,
 	X
 } from "lucide-react";
-import { useLocale } from "~/i18n";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -30,7 +29,8 @@ import { openFeedback } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
-import { redirect, useRouter, useSelectedLayoutSegment } from "~/i18n/navigation";
+import { useLocale } from "~/i18n";
+import { redirect, useSelectedLayoutSegment } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";

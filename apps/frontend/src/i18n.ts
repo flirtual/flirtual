@@ -1,4 +1,5 @@
-import i18n, { type ResourceKey } from "i18next";
+import i18n from "i18next";
+import type { ResourceKey } from "i18next";
 import icu from "i18next-icu";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { useCallback } from "react";

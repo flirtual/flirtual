@@ -1,4 +1,5 @@
-import { type FC, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
+import type { FC } from "react";
 import { keys } from "remeda";
 
 import { useInterval } from "~/hooks/use-interval";

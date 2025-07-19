@@ -1,7 +1,8 @@
 import { setTag, setUser } from "@sentry/react";
 import posthog from "posthog-js";
 import { PostHogProvider, usePostHog } from "posthog-js/react";
-import { type PropsWithChildren, Suspense, useCallback, useEffect } from "react";
+import { Suspense, useCallback, useEffect } from "react";
+import type { PropsWithChildren } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import {
@@ -101,7 +102,7 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 					<Identity />
 				</Suspense>
 			</ErrorBoundary>
-			{production && (
+			{production && cloudflareBeaconId && (
 				<script
 					defer
 					data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}

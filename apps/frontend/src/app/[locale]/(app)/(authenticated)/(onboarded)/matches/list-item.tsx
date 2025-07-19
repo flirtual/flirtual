@@ -26,11 +26,11 @@ function replaceEmojis(message: string) {
 		return customEmojis[part]
 			? (
 					<Image
+						// eslint-disable-next-line react/no-array-index-key
+						key={index}
 						alt={part}
 						className="inline-block"
 						height={24}
-						// eslint-disable-next-line react/no-array-index-key
-						key={index}
 						src={customEmojis[part].url}
 						width={24}
 					/>

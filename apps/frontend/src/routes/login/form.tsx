@@ -1,5 +1,6 @@
 import { MoveRight } from "lucide-react";
-import { type FC, Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";

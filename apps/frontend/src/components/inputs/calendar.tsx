@@ -12,10 +12,11 @@ import type { IconComponent } from "~/components/icons";
 import { useLocale } from "~/i18n";
 
 import {
-	type InputOptionEvent,
-	InputOptionWindow,
-	type InputSelectOption
+
+	InputOptionWindow
+
 } from "./option-window";
+import type { InputOptionEvent, InputSelectOption } from "./option-window";
 
 function getMonthLength(date: Date): number {
 	return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -355,7 +356,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 							<tr>
 								{weekNames.map((name, index) => (
 									// eslint-disable-next-line react/no-array-index-key
-									<th className="size-10 font-extrabold" key={index}>
+									<th key={index} className="size-10 font-extrabold">
 										{name}
 									</th>
 								))}
@@ -367,7 +368,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								.map((_, weekIndex) => {
 									return (
 										// eslint-disable-next-line react/no-array-index-key
-										<tr className="" key={weekIndex}>
+										<tr key={weekIndex} className="">
 											{Array.from({ length: 7 })
 												.fill(null)
 												.map((_, dayIndex) => {
@@ -395,7 +396,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 													const active = dateEqual(value, date);
 
 													return (
-														<td className="p-1" key={day}>
+														<td key={day} className="p-1">
 															<button
 																className={twMerge(
 																	"size-10 rounded-xl text-center hover:bg-white-40 dark:hover:bg-black-60",

@@ -3,18 +3,17 @@
 import { AlertTriangle, Check } from "lucide-react";
 import {
 	createContext,
-	type PropsWithChildren,
+
 	use,
 	useCallback,
 	useMemo,
 	useState
 } from "react";
+import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
-
-import { device } from "./use-device";
 
 export type ToastType = "error" | "success" | "warning";
 export type ToastDuration = "long" | "short";

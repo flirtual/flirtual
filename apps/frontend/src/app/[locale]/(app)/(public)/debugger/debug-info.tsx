@@ -1,11 +1,11 @@
 import { Clipboard } from "@capacitor/clipboard";
 import { Copy } from "lucide-react";
-import { useLocale } from "~/i18n";
 
 import { Button } from "~/components/button";
 import { environment } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { logout, useOptionalSession } from "~/hooks/use-session";
+import { useLocale } from "~/i18n";
 import { evictQueries, invalidate, restoreQueries, saveQueries } from "~/query";
 
 export const DebugInfo: React.FC = () => {

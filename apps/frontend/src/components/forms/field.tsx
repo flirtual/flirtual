@@ -3,10 +3,10 @@ import { useSearchParams } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import {
-	type FormFieldsDefault,
-	type InputFormField,
+
 	useFormContext
 } from "~/hooks/use-input-form";
+import type { FormFieldsDefault, InputFormField } from "~/hooks/use-input-form";
 
 import { FormInputMessages } from "./input-messages";
 

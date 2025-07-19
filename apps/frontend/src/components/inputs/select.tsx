@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-destructuring-assignment */
 import { SelectItemText } from "@radix-ui/react-select";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDown, ChevronsUpDown, ChevronUp, X } from "lucide-react";
@@ -232,8 +231,8 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 			<SelectContent>
 				{options.map((option) => (
 					<Item
-						disabled={option.disabled}
 						key={option.id}
+						disabled={option.disabled}
 						value={option.id as K & string}
 						onPointerEnter={() => props.onItemHover?.(option.id as K & string)}
 					>

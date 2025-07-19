@@ -11,7 +11,8 @@ import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { ConnectionType } from "~/api/connections";
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
@@ -91,8 +92,8 @@ export const ProfileDropdownCopySubmenu: FC<
 						{connections.map(({ type, value }) => {
 							return (
 								<DropdownMenuItem
-									disabled={!value}
 									key={type}
+									disabled={!value}
 									onClick={() => value && Clipboard.write({ string: value })}
 								>
 									{t(type)}

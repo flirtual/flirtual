@@ -1,6 +1,8 @@
 import type { StringValue } from "ms";
-import { type createFormatter, useFormatter } from "next-intl";
-import { type ComponentProps, type FC, useCallback, useMemo, useState } from "react";
+import { useFormatter } from "next-intl";
+import type { createFormatter } from "next-intl";
+import { useCallback, useMemo, useState } from "react";
+import type { ComponentProps, FC } from "react";
 
 import { useInterval } from "~/hooks/use-interval";
 

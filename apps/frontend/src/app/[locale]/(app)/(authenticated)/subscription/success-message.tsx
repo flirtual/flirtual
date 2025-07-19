@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
-import { useSearchParams } from "react-router";
 import type React from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 
 import { InlineLink } from "~/components/inline-link";
 import { Link } from "~/components/link";

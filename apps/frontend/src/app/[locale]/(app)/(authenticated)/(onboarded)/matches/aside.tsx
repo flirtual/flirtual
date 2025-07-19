@@ -1,5 +1,6 @@
 import { CheckCheck, ChevronLeft, X } from "lucide-react";
-import { type FC, Fragment, Suspense, useLayoutEffect } from "react";
+import { Fragment, Suspense, useLayoutEffect } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
 import { twMerge } from "tailwind-merge";
@@ -88,8 +89,8 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 							<Fragment key={metadata.cursor.self.page}>
 								{conversations.map((conversation, conversationIndex) => (
 									<Suspense
-										fallback={<ConversationListItemSkeleton />}
 										key={conversation.id}
+										fallback={<ConversationListItemSkeleton />}
 									>
 										<ConversationListItem
 											{...conversation}

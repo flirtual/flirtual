@@ -1,13 +1,14 @@
 import { VenetianMask } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import { Authentication } from "~/api/auth";
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useNavigate } from "react-router";
 
 export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 	const session = useOptionalSession();

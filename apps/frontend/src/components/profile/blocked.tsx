@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 
 import { ModelCard } from "../model-card";
 import { BlockedActions } from "./blocked-actions";

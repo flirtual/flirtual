@@ -97,7 +97,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 				/>
 			</div>
 			<FormInputMessages
-				className="desktop:mx-auto desktop:w-fit desktop:text-center"
+				className="mx-auto w-fit text-center"
 				messages={fields.captcha?.errors.map((value) => ({ type: "error", value }))}
 			/>
 		</div>

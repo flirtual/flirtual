@@ -1,12 +1,13 @@
-import { api, type DatedModel, type UuidModel } from "~/api/common";
+import { api } from "~/api/common";
+import type { DatedModel, UuidModel } from "~/api/common";
 import { urls } from "~/urls";
 
 export type ProfileImage = {
 	originalFile?: string;
 	externalId?: string;
 	scanned?: boolean;
-} &
-DatedModel & UuidModel;
+}
+& DatedModel & UuidModel;
 
 export const notFoundImage = {
 	id: "not-found",

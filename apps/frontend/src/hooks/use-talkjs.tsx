@@ -2,20 +2,19 @@
 import { useLocale, useMessages } from "next-intl";
 import {
 	createContext,
-	type CSSProperties,
-	type FC,
-	type PropsWithChildren,
+
 	use,
 	useEffect,
 	useMemo,
 	useState
 } from "react";
+import type { CSSProperties, FC, PropsWithChildren } from "react";
 import type React from "react";
+import { useNavigate } from "react-router";
 import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
-import { useNavigate } from "react-router";
 import { resolveTheme } from "~/theme";
 import { urls } from "~/urls";
 import { emptyArray } from "~/utilities";

@@ -1,13 +1,13 @@
-import { useLocale } from "~/i18n";
 import { useMemo } from "react";
 
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 
 import {
-	InputAutocomplete,
-	type InputAutocompleteOption,
-	type InputAutocompleteProps
+	InputAutocomplete
+
 } from "../autocomplete";
+import type { InputAutocompleteOption, InputAutocompleteProps } from "../autocomplete";
 
 export const InputLanguageAutocomplete: React.FC<
 	Omit<InputAutocompleteProps, "options">

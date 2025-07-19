@@ -6,9 +6,10 @@ import { twMerge } from "tailwind-merge";
 
 import {
 	Connection,
-	ConnectionMetadata,
-	type ConnectionType
+	ConnectionMetadata
+
 } from "~/api/connections";
+import type { ConnectionType } from "~/api/connections";
 import { Button, ButtonLink } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { toAbsoluteUrl } from "~/urls";

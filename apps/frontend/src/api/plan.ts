@@ -2,7 +2,8 @@ import { cache } from "react";
 
 import { gitCommitSha } from "~/const";
 
-import { api, type DatedModel, type UuidModel } from "./common";
+import { api } from "./common";
+import type { DatedModel, UuidModel } from "./common";
 
 export const SubscriptionFeatures = ["custom_weights"] as const;
 export type SubscriptionFeature = (typeof SubscriptionFeatures)[number];
@@ -16,8 +17,8 @@ export type Plan = {
 	googleId?: string;
 	revenuecatId?: string;
 	purchasable: boolean;
-} &
-Partial<DatedModel> & UuidModel;
+}
+& Partial<DatedModel> & UuidModel;
 
 export const Plan = {
 	api: api.url("plans"),

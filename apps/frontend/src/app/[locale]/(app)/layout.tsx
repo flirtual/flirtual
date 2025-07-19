@@ -1,4 +1,5 @@
-import { type PropsWithChildren, Suspense } from "react";
+import { Suspense } from "react";
+import type { PropsWithChildren } from "react";
 
 import { Footer } from "~/components/layout/footer";
 import { TalkjsProvider } from "~/hooks/use-talkjs";

@@ -1,6 +1,6 @@
 import { ChevronLeft, X } from "lucide-react";
-import { useSearchParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 
 import { Link } from "~/components/link";
 import { ensureRelativeUrl, urls } from "~/urls";

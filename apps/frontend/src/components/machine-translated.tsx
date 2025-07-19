@@ -1,6 +1,6 @@
-import { useLocale } from "~/i18n";
 import type { FC } from "react";
 
+import { useLocale } from "~/i18n";
 import { urls } from "~/urls";
 
 import { InlineLink } from "./inline-link";

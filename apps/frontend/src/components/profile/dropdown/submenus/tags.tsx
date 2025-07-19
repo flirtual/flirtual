@@ -1,7 +1,8 @@
 import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
-import { type User, userTagNames, userTags } from "~/api/user";
+import { userTagNames, userTags } from "~/api/user";
+import type { User } from "~/api/user";
 import {
 	DropdownMenuCheckboxItem,
 	DropdownMenuLabel,
@@ -25,8 +26,8 @@ export const ProfileDropdownTagsSubmenu: FC<
 				<DropdownMenuSeparator />
 				{userTags.map((tag) => (
 					<DropdownMenuCheckboxItem
-						checked={user.tags?.includes(tag)}
 						key={tag}
+						checked={user.tags?.includes(tag)}
 						onCheckedChange={() =>
 							toasts.add({
 								type: "error",

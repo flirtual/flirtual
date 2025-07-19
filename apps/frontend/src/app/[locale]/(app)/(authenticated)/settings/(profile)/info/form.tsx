@@ -19,10 +19,11 @@ import {
 	InputLanguageAutocomplete
 } from "~/components/inputs/specialized";
 import {
-	type AttributeTranslation,
+
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";

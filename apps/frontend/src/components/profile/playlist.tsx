@@ -1,8 +1,8 @@
-import type { Locale } from "~/i18n";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useTheme } from "~/hooks/use-theme";
+import type { Locale } from "~/i18n";
 import { useLocale } from "~/i18n";
 import type { Theme } from "~/theme";
 

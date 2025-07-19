@@ -1,6 +1,7 @@
 import { cache } from "react";
 
-import { api, type CreatedAtModel } from "./common";
+import { api } from "./common";
+import type { CreatedAtModel } from "./common";
 import type { ProspectKind } from "./matchmaking";
 
 export type Message = {

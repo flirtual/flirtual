@@ -4,7 +4,8 @@ import type { FC, PropsWithChildren, ReactNode, RefAttributes } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { InlineLink, type InlineLinkProps } from "~/components/inline-link";
+import { InlineLink } from "~/components/inline-link";
+import type { InlineLinkProps } from "~/components/inline-link";
 import { useLocation } from "~/hooks/use-location";
 import { useOptionalSession } from "~/hooks/use-session";
 

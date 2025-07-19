@@ -1,4 +1,5 @@
-import { type FC, Suspense, use } from "react";
+import { Suspense, use } from "react";
+import type { FC } from "react";
 
 import { Profile } from "~/components/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";

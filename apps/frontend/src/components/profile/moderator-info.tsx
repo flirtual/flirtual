@@ -1,7 +1,7 @@
 import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
-import { useLocale } from "~/i18n";
-import { type FC, useMemo } from "react";
+import { useMemo } from "react";
+import type { FC } from "react";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -11,6 +11,7 @@ import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
+import { useLocale } from "~/i18n";
 import { invalidate, userKey } from "~/query";
 
 import { CopyClick } from "../copy-click";

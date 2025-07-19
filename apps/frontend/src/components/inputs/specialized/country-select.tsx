@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { SelectItemText } from "@radix-ui/react-select";
-import { useLocale } from "~/i18n";
-import { type FC, useMemo } from "react";
+import { useMemo } from "react";
+import type { FC } from "react";
 import { useInView } from "react-intersection-observer";
 
 import {
@@ -9,8 +9,10 @@ import {
 	getCountryName
 } from "~/components/profile/pill/country";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 
-import { InputSelect, type InputSelectProps, SelectItem } from "../select";
+import { InputSelect, SelectItem } from "../select";
+import type { InputSelectProps } from "../select";
 
 const CountrySelectItem: FC<{ value: string }> = ({ value: countryId }) => {
 	const tAttribute = useAttributeTranslation();

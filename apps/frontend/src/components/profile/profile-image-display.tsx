@@ -207,22 +207,22 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 					? (
 							images.map((image, imageIndex) => (
 								<SingleImage
+									key={image.id}
 									className={twMerge(
 										"size-full transition-opacity duration-300",
 										image.id === imageId ? "opacity-100" : "absolute opacity-0"
 									)}
 									image={image}
-									key={image.id}
 									priority={imageIndex === 0}
 								/>
 							))
 						)
 					: (
 							<SingleImage
+								key={notFoundImage.id}
 								priority
 								className={twMerge("size-full")}
 								image={notFoundImage}
-								key={notFoundImage.id}
 							/>
 						)}
 				{currentImage && (
@@ -293,8 +293,8 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							<div className="-mx-1 flex grow items-center">
 								{images.map((image) => (
 									<button
-										className="group grow px-1 py-6 pt-[max(var(--safe-area-inset-top,0rem),1.5rem)]"
 										key={image.id}
+										className="group grow px-1 py-6 pt-[max(var(--safe-area-inset-top,0rem),1.5rem)]"
 										type="button"
 										onClick={() => set(0, image.id)}
 									>

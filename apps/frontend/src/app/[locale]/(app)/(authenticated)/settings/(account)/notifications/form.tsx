@@ -2,6 +2,7 @@ import { PushNotifications } from "@capacitor/push-notifications";
 import { IOSSettings, NativeSettings } from "capacitor-native-settings";
 import { Mail, Smartphone } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { fromEntries, keys } from "remeda";
 
 import { Preferences } from "~/api/user/preferences";
@@ -12,7 +13,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useNavigate } from "react-router";
 
 export const NotificationsForm: React.FC = () => {
 	const { user } = useSession();
@@ -97,8 +97,8 @@ export const NotificationsForm: React.FC = () => {
 								"product_updates"
 							].map((type) => (
 								<div
-									className="flex h-8 items-center text-lg leading-4"
 									key={type}
+									className="flex h-8 items-center text-lg leading-4"
 								>
 									{t(type as any)}
 								</div>

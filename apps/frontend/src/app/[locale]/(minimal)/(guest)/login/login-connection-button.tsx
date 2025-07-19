@@ -6,10 +6,11 @@ import { twMerge } from "tailwind-merge";
 
 import {
 	Connection,
-	ConnectionMetadata,
-	type ConnectionType
+	ConnectionMetadata
+
 } from "~/api/connections";
-import { Button, ButtonLink } from "~/components/button";
+import type { ConnectionType } from "~/api/connections";
+import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
 import { toAbsoluteUrl } from "~/urls";
 
@@ -39,23 +40,22 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 
-	const Component = native ? Button : ButtonLink;
-	const href = Connection.authorizeUrl({
-		type,
-		prompt: "consent",
-		next: toAbsoluteUrl(next).href
-	});
-
 	return (
-		<Component
+		<Button
 			className="gap-4 bg-none"
-			href={href}
 			size="sm"
 			style={{ backgroundColor: color }}
 			tabIndex={tabIndex}
-			target="_self"
 			onClick={async () => {
-				if (!native) return;
+				if (!native) {
+					location.href = Connection.authorizeUrl({
+						type,
+						prompt: "consent",
+						next: toAbsoluteUrl(next).href
+					});
+
+					return;
+				}
 
 				const { authorizeUrl } = await Connection.authorize({
 					type,
@@ -82,8 +82,6 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 							const next = response.headers.get("location");
 							if (next) navigate(next);
 
-							router.refresh();
-
 							await InAppBrowser.removeAllListeners();
 							await InAppBrowser.close();
 						}, 1000);
@@ -100,7 +98,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 			<span className="font-montserrat text-lg font-semibold">
 				{t("log_in_with", { type: label[type] })}
 			</span>
-		</Component>
+		</Button>
 	);
 };
 

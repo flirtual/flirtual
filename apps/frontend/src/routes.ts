@@ -1,10 +1,10 @@
 import {
 	layout as _layout,
 	route as _route,
-	prefix,
-	type RouteConfig,
-	type RouteConfigEntry
+	prefix
+
 } from "@react-router/dev/routes";
+import type { RouteConfig, RouteConfigEntry } from "@react-router/dev/routes";
 
 const filePrefix = "./app/[locale]";
 

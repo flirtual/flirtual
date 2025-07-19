@@ -7,6 +7,7 @@ export default {
 	prerender: [
 		// "/",
 		"/home",
+		"/login"
 		// "/about",
 	]
 		.map((path) => [

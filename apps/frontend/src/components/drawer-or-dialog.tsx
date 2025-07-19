@@ -1,10 +1,12 @@
-import { Children, type Dispatch } from "react";
+import { Children } from "react";
+import type { Dispatch } from "react";
 import { twMerge } from "tailwind-merge";
 
 import {
-	type ScreenBreakpoint,
+
 	useScreenBreakpoint
 } from "~/hooks/use-screen-breakpoint";
+import type { ScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 
 import { Dialog, DialogContent } from "./dialog/dialog";
 import { Drawer, DrawerContent } from "./drawer";

@@ -1,9 +1,9 @@
-import type { Locale } from "~/i18n";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";
+import type { Locale } from "~/i18n";
 
 import { FinishProgress } from "../progress";
 import { Finish5Form } from "./form";

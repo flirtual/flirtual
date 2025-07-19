@@ -1,8 +1,9 @@
 import {
 	initialize as initializeSafeArea,
-	SafeArea,
-	type Config as SafeAreaConfig
+	SafeArea
+
 } from "@capacitor-community/safe-area";
+import type { Config as SafeAreaConfig } from "@capacitor-community/safe-area";
 import { omitBy } from "remeda";
 
 import { device } from "~/hooks/use-device";

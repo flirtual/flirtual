@@ -4,7 +4,8 @@ import { Image } from "~/components/image";
 import { useMessages } from "~/i18n";
 import { urls } from "~/urls";
 
-import { Tile, TileAnchor, type TileProps } from ".";
+import { Tile, TileAnchor } from ".";
+import type { TileProps } from ".";
 
 export function Testimonial({ id }: TileProps) {
 	const { t } = useTranslation();
@@ -19,7 +20,7 @@ export function Testimonial({ id }: TileProps) {
 	const images = Object.values(_images);
 
 	return (
-		<Tile className="flex flex-col overflow-hidden" id={id}>
+		<Tile id={id} className="flex flex-col overflow-hidden">
 			<div className="flex justify-center p-8 desktop:p-16 desktop:py-12">
 				<TileAnchor id={id}>
 					<span className="font-montserrat text-3xl font-extrabold desktop:text-4xl">
@@ -34,9 +35,9 @@ export function Testimonial({ id }: TileProps) {
 					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
 						{images.map((source) => (
 							<img
-								className="h-full object-cover"
 								// fetchPriority={index === 0 ? "high" : "low"}
 								key={source}
+								className="h-full object-cover"
 								src={urls.media(source)}
 							/>
 						))}
@@ -44,9 +45,9 @@ export function Testimonial({ id }: TileProps) {
 					<div className="flex h-[40vh] animate-scroll-x-screen desktop:tall:h-[50vh]">
 						{images.map((source) => (
 							<img
-								className="h-full object-cover"
 								// fetchPriority={index === 0 ? "high" : "low"}
 								key={source}
+								className="h-full object-cover"
 								src={urls.media(source)}
 							/>
 						))}
@@ -56,10 +57,10 @@ export function Testimonial({ id }: TileProps) {
 			<div className="relative mx-auto flex max-h-full max-w-screen-wide flex-wrap items-center justify-around gap-8 p-8 before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-black-80 desktop:h-full desktop:max-w-none desktop:px-16 desktop:py-8 desktop:tall:max-w-screen-wide desktop:tall:before:bg-none">
 				{Object.values(brands).map(({ name, image }, index) => (
 					<Image
+						key={image}
 						alt={name}
 						className="h-auto w-20 desktop:tall:w-32"
 						height={128}
-						key={image}
 						src={urls.media(image)}
 						style={{ transitionDuration: `${index * 10}ms` }}
 						width={128}
