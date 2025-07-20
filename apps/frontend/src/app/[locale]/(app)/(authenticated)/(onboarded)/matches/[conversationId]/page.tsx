@@ -12,6 +12,7 @@ import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { ConversationAside } from "../aside";
+import { LeaveButton } from "./leave-button";
 import { VRChatButton } from "./vrchat-button";
 
 export interface ConversationPageProps {
@@ -94,7 +95,13 @@ export default function ConversationPage(props: ConversationPageProps) {
 						</span>
 					</InlineLink>
 					<div className="ml-auto">
-						<VRChatButton conversationId={conversation.id} user={user} />
+						{user.tags?.includes("official")
+							? (
+									<LeaveButton conversationId={conversation.id} />
+								)
+							: (
+									<VRChatButton conversationId={conversation.id} user={user} />
+								)}
 					</div>
 				</div>
 				<ConversationChatbox conversationId={conversation.id} />
