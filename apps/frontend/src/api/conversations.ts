@@ -58,6 +58,9 @@ export const Conversation = {
 	markRead() {
 		return this.api.url("/unread").delete().res();
 	},
+	leave(conversationId: string) {
+		return this.api.url(`/${conversationId}`).delete().res();
+	},
 	observe(options: { userId: string; targetId: string }) {
 		return this.api.url("/observe").json(options).post().res();
 	}
