@@ -15,8 +15,7 @@ export default function ConversationsLayout({
 	params,
 	children
 }: PropsWithChildren<{ params: Promise<{ locale: Locale }> }>) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+
 
 	// const { data: conversations } = useConversations();
 	const { t } = useTranslation();

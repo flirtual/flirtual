@@ -25,7 +25,7 @@ const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 };
 
 export default function ProfilePage() {
-	const userId = useSearchParams().get("");
+	const userId = useSearchParams()[0].get("");
 	if (!userId) notFound();
 
 	return (

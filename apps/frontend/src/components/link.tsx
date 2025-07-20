@@ -1,11 +1,11 @@
 import { Slot } from "@radix-ui/react-slot";
+import { useMemo } from "react";
 import type { Ref } from "react";
 import type { PathPattern } from "react-router";
-import { Link as _Link, matchPath, resolvePath, useLocation } from "react-router";
+import { Link as _Link, createPath, matchPath, resolvePath, useLocation } from "react-router";
 
 import { replaceLanguage, useLocale } from "~/i18n";
 import type { Locale } from "~/i18n";
-// import { Link as NextIntlLink, usePathname } from "~/i18n/navigation";
 import { isInternalHref } from "~/urls";
 
 export type LinkProps = {
@@ -34,14 +34,18 @@ export function Link({
 	const [locale] = useLocale();
 	const hrefLang = _hrefLang || locale;
 
-	const internal = _href ? isInternalHref(_href) : true;
+	const { to, internal, active } = useMemo(() => {
+		const internal = _href ? isInternalHref(_href) : true;
 
-	const to = internal && _href
-		? replaceLanguage(_href, hrefLang, location.pathname)
-		: _href || "#";
+		const to = internal && _href
+			? createPath(replaceLanguage(_href, hrefLang, location.pathname))
+			: _href || "#";
 
-	const pattern = _pattern || (internal && to ? { path: resolvePath(to, location.pathname).pathname } : undefined);
-	const active = _active || (pattern && matchPath(pattern, location.pathname) !== null);
+		const pattern = _pattern || (internal && to ? { path: resolvePath(to, location.pathname).pathname } : undefined);
+		const active = _active || (pattern && matchPath(pattern, location.pathname) !== null) || false;
+
+		return { to, internal, active };
+	}, [_active, _href, _pattern, hrefLang, location.pathname]);
 
 	const Component = asChild
 		? Slot

@@ -30,7 +30,7 @@ import {
 import { useQueue } from "~/hooks/use-queue";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useSearchParams } from "~/i18n/navigation";
+import { useSearchParams } from "react-router";
 import { invalidate, userKey } from "~/query";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({

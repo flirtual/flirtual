@@ -34,10 +34,10 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 export const InputLanguageSelect = withSuspense(InputLanguageSelect_);
 
 export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ className }) => {
-	const [locale] = useLocale();
+	const [locale, setLocale] = useLocale();
 
 	return (
-		<Select>
+		<Select value={locale} onValueChange={setLocale}>
 			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
 				<Languages className="inline-block size-em" />
 				{" "}

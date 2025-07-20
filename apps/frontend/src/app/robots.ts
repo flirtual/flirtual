@@ -1,14 +1,16 @@
-import type { MetadataRoute } from "next";
-
 import { siteOrigin } from "~/const";
 
-export default function robots(): MetadataRoute.Robots {
-	return {
-		host: siteOrigin,
-		sitemap: `${siteOrigin}/sitemap.xml`,
-		rules: {
-			userAgent: "*",
-			allow: "/"
+export async function loader() {
+	const value = `User-Agent: *
+Allow: /
+
+Host: ${siteOrigin}
+Sitemap: ${siteOrigin}/sitemap.xml`;
+
+	return new Response(value, {
+		status: 200,
+		headers: {
+			"Content-Type": "application/pdf",
 		},
-	};
+	});
 }

@@ -27,7 +27,7 @@ import {
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
 import { useLocale } from "~/i18n";
-import { useSearchParams } from "~/i18n/navigation";
+import { useSearchParams } from "react-router";
 import { mutate, userKey } from "~/query";
 
 const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {

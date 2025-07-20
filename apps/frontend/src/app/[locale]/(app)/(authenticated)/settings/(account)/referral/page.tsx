@@ -12,8 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function SettingsAccountReferralPage() {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+
 
 	return (
 		<ModelCard

@@ -1,6 +1,4 @@
-import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -18,9 +16,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function TermsPage() {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
 	const { t } = useTranslation();
 
 	return (

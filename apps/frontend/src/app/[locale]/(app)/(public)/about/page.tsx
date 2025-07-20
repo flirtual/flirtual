@@ -21,9 +21,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function AboutPage() {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
 	const { t } = useTranslation();
 	const tTeam = useTranslations("copy_frighten_wobble_futuristic");
 

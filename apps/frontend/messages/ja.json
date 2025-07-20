@@ -500,7 +500,7 @@
 	"sticks_own_phobic_utopian": "メールアドレスを入力してください。パスワードリセット用リンクをお送りします。",
 	"or_log_in": "またはログイン",
 	"need_help": "お困りですか？",
-	"ready_ghost_locket_bubble": "アカウントをお持ちの場合、<email></email>にパスワードリセット用リンクを含むメールをお送りします。<br></br><br></br>メールが見つからない場合は、迷惑メールやスパムフォルダーを確認してください。それでも見つからない場合は<contact>お問い合わせ</contact>ください。",
+	"ready_ghost_locket_bubble": "アカウントをお持ちの場合、<strong>{email}</strong>にパスワードリセット用リンクを含むメールをお送りします。<br></br><br></br>メールが見つからない場合は、迷惑メールやスパムフォルダーを確認してください。それでも見つからない場合は<contact>お問い合わせ</contact>ください。",
 	"login": "ログイン",
 	"help_translate_others": "Flirtualをあなたの言語に翻訳するお手伝いをしたいですか？<link>協力する</link>",
 	"help_translate": "Flirtualを{language}に翻訳するお手伝いをしたいですか？<link>協力する</link>",

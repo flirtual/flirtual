@@ -77,7 +77,7 @@ async function load(locale: Locale) {
 				case "ja": return (await import("@uppy/locales/lib/ja_JP.js")).default.strings;
 				default: return {};
 			}
-		})(),
+		})()
 	]);
 
 	return {
@@ -104,7 +104,7 @@ i18n
 
 export function replaceLanguage(to: To, locale: Locale, relativeTo: string = window.location.pathname): Path {
 	let { pathname, ...path } = resolvePath(to, relativeTo);
-	pathname = pathname.replace(localePathnameRegex, locale === defaultLocale ? "/" : `/${locale}/`);
+	pathname = pathname.replace(localePathnameRegex, `/${locale}/`);
 
 	return { ...path, pathname };
 }

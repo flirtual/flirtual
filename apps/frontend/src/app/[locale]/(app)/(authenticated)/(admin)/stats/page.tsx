@@ -58,8 +58,7 @@ export const metadata: Metadata = {
 };
 
 export default function StatsPage() {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+
 
 	return (
 		<ModelCard

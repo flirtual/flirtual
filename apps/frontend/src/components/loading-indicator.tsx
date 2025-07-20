@@ -1,8 +1,8 @@
-import { Chrome, Laptop, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
-import { AnimatePresence } from "motion/react";
+import { Chrome, Laptop, RotateCw, Smartphone, WifiOff } from "lucide-react";
+import { AnimatePresence, m } from "motion/react";
 import { useState } from "react";
 import type { PropsWithChildren } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
@@ -10,12 +10,18 @@ import { device } from "~/hooks/use-device";
 import { useTimeout } from "~/hooks/use-interval";
 import { urls } from "~/urls";
 
+import { Link } from "./link";
+
 export function LoadingIndicator({ className, children }: PropsWithChildren<{ className?: string }>) {
 	const [probablyErrored, setProbablyErrored] = useState(false);
 	useTimeout(() => setProbablyErrored(true), "5s");
 
 	const { t } = useTranslation();
 	const native = device.native;
+
+	const BrowserIcon = device.platform === "web"
+		? Laptop
+		: Smartphone;
 
 	return (
 		<div className={twMerge("flex min-h-screen w-full flex-col items-center justify-center opacity-75", className)}>
@@ -50,22 +56,22 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 						<p className="font-semibold">{t("crisp_lime_raven_arise")}</p>
 						<ul className="ml-4 flex list-disc flex-col gap-2">
 							<li>
-								{t.rich("tough_sleek_wasp_reside", {
-									icon: () => <WifiOff className="inline-block size-4 shrink-0" />
-								})}
+								<Trans
+									components={{
+										icon: <WifiOff className="inline-block size-4 shrink-0" />
+									}}
+									i18nKey="tough_sleek_wasp_reside"
+								/>
 							</li>
 							{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
 							<li>
-								{t.rich(native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe", {
-									"browser-icon": () => <Chrome className="inline-block size-4 shrink-0" />,
-									"device-icon": () => {
-										const Icon = device.platform === "web"
-											? Laptop
-											: Smartphone;
-
-										return <Icon className="inline-block size-4 shrink-0" />;
-									}
-								})}
+								<Trans
+									components={{
+										"browser-icon": <Chrome className="inline-block size-4 shrink-0" />,
+										"device-icon": <BrowserIcon className="inline-block size-4 shrink-0" />
+									}}
+									i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}
+								/>
 							</li>
 							<li>
 								<button
@@ -78,17 +84,17 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 								</button>
 							</li>
 							<li>
-								{t.rich("yummy_salty_porpoise_greet", {
-									contact: (children) => (
-										<a
-											className="whitespace-nowrap lowercase underline"
-											href={urls.resources.contact}
-										>
-											<Send className="mr-1 inline-block size-4 shrink-0" />
-											{children}
-										</a>
-									)
-								})}
+								<Trans
+									components={{
+										contact: (
+											<Link
+												className="whitespace-nowrap lowercase underline"
+												href={urls.resources.contact}
+											/>
+										)
+									}}
+									i18nKey="yummy_salty_porpoise_greet"
+								/>
 							</li>
 						</ul>
 					</m.div>

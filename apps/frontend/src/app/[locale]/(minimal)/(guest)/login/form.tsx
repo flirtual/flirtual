@@ -1,7 +1,8 @@
+/* eslint-disable no-throw-literal */
 import { MoveRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import type { FC } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
@@ -138,56 +139,64 @@ export const LoginForm: FC = () => {
 					const value = await Authentication.login(body);
 
 					if ("error" in value) {
-						if (value.error === "invalid_credentials") {
-							throw tError.rich("invalid_credentials_complex", {
-								help: (children) => (
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
-									>
-										{children}
-									</InlineLink>
-								),
-								reset: (children) => (
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href={urls.forgotPassword}
-									>
-										{children}
-									</InlineLink>
-								)
-							});
-						}
-						if (value.error === "leaked_login_password") {
-							throw tError.rich("leaked_login_password", {
-								reset: (children) => (
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href={urls.forgotPassword}
-									>
-										{children}
-									</InlineLink>
-								)
-							});
-						}
-						if (value.error === "login_rate_limit") {
-							throw tError.rich("login_rate_limit", {
-								reset: (children) => (
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href={urls.forgotPassword}
-									>
-										{children}
-									</InlineLink>
-								)
-							});
-						}
+						if (value.error === "invalid_credentials")
+							throw [
+								<Trans
+									key=""
+									components={{
+										help: (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
+											/>
+										),
+										reset: (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href={urls.forgotPassword}
+											/>
+										)
+									}}
+									i18nKey="errors.invalid_credentials_complex"
+								/>
+							];
 
-						// eslint-disable-next-line no-throw-literal
+						if (value.error === "leaked_login_password")
+							throw [
+								<Trans
+									key=""
+									components={{
+										reset: (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href={urls.forgotPassword}
+											/>
+										)
+									}}
+									i18nKey="errors.leaked_login_password"
+								/>
+							];
+
+						if (value.error === "login_rate_limit")
+							throw [
+								<Trans
+									key=""
+									components={{
+										reset: (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href={urls.forgotPassword}
+											/>
+										)
+									}}
+									i18nKey="errors.login_rate_limit"
+								/>
+							];
+
 						throw [t(`errors.${value.error}` as any)];
 					}
 

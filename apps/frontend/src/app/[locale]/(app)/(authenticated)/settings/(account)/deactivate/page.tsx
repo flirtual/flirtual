@@ -1,6 +1,4 @@
-import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+
 
 import { DeactivationForm } from "./form";
 
@@ -13,8 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function SettingsAccountDeactivatePage() {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+
 
 	return <DeactivationForm />;
 }

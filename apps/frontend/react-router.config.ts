@@ -5,15 +5,22 @@ const locales = ["en", "ja"];
 export default {
 	ssr: false,
 	prerender: [
-		// "/",
-		"/home",
-		"/login"
-		// "/about",
-	]
-		.map((path) => [
-			path,
-			...locales.map((locale) => `/${locale}${path}`)
-		])
-		.flat(),
+		"/robots.txt",
+		...[
+			// "/",
+			"/home",
+
+			"/login",
+			"/sign-up",
+			"/forgot",
+
+			// "/about",
+		]
+			.map((path) => [
+				path,
+				...locales.map((locale) => `/${locale}${path}`)
+			])
+			.flat()
+	],
 	appDirectory: "src"
 } satisfies Config;

@@ -4,8 +4,7 @@ import { use } from "react";
 import { ReportView } from "./report-view";
 
 export default function ReportPage() {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+
 
 	return <ReportView />;
 }

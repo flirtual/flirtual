@@ -500,7 +500,7 @@
 	"sticks_own_phobic_utopian": "Please enter your email and we'll send along a link to reset your password.",
 	"or_log_in": "or log in",
 	"need_help": "Need help?",
-	"ready_ghost_locket_bubble": "If you have an account, we'll send an email to <email></email> with a link to reset your password. <br></br><br></br>If you don't see it, check your spam/junk/trash folders, and if you still don't see it, <contact>contact us</contact>.",
+	"ready_ghost_locket_bubble": "If you have an account, we'll send an email to <strong>{email}</strong> with a link to reset your password. <br></br><br></br>If you don't see it, check your spam/junk/trash folders, and if you still don't see it, <contact>contact us</contact>.",
 	"login": "Login",
 	"help_translate_others": "Want to help translate Flirtual to your language? <link>Contribute</link>.",
 	"help_translate": "Want to help translate Flirtual to {language}? <link>Contribute</link>.",

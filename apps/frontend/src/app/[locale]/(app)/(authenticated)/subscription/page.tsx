@@ -15,9 +15,6 @@ import { SubscriptionForm } from "./form";
 // }
 
 export default function SubscriptionPage() {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
 	const { t } = useTranslation();
 
 	return (

@@ -7,7 +7,7 @@ import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
-import { useSearchParams } from "~/i18n/navigation";
+import { useSearchParams } from "react-router";
 import { invalidate, userKey } from "~/query";
 
 import {

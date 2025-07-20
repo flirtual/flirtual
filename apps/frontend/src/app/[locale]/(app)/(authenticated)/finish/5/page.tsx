@@ -19,9 +19,6 @@ import { Finish5Form } from "./form";
 export default function Finish5Page({ params }: {
 	params: Promise<{ locale: Locale }>;
 }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
 	const { t } = useTranslation();
 
 	return (

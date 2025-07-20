@@ -1,6 +1,6 @@
 import { MoveRight } from "lucide-react";
 import type { FC } from "react";
-import { useNavigate } from "react-router";
+import { Trans, useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -21,8 +21,6 @@ import { urls } from "~/urls";
 export const Onboarding0Form: FC = () => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
-
-	const navigate = useNavigate();
 
 	return (
 		<Form
@@ -94,28 +92,27 @@ export const Onboarding0Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											{t.rich("pickle_capricious_cemetery_name", {
-												terms: (children) => (
-													<InlineLink
-														className="underline"
-														highlight={false}
-														href={urls.resources.termsOfService}
-														tabIndex={8}
-													>
-														{children}
-													</InlineLink>
-												),
-												privacy: (children) => (
-													<InlineLink
-														className="underline"
-														highlight={false}
-														href={urls.resources.privacyPolicy}
-														tabIndex={9}
-													>
-														{children}
-													</InlineLink>
-												)
-											})}
+											<Trans
+												components={{
+													terms: (
+														<InlineLink
+															className="underline"
+															highlight={false}
+															href={urls.resources.termsOfService}
+															tabIndex={8}
+														/>
+													),
+													privacy: (
+														<InlineLink
+															className="underline"
+															highlight={false}
+															href={urls.resources.privacyPolicy}
+															tabIndex={9}
+														/>
+													)
+												}}
+												i18nKey="pickle_capricious_cemetery_name"
+											/>
 										</InputLabelHint>
 									)}
 								>
@@ -133,7 +130,7 @@ export const Onboarding0Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											{t.rich("spade_mindless_furry_jeans", { br: () => <br /> })}
+											<Trans i18nKey="spade_mindless_furry_jeans" />
 										</InputLabelHint>
 									)}
 								>

@@ -1,25 +1,24 @@
-import { decode } from "jsonwebtoken";
+import { decodeJwt } from "jose";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Authentication } from "~/api/auth";
 import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useLocale } from "~/i18n";
-import { redirect } from "~/i18n/navigation";
+import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 export const ConfirmPasswordResetForm: React.FC<{ token: string }> = ({ token }) => {
-	const [success, setSuccess] = useState(false);
-
-	const [locale] = useLocale();
 	const { t } = useTranslation();
 
-	const payload = decode(token, { json: true });
+	const [success, setSuccess] = useState(false);
 
+	const payload = decodeJwt(token);
 	const email = payload?.sub;
-	if (!email) return redirect({ href: urls.forgotPassword, locale });
+
+	if (!email) return throwRedirect(urls.forgotPassword);
 
 	return (
 		<Form

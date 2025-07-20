@@ -28,6 +28,8 @@ export default [
 		layout("(minimal)", [
 			layout("(minimal)/(guest)", [
 				page("login", "(minimal)/(guest)/login"),
+				page("sign-up", "(minimal)/(guest)/sign-up"),
+				page("forgot", "(minimal)/(guest)/forgot"),
 			])
 		]),
 		route("*", "not-found"),

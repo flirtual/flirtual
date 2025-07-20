@@ -7,12 +7,15 @@ import { useSSR as useTranslateSSR } from "react-i18next";
 import {
 	Links,
 	Meta,
+
 	Outlet,
 	Scripts,
 	ScrollRestoration,
 	useParams,
-	useRouteLoaderData,
+	useRouteLoaderData
 } from "react-router";
+import type { MetaDescriptor } from "react-router";
+import { uniqueBy } from "remeda";
 
 import type { Route } from "./+types/root";
 import { AnalyticsProvider } from "./analytics";
@@ -21,7 +24,7 @@ import { InsetPreview } from "./components/inset-preview";
 import { LoadingIndicator } from "./components/loading-indicator";
 import { TooltipProvider } from "./components/tooltip";
 import { UpdateInformation } from "./components/update-information";
-import { apiOrigin, development, platformOverride } from "./const";
+import { apiOrigin, development, platformOverride, production } from "./const";
 import { ToastProvider } from "./hooks/use-toast";
 import { defaultLocale, i18n, localePathnameRegex, locales } from "./i18n";
 import { QueryProvider } from "./query";
@@ -36,7 +39,41 @@ export async function loader({ params: { locale = defaultLocale } }: Route.Loade
 	if (!locales.includes(locale)) locale = defaultLocale;
 	await i18n.changeLanguage(locale);
 
-	return { initialI18nStore: i18n.store.data, locale };
+	return {
+		initialI18nStore: {
+			// Only include the locale that was requested, as during during pre-rendering
+			// we load every locale. Without this, we'd bundle every locale into the
+			// initial HTML, which is not what we want.
+			[locale]: i18n.store.data[locale]
+		},
+		locale
+	};
+}
+
+export function meta({ params: { locale = defaultLocale } }: Pick<Route.MetaArgs, "params">): Route.MetaDescriptors {
+	const t = i18n.getFixedT(locale);
+
+	return [
+		{ title: t("flirtual") },
+		{ name: "description", content: t("knotty_direct_mongoose_bend") },
+		{ }
+	];
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export { meta as rootMeta };
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function metaMerge(metas: Array<MetaDescriptor>) {
+	return uniqueBy(metas.reverse(), (meta, index) => {
+		if ("title" in meta && meta.title) return "title";
+		if ("name" in meta && meta.name) return `name:${meta.name}`;
+		if ("property" in meta && meta.property) return `property:${meta.property}`;
+		if ("httpEquiv" in meta && meta.httpEquiv) return `httpEquiv:${meta.httpEquiv}`;
+
+		// Always unique.
+		return index;
+	});
 }
 
 export function Layout({ children }: PropsWithChildren) {
@@ -48,8 +85,6 @@ export function Layout({ children }: PropsWithChildren) {
 	useTranslateSSR(initialI18nStore, locale);
 	useEffect(() => void i18n.changeLanguage(locale), [locale]);
 
-	const { t } = i18n;
-
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
 
@@ -58,10 +93,23 @@ export function Layout({ children }: PropsWithChildren) {
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<title>{t("flirtual")}</title>
-				<meta name="description" content={t("knotty_direct_mongoose_bend")} />
 				<Meta />
 				<Links />
+				<script src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill${production ? ".min" : ""}.js?features=${[
+					"Intl",
+					"Intl.Locale",
+					"Intl.DateTimeFormat",
+					`Intl.DateTimeFormat.~locale.${locale}`,
+					`Intl.NumberFormat`,
+					`Intl.NumberFormat.~locale.${locale}`,
+					"Intl.PluralRules",
+					`Intl.PluralRules.~locale.${locale}`,
+					"Intl.RelativeTimeFormat",
+					`Intl.RelativeTimeFormat.~locale.${locale}`,
+					"Intl.ListFormat",
+					`Intl.ListFormat.~locale.${locale}`
+				].join(",")}`}
+				/>
 			</head>
 			<body
 				suppressHydrationWarning
