@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
 
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
@@ -58,8 +56,6 @@ export const metadata: Metadata = {
 };
 
 export default function StatsPage() {
-
-
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-xl"

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { useMessages, useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { getTranslations } from "next-intl/server";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";

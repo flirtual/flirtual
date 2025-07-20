@@ -5,7 +5,6 @@ const locales = ["en", "ja"];
 export default {
 	ssr: false,
 	prerender: [
-		"/robots.txt",
 		...[
 			// "/",
 			"/home",
@@ -20,7 +19,14 @@ export default {
 				path,
 				...locales.map((locale) => `/${locale}${path}`)
 			])
-			.flat()
+			.flat(),
+
+		// Static files, not in public folder.
+		// Keep in sync with routes.ts.
+		"/manifest.json",
+		"/robots.txt",
+		"/pico_authentication.json",
+		"/.well-known/security.txt"
 	],
 	appDirectory: "src"
 } satisfies Config;

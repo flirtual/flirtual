@@ -1,5 +1,3 @@
-
-
 import { ConversationAside } from "./aside";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -11,7 +9,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function ConversationListPage() {
-
-
 	return <ConversationAside />;
 }

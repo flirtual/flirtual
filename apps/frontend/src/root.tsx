@@ -5,6 +5,7 @@ import type { PropsWithChildren } from "react";
 import { preconnect } from "react-dom";
 import { useSSR as useTranslateSSR } from "react-i18next";
 import {
+	href,
 	Links,
 	Meta,
 
@@ -24,7 +25,7 @@ import { InsetPreview } from "./components/inset-preview";
 import { LoadingIndicator } from "./components/loading-indicator";
 import { TooltipProvider } from "./components/tooltip";
 import { UpdateInformation } from "./components/update-information";
-import { apiOrigin, development, platformOverride, production } from "./const";
+import { apiOrigin, development, platformOverride, production, siteOrigin } from "./const";
 import { ToastProvider } from "./hooks/use-toast";
 import { defaultLocale, i18n, localePathnameRegex, locales } from "./i18n";
 import { QueryProvider } from "./query";
@@ -50,15 +51,67 @@ export async function loader({ params: { locale = defaultLocale } }: Route.Loade
 	};
 }
 
+/*
+<link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="48x48">
+<link rel="icon" href="/icon.svg?a38d76fde8670b0b" type="image/svg+xml" sizes="any">
+<link rel="icon" href="/icon2.png?dec409443b69fd90" type="image/png" sizes="32x32">
+<link rel="icon" href="/icon3.png?791a32ba4d792616" type="image/png" sizes="16x16">
+<link rel="apple-touch-icon" href="/apple-icon.png?b06a44025c5e35be" type="image/png" sizes="180x180">
+<link color="#e9658b" href="/_next/static/media/safari-pinned-tab.f0d3b570.svg" rel="mask-icon">
+*/
+
 export function meta({ params: { locale = defaultLocale } }: Pick<Route.MetaArgs, "params">): Route.MetaDescriptors {
 	const t = i18n.getFixedT(locale);
 
 	return [
+		{ charSet: "utf-8" },
+		{ name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" },
+
 		{ title: t("flirtual") },
 		{ name: "description", content: t("knotty_direct_mongoose_bend") },
-		{ }
+
+		{ name: "theme-color", media: "(prefers-color-scheme: light)", content: "#ffffff" },
+		{ name: "theme-color", media: "(prefers-color-scheme: dark)", content: "#111111" },
+
+		{ name: "twitter:card", content: "summary" },
+		{ name: "twitter:site", content: `@${urls.socials.twitter.split("twitter.com/")[1]}` },
+		{ name: "twitter:title", content: t("flirtual") },
+		{ name: "twitter:description", content: t("green_plain_mongoose_lend") },
+		{ name: "twitter:image:type", content: "image/png" },
+		{ name: "twitter:image:width", content: 1000 },
+		{ name: "twitter:image:height", content: 1000 },
+		{ name: "twitter:image", content: urls.media("flirtual-mark-background.png") },
+		{ property: "og:title", content: t("flirtual") },
+		{ property: "og:description", content: t("green_plain_mongoose_lend") },
+		{ property: "og:image:type", content: "image/png" },
+		{ property: "og:image:width", content: 1000 },
+		{ property: "og:image:height", content: 1000 },
+		{ property: "og:image", content: urls.media("flirtual-mark-background.png") },
+		{ property: "og:type", content: "website" },
+
+		{ name: "application-name", content: t("flirtual") },
+		{ name: "category", content: "technology" },
+		{ name: "msapplication-TileColor", content: "#e9658b" },
+
+		{ name: "mobile-web-app-capable", content: "yes" },
+
+		{ name: "apple-itunes-app", content: "app-id=6450485324" },
+		{ name: "apple-mobile-web-app-title", content: t("flirtual") },
+		{ name: "apple-mobile-web-app-status-bar-style", content: "default" },
+		{ property: "al:ios:app_store_id", content: "6450485324" },
+		{ property: "al:ios:url", content: urls.apps.apple },
+		{ property: "al:android:package", content: "zone.homie.flirtual.pwa" },
+		{ property: "al:android:url", content: urls.apps.google },
+		{ property: "al:web:should_fallback", content: (true).toString() },
+		{ property: "al:web:url", content: siteOrigin },
+
+		{ name: "darkreader-lock" },
 	];
 }
+
+export const links: Route.LinksFunction = () => [
+	{ rel: "manifest", href: href("/manifest.json") },
+];
 
 // eslint-disable-next-line react-refresh/only-export-components
 export { meta as rootMeta };
@@ -67,8 +120,8 @@ export { meta as rootMeta };
 export function metaMerge(metas: Array<MetaDescriptor>) {
 	return uniqueBy(metas.reverse(), (meta, index) => {
 		if ("title" in meta && meta.title) return "title";
-		if ("name" in meta && meta.name) return `name:${meta.name}`;
-		if ("property" in meta && meta.property) return `property:${meta.property}`;
+		if ("name" in meta && meta.name) return `name:${meta.name}:${"media" in meta ? meta.media : ""}`;
+		if ("property" in meta && meta.property) return `property:${meta.property}:${"media" in meta ? meta.media : ""}`;
 		if ("httpEquiv" in meta && meta.httpEquiv) return `httpEquiv:${meta.httpEquiv}`;
 
 		// Always unique.
@@ -91,8 +144,6 @@ export function Layout({ children }: PropsWithChildren) {
 	return (
 		<html suppressHydrationWarning lang={locale}>
 			<head>
-				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<Meta />
 				<Links />
 				<script src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill${production ? ".min" : ""}.js?features=${[

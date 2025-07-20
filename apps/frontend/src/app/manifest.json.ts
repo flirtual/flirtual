@@ -1,12 +1,8 @@
-import { NextResponse } from "next/server";
-
 import { siteOrigin } from "~/const";
 import { urls } from "~/urls";
 
-export const dynamic = "force-static";
-
-export async function GET() {
-	return NextResponse.json({
+export function loader() {
+	return {
 		id: "flirtual",
 		name: "Flirtual",
 		short_name: "Flirtual",
@@ -160,19 +156,19 @@ export async function GET() {
 		related_applications: [
 			{
 				platform: "itunes",
-				url: "https://apps.apple.com/app/flirtual-vr-dating-app/id6450485324"
+				url: urls.apps.apple
 			},
 			{
 				platform: "play",
-				url: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
+				url: urls.apps.google,
 				id: "zone.homie.flirtual.pwa"
 			},
 			{
 				platform: "windows",
-				url: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3"
+				url: urls.apps.microsoft,
 			}
 		],
 		prefer_related_applications: true,
 		edge_side_panel: {}
-	});
+	};
 }

@@ -1,14 +1,9 @@
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
-
 import { ModelCard } from "~/components/model-card";
 
 import { FinishProgress } from "../progress";
 import { Finish1Form } from "./form";
 
 export default function Finish1Page() {
-
-
 	return (
 		<>
 			<FinishProgress page={1} />

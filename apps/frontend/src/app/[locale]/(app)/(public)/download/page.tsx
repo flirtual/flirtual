@@ -1,4 +1,3 @@
-
 import { useTranslation } from "react-i18next";
 
 import { DownloadButton } from "~/components/download-button";

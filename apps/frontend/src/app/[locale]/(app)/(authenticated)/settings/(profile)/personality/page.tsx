@@ -1,4 +1,3 @@
-
 import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";

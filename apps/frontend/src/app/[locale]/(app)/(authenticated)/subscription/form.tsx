@@ -4,7 +4,6 @@ import type { FC } from "react";
 
 import { InlineLink } from "~/components/inline-link";
 import { useOptionalSession } from "~/hooks/use-session";
-import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { ManageButton } from "./manage-button";

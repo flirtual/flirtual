@@ -12,6 +12,10 @@ function route(path: string, file: string, children?: Array<RouteConfigEntry>) {
 	return _route(path, `${filePrefix}/${file}.tsx`, children);
 }
 
+function file(file: string, extension: string = "ts") {
+	return _route(`/${file}`, `./app/${file}.${extension}`);
+}
+
 function layout(file: string, children?: Array<RouteConfigEntry>) {
 	return _layout(`${filePrefix}/${file}/layout.tsx`, children);
 }
@@ -33,5 +37,12 @@ export default [
 			])
 		]),
 		route("*", "not-found"),
-	])
+	]),
+
+	// Static files, not in public folder.
+	// Keep in sync with react-router.config.ts.
+	file("manifest.json"),
+	file("robots.txt"),
+	file("pico_authentication.json"),
+	file(".well-known/security.txt"),
 ] satisfies RouteConfig;

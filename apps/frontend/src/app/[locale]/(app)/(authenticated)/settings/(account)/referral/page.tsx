@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
 
 import { ModelCard } from "~/components/model-card";
 
@@ -12,8 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function SettingsAccountReferralPage() {
-
-
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"

@@ -1,5 +1,3 @@
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";

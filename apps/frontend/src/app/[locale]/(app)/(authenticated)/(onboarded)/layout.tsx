@@ -2,7 +2,6 @@ import type { PropsWithChildren } from "react";
 
 import { useSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
-import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 export default function OnboardedLayout({ children }: PropsWithChildren) {

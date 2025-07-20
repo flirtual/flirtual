@@ -1,5 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
@@ -7,7 +8,6 @@ import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
-import { useSearchParams } from "react-router";
 import { invalidate, userKey } from "~/query";
 
 import {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
@@ -30,7 +31,6 @@ import {
 import { useQueue } from "~/hooks/use-queue";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useSearchParams } from "react-router";
 import { invalidate, userKey } from "~/query";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({

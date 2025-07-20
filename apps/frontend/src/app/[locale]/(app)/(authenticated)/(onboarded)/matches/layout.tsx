@@ -1,5 +1,3 @@
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
 import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -15,8 +13,6 @@ export default function ConversationsLayout({
 	params,
 	children
 }: PropsWithChildren<{ params: Promise<{ locale: Locale }> }>) {
-
-
 	// const { data: conversations } = useConversations();
 	const { t } = useTranslation();
 

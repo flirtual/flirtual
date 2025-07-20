@@ -1,5 +1,3 @@
-
-
 import type { Locale } from "~/i18n";
 
 import { ConnectionsForm } from "./form";
@@ -15,7 +13,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function SettingsAccountConnectionsPage({ params }: {
 	params: Promise<{ locale: Locale }>;
 }) {
-
-
 	return <ConnectionsForm />;
 }

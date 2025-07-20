@@ -1,5 +1,3 @@
-
-
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
 import { urls } from "~/urls";

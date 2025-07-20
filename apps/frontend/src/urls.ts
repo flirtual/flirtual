@@ -20,6 +20,8 @@ export function toAbsoluteUrl(to: URL | string) {
 	return new URL(to, siteOrigin);
 }
 
+export { toAbsoluteUrl as absoluteUrl };
+
 export function toRelativeUrl(url: { href: string; origin: string }) {
 	return url.href.slice(url.origin.length);
 }
@@ -219,8 +221,7 @@ export const urls = {
 
 	apps: {
 		apple: "https://apps.apple.com/app/flirtual-vr-dating-app/id6450485324",
-		google:
-			"https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
+		google: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
 		microsoft: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
 		sideQuest: "https://sidequestvr.com/app/9195"
 	}
