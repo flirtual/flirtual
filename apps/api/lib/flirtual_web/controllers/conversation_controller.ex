@@ -52,6 +52,19 @@ defmodule FlirtualWeb.ConversationController do
     end
   end
 
+  def leave(conn, %{"conversation_id" => conversation_id}) do
+    with user <- conn.assigns[:session].user,
+         {:ok, conversation} <- Conversation.get(conversation_id),
+         conversation <- Policy.transform(conn, conversation),
+         {:ok, _} <- Talkjs.delete_participant(conversation_id, user.id) do
+      conn
+      |> json(%{success: true})
+    else
+      reason ->
+        reason
+    end
+  end
+
   def observe(conn, %{"user_id" => user_id, "target_id" => target_id}) do
     with user <- conn.assigns[:session].user,
          conversation_id <- Talkjs.new_conversation_id(user_id, target_id),

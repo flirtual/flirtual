@@ -10,7 +10,7 @@ import { urls } from "~/urls";
 
 import { getProfile } from "../../[slug]/data";
 import { ConversationAside } from "../aside";
-import { FaceTimeButton } from "./facetime-button";
+import { LeaveButton } from "./leave-button";
 
 export interface ConversationPageProps {
 	params: Promise<{
@@ -64,7 +64,11 @@ export default async function ConversationPage(props: ConversationPageProps) {
 							{displayName(user)}
 						</span>
 					</InlineLink>
-					<FaceTimeButton user={user} />
+					{user.tags?.includes("official") && (
+						<div className="ml-auto">
+							<LeaveButton conversationId={conversation.id} />
+						</div>
+					)}
 				</div>
 				<ConversationChatbox conversationId={conversation.id} />
 			</div>

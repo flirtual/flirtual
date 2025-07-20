@@ -259,6 +259,7 @@ defmodule FlirtualWeb.Router do
 
           scope "/:conversation_id" do
             get("/", ConversationController, :get)
+            delete("/", ConversationController, :leave)
           end
         end
 
