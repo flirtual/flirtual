@@ -1,8 +1,9 @@
 import { Slot } from "@radix-ui/react-slot";
 import type { Ref } from "react";
-import { Link as _Link } from "react-router";
+import type { PathPattern } from "react-router";
+import { Link as _Link, matchPath, resolvePath, useLocation } from "react-router";
 
-import { useLocale } from "~/i18n";
+import { replaceLanguage, useLocale } from "~/i18n";
 import type { Locale } from "~/i18n";
 // import { Link as NextIntlLink, usePathname } from "~/i18n/navigation";
 import { isInternalHref } from "~/urls";
@@ -13,33 +14,38 @@ export type LinkProps = {
 	as?: string;
 } & {
 	href: Parameters<typeof _Link>[0]["to"] | null;
-	lang?: Locale;
-} & Omit<Parameters<typeof _Link>[0], "lang" | "to">;
+	pattern?: PathPattern<string>;
+	hrefLang?: Locale;
+} & Omit<Parameters<typeof _Link>[0], "hrefLang" | "to">;
 
 export function Link({
 	ref: reference,
-	href,
+	href: _href,
+	pattern: _pattern,
 	active: _active,
 	asChild = false,
-	lang: _lang,
+	hrefLang: _hrefLang,
 	as = "span",
 	target,
 	...props
 }: { ref?: Ref<HTMLAnchorElement> | null } & LinkProps) {
-	// const location = useLocation();
+	const location = useLocation();
 
 	const [locale] = useLocale();
-	const lang = _lang || locale;
+	const hrefLang = _hrefLang || locale;
 
-	const internal = isInternalHref(href || "#");
-	// const active = (_active === undefined && location && href)
-	// 	? urlEqual(toAbsoluteUrl(href.toString()), location, false)
-	// 	: _active || false;
-	const active = false;
+	const internal = _href ? isInternalHref(_href) : true;
+
+	const to = internal && _href
+		? replaceLanguage(_href, hrefLang, location.pathname)
+		: _href || "#";
+
+	const pattern = _pattern || (internal && to ? { path: resolvePath(to, location.pathname).pathname } : undefined);
+	const active = _active || (pattern && matchPath(pattern, location.pathname) !== null);
 
 	const Component = asChild
 		? Slot
-		: href === null
+		: _href === null
 			? as
 			: _Link;
 
@@ -47,11 +53,11 @@ export function Link({
 		<Component
 			data-active={active ? "" : undefined}
 			data-external={internal ? undefined : ""}
-			lang=""
+			hrefLang={hrefLang}
 			{...props}
 			ref={reference}
 			target={target || (internal ? undefined : "_blank")}
-			to={href || "#"}
+			to={to}
 		/>
 	);
 }

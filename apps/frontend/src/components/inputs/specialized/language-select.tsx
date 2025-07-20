@@ -3,6 +3,7 @@ import { ChevronDown, Languages } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
+import { Link } from "~/components/link";
 import { localeNames, locales, useLocale } from "~/i18n";
 
 import {
@@ -33,10 +34,10 @@ const InputLanguageSelect_: React.FC<{ className?: string; tabIndex?: number }> 
 export const InputLanguageSelect = withSuspense(InputLanguageSelect_);
 
 export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ className }) => {
-	const [locale, setLocale] = useLocale();
+	const [locale] = useLocale();
 
 	return (
-		<Select onValueChange={setLocale}>
+		<Select>
 			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
 				<Languages className="inline-block size-em" />
 				{" "}
@@ -48,10 +49,14 @@ export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ classNa
 				{locales.map((value) => (
 					<SelectItem
 						key={value}
+						asChild
 						className="flex w-full items-center gap-2"
+						lang={value}
 						value={value}
 					>
-						{localeNames[value]}
+						<Link href="./" hrefLang={value} lang={value}>
+							{localeNames[value]}
+						</Link>
 					</SelectItem>
 				))}
 			</SelectContent>

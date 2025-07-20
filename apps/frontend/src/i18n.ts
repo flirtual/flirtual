@@ -4,7 +4,8 @@ import icu from "i18next-icu";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router";
+import { resolvePath, useLocation, useNavigate } from "react-router";
+import type { Path, To } from "react-router";
 
 import { log as _log } from "./log";
 
@@ -61,7 +62,7 @@ function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) 
 }
 
 async function load(locale: Locale) {
-	log("%s(%s)", load.name, locale);
+	log("load(%s)", locale);
 
 	// Aries: Keep this in sync with `getModuleLanguage` from `vite.config.ts`.
 	// For performance, we bundle all translations into a single file per locale.
@@ -91,7 +92,6 @@ i18n
 	.use(icu)
 	.use(initReactI18next)
 	.init({
-		// fallbackLng: defaultLocale,
 		supportedLngs: locales,
 
 		ns: [defaultNamespace],
@@ -102,6 +102,13 @@ i18n
 		}
 	});
 
+export function replaceLanguage(to: To, locale: Locale, relativeTo: string = window.location.pathname): Path {
+	let { pathname, ...path } = resolvePath(to, relativeTo);
+	pathname = pathname.replace(localePathnameRegex, locale === defaultLocale ? "/" : `/${locale}/`);
+
+	return { ...path, pathname };
+}
+
 export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Promise<void>] {
 	const { i18n } = useTranslation();
 
@@ -109,8 +116,7 @@ export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Pro
 	const navigate = useNavigate();
 
 	const setLocale = useCallback(async (locale: Locale) => {
-		const pathname = location.pathname.replace(localePathnameRegex, locale === defaultLocale ? "/" : `/${locale}/`);
-		await navigate({ ...location, pathname }, { replace: true });
+		await navigate(replaceLanguage(location, locale), { replace: true });
 	}, [location, navigate]);
 
 	return [

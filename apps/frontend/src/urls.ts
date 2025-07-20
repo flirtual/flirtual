@@ -1,4 +1,4 @@
-import type { Url } from "next/dist/shared/lib/router/router";
+import type { To } from "react-router";
 import { entries, fromEntries } from "remeda";
 
 import type { User } from "./api/user";
@@ -16,8 +16,8 @@ export function ensureRelativeUrl(pathname: string) {
 	return pathname;
 }
 
-export function toAbsoluteUrl(href: string) {
-	return new URL(href, siteOrigin);
+export function toAbsoluteUrl(to: URL | string) {
+	return new URL(to, siteOrigin);
 }
 
 export function toRelativeUrl(url: { href: string; origin: string }) {
@@ -53,8 +53,8 @@ function url(
 	return `${pathname}${queryString}`;
 }
 
-export function isInternalHref(href: Url) {
-	return toAbsoluteUrl(href.toString()).origin === siteOrigin;
+export function isInternalHref(to: To) {
+	return toAbsoluteUrl(to.toString()).origin === siteOrigin;
 }
 
 export type FinishPage = 1 | 2 | 3 | 4 | 5;
