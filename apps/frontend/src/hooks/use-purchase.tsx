@@ -1,21 +1,22 @@
 import {
-	Purchases,
-	type PurchasesPackage
+	Purchases
+
 } from "@revenuecat/purchases-capacitor";
+import type { PurchasesPackage } from "@revenuecat/purchases-capacitor";
 import {
 	createContext,
-	type FC,
-	type PropsWithChildren,
+
 	use,
 	useCallback,
 	useEffect,
 	useMemo,
 	useState
 } from "react";
+import type { FC, PropsWithChildren } from "react";
+import { useNavigate } from "react-router";
 
 import { Subscription } from "~/api/subscription";
 import { rcAppleKey, rcGoogleKey } from "~/const";
-import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 import { useDevice } from "./use-device";
@@ -98,7 +99,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			return Purchases.purchasePackage({ aPackage })
 				.then(() => {
 					router.refresh();
-					navigate(urls.subscription.success));
+					navigate(urls.subscription.success);
 					return null;
 				})
 				.catch((reason) => {

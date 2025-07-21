@@ -1,13 +1,14 @@
 import { Hash, X } from "lucide-react";
-import { useLocale } from "~/i18n";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useEffect, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
+import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
 import { PreferenceThemes } from "~/api/user/preferences";
-import { Profile, type ProfileColors } from "~/api/user/profile";
+import { Profile } from "~/api/user/profile";
+import type { ProfileColors } from "~/api/user/profile";
 import { applyDocumentMutations } from "~/app/[locale]/lazy-layout";
 import { NewBadge, PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
@@ -19,7 +20,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
-import { useNavigate } from "react-router";
+import { useLocale } from "~/i18n";
 import { defaultLocale } from "~/i18n/routing";
 import { mutate, sessionKey, useMutation } from "~/query";
 import { urls } from "~/urls";
@@ -180,8 +181,8 @@ const ProfileColorSelect: FC = () => {
 					...recommendedThemes
 				].map((theme) => (
 					<button
-						className="relative flex flex-col"
 						key={theme.name}
+						className="relative flex flex-col"
 						type="button"
 						onClick={async () => {
 							if (theme.name === "touch_grass") {
@@ -191,7 +192,7 @@ const ProfileColorSelect: FC = () => {
 										await new Promise((resolve) => {
 											setTimeout(resolve, 800);
 										});
-										navigate(urls.settings.fun));
+										navigate(urls.settings.fun);
 									}
 									setGrassTouched(grassTouched + 1);
 								}

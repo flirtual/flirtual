@@ -45,4 +45,6 @@ export default [
 	file("robots.txt"),
 	file("pico_authentication.json"),
 	file(".well-known/security.txt"),
+	file("_redirects"),
+	file("_headers"),
 ] satisfies RouteConfig;

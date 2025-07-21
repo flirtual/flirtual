@@ -1,3 +1,5 @@
+import { sha as gitCommitSha, github as gitUrl } from "~build/git";
+
 import type { DevicePlatform } from "./hooks/use-device";
 
 function assert(condition: any, message: string): asserts condition {
@@ -11,21 +13,8 @@ export const apiUrl = import.meta.env.VITE_API_URL as string;
 assert(apiUrl, "VITE_API_URL is required");
 export const apiOrigin = new URL(apiUrl).origin;
 
-// export const environment = (import.meta.env.NODE_ENV) as "development" | "preview" | "production";
-
 export const development = import.meta.env.DEV;
 export const production = !development;
-
-// Git build information
-export const gitOrganization = import.meta.env.VITE_VERCEL_GIT_REPO_OWNER as string;
-export const gitRepository = import.meta.env.VITE_VERCEL_GIT_REPO_SLUG as string;
-export const gitCommitSha
-	= import.meta.env.VITE_VERCEL_GIT_COMMIT_SHA || "local";
-export const gitCommitReference = import.meta.env.VITE_VERCEL_GIT_COMMIT_REF as string;
-export const gitCommitUrl
-	= gitCommitSha !== "local"
-		? `https://github.com/${gitOrganization}/${gitRepository}/commit/${gitCommitSha}`
-		: null;
 
 // Captcha
 export const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY as string;
@@ -69,6 +58,9 @@ export const platformOverride = import.meta.env.VITE_PLATFORM_OVERRIDE as Device
 export const nativeOverride = platformOverride ? platformOverride !== "web" : undefined;
 
 export const maintenance = false;
-export const duringBuild = import.meta.env.BUILD === "1";
 export const server = import.meta.env.SSR;
 export const client = !server;
+
+export { gitCommitSha, gitUrl };
+
+export const gitCommitUrl = `${gitUrl}/commit/${gitCommitSha}`;

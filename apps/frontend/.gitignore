@@ -4,6 +4,7 @@ npm-debug.log
 node_modules
 .next
 .vercel
+dist
 build
 .sonda
 .wrangler
@@ -21,3 +22,4 @@ certificates
 
 # tsc
 *.tsbuildinfo
+worker-configuration.d.ts

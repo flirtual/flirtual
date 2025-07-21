@@ -22,7 +22,9 @@
 		"resolveJsonModule": true,
 		"types": [
 			"node",
-			"vite/client"
+			"vite/client",
+			"unplugin-info/client",
+			"unplugin-icons/types/react"
 		],
 		"strict": true,
 		"noEmit": true,

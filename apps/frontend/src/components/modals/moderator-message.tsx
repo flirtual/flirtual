@@ -1,13 +1,13 @@
 import ms from "ms";
 import type { Dispatch, FC, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { withSuspense } from "with-suspense";
 
 import { User } from "~/api/user";
 import { Image } from "~/components/image";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useNavigate } from "react-router";
 import { urls } from "~/urls";
 
 import { Button } from "../button";
@@ -72,7 +72,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 						onClick={async () => {
 							await remindMeLater(true);
 
-							navigate(urls.settings.bio));
+							navigate(urls.settings.bio);
 							router.refresh();
 						}}
 					>

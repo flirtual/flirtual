@@ -2,8 +2,11 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 import { reactRouter } from "@react-router/dev/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import sonda from "sonda/vite";
+import info from "unplugin-info/vite";
 import { defineConfig, loadEnv } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+
+// import checker from "vite-plugin-checker";
 
 const moduleLanguageRegex = /(\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)(?<language>[a-z-_]+)\.(json|js)$/i;
 
@@ -20,13 +23,18 @@ function getModuleLanguage(id: string): string | null {
 	return language;
 }
 
-const modulePackageNameRegex = /\/node_modules\/.+\/node_modules\/(?<name>(@[^/]+\/)?[^/]+)\//i;
+const modulePackageRegex = /\/node_modules\/.+\/node_modules\/(?<name>(@[^/]+\/)?[^/]+)\//i;
 
-function getPackageName(id: string): string | null {
-	const match = id.match(modulePackageNameRegex);
+function getModuleIdentifiers(id: string) {
+	const match = id.match(modulePackageRegex);
 	if (!match?.groups?.name) return null;
 
-	return match.groups.name;
+	const [scopeOrName, name] = match.groups.name.split("/").slice(0, 2);
+
+	return {
+		scope: name ? scopeOrName.replace(/@/, "") : undefined,
+		name: name || scopeOrName,
+	};
 }
 
 export default defineConfig(({ mode }) => {
@@ -34,20 +42,43 @@ export default defineConfig(({ mode }) => {
 	const { hostname } = new URL(origin);
 
 	return {
+		appType: "spa",
+		esbuild: {
+			charset: "utf8",
+			legalComments: "external",
+		},
 		build: {
+			assetsDir: "static",
 			sourcemap: true,
+			chunkSizeWarningLimit: 100,
+			cssMinify: "lightningcss",
 			rollupOptions: {
 				output: {
 					hashCharacters: "hex",
-					entryFileNames: "chunks/[hash:8].js",
-					chunkFileNames: "chunks/[name].[hash:8].js",
-					assetFileNames: "chunks/[name].[hash:8].[ext]",
+					entryFileNames: "static/[name].[hash:8].js",
+					chunkFileNames: "static/[name].[hash:8].js",
+					assetFileNames: "static/[name].[hash:8].[ext]",
 					manualChunks: (id) => {
 						const language = getModuleLanguage(id);
-						if (language) return `languages/${language}`;
+						if (language) return `language-${language}`;
 
-						const packageName = getPackageName(id);
-						if (packageName?.startsWith("@capacitor")) return `capacitor`;
+						const identifiers = getModuleIdentifiers(id);
+						if (identifiers) {
+							const { scope, name } = identifiers;
+
+							if (
+								(scope && [
+									"capacitor",
+									"capawesome",
+									"capgo",
+									"revenuecat",
+									"trapezedev"
+								].includes(scope)) || [
+									"capacitor-native-settings"
+								].includes(name)
+							)
+								return "native";
+						}
 
 						return null;
 					}
@@ -56,23 +87,34 @@ export default defineConfig(({ mode }) => {
 		},
 		server: {
 			host: hostname,
+			origin,
 			port: 3000,
 			strictPort: true,
 		},
 		plugins: [
+			tsconfigPaths(),
+			info(),
 			basicSsl({
 				name: "flirtual",
 				domains: [hostname],
 				certDir: "./certificates",
 			}),
 			reactRouter(),
-			tsconfigPaths(),
 			cloudflare({
 				experimental: {
 					headersAndRedirectsDevModeSupport: true,
 				}
 			}),
-			sonda()
+			// checker({
+			// 	overlay: false,
+			// 	typescript: true,
+			// 	eslint: {
+			// 		useFlatConfig: true,
+			// 		lintCommand: "eslint \"./src/**/*.{ts,tsx}\"",
+			// 		watchPath: "./src",
+			// 	}
+			// }),
+			sonda(),
 		],
 	};
 });

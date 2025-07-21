@@ -26,7 +26,14 @@ export default {
 		"/manifest.json",
 		"/robots.txt",
 		"/pico_authentication.json",
-		"/.well-known/security.txt"
+		"/.well-known/security.txt",
+		"/_redirects",
+		"/_headers"
 	],
-	appDirectory: "src"
+	appDirectory: "src",
+	buildDirectory: "dist",
+	future: {
+		unstable_viteEnvironmentApi: true,
+		unstable_splitRouteModules: "enforce",
+	}
 } satisfies Config;

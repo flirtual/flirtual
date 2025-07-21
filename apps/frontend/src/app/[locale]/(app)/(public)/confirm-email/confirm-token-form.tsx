@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import useMutation from "swr/mutation";
 
 import { User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
-import { useNavigate } from "react-router";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -20,7 +20,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 		(_, { arg: token }: { arg: string }) => User.confirmEmail(token),
 		{
 			onError: () => {
-				navigate(urls.confirmEmail()));
+				navigate(urls.confirmEmail());
 
 				toasts.add({
 					type: "error",
@@ -32,7 +32,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 				toasts.add(t("royal_home_leopard_tickle"));
 
 				await invalidate({ queryKey: sessionKey() });
-				navigate(urls.default));
+				navigate(urls.default);
 			}
 		}
 	);
