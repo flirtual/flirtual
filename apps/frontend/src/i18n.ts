@@ -102,9 +102,9 @@ i18n
 		}
 	});
 
-export function replaceLanguage(to: To, locale: Locale, relativeTo: string = window.location.pathname): Path {
+export function replaceLanguage(to: To, locale: Locale | null, relativeTo: string = window.location.pathname): Path {
 	let { pathname, ...path } = resolvePath(to, relativeTo);
-	pathname = pathname.replace(localePathnameRegex, `/${locale}/`);
+	pathname = pathname.replace(localePathnameRegex, locale ? `/${locale}/` : "/");
 
 	return { ...path, pathname };
 }

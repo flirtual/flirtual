@@ -1,4 +1,5 @@
-import type { To } from "react-router";
+import { createPath } from "react-router";
+import type { Path, To } from "react-router";
 import { entries, fromEntries } from "remeda";
 
 import type { User } from "./api/user";
@@ -16,8 +17,8 @@ export function ensureRelativeUrl(pathname: string) {
 	return pathname;
 }
 
-export function toAbsoluteUrl(to: URL | string) {
-	return new URL(to, siteOrigin);
+export function toAbsoluteUrl(to: Path | URL | string) {
+	return new URL((typeof to === "string" || to instanceof URL) ? to : createPath(to), siteOrigin);
 }
 
 export { toAbsoluteUrl as absoluteUrl };

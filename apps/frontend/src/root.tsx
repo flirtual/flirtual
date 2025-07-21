@@ -27,10 +27,11 @@ import { TooltipProvider } from "./components/tooltip";
 import { UpdateInformation } from "./components/update-information";
 import { apiOrigin, development, platformOverride, production, siteOrigin } from "./const";
 import { ToastProvider } from "./hooks/use-toast";
-import { defaultLocale, i18n, localePathnameRegex, locales } from "./i18n";
+import { defaultLocale, i18n, localePathnameRegex, locales, replaceLanguage } from "./i18n";
+import type { Locale } from "./i18n";
 import { QueryProvider } from "./query";
 import { RedirectBoundary } from "./redirect";
-import { bucketOrigins, urls } from "./urls";
+import { absoluteUrl, bucketOrigins, urls } from "./urls";
 
 import "@fontsource-variable/montserrat";
 import "@fontsource-variable/nunito";
@@ -60,7 +61,10 @@ export async function loader({ params: { locale = defaultLocale } }: Route.Loade
 <link color="#e9658b" href="/_next/static/media/safari-pinned-tab.f0d3b570.svg" rel="mask-icon">
 */
 
-export function meta({ params: { locale = defaultLocale } }: Pick<Route.MetaArgs, "params">): Route.MetaDescriptors {
+export function meta({
+	location: { pathname },
+	params: { locale = defaultLocale }
+}: Pick<Route.MetaArgs, "location" | "params">): Route.MetaDescriptors {
 	const t = i18n.getFixedT(locale);
 
 	return [
@@ -106,12 +110,18 @@ export function meta({ params: { locale = defaultLocale } }: Pick<Route.MetaArgs
 		{ property: "al:web:url", content: siteOrigin },
 
 		{ name: "darkreader-lock" },
+
+		{ tagName: "link", rel: "manifest", href: href("/manifest.json") },
+
+		{ tagName: "link", rel: "canonical", hrefLang: locale, href: absoluteUrl(replaceLanguage(pathname, locale as Locale, pathname)) },
+		{ tagName: "link", rel: "alternate", hrefLang: "x-default", href: absoluteUrl(replaceLanguage(pathname, defaultLocale, pathname)) },
+
+		...locales.map((locale) => {
+			const href = absoluteUrl(replaceLanguage(pathname, locale, pathname));
+			return ({ tagName: "link", rel: "alternate", hrefLang: locale, href });
+		})
 	];
 }
-
-export const links: Route.LinksFunction = () => [
-	{ rel: "manifest", href: href("/manifest.json") },
-];
 
 // eslint-disable-next-line react-refresh/only-export-components
 export { meta as rootMeta };
@@ -146,20 +156,21 @@ export function Layout({ children }: PropsWithChildren) {
 			<head>
 				<Meta />
 				<Links />
-				<script src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill${production ? ".min" : ""}.js?features=${[
-					"Intl",
-					"Intl.Locale",
-					"Intl.DateTimeFormat",
-					`Intl.DateTimeFormat.~locale.${locale}`,
-					`Intl.NumberFormat`,
-					`Intl.NumberFormat.~locale.${locale}`,
-					"Intl.PluralRules",
-					`Intl.PluralRules.~locale.${locale}`,
-					"Intl.RelativeTimeFormat",
-					`Intl.RelativeTimeFormat.~locale.${locale}`,
-					"Intl.ListFormat",
-					`Intl.ListFormat.~locale.${locale}`
-				].join(",")}`}
+				<script
+					src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill${production ? ".min" : ""}.js?features=${[
+						"Intl",
+						"Intl.Locale",
+						"Intl.DateTimeFormat",
+						`Intl.DateTimeFormat.~locale.${locale}`,
+						`Intl.NumberFormat`,
+						`Intl.NumberFormat.~locale.${locale}`,
+						"Intl.PluralRules",
+						`Intl.PluralRules.~locale.${locale}`,
+						"Intl.RelativeTimeFormat",
+						`Intl.RelativeTimeFormat.~locale.${locale}`,
+						"Intl.ListFormat",
+						`Intl.ListFormat.~locale.${locale}`
+					].join(",")}`}
 				/>
 			</head>
 			<body
