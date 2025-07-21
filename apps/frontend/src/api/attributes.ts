@@ -1,7 +1,7 @@
 import { cache } from "react";
 import type { WretchOptions } from "wretch";
 
-import { gitCommitSha } from "~/const";
+import { commitIdShort } from "~/const";
 import type { Expand } from "~/utilities";
 
 import { api } from "./common";
@@ -102,7 +102,7 @@ export const Attribute = {
 	list<T extends AttributeType>(type: T, options: WretchOptions = {}) {
 		return this.api
 			.url(`/${type}`)
-			.query({ v: gitCommitSha })
+			.query({ v: commitIdShort })
 			.options(options)
 			.get()
 			.json<AttributeCollection<T>>();

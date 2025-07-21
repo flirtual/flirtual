@@ -1,7 +1,7 @@
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
 
-import { maintenance } from "~/const";
+import { commitIdShort, maintenance } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useInterval } from "~/hooks/use-interval";
 import { useLocale } from "~/i18n";
@@ -123,11 +123,16 @@ export function HavingIssues({ digest }: { digest?: string }) {
 
 						</li>
 					</ul>
-					{digest && (
-						<CopyClick value={digest}>
-							<span className="mt-6 font-mono text-xs desktop:text-sm">{digest}</span>
+					<div className="mt-6 flex flex-col text-center font-mono text-xs opacity-50 desktop:text-sm">
+						{digest && (
+							<CopyClick value={digest}>
+								<span>{digest}</span>
+							</CopyClick>
+						)}
+						<CopyClick value={commitIdShort}>
+							<span>{t("version", { version: commitIdShort })}</span>
 						</CopyClick>
-					)}
+					</div>
 				</>
 			)}
 		</div>

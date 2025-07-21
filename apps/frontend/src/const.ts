@@ -1,4 +1,4 @@
-import { sha as gitCommitSha, github as gitUrl } from "~build/git";
+import { sha as commitId, abbreviatedSha as commitIdShort, github as gitUrl } from "~build/git";
 
 import type { DevicePlatform } from "./hooks/use-device";
 
@@ -61,6 +61,6 @@ export const maintenance = false;
 export const server = import.meta.env.SSR;
 export const client = !server;
 
-export { gitCommitSha, gitUrl };
+export { commitId, commitIdShort };
 
-export const gitCommitUrl = `${gitUrl}/commit/${gitCommitSha}`;
+export const commitUrl = `${gitUrl}/commit/${commitId}`;

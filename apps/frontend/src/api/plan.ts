@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { gitCommitSha } from "~/const";
+import { commitIdShort } from "~/const";
 
 import { api } from "./common";
 import type { DatedModel, UuidModel } from "./common";
@@ -30,7 +30,7 @@ export const Plan = {
 					revalidate: false
 				}
 			})
-			.query({ v: gitCommitSha })
+			.query({ v: commitIdShort })
 			.get()
 			.json<Array<Plan>>();
 	}

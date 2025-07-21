@@ -17,7 +17,7 @@ import type { ProspectKind } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
-import { development, gitCommitSha, server } from "./const";
+import { commitId, development, server } from "./const";
 import { log as _log } from "./log";
 import { getPreferences, setPreferences } from "./preferences";
 import { isUid } from "./utilities";
@@ -147,7 +147,7 @@ interface QueryPreference {
 
 export type MinimalQueryOptions<T> = Pick<UseQueryOptions<T, Error, T, QueryKey>, "placeholderData">;
 
-const cacheVersion = gitCommitSha;
+const cacheVersion = commitId;
 const defaultCacheTime = ms("1d");
 
 export async function saveQueries() {

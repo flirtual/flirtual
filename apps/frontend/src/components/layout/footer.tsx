@@ -8,7 +8,7 @@ import {
 	TwitterIcon
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
-import { gitCommitSha } from "~/const";
+import { commitIdShort } from "~/const";
 import { urls } from "~/urls";
 
 import { InlineLink } from "../inline-link";
@@ -178,7 +178,7 @@ export const Footer: React.FC<FooterProps> = ({
 							highlight={false}
 							href={urls.debugger}
 						>
-							{gitCommitSha.slice(0, 8)}
+							{commitIdShort}
 						</InlineLink>
 					</div>
 				</div>

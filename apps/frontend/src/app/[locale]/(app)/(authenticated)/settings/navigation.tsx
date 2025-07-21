@@ -24,7 +24,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { InlineLink } from "~/components/inline-link";
-import { gitCommitSha } from "~/const";
+import { commitIdShort } from "~/const";
 import { openFeedback } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
@@ -211,7 +211,7 @@ export const SettingsNavigation: FC = () => {
 						className="-mt-4 self-center text-black-10 no-underline vision:text-white-20"
 						href={urls.debugger}
 					>
-						{t("version", { version: gitCommitSha?.slice(0, 8) })}
+						{t("version", { version: commitIdShort })}
 					</InlineLink>
 				</nav>
 			</div>

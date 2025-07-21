@@ -3,7 +3,7 @@ import { App } from "@capacitor/app";
 import type { DeviceId, DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
 
-import { client, gitCommitSha, platformOverride } from "~/const";
+import { client, commitId, platformOverride } from "~/const";
 import { log as _log } from "~/log";
 
 export type DevicePlatform = "android" | "apple" | "web";
@@ -64,7 +64,7 @@ export const device = {
 	deviceId,
 	operatingSystem,
 	versions: {
-		commit: gitCommitSha,
+		commit: commitId,
 		build,
 		version,
 		operatingSystem: osVersion,

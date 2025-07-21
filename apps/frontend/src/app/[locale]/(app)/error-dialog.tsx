@@ -15,7 +15,7 @@ import {
 } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
-import { gitCommitSha, maintenance } from "~/const";
+import { commitIdShort, maintenance } from "~/const";
 import { urls } from "~/urls";
 
 export type ErrorWithDigest = { digest?: string } & Error;
@@ -162,7 +162,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									<footer>
 										<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 										{" "}
-										<span className="text-sm opacity-75">{gitCommitSha?.slice(0, 6)}</span>
+										<span className="text-sm opacity-75">{commitIdShort}</span>
 									</footer>
 								</div>
 							</DialogBody>
@@ -283,7 +283,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									<footer>
 										<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 										{" "}
-										<span className="text-sm opacity-75">{gitCommitSha?.slice(0, 6)}</span>
+										<span className="text-sm opacity-75">{commitIdShort}</span>
 									</footer>
 								</div>
 							</DialogBody>
