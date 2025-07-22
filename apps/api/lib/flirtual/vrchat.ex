@@ -188,9 +188,12 @@ defmodule Flirtual.VRChat do
           _ -> {:display_name, input}
         end
 
-      # Search link: https://vrchat.com/home/search/displayname
-      Regex.match?(~r/^https?:\/\/vrchat\.com\/home\/search\/([^\/?\#]+)$/i, input) ->
-        case Regex.run(~r/^https?:\/\/vrchat\.com\/home\/search\/([^\/?\#]+)$/i, input) do
+      # Search link: https://vrchat.com/home/search[/users]/displayname
+      Regex.match?(~r/^https?:\/\/vrchat\.com\/home\/search\/(?:users\/)?([^\/?\#]+)$/i, input) ->
+        case Regex.run(
+               ~r/^https?:\/\/vrchat\.com\/home\/search\/(?:users\/)?([^\/?\#]+)$/i,
+               input
+             ) do
           [_, display_name] -> {:display_name, URI.decode(display_name)}
           _ -> {:display_name, input}
         end
