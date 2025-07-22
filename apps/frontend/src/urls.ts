@@ -82,7 +82,7 @@ export const urls = {
 			? urls.pfp(user.profile.images[0], variant)
 			: urls.media("8d120672-c717-49d2-b9f3-2d4479bbacf6"),
 	vrchat: (username: string) =>
-		`https://vrchat.com/home/search/${encodeURIComponent(
+		`https://vrchat.com/home/search/users/${encodeURIComponent(
 			escapeVRChat(username)
 		)}`,
 
