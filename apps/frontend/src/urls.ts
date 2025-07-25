@@ -6,7 +6,6 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/[group]/page";
-import type { ConfirmEmailPageProps } from "./app/[locale]/(app)/(public)/confirm-email/page";
 import { apiUrl, siteOrigin } from "./const";
 import type { EmojiType } from "./hooks/use-talkjs";
 import { escapeVRChat } from "./vrchat";
@@ -141,7 +140,7 @@ export const urls = {
 		success: url("/subscription", { success: "yes" })
 	},
 	confirmEmail: (
-		query: Awaited<ConfirmEmailPageProps["searchParams"]> = {}
+		query: any = {}
 	) => url("/confirm-email", query),
 
 	settings: {

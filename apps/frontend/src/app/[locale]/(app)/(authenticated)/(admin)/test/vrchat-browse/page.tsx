@@ -24,8 +24,12 @@ import {
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "~/components/drawer";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
+import { defaultLocale, i18n } from "~/i18n";
 import { useInfiniteQuery } from "~/query";
+import { metaMerge, rootMeta } from "~/root";
 import { urls } from "~/urls";
+
+import type { Route } from "./+types/page";
 
 const worldCategoryIcons = {
 	recommended: Flame,
@@ -243,6 +247,11 @@ const WorldCategoryContent = withSuspense<{
 		))}
 	</>
 });
+
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	return metaMerge([...rootMeta(options), { title: "VRChat Browse Test" }]);
+};
 
 export default function Test() {
 	return (

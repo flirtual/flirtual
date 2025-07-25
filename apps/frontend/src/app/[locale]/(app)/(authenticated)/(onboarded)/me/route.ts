@@ -1,14 +1,15 @@
-// eslint-disable-next-line no-restricted-imports
-import { redirect } from "next/navigation";
+import { redirect } from "react-router";
 
 import { Authentication } from "~/api/auth";
 import { urls } from "~/urls";
 
-export const dynamic = "force-dynamic";
+import type { Route } from "./+types/route";
 
-export async function GET() {
+export async function loader({ request }: Route.LoaderArgs) {
 	const session = await Authentication.getOptionalSession();
-	if (!session) return redirect(urls.login(urls.user.me));
+	if (!session) {
+		throw redirect(urls.login(urls.user.me));
+	}
 
-	return redirect(urls.profile(session.user));
+	throw redirect(urls.profile(session.user));
 }

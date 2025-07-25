@@ -1,13 +1,17 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect } from "react-router";
 
 import { urls } from "~/urls";
 
-export async function GET() {
-	if ((await cookies()).has("session"))
+import type { Route } from "./+types/route";
+
+export async function loader({ request }: Route.LoaderArgs) {
+	// Check for session cookie
+	const cookies = request.headers.get("cookie");
+	if (cookies && cookies.includes("session=")) {
 		// Optimistically redirect to the discover page if the session cookie exists.
 		// Worst case: If the session is invalid, the user will be redirected to the browse page, then the login page.
-		redirect(urls.discover("dates"));
+		throw redirect(urls.discover("dates"));
+	}
 
-	redirect(urls.landing);
+	throw redirect(urls.landing);
 }

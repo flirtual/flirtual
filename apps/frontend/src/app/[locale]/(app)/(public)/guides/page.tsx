@@ -2,15 +2,20 @@ import { useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 import { urls } from "~/urls";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+import type { Route } from "./+types/page";
 
-	return {
-		title: t("guides")
-	};
-}
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("guides") }
+	]);
+};
 
 export default function GuidesPage() {
 	const { t } = useTranslation();

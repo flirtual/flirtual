@@ -8,7 +8,6 @@ import ImageEditor from "@uppy/image-editor";
 import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
 import RemoteSources from "@uppy/remote-sources";
 import { ImagePlus } from "lucide-react";
-import { useMessages } from "next-intl";
 import {
 
 	useCallback,
@@ -16,6 +15,7 @@ import {
 	useState
 } from "react";
 import type { Dispatch, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -23,6 +23,7 @@ import { uppyCompanionUrl } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
+import { useMessages } from "~/i18n";
 import { urls } from "~/urls";
 
 import {
@@ -89,8 +90,8 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
-	const { uppy: uppyLocale } = useMessages() as { uppy: Record<string, string> };
 	const { t } = useTranslation();
+	const uppyLocale = useMessages("uppy");
 
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
@@ -328,7 +329,6 @@ const ArrangeableImageDialog: React.FC<{
 		<Dialog open onOpenChange={onOpenChange}>
 			<DialogContent className="pointer-events-none w-fit max-w-[95svw] overflow-hidden p-0 desktop:max-w-[95svw]">
 				<UserImage
-					fill
 					alt={t("profile_picture")}
 					className="!relative mx-auto aspect-auto !size-auto max-h-[80vh] rounded-[1.25rem] object-cover"
 					src={image.fullSrc}

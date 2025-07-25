@@ -1,16 +1,20 @@
 import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 
+import type { Route } from "./+types/page";
 import { DebugInfo } from "./debug-info";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("debug_information")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("debug_information") }
+	]);
+};
 
 export default function DebuggerPage() {
 	const { t } = useTranslation();

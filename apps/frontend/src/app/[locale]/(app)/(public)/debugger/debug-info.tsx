@@ -1,8 +1,8 @@
 import { Clipboard } from "@capacitor/clipboard";
 import { Copy } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "~/components/button";
-import { environment } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { logout, useOptionalSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";

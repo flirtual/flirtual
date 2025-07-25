@@ -83,7 +83,7 @@ export const ProfilePlaylist: FC<{
 	className?: string;
 }> = ({ playlist, className }) => {
 	const [theme] = useTheme();
-	const locale = useLocale() as Locale;
+	const [locale] = useLocale();
 
 	const matchedPlatform = playlistPlatforms.find(({ pattern }) => pattern.test(playlist));
 	const match = matchedPlatform?.pattern.exec(playlist);

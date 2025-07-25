@@ -1,9 +1,9 @@
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import type { FC } from "react";
+import { useParams } from "react-router";
 
 import { Profile } from "~/components/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { notFound } from "~/i18n/navigation";
 
 import { QueueActions } from "../discover/[group]/queue-actions";
 
@@ -19,19 +19,18 @@ const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 
 	return (
 		<QueueActions
-			explicitUserId={userId}
+			// explicitUserId={userId}
 			kind="love"
 		/>
 	);
 };
 
-export const dynamic = "force-dynamic";
+export default function ProfilePage() {
+	const { slug } = useParams();
 
-export default function ProfilePage({ params }: { params: Promise<{ slug: string }> }) {
-	const { slug } = use(params);
-
-	const user = useUser(slug);
-	if (!user) return notFound();
+	const user = useUser(slug!);
+	// TODO: Handle user not found case properly
+	if (!user) return null;
 
 	return (
 		<>

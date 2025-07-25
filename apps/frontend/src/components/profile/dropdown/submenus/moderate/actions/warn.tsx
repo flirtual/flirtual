@@ -1,6 +1,7 @@
 import { Languages, MailWarning } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { OpenAI } from "~/api/openai";
 import { displayName, User } from "~/api/user";

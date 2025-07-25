@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useLocale, useMessages } from "next-intl";
 import {
 	createContext,
 
@@ -10,11 +9,12 @@ import {
 } from "react";
 import type { CSSProperties, FC, PropsWithChildren } from "react";
 import type React from "react";
-import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
+import { useLocale } from "~/i18n";
 import { resolveTheme } from "~/theme";
 import { urls } from "~/urls";
 import { emptyArray } from "~/utilities";
@@ -32,8 +32,6 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [ready, setReady] = useState(false);
 	const authSession = useOptionalSession();
-
-	const navigate = useNavigate();
 
 	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>([]);
 
@@ -59,7 +57,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 		const messageSubscription = session.onMessage(async () => {
 			// todo:
 			// await mutate(conversationsKey);
-			// router.refresh();
+			// // router.refresh();
 		});
 
 		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
@@ -68,7 +66,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 			unreadSubscription.unsubscribe();
 			messageSubscription.unsubscribe();
 		};
-	}, [session, router]);
+	}, [session]);
 
 	// useEffect(() => {
 	// 	return () => session?.destroy();
@@ -153,7 +151,9 @@ export const ConversationChatbox: React.FC<
 
 	const [,,{ sessionTheme }] = useTheme();
 	const { native, vision } = useDevice();
-	const { talkjs_match_message, talkjs_input_placeholder } = useMessages();
+	const { t } = useTranslation();
+	const talkjs_match_message = t("talkjs_match_message");
+	const talkjs_input_placeholder = t("talkjs_input_placeholder");
 	const [locale] = useLocale();
 
 	const chatbox = useMemo(() => {

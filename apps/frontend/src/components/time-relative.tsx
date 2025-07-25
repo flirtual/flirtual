@@ -1,17 +1,11 @@
 import type { StringValue } from "ms";
-import { useFormatter } from "next-intl";
-import type { createFormatter } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import type { ComponentProps, FC } from "react";
 
 import { useInterval } from "~/hooks/use-interval";
+import { useLocale } from "~/i18n";
 
-type RelativeTimeFormatOptions = Exclude<
-	Parameters<ReturnType<typeof createFormatter>["relativeTime"]>[1],
-	Date | number | undefined
->;
-
-interface TimeRelativeProps extends RelativeTimeFormatOptions {
+interface TimeRelativeProps extends Intl.RelativeTimeFormatOptions {
 	elementProps?: ComponentProps<"span">;
 	every?: StringValue | number;
 	value: string;
@@ -22,6 +16,7 @@ export const TimeRelative: FC<TimeRelativeProps> = (props) => {
 
 	const date = useMemo(() => new Date(value), [value]);
 	const [now, setNow] = useState(() => Date.now());
+	const [locale] = useLocale();
 
 	const difference = now - date.getTime();
 
@@ -32,8 +27,6 @@ export const TimeRelative: FC<TimeRelativeProps> = (props) => {
 		if (difference > 60 * 60 * 1000) every = "1h";
 	}
 
-	const formatter = useFormatter();
-
 	useInterval(
 		useCallback(() => setNow(Date.now()), []),
 		every
@@ -41,7 +34,10 @@ export const TimeRelative: FC<TimeRelativeProps> = (props) => {
 
 	return (
 		<span suppressHydrationWarning {...elementProps}>
-			{formatter.relativeTime(date, { ...options, now })}
+			{new Intl.RelativeTimeFormat(locale, options).format(
+				Math.round((date.getTime() - now) / 1000),
+				"second"
+			)}
 		</span>
 	);
 };

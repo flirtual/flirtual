@@ -272,7 +272,7 @@ export const MatchmakingForm: FC = () => {
 												.then(() => {
 													setPassesPending(false);
 													toasts.add(t("passes_reset"));
-													return router.refresh();
+													return // router.refresh();
 												})
 												.catch(toasts.addError);
 										}}

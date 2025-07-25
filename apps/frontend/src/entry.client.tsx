@@ -57,9 +57,12 @@ startTransition(() => {
 			<HydratedRouter />
 		</StrictMode>,
 		{
-			onCaughtError: (error) => {
+			onCaughtError: (error, { componentStack }) => {
 				if (isRedirectError(error)) return;
-				console.error("onCaught", error);
+				console.error("onCaught", error instanceof Error
+					// Component stack is usually more useful.
+					? Object.assign(error, { stack: componentStack || error.stack })
+					: error);
 			},
 			onRecoverableError: (error) => console.error("onRecoverable", error),
 			onUncaughtError: (error) => console.error("onUncaught", error),

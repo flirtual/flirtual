@@ -4,9 +4,7 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Link } from "~/components/link";
-import { useLocation } from "~/hooks/use-location";
 import { usePreferences } from "~/hooks/use-preferences";
-import { toAbsoluteUrl, urlEqual } from "~/urls";
 
 export interface NavigationalSwitchItemProps {
 	href: string;
@@ -22,8 +20,10 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	strict,
 	...props
 }) => {
-	const location = useLocation();
-	const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
+	// const location = useLocation();
+	// const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
+	const active = false;
+	// todo:
 
 	const [rankedMode] = usePreferences("ranked_mode", false);
 	const { t } = useTranslation();
@@ -67,12 +67,11 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 };
 
 export const NavigationItem: FC<
-	{ href: string; ref?: any } & ComponentProps<"a">
+	ComponentProps<typeof Link>
 > = ({ children, ...props }) => {
-	const location = useLocation();
-	const active
-		= toAbsoluteUrl(props.href).pathname.split("/")[1]
-			=== location.pathname.split("/")[1];
+	// const location = useLocation();
+	// todo:
+	const active = false;
 
 	return (
 		<Link

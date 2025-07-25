@@ -1,8 +1,8 @@
-import { Chrome, Laptop, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
-import { AnimatePresence } from "motion/react";
+import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import { AnimatePresence, m } from "motion/react";
 import { useState } from "react";
 import type { PropsWithChildren } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
@@ -53,22 +53,22 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 						<p className="font-semibold">{t("crisp_lime_raven_arise")}</p>
 						<ul className="ml-4 flex list-disc flex-col gap-2">
 							<li>
-								{t.rich("tough_sleek_wasp_reside", {
-									icon: () => <WifiOff className="inline-block size-4 shrink-0" />
-								})}
+								<Trans
+									components={{
+										icon: <WifiOff className="mr-1 inline-block size-4 shrink-0" />,
+									}}
+									i18nKey="tough_sleek_wasp_reside"
+								/>
 							</li>
 							{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
 							<li>
-								{t.rich(native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe", {
-									"browser-icon": () => <Chrome className="inline-block size-4 shrink-0" />,
-									"device-icon": () => {
-										const Icon = device.platform === "web"
-											? Laptop
-											: Smartphone;
-
-										return <Icon className="inline-block size-4 shrink-0" />;
-									}
-								})}
+								<Trans
+									components={{
+										"browser-icon": <Chrome className="mr-1 inline-block size-4 shrink-0" />,
+										"device-icon": <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
+									}}
+									i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}
+								/>
 							</li>
 							<li>
 								<button
@@ -81,17 +81,19 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 								</button>
 							</li>
 							<li>
-								{t.rich("yummy_salty_porpoise_greet", {
-									contact: (children) => (
-										<a
-											className="whitespace-nowrap lowercase underline"
-											href={urls.resources.contact}
-										>
-											<Send className="mr-1 inline-block size-4 shrink-0" />
-											{children}
-										</a>
-									)
-								})}
+								<Trans
+									components={{
+										contact: (
+											<a
+												className="whitespace-nowrap lowercase underline"
+												href={urls.resources.contact}
+											>
+												<Send className="mr-1 inline-block size-4 shrink-0" />
+											</a>
+										)
+									}}
+									i18nKey="yummy_salty_porpoise_greet"
+								/>
 							</li>
 						</ul>
 					</m.div>

@@ -2,6 +2,7 @@ import { Hash, X } from "lucide-react";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useEffect, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
+import { Trans, useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
@@ -9,19 +10,18 @@ import type { Session } from "~/api/auth";
 import { PreferenceThemes } from "~/api/user/preferences";
 import { Profile } from "~/api/user/profile";
 import type { ProfileColors } from "~/api/user/profile";
-import { applyDocumentMutations } from "~/app/[locale]/lazy-layout";
 import { NewBadge, PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
+import { applyDocumentMutations } from "~/document";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
-import { useLocale } from "~/i18n";
-import { defaultLocale } from "~/i18n/routing";
+import { defaultLocale, useLocale } from "~/i18n";
 import { mutate, sessionKey, useMutation } from "~/query";
 import { urls } from "~/urls";
 
@@ -307,18 +307,13 @@ export const AppearanceForm: FC = () => {
 					inline
 					hint={(
 						<InputLabelHint>
-							{t.rich(locale === defaultLocale
-								? "help_translate_others"
-								: "help_translate", {
-								language: tAttribute[locale]?.name || locale,
-								link: (children) => (
-									<InlineLink
-										href={`https://hosted.weblate.org/projects/flirtual/flirtual/${locale === defaultLocale ? "" : locale}`}
-									>
-										{children}
-									</InlineLink>
-								)
-							})}
+							<Trans
+								components={{
+									link: <InlineLink href={`https://hosted.weblate.org/projects/flirtual/flirtual/${locale === defaultLocale ? "" : locale}`} />
+								}}
+								i18nKey={locale === defaultLocale ? "help_translate_others" : "help_translate"}
+								values={{ language: tAttribute[locale]?.name || locale }}
+							/>
 						</InputLabelHint>
 					)}
 				>

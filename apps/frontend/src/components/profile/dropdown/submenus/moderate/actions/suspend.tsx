@@ -1,6 +1,7 @@
 import { Gavel, Languages } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
@@ -33,7 +34,7 @@ import { mutate, userKey } from "~/query";
 const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {
 	const toasts = useToast();
 
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const kind = (query.get("kind") || "love") as ProspectKind;
 
 	const { forward: forwardQueue } = useQueue(kind);

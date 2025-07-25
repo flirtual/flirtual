@@ -2,6 +2,7 @@ import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
 import { useMemo } from "react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -26,7 +27,7 @@ export const ProfileModeratorInfo: FC<{
 	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 	const user = useUser(userId);
-	const systemLanguage = useLocale();
+	const [systemLanguage] = useLocale();
 
 	const languageNames = useMemo(
 		() => new Intl.DisplayNames(systemLanguage, { type: "language" }),

@@ -1,21 +1,25 @@
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { ButtonLink } from "~/components/button";
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 import { urls } from "~/urls";
 
+import type { Route } from "./+types/page";
 import { DiscordEmbed } from "./discord-embed";
 import { Livestream } from "./livestream";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("events")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("events") }
+	]);
+};
 
 export default function EventsPage() {
 	const { t } = useTranslation();
@@ -31,11 +35,10 @@ export default function EventsPage() {
 				<h1 className="text-2xl font-semibold">{t("top_big_tern_twist")}</h1>
 				<p>{t("nimble_equal_loris_foster")}</p>
 				<p>
-					{t.rich("flaky_early_shad_nourish", {
-						discord: (children) => (
-							<InlineLink href={urls.socials.discord}>{children}</InlineLink>
-						)
-					})}
+					<Trans
+						components={{ discord: <InlineLink href={urls.socials.discord} /> }}
+						i18nKey="flaky_early_shad_nourish"
+					/>
 				</p>
 				<DiscordEmbed />
 			</div>
@@ -72,14 +75,13 @@ export default function EventsPage() {
 				<p>{t("sweet_mellow_ant_hunt")}</p>
 				<ButtonLink href="/club" target="_blank">{t("inclusive_simple_alligator_zap")}</ButtonLink>
 				<p>
-					{t.rich("dry_inclusive_ox_trust", {
-						faxmashine: (children) => (
-							<InlineLink href="https://faxmashine.com/">{children}</InlineLink>
-						),
-						vrchat: (children) => (
-							<InlineLink href="https://vrchat.com/">{children}</InlineLink>
-						)
-					})}
+					<Trans
+						components={{
+							faxmashine: <InlineLink href="https://faxmashine.com/" />,
+							vrchat: <InlineLink href="https://vrchat.com/" />
+						}}
+						i18nKey="dry_inclusive_ox_trust"
+					/>
 				</p>
 			</div>
 		</ModelCard>

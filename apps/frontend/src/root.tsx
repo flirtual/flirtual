@@ -113,11 +113,11 @@ export function meta({
 
 		{ tagName: "link", rel: "manifest", href: href("/manifest.json") },
 
-		{ tagName: "link", rel: "canonical", hrefLang: locale, href: absoluteUrl(replaceLanguage(pathname, locale as Locale, pathname)) },
-		{ tagName: "link", rel: "alternate", hrefLang: "x-default", href: absoluteUrl(replaceLanguage(pathname, defaultLocale, pathname)) },
+		{ tagName: "link", rel: "canonical", hrefLang: locale, href: absoluteUrl(replaceLanguage(pathname, locale as Locale, pathname)).href },
+		{ tagName: "link", rel: "alternate", hrefLang: "x-default", href: absoluteUrl(replaceLanguage(pathname, defaultLocale, pathname)).href },
 
 		...locales.map((locale) => {
-			const href = absoluteUrl(replaceLanguage(pathname, locale, pathname));
+			const { href } = absoluteUrl(replaceLanguage(pathname, locale, pathname));
 			return ({ tagName: "link", rel: "alternate", hrefLang: locale, href });
 		})
 	];
@@ -156,6 +156,33 @@ export function Layout({ children }: PropsWithChildren) {
 			<head>
 				<Meta />
 				<Links />
+			</head>
+			<body
+				suppressHydrationWarning
+				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
+				data-platform={platformOverride || undefined}
+			>
+				<script
+					// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+					dangerouslySetInnerHTML={{
+						__html: `(${(() => {
+							const localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`);
+							const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+							const theme = localTheme === "system" ? prefersDark : localTheme;
+							const themeStyle = location.pathname.replace("$0", "") === "$1" ? "friend" : "default";
+
+							Object.assign(document.body.dataset, { theme, themeStyle });
+
+							const fontSize = JSON.parse(localStorage.getItem(".font_size") || "16") || 16;
+							document.documentElement.style.setProperty("font-size", `${fontSize}px`);
+						})
+							.toString()
+							.replace(`"$0"`, localePathnameRegex.toString())
+							.replace(`"$1"`, JSON.stringify(urls.discover("homies")))
+						})()`
+					}}
+				/>
 				<script
 					src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill${production ? ".min" : ""}.js?features=${[
 						"Intl",
@@ -171,26 +198,6 @@ export function Layout({ children }: PropsWithChildren) {
 						"Intl.ListFormat",
 						`Intl.ListFormat.~locale.${locale}`
 					].join(",")}`}
-				/>
-			</head>
-			<body
-				suppressHydrationWarning
-				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
-				data-platform={platformOverride || undefined}
-			>
-				{/* eslint-disable-next-line react-dom/no-dangerously-set-innerhtml */}
-				<script dangerouslySetInnerHTML={{
-					__html: `const localTheme = JSON.parse(localStorage.getItem(".theme") || \`"system"\`);
-const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-
-const theme = localTheme === "system" ? prefersDark : localTheme;
-const themeStyle = location.pathname.replace(${localePathnameRegex}, "") === ${JSON.stringify(urls.discover("homies"))} ? "friend" : "default";
-
-Object.assign(document.body.dataset, { theme, themeStyle });
-
-const fontSize = JSON.parse(localStorage.getItem(".font_size") || "16") || 16;
-document.documentElement.style.setProperty("font-size", fontSize + "px");`
-				}}
 				/>
 				<Sentry.ErrorBoundary
 					fallback={({ eventId }) => (

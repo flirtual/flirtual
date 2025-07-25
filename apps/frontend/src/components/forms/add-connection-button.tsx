@@ -2,7 +2,7 @@ import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -12,7 +12,6 @@ import {
 } from "~/api/connections";
 import type { ConnectionType } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
-import { useLocation } from "~/hooks/use-location";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 
@@ -52,11 +51,10 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 				onClick={async () => {
 					if (connection) return;
 
-					const url = new URL(location.href);
-					url.search = "";
+					const url = new URL(`${location.pathname}`, window.location.origin);
 
 					if (!native) {
-						return router.push(
+						return navigate(
 							Connection.authorizeUrl({
 								type,
 								prompt: "consent",
@@ -89,7 +87,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 								const next = response.headers.get("location");
 								if (next) navigate(next);
 
-								router.refresh();
+								// router.refresh();
 
 								await InAppBrowser.removeAllListeners();
 								await InAppBrowser.close();
@@ -117,7 +115,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 						await Connection.delete(type)
 							.then(() => {
 								toasts.add(t("removed_connection"));
-								return router.refresh();
+								// router.refresh();
 							})
 							.catch(toasts.addError);
 					}}

@@ -1,5 +1,5 @@
 import { Pencil } from "lucide-react";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import type { MouseEventHandler, PropsWithChildren, RefAttributes } from "react";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";

@@ -1,5 +1,5 @@
 import { fuzzy, search as fuzzySearch } from "fast-fuzzy";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 

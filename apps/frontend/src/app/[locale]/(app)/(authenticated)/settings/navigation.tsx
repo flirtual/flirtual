@@ -20,6 +20,8 @@ import {
 	X
 } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -30,7 +32,7 @@ import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
-import { redirect, useSelectedLayoutSegment } from "~/i18n/navigation";
+import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -42,13 +44,13 @@ export const SettingsNavigation: FC = () => {
 	const { vision } = useDevice();
 
 	const navigate = useNavigate();
-	const locale = useLocale();
-	const layoutSegment = useSelectedLayoutSegment();
+	const [locale] = useLocale();
+	const layoutSegment = null; // TODO: Replace with proper React Router segment detection
 
 	const { openFreshworks } = useFreshworks();
 	const { t } = useTranslation();
 
-	if (user.status === "onboarded") redirect({ href: urls.finish(1), locale });
+	if (user.status === "onboarded") throwRedirect(urls.finish(1));
 
 	return (
 		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
@@ -82,7 +84,7 @@ export const SettingsNavigation: FC = () => {
 									Icon={VenetianMask}
 									onClick={async () => {
 										await Authentication.revokeImpersonate();
-										router.refresh();
+										// router.refresh();
 									}}
 								>
 									{t("unsudo")}

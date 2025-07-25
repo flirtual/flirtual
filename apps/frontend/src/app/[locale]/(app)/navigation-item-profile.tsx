@@ -7,11 +7,11 @@ import {
 	Sparkles,
 	VenetianMask
 } from "lucide-react";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -22,7 +22,6 @@ import { UserAvatar } from "~/components/user-avatar";
 import { closeChangelog, openChangelog } from "~/hooks/use-canny";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useLocation } from "~/hooks/use-location";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
@@ -55,12 +54,12 @@ export const NavigationItemProfile: FC = () => {
 	const { user } = session;
 
 	const { t } = useTranslation();
-	const navigate = useNavigate();
 
 	const [visible, setVisible] = useState(false);
 	const elementReference = useRef<HTMLDivElement>(null);
 	const location = useLocation();
-	const active = urlEqual(toAbsoluteUrl(urls.user.me), location);
+	// const active = urlEqual(toAbsoluteUrl(urls.user.me), location);
+	const active = false; // todo:
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
 	useGlobalEventListener(
@@ -171,7 +170,7 @@ export const NavigationItemProfile: FC = () => {
 								<ProfileNavigationItem
 									onClick={async () => {
 										await Authentication.revokeImpersonate();
-										router.refresh();
+										// router.refresh();
 									}}
 								>
 									<VenetianMask className="size-6 shrink-0" />

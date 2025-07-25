@@ -4,15 +4,21 @@ import { useTranslation } from "react-i18next";
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
 import { ModelCard } from "~/components/model-card";
+import { siteOrigin } from "~/const";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 import { urls } from "~/urls";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+import type { Route } from "./+types/page";
 
-	return {
-		title: t("terms_of_service")
-	};
-}
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("terms_of_service") }
+	]);
+};
 
 export default function TermsPage() {
 	const { t } = useTranslation();
@@ -20,7 +26,7 @@ export default function TermsPage() {
 	return (
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("terms_of_service")}>
 			<div className="flex flex-col gap-4">
-				<MachineTranslatedLegal original={urls.resources.termsOfService} />
+				<MachineTranslatedLegal />
 				{t.rich("committee_trucks_welcome_approval", {
 					section: (children: ReactNode) => (
 						<section className="select-children flex flex-col gap-2">
@@ -54,7 +60,7 @@ export default function TermsPage() {
 						</InlineLink>
 					),
 					ssltest: (children) => (
-						<InlineLink href="https://www.ssllabs.com/ssltest/analyze.html?d=flirtu.al&latest">
+						<InlineLink href={`https://www.ssllabs.com/ssltest/analyze.html?d=${siteOrigin}&latest`}>
 							{children}
 						</InlineLink>
 					)

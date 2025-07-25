@@ -27,7 +27,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	const { t } = useTranslation();
 	const toasts = useToast();
 
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const kind = (query.get("kind") || "love") as ProspectKind;
 
 	const { forward: forwardQueue } = useQueue(kind);

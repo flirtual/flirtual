@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, Search, Trash2 } from "lucide-react";
-import { useFormatter } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
 import { twMerge } from "tailwind-merge";
 
@@ -10,6 +10,7 @@ import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { invalidate, userKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -70,7 +71,6 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 		<UserImage
 			alt=""
 			className={twMerge(className, large && "bg-black-90 object-contain")}
-			fill={large}
 			height={large ? undefined : 512}
 			priority={priority}
 			src={urls.image(image, large ? "full" : "profile")}
@@ -81,18 +81,25 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 
 const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
 	const { t } = useTranslation();
-	const formatter = useFormatter();
+	const [locale] = useLocale();
 
 	const toasts = useToast();
+
+	const formattedUploadTime = new Intl.RelativeTimeFormat(locale).format(
+		Math.round((new Date(image.createdAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+		"day"
+	);
 
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 text-white-20">
 			<span>
-				{t.rich("strong_trite_squid_grasp", {
-					uploaded: formatter.relativeTime(new Date(image.createdAt)),
-					scanned: (!!image.scanned).toString(),
-					bold: (children) => <span className="font-bold">{children}</span>
-				})}
+				<Trans
+					values={{
+						uploaded: formattedUploadTime,
+						scanned: (!!image.scanned).toString()
+					}}
+					i18nKey="strong_trite_squid_grasp"
+				/>
 			</span>
 			<div className="flex gap-4 text-white-20">
 				<Tooltip>

@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import { SelectItemText } from "@radix-ui/react-select";
 import { useMemo } from "react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
 
 import {

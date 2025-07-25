@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { fromEntries } from "remeda";
 
 import { User } from "~/api/user";
@@ -15,13 +16,13 @@ import {
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputCountrySelect } from "~/components/inputs/specialized";
 import {
-	type AttributeTranslation,
+
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useConfig } from "~/hooks/use-config";
 import { useSession } from "~/hooks/use-session";
-import { useNavigate } from "react-router";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -78,7 +79,7 @@ export const Onboarding1Form: FC = () => {
 					await invalidate({ queryKey: sessionKey() });
 				});
 
-				navigate(urls.onboarding(2)));
+				navigate(urls.onboarding(2));
 			}}
 		>
 			{({ FormField }) => (

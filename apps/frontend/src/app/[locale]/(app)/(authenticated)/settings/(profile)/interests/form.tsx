@@ -13,7 +13,7 @@ import {
 	User
 } from "lucide-react";
 import type { Dispatch, FC } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -176,9 +176,7 @@ export const InterestSelectCustomInput: FC<{
 				{t("custom_interests")}
 			</InputLabel>
 			<InputLabelHint className="-mt-2">
-				{t.rich(platform === "apple" ? "wide_shy_loris_gleam" : "born_game_pony_empower", {
-					small: (children) => <small>{children}</small>
-				})}
+				<Trans i18nKey={platform === "apple" ? "wide_shy_loris_gleam" : "born_game_pony_empower"} />
 			</InputLabelHint>
 			<InputAutocomplete
 				supportArbitrary

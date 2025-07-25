@@ -68,7 +68,7 @@ export const NotificationsForm: React.FC = () => {
 
 				toasts.add(t("merry_smart_snake_boil"));
 
-				router.refresh();
+				// router.refresh();
 			}}
 		>
 			{({ FormField }) => (

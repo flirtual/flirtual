@@ -1,7 +1,3 @@
-import {
-	Purchases
-
-} from "@revenuecat/purchases-capacitor";
 import type { PurchasesPackage } from "@revenuecat/purchases-capacitor";
 import {
 	createContext,
@@ -31,7 +27,12 @@ interface PurchaseContext {
 
 const PurchaseContext = createContext<PurchaseContext>({} as PurchaseContext);
 
+async function getPurchaseModule() {
+	return import("@revenuecat/purchases-capacitor");
+}
+
 async function getPackage(revenuecatId: string) {
+	const { Purchases } = await getPurchaseModule();
 	return (await Purchases.getOfferings()).current?.availablePackages.find(
 		(availablePackage) => availablePackage.identifier === revenuecatId
 	);
@@ -51,6 +52,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	useEffect(() => {
 		void (async () => {
 			if (!user?.revenuecatId || !native) return;
+			const { Purchases } = await getPurchaseModule();
 
 			await Purchases.configure({
 				apiKey: platform === "apple" ? rcAppleKey : rcGoogleKey,
@@ -70,6 +72,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					: Subscription.manageUrl();
 			}
 
+			const { Purchases } = await getPurchaseModule();
 			const { customerInfo } = await Purchases.getCustomerInfo();
 
 			if (!planId && customerInfo.managementURL) {
@@ -98,7 +101,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 
 			return Purchases.purchasePackage({ aPackage })
 				.then(() => {
-					router.refresh();
+					// router.refresh();
 					navigate(urls.subscription.success);
 					return null;
 				})
@@ -107,7 +110,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					return null;
 				});
 		},
-		[native, plans, platform, router, toasts]
+		[native, plans, platform, toasts, navigate]
 	);
 
 	return (

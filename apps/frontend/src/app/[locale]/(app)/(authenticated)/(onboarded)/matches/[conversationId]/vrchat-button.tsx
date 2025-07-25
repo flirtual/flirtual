@@ -22,7 +22,7 @@ import { VRChatOutlineIcon } from "~/components/icons/brand/vrchat-outline";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 
-import { VRChatBrowse } from "./vrchat-browse";
+// import { VRChatBrowse } from "./vrchat-browse";
 
 export interface VRChatButtonProps {
 	user: User;
@@ -80,11 +80,11 @@ export const VRChatButton: FC<VRChatButtonProps> = (props) => {
 						<DialogTitle>Send a VRChat invite</DialogTitle>
 					</DialogHeader>
 					<DialogBody>
-						<VRChatBrowse
+						{/* <VRChatBrowse
 							conversationId={conversationId}
 							user={user}
 							onClose={() => setDialogOpen(false)}
-						/>
+						/> */}
 					</DialogBody>
 				</DialogContent>
 			</Dialog>

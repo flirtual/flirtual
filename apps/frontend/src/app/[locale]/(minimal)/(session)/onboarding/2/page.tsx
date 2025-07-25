@@ -1,21 +1,22 @@
 import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";
-import type { Locale } from "~/i18n";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 
+import type { Route } from "./+types/page";
 import { Onboarding2Form } from "./form";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("want_to_meet")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("want_to_meet") }
+	]);
+};
 
-export default function Onboarding2Page({ params }: {
-	params: Promise<{ locale: Locale }>;
-}) {
+export default function Onboarding2Page() {
 	const { t } = useTranslation();
 
 	return (

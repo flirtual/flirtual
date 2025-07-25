@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
-
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { Table, TableBody, TableCell, TableRow } from "~/components/table";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 import { urls } from "~/urls";
+
+import type { Route } from "./+types/page";
 
 const stats = [
 	"dau",
@@ -51,8 +53,9 @@ const stats = [
 	)
 ];
 
-export const metadata: Metadata = {
-	title: "Stats"
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	return metaMerge([...rootMeta(options), { title: "Stats" }]);
 };
 
 export default function StatsPage() {

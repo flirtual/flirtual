@@ -1,17 +1,18 @@
 import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 
 import { FinishProgress } from "../progress";
+import type { Route } from "./+types/page";
 import { Finish3Form } from "./form";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("interests")
-	};
-}
+	return metaMerge([...rootMeta(options), { title: t("interests") }]);
+};
 
 export default function Finish3Page() {
 	const { t } = useTranslation();

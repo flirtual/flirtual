@@ -1,6 +1,6 @@
 import ms from "ms";
 import type { Dispatch, FC, ReactNode } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { withSuspense } from "with-suspense";
 
@@ -17,10 +17,7 @@ import { InlineLink } from "../inline-link";
 
 export const ModerationMessageDialog: FC = withSuspense(() => {
 	const session = useOptionalSession();
-
 	const toasts = useToast();
-	const navigate = useNavigate();
-
 	const { t } = useTranslation();
 
 	if (!session?.user.moderatorMessage) return null;
@@ -31,7 +28,7 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 				User.acknowledgeWarn(session.user.id)
 					.then(() => {
 						toasts.add(t("message_acknowledged"));
-						return router.refresh();
+						// router.refresh();
 					})
 					.catch(toasts.addError)}
 		>
@@ -73,7 +70,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 							await remindMeLater(true);
 
 							navigate(urls.settings.bio);
-							router.refresh();
+							// router.refresh();
 						}}
 					>
 						{t("edit_profile")}
@@ -84,7 +81,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 						size="sm"
 						onClick={async () => {
 							await remindMeLater();
-							router.refresh();
+							// router.refresh();
 						}}
 					>
 						{t("remind_me_later")}
@@ -95,13 +92,15 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 				if (open) return;
 
 				await remindMeLater();
-				router.refresh();
+				// router.refresh();
 			}}
 		>
-			{t.rich("tense_active_gibbon_dare", {
-				link: (children) => <InlineLink href={urls.settings.connections}>{children}</InlineLink>,
-				br: () => <br />
-			})}
+			<Trans
+				components={{
+					link: <InlineLink href={urls.settings.connections} />,
+				}}
+				i18nKey="tense_active_gibbon_dare"
+			/>
 		</TrustAndSafetyDialog>
 	);
 });

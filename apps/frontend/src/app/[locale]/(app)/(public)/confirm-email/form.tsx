@@ -1,9 +1,9 @@
 import type { FC } from "react";
+import { useSearchParams } from "react-router";
 
 import { ModelCard } from "~/components/model-card";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
-import { redirect, useSearchParams } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { ConfirmTokenForm } from "./confirm-token-form";

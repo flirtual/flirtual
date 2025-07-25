@@ -1,13 +1,13 @@
 import { Link, Pencil } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { useShare } from "~/hooks/use-share";
 import { useToast } from "~/hooks/use-toast";
-import { useNavigate } from "react-router";
 import { mutate, sessionKey } from "~/query";
 import { toAbsoluteUrl, urls } from "~/urls";
 
@@ -58,7 +58,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 											setProfileLink(slug);
 
 											await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
-											navigate(urls.profile(slug)));
+											navigate(urls.profile(slug));
 
 											return toasts.add(t("odd_mad_dog_nurture"));
 										})
@@ -68,7 +68,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 								{({ FormField }) => (
 									<div className="flex flex-col gap-2">
 										<div className="flex flex-row items-center gap-1">
-											<FormField className="w-full" name="slug">
+											<FormField name="slug" className="w-full">
 												{(field) => (
 													<InputText
 														{...field.props}

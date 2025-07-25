@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -6,7 +7,6 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
-import { useNavigate } from "react-router";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -28,7 +28,7 @@ export const EmailForm: React.FC = () => {
 				const newUser = await User.updateEmail(user.id, body);
 				await mutate<Session>(sessionKey(), (session) => ({ ...session, user: newUser }));
 
-				navigate(urls.confirmEmail({ to: urls.settings.list()) }));
+				navigate(urls.confirmEmail({ to: urls.settings.list() }));
 			}}
 		>
 			{({ FormField }) => (

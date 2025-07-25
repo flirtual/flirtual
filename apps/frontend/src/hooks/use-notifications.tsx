@@ -10,7 +10,6 @@ import {
 	useMemo
 } from "react";
 import type { PropsWithChildren } from "react";
-import { useNavigate } from "react-router";
 
 import { User } from "~/api/user";
 import { useQuery } from "~/query";
@@ -27,7 +26,6 @@ const NotificationContext = createContext({} as NotificationContext);
 export function NotificationProvider({ children }: PropsWithChildren) {
 	const { platform, native } = useDevice();
 	const session = useOptionalSession();
-	const navigate = useNavigate();
 
 	useQuery({
 		queryKey: ["notifications-reset-count"],
@@ -99,7 +97,6 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 						type: platform === "apple" ? "apns" : "fcm",
 						token: newPushRegistrationId
 					});
-					router.refresh();
 				}
 			);
 

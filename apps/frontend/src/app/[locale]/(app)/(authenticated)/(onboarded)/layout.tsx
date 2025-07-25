@@ -1,17 +1,16 @@
-import type { PropsWithChildren } from "react";
+import { Outlet } from "react-router";
 
 import { useSession } from "~/hooks/use-session";
-import { useLocale } from "~/i18n";
+import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
-export default function OnboardedLayout({ children }: PropsWithChildren) {
+export default function OnboardedLayout() {
 	const { user } = useSession();
-	const [locale] = useLocale();
 
 	if (user.status === "registered")
-		return redirect({ href: urls.onboarding(1), locale });
+		return throwRedirect(urls.onboarding(1));
 	if (user.deactivatedAt)
-		return redirect({ href: urls.settings.deactivateAccount, locale });
+		return throwRedirect(urls.settings.deactivateAccount);
 
-	return <>{children}</>;
+	return <Outlet />;
 }

@@ -1,7 +1,6 @@
 import { MoveLeft } from "lucide-react";
-// eslint-disable-next-line no-restricted-imports
-import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
@@ -16,7 +15,7 @@ import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Finish5Form: React.FC = () => {
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const error = query.get("error") || undefined;
 
 	const { vision } = useDevice();
@@ -57,7 +56,7 @@ export const Finish5Form: React.FC = () => {
 							}
 						}));
 
-						router.push(
+						navigate(
 							user.emailConfirmedAt
 								? urls.discover("dates")
 								: urls.confirmEmail()

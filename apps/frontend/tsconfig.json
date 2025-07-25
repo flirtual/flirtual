@@ -23,8 +23,7 @@
 		"types": [
 			"node",
 			"vite/client",
-			"unplugin-info/client",
-			"unplugin-icons/types/react"
+			"unplugin-info/client"
 		],
 		"strict": true,
 		"noEmit": true,

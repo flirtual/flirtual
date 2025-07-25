@@ -1,17 +1,22 @@
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 import { urls } from "~/urls";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+import type { Route } from "./+types/page";
 
-	return {
-		title: t("privacy_policy")
-	};
-}
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("privacy_policy") }
+	]);
+};
 
 export default function PrivacyPage() {
 	const { t } = useTranslation();
@@ -22,33 +27,19 @@ export default function PrivacyPage() {
 			containerProps={{ className: "gap-4" }}
 			title={t("privacy_policy")}
 		>
-			<MachineTranslatedLegal original={urls.resources.privacyPolicy} />
-			{t.rich("sticks_protect_zinc_explain", {
-				p: (children) => <p className="select-children">{children}</p>,
-				strong: (children) => <strong>{children}</strong>,
-				"settings-privacy": (children) => (
-					<InlineLink href={urls.settings.privacy}>{children}</InlineLink>
-				),
-				"settings-notifications": (children) => (
-					<InlineLink href={urls.settings.notifications}>{children}</InlineLink>
-				),
-				"settings-password": (children) => (
-					<InlineLink href={urls.settings.password}>{children}</InlineLink>
-				),
-				settings: (children) => (
-					<InlineLink href={urls.settings.list()}>{children}</InlineLink>
-				),
-				vulnerability: (children) => (
-					<InlineLink href={urls.resources.vulnerabilityReport}>
-						{children}
-					</InlineLink>
-				),
-				contact: (children) => (
-					<InlineLink href={urls.resources.contactDirect}>
-						{children}
-					</InlineLink>
-				)
-			})}
+			<MachineTranslatedLegal />
+			<Trans
+				components={{
+					p: <p className="select-children" />,
+					"settings-privacy": <InlineLink href={urls.settings.privacy} />,
+					"settings-notifications": <InlineLink href={urls.settings.notifications} />,
+					"settings-password": <InlineLink href={urls.settings.password} />,
+					settings: <InlineLink href={urls.settings.list()} />,
+					vulnerability: <InlineLink href={urls.resources.vulnerabilityReport} />,
+					contact: <InlineLink href={urls.resources.contactDirect} />
+				}}
+				i18nKey="sticks_protect_zinc_explain"
+			/>
 		</ModelCard>
 	);
 }

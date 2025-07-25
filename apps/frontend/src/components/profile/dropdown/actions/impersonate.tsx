@@ -33,14 +33,14 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 						await Authentication.revokeImpersonate();
 
 						toasts.add(t("no_longer_impersonating_name", { name: displayName(user) }));
-						router.refresh();
+						// router.refresh();
 						return;
 					}
 
 					await Authentication.impersonate(user.id);
 
 					toasts.add(t("impersonating_name", { name: displayName(user) }));
-					router.refresh();
+					// router.refresh();
 				}}
 			>
 				<VenetianMask className="size-5" />

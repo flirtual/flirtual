@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -5,7 +6,7 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { HomeIcon } from "~/components/icons/gradient/home";
 import { LoginIcon } from "~/components/icons/gradient/login";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
-import { environment } from "~/const";
+import { development } from "~/const";
 import { device } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
@@ -71,24 +72,31 @@ const NavigationContent: FC = () => {
 	);
 };
 
-export function Navigation() {
+const BuildInformation: FC = () => {
 	const { deviceId, userAgent, native, versions: { commit, version } } = device;
+	const [hidden, setHidden] = useState(false);
+
+	if (hidden) return null;
 
 	return (
-		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col items-center justify-center bg-brand-gradient text-white-20 shadow-brand-1 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
-			{environment === "preview" && (
-				<div className="pointer-events-none absolute bottom-20 flex max-w-lg flex-col items-center justify-center px-4 text-center text-xs opacity-75 desktop:bottom-[unset] desktop:top-24">
-					<span>{deviceId}</span>
-					<span>{userAgent}</span>
-					<span>{`${commit}`}</span>
-					{native && (
-						<span>
-							v
-							{version}
-						</span>
-					)}
-				</div>
+		<button className="absolute bottom-20 right-0 flex max-w-lg flex-col items-end justify-center px-4 py-3 text-right text-xs opacity-75 desktop:bottom-[unset] desktop:top-20" type="button" onClick={() => setHidden(true)}>
+			<span>{deviceId}</span>
+			<span>{userAgent}</span>
+			<span>{`${commit}`}</span>
+			{native && (
+				<span>
+					v
+					{version}
+				</span>
 			)}
+		</button>
+	);
+};
+
+export function Navigation() {
+	return (
+		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col items-center justify-center bg-brand-gradient text-white-20 shadow-brand-1 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
+			{development && <BuildInformation />}
 			<div className="flex size-full items-center justify-evenly gap-4 px-5 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.625rem),0.5rem)] pt-2 font-nunito text-white-20 desktop:w-auto desktop:pb-2">
 				<NavigationContent />
 			</div>

@@ -25,7 +25,7 @@ export const PasswordChangeForm: React.FC = () => {
 			requireChange={["password", "passwordConfirmation", "currentPassword"]}
 			onSubmit={async (body) => {
 				await User.updatePassword(session.user.id, body);
-				router.refresh();
+				// router.refresh();
 			}}
 		>
 			{({ FormField }) => (

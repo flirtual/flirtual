@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { displayName } from "~/api/user";
 import type { User } from "~/api/user";
@@ -17,14 +17,13 @@ export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 			title={t("account_blocked")}
 		>
 			<span>
-				{t.rich("giant_strong_thrush_startle", {
-					name: displayName(user),
-					highlight: (children) => (
-						<span data-mask className="font-semibold">
-							{children}
-						</span>
-					)
-				})}
+				<Trans
+					components={{
+						highlight: <span data-mask className="font-semibold" />
+					}}
+					i18nKey="giant_strong_thrush_startle"
+					values={{ name: displayName(user) }}
+				/>
 			</span>
 			<BlockedActions user={user} />
 		</ModelCard>

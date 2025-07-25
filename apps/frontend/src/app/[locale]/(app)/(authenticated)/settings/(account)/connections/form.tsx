@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
@@ -19,17 +19,17 @@ import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
 
 const ConnectionError: FC = withSuspense(() => {
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const error = query.get("error");
 
-	const tError = useTranslations("errors");
+	const { t } = useTranslation();
 
 	if (!error || error === "access_denied") return null;
 
 	return (
 		<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
-				{tError(error as any)}
+				{t(`errors.${error}` as any)}
 			</span>
 		</div>
 	);
@@ -175,11 +175,7 @@ export const ConnectionsForm: FC = () => {
 									: playlistSubmitted === "other"
 										? (
 												<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
-													{t.rich("main_civil_jaguar_peel", {
-														strong: (children) => (
-															<strong>{children}</strong>
-														)
-													})}
+													<Trans i18nKey="main_civil_jaguar_peel" />
 												</span>
 											)
 										: null}

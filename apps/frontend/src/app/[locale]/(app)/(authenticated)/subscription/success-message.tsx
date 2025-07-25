@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import type React from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 
 import { InlineLink } from "~/components/inline-link";
@@ -27,15 +27,18 @@ export const SuccessMessage: React.FC = () => {
 				</Link>
 			</div>
 			<p>
-				{t.rich("remark_butterfly_sum_seasonal", { contact: (children) => (
-					<InlineLink
-						className="underline"
-						highlight={false}
-						href={urls.resources.contact}
-					>
-						{children}
-					</InlineLink>
-				) })}
+				<Trans
+					components={{
+						contact: (
+							<InlineLink
+								className="underline"
+								highlight={false}
+								href={urls.resources.contact}
+							/>
+						)
+					}}
+					i18nKey="remark_butterfly_sum_seasonal"
+				/>
 			</p>
 		</div>
 	);

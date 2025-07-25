@@ -43,7 +43,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 
 	const toasts = useToast();
 
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const kind = (query.get("kind") || "love") as ProspectKind;
 
 	const { forward: forwardQueue } = useQueue(kind);

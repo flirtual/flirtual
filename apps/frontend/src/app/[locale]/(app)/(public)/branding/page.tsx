@@ -1,20 +1,24 @@
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 import { urls } from "~/urls";
 
+import type { Route } from "./+types/page";
 import { ColorBlock } from "./color-block";
 import { ImageList } from "./image-list";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("branding")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("branding") }
+	]);
+};
 
 export default function BrandingPage() {
 	const { t } = useTranslation();
@@ -26,11 +30,12 @@ export default function BrandingPage() {
 			title={t("branding")}
 		>
 			<p>
-				{t.rich("lime_soft_shad_skip", {
-					contact: (children) => (
-						<InlineLink href={urls.resources.pressEmail}>{children}</InlineLink>
-					)
-				})}
+				<Trans
+					components={{
+						contact: <InlineLink href={urls.resources.pressEmail} />
+					}}
+					i18nKey="lime_soft_shad_skip"
+				/>
 			</p>
 			<div className="flex flex-col gap-4">
 				<span className="text-2xl font-semibold">

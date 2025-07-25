@@ -1,12 +1,17 @@
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
+
+import type { Route } from "./+types/page";
 import { ReactivationForm } from "./form";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("reactivate_account")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("reactivate_account") }
+	]);
+};
 
 export default function SettingsAccountReactivatePage() {
 	return <ReactivationForm />;

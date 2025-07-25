@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useLocale } from "~/i18n";
@@ -16,7 +17,7 @@ export const InputLanguageAutocomplete: React.FC<
 	const tAttribute = useAttributeTranslation();
 
 	const languages = useAttributes("language");
-	const systemLanguage = useLocale();
+	const [systemLanguage] = useLocale();
 	const pinnedLanguage = systemLanguage.split("-")[0];
 
 	const languageNames = useMemo(

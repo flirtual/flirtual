@@ -2,17 +2,23 @@ import { useTranslation } from "react-i18next";
 
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/root";
 import { urls } from "~/urls";
 
+import type { Route } from "./+types/page";
 import { LikesList } from "./list";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("likes_you")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{
+			title: t("likes_you")
+		}
+	]);
+};
 
 export default function LikesPage() {
 	const { t } = useTranslation();
