@@ -189,7 +189,8 @@ defmodule Flirtual.Flag do
   def check_profile_biography(%Profile{biography: biography}, biography), do: :ok
 
   def check_profile_biography(profile, biography) do
-    with :ok <- check_flags(profile.user_id, biography),
+    with biography_text <- biography |> Floki.parse_fragment!() |> Floki.text(),
+         :ok <- check_flags(profile.user_id, biography_text),
          :ok <- check_openai_moderation(profile.user_id, biography),
          :ok <- check_discord_in_biography(profile, biography) do
       :ok
