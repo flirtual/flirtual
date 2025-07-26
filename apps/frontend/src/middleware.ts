@@ -165,7 +165,7 @@ export function middleware(request: NextRequest) {
 		request
 	});
 
-	response.headers.set("content-security-policy", contentSecurityPolicy);
+	response.headers.set("content-security-policy-report-only", contentSecurityPolicy);
 	return response;
 }
 
