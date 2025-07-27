@@ -15,8 +15,6 @@ import {
 	useParams,
 	useRouteLoaderData
 } from "react-router";
-import type { MetaDescriptor } from "react-router";
-import { uniqueBy } from "remeda";
 
 import type { Route } from "./+types/root";
 import { AnalyticsProvider } from "./analytics";
@@ -113,36 +111,40 @@ export function meta({
 
 		{ tagName: "link", rel: "manifest", href: href("/manifest.json") },
 
-		{ tagName: "link", rel: "canonical", hrefLang: locale, href: absoluteUrl(replaceLanguage(pathname, locale as Locale, pathname)).href },
-		{ tagName: "link", rel: "alternate", hrefLang: "x-default", href: absoluteUrl(replaceLanguage(pathname, defaultLocale, pathname)).href },
+		{
+			tagName: "link",
+			key: "canonical",
+			rel: "canonical",
+			hrefLang: locale,
+			href: absoluteUrl(replaceLanguage(pathname, locale as Locale, pathname)).href
+		},
+		{
+			tagName: "link",
+			key: "alternate-default",
+			rel: "alternate",
+			hrefLang: "x-default",
+			href: absoluteUrl(replaceLanguage(pathname, defaultLocale, pathname)).href
+		},
 
 		...locales.map((locale) => {
 			const { href } = absoluteUrl(replaceLanguage(pathname, locale, pathname));
-			return ({ tagName: "link", rel: "alternate", hrefLang: locale, href });
+
+			return ({
+				tagName: "link",
+				key: `alternate-${locale}`,
+				rel: "alternate",
+				hrefLang: locale,
+				href
+			});
 		})
 	];
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export { meta as rootMeta };
-
-// eslint-disable-next-line react-refresh/only-export-components
-export function metaMerge(metas: Array<MetaDescriptor>) {
-	return uniqueBy(metas.reverse(), (meta, index) => {
-		if ("title" in meta && meta.title) return "title";
-		if ("name" in meta && meta.name) return `name:${meta.name}:${"media" in meta ? meta.media : ""}`;
-		if ("property" in meta && meta.property) return `property:${meta.property}:${"media" in meta ? meta.media : ""}`;
-		if ("httpEquiv" in meta && meta.httpEquiv) return `httpEquiv:${meta.httpEquiv}`;
-
-		// Always unique.
-		return index;
-	});
 }
 
 export function Layout({ children }: PropsWithChildren) {
 	let { locale = defaultLocale } = useParams();
 	if (!locales.includes(locale)) locale = defaultLocale;
 
+	console.log(useRouteLoaderData<typeof loader>("root"));
 	const { initialI18nStore = {} } = useRouteLoaderData<typeof loader>("root") || {};
 
 	useTranslateSSR(initialI18nStore, locale);
@@ -165,22 +167,21 @@ export function Layout({ children }: PropsWithChildren) {
 				<script
 					// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
 					dangerouslySetInnerHTML={{
-						__html: `(${(() => {
+						__html: `(${((localePathnameRegex: RegExp, friendsPathname: string) => {
 							const localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`);
 							const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 							const theme = localTheme === "system" ? prefersDark : localTheme;
-							const themeStyle = location.pathname.replace("$0", "") === "$1" ? "friend" : "default";
+							const themeStyle = location.pathname.replace(localePathnameRegex, "") === friendsPathname ? "friend" : "default";
 
 							Object.assign(document.body.dataset, { theme, themeStyle });
 
 							const fontSize = JSON.parse(localStorage.getItem(".font_size") || "16") || 16;
 							document.documentElement.style.setProperty("font-size", `${fontSize}px`);
-						})
-							.toString()
-							.replace(`"$0"`, localePathnameRegex.toString())
-							.replace(`"$1"`, JSON.stringify(urls.discover("homies")))
-						})()`
+						}).toString()})(${[
+							localePathnameRegex,
+							JSON.stringify(urls.discover("homies"))
+						].join(", ")})`
 					}}
 				/>
 				<script

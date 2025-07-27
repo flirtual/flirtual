@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";
 import { defaultLocale, i18n } from "~/i18n";
-import { metaMerge, rootMeta } from "~/root";
+import { metaMerge, rootMeta } from "~/meta";
 
 import type { Route } from "./+types/page";
 import { DeleteForm } from "./form";

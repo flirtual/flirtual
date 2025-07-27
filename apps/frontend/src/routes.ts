@@ -1,6 +1,7 @@
 import {
 	layout as _layout,
 	route as _route,
+	index as _index,
 	prefix
 
 } from "@react-router/dev/routes";
@@ -20,6 +21,10 @@ function layout(file: string, children?: Array<RouteConfigEntry>) {
 	return _layout(`${filePrefix}/${file}/layout.tsx`, children);
 }
 
+function index(file: string) {
+	return _index(`${filePrefix}/${file}/page.tsx`);
+}
+
 function page(path: string, file?: string, children?: Array<RouteConfigEntry>) {
 	return route(path, `${file}/page`, children);
 }
@@ -27,7 +32,8 @@ function page(path: string, file?: string, children?: Array<RouteConfigEntry>) {
 export default [
 	...prefix(":locale?", [
 		layout("(public)", [
-			page("home", "(public)/home"),
+			// index("(public)/home"),
+			page("/home", "(public)/home"),
 			// route("/", "(public)/route"),
 		]),
 		layout("(app)", [

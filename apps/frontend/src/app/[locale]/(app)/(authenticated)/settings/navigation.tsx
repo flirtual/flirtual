@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -31,7 +30,7 @@ import { openFeedback } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
-import { useLocale } from "~/i18n";
+import { mutate, sessionKey } from "~/query";
 import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
@@ -43,8 +42,6 @@ export const SettingsNavigation: FC = () => {
 	const { user, sudoerId } = useSession();
 	const { vision } = useDevice();
 
-	const navigate = useNavigate();
-	const [locale] = useLocale();
 	const layoutSegment = null; // TODO: Replace with proper React Router segment detection
 
 	const { openFreshworks } = useFreshworks();
@@ -83,8 +80,8 @@ export const SettingsNavigation: FC = () => {
 								<NavigationLink
 									Icon={VenetianMask}
 									onClick={async () => {
-										await Authentication.revokeImpersonate();
-										// router.refresh();
+										const session = await Authentication.revokeImpersonate();
+										await mutate(sessionKey(), session);
 									}}
 								>
 									{t("unsudo")}

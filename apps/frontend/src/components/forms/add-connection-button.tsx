@@ -14,6 +14,7 @@ import type { ConnectionType } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { invalidate, sessionKey } from "~/query";
 
 export interface ConnectionButtonProps {
 	type: ConnectionType;
@@ -87,7 +88,7 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 								const next = response.headers.get("location");
 								if (next) navigate(next);
 
-								// router.refresh();
+								await invalidate({ queryKey: sessionKey() });
 
 								await InAppBrowser.removeAllListeners();
 								await InAppBrowser.close();
@@ -113,11 +114,10 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 					type="button"
 					onClick={async () => {
 						await Connection.delete(type)
-							.then(() => {
-								toasts.add(t("removed_connection"));
-								// router.refresh();
-							})
+							.then(() => toasts.add(t("removed_connection")))
 							.catch(toasts.addError);
+
+						await invalidate({ queryKey: sessionKey() });
 					}}
 				>
 					<X className="size-5" />

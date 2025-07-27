@@ -5,7 +5,7 @@ import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { defaultLocale, i18n } from "~/i18n";
-import { metaMerge, rootMeta } from "~/root";
+import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
 import type { Route } from "./+types/page";

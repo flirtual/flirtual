@@ -1,15 +1,26 @@
-import { toAbsoluteUrl, urls } from "~/urls";
+import { absoluteUrl, urls } from "~/urls";
 
 export function loader() {
 	const now = new Date();
 
 	return [
+		["Canonical", absoluteUrl(".well-known/security.txt")],
+		["Expires", new Date(now.getFullYear() + 1, now.getMonth(), 1).toISOString()],
+		"",
 		["Contact", urls.resources.contactDirect],
 		["Contact", urls.resources.vulnerabilityReport],
-		["Expires", new Date(now.getFullYear() + 1, now.getMonth(), 1).toISOString()],
-		["Canonical", toAbsoluteUrl(".well-known/security.txt")],
-		["Policy", toAbsoluteUrl(`${urls.resources.communityGuidelines}#respect-flirtual`)],
+		"",
+		["Policy", absoluteUrl(urls.resources.communityGuidelines)],
 	]
-		.map(([key, value]) => `${key}: ${value}`)
+		.map((line) => {
+			if (!line) return "";
+
+			if (Array.isArray(line)) {
+				const [key, value] = line;
+				return `${key}: ${value}`;
+			}
+
+			return `# ${line}`;
+		})
 		.join("\n");
 }

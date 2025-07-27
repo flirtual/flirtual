@@ -1,5 +1,5 @@
 import { ModelCard } from "~/components/model-card";
-import { metaMerge, rootMeta } from "~/root";
+import { metaMerge, rootMeta } from "~/meta";
 
 import type { Route } from "./+types/page";
 import { ReferralForm } from "./form";

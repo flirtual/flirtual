@@ -1,6 +1,7 @@
 import ms from "ms";
 import type { Dispatch, FC, ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import type { Session } from "react-router";
 import { useNavigate } from "react-router";
 import { withSuspense } from "with-suspense";
 
@@ -8,6 +9,7 @@ import { User } from "~/api/user";
 import { Image } from "~/components/image";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Button } from "../button";
@@ -26,9 +28,9 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 		<TrustAndSafetyDialog
 			onAcknowledge={() =>
 				User.acknowledgeWarn(session.user.id)
-					.then(() => {
-						toasts.add(t("message_acknowledged"));
-						// router.refresh();
+					.then(async () => {
+						const user = await toasts.add(t("message_acknowledged"));
+						await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 					})
 					.catch(toasts.addError)}
 		>
@@ -48,11 +50,12 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 	const remindMeLater = async (quiet: boolean = false) => {
 		if (!session) return;
 
-		await User.update(session.user.id, {
+		const user = await User.update(session.user.id, {
 			tnsDiscordInBiography: new Date(Date.now() + ms("30d")).toISOString()
 		});
 
 		if (!quiet) toasts.add(t("you_will_be_reminded_in_number_days", { number: 30 }));
+		await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 	};
 
 	if (!session?.user.tnsDiscordInBiography || new Date(session?.user.tnsDiscordInBiography).getTime() > Date.now())
@@ -68,9 +71,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 						size="sm"
 						onClick={async () => {
 							await remindMeLater(true);
-
-							navigate(urls.settings.bio);
-							// router.refresh();
+							await navigate(urls.settings.bio);
 						}}
 					>
 						{t("edit_profile")}
@@ -81,7 +82,6 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 						size="sm"
 						onClick={async () => {
 							await remindMeLater();
-							// router.refresh();
 						}}
 					>
 						{t("remind_me_later")}
@@ -90,9 +90,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 			)}
 			onOpenChange={async (open) => {
 				if (open) return;
-
 				await remindMeLater();
-				// router.refresh();
 			}}
 		>
 			<Trans

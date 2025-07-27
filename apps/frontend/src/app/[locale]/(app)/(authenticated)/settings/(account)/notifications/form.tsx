@@ -2,7 +2,6 @@ import { PushNotifications } from "@capacitor/push-notifications";
 import { IOSSettings, NativeSettings } from "capacitor-native-settings";
 import { Mail, Smartphone } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { fromEntries, keys } from "remeda";
 
 import { Preferences } from "~/api/user/preferences";
@@ -13,11 +12,11 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { invalidate, sessionKey } from "~/query";
 
 export const NotificationsForm: React.FC = () => {
 	const { user } = useSession();
 	const toasts = useToast();
-	const navigate = useNavigate();
 	const { native, platform } = useDevice();
 	const { t } = useTranslation();
 
@@ -37,38 +36,25 @@ export const NotificationsForm: React.FC = () => {
 			className="flex flex-col gap-8"
 			onSubmit={async (values) => {
 				await Preferences.updateNotifications(user.id, {
-					email: fromEntries(
-						keys(preferences.emailNotifications).map((key) => [
-							key,
-							values.email.includes(key)
-						])
-					),
-					push: fromEntries(
-						keys(preferences.pushNotifications).map((key) => [
-							key,
-							values.push.includes(key)
-						])
-					)
+					email: fromEntries(keys(preferences.emailNotifications).map((key) => [key, values.email.includes(key)])),
+					push: fromEntries(keys(preferences.pushNotifications).map((key) => [key, values.push.includes(key)]))
 				});
 
 				if (values.push.length > 0 && native) {
 					const { receive } = await PushNotifications.requestPermissions();
 
-					if (receive === "granted") {
+					if (receive === "granted")
 						await PushNotifications.register();
-					}
 					else if (platform === "apple") {
-						toasts.add(t("main_fit_lark_imagine"));
-						await new Promise((resolve) => {
-							setTimeout(resolve, 2000);
-						});
-						NativeSettings.openIOS({ option: IOSSettings.App });
+						await toasts.add(t("main_fit_lark_imagine"));
+						await new Promise((resolve) => setTimeout(resolve, 2000));
+
+						await NativeSettings.openIOS({ option: IOSSettings.App });
 					}
 				}
 
-				toasts.add(t("merry_smart_snake_boil"));
-
-				// router.refresh();
+				await invalidate({ queryKey: sessionKey() });
+				await toasts.add(t("merry_smart_snake_boil"));
 			}}
 		>
 			{({ FormField }) => (
@@ -89,19 +75,19 @@ export const NotificationsForm: React.FC = () => {
 						</Tooltip>
 
 						<div className="flex flex-col gap-2">
-							{[
+							{([
 								"match_notifications",
 								"message_notifications",
 								"weekly_likes_summary",
 								"tips_and_reminders",
 								"product_updates"
-							].map((type) => (
-								<div
+							] as const).map((type) => (
+								<span
 									key={type}
 									className="flex h-8 items-center text-lg leading-4"
 								>
-									{t(type as any)}
-								</div>
+									{t(type)}
+								</span>
 							))}
 						</div>
 

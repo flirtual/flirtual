@@ -2,7 +2,6 @@ import { Loader2, Trash2 } from "lucide-react";
 import { useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -47,7 +46,6 @@ const absMaxAge = 60;
 
 export const MatchmakingForm: FC = () => {
 	const session = useSession();
-	const navigate = useNavigate();
 	const toasts = useToast();
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
@@ -269,10 +267,11 @@ export const MatchmakingForm: FC = () => {
 										onClick={async () => {
 											setPassesPending(true);
 											await Matchmaking.resetPasses()
-												.then(() => {
+												.then(async () => {
 													setPassesPending(false);
 													toasts.add(t("passes_reset"));
-													return // router.refresh();
+
+													return invalidate({ predicate: ({ queryKey }) => queryKey[0] === "query" });
 												})
 												.catch(toasts.addError);
 										}}

@@ -15,7 +15,6 @@ import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
 import { useLocale } from "~/i18n";
-import { resolveTheme } from "~/theme";
 import { urls } from "~/urls";
 import { emptyArray } from "~/utilities";
 
@@ -149,36 +148,29 @@ export const ConversationChatbox: React.FC<
 	const session = useTalkjs();
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
-	const [,,{ sessionTheme }] = useTheme();
+	const [theme] = useTheme();
 	const { native, vision } = useDevice();
 	const { t } = useTranslation();
-	const talkjs_match_message = t("talkjs_match_message");
-	const talkjs_input_placeholder = t("talkjs_input_placeholder");
 	const [locale] = useLocale();
 
 	const chatbox = useMemo(() => {
 		if (!session) return null;
 
-		const dark = resolveTheme(sessionTheme) === "dark";
-		const theme = vision
-			? "vision"
-			: dark
-				? "dark"
-				: "light";
-
 		return session.createChatbox({
 			theme: {
-				name: theme,
+				name: vision
+					? "vision"
+					: theme,
 				custom: {
 					language: locale,
-					matchMessage: talkjs_match_message,
-					inputPlaceholder: talkjs_input_placeholder
+					matchMessage: t("talkjs_match_message"),
+					inputPlaceholder: t("talkjs_input_placeholder")
 				}
 			},
 			messageField: { spellcheck: true, enterSendsMessage: !native },
 			customEmojis
 		} as ChatboxOptions);
-	}, [session, sessionTheme, vision, locale, talkjs_match_message, talkjs_input_placeholder, native]);
+	}, [session, theme, vision, locale, t, native]);
 
 	const conversation = useMemo(() => {
 		if (!session || !conversationId) return null;

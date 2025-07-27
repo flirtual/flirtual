@@ -13,6 +13,7 @@ import { useNavigate } from "react-router";
 
 import { Subscription } from "~/api/subscription";
 import { rcAppleKey, rcGoogleKey } from "~/const";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import { useDevice } from "./use-device";
@@ -100,9 +101,9 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			if (!aPackage) throw new Error("Package not available");
 
 			return Purchases.purchasePackage({ aPackage })
-				.then(() => {
-					// router.refresh();
-					navigate(urls.subscription.success);
+				.then(async () => {
+					await invalidate({ queryKey: sessionKey() });
+					await navigate(urls.subscription.success);
 					return null;
 				})
 				.catch((reason) => {

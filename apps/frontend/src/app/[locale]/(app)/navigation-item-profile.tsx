@@ -11,7 +11,7 @@ import { AnimatePresence, m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -24,7 +24,8 @@ import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
-import { toAbsoluteUrl, urlEqual, urls } from "~/urls";
+import { mutate, sessionKey } from "~/query";
+import { urls } from "~/urls";
 
 type ProfileNavigationItemProps = React.PropsWithChildren<
 	{ className?: string } & (
@@ -169,8 +170,8 @@ export const NavigationItemProfile: FC = () => {
 							{session.sudoerId && (
 								<ProfileNavigationItem
 									onClick={async () => {
-										await Authentication.revokeImpersonate();
-										// router.refresh();
+										const session = await Authentication.revokeImpersonate();
+										await mutate(sessionKey(), session);
 									}}
 								>
 									<VenetianMask className="size-6 shrink-0" />

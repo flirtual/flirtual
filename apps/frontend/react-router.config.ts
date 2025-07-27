@@ -5,6 +5,7 @@ const locales = ["en", "ja"];
 export default {
 	ssr: false,
 	prerender: [
+		// ...locales.map((locale) => `/${locale}`),
 		...[
 			// "/",
 			"/home",
@@ -13,7 +14,20 @@ export default {
 			"/sign-up",
 			"/forgot",
 
-			// "/about",
+			"/about",
+			"/branding",
+			"/debugger",
+			"/download",
+			"/events",
+			"/guidelines",
+			"/guides",
+			// "/guides/mental",
+			"/payments",
+			"/press",
+			"/privacy",
+			"/privacy-20221022",
+			"/terms",
+			"/terms-20230530",
 		]
 			.map((path) => [
 				path,
@@ -21,8 +35,6 @@ export default {
 			])
 			.flat(),
 
-		// Static files, not in public folder.
-		// Keep in sync with routes.ts.
 		"/manifest.json",
 		"/robots.txt",
 		"/pico_authentication.json",
@@ -33,7 +45,7 @@ export default {
 	appDirectory: "src",
 	buildDirectory: "dist",
 	future: {
-		unstable_viteEnvironmentApi: true,
+		// unstable_viteEnvironmentApi: true,
 		unstable_splitRouteModules: "enforce",
 	}
 } satisfies Config;

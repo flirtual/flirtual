@@ -3,6 +3,7 @@ import { Copy } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "~/components/button";
+import { production } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { logout, useOptionalSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
@@ -26,7 +27,7 @@ export const DebugInfo: React.FC = () => {
 
 	const data = JSON.stringify({
 		at: new Date().toISOString(),
-		environment,
+		production,
 		locale,
 		user: session?.user.id || null,
 		sudoerId: session?.sudoerId,

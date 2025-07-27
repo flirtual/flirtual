@@ -1,6 +1,6 @@
-import { cloudflare } from "@cloudflare/vite-plugin";
 import { reactRouter } from "@react-router/dev/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
+import type { PreRenderedChunk } from "rollup";
 import sonda from "sonda/vite";
 import info from "unplugin-info/vite";
 import { defineConfig, loadEnv } from "vite";
@@ -37,6 +37,17 @@ function getModuleIdentifiers(id: string) {
 	};
 }
 
+function getChunkName({ name: _name, facadeModuleId, moduleIds }: PreRenderedChunk) {
+	const moduleId = facadeModuleId || moduleIds.at(-1);
+	const identifiers = moduleId ? getModuleIdentifiers(moduleId) : null;
+
+	const name = (_name.startsWith("chunk")
+		? identifiers?.name
+		: _name) || _name;
+
+	return `static/${name.toLowerCase().replaceAll(/^use|[_.-]/g, "")}.[hash:8].js`;
+}
+
 export default defineConfig(({ mode }) => {
 	const { VITE_ORIGIN: origin } = loadEnv(mode, process.cwd(), "");
 	const { hostname } = new URL(origin);
@@ -50,17 +61,19 @@ export default defineConfig(({ mode }) => {
 		build: {
 			assetsDir: "static",
 			sourcemap: true,
+			minify: true,
+			target: ["chrome106", "edge106", "firefox104", "safari15"],
 			chunkSizeWarningLimit: 100,
 			cssMinify: "lightningcss",
 			rollupOptions: {
 				output: {
 					hashCharacters: "hex",
-					entryFileNames: "static/[name].[hash:8].js",
-					chunkFileNames: "static/[name].[hash:8].js",
+					entryFileNames: getChunkName,
+					chunkFileNames: getChunkName,
 					assetFileNames: "static/[name].[hash:8].[ext]",
 					manualChunks: (id) => {
 						const language = getModuleLanguage(id);
-						if (language) return `language-${language}`;
+						if (language) return `languages/${language}`;
 
 						const identifiers = getModuleIdentifiers(id);
 						if (identifiers) {
@@ -69,7 +82,9 @@ export default defineConfig(({ mode }) => {
 							if (
 								(scope && [
 									"capacitor",
+									"capacitor-community",
 									"capawesome",
+									"capawesome-team",
 									"capgo",
 									"revenuecat",
 									"trapezedev"
@@ -100,11 +115,6 @@ export default defineConfig(({ mode }) => {
 				certDir: "./certificates",
 			}),
 			reactRouter(),
-			cloudflare({
-				experimental: {
-					headersAndRedirectsDevModeSupport: true,
-				}
-			}),
 			// checker({
 			// 	overlay: false,
 			// 	typescript: true,

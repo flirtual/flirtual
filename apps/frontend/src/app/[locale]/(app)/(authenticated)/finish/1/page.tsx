@@ -1,6 +1,6 @@
 import { ModelCard } from "~/components/model-card";
 import { defaultLocale, i18n } from "~/i18n";
-import { metaMerge, rootMeta } from "~/root";
+import { metaMerge, rootMeta } from "~/meta";
 
 import { FinishProgress } from "../progress";
 import type { Route } from "./+types/page";

@@ -4,18 +4,28 @@ import icu from "i18next-icu";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
-import { resolvePath, useLocation, useNavigate } from "react-router";
-import type { Path, To } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-import { log as _log } from "./log";
+import { log as _log } from "../log";
+import {
+	defaultLocale,
+	localeNames,
+	localePathnameRegex,
+	locales,
+	replaceLanguage
+} from "./languages";
+import type { Locale } from "./languages";
 
 const log = _log.extend("i18n");
 
-export const locales = ["en", "ja"] as const;
-export type Locale = (typeof locales)[number];
-
-export const defaultLocale = "en";
-export type DefaultLocale = typeof defaultLocale;
+export {
+	defaultLocale,
+	localeNames,
+	localePathnameRegex,
+	locales,
+	replaceLanguage
+};
+export type { Locale };
 
 export const defaultNamespace = "default";
 export type DefaultNamespace = typeof defaultNamespace;
@@ -29,23 +39,6 @@ declare module "i18next" {
 		resources: Resources;
 	}
 }
-
-// eslint-disable-next-line regexp/no-optional-assertion
-export const localePathnameRegex = new RegExp(`^\/(${locales.join("|")})?(\/|$)?`);
-
-export const localeNames: Record<Locale, string> = {
-	en: "English",
-	// de: "Deutsch",
-	// es: "Español",
-	// fr: "Français",
-	ja: "日本語"// ,
-	// ko: "한국어",
-	// nl: "Nederlands",
-	// pt: "Português",
-	// "pt-BR": "Português (Brasil)",
-	// ru: "Русский",
-	// sv: "Svenska"
-};
 
 export function guessLocale() {
 	const [, maybeLocale] = location.pathname.split("/");
@@ -62,12 +55,13 @@ function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) 
 }
 
 async function load(locale: Locale) {
+	console.log("load(%s)", locale);
 	log("load(%s)", locale);
 
 	// Aries: Keep this in sync with `getModuleLanguage` from `vite.config.ts`.
 	// For performance, we bundle all translations into a single file per locale.
 	const [default_, attributes, uppy] = await Promise.all([
-		import(`../messages/${locale}.json`) as unknown as typeof import("../messages/en.json"),
+		import(`../messages/${locale}.json`) as unknown as typeof import("../../messages/en.json"),
 		import(`../messages/attributes.${locale}.json`)
 			.then(({ default: attributes }) => flat1(attributes)),
 		(async () => {
@@ -80,11 +74,14 @@ async function load(locale: Locale) {
 		})()
 	]);
 
-	return {
+	const resources ={
 		default: default_,
 		attributes,
 		uppy
 	};
+
+	console.log("i18n resources loaded for %s: %O", locale, resources);
+	return resources;
 }
 
 i18n
@@ -101,13 +98,6 @@ i18n
 			escapeValue: false
 		}
 	});
-
-export function replaceLanguage(to: To, locale: Locale | null, relativeTo: string = window.location.pathname): Path {
-	let { pathname, ...path } = resolvePath(to, relativeTo);
-	pathname = pathname.replace(localePathnameRegex, locale ? `/${locale}/` : "/");
-
-	return { ...path, pathname };
-}
 
 export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Promise<void>] {
 	const { i18n } = useTranslation();

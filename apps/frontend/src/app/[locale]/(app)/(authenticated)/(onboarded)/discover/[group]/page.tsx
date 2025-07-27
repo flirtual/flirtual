@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 
 import { defaultLocale, i18n } from "~/i18n";
-import { metaMerge, rootMeta } from "~/root";
+import { metaMerge, rootMeta } from "~/meta";
 
 import type { Route } from "./+types/page";
 import { Queue } from "./queue";

@@ -1,9 +1,10 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 
 import { ModelCard } from "~/components/model-card";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useLocale } from "~/i18n";
+import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { ConfirmTokenForm } from "./confirm-token-form";
@@ -15,13 +16,12 @@ export const ConfirmEmailForm: FC = () => {
 	const to = searchParameters.get("to") || undefined;
 	const token = searchParameters.get("");
 
-	const [locale] = useLocale();
 	const { t } = useTranslation();
 
 	const session = useOptionalSession();
 
-	if (session?.user.emailConfirmedAt && !token) redirect({ href: to ?? urls.discover("dates"), locale });
-	if (!session?.user && !token) redirect({ href: urls.login(to), locale });
+	if (session?.user.emailConfirmedAt && !token) throwRedirect(to ?? urls.discover("dates"));
+	if (!session?.user && !token) throwRedirect(urls.login(to));
 
 	if (token) return <ConfirmTokenForm token={token} />;
 
