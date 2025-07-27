@@ -162,7 +162,7 @@ export const InterestSelectCustomInput: FC<{
 	value: Array<string>;
 	onChange: Dispatch<Array<string>>;
 }> = ({ value, onChange }) => {
-	const { platform } = useDevice();
+	const { apple } = useDevice();
 	const { t } = useTranslation();
 
 	return (
@@ -176,7 +176,7 @@ export const InterestSelectCustomInput: FC<{
 				{t("custom_interests")}
 			</InputLabel>
 			<InputLabelHint className="-mt-2">
-				<Trans i18nKey={platform === "apple" ? "wide_shy_loris_gleam" : "born_game_pony_empower"} />
+				<Trans i18nKey={apple ? "wide_shy_loris_gleam" : "born_game_pony_empower"} />
 			</InputLabelHint>
 			<InputAutocomplete
 				supportArbitrary

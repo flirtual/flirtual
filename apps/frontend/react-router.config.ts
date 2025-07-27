@@ -5,10 +5,10 @@ const locales = ["en", "ja"];
 export default {
 	ssr: false,
 	prerender: [
-		// ...locales.map((locale) => `/${locale}`),
+		...locales.map((locale) => `/${locale}`),
 		...[
 			// "/",
-			"/home",
+			// "/home",
 
 			"/login",
 			"/sign-up",
@@ -30,7 +30,7 @@ export default {
 			"/terms-20230530",
 		]
 			.map((path) => [
-				path,
+				// path,
 				...locales.map((locale) => `/${locale}${path}`)
 			])
 			.flat(),

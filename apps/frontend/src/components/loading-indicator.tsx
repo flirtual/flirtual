@@ -17,7 +17,6 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 	useTimeout(() => setProbablyErrored(true), "5s");
 
 	const { t } = useTranslation();
-	const native = device.native;
 
 	const BrowserIcon = device.platform === "web"
 		? Laptop
@@ -63,14 +62,14 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 									i18nKey="tough_sleek_wasp_reside"
 								/>
 							</li>
-							{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
+							<li>{t("game_vexed_goldfish_dash")}</li>
 							<li>
 								<Trans
 									components={{
 										"browser-icon": <Chrome className="inline-block size-4 shrink-0" />,
 										"device-icon": <BrowserIcon className="inline-block size-4 shrink-0" />
 									}}
-									i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}
+									i18nKey="sweet_strong_poodle_endure"
 								/>
 							</li>
 							<li>
@@ -80,7 +79,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 									onClick={() => location.reload()}
 								>
 									<RotateCw className="mr-1 inline-block size-4 shrink-0" />
-									{t(native ? "refresh_the_app" : "refresh_the_page")}
+									{t("refresh_the_app")}
 								</button>
 							</li>
 							<li>

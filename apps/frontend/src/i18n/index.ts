@@ -1,10 +1,13 @@
 import i18n from "i18next";
-import type { ResourceKey } from "i18next";
+import type { BackendModule, ResourceKey } from "i18next";
 import icu from "i18next-icu";
-import resourcesToBackend from "i18next-resources-to-backend";
 import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router";
+import {
+	useNavigate as _useNavigate,
+	useLocation
+} from "react-router";
+import type { NavigateOptions as _NavigateOptions,	To } from "react-router";
 
 import { log as _log } from "../log";
 import {
@@ -55,14 +58,13 @@ function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) 
 }
 
 async function load(locale: Locale) {
-	console.log("load(%s)", locale);
 	log("load(%s)", locale);
 
 	// Aries: Keep this in sync with `getModuleLanguage` from `vite.config.ts`.
 	// For performance, we bundle all translations into a single file per locale.
 	const [default_, attributes, uppy] = await Promise.all([
-		import(`../messages/${locale}.json`) as unknown as typeof import("../../messages/en.json"),
-		import(`../messages/attributes.${locale}.json`)
+		import(`../../messages/${locale}.json`) as unknown as typeof import("../../messages/en.json"),
+		import(`../../messages/attributes.${locale}.json`)
 			.then(({ default: attributes }) => flat1(attributes)),
 		(async () => {
 			// https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
@@ -74,18 +76,22 @@ async function load(locale: Locale) {
 		})()
 	]);
 
-	const resources ={
+	return {
 		default: default_,
 		attributes,
 		uppy
 	};
-
-	console.log("i18n resources loaded for %s: %O", locale, resources);
-	return resources;
 }
 
 i18n
-	.use(resourcesToBackend(load))
+	.use({
+		type: "backend",
+		init: () => {},
+		read: (language: Locale, namespace, callback) => {
+			if (!locales.includes(language)) throw new Error(`Unknown language: ${language}`);
+			load(language).then((data) => callback(null, (data && data.default) || data));
+		}
+	} satisfies BackendModule)
 	.use(icu)
 	.use(initReactI18next)
 	.init({
@@ -120,6 +126,22 @@ export function useMessages<T extends Namespace = "default">(namespace: T = "def
 	const [locale] = useLocale();
 
 	return i18n.store.data[locale][namespace] as Resources[T];
+}
+
+export type NavigateOptions = _NavigateOptions & { locale?: Locale };
+
+export interface NavigateFunction {
+	(to: To, options?: NavigateOptions): Promise<void> | void;
+	(delta: number): Promise<void> | void;
+}
+
+export function useNavigate() {
+	const navigate = _useNavigate();
+
+	return useCallback<NavigateFunction>((toOrDelta: To | number, { locale, ...options }: NavigateOptions = {}) => {
+		if (typeof toOrDelta === "number") return navigate(toOrDelta);
+		return navigate(replaceLanguage(toOrDelta, locale || defaultLocale), options);
+	}, [navigate]);
 }
 
 export { i18n };

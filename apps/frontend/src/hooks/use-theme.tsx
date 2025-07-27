@@ -6,11 +6,12 @@ import type { PreferenceTheme } from "~/api/user/preferences";
 import { applyDocumentMutations } from "~/document";
 import { getPreferences } from "~/preferences";
 import { mutate, sessionKey, useMutation } from "~/query";
-import type { Theme } from "~/theme";
 
 import { useMediaQuery } from "./use-media-query";
 import { usePreferences } from "./use-preferences";
 import { useOptionalSession } from "./use-session";
+
+export type Theme = "dark" | "light";
 
 export async function getTheme(): Promise<Theme> {
 	const localTheme = await getPreferences<PreferenceTheme>("theme") || "system";

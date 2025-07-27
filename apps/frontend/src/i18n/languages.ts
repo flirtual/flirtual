@@ -1,3 +1,4 @@
+import acceptLanguage from "accept-language";
 import { resolvePath } from "react-router";
 import type { Path, To } from "react-router";
 
@@ -24,7 +25,7 @@ export const localeNames: Record<Locale, string> = {
 	// sv: "Svenska"
 };
 
-export function getLanguage(to: To, relativeTo: string = window.location.pathname): Locale | null {
+export function getLocale(to: To, relativeTo: string = window.location.pathname): Locale | null {
 	const { pathname } = resolvePath(to, relativeTo);
 	const match = pathname.match(localePathnameRegex);
 	if (!match) return null;
@@ -40,4 +41,13 @@ export function replaceLanguage(to: To, locale: Locale | null, relativeTo: strin
 	if (pathname.endsWith("/")) pathname = pathname.slice(0, -1);
 
 	return { ...path, pathname };
+}
+
+acceptLanguage.languages([...locales]);
+
+export function getRecommendedLocale(acceptLanguageHeader: string | null): Locale | null {
+	const language = acceptLanguage.get(acceptLanguageHeader) as Locale | null;
+	if (!language || !locales.includes(language)) return null;
+
+	return language;
 }

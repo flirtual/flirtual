@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, MouseEventHandler } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "~/i18n";
 import { twMerge } from "tailwind-merge";
 
 import { urls } from "~/urls";

@@ -17,7 +17,7 @@ import { invalidate, sessionKey } from "~/query";
 export const NotificationsForm: React.FC = () => {
 	const { user } = useSession();
 	const toasts = useToast();
-	const { native, platform } = useDevice();
+	const { native, apple } = useDevice();
 	const { t } = useTranslation();
 
 	if (!user || !user.preferences) return null;
@@ -45,7 +45,7 @@ export const NotificationsForm: React.FC = () => {
 
 					if (receive === "granted")
 						await PushNotifications.register();
-					else if (platform === "apple") {
+					else if (apple) {
 						await toasts.add(t("main_fit_lark_imagine"));
 						await new Promise((resolve) => setTimeout(resolve, 2000));
 

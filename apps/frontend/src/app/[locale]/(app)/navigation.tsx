@@ -1,13 +1,12 @@
-import { useState } from "react";
 import type { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { BuildInformation } from "~/components/build";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { HomeIcon } from "~/components/icons/gradient/home";
 import { LoginIcon } from "~/components/icons/gradient/login";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { development } from "~/const";
-import { device } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
@@ -69,27 +68,6 @@ const NavigationContent: FC = () => {
 			</NavigationalSwitch>
 			<NavigationItemMessage />
 		</>
-	);
-};
-
-const BuildInformation: FC = () => {
-	const { deviceId, userAgent, native, versions: { commit, version } } = device;
-	const [hidden, setHidden] = useState(false);
-
-	if (hidden) return null;
-
-	return (
-		<button className="absolute bottom-20 right-0 flex max-w-lg flex-col items-end justify-center px-4 py-3 text-right text-xs opacity-75 desktop:bottom-[unset] desktop:top-20" type="button" onClick={() => setHidden(true)}>
-			<span>{deviceId}</span>
-			<span>{userAgent}</span>
-			<span>{`${commit}`}</span>
-			{native && (
-				<span>
-					v
-					{version}
-				</span>
-			)}
-		</button>
 	);
 };
 

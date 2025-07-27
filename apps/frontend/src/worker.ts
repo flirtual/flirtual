@@ -1,23 +1,22 @@
-import { create as createAcceptLanguage } from "accept-language";
 import { env } from "cloudflare:workers";
 import { createPath } from "react-router";
 
-import { defaultLocale, getLanguage, locales, replaceLanguage } from "./i18n/languages";
-import type { Locale } from "./i18n/languages";
-
-const acceptLanguage = createAcceptLanguage();
-acceptLanguage.languages([...locales]);
+import {
+	defaultLocale,
+	getLocale,
+	getRecommendedLocale,
+	replaceLanguage
+} from "./i18n/languages";
 
 export default {
 	async fetch(request): Promise<Response> {
 		const url = new URL(request.url);
 
-		const currentLocale = getLanguage(url.pathname, url.pathname);
+		const currentLocale = getLocale(url.pathname, url.pathname);
 		if (!currentLocale) {
-			let suggestedLanguage = acceptLanguage.get(request.headers.get("accept-language")) as Locale || defaultLocale;
-			if (!locales.includes(suggestedLanguage)) suggestedLanguage = defaultLocale;
+			const recommendedLocale = getRecommendedLocale(request.headers.get("accept-language")) || defaultLocale;
+			const newUrl = new URL(createPath(replaceLanguage(url, recommendedLocale, url.pathname)), url);
 
-			const newUrl = new URL(createPath(replaceLanguage(url, suggestedLanguage, url.pathname)), url);
 			return new Response(null, {
 				status: 301,
 				headers: {

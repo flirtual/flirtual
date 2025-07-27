@@ -15,10 +15,9 @@ export const DebugInfo: React.FC = () => {
 	const {
 		userAgent,
 		operatingSystem,
-		nativePlatform,
 		native,
 		vision,
-		deviceId,
+		id: deviceId,
 		versions,
 	} = useDevice();
 	const [locale] = useLocale();
@@ -34,7 +33,6 @@ export const DebugInfo: React.FC = () => {
 		deviceId,
 		agent: userAgent,
 		operatingSystem,
-		platform: nativePlatform,
 		native,
 		vision,
 		versions

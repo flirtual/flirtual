@@ -58,8 +58,8 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 										<ShieldAlert className="size-4" />
 										<span>
 											{{
-												110500: "Unsupported device."
-											}[error] || "Couldn't verify your device."}
+												110500: t("elegant_actual_ray_buzz")
+											}[error] || t("major_vivid_beetle_support")}
 											{" "}
 											<span className="text-xs opacity-80">
 												{error}

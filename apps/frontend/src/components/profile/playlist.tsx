@@ -2,9 +2,9 @@ import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useTheme } from "~/hooks/use-theme";
+import type { Theme } from "~/hooks/use-theme";
 import type { Locale } from "~/i18n";
 import { useLocale } from "~/i18n";
-import type { Theme } from "~/theme";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const playlistPlatforms = [

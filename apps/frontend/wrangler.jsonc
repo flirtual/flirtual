@@ -1,0 +1,30 @@
+{
+	"$schema": "https://unpkg.com/wrangler@latest/config-schema.json",
+	"name": "flirtual",
+	"workers_dev": false,
+	"main": "src/worker.ts",
+	"compatibility_date": "2025-04-03",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist/client",
+		"not_found_handling": "single-page-application",
+		"html_handling": "drop-trailing-slash",
+		"run_worker_first": [
+			"/*",
+			// Localized pages.
+			"!/en/*",
+			"!/ja/*",
+			// Static assets.
+			"!/static/*",
+			"!/.well-known/*",
+			"!/bimi.svg",
+			"!/browserconfig.xml",
+			"!/manifest.json",
+			"!/mstile-150x150.png",
+			"!/pico_authentication.json",
+			"!/robots.txt",
+			"!/safari-pinned-tab.svg",
+			"!/sitemap.xml"
+		]
+	}
+}

@@ -40,7 +40,7 @@ async function getPackage(revenuecatId: string) {
 }
 
 export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
-	const { platform, native } = useDevice();
+	const { apple, native } = useDevice();
 
 	const toasts = useToast();
 	const navigate = useNavigate();
@@ -56,14 +56,14 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			const { Purchases } = await getPurchaseModule();
 
 			await Purchases.configure({
-				apiKey: platform === "apple" ? rcAppleKey : rcGoogleKey,
+				apiKey: apple ? rcAppleKey : rcGoogleKey,
 				appUserID: user?.revenuecatId
 			});
 
 			const offerings = await Purchases.getOfferings();
 			setPackages(offerings.current?.availablePackages ?? []);
 		})();
-	}, [platform, native, user?.revenuecatId]);
+	}, [apple, native, user?.revenuecatId]);
 
 	const purchase = useCallback(
 		async (planId?: string): Promise<string | null> => {
@@ -86,7 +86,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			if (!plan || !plan.googleId || !plan.appleId || !plan.revenuecatId)
 				throw new Error("Plan not available");
 
-			const productId = platform === "apple" ? plan.appleId : plan.googleId;
+			const productId = apple ? plan.appleId : plan.googleId;
 
 			if (
 				customerInfo.activeSubscriptions.includes(productId)
@@ -111,7 +111,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					return null;
 				});
 		},
-		[native, plans, platform, toasts, navigate]
+		[native, plans, apple, toasts, navigate]
 	);
 
 	return (

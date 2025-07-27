@@ -144,7 +144,6 @@ export function Layout({ children }: PropsWithChildren) {
 	let { locale = defaultLocale } = useParams();
 	if (!locales.includes(locale)) locale = defaultLocale;
 
-	console.log(useRouteLoaderData<typeof loader>("root"));
 	const { initialI18nStore = {} } = useRouteLoaderData<typeof loader>("root") || {};
 
 	useTranslateSSR(initialI18nStore, locale);

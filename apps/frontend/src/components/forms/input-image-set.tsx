@@ -85,7 +85,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	const session = useOptionalSession();
 	const [theme] = useTheme();
-	const { platform, native } = useDevice();
+	const { android, native } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(null);
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
@@ -266,7 +266,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 													theme={theme}
 													uppy={uppy}
 												/>
-												{platform === "android" && native && (
+												{android && native && (
 													<span className="text-sm opacity-75">
 														{t("patchy_flaky_giraffe_dream")}
 													</span>

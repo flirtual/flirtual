@@ -32,7 +32,7 @@ export interface VRChatButtonProps {
 export const VRChatButton: FC<VRChatButtonProps> = (props) => {
 	const { user, conversationId } = props;
 	const [dialogOpen, setDialogOpen] = useState(false);
-	const { platform, vision } = useDevice();
+	const { apple, vision } = useDevice();
 	const session = useOptionalSession();
 
 	return (
@@ -60,7 +60,7 @@ export const VRChatButton: FC<VRChatButtonProps> = (props) => {
 						&& session?.user.tags?.includes("debugger")
 						&& session.user.profile.facetime
 						&& user.profile.facetime
-						&& platform === "apple" && (
+						&& apple && (
 						<DropdownMenuItem asChild>
 							<a
 								className="flex items-center gap-2"

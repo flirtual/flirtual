@@ -6,6 +6,7 @@ import { HydratedRouter } from "react-router/dom";
 
 import { apiOrigin, apiUrl, sentryDsn, sentryEnabled, siteOrigin } from "./const";
 import { applyDocumentMutations } from "./document";
+import { onHydrateComplete } from "./hooks/use-hydrated";
 import { i18n } from "./i18n";
 import { preloadAll, restoreQueries, saveQueries } from "./query";
 import { isRedirectError } from "./redirect";
@@ -51,7 +52,7 @@ App.addListener("appUrlOpen", async (event) => {
 });
 
 startTransition(() => {
-	hydrateRoot(
+	onHydrateComplete(hydrateRoot(
 		document,
 		<StrictMode>
 			<HydratedRouter />
@@ -67,7 +68,7 @@ startTransition(() => {
 			onRecoverableError: (error) => console.error("onRecoverable", error),
 			onUncaughtError: (error) => console.error("onUncaught", error),
 		}
-	);
+	));
 });
 
 i18n.on("loaded", () => {

@@ -1,27 +1,20 @@
-import type {	ComponentProps, ComponentType, DispatchWithoutAction } from "react";
-import { lazy as _lazy,	useEffect,	useState } from "react";
+import type {	ComponentProps, ComponentType } from "react";
+import { lazy as _lazy, use } from "react";
+
+import { hydratePromise } from "./hooks/use-hydrated";
 
 export interface LazyOptions {
 	ssr?: boolean;
 }
 
-export function useHydrated() {
-	const [hydrated, setHydrated] = useState(false);
-	useHydratedCallback(() => setHydrated(true));
+type LoadFunction<T> = (() => Promise<T> | T);
 
-	return hydrated;
-}
-
-export function useHydratedCallback(callback: DispatchWithoutAction) {
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(() => callback(), []);
-}
-
-export function lazy<T extends ComponentType<any>>(load: () => Promise<{ default: T }>, { ssr = false }: LazyOptions = {}) {
-	const LazyComponent = _lazy(load);
+export function lazy<T extends ComponentType<any>>(load: LoadFunction<T>, { ssr = false }: LazyOptions = {}) {
+	const LazyComponent = _lazy(async () => ({ default: await (typeof load === "function" ? load() : load) }));
 	if (ssr) return LazyComponent;
 
-	return (props: ComponentProps<T>) => useHydrated()
-		? <LazyComponent {...props} />
-		: null;
+	return (props: ComponentProps<T>) => {
+		use(hydratePromise);
+		return <LazyComponent {...props} />;
+	};
 }

@@ -1,7 +1,7 @@
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
 
-import { commitIdShort, maintenance } from "~/const";
+import { commitIdShort, maintenance, production } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useInterval } from "~/hooks/use-interval";
 import { useLocale } from "~/i18n";
@@ -46,7 +46,8 @@ export function HavingIssues({ digest }: { digest?: string }) {
 	const reload = () => location.reload();
 
 	// Automatic retry, as eventually, we'll be back online.
-	useInterval(reload, "30s");
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	if (production) useInterval(reload, "30s");
 
 	return (
 		<div className="flex flex-col items-center p-4">

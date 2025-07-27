@@ -1,5 +1,5 @@
 import type { ProfileColors } from "~/api/user/profile";
-import type { Theme } from "~/theme";
+import type { Theme } from "~/hooks/use-theme";
 
 export const defaultProfileColors: Record<Theme, ProfileColors> = {
 	light: {

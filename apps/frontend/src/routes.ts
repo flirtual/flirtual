@@ -1,7 +1,7 @@
 import {
+	index as _index,
 	layout as _layout,
 	route as _route,
-	index as _index,
 	prefix
 
 } from "@react-router/dev/routes";
@@ -30,30 +30,24 @@ function page(path: string, file?: string, children?: Array<RouteConfigEntry>) {
 }
 
 export default [
-	...prefix(":locale?", [
+	...prefix(":locale", [
 		layout("(public)", [
-			// index("(public)/home"),
-			page("/home", "(public)/home"),
+			index("(public)/home"),
+			// page("/home", "(public)/home"),
 			// route("/", "(public)/route"),
 		]),
-		layout("(app)", [
-			layout("(app)/(public)", [
-				page("about", "(app)/(public)/about"),
-				page("branding", "(app)/(public)/branding"),
-				page("confirm-email", "(app)/(public)/confirm-email"),
-				page("debugger", "(app)/(public)/debugger"),
-				page("download", "(app)/(public)/download"),
-				page("events", "(app)/(public)/events"),
-				page("guidelines", "(app)/(public)/guidelines"),
-				page("guides", "(app)/(public)/guides"),
-				page("guides/mental-health", "(app)/(public)/guides/mental-health"),
-				page("payments", "(app)/(public)/payments"),
-				page("press", "(app)/(public)/press"),
-				page("privacy", "(app)/(public)/privacy"),
-				page("privacy-20221022", "(app)/(public)/privacy-20221022"),
-				page("terms", "(app)/(public)/terms"),
-				page("terms-20230530", "(app)/(public)/terms-20230530"),
+		layout("(minimal)", [
+			layout("(minimal)/(guest)", [
+				page("login", "(minimal)/(guest)/login"),
+				page("sign-up", "(minimal)/(guest)/sign-up"),
+				page("forgot", "(minimal)/(guest)/forgot"),
 			]),
+			layout("(minimal)/(session)", [
+				page("onboarding/1", "(minimal)/(session)/onboarding/1"),
+				page("onboarding/2", "(minimal)/(session)/onboarding/2"),
+			])
+		]),
+		layout("(app)", [
 			layout("(app)/(authenticated)", [
 				page("finish/1", "(app)/(authenticated)/finish/1"),
 				page("finish/2", "(app)/(authenticated)/finish/2"),
@@ -99,19 +93,25 @@ export default [
 					page("search", "(app)/(authenticated)/(moderator)/search"),
 				]),
 			]),
-		]),
-		layout("(minimal)", [
-			layout("(minimal)/(guest)", [
-				page("login", "(minimal)/(guest)/login"),
-				page("sign-up", "(minimal)/(guest)/sign-up"),
-				page("forgot", "(minimal)/(guest)/forgot"),
+			layout("(app)/(public)", [
+				page("about", "(app)/(public)/about"),
+				page("branding", "(app)/(public)/branding"),
+				page("confirm-email", "(app)/(public)/confirm-email"),
+				page("debugger", "(app)/(public)/debugger"),
+				page("download", "(app)/(public)/download"),
+				page("events", "(app)/(public)/events"),
+				page("guidelines", "(app)/(public)/guidelines"),
+				page("guides", "(app)/(public)/guides"),
+				page("guides/mental-health", "(app)/(public)/guides/mental-health"),
+				page("payments", "(app)/(public)/payments"),
+				page("press", "(app)/(public)/press"),
+				page("privacy", "(app)/(public)/privacy"),
+				page("privacy-20221022", "(app)/(public)/privacy-20221022"),
+				page("terms", "(app)/(public)/terms"),
+				page("terms-20230530", "(app)/(public)/terms-20230530"),
 			]),
-			layout("(minimal)/(session)", [
-				page("onboarding/1", "(minimal)/(session)/onboarding/1"),
-				page("onboarding/2", "(minimal)/(session)/onboarding/2"),
-			])
 		]),
-		route("*", "not-found"),
+		route("*", "not-found")
 	]),
 
 	// Static files, not in public folder.

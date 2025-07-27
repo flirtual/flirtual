@@ -4,7 +4,6 @@ import {
 
 } from "@capacitor-community/safe-area";
 import type { Config as SafeAreaConfig } from "@capacitor-community/safe-area";
-import { omitBy } from "remeda";
 
 import { device } from "~/hooks/use-device";
 import { getTheme } from "~/hooks/use-theme";
@@ -23,8 +22,8 @@ const safeArea: SafeAreaConfig = {
 export async function applyDocumentMutations() {
 	log("applyDocumentMutations()");
 
-	const { body: element } = document;
-	if (!element.style.getPropertyValue("--safe-area-inset-top")) initializeSafeArea();
+	const { body: { style, dataset } } = document;
+	if (!style.getPropertyValue("--safe-area-inset-top")) initializeSafeArea();
 
 	const [theme, fontSize] = await Promise.all([
 		getTheme(),
@@ -40,11 +39,12 @@ export async function applyDocumentMutations() {
 
 	const { platform, native, vision } = device;
 
-	Object.assign(element.dataset, omitBy({
+	Object.assign(dataset, {
 		theme,
 		themeStyle,
 		platform,
-		native,
-		vision
-	}, (value) => !value));
+	});
+
+	native ? dataset.native = "" : delete dataset.native;
+	vision ? dataset.vision = "" : delete dataset.vision;
 }
