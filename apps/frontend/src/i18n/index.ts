@@ -5,9 +5,12 @@ import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
 import {
 	useNavigate as _useNavigate,
+	createPath,
 	useLocation
 } from "react-router";
-import type { NavigateOptions as _NavigateOptions,	To } from "react-router";
+import type { NavigateOptions as _NavigateOptions, To } from "react-router";
+
+import { server } from "~/const";
 
 import { log as _log } from "../log";
 import {
@@ -144,4 +147,18 @@ export function useNavigate() {
 	}, [navigate]);
 }
 
+export function hideLocale(to: To) {
+	if (!server) history.replaceState(null, "", createPath(replaceLanguage(to, null)));
+}
+
 export { i18n };
+
+// if (!server) {
+// 	const pushState = history.pushState;
+// 	history.pushState = function (data, unused, url) {
+// 		pushState.call(history, data, unused, url);
+//
+// 		// Hide the locale from the URL, if any.
+// 		if (url) history.replaceState(data, unused, createPath(replaceLanguage(url.toString(), null)));
+// 	};
+// }

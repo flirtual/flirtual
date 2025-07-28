@@ -1,4 +1,4 @@
-import { Chrome, Laptop, RotateCw, Smartphone, WifiOff } from "lucide-react";
+import { Chrome, RotateCw, Smartphone, WifiOff } from "lucide-react";
 import { AnimatePresence, m } from "motion/react";
 import { useState } from "react";
 import type { PropsWithChildren } from "react";
@@ -6,7 +6,6 @@ import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
-import { device } from "~/hooks/use-device";
 import { useTimeout } from "~/hooks/use-interval";
 import { urls } from "~/urls";
 
@@ -17,10 +16,6 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 	useTimeout(() => setProbablyErrored(true), "5s");
 
 	const { t } = useTranslation();
-
-	const BrowserIcon = device.platform === "web"
-		? Laptop
-		: Smartphone;
 
 	return (
 		<div className={twMerge("flex min-h-screen w-full flex-col items-center justify-center opacity-75", className)}>
@@ -67,7 +62,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 								<Trans
 									components={{
 										"browser-icon": <Chrome className="inline-block size-4 shrink-0" />,
-										"device-icon": <BrowserIcon className="inline-block size-4 shrink-0" />
+										"device-icon": <Smartphone className="inline-block size-4 shrink-0" />
 									}}
 									i18nKey="sweet_strong_poodle_endure"
 								/>

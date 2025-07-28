@@ -1,20 +1,24 @@
-import type {	ComponentProps, ComponentType } from "react";
-import { lazy as _lazy, use } from "react";
+import type {	ComponentType } from "react";
+import { lazy as _lazy } from "react";
+import { withSuspense } from "with-suspense";
+import type { SuspenseOptions } from "with-suspense";
 
-import { hydratePromise } from "./hooks/use-hydrated";
+import { server } from "./const";
 
-export interface LazyOptions {
+export interface LazyOptions<T> extends SuspenseOptions<T> {
 	ssr?: boolean;
 }
 
 type LoadFunction<T> = (() => Promise<T> | T);
 
-export function lazy<T extends ComponentType<any>>(load: LoadFunction<T>, { ssr = false }: LazyOptions = {}) {
+export function lazy<T extends object>(load: LoadFunction<ComponentType<T>>, { ssr = false, fallback, ...suspenseOptions }: LazyOptions<T> = {}) {
+	const FallbackComponent = typeof fallback === "function" ? fallback : () => fallback;
 	const LazyComponent = _lazy(async () => ({ default: await (typeof load === "function" ? load() : load) }));
-	if (ssr) return LazyComponent;
 
-	return (props: ComponentProps<T>) => {
-		use(hydratePromise);
+	return withSuspense<T>((props) => {
+		if (ssr) return <LazyComponent {...props} />;
+		if (server) return <FallbackComponent {...props} />;
+
 		return <LazyComponent {...props} />;
-	};
+	}, suspenseOptions);
 }

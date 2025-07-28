@@ -1,9 +1,11 @@
 import { Clipboard } from "@capacitor/clipboard";
 import { Copy } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 
 import { Button } from "~/components/button";
-import { production } from "~/const";
+import { commitId, production } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { logout, useOptionalSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
@@ -12,82 +14,50 @@ import { evictQueries, invalidate, restoreQueries, saveQueries } from "~/query";
 export const DebugInfo: React.FC = () => {
 	const { t } = useTranslation();
 
-	const {
-		userAgent,
-		operatingSystem,
-		native,
-		vision,
-		id: deviceId,
-		versions,
-	} = useDevice();
+	const device = useDevice();
 	const [locale] = useLocale();
 
+	const [seeMore, setSeeMore] = useState(false);
 	const session = useOptionalSession();
 
-	const data = JSON.stringify({
+	const data = useMemo(() => JSON.stringify({
 		at: new Date().toISOString(),
 		production,
+		sha: commitId,
 		locale,
 		user: session?.user.id || null,
 		sudoerId: session?.sudoerId,
-		deviceId,
-		agent: userAgent,
-		operatingSystem,
-		native,
-		vision,
-		versions
-	}, null, 2);
+		device
+	}), [device, locale, session?.sudoerId, session?.user.id]);
+
+	const copy = useCallback(() => Clipboard.write({ string: `\`\`\`json\n${data}\n\`\`\`` }), [data]);
 
 	return (
 		<>
 			<p>{t("bad_jumpy_sheep_gasp")}</p>
 			<Button
 				Icon={Copy}
-				onClick={() => Clipboard.write({ string: data })}
+				onClick={copy}
 			>
 				{t("copy")}
 			</Button>
-			<code className="select-text overflow-auto whitespace-pre-wrap text-xs">
+			<code
+				className={twMerge("cursor-pointer select-none overflow-auto whitespace-pre-wrap break-all text-left text-xs opacity-75", !seeMore && "line-clamp-3")}
+				onClick={() => {
+					setSeeMore(!seeMore);
+					copy();
+				}}
+			>
 				{data}
 			</code>
-			<p>
-				Internal tools, avoid touching this unless you know what you're doing. You may break something.
-			</p>
-			<div className="flex flex-wrap gap-2">
-				<Button
-					className="bg-red-500"
-					size="xs"
-					onClick={() => saveQueries()}
-				>
-					Save queries
-				</Button>
-				<Button
-					className="bg-red-500"
-					size="xs"
-					onClick={() => restoreQueries()}
-				>
-					Restore queries
-				</Button>
-				<Button
-					className="bg-red-500"
-					size="xs"
-					onClick={() => evictQueries()}
-				>
-					Evict queries
-				</Button>
-				<Button
-					className="bg-red-500"
-					size="xs"
-					onClick={() => invalidate()}
-				>
-					Invalidate queries
-				</Button>
+			<div className="grid grid-cols-3 gap-2">
+				<span className="col-span-3 font-semibold">App</span>
 				<Button
 					className="bg-red-500"
 					size="xs"
 					onClick={() => window.location.reload()}
 				>
-					Reload app
+					Reload
 				</Button>
 				<Button
 					className="bg-red-500"
@@ -95,6 +65,38 @@ export const DebugInfo: React.FC = () => {
 					onClick={() => logout()}
 				>
 					Logout
+				</Button>
+				<span className="col-span-3 font-semibold">Cache</span>
+				<Button
+					className="bg-red-500"
+					size="xs"
+					onClick={() => saveQueries()}
+				>
+					Write
+				</Button>
+				<Button
+					className="bg-red-500"
+					size="xs"
+					onClick={() => restoreQueries()}
+				>
+					Restore
+				</Button>
+				<Button
+					className="bg-red-500"
+					size="xs"
+					onClick={async () => {
+						await evictQueries();
+						await invalidate();
+					}}
+				>
+					Clear
+				</Button>
+				<Button
+					className="bg-red-500"
+					size="xs"
+					onClick={() => invalidate()}
+				>
+					Invalidate
 				</Button>
 			</div>
 		</>

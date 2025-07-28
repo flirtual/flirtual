@@ -2,12 +2,9 @@ import type { AppInfo } from "@capacitor/app";
 import { App } from "@capacitor/app";
 import type { DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
-import { use } from "react";
 
 import { client, nativeOverride, platformOverride, server } from "~/const";
 import { log as _log } from "~/log";
-
-import { hydratePromise } from "./use-hydrated";
 
 export type DevicePlatform = "android" | "apple" | "web";
 
@@ -84,14 +81,15 @@ const safeKeys = [
 	nativeOverride && "native"
 ].filter(Boolean);
 
-export const device = server
-	? new Proxy(_device, {
-		get: (device, property) => {
-			if (safeKeys.includes(String(property))) return Reflect.get(device, property);
-			throw new Error(`"device.${String(property)}" cannot be accessed on the server, as it relies on the client environment.`);
-		}
-	})
-	: _device;
+export const device = _device;
+// export const device = server
+// 	? new Proxy(_device, {
+// 		get: (device, property) => {
+// 			if (safeKeys.includes(String(property))) return Reflect.get(device, property);
+// 			throw new Error(`"device.${String(property)}" cannot be accessed on the server, as it relies on the client environment.`);
+// 		}
+// 	})
+// 	: _device;
 
 export type Device = typeof device;
 
@@ -100,13 +98,5 @@ if (client)
 
 // eslint-disable-next-line react-hooks-extra/no-unnecessary-use-prefix
 export function useDevice() {
-	return new Proxy(device, {
-		get: (device, property) => {
-			if (safeKeys.includes(String(property))) return Reflect.get(device, property);
-
-			// eslint-disable-next-line react-hooks/rules-of-hooks
-			use(hydratePromise);
-			return Reflect.get(device, property);
-		}
-	});
+	return device;
 }
