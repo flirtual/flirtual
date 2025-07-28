@@ -1,28 +1,27 @@
-"use client";
-
 import { Hash, X } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
 import type { CSSProperties, Dispatch, FC } from "react";
 import { useEffect, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
+import { Trans, useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
 import { PreferenceThemes } from "~/api/user/preferences";
-import { Profile, type ProfileColors } from "~/api/user/profile";
-import { applyDocumentMutations } from "~/app/[locale]/lazy-layout";
+import { Profile } from "~/api/user/profile";
+import type { ProfileColors } from "~/api/user/profile";
 import { NewBadge, PremiumBadge } from "~/components/badge";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
+import { applyDocumentMutations } from "~/document";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useEventListener, useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
-import { useRouter } from "~/i18n/navigation";
-import { defaultLocale } from "~/i18n/routing";
+import { defaultLocale, useLocale } from "~/i18n";
 import { mutate, sessionKey, useMutation } from "~/query";
 import { urls } from "~/urls";
 
@@ -68,7 +67,7 @@ export const InputColor: FC<{ value: string; onChange: Dispatch<string> }> = ({ 
 const ProfileColorSelect: FC = () => {
 	const [theme] = useTheme();
 	const { user } = useSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const defaultColors = defaultProfileColors[theme];
 	const colors: ProfileColors = (user.profile as unknown as { previewColors: ProfileColors }).previewColors || {
@@ -131,7 +130,7 @@ const ProfileColorSelect: FC = () => {
 		});
 	}, [reset]);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<div className="flex w-full flex-col gap-8">
@@ -182,8 +181,8 @@ const ProfileColorSelect: FC = () => {
 					...recommendedThemes
 				].map((theme) => (
 					<button
-						className="relative flex flex-col"
 						key={theme.name}
+						className="relative flex flex-col"
 						type="button"
 						onClick={async () => {
 							if (theme.name === "touch_grass") {
@@ -193,7 +192,7 @@ const ProfileColorSelect: FC = () => {
 										await new Promise((resolve) => {
 											setTimeout(resolve, 800);
 										});
-										router.push(urls.settings.fun);
+										navigate(urls.settings.fun);
 									}
 									setGrassTouched(grassTouched + 1);
 								}
@@ -240,7 +239,6 @@ const ProfileColorSelect: FC = () => {
 	);
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const defaultFontSize = 16;
 const fontSizeNamed = {
 	12: "tiny",
@@ -259,7 +257,7 @@ const InputFontSize: FC = () => {
 	const [fontSize, setFontSize] = usePreferences<FontSize>("font_size", defaultFontSize);
 	const namedSize = fontSizeNamed[fontSize] as NamedFontSize;
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	// workaround for https://github.com/radix-ui/primitives/issues/1760
 	useGlobalEventListener("document", "pointerup", applyDocumentMutations);
@@ -297,9 +295,9 @@ const InputFontSize: FC = () => {
 };
 
 export const AppearanceForm: FC = () => {
-	const locale = useLocale();
+	const [locale] = useLocale();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	return (
@@ -309,18 +307,13 @@ export const AppearanceForm: FC = () => {
 					inline
 					hint={(
 						<InputLabelHint>
-							{t.rich(locale === defaultLocale
-								? "help_translate_others"
-								: "help_translate", {
-								language: tAttribute[locale]?.name || locale,
-								link: (children) => (
-									<InlineLink
-										href={`https://hosted.weblate.org/projects/flirtual/flirtual/${locale === defaultLocale ? "" : locale}`}
-									>
-										{children}
-									</InlineLink>
-								)
-							})}
+							<Trans
+								components={{
+									link: <InlineLink href={`https://hosted.weblate.org/projects/flirtual/flirtual/${locale === defaultLocale ? "" : locale}`} />
+								}}
+								i18nKey={locale === defaultLocale ? "help_translate_others" : "help_translate"}
+								values={{ language: tAttribute[locale]?.name || locale }}
+							/>
 						</InputLabelHint>
 					)}
 				>

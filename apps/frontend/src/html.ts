@@ -1,6 +1,7 @@
 import type { PropertiesHyphen, Property } from "csstype";
 import { entries } from "remeda";
-import sanitizeHtml, { type Attributes } from "sanitize-html";
+import sanitizeHtml from "sanitize-html";
+import type { Attributes } from "sanitize-html";
 
 import { rgb } from "./colors";
 import { siteOrigin } from "./const";

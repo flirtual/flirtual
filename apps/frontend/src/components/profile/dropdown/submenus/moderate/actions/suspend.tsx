@@ -1,6 +1,8 @@
 import { Gavel, Languages } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import { type FC, type PropsWithChildren, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
 import type { ProspectKind } from "~/api/matchmaking";
@@ -26,18 +28,18 @@ import {
 } from "~/hooks/use-attribute";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
-import { useSearchParams } from "~/i18n/navigation";
+import { useLocale } from "~/i18n";
 import { mutate, userKey } from "~/query";
 
 const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {
 	const toasts = useToast();
 
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const kind = (query.get("kind") || "love") as ProspectKind;
 
 	const { forward: forwardQueue } = useQueue(kind);
 
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const languageNames = useMemo(
 		() => new Intl.DisplayNames(locale, { type: "language" }),
@@ -46,7 +48,7 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 
 	const reasons = useAttributes("ban-reason");
 	const defaultReason = reasons[0] as string;
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation("ban-reason");
 
 	const [open, setOpen] = useState(false);
@@ -152,7 +154,7 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 									)}
 								</FormField>
 								{message.props.value !== tAttribute[reasonId.props.value]?.details
-								&& user.preferences?.language && user.preferences?.language !== locale && (
+									&& user.preferences?.language && user.preferences?.language !== locale && (
 									<div className="flex flex-col gap-4">
 										<FormMessage size="sm" type="warning">
 											Custom messages are not automatically translated.

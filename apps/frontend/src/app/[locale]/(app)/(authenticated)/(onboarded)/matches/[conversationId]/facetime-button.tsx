@@ -1,5 +1,3 @@
-"use client";
-
 import type { FC } from "react";
 
 import type { User } from "~/api/user";
@@ -14,11 +12,12 @@ export interface FaceTimeButtonProps {
 
 export const FaceTimeButton: FC<FaceTimeButtonProps> = (props) => {
 	const { user } = props;
-	const { platform, vision } = useDevice();
+	const { apple, vision } = useDevice();
 	const session = useOptionalSession();
 
 	if (
-		!vision
+		!apple
+		|| !vision
 		|| !session?.user.tags?.includes("debugger")
 		|| !session.user.profile.facetime
 		|| !user.profile.facetime
@@ -26,17 +25,13 @@ export const FaceTimeButton: FC<FaceTimeButtonProps> = (props) => {
 		return null;
 
 	return (
-		<>
-			{platform === "apple" && (
-				<ButtonLink
-					className="bg-[#0ebe2c]"
-					href={`facetime://${user.profile.facetime}`}
-					Icon={FaceTimeIcon}
-					size="sm"
-				>
-					FaceTime
-				</ButtonLink>
-			)}
-		</>
+		<ButtonLink
+			className="bg-[#0ebe2c]"
+			href={`facetime://${user.profile.facetime}`}
+			Icon={FaceTimeIcon}
+			size="sm"
+		>
+			FaceTime
+		</ButtonLink>
 	);
 };

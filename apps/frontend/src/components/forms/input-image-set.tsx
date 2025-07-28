@@ -1,22 +1,21 @@
-"use client";
-
 import AwsS3 from "@uppy/aws-s3";
 import Compressor from "@uppy/compressor";
-import Uppy, { type UppyFile } from "@uppy/core";
+import Uppy from "@uppy/core";
+import type { UppyFile } from "@uppy/core";
 import DropTarget from "@uppy/drop-target";
 import GoldenRetriever from "@uppy/golden-retriever";
 import ImageEditor from "@uppy/image-editor";
 import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
 import RemoteSources from "@uppy/remote-sources";
 import { ImagePlus } from "lucide-react";
-import { useMessages, useTranslations } from "next-intl";
 import {
-	type Dispatch,
-	type FC,
+
 	useCallback,
 	useEffect,
 	useState
 } from "react";
+import type { Dispatch, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -24,6 +23,7 @@ import { uppyCompanionUrl } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
+import { useMessages } from "~/i18n";
 import { urls } from "~/urls";
 
 import {
@@ -85,13 +85,13 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 
 	const session = useOptionalSession();
 	const [theme] = useTheme();
-	const { platform, native } = useDevice();
+	const { android, native } = useDevice();
 	const [uppy, setUppy] = useState<Uppy<UppyfileMeta, UppyfileData> | null>(null);
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
-	const { uppy: uppyLocale } = useMessages() as { uppy: Record<string, string> };
-	const t = useTranslations();
+	const { t } = useTranslation();
+	const uppyLocale = useMessages("uppy");
 
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
@@ -223,8 +223,8 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 						? (
 								<SortableItem id={image.id} key={image.id}>
 									<ArrangeableImage
-										className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
 										id={image.id}
+										className={max && (imageIndex + 1 > max) ? "opacity-25" : ""}
 										src={image.src}
 										onDelete={() => {
 											onChange?.(value.filter((_, index) => imageIndex !== index));
@@ -234,7 +234,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 								</SortableItem>
 							)
 						: (
-								<div className="m-auto" key={image.id}>
+								<div key={image.id} className="m-auto">
 									{image.id.split("-").pop()}
 								</div>
 							)
@@ -266,7 +266,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 													theme={theme}
 													uppy={uppy}
 												/>
-												{platform === "android" && native && (
+												{android && native && (
 													<span className="text-sm opacity-75">
 														{t("patchy_flaky_giraffe_dream")}
 													</span>
@@ -323,13 +323,12 @@ const ArrangeableImageDialog: React.FC<{
 	image: ImageSetValue;
 	onOpenChange: Dispatch<boolean>;
 }> = ({ image, onOpenChange }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Dialog open onOpenChange={onOpenChange}>
 			<DialogContent className="pointer-events-none w-fit max-w-[95svw] overflow-hidden p-0 desktop:max-w-[95svw]">
 				<UserImage
-					fill
 					alt={t("profile_picture")}
 					className="!relative mx-auto aspect-auto !size-auto max-h-[80vh] rounded-[1.25rem] object-cover"
 					src={image.fullSrc}

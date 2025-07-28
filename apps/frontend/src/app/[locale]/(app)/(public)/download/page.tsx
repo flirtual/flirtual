@@ -1,25 +1,23 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { useTranslation } from "react-i18next";
 
 import { DownloadButton } from "~/components/download-button";
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+import type { Route } from "./+types/page";
 
-	return {
-		title: t("download")
-	};
-}
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-export default function DownloadPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("download") }
+	]);
+};
 
-	const t = useTranslations();
+export default function DownloadPage() {
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("download")}>

@@ -1,7 +1,7 @@
-/* eslint-disable react/prefer-destructuring-assignment */
 import { Pencil, Plus, X } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { type Dispatch, type FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { Dispatch, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { groupBy, prop, uniqueBy } from "remeda";
 
 import type { ProfilePrompt } from "~/api/user/profile";
@@ -38,7 +38,7 @@ const EditPromptDialog: FC<{
 	const filteredPrompts = useAttributes("prompt").filter(
 		(promptId) => !excludedPrompts?.includes(promptId)
 	);
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	return (
@@ -113,7 +113,7 @@ interface InputPromptsProps {
 export const InputPrompts: FC<InputPromptsProps> = (props) => {
 	const [promptDialogOpen, setPromptDialogOpen] = useState(false);
 	const [editingPrompt, setEditingPrompt] = useState<string | null>(null);
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	return (

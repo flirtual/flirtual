@@ -1,6 +1,7 @@
 import { AlertCircle, AlertTriangle, Check, Info } from "lucide-react";
-import { motion } from "motion/react";
-import { type FC, type PropsWithChildren, useLayoutEffect, useRef } from "react";
+import { m } from "motion/react";
+import { useLayoutEffect, useRef } from "react";
+import type { FC, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useFormContext } from "~/hooks/use-input-form";
@@ -58,7 +59,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 	}, [children, submitCount]);
 
 	return (
-		<motion.div
+		<m.div
 			className={twMerge(
 				"motion-preset-rebound select-children flex gap-2 font-nunito motion-duration-200",
 				formMessageStyle[type],
@@ -72,7 +73,7 @@ export const FormMessage: FC<FormMessageProps> = (props) => {
 		>
 			<Icon className={twMerge("shrink-0", formMessageIconSize[size])} />
 			<span>{children}</span>
-		</motion.div>
+		</m.div>
 	);
 };
 

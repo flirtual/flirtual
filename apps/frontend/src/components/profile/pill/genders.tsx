@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { indexBy, prop } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -30,7 +28,7 @@ export const GenderPills: FC<GenderPillsProps> = ({
 	const genders = useAttributes("gender");
 	const keyedGenders = indexBy(genders, prop("id"));
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const tAttributes = useAttributeTranslation("gender");
 

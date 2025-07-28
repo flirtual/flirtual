@@ -1,9 +1,7 @@
-"use client";
-
 import { ChevronLeft, ChevronRight, Search, Trash2 } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type React from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
 import { twMerge } from "tailwind-merge";
 
@@ -12,6 +10,7 @@ import { notFoundImage, ProfileImage } from "~/api/user/profile/images";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useLocale } from "~/i18n";
 import { invalidate, userKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -72,7 +71,6 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 		<UserImage
 			alt=""
 			className={twMerge(className, large && "bg-black-90 object-contain")}
-			fill={large}
 			height={large ? undefined : 512}
 			priority={priority}
 			src={urls.image(image, large ? "full" : "profile")}
@@ -82,19 +80,26 @@ const SingleImage: React.FC<SingleImageProps> = (props) => {
 };
 
 const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, user }) => {
-	const t = useTranslations();
-	const formatter = useFormatter();
+	const { t } = useTranslation();
+	const [locale] = useLocale();
 
 	const toasts = useToast();
+
+	const formattedUploadTime = new Intl.RelativeTimeFormat(locale).format(
+		Math.round((new Date(image.createdAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+		"day"
+	);
 
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 text-white-20">
 			<span>
-				{t.rich("strong_trite_squid_grasp", {
-					uploaded: formatter.relativeTime(new Date(image.createdAt)),
-					scanned: (!!image.scanned).toString(),
-					bold: (children) => <span className="font-bold">{children}</span>
-				})}
+				<Trans
+					values={{
+						uploaded: formattedUploadTime,
+						scanned: (!!image.scanned).toString()
+					}}
+					i18nKey="strong_trite_squid_grasp"
+				/>
 			</span>
 			<div className="flex gap-4 text-white-20">
 				<Tooltip>
@@ -139,7 +144,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [imageId, setImageId] = useState(firstImageId);
 	useEffect(() => setImageId(firstImageId), [firstImageId]);
@@ -209,22 +214,22 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 					? (
 							images.map((image, imageIndex) => (
 								<SingleImage
+									key={image.id}
 									className={twMerge(
 										"size-full transition-opacity duration-300",
 										image.id === imageId ? "opacity-100" : "absolute opacity-0"
 									)}
 									image={image}
-									key={image.id}
 									priority={imageIndex === 0}
 								/>
 							))
 						)
 					: (
 							<SingleImage
+								key={notFoundImage.id}
 								priority
 								className={twMerge("size-full")}
 								image={notFoundImage}
-								key={notFoundImage.id}
 							/>
 						)}
 				{currentImage && (
@@ -295,8 +300,8 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 							<div className="-mx-1 flex grow items-center">
 								{images.map((image) => (
 									<button
-										className="group grow px-1 py-6 pt-[max(var(--safe-area-inset-top,0rem),1.5rem)]"
 										key={image.id}
+										className="group grow px-1 py-6 pt-[max(var(--safe-area-inset-top,0rem),1.5rem)]"
 										type="button"
 										onClick={() => set(0, image.id)}
 									>

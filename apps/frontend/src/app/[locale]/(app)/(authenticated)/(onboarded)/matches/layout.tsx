@@ -1,28 +1,26 @@
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { type PropsWithChildren, use } from "react";
+import type { PropsWithChildren } from "react";
 
-import { ButtonLink } from "~/components/button";
-import { InlineLink } from "~/components/inline-link";
-import { ModelCard } from "~/components/model-card";
-import { urls } from "~/urls";
-
-import { LikesYouButton } from "./likes-you-button";
+// import { useTranslation } from "react-i18next";
+//
+// import { ButtonLink } from "~/components/button";
+// import { InlineLink } from "~/components/inline-link";
+// import { ModelCard } from "~/components/model-card";
+import type { Locale } from "~/i18n";
+// import { urls } from "~/urls";
+//
+// import { LikesYouButton } from "./likes-you-button";
 
 export default function ConversationsLayout({
-	params,
+	// params,
 	children
 }: PropsWithChildren<{ params: Promise<{ locale: Locale }> }>) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
 	// const { data: conversations } = useConversations();
-	const t = useTranslations();
+	// const { t } = useTranslation();
 
 	// TODO:
 	return children;
 
+	/*
 	return (
 		<>
 			{conversations.length === 0
@@ -53,5 +51,5 @@ export default function ConversationsLayout({
 					)
 				: children}
 		</>
-	);
+	); */
 }

@@ -1,20 +1,16 @@
-/* eslint-disable react/prefer-destructuring-assignment */
-"use client";
-
 import { DatetimePicker } from "@capawesome-team/capacitor-datetime-picker";
 import { useCallback, useRef, useState } from "react";
 
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useDevice } from "~/hooks/use-device";
 import { useTheme } from "~/hooks/use-theme";
-import { resolveTheme } from "~/theme";
 
 import { Popover } from "../popover";
 import {
-	InputCalendar,
-	type InputCalendarProps,
-	type MinmaxDate
+	InputCalendar
+
 } from "./calendar";
+import type { InputCalendarProps, MinmaxDate } from "./calendar";
 import { InputText } from "./text";
 
 /**
@@ -170,7 +166,7 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 	max
 }) => {
 	const [selectedDate, setSelectedDate] = useState(value);
-	const [,,{ sessionTheme }] = useTheme();
+	const [theme] = useTheme();
 
 	const openDatePicker = async () => {
 		try {
@@ -178,7 +174,7 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 				mode: "date",
 				locale: "en-US",
 				value: selectedDate.toISOString(),
-				theme: resolveTheme(sessionTheme),
+				theme,
 				min:
 					min && (min === "now" ? new Date().toISOString() : min.toISOString()),
 				max:

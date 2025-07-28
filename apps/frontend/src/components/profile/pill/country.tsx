@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element, react-refresh/only-export-components  */
 
-import { useLocale } from "next-intl";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useAttributeTranslation } from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 
 import { Pill } from "./pill";
 
@@ -31,7 +31,7 @@ export const CountryPill: FC<CountryPillProps> = ({
 	className
 }) => {
 	const tAttribute = useAttributeTranslation();
-	const locale = useLocale();
+	const [locale] = useLocale();
 	const countryName = tAttribute[id.toUpperCase()]?.name ?? getCountryName(locale, id) ?? id;
 
 	return (

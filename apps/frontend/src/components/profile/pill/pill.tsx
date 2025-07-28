@@ -1,7 +1,5 @@
-"use client";
-
 import { Pencil } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import type { MouseEventHandler, PropsWithChildren, RefAttributes } from "react";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -59,7 +57,7 @@ export function Pill(props: PillProps) {
 				onPointerLeave={() => setHocused(false)}
 			>
 				{Icon && <Icon className="h-4" />}
-				<motion.div
+				<m.div
 					data-block
 					animate={
 						href && hocused ? { marginRight: "1.5rem" } : { marginRight: 0 }
@@ -69,9 +67,9 @@ export function Pill(props: PillProps) {
 					transition={{ type: "tween" }}
 				>
 					{children}
-				</motion.div>
+				</m.div>
 				{href && hocused && (
-					<motion.div
+					<m.div
 						animate={{ opacity: 1 }}
 						className="absolute right-0 pr-4"
 						exit={{ opacity: 0 }}
@@ -79,7 +77,7 @@ export function Pill(props: PillProps) {
 						transition={{ type: "spring" }}
 					>
 						<Pencil className=" size-4" />
-					</motion.div>
+					</m.div>
 				)}
 			</Component>
 		</AnimatePresence>

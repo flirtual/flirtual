@@ -1,16 +1,11 @@
-import { useTranslations } from "next-intl";
 import {
-	type ComponentProps,
-	type EventHandler,
-	type FC,
-	type FocusEvent,
-	type KeyboardEvent,
-	type MouseEvent,
-	type SyntheticEvent,
+
 	useCallback,
 	useEffect,
 	useRef
 } from "react";
+import type { ComponentProps, EventHandler, FC, FocusEvent, KeyboardEvent, MouseEvent, SyntheticEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineLink } from "../inline-link";
@@ -86,7 +81,7 @@ function focusElementByKeydown({
 
 export const DefaultOptionItem: FC<OptionItemProps<unknown>> = (props) => {
 	const { option, elementProps } = props;
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Tooltip>
@@ -207,6 +202,7 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 
 					return (
 						<OptionItem
+							key={option.key as any}
 							elementProps={{
 								"data-active": option.active ?? false,
 								"data-key": option.key,
@@ -216,7 +212,6 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 								onFocus: (event) =>
 									onOptionFocus?.(Object.assign(event, { option }))
 							}}
-							key={option.key as any}
 							option={option}
 						/>
 					);

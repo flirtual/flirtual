@@ -1,23 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-"use client";
-
 import { useDebugValue, useEffect, useState } from "react";
 
 import { server } from "~/const";
 
-import { postpone } from "./use-postpone";
-
 export function useMediaQuery(media: string, defaultValue?: boolean) {
 	useDebugValue(media);
 
-	if (server) {
-		if (defaultValue === undefined)
-			postpone("useMediaQuery() without defaultValue");
+	if (server && defaultValue !== undefined) return defaultValue;
 
-		return defaultValue;
-	}
-
-	const [value, setValue] = useState(defaultValue ?? matchMedia(media).matches);
+	const [value, setValue] = useState(() => defaultValue ?? matchMedia(media).matches);
 	useMediaQueryCallback(media, ({ matches }) => setValue(matches));
 
 	return value;

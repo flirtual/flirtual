@@ -1,7 +1,3 @@
-"use client";
-
-import { useLocale, useTranslations } from "next-intl";
-
 import type { Session } from "~/api/auth";
 import { Subscription } from "~/api/subscription";
 import { User } from "~/api/user";
@@ -14,15 +10,15 @@ import {
 import { ModelCard } from "~/components/model-card";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { redirect } from "~/i18n/navigation";
+import { useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const ReactivationForm: React.FC = () => {
 	const { user } = useSession();
 
-	const t = useTranslations();
-	const locale = useLocale();
+	const { t } = useTranslation();
+	const [locale] = useLocale();
 
 	const toasts = useToast();
 

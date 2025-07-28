@@ -1,5 +1,3 @@
-"use client";
-
 import Flitty from "~/components/flitty";
 import {
 	DiscordSpamDialog,

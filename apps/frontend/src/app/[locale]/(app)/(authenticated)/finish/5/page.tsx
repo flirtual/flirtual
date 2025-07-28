@@ -1,28 +1,21 @@
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 
 import { FinishProgress } from "../progress";
+import type { Route } from "./+types/page";
 import { Finish5Form } from "./form";
 
-// export async function generateMetadata(): Promise<Metadata> {
-// 	const t = await getTranslations();
-//
-// 	return {
-// 		title: t("connections")
-// 	};
-// }
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-export default function Finish5Page({ params }: {
-	params: Promise<{ locale: Locale }>;
-}) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+	return metaMerge([...rootMeta(options), { title: t("connections") }]);
+};
 
-	const t = useTranslations();
+export default function Finish5Page() {
+	const { t } = useTranslation();
 
 	return (
 		<>

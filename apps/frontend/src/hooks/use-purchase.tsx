@@ -1,23 +1,19 @@
-"use client";
-
-import {
-	Purchases,
-	type PurchasesPackage
-} from "@revenuecat/purchases-capacitor";
+import type { PurchasesPackage } from "@revenuecat/purchases-capacitor";
 import {
 	createContext,
-	type FC,
-	type PropsWithChildren,
+
 	use,
 	useCallback,
 	useEffect,
 	useMemo,
 	useState
 } from "react";
+import type { FC, PropsWithChildren } from "react";
+import { useNavigate } from "react-router";
 
 import { Subscription } from "~/api/subscription";
 import { rcAppleKey, rcGoogleKey } from "~/const";
-import { useRouter } from "~/i18n/navigation";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import { useDevice } from "./use-device";
@@ -32,17 +28,22 @@ interface PurchaseContext {
 
 const PurchaseContext = createContext<PurchaseContext>({} as PurchaseContext);
 
+async function getPurchaseModule() {
+	return import("@revenuecat/purchases-capacitor");
+}
+
 async function getPackage(revenuecatId: string) {
+	const { Purchases } = await getPurchaseModule();
 	return (await Purchases.getOfferings()).current?.availablePackages.find(
 		(availablePackage) => availablePackage.identifier === revenuecatId
 	);
 }
 
 export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
-	const { platform, native } = useDevice();
+	const { apple, native } = useDevice();
 
 	const toasts = useToast();
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const [packages, setPackages] = useState<Array<PurchasesPackage>>([]);
 
@@ -52,16 +53,17 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 	useEffect(() => {
 		void (async () => {
 			if (!user?.revenuecatId || !native) return;
+			const { Purchases } = await getPurchaseModule();
 
 			await Purchases.configure({
-				apiKey: platform === "apple" ? rcAppleKey : rcGoogleKey,
+				apiKey: apple ? rcAppleKey : rcGoogleKey,
 				appUserID: user?.revenuecatId
 			});
 
 			const offerings = await Purchases.getOfferings();
 			setPackages(offerings.current?.availablePackages ?? []);
 		})();
-	}, [platform, native, user?.revenuecatId]);
+	}, [apple, native, user?.revenuecatId]);
 
 	const purchase = useCallback(
 		async (planId?: string): Promise<string | null> => {
@@ -71,6 +73,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					: Subscription.manageUrl();
 			}
 
+			const { Purchases } = await getPurchaseModule();
 			const { customerInfo } = await Purchases.getCustomerInfo();
 
 			if (!planId && customerInfo.managementURL) {
@@ -83,7 +86,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			if (!plan || !plan.googleId || !plan.appleId || !plan.revenuecatId)
 				throw new Error("Plan not available");
 
-			const productId = platform === "apple" ? plan.appleId : plan.googleId;
+			const productId = apple ? plan.appleId : plan.googleId;
 
 			if (
 				customerInfo.activeSubscriptions.includes(productId)
@@ -98,9 +101,9 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 			if (!aPackage) throw new Error("Package not available");
 
 			return Purchases.purchasePackage({ aPackage })
-				.then(() => {
-					router.refresh();
-					router.push(urls.subscription.success);
+				.then(async () => {
+					await invalidate({ queryKey: sessionKey() });
+					await navigate(urls.subscription.success);
 					return null;
 				})
 				.catch((reason) => {
@@ -108,7 +111,7 @@ export const PurchaseProvider: FC<PropsWithChildren> = ({ children }) => {
 					return null;
 				});
 		},
-		[native, plans, platform, router, toasts]
+		[native, plans, apple, toasts, navigate]
 	);
 
 	return (

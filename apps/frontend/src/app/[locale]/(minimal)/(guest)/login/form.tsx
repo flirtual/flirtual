@@ -1,10 +1,9 @@
-"use client";
-
+/* eslint-disable no-throw-literal */
 import { MoveRight } from "lucide-react";
-import { useTranslations } from "next-intl";
-// eslint-disable-next-line no-restricted-imports
-import { useRouter, useSearchParams } from "next/navigation";
-import { type FC, Suspense, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import type { FC } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { useNavigate, useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
 import { Authentication } from "~/api/auth";
@@ -30,11 +29,11 @@ function next() {
 }
 
 function useKylesWebAuthnImplementation() {
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 	const challengeGenerated = useRef(false);
 
-	const tError = useTranslations("errors");
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		async function webAuthnAuthenticate() {
@@ -84,13 +83,10 @@ function useKylesWebAuthnImplementation() {
 								)
 							}
 						})
-						.then(() => {
-							router.push(next());
-							return router.refresh();
-						})
+						.then(() => navigate(next()))
 						.catch((reason) => {
 							if (isWretchError(reason)) {
-								toasts.addError(tError(reason.json.error as any));
+								toasts.addError(t(`errors.${reason.json.error}` as any));
 							}
 							else {
 								toasts.addError(reason);
@@ -101,29 +97,28 @@ function useKylesWebAuthnImplementation() {
 			}
 		}
 		void webAuthnAuthenticate();
-	}, [router, toasts, tError]);
+	}, [toasts, t, navigate]);
 }
 
 const OAuthError: FC = withSuspense(() => {
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const error = query.get("error");
 
-	const tError = useTranslations("errors");
+	const { t } = useTranslation();
 
 	if (!error || error === "access_denied") return null;
 
 	return (
 		<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
-				{tError(error as any)}
+				{t(`errors.${error}` as any)}
 			</span>
 		</div>
 	);
 });
 
 export const LoginForm: FC = () => {
-	const t = useTranslations();
-	const tError = useTranslations("errors");
+	const { t } = useTranslation();
 
 	useKylesWebAuthnImplementation();
 
@@ -144,57 +139,65 @@ export const LoginForm: FC = () => {
 					const value = await Authentication.login(body);
 
 					if ("error" in value) {
-						if (value.error === "invalid_credentials") {
-							throw tError.rich("invalid_credentials_complex", {
-								help: (children) => (
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
-									>
-										{children}
-									</InlineLink>
-								),
-								reset: (children) => (
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href={urls.forgotPassword}
-									>
-										{children}
-									</InlineLink>
-								)
-							});
-						}
-						if (value.error === "leaked_login_password") {
-							throw tError.rich("leaked_login_password", {
-								reset: (children) => (
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href={urls.forgotPassword}
-									>
-										{children}
-									</InlineLink>
-								)
-							});
-						}
-						if (value.error === "login_rate_limit") {
-							throw tError.rich("login_rate_limit", {
-								reset: (children) => (
-									<InlineLink
-										className="underline"
-										highlight={false}
-										href={urls.forgotPassword}
-									>
-										{children}
-									</InlineLink>
-								)
-							});
-						}
+						if (value.error === "invalid_credentials")
+							throw [
+								<Trans
+									key=""
+									components={{
+										help: (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href="https://hello.flirtu.al/support/solutions/articles/73000539480-reset-your-password"
+											/>
+										),
+										reset: (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href={urls.forgotPassword}
+											/>
+										)
+									}}
+									i18nKey="errors.invalid_credentials_complex"
+								/>
+							];
 
-						// eslint-disable-next-line no-throw-literal
-						throw [tError(value.error)];
+						if (value.error === "leaked_login_password")
+							throw [
+								<Trans
+									key=""
+									components={{
+										reset: (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href={urls.forgotPassword}
+											/>
+										)
+									}}
+									i18nKey="errors.leaked_login_password"
+								/>
+							];
+
+						if (value.error === "login_rate_limit")
+							throw [
+								<Trans
+									key=""
+									components={{
+										reset: (
+											<InlineLink
+												className="underline"
+												highlight={false}
+												href={urls.forgotPassword}
+											/>
+										)
+									}}
+									i18nKey="errors.login_rate_limit"
+								/>
+							];
+
+						throw [t(`errors.${value.error}` as any)];
 					}
 
 					await invalidate({ refetchType: "none" });
@@ -265,16 +268,15 @@ export const LoginForm: FC = () => {
 					</>
 				)}
 			</Form>
-			<Suspense>
-				<div className="flex flex-col gap-2">
-					<div className="inline-flex items-center justify-center">
-						<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
-							{t("or")}
-						</span>
-						<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
-					</div>
-					<LoginConnectionButton tabIndex={5} type="discord" />
-					{/* {platform === "apple" ? (
+			<div className="flex flex-col gap-2">
+				<div className="inline-flex items-center justify-center">
+					<span className="absolute left-1/2 mb-1 -translate-x-1/2 bg-white-20 px-3 font-montserrat font-semibold text-black-50 vision:bg-transparent vision:text-white-50 dark:bg-black-70 dark:text-white-50">
+						{t("or")}
+					</span>
+					<hr className="my-8 h-px w-full border-0 bg-white-40 vision:bg-transparent dark:bg-black-60" />
+				</div>
+				<LoginConnectionButton tabIndex={5} type="discord" />
+				{/* {platform === "apple" ? (
 						<>
 							<LoginConnectionButton type="apple" />
 							<LoginConnectionButton type="google" />
@@ -286,9 +288,8 @@ export const LoginForm: FC = () => {
 						</>
 					)}
 					<LoginConnectionButton type="meta" /> */}
-					{/* <LoginConnectionButton type="vrchat" /> */}
-				</div>
-			</Suspense>
+				{/* <LoginConnectionButton type="vrchat" /> */}
+			</div>
 		</>
 	);
 };

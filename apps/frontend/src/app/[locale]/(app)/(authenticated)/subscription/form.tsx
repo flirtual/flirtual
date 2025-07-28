@@ -1,12 +1,11 @@
-"use client";
-
 import { Sparkles } from "lucide-react";
-import { useFormatter, useLocale, useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
 import { useOptionalSession } from "~/hooks/use-session";
-import { redirect } from "~/i18n/navigation";
+import { useLocale } from "~/i18n";
+import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { ManageButton } from "./manage-button";
@@ -18,10 +17,8 @@ import {
 import { SuccessMessage } from "./success-message";
 
 export const SubscriptionForm: FC = () => {
-	const locale = useLocale();
-
-	const t = useTranslations();
-	const formatter = useFormatter();
+	const [locale] = useLocale();
+	const { t } = useTranslation();
 
 	const session = useOptionalSession();
 	const userCount = 1000; // TODO: Replace with actual user count
@@ -30,7 +27,7 @@ export const SubscriptionForm: FC = () => {
 	const { user: { subscription, emailConfirmedAt } } = session;
 
 	if (!emailConfirmedAt)
-		redirect({ href: urls.confirmEmail({ to: urls.subscription.default }), locale });
+		throwRedirect(urls.confirmEmail({ to: urls.subscription.default }));
 
 	return (
 		<>
@@ -147,7 +144,7 @@ export const SubscriptionForm: FC = () => {
 			<div className="flex flex-col gap-4">
 				<p>
 					{t("drab_lucky_lemming_feel", {
-						number: formatter.number(userCount)
+						number: new Intl.NumberFormat(locale).format(userCount)
 					})}
 					{" "}
 					{subscription

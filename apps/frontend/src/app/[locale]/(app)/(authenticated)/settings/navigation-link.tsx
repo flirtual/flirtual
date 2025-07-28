@@ -1,12 +1,10 @@
-"use client";
-
 import { ChevronRight } from "lucide-react";
+import { useLocation } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { NewBadge } from "~/components/badge";
 import type { IconComponent } from "~/components/icons";
 import { Link } from "~/components/link";
-import { useLocation } from "~/hooks/use-location";
 import { toAbsoluteUrl, urlEqual } from "~/urls";
 
 export interface NavigationLinkProps {

@@ -3,10 +3,10 @@ import type { WretchOptions } from "wretch";
 
 import {
 	api,
-	type DatedModel,
-	type Issue,
+
 	isWretchError
 } from "./common";
+import type { DatedModel, Issue } from "./common";
 import type { User } from "./user";
 
 export type Session = {

@@ -1,24 +1,23 @@
-"use client";
-
-import { useLocale, useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 
 import {
-	InputAutocomplete,
-	type InputAutocompleteOption,
-	type InputAutocompleteProps
+	InputAutocomplete
+
 } from "../autocomplete";
+import type { InputAutocompleteOption, InputAutocompleteProps } from "../autocomplete";
 
 export const InputLanguageAutocomplete: React.FC<
 	Omit<InputAutocompleteProps, "options">
 > = (props) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	const languages = useAttributes("language");
-	const systemLanguage = useLocale();
+	const [systemLanguage] = useLocale();
 	const pinnedLanguage = systemLanguage.split("-")[0];
 
 	const languageNames = useMemo(

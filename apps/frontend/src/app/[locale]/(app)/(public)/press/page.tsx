@@ -1,27 +1,27 @@
-import type { Metadata } from "next";
-import { type Locale, useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router";
 
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
+import type { Route } from "./+types/page";
 import { PressItem } from "./press-item";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("press")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("press") }
+	]);
+};
 
-export default function PressPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
-	const t = useTranslations();
+export default function PressPage() {
+	const { t } = useTranslation();
+	const { locale } = useParams();
 
 	return (
 		<ModelCard

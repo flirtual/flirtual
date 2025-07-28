@@ -1,15 +1,17 @@
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import {
-	type PrivacyPreferenceOption,
+
 	PrivacyPreferenceOptions
 } from "~/api/user/preferences";
-import { InputSelect, type InputSelectProps } from "~/components/inputs";
+import type { PrivacyPreferenceOption } from "~/api/user/preferences";
+import { InputSelect } from "~/components/inputs";
+import type { InputSelectProps } from "~/components/inputs";
 
 export const InputPrivacySelect: React.FC<
 	Omit<InputSelectProps<PrivacyPreferenceOption>, "options">
 > = (props) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<InputSelect

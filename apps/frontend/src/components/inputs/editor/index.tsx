@@ -1,15 +1,11 @@
-import dynamic from "next/dynamic";
 import type React from "react";
 
 import { editorColors } from "~/html";
-
-import { EditorSkeleton } from "./skeleton";
+import { lazy } from "~/lazy";
 
 import "./style.scss";
 
-// Quill throws an error on the server if imported directly,
-// so we lazily import it, which only renders when needed on client.
-const ReactQuill = dynamic(
+const ReactQuill = lazy(
 	async () => {
 		const ReactQuill = (await import("react-quill-new")).default;
 		const { Quill } = ReactQuill;
@@ -20,9 +16,8 @@ const ReactQuill = dynamic(
 		// @ts-expect-error: Broken types in migration to v3.
 		Quill.register(AlignStyle);
 
-		return ReactQuill;
+		return { default: ReactQuill };
 	},
-	{ ssr: false, loading: () => <EditorSkeleton /> }
 );
 
 export interface InputEditorProps {

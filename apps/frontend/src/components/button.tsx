@@ -1,8 +1,6 @@
-"use client";
-
 import { Loader2 } from "lucide-react";
 import type { HTMLMotionProps } from "motion/react";
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -55,7 +53,7 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 	const iconClassName = pending ? "animate-spin" : _iconClassName;
 
 	return (
-		<motion.button
+		<m.button
 			{...elementProps}
 			className={twMerge(
 				defaultClassName,
@@ -78,11 +76,11 @@ export function Button(props: ButtonProps & HTMLMotionProps<"button">) {
 					)}
 				/>
 			)}
-		</motion.button>
+		</m.button>
 	);
 };
 
-const MotionLink = motion.create(Link);
+const MotionLink = m.create(Link);
 
 export function ButtonLink(props: ButtonProps & HTMLMotionProps<"a"> & LinkProps) {
 	const {

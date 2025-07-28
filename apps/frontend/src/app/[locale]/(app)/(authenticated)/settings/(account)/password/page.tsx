@@ -1,27 +1,24 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 
+import type { Route } from "./+types/page";
 import { PasswordChangeForm } from "./change-form";
 import { PasswordPasskeyForm } from "./passkey-form";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("password_passkeys")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("password_passkeys") }
+	]);
+};
 
-export default function SettingsAccountPasswordPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
-	const t = useTranslations();
+export default function SettingsAccountPasswordPage() {
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard

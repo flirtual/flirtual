@@ -1,10 +1,9 @@
-"use client";
-
-import { useMessages } from "next-intl";
-import { type FC, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
+import type { FC } from "react";
 import { keys } from "remeda";
 
 import { useInterval } from "~/hooks/use-interval";
+import { useMessages } from "~/i18n";
 
 export const ProfileMessage: FC = () => {
 	const {
@@ -23,9 +22,9 @@ export const ProfileMessage: FC = () => {
 		useCallback(() => {
 			setCurrent((current) => {
 				const messageKeys = keys(messages);
-				return messageKeys[
-					(messageKeys.indexOf(current.toString()) + 1) % messageKeys.length
-				]!;
+				const index = messageKeys.indexOf(current.toString());
+
+				return messageKeys[(index + 1) % messageKeys.length]!;
 			});
 		}, [messages]),
 		5000

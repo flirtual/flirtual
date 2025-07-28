@@ -1,17 +1,15 @@
-"use client";
-
 import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import type React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 
 import { InlineLink } from "~/components/inline-link";
 import { Link } from "~/components/link";
 import { urls } from "~/urls";
 
 export const SuccessMessage: React.FC = () => {
-	const searchParameters = useSearchParams();
-	const t = useTranslations();
+	const [searchParameters] = useSearchParams();
+	const { t } = useTranslation();
 
 	if (!searchParameters.get("success")) return null;
 
@@ -29,15 +27,18 @@ export const SuccessMessage: React.FC = () => {
 				</Link>
 			</div>
 			<p>
-				{t.rich("remark_butterfly_sum_seasonal", { contact: (children) => (
-					<InlineLink
-						className="underline"
-						highlight={false}
-						href={urls.resources.contact}
-					>
-						{children}
-					</InlineLink>
-				) })}
+				<Trans
+					components={{
+						contact: (
+							<InlineLink
+								className="underline"
+								highlight={false}
+								href={urls.resources.contact}
+							/>
+						)
+					}}
+					i18nKey="remark_butterfly_sum_seasonal"
+				/>
 			</p>
 		</div>
 	);

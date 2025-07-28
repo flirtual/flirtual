@@ -1,7 +1,8 @@
 import { Dialog } from "@capacitor/dialog";
 import { Eye, EyeOff } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import { type FC, useMemo } from "react";
+import { useMemo } from "react";
+import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -11,6 +12,7 @@ import { usePreferences } from "~/hooks/use-preferences";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useUser } from "~/hooks/use-user";
+import { useLocale } from "~/i18n";
 import { invalidate, userKey } from "~/query";
 
 import { CopyClick } from "../copy-click";
@@ -22,10 +24,10 @@ export const ProfileModeratorInfo: FC<{
 }> = ({ userId }) => {
 	const session = useOptionalSession();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 	const user = useUser(userId);
-	const systemLanguage = useLocale();
+	const [systemLanguage] = useLocale();
 
 	const languageNames = useMemo(
 		() => new Intl.DisplayNames(systemLanguage, { type: "language" }),

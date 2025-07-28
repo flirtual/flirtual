@@ -1,21 +1,18 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 
+import type { Route } from "./+types/page";
 import { ReactivationForm } from "./form";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("reactivate_account")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("reactivate_account") }
+	]);
+};
 
-export default function SettingsAccountReactivatePage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
+export default function SettingsAccountReactivatePage() {
 	return <ReactivationForm />;
 }

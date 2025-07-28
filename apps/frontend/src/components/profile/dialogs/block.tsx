@@ -1,5 +1,6 @@
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { displayName, User } from "~/api/user";
@@ -7,7 +8,6 @@ import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
-import { useSearchParams } from "~/i18n/navigation";
 import { invalidate, userKey } from "~/query";
 
 import {
@@ -24,10 +24,10 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
 	children
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const toasts = useToast();
 
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const kind = (query.get("kind") || "love") as ProspectKind;
 
 	const { forward: forwardQueue } = useQueue(kind);

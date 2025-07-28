@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 export interface ActivityIndicatorProps {
 	lastActiveAt: Date;
@@ -10,7 +10,7 @@ const twoWeeksInMilliseconds = 1.21e9;
 export const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
 	lastActiveAt
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const timeSince = Date.now() - lastActiveAt.getTime();
 	if (timeSince > twoWeeksInMilliseconds) return null;

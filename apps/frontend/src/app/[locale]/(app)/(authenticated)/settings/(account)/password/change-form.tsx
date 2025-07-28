@@ -1,18 +1,16 @@
-"use client";
+import { useTranslation } from "react-i18next";
 
-import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
-
+import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
+import { mutate, sessionKey } from "~/query";
 
 export const PasswordChangeForm: React.FC = () => {
 	const session = useOptionalSession();
-	const router = useRouter();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session) return null;
 
@@ -26,8 +24,8 @@ export const PasswordChangeForm: React.FC = () => {
 			className="flex flex-col gap-8"
 			requireChange={["password", "passwordConfirmation", "currentPassword"]}
 			onSubmit={async (body) => {
-				await User.updatePassword(session.user.id, body);
-				router.refresh();
+				const user = await User.updatePassword(session.user.id, body);
+				await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 			}}
 		>
 			{({ FormField }) => (

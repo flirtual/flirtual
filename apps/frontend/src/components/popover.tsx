@@ -1,6 +1,5 @@
-"use client";
-
-import { Children, type Dispatch, useRef } from "react";
+import { Children, useRef } from "react";
+import type { Dispatch } from "react";
 
 import { useClickOutside } from "~/hooks/use-click-outside";
 import type { ScreenBreakpoint } from "~/hooks/use-screen-breakpoint";

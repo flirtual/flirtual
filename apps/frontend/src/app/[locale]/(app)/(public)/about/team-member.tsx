@@ -1,7 +1,5 @@
-"use client";
-
 import { ExternalLink } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/components/image";
@@ -21,7 +19,7 @@ export const TeamMember: React.FC<TeamMemberProps> = (props) => {
 	const { name, role, avatar, url, extra_url } = props;
 
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<div

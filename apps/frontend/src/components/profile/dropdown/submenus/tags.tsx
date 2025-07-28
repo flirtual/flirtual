@@ -1,7 +1,8 @@
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 
-import { type User, userTagNames, userTags } from "~/api/user";
+import { userTagNames, userTags } from "~/api/user";
+import type { User } from "~/api/user";
 import {
 	DropdownMenuCheckboxItem,
 	DropdownMenuLabel,
@@ -15,7 +16,7 @@ export const ProfileDropdownTagsSubmenu: FC<
 	PropsWithChildren<{ user: User }>
 > = ({ user, children }) => {
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<DropdownMenuSub>
@@ -25,8 +26,8 @@ export const ProfileDropdownTagsSubmenu: FC<
 				<DropdownMenuSeparator />
 				{userTags.map((tag) => (
 					<DropdownMenuCheckboxItem
-						checked={user.tags?.includes(tag)}
 						key={tag}
+						checked={user.tags?.includes(tag)}
 						onCheckedChange={() =>
 							toasts.add({
 								type: "error",

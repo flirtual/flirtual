@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
 
-import { duringBuild } from "~/const";
-
 const logOnceSymbol = Symbol.for("logOnce");
 
 declare global {
@@ -18,7 +16,7 @@ function getHistory() {
 }
 
 export function logOnce(...messages: Array<string>) {
-	if (duringBuild || messages.length === 0) return;
+	if (messages.length === 0) return;
 
 	const history = getHistory();
 	const key = messages.join(" ");
@@ -29,7 +27,7 @@ export function logOnce(...messages: Array<string>) {
 }
 
 export function warnOnce(...messages: Array<string>) {
-	if (duringBuild || messages.length === 0) return;
+	if (messages.length === 0) return;
 
 	const history = getHistory();
 	const key = messages.join(" ");

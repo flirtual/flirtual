@@ -1,70 +1,47 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { type ReactNode, use } from "react";
+import type { ReactNode } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
 import { ModelCard } from "~/components/model-card";
+import { siteOrigin } from "~/const";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+import type { Route } from "./+types/page";
 
-	return {
-		title: t("terms_of_service")
-	};
-}
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-export default function TermsPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("terms_of_service") }
+	]);
+};
 
-	const t = useTranslations();
+export default function TermsPage() {
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard className="w-full desktop:max-w-2xl" title={t("terms_of_service")}>
 			<div className="flex flex-col gap-4">
-				<MachineTranslatedLegal original={urls.resources.termsOfService} />
-				{t.rich("committee_trucks_welcome_approval", {
-					section: (children: ReactNode) => (
-						<section className="select-children flex flex-col gap-2">
-							{children}
-						</section>
-					),
-					h1: (children: ReactNode) => (
-						<h1 className="text-2xl font-semibold">{children}</h1>
-					),
-					p: (children: ReactNode) => <p className="select-text">{children}</p>,
-					ol: (children: ReactNode) => (
-						<ol className="list-decimal pl-4">{children}</ol>
-					),
-					li: (children: ReactNode) => <li>{children}</li>,
-					privacy: (children) => (
-						<InlineLink href={urls.resources.privacyPolicy}>
-							{children}
-						</InlineLink>
-					),
-					guidelines: (children) => (
-						<InlineLink href={urls.resources.communityGuidelines}>
-							{children}
-						</InlineLink>
-					),
-					contact: (children) => (
-						<InlineLink href={urls.resources.contact}>{children}</InlineLink>
-					),
-					"delete-account": (children) => (
-						<InlineLink href={urls.settings.deleteAccount}>
-							{children}
-						</InlineLink>
-					),
-					ssltest: (children) => (
-						<InlineLink href="https://www.ssllabs.com/ssltest/analyze.html?d=flirtu.al&latest">
-							{children}
-						</InlineLink>
-					)
-				})}
+				<MachineTranslatedLegal />
+				<Trans
+					components={{
+						section: <section className="select-children flex flex-col gap-2" />,
+						h1: <h1 className="text-2xl font-semibold" />,
+						p: <p className="select-text" />,
+						ol: <ol className="list-decimal pl-4" />,
+						li: <li />,
+						privacy: <InlineLink href={urls.resources.privacyPolicy} />,
+						guidelines: <InlineLink href={urls.resources.communityGuidelines} />,
+						contact: <InlineLink href={urls.resources.contact} />,
+						"delete-account": <InlineLink href={urls.settings.deleteAccount} />,
+						ssltest: <InlineLink href={`https://www.ssllabs.com/ssltest/analyze.html?d=${siteOrigin}&latest`} />
+					}}
+					i18nKey="committee_trucks_welcome_approval"
+				/>
 			</div>
 		</ModelCard>
 	);

@@ -1,18 +1,17 @@
-"use client";
-
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import {
 	Connection,
-	ConnectionMetadata,
-	type ConnectionType
+	ConnectionMetadata
+
 } from "~/api/connections";
-import { Button, ButtonLink } from "~/components/button";
+import type { ConnectionType } from "~/api/connections";
+import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
-import { useRouter } from "~/i18n/navigation";
 import { toAbsoluteUrl } from "~/urls";
 
 export interface LoginConnectionButtonProps {
@@ -34,30 +33,29 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	tabIndex,
 	next = "/"
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { native } = useDevice();
 
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 
-	const Component = native ? Button : ButtonLink;
-	const href = Connection.authorizeUrl({
-		type,
-		prompt: "consent",
-		next: toAbsoluteUrl(next).href
-	});
-
 	return (
-		<Component
+		<Button
 			className="gap-4 bg-none"
-			href={href}
 			size="sm"
 			style={{ backgroundColor: color }}
 			tabIndex={tabIndex}
-			target="_self"
 			onClick={async () => {
-				if (!native) return;
+				if (!native) {
+					location.href = Connection.authorizeUrl({
+						type,
+						prompt: "consent",
+						next: toAbsoluteUrl(next).href
+					});
+
+					return;
+				}
 
 				const { authorizeUrl } = await Connection.authorize({
 					type,
@@ -82,9 +80,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 							});
 
 							const next = response.headers.get("location");
-							if (next) router.push(next);
-
-							router.refresh();
+							if (next) navigate(next);
 
 							await InAppBrowser.removeAllListeners();
 							await InAppBrowser.close();
@@ -102,7 +98,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 			<span className="font-montserrat text-lg font-semibold">
 				{t("log_in_with", { type: label[type] })}
 			</span>
-		</Component>
+		</Button>
 	);
 };
 

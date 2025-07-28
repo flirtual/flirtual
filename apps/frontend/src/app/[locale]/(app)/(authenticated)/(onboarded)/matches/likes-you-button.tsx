@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { ButtonLink } from "~/components/button";
@@ -15,7 +13,7 @@ import { urls } from "~/urls";
 export const LikesYouButton: FC = () => {
 	const session = useOptionalSession();
 	const likes = useLikesYou();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session) return null;
 	const { user } = session;
@@ -31,11 +29,11 @@ export const LikesYouButton: FC = () => {
 					<div className="flex items-center -space-x-2">
 						{likes.thumbnails?.map((thumbnail) => (
 							<Image
+								key={thumbnail}
 								alt="Like preview"
 								className="aspect-square rounded-full border-2 border-white-10 object-cover shadow-brand-1"
 								draggable={false}
 								height={34}
-								key={thumbnail}
 								src={thumbnail}
 								width={34}
 							/>

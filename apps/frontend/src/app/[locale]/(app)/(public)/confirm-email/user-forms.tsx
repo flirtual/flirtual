@@ -1,7 +1,6 @@
-"use client";
+import { Trans, useTranslation } from "react-i18next";
 
-import { useTranslations } from "next-intl";
-
+import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";
 import { Form, FormButton } from "~/components/forms";
@@ -9,15 +8,14 @@ import { InputLabel, InputText } from "~/components/inputs";
 import { useInterval } from "~/hooks/use-interval";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { invalidate, sessionKey } from "~/query";
+import { invalidate, mutate, sessionKey } from "~/query";
 
 export const UserForms: React.FC = () => {
 	const { user } = useSession();
 
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
-	// Re-check against the API every second to see if the user has confirmed their email.
 	useInterval(() => invalidate({ queryKey: sessionKey() }), "1s");
 
 	return (
@@ -28,7 +26,10 @@ export const UserForms: React.FC = () => {
 				requireChange={false}
 				onSubmit={async () => {
 					await User.resendConfirmEmail()
-						.then(() => toasts.add(t("salty_novel_octopus_surge")))
+						.then(async (user) => {
+							await toasts.add(t("salty_novel_octopus_surge"));
+							await mutate<Session | null>(sessionKey(), (session) => ({ ...session, user }));
+						})
 						.catch(toasts.addError);
 
 					await invalidate({ queryKey: sessionKey() });
@@ -39,16 +40,13 @@ export const UserForms: React.FC = () => {
 						{t("one_more_step")}
 					</h1>
 					<span className="text-lg">
-						{t.rich("maroon_polite_butterfly_boil", {
-							copy: (children) => (
-								<CopyClick value={user.email}>
-									<span data-mask className="select-all font-semibold">
-										{children}
-									</span>
-								</CopyClick>
-							),
-							email: user.email
-						})}
+						<Trans
+							components={{
+								copy: <CopyClick data-mask className="select-all font-semibold" value={user.email} />,
+							}}
+							i18nKey="maroon_polite_butterfly_boil"
+							values={{ email: user.email }}
+						/>
 					</span>
 				</div>
 				<FormButton>{t("send_again")}</FormButton>

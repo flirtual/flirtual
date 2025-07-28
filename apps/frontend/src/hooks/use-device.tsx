@@ -1,14 +1,10 @@
-"use client";
-
 import type { AppInfo } from "@capacitor/app";
 import { App } from "@capacitor/app";
-import type { DeviceId, DeviceInfo } from "@capacitor/device";
+import type { DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
 
-import { client, gitCommitSha, platformOverride } from "~/const";
+import { client, nativeOverride, platformOverride, server } from "~/const";
 import { log as _log } from "~/log";
-
-import { postpone } from "./use-postpone";
 
 export type DevicePlatform = "android" | "apple" | "web";
 
@@ -27,9 +23,7 @@ const [
 		iOSVersion,
 		osVersion,
 	},
-	{
-		identifier: deviceId
-	}
+	id
 ] = await Promise.all([
 	client
 		? App.getInfo().catch(() => ({} as Partial<AppInfo>))
@@ -38,8 +32,8 @@ const [
 		? Device.getInfo()
 		: {} as DeviceInfo,
 	client
-		? Device.getId()
-		: {} as DeviceId,
+		? Device.getId().then(({ identifier }) => identifier.replaceAll(/-/g, ""))
+		: "",
 ]);
 
 // const userAgent = userAgentFromString(client ? navigator.userAgent : "");
@@ -57,18 +51,19 @@ const userAgent = client ? navigator.userAgent : "";
 const vision = userAgent.includes("Flirtual-Vision");
 
 // const native = ua.includes("Flirtual-Native");
-const native = nativePlatform !== "web";
+const native = nativeOverride || (nativePlatform && nativePlatform !== "web");
 
-export const device = {
+const _device = {
+	id,
 	userAgent,
 	platform,
-	nativePlatform,
+	web: ["unknown", "web"].includes(operatingSystem),
+	apple: platformOverride === "apple" || ["ios", "mac"].includes(operatingSystem),
+	android: platformOverride === "android" || operatingSystem === "android",
 	native,
 	vision,
-	deviceId,
 	operatingSystem,
 	versions: {
-		commit: gitCommitSha,
 		build,
 		version,
 		operatingSystem: osVersion,
@@ -78,12 +73,30 @@ export const device = {
 	}
 } as const;
 
+const safeKeys = [
+	platformOverride && "platform",
+	platformOverride && "apple",
+	platformOverride && "android",
+	platformOverride && "web",
+	nativeOverride && "native"
+].filter(Boolean);
+
+export const device = _device;
+// export const device = server
+// 	? new Proxy(_device, {
+// 		get: (device, property) => {
+// 			if (safeKeys.includes(String(property))) return Reflect.get(device, property);
+// 			throw new Error(`"device.${String(property)}" cannot be accessed on the server, as it relies on the client environment.`);
+// 		}
+// 	})
+// 	: _device;
+
 export type Device = typeof device;
 
 if (client)
 	log(device);
 
+// eslint-disable-next-line react-hooks-extra/no-unnecessary-use-prefix
 export function useDevice() {
-	postpone(useDevice.name);
 	return device;
 }

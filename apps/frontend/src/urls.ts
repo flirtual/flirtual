@@ -1,12 +1,12 @@
-import type { Url } from "next/dist/shared/lib/router/router";
+import { createPath } from "react-router";
+import type { Path, To } from "react-router";
 import { entries, fromEntries } from "remeda";
 
 import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/[group]/page";
-import type { ConfirmEmailPageProps } from "./app/[locale]/(app)/(public)/confirm-email/page";
-import { siteOrigin } from "./const";
+import { apiUrl, siteOrigin } from "./const";
 import type { EmojiType } from "./hooks/use-talkjs";
 import { escapeVRChat } from "./vrchat";
 
@@ -16,9 +16,11 @@ export function ensureRelativeUrl(pathname: string) {
 	return pathname;
 }
 
-export function toAbsoluteUrl(href: string) {
-	return new URL(href, siteOrigin);
+export function toAbsoluteUrl(to: Path | URL | string) {
+	return new URL((typeof to === "string" || to instanceof URL) ? to : createPath(to), siteOrigin);
 }
+
+export { toAbsoluteUrl as absoluteUrl };
 
 export function toRelativeUrl(url: { href: string; origin: string }) {
 	return url.href.slice(url.origin.length);
@@ -53,8 +55,8 @@ function url(
 	return `${pathname}${queryString}`;
 }
 
-export function isInternalHref(href: Url) {
-	return toAbsoluteUrl(href.toString()).origin === siteOrigin;
+export function isInternalHref(to: To) {
+	return toAbsoluteUrl(to.toString()).origin === siteOrigin;
 }
 
 export type FinishPage = 1 | 2 | 3 | 4 | 5;
@@ -79,7 +81,7 @@ type ArbitraryImageOptions = Record<string, number | string>;
 
 export const urls = {
 	// internal
-	api: process.env.NEXT_PUBLIC_API_URL as string,
+	api: apiUrl,
 	media: (id: string, bucket: BucketName = "static", variant: string = "", folder: string = "") =>
 		`${bucketOriginMap[bucket]}/${folder ? `${folder}/` : ""}${id}${variant ? `/${variant}` : ""}`,
 	emoji: (name: string, type: EmojiType) =>
@@ -112,7 +114,7 @@ export const urls = {
 
 	// pages
 	default: "/",
-	landing: "/home",
+	landing: "/",
 	register: "/sign-up",
 	login: (next?: string) => url("/login", { next }),
 	forgotPassword: "/forgot",
@@ -138,7 +140,7 @@ export const urls = {
 		success: url("/subscription", { success: "yes" })
 	},
 	confirmEmail: (
-		query: Awaited<ConfirmEmailPageProps["searchParams"]> = {}
+		query: any = {}
 	) => url("/confirm-email", query),
 
 	settings: {
@@ -219,8 +221,7 @@ export const urls = {
 
 	apps: {
 		apple: "https://apps.apple.com/app/flirtual-vr-dating-app/id6450485324",
-		google:
-			"https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
+		google: "https://play.google.com/store/apps/details?id=zone.homie.flirtual.pwa",
 		microsoft: "https://apps.microsoft.com/store/detail/flirtual/9NWCSDGB6CS3",
 		sideQuest: "https://sidequestvr.com/app/9195"
 	}

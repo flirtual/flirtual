@@ -1,26 +1,23 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { useTranslations } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 
+import type { Route } from "./+types/page";
 import { ForgotPasswordForm } from "./form";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("reset_password")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("page_title", { name: t("reset_password") }) },
+	]);
+};
 
-export default function ForgotPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
-	const t = useTranslations();
+export default function ForgotPage() {
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard branded miniFooter title={t("reset_password")}>

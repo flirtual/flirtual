@@ -1,6 +1,3 @@
-import ms from "ms";
-import { unstable_cache } from "next/cache";
-import { cache } from "react";
 import { toSnakeCase } from "remeda";
 import type { WretchOptions } from "wretch";
 
@@ -8,12 +5,10 @@ import { isUid } from "~/utilities";
 
 import type { Attribute } from "../attributes";
 import {
-	api,
-	type DatedModel,
-	type Paginate,
-	type PaginateOptions,
-	type UuidModel
+	api
+
 } from "../common";
+import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
 import type { Connection } from "../connections";
 import type { Subscription } from "../subscription";
 import type { PreferenceLanguage } from "./preferences";
@@ -47,8 +42,8 @@ export type UserTags = (typeof userTags)[number];
 
 export type UserPasskey = {
 	aaguid: string;
-} &
-DatedModel & UuidModel;
+}
+& DatedModel & UuidModel;
 
 export const UserStatuses = [
 	"registered",
@@ -91,8 +86,8 @@ export type User = {
 	tnsDiscordInBiography?: string;
 	connections?: Array<Connection>;
 	passkeys?: Array<UserPasskey>;
-} &
-Partial<DatedModel> & UuidModel;
+}
+& Partial<DatedModel> & UuidModel;
 
 export interface UserPreview {
 	id: string;
@@ -197,17 +192,12 @@ export const User = {
 			.json<User | null>();
 	},
 	getCount() {
-		return unstable_cache(
-			() =>
-				this.api
-					.url("/count")
-					.options({ credentials: "omit" })
-					.get()
-					.fetchError(() => ({ count: 0 }))
-					.json<{ count: number }>(),
-			[],
-			{ revalidate: ms("1d") / 1000 }
-		)();
+		return this.api
+			.url("/count")
+			.options({ credentials: "omit" })
+			.get()
+			.fetchError(() => ({ count: 0 }))
+			.json<{ count: number }>();
 	},
 	async getApproximateCount() {
 		const { count } = await this.getCount();
@@ -342,9 +332,3 @@ export const User = {
 		return this.api.url(`/${userId}`).delete().json<User>();
 	}
 };
-
-User.get = cache(User.get.bind(User));
-User.getMany = cache(User.getMany.bind(User));
-User.getBySlug = cache(User.getBySlug.bind(User));
-User.preview = cache(User.preview.bind(User));
-User.getRelationship = cache(User.getRelationship.bind(User));

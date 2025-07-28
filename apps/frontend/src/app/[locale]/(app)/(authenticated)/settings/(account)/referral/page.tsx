@@ -1,21 +1,18 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
-
 import { ModelCard } from "~/components/model-card";
+import { metaMerge, rootMeta } from "~/meta";
 
+import type { Route } from "./+types/page";
 import { ReferralForm } from "./form";
 import { ReferralTicket } from "./referral-ticket";
 
-export const metadata: Metadata = {
-	title: "Refer a homie"
+export const meta: Route.MetaFunction = (options) => {
+	return metaMerge([
+		...rootMeta(options),
+		{ title: "Refer a homie" }
+	]);
 };
 
-export default function SettingsAccountReferralPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
+export default function SettingsAccountReferralPage() {
 	return (
 		<ModelCard
 			className="shrink desktop:w-full desktop:max-w-2xl"

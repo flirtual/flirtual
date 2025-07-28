@@ -1,7 +1,7 @@
 import { cache } from "react";
 import type { WretchOptions } from "wretch";
 
-import { gitCommitSha } from "~/const";
+import { commitIdShort } from "~/const";
 import type { Expand } from "~/utilities";
 
 import { api } from "./common";
@@ -79,8 +79,8 @@ export type Attribute<T = unknown> = {
 
 // export type PartialAttribute = Pick<Attribute<unknown>, "id" | "type">;
 
-export type MinimalAttribute<T extends AttributeType> =
-	AttributeMetadata[T] extends infer A
+export type MinimalAttribute<T extends AttributeType>
+	= AttributeMetadata[T] extends infer A
 		? A extends undefined
 			? string
 			: Expand<Omit<Attribute<AttributeMetadata[T]>, "type">>
@@ -102,7 +102,7 @@ export const Attribute = {
 	list<T extends AttributeType>(type: T, options: WretchOptions = {}) {
 		return this.api
 			.url(`/${type}`)
-			.query({ v: gitCommitSha })
+			.query({ v: commitIdShort })
 			.options(options)
 			.get()
 			.json<AttributeCollection<T>>();

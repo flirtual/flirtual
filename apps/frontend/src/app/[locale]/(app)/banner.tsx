@@ -1,13 +1,11 @@
-"use client";
-
 import { Slot } from "@radix-ui/react-slot";
 import { MoveRight } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC, PropsWithChildren, ReactNode, RefAttributes } from "react";
+import { Trans } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { InlineLink, type InlineLinkProps } from "~/components/inline-link";
-import { useLocation } from "~/hooks/use-location";
+import { InlineLink } from "~/components/inline-link";
+import type { InlineLinkProps } from "~/components/inline-link";
 import { useOptionalSession } from "~/hooks/use-session";
 
 export const BannerLink: FC<PropsWithChildren<InlineLinkProps>> = ({
@@ -24,27 +22,6 @@ export const BannerLink: FC<PropsWithChildren<InlineLinkProps>> = ({
 		{children}
 	</InlineLink>
 );
-
-export const SelfLink: FC<
-	PropsWithChildren<
-		{ query?: Record<string, string | null> } & Omit<InlineLinkProps, "href">
-	>
-> = ({ children, query, ...props }) => {
-	const location = useLocation();
-
-	const url = new URL(location.href);
-	if (query)
-		Object.entries(query).forEach(([key, value]) => {
-			if (value === null) return url.searchParams.delete(key);
-			url.searchParams.set(key, value);
-		});
-
-	return (
-		<BannerLink href={url.href} {...props}>
-			{children}
-		</BannerLink>
-	);
-};
 
 export type BannerProps = PropsWithChildren<{
 	className?: string;
@@ -74,26 +51,26 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon }: B
 
 export const AppBanner: FC = () => {
 	const session = useOptionalSession();
-	const t = useTranslations();
 
 	if (!session) return null;
 
 	if (!["finished_profile", "visible"].includes(session.user.status)) {
 		return (
 			<Banner>
-				{t.rich("nutritious_challenge_blue_end", {
-					link: (children) => (
-						<BannerLink
-							href={
-								session.user.status === "registered"
-									? "/onboarding/1"
-									: "/finish/1"
-							}
-						>
-							{children}
-						</BannerLink>
-					)
-				})}
+				<Trans
+					components={{
+						link: (
+							<BannerLink
+								href={
+									session.user.status === "registered"
+										? "/onboarding/1"
+										: "/finish/1"
+								}
+							/>
+						)
+					}}
+					i18nKey="nutritious_challenge_blue_end"
+				/>
 			</Banner>
 		);
 	}
@@ -101,11 +78,12 @@ export const AppBanner: FC = () => {
 	if (!session.user.emailConfirmedAt) {
 		return (
 			<Banner>
-				{t.rich("exuberant_green_horse_fowl", {
-					link: (children) => (
-						<BannerLink href="/confirm-email">{children}</BannerLink>
-					)
-				})}
+				<Trans
+					components={{
+						link: <BannerLink href="/confirm-email" />
+					}}
+					i18nKey="exuberant_green_horse_fowl"
+				/>
 			</Banner>
 		);
 	}

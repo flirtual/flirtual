@@ -1,8 +1,6 @@
-"use client";
-
 import { Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Authentication } from "~/api/auth";
 import { Button } from "~/components/button";
@@ -38,7 +36,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 	const session = useSession();
 	const { native } = useDevice();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [passkeysAvailable, setPasskeysAvailable] = useState(false);
 	const aaguidData = useAaguid();
@@ -123,11 +121,11 @@ export const PasswordPasskeyForm: React.FC = () => {
 				<div className="flex flex-col gap-4">
 					{session.user.passkeys.map((passkey) => (
 						<PasskeyButton
-							date={new Date(passkey.createdAt)}
-							icon={aaguidData[passkey.aaguid]?.icon_dark}
 							id={passkey.id}
 							key={passkey.id}
 							name={aaguidData[passkey.aaguid]?.name}
+							date={new Date(passkey.createdAt)}
+							icon={aaguidData[passkey.aaguid]?.icon_dark}
 						/>
 					))}
 				</div>
@@ -143,7 +141,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 				{t("add_passkey")}
 				{" "}
 				{!passkeysAvailable
-				&& (native ? t("unsupported_device") : t("unsupported_browser"))}
+					&& (native ? t("unsupported_device") : t("unsupported_browser"))}
 			</Button>
 		</>
 	);

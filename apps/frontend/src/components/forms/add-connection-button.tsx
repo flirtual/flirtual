@@ -1,21 +1,20 @@
-"use client";
-
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import {
 	Connection,
-	ConnectionMetadata,
-	type ConnectionType
+	ConnectionMetadata
+
 } from "~/api/connections";
+import type { ConnectionType } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
-import { useLocation } from "~/hooks/use-location";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { invalidate, sessionKey } from "~/query";
 
 export interface ConnectionButtonProps {
 	type: ConnectionType;
@@ -26,10 +25,10 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 	const location = useLocation();
 	const session = useOptionalSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 	const { native } = useDevice();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const connection = useMemo(() => {
 		return session
@@ -53,11 +52,10 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 				onClick={async () => {
 					if (connection) return;
 
-					const url = new URL(location.href);
-					url.search = "";
+					const url = new URL(`${location.pathname}`, window.location.origin);
 
 					if (!native) {
-						return router.push(
+						return navigate(
 							Connection.authorizeUrl({
 								type,
 								prompt: "consent",
@@ -88,9 +86,9 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 								});
 
 								const next = response.headers.get("location");
-								if (next) router.push(next);
+								if (next) navigate(next);
 
-								router.refresh();
+								await invalidate({ queryKey: sessionKey() });
 
 								await InAppBrowser.removeAllListeners();
 								await InAppBrowser.close();
@@ -116,11 +114,10 @@ export const AddConnectionButton: React.FC<ConnectionButtonProps> = (props) => {
 					type="button"
 					onClick={async () => {
 						await Connection.delete(type)
-							.then(() => {
-								toasts.add(t("removed_connection"));
-								return router.refresh();
-							})
+							.then(() => toasts.add(t("removed_connection")))
 							.catch(toasts.addError);
+
+						await invalidate({ queryKey: sessionKey() });
 					}}
 				>
 					<X className="size-5" />

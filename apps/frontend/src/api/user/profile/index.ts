@@ -5,7 +5,8 @@ import type {
 	GroupedAttributeCollection
 } from "~/api/attributes";
 
-import { api, type UpdatedAtModel } from "../../common";
+import { api } from "../../common";
+import type { UpdatedAtModel } from "../../common";
 import { ProfileImage } from "./images";
 import { Personality } from "./personality";
 

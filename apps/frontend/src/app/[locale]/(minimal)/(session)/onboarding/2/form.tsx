@@ -1,8 +1,7 @@
-"use client";
-
 import { MoveLeft } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
@@ -12,12 +11,12 @@ import { InputLabel } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
 import {
-	type AttributeTranslation,
+
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -28,13 +27,13 @@ export const Onboarding2Form: FC = () => {
 	const { user } = useSession();
 	const { preferences } = user.profile;
 
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	const genders = useAttributes("gender").filter(
 		({ simple, fallback }) => simple || fallback
 	);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	return (
@@ -64,7 +63,7 @@ export const Onboarding2Form: FC = () => {
 				});
 
 				await invalidate({ queryKey: sessionKey() });
-				router.push(urls.discover("dates"));
+				navigate(urls.discover("dates"));
 			}}
 		>
 			{({ FormField }) => (

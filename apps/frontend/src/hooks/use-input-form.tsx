@@ -1,13 +1,14 @@
-import { type TranslationValues, useTranslations } from "next-intl";
 import { createContext, use, useId, useMemo, useState } from "react";
 import type { ReactNode, RefObject } from "react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { entries, fromEntries, toCamelCase } from "remeda";
 import { WretchError } from "wretch/resolver";
 
 import { isWretchError } from "~/api/common";
 import type { FormCaptchaReference } from "~/components/forms/captcha";
-import { FormField, type FormFieldFC } from "~/components/forms/field";
+import { FormField } from "~/components/forms/field";
+import type { FormFieldFC } from "~/components/forms/field";
 
 export interface FormFieldsDefault {
 	[s: string]: unknown;
@@ -93,7 +94,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const reactId = useId();
 	const formId = withGlobalId ? "" : reactId;
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [initialValues, setInitialValues] = useState(options.fields);
 	const [values, setValues] = useState(initialValues);
@@ -158,7 +159,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 								[
 									toCamelCase(key),
 									issues.map(({ error, details }) =>
-										t(`errors.${error}` as any, details as TranslationValues)
+										t(`errors.${error}` as any, details)
 									)
 								] as const
 						)
@@ -181,7 +182,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 					const errors = [
 						t(
 							`errors.${error}` as any,
-							reason.json.details as TranslationValues
+							reason.json.details
 						)
 					];
 

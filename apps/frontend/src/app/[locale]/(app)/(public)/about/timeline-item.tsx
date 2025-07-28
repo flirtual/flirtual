@@ -1,28 +1,30 @@
-import { useTranslations } from "next-intl";
-import Image from "next/image";
+import type { ResourceKeys } from "i18next";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import type { MessageKeys } from "~/i18n/request";
+import { Image } from "~/components/image";
+import type { DefaultNamespace } from "~/i18n";
 import { urls } from "~/urls";
 
 export type TimelineItemYear = {
-	[K in MessageKeys]: K extends `outgoing_teeny_tiny_pass_male.${infer T}` ? T : never;
-}[MessageKeys];
+	[K in ResourceKeys<true>[DefaultNamespace]]: K extends `outgoing_teeny_tiny_pass_male.${infer T extends number}` ? T : never;
+}[ResourceKeys<true>[DefaultNamespace]];
 
 export const TimelineItem: FC<{ year: TimelineItemYear; index: number }> = ({
 	year,
 	index
 }) => {
-	const t = useTranslations(`outgoing_teeny_tiny_pass_male.${year}`);
+	const { t } = useTranslation();
+	const { image, image_alt, description, title } = t(`outgoing_teeny_tiny_pass_male.${year}`, { returnObjects: true });
 
 	return (
 		<div className="grid grid-cols-2 items-center gap-6">
 			<Image
-				alt={t("image_alt")}
+				alt={image_alt}
 				className={twMerge("rounded-md shadow-brand-1")}
 				height={461}
-				src={urls.media(t("image"))}
+				src={urls.media(image)}
 				width={810}
 			/>
 			<div
@@ -31,8 +33,8 @@ export const TimelineItem: FC<{ year: TimelineItemYear; index: number }> = ({
 					index % 2 !== 0 ? "-order-1 text-right" : ""
 				)}
 			>
-				<span className="font-montserrat text-2xl font-bold">{t("title")}</span>
-				<span>{t("description")}</span>
+				<span className="font-montserrat text-2xl font-bold">{title}</span>
+				<span>{description}</span>
 			</div>
 		</div>
 	);

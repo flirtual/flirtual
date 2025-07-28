@@ -49,8 +49,8 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				nunito: "var(--font-nunito)",
-				montserrat: "var(--font-montserrat)"
+				montserrat: "'Montserrat Variable', sans-serif",
+				nunito: "'Nunito Variable', sans-serif"
 			},
 			colors,
 			backgroundImage: {

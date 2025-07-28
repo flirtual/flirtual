@@ -9,9 +9,9 @@ export const FlirtualMark: IconComponent = (props) => (
 	>
 		<defs>
 			<linearGradient
+				id="b"
 				gradientTransform="translate(-19.2149 8.0305)"
 				gradientUnits="userSpaceOnUse"
-				id="b"
 				x1="196.7217"
 				x2="268.4562"
 				xlinkHref="#a"
@@ -19,9 +19,9 @@ export const FlirtualMark: IconComponent = (props) => (
 				y2="92.5157"
 			/>
 			<linearGradient
+				id="d"
 				gradientTransform="translate(76.0771 80.3102)"
 				gradientUnits="userSpaceOnUse"
-				id="d"
 				x1="-74.7175"
 				x2="-12.552"
 				xlinkHref="#a"
@@ -29,9 +29,9 @@ export const FlirtualMark: IconComponent = (props) => (
 				y2="62.5683"
 			/>
 			<linearGradient
+				id="c"
 				gradientTransform="translate(76.0771 80.3102)"
 				gradientUnits="userSpaceOnUse"
-				id="c"
 				x1="-74.7175"
 				x2="-12.552"
 				xlinkHref="#a"
@@ -43,35 +43,35 @@ export const FlirtualMark: IconComponent = (props) => (
 				<stop offset="1" stopColor="#fb7d9b" />
 			</linearGradient>
 			<radialGradient
+				id="e"
 				cx="133.0941"
 				cy="80.1321"
 				fx="133.0941"
 				fy="80.1321"
 				gradientTransform="matrix(-.4121 .8079 -1.0236 -.5222 247.5047 48.9698)"
 				gradientUnits="userSpaceOnUse"
-				id="e"
 				r="133.4293"
 				xlinkHref="#a"
 			/>
 			<radialGradient
+				id="f"
 				cx="133.0941"
 				cy="80.1321"
 				fx="133.0941"
 				fy="80.1321"
 				gradientTransform="matrix(-.4121 .8079 -1.0236 -.5222 250.6226 47.2186)"
 				gradientUnits="userSpaceOnUse"
-				id="f"
 				r="133.4293"
 				xlinkHref="#a"
 			/>
 			<radialGradient
+				id="g"
 				cx="133.0941"
 				cy="80.1321"
 				fx="133.0941"
 				fy="80.1321"
 				gradientTransform="matrix(-.4121 .8079 -1.0236 -.5222 250.6226 47.219)"
 				gradientUnits="userSpaceOnUse"
-				id="g"
 				r="133.4293"
 				xlinkHref="#a"
 			/>

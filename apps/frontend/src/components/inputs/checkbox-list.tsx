@@ -32,7 +32,7 @@ export function InputCheckboxList<T extends string>(
 				const itemId = id + item.key;
 
 				return (
-					<div className="flex items-center gap-4" key={item.key}>
+					<div key={item.key} className="flex items-center gap-4">
 						<InputCheckbox
 							id={itemId}
 							value={value.includes(item.key)}

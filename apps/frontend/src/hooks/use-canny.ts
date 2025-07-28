@@ -1,5 +1,6 @@
 import type { Session } from "~/api/auth";
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 import { cannyAppId } from "~/const";
 import { queryClient, sessionKey } from "~/query";
 import { urls } from "~/urls";
@@ -7,7 +8,7 @@ import { urls } from "~/urls";
 import { isDesktop } from "./use-screen-breakpoint";
 
 declare global {
-	// eslint-disable-next-line no-var, vars-on-top
+	// eslint-disable-next-line vars-on-top
 	var Canny: {
 		(...arguments_: Array<unknown>): void;
 		q: Array<unknown>;

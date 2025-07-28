@@ -1,10 +1,7 @@
-"use client";
-
-import { useTranslations } from "next-intl";
-// eslint-disable-next-line no-restricted-imports
-import { useSearchParams } from "next/navigation";
 import type { FC } from "react";
 import { useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
 import type { Session } from "~/api/auth";
@@ -22,17 +19,17 @@ import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
 
 const ConnectionError: FC = withSuspense(() => {
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const error = query.get("error");
 
-	const tError = useTranslations("errors");
+	const { t } = useTranslation();
 
 	if (!error || error === "access_denied") return null;
 
 	return (
 		<div className="mb-8 rounded-lg bg-brand-gradient px-6 py-4">
 			<span className="font-montserrat text-lg text-white-10">
-				{tError(error as any)}
+				{t(`errors.${error}` as any)}
 			</span>
 		</div>
 	);
@@ -45,7 +42,7 @@ export const ConnectionsForm: FC = () => {
 	const [playlistSubmitted, setPlaylistSubmitted] = useState<string | null>(
 		null
 	);
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard
@@ -154,7 +151,7 @@ export const ConnectionsForm: FC = () => {
 									{t("proof_knotty_cockroach_commend")}
 								</span>
 							</div>
-							<FormField className="col-span-2 wide:col-span-1" name="playlist">
+							<FormField name="playlist" className="col-span-2 wide:col-span-1">
 								{(field) => (
 									<InputText
 										iconColor="#095d6a"
@@ -178,11 +175,7 @@ export const ConnectionsForm: FC = () => {
 									: playlistSubmitted === "other"
 										? (
 												<span className="italic text-black-50 vision:text-white-50 dark:text-white-50">
-													{t.rich("main_civil_jaguar_peel", {
-														strong: (children) => (
-															<strong>{children}</strong>
-														)
-													})}
+													<Trans i18nKey="main_civil_jaguar_peel" />
 												</span>
 											)
 										: null}

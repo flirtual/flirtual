@@ -1,9 +1,7 @@
-"use client";
-
 import { fuzzy, search as fuzzySearch } from "fast-fuzzy";
-import { AnimatePresence, motion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { AnimatePresence, m } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { emptyArray } from "~/utilities";
 
@@ -44,7 +42,7 @@ export function InputAutocomplete<K extends string>(
 		...elementProps
 	} = props;
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const visibleValueOptions = useMemo(
 		() =>
 			options.length === 0
@@ -131,8 +129,8 @@ export function InputAutocomplete<K extends string>(
 					{visibleValueOptions.map((option) => {
 						return (
 							<button
-								className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 shadow-brand-1"
 								key={option.key}
+								className="focusable h-fit rounded-xl bg-brand-gradient px-3 py-1 shadow-brand-1"
 								type="button"
 								onClick={() => onChange(values.filter((v) => v !== option.key))}
 							>
@@ -218,7 +216,7 @@ export function InputAutocomplete<K extends string>(
 			</div>
 			<AnimatePresence>
 				{dropdown && overlayVisible && (
-					<motion.div
+					<m.div
 						animate={{ height: "max-content" }}
 						className="absolute z-10 mt-4 flex w-full"
 						exit={{ height: 0 }}
@@ -236,7 +234,7 @@ export function InputAutocomplete<K extends string>(
 								setInputValue("");
 							}}
 						/>
-					</motion.div>
+					</m.div>
 				)}
 			</AnimatePresence>
 		</div>

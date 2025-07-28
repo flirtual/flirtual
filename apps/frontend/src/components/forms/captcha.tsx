@@ -1,19 +1,18 @@
-"use client";
-
 import type { TurnstileInstance, TurnstileProps } from "@marsidev/react-turnstile";
 import {
 	Turnstile as _Turnstile
 } from "@marsidev/react-turnstile";
 import { LoaderCircle, ShieldAlert, ShieldCheck } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
 import type { FC, RefAttributes } from "react";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
 import { turnstileSiteKey } from "~/const";
 import { useFormContext } from "~/hooks/use-input-form";
 import { useTheme } from "~/hooks/use-theme";
+import { useLocale } from "~/i18n";
 
 import { FormInputMessages } from "./input-messages";
 
@@ -24,7 +23,7 @@ interface FormCaptchaProps extends RefAttributes<TurnstileInstance> {
 }
 
 export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [error, setError] = useState<string | null>(null);
 
@@ -59,8 +58,8 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 										<ShieldAlert className="size-4" />
 										<span>
 											{{
-												110500: "Unsupported device."
-											}[error] || "Couldn't verify your device."}
+												110500: t("elegant_actual_ray_buzz")
+											}[error] || t("major_vivid_beetle_support")}
 											{" "}
 											<span className="text-xs opacity-80">
 												{error}
@@ -98,7 +97,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 				/>
 			</div>
 			<FormInputMessages
-				className="desktop:mx-auto desktop:w-fit desktop:text-center"
+				className="mx-auto w-fit text-center"
 				messages={fields.captcha?.errors.map((value) => ({ type: "error", value }))}
 			/>
 		</div>
@@ -106,7 +105,7 @@ export function FormCaptcha({ ref, tabIndex }: FormCaptchaProps) {
 }
 
 const Turnstile: FC<{ tabIndex?: number } & Omit<TurnstileProps, "options" | "siteKey"> & RefAttributes<TurnstileInstance>> = withSuspense(({ tabIndex, ...props }) => {
-	const locale = useLocale();
+	const [locale] = useLocale();
 	const [theme] = useTheme();
 
 	return (

@@ -117,6 +117,6 @@ export const emptyArray = Object.freeze([]) as Array<never>;
 export function skipErrorStack(error: Error, count: number) {
 	const stack = error.stack?.split("\n").slice(count);
 	error.stack = stack?.join("\n");
-	
+
 	return error;
 }

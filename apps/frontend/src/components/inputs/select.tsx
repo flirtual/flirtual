@@ -1,12 +1,9 @@
-/* eslint-disable react/prefer-destructuring-assignment */
-"use client";
-
 import { SelectItemText } from "@radix-ui/react-select";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDown, ChevronsUpDown, ChevronUp, X } from "lucide-react";
-import { useTranslations } from "next-intl";
 import * as React from "react";
 import type { Dispatch, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { emptyArray } from "~/utilities";
@@ -183,7 +180,7 @@ export interface InputSelectProps<T> {
 }
 
 export function InputSelect<K>(props: InputSelectProps<K>) {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const {
 		value,
@@ -234,8 +231,8 @@ export function InputSelect<K>(props: InputSelectProps<K>) {
 			<SelectContent>
 				{options.map((option) => (
 					<Item
-						disabled={option.disabled}
 						key={option.id}
+						disabled={option.disabled}
 						value={option.id as K & string}
 						onPointerEnter={() => props.onItemHover?.(option.id as K & string)}
 					>

@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import { Preferences } from "~/api/user/preferences";
@@ -15,10 +13,11 @@ import {
 } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
 import {
-	type AttributeTranslation,
+
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
@@ -27,7 +26,7 @@ export const NsfwForm: React.FC = () => {
 	const session = useSession();
 	const toasts = useToast();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 	const kinks = useAttributes("kink");
 

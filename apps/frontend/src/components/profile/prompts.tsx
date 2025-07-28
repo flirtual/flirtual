@@ -13,8 +13,8 @@ export const ProfilePrompts: FC<{
 		<div className="flex flex-col gap-4 vision:text-white-20">
 			{prompts.map(({ response, promptId }) => (
 				<div
-					className="gap-2 rounded-xl bg-white-30 p-4 shadow-brand-1 vision:bg-white-30/70 vision:text-black-80 dark:bg-black-60"
 					key={promptId}
+					className="gap-2 rounded-xl bg-white-30 p-4 shadow-brand-1 vision:bg-white-30/70 vision:text-black-80 dark:bg-black-60"
 				>
 					<h2 className="text-base opacity-70">
 						{tAttribute[promptId]?.name || promptId}

@@ -1,5 +1,3 @@
-"use client";
-
 import {
 	Brain,
 	Dices,
@@ -14,8 +12,8 @@ import {
 	Trophy,
 	User
 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { Dispatch, FC } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -63,7 +61,7 @@ const HighlightedText: FC<{ children: string; snippet: string }> = ({
 				if (part.toLowerCase() !== snippet.toLowerCase()) return part;
 				return (
 					// eslint-disable-next-line react/no-array-index-key
-					<span className="font-bold" key={`${part}-${index}`}>
+					<span key={`${part}-${index}`} className="font-bold">
 						{part}
 					</span>
 				);
@@ -115,7 +113,7 @@ export const InterestSelectList: FC<{
 				if (!filteredInterests || filteredInterests.length === 0) return null;
 
 				return (
-					<div className="flex flex-col gap-4" key={categoryId}>
+					<div key={categoryId} className="flex flex-col gap-4">
 						<InputLabel className="flex flex-row items-center gap-2">
 							{categoryIcon}
 							{" "}
@@ -130,6 +128,7 @@ export const InterestSelectList: FC<{
 
 								return (
 									<Pill
+										key={interestId}
 										className={twMerge(
 											"data-[active]:bg-brand-gradient",
 											!active && selected.length >= maximum
@@ -138,7 +137,6 @@ export const InterestSelectList: FC<{
 										)}
 										active={active}
 										hocusable={false}
-										key={interestId}
 										onClick={() =>
 											onSelected(
 												active
@@ -164,8 +162,8 @@ export const InterestSelectCustomInput: FC<{
 	value: Array<string>;
 	onChange: Dispatch<Array<string>>;
 }> = ({ value, onChange }) => {
-	const { platform } = useDevice();
-	const t = useTranslations();
+	const { apple } = useDevice();
+	const { t } = useTranslation();
 
 	return (
 		<>
@@ -178,9 +176,7 @@ export const InterestSelectCustomInput: FC<{
 				{t("custom_interests")}
 			</InputLabel>
 			<InputLabelHint className="-mt-2">
-				{t.rich(platform === "apple" ? "wide_shy_loris_gleam" : "born_game_pony_empower", {
-					small: (children) => <small>{children}</small>
-				})}
+				<Trans i18nKey={apple ? "wide_shy_loris_gleam" : "born_game_pony_empower"} />
 			</InputLabelHint>
 			<InputAutocomplete
 				supportArbitrary
@@ -231,13 +227,12 @@ export const InterestSelectCount: FC<{ current: number; maximum: number; classNa
 	);
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const maximumInterests = 10;
 
 export const InterestsForm: FC = () => {
 	const session = useSession();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const { user } = session;
 	const { profile } = user;

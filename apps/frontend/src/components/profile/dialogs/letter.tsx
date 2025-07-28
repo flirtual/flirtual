@@ -1,4 +1,5 @@
-import { type FC, type PropsWithChildren, useState } from "react";
+import { useState } from "react";
+import type { FC, PropsWithChildren } from "react";
 
 import { Button } from "~/components/button";
 import {

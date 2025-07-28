@@ -1,12 +1,13 @@
-import { useTranslations } from "next-intl";
+import { Trans, useTranslation } from "react-i18next";
 
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 
 import { ModelCard } from "../model-card";
 import { BlockedActions } from "./blocked-actions";
 
 export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard
@@ -16,14 +17,13 @@ export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 			title={t("account_blocked")}
 		>
 			<span>
-				{t.rich("giant_strong_thrush_startle", {
-					name: displayName(user),
-					highlight: (children) => (
-						<span data-mask className="font-semibold">
-							{children}
-						</span>
-					)
-				})}
+				<Trans
+					components={{
+						highlight: <span data-mask className="font-semibold" />
+					}}
+					i18nKey="giant_strong_thrush_startle"
+					values={{ name: displayName(user) }}
+				/>
 			</span>
 			<BlockedActions user={user} />
 		</ModelCard>

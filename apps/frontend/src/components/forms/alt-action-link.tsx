@@ -1,7 +1,8 @@
 import { MoveRight } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
-import { Link, type LinkProps } from "~/components/link";
+import { Link } from "~/components/link";
+import type { LinkProps } from "~/components/link";
 
 export const FormAlternativeActionLink: React.FC<
 	LinkProps & Omit<React.ComponentProps<"a">, "ref">

@@ -1,43 +1,38 @@
-/* eslint-disable unicorn/prevent-abbreviations */
+import { useParams } from "react-router";
 
-import type { Locale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 
+import type { Route } from "./+types/page";
 import { Queue } from "./queue";
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 const discoverGroups = ["dates", "homies"] as const;
 export type DiscoverGroup = (typeof discoverGroups)[number];
 
-export function generateStaticParams() {
-	return [{ group: "dates" }, { group: "homies" }];
-}
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	const group = options.params.group ?? "dates";
 
-export const dynamicParams = false;
+	return metaMerge([
+		...rootMeta(options),
+		{
+			title: group === "homies"
+				? t("homie_mode")
+				: t("browse")
+		}
+	]);
+};
 
-export async function generateMetadata({ params }: { params: Promise<{ group: DiscoverGroup }> }) {
-	const { group = "dates" } = await params;
-
-	const t = await getTranslations();
-
-	return {
-		title: group === "homies"
-			? t("homie_mode")
-			: t("browse")
-	};
-}
-
-export default function DiscoverPage({ params }: { params: Promise<{ locale: Locale; group: DiscoverGroup }> }) {
-	const { locale, group } = use(params);
-	setRequestLocale(locale);
+export default function DiscoverPage() {
+	const { group } = useParams();
 
 	return (
 		<Queue
 			kind={({
 				dates: "love",
 				homies: "friend"
-			} as const)[group]}
+			} as const)[group as DiscoverGroup] ?? "love"}
 		/>
 	);
 }

@@ -1,10 +1,12 @@
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { Image } from "~/components/image";
 import { urls } from "~/urls";
 
+const posterUrl = urls.media("7d9eca06-b0d6-4d96-bdfc-b64c4edc59b7");
+
 export const BackgroundVideo: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<video
@@ -15,18 +17,14 @@ export const BackgroundVideo: React.FC = () => {
 			muted
 			playsInline
 			className="absolute left-0 top-0 size-full object-cover brightness-50"
-			poster="https://static.flirtual.com/6be390d0-4479-4a98-8c7a-10257ea5585a"
+			poster={posterUrl}
 		>
-			<source
-				src="https://static.flirtual.com/video.webm"
-				type="video/webm; codecs=vp9"
-			/>
-			<source src="https://static.flirtual.com/video.mp4" type="video/mp4" />
+			<source src={urls.media("video.webm")} type="video/webm; codecs=vp9" />
+			<source src={urls.media("video.mp4")} type="video/mp4" />
 			<Image
-				fill
 				priority
 				alt={t("mellow_short_shark_propel")}
-				src={urls.media("6be390d0-4479-4a98-8c7a-10257ea5585a")}
+				src={posterUrl}
 			/>
 		</video>
 	);

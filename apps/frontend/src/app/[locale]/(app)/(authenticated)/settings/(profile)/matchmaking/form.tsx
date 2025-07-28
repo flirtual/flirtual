@@ -1,12 +1,10 @@
-"use client";
-
 import { Loader2, Trash2 } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { type FC, startTransition, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { capitalize } from "remeda";
 import { twMerge } from "tailwind-merge";
 
-import type { Session } from "~/api/auth";
 import { Matchmaking } from "~/api/matchmaking";
 import {
 	CustomWeightList,
@@ -34,23 +32,22 @@ import { InputCheckbox, InputLabel, InputLabelHint, InputSelect } from "~/compon
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { Slider } from "~/components/inputs/slider";
 import {
-	type AttributeTranslation,
+
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
-import { invalidate, mutate, sessionKey } from "~/query";
+import { invalidate, sessionKey } from "~/query";
 
 const absMinAge = 18;
 const absMaxAge = 60;
 
 export const MatchmakingForm: FC = () => {
 	const session = useSession();
-	const router = useRouter();
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	const genders = useAttributes("gender").filter(
@@ -270,10 +267,11 @@ export const MatchmakingForm: FC = () => {
 										onClick={async () => {
 											setPassesPending(true);
 											await Matchmaking.resetPasses()
-												.then(() => {
+												.then(async () => {
 													setPassesPending(false);
 													toasts.add(t("passes_reset"));
-													return router.refresh();
+
+													return invalidate({ predicate: ({ queryKey }) => queryKey[0] === "query" });
 												})
 												.catch(toasts.addError);
 										}}

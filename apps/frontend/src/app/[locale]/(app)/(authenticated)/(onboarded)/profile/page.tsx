@@ -1,10 +1,8 @@
-"use client";
-
 import type { FC } from "react";
+import { useSearchParams } from "react-router";
 
 import { Profile } from "~/components/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";
-import { notFound, useSearchParams } from "~/i18n/navigation";
 
 import { QueueActions } from "../discover/[group]/queue-actions";
 
@@ -27,8 +25,9 @@ const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 };
 
 export default function ProfilePage() {
-	const userId = useSearchParams().get("");
-	if (!userId) notFound();
+	const [searchParameters] = useSearchParams();
+	const userId = searchParameters.get("userId");
+	if (!userId) return null;
 
 	return (
 		<>

@@ -1,11 +1,9 @@
-import { captureException } from "@sentry/nextjs";
+import { captureException } from "@sentry/react";
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
-import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
+import { m } from "motion/react";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo } from "react";
-import useSound from "use-sound";
+import { Trans, useTranslation } from "react-i18next";
 
 import { Button } from "~/components/button";
 import { CopyClick } from "~/components/copy-click";
@@ -16,7 +14,8 @@ import {
 	DialogTitle
 } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
-import { gitCommitSha, maintenance } from "~/const";
+import { Image } from "~/components/image";
+import { commitIdShort, maintenance } from "~/const";
 import { urls } from "~/urls";
 
 export type ErrorWithDigest = { digest?: string } & Error;
@@ -24,27 +23,33 @@ export type ErrorWithDigest = { digest?: string } & Error;
 export interface ErrorProps { error: ErrorWithDigest; reset: () => void };
 
 const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, eventId }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<>
 			{digest && (
 				<CopyClick value={digest}>
 					<span>
-						{t.rich("zany_watery_zebra_play", {
-							value: digest,
-							strong: (children) => <strong className="font-bold">{children}</strong>
-						})}
+						<Trans
+							components={{
+								strong: <strong className="font-bold" />
+							}}
+							i18nKey="zany_watery_zebra_play"
+							values={{ value: digest }}
+						/>
 					</span>
 				</CopyClick>
 			)}
 			{eventId && (
 				<CopyClick value={eventId}>
 					<span>
-						{t.rich("big_that_insect_slurp", {
-							value: eventId,
-							strong: (children) => <strong className="font-bold">{children}</strong>
-						})}
+						<Trans
+							components={{
+								strong: <strong className="font-bold" />
+							}}
+							i18nKey="big_that_insect_slurp"
+							values={{ value: eventId }}
+						/>
 					</span>
 				</CopyClick>
 			)}
@@ -60,12 +65,12 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 	// Bail out to the Next.js error dialog in development, more useful for debugging.
 	// if (environment === "development") throw error;
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const errorKey = error.digest || error.message;
 
 	const eventId = useMemo(() => captureException(error, { tags: { digest: error.digest } }), [error]);
-	const [squeak] = useSound(urls.media("squeak.mp3"));
+	// const [squeak] = useSound(urls.media("squeak.mp3"));
 
 	const throwCount = (errors.get(errorKey) || 0) + 1;
 
@@ -82,10 +87,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 
 	useEffect(() => {
 		errors.set(errorKey, throwCount);
-
-		// Maybe recover from error automatically?
-		if (throwCount === 1) tryAgain();
-	}, [errorKey, throwCount, tryAgain]);
+	}, [errorKey, throwCount]);
 
 	return (
 		<DrawerOrDialog
@@ -113,9 +115,9 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										height={345}
 										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 										width={412}
-										onClick={() => squeak()}
+										// onClick={() => squeak()}
 									/>
-									<motion.div
+									<m.div
 										animate={{ scale: 1, opacity: 1 }}
 										className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80"
 										initial={{ scale: 0.8, opacity: 0.5 }}
@@ -127,7 +129,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										<p>
 											Flirtual is temporarily offline for scheduled maintenance. We'll be right back&mdash;check back soon!
 										</p>
-									</motion.div>
+									</m.div>
 								</div>
 								<div className="flex flex-wrap gap-2">
 									<Button
@@ -160,7 +162,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									<footer>
 										<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 										{" "}
-										<span className="text-sm opacity-75">{gitCommitSha?.slice(0, 6)}</span>
+										<span className="text-sm opacity-75">{commitIdShort}</span>
 									</footer>
 								</div>
 							</DialogBody>
@@ -183,9 +185,9 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										height={345}
 										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
 										width={412}
-										onClick={() => squeak()}
+										// onClick={() => squeak()}
 									/>
-									<motion.div
+									<m.div
 										animate={{ scale: 1, opacity: 1 }}
 										className="relative flex flex-col gap-2 rounded-lg bg-white-10 p-4 text-black-80"
 										initial={{ scale: 0.8, opacity: 0.5 }}
@@ -198,7 +200,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										<pre className="whitespace-pre-wrap text-xs">
 											{error.message}
 										</pre>
-									</motion.div>
+									</m.div>
 								</div>
 								<ul className="ml-4 flex list-disc flex-col gap-2">
 									<li>
@@ -214,28 +216,36 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									</li>
 									{native && (<li>{t("game_vexed_goldfish_dash")}</li>)}
 									<li>
-										{t.rich(native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe", {
-											"browser-icon": () => <Chrome className="mr-1 inline-block size-4 shrink-0" />,
-											"device-icon": () => <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
-										})}
+										<Trans
+											components={{
+												"browser-icon": <Chrome className="mr-1 inline-block size-4 shrink-0" />,
+												"device-icon": <Smartphone className="mr-0.5 inline-block size-4 shrink-0" />
+											}}
+											i18nKey={native ? "sweet_strong_poodle_endure" : "heroic_pink_gull_breathe"}
+										/>
 									</li>
 									<li>
-										{t.rich("tough_sleek_wasp_reside", {
-											icon: () => <WifiOff className="mr-1 inline-block size-4 shrink-0" />
-										})}
+										<Trans
+											components={{
+												icon: <WifiOff className="mr-1 inline-block size-4 shrink-0" />,
+											}}
+											i18nKey="tough_sleek_wasp_reside"
+										/>
 									</li>
 									<li>
-										{t.rich("yummy_salty_porpoise_greet", {
-											contact: (children) => (
-												<a
-													className="whitespace-nowrap lowercase underline"
-													href={urls.resources.contact}
-												>
-													<Send className="mr-1 inline-block size-4 shrink-0" />
-													{children}
-												</a>
-											)
-										})}
+										<Trans
+											components={{
+												contact: (
+													<a
+														className="whitespace-nowrap lowercase underline"
+														href={urls.resources.contact}
+													>
+														<Send className="mr-1 inline-block size-4 shrink-0" />
+													</a>
+												)
+											}}
+											i18nKey="yummy_salty_porpoise_greet"
+										/>
 
 									</li>
 								</ul>
@@ -273,7 +283,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 									<footer>
 										<span>{t("copyright", { year: new Date().getFullYear() })}</span>
 										{" "}
-										<span className="text-sm opacity-75">{gitCommitSha?.slice(0, 6)}</span>
+										<span className="text-sm opacity-75">{commitIdShort}</span>
 									</footer>
 								</div>
 							</DialogBody>

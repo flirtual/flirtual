@@ -1,7 +1,5 @@
-"use client";
-
 import { Key, Loader2, X } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -18,7 +16,7 @@ export interface PasskeyButtonProps {
 export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 	const { id, name, icon, date } = props;
 	const toasts = useToast();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const { mutate, isPending } = useMutation({
 		mutationKey: sessionKey(),

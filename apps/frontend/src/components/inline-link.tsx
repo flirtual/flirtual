@@ -1,10 +1,8 @@
-import type { Url } from "next/dist/shared/lib/router/router";
 import { twMerge } from "tailwind-merge";
 
 import { Link } from "./link";
 
 export type InlineLinkProps = {
-	href: Url | null;
 	highlight?: boolean;
 	asChild?: boolean;
 } & Parameters<typeof Link>[0];

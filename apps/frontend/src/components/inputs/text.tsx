@@ -1,10 +1,7 @@
-/* eslint-disable react/prefer-destructuring-assignment */
-"use client";
-
 import { CalendarDays, Eye, EyeOff } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { omit } from "remeda";
 import { twMerge } from "tailwind-merge";
 
@@ -22,7 +19,7 @@ export type InputTextProps = {
 export const InputText: React.FC<InputTextProps> = (props) => {
 	const inputReference = useRef<HTMLInputElement>(null);
 	const [inputVisible, setInputVisible] = useState(props.type !== "password");
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const type = inputVisible
 		? props.type === "date" || props.type === "password"

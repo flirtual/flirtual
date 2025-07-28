@@ -1,11 +1,9 @@
-"use client";
-
 import { Trash2 } from "lucide-react";
 import type { FC } from "react";
+import { useNavigate } from "react-router";
 
 import { Conversation } from "~/api/conversations";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 export interface LeaveButtonProps {
@@ -14,7 +12,7 @@ export interface LeaveButtonProps {
 
 export const LeaveButton: FC<LeaveButtonProps> = (props) => {
 	const { conversationId } = props;
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 
 	return (
@@ -25,7 +23,7 @@ export const LeaveButton: FC<LeaveButtonProps> = (props) => {
 				await Conversation.leave(conversationId)
 					.catch(toasts.addError);
 
-				return router.push(urls.conversations.list());
+				await navigate(urls.conversations.list());
 			}}
 		>
 			<Trash2 className="size-[1.625rem]" />

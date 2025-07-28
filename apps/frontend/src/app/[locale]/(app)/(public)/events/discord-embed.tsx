@@ -1,10 +1,9 @@
-"use client";
-
 import WidgetBot from "@widgetbot/react-embed";
-import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import { displayName } from "~/api/user";
 import { useOptionalSession } from "~/hooks/use-session";
+import { lazy } from "~/lazy";
 import { urls } from "~/urls";
 
 const DiscordEmbed_: React.FC = () => {
@@ -22,7 +21,10 @@ const DiscordEmbed_: React.FC = () => {
 	);
 };
 
-export const DiscordEmbed = dynamic(() => Promise.resolve(DiscordEmbed_), {
-	ssr: false,
-	loading: () => <div style={{ height: 600, width: "100%" }} />
-});
+const LazyDiscordEmbed = lazy(() => Promise.resolve({ default: DiscordEmbed_ }));
+
+export const DiscordEmbed: React.FC = () => (
+	<Suspense fallback={<div style={{ height: 600, width: "100%" }} />}>
+		<LazyDiscordEmbed />
+	</Suspense>
+);

@@ -1,12 +1,10 @@
-"use client";
-
 import {
 	AppUpdate,
 	AppUpdateAvailability,
 } from "@capawesome/capacitor-app-update";
 import ms from "ms";
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { withSuspense, } from "with-suspense";
 
 import { useDevice } from "~/hooks/use-device";
@@ -26,7 +24,7 @@ import { DialogFooter } from "./dialog/dialog";
 
 export const UpdateInformation: React.FC = withSuspense(() => {
 	const { native } = useDevice();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const updateInformation = useQuery({
 		queryKey: ["update-information"],

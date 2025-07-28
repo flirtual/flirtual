@@ -1,8 +1,5 @@
-"use client";
-
-import { Copy } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ComponentProps, CSSProperties } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { displayName } from "~/api/user";
@@ -48,7 +45,7 @@ export function Profile({
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!user) return null;
 
@@ -61,6 +58,7 @@ export function Profile({
 
 	return (
 		<div
+			id={id}
 			style={
 				user.profile.color1 && user.profile.color2
 					? ({
@@ -73,7 +71,6 @@ export function Profile({
 						} as CSSProperties)
 					: {}
 			}
-			id={id}
 			{...elementProps}
 			data-mask
 			className={twMerge(
@@ -116,8 +113,8 @@ export function Profile({
 							/>
 							{user.profile.country && (
 								<CountryPill
-									className="!bg-opacity-70"
 									id={user.profile.country}
+									className="!bg-opacity-70"
 								/>
 							)}
 						</div>
@@ -146,24 +143,23 @@ export function Profile({
 							{(discordConnection || user.profile.discord) && (
 								<div className="flex items-center gap-2">
 									<DiscordIcon className="size-6 shrink-0" />
-									{t.rich("that_proud_butterfly_find", {
-										name:
-											discordConnection?.displayName || user.profile.discord!,
-										copy: (children) => (
-											<CopyClick
-												value={
-													session.user.status === "visible"
-														? discordConnection?.displayName
-														|| user.profile.discord!
-														: null
-												}
-											>
-												<span className="data-[copy-click]:hover:underline">
-													{children}
-												</span>
-											</CopyClick>
-										)
-									})}
+									<Trans
+										components={{
+											copy: (
+												<CopyClick
+													value={
+														session.user.status === "visible"
+															? discordConnection?.displayName
+															|| user.profile.discord!
+															: null
+													}
+													className="data-[copy-click]:hover:underline"
+												/>
+											)
+										}}
+										i18nKey="that_proud_butterfly_find"
+										values={{ name: discordConnection?.displayName || user.profile.discord! }}
+									/>
 									{discordConnection && (
 										<ProfileVerificationBadge
 											tooltip={t("discord_verified")}
@@ -180,30 +176,19 @@ export function Profile({
 								return (
 									<div className="flex items-center gap-2">
 										<VRChatOutlineIcon className="size-6 shrink-0 text-black-90" />
-										{t.rich("zany_salty_cheetah_lead", {
-											name,
-											copy: (children) => (
-												<div className="group flex items-center justify-center gap-1">
+										<Trans
+											components={{
+												copy: (
 													<InlineLink
 														className="underline"
 														highlight={false}
 														href={url}
-													>
-														{children}
-													</InlineLink>
-													{session.user.status === "visible" && (
-														<CopyClick value={name}>
-															<button
-																className="p-2 opacity-0 transition-opacity group-hover:opacity-100"
-																type="button"
-															>
-																<Copy className="size-4 shrink-0" />
-															</button>
-														</CopyClick>
-													)}
-												</div>
-											)
-										})}
+													/>
+												)
+											}}
+											i18nKey="zany_salty_cheetah_lead"
+											values={{ name }}
+										/>
 									</div>
 								);
 							})()}
@@ -243,11 +228,14 @@ export function Profile({
 						: myProfile
 							? (
 									<span className="text-xl italic dark:text-white-20">
-										{t.rich("early_quiet_giraffe_dine", {
-											"settings-bio": (children) => (
-												<InlineLink href={urls.settings.bio}>{children}</InlineLink>
-											)
-										})}
+										<Trans
+											components={{
+												"settings-bio": (
+													<InlineLink href={urls.settings.bio} />
+												)
+											}}
+											i18nKey="early_quiet_giraffe_dine"
+										/>
 									</span>
 								)
 							: (

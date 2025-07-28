@@ -1,5 +1,3 @@
-"use client";
-
 import { MailPlus } from "lucide-react";
 import type { FC } from "react";
 import { useState } from "react";
@@ -24,7 +22,7 @@ import { VRChatOutlineIcon } from "~/components/icons/brand/vrchat-outline";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 
-import { VRChatBrowse } from "./vrchat-browse";
+// import { VRChatBrowse } from "./vrchat-browse";
 
 export interface VRChatButtonProps {
 	user: User;
@@ -34,7 +32,7 @@ export interface VRChatButtonProps {
 export const VRChatButton: FC<VRChatButtonProps> = (props) => {
 	const { user, conversationId } = props;
 	const [dialogOpen, setDialogOpen] = useState(false);
-	const { platform, vision } = useDevice();
+	const { apple, vision } = useDevice();
 	const session = useOptionalSession();
 
 	return (
@@ -59,10 +57,10 @@ export const VRChatButton: FC<VRChatButtonProps> = (props) => {
 						VRChat
 					</DropdownMenuItem>
 					{vision
-					&& session?.user.tags?.includes("debugger")
-					&& session.user.profile.facetime
-					&& user.profile.facetime
-					&& platform === "apple" && (
+						&& session?.user.tags?.includes("debugger")
+						&& session.user.profile.facetime
+						&& user.profile.facetime
+						&& apple && (
 						<DropdownMenuItem asChild>
 							<a
 								className="flex items-center gap-2"
@@ -82,11 +80,11 @@ export const VRChatButton: FC<VRChatButtonProps> = (props) => {
 						<DialogTitle>Send a VRChat invite</DialogTitle>
 					</DialogHeader>
 					<DialogBody>
-						<VRChatBrowse
+						{/* <VRChatBrowse
 							conversationId={conversationId}
 							user={user}
 							onClose={() => setDialogOpen(false)}
-						/>
+						/> */}
 					</DialogBody>
 				</DialogContent>
 			</Dialog>

@@ -2,10 +2,10 @@ import { cache } from "react";
 import type { WretchOptions } from "wretch";
 
 import {
-	api,
-	type Issue,
-	isWretchError
+	api
+
 } from "./common";
+import type { Issue } from "./common";
 
 export const ProspectKind = ["love", "friend"] as const;
 export const prospectKinds = ProspectKind;
@@ -34,10 +34,10 @@ export interface RespondProspect {
 	queue: Queue;
 }
 
-export type QueueActionIssue =
-	| Issue<"already_responded">
-	| Issue<"out_of_likes" | "out_of_passes", { reset_at: string }>
-	| QueueIssue;
+export type QueueActionIssue
+	= | Issue<"already_responded">
+		| Issue<"out_of_likes" | "out_of_passes", { reset_at: string }>
+		| QueueIssue;
 
 export interface ReverseRespondProspectBody {
 	mode: ProspectKind;

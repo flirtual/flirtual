@@ -1,8 +1,7 @@
-"use client";
-
 import { MoveRight } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 
 import { Authentication } from "~/api/auth";
 import { Button, ButtonLink } from "~/components/button";
@@ -11,18 +10,17 @@ import { FormButton } from "~/components/forms/button";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useFreshworks } from "~/hooks/use-freshworks";
-import { useSearchParams } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { ConfirmPasswordResetForm } from "./confirm-form";
 
 export const ForgotPasswordForm: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [success, setSuccess] = useState(false);
 	const { openFreshworks } = useFreshworks();
 
-	const token = useSearchParams().get("");
+	const token = useSearchParams()[0].get("");
 	if (token) return <ConfirmPasswordResetForm token={token} />;
 
 	return (
@@ -43,11 +41,13 @@ export const ForgotPasswordForm: React.FC = () => {
 					? (
 							<>
 								<p>
-									{t.rich("ready_ghost_locket_bubble", {
-										br: () => <br />,
-										email: () => <span className="font-semibold">{fields.email.props.value}</span>,
-										contact: (children) => <InlineLink href={urls.resources.contactDirect}>{children}</InlineLink>
-									})}
+									<Trans
+										components={{
+											contact: <InlineLink href={urls.resources.contactDirect} />
+										}}
+										i18nKey="ready_ghost_locket_bubble"
+										values={{ email: fields.email.props.value }}
+									/>
 								</p>
 								<div className="flex gap-2">
 									<ButtonLink className="min-w-44" href={urls.login()} size="sm">{t("login")}</ButtonLink>

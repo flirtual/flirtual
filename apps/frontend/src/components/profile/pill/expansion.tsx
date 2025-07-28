@@ -1,12 +1,12 @@
-"use client";
-
 import { MoreHorizontal } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import { type FC, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import type { User } from "~/api/user";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
+import { useLocale } from "~/i18n";
 import { urls } from "~/urls";
 
 import { ProfilePlaylist } from "../playlist";
@@ -24,7 +24,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 ) => {
 	const { editable, user, session } = props;
 	const [expanded, setExpanded] = useState(false);
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	const kinks = useAttributes("kink");
@@ -36,7 +36,7 @@ export const PillCollectionExpansion: FC<PillCollectionExpansionProps> = (
 		[kinks, session.user.profile.attributes]
 	);
 
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const languageNames = new Intl.DisplayNames(locale, {
 		type: "language"

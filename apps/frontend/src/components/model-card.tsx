@@ -1,6 +1,6 @@
 import { Info } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
@@ -29,7 +29,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	inset = true,
 	...props
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<>
@@ -70,16 +70,16 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			</div>
 			{miniFooter && (
 				<footer className={twMerge(
-					"mb-8 mt-auto grid grid-cols-3 items-center justify-center gap-4 desktop:mb-0 desktop:mt-8",
+					"mb-8 mt-auto flex grid-cols-3 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mb-0 desktop:mt-8 desktop:grid",
 				)}
 				>
-					<SupportButton className="flex items-center gap-0.5em whitespace-nowrap">
+					<InlineLanguageSelect />
+					<InlineThemeSelect />
+					<SupportButton className="col-span-2 flex items-center gap-0.5em whitespace-nowrap desktop:col-span-1">
 						<Info className="inline-block size-em" />
 						{" "}
 						{t("need_help")}
 					</SupportButton>
-					<InlineThemeSelect />
-					<InlineLanguageSelect />
 				</footer>
 			)}
 		</>

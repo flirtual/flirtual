@@ -1,20 +1,21 @@
-import { api, type DatedModel, type UuidModel } from "./common";
+import { api } from "./common";
+import type { DatedModel, UuidModel } from "./common";
 import type { Plan } from "./plan";
 
-type SubscriptionPlatform =
-	| "android"
-	| "chargebee"
-	| "ios"
-	| "stripe"
-	| "unknown";
+type SubscriptionPlatform
+	= | "android"
+		| "chargebee"
+		| "ios"
+		| "stripe"
+		| "unknown";
 
 export type Subscription = {
 	active: boolean;
 	plan: Plan;
 	cancelledAt?: string;
 	platform: SubscriptionPlatform;
-} &
-DatedModel & UuidModel;
+}
+& DatedModel & UuidModel;
 
 export const Subscription = {
 	api: api.url("subscriptions"),

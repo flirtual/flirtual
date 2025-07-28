@@ -1,6 +1,7 @@
 import type { Expand } from "~/utilities";
 
-import { api, type DatedModel, type UuidModel } from "./common";
+import { api } from "./common";
+import type { DatedModel, UuidModel } from "./common";
 
 export type Report = Expand<
 	{
@@ -10,8 +11,8 @@ export type Report = Expand<
 		reviewedAt?: string;
 		userId?: string;
 		targetId: string;
-	} &
-	DatedModel & UuidModel
+	}
+	& DatedModel & UuidModel
 >;
 
 export type ListReportOptions = Partial<

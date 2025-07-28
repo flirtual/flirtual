@@ -1,15 +1,12 @@
-"use client";
-
 import type { InfiniteData } from "@tanstack/react-query";
 import { ArrowLeft, ArrowLeftToLine, ArrowRight, Cone, Dices, Flame, Gamepad2, Map, Sprout } from "lucide-react";
 import {
-	type ComponentProps,
-	type DispatchWithoutAction,
-	type FC,
+
 	use,
 	useRef,
 	useState
 } from "react";
+import type { ComponentProps, DispatchWithoutAction, FC } from "react";
 import { useInView } from "react-intersection-observer";
 import { capitalize, uniqueBy } from "remeda";
 import { twMerge } from "tailwind-merge";
@@ -27,8 +24,12 @@ import {
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "~/components/drawer";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
+import { defaultLocale, i18n } from "~/i18n";
 import { useInfiniteQuery } from "~/query";
+import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
+
+import type { Route } from "./+types/page";
 
 const worldCategoryIcons = {
 	recommended: Flame,
@@ -247,6 +248,11 @@ const WorldCategoryContent = withSuspense<{
 	</>
 });
 
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	return metaMerge([...rootMeta(options), { title: "VRChat Browse Test" }]);
+};
+
 export default function Test() {
 	return (
 		<DrawerOrDialog open className="desktop:max-w-2xl">
@@ -260,7 +266,7 @@ export default function Test() {
 				<DialogBody className="-mx-4 -mb-4 overflow-y-auto desktop:mx-0">
 					<div data-vaul-no-drag className="flex w-full snap-y snap-proximity flex-col gap-4 py-1">
 						{worldCategories.map((category) => (
-							<WorldCategory category={category} key={category} />
+							<WorldCategory key={category} category={category} />
 						))}
 					</div>
 				</DialogBody>

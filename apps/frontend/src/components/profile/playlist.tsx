@@ -1,10 +1,10 @@
-import type { Locale } from "next-intl";
-import { useLocale } from "next-intl";
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useTheme } from "~/hooks/use-theme";
-import type { Theme } from "~/theme";
+import type { Theme } from "~/hooks/use-theme";
+import type { Locale } from "~/i18n";
+import { useLocale } from "~/i18n";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const playlistPlatforms = [
@@ -83,7 +83,7 @@ export const ProfilePlaylist: FC<{
 	className?: string;
 }> = ({ playlist, className }) => {
 	const [theme] = useTheme();
-	const locale = useLocale() as Locale;
+	const [locale] = useLocale();
 
 	const matchedPlatform = playlistPlatforms.find(({ pattern }) => pattern.test(playlist));
 	const match = matchedPlatform?.pattern.exec(playlist);

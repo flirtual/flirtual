@@ -1,7 +1,5 @@
-"use client";
-
 import { Sparkles } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 import { Matchmaking } from "~/api/matchmaking";
 import { displayName } from "~/api/user";
@@ -21,7 +19,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 	const relationship = useRelationship(userId);
 	const { user: current } = useSession();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const toasts = useToast();
 
 	if (!user || !relationship) return null;

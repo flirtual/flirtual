@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { fromEntries } from "remeda";
 
 import { User } from "~/api/user";
@@ -21,10 +19,11 @@ import {
 	InputLanguageAutocomplete
 } from "~/components/inputs/specialized";
 import {
-	type AttributeTranslation,
+
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
@@ -42,7 +41,7 @@ export const InfoForm: FC = () => {
 	const sexualities = useAttributes("sexuality");
 	const genders = useAttributes("gender");
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;

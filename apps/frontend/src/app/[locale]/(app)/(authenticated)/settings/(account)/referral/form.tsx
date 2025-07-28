@@ -1,5 +1,3 @@
-"use client";
-
 import { Form, FormButton } from "~/components/forms";
 import { InputLabel, InputText } from "~/components/inputs";
 

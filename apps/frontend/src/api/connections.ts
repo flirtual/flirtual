@@ -2,12 +2,14 @@ import {
 	AppleIcon,
 	DiscordIcon,
 	GoogleIcon,
-	type IconComponent,
+
 	MetaIcon,
 	VRChatIcon
 } from "~/components/icons";
+import type { IconComponent } from "~/components/icons";
 
-import { api, type UpdatedAtModel } from "./common";
+import { api } from "./common";
+import type { UpdatedAtModel } from "./common";
 
 export const ConnectionType = [
 	"google",
@@ -80,9 +82,9 @@ export const Connection = {
 			.url(this.authorizeUrl({ ...options, json: true }), true)
 			.get()
 			.json<{
-			state: string;
-			authorizeUrl: string;
-		}>();
+				state: string;
+				authorizeUrl: string;
+			}>();
 	},
 	grant(options: ConnectionGrantOptions) {
 		return this.api.url("/grant").query(options).get().res();

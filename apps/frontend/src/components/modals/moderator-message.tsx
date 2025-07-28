@@ -1,15 +1,15 @@
-"use client";
-
 import ms from "ms";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
 import type { Dispatch, FC, ReactNode } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import type { Session } from "react-router";
+import { useNavigate } from "react-router";
 import { withSuspense } from "with-suspense";
 
 import { User } from "~/api/user";
+import { Image } from "~/components/image";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "~/i18n/navigation";
+import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Button } from "../button";
@@ -19,11 +19,8 @@ import { InlineLink } from "../inline-link";
 
 export const ModerationMessageDialog: FC = withSuspense(() => {
 	const session = useOptionalSession();
-
 	const toasts = useToast();
-	const router = useRouter();
-
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session?.user.moderatorMessage) return null;
 
@@ -31,9 +28,9 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 		<TrustAndSafetyDialog
 			onAcknowledge={() =>
 				User.acknowledgeWarn(session.user.id)
-					.then(() => {
-						toasts.add(t("message_acknowledged"));
-						return router.refresh();
+					.then(async () => {
+						const user = await toasts.add(t("message_acknowledged"));
+						await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 					})
 					.catch(toasts.addError)}
 		>
@@ -45,19 +42,20 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 export const DiscordSpamDialog: FC = withSuspense(() => {
 	const session = useOptionalSession();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 	const toasts = useToast();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const remindMeLater = async (quiet: boolean = false) => {
 		if (!session) return;
 
-		await User.update(session.user.id, {
+		const user = await User.update(session.user.id, {
 			tnsDiscordInBiography: new Date(Date.now() + ms("30d")).toISOString()
 		});
 
 		if (!quiet) toasts.add(t("you_will_be_reminded_in_number_days", { number: 30 }));
+		await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 	};
 
 	if (!session?.user.tnsDiscordInBiography || new Date(session?.user.tnsDiscordInBiography).getTime() > Date.now())
@@ -73,9 +71,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 						size="sm"
 						onClick={async () => {
 							await remindMeLater(true);
-
-							router.push(urls.settings.bio);
-							router.refresh();
+							await navigate(urls.settings.bio);
 						}}
 					>
 						{t("edit_profile")}
@@ -86,7 +82,6 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 						size="sm"
 						onClick={async () => {
 							await remindMeLater();
-							router.refresh();
 						}}
 					>
 						{t("remind_me_later")}
@@ -95,15 +90,15 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 			)}
 			onOpenChange={async (open) => {
 				if (open) return;
-
 				await remindMeLater();
-				router.refresh();
 			}}
 		>
-			{t.rich("tense_active_gibbon_dare", {
-				link: (children) => <InlineLink href={urls.settings.connections}>{children}</InlineLink>,
-				br: () => <br />
-			})}
+			<Trans
+				components={{
+					link: <InlineLink href={urls.settings.connections} />,
+				}}
+				i18nKey="tense_active_gibbon_dare"
+			/>
 		</TrustAndSafetyDialog>
 	);
 });
@@ -116,7 +111,7 @@ export const TrustAndSafetyDialog: FC<{
 	closable?: boolean;
 }> = ({ children, actions, closable = false, onAcknowledge, onOpenChange }) => {
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session) return null;
 

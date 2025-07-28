@@ -1,6 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-"use client";
-
 import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -12,13 +10,14 @@ import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
 import { Config } from "./api/config";
-import { Conversation, type ConversationList } from "./api/conversations";
-import { Matchmaking, type ProspectKind } from "./api/matchmaking";
+import { Conversation } from "./api/conversations";
+import type { ConversationList } from "./api/conversations";
+import { Matchmaking } from "./api/matchmaking";
+import type { ProspectKind } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
-import { development, gitCommitSha, server } from "./const";
-import { postpone } from "./hooks/use-postpone";
+import { commitId, development, server } from "./const";
 import { log as _log } from "./log";
 import { getPreferences, setPreferences } from "./preferences";
 import { isUid } from "./utilities";
@@ -79,7 +78,7 @@ export function preferencesFetcher<T>({ queryKey: [, key] }: QueryFunctionContex
 }
 
 export async function preloadAll() {
-	log("%s()", preloadAll.name);
+	log("preloadAll()");
 
 	await Promise.all([
 		// `staleTime: 0` to force a refetch on every hard-reload.
@@ -104,7 +103,7 @@ export async function preloadAll() {
 			queryFn: attributeFetcher
 		}))
 	]).catch((reason) => {
-		log("%s() failed: %o", preloadAll.name, reason);
+		log("preloadAll() failed: %o", reason);
 	});
 }
 
@@ -114,9 +113,8 @@ export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			experimental_prefetchInRender: true,
-			// retry: environment !== "development",
 			throwOnError: true,
-			retry: true,
+			retry: !development,
 			retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 60000),
 			staleTime: ms("5m"),
 			gcTime: ms("1h"),
@@ -149,11 +147,11 @@ interface QueryPreference {
 
 export type MinimalQueryOptions<T> = Pick<UseQueryOptions<T, Error, T, QueryKey>, "placeholderData">;
 
-const cacheVersion = gitCommitSha;
+const cacheVersion = commitId;
 const defaultCacheTime = ms("1d");
 
 export async function saveQueries() {
-	log("%s()", saveQueries.name);
+	log("saveQueries()");
 	const queries = queryCache.getAll();
 
 	const eligibleQueries = queries.filter(({
@@ -185,13 +183,13 @@ export async function saveQueries() {
 }
 
 export async function evictQueries() {
-	log("%s()", evictQueries.name);
+	log("evictQueries()");
 	queryCache.clear();
 	await setPreferences("queries", null);
 }
 
 export async function restoreQueries() {
-	log("%s()", restoreQueries.name);
+	log("restoreQueries()");
 
 	const { v: version, q: potentialQueries } = await getPreferences<QueryPreference>("queries") || { v: cacheVersion, q: [] };
 
@@ -214,7 +212,7 @@ export async function restoreQueries() {
 		return queryCache.build(queryClient, { queryKey, queryHash }, state);
 	}).filter(Boolean);
 
-	log("%s() => %O", restoreQueries.name, new Map(queries.map(({ queryKey, state: { data } }) => [queryKey, data])));
+	log("restoreQueries() => %O", new Map(queries.map(({ queryKey, state: { data } }) => [queryKey, data])));
 }
 
 let usedQuery = false;
@@ -246,10 +244,8 @@ export function useQuery<
 	}
 
 	if (server) {
-		if (placeholderData === undefined)
-			postpone("useQuery() without placeholderData");
-
-		return placeholderData as T;
+		if (placeholderData !== undefined)
+			return placeholderData as T;
 	}
 
 	if (!enabled && placeholderData === undefined)

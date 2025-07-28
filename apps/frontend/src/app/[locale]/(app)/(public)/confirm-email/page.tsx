@@ -1,24 +1,18 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 
+import type { Route } from "./+types/page";
 import { ConfirmEmailForm } from "./form";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("confirm_email")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("confirm_email") }
+	]);
+};
 
-export interface ConfirmEmailPageProps {
-	params: Promise<{ locale: Locale }>;
-}
-
-export default async function ConfirmEmailPage({ params }: ConfirmEmailPageProps) {
-	const { locale } = await params;
-	setRequestLocale(locale);
-
-	return <ConfirmEmailForm />
+export default function ConfirmEmailPage() {
+	return <ConfirmEmailForm />;
 }

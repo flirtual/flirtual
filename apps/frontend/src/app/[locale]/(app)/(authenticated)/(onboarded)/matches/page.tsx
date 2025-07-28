@@ -1,21 +1,20 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 
+import type { Route } from "./+types/page";
 import { ConversationAside } from "./aside";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return {
-		title: t("matches")
-	};
-}
+	return metaMerge([
+		...rootMeta(options),
+		{
+			title: t("matches")
+		}
+	]);
+};
 
-export default function ConversationListPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
+export default function ConversationListPage() {
 	return <ConversationAside />;
 }

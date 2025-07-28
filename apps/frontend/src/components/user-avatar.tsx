@@ -1,16 +1,17 @@
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { displayName } from "~/api/user";
 import { urls } from "~/urls";
 
-import { Image, type ImageProps } from "./image";
+import { Image } from "./image";
+import type { ImageProps } from "./image";
 
 export type UserAvatarProps = {
-	user: Parameters<typeof displayName>[0] &
-		Parameters<typeof urls.userAvatar>[0] | null;
+	user: Parameters<typeof displayName>[0]
+		& Parameters<typeof urls.userAvatar>[0] | null;
 	variant?: string;
 } & Omit<ImageProps, "alt" | "src">;
 
@@ -19,7 +20,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 	variant = "profile",
 	...props
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<UserImage

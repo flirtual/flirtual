@@ -1,9 +1,7 @@
-"use client";
-
 import { MoveLeft, Search } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useRouter } from "~/i18n/navigation";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
@@ -24,8 +22,8 @@ import {
 export const Finish3Form: FC = () => {
 	const session = useOptionalSession();
 	const toasts = useToast();
-	const router = useRouter();
-	const t = useTranslations();
+	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	if (!session) return null;
 	const { user } = session;
@@ -46,7 +44,7 @@ export const Finish3Form: FC = () => {
 					interestId: defaultInterests
 				})
 					.then(() => {
-						return router.push(urls.finish(4));
+						return navigate(urls.finish(4));
 					})
 					.catch(toasts.addError);
 			}}

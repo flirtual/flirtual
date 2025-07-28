@@ -1,15 +1,14 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
 import {
 	DiscordIcon,
-	type IconComponent,
+
 	TwitterIcon
 } from "~/components/icons";
-import { gitCommitSha } from "~/const";
+import type { IconComponent } from "~/components/icons";
+import { commitIdShort } from "~/const";
 import { urls } from "~/urls";
 
 import { InlineLink } from "../inline-link";
@@ -20,8 +19,8 @@ import { FooterCannyLink } from "./canny-button";
 import { MadeWithLove } from "./made-with-love";
 import { FooterIconSupportLink, FooterSupportLink } from "./support-button";
 
-type LinkOrButtonProps<T> = T &
-	(
+type LinkOrButtonProps<T> = T
+	& (
 		| Pick<React.ComponentProps<"a">, "href">
 		| Pick<React.ComponentProps<"button">, "onClick">
 	);
@@ -91,7 +90,7 @@ export const Footer: React.FC<FooterProps> = ({
 	logoClassName,
 	...props
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<footer
@@ -179,7 +178,7 @@ export const Footer: React.FC<FooterProps> = ({
 							highlight={false}
 							href={urls.debugger}
 						>
-							{gitCommitSha.slice(0, 8)}
+							{commitIdShort}
 						</InlineLink>
 					</div>
 				</div>

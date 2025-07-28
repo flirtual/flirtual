@@ -1,5 +1,3 @@
-"use client";
-
 import { useDebugValue } from "react";
 
 import { setPreferences } from "~/preferences";
@@ -10,7 +8,7 @@ import {
 	useQuery
 } from "~/query";
 
-import { postpone } from "./use-postpone";
+// import { postpone } from "./use-postpone";
 
 /**
  * A hook for getting and setting preferences.
@@ -22,8 +20,7 @@ export function usePreferences<T>(key: string, defaultValue: T): [T, (value: T |
 export function usePreferences<T>(key: string, defaultValue?: T): [T | null, (value: T | null) => Promise<T | null>] {
 	useDebugValue(key);
 
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	if (defaultValue === undefined) postpone("usePreferences() without defaultValue");
+	// if (defaultValue === undefined) postpone("usePreferences() without defaultValue");
 
 	const queryKey = preferencesKey(key);
 

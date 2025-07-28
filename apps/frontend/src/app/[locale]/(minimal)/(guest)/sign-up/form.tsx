@@ -1,8 +1,6 @@
-"use client";
-
 import { MoveRight } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
 import type { FC } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -16,15 +14,13 @@ import {
 	InputLabelHint,
 	InputText
 } from "~/components/inputs";
-import { useRouter } from "~/i18n/navigation";
+import { useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Onboarding0Form: FC = () => {
-	const t = useTranslations();
-	const locale = useLocale();
-
-	const router = useRouter();
+	const { t } = useTranslation();
+	const [locale] = useLocale();
 
 	return (
 		<Form
@@ -76,9 +72,9 @@ export const Onboarding0Form: FC = () => {
 						)}
 					</FormField>
 					<FormField
+						name="url"
 						aria-hidden="true"
 						className="absolute left-[-9999px]"
-						name="url"
 					>
 						{({ props, labelProps }) => (
 							<>
@@ -96,28 +92,27 @@ export const Onboarding0Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											{t.rich("pickle_capricious_cemetery_name", {
-												terms: (children) => (
-													<InlineLink
-														className="underline"
-														highlight={false}
-														href={urls.resources.termsOfService}
-														tabIndex={8}
-													>
-														{children}
-													</InlineLink>
-												),
-												privacy: (children) => (
-													<InlineLink
-														className="underline"
-														highlight={false}
-														href={urls.resources.privacyPolicy}
-														tabIndex={9}
-													>
-														{children}
-													</InlineLink>
-												)
-											})}
+											<Trans
+												components={{
+													terms: (
+														<InlineLink
+															className="underline"
+															highlight={false}
+															href={urls.resources.termsOfService}
+															tabIndex={8}
+														/>
+													),
+													privacy: (
+														<InlineLink
+															className="underline"
+															highlight={false}
+															href={urls.resources.privacyPolicy}
+															tabIndex={9}
+														/>
+													)
+												}}
+												i18nKey="pickle_capricious_cemetery_name"
+											/>
 										</InputLabelHint>
 									)}
 								>
@@ -135,7 +130,7 @@ export const Onboarding0Form: FC = () => {
 									inline
 									hint={(
 										<InputLabelHint className="max-w-[34ch]">
-											{t.rich("spade_mindless_furry_jeans", { br: () => <br /> })}
+											<Trans i18nKey="spade_mindless_furry_jeans" />
 										</InputLabelHint>
 									)}
 								>

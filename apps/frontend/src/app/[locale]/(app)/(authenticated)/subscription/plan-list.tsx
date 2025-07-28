@@ -1,7 +1,6 @@
-"use client";
-
-import { useTranslations } from "next-intl";
-import { type FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -12,7 +11,7 @@ export const PlanList: FC = () => {
 	const { native, vision } = useDevice();
 	const session = useOptionalSession();
 	const [purchasePending, setPurchasePending] = useState(false);
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	if (!session || vision) return null;
 
@@ -62,17 +61,17 @@ export const PlanList: FC = () => {
 				return (
 					<PlanCard
 						{...item}
-						disabled={purchasePending}
 						key={item.id}
+						disabled={purchasePending}
 						setPurchasePending={setPurchasePending}
 					/>
 				);
 			})}
 			<div className="col-span-full flex flex-col gap-2">
 				<PlanCard
+					id="Di7Sypboma4ryhy6MUagyS"
 					disabled={purchasePending}
 					duration={t("lifetime")}
-					id="Di7Sypboma4ryhy6MUagyS"
 					price={129.99}
 					setPurchasePending={setPurchasePending}
 				/>

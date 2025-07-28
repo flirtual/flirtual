@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { twMerge } from "tailwind-merge";
 
 import { urls } from "~/urls";
@@ -13,7 +12,7 @@ function getUrl(name: string, kind: string) {
 	return urls.media(`flirtual-${name.replaceAll("/", "-")}.${kind}`, "static");
 }
 
-async function ImageListItem({ name, kinds, dark }: ImageListItemProps) {
+function ImageListItem({ name, kinds, dark }: ImageListItemProps) {
 	const defaultKind = kinds[0];
 
 	return (
@@ -32,9 +31,9 @@ async function ImageListItem({ name, kinds, dark }: ImageListItemProps) {
 			<div className="flex gap-2">
 				{kinds.map((kind) => (
 					<a
+						key={kind}
 						className="uppercase text-theme-2 hocus:underline hocus:outline-none"
 						href={getUrl(name, kind)}
-						key={kind}
 					>
 						{kind}
 					</a>
@@ -49,7 +48,7 @@ export interface ImageListProps {
 	className?: string;
 }
 
-export async function ImageList({ className, items }: ImageListProps) {
+export function ImageList({ className, items }: ImageListProps) {
 	return (
 		<div
 			className={twMerge(

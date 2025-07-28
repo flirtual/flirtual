@@ -1,4 +1,5 @@
-import { type RefObject, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import type { RefObject } from "react";
 
 export function useScrollLock<T extends { style: CSSStyleDeclaration }>(
 	reference?: RefObject<T>

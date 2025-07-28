@@ -1,9 +1,8 @@
 import { PushNotifications } from "@capacitor/push-notifications";
-import { useLocale } from "next-intl";
+import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Authentication } from "~/api/auth";
-import { redirect, useSearchParams } from "~/i18n/navigation";
 import type {
 	MinimalQueryOptions
 } from "~/query";
@@ -15,10 +14,10 @@ import {
 	sessionKey,
 	useQuery
 } from "~/query";
+import { throwRedirect } from "~/redirect";
 import { toAbsoluteUrl, toRelativeUrl, urls } from "~/urls";
 
 import { device } from "./use-device";
-import { postpone } from "./use-postpone";
 
 export async function logout() {
 	await mutate(sessionKey(), null);
@@ -33,7 +32,7 @@ export async function logout() {
 }
 
 export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | null> = {}): Session | null {
-	postpone(useOptionalSession.name);
+	// postpone(useOptionalSession.name);
 
 	return useQuery({
 		placeholderData: null,
@@ -44,28 +43,26 @@ export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | n
 }
 
 export function useGuest() {
-	const locale = useLocale();
 	const session = useOptionalSession();
+	const [searchParameters] = useSearchParams();
 
 	const next = toRelativeUrl(
-		toAbsoluteUrl(useSearchParams().get("next")
+		toAbsoluteUrl(searchParameters.get("next")
 			|| (session?.user.status === "registered"
 				? urls.onboarding(1)
 				: urls.discover("dates")))
 	);
 
-	if (session) redirect({ href: next, locale });
+	if (session) throwRedirect(next);
 }
 
 export function useSession(queryOptions: MinimalQueryOptions<Session | null> = {}) {
-	const locale = useLocale();
 	const session = useQuery({
 		...queryOptions,
 		queryKey: sessionKey(),
 		queryFn: sessionFetcher
 	});
 
-	if (!session) return redirect({ href: urls.login(toRelativeUrl(location)), locale });
-
+	if (!session) throwRedirect(urls.login(toRelativeUrl(location)));
 	return session;
 }

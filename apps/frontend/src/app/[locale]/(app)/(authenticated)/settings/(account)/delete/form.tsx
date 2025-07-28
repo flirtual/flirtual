@@ -1,8 +1,6 @@
-"use client";
-
 import { InAppReview } from "@capacitor-community/in-app-review";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import { User } from "~/api/user";
 import { Form } from "~/components/forms";
@@ -20,7 +18,7 @@ import { urls } from "~/urls";
 
 export const DeleteForm: FC = () => {
 	const { native } = useDevice();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 	const deleteReasons = useAttributes("delete-reason");
 
@@ -43,7 +41,7 @@ export const DeleteForm: FC = () => {
 			{({ FormField, fields }) => (
 				<>
 					{subscription?.active
-					&& ["android", "ios"].includes(subscription.platform) && (
+						&& ["android", "ios"].includes(subscription.platform) && (
 						<div className="rounded-lg bg-brand-gradient px-6 py-4">
 							<span className="font-montserrat text-white-10">
 								⚠️
@@ -82,13 +80,12 @@ export const DeleteForm: FC = () => {
 								{field.props.value === "sQcEHRLCffbLfcgM4zAELf"
 									? (
 											<p>
-												{t.rich("brave_bald_bison_trim", {
-													link: (children) => (
-														<InlineLink href={urls.settings.deactivateAccount}>
-															{children}
-														</InlineLink>
-													)
-												})}
+												<Trans
+													components={{
+														link: <InlineLink href={urls.settings.deactivateAccount} />
+													}}
+													i18nKey="brave_bald_bison_trim"
+												/>
 												{" "}
 											</p>
 										)
@@ -135,9 +132,7 @@ export const DeleteForm: FC = () => {
 					</FormField>
 					<div className="flex flex-col gap-4">
 						<span>
-							{t.rich("teary_cuddly_midge_sew", {
-								strong: (children) => <strong>{children}</strong>
-							})}
+							<Trans i18nKey="teary_cuddly_midge_sew" />
 						</span>
 					</div>
 					<FormButton>{t("delete_account")}</FormButton>

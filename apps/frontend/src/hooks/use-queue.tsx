@@ -1,14 +1,21 @@
-"use client";
-
 import ms from "ms";
 import { useCallback } from "react";
-import { Issue, isWretchError } from "~/api/common";
 
+import type { Issue } from "~/api/common";
+import { isWretchError } from "~/api/common";
 import type { Queue, QueueIssue } from "~/api/matchmaking";
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
 import { log } from "~/log";
-import { 
-	invalidate, mutate, preload, queueKey, useMutation, useQuery, userFetcher, userKey } from "~/query";
+import {
+	invalidate,
+	mutate,
+	preload,
+	queueKey,
+	useMutation,
+	useQuery,
+	userFetcher,
+	userKey
+} from "~/query";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
@@ -24,10 +31,10 @@ export function useQueue(mode: ProspectKind = "love") {
 				.catch((reason) => {
 					if (!isWretchError(reason)) throw reason;
 					const issue = reason.json as Issue;
-					
+
 					if (!["confirm_email", "finish_profile"].includes(issue.error)) throw reason;
 					return issue as QueueIssue;
-		}),
+				}),
 		refetchInterval: ms("1m"),
 		staleTime: 0,
 		meta: {

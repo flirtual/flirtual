@@ -1,27 +1,25 @@
-import type { Metadata } from "next";
-import { useTranslations } from "next-intl";
-import type { Locale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
 import { MachineTranslatedLegal } from "~/components/machine-translated";
 import { ModelCard } from "~/components/model-card";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations();
+import type { Route } from "./+types/page";
 
-	return {
-		title: t("privacy_policy")
-	};
-}
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-export default function PrivacyPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
+	return metaMerge([
+		...rootMeta(options),
+		{ title: t("privacy_policy") }
+	]);
+};
 
-	const t = useTranslations();
+export default function PrivacyPage() {
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard
@@ -29,33 +27,19 @@ export default function PrivacyPage({ params }: { params: Promise<{ locale: Loca
 			containerProps={{ className: "gap-4" }}
 			title={t("privacy_policy")}
 		>
-			<MachineTranslatedLegal original={urls.resources.privacyPolicy} />
-			{t.rich("sticks_protect_zinc_explain", {
-				p: (children) => <p className="select-children">{children}</p>,
-				strong: (children) => <strong>{children}</strong>,
-				"settings-privacy": (children) => (
-					<InlineLink href={urls.settings.privacy}>{children}</InlineLink>
-				),
-				"settings-notifications": (children) => (
-					<InlineLink href={urls.settings.notifications}>{children}</InlineLink>
-				),
-				"settings-password": (children) => (
-					<InlineLink href={urls.settings.password}>{children}</InlineLink>
-				),
-				settings: (children) => (
-					<InlineLink href={urls.settings.list()}>{children}</InlineLink>
-				),
-				vulnerability: (children) => (
-					<InlineLink href={urls.resources.vulnerabilityReport}>
-						{children}
-					</InlineLink>
-				),
-				contact: (children) => (
-					<InlineLink href={urls.resources.contactDirect}>
-						{children}
-					</InlineLink>
-				)
-			})}
+			<MachineTranslatedLegal />
+			<Trans
+				components={{
+					p: <p className="select-children" />,
+					"settings-privacy": <InlineLink href={urls.settings.privacy} />,
+					"settings-notifications": <InlineLink href={urls.settings.notifications} />,
+					"settings-password": <InlineLink href={urls.settings.password} />,
+					settings: <InlineLink href={urls.settings.list()} />,
+					vulnerability: <InlineLink href={urls.resources.vulnerabilityReport} />,
+					contact: <InlineLink href={urls.resources.contactDirect} />
+				}}
+				i18nKey="sticks_protect_zinc_explain"
+			/>
 		</ModelCard>
 	);
 }

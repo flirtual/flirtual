@@ -1,15 +1,8 @@
-"use client";
-
-import type { PropsWithChildren } from "react";
+import { Outlet } from "react-router";
 
 import { useGuest } from "~/hooks/use-session";
 
-export default function MinimalGuestLayout({ children }: PropsWithChildren) {
+export default function MinimalGuestLayout() {
 	useGuest();
-
-	return (
-		<>
-			{children}
-		</>
-	);
+	return <Outlet />;
 }

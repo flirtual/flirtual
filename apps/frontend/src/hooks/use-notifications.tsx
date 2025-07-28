@@ -1,18 +1,17 @@
-"use client";
-
 import {
-	type PermissionStatus,
+
 	PushNotifications
 } from "@capacitor/push-notifications";
+import type { PermissionStatus } from "@capacitor/push-notifications";
 import {
 	createContext,
-	type PropsWithChildren,
+
 	use,
 	useMemo
 } from "react";
+import type { PropsWithChildren } from "react";
 
 import { User } from "~/api/user";
-import { useRouter } from "~/i18n/navigation";
 import { useQuery } from "~/query";
 
 import { useDevice } from "./use-device";
@@ -27,7 +26,6 @@ const NotificationContext = createContext({} as NotificationContext);
 export function NotificationProvider({ children }: PropsWithChildren) {
 	const { platform, native } = useDevice();
 	const session = useOptionalSession();
-	const router = useRouter();
 
 	useQuery({
 		queryKey: ["notifications-reset-count"],
@@ -99,7 +97,6 @@ export function NotificationProvider({ children }: PropsWithChildren) {
 						type: platform === "apple" ? "apns" : "fcm",
 						token: newPushRegistrationId
 					});
-					router.refresh();
 				}
 			);
 

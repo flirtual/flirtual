@@ -1,14 +1,10 @@
-"use client";
-
-import { motion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { m } from "motion/react";
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Link } from "~/components/link";
-import { useLocation } from "~/hooks/use-location";
 import { usePreferences } from "~/hooks/use-preferences";
-import { toAbsoluteUrl, urlEqual } from "~/urls";
 
 export interface NavigationalSwitchItemProps {
 	href: string;
@@ -24,11 +20,13 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	strict,
 	...props
 }) => {
-	const location = useLocation();
-	const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
+	// const location = useLocation();
+	// const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
+	const active = false;
+	// todo:
 
 	const [rankedMode] = usePreferences("ranked_mode", false);
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<Link
@@ -40,7 +38,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 			data-active={active ? "" : undefined}
 		>
 			{active && (
-				<motion.div
+				<m.div
 					className={twMerge(
 						"absolute inset-0 rounded-full bg-black-90 bg-brand-gradient shadow-brand-1 transition-colors",
 						rankedMode && props.id === "date-mode-switch" && "!bg-[url('https://static.flirtual.com/ranked.jpg')] bg-cover bg-center"
@@ -58,7 +56,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 			{(rankedMode && (props.id === "date-mode-switch" || props.id === "homie-mode-switch") && (
 				<span className={twMerge(
 					"z-10 pr-2",
-					active ? "text-white-20" : "group-hocus:text-white-20 hidden text-black-70 dark:text-white-20 desktop:block"
+					active ? "text-white-20" : "hidden text-black-70 group-hocus:text-white-20 dark:text-white-20 desktop:block"
 				)}
 				>
 					{t(props.id === "date-mode-switch" ? "ranked" : "casual")}
@@ -69,12 +67,11 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 };
 
 export const NavigationItem: FC<
-	{ href: string; ref?: any } & ComponentProps<"a">
+	ComponentProps<typeof Link>
 > = ({ children, ...props }) => {
-	const location = useLocation();
-	const active
-		= toAbsoluteUrl(props.href).pathname.split("/")[1]
-			=== location.pathname.split("/")[1];
+	// const location = useLocation();
+	// todo:
+	const active = false;
 
 	return (
 		<Link

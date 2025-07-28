@@ -1,8 +1,9 @@
-import { useTranslations } from "next-intl";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { Link, type LinkProps } from "~/components/link";
+import { Link } from "~/components/link";
+import type { LinkProps } from "~/components/link";
 import { urls } from "~/urls";
 
 import { AppleIcon, GooglePlayIcon, MetaIcon, MicrosoftIcon } from "./icons";
@@ -38,7 +39,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 	className,
 	...props
 }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const { href, Icon } = platforms[platform];
 
 	return (

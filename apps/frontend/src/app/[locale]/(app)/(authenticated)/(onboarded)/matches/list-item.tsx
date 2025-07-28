@@ -1,8 +1,6 @@
-"use client";
-
 import { Check } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC, RefAttributes } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { Conversation } from "~/api/conversations";
@@ -28,11 +26,11 @@ function replaceEmojis(message: string) {
 		return customEmojis[part]
 			? (
 					<Image
+						// eslint-disable-next-line react/no-array-index-key
+						key={index}
 						alt={part}
 						className="inline-block"
 						height={24}
-						// eslint-disable-next-line react/no-array-index-key
-						key={index}
 						src={customEmojis[part].url}
 						width={24}
 					/>
@@ -50,7 +48,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 		lastMessage,
 		isUnread,
 	} = props;
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const user = useUser(userId);
 	// const relationship = useRelationship(userId);

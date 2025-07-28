@@ -1,15 +1,13 @@
-"use client";
-
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { SelectTrigger as RadixSelectTrigger } from "@radix-ui/react-select";
-import { ChevronDown, Moon, Palette, Sun, SunMoon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { ChevronDown, Moon, Sun, SunMoon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { type PreferenceTheme, PreferenceThemes } from "~/api/user/preferences";
+import { PreferenceThemes } from "~/api/user/preferences";
+import type { PreferenceTheme } from "~/api/user/preferences";
 import { Image } from "~/components/image";
 import {
-	InputSelect,
 	Select,
 	SelectContent,
 	SelectItem
@@ -23,7 +21,7 @@ export interface ThemePreviewProps {
 }
 
 export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	const [, setTheme, { sessionTheme }] = useTheme();
 	const active = theme === sessionTheme;
@@ -61,9 +59,9 @@ export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 };
 
 export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
-	const [, setTheme, { sessionTheme: theme }] = useTheme();
+	const [, setTheme, { localTheme: theme }] = useTheme();
 	const ThemeIcon = {
 		dark: Moon,
 		light: Sun,
@@ -72,18 +70,18 @@ export const InlineThemeSelect: React.FC<{ className?: string }> = ({ className 
 
 	return (
 		<Select onValueChange={(theme: PreferenceTheme) => setTheme(theme)}>
-			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap", className)}>
+			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
 				<ThemeIcon className="inline-block size-em" />
 				{" "}
-				{t(theme)}
+				<span className="grow">{t(theme)}</span>
 				{" "}
 				<ChevronDown className="inline-block size-em" />
 			</RadixSelectTrigger>
 			<SelectContent>
 				{PreferenceThemes.map((value) => (
 					<SelectItem
-						className="flex w-full items-center gap-2"
 						key={value}
+						className="flex w-full items-center gap-2"
 						value={value}
 					>
 						{t(value)}

@@ -1,5 +1,3 @@
-"use client";
-
 import {
 	AtSign,
 	Bell,
@@ -21,18 +19,19 @@ import {
 	VenetianMask,
 	X
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
 import { InlineLink } from "~/components/inline-link";
-import { gitCommitSha } from "~/const";
+import { commitIdShort } from "~/const";
 import { openFeedback } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
-import { redirect, useRouter, useSelectedLayoutSegment } from "~/i18n/navigation";
+import { mutate, sessionKey } from "~/query";
+import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -43,14 +42,12 @@ export const SettingsNavigation: FC = () => {
 	const { user, sudoerId } = useSession();
 	const { vision } = useDevice();
 
-	const router = useRouter();
-	const locale = useLocale();
-	const layoutSegment = useSelectedLayoutSegment();
+	const layoutSegment = null; // TODO: Replace with proper React Router segment detection
 
 	const { openFreshworks } = useFreshworks();
-	const t = useTranslations();
+	const { t } = useTranslation();
 
-	if (user.status === "onboarded") redirect({ href: urls.finish(1), locale });
+	if (user.status === "onboarded") throwRedirect(urls.finish(1));
 
 	return (
 		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
@@ -83,8 +80,8 @@ export const SettingsNavigation: FC = () => {
 								<NavigationLink
 									Icon={VenetianMask}
 									onClick={async () => {
-										await Authentication.revokeImpersonate();
-										router.refresh();
+										const session = await Authentication.revokeImpersonate();
+										await mutate(sessionKey(), session);
 									}}
 								>
 									{t("unsudo")}
@@ -213,7 +210,7 @@ export const SettingsNavigation: FC = () => {
 						className="-mt-4 self-center text-black-10 no-underline vision:text-white-20"
 						href={urls.debugger}
 					>
-						{t("version", { version: gitCommitSha?.slice(0, 8) })}
+						{t("version", { version: commitIdShort })}
 					</InlineLink>
 				</nav>
 			</div>

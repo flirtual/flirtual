@@ -1,4 +1,5 @@
-import { type CSSProperties, useId } from "react";
+import { useId } from "react";
+import type { CSSProperties } from "react";
 
 import type { GradientIconProps } from ".";
 
@@ -23,8 +24,8 @@ export const PeaceIcon: React.FC<GradientIconProps> = ({
 			{gradient && (
 				<defs>
 					<linearGradient
-						gradientUnits="userSpaceOnUse"
 						id={id}
+						gradientUnits="userSpaceOnUse"
 						x1="56.676"
 						x2="172.74"
 						y1="97.05"

@@ -1,17 +1,16 @@
-"use client";
-
 import { Toast as NativeToast } from "@capacitor/toast";
-import { captureException } from "@sentry/nextjs";
+import { captureException } from "@sentry/react";
 import { AlertTriangle, Check } from "lucide-react";
-import { useTranslations } from "next-intl";
 import {
 	createContext,
-	type PropsWithChildren,
+
 	use,
 	useCallback,
 	useMemo,
 	useState
 } from "react";
+import type { PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { IconComponent } from "~/components/icons";
@@ -80,7 +79,7 @@ export interface AddErrorOptions {
 }
 
 export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const [toasts, setToasts] = useState<Array<Toast>>([]);
 
 	const remove = useCallback((toast: Pick<Toast, "id">) => {

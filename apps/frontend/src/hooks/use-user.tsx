@@ -1,5 +1,3 @@
-"use client";
-
 import type { User } from "~/api/user";
 import type { Relationship } from "~/api/user/relationship";
 import {

@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
-
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { Table, TableBody, TableCell, TableRow } from "~/components/table";
+import { defaultLocale, i18n } from "~/i18n";
+import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
+
+import type { Route } from "./+types/page";
 
 const stats = [
 	"dau",
@@ -54,14 +53,12 @@ const stats = [
 	)
 ];
 
-export const metadata: Metadata = {
-	title: "Stats"
+export const meta: Route.MetaFunction = (options) => {
+	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	return metaMerge([...rootMeta(options), { title: "Stats" }]);
 };
 
-export default function StatsPage({ params }: { params: Promise<{ locale: Locale }> }) {
-	const { locale } = use(params);
-	setRequestLocale(locale);
-
+export default function StatsPage() {
 	return (
 		<ModelCard
 			className="w-full desktop:max-w-xl"

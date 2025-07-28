@@ -1,36 +1,30 @@
-"use client";
+import { useState } from "react";
+import { useParams } from "react-router";
 
-import type { Metadata } from "next";
-import { use, useEffect, useState } from "react";
-
-import { Conversation } from "~/api/conversations";
-import { displayName, User } from "~/api/user";
+import type { Conversation } from "~/api/conversations";
+import type { User } from "~/api/user";
+import { displayName } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { UserAvatar } from "~/components/user-avatar";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
-import { redirect } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { ConversationAside } from "../aside";
 import { LeaveButton } from "./leave-button";
 import { VRChatButton } from "./vrchat-button";
 
-export interface ConversationPageProps {
-	params: Promise<{
-		conversationId: string;
-	}>;
-}
+export default function ConversationPage() {
+	const { conversationId } = useParams();
+	const [conversation, _setConversation] = useState<Awaited<ReturnType<typeof Conversation.get>> | undefined>();
+	const [user, _setUser] = useState<Awaited<ReturnType<typeof User.get>> | undefined>();
+	const [loading, _setLoading] = useState(true);
 
-export default function ConversationPage(props: ConversationPageProps) {
-	const { conversationId } = use(props.params);
-	const [conversation, setConversation] = useState<Awaited<ReturnType<typeof Conversation.get>> | undefined>();
-	const [user, setUser] = useState<Awaited<ReturnType<typeof User.get>> | undefined>();
-	const [loading, setLoading] = useState(true);
-
+	/*
+	todo: wtf is this
 	useEffect(() => {
 		async function loadData() {
 			try {
-				const conversationData = await Conversation.get(conversationId);
+				const conversationData = await Conversation.get(conversationId!);
 				if (!conversationData) {
 					return notFound();
 				}
@@ -54,12 +48,12 @@ export default function ConversationPage(props: ConversationPageProps) {
 		}
 
 		loadData();
-	}, [conversationId]);
+	}, [conversationId]); */
 
 	if (loading) {
 		return (
 			<div className="flex w-full shrink-0 flex-col desktop:flex-row desktop:justify-center desktop:gap-4">
-				<ConversationAside activeConversationId={conversationId} />
+				<ConversationAside activeConversationId={conversationId!} />
 				<div className="mt-0 h-fit w-full shrink-0 bg-brand-gradient vision:bg-none desktop:max-w-[38rem] desktop:shrink desktop:rounded-2xl desktop:p-1 desktop:shadow-brand-1">
 					<div className="flex w-full items-center bg-brand-gradient p-3 vision:bg-none desktop:mt-0 desktop:rounded-t-xl android:desktop:mt-0">
 						<div className="size-10 animate-pulse rounded-full bg-white-20"></div>
@@ -70,9 +64,7 @@ export default function ConversationPage(props: ConversationPageProps) {
 		);
 	}
 
-	if (!conversation || !user) {
-		return notFound();
-	}
+	if (!conversation || !user) return null;
 
 	return (
 		<div className="flex w-full shrink-0 flex-col desktop:flex-row desktop:justify-center desktop:gap-4">

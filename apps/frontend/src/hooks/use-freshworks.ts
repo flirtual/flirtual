@@ -1,9 +1,9 @@
-import { useLocale } from "next-intl";
 import { useCallback, useEffect } from "react";
 
 import type { Session } from "~/api/auth";
 import { displayName } from "~/api/user";
 import { freshworksWidgetId } from "~/const";
+import { useLocale } from "~/i18n";
 import { queryClient, sessionKey } from "~/query";
 
 declare global {
@@ -19,7 +19,7 @@ declare global {
 let loaded = false;
 
 export function useFreshworks() {
-	const locale = useLocale();
+	const [locale] = useLocale();
 
 	const loadFreshworks = useCallback(() => {
 		if (loaded) return;

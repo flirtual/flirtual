@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { ButtonLink } from "~/components/button";
@@ -12,7 +12,7 @@ export interface OutOfProspectsProps {
 }
 
 export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard
@@ -28,23 +28,21 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 								<div className="flex flex-col gap-4">
 									<p>{t("full_zesty_finch_exhale")}</p>
 									<p>
-										{t.rich("round_stout_iguana_stab", {
-											link: (children) => (
-												<InlineLink href={urls.settings.matchmaking()}>
-													{children}
-												</InlineLink>
-											)
-										})}
+										<Trans
+											components={{
+												link: <InlineLink href={urls.settings.matchmaking()} />
+											}}
+											i18nKey="round_stout_iguana_stab"
+										/>
 									</p>
 									<p>{t("sea_giant_anteater_slurp")}</p>
 									<p>
-										{t.rich("main_large_goat_succeed", {
-											link: (children) => (
-												<InlineLink href={urls.discover("homies")}>
-													{children}
-												</InlineLink>
-											)
-										})}
+										<Trans
+											components={{
+												link: <InlineLink href={urls.discover("homies")} />
+											}}
+											i18nKey="main_large_goat_succeed"
+										/>
 									</p>
 								</div>
 								<div className="flex gap-4">
@@ -80,7 +78,7 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 };
 
 export const FinishProfileError: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard
@@ -101,7 +99,7 @@ export const FinishProfileError: React.FC = () => {
 };
 
 export const ConfirmEmailError: React.FC = () => {
-	const t = useTranslations();
+	const { t } = useTranslation();
 
 	return (
 		<ModelCard

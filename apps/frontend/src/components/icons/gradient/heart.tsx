@@ -1,4 +1,5 @@
-import { type CSSProperties, useId } from "react";
+import { useId } from "react";
+import type { CSSProperties } from "react";
 
 import type { GradientIconProps } from ".";
 
@@ -21,8 +22,8 @@ export const HeartIcon: React.FC<GradientIconProps> = ({
 		>
 			<defs>
 				<linearGradient
-					gradientUnits="userSpaceOnUse"
 					id={id}
+					gradientUnits="userSpaceOnUse"
 					x1="90.392"
 					x2="384.66"
 					y1="167.59"

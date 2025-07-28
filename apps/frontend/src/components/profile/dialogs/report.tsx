@@ -1,9 +1,12 @@
-import { useTranslations } from "next-intl";
-import { type FC, type PropsWithChildren, useState } from "react";
+import { useState } from "react";
+import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
-import { displayName, type User } from "~/api/user";
+import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -15,9 +18,10 @@ import {
 } from "~/components/dialog/dialog";
 import { Form, FormButton } from "~/components/forms";
 import {
-	type ImageSetValue,
+
 	InputImageSet
 } from "~/components/forms/input-image-set";
+import type { ImageSetValue } from "~/components/forms/input-image-set";
 import { InputLabel, InputLabelHint, InputSelect, InputTextArea } from "~/components/inputs";
 import { UserThumbnail } from "~/components/user-avatar";
 import {
@@ -27,7 +31,6 @@ import {
 import { useQueue } from "~/hooks/use-queue";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useSearchParams } from "~/i18n/navigation";
 import { invalidate, userKey } from "~/query";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
@@ -35,12 +38,12 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	children
 }) => {
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 
 	const toasts = useToast();
 
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const kind = (query.get("kind") || "love") as ProspectKind;
 
 	const { forward: forwardQueue } = useQueue(kind);

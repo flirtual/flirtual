@@ -19,9 +19,9 @@ export const HomeIcon: React.FC<GradientIconProps> = ({
 			{gradient && (
 				<defs>
 					<linearGradient
+						id={id}
 						gradientTransform="matrix(.95678 0 0 .95678 -2.2726e-5 0)"
 						gradientUnits="userSpaceOnUse"
-						id={id}
 						x1="63.923"
 						x2="444.34"
 						y1="201.91"

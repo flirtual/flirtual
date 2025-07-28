@@ -1,8 +1,7 @@
-"use client";
-
 import { MoveLeft } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
@@ -18,14 +17,13 @@ import {
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 export const Finish1Form: FC = () => {
 	const session = useOptionalSession();
-	const router = useRouter();
+	const navigate = useNavigate();
 
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	if (!session) return null;
@@ -68,7 +66,7 @@ export const Finish1Form: FC = () => {
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
-				router.push(urls.finish(2));
+				navigate(urls.finish(2));
 			}}
 		>
 			{({ FormField }) => (

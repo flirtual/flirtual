@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { AttributeType, MinimalAttribute } from "~/api/attributes";
 import type { User } from "~/api/user";
@@ -28,7 +26,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 	getName
 }) => {
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttributes = useAttributeTranslation();
 
 	if (!attributes?.length) return null;
@@ -65,7 +63,7 @@ export const PillAttributeList: FC<PillAttributeListProps> = ({
 							</div>
 						</TooltipTrigger>
 						{metadata !== undefined
-						&& (meta.definition || meta.definitionLink) && (
+							&& (meta.definition || meta.definitionLink) && (
 							<TooltipContent>
 								{meta.definition}
 								{" "}

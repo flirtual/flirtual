@@ -1,24 +1,20 @@
 /* eslint-disable react-refresh/only-export-components */
-"use client";
-
-import { useLocale, useMessages } from "next-intl";
 import {
 	createContext,
-	type CSSProperties,
-	type FC,
-	type PropsWithChildren,
+
 	use,
 	useEffect,
 	useMemo,
 	useState
 } from "react";
+import type { CSSProperties, FC, PropsWithChildren } from "react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
 
 import { talkjsAppId } from "~/const";
-import { useRouter } from "~/i18n/navigation";
-import { resolveTheme } from "~/theme";
+import { useLocale } from "~/i18n";
 import { urls } from "~/urls";
 import { emptyArray } from "~/utilities";
 
@@ -35,8 +31,6 @@ const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
 const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [ready, setReady] = useState(false);
 	const authSession = useOptionalSession();
-
-	const router = useRouter();
 
 	const [unreadConversations, setUnreadConversations] = useState<Array<Talk.UnreadConversation>>([]);
 
@@ -62,7 +56,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 		const messageSubscription = session.onMessage(async () => {
 			// todo:
 			// await mutate(conversationsKey);
-			// router.refresh();
+			// // router.refresh();
 		});
 
 		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
@@ -71,7 +65,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 			unreadSubscription.unsubscribe();
 			messageSubscription.unsubscribe();
 		};
-	}, [session, router]);
+	}, [session]);
 
 	// useEffect(() => {
 	// 	return () => session?.destroy();
@@ -154,34 +148,29 @@ export const ConversationChatbox: React.FC<
 	const session = useTalkjs();
 	const [element, setElement] = useState<HTMLDivElement | null>(null);
 
-	const [,,{ sessionTheme }] = useTheme();
+	const [theme] = useTheme();
 	const { native, vision } = useDevice();
-	const { talkjs_match_message, talkjs_input_placeholder } = useMessages();
-	const locale = useLocale();
+	const { t } = useTranslation();
+	const [locale] = useLocale();
 
 	const chatbox = useMemo(() => {
 		if (!session) return null;
 
-		const dark = resolveTheme(sessionTheme) === "dark";
-		const theme = vision
-			? "vision"
-			: dark
-				? "dark"
-				: "light";
-
 		return session.createChatbox({
 			theme: {
-				name: theme,
+				name: vision
+					? "vision"
+					: theme,
 				custom: {
 					language: locale,
-					matchMessage: talkjs_match_message,
-					inputPlaceholder: talkjs_input_placeholder
+					matchMessage: t("talkjs_match_message"),
+					inputPlaceholder: t("talkjs_input_placeholder")
 				}
 			},
 			messageField: { spellcheck: true, enterSendsMessage: !native },
 			customEmojis
 		} as ChatboxOptions);
-	}, [session, sessionTheme, vision, locale, talkjs_match_message, talkjs_input_placeholder, native]);
+	}, [session, theme, vision, locale, t, native]);
 
 	const conversation = useMemo(() => {
 		if (!session || !conversationId) return null;

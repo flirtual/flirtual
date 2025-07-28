@@ -1,4 +1,5 @@
-import { Share, type ShareOptions, type ShareResult } from "@capacitor/share";
+import { Share } from "@capacitor/share";
+import type { ShareOptions, ShareResult } from "@capacitor/share";
 import { useCallback } from "react";
 
 import { useQuery } from "~/query";

@@ -1,8 +1,7 @@
-"use client";
-
 import { CheckCircle2, MoveLeft } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { FC } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 import {
 	Profile,
@@ -23,7 +22,6 @@ import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -32,10 +30,10 @@ export const Finish2Form: FC = () => {
 	const sexualities = useAttributes("sexuality");
 
 	const session = useOptionalSession();
-	const t = useTranslations();
+	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	if (!session) return null;
 	const { user } = session;
@@ -70,7 +68,7 @@ export const Finish2Form: FC = () => {
 					}
 				});
 
-				router.push(urls.finish(3));
+				navigate(urls.finish(3));
 			}}
 		>
 			{({ FormField }) => (
@@ -79,9 +77,7 @@ export const Finish2Form: FC = () => {
 						<div className="flex gap-4 pb-6 desktop:pb-6">
 							<CheckCircle2 className="mt-1.5 size-7 shrink-0 text-pink" />
 							<span>
-								{t.rich(user.emailConfirmedAt ? "actual_stock_camel_devour" : "clean_extra_goldfish_pause", {
-									strong: (children) => <strong>{children}</strong>
-								})}
+								<Trans i18nKey={user.emailConfirmedAt ? "actual_stock_camel_devour" : "clean_extra_goldfish_pause"} />
 							</span>
 						</div>
 						<hr className="border-t-2 border-white-30 dark:border-black-60" />

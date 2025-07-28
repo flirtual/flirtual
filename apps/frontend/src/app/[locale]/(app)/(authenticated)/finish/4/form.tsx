@@ -1,8 +1,7 @@
-"use client";
-
 import shuffle from "fast-shuffle";
 import { MoveLeft } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { entries } from "remeda";
 
 import { Profile } from "~/api/user/profile";
@@ -11,14 +10,13 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
-import { useRouter } from "~/i18n/navigation";
 import { urls } from "~/urls";
 
 import { usePersonality } from "../../settings/(profile)/personality/form";
 
 export const Finish4Form: React.FC = () => {
-	const router = useRouter();
-	const t = useTranslations();
+	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	const session = useOptionalSession();
 	const personality = usePersonality();
@@ -34,7 +32,7 @@ export const Finish4Form: React.FC = () => {
 			onSubmit={async (body) => {
 				await Profile.Personality.update(user.id, body);
 
-				router.push(urls.finish(5));
+				navigate(urls.finish(5));
 			}}
 		>
 			{({ FormField }) => (

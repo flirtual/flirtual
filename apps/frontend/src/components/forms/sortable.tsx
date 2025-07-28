@@ -5,10 +5,11 @@ import {
 	KeyboardSensor,
 	MouseSensor,
 	TouchSensor,
-	type UniqueIdentifier,
+
 	useSensor,
 	useSensors
 } from "@dnd-kit/core";
+import type { UniqueIdentifier } from "@dnd-kit/core";
 import {
 	arrayMove,
 	rectSortingStrategy,
@@ -18,14 +19,13 @@ import {
 import { Slot } from "@radix-ui/react-slot";
 import {
 	createContext,
-	type Dispatch,
-	type FC,
-	type PropsWithChildren,
+
 	use,
 	useEffect,
 	useMemo,
 	useState
 } from "react";
+import type { Dispatch, FC, PropsWithChildren } from "react";
 import { Portal } from "react-portal";
 
 const CurrentSortableContext = createContext(
@@ -82,9 +82,9 @@ export const SortableGrid: FC<
 				}}
 			>
 				<SortableContext
+					key={JSON.stringify(values)}
 					disabled={disabled}
 					items={values}
-					key={JSON.stringify(values)}
 					strategy={rectSortingStrategy}
 				>
 					{children}
