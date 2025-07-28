@@ -15,6 +15,7 @@ import { server } from "~/const";
 import { log as _log } from "../log";
 import {
 	defaultLocale,
+	getLocale,
 	localeNames,
 	localePathnameRegex,
 	locales,
@@ -115,7 +116,8 @@ export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Pro
 	const navigate = useNavigate();
 
 	const setLocale = useCallback(async (locale: Locale) => {
-		await navigate(replaceLanguage(location, locale), { replace: true });
+		log("setLocale(%s)", locale);
+		await navigate(replaceLanguage(location, locale));
 	}, [location, navigate]);
 
 	return [
@@ -143,6 +145,10 @@ export function useNavigate() {
 
 	return useCallback<NavigateFunction>((toOrDelta: To | number, { locale, ...options }: NavigateOptions = {}) => {
 		if (typeof toOrDelta === "number") return navigate(toOrDelta);
+
+		const toLocale = getLocale(toOrDelta);
+		if (toLocale) locale = toLocale;
+
 		return navigate(replaceLanguage(toOrDelta, locale || defaultLocale), options);
 	}, [navigate]);
 }

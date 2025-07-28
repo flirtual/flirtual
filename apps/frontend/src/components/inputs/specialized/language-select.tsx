@@ -3,7 +3,6 @@ import { ChevronDown, Languages } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
-import { Link } from "~/components/link";
 import { localeNames, locales, useLocale } from "~/i18n";
 
 import {
@@ -49,14 +48,11 @@ export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ classNa
 				{locales.map((value) => (
 					<SelectItem
 						key={value}
-						asChild
 						className="flex w-full items-center gap-2"
 						lang={value}
 						value={value}
 					>
-						<Link href="./" hrefLang={value} lang={value}>
-							{localeNames[value]}
-						</Link>
+						{localeNames[value]}
 					</SelectItem>
 				))}
 			</SelectContent>

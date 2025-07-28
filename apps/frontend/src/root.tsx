@@ -12,7 +12,6 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	useLocation,
 	useParams,
 	useRouteLoaderData
 } from "react-router";
@@ -26,7 +25,7 @@ import { TooltipProvider } from "./components/tooltip";
 import { UpdateInformation } from "./components/update-information";
 import { apiOrigin, development, platformOverride, production, siteOrigin } from "./const";
 import { ToastProvider } from "./hooks/use-toast";
-import { defaultLocale, hideLocale, i18n, localePathnameRegex, locales, replaceLanguage } from "./i18n";
+import { defaultLocale, i18n, localePathnameRegex, locales, replaceLanguage } from "./i18n";
 import type { Locale } from "./i18n";
 import { QueryProvider } from "./query";
 import { RedirectBoundary } from "./redirect";
@@ -153,8 +152,8 @@ export function Layout({ children }: PropsWithChildren) {
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
 
-	const location = useLocation();
-	hideLocale(location);
+	// const location = useLocation();
+	// hideLocale(location);
 
 	return (
 		<html suppressHydrationWarning lang={locale}>
