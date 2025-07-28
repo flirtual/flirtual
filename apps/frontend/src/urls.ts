@@ -106,7 +106,7 @@ export const urls = {
 	vrchatProfile: (userId: string) =>
 		`https://vrchat.com/home/user/${userId}`,
 	vrchatSearch: (name: string) =>
-		`https://vrchat.com/home/search/${encodeURIComponent(
+		`https://vrchat.com/home/search/users/${encodeURIComponent(
 			escapeVRChat(name)
 		)}`,
 
