@@ -1,7 +1,8 @@
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
-import { commitIdShort, maintenance, production } from "~/const";
+import { commitIdShort, development, maintenance, production } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useInterval } from "~/hooks/use-interval";
 import { useLocale } from "~/i18n";
@@ -35,7 +36,7 @@ const translations = {
 	},
 } as const;
 
-export function HavingIssues({ digest }: { digest?: string }) {
+export function HavingIssues({ error, digest }: { error?: unknown; digest?: string }) {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
 
@@ -124,6 +125,12 @@ export function HavingIssues({ digest }: { digest?: string }) {
 
 						</li>
 					</ul>
+					{development && error instanceof Error && (
+						<code className="mt-6 flex max-w-sm flex-col font-mono text-xs opacity-50 desktop:max-w-md desktop:text-sm">
+							<span className="mb-4 font-semibold">{error.message}</span>
+							<p className="line-clamp-6">{error.stack}</p>
+						</code>
+					)}
 					<div className="mt-6 flex flex-col text-center font-mono text-xs opacity-50 desktop:text-sm">
 						{digest && (
 							<CopyClick value={digest}>
@@ -139,3 +146,11 @@ export function HavingIssues({ digest }: { digest?: string }) {
 		</div>
 	);
 }
+
+export const HavingIssuesViewport: FC<ComponentProps<typeof HavingIssues>> = (props) => {
+	return (
+		<div className="flex h-screen w-screen items-center justify-center">
+			<HavingIssues {...props} />
+		</div>
+	);
+};

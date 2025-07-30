@@ -8,7 +8,6 @@ import {
 	href,
 	Links,
 	Meta,
-
 	Outlet,
 	Scripts,
 	ScrollRestoration,
@@ -18,7 +17,7 @@ import {
 
 import type { Route } from "./+types/root";
 import { AnalyticsProvider } from "./analytics";
-import { HavingIssues } from "./components/error";
+import { HavingIssuesViewport } from "./components/error";
 import { InsetPreview } from "./components/inset-preview";
 import { LoadingIndicator } from "./components/loading-indicator";
 import { TooltipProvider } from "./components/tooltip";
@@ -142,9 +141,24 @@ export function meta({
 	];
 }
 
+// export function clientLoader({ request, params: { locale } }: Route.ClientLoaderArgs) {
+// 	const url = new URL(request.url);
+//
+// 	if (!locale || !isLocale(locale)) {
+// 		const recommendedLocale = getRecommendedLocale(navigator.languages.join(", ")) || defaultLocale;
+//
+// 		const to = createPath(replaceLanguage(url, recommendedLocale, url.pathname));
+//
+// 		logRendering(`Using recommended locale: ${recommendedLocale} (${to})`);
+// 		throwRedirect(to);
+// 	}
+// }
+//
+// clientLoader.hydrate = true as const;
+
 export function Layout({ children }: PropsWithChildren) {
-	const { locale = defaultLocale } = useParams();
-	if (!isLocale(locale)) throw new Error(`Invalid locale: ${locale}`);
+	let { locale } = useParams();
+	if (!locale || !isLocale(locale)) locale = defaultLocale;
 
 	const { initialI18nStore = {} } = useRouteLoaderData<typeof loader>("root") || {};
 
@@ -188,14 +202,8 @@ export function Layout({ children }: PropsWithChildren) {
 						].join(", ")})`
 					}}
 				/>
-				<script src={getPolyfillUrl(locale)} />
-				<Sentry.ErrorBoundary
-					fallback={({ eventId }) => (
-						<div className="flex h-screen w-screen items-center justify-center">
-							<HavingIssues digest={eventId} />
-						</div>
-					)}
-				>
+				<script src={getPolyfillUrl(locale as Locale)} />
+				<Sentry.ErrorBoundary fallback={({ eventId }) => <HavingIssuesViewport digest={eventId} />}>
 					<RedirectBoundary>
 						<AnalyticsProvider />
 						<LazyMotion strict features={async () => ((await import("./motion")).default)}>
@@ -216,6 +224,10 @@ export function Layout({ children }: PropsWithChildren) {
 			</body>
 		</html>
 	);
+}
+
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+	return <HavingIssuesViewport error={error} />;
 }
 
 export function HydrateFallback() {
