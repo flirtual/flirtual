@@ -1,7 +1,6 @@
 import shuffle from "fast-shuffle";
 import { MoveLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { entries } from "remeda";
 
 import { Profile } from "~/api/user/profile";
@@ -10,6 +9,7 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
 import { usePersonality } from "../../settings/(profile)/personality/form";

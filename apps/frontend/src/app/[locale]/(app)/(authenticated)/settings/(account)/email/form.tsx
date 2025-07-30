@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
@@ -7,6 +6,7 @@ import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
 import { useSession } from "~/hooks/use-session";
+import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 

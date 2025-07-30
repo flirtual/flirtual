@@ -1,13 +1,13 @@
 import { Link, Pencil } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { useShare } from "~/hooks/use-share";
 import { useToast } from "~/hooks/use-toast";
+import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { toAbsoluteUrl, urls } from "~/urls";
 

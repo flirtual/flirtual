@@ -1,7 +1,6 @@
 import { CheckCircle2, MoveLeft } from "lucide-react";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 
 import {
 	Profile,
@@ -22,6 +21,7 @@ import { InputLanguageAutocomplete } from "~/components/inputs/specialized";
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useAttributes, useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 

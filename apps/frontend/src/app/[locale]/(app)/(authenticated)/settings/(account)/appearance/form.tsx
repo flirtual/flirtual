@@ -3,7 +3,6 @@ import type { CSSProperties, Dispatch, FC } from "react";
 import { useEffect, useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { Trans, useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import type { Session } from "~/api/auth";
@@ -21,7 +20,7 @@ import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
-import { defaultLocale, useLocale } from "~/i18n";
+import { defaultLocale, useLocale, useNavigate } from "~/i18n";
 import { mutate, sessionKey, useMutation } from "~/query";
 import { urls } from "~/urls";
 

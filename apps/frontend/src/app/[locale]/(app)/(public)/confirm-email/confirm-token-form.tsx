@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import useMutation from "swr/mutation";
 
 import { User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
+import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 

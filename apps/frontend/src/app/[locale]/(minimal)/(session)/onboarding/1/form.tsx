@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { fromEntries } from "remeda";
 
 import { User } from "~/api/user";
@@ -23,6 +22,7 @@ import {
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useConfig } from "~/hooks/use-config";
 import { useSession } from "~/hooks/use-session";
+import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 

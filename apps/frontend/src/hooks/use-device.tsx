@@ -3,7 +3,7 @@ import { App } from "@capacitor/app";
 import type { DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
 
-import { client, nativeOverride, platformOverride, server } from "~/const";
+import { client, nativeOverride, platformOverride } from "~/const";
 import { log as _log } from "~/log";
 
 export type DevicePlatform = "android" | "apple" | "web";

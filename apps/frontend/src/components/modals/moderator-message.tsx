@@ -2,13 +2,13 @@ import ms from "ms";
 import type { Dispatch, FC, ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import type { Session } from "react-router";
-import { useNavigate } from "react-router";
 import { withSuspense } from "with-suspense";
 
 import { User } from "~/api/user";
 import { Image } from "~/components/image";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 

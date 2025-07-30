@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";

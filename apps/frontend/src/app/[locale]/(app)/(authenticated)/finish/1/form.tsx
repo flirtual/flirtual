@@ -1,7 +1,6 @@
 import { MoveLeft } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
@@ -17,6 +16,7 @@ import {
 } from "~/components/inputs";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
+import { useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
 export const Finish1Form: FC = () => {

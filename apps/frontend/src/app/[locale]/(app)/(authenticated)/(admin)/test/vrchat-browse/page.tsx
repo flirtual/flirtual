@@ -25,8 +25,8 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } 
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
 import { defaultLocale, i18n } from "~/i18n";
-import { useInfiniteQuery } from "~/query";
 import { metaMerge, rootMeta } from "~/meta";
+import { useInfiniteQuery } from "~/query";
 import { urls } from "~/urls";
 
 import type { Route } from "./+types/page";

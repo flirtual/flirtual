@@ -9,10 +9,10 @@ import {
 	useState
 } from "react";
 import type { FC, PropsWithChildren } from "react";
-import { useNavigate } from "react-router";
 
 import { Subscription } from "~/api/subscription";
 import { rcAppleKey, rcGoogleKey } from "~/const";
+import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 

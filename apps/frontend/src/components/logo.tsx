@@ -1,7 +1,7 @@
 import type { ComponentProps, FC, MouseEventHandler } from "react";
-import { useNavigate } from "~/i18n";
 import { twMerge } from "tailwind-merge";
 
+import { useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
 export const FlirtualLogo: FC<Omit<ComponentProps<"img">, "src">> = ({ className, ...props }) => {

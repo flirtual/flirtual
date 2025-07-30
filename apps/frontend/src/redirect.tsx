@@ -4,13 +4,16 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Navigate, useLocation } from "react-router";
 import type { To } from "react-router";
 
+import { replaceLanguage } from "./i18n";
+import { getLocale } from "./i18n/languages";
+
 const redirectSymbol = Symbol("redirect");
 const redirectErrorMessage = "This error was thrown by throwRedirect() and must be caught by a redirect boundary.";
 
 export function throwRedirect(to: To): never {
 	const error = Object.assign(new Error(redirectErrorMessage), {
 		[redirectSymbol]: true,
-		to
+		to: replaceLanguage(to, getLocale(window.location.pathname))
 	});
 
 	throw error;

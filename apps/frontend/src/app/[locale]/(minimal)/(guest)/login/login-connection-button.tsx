@@ -1,7 +1,6 @@
 import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -12,6 +11,7 @@ import {
 import type { ConnectionType } from "~/api/connections";
 import { Button } from "~/components/button";
 import { useDevice } from "~/hooks/use-device";
+import { useNavigate } from "~/i18n";
 import { toAbsoluteUrl } from "~/urls";
 
 export interface LoginConnectionButtonProps {
