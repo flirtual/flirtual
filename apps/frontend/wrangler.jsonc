@@ -4,6 +4,16 @@
 	"workers_dev": false,
 	"main": "src/worker.ts",
 	"compatibility_date": "2025-04-03",
+	"env": {
+		"canary": {
+			"routes": [
+				{
+					"pattern": "canary.flirtual.com",
+					"custom_domain": true
+				}
+			]
+		}
+	},
 	"assets": {
 		"binding": "ASSETS",
 		"directory": "./dist/client",
@@ -16,6 +26,8 @@
 			"!/ja/*",
 			// Static assets.
 			"!/static/*",
+			// todo: remove this?
+			"!/images/*",
 			"!/.well-known/*",
 			"!/bimi.svg",
 			"!/browserconfig.xml",
