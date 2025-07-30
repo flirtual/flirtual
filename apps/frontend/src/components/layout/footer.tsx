@@ -9,6 +9,7 @@ import {
 } from "~/components/icons";
 import type { IconComponent } from "~/components/icons";
 import { commitIdShort } from "~/const";
+import type { Theme } from "~/hooks/use-theme";
 import { urls } from "~/urls";
 
 import { InlineLink } from "../inline-link";
@@ -81,13 +82,13 @@ export const FooterListLink: React.FC<FooterListLinkProps> = ({ label, ...props 
 export type FooterProps = {
 	desktopOnly?: boolean;
 	background?: boolean;
-	logoClassName?: string;
+	logoTheme?: Theme;
 } & React.ComponentProps<"footer">;
 
 export const Footer: React.FC<FooterProps> = ({
 	desktopOnly,
 	background = true,
-	logoClassName,
+	logoTheme,
 	...props
 }) => {
 	const { t } = useTranslation();
@@ -107,12 +108,7 @@ export const Footer: React.FC<FooterProps> = ({
 				<div className="flex justify-between gap-8">
 					<div className="flex items-center gap-8">
 						<Link href={urls.landing}>
-							<FlirtualLogo
-								className={twMerge(
-									"w-36 text-black-80 dark:text-[snow]",
-									logoClassName
-								)}
-							/>
+							<FlirtualLogo className="w-36" theme={logoTheme} />
 						</Link>
 						<div className="flex gap-4">
 							<FooterIconSupportLink />

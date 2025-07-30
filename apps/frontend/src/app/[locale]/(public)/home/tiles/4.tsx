@@ -25,7 +25,7 @@ export function CallToAction({ id }: TileProps) {
 			<div className="-mt-32 flex grow flex-col items-center px-8 pb-8 desktop:mt-0 desktop:px-24">
 				<div className="flex flex-col items-center gap-16 desktop:tall:mt-16">
 					<div className="flex flex-col items-center gap-4">
-						<FlirtualLogo className="w-56" />
+						<FlirtualLogo className="w-56" theme="dark" />
 						<TileAnchor id={id}>
 							<h1 className="max-w-screen-wide text-balance text-center font-montserrat text-4xl font-bold text-white-10 desktop:text-6xl desktop:tall:text-7xl">
 								<Trans
@@ -82,7 +82,7 @@ export function CallToAction({ id }: TileProps) {
 					desktopOnly
 					background={false}
 					className="mt-auto bg-transparent pt-32 desktop:pb-12"
-					logoClassName="text-[snow]"
+					logoTheme="dark"
 				/>
 			</div>
 		</Tile>
