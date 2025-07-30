@@ -13,6 +13,7 @@ export const apiUrl = import.meta.env.VITE_API_URL as string;
 assert(apiUrl, "VITE_API_URL is required");
 export const apiOrigin = new URL(apiUrl).origin;
 
+export const preview = import.meta.env.VITE_PREVIEW as string || null;
 export const development = import.meta.env.DEV;
 export const production = !development;
 
@@ -52,7 +53,6 @@ export const uppyBucketOrigin = import.meta.env.VITE_UPPY_BUCKET_ORIGIN as strin
 export const picoAppId = import.meta.env.VITE_PICO_APP_ID as string;
 
 export const region = import.meta.env.VERCEL_REGION as string;
-export const cloudflareInternalIdentifier = import.meta.env.CLOUDFLARE_INTERNAL_IDENTIFIER as string;
 
 export const platformOverride = import.meta.env.VITE_PLATFORM_OVERRIDE as DevicePlatform | undefined;
 export const nativeOverride = platformOverride ? platformOverride !== "web" : undefined;

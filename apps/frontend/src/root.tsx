@@ -23,10 +23,12 @@ import { InsetPreview } from "./components/inset-preview";
 import { LoadingIndicator } from "./components/loading-indicator";
 import { TooltipProvider } from "./components/tooltip";
 import { UpdateInformation } from "./components/update-information";
-import { apiOrigin, development, platformOverride, production, siteOrigin } from "./const";
+import { apiOrigin, development, platformOverride, siteOrigin } from "./const";
 import { ToastProvider } from "./hooks/use-toast";
 import { defaultLocale, i18n, localePathnameRegex, locales, replaceLanguage } from "./i18n";
 import type { Locale } from "./i18n";
+import { isLocale } from "./i18n/languages";
+import { getPolyfillUrl } from "./polyfill";
 import { QueryProvider } from "./query";
 import { RedirectBoundary } from "./redirect";
 import { absoluteUrl, bucketOrigins, urls } from "./urls";
@@ -141,8 +143,8 @@ export function meta({
 }
 
 export function Layout({ children }: PropsWithChildren) {
-	let { locale = defaultLocale } = useParams();
-	if (!locales.includes(locale)) locale = defaultLocale;
+	const { locale = defaultLocale } = useParams();
+	if (!isLocale(locale)) throw new Error(`Invalid locale: ${locale}`);
 
 	const { initialI18nStore = {} } = useRouteLoaderData<typeof loader>("root") || {};
 
@@ -186,22 +188,7 @@ export function Layout({ children }: PropsWithChildren) {
 						].join(", ")})`
 					}}
 				/>
-				<script
-					src={`https://cdnjs.cloudflare.com/polyfill/v3/polyfill${production ? ".min" : ""}.js?features=${[
-						"Intl",
-						"Intl.Locale",
-						"Intl.DateTimeFormat",
-						`Intl.DateTimeFormat.~locale.${locale}`,
-						`Intl.NumberFormat`,
-						`Intl.NumberFormat.~locale.${locale}`,
-						"Intl.PluralRules",
-						`Intl.PluralRules.~locale.${locale}`,
-						"Intl.RelativeTimeFormat",
-						`Intl.RelativeTimeFormat.~locale.${locale}`,
-						"Intl.ListFormat",
-						`Intl.ListFormat.~locale.${locale}`
-					].join(",")}`}
-				/>
+				<script src={getPolyfillUrl(locale)} />
 				<Sentry.ErrorBoundary
 					fallback={({ eventId }) => (
 						<div className="flex h-screen w-screen items-center justify-center">

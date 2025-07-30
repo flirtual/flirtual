@@ -45,7 +45,7 @@ export default {
 	appDirectory: "src",
 	buildDirectory: "dist",
 	future: {
-		// unstable_viteEnvironmentApi: true,
+		// unstable_subResourceIntegrity: true,
 		unstable_splitRouteModules: "enforce",
 	}
 } satisfies Config;

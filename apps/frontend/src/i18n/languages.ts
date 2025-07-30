@@ -8,6 +8,10 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale = "en";
 export type DefaultLocale = typeof defaultLocale;
 
+export function isLocale(locale: string): locale is Locale {
+	return locales.includes(locale as Locale);
+}
+
 // eslint-disable-next-line regexp/no-optional-assertion
 export const localePathnameRegex = new RegExp(`^\/(${locales.join("|")})?(\/|$)?`);
 

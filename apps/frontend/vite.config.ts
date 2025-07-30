@@ -61,7 +61,7 @@ export default defineConfig(({ mode }) => {
 		build: {
 			assetsDir: "static",
 			sourcemap: true,
-			// minify: true,
+			minify: true,
 			target: ["chrome106", "edge106", "firefox104", "safari15"],
 			chunkSizeWarningLimit: 100,
 			cssMinify: "lightningcss",
