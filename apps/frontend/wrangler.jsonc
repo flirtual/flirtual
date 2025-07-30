@@ -26,11 +26,14 @@
 			"!/ja/*",
 			// Static assets.
 			"!/static/*",
-			// todo: remove this?
-			"!/images/*",
 			"!/.well-known/*",
+			"!/apple-icon.png",
 			"!/bimi.svg",
 			"!/browserconfig.xml",
+			"!/favicon.ico",
+			"!/icon-16x16.png",
+			"!/icon-32x32.png",
+			"!/icon.svg",
 			"!/manifest.json",
 			"!/mstile-150x150.png",
 			"!/pico_authentication.json",

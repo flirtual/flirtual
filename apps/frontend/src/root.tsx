@@ -51,15 +51,6 @@ export async function loader({ params: { locale = defaultLocale } }: Route.Loade
 	};
 }
 
-/*
-<link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="48x48">
-<link rel="icon" href="/icon.svg?a38d76fde8670b0b" type="image/svg+xml" sizes="any">
-<link rel="icon" href="/icon2.png?dec409443b69fd90" type="image/png" sizes="32x32">
-<link rel="icon" href="/icon3.png?791a32ba4d792616" type="image/png" sizes="16x16">
-<link rel="apple-touch-icon" href="/apple-icon.png?b06a44025c5e35be" type="image/png" sizes="180x180">
-<link color="#e9658b" href="/_next/static/media/safari-pinned-tab.f0d3b570.svg" rel="mask-icon">
-*/
-
 export function meta({
 	location: { pathname },
 	params: { locale = defaultLocale }
@@ -114,6 +105,47 @@ export function meta({
 
 		{
 			tagName: "link",
+			rel: "icon",
+			type: "image/x-icon",
+			sizes: "48x48",
+			href: "/favicon.ico"
+		},
+		{
+			tagName: "link",
+			rel: "icon",
+			type: "image/svg+xml",
+			sizes: "any",
+			href: "/icon.svg"
+		},
+		{
+			tagName: "link",
+			rel: "icon",
+			type: "image/png",
+			sizes: "32x32",
+			href: "/icon-32x32.png"
+		},
+		{
+			tagName: "link",
+			rel: "icon",
+			type: "image/png",
+			sizes: "16x16",
+			href: "/icon-16x16.png"
+		},
+		{
+			tagName: "link",
+			rel: "apple-touch-icon",
+			type: "image/png",
+			sizes: "180x180",
+			href: "/apple-icon.png"
+		},
+		{
+			tagName: "link",
+			rel: "mask-icon",
+			color: "#e9658b",
+			href: "/safari-pinned-tab.svg"
+		},
+		{
+			tagName: "link",
 			key: "canonical",
 			rel: "canonical",
 			hrefLang: locale,
@@ -124,7 +156,7 @@ export function meta({
 			key: "alternate-default",
 			rel: "alternate",
 			hrefLang: "x-default",
-			href: absoluteUrl(replaceLanguage(pathname, defaultLocale, pathname)).href
+			href: absoluteUrl(replaceLanguage(pathname, null, pathname)).href
 		},
 
 		...locales.map((locale) => {
