@@ -2,6 +2,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
+import { FlirtualLogo } from "~/components/logo";
 import { ModelCard } from "~/components/model-card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { defaultLocale, i18n } from "~/i18n";
@@ -29,7 +30,6 @@ export default function AboutPage() {
 
 	return (
 		<ModelCard
-			branded
 			className="w-full desktop:max-w-2xl"
 			containerProps={{ className: "!p-0 overflow-hidden" }}
 			title={t("about_us")}
@@ -50,6 +50,7 @@ export default function AboutPage() {
 						group: <div className="flex flex-col items-start" />,
 						contact: <InlineLink href={urls.resources.contact} />,
 						feedback: <InlineLink href={urls.resources.feedback} />,
+						logo: <FlirtualLogo className="-ml-2.5 w-36" />,
 						discord: <InlineLink className="select-text" href={urls.socials.discord} />,
 						"team-list": (
 							<TeamList>

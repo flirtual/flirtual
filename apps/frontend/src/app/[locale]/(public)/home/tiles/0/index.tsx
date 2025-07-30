@@ -20,7 +20,7 @@ export function Hero({ id }: TileProps) {
 		>
 			<InlineLanguageSelect className="absolute right-12 top-8 z-20 hidden desktop:block" />
 			<div className="z-10 -mt-16 flex flex-col items-center px-4 pb-12 desktop:mt-0 desktop:px-32">
-				<FlirtualLogo className="mb-4 w-48 desktop:w-64" />
+				<FlirtualLogo className="mb-4 w-48 desktop:w-64" theme="dark" />
 				<TileAnchor id={id}>
 					<h2 className="max-w-4xl text-balance text-center font-montserrat text-4xl font-bold text-white-10 desktop:text-6xl desktop:tall:text-7xl">
 						<Trans

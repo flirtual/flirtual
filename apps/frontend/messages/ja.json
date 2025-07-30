@@ -4,7 +4,7 @@
 	"knotty_direct_mongoose_bend": "初の VR デート アプリ。VRChat などの VR アプリで 10 万人以上の人とデートしましょう。",
 	"green_plain_mongoose_lend": "バーチャルリアリティで新しい人と出会いましょう❤️ Flirtual は VR と VRChat でデートするのに役立ちます…",
 	"about_us": "私たちについて",
-	"hard_cause_trick_puzzling": "<section><h1>私たちのストーリー</h1><p>こんにちは、私たちはFlirtualのクリエイター、カイルとトニーです。カイルはオキュラスの初期からVRに夢中でしたが、VRChatに参加して、親友や妻を含む最も親しい友人と出会ったことで人生が変わりました。COVIDが流行する直前に、カイルは幼なじみのトニーをこの旅に誘い、VRは彼の人生も変えました。私たちは他の人々も世界中の素晴らしい人々に出会えるようにすることを目指し、VRLFP（バーチャルリアリティパートナー探し）から始めました。</p><p>VRでの没入感のある存在感は、世界中のどこにいる人々とも深い繋がりを築くのに役立ちます。地理的な距離を橋渡しし、個性を最優先にすることで、私たちの使命はどこにいてもあなたに最適な人を見つけること、そしてデートをより安全で魔法のようなものにすることです。</p><p>2022年、VRLFPはFlirtualとなりました。一から再構築し、マッチメイキングを強化し、個性と興味のタグを追加し、改良されたアプリを立ち上げました。真剣な関係をリアルライフに移行したい場合でも、VR内でのカジュアルな関係を探している場合でも、新しい友達を見つけたい場合でも、私たちは完璧な相手を見つけるお手伝いをします。</p><group><p><3 kfarwell, Tony & Flirtual Team</p><discord>Discordに参加する</discord></group><p><italic>P.S. VRLFPの控えめな始まりから長い道のりを歩んできましたが、私たちは依然としてVRコミュニティに根ざした小さなチームです。Flirtualを最高のものにするために一生懸命努力している間、私たちに忍耐を示していただければ幸いです。<contact>バグを見つけた</contact>場合や、<feedback>提案がある</feedback>場合はお知らせください！</italic></p></section><section><h1>チーム</h1><team-list/></section><section><h1>タイムライン</h1><timeline/></section>",
+	"hard_cause_trick_puzzling": "<section><h1>私たちのストーリー</h1><p>こんにちは、私たちはFlirtualのクリエイター、カイルとトニーです。カイルはオキュラスの初期からVRに夢中でしたが、VRChatに参加して、親友や妻を含む最も親しい友人と出会ったことで人生が変わりました。COVIDが流行する直前に、カイルは幼なじみのトニーをこの旅に誘い、VRは彼の人生も変えました。私たちは他の人々も世界中の素晴らしい人々に出会えるようにすることを目指し、VRLFP（バーチャルリアリティパートナー探し）から始めました。</p><p>VRでの没入感のある存在感は、世界中のどこにいる人々とも深い繋がりを築くのに役立ちます。地理的な距離を橋渡しし、個性を最優先にすることで、私たちの使命はどこにいてもあなたに最適な人を見つけること、そしてデートをより安全で魔法のようなものにすることです。</p><p>2022年、VRLFPはFlirtualとなりました。一から再構築し、マッチメイキングを強化し、個性と興味のタグを追加し、改良されたアプリを立ち上げました。真剣な関係をリアルライフに移行したい場合でも、VR内でのカジュアルな関係を探している場合でも、新しい友達を見つけたい場合でも、私たちは完璧な相手を見つけるお手伝いをします。</p><group><logo/><p>❤ kfarwell, Tony & Flirtual Team</p><discord>Discordに参加する</discord></group><p><italic>P.S. VRLFPの控えめな始まりから長い道のりを歩んできましたが、私たちは依然としてVRコミュニティに根ざした小さなチームです。Flirtualを最高のものにするために一生懸命努力している間、私たちに忍耐を示していただければ幸いです。<contact>バグを見つけた</contact>場合や、<feedback>提案がある</feedback>場合はお知らせください！</italic></p></section><section><h1>チーム</h1><team-list/></section><section><h1>タイムライン</h1><timeline/></section>",
 	"extra_moving_jackdaw_twist": "{name}のアバター",
 	"voice_spiritual_polite_entertaining": "VRChatでのFlirtualチームの写真",
 	"copy_frighten_wobble_futuristic": {
@@ -979,5 +979,6 @@
 	"join_group": "グループに参加する",
 	"console_message": "Flirtualはオープンソースです！貢献したいですか？",
 	"elegant_actual_ray_buzz": "サポートされていないデバイス。",
-	"major_vivid_beetle_support": "デバイスを確認できませんでした。"
+	"major_vivid_beetle_support": "デバイスを確認できませんでした。",
+	"flirtual_logo": "Flirtualロゴ"
 }
