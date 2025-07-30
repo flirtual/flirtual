@@ -1,5 +1,6 @@
 import ms from "ms";
 import { useDebugValue } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { AttributeCollection, AttributeType } from "~/api/attributes";
 import { useMessages } from "~/i18n";
@@ -40,5 +41,6 @@ export function useAttributeTranslation<
 	T extends AttributeType = AttributeType
 // eslint-disable-next-line unused-imports/no-unused-vars
 >(type?: T): Record<string, AttributeTranslation<T>> {
-	return useMessages("attributes") as Record<string, AttributeTranslation<T>>;
+	const { t } = useTranslation();
+	return t("attributes", { returnObjects: true }) as Record<string, AttributeTranslation<T>>;
 }

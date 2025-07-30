@@ -176,7 +176,7 @@ const ProfileColorSelect: FC = () => {
 			</div>
 			<div className="grid w-full grid-cols-2 gap-2 wide:grid-cols-4">
 				{[
-					{ name: "flirtual" as const, description: t("default"), ...defaultColors },
+					{ name: "flirtual" as const, description: t("default_"), ...defaultColors },
 					...recommendedThemes
 				].map((theme) => (
 					<button
@@ -243,7 +243,7 @@ const fontSizeNamed = {
 	12: "tiny",
 	13.33: "extra_small",
 	14.67: "small",
-	[defaultFontSize]: "default",
+	[defaultFontSize]: "default_",
 	17.33: "large",
 	18.67: "extra_large",
 	20: "huge"

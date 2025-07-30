@@ -1,3 +1,5 @@
+import { Outlet } from "react-router";
+
 import { defaultLocale, i18n } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
 
@@ -13,13 +15,11 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export default function SettingsLayout({
-	children
-}: React.ComponentProps<"div">) {
+export default function SettingsLayout() {
 	return (
 		<div className="flex w-full grow flex-col desktop:flex-row desktop:justify-center desktop:gap-8">
 			<SettingsNavigation />
-			{children}
+			<Outlet />
 		</div>
 	);
 }

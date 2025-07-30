@@ -127,7 +127,7 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 					</ul>
 					{development && error instanceof Error && (
 						<code className="mt-6 flex max-w-sm flex-col font-mono text-xs opacity-50 desktop:max-w-md desktop:text-sm">
-							<span className="mb-4 font-semibold">{error.message}</span>
+							<span className="mb-4 line-clamp-5 font-semibold">{error.message}</span>
 							<p className="line-clamp-6">{error.stack}</p>
 						</code>
 					)}

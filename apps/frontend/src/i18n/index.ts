@@ -34,7 +34,7 @@ export {
 };
 export type { Locale };
 
-export const defaultNamespace = "default";
+export const defaultNamespace = "_flirtual";
 export type DefaultNamespace = typeof defaultNamespace;
 
 export type Resources = Awaited<ReturnType<typeof load>>;
@@ -81,9 +81,11 @@ async function load(locale: Locale) {
 	]);
 
 	return {
-		default: default_,
-		attributes,
-		uppy
+		_flirtual: {
+			...default_,
+			attributes,
+			uppy
+		}
 	};
 }
 
@@ -93,7 +95,7 @@ i18n
 		init: () => {},
 		read: (language: Locale, namespace, callback) => {
 			if (!locales.includes(language)) throw new Error(`Unknown language: ${language}`);
-			load(language).then((data) => callback(null, (data && data.default) || data));
+			load(language).then((data) => callback(null, (data && (data as any)[namespace]) || data));
 		}
 	} satisfies BackendModule)
 	.use(icu)
@@ -126,7 +128,7 @@ export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Pro
 	];
 }
 
-export function useMessages<T extends Namespace = "default">(namespace: T = "default" as T): Resources[T] {
+export function useMessages<T extends Namespace = "_flirtual">(namespace: T = "_flirtual" as T): Resources[T] {
 	const { i18n } = useTranslation();
 	const [locale] = useLocale();
 

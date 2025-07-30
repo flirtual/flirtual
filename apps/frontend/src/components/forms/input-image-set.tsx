@@ -91,7 +91,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const [dragging, setDragging] = useState(false);
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
 	const { t } = useTranslation();
-	const uppyLocale = useMessages("uppy");
+	const uppyLocale = t("uppy", { returnObjects: true });
 
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 

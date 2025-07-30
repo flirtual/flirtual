@@ -176,7 +176,10 @@ export const InterestSelectCustomInput: FC<{
 				{t("custom_interests")}
 			</InputLabel>
 			<InputLabelHint className="-mt-2">
-				<Trans i18nKey={apple ? "wide_shy_loris_gleam" : "born_game_pony_empower"} />
+				<Trans
+					components={{ small: <small /> }}
+					i18nKey={apple ? "wide_shy_loris_gleam" : "born_game_pony_empower"}
+				/>
 			</InputLabelHint>
 			<InputAutocomplete
 				supportArbitrary

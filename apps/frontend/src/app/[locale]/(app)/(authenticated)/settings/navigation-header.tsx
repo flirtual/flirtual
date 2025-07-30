@@ -12,7 +12,7 @@ export interface NavigationHeaderProps {
 export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
 	navigationInner
 }) => {
-	const query = useSearchParams();
+	const [query] = useSearchParams();
 	const { t } = useTranslation();
 
 	const Icon = navigationInner ? ChevronLeft : X;

@@ -1,3 +1,5 @@
+import { Outlet } from "react-router";
+
 import Flitty from "~/components/flitty";
 import {
 	DiscordSpamDialog,
@@ -8,16 +10,14 @@ import { NotificationProvider } from "~/hooks/use-notifications";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 import { useSession } from "~/hooks/use-session";
 
-export default function AuthenticatedLayout({
-	children
-}: React.PropsWithChildren) {
+export default function AuthenticatedLayout() {
 	useSession();
 
 	return (
 		<PurchaseProvider>
 			<ShepherdProvider>
 				<NotificationProvider>
-					{children}
+					<Outlet />
 					<ModerationMessageDialog />
 					<DiscordSpamDialog />
 					<Flitty />

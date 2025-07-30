@@ -201,7 +201,7 @@ export function Layout({ children }: PropsWithChildren) {
 					}}
 				/>
 				<script src={getPolyfillUrl(locale as Locale)} />
-				<Sentry.ErrorBoundary fallback={({ eventId }) => <HavingIssuesViewport digest={eventId} />}>
+				<Sentry.ErrorBoundary fallback={({ error, eventId }) => <HavingIssuesViewport digest={eventId} error={error} />}>
 					<RedirectBoundary>
 						<AnalyticsProvider />
 						<LazyMotion strict features={async () => ((await import("./motion")).default)}>

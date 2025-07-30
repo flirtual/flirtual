@@ -16,7 +16,7 @@ const ReactQuill = lazy(
 		// @ts-expect-error: Broken types in migration to v3.
 		Quill.register(AlignStyle);
 
-		return { default: ReactQuill };
+		return ReactQuill;
 	},
 );
 
