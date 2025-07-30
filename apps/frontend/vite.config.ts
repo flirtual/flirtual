@@ -109,7 +109,7 @@ export default defineConfig(({ mode }) => {
 		plugins: [
 			tsconfigPaths(),
 			info(),
-			basicSsl({
+			mode === "development" && basicSsl({
 				name: "flirtual",
 				domains: [hostname],
 				certDir: "./certificates",
