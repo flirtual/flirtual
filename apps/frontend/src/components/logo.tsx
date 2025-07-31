@@ -2,6 +2,8 @@ import { useCallback } from "react";
 import type { ComponentProps, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
+import FlirtualBlack from "virtual:r2/flirtual-black.svg";
+import FlirtualWhite from "virtual:r2/flirtual-white.svg";
 
 import type { Theme } from "~/hooks/use-theme";
 import { useNavigate } from "~/i18n";
@@ -24,10 +26,10 @@ export const FlirtualLogo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "s
 		return (
 			<img
 				{...elementProps}
-				src={urls.media({
-					dark: "flirtual-white.svg",
-					light: "flirtual-black.svg"
-				}[theme])}
+				src={{
+					dark: FlirtualWhite,
+					light: FlirtualBlack
+				}[theme]}
 				className={className}
 			/>
 		);
@@ -37,12 +39,12 @@ export const FlirtualLogo: FC<{ theme?: Theme } & Omit<ComponentProps<"img">, "s
 			<img
 				{...elementProps}
 				className={twMerge("dark:hidden", className)}
-				src={urls.media("flirtual-black.svg")}
+				src={FlirtualBlack}
 			/>
 			<img
 				{...elementProps}
 				className={twMerge("hidden dark:block", className)}
-				src={urls.media("flirtual-white.svg")}
+				src={FlirtualWhite}
 			/>
 		</>
 	);

@@ -18,7 +18,7 @@ export default function handleRequest(
 	// loadContext: unstable_RouterContextProvider
 ) {
 	return new Promise((resolve, reject) => {
-		let shellRendered = false;
+		// let shellRendered = false;
 		const userAgent = request.headers.get("user-agent");
 
 		// Ensure requests from bots and SPA Mode renders wait for all content to load before responding
@@ -32,7 +32,7 @@ export default function handleRequest(
 			<ServerRouter context={routerContext} url={request.url} />,
 			{
 				[readyOption]() {
-					shellRendered = true;
+					// shellRendered = true;
 					const body = new PassThrough();
 					const stream = createReadableStreamFromReadable(body);
 

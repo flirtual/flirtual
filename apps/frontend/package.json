@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "react-router dev",
 		"typegen": "wrangler types && react-router typegen",
-		"build": "pnpm -s typegen && react-router build",
+		"build": "rm -rf .sonda && pnpm -s typegen && react-router build",
 		"build:preview": "sh -c 'name=${1:-$(whoami)} && VITE_PREVIEW=\"$name\" pnpm -s build --mode=\"$name\"' --",
 		"release:production": "pnpm -s build && wrangler deploy",
 		"release:preview": "sh -c 'name=${1:-$(whoami)} && pnpm -s build:preview $name && wrangler versions upload --preview-alias=\"$name\"' --",
@@ -13,7 +13,7 @@
 		"android:build": "cap sync android && cd ./android && ./gradlew build",
 		"android:uninstall": "adb uninstall zone.homie.flirtual.pwa",
 		"android:install": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk",
-		"clean": "rm -rf node_modules .react-router dist && pnpm install --force",
+		"clean": "rm -rf node_modules dist .react-router .sonda && pnpm install --force",
 		"postinstall": "pnpm -s typegen"
 	},
 	"dependencies": {
@@ -159,14 +159,17 @@
 		"native-run": "^2.0.1",
 		"postcss": "^8.5.6",
 		"rollup": "^4.45.3",
+		"sharp": "^0.34.3",
 		"sitemap": "^8.0.0",
 		"sonda": "^0.9.0",
+		"svgo": "^4.0.0",
 		"tailwindcss": "^3.4.17",
 		"tailwindcss-hocus": "^0.0.7",
 		"tailwindcss-motion": "1.1.0",
 		"typescript": "^5.8.3",
-		"vite": "npm:rolldown-vite@latest",
+		"vite": "^7.0.6",
 		"vite-plugin-checker": "^0.10.0",
+		"vite-plugin-image-optimizer": "^2.0.2",
 		"vite-tsconfig-paths": "^5.1.4",
 		"wrangler": "^4.24.4",
 		"xml-formatter": "^3.6.6"

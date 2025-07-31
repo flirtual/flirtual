@@ -1,4 +1,3 @@
-import { cache } from "react";
 import type { WretchOptions } from "wretch";
 
 import { commitIdShort } from "~/const";
@@ -112,5 +111,3 @@ export const Attribute = {
 		return values.find((value) => value.id === id) ?? null;
 	}
 };
-
-Attribute.list = cache(Attribute.list.bind(Attribute));

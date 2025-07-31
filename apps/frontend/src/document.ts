@@ -20,6 +20,7 @@ const safeArea: SafeAreaConfig = {
 };
 
 export async function applyDocumentMutations() {
+	return;
 	log("applyDocumentMutations()");
 
 	const { body: { style, dataset } } = document;

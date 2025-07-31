@@ -1,5 +1,3 @@
-import { cache } from "react";
-
 import { commitIdShort } from "~/const";
 
 import { api } from "./common";
@@ -35,5 +33,3 @@ export const Plan = {
 			.json<Array<Plan>>();
 	}
 };
-
-Plan.list = cache(Plan.list.bind(Plan));

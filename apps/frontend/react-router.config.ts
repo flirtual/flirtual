@@ -46,6 +46,6 @@ export default {
 	buildDirectory: "dist",
 	future: {
 		// unstable_subResourceIntegrity: true,
-		unstable_splitRouteModules: "enforce",
+		unstable_splitRouteModules: false,
 	}
 } satisfies Config;

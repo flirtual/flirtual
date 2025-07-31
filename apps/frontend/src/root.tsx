@@ -11,6 +11,7 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	useMatch,
 	useParams,
 	useRouteLoaderData
 } from "react-router";
@@ -22,12 +23,15 @@ import { InsetPreview } from "./components/inset-preview";
 import { LoadingIndicator } from "./components/loading-indicator";
 import { TooltipProvider } from "./components/tooltip";
 import { UpdateInformation } from "./components/update-information";
-import { apiOrigin, development, platformOverride, siteOrigin } from "./const";
+import { apiOrigin, client, development, nativeOverride, platformOverride, siteOrigin } from "./const";
+import { device } from "./hooks/use-device";
+import { usePreferences } from "./hooks/use-preferences";
+import { useTheme } from "./hooks/use-theme";
 import { ToastProvider } from "./hooks/use-toast";
 import { defaultLocale, i18n, localePathnameRegex, locales, replaceLanguage } from "./i18n";
 import type { Locale } from "./i18n";
 import { isLocale } from "./i18n/languages";
-import { getPolyfillUrl } from "./polyfill";
+import { getPolyfillUrl, polyfillBaseUrl } from "./polyfill";
 import { QueryProvider } from "./query";
 import { RedirectBoundary } from "./redirect";
 import { absoluteUrl, bucketOrigins, urls } from "./urls";
@@ -163,14 +167,27 @@ export function Layout({ children }: PropsWithChildren) {
 	useTranslateSSR(initialI18nStore, locale);
 	useEffect(() => void i18n.changeLanguage(locale), [locale]);
 
+	preconnect(polyfillBaseUrl.origin);
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
+
+	const [theme] = useTheme();
+	const themeStyle = useMatch(urls.discover("homies")) ? "friend" : "default";
+
+	const [fontSize] = usePreferences<number>("font_size", 16);
 
 	// const location = useLocation();
 	// hideLocale(location);
 
 	return (
-		<html suppressHydrationWarning lang={locale}>
+		<html
+			suppressHydrationWarning
+			style={{
+				colorScheme: theme,
+				fontSize: `${fontSize || 16}px`
+			}}
+			lang={locale}
+		>
 			<head>
 				<Meta />
 				<Links />
@@ -178,7 +195,10 @@ export function Layout({ children }: PropsWithChildren) {
 			<body
 				suppressHydrationWarning
 				className="flex min-h-screen flex-col bg-white-20 font-nunito text-black-80 antialiased data-[theme=dark]:bg-black-70 data-[vision]:bg-transparent data-[theme=dark]:text-white-20 desktop:bg-cream desktop:data-[theme=dark]:bg-black-80"
-				data-platform={platformOverride || undefined}
+				data-native={nativeOverride || (client && device.native) || undefined}
+				data-platform={platformOverride || (client && device.platform) || undefined}
+				data-theme={theme}
+				data-theme-style={themeStyle}
 			>
 				<script
 					// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml

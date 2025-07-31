@@ -1,4 +1,3 @@
-import { cache } from "react";
 import type { WretchOptions } from "wretch";
 
 import {
@@ -164,5 +163,3 @@ export const Authentication = {
 		return this.api.url(`/sso/${signer}`).get().json<{ token: string }>();
 	}
 };
-
-Authentication.getOptionalSession = cache(Authentication.getOptionalSession.bind(Authentication));

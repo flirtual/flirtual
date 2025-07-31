@@ -1,4 +1,3 @@
-import { cache } from "react";
 import type { WretchOptions } from "wretch";
 
 import {
@@ -97,5 +96,3 @@ export const Matchmaking = {
 		}>();
 	}
 };
-
-Matchmaking.queue = cache(Matchmaking.queue.bind(Matchmaking));

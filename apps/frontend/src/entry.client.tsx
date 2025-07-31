@@ -4,9 +4,7 @@ import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-import { apiOrigin, apiUrl, sentryDsn, sentryEnabled, siteOrigin } from "./const";
-import { applyDocumentMutations } from "./document";
-// import { onHydrateComplete } from "./hooks/use-hydrated";
+import { apiOrigin, sentryDsn, sentryEnabled, siteOrigin } from "./const";
 import { i18n } from "./i18n";
 import { preloadAll, restoreQueries, saveQueries } from "./query";
 import { isRedirectError } from "./redirect";
@@ -25,23 +23,23 @@ Sentry.init({
 		apiOrigin,
 	],
 	ignoreErrors: [],
-	integrations: [
-		Sentry.replayIntegration({
-			blockAllMedia: false,
-			maskAllText: false,
-			maskAllInputs: true,
-			mask: ["[data-mask]"],
-			block: ["[data-block]"],
-			networkDetailAllowUrls: [
-				window.location.origin,
-				new URL(siteOrigin).origin,
-				new URL(apiUrl).origin
-			]
-		}),
-		Sentry.feedbackIntegration({
-			autoInject: false
-		})
-	]
+	// integrations: [
+	// 	Sentry.replayIntegration({
+	// 		blockAllMedia: false,
+	// 		maskAllText: false,
+	// 		maskAllInputs: true,
+	// 		mask: ["[data-mask]"],
+	// 		block: ["[data-block]"],
+	// 		networkDetailAllowUrls: [
+	// 			window.location.origin,
+	// 			new URL(siteOrigin).origin,
+	// 			new URL(apiUrl).origin
+	// 		]
+	// 	}),
+	// 	Sentry.feedbackIntegration({
+	// 		autoInject: false
+	// 	})
+	// ]
 });
 
 App.addListener("appUrlOpen", async (event) => {
@@ -81,7 +79,6 @@ i18n.on("loaded", () => {
 });
 
 await restoreQueries();
-await applyDocumentMutations();
 
 window.addEventListener("beforeunload", saveQueries);
 document.addEventListener("visibilitychange", () => {
