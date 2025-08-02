@@ -1,13 +1,10 @@
+import deepmerge from "deepmerge";
 import i18n from "i18next";
 import type { BackendModule, ResourceKey } from "i18next";
 import icu from "i18next-icu";
 import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
-import {
-	useNavigate as _useNavigate,
-	createPath,
-	useLocation
-} from "react-router";
+import { useNavigate as _useNavigate, useLocation } from "react-router";
 import type { NavigateOptions as _NavigateOptions, To } from "react-router";
 
 import { server } from "~/const";
@@ -61,6 +58,8 @@ function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) 
 	}, {});
 }
 
+const defaultResourcePromise = load(defaultLocale);
+
 async function load(locale: Locale) {
 	log("load(%s)", locale);
 
@@ -85,7 +84,7 @@ async function load(locale: Locale) {
 			...default_,
 			attributes,
 			uppy
-		}
+		},
 	};
 }
 
@@ -93,9 +92,20 @@ i18n
 	.use({
 		type: "backend",
 		init: () => {},
-		read: (language: Locale, namespace, callback) => {
-			if (!locales.includes(language)) throw new Error(`Unknown language: ${language}`);
-			load(language).then((data) => callback(null, (data && (data as any)[namespace]) || data));
+		read: async (locale: Locale, namespace, callback) => {
+			if (!locales.includes(locale)) throw new Error(`Unknown locale: ${locale}`);
+
+			const [defaultResource, resource] = await Promise.all([
+				defaultResourcePromise,
+				load(locale)
+			]);
+
+			const data = deepmerge(
+				(defaultResource && (defaultResource as any)[namespace]) || defaultResource,
+				(resource && (resource as any)[namespace]) || resource
+			) as any;
+
+			callback(null, data);
 		}
 	} satisfies BackendModule)
 	.use(icu)

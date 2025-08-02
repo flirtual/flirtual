@@ -35,8 +35,7 @@ const translations = {
 		reload: "リロード",
 		discord: "Discordコミュニティ",
 		contact: "サポートに連絡",
-	},
-	cimode: {}
+	}
 } as const;
 
 export function HavingIssues({ error, digest }: { error?: unknown; digest?: string }) {
@@ -70,15 +69,15 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 			{t2.subtitle && <h2 className="mb-2 text-sm desktop:text-base">{t2.subtitle}</h2>}
 			<div className="flex flex-wrap items-center justify-center gap-2 text-center text-xs desktop:text-sm">
 				<span className="cursor-pointer text-theme-2" onClick={reload}>
-					{t2.reload}
+					{t("refresh_the_page")}
 				</span>
 				{" ⋅ "}
 				<a className="text-theme-2" href={urls.socials.discord}>
-					{t2.discord}
+					{t("discord")}
 				</a>
 				{" ⋅ "}
 				<a className="text-theme-2" href={urls.resources.contact}>
-					{t2.contact}
+					{t("contact_us")}
 				</a>
 			</div>
 			{!maintenance && (
