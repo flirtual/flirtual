@@ -129,12 +129,14 @@ export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Pro
 
 	const setLocale = useCallback(async (locale: Locale) => {
 		log("setLocale(%s)", locale);
+
+		await i18n.loadLanguages(locale);
 		await navigate(replaceLanguage(location, locale));
-	}, [location, navigate]);
+	}, [i18n, location, navigate]);
 
 	return [
 		i18n.language as Locale,
-		setLocale
+		setLocale,
 	];
 }
 

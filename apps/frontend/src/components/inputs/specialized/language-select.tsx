@@ -3,9 +3,7 @@ import { ChevronDown, Languages } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
-import { development } from "~/const";
-import { useOptionalSession } from "~/hooks/use-session";
-import { localeNames, locales, useLocale } from "~/i18n";
+import { i18n, localeNames, locales, useLocale } from "~/i18n";
 
 import {
 	InputSelect,
@@ -37,12 +35,6 @@ export const InputLanguageSelect = withSuspense(InputLanguageSelect_);
 export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ className }) => {
 	const [locale, setLocale] = useLocale();
 
-	const session = useOptionalSession();
-
-	const testVisible = development
-		|| session?.user.tags?.includes("beta_tester")
-		|| session?.user.tags?.includes("debugger");
-
 	return (
 		<Select value={locale} onValueChange={setLocale}>
 			<RadixSelectTrigger className={twMerge("focusable flex items-center gap-0.5em whitespace-nowrap rounded-lg", className)}>
@@ -54,14 +46,13 @@ export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ classNa
 			</RadixSelectTrigger>
 			<SelectContent>
 				{locales.map((locale) => {
-					if (locale === "cimode" && !testVisible) return null;
-
 					return (
 						<SelectItem
 							key={locale}
 							className="flex w-full items-center gap-2"
 							lang={locale}
 							value={locale}
+							onPointerEnter={() => i18n.loadLanguages(locale)}
 						>
 							{localeNames[locale]}
 						</SelectItem>

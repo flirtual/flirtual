@@ -21,6 +21,7 @@ import { HavingIssuesViewport } from "./components/error";
 import { LoadingIndicator } from "./components/loading-indicator";
 import { apiOrigin, client, development, nativeOverride, platformOverride, preview, siteOrigin } from "./const";
 import { device } from "./hooks/use-device";
+import { logOnce } from "./hooks/use-log";
 import { usePreferences } from "./hooks/use-preferences";
 import { useTheme } from "./hooks/use-theme";
 import type { LocalTheme } from "./hooks/use-theme";
@@ -47,8 +48,10 @@ export async function loader({ params: { locale: _locale } }: Route.LoaderArgs) 
 
 export function meta({
 	location: { pathname },
-	params: { locale = defaultLocale }
+	params: { locale: _locale }
 }: Pick<Route.MetaArgs, "location" | "params">): Route.MetaDescriptors {
+	const locale = !_locale || !isLocale(_locale) ? defaultLocale : _locale;
+
 	const t = i18n.getFixedT(locale);
 
 	return [
@@ -104,7 +107,7 @@ export function meta({
 		{ tagName: "link", rel: "apple-touch-icon", type: "image/png", sizes: "180x180", href: "/apple-icon.png" },
 		{ tagName: "link", rel: "mask-icon", color: "#e9658b", href: "/safari-pinned-tab.svg" },
 
-		(development || preview || locale === "citext") && {
+		(development || preview) && {
 			tagName: "meta",
 			name: "robots",
 			content: "noindex, nofollow"
@@ -168,10 +171,12 @@ const BeforeRenderScript: FC = memo(() => {
 export function Layout({ children }: PropsWithChildren) {
 	const { initialLocale = defaultLocale, initialTranslations = {} } = useRouteLoaderData<typeof loader>("root") || { };
 
-	const { locale } = useParams();
+	const { locale: _locale } = useParams();
+	const locale = _locale && isLocale(_locale) ? _locale : initialLocale;
 
 	useTranslateSSR({ [initialLocale]: initialTranslations }, initialLocale);
 	useEffect(() => void i18n.changeLanguage(locale), [locale]);
+	const { t, language } = i18n;
 
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
@@ -180,6 +185,12 @@ export function Layout({ children }: PropsWithChildren) {
 	const themeStyle = useMatch(urls.discover("homies")) ? "friend" : "default";
 
 	const [fontSize] = usePreferences<number>("font_size", 16);
+
+	logOnce(
+		`\n%c${t("console_message")}`,
+		"padding: 0 0.5rem; background-image: linear-gradient(to right, #ff8975, #e9658b); color: white; white-space: pre; display: block; text-align: center; font-weight: bold; border-radius: .5rem",
+		`\n${t("translate")} → ${urls.resources.translate(language as Locale)}\n${t("source_code")} → ${urls.resources.developers}\n\n`
+	);
 
 	return (
 		<html

@@ -69,11 +69,11 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 			{t2.subtitle && <h2 className="mb-2 text-sm desktop:text-base">{t2.subtitle}</h2>}
 			<div className="flex flex-wrap items-center justify-center gap-2 text-center text-xs desktop:text-sm">
 				<span className="cursor-pointer text-theme-2" onClick={reload}>
-					{t("refresh_the_page")}
+					{t2.reload}
 				</span>
 				{" ⋅ "}
 				<a className="text-theme-2" href={urls.socials.discord}>
-					{t("discord")}
+					{t2.discord}
 				</a>
 				{" ⋅ "}
 				<a className="text-theme-2" href={urls.resources.contact}>
