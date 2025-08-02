@@ -24,7 +24,8 @@
 		"types": [
 			"node",
 			"vite/client",
-			"unplugin-info/client"
+			"unplugin-info/client",
+			"unplugin-remote-assets/client"
 		],
 		"strict": true,
 		"noEmit": true,

@@ -96,12 +96,12 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 
 	return (
 		<>
-			<ErrorBoundary fallback={null}>
-				<Suspense>
+			<Suspense>
+				<ErrorBoundary fallbackRender={() => null}>
 					{/* <Pageview /> */}
 					<Identity />
-				</Suspense>
-			</ErrorBoundary>
+				</ErrorBoundary>
+			</Suspense>
 			{production && cloudflareBeaconId && (
 				<script
 					defer

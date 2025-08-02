@@ -1,13 +1,16 @@
 import { createPath } from "react-router";
 import type { Path, To } from "react-router";
 import { entries, fromEntries } from "remeda";
+import Gradient from "virtual:remote/e8212f93-af6f-4a2c-ac11-cb328bbc4aa4";
+import Mark from "virtual:remote/flirtual-mark.png";
 
 import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/[group]/page";
 import { apiUrl, siteOrigin } from "./const";
-import type { EmojiType } from "./hooks/use-talkjs";
+import { defaultLocale } from "./i18n";
+import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
 
 export function ensureRelativeUrl(pathname: string) {
@@ -84,14 +87,12 @@ export const urls = {
 	api: apiUrl,
 	media: (id: string, bucket: BucketName = "static", variant: string = "", folder: string = "") =>
 		`${bucketOriginMap[bucket]}/${folder ? `${folder}/` : ""}${id}${variant ? `/${variant}` : ""}`,
-	emoji: (name: string, type: EmojiType) =>
-		urls.media(`${name}.${type}`, "static", "", "emoji"),
 	image: (image: ProfileImage, variant: string = "profile") =>
 		image.externalId
 			? urls.media(image.externalId, "content", variant)
 			: image.originalFile
 				? urls.media(image.originalFile, "uploads")
-				: urls.media("e8212f93-af6f-4a2c-ac11-cb328bbc4aa4"),
+				: Gradient,
 	arbitraryImage: (urlOrPathname: string, options: ArbitraryImageOptions = { quality: 90 }) =>
 		`https://flirtual.com/cdn-cgi/image/${Object.entries(options).map(([key, value]) =>
 			`${{
@@ -104,7 +105,7 @@ export const urls = {
 	userAvatar: (user: { profile: Pick<Profile, "images"> } | null, variant?: string) =>
 		user?.profile.images[0]
 			? urls.image(user.profile.images[0], variant)
-			: urls.media("8d120672-c717-49d2-b9f3-2d4479bbacf6"),
+			: Mark,
 	vrchatProfile: (userId: string) =>
 		`https://vrchat.com/home/user/${userId}`,
 	vrchatSearch: (name: string) =>
@@ -196,7 +197,8 @@ export const urls = {
 		press: "/press",
 		pressEmail: "mailto:press@flirtu.al",
 		branding: "/branding",
-		developers: "https://github.com/flirtual",
+		developers: "https://github.com/flirtual/flirtual",
+		translate: (locale?: Locale) => `https://hosted.weblate.org/projects/flirtual/flirtual${locale && locale !== defaultLocale ? `/${locale}` : ""}`,
 		about: "/about",
 		communityGuidelines: "/guidelines",
 		termsOfService: "/terms",

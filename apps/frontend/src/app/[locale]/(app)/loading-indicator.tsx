@@ -4,8 +4,8 @@ import { useState } from "react";
 import type { PropsWithChildren } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
-import FlirtualBlack from "virtual:r2/flirtual-black.svg";
-import FlirtualWhite from "virtual:r2/flirtual-white.svg";
+import FlirtualBlack from "virtual:remote/static/flirtual-black.svg";
+import FlirtualWhite from "virtual:remote/static/flirtual-white.svg";
 
 import { Image } from "~/components/image";
 import { device } from "~/hooks/use-device";

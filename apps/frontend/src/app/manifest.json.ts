@@ -1,3 +1,22 @@
+import Image037c3224 from "virtual:remote/037c3224-2390-4dbc-bfdf-09bbbe53ef5d";
+import Image086711c1 from "virtual:remote/086711c1-e359-4a10-bcd5-492ef4687936";
+import Image143f16e8 from "virtual:remote/143f16e8-288c-429c-86d9-5bd1404b42a3";
+import Image21747a8e from "virtual:remote/21747a8e-1863-4534-b184-e6b0940245db";
+import Image36caae65 from "virtual:remote/36caae65-e07f-4ccf-9290-f4d329de66a6";
+import Image4977b687 from "virtual:remote/4977b687-26ae-4da7-b1aa-7fbf6cd2b14e";
+import Image544e3a7a from "virtual:remote/544e3a7a-7604-4415-b132-bf02aa49550d";
+import Image680f5d7b from "virtual:remote/680f5d7b-65dd-4cd2-bcad-15d4b4ae200b";
+import Image6987eb07 from "virtual:remote/6987eb07-6baa-4500-aed0-c09a94a49b19";
+import Image7273fe85 from "virtual:remote/7273fe85-1b60-402b-9d69-5e5b884df74d";
+import Image7275f45b from "virtual:remote/7275f45b-680a-4e19-b793-4554784a8fb1";
+import Image7b134496 from "virtual:remote/7b134496-3a5a-4cc9-acd1-f5e332269b3e";
+import Image83e96aea from "virtual:remote/83e96aea-cd0a-42a6-b178-ebf253c02f50";
+import Image8c2015ab from "virtual:remote/8c2015ab-ee61-4f5e-ad69-d4d03e45a90a";
+import Image9e9b05bf from "virtual:remote/9e9b05bf-56a8-45d2-b593-2b3d05077560";
+import ImageAe8bdc6b from "virtual:remote/ae8bdc6b-2073-491a-9d09-58fce4223d4e";
+import ImageCff9ca62 from "virtual:remote/cff9ca62-2ec5-4467-8bb1-5ec0972f0a5e";
+import ImageDcfbd0d6 from "virtual:remote/dcfbd0d6-1f35-44b9-9f4e-d9c50a368907";
+
 import { siteOrigin } from "~/const";
 import { urls } from "~/urls";
 
@@ -8,25 +27,25 @@ export function loader() {
 		short_name: "Flirtual",
 		icons: [
 			{
-				src: urls.media("36caae65-e07f-4ccf-9290-f4d329de66a6", "static"),
+				src: Image36caae65,
 				sizes: "192x192",
 				type: "image/png",
 				purpose: "any"
 			},
 			{
-				src: urls.media("ae8bdc6b-2073-491a-9d09-58fce4223d4e", "static"),
+				src: ImageAe8bdc6b,
 				sizes: "512x512",
 				type: "image/png",
 				purpose: "any"
 			},
 			{
-				src: urls.media("4977b687-26ae-4da7-b1aa-7fbf6cd2b14e", "static"),
+				src: Image4977b687,
 				sizes: "192x192",
 				type: "image/png",
 				purpose: "maskable"
 			},
 			{
-				src: urls.media("680f5d7b-65dd-4cd2-bcad-15d4b4ae200b", "static"),
+				src: Image680f5d7b,
 				sizes: "512x512",
 				type: "image/png",
 				purpose: "maskable"
@@ -43,11 +62,11 @@ export function loader() {
 				description: "Find new dates",
 				icons: [
 					{
-						src: urls.media("143f16e8-288c-429c-86d9-5bd1404b42a3", "static"),
+						src: Image143f16e8,
 						sizes: "96x96"
 					},
 					{
-						src: urls.media("8c2015ab-ee61-4f5e-ad69-d4d03e45a90a", "static"),
+						src: Image8c2015ab,
 						sizes: "256x256"
 					}
 				]
@@ -58,11 +77,11 @@ export function loader() {
 				description: "Find new homies",
 				icons: [
 					{
-						src: urls.media("7275f45b-680a-4e19-b793-4554784a8fb1", "static"),
+						src: Image7275f45b,
 						sizes: "96x96"
 					},
 					{
-						src: urls.media("83e96aea-cd0a-42a6-b178-ebf253c02f50", "static"),
+						src: Image83e96aea,
 						sizes: "256x256"
 					}
 				]
@@ -73,11 +92,11 @@ export function loader() {
 				description: "Message your matches",
 				icons: [
 					{
-						src: urls.media("544e3a7a-7604-4415-b132-bf02aa49550d", "static"),
+						src: Image544e3a7a,
 						sizes: "96x96"
 					},
 					{
-						src: urls.media("21747a8e-1863-4534-b184-e6b0940245db", "static"),
+						src: Image21747a8e,
 						sizes: "256x256"
 					}
 				]
@@ -88,11 +107,11 @@ export function loader() {
 				description: "View your profile",
 				icons: [
 					{
-						src: urls.media("086711c1-e359-4a10-bcd5-492ef4687936", "static"),
+						src: Image086711c1,
 						sizes: "96x96"
 					},
 					{
-						src: urls.media("9e9b05bf-56a8-45d2-b593-2b3d05077560", "static"),
+						src: Image9e9b05bf,
 						sizes: "256x256"
 					}
 				]
@@ -103,11 +122,11 @@ export function loader() {
 				description: "Change settings and edit your profile",
 				icons: [
 					{
-						src: urls.media("037c3224-2390-4dbc-bfdf-09bbbe53ef5d", "static"),
+						src: Image037c3224,
 						sizes: "96x96"
 					},
 					{
-						src: urls.media("6987eb07-6baa-4500-aed0-c09a94a49b19", "static"),
+						src: Image6987eb07,
 						sizes: "256x256"
 					}
 				]
@@ -119,28 +138,28 @@ export function loader() {
 		iarc_rating_id: "6e4124cb-ab7a-416e-aeb3-f93a42787fa4",
 		screenshots: [
 			{
-				src: urls.media("7b134496-3a5a-4cc9-acd1-f5e332269b3e", "static"),
+				src: Image7b134496,
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
 				label: "Real People, Avatar Profiles"
 			},
 			{
-				src: urls.media("cff9ca62-2ec5-4467-8bb1-5ec0972f0a5e", "static"),
+				src: ImageCff9ca62,
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
 				label: "Share Interests and Personality"
 			},
 			{
-				src: urls.media("7273fe85-1b60-402b-9d69-5e5b884df74d", "static"),
+				src: Image7273fe85,
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",
 				label: "Match on Flirtual"
 			},
 			{
-				src: urls.media("dcfbd0d6-1f35-44b9-9f4e-d9c50a368907", "static"),
+				src: ImageDcfbd0d6,
 				sizes: "1440x2560",
 				type: "image/png",
 				platform: "narrow",

@@ -1,3 +1,4 @@
+import type { Locale } from "~/i18n";
 import { urls } from "~/urls";
 
 // see: https://developers.cloudflare.com/workers/static-assets/redirects/

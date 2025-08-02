@@ -1,19 +1,13 @@
 import { twMerge } from "tailwind-merge";
 
-import { urls } from "~/urls";
-
 export interface ImageListItemProps {
 	name: string;
 	dark?: boolean;
-	kinds: Array<string>;
+	sources: Record<string, string>;
 }
 
-function getUrl(name: string, kind: string) {
-	return urls.media(`flirtual-${name.replaceAll("/", "-")}.${kind}`, "static");
-}
-
-function ImageListItem({ name, kinds, dark }: ImageListItemProps) {
-	const defaultKind = kinds[0];
+function ImageListItem({ name, sources, dark }: ImageListItemProps) {
+	const defaultKind = Object.keys(sources)[0];
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -24,16 +18,18 @@ function ImageListItem({ name, kinds, dark }: ImageListItemProps) {
 						: "repeating-conic-gradient(#fff 0% 25%, #eee 0% 50%) 50% / 30px 30px"
 				}}
 				className="flex h-full items-center justify-center overflow-hidden rounded-lg"
-				href={getUrl(name, defaultKind!)}
+				download={`flirtual-${name}.${defaultKind}`}
+				href={sources[defaultKind]}
 			>
-				<img className="h-fit w-full" src={getUrl(name, defaultKind!)} />
+				<img className="h-fit w-full" src={sources[defaultKind]} />
 			</a>
 			<div className="flex gap-2">
-				{kinds.map((kind) => (
+				{Object.entries(sources).map(([kind, source]) => (
 					<a
 						key={kind}
 						className="uppercase text-theme-2 hocus:underline hocus:outline-none"
-						href={getUrl(name, kind)}
+						download={`flirtual-${name}.${kind}`}
+						href={source}
 					>
 						{kind}
 					</a>

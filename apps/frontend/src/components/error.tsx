@@ -1,6 +1,8 @@
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import { useState } from "react";
 import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import FlittyHardhat from "virtual:remote/b25d8377-7035-4a23-84f1-faa095fa8104";
 
 import { commitIdShort, development, maintenance, production } from "~/const";
 import { useDevice } from "~/hooks/use-device";
@@ -34,6 +36,7 @@ const translations = {
 		discord: "Discordコミュニティ",
 		contact: "サポートに連絡",
 	},
+	cimode: {}
 } as const;
 
 export function HavingIssues({ error, digest }: { error?: unknown; digest?: string }) {
@@ -43,6 +46,7 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 	const t2 = translations[locale];
 
 	const { native } = useDevice();
+	const [squishCount, setSquishCount] = useState(0);
 
 	const reload = () => location.reload();
 
@@ -58,8 +62,9 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 				className="pettable mx-auto mb-4 h-14 w-fit shrink-0 rotate-[10deg] desktop:mt-1 desktop:h-16"
 				draggable={false}
 				height={345}
-				src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
+				src={FlittyHardhat}
 				width={412}
+				onClick={() => setSquishCount((squishCount) => squishCount + 1)}
 			/>
 			<h1>{t2.title}</h1>
 			{t2.subtitle && <h2 className="mb-2 text-sm desktop:text-base">{t2.subtitle}</h2>}
@@ -125,10 +130,10 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 
 						</li>
 					</ul>
-					{development && error instanceof Error && (
-						<code className="mt-6 flex max-w-sm flex-col font-mono text-xs opacity-50 desktop:max-w-md desktop:text-sm">
-							<span className="mb-4 line-clamp-5 font-semibold">{error.message}</span>
-							<p className="line-clamp-6">{error.stack}</p>
+					{(development || squishCount > 2) && error instanceof Error && (
+						<code className="select-children mt-6 flex max-w-sm flex-col font-mono text-xs opacity-50 desktop:max-w-md desktop:text-sm">
+							<span className="line-clamp-5 font-semibold">{error.message}</span>
+							{error.stack && <p className="mt-4 line-clamp-6">{error.stack}</p>}
 						</code>
 					)}
 					<div className="mt-6 flex flex-col text-center font-mono text-xs opacity-50 desktop:text-sm">

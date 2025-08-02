@@ -308,7 +308,7 @@ export const AppearanceForm: FC = () => {
 						<InputLabelHint>
 							<Trans
 								components={{
-									link: <InlineLink href={`https://hosted.weblate.org/projects/flirtual/flirtual/${locale === defaultLocale ? "" : locale}`} />
+									link: <InlineLink href={urls.resources.translate(locale)} />
 								}}
 								i18nKey={locale === defaultLocale ? "help_translate_others" : "help_translate"}
 								values={{ language: tAttribute[locale]?.name || locale }}

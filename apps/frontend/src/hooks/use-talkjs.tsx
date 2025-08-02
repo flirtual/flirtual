@@ -12,10 +12,27 @@ import type React from "react";
 import { useTranslation } from "react-i18next";
 import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
+import EmojiBonk from "virtual:remote/static/emoji/bonk.gif";
+import EmojiChad from "virtual:remote/static/emoji/chad.png";
+import EmojiCool from "virtual:remote/static/emoji/cool.png";
+import EmojiCupid from "virtual:remote/static/emoji/cupid.png";
+import EmojiDeveloper from "virtual:remote/static/emoji/developer.png";
+import EmojiDj from "virtual:remote/static/emoji/dj.png";
+import EmojiEtto from "virtual:remote/static/emoji/etto.png";
+import EmojiEw from "virtual:remote/static/emoji/ew.png";
+import EmojiFlirtual from "virtual:remote/static/emoji/flirtual.png";
+import EmojiHeadphones from "virtual:remote/static/emoji/headphones.gif";
+import EmojiLong from "virtual:remote/static/emoji/long.png";
+import EmojiNerd from "virtual:remote/static/emoji/nerd.png";
+import EmojiPat from "virtual:remote/static/emoji/pat.gif";
+import EmojiPatient from "virtual:remote/static/emoji/patient.png";
+import EmojiPride from "virtual:remote/static/emoji/pride.png";
+import EmojiRose from "virtual:remote/static/emoji/rose.png";
+import EmojiThink from "virtual:remote/static/emoji/think.png";
+import EmojiYonk from "virtual:remote/static/emoji/yonk.png";
 
 import { talkjsAppId } from "~/const";
 import { useLocale } from "~/i18n";
-import { urls } from "~/urls";
 import { emptyArray } from "~/utilities";
 
 import { useDevice } from "./use-device";
@@ -107,34 +124,32 @@ export function useUnreadConversations() {
 	return use(UnreadConversationContext);
 }
 
-export type EmojiType = "gif" | "png";
-
-const emojis: Array<{ name: string; type: EmojiType; hidden?: boolean }> = [
-	{ name: "bonk", type: "gif" },
-	{ name: "chad", type: "png" },
-	{ name: "cool", type: "png" },
-	{ name: "cupid", type: "png" },
-	{ name: "developer", type: "png" },
-	{ name: "dj", type: "png" },
-	{ name: "etto", type: "png" },
-	{ name: "ew", type: "png" },
-	{ name: "flirtual", type: "png" },
-	{ name: "headphones", type: "gif" },
-	{ name: "long", type: "png" },
-	{ name: "nerd", type: "png" },
-	{ name: "pat", type: "gif" },
-	{ name: "patient", type: "png" },
-	{ name: "pride", type: "png" },
-	{ name: "rose", type: "png" },
-	{ name: "think", type: "png" },
-	{ name: "yonk", type: "png" }
+const emojis: Array<{ name: string; url: string; hidden?: boolean }> = [
+	{ name: "bonk", url: EmojiBonk },
+	{ name: "chad", url: EmojiChad },
+	{ name: "cool", url: EmojiCool },
+	{ name: "cupid", url: EmojiCupid },
+	{ name: "developer", url: EmojiDeveloper },
+	{ name: "dj", url: EmojiDj },
+	{ name: "etto", url: EmojiEtto },
+	{ name: "ew", url: EmojiEw },
+	{ name: "flirtual", url: EmojiFlirtual },
+	{ name: "headphones", url: EmojiHeadphones },
+	{ name: "long", url: EmojiLong },
+	{ name: "nerd", url: EmojiNerd },
+	{ name: "pat", url: EmojiPat },
+	{ name: "patient", url: EmojiPatient },
+	{ name: "pride", url: EmojiPride },
+	{ name: "rose", url: EmojiRose },
+	{ name: "think", url: EmojiThink },
+	{ name: "yonk", url: EmojiYonk }
 ];
 
 export const customEmojis = Object.fromEntries(
-	emojis.map(({ name, type, hidden = false }) => [
+	emojis.map(({ name, url, hidden = false }) => [
 		`:${name}:`,
 		{
-			url: urls.emoji(name, type),
+			url,
 			hidden
 		}
 	])

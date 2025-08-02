@@ -2,7 +2,7 @@ import acceptLanguage from "accept-language";
 import { resolvePath } from "react-router";
 import type { Path, To } from "react-router";
 
-export const locales = ["en", "ja"] as const;
+export const locales = ["en", "ja", "cimode"] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale = "en";
@@ -20,13 +20,14 @@ export const localeNames: Record<Locale, string> = {
 	// de: "Deutsch",
 	// es: "Español",
 	// fr: "Français",
-	ja: "日本語"// ,
+	ja: "日本語",
 	// ko: "한국어",
 	// nl: "Nederlands",
 	// pt: "Português",
 	// "pt-BR": "Português (Brasil)",
 	// ru: "Русский",
-	// sv: "Svenska"
+	// sv: "Svenska",
+	cimode: "Test"
 };
 
 export function getLocale(to: To, relativeTo: string = window.location.pathname): Locale | null {

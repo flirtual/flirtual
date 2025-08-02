@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
+import Image1 from "virtual:remote/303e4ab2-b72f-4947-829e-e818514be4d9";
 
 import { Image } from "~/components/image";
-import { urls } from "~/urls";
 
 import { Tile, TileAnchor } from "..";
 import type { TileProps } from "..";
@@ -18,7 +18,7 @@ export function AvatarProfiles({ id }: TileProps) {
 					alt={t("legal_big_finch_kiss")}
 					className="w-fit object-contain desktop:h-[50vh] wide:scale-100 tall:scale-125"
 					height={1302}
-					src={urls.media(t("quick_happy_lobster_hush"))}
+					src={Image1}
 					width={1600}
 				/>
 				<div className="flex h-fit flex-col gap-4 text-center desktop:gap-8">

@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import type { Session } from "~/api/auth";
 import { Preferences } from "~/api/user/preferences";
 import type { PreferenceTheme } from "~/api/user/preferences";
@@ -9,15 +7,26 @@ import { mutate, sessionKey, useMutation } from "~/query";
 
 import { useMediaQuery } from "./use-media-query";
 import { usePreferences } from "./use-preferences";
-import { useOptionalSession } from "./use-session";
+import { getSession } from "./use-session";
 
 export type Theme = "dark" | "light";
+export type LocalTheme = "system" | Theme;
+export type ThemeStyle = "default" | "friend";
+
+declare global {
+	// eslint-disable-next-line vars-on-top
+	var theme: Theme;
+	// eslint-disable-next-line vars-on-top
+	var themeStyle: ThemeStyle;
+	// eslint-disable-next-line vars-on-top
+	var fontSize: number;
+}
 
 export async function getTheme(): Promise<Theme> {
 	const localTheme = await getPreferences<PreferenceTheme>("theme") || "system";
 	if (localTheme !== "system") return localTheme;
 
-	return matchMedia("(prefers-color-scheme: dark)").matches
+	return globalThis.theme = matchMedia("(prefers-color-scheme: dark)").matches
 		? "dark"
 		: "light";
 }
@@ -25,18 +34,18 @@ export async function getTheme(): Promise<Theme> {
 export function useTheme() {
 	const [localTheme, setLocalTheme] = usePreferences<PreferenceTheme>("theme", "system");
 
-	const session = useOptionalSession();
-	const sessionTheme = session?.user.preferences?.theme;
+	// const session = useOptionalSession();
+	// const sessionTheme = session?.user.preferences?.theme;
 
 	const prefersDark = useMediaQuery("(prefers-color-scheme: dark)", false);
 
-	const theme = localTheme === "system"
+	const theme = globalThis.theme = localTheme === "system"
 		? prefersDark
 			? "dark"
 			: "light"
 		: localTheme;
 
-	useEffect(() => void applyDocumentMutations(), [theme]);
+	// useEffect(() => void applyDocumentMutations(), [theme]);
 
 	const { mutateAsync } = useMutation({
 		mutationKey: sessionKey(),
@@ -61,7 +70,9 @@ export function useTheme() {
 			await applyDocumentMutations();
 		},
 		mutationFn: async (theme) => {
-			if (!session || theme === sessionTheme) return;
+			const session = getSession();
+			if (!session) return;
+
 			await Preferences.update(session.user.id, { theme });
 		},
 	});
@@ -71,7 +82,7 @@ export function useTheme() {
 		mutateAsync,
 		{
 			prefersDark,
-			sessionTheme,
+			// sessionTheme,
 			localTheme
 		}
 	] as const;

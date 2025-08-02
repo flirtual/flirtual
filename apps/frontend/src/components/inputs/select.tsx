@@ -98,8 +98,8 @@ function SelectContent({ ref: reference, ...props }: { ref?: React.Ref<React.Com
 				<SelectScrollUpButton />
 				<SelectPrimitive.Viewport
 					style={{
-						height: "var(--radix-select-trigger-height)",
-						width: "var(--radix-select-trigger-width)"
+						minHeight: "var(--radix-select-trigger-height)",
+						minWidth: "var(--radix-select-trigger-width)"
 					}}
 				>
 					{children}

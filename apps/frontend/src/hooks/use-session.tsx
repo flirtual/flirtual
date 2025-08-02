@@ -10,6 +10,7 @@ import {
 	evictQueries,
 	invalidate,
 	mutate,
+	queryClient,
 	sessionFetcher,
 	sessionKey,
 	useQuery
@@ -30,6 +31,8 @@ export async function logout() {
 
 	await evictQueries();
 }
+
+export const getSession = () => queryClient.getQueryData<Session>(sessionKey()) || null;
 
 export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | null> = {}): Session | null {
 	// postpone(useOptionalSession.name);

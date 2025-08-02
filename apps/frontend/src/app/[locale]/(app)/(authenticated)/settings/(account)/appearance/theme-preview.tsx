@@ -23,8 +23,8 @@ export interface ThemePreviewProps {
 export const ThemePreview: React.FC<ThemePreviewProps> = ({ theme }) => {
 	const { t } = useTranslation();
 
-	const [, setTheme, { sessionTheme }] = useTheme();
-	const active = theme === sessionTheme;
+	const [, setTheme, { localTheme }] = useTheme();
+	const active = theme === localTheme;
 
 	return (
 		<Tooltip>

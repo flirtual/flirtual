@@ -1,4 +1,18 @@
 import { Trans, useTranslation } from "react-i18next";
+import FlirtualBackgroundPNG from "virtual:remote/flirtual-background.png";
+import FlirtualBackgroundSVG from "virtual:remote/flirtual-background.svg";
+import FlirtualBlackPNG from "virtual:remote/flirtual-black.png";
+import FlirtualBlackSVG from "virtual:remote/flirtual-black.svg";
+import FlirtualMarkBackgroundPNG from "virtual:remote/flirtual-mark-background.png";
+import FlirtualMarkBackgroundSVG from "virtual:remote/flirtual-mark-background.svg";
+import FlirtualMarkBlackPNG from "virtual:remote/flirtual-mark-black.png";
+import FlirtualMarkBlackSVG from "virtual:remote/flirtual-mark-black.svg";
+import FlirtualMarkWhitePNG from "virtual:remote/flirtual-mark-white.png";
+import FlirtualMarkWhiteSVG from "virtual:remote/flirtual-mark-white.svg";
+import FlirtualMarkPNG from "virtual:remote/flirtual-mark.png";
+import FlirtualMarkSVG from "virtual:remote/flirtual-mark.svg";
+import FlirtualWhitePNG from "virtual:remote/flirtual-white.png";
+import FlirtualWhiteSVG from "virtual:remote/flirtual-white.svg";
 
 import { ButtonLink } from "~/components/button";
 import { InlineLink } from "~/components/inline-link";
@@ -46,17 +60,26 @@ export default function BrandingPage() {
 					items={[
 						{
 							name: "background",
-							kinds: ["svg", "png"]
+							sources: {
+								png: FlirtualBackgroundPNG,
+								svg: FlirtualBackgroundSVG,
+							}
 						},
 						{
 							name: "white",
-							kinds: ["svg", "png"],
-							dark: true
+							dark: true,
+							sources: {
+								png: FlirtualWhitePNG,
+								svg: FlirtualWhiteSVG,
+							}
 						},
 						{
 							name: "black",
-							kinds: ["svg", "png"]
-						}
+							sources: {
+								png: FlirtualBlackPNG,
+								svg: FlirtualBlackSVG,
+							}
+						},
 					]}
 				/>
 			</div>
@@ -68,21 +91,33 @@ export default function BrandingPage() {
 				<ImageList
 					items={[
 						{
-							name: "mark/background",
-							kinds: ["svg", "png"]
+							name: "mark-background",
+							sources: {
+								png: FlirtualMarkBackgroundPNG,
+								svg: FlirtualMarkBackgroundSVG,
+							}
 						},
 						{
 							name: "mark",
-							kinds: ["svg", "png"]
+							sources: {
+								png: FlirtualMarkPNG,
+								svg: FlirtualMarkSVG,
+							}
 						},
 						{
-							name: "mark/white",
-							kinds: ["svg", "png"],
-							dark: true
+							name: "mark-white",
+							dark: true,
+							sources: {
+								png: FlirtualMarkWhitePNG,
+								svg: FlirtualMarkWhiteSVG,
+							}
 						},
 						{
-							name: "mark/black",
-							kinds: ["svg", "png"]
+							name: "mark-black",
+							sources: {
+								png: FlirtualMarkBlackPNG,
+								svg: FlirtualMarkBlackSVG,
+							}
 						}
 					]}
 					className="desktop:grid-cols-4"

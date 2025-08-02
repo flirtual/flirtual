@@ -1,38 +1,33 @@
-import * as Sentry from "@sentry/react";
-import { LazyMotion } from "motion/react";
-import { useEffect } from "react";
-import type { PropsWithChildren } from "react";
+import { SafeArea } from "@capacitor-community/safe-area";
+import type { FC, PropsWithChildren } from "react";
+import { memo, useEffect } from "react";
 import { preconnect } from "react-dom";
 import { useSSR as useTranslateSSR } from "react-i18next";
 import {
 	href,
 	Links,
 	Meta,
-	Outlet,
 	Scripts,
 	ScrollRestoration,
 	useMatch,
 	useParams,
 	useRouteLoaderData
 } from "react-router";
+import MarkBackground from "virtual:remote/flirtual-mark-background.png";
 
 import type { Route } from "./+types/root";
-import { AnalyticsProvider } from "./analytics";
+import { App } from "./app";
 import { HavingIssuesViewport } from "./components/error";
-import { InsetPreview } from "./components/inset-preview";
 import { LoadingIndicator } from "./components/loading-indicator";
-import { TooltipProvider } from "./components/tooltip";
-import { UpdateInformation } from "./components/update-information";
-import { apiOrigin, client, development, nativeOverride, platformOverride, siteOrigin } from "./const";
+import { apiOrigin, client, development, nativeOverride, platformOverride, preview, siteOrigin } from "./const";
 import { device } from "./hooks/use-device";
 import { usePreferences } from "./hooks/use-preferences";
 import { useTheme } from "./hooks/use-theme";
-import { ToastProvider } from "./hooks/use-toast";
+import type { LocalTheme } from "./hooks/use-theme";
 import { defaultLocale, i18n, localePathnameRegex, locales, replaceLanguage } from "./i18n";
 import type { Locale } from "./i18n";
 import { isLocale } from "./i18n/languages";
-import { getPolyfillUrl, polyfillBaseUrl } from "./polyfill";
-import { QueryProvider } from "./query";
+import { PolyfillScript } from "./polyfill";
 import { RedirectBoundary } from "./redirect";
 import { absoluteUrl, bucketOrigins, urls } from "./urls";
 
@@ -40,18 +35,13 @@ import "@fontsource-variable/montserrat";
 import "@fontsource-variable/nunito";
 import "./app/index.css";
 
-export async function loader({ params: { locale = defaultLocale } }: Route.LoaderArgs) {
-	if (!locales.includes(locale)) locale = defaultLocale;
+export async function loader({ params: { locale: _locale } }: Route.LoaderArgs) {
+	const locale = !_locale || !isLocale(_locale) ? defaultLocale : _locale;
 	await i18n.changeLanguage(locale);
 
 	return {
-		initialI18nStore: {
-			// Only include the locale that was requested, as during during pre-rendering
-			// we load every locale. Without this, we'd bundle every locale into the
-			// initial HTML, which is not what we want.
-			[locale]: i18n.store.data[locale]
-		},
-		locale
+		initialLocale: locale,
+		initialTranslations: i18n.store.data[locale]
 	};
 }
 
@@ -78,13 +68,13 @@ export function meta({
 		{ name: "twitter:image:type", content: "image/png" },
 		{ name: "twitter:image:width", content: 1000 },
 		{ name: "twitter:image:height", content: 1000 },
-		{ name: "twitter:image", content: urls.media("flirtual-mark-background.png") },
+		{ name: "twitter:image", content: MarkBackground },
 		{ property: "og:title", content: t("flirtual") },
 		{ property: "og:description", content: t("green_plain_mongoose_lend") },
 		{ property: "og:image:type", content: "image/png" },
 		{ property: "og:image:width", content: 1000 },
 		{ property: "og:image:height", content: 1000 },
-		{ property: "og:image", content: urls.media("flirtual-mark-background.png") },
+		{ property: "og:image", content: MarkBackground },
 		{ property: "og:type", content: "website" },
 
 		{ name: "application-name", content: t("flirtual") },
@@ -114,6 +104,12 @@ export function meta({
 		{ tagName: "link", rel: "apple-touch-icon", type: "image/png", sizes: "180x180", href: "/apple-icon.png" },
 		{ tagName: "link", rel: "mask-icon", color: "#e9658b", href: "/safari-pinned-tab.svg" },
 
+		(development || preview || locale === "citext") && {
+			tagName: "meta",
+			name: "robots",
+			content: "noindex, nofollow"
+		},
+
 		{
 			tagName: "link",
 			key: "canonical",
@@ -128,7 +124,6 @@ export function meta({
 			hrefLang: "x-default",
 			href: absoluteUrl(replaceLanguage(pathname, null, pathname)).href
 		},
-
 		...locales.map((locale) => {
 			const { href } = absoluteUrl(replaceLanguage(pathname, locale, pathname));
 
@@ -140,34 +135,44 @@ export function meta({
 				href
 			});
 		})
-	];
+	].filter(Boolean);
 }
 
-// export function clientLoader({ request, params: { locale } }: Route.ClientLoaderArgs) {
-// 	const url = new URL(request.url);
-//
-// 	if (!locale || !isLocale(locale)) {
-// 		const recommendedLocale = getRecommendedLocale(navigator.languages.join(", ")) || defaultLocale;
-//
-// 		const to = createPath(replaceLanguage(url, recommendedLocale, url.pathname));
-//
-// 		logRendering(`Using recommended locale: ${recommendedLocale} (${to})`);
-// 		throwRedirect(to);
-// 	}
-// }
-//
-// clientLoader.hydrate = true as const;
+const BeforeRenderScript: FC = memo(() => {
+	const beforeRender = (localePathnameRegex: RegExp, friendsPathname: string) => {
+		const localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`) as LocalTheme;
+		const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+		const theme = globalThis.theme = localTheme === "system" ? prefersDark : localTheme;
+		const themeStyle = globalThis.themeStyle = location.pathname.replace(localePathnameRegex, "") === friendsPathname ? "friend" : "default";
+
+		Object.assign(document.body.dataset, { theme, themeStyle });
+
+		const fontSize = globalThis.fontSize = Number.parseInt(JSON.parse(localStorage.getItem(".font_size") || "16") as string) || 16;
+		document.documentElement.style.setProperty("font-size", `${fontSize}px`);
+	};
+
+	return (
+		<script
+			// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+			dangerouslySetInnerHTML={{
+				__html: `(${beforeRender})(${[
+					localePathnameRegex,
+					JSON.stringify(urls.discover("homies"))
+				].join(", ")})`
+			}}
+		/>
+	);
+});
 
 export function Layout({ children }: PropsWithChildren) {
-	let { locale } = useParams();
-	if (!locale || !isLocale(locale)) locale = defaultLocale;
+	const { initialLocale = defaultLocale, initialTranslations = {} } = useRouteLoaderData<typeof loader>("root") || { };
 
-	const { initialI18nStore = {} } = useRouteLoaderData<typeof loader>("root") || {};
+	const { locale } = useParams();
 
-	useTranslateSSR(initialI18nStore, locale);
+	useTranslateSSR({ [initialLocale]: initialTranslations }, initialLocale);
 	useEffect(() => void i18n.changeLanguage(locale), [locale]);
 
-	preconnect(polyfillBaseUrl.origin);
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
 
@@ -176,14 +181,18 @@ export function Layout({ children }: PropsWithChildren) {
 
 	const [fontSize] = usePreferences<number>("font_size", 16);
 
-	// const location = useLocation();
-	// hideLocale(location);
-
 	return (
 		<html
 			suppressHydrationWarning
+			ref={() => {
+				SafeArea.enable({ config: {
+					customColorsForSystemBars: true,
+					statusBarColor: "#00000000",
+					navigationBarColor: "#00000000",
+					offset: 10
+				} });
+			}}
 			style={{
-				colorScheme: theme,
 				fontSize: `${fontSize || 16}px`
 			}}
 			lang={locale}
@@ -200,43 +209,11 @@ export function Layout({ children }: PropsWithChildren) {
 				data-theme={theme}
 				data-theme-style={themeStyle}
 			>
-				<script
-					// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
-					dangerouslySetInnerHTML={{
-						__html: `(${((localePathnameRegex: RegExp, friendsPathname: string) => {
-							const localTheme = JSON.parse(localStorage.getItem(".theme") || `"system"`);
-							const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-
-							const theme = localTheme === "system" ? prefersDark : localTheme;
-							const themeStyle = location.pathname.replace(localePathnameRegex, "") === friendsPathname ? "friend" : "default";
-
-							Object.assign(document.body.dataset, { theme, themeStyle });
-
-							const fontSize = JSON.parse(localStorage.getItem(".font_size") || "16") || 16;
-							document.documentElement.style.setProperty("font-size", `${fontSize}px`);
-						}).toString()})(${[
-							localePathnameRegex,
-							JSON.stringify(urls.discover("homies"))
-						].join(", ")})`
-					}}
-				/>
-				<script src={getPolyfillUrl(locale as Locale)} />
-				<Sentry.ErrorBoundary fallback={({ error, eventId }) => <HavingIssuesViewport digest={eventId} error={error} />}>
-					<RedirectBoundary>
-						<AnalyticsProvider />
-						<LazyMotion strict features={async () => ((await import("./motion")).default)}>
-							<QueryProvider>
-								{development && <InsetPreview />}
-								<UpdateInformation />
-								<ToastProvider>
-									<TooltipProvider>
-										{children}
-									</TooltipProvider>
-								</ToastProvider>
-							</QueryProvider>
-						</LazyMotion>
-					</RedirectBoundary>
-				</Sentry.ErrorBoundary>
+				<BeforeRenderScript />
+				<PolyfillScript locale={locale} />
+				<RedirectBoundary>
+					{children}
+				</RedirectBoundary>
 				<ScrollRestoration />
 				<Scripts />
 			</body>
@@ -244,14 +221,12 @@ export function Layout({ children }: PropsWithChildren) {
 	);
 }
 
+export default App;
+
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	return <HavingIssuesViewport error={error} />;
 }
 
 export function HydrateFallback() {
 	return <LoadingIndicator />;
-}
-
-export default function App() {
-	return <Outlet />;
 }

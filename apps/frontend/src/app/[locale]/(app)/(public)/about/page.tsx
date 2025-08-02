@@ -1,4 +1,5 @@
 import { Trans, useTranslation } from "react-i18next";
+import TeamPicture from "virtual:remote/5337d467-579b-4718-baa5-489fcaa32066";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
@@ -37,7 +38,7 @@ export default function AboutPage() {
 			<Image
 				alt={t("voice_spiritual_polite_entertaining")}
 				height={618}
-				src={urls.media("5337d467-579b-4718-baa5-489fcaa32066")}
+				src={TeamPicture}
 				width={1888}
 			/>
 			<div className="flex flex-col gap-12 px-8 py-10 desktop:px-16">

@@ -4,6 +4,7 @@ import { m } from "motion/react";
 import type { FC } from "react";
 import { useCallback, useEffect, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import FlittyHardhat from "virtual:remote/b25d8377-7035-4a23-84f1-faa095fa8104";
 
 import { Button } from "~/components/button";
 import { CopyClick } from "~/components/copy-click";
@@ -23,8 +24,6 @@ export type ErrorWithDigest = { digest?: string } & Error;
 export interface ErrorProps { error: ErrorWithDigest; reset: () => void };
 
 const ErrorDetails: FC<{ digest?: string; eventId?: string }> = ({ digest, eventId }) => {
-	const { t } = useTranslation();
-
 	return (
 		<>
 			{digest && (
@@ -113,7 +112,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										className="pettable mt-5 h-8 w-fit shrink-0 rotate-[10deg] desktop:mt-1 desktop:h-12"
 										draggable={false}
 										height={345}
-										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
+										src={FlittyHardhat}
 										width={412}
 										// onClick={() => squeak()}
 									/>
@@ -183,7 +182,7 @@ export const ErrorDialog: FC<ErrorDialogProps> = ({ error, reset }) => {
 										className="pettable mt-5 h-8 w-fit shrink-0 rotate-[10deg] desktop:mt-1 desktop:h-12"
 										draggable={false}
 										height={345}
-										src={urls.media("b25d8377-7035-4a23-84f1-faa095fa8104")}
+										src={FlittyHardhat}
 										width={412}
 										// onClick={() => squeak()}
 									/>

@@ -155,18 +155,18 @@ export function useNavigate() {
 	}, [navigate]);
 }
 
-export function hideLocale(to: To) {
-	if (!server) history.replaceState(null, "", createPath(replaceLanguage(to, null)));
+export function excludeLocale(to: To = window.location.pathname) {
+	// history.replaceState(history.state, "", createPath(replaceLanguage(to, null)));
 }
 
 export { i18n };
 
-// if (!server) {
-// 	const pushState = history.pushState;
-// 	history.pushState = function (data, unused, url) {
-// 		pushState.call(history, data, unused, url);
-//
-// 		// Hide the locale from the URL, if any.
-// 		if (url) history.replaceState(data, unused, createPath(replaceLanguage(url.toString(), null)));
-// 	};
-// }
+if (!server) {
+	const pushState = history.pushState;
+	history.pushState = function (data, unused, url) {
+		pushState.call(history, data, unused, url);
+
+		// Hide the locale from the URL, if any.
+		// if (url) history.replaceState(data, unused, createPath(replaceLanguage(url.toString(), null)));
+	};
+}

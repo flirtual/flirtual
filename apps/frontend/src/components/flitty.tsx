@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import FlittyImage from "virtual:remote/static/flitty.png";
 
 import { Image } from "~/components/image";
 import { usePreferences } from "~/hooks/use-preferences";
-import { urls } from "~/urls";
 
 const dialogueLines: Array<[string, string]> = [
 	["Hi, I'm Flitty! I'm your dating assistant and my job is to help you find your purr-fect match!", "Okay"],
@@ -353,7 +353,7 @@ export default function Flitty() {
 				className="pettable cursor-grab select-none active:cursor-grabbing"
 				draggable={false}
 				height={150}
-				src={urls.media("flitty.png", "static")}
+				src={FlittyImage}
 				width={150}
 				onMouseDown={handleMouseDown}
 				onTouchStart={handleTouchStart}

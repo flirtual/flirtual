@@ -4,6 +4,8 @@ import { useState } from "react";
 import type { PropsWithChildren } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
+import FlirtualBlack from "virtual:remote/static/flirtual-black.svg";
+import FlirtualWhite from "virtual:remote/static/flirtual-white.svg";
 
 import { Image } from "~/components/image";
 import { useTimeout } from "~/hooks/use-interval";
@@ -26,7 +28,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 					className="hidden w-full vision:block dark:block"
 					draggable={false}
 					height={1000}
-					src={urls.media("flirtual-white.svg", "static")}
+					src={FlirtualWhite}
 					width={3468}
 				/>
 				<Image
@@ -35,7 +37,7 @@ export function LoadingIndicator({ className, children }: PropsWithChildren<{ cl
 					className="block w-full vision:hidden dark:hidden"
 					draggable={false}
 					height={1000}
-					src={urls.media("flirtual-black.svg", "static")}
+					src={FlirtualBlack}
 					width={3468}
 				/>
 			</div>

@@ -1,4 +1,6 @@
 import { Trans, useTranslation } from "react-i18next";
+import Image2 from "virtual:remote/660c7e75-9634-45d1-a306-628eeef0a620";
+import Image1 from "virtual:remote/b593e4e1-bef3-4ab8-b9ea-74628ebf694b";
 
 import { ButtonLink } from "~/components/button";
 import { Image } from "~/components/image";
@@ -56,7 +58,7 @@ export default function EventsPage() {
 					alt={t("tidy_wise_robin_urge")}
 					className="w-full max-w-sm rounded-xl shadow-brand-1"
 					height={900}
-					src={urls.media("b593e4e1-bef3-4ab8-b9ea-74628ebf694b")}
+					src={Image1}
 					width={1200}
 				/>
 				<h2 className="text-xl font-semibold">{t("tidy_wise_robin_urge")}</h2>
@@ -66,7 +68,7 @@ export default function EventsPage() {
 					alt={t("inclusive_simple_alligator_zap")}
 					className="mt-4 w-full max-w-sm rounded-xl shadow-brand-1"
 					height={900}
-					src={urls.media("660c7e75-9634-45d1-a306-628eeef0a620")}
+					src={Image2}
 					width={1200}
 				/>
 				<h2 className="text-xl font-semibold">

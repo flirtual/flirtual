@@ -6,6 +6,7 @@ import { HydratedRouter } from "react-router/dom";
 
 import { apiOrigin, sentryDsn, sentryEnabled, siteOrigin } from "./const";
 import { i18n } from "./i18n";
+import type { Locale } from "./i18n";
 import { preloadAll, restoreQueries, saveQueries } from "./query";
 import { isRedirectError } from "./redirect";
 import { urls } from "./urls";
@@ -70,11 +71,13 @@ startTransition(() => {
 });
 
 i18n.on("loaded", () => {
+	const { t, language } = i18n;
+
 	// eslint-disable-next-line no-console
 	console.log(
-		`%c${i18n.t("console_message")}`,
+		`\n%c${t("console_message")}`,
 		"padding: 0 0.5rem; background-image: linear-gradient(to right, #ff8975, #e9658b); color: white; white-space: pre; display: block; text-align: center; font-weight: bold; border-radius: .5rem",
-		urls.resources.developers
+		`\n${t("translate")} → ${urls.resources.translate(language as Locale)}\n${t("source_code")} → ${urls.resources.developers}\n\n`
 	);
 });
 

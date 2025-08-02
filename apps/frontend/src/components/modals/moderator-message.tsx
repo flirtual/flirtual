@@ -2,6 +2,8 @@ import ms from "ms";
 import type { Dispatch, FC, ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import type { Session } from "react-router";
+import FlirtualBlack from "virtual:remote/static/flirtual-black.svg";
+import FlirtualWhite from "virtual:remote/static/flirtual-white.svg";
 import { withSuspense } from "with-suspense";
 
 import { User } from "~/api/user";
@@ -124,14 +126,14 @@ export const TrustAndSafetyDialog: FC<{
 							alt={t("flirtual")}
 							className="hidden h-fit w-24 dark:block desktop:block"
 							height={1000}
-							src={urls.media("flirtual-white.svg", "static")}
+							src={FlirtualWhite}
 							width={3468}
 						/>
 						<Image
 							alt={t("flirtual")}
 							className="block h-fit w-24 dark:hidden desktop:hidden"
 							height={1000}
-							src={urls.media("flirtual-black.svg", "static")}
+							src={FlirtualBlack}
 							width={3468}
 						/>
 						<span>{t("trust_and_safety")}</span>
