@@ -4,24 +4,23 @@ const locales = ["en", "ja"];
 
 export default {
 	ssr: false,
+	routeDiscovery: {
+		mode: "initial"
+	},
 	prerender: [
 		...locales.map((locale) => `/${locale}`),
 		...[
-			// "/",
-			// "/home",
-
 			"/login",
 			"/sign-up",
 			"/forgot",
 
 			"/about",
 			"/branding",
-			"/debugger",
 			"/download",
 			"/events",
 			"/guidelines",
 			"/guides",
-			// "/guides/mental",
+			"/guides/mental",
 			"/payments",
 			"/press",
 			"/privacy",
@@ -29,10 +28,7 @@ export default {
 			"/terms",
 			"/terms-20230530",
 		]
-			.map((path) => [
-				// path,
-				...locales.map((locale) => `/${locale}${path}`)
-			])
+			.map((path) => locales.map((locale) => `/${locale}${path}`))
 			.flat(),
 
 		"/manifest.json",
@@ -40,7 +36,8 @@ export default {
 		"/pico_authentication.json",
 		"/.well-known/security.txt",
 		"/_redirects",
-		"/_headers"
+		"/_headers",
+		"/wrangler.json"
 	],
 	appDirectory: "src",
 	buildDirectory: "dist",

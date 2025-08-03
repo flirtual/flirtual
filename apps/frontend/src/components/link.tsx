@@ -58,6 +58,7 @@ export function Link({
 			data-active={active ? "" : undefined}
 			data-external={internal ? undefined : ""}
 			hrefLang={hrefLang}
+			prefetch="intent"
 			{...props}
 			ref={reference}
 			target={target || (internal ? undefined : "_blank")}

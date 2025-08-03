@@ -2,7 +2,7 @@ import { SafeArea } from "@capacitor-community/safe-area";
 import type { FC, PropsWithChildren } from "react";
 import { memo, useEffect } from "react";
 import { preconnect } from "react-dom";
-import { useSSR as useTranslateSSR } from "react-i18next";
+import { useSSR as useTranslateSSR, useTranslation } from "react-i18next";
 import {
 	href,
 	Links,
@@ -13,7 +13,13 @@ import {
 	useParams,
 	useRouteLoaderData
 } from "react-router";
-import MarkBackground from "virtual:remote/flirtual-mark-background.png";
+import SafariPinnedTab from "virtual:remote/00d9dab1-3fbe-4dd7-8700-ae21f8425b37.svg?no-inline";
+import Icon32x32 from "virtual:remote/0d4ca725-5c21-45f6-a08c-63b9e990f0dd?no-inline";
+import Icon from "virtual:remote/21bbde80-1a5d-4138-addf-6d5ac38356c8.svg?no-inline";
+import Icon16x16 from "virtual:remote/89951afc-3afd-47df-bb6d-5aec235b30c4?no-inline";
+import Favicon from "virtual:remote/b4c0e29e-4055-4924-8ddf-adee9bc505c3?no-inline";
+import AppleIcon from "virtual:remote/e7a99a6d-7299-4754-af73-b2eae55f969c?no-inline";
+import MarkBackground from "virtual:remote/flirtual-mark-background.png?no-inline";
 
 import type { Route } from "./+types/root";
 import { App } from "./app";
@@ -100,12 +106,12 @@ export function meta({
 
 		{ tagName: "link", rel: "manifest", href: href("/manifest.json") },
 
-		{ tagName: "link", rel: "icon", type: "image/x-icon", sizes: "48x48", href: "/favicon.ico" },
-		{ tagName: "link", rel: "icon", type: "image/svg+xml", sizes: "any", href: "/icon.svg" },
-		{ tagName: "link", rel: "icon", type: "image/png", sizes: "32x32", href: "/icon-32x32.png" },
-		{ tagName: "link", rel: "icon", type: "image/png", sizes: "16x16", href: "/icon-16x16.png" },
-		{ tagName: "link", rel: "apple-touch-icon", type: "image/png", sizes: "180x180", href: "/apple-icon.png" },
-		{ tagName: "link", rel: "mask-icon", color: "#e9658b", href: "/safari-pinned-tab.svg" },
+		{ tagName: "link", rel: "icon", type: "image/x-icon", sizes: "48x48", href: Favicon },
+		{ tagName: "link", rel: "icon", type: "image/svg+xml", sizes: "any", href: Icon },
+		{ tagName: "link", rel: "icon", type: "image/png", sizes: "32x32", href: Icon32x32 },
+		{ tagName: "link", rel: "icon", type: "image/png", sizes: "16x16", href: Icon16x16 },
+		{ tagName: "link", rel: "apple-touch-icon", type: "image/png", sizes: "180x180", href: AppleIcon },
+		{ tagName: "link", rel: "mask-icon", color: "#e9658b", href: SafariPinnedTab },
 
 		(development || preview) && {
 			tagName: "meta",
@@ -176,7 +182,6 @@ export function Layout({ children }: PropsWithChildren) {
 
 	useTranslateSSR({ [initialLocale]: initialTranslations }, initialLocale);
 	useEffect(() => void i18n.changeLanguage(locale), [locale]);
-	const { t, language } = i18n;
 
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
@@ -186,11 +191,14 @@ export function Layout({ children }: PropsWithChildren) {
 
 	const [fontSize] = usePreferences<number>("font_size", 16);
 
-	logOnce(
-		`\n%c${t("console_message")}`,
-		"padding: 0 0.5rem; background-image: linear-gradient(to right, #ff8975, #e9658b); color: white; white-space: pre; display: block; text-align: center; font-weight: bold; border-radius: .5rem",
-		`\n${t("translate")} → ${urls.resources.translate(language as Locale)}\n${t("source_code")} → ${urls.resources.developers}\n\n`
-	);
+	const { t } = useTranslation();
+
+	if (client)
+		logOnce(
+			`\n%c${t("console_message")}`,
+			"padding: 0 0.5rem; background-image: linear-gradient(to right, #ff8975, #e9658b); white-space: pre; display: block; text-align: center; font-weight: bold; border-radius: .5rem",
+			`\n${t("translate")} → ${urls.resources.translate(i18n.language as Locale)}\n${t("source_code")} → ${urls.resources.developers}\n\n`
+		);
 
 	return (
 		<html

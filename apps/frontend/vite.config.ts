@@ -4,6 +4,7 @@ import sonda from "sonda/vite";
 import info from "unplugin-info/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
+import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -26,11 +27,6 @@ export default defineConfig(({ mode }) => {
 		esbuild: {
 			charset: "utf8",
 			legalComments: "external",
-		},
-		resolve: {
-			alias: {
-				ramda: "remeda"
-			}
 		},
 		build: {
 			assetsDir: "static",
@@ -76,6 +72,15 @@ export default defineConfig(({ mode }) => {
 				certDir: "./certificates",
 			}),
 			reactRouter(),
+			babel({
+				filter: /\.[jt]sx?$/,
+				babelConfig: {
+					presets: ["@babel/preset-typescript"],
+					plugins: [
+						["babel-plugin-react-compiler", {}],
+					],
+				},
+			}),
 			imageOptimize({
 				cache: true,
 				cacheLocation: "./node_modules/.cache/vite-image-optimizer",

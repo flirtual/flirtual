@@ -122,4 +122,5 @@ export default [
 	file(".well-known/security.txt"),
 	file("_redirects"),
 	file("_headers"),
+	file("wrangler.json"),
 ] satisfies RouteConfig;

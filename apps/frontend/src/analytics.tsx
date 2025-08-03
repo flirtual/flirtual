@@ -98,12 +98,17 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 		<>
 			<Suspense>
 				<ErrorBoundary fallbackRender={() => null}>
-					{/* <Pageview /> */}
-					<Identity />
+					<ErrorBoundary fallbackRender={() => null}>
+						<ErrorBoundary fallbackRender={() => null}>
+							{/* <Pageview /> */}
+							<Identity />
+						</ErrorBoundary>
+					</ErrorBoundary>
 				</ErrorBoundary>
 			</Suspense>
 			{production && cloudflareBeaconId && (
 				<script
+					async
 					defer
 					data-cf-beacon={JSON.stringify({ token: cloudflareBeaconId })}
 					src="https://static.cloudflareinsights.com/beacon.min.js"
