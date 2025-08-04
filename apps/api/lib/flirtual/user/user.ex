@@ -1013,9 +1013,16 @@ defmodule Flirtual.User do
   end
 
   defp check_for_leaked_password(%Changeset{changes: %{password: password}} = changeset) do
-    password
-    |> LeakedPasswords.leaked?()
-    |> process_leaked_check(changeset)
+    case Application.get_env(:flirtual, :prohibit_leaked_passwords, true) do
+      true ->
+        password
+          |> LeakedPasswords.leaked?()
+          |> process_leaked_check(changeset)
+
+      false ->
+        changeset
+    end
+
   end
 
   defp check_for_leaked_password(changeset), do: changeset

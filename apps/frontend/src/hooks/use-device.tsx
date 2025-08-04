@@ -3,7 +3,13 @@ import { App } from "@capacitor/app";
 import type { DeviceInfo } from "@capacitor/device";
 import { Device } from "@capacitor/device";
 
-import { client, nativeOverride, platformOverride, server } from "~/const";
+import {
+	client,
+	development,
+	nativeOverride,
+	platformOverride,
+	server
+} from "~/const";
 import { log as _log } from "~/log";
 
 export type DevicePlatform = "android" | "apple" | "web";
@@ -82,7 +88,7 @@ const safeKeys = [
 ].filter(Boolean);
 
 // export const device = _device;
-export const device = server
+export const device = server && development
 	? new Proxy(_device, {
 		get: (device, property) => {
 			if (safeKeys.includes(String(property))) return Reflect.get(device, property);

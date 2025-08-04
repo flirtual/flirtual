@@ -1,5 +1,8 @@
 import Config
 
+config :flirtual,
+  prohibit_leaked_passwords: false
+
 # Configure your database
 config :flirtual, Flirtual.Repo,
   username: "postgres",
