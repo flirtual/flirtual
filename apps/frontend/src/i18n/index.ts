@@ -31,7 +31,7 @@ export {
 };
 export type { Locale };
 
-export const defaultNamespace = "_flirtual";
+export const defaultNamespace = "data";
 export type DefaultNamespace = typeof defaultNamespace;
 
 export type Resources = Awaited<ReturnType<typeof load>>;
@@ -66,7 +66,8 @@ async function load(locale: Locale) {
 	// Aries: Keep this in sync with `getModuleLanguage` from `vite.config.ts`.
 	// For performance, we bundle all translations into a single file per locale.
 	const [default_, attributes, uppy] = await Promise.all([
-		import(`../../messages/${locale}.json`) as unknown as typeof import("../../messages/en.json"),
+		import(`../../messages/${locale}.json`)
+			.then(({ default: messages }) => messages) as unknown as typeof import("../../messages/en.json"),
 		import(`../../messages/attributes.${locale}.json`)
 			.then(({ default: attributes }) => flat1(attributes)),
 		(async () => {
@@ -80,7 +81,7 @@ async function load(locale: Locale) {
 	]);
 
 	return {
-		_flirtual: {
+		[defaultNamespace]: {
 			...default_,
 			attributes,
 			uppy
@@ -140,7 +141,7 @@ export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Pro
 	];
 }
 
-export function useMessages<T extends Namespace = "_flirtual">(namespace: T = "_flirtual" as T): Resources[T] {
+export function useMessages<T extends Namespace = DefaultNamespace>(namespace: T = defaultNamespace as T): Resources[T] {
 	const { i18n } = useTranslation();
 	const [locale] = useLocale();
 

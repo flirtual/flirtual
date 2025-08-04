@@ -1,7 +1,6 @@
 import type { Session } from "~/api/auth";
 import { Preferences } from "~/api/user/preferences";
 import type { PreferenceTheme } from "~/api/user/preferences";
-import { applyDocumentMutations } from "~/document";
 import { getPreferences } from "~/preferences";
 import { mutate, sessionKey, useMutation } from "~/query";
 
@@ -45,8 +44,6 @@ export function useTheme() {
 			: "light"
 		: localTheme;
 
-	// useEffect(() => void applyDocumentMutations(), [theme]);
-
 	const { mutateAsync } = useMutation({
 		mutationKey: sessionKey(),
 		onMutate: async (theme: PreferenceTheme) => {
@@ -66,8 +63,6 @@ export function useTheme() {
 							})
 						: null)
 			]);
-
-			await applyDocumentMutations();
 		},
 		mutationFn: async (theme) => {
 			const session = getSession();

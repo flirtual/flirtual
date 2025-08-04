@@ -10,8 +10,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 	useMatch,
-	useParams,
-	useRouteLoaderData
+	useParams
 } from "react-router";
 import SafariPinnedTab from "virtual:remote/00d9dab1-3fbe-4dd7-8700-ae21f8425b37.svg?no-inline";
 import Icon32x32 from "virtual:remote/0d4ca725-5c21-45f6-a08c-63b9e990f0dd?no-inline";
@@ -25,7 +24,15 @@ import type { Route } from "./+types/root";
 import { App } from "./app";
 import { HavingIssuesViewport } from "./components/error";
 import { LoadingIndicator } from "./components/loading-indicator";
-import { apiOrigin, client, development, nativeOverride, platformOverride, preview, siteOrigin } from "./const";
+import {
+	apiOrigin,
+	client,
+	development,
+	nativeOverride,
+	platformOverride,
+	preview,
+	siteOrigin
+} from "./const";
 import { device } from "./hooks/use-device";
 import { logOnce } from "./hooks/use-log";
 import { usePreferences } from "./hooks/use-preferences";
@@ -45,11 +52,6 @@ import "./app/index.css";
 export async function loader({ params: { locale: _locale } }: Route.LoaderArgs) {
 	const locale = !_locale || !isLocale(_locale) ? defaultLocale : _locale;
 	await i18n.changeLanguage(locale);
-
-	return {
-		initialLocale: locale,
-		initialTranslations: i18n.store.data[locale]
-	};
 }
 
 export function meta({
@@ -175,12 +177,10 @@ const BeforeRenderScript: FC = memo(() => {
 });
 
 export function Layout({ children }: PropsWithChildren) {
-	const { initialLocale = defaultLocale, initialTranslations = {} } = useRouteLoaderData<typeof loader>("root") || { };
-
 	const { locale: _locale } = useParams();
-	const locale = _locale && isLocale(_locale) ? _locale : initialLocale;
+	const locale = _locale && isLocale(_locale) ? _locale : defaultLocale;
 
-	useTranslateSSR({ [initialLocale]: initialTranslations }, initialLocale);
+	useTranslateSSR(i18n.store.data, locale);
 	useEffect(() => void i18n.changeLanguage(locale), [locale]);
 
 	preconnect(apiOrigin);

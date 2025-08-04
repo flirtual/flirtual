@@ -1,5 +1,11 @@
 import { Trans, useTranslation } from "react-i18next";
+import Image0d6b9258 from "virtual:remote/0d6b9258-a330-47cd-9964-eb0143f34825";
+import Image2451ca85 from "virtual:remote/2451ca85-8a4b-4c49-9d2b-d12a403271cb";
+import Image273de50f from "virtual:remote/273de50f-7a03-4918-bd7c-331e11a00949";
 import TeamPicture from "virtual:remote/5337d467-579b-4718-baa5-489fcaa32066";
+import Image7aa24041 from "virtual:remote/7aa24041-91fb-4901-976e-a8b31b12e9a2";
+import ImageC48bc92a from "virtual:remote/c48bc92a-f0d3-4b29-877f-cdbedfadf0d5";
+import ImageD76791d0 from "virtual:remote/d76791d0-bcdd-4a56-87c0-9b298e14a246";
 
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
@@ -23,6 +29,15 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
+const imageSources = [
+	Image273de50f,
+	ImageD76791d0,
+	Image0d6b9258,
+	Image2451ca85,
+	Image7aa24041,
+	ImageC48bc92a
+];
+
 export default function AboutPage() {
 	const { t } = useTranslation();
 
@@ -36,6 +51,7 @@ export default function AboutPage() {
 			title={t("about_us")}
 		>
 			<Image
+				priority
 				alt={t("voice_spiritual_polite_entertaining")}
 				height={618}
 				src={TeamPicture}
@@ -173,14 +189,14 @@ export default function AboutPage() {
 				/>
 			</div>
 			<div className="grid grid-cols-3">
-				{Object.entries(images).map(([index, { image, image_alt, link }]) => (
+				{Object.entries(images).map(([index, { image_alt, link }]) => (
 					<Tooltip key={index}>
 						<TooltipTrigger asChild>
 							<InlineLink href={link}>
 								<Image
 									alt={image_alt}
 									height={230}
-									src={urls.media(image)}
+									src={imageSources[Number(index)]}
 									width={405}
 								/>
 							</InlineLink>

@@ -12,8 +12,8 @@ import { Authentication } from "./api/auth";
 import { Config } from "./api/config";
 import { Conversation } from "./api/conversations";
 import type { ConversationList } from "./api/conversations";
-import { Matchmaking } from "./api/matchmaking";
 import type { ProspectKind } from "./api/matchmaking";
+import { Matchmaking, prospectKinds } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
@@ -84,7 +84,14 @@ export async function preloadAll() {
 		// `staleTime: 0` to force a refetch on every hard-reload.
 		preload({ queryKey: configKey(), queryFn: configFetcher, staleTime: 0 }),
 		preload({ queryKey: sessionKey(), queryFn: sessionFetcher, staleTime: 0 }),
+
 		preload({ queryKey: plansKey(), queryFn: plansFetcher }),
+
+		...prospectKinds.map((kind) => preload({
+			queryKey: queueKey(kind),
+			queryFn: queueFetcher
+		})),
+
 		...([
 			"country",
 			"game",
@@ -96,7 +103,6 @@ export async function preloadAll() {
 			"platform",
 			"prompt",
 			"relationship",
-			"report-reason",
 			"sexuality"
 		] as const).map((type) => preload({
 			queryKey: attributeKey(type),
@@ -151,6 +157,8 @@ const cacheVersion = commitId;
 const defaultCacheTime = ms("1d");
 
 export async function saveQueries() {
+	return; // Disable for now.
+
 	log("saveQueries()");
 	const queries = queryCache.getAll();
 
@@ -183,12 +191,16 @@ export async function saveQueries() {
 }
 
 export async function evictQueries() {
+	return; // Disable for now.
+
 	log("evictQueries()");
 	queryCache.clear();
 	await setPreferences("queries", null);
 }
 
 export async function restoreQueries() {
+	return; // Disable for now.
+
 	log("restoreQueries()");
 
 	const { v: version, q: potentialQueries } = await getPreferences<QueryPreference>("queries") || { v: cacheVersion, q: [] };
@@ -251,15 +263,15 @@ export function useQuery<
 	if (!enabled && placeholderData === undefined)
 		throw new Error(`useQuery(${queryKey}) called without placeholderData while disabled. This will permanently suspend the component.`);
 
-	const { promise } = _useQuery({
-		queryKey,
-		queryFn,
-		placeholderData,
-		enabled,
-		...options
-	}, queryClient);
-
 	try {
+		const { promise } = _useQuery({
+			queryKey,
+			queryFn,
+			placeholderData,
+			enabled,
+			...options
+		}, queryClient);
+
 		return use(promise);
 	}
 	catch (reason) {

@@ -4,6 +4,7 @@ import sonda from "sonda/vite";
 import info from "unplugin-info/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
+import { imagetools } from "vite-imagetools";
 import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -32,7 +33,12 @@ export default defineConfig(({ mode }) => {
 			assetsDir: "static",
 			sourcemap: true,
 			minify: true,
-			target: ["chrome106", "edge106", "firefox104", "safari15"],
+			target: [
+				"chrome106",
+				"edge106",
+				"firefox104",
+				"safari16"
+			],
 			chunkSizeWarningLimit: 100,
 			cssMinify: "lightningcss",
 			rollupOptions: {
@@ -84,6 +90,19 @@ export default defineConfig(({ mode }) => {
 			imageOptimize({
 				cache: true,
 				cacheLocation: "./node_modules/.cache/vite-image-optimizer",
+				logStats: false
+			}),
+			imagetools({
+				exclude: [],
+				defaultDirectives: (url) => {
+					if (url.searchParams.has("raw")) return url.searchParams;
+
+					return new URLSearchParams({
+						lossless: "",
+						effort: "max",
+						format: "webp"
+					});
+				}
 			}),
 			// checker({
 			// 	overlay: false,

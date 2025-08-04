@@ -42,7 +42,7 @@ export default {
 	appDirectory: "src",
 	buildDirectory: "dist",
 	future: {
-		unstable_subResourceIntegrity: true,
+		// unstable_subResourceIntegrity: true,
 		unstable_splitRouteModules: false,
 	}
 } satisfies Config;

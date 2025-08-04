@@ -14,9 +14,7 @@ import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint } from "~/components/inputs";
 import { Slider } from "~/components/inputs/slider";
 import { InputLanguageSelect } from "~/components/inputs/specialized/language-select";
-import { applyDocumentMutations } from "~/document";
 import { useAttributeTranslation } from "~/hooks/use-attribute";
-import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
@@ -258,9 +256,6 @@ const InputFontSize: FC = () => {
 
 	const { t } = useTranslation();
 
-	// workaround for https://github.com/radix-ui/primitives/issues/1760
-	useGlobalEventListener("document", "pointerup", applyDocumentMutations);
-
 	return (
 		<div className="flex flex-col gap-2">
 			<InputLabel hint={(
@@ -286,7 +281,6 @@ const InputFontSize: FC = () => {
 				}}
 				onValueCommit={async ([value]) => {
 					await setFontSize((Math.round(value! * 100) / 100) as FontSize);
-					await applyDocumentMutations();
 				}}
 			/>
 		</div>

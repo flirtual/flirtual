@@ -4,7 +4,7 @@
 	"knotty_direct_mongoose_bend": "The first VR dating app. Join over 100,000 people for dates in VR apps like VRChat.",
 	"green_plain_mongoose_lend": "Meet new people in Virtual Reality ❤️ Flirtual helps you go on dates in VR and VRChat…",
 	"about_us": "About us",
-	"hard_cause_trick_puzzling": "<section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><logo/><p>❤ kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <feedback>have any suggestions</feedback>!</italic></p></section><section><h1>The team</h1><team-list/></section><section><h1>Timeline</h1><timeline/></section>",
+	"hard_cause_trick_puzzling": "<section><h1>Our story</h1><p>Hey, we're Kyle and Tony, the creators of Flirtual. Kyle has been obsessed with VR since the early days of Oculus, but it really changed his life when he joined VRChat and met some of his closest friends (including his wife!) there. Right before COVID hit, Kyle brought his childhood best friend Tony along for the journey, and VR also changed his life. We set out to help others meet awesome people around the world too, starting with VRLFP (Virtual Reality Looking For Partner).</p><p>Immersive presence in VR helps you form deep connections with people anywhere in the world. By bridging geographic distance and putting personality first, our mission is to find the very best people for you, wherever they are. And to make dating safer and more magical!</p><p>In 2022, VRLFP became Flirtual. Rebuilt from the ground up, we've enhanced matchmaking, added personality & interest tags, and launched improved apps. Whether you're looking for a serious relationship that transitions into real life, something more casual in VR, or just new homies, we're ready to help find your perfect match.</p><group><logo/><p>❤ kfarwell, Tony & The Flirtual Team</p><discord>Join our Discord</discord></group><p><italic>P.S. We've come a long way from VRLFP's humble beginnings, but we're still a small team rooted in the VR community. <br/><br/>We appreciate your patience as we work hard to make Flirtual as awesome as it can be. Please let us know if you <contact>find any bugs</contact> or <feedback>have any suggestions</feedback>!</italic></p></section><section><h1>The team</h1><team-list/></section><section><h1>Timeline</h1><timeline/></section>",
 	"extra_moving_jackdaw_twist": "{name}'s avatar",
 	"voice_spiritual_polite_entertaining": "Picture of the Flirtual Team in VRChat",
 	"copy_frighten_wobble_futuristic": {
@@ -23,74 +23,61 @@
 		"2018": {
 			"title": "2018 🐣",
 			"description": "The first VR dating app is born.",
-			"image": "88bb9381-87ed-499d-9667-cd61eff96938",
 			"image_alt": "Flirtual in 2018"
 		},
 		"2019": {
 			"title": "🏆 2019",
 			"description": "VRLFP is named the best new technology at the iDate Awards.",
-			"image": "c373b72d-16a0-479c-b834-ccb7041bc615",
 			"image_alt": "Flirtual in 2019"
 		},
 		"2020": {
 			"title": "2020 🧪",
 			"description": "Some wacky concepts that eventually became the Flirtual you know and love today. Thanks for letting us cook.",
-			"image": "ead58fb3-e858-4e13-8acc-c9a5266a5b86",
 			"image_alt": "Flirtual in 2020"
 		},
 		"2021": {
 			"title": "✌️ 2021",
 			"description": "ROVR is launched, a social matchmaking app for VR friends and groups. Its spirit lives on in Homie Mode.",
-			"image": "366e91ce-2e3d-4e00-88e3-42626ec6e42f",
 			"image_alt": "Flirtual in 2021"
 		},
 		"2022": {
 			"title": "2022 😻",
 			"description": "VRLFP becomes Flirtual. Maybe people will remember how to spell our name now.",
-			"image": "726f31b1-fb07-4dc8-af9f-f10985aee7be",
 			"image_alt": "Flirtual in 2022"
 		},
 		"2023": {
 			"title": "📱 2023",
 			"description": "Rebuilt from the ground up with a fresh new design, improved performance, and finally: mobile apps!",
-			"image": "36446ecb-9103-4b6d-b221-7c657f17323d",
 			"image_alt": "Flirtual in 2023"
 		},
 		"2024": {
 			"title": "2024 💅",
 			"description": "More ways to express yourself with profile prompts, music playlists, 200+ new interests, chat emojis, and more.",
-			"image": "ce26852c-d7a2-439c-95aa-55543b1c7d23",
 			"image_alt": "Flirtual in 2024"
 		}
 	},
 	"price_listen_wise_communicate": {
 		"0": {
-			"image": "273de50f-7a03-4918-bd7c-331e11a00949",
 			"image_alt": "Flirtual's 12-hour Valentine's 2022 launch party with Vanguard",
 			"link": "https://vrchat.com/home/world/wrld_70fac20a-3cb4-4ecd-b8ea-f4ec28603395"
 		},
 		"1": {
-			"image": "d76791d0-bcdd-4a56-87c0-9b298e14a246",
 			"image_alt": "Flirtual Speed Dating in VRChat",
 			"link": "https://vrchat.com/home/world/wrld_f5844d7c-dc4d-4ee7-bf3f-63c8e6be5539"
 		},
 		"2": {
-			"image": "0d6b9258-a330-47cd-9964-eb0143f34825",
 			"image_alt": "Flirtual DJ Night in VRChat",
 			"link": "https://vrchat.com/home/world/wrld_d4f2cc35-83b9-41e9-9b3a-b861691c8df4"
 		},
 		"3": {
-			"image": "2451ca85-8a4b-4c49-9d2b-d12a403271cb",
 			"image_alt": "Flirtual at VRCon 2022",
 			"link": "https://vrchat.com/home/world/wrld_3f6b1425-e191-4d1e-902f-b38ebf68576c"
 		},
 		"4": {
-			"image": "7aa24041-91fb-4901-976e-a8b31b12e9a2",
 			"image_alt": "Flirtual on the Today Show",
 			"link": "https://www.youtube.com/watch?v=zwguAbPv7zg"
 		},
 		"5": {
-			"image": "c48bc92a-f0d3-4b29-877f-cdbedfadf0d5",
 			"image_alt": "Flirtual at Vket 2023 Summer",
 			"link": "https://vrchat.com/home/world/wrld_2a35bcd6-19e2-42f6-ad72-ad32bc15a788"
 		}
