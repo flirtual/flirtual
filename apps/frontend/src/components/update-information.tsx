@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense, } from "with-suspense";
 
-import { useDevice } from "~/hooks/use-device";
+import { client } from "~/const";
+import { device } from "~/hooks/use-device";
 import { useQuery } from "~/query";
 
 import { Button } from "./button";
@@ -23,13 +24,12 @@ import {
 import { DialogFooter } from "./dialog/dialog";
 
 export const UpdateInformation: React.FC = withSuspense(() => {
-	const { native } = useDevice();
 	const { t } = useTranslation();
 
 	const updateInformation = useQuery({
 		queryKey: ["update-information"],
 		queryFn: () => AppUpdate.getAppUpdateInfo(),
-		enabled: native,
+		enabled: client && device.native,
 		refetchInterval: ms("1m"),
 		staleTime: 0,
 		placeholderData: null,
@@ -47,8 +47,7 @@ export const UpdateInformation: React.FC = withSuspense(() => {
 	}, [updateInformation]);
 
 	if (
-		!native
-		|| !updateInformation
+		!updateInformation
 		|| updateInformation.updateAvailability !== AppUpdateAvailability.UPDATE_AVAILABLE
 		|| updateInformation.flexibleUpdateAllowed
 	)

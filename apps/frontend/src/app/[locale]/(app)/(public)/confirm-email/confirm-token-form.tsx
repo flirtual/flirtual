@@ -3,12 +3,11 @@ import { useTranslation } from "react-i18next";
 import useMutation from "swr/mutation";
 
 import { User } from "~/api/user";
+import { LoadingIndicator } from "~/components/loading-indicator";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
-
-import { LoadingIndicator } from "../../loading-indicator";
 
 export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	const toasts = useToast();

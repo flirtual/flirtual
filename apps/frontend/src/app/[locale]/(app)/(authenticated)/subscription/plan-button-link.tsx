@@ -6,10 +6,10 @@ import { twMerge } from "tailwind-merge";
 
 import { Button } from "~/components/button";
 import { Dialog, DialogContent, DialogTitle } from "~/components/dialog/dialog";
+import { LoadingIndicator } from "~/components/loading-indicator";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useToast } from "~/hooks/use-toast";
 
-import { LoadingIndicator } from "../../loading-indicator";
 import type { PlanCardProps } from "./plan-card";
 
 export const PlanButtonLink: FC<

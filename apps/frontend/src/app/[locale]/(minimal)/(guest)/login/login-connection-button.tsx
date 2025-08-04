@@ -10,7 +10,7 @@ import {
 } from "~/api/connections";
 import type { ConnectionType } from "~/api/connections";
 import { Button } from "~/components/button";
-import { useDevice } from "~/hooks/use-device";
+import { device } from "~/hooks/use-device";
 import { useNavigate } from "~/i18n";
 import { toAbsoluteUrl } from "~/urls";
 
@@ -36,7 +36,6 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 	const { t } = useTranslation();
 
 	const navigate = useNavigate();
-	const { native } = useDevice();
 
 	const { Icon, iconClassName, color } = ConnectionMetadata[type];
 
@@ -47,7 +46,7 @@ export const LoginConnectionButton: FC<LoginConnectionButtonProps> = ({
 			style={{ backgroundColor: color }}
 			tabIndex={tabIndex}
 			onClick={async () => {
-				if (!native) {
+				if (!device.native) {
 					location.href = Connection.authorizeUrl({
 						type,
 						prompt: "consent",

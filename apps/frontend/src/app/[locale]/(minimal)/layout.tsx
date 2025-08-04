@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router";
 
-import { LoadingIndicator } from "../(app)/loading-indicator";
+import { LoadingIndicator } from "~/components/loading-indicator";
 
 export default function MinimalLayout() {
 	return (

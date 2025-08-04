@@ -28,7 +28,7 @@ import {
 } from "~/hooks/use-attribute";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
-import { useLocale } from "~/i18n";
+import { defaultLocale, i18n, useLocale } from "~/i18n";
 import { mutate, userKey } from "~/query";
 
 const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {
@@ -79,10 +79,11 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 							const messageChanged = message !== tAttribute[reasonId]?.details;
 
 							if (!messageChanged) {
-								const { "ban-reason": banReasons = {} } = (await import(`~/../messages/attributes.${user.preferences?.language}.json`).catch(() => ({
-									default: {}
-								}))
-								).default as Record<string, Record<string, unknown>>;
+								const targetLocale = user.preferences?.language ?? defaultLocale;
+								await i18n.loadLanguages(targetLocale);
+
+								const targetT = i18n.getFixedT(user.preferences?.language ?? defaultLocale);
+								const { "ban-reasons": banReasons } = targetT("attributes", { returnObjects: true });
 
 								// @ts-expect-error: yes.
 								message = banReasons[reasonId]?.details || message;
