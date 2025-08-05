@@ -169,7 +169,7 @@ export function InputOptionWindow(props: InputOptionWindowProps<unknown>) {
 		<div
 			{...elementProps}
 			className={twMerge(
-				"focusable-within flex max-h-72 w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-60",
+				"focusable-within flex max-h-72 w-fit min-w-full overflow-x-hidden overflow-y-scroll rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-60",
 				elementProps.className
 			)}
 			tabIndex={-1}

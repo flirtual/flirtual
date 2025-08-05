@@ -145,6 +145,9 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 	const monthNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
 		month: "long"
 	}), [locale]);
+	const monthShortNameFormatter = useMemo(() => new Intl.DateTimeFormat(locale, {
+		month: "short"
+	}), [locale]);
 	const monthNames = useMemo(
 		() =>
 			Array.from({ length: 12 })
@@ -317,7 +320,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 								);
 							}}
 						>
-							{monthNameFormatter.format(displayDate)}
+							{monthShortNameFormatter.format(displayDate)}
 						</LabelSelect>
 						<LabelSelect
 							options={yearNames.map(({ year, name }) => ({
@@ -406,11 +409,7 @@ export const InputCalendar: React.FC<InputCalendarProps> = (props) => {
 																	active
 																		? "bg-brand-gradient text-white-20"
 																		: (!currentMonth || disabled)
-																			&& "text-black-30 dark:text-black-10",
-																	now.getDate() === date.getDate()
-																	&& now.getMonth() === date.getMonth()
-																	&& now.getFullYear() === date.getFullYear()
-																	&& "border-2 border-dashed border-pink"
+																			&& "text-black-30 dark:text-black-10"
 																)}
 																type="button"
 																onClick={(event) => {
