@@ -1,7 +1,7 @@
-import shuffle from "fast-shuffle";
 import { MoveLeft } from "lucide-react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { entries } from "remeda";
+import { entries, shuffle } from "remeda";
 
 import { Profile } from "~/api/user/profile";
 import { ButtonLink } from "~/components/button";
@@ -20,6 +20,8 @@ export const Finish4Form: React.FC = () => {
 
 	const session = useOptionalSession();
 	const personality = usePersonality();
+
+	const questions = useMemo(() => (shuffle(entries(personality))), [personality]);
 
 	if (!session || !personality) return null;
 	const { user } = session;
@@ -40,10 +42,7 @@ export const Finish4Form: React.FC = () => {
 					<InputLabel>
 						{t("quiet_gross_skate_honor")}
 					</InputLabel>
-					{shuffle(
-						Number.parseInt(user.talkjsId.slice(0, 8), 16),
-						entries(personality)
-					).map(([name]) => (
+					{questions.map(([name]) => (
 						<FormField key={name} name={name}>
 							{(field) => (
 								<div className="flex items-center justify-between gap-4">

@@ -88,7 +88,6 @@
 		"deepmerge": "^4.3.1",
 		"dotenv": "^16.6.1",
 		"fast-fuzzy": "^1.12.0",
-		"fast-shuffle": "^6.1.1",
 		"i18next": "^25.3.2",
 		"i18next-icu": "^2.3.0",
 		"import-in-the-middle": "^1.14.2",

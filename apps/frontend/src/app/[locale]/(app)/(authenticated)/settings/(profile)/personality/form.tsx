@@ -1,7 +1,7 @@
-import shuffle from "fast-shuffle";
+import { useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { entries } from "remeda";
+import { entries, shuffle } from "remeda";
 
 import {
 	Personality,
@@ -37,6 +37,8 @@ export const PersonalityForm: FC = () => {
 	const toasts = useToast();
 	const { t } = useTranslation();
 
+	const questions = useMemo(() => (shuffle(entries(personality))), [personality]);
+
 	return (
 		<Form
 			className="flex flex-col gap-8"
@@ -52,10 +54,7 @@ export const PersonalityForm: FC = () => {
 					<InputLabel>
 						{t("quiet_gross_skate_honor")}
 					</InputLabel>
-					{shuffle(
-						Number.parseInt(user.talkjsId.slice(0, 8), 16),
-						entries(personality)
-					).map(([name]) => (
+					{questions.map(([name]) => (
 						<FormField key={name} name={name}>
 							{(field) => (
 								<div className="flex items-center justify-between gap-4">
