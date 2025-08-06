@@ -457,8 +457,8 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       unplugin-remote-assets:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.6)(rollup@4.45.3)(vite@7.0.6(@types/node@24.0.14)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0))
+        specifier: ^0.3.1
+        version: 0.3.1(esbuild@0.25.6)(rollup@4.45.3)(vite@7.0.6(@types/node@24.0.14)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0))
       vite:
         specifier: ^7.0.6
         version: 7.0.6(@types/node@24.0.14)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
@@ -2611,8 +2611,8 @@ packages:
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
 
-  '@swc/types@0.1.23':
-    resolution: {integrity: sha512-u1iIVZV9Q0jxY+yM2vw/hZGDNudsN85bBpTqzAQ9rzkxW9D+e3aEM4Han+ow518gSewkXgjmEK0BD79ZcNVgPw==}
+  '@swc/types@0.1.24':
+    resolution: {integrity: sha512-tjTMh3V4vAORHtdTprLlfoMptu1WfTZG9Rsca6yOKyNYsRr+MUXutKmliB17orgSZk5DpnDxs8GUdd/qwYxOng==}
 
   '@tailwindcss/cli@4.1.11':
     resolution: {integrity: sha512-7RAFOrVaXCFz5ooEG36Kbh+sMJiI2j4+Ozp71smgjnLfBRu7DTfoq8DsTvzse2/6nDeo2M3vS/FGaxfDgr3rtQ==}
@@ -7089,8 +7089,8 @@ packages:
       webpack:
         optional: true
 
-  unplugin-remote-assets@0.3.0:
-    resolution: {integrity: sha512-M2YVzXtmirKw/J6fg2cdIinEz1WKERvRYLjfYcsWZe72IUn+DJ3+377hCq8GHyhBT1kOt4lLrB/+w9jvYqvlyQ==}
+  unplugin-remote-assets@0.3.1:
+    resolution: {integrity: sha512-ol83HMpsn28XOSZUSpZprEmtDHN7G65IIb+pamZHFb3PRISImH/17I+OiUCW+QuLpx+NWeyB/r8oUBm2gT+/8Q==}
     peerDependencies:
       '@farmfe/core': '>=1'
       '@nuxt/kit': ^3
@@ -9720,7 +9720,7 @@ snapshots:
   '@swc/core@1.13.1':
     dependencies:
       '@swc/counter': 0.1.3
-      '@swc/types': 0.1.23
+      '@swc/types': 0.1.24
     optionalDependencies:
       '@swc/core-darwin-arm64': 1.13.1
       '@swc/core-darwin-x64': 1.13.1
@@ -9737,7 +9737,7 @@ snapshots:
   '@swc/counter@0.1.3':
     optional: true
 
-  '@swc/types@0.1.23':
+  '@swc/types@0.1.24':
     dependencies:
       '@swc/counter': 0.1.3
     optional: true
@@ -14696,7 +14696,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  unplugin-remote-assets@0.3.0(esbuild@0.25.6)(rollup@4.45.3)(vite@7.0.6(@types/node@24.0.14)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)):
+  unplugin-remote-assets@0.3.1(esbuild@0.25.6)(rollup@4.45.3)(vite@7.0.6(@types/node@24.0.14)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)):
     dependencies:
       mime: 4.0.7
       ohash: 2.0.11
