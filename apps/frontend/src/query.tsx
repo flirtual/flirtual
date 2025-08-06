@@ -13,7 +13,7 @@ import { Config } from "./api/config";
 import { Conversation } from "./api/conversations";
 import type { ConversationList } from "./api/conversations";
 import type { ProspectKind } from "./api/matchmaking";
-import { Matchmaking, prospectKinds } from "./api/matchmaking";
+import { Matchmaking } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
 import { Personality } from "./api/user/profile/personality";
@@ -87,11 +87,6 @@ export async function preloadAll() {
 
 		preload({ queryKey: plansKey(), queryFn: plansFetcher }),
 
-		...prospectKinds.map((kind) => preload({
-			queryKey: queueKey(kind),
-			queryFn: queueFetcher
-		})),
-
 		...([
 			"country",
 			"game",
@@ -121,7 +116,7 @@ export const queryClient = new QueryClient({
 			experimental_prefetchInRender: true,
 			throwOnError: true,
 			retry: !development,
-			retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 60000),
+			retryDelay: (attempt) => Math.min(100 * 2 ** attempt, 60000),
 			staleTime: ms("5m"),
 			gcTime: ms("1h"),
 		},

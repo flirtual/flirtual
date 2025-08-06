@@ -98,7 +98,8 @@ export default defineConfig(({ mode }) => {
 					if (url.searchParams.has("raw")) return url.searchParams;
 
 					return new URLSearchParams({
-						lossless: "",
+						// lossless: "",
+						quality: "90",
 						effort: "max",
 						format: "webp"
 					});

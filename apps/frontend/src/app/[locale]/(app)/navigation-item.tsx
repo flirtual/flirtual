@@ -2,6 +2,7 @@ import { m } from "motion/react";
 import type { ComponentProps, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
+import RankedImage from "virtual:remote/ranked.jpg";
 
 import { Link } from "~/components/link";
 import { usePreferences } from "~/hooks/use-preferences";
@@ -39,16 +40,20 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 		>
 			{active && (
 				<m.div
-					className={twMerge(
-						"absolute inset-0 rounded-full bg-black-90 bg-brand-gradient shadow-brand-1 transition-colors",
-						rankedMode && props.id === "date-mode-switch" && "!bg-[url('https://static.flirtual.com/ranked.jpg')] bg-cover bg-center"
-					)}
+					style={rankedMode && props.id === "date-mode-switch"
+						? {
+								backgroundImage: `url(${RankedImage})`,
+								backgroundSize: "cover",
+								backgroundPosition: "center"
+							}
+						: undefined}
 					transition={{
 						type: "spring",
 						duration: 0.5,
 						ease: "easeInOut",
 						bounce: 0.25
 					}}
+					className="absolute inset-0 rounded-full bg-black-90 bg-brand-gradient shadow-brand-1 transition-colors"
 					layoutId="switch-indicator"
 				/>
 			)}

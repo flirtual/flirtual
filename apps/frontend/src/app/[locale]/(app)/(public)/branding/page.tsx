@@ -1,17 +1,17 @@
 import { Trans, useTranslation } from "react-i18next";
-import FlirtualBackgroundPNG from "virtual:remote/flirtual-background.png?format=png";
+import FlirtualBackgroundPNG from "virtual:remote/flirtual-background.png?format=png&quality=100";
 import FlirtualBackgroundSVG from "virtual:remote/flirtual-background.svg";
-import FlirtualBlackPNG from "virtual:remote/flirtual-black.png?format=png";
+import FlirtualBlackPNG from "virtual:remote/flirtual-black.png?format=png&quality=100";
 import FlirtualBlackSVG from "virtual:remote/flirtual-black.svg";
-import FlirtualMarkBackgroundPNG from "virtual:remote/flirtual-mark-background.png?format=png";
+import FlirtualMarkBackgroundPNG from "virtual:remote/flirtual-mark-background.png?format=png&quality=100";
 import FlirtualMarkBackgroundSVG from "virtual:remote/flirtual-mark-background.svg";
-import FlirtualMarkBlackPNG from "virtual:remote/flirtual-mark-black.png?format=png";
+import FlirtualMarkBlackPNG from "virtual:remote/flirtual-mark-black.png?format=png&quality=100";
 import FlirtualMarkBlackSVG from "virtual:remote/flirtual-mark-black.svg";
-import FlirtualMarkWhitePNG from "virtual:remote/flirtual-mark-white.png?format=png";
+import FlirtualMarkWhitePNG from "virtual:remote/flirtual-mark-white.png?format=png&quality=100";
 import FlirtualMarkWhiteSVG from "virtual:remote/flirtual-mark-white.svg";
-import FlirtualMarkPNG from "virtual:remote/flirtual-mark.png?format=png";
+import FlirtualMarkPNG from "virtual:remote/flirtual-mark.png?format=png&quality=100";
 import FlirtualMarkSVG from "virtual:remote/flirtual-mark.svg";
-import FlirtualWhitePNG from "virtual:remote/flirtual-white.png?format=png";
+import FlirtualWhitePNG from "virtual:remote/flirtual-white.png?format=png&quality=100";
 import FlirtualWhiteSVG from "virtual:remote/flirtual-white.svg";
 
 import { ButtonLink } from "~/components/button";

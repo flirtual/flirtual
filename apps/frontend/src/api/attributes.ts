@@ -97,7 +97,9 @@ export type GroupedAttributeCollection = Record<
 // export type PartialAttributeCollection = Array<PartialAttribute>;
 
 export const Attribute = {
-	api: api.url("attributes"),
+	api: api
+		.url("attributes")
+		.options({ credentials: "omit" }),
 	list<T extends AttributeType>(type: T, options: WretchOptions = {}) {
 		return this.api
 			.url(`/${type}`)
