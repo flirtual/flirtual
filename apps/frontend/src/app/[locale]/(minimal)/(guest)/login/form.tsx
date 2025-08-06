@@ -3,7 +3,7 @@ import { MoveRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import type { FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
 
 import { Authentication } from "~/api/auth";
@@ -14,6 +14,7 @@ import { FormInputMessages } from "~/components/forms/input-messages";
 import { InlineLink } from "~/components/inline-link";
 import { InputLabel, InputLabelHint, InputText } from "~/components/inputs";
 import { useToast } from "~/hooks/use-toast";
+import { useNavigate } from "~/i18n";
 import { invalidate, mutate, sessionKey } from "~/query";
 import { isInternalHref, urls } from "~/urls";
 

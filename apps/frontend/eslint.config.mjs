@@ -24,21 +24,14 @@ export default configure({
 		"no-restricted-imports": [
 			"error",
 			{
-				name: "next/link",
-				message: "Use '~/components/link' instead."
-			},
-			{
-				name: "next/router",
-				message: "Use '~/i18n/navigation' instead."
-			},
-			{
-				name: "next/navigation",
-				message: "Use '~/i18n/navigation' instead."
-			},
-			{
-				name: "swr",
-				message: "Use '~/swr' instead."
-			},
+				paths: [
+					{
+						name: "react-router",
+						importNames: ["useNavigate"],
+						message: "Use '~/i18n' instead."
+					}
+				]
+			}
 		]
 	}
 });
