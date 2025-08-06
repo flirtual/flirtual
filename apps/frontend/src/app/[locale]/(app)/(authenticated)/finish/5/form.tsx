@@ -1,6 +1,6 @@
 import { MoveLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Profile } from "~/api/user/profile";
@@ -11,6 +11,7 @@ import { FaceTimeIcon, VRChatIcon } from "~/components/icons";
 import { InputText } from "~/components/inputs";
 import { useDevice } from "~/hooks/use-device";
 import { useSession } from "~/hooks/use-session";
+import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 

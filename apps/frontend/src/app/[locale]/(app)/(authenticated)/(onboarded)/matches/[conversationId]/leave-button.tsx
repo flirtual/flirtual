@@ -1,9 +1,9 @@
 import { Trash2 } from "lucide-react";
 import type { FC } from "react";
-import { useNavigate } from "react-router";
 
 import { Conversation } from "~/api/conversations";
 import { useToast } from "~/hooks/use-toast";
+import { useNavigate } from "~/i18n";
 import { urls } from "~/urls";
 
 export interface LeaveButtonProps {

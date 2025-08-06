@@ -1,8 +1,8 @@
 import { createPath } from "react-router";
 import type { Path, To } from "react-router";
 import { entries, fromEntries } from "remeda";
+import FallbackAvatar from "virtual:remote/8d120672-c717-49d2-b9f3-2d4479bbacf6";
 import Gradient from "virtual:remote/e8212f93-af6f-4a2c-ac11-cb328bbc4aa4";
-import Mark from "virtual:remote/flirtual-mark.png";
 
 import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
@@ -105,7 +105,7 @@ export const urls = {
 	userAvatar: (user: { profile: Pick<Profile, "images"> } | null, variant?: string) =>
 		user?.profile.images[0]
 			? urls.image(user.profile.images[0], variant)
-			: Mark,
+			: FallbackAvatar,
 	vrchatProfile: (userId: string) =>
 		`https://vrchat.com/home/user/${userId}`,
 	vrchatSearch: (name: string) =>

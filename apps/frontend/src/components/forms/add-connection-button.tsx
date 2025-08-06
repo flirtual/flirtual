@@ -2,7 +2,7 @@ import { InAppBrowser, ToolBarType } from "@capgo/inappbrowser";
 import { X } from "lucide-react";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -14,6 +14,7 @@ import type { ConnectionType } from "~/api/connections";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
 
 export interface ConnectionButtonProps {
