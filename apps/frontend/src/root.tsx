@@ -1,7 +1,9 @@
 import { SafeArea } from "@capacitor-community/safe-area";
+import montserratNormal from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
+import nunitoNormal from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url";
 import type { FC, PropsWithChildren } from "react";
 import { memo, useEffect } from "react";
-import { preconnect } from "react-dom";
+import { preconnect, preload } from "react-dom";
 import { useSSR as useTranslateSSR, useTranslation } from "react-i18next";
 import {
 	href,
@@ -185,6 +187,8 @@ export function Layout({ children }: PropsWithChildren) {
 
 	preconnect(apiOrigin);
 	bucketOrigins.map((origin) => preconnect(origin));
+	preload(montserratNormal, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+	preload(nunitoNormal, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
 
 	const [theme] = useTheme();
 	const themeStyle = useMatch(urls.discover("homies")) ? "friend" : "default";
