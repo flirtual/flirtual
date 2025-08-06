@@ -102,6 +102,10 @@ export const redirects = [
 	{
 		source: "/bimi.svg",
 		destination: Bimi
+	},
+	{
+		source: "/user/:slug",
+		destination: "/:slug"
 	}
 ]
 	.sort(({ destination: a }, { destination: b }) => a.localeCompare(b));
