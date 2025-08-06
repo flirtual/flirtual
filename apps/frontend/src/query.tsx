@@ -258,24 +258,15 @@ export function useQuery<
 	if (!enabled && placeholderData === undefined)
 		throw new Error(`useQuery(${queryKey}) called without placeholderData while disabled. This will permanently suspend the component.`);
 
-	try {
-		const { promise } = _useQuery({
-			queryKey,
-			queryFn,
-			placeholderData,
-			enabled,
-			...options
-		}, queryClient);
+	const { promise } = _useQuery({
+		queryKey,
+		queryFn,
+		placeholderData,
+		enabled,
+		...options
+	}, queryClient);
 
-		return use(promise);
-	}
-	catch (reason) {
-		if (reason instanceof Error && reason.message.includes("Suspense Exception"))
-			throw reason;
-
-		log("useQuery(%o) failed: %o", queryKey, reason);
-		throw reason;
-	}
+	return use(promise);
 }
 
 export function useQueryState(queryKey: QueryKey) {
