@@ -105,7 +105,9 @@ export default defineConfig(({ mode }) => {
 			// 		watchPath: "./src",
 			// 	}
 			// }),
-			sonda(),
+			sonda({
+				open: false
+			}),
 		],
 	};
 });
