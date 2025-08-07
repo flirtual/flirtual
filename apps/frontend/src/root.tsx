@@ -53,16 +53,7 @@ import "@fontsource-variable/montserrat";
 import "@fontsource-variable/nunito";
 import "./app/index.css";
 
-export async function loader({ params: { locale: _locale } }: Route.LoaderArgs) {
-	console.log("loader");
-
-	const locale = !_locale || !isLocale(_locale) ? defaultLocale : _locale;
-	await i18n.changeLanguage(locale);
-}
-
 export async function clientLoader({ request, params: { locale } }: Route.ClientLoaderArgs) {
-	console.log("clientLoader");
-
 	if (!locale || !isLocale(locale))
 		return redirect(createPath(replaceLanguage(new URL(request.url), defaultLocale)));
 
@@ -73,12 +64,9 @@ clientLoader.hydrate = true as const;
 
 export function meta({
 	location: { pathname },
-	params: { locale: _locale }
+	params: { locale }
 }: Pick<Route.MetaArgs, "location" | "params">): Route.MetaDescriptors {
-	console.log("meta");
-
-	const locale = !_locale || !isLocale(_locale) ? defaultLocale : _locale;
-
+	if (!locale || !isLocale(locale)) return [];
 	const t = i18n.getFixedT(locale);
 
 	return [

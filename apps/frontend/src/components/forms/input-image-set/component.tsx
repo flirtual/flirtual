@@ -23,34 +23,34 @@ import { uppyCompanionUrl } from "~/const";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
-import { useMessages } from "~/i18n";
 import { urls } from "~/urls";
 
 import {
 	ArrangeableImage,
 	ArrangeableImagePreview
-} from "../arrangeable-image";
-import { Button } from "../button";
+} from "../../arrangeable-image";
+import { Button } from "../../button";
 import {
 	Dialog,
 	DialogBody,
 	DialogContent,
 	DialogHeader,
 	DialogTitle
-} from "../dialog/dialog";
-import { UserImage } from "../user-avatar";
+} from "../../dialog/dialog";
+import { UserImage } from "../../user-avatar";
 import {
 	SortableGrid,
 	SortableItem,
 	SortableItemOverlay,
 	useCurrentSortableItem
-} from "./sortable";
+} from "../sortable";
 
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import "@uppy/image-editor/dist/style.min.css";
 import "@uppy/drag-drop/dist/style.min.css";
 import "@uppy/status-bar/dist/style.min.css";
+import "./index.css";
 
 export interface ImageSetValue {
 	id: string;
@@ -337,3 +337,5 @@ const ArrangeableImageDialog: React.FC<{
 		</Dialog>
 	);
 };
+
+export default InputImageSet;

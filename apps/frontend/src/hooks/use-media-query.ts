@@ -1,12 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useDebugValue, useEffect, useState } from "react";
-
-import { server } from "~/const";
 
 export function useMediaQuery(media: string, defaultValue?: boolean) {
 	useDebugValue(media);
-
-	if (server && defaultValue !== undefined) return defaultValue;
 
 	const [value, setValue] = useState(() => defaultValue ?? matchMedia(media).matches);
 	useMediaQueryCallback(media, ({ matches }) => setValue(matches));

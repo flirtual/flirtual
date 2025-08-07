@@ -29,9 +29,9 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 	const [profileLink, setProfileLink] = useState(session.user.slug);
 
 	return (
-		<div className="flex gap-4">
+		<div className="grid grid-cols-2 gap-4">
 			<ButtonLink
-				className="w-1/2 text-theme-overlay"
+				className="text-theme-overlay"
 				href={urls.settings.bio}
 				Icon={Pencil}
 				size="sm"
@@ -127,7 +127,7 @@ export const PersonalActions: React.FC<{ user: User }> = ({ user }) => {
 				</>
 			</DrawerOrDialog>
 			<Button
-				className="w-1/2 text-theme-overlay"
+				className="text-theme-overlay"
 				Icon={ShareIcon}
 				size="sm"
 				onClick={() => setShareVisible(true)}

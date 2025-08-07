@@ -122,11 +122,14 @@ defmodule Flirtual.Matchmaking do
          previous:
            (grouped_prospects[true] || [])
            |> Enum.at(0)
-           |> Map.get(:id),
+           |> case do
+             nil -> nil
+             prospect -> Map.get(prospect, :id)
+           end,
          next:
            (grouped_prospects[false] || [])
            |> Enum.take(2)
-           |> Enum.map(& &1.id)
+           |> Enum.map(&Map.get(&1, :id))
        }}
     end
   end

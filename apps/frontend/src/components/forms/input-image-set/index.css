@@ -1,0 +1,139 @@
+.uppy-Root {
+  font-family: var(--font-nunito) !important;
+}
+
+.uppy-Dashboard-inner,
+.uppy-DashboardContent-bar,
+.uppy-StatusBar,
+.uppy-StatusBar-actions {
+  background-color: transparent !important;
+}
+
+.uppy-Dashboard-inner {
+  border: none !important;
+  max-height: calc(100svh - 10rem) !important;
+}
+
+.uppy-StatusBar,
+.uppy-DashboardContent-bar,
+.uppy-Dashboard-serviceMsg {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+.uppy-StatusBar:before {
+  background: none !important;
+}
+
+.uppy-Dashboard-AddFiles {
+  border: none !important;
+}
+
+.uppy-Dashboard-dropFilesHereHint {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='48' height='48' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24 1v1C11.85 2 2 11.85 2 24s9.85 22 22 22 22-9.85 22-22S36.15 2 24 2V1zm0 0V0c13.254 0 24 10.746 24 24S37.254 48 24 48 0 37.254 0 24 10.746 0 24 0v1zm7.707 19.293a.999.999 0 1 1-1.414 1.414L25 16.414V34a1 1 0 1 1-2 0V16.414l-5.293 5.293a.999.999 0 1 1-1.414-1.414l7-7a.999.999 0 0 1 1.414 0l7 7z' fill='%23E9658B'/%3E%3C/svg%3E") !important;
+  border-color: var(--brand-theme-2) !important;
+  border-radius: 14px !important;
+}
+
+.uppy-DashboardContent-panel,
+.uppy-Dashboard-AddFilesPanel,
+.cropper-modal {
+  background-color: rgb(235 235 235) !important;
+}
+
+:is([data-theme="dark"] .uppy-DashboardContent-panel),
+:is([data-theme="dark"] .uppy-Dashboard-AddFilesPanel),
+:is([data-theme="dark"] .cropper-modal) {
+  background-color: rgb(30 30 30) !important;
+}
+
+.uppy-StatusBar-actionBtn {
+  background-image: linear-gradient(to right, var(--brand-theme-1), var(--brand-theme-2)) !important;
+  color: rgb(235 235 235) !important;
+  border-radius: 12px !important;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px !important;
+  font-family: var(--font-montserrat) !important;
+  font-weight: 600 !important;
+}
+
+.uppy-StatusBar-actionBtn--retry {
+  padding-top: 2px !important;
+}
+
+.uppy-Dashboard-browse,
+.uppy-DashboardContent-back,
+.uppy-DashboardContent-save,
+.uppy-DashboardContent-addMore,
+.uppy-DashboardTab-iconMyDevice {
+  color: var(--brand-theme-2) !important;
+}
+
+.uppy-Dashboard-browse:focus,
+.uppy-Dashboard-browse:hover {
+  border-bottom-color: var(--brand-theme-2) !important;
+}
+
+.uppy-Dashboard-Item-previewInnerWrap {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.uppy-Dashboard-Item-previewIcon>svg>g {
+  fill: var(--brand-theme-2) !important;
+}
+
+.uppy-Dashboard-Item-progressIndicator>svg>circle {
+  fill: var(--brand-theme-2) !important;
+}
+
+.cropper-view-box {
+  outline-color: var(--brand-theme-2) !important;
+}
+
+.cropper-point,
+.cropper-line {
+  background-color: var(--brand-theme-2) !important;
+}
+
+.uppy-DashboardTab-btn:active,
+.uppy-DashboardTab-btn:focus,
+.uppy-DashboardContent-back:focus,
+.uppy-DashboardContent-save:focus,
+.uppy-DashboardContent-addMore:focus {
+  background-color: rgb(241, 223, 230) !important;
+}
+
+.uppy-StatusBar-progress {
+  background-image: linear-gradient(to right, var(--brand-theme-1), var(--brand-theme-2)) !important;
+}
+
+.uppy-StatusBar.is-error .uppy-StatusBar-progress {
+  background-image: none !important;
+}
+
+.uppy-ImageCropper-controls {
+  padding-top: 0 !important;
+}
+
+.uppy-DragDrop-container {
+  background: none !important;
+  border: none !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+.uppy-DragDrop-inner {
+  padding: 0 20px !important;
+}
+
+.uppy-DragDrop-inner>svg {
+  display: none !important;
+}
+
+.uppy-DragDrop-label {
+  color: rgb(245, 245, 245) !important;
+  font-family: var(--font-nunito) !important;
+}
+
+.uppy-DragDrop-browse {
+  color: rgb(245, 245, 245) !important;
+  border-bottom: 1px solid rgb(245, 245, 245) !important;
+}

@@ -1,29 +1,36 @@
 import { ChevronRight } from "lucide-react";
-import { useLocation } from "react-router";
+import { createPath, useMatch } from "react-router";
+import type { PathPattern, To } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { NewBadge } from "~/components/badge";
 import type { IconComponent } from "~/components/icons";
 import { Link } from "~/components/link";
-import { toAbsoluteUrl, urlEqual } from "~/urls";
+import { replaceLanguage, useLocale } from "~/i18n";
 
 export interface NavigationLinkProps {
 	children: string;
 	newBadge?: boolean;
 	Icon?: IconComponent;
-	href?: string;
+	href?: To;
+	pattern?: PathPattern;
 	onClick?: () => void;
 }
 
 export const NavigationLink: React.FC<NavigationLinkProps> = ({
 	Icon,
 	href = null,
+	pattern: _pattern,
 	onClick,
 	newBadge,
 	children
 }) => {
-	const location = useLocation();
-	const active = !!href && urlEqual(toAbsoluteUrl(href), location);
+	const [locale] = useLocale();
+
+	const pattern = _pattern || { path: typeof href === "string" ? href : createPath(href || {}) };
+	const match = useMatch({ ...pattern, path: createPath(replaceLanguage(pattern.path, locale)) });
+
+	const active = !!href && !!match;
 
 	return (
 		<Link

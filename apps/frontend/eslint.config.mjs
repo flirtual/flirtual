@@ -27,7 +27,7 @@ export default configure({
 				paths: [
 					{
 						name: "react-router",
-						importNames: ["useNavigate"],
+						importNames: ["Navigate", "useNavigate", "redirect"],
 						message: "Import from \"~/i18n\" instead."
 					}
 				]

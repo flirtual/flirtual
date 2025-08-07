@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { useMatches } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -31,7 +32,6 @@ import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
 import { mutate, sessionKey } from "~/query";
-import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -42,21 +42,22 @@ export const SettingsNavigation: FC = () => {
 	const { user, sudoerId } = useSession();
 	const { vision } = useDevice();
 
-	const layoutSegment = null; // TODO: Replace with proper React Router segment detection
+	const matches = useMatches();
+	const listOnly = matches.at(-1)?.pathname.endsWith(urls.settings.list()) || false;
 
 	const { openFreshworks } = useFreshworks();
 	const { t } = useTranslation();
 
-	if (user.status === "onboarded") throwRedirect(urls.finish(1));
+	// if (user.status === "onboarded") throwRedirect(urls.finish(1));
 
 	return (
 		<div className="sticky top-0 z-10 flex w-full shrink-0 grow-0 flex-col self-baseline desktop:relative desktop:w-80 desktop:rounded-2xl desktop:bg-brand-gradient desktop:text-white-20 desktop:shadow-brand-1">
-			<NavigationHeader {...{ navigationInner: layoutSegment }} />
+			<NavigationHeader listOnly={listOnly} />
 			<div className="vision:bg-none desktop:rounded-2xl desktop:rounded-t-none desktop:bg-brand-gradient desktop:p-1 desktop:pt-0">
 				<nav
 					className={twMerge(
 						"flex-col gap-8 py-6 vision:bg-transparent dark:bg-transparent desktop:rounded-xl desktop:bg-white-20 desktop:pb-4 desktop:pt-6 desktop:shadow-brand-inset android:desktop:pt-6 dark:desktop:bg-black-70",
-						layoutSegment ? "hidden desktop:flex" : "flex"
+						!listOnly ? "hidden desktop:flex" : "flex"
 					)}
 				>
 					{vision && (user.tags?.includes("moderator") || user.tags?.includes("admin") || sudoerId) && (

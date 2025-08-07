@@ -1,11 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { PropsWithChildren } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { Navigate, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import type { To } from "react-router";
 
-import { replaceLanguage } from "./i18n";
-import { getLocale } from "./i18n/languages";
+import { Navigate } from "./i18n";
 
 const redirectSymbol = Symbol("redirect");
 const redirectErrorMessage = "This error was thrown by throwRedirect() and must be caught by a redirect boundary.";
@@ -13,7 +12,7 @@ const redirectErrorMessage = "This error was thrown by throwRedirect() and must 
 export function throwRedirect(to: To): never {
 	const error = Object.assign(new Error(redirectErrorMessage), {
 		[redirectSymbol]: true,
-		to: replaceLanguage(to, getLocale(window.location.pathname))
+		to
 	});
 
 	throw error;

@@ -1,11 +1,19 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable no-restricted-imports */
 import deepmerge from "deepmerge";
 import i18n from "i18next";
 import type { BackendModule, ResourceKey } from "i18next";
 import icu from "i18next-icu";
 import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
-import { useNavigate as _useNavigate, useLocation } from "react-router";
-import type { NavigateOptions as _NavigateOptions, To } from "react-router";
+import {
+	Navigate as _Navigate,
+	redirect as _redirect,
+	useNavigate as _useNavigate,
+	createPath,
+	useLocation
+} from "react-router";
+import type { NavigateOptions as _NavigateOptions, NavigateProps, RedirectFunction, To } from "react-router";
 
 import { server } from "~/const";
 
@@ -168,8 +176,24 @@ export function useNavigate() {
 	}, [navigate]);
 }
 
+export const redirect: RedirectFunction = (url, init) => {
+	return _redirect(createPath(replaceLanguage(url, getLocale(url) || defaultLocale)), init);
+};
+
+export function Navigate({ to, ...props }: NavigateProps) {
+	const [locale] = useLocale();
+
+	return (
+		<_Navigate
+			{...props}
+			to={replaceLanguage(to, locale)}
+		/>
+	);
+}
+
 export function excludeLocale(to: To = window.location.pathname) {
-	// history.replaceState(history.state, "", createPath(replaceLanguage(to, null)));
+	return;
+	history.replaceState(history.state, "", createPath(replaceLanguage(to, null)));
 }
 
 export { i18n };

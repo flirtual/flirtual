@@ -1,34 +1,24 @@
 import { ChevronLeft, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router";
 
-import { Link } from "~/components/link";
-import { ensureRelativeUrl, urls } from "~/urls";
+import { useNavigate } from "~/i18n";
+import { urls } from "~/urls";
 
-export interface NavigationHeaderProps {
-	navigationInner: string | null;
-}
-
-export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
-	navigationInner
-}) => {
-	const [query] = useSearchParams();
+export const NavigationHeader: React.FC<{ listOnly: boolean }> = ({ listOnly }) => {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 
-	const Icon = navigationInner ? ChevronLeft : X;
-	const returnTo = ensureRelativeUrl(
-		query.get("return")
-		?? (navigationInner ? urls.settings.list() : urls.discover("dates"))
-	);
+	const Icon = listOnly ? X : ChevronLeft;
 
 	return (
 		<div className="sticky top-0 flex w-full items-center justify-center bg-black-70 p-4 pt-[max(calc(var(--safe-area-inset-top,0rem)+0.5rem),1rem)] text-white-20 desktop:static desktop:bg-transparent desktop:pb-4 desktop:pt-[1.125rem]">
-			<Link
+			<button
 				className="absolute left-4 flex shrink-0 vision:left-8 desktop:hidden"
-				href={returnTo}
+				type="button"
+				onClick={() => listOnly ? navigate(urls.discover("dates")) : navigate(-1)}
 			>
 				<Icon className="w-6" />
-			</Link>
+			</button>
 			<span className="font-montserrat text-2xl font-extrabold">{t("settings")}</span>
 		</div>
 	);

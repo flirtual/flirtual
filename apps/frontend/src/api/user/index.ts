@@ -101,7 +101,7 @@ export interface UserPreview {
 export function displayName(
 	user: { profile: Pick<Profile, "displayName"> } & Pick<User, "slug">
 ) {
-	return user.profile.displayName || user.slug;
+	return user.profile.displayName;
 }
 
 export const searchSortKeys = [

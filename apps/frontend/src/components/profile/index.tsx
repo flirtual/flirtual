@@ -87,14 +87,15 @@ export function Profile({
 						<div className="pointer-events-auto flex w-fit items-baseline gap-4 font-montserrat">
 							<span
 								className={twMerge(
-									"text-shadow-brand max-w-[95%] truncate text-4xl font-bold",
+									"text-shadow-brand col-span-10 line-clamp-1 shrink break-all text-4xl font-bold",
 									session.user.tags?.includes("moderator") && "select-text"
 								)}
 							>
-								{displayName(user)}
+								{displayName(user) || t("unnamed")}
+								{" "}
 							</span>
 							{user.bornAt && (
-								<div className="flex h-fit items-center gap-2">
+								<div className="col-span-2 flex h-fit shrink-0 items-center gap-2">
 									<span className="text-shadow-brand text-3xl leading-none">
 										{yearsAgo(new Date(user.bornAt))}
 									</span>

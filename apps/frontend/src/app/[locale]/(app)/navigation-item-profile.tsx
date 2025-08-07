@@ -11,7 +11,7 @@ import { AnimatePresence, m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router";
+import { createPath, useLocation, useMatch } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { Authentication } from "~/api/auth";
@@ -24,6 +24,7 @@ import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { useSession } from "~/hooks/use-session";
+import { replaceLanguage, useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -59,8 +60,9 @@ export const NavigationItemProfile: FC = () => {
 	const [visible, setVisible] = useState(false);
 	const elementReference = useRef<HTMLDivElement>(null);
 	const location = useLocation();
-	// const active = urlEqual(toAbsoluteUrl(urls.user.me), location);
-	const active = false; // todo:
+	const [locale] = useLocale();
+
+	const active = !!useMatch({ path: createPath(replaceLanguage(urls.profile(user), locale)) });
 
 	useClickOutside(elementReference, () => setVisible(false), visible);
 	useGlobalEventListener(
