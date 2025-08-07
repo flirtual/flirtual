@@ -5,7 +5,6 @@ import info from "unplugin-info/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
-import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
 
