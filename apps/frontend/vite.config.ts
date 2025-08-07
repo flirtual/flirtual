@@ -78,15 +78,6 @@ export default defineConfig(({ mode }) => {
 				certDir: "./certificates",
 			}),
 			reactRouter(),
-			babel({
-				filter: /\.[jt]sx?$/,
-				babelConfig: {
-					presets: ["@babel/preset-typescript"],
-					plugins: [
-						["babel-plugin-react-compiler", {}],
-					],
-				},
-			}),
 			imageOptimize({
 				cache: true,
 				cacheLocation: "./node_modules/.cache/vite-image-optimizer",
