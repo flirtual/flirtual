@@ -14,7 +14,7 @@ export const meta: Route.MetaFunction = (options) => {
 
 	return metaMerge([
 		...rootMeta(options),
-		{ title: t("privacy_policy_outdated") }
+		{ title: t("page_title", { name: t("privacy_policy_outdated") }) }
 	]);
 };
 

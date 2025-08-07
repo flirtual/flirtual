@@ -11,7 +11,7 @@ import { Finish5Form } from "./form";
 export const meta: Route.MetaFunction = (options) => {
 	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return metaMerge([...rootMeta(options), { title: t("connections") }]);
+	return metaMerge([...rootMeta(options), { title: t("page_title", { name: t("connections") }) }]);
 };
 
 export default function Finish5Page() {

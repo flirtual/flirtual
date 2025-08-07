@@ -11,7 +11,7 @@ import { Finish2Form } from "./form";
 export const meta: Route.MetaFunction = (options) => {
 	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return metaMerge([...rootMeta(options), { title: t("more_details") }]);
+	return metaMerge([...rootMeta(options), { title: t("page_title", { name: t("more_details") }) }]);
 };
 
 export default function Finish2Page() {

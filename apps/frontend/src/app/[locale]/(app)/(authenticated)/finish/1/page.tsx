@@ -9,7 +9,7 @@ import { Finish1Form } from "./form";
 export const meta: Route.MetaFunction = (options) => {
 	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
-	return metaMerge([...rootMeta(options), { title: t("bio_and_pics") }]);
+	return metaMerge([...rootMeta(options), { title: t("page_title", { name: t("bio_and_pics") }) }]);
 };
 
 export default function Finish1Page() {

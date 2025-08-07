@@ -15,7 +15,7 @@ export const meta: Route.MetaFunction = (options) => {
 	return metaMerge([
 		...rootMeta(options),
 		{
-			title: t("likes_you")
+			title: t("page_title", { name: t("likes_you") })
 		}
 	]);
 };
