@@ -28,7 +28,7 @@ export default configure({
 					{
 						name: "react-router",
 						importNames: ["useNavigate"],
-						message: "Use '~/i18n' instead."
+						message: "Import from \"~/i18n\" instead."
 					}
 				]
 			}

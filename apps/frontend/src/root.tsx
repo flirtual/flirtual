@@ -6,9 +6,11 @@ import { memo, useEffect } from "react";
 import { preconnect, preload } from "react-dom";
 import { useSSR as useTranslateSSR, useTranslation } from "react-i18next";
 import {
+	createPath,
 	href,
 	Links,
 	Meta,
+	redirect,
 	Scripts,
 	ScrollRestoration,
 	useMatch,
@@ -52,14 +54,29 @@ import "@fontsource-variable/nunito";
 import "./app/index.css";
 
 export async function loader({ params: { locale: _locale } }: Route.LoaderArgs) {
+	console.log("loader");
+
 	const locale = !_locale || !isLocale(_locale) ? defaultLocale : _locale;
 	await i18n.changeLanguage(locale);
 }
+
+export async function clientLoader({ request, params: { locale } }: Route.ClientLoaderArgs) {
+	console.log("clientLoader");
+
+	if (!locale || !isLocale(locale))
+		return redirect(createPath(replaceLanguage(new URL(request.url), defaultLocale)));
+
+	await i18n.changeLanguage(locale);
+}
+
+clientLoader.hydrate = true as const;
 
 export function meta({
 	location: { pathname },
 	params: { locale: _locale }
 }: Pick<Route.MetaArgs, "location" | "params">): Route.MetaDescriptors {
+	console.log("meta");
+
 	const locale = !_locale || !isLocale(_locale) ? defaultLocale : _locale;
 
 	const t = i18n.getFixedT(locale);
@@ -208,12 +225,14 @@ export function Layout({ children }: PropsWithChildren) {
 		<html
 			suppressHydrationWarning
 			ref={() => {
-				SafeArea.enable({ config: {
-					customColorsForSystemBars: true,
-					statusBarColor: "#00000000",
-					navigationBarColor: "#00000000",
-					offset: 10
-				} });
+				SafeArea.enable({
+					config: {
+						customColorsForSystemBars: true,
+						statusBarColor: "#00000000",
+						navigationBarColor: "#00000000",
+						offset: 10
+					}
+				});
 			}}
 			style={{
 				fontSize: `${fontSize || 16}px`

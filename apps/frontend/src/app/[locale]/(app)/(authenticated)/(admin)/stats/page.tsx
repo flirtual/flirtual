@@ -55,7 +55,7 @@ const stats = [
 
 export const meta: Route.MetaFunction = (options) => {
 	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
-	return metaMerge([...rootMeta(options), { title: "Stats" }]);
+	return metaMerge([...rootMeta(options), { title: t("page_title", { name: "Stats" }) }]);
 };
 
 export default function StatsPage() {

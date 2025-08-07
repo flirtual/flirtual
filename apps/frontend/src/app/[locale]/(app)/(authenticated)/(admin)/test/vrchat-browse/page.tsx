@@ -250,7 +250,7 @@ const WorldCategoryContent = withSuspense<{
 
 export const meta: Route.MetaFunction = (options) => {
 	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
-	return metaMerge([...rootMeta(options), { title: "VRChat Browse Test" }]);
+	return metaMerge([...rootMeta(options), { title: t("page_title", { name: "VRChat Browse Test" }) }]);
 };
 
 export default function Test() {
