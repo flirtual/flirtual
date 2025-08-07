@@ -2,6 +2,8 @@ import { sha as commitId, abbreviatedSha as commitIdShort, github as gitUrl } fr
 
 import type { DevicePlatform } from "./hooks/use-device";
 
+export { default as builtAt } from "~build/time";
+
 function assert(condition: any, message: string): asserts condition {
 	if (!condition) throw new Error(message);
 }
