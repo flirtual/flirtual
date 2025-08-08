@@ -1,15 +1,53 @@
-import { setTag, setUser } from "@sentry/react";
+/* eslint-disable react-refresh/only-export-components */
+import * as Sentry from "@sentry/react";
 import { Suspense } from "react";
-import type { PropsWithChildren } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import {
+	apiOrigin,
 	client,
 	cloudflareBeaconId,
-	production
+	production,
+	sentryDsn,
+	sentryEnabled,
+	siteOrigin
 } from "~/const";
 import { device } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
+
+export function initialize() {
+	Sentry.init({
+		enabled: sentryEnabled,
+		dsn: sentryDsn,
+		sampleRate: 1,
+		tracesSampleRate: 1,
+		profilesSampleRate: 1,
+		replaysOnErrorSampleRate: 0,
+		replaysSessionSampleRate: 0,
+		tracePropagationTargets: [
+			siteOrigin,
+			apiOrigin,
+		],
+		ignoreErrors: [],
+	// integrations: [
+	// 	Sentry.replayIntegration({
+	// 		blockAllMedia: false,
+	// 		maskAllText: false,
+	// 		maskAllInputs: true,
+	// 		mask: ["[data-mask]"],
+	// 		block: ["[data-block]"],
+	// 		networkDetailAllowUrls: [
+	// 			window.location.origin,
+	// 			new URL(siteOrigin).origin,
+	// 			new URL(apiUrl).origin
+	// 		]
+	// 	}),
+	// 	Sentry.feedbackIntegration({
+	// 		autoInject: false
+	// 	})
+	// ]
+	});
+}
 
 function Identity() {
 	const session = useOptionalSession();
@@ -18,16 +56,16 @@ function Identity() {
 	const optIn = session?.user.preferences?.privacy.analytics || true;
 
 	if (client) {
-		setTag("native", device.native ? "yes" : "no");
-		setTag("vision", device.vision ? "yes" : "no");
+		Sentry.setTag("native", device.native ? "yes" : "no");
+		Sentry.setTag("vision", device.vision ? "yes" : "no");
 
-		setUser((userId && optIn) ? { id: userId } : null);
+		Sentry.setUser((userId && optIn) ? { id: userId } : null);
 	}
 
 	return null;
 }
 
-export function AnalyticsProvider({ children }: PropsWithChildren) {
+export function Analytics() {
 	return (
 		<>
 			<Suspense>
@@ -44,7 +82,6 @@ export function AnalyticsProvider({ children }: PropsWithChildren) {
 					src="https://static.cloudflareinsights.com/beacon.min.js"
 				/>
 			)}
-			{children}
 		</>
 	);
 }

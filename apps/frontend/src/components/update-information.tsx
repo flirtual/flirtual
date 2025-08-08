@@ -2,7 +2,7 @@ import {
 	AppUpdate,
 	AppUpdateAvailability,
 } from "@capawesome/capacitor-app-update";
-import ms from "ms";
+import ms from "ms.macro";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { withSuspense, } from "with-suspense";

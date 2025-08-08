@@ -1,3 +1,4 @@
+import ms from "ms.macro";
 import { useCallback, useState } from "react";
 import type { FC } from "react";
 import { keys } from "remeda";
@@ -27,7 +28,7 @@ export const ProfileMessage: FC = () => {
 				return messageKeys[(index + 1) % messageKeys.length]!;
 			});
 		}, [messages]),
-		5000
+		ms("5s")
 	);
 
 	return (

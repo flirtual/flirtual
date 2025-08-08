@@ -1,29 +1,28 @@
-import { LazyMotion } from "motion/react";
+import { lazy } from "react";
 import { Outlet } from "react-router";
 
-import { AnalyticsProvider } from "./analytics";
 import { InsetPreview } from "./components/inset-preview";
 import { TooltipProvider } from "./components/tooltip";
-import { UpdateInformation } from "./components/update-information";
 import { development } from "./const";
 import { ToastProvider } from "./hooks/use-toast";
 import { QueryProvider } from "./query";
 
+const Analytics = lazy(() => import("./analytics").then(({ Analytics }) => ({ default: Analytics })));
+const UpdateInformation = lazy(() => import("./components/update-information").then(({ UpdateInformation }) => ({ default: UpdateInformation })));
+
 export function App() {
 	return (
 		<>
-			<AnalyticsProvider />
+			<Analytics />
 			{development && <InsetPreview />}
-			<LazyMotion strict features={async () => ((await import("./motion")).default)}>
-				<QueryProvider>
-					<UpdateInformation />
-					<ToastProvider>
-						<TooltipProvider>
-							<Outlet />
-						</TooltipProvider>
-					</ToastProvider>
-				</QueryProvider>
-			</LazyMotion>
+			<QueryProvider>
+				<UpdateInformation />
+				<ToastProvider>
+					<TooltipProvider>
+						<Outlet />
+					</TooltipProvider>
+				</ToastProvider>
+			</QueryProvider>
 		</>
 	);
 }

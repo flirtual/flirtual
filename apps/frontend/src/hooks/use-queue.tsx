@@ -1,4 +1,4 @@
-import ms from "ms";
+import ms from "ms.macro";
 import { useCallback } from "react";
 
 import type { Issue } from "~/api/common";
@@ -73,7 +73,7 @@ export function useQueue(mode: ProspectKind = "love") {
 
 		// x ... y ... z
 		// ? ... x --> y
-		const { previous, next: [current, ...next] } = queue;
+		const { previous, next: [current] } = queue;
 		if (!current) return queue;
 
 		return {

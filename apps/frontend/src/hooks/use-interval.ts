@@ -1,14 +1,7 @@
-import type { StringValue } from "ms";
-import ms from "ms";
-import { useCallback, useDebugValue, useEffect, useMemo, useRef } from "react";
+import { useCallback, useDebugValue, useEffect, useRef } from "react";
 
-export function useInterval(callback: () => void, every: StringValue | number) {
+export function useInterval(callback: () => void, every: number) {
 	const reference = useRef<ReturnType<typeof setInterval> | null>(null);
-
-	const interval = useMemo(
-		() => (typeof every === "string" ? ms(every) : every),
-		[every]
-	);
 
 	const clear = useCallback(() => {
 		const { current } = reference;
@@ -20,8 +13,8 @@ export function useInterval(callback: () => void, every: StringValue | number) {
 
 	const reset = useCallback(() => {
 		clear();
-		reference.current = setInterval(callback, interval);
-	}, [clear, callback, interval]);
+		reference.current = setInterval(callback, every);
+	}, [clear, callback, every]);
 
 	useEffect(() => {
 		reset();
@@ -33,26 +26,20 @@ export function useInterval(callback: () => void, every: StringValue | number) {
 	return { ref: reference, clear, reset };
 }
 
-export function useTimeout(callback: () => void, every: StringValue | number) {
+export function useTimeout(callback: () => void, every: number) {
 	const reference = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-	const interval = useMemo(
-		() => (typeof every === "string" ? ms(every) : every),
-		[every]
-	);
 
 	const clear = useCallback(() => {
 		const { current } = reference;
 		if (!current) return;
 
-		// ???
 		clearTimeout(current as unknown as number);
 	}, []);
 
 	const reset = useCallback(() => {
 		clear();
-		reference.current = setTimeout(callback, interval);
-	}, [clear, callback, interval]);
+		reference.current = setTimeout(callback, every);
+	}, [clear, callback, every]);
 
 	useEffect(() => {
 		reset();

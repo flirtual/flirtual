@@ -4,7 +4,7 @@ import AbortAddon from "wretch/addons/abort";
 import QueryAddon from "wretch/addons/queryString";
 import { WretchError } from "wretch/resolver";
 
-import { development, server } from "~/const";
+import { client, development } from "~/const";
 import { urls } from "~/urls";
 import { newIdempotencyKey, toCamelObject, toSnakeObject } from "~/utilities";
 
@@ -51,13 +51,12 @@ export const api = wretch(urls.api)
 	})
 	.middlewares(
 		[
-			((next) => {
+			(client && development) && ((next) => {
 				return async (url, options) => {
 					options.headers ??= {};
 
-					if (!server && development)
-						// Artificially slow requests in development, ensuring we can see loading/pending states.
-						await new Promise((resolve) => setTimeout(resolve, 500 * Math.random() * (options.method === "GET" ? 1 : 2)));
+					// Artificially slow requests in development, ensuring we can see loading/pending states.
+					await new Promise((resolve) => setTimeout(resolve, 500 * Math.random() * (options.method === "GET" ? 1 : 2)));
 
 					return next(url, options);
 				};

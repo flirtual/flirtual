@@ -1,4 +1,4 @@
-import ms from "ms";
+import ms from "ms.macro";
 import type { Dispatch, FC, ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import type { Session } from "react-router";

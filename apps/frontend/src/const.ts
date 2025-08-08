@@ -1,18 +1,20 @@
-import { sha as commitId, abbreviatedSha as commitIdShort, github as gitUrl } from "~build/git";
+import {
+	sha as commitId,
+	abbreviatedSha as commitIdShort,
+	github as gitUrl
+} from "~build/git";
+import invariant from "tiny-invariant";
 
 import type { DevicePlatform } from "./hooks/use-device";
 
 export { default as builtAt } from "~build/time";
 
-function assert(condition: any, message: string): asserts condition {
-	if (!condition) throw new Error(message);
-}
-
 export const siteOrigin = import.meta.env.VITE_ORIGIN as string;
-assert(siteOrigin, "VITE_ORIGIN is required");
+invariant(siteOrigin, "VITE_ORIGIN is required");
 
 export const apiUrl = import.meta.env.VITE_API_URL as string;
-assert(apiUrl, "VITE_API_URL is required");
+invariant(apiUrl, "VITE_API_URL is required");
+
 export const apiOrigin = new URL(apiUrl).origin;
 
 export const preview = import.meta.env.VITE_PREVIEW as string || null;

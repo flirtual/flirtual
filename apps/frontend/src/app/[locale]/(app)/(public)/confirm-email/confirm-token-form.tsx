@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import useMutation from "swr/mutation";
 
 import { User } from "~/api/user";
-import { LoadingIndicator } from "~/components/loading-indicator";
+import { Loading } from "~/components/loading";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { invalidate, sessionKey } from "~/query";
@@ -37,5 +37,5 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 	);
 
 	useEffect(() => void trigger(token), [trigger, token]);
-	return <LoadingIndicator className="absolute inset-0" />;
+	return <Loading className="absolute inset-0" />;
 };

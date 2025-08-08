@@ -5,8 +5,10 @@ import info from "unplugin-info/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
+import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { analyzer } from 'vite-bundle-analyzer'
 
 function getManualChunk(moduleId: string) {
 	const [,, language] = /(?:\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)([a-z-_]+)\.(?:json|js)$/i.exec(moduleId) || [];
@@ -58,6 +60,18 @@ export default defineConfig(({ mode }) => {
 		},
 		plugins: [
 			tsconfigPaths(),
+			babel({
+				filter: /\.[jt]sx?$/,
+				babelConfig: {
+					babelrc: false,
+					configFile: false,
+					presets: ["@babel/preset-typescript"],
+					plugins: [
+						["babel-plugin-macros", {}],
+						["babel-plugin-dev-expression", {}]
+					]
+				}
+			}),
 			info(),
 			remoteAssets({
 				aliases: [
@@ -107,6 +121,7 @@ export default defineConfig(({ mode }) => {
 			sonda({
 				open: false
 			}),
+			analyzer()
 		],
 	};
 });

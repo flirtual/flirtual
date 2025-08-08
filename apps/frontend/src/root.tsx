@@ -1,6 +1,7 @@
 import { SafeArea } from "@capacitor-community/safe-area";
 import montserratNormal from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
 import nunitoNormal from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url";
+import { LazyMotion } from "motion/react";
 import type { FC, PropsWithChildren } from "react";
 import { memo, useEffect } from "react";
 import { preconnect, preload } from "react-dom";
@@ -10,6 +11,7 @@ import {
 	href,
 	Links,
 	Meta,
+	// eslint-disable-next-line no-restricted-imports
 	redirect,
 	Scripts,
 	ScrollRestoration,
@@ -27,7 +29,7 @@ import MarkBackground from "virtual:remote/flirtual-mark-background.png?no-inlin
 import type { Route } from "./+types/root";
 import { App } from "./app";
 import { HavingIssuesViewport } from "./components/error";
-import { LoadingIndicator } from "./components/loading-indicator";
+import { Loading } from "./components/loading";
 import {
 	apiOrigin,
 	client,
@@ -42,7 +44,13 @@ import { logOnce } from "./hooks/use-log";
 import { usePreferences } from "./hooks/use-preferences";
 import { useTheme } from "./hooks/use-theme";
 import type { LocalTheme } from "./hooks/use-theme";
-import { defaultLocale, i18n, localePathnameRegex, locales, replaceLanguage } from "./i18n";
+import {
+	defaultLocale,
+	i18n,
+	localePathnameRegex,
+	locales,
+	replaceLanguage
+} from "./i18n";
 import type { Locale } from "./i18n";
 import { isLocale } from "./i18n/languages";
 import { PolyfillScript } from "./polyfill";
@@ -53,14 +61,24 @@ import "@fontsource-variable/montserrat";
 import "@fontsource-variable/nunito";
 import "./app/index.css";
 
-export async function clientLoader({ request, params: { locale } }: Route.ClientLoaderArgs) {
+export async function loader({ request, params: { locale } }: Route.LoaderArgs) {
+	const url = new URL(request.url);
+	if (url.pathname === "/") return;
+
 	if (!locale || !isLocale(locale))
-		return redirect(createPath(replaceLanguage(new URL(request.url), defaultLocale)));
+		return redirect(createPath(replaceLanguage(url, defaultLocale, url.pathname)));
 
 	await i18n.changeLanguage(locale);
 }
 
-clientLoader.hydrate = true as const;
+// export async function clientLoader({ request, params: { locale } }: Route.ClientLoaderArgs) {
+// 	if (!locale || !isLocale(locale))
+// 		return redirect(createPath(replaceLanguage(new URL(request.url), defaultLocale)));
+//
+// 	await i18n.changeLanguage(locale);
+// }
+//
+// clientLoader.hydrate = true as const;
 
 export function meta({
 	location: { pathname },
@@ -242,7 +260,9 @@ export function Layout({ children }: PropsWithChildren) {
 				<BeforeRenderScript />
 				<PolyfillScript locale={locale} />
 				<RedirectBoundary>
-					{children}
+					<LazyMotion strict features={async () => ((await import("./motion")).default)}>
+						{children}
+					</LazyMotion>
 				</RedirectBoundary>
 				<ScrollRestoration />
 				<Scripts />
@@ -258,5 +278,5 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 }
 
 export function HydrateFallback() {
-	return <LoadingIndicator />;
+	return <Loading />;
 }

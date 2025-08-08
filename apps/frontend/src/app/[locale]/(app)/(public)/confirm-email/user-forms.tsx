@@ -1,3 +1,4 @@
+import ms from "ms.macro";
 import { Trans, useTranslation } from "react-i18next";
 
 import type { Session } from "~/api/auth";
@@ -16,7 +17,7 @@ export const UserForms: React.FC = () => {
 	const toasts = useToast();
 	const { t } = useTranslation();
 
-	useInterval(() => invalidate({ queryKey: sessionKey() }), "1s");
+	useInterval(() => invalidate({ queryKey: sessionKey() }), ms("1s"));
 
 	return (
 		<>

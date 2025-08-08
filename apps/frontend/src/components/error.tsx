@@ -12,6 +12,7 @@ import { urls } from "~/urls";
 
 import { CopyClick } from "./copy-click";
 import { Image } from "./image";
+import ms from "ms.macro";
 
 const translations = {
 	en: {
@@ -51,7 +52,7 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 
 	// Automatic retry, as eventually, we'll be back online.
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	if (production) useInterval(reload, "30s");
+	if (production) useInterval(reload, ms("30s"));
 
 	return (
 		<div className="flex flex-col items-center p-4">

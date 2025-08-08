@@ -66,8 +66,6 @@ function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) 
 	}, {});
 }
 
-const defaultResourcePromise = load(defaultLocale);
-
 async function load(locale: Locale) {
 	log("load(%s)", locale);
 
@@ -105,16 +103,14 @@ i18n
 			if (!locales.includes(locale)) throw new Error(`Unknown locale: ${locale}`);
 
 			const [defaultResource, resource] = await Promise.all([
-				defaultResourcePromise,
-				load(locale)
+				load(defaultLocale),
+				locale !== defaultLocale
+					? load(locale)
+					: {}
 			]);
 
-			const data = deepmerge(
-				(defaultResource && (defaultResource as any)[namespace]) || defaultResource,
-				(resource && (resource as any)[namespace]) || resource
-			) as any;
-
-			callback(null, data);
+			const data = deepmerge(defaultResource, resource);
+			callback(null, (data && (data as any)[namespace]) || data);
 		}
 	} satisfies BackendModule)
 	.use(icu)

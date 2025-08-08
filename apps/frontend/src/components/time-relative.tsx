@@ -1,4 +1,4 @@
-import type { StringValue } from "ms";
+import ms from "ms.macro";
 import { useCallback, useMemo, useState } from "react";
 import type { ComponentProps, FC } from "react";
 
@@ -7,7 +7,7 @@ import { useLocale } from "~/i18n";
 
 interface TimeRelativeProps extends Intl.RelativeTimeFormatOptions {
 	elementProps?: ComponentProps<"span">;
-	every?: StringValue | number;
+	every?: number;
 	value: string;
 }
 
@@ -22,9 +22,9 @@ export const TimeRelative: FC<TimeRelativeProps> = (props) => {
 
 	let every = _every;
 	if (!every) {
-		every = "1s";
-		if (difference > 60 * 1000) every = "1m";
-		if (difference > 60 * 60 * 1000) every = "1h";
+		every = ms("1s");
+		if (difference > 60 * 1000) every = ms("1m");
+		if (difference > 60 * 60 * 1000) every = ms("1h");
 	}
 
 	useInterval(

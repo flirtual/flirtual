@@ -1,9 +1,8 @@
-import ms from "ms";
+import ms from "ms.macro";
 import { useDebugValue } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { AttributeCollection, AttributeType } from "~/api/attributes";
-import { useMessages } from "~/i18n";
 import { attributeFetcher, attributeKey, useQuery } from "~/query";
 
 export function useAttributes<T extends AttributeType>(type: T): AttributeCollection<T> {

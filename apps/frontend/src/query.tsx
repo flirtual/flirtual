@@ -2,7 +2,7 @@
 import type { QueryFunctionContext, QueryKey, QueryState, UseMutationOptions, UseQueryOptions } from "@tanstack/react-query";
 import { useMutation as _useMutation, useQuery as _useQuery, hashKey, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import ms from "ms";
+import ms from "ms.macro";
 import type { Dispatch, PropsWithChildren } from "react";
 import { use, useDebugValue, useEffect, useState } from "react";
 
@@ -87,22 +87,22 @@ export async function preloadAll() {
 
 		preload({ queryKey: plansKey(), queryFn: plansFetcher }),
 
-		...([
-			"country",
-			"game",
-			"gender",
-			"interest",
-			"interest-category",
-			"kink",
-			"language",
-			"platform",
-			"prompt",
-			"relationship",
-			"sexuality"
-		] as const).map((type) => preload({
-			queryKey: attributeKey(type),
-			queryFn: attributeFetcher
-		}))
+		// ...([
+		// 	"country",
+		// 	"game",
+		// 	"gender",
+		// 	"interest",
+		// 	"interest-category",
+		// 	"kink",
+		// 	"language",
+		// 	"platform",
+		// 	"prompt",
+		// 	"relationship",
+		// 	"sexuality"
+		// ] as const).map((type) => preload({
+		// 	queryKey: attributeKey(type),
+		// 	queryFn: attributeFetcher
+		// }))
 	]).catch((reason) => {
 		log("preloadAll() failed: %o", reason);
 	});

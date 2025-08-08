@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Button } from "~/components/button";
 import { Dialog, DialogContent, DialogTitle } from "~/components/dialog/dialog";
-import { LoadingIndicator } from "~/components/loading-indicator";
+import { Loading } from "~/components/loading";
 import { usePurchase } from "~/hooks/use-purchase";
 import { useToast } from "~/hooks/use-toast";
 
@@ -40,7 +40,7 @@ export const PlanButtonLink: FC<
 					<DialogTitle className="sr-only">{t("purchase")}</DialogTitle>
 					<DialogContent className="max-w-[min(489px,95svw)] overflow-hidden desktop:w-fit" closable={false}>
 						<div className="flex items-center justify-center rounded-[1.25rem] bg-white-10">
-							<LoadingIndicator className="absolute min-h-0" />
+							<Loading className="absolute min-h-0" />
 							{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
 							<iframe
 								className="z-10 max-h-[90vh] max-w-full rounded-[1.25rem] bg-transparent"

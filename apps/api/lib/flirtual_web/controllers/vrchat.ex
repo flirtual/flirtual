@@ -65,7 +65,6 @@ defmodule FlirtualWeb.VRChatController do
 
       {:error, %{status: 429}} ->
         {:error, {:too_many_requests}}
-
     end
   end
 
