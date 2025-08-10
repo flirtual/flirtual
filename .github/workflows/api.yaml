@@ -79,33 +79,33 @@ jobs:
     - name: Mix check
       run: mix check --except compiler
 
-  deploy-staging:
+  deploy-canary:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: [build]
     environment: 
-      name: Staging
-      url: https://staging-api.flirtu.al
+      name: canary
+      url: https://canary-api.flirtual.com
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: |
           flyctl config show -a flirtual | jq '
-            .app = "flirtual-staging" |
+            .app = "flirtual-canary" |
             .deploy.strategy = "immediate" |
             .services[0].auto_stop_machines = true |
             .services[0].auto_start_machines = true |
             .services[0].min_machines_running = 0 |
             .vm[0].size = "shared-cpu-2x"
-          ' > fly-staging.json
+          ' > fly-canary.json
 
           GIT_COMMIT_SHA=$(git rev-parse HEAD)
 
           flyctl deploy \
-            -c fly-staging.json \
+            -c fly-canary.json \
             --remote-only \
             --update-only \
-            --env STAGING=1 \
+            --env CANARY=1 \
             --env GIT_COMMIT_SHA="$GIT_COMMIT_SHA"
         working-directory: ./apps/api
         env:
