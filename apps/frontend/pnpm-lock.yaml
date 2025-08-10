@@ -459,9 +459,6 @@ importers:
       vite:
         specifier: ^7.0.6
         version: 7.0.6(@types/node@24.2.1)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
-      vite-bundle-analyzer:
-        specifier: ^1.2.0
-        version: 1.2.0
       vite-imagetools:
         specifier: ^7.1.0
         version: 7.1.0(rollup@4.45.3)
@@ -7212,10 +7209,6 @@ packages:
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc
-
-  vite-bundle-analyzer@1.2.0:
-    resolution: {integrity: sha512-RYvfTw06KVw5rOgdBvpCYF49IlXSRs0/2ED36uDK5l0Y/hW+AUMSFQba7jyPflZkDuBlhHl0TuMpl9UT3lmqdg==}
-    hasBin: true
 
   vite-imagetools@7.1.0:
     resolution: {integrity: sha512-Mqh1uUY2DEMuBOogFz5Rd7cAs70VP6wsdQh2IShrJ+qGk5f7yQa4pN8w0YMLlGIKYW1JfM8oXrznUwVkhG+qxg==}
@@ -14822,8 +14815,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
-
-  vite-bundle-analyzer@1.2.0: {}
 
   vite-imagetools@7.1.0(rollup@4.45.3):
     dependencies:

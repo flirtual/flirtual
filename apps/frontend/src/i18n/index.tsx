@@ -39,25 +39,17 @@ export {
 };
 export type { Locale };
 
-export const defaultNamespace = "data";
+const defaultNamespace = "data";
 export type DefaultNamespace = typeof defaultNamespace;
 
-export type Resources = Awaited<ReturnType<typeof load>>;
-export type Namespace = keyof Resources;
+type Resources = Awaited<ReturnType<typeof load>>;
+type Namespace = keyof Resources;
 
 declare module "i18next" {
 	interface CustomTypeOptions {
 		defaultNS: DefaultNamespace;
 		resources: Resources;
 	}
-}
-
-export function guessLocale() {
-	const [, maybeLocale] = location.pathname.split("/");
-
-	return maybeLocale && locales.includes(maybeLocale)
-		? maybeLocale as Locale
-		: defaultLocale;
 }
 
 function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) {
@@ -152,9 +144,9 @@ export function useMessages<T extends Namespace = DefaultNamespace>(namespace: T
 	return i18n.store.data[locale][namespace] as Resources[T];
 }
 
-export type NavigateOptions = _NavigateOptions & { locale?: Locale };
+type NavigateOptions = _NavigateOptions & { locale?: Locale };
 
-export interface NavigateFunction {
+interface NavigateFunction {
 	(to: To, options?: NavigateOptions): Promise<void> | void;
 	(delta: number): Promise<void> | void;
 }
@@ -187,10 +179,10 @@ export function Navigate({ to, ...props }: NavigateProps) {
 	);
 }
 
-export function excludeLocale(to: To = window.location.pathname) {
-	return;
-	history.replaceState(history.state, "", createPath(replaceLanguage(to, null)));
-}
+// function excludeLocale(to: To = window.location.pathname) {
+// 	return;
+// 	history.replaceState(history.state, "", createPath(replaceLanguage(to, null)));
+// }
 
 export { i18n };
 
