@@ -454,8 +454,8 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       unplugin-remote-assets:
-        specifier: ^0.3.1
-        version: link:../../../../unplugin-remote-assets
+        specifier: ^0.4.1
+        version: 0.4.1(esbuild@0.25.6)(rollup@4.45.3)(vite@7.0.6(@types/node@24.2.1)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0))
       vite:
         specifier: ^7.0.6
         version: 7.0.6(@types/node@24.2.1)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
@@ -7111,6 +7111,32 @@ packages:
       vite: '>=3.2.7'
       webpack: ^4 || ^5
     peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      '@nuxt/schema':
+        optional: true
+      esbuild:
+        optional: true
+      rollup:
+        optional: true
+      vite:
+        optional: true
+      webpack:
+        optional: true
+
+  unplugin-remote-assets@0.4.1:
+    resolution: {integrity: sha512-0aMizJIPxyabObWTXGFkXFD4Kx9v9v2VXuPoSKJz5QNfoc9XbchXWxGGcNDL3Ov0rYT4NzoNbhnoRgJfVYF+nQ==}
+    peerDependencies:
+      '@farmfe/core': '>=1'
+      '@nuxt/kit': ^3
+      '@nuxt/schema': ^3
+      esbuild: '*'
+      rollup: ^3
+      vite: '>=3'
+      webpack: ^4 || ^5
+    peerDependenciesMeta:
+      '@farmfe/core':
+        optional: true
       '@nuxt/kit':
         optional: true
       '@nuxt/schema':
@@ -14743,6 +14769,16 @@ snapshots:
       vite: 7.0.6(@types/node@24.2.1)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
     transitivePeerDependencies:
       - supports-color
+
+  unplugin-remote-assets@0.4.1(esbuild@0.25.6)(rollup@4.45.3)(vite@7.0.6(@types/node@24.2.1)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)):
+    dependencies:
+      mime: 4.0.7
+      ohash: 2.0.11
+      unplugin: 2.3.5
+    optionalDependencies:
+      esbuild: 0.25.6
+      rollup: 4.45.3
+      vite: 7.0.6(@types/node@24.2.1)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)
 
   unplugin@2.3.5:
     dependencies:
