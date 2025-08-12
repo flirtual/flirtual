@@ -63,22 +63,14 @@ import "./app/index.css";
 
 export async function loader({ request, params: { locale } }: Route.LoaderArgs) {
 	const url = new URL(request.url);
-	if (url.pathname === "/") return;
 
-	if (!locale || !isLocale(locale))
+	if (!development && url.pathname === "/") return;
+
+	if ((!locale || !isLocale(locale)))
 		return redirect(createPath(replaceLanguage(url, defaultLocale, url.pathname)));
 
 	await i18n.changeLanguage(locale);
 }
-
-// export async function clientLoader({ request, params: { locale } }: Route.ClientLoaderArgs) {
-// 	if (!locale || !isLocale(locale))
-// 		return redirect(createPath(replaceLanguage(new URL(request.url), defaultLocale)));
-//
-// 	await i18n.changeLanguage(locale);
-// }
-//
-// clientLoader.hydrate = true as const;
 
 export function meta({
 	location: { pathname },

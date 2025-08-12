@@ -1,6 +1,6 @@
 import { AnimatePresence } from "motion/react";
 import ms from "ms.macro";
-import { lazy, useState } from "react";
+import { useState } from "react";
 import type { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 import FlirtualBlack from "virtual:remote/static/flirtual-black.svg";
@@ -9,7 +9,7 @@ import FlirtualWhite from "virtual:remote/static/flirtual-white.svg";
 import { Image } from "~/components/image";
 import { useTimeout } from "~/hooks/use-interval";
 
-const LongerThanUsual = lazy(() => import("./longer-than-usual").then(({ LongerThanUsual }) => ({ default: LongerThanUsual })));
+import { LongerThanUsual } from "./longer-than-usual";
 
 export function Loading({ className, children }: PropsWithChildren<{ className?: string }>) {
 	const [longerThanUsual, setLongerThanUsual] = useState(false);

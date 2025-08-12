@@ -2,6 +2,7 @@ import { Chrome, RotateCw, Smartphone, WifiOff } from "lucide-react";
 import { m } from "motion/react";
 import { Trans, useTranslation } from "react-i18next";
 
+import { preview } from "~/const";
 import { urls } from "~/urls";
 
 import { Link } from "../link";
@@ -18,6 +19,15 @@ export function LongerThanUsual() {
 		>
 			<p className="font-semibold">{t("crisp_lime_raven_arise")}</p>
 			<ul className="ml-4 flex list-disc flex-col gap-2">
+				{preview && (
+					<li>
+						This is a
+						{" "}
+						<strong>preview</strong>
+						{" "}
+						version of Flirtual that automatically turns off after a few minutes of use. It may take a minute to start up again.
+					</li>
+				)}
 				<li>
 					<Trans
 						components={{
