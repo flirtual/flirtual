@@ -3,7 +3,7 @@ import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-// import { preloadAll, restoreQueries, saveQueries } from "./query";
+import { preloadAll } from "./query";
 import { isRedirectError } from "./redirect";
 
 startTransition(() => {
@@ -40,5 +40,5 @@ import("./analytics").then(({ initialize }) => initialize());
 // 	saveQueries();
 // });
 //
-// preloadAll();
+preloadAll();
 //

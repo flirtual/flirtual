@@ -29,7 +29,6 @@ import MarkBackground from "virtual:remote/flirtual-mark-background.png?no-inlin
 import type { Route } from "./+types/root";
 import { App } from "./app";
 import { HavingIssuesViewport } from "./components/error";
-import { Loading } from "./components/loading";
 import {
 	apiOrigin,
 	client,
@@ -269,6 +268,4 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	return <HavingIssuesViewport error={error} />;
 }
 
-export function HydrateFallback() {
-	return <Loading />;
-}
+export { Loading as HydrateFallback } from "./components/loading";
