@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, useOutlet } from "react-router";
 
 import { isDesktop, useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
 import { defaultLocale, i18n, Navigate, redirect } from "~/i18n";
@@ -24,11 +24,11 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 	if (listOnly && desktop) return redirect(urls.settings.matchmaking());
 }
 
-export default function SettingsLayout({ matches }: Route.ComponentProps) {
-	const listOnly = matches.at(-1)?.pathname.endsWith(urls.settings.list());
+export default function SettingsLayout() {
 	const desktop = useScreenBreakpoint("desktop");
+	const outlet = useOutlet();
 
-	if (listOnly && desktop) return <Navigate replace to={urls.settings.matchmaking()} />;
+	if (!outlet && desktop) return <Navigate replace to={urls.settings.matchmaking()} />;
 
 	return (
 		<div className="flex w-full grow flex-col desktop:flex-row desktop:justify-center desktop:gap-8">
