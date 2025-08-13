@@ -178,10 +178,8 @@ defmodule FlirtualWeb.Router do
           end
 
           scope "/sso" do
-            pipe_through(:require_authenticated_user)
-
             scope "/canny" do
-              get("/", CannyController, :create_token)
+              get("/", CannyController, :login)
             end
           end
         end

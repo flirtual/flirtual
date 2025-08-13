@@ -16,7 +16,7 @@ import {
 	useQuery
 } from "~/query";
 import { throwRedirect } from "~/redirect";
-import { toAbsoluteUrl, toRelativeUrl, urls } from "~/urls";
+import { absoluteUrl, allowedOrigins, isInternalHref, toRelativeUrl, urls } from "~/urls";
 
 import { device } from "./use-device";
 
@@ -49,14 +49,18 @@ export function useGuest() {
 	const session = useOptionalSession();
 	const [searchParameters] = useSearchParams();
 
-	const next = toRelativeUrl(
-		toAbsoluteUrl(searchParameters.get("next")
-			|| (session?.user.status === "registered"
-				? urls.onboarding(1)
-				: urls.discover("dates")))
-	);
+	let next = searchParameters.get("next");
+	if (next && !allowedOrigins.includes(absoluteUrl(next).origin)) next = null;
 
-	if (session) throwRedirect(next);
+	if (!next)
+		next = session?.user.status === "registered"
+			? urls.onboarding(1)
+			: urls.discover("dates");
+
+	if (session) {
+		if (isInternalHref(next)) throwRedirect(next);
+		window.location.href = next;
+	}
 }
 
 export function useSession(queryOptions: MinimalQueryOptions<Session | null> = {}) {

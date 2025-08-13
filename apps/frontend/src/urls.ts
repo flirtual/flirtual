@@ -19,6 +19,11 @@ export function ensureRelativeUrl(pathname: string) {
 	return pathname;
 }
 
+export const allowedOrigins = [
+	siteOrigin,
+	new URL(apiUrl).origin
+];
+
 export function toAbsoluteUrl(to: Path | URL | string) {
 	return new URL((typeof to === "string" || to instanceof URL) ? to : createPath(to), siteOrigin);
 }
