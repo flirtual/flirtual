@@ -5,7 +5,7 @@ import { cannyAppId } from "~/const";
 import { queryClient, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
-import { isDesktop } from "./use-screen-breakpoint";
+import { isDesktop } from "./use-breakpoint";
 
 declare global {
 	// eslint-disable-next-line vars-on-top

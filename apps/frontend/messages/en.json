@@ -902,5 +902,8 @@
 	"flirtual_logo": "Flirtual logo",
 	"translate": "Translate",
 	"source_code": "Source code",
-	"unnamed": "Unnamed"
+	"unnamed": "Unnamed",
+	"flirtual_bug_report": "Flirtual bug report",
+	"copied": "Copied",
+	"copy_details": "Copy details"
 }

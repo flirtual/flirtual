@@ -40,7 +40,7 @@ export default defineConfig(({ mode }) => {
 				"safari16"
 			],
 			chunkSizeWarningLimit: 100,
-			cssMinify: "lightningcss",
+			// cssMinify: "lightningcss",
 			rollupOptions: {
 				output: {
 					experimentalMinChunkSize: 8192,

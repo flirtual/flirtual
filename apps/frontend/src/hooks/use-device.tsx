@@ -23,7 +23,7 @@ const [
 	},
 	{
 		platform: nativePlatform,
-		operatingSystem,
+		operatingSystem: os,
 		webViewVersion,
 		androidSDKVersion,
 		iOSVersion,
@@ -51,7 +51,7 @@ const platform: DevicePlatform = platformOverride || ({
 	ios: "apple",
 	windows: "web",
 	unknown: "web"
-} as const)[operatingSystem];
+} as const)[os];
 
 const userAgent = client ? navigator.userAgent : "";
 const vision = userAgent.includes("Flirtual-Vision");
@@ -63,27 +63,24 @@ const _device = {
 	id,
 	userAgent,
 	platform,
-	web: ["unknown", "web"].includes(operatingSystem),
-	apple: platformOverride === "apple" || ["ios", "mac"].includes(operatingSystem),
-	android: platformOverride === "android" || operatingSystem === "android",
+	// web: ["unknown", ""].includes(os),
+	apple: platformOverride === "apple" || ["ios", "mac"].includes(os),
+	android: platformOverride === "android" || os === "android",
 	native,
 	vision,
-	operatingSystem,
-	versions: {
-		build,
-		version,
-		operatingSystem: osVersion,
-		webView: webViewVersion,
-		android: androidSDKVersion,
-		iOS: iOSVersion,
-	}
+	os,
+	build,
+	version,
+	osVersion,
+	webViewVersion,
+	androidSDKVersion,
+	iOS: iOSVersion,
 } as const;
 
 const safeKeys = [
 	platformOverride && "platform",
 	platformOverride && "apple",
 	platformOverride && "android",
-	platformOverride && "web",
 	nativeOverride && "native"
 ].filter(Boolean);
 

@@ -7,7 +7,7 @@ import Gradient from "virtual:remote/e8212f93-af6f-4a2c-ac11-cb328bbc4aa4";
 import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
-import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/[group]/page";
+import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
 import { apiUrl, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
@@ -133,7 +133,7 @@ export const urls = {
 	},
 	// browse: (kind?: ProspectKind) =>
 	// 	url("/browse", { kind: kind === "love" ? undefined : kind }),
-	discover: (group: DiscoverGroup) => url(`/discover/${group}`),
+	discover: (group: DiscoverGroup) => url(`/${group}`),
 	conversations: {
 		list: () => "/matches",
 		of: (conversationId: string) => `/matches/${conversationId}`

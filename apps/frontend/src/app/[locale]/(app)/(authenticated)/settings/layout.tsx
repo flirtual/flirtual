@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 
-import { isDesktop, useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+import { isDesktop, useBreakpoint } from "~/hooks/use-breakpoint";
 import { defaultLocale, i18n, Navigate, redirect } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
@@ -26,7 +26,7 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 
 export default function SettingsLayout({ matches }: Route.ComponentProps) {
 	const listOnly = matches.at(-1)?.id.endsWith("settings/page");
-	const desktop = useScreenBreakpoint("desktop");
+	const desktop = useBreakpoint("desktop");
 
 	if (listOnly && desktop) return <Navigate replace to={urls.settings.matchmaking()} />;
 

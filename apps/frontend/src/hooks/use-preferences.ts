@@ -24,10 +24,11 @@ export function usePreferences<T>(key: string, defaultValue?: T): [T | null, (va
 
 	const queryKey = preferencesKey(key);
 
-	const data = useQuery({
+	const value = useQuery({
 		queryKey,
 		queryFn: preferencesFetcher<T>,
 		placeholderData: defaultValue,
+		networkMode: "always",
 		meta: {
 			cacheTime: 0,
 		}
@@ -36,10 +37,12 @@ export function usePreferences<T>(key: string, defaultValue?: T): [T | null, (va
 	const { mutateAsync } = useMutation({
 		mutationKey: queryKey,
 		mutationFn: async (newValue: T | null) => {
+			if (newValue === value) return newValue;
+
 			await setPreferences(key, newValue);
 			return newValue;
 		},
 	});
 
-	return [(data ?? defaultValue ?? null), mutateAsync] as const;
+	return [(value ?? defaultValue ?? null), mutateAsync] as const;
 }

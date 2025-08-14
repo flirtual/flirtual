@@ -2,11 +2,11 @@ import { Children, useRef } from "react";
 import type { Dispatch } from "react";
 
 import { useClickOutside } from "~/hooks/use-click-outside";
-import type { ScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+import type { Breakpoint } from "~/hooks/use-breakpoint";
 
 export interface PopoverProps {
 	children: React.ReactNode;
-	breakpoint?: ScreenBreakpoint;
+	breakpoint?: Breakpoint;
 	open: boolean;
 	onOpenChange: Dispatch<boolean>;
 }

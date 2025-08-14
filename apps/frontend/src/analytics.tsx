@@ -29,23 +29,6 @@ export function initialize() {
 			apiOrigin,
 		],
 		ignoreErrors: [],
-	// integrations: [
-	// 	Sentry.replayIntegration({
-	// 		blockAllMedia: false,
-	// 		maskAllText: false,
-	// 		maskAllInputs: true,
-	// 		mask: ["[data-mask]"],
-	// 		block: ["[data-block]"],
-	// 		networkDetailAllowUrls: [
-	// 			window.location.origin,
-	// 			new URL(siteOrigin).origin,
-	// 			new URL(apiUrl).origin
-	// 		]
-	// 	}),
-	// 	Sentry.feedbackIntegration({
-	// 		autoInject: false
-	// 	})
-	// ]
 	});
 }
 
@@ -69,8 +52,7 @@ export function Analytics() {
 	return (
 		<>
 			<Suspense>
-				<ErrorBoundary fallbackRender={() => null}>
-					{/* <Pageview /> */}
+				<ErrorBoundary fallback={null}>
 					<Identity />
 				</ErrorBoundary>
 			</Suspense>

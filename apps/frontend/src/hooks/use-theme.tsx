@@ -65,7 +65,7 @@ export function useTheme() {
 			]);
 		},
 		mutationFn: async (theme) => {
-			const session = getSession();
+			const session = await getSession();
 			if (!session) return;
 
 			await Preferences.update(session.user.id, { theme });

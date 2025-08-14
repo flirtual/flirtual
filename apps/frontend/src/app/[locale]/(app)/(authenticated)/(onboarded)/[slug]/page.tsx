@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { Profile } from "~/components/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";
 
-import { QueueActions } from "../discover/[group]/queue-actions";
+import { QueueActions } from "../discover/queue-actions";
 
 const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 	const user = useUser(userId);

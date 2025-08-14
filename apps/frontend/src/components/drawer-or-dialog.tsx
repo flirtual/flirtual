@@ -4,16 +4,16 @@ import { twMerge } from "tailwind-merge";
 
 import {
 
-	useScreenBreakpoint
-} from "~/hooks/use-screen-breakpoint";
-import type { ScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+	useBreakpoint
+} from "~/hooks/use-breakpoint";
+import type { Breakpoint } from "~/hooks/use-breakpoint";
 
 import { Dialog, DialogContent } from "./dialog/dialog";
 import { Drawer, DrawerContent } from "./drawer";
 
 export interface DrawerOrDialogProps {
 	children: React.ReactNode;
-	breakpoint?: ScreenBreakpoint;
+	breakpoint?: Breakpoint;
 	open: boolean;
 	onOpenChange?: Dispatch<boolean>;
 	closable?: boolean;
@@ -31,7 +31,7 @@ export const DrawerOrDialog: React.FC<DrawerOrDialogProps> = (props) => {
 	} = props;
 	// eslint-disable-next-line react/no-children-to-array
 	const [overlayNode, contentNode] = Children.toArray(children);
-	const drawer = !useScreenBreakpoint(breakpoint);
+	const drawer = !useBreakpoint(breakpoint);
 
 	return (
 		<>

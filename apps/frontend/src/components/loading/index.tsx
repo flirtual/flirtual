@@ -11,8 +11,15 @@ import { useTimeout } from "~/hooks/use-interval";
 
 import { LongerThanUsual } from "./longer-than-usual";
 
-export function Loading({ className, children }: PropsWithChildren<{ className?: string }>) {
-	const [longerThanUsual, setLongerThanUsual] = useState(false);
+export function Loading({
+	longerThanUsual: _longerThanUsual,
+	className,
+	children
+}: PropsWithChildren<{
+	className?: string;
+	longerThanUsual?: boolean;
+}>) {
+	const [longerThanUsual, setLongerThanUsual] = useState(_longerThanUsual);
 	useTimeout(() => setLongerThanUsual(true), ms("5s"));
 
 	return (

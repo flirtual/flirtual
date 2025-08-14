@@ -230,6 +230,9 @@ importers:
       import-in-the-middle:
         specifier: ^1.14.2
         version: 1.14.2
+      is-network-error:
+        specifier: ^1.1.0
+        version: 1.1.0
       isbot:
         specifier: ^5.1.28
         version: 5.1.28

@@ -8,7 +8,7 @@ import {
 import type { ShepherdOptionsWithType, Tour } from "react-shepherd";
 
 import { usePreferences } from "./use-preferences";
-import { useScreenBreakpoint } from "./use-screen-breakpoint";
+import { useBreakpoint } from "./use-breakpoint";
 import { useScrollLock } from "./use-scroll-lock";
 
 import "~/components/shepherd/style.scss";
@@ -110,7 +110,7 @@ export function useTour(
 }
 
 export function useDefaultTour(enabled: boolean = true) {
-	const mobile = !useScreenBreakpoint("desktop");
+	const mobile = !useBreakpoint("desktop");
 	const { t } = useTranslation();
 
 	useTour(

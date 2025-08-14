@@ -91,6 +91,7 @@
 		"i18next": "^25.3.2",
 		"i18next-icu": "^2.3.0",
 		"import-in-the-middle": "^1.14.2",
+		"is-network-error": "^1.1.0",
 		"isbot": "^5.1.28",
 		"jose": "^6.0.12",
 		"lucide-react": "^0.487.0",

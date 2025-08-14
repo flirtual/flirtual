@@ -1,5 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable no-restricted-imports */
+/* eslint-disable react-refresh/only-export-components, no-restricted-imports */
 import deepmerge from "deepmerge";
 import i18n from "i18next";
 import type { BackendModule, ResourceKey } from "i18next";
@@ -9,11 +8,17 @@ import { initReactI18next, useTranslation } from "react-i18next";
 import {
 	Navigate as _Navigate,
 	redirect as _redirect,
+	useMatch as _useMatch,
 	useNavigate as _useNavigate,
 	createPath,
 	useLocation
 } from "react-router";
-import type { NavigateOptions as _NavigateOptions, NavigateProps, RedirectFunction, To } from "react-router";
+import type {
+	NavigateOptions as _NavigateOptions,
+	NavigateProps,
+	RedirectFunction,
+	To
+} from "react-router";
 
 import { server } from "~/const";
 
@@ -177,6 +182,18 @@ export function Navigate({ to, ...props }: NavigateProps) {
 			to={replaceLanguage(to, locale)}
 		/>
 	);
+}
+
+export function useMatch(pattern: Parameters<typeof _useMatch>[0]) {
+	const [locale] = useLocale();
+	const { pathname } = useLocation();
+
+	const { path, ...options } = typeof pattern === "string" ? { path: pattern } : pattern;
+
+	return _useMatch({
+		path: replaceLanguage(path, locale, pathname).pathname,
+		...options
+	});
 }
 
 // function excludeLocale(to: To = window.location.pathname) {

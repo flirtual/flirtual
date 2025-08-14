@@ -3,9 +3,8 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
-import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 import { ManageButton } from "./manage-button";
@@ -20,14 +19,8 @@ export const SubscriptionForm: FC = () => {
 	const [locale] = useLocale();
 	const { t } = useTranslation();
 
-	const session = useOptionalSession();
+	const { user: { subscription } } = useSession();
 	const userCount = 1000; // TODO: Replace with actual user count
-
-	if (!session) return null;
-	const { user: { subscription, emailConfirmedAt } } = session;
-
-	if (!emailConfirmedAt)
-		throwRedirect(urls.confirmEmail({ to: urls.subscription.default }));
 
 	return (
 		<>

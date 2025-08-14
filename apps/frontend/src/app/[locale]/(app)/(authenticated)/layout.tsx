@@ -9,15 +9,19 @@ import { ShepherdProvider } from "~/components/shepherd";
 import { NotificationProvider } from "~/hooks/use-notifications";
 import { PurchaseProvider } from "~/hooks/use-purchase";
 import { useSession } from "~/hooks/use-session";
+import { RedirectBoundary } from "~/redirect";
 
 export default function AuthenticatedLayout() {
+	console.log("auth loayout");
 	useSession();
 
 	return (
 		<PurchaseProvider>
 			<ShepherdProvider>
 				<NotificationProvider>
-					<Outlet />
+					<RedirectBoundary>
+						<Outlet />
+					</RedirectBoundary>
 					<ModerationMessageDialog />
 					<DiscordSpamDialog />
 					<Flitty />

@@ -32,7 +32,7 @@ export async function logout() {
 	await evictQueries();
 }
 
-export const getSession = () => queryClient.getQueryData<Session>(sessionKey()) || null;
+export const getSession = () => queryClient.ensureQueryData<Session | null>({ queryKey: sessionKey() });
 
 export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | null> = {}): Session | null {
 	// postpone(useOptionalSession.name);

@@ -1,18 +1,19 @@
-import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import { Clipboard } from "@capacitor/clipboard";
+import { Check, Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
+import ms from "ms.macro";
 import { useState } from "react";
 import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FlittyHardhat from "virtual:remote/b25d8377-7035-4a23-84f1-faa095fa8104";
 
-import { commitIdShort, development, maintenance, production } from "~/const";
-import { useDevice } from "~/hooks/use-device";
+import { commitId, commitIdShort, commitUrl, development, maintenance, preview, production } from "~/const";
+import { device, useDevice } from "~/hooks/use-device";
 import { useInterval } from "~/hooks/use-interval";
+import { getSession } from "~/hooks/use-session";
 import { useLocale } from "~/i18n";
 import { urls } from "~/urls";
 
-import { CopyClick } from "./copy-click";
 import { Image } from "./image";
-import ms from "ms.macro";
 
 const translations = {
 	en: {
@@ -47,6 +48,7 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 
 	const { native } = useDevice();
 	const [squishCount, setSquishCount] = useState(0);
+	const [copied, setCopied] = useState(false);
 
 	const reload = () => location.reload();
 
@@ -133,18 +135,76 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 					{(development || squishCount > 2) && error instanceof Error && (
 						<code className="select-children mt-6 flex max-w-sm flex-col font-mono text-xs opacity-50 desktop:max-w-md desktop:text-sm">
 							<span className="line-clamp-5 font-semibold">{error.message}</span>
-							{error.stack && <p className="mt-4 line-clamp-6">{error.stack}</p>}
+							{error.stack && (
+								<p
+									className="mt-4 line-clamp-6 h-32 overflow-hidden whitespace-pre-wrap hover:line-clamp-none hover:overflow-y-scroll"
+									onMouseLeave={({ currentTarget }) => currentTarget.scrollTop = 0}
+								>
+									{error.stack.replaceAll(/\n/g, "\n\n")}
+								</p>
+							)}
 						</code>
 					)}
-					<div className="mt-6 flex flex-col text-center font-mono text-xs opacity-50 desktop:text-sm">
+					<div className="mt-6 flex flex-col text-center text-xs">
 						{digest && (
-							<CopyClick value={digest}>
-								<span>{digest}</span>
-							</CopyClick>
+							<span className="font-mono opacity-50 desktop:text-sm">
+								{digest}
+							</span>
 						)}
-						<CopyClick value={commitIdShort}>
-							<span>{t("version", { version: commitIdShort })}</span>
-						</CopyClick>
+						<span className="font-mono opacity-50 desktop:text-sm">
+							{t("version", { version: commitIdShort })}
+						</span>
+						<button
+							className="mt-2 text-theme-2"
+							type="button"
+							onClick={async () => {
+								const session = await getSession().catch(() => null);
+
+								const extra = {
+									production,
+									preview: preview || undefined,
+									digest,
+									user: session?.user.id,
+									sudoer: session?.sudoerId,
+									...device
+								};
+
+								await Clipboard.write({
+									label: t("flirtual_bug_report"),
+									string: `# Flirtual bug report
+
+* At: <t:${Math.floor(Date.now() / 1000)}:F>
+* URL: <${window.location.href}>
+* Commit: [${commitId}](<${commitUrl}>)
+
+## Error
+\`\`\`
+${(error && typeof error === "object" && "message" in error && error.message)}
+
+${String((error && typeof error === "object" && "stack" in error && error.stack)).slice(0, 1024)}
+\`\`\`
+## Extra details
+\`\`\`json
+${JSON.stringify(extra, null, 2)}
+\`\`\`
+`
+								});
+
+								setCopied(true);
+							}}
+						>
+							{
+								copied
+									? (
+											<>
+												{t("copied")}
+												{" "}
+												<Check className="inline size-3" strokeWidth={3} />
+											</>
+										)
+									: t("copy_details")
+							}
+						</button>
 					</div>
 				</>
 			)}

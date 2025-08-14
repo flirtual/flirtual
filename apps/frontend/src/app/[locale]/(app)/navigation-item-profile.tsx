@@ -22,7 +22,7 @@ import { UserAvatar } from "~/components/user-avatar";
 import { closeChangelog, openChangelog } from "~/hooks/use-canny";
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
-import { useScreenBreakpoint } from "~/hooks/use-screen-breakpoint";
+import { useBreakpoint } from "~/hooks/use-breakpoint";
 import { useSession } from "~/hooks/use-session";
 import { replaceLanguage, useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
@@ -81,7 +81,7 @@ export const NavigationItemProfile: FC = () => {
 		closeChangelog();
 	}, [visible]);
 
-	const isDesktop = useScreenBreakpoint("desktop");
+	const isDesktop = useBreakpoint("desktop");
 
 	return (
 		<div className="relative aspect-square shrink-0">

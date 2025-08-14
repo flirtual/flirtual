@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { defaultLocale, i18n } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
 
-import type { Route } from "./+types/page";
+import type { Route } from "./[group]/+types/page";
 import { Queue } from "./queue";
 
 // eslint-disable-next-line unused-imports/no-unused-vars
@@ -11,8 +11,10 @@ const discoverGroups = ["dates", "homies"] as const;
 export type DiscoverGroup = (typeof discoverGroups)[number];
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
-	const group = options.params.group ?? "dates";
+	const { params: { locale }, matches } = options;
+
+	const { id: group } = matches[4];
+	const t = i18n.getFixedT(locale ?? defaultLocale);
 
 	return metaMerge([
 		...rootMeta(options),

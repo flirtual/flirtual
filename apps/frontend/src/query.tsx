@@ -83,7 +83,7 @@ export async function preloadAll() {
 	await Promise.all([
 		// `staleTime: 0` to force a refetch on every hard-reload.
 		preload({ queryKey: configKey(), queryFn: configFetcher, staleTime: 0 }),
-		preload({ queryKey: sessionKey(), queryFn: sessionFetcher, staleTime: 0 }),
+		// preload({ queryKey: sessionKey(), queryFn: sessionFetcher, staleTime: 0 }),
 
 		preload({ queryKey: plansKey(), queryFn: plansFetcher }),
 

@@ -9,8 +9,10 @@ import type { RouteConfig, RouteConfigEntry } from "@react-router/dev/routes";
 
 const filePrefix = "./app/[locale]";
 
-function route(path: string, file: string, children?: Array<RouteConfigEntry>) {
-	return _route(path, `${filePrefix}/${file}.tsx`, children);
+type RouteOptions = Parameters<typeof _route>[2] & Record<string, unknown>;
+
+function route(path: string, file: string, options: RouteOptions = {}, children?: Array<RouteConfigEntry>) {
+	return _route(path, `${filePrefix}/${file}.tsx`, options, children);
 }
 
 function file(file: string, extension: string = "ts") {
@@ -25,8 +27,8 @@ function index(file: string) {
 	return _index(`${filePrefix}/${file}/page.tsx`);
 }
 
-function page(path: string, file?: string, children?: Array<RouteConfigEntry>) {
-	return route(path, `${file}/page`, children);
+function page(path: string, file?: string, options?: RouteOptions, children?: Array<RouteConfigEntry>) {
+	return route(path, `${file}/page`, options, children);
 }
 
 export default [
@@ -57,7 +59,9 @@ export default [
 				page("subscription", "(app)/(authenticated)/subscription"),
 				layout("(app)/(authenticated)/(onboarded)", [
 					page(":slug", "(app)/(authenticated)/(onboarded)/[slug]"),
-					page("discover/:group", "(app)/(authenticated)/(onboarded)/discover/[group]"),
+					// page("discover/:group", "(app)/(authenticated)/(onboarded)/discover/[group]"),
+					page("dates", "(app)/(authenticated)/(onboarded)/discover", { id: "dates" }),
+					page("homies", "(app)/(authenticated)/(onboarded)/discover", { id: "homies" }),
 					page("likes", "(app)/(authenticated)/(onboarded)/likes"),
 					page("matches", "(app)/(authenticated)/(onboarded)/matches"),
 					page("matches/:conversationId", "(app)/(authenticated)/(onboarded)/matches/[conversationId]"),

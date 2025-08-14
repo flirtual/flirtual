@@ -15,7 +15,6 @@ import {
 	redirect,
 	Scripts,
 	ScrollRestoration,
-	useMatch,
 	useParams
 } from "react-router";
 import SafariPinnedTab from "virtual:remote/00d9dab1-3fbe-4dd7-8700-ae21f8425b37.svg?no-inline";
@@ -29,6 +28,7 @@ import MarkBackground from "virtual:remote/flirtual-mark-background.png?no-inlin
 import type { Route } from "./+types/root";
 import { App } from "./app";
 import { HavingIssuesViewport } from "./components/error";
+import { Loading } from "./components/loading";
 import {
 	apiOrigin,
 	client,
@@ -48,7 +48,8 @@ import {
 	i18n,
 	localePathnameRegex,
 	locales,
-	replaceLanguage
+	replaceLanguage,
+	useMatch
 } from "./i18n";
 import type { Locale } from "./i18n";
 import { isLocale } from "./i18n/languages";
@@ -175,7 +176,7 @@ const BeforeRenderScript: FC = memo(() => {
 
 		Object.assign(document.body.dataset, { theme, themeStyle });
 
-		const fontSize = globalThis.fontSize = Number.parseInt(JSON.parse(localStorage.getItem(".font_size") || "16") as string) || 16;
+		const fontSize = globalThis.fontSize = Number.parseFloat(JSON.parse(localStorage.getItem(".font_size") || "16") as string) || 16;
 		document.documentElement.style.setProperty("font-size", `${fontSize}px`);
 	};
 
@@ -251,7 +252,10 @@ export function Layout({ children }: PropsWithChildren) {
 				<BeforeRenderScript />
 				<PolyfillScript locale={locale} />
 				<RedirectBoundary>
-					<LazyMotion strict features={async () => ((await import("./motion")).default)}>
+					<LazyMotion
+						strict
+						features={async () => ((await import("./motion")).default)}
+					>
 						{children}
 					</LazyMotion>
 				</RedirectBoundary>
@@ -268,4 +272,4 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	return <HavingIssuesViewport error={error} />;
 }
 
-export { Loading as HydrateFallback } from "./components/loading";
+export { Loading as HydrateFallback };
