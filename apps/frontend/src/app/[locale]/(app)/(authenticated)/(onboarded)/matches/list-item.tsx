@@ -13,7 +13,7 @@ import { Link } from "~/components/link";
 import { TimeRelative } from "~/components/time-relative";
 import { UserAvatar } from "~/components/user-avatar";
 import { customEmojis } from "~/hooks/use-talkjs";
-import { useUser } from "~/hooks/use-user";
+import { useRelationship, useUser } from "~/hooks/use-user";
 import { urls } from "~/urls";
 
 export type ConversationListItemProps = {
@@ -51,9 +51,8 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 	const { t } = useTranslation();
 
 	const user = useUser(userId);
-	// const relationship = useRelationship(userId);
-	// if ((!user || !user.relationship?.matched)) return null;
-	if (!user) return null;
+	const relationship = useRelationship(userId);
+	if (!user || !relationship?.matched) return null;
 
 	return (
 		<div
