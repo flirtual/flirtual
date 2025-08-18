@@ -35,12 +35,12 @@ const reverseSearchEngines = [
 	{
 		name: "Google Images",
 		url: (url: string) =>
-			`https://lens.google.com/uploadbyurl?url=${encodeURIComponent(url)}`
+			`https://www.google.com/searchbyimage?client=app&image_url=${encodeURIComponent(url)}`
 	},
 	{
-		name: "TinEye",
+		name: "Google Lens",
 		url: (url: string) =>
-			`https://www.tineye.com/search?url=${encodeURIComponent(url)}`
+			`https://lens.google.com/uploadbyurl?url=${encodeURIComponent(url)}`
 	},
 	{
 		name: "Yandex",
@@ -55,6 +55,11 @@ const reverseSearchEngines = [
 			`https://www.bing.com/images/search?q=imgurl:${encodeURIComponent(
 				url
 			)}&view=detailv2&iss=sbi&FORM=IRSBIQ`
+	},
+	{
+		name: "TinEye",
+		url: (url: string) =>
+			`https://www.tineye.com/search?url=${encodeURIComponent(url)}`
 	}
 ];
 
