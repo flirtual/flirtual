@@ -29,3 +29,5 @@ export default function AppLayout() {
 		</TalkjsProvider>
 	);
 }
+
+export { Loading as HydrateFallback } from "~/components/loading";

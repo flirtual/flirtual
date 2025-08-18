@@ -24,11 +24,11 @@ export default defineConfig(({ mode }) => {
 	const { hostname } = new URL(origin);
 
 	return {
-		appType: "spa",
 		esbuild: {
 			charset: "utf8",
 			legalComments: "external",
 		},
+		appType: "mpa",
 		build: {
 			assetsDir: "static",
 			sourcemap: true,

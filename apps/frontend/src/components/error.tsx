@@ -162,6 +162,7 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 
 								const extra = {
 									production,
+									development,
 									preview: preview || undefined,
 									digest,
 									user: session?.user.id,
@@ -177,16 +178,16 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 * URL: <${window.location.href}>
 * Commit: [${commitId}](<${commitUrl}>)
 
-## Error
 \`\`\`
-${(error && typeof error === "object" && "message" in error && error.message)}
+${`${(error && typeof error === "object" && "message" in error && error.message)}
 
-${String((error && typeof error === "object" && "stack" in error && error.stack)).slice(0, 1024)}
+${String((error && typeof error === "object" && "stack" in error && error.stack)).slice(0, 1024)}`.trim()}
 \`\`\`
-## Extra details
-\`\`\`json
-${JSON.stringify(extra, null, 2)}
-\`\`\`
+
+${Object.entries(extra)
+					.filter(([, value]) => value)
+					.map(([key, value]) => `* ${key}: \`\`${value}\`\``)
+					.join("\n")}
 `
 								});
 

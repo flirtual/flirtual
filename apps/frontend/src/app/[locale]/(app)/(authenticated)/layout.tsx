@@ -12,7 +12,6 @@ import { useSession } from "~/hooks/use-session";
 import { RedirectBoundary } from "~/redirect";
 
 export default function AuthenticatedLayout() {
-	console.log("auth loayout");
 	useSession();
 
 	return (
@@ -30,3 +29,5 @@ export default function AuthenticatedLayout() {
 		</PurchaseProvider>
 	);
 }
+
+export { Loading as HydrateFallback } from "~/components/loading";

@@ -73,12 +73,11 @@ export function useQueue(mode: ProspectKind = "love") {
 
 		// x ... y ... z
 		// ? ... x --> y
-		const { previous, next: [current] } = queue;
-		if (!current) return queue;
+		const { previous, next } = queue;
 
 		return {
 			previous: null,
-			next: [previous],
+			next: [previous, ...next],
 		};
 	}), [queryKey]);
 

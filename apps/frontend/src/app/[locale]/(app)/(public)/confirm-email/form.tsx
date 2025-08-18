@@ -21,7 +21,7 @@ export const ConfirmEmailForm: FC = () => {
 	const session = useOptionalSession();
 
 	if (session?.user.emailConfirmedAt && !token) throwRedirect(to ?? urls.discover("dates"));
-	if (!session?.user && !token) throwRedirect(urls.login(to));
+	if (!session?.user && !token) throwRedirect(urls.login(urls.confirmEmail({ to })));
 
 	if (token) return <ConfirmTokenForm token={token} />;
 

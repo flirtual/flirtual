@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { defaultLocale, i18n } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
 
-import type { Route } from "./[group]/+types/page";
+import type { Route } from "./+types/page";
 import { Queue } from "./queue";
 
 // eslint-disable-next-line unused-imports/no-unused-vars

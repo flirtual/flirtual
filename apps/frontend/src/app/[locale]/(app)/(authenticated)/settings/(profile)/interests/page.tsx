@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ModelCard } from "~/components/model-card";
 import { defaultLocale, i18n } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
+import { attributeFetcher, attributeKey, queryClient } from "~/query";
 
 import type { Route } from "./+types/page";
 import { InterestsForm } from "./form";
@@ -15,6 +16,13 @@ export const meta: Route.MetaFunction = (options) => {
 		{ title: t("page_title", { name: t("interests") }) }
 	]);
 };
+
+export async function clientLoader() {
+	await Promise.all([
+		queryClient.prefetchQuery({ queryKey: attributeKey("interest-category"), queryFn: attributeFetcher }),
+		queryClient.prefetchQuery({ queryKey: attributeKey("interest"), queryFn: attributeFetcher })
+	]);
+}
 
 export default function SettingsProfileInterestsPage() {
 	const { t } = useTranslation();

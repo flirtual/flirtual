@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ModelCard } from "~/components/model-card";
 import { defaultLocale, i18n } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
+import { attributeFetcher, attributeKey, queryClient } from "~/query";
 
 import type { Route } from "./+types/page";
 import { InfoForm } from "./form";
@@ -15,6 +16,20 @@ export const meta: Route.MetaFunction = (options) => {
 		{ title: t("page_title", { name: t("basic_info") }) }
 	]);
 };
+
+export async function clientLoader() {
+	await Promise.all(([
+		"game",
+		"platform",
+		"sexuality",
+		"gender",
+		"country",
+		"language"
+	] as const).map((type) => queryClient.prefetchQuery({
+		queryKey: attributeKey(type),
+		queryFn: attributeFetcher
+	})));
+}
 
 export default function SettingsProfileInfoPage() {
 	const { t } = useTranslation();
