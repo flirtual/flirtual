@@ -18,7 +18,7 @@ export const ConfirmEmailForm: FC = () => {
 
 	const { t } = useTranslation();
 
-	const session = useOptionalSession();
+	const session = useOptionalSession({ placeholderData: undefined });
 
 	if (session?.user.emailConfirmedAt && !token) throwRedirect(to ?? urls.discover("dates"));
 	if (!session?.user && !token) throwRedirect(urls.login(urls.confirmEmail({ to })));
