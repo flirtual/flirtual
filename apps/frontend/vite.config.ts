@@ -1,6 +1,8 @@
 import { reactRouter } from "@react-router/dev/vite";
+import { sentryReactRouter } from "@sentry/react-router";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import sonda from "sonda/vite";
+import invariant from "tiny-invariant";
 import info from "unplugin-info/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
@@ -19,9 +21,20 @@ function getManualChunk(moduleId: string) {
 	return null;
 }
 
-export default defineConfig(({ mode }) => {
-	const { VITE_ORIGIN: origin } = loadEnv(mode, process.cwd(), "");
+export default defineConfig((config) => {
+	const { mode } = config;
+
+	const {
+		VITE_ORIGIN: origin,
+		VITE_SENTRY_ORGANIZATION: sentryOrganization,
+		VITE_SENTRY_PROJECT_ID: sentryProjectId,
+		SENTRY_AUTH_TOKEN: sentryAuthToken
+	} = loadEnv(mode, process.cwd(), "");
+
+	invariant(origin, "VITE_ORIGIN is required");
 	const { hostname } = new URL(origin);
+
+	const sentryEnabled = sentryOrganization && sentryProjectId && sentryAuthToken;
 
 	return {
 		esbuild: {
@@ -31,7 +44,7 @@ export default defineConfig(({ mode }) => {
 		appType: "mpa",
 		build: {
 			assetsDir: "static",
-			sourcemap: true,
+			sourcemap: "hidden",
 			minify: true,
 			target: [
 				"chrome106",
@@ -119,7 +132,22 @@ export default defineConfig(({ mode }) => {
 			// }),
 			sonda({
 				open: false
-			})
+			}),
+			sentryEnabled && sentryReactRouter({
+				org: sentryOrganization,
+				project: sentryProjectId,
+				authToken: sentryAuthToken,
+				telemetry: false,
+				sourceMapsUploadOptions: {
+					filesToDeleteAfterUpload: "**/*.map"
+				},
+				bundleSizeOptimizations: {
+					excludeDebugStatements: true,
+					excludeReplayIframe: true,
+					excludeReplayShadowDom: true,
+					excludeReplayWorker: true
+				}
+			}, config)
 		],
 	};
 });

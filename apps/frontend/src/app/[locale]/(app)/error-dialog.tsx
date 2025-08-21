@@ -1,4 +1,4 @@
-import { captureException } from "@sentry/react";
+import { captureException } from "@sentry/react-router";
 import { Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import { m } from "motion/react";
 import type { FC } from "react";

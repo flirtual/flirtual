@@ -1,7 +1,8 @@
 import { Clipboard } from "@capacitor/clipboard";
+import * as Sentry from "@sentry/react-router";
 import { Check, Chrome, RotateCw, Send, Smartphone, WifiOff } from "lucide-react";
 import ms from "ms.macro";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { ComponentProps, FC } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FlittyHardhat from "virtual:remote/b25d8377-7035-4a23-84f1-faa095fa8104";
@@ -40,7 +41,7 @@ const translations = {
 	}
 } as const;
 
-export function HavingIssues({ error, digest }: { error?: unknown; digest?: string }) {
+export function HavingIssues({ error }: { error?: unknown }) {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
 
@@ -49,6 +50,8 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 	const { native } = useDevice();
 	const [squishCount, setSquishCount] = useState(0);
 	const [copied, setCopied] = useState(false);
+
+	const eventId = useMemo(() => error ? Sentry.captureException(error) : null, [error]);
 
 	const reload = () => location.reload();
 
@@ -146,9 +149,9 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 						</code>
 					)}
 					<div className="mt-6 flex flex-col text-center text-xs">
-						{digest && (
+						{eventId && (
 							<span className="font-mono opacity-50 desktop:text-sm">
-								{digest}
+								{eventId}
 							</span>
 						)}
 						<span className="font-mono opacity-50 desktop:text-sm">
@@ -164,7 +167,6 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 									production,
 									development,
 									preview: preview || undefined,
-									digest,
 									user: session?.user.id,
 									sudoer: session?.sudoerId,
 									...device
@@ -175,6 +177,7 @@ export function HavingIssues({ error, digest }: { error?: unknown; digest?: stri
 									string: `# Flirtual bug report
 
 * At: <t:${Math.floor(Date.now() / 1000)}:F>
+* Event ID: \`${eventId}\`
 * URL: <${window.location.href}>
 * Commit: [${commitId}](<${commitUrl}>)
 

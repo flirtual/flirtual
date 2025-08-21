@@ -1,5 +1,5 @@
 import { Toast as NativeToast } from "@capacitor/toast";
-import { captureException } from "@sentry/react";
+import { captureException } from "@sentry/react-router";
 import { AlertTriangle, Check } from "lucide-react";
 import {
 	createContext,

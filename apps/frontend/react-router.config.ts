@@ -1,12 +1,20 @@
 import type { Config } from "@react-router/dev/config";
+import { sentryOnBuildEnd } from "@sentry/react-router";
 
-const locales = ["en", "ja"];
+import { locales } from "./src/i18n/languages";
 
 export default {
+	future: {
+		// unstable_subResourceIntegrity: true,
+		unstable_splitRouteModules: false,
+	},
 	ssr: false,
 	routeDiscovery: {
 		mode: "initial"
 	},
+	appDirectory: "src",
+	buildDirectory: "dist",
+	buildEnd: sentryOnBuildEnd,
 	prerender: [
 		...locales.map((locale) => `/${locale}`),
 		...[
@@ -38,11 +46,5 @@ export default {
 		"/_redirects",
 		"/_headers",
 		"/wrangler.json"
-	],
-	appDirectory: "src",
-	buildDirectory: "dist",
-	future: {
-		// unstable_subResourceIntegrity: true,
-		unstable_splitRouteModules: false,
-	}
+	]
 } satisfies Config;

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import * as Sentry from "@sentry/react";
+import * as Sentry from "@sentry/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
