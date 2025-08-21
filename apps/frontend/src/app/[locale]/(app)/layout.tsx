@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Outlet } from "react-router";
 
 import { Footer } from "~/components/layout/footer";
+import { Loading } from "~/components/loading";
 import { TalkjsProvider } from "~/hooks/use-talkjs";
 import { RedirectBoundary } from "~/redirect";
 
@@ -21,7 +22,9 @@ export default function AppLayout() {
 					// vaul-drawer-wrapper=""
 				>
 					<RedirectBoundary>
-						<Outlet />
+						<Suspense fallback={<Loading />}>
+							<Outlet />
+						</Suspense>
 					</RedirectBoundary>
 				</div>
 				<Footer desktopOnly />
@@ -29,5 +32,3 @@ export default function AppLayout() {
 		</TalkjsProvider>
 	);
 }
-
-export { Loading as HydrateFallback } from "~/components/loading";

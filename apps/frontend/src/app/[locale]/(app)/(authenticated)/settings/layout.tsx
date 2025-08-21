@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router";
 
+import { Loading } from "~/components/loading";
 import { isDesktop, useBreakpoint } from "~/hooks/use-breakpoint";
 import { defaultLocale, i18n, Navigate, redirect } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
@@ -33,7 +35,9 @@ export default function SettingsLayout({ matches }: Route.ComponentProps) {
 	return (
 		<div className="flex w-full grow flex-col desktop:flex-row desktop:justify-center desktop:gap-8">
 			<SettingsNavigation />
-			<Outlet />
+			<Suspense fallback={<Loading />}>
+				<Outlet />
+			</Suspense>
 		</div>
 	);
 }

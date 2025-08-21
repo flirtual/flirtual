@@ -1,7 +1,8 @@
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { Outlet } from "react-router";
 
 import { InsetPreview } from "./components/inset-preview";
+import { Loading } from "./components/loading";
 import { TooltipProvider } from "./components/tooltip";
 import { development } from "./const";
 import { ToastProvider } from "./hooks/use-toast";
@@ -19,7 +20,9 @@ export function App() {
 				<UpdateInformation />
 				<ToastProvider>
 					<TooltipProvider>
-						<Outlet />
+						<Suspense fallback={<Loading />}>
+							<Outlet />
+						</Suspense>
 					</TooltipProvider>
 				</ToastProvider>
 			</QueryProvider>

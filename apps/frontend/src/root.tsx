@@ -7,12 +7,9 @@ import { memo, useEffect } from "react";
 import { preconnect, preload } from "react-dom";
 import { useSSR as useTranslateSSR, useTranslation } from "react-i18next";
 import {
-	createPath,
 	href,
 	Links,
 	Meta,
-	// eslint-disable-next-line no-restricted-imports
-	redirect,
 	Scripts,
 	ScrollRestoration,
 	useParams
@@ -60,17 +57,6 @@ import { absoluteUrl, bucketOrigins, urls } from "./urls";
 import "@fontsource-variable/montserrat";
 import "@fontsource-variable/nunito";
 import "./app/index.css";
-
-export async function loader({ request, params: { locale } }: Route.LoaderArgs) {
-	const url = new URL(request.url);
-
-	if (!development && url.pathname === "/") return;
-
-	if ((!locale || !isLocale(locale)))
-		return redirect(createPath(replaceLanguage(url, defaultLocale, url.pathname)));
-
-	await i18n.changeLanguage(locale);
-}
 
 export function meta({
 	location: { pathname },
@@ -256,6 +242,7 @@ export function Layout({ children }: PropsWithChildren) {
 						strict
 						features={async () => ((await import("./motion")).default)}
 					>
+						root
 						{children}
 					</LazyMotion>
 				</RedirectBoundary>

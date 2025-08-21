@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router";
 
 import Flitty from "~/components/flitty";
+import { Loading } from "~/components/loading";
 import {
 	DiscordSpamDialog,
 	ModerationMessageDialog
@@ -19,7 +21,9 @@ export default function AuthenticatedLayout() {
 			<ShepherdProvider>
 				<NotificationProvider>
 					<RedirectBoundary>
-						<Outlet />
+						<Suspense fallback={<Loading />}>
+							<Outlet />
+						</Suspense>
 					</RedirectBoundary>
 					<ModerationMessageDialog />
 					<DiscordSpamDialog />
@@ -29,5 +33,3 @@ export default function AuthenticatedLayout() {
 		</PurchaseProvider>
 	);
 }
-
-export { Loading as HydrateFallback } from "~/components/loading";
