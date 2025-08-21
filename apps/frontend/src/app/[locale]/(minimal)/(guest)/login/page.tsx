@@ -12,7 +12,7 @@ export const meta: Route.MetaFunction = (options) => {
 
 	return metaMerge([
 		...rootMeta(options),
-		{ title: t("page_title", { name: t("create_account") }) },
+		{ title: t("page_title", { name: t("login") }) },
 	]);
 };
 
