@@ -33,7 +33,6 @@ export const PasskeyButton: React.FC<PasskeyButtonProps> = (props) => {
 			<div className="flex aspect-square size-12 items-center justify-center rounded-l-xl bg-brand-gradient p-2 text-white-20">
 				{icon
 					? (
-						// eslint-disable-next-line @next/next/no-img-element
 							<img className="size-7" src={icon} />
 						)
 					: (

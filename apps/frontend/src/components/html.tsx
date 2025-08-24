@@ -17,6 +17,7 @@ export const Html: React.FC<HtmlProps> = ({ children, ...props }) => (
 		)}
 		// "html" is a sanitization function, we explicitly declare
 		// allowed tags, properties, and other various attributes.
+		// eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
 		dangerouslySetInnerHTML={{ __html: html(children) }}
 	/>
 );

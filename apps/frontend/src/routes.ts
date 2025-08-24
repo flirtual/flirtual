@@ -65,7 +65,6 @@ export default [
 					page("likes", "(app)/(authenticated)/(onboarded)/likes"),
 					page("matches", "(app)/(authenticated)/(onboarded)/matches"),
 					page("matches/:conversationId", "(app)/(authenticated)/(onboarded)/matches/[conversationId]"),
-					page("profile", "(app)/(authenticated)/(onboarded)/profile"),
 					// route("me", "(app)/(authenticated)/(onboarded)/me/route"),
 				]),
 				layout("(app)/(authenticated)/settings", [

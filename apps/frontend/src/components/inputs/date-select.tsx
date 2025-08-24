@@ -43,7 +43,7 @@ export type InputDateSelectProps = Pick<
 export const InputDateSelect: React.FC<InputDateSelectProps> = (props) => {
 	const { native } = useDevice();
 
-	const [inputValue, setInputValue] = useState(toDateString(props.value));
+	const [inputValue, setInputValue] = useState(() => toDateString(props.value));
 	const [drawerVisible, setDrawerVisible] = useState(false);
 
 	const reference = useRef<HTMLDivElement>(null);

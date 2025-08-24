@@ -1,12 +1,12 @@
 import { ChevronRight } from "lucide-react";
-import { createPath, useMatch } from "react-router";
+import { createPath } from "react-router";
 import type { PathPattern, To } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import { NewBadge } from "~/components/badge";
 import type { IconComponent } from "~/components/icons";
 import { Link } from "~/components/link";
-import { replaceLanguage, useLocale } from "~/i18n";
+import { useMatch } from "~/i18n";
 
 export interface NavigationLinkProps {
 	children: string;
@@ -25,10 +25,8 @@ export const NavigationLink: React.FC<NavigationLinkProps> = ({
 	newBadge,
 	children
 }) => {
-	const [locale] = useLocale();
-
 	const pattern = _pattern || { path: typeof href === "string" ? href : createPath(href || {}) };
-	const match = useMatch({ ...pattern, path: createPath(replaceLanguage(pattern.path, locale)) });
+	const match = useMatch(pattern);
 
 	const active = !!href && !!match;
 

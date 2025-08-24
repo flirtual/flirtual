@@ -8,8 +8,6 @@ import {
 	useQuery
 } from "~/query";
 
-// import { postpone } from "./use-postpone";
-
 /**
  * A hook for getting and setting preferences.
  *

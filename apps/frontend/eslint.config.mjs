@@ -18,9 +18,12 @@ export default configure({
 		"visionos/",
 	],
 	rules: {
+		// todo: disable eventually, flags bug-prone code.
+		"react-hooks-extra/no-direct-set-state-in-use-effect": "off",
+
 		"node/prefer-global/buffer": "off",
 		"node/prefer-global/process": "off",
-		"antfu/no-top-level-await": "off",
+		// "antfu/no-top-level-await": "off",
 		"no-restricted-imports": [
 			"error",
 			{

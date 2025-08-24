@@ -1,8 +1,8 @@
 import { Children, useRef } from "react";
 import type { Dispatch } from "react";
 
-import { useClickOutside } from "~/hooks/use-click-outside";
 import type { Breakpoint } from "~/hooks/use-breakpoint";
+import { useClickOutside } from "~/hooks/use-click-outside";
 
 export interface PopoverProps {
 	children: React.ReactNode;

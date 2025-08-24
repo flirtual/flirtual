@@ -46,7 +46,7 @@ export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | n
 }
 
 export function useGuest() {
-	const session = useOptionalSession({ placeholderData: undefined });
+	const session = useOptionalSession();
 	const [searchParameters] = useSearchParams();
 
 	let next = searchParameters.get("next");

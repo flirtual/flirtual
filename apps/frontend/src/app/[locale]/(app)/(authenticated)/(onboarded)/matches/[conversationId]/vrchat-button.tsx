@@ -30,7 +30,7 @@ export interface VRChatButtonProps {
 }
 
 export const VRChatButton: FC<VRChatButtonProps> = (props) => {
-	const { user, conversationId } = props;
+	const { user } = props;
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const { apple, vision } = useDevice();
 	const session = useOptionalSession();

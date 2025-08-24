@@ -1,14 +1,10 @@
 import { use, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import {
-
-	ShepherdTourContext
-
-} from "react-shepherd";
+import { ShepherdTourContext } from "react-shepherd";
 import type { ShepherdOptionsWithType, Tour } from "react-shepherd";
 
-import { usePreferences } from "./use-preferences";
 import { useBreakpoint } from "./use-breakpoint";
+import { usePreferences } from "./use-preferences";
 import { useScrollLock } from "./use-scroll-lock";
 
 import "~/components/shepherd/style.scss";

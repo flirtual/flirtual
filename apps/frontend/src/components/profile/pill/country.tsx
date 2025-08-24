@@ -1,5 +1,4 @@
-/* eslint-disable @next/next/no-img-element, react-refresh/only-export-components  */
-
+/* eslint-disable react-refresh/only-export-components */
 import type { FC } from "react";
 import { twMerge } from "tailwind-merge";
 

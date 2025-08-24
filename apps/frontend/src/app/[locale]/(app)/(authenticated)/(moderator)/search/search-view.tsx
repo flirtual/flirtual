@@ -52,9 +52,6 @@ import { useUser } from "~/hooks/use-user";
 import { useQuery } from "~/query";
 import { urls } from "~/urls";
 
-;
-"use no memo";
-
 const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
 	const user = useUser(userId);
 	if (!user) return null;

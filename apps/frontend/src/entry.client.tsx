@@ -15,10 +15,8 @@ startTransition(() => {
 		{
 			onCaughtError: (error) => {
 				if (isRedirectError(error)) return;
-				console.error(error);
+				console.error("onCaughtError", error);
 			},
-			onRecoverableError: (error) => console.warn(error),
-			onUncaughtError: (error) => console.error("onUncaught", error),
 		}
 	);
 });

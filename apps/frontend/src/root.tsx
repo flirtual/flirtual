@@ -242,7 +242,6 @@ export function Layout({ children }: PropsWithChildren) {
 						strict
 						features={async () => ((await import("./motion")).default)}
 					>
-						root
 						{children}
 					</LazyMotion>
 				</RedirectBoundary>

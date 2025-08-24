@@ -28,21 +28,13 @@ export const talkjsAppId = import.meta.env.VITE_TALKJS_APP_ID as string;
 // Sentry
 export const sentryDsn = import.meta.env.VITE_SENTRY_DSN as string;
 export const sentryOrganization = import.meta.env.VITE_SENTRY_ORGANIZATION as string;
-export const sentryProject = import.meta.env.SENTRY_PROJECT as string;
 export const sentryProjectId = Number.parseInt(import.meta.env.VITE_SENTRY_PROJECT_ID as string || "0");
 export const sentryReportTo = import.meta.env.VITE_SENTRY_REPORT_TO as string;
 
-export const sentryEnabled = development
+export const sentryEnabled = production
 	&& !!sentryDsn
 	&& !!sentryOrganization
-	&& !!sentryProject
 	&& !!sentryProjectId;
-
-// PostHog
-export const posthogKey = import.meta.env.VITE_POSTHOG_KEY as string;
-export const posthogHost = import.meta.env.VITE_POSTHOG_HOST as string;
-
-export const posthogEnabled = !!posthogKey && !!posthogHost;
 
 // Miscellaneous
 export const cloudflareBeaconId = import.meta.env.VITE_CLOUDFLARE_BEACON_ID as string;

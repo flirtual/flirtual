@@ -34,8 +34,6 @@ export default defineConfig((config) => {
 	invariant(origin, "VITE_ORIGIN is required");
 	const { hostname } = new URL(origin);
 
-	const sentryEnabled = sentryOrganization && sentryProjectId && sentryAuthToken;
-
 	return {
 		esbuild: {
 			charset: "utf8",
@@ -44,7 +42,6 @@ export default defineConfig((config) => {
 		appType: "mpa",
 		build: {
 			assetsDir: "static",
-			sourcemap: "hidden",
 			minify: true,
 			target: [
 				"chrome106",
@@ -133,7 +130,7 @@ export default defineConfig((config) => {
 			sonda({
 				open: false
 			}),
-			sentryEnabled && sentryReactRouter({
+			sentryReactRouter({
 				org: sentryOrganization,
 				project: sentryProjectId,
 				authToken: sentryAuthToken,

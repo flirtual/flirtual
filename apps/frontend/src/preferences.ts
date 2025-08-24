@@ -4,9 +4,16 @@ import { log as _log } from "~/log";
 
 const log = _log.extend("preferences");
 
-await Preferences.configure({ group: "" });
+let configured = false;
+async function maybeConfigure() {
+	if (configured) return;
+
+	await Preferences.configure({ group: "" });
+	configured = true;
+}
 
 export async function getPreferences<T>(key: string) {
+	await maybeConfigure();
 	const { value: localValue } = await Preferences.get({ key });
 
 	return localValue
@@ -15,6 +22,8 @@ export async function getPreferences<T>(key: string) {
 }
 
 export async function setPreferences<T>(key: string, value: T | null): Promise<void> {
+	await maybeConfigure();
+
 	if (value == null) {
 		await Preferences.remove({ key });
 
@@ -27,11 +36,15 @@ export async function setPreferences<T>(key: string, value: T | null): Promise<v
 }
 
 export async function listPreferences(): Promise<Array<string>> {
+	await maybeConfigure();
+
 	const { keys } = await Preferences.keys();
 	return keys;
 }
 
 export async function clearPreferences(): Promise<void> {
+	await maybeConfigure();
+
 	const { keys } = await Preferences.keys();
 
 	await Preferences.clear();

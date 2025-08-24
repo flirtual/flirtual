@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+
 import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import {
@@ -9,7 +10,6 @@ import {
 import { ModelCard } from "~/components/model-card";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
 import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
@@ -18,7 +18,6 @@ export const DeactivationForm: React.FC = () => {
 	const { user } = useSession();
 
 	const { t } = useTranslation();
-	const [locale] = useLocale();
 
 	const toasts = useToast();
 
