@@ -5,16 +5,22 @@ import { renderToPipeableStream } from "react-dom/server";
 import type { EntryContext } from "react-router";
 import { ServerRouter } from "react-router";
 
+import { i18n } from "./i18n";
+import { getLocale } from "./i18n/languages";
+
 export const streamTimeout = 1000;
 
-export default function handleRequest(
+export default async function handleRequest(
 	request: Request,
 	responseStatusCode: number,
 	responseHeaders: Headers,
-	routerContext: EntryContext,
-	// If you have middleware enabled:
-	// loadContext: unstable_RouterContextProvider
+	routerContext: EntryContext
 ) {
+	const { pathname } = new URL(request.url);
+
+	const locale = getLocale(pathname, pathname);
+	if (locale) await i18n.changeLanguage(locale);
+
 	return new Promise((resolve, reject) => {
 		const { pipe, abort } = renderToPipeableStream(
 			<ServerRouter context={routerContext} url={request.url} />,

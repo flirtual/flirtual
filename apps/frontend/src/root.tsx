@@ -50,7 +50,6 @@ import {
 } from "./i18n";
 import type { Locale } from "./i18n";
 import { isLocale } from "./i18n/languages";
-import { log, logRendering } from "./log";
 import { PolyfillScript } from "./polyfill";
 import { RedirectBoundary } from "./redirect";
 import { absoluteUrl, bucketOrigins, urls } from "./urls";
@@ -180,11 +179,7 @@ const BeforeRenderScript: FC = memo(() => {
 	);
 });
 
-log("root.tsx");
-
 export function Layout({ children }: PropsWithChildren) {
-	logRendering("Root layout");
-
 	const { locale: _locale } = useParams();
 	const locale = _locale && isLocale(_locale) ? _locale : defaultLocale;
 

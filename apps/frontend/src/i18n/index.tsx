@@ -16,7 +16,6 @@ import {
 import type {
 	NavigateOptions as _NavigateOptions,
 	NavigateProps,
-	RedirectFunction,
 	To
 } from "react-router";
 
@@ -64,9 +63,7 @@ function flat1<T extends Record<string, Record<string, ResourceKey>>>(value: T) 
 }
 
 async function load(locale: Locale) {
-	log("load(%s)", locale);
-
-	// Aries: Keep this in sync with `getModuleLanguage` from `vite.config.ts`.
+	// Aries: Keep this in sync with `getManualChunk` from `vite.config.ts`.
 	// For performance, we bundle all translations into a single file per locale.
 	const [default_, attributes, uppy] = await Promise.all([
 		import(`../../messages/${locale}.json`)
@@ -114,13 +111,14 @@ i18n
 	.use(initReactI18next)
 	.init({
 		supportedLngs: locales,
+		fallbackLng: defaultLocale,
 
 		ns: [defaultNamespace],
 		defaultNS: defaultNamespace,
 
 		interpolation: {
 			escapeValue: false
-		}
+		},
 	});
 
 export function useLocale(): [locale: Locale, setLocale: (locale: Locale) => Promise<void>] {
@@ -162,16 +160,15 @@ export function useNavigate() {
 	return useCallback<NavigateFunction>((toOrDelta: To | number, { locale, ...options }: NavigateOptions = {}) => {
 		if (typeof toOrDelta === "number") return navigate(toOrDelta);
 
-		const toLocale = getLocale(toOrDelta);
-		if (toLocale) locale = toLocale;
-
-		return navigate(replaceLanguage(toOrDelta, locale || defaultLocale), options);
+		locale ??= getLocale(toOrDelta) || defaultLocale;
+		return navigate(replaceLanguage(toOrDelta, locale), options);
 	}, [navigate]);
 }
 
-export const redirect: RedirectFunction = (url, init) => {
-	return _redirect(createPath(replaceLanguage(url, getLocale(url) || defaultLocale)), init);
-};
+export function redirect(url: string, { locale, ...init }: { locale?: Locale } & RequestInit = {}) {
+	locale ??= getLocale(url) || defaultLocale;
+	return _redirect(createPath(replaceLanguage(url, locale)), init);
+}
 
 export function Navigate({ to, ...props }: NavigateProps) {
 	const [locale] = useLocale();
