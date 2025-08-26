@@ -27,9 +27,9 @@ export async function logout() {
 	if (native) await PushNotifications.unregister();
 
 	await Authentication.logout().catch(() => null);
-	await invalidate();
 
 	await evictQueries();
+	await invalidate();
 }
 
 export const getSession = () => queryClient.ensureQueryData<Session | null>({ queryKey: sessionKey() });

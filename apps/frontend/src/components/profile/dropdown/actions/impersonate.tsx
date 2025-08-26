@@ -7,7 +7,7 @@ import type { User } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { mutate, sessionKey } from "~/query";
+import { evictQueries, invalidate, mutate, sessionKey } from "~/query";
 
 export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 	const session = useOptionalSession();
@@ -29,6 +29,9 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 				onClick={async () => {
 					if (session?.sudoerId) {
 						const newSession = await Authentication.revokeImpersonate();
+						await evictQueries();
+						await invalidate();
+
 						await mutate(sessionKey(), newSession);
 
 						toasts.add(t("no_longer_impersonating_name", {
@@ -39,6 +42,9 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 					}
 
 					const newSession = await Authentication.impersonate(user.id);
+					await evictQueries();
+					await invalidate();
+
 					await mutate(sessionKey(), newSession);
 
 					toasts.add(t("impersonating_name", {

@@ -31,7 +31,7 @@ import { openFeedback } from "~/hooks/use-canny";
 import { useDevice } from "~/hooks/use-device";
 import { useFreshworks } from "~/hooks/use-freshworks";
 import { logout, useSession } from "~/hooks/use-session";
-import { mutate, sessionKey } from "~/query";
+import { evictQueries, invalidate, mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import { NavigationCategory } from "./navigation-category";
@@ -82,6 +82,10 @@ export const SettingsNavigation: FC = () => {
 									Icon={VenetianMask}
 									onClick={async () => {
 										const session = await Authentication.revokeImpersonate();
+
+										await evictQueries();
+										await invalidate();
+
 										await mutate(sessionKey(), session);
 									}}
 								>

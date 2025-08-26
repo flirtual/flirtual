@@ -1,31 +1,23 @@
 import type { PropsWithChildren } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { Outlet } from "react-router";
+import { useConversations } from "~/hooks/use-conversations";
 
-// import { useTranslation } from "react-i18next";
-//
-// import { ButtonLink } from "~/components/button";
-// import { InlineLink } from "~/components/inline-link";
-// import { ModelCard } from "~/components/model-card";
 import type { Locale } from "~/i18n";
-// import { urls } from "~/urls";
-//
-// import { LikesYouButton } from "./likes-you-button";
+import { LikesYouButton } from "./likes-you-button";
+import { ButtonLink } from "~/components/button";
+import { InlineLink } from "~/components/inline-link";
+import { ModelCard } from "~/components/model-card";
+import { urls } from "~/urls";
 
-export default function ConversationsLayout({
-	// params,
-	children
-}: PropsWithChildren<{ params: Promise<{ locale: Locale }> }>) {
-	// const { data: conversations } = useConversations();
-	// const { t } = useTranslation();
+export default function ConversationsLayout() {
+	const { t } = useTranslation();
 
-	// TODO:
-	return children;
+	const { data: [firstPage], loadMore } = useConversations();
+	const { data: conversations } = firstPage || { data: [] };
 
-	/*
-	return (
-		<>
-			{conversations.length === 0
-				? (
-						<ModelCard
+	if (conversations.length === 0)
+		return <ModelCard
 							branded
 							containerProps={{ className: "flex flex-col gap-4" }}
 							title={t("matches")}
@@ -37,19 +29,21 @@ export default function ConversationsLayout({
 								<summary className="text-pink opacity-75 transition-opacity hover:cursor-pointer hover:opacity-100">
 									{t("tips")}
 								</summary>
-								{t.rich("heavy_weak_hare_spin", {
-									link: (children) => (
-										<InlineLink href={urls.socials.discord}>{children}</InlineLink>
-									)
-								})}
+								<Trans
+									i18nKey="heavy_weak_hare_spin"
+									components={{
+										link: <InlineLink href={urls.socials.discord} />
+									}}
+								/>
 							</details>
 							<div className="flex flex-col gap-2">
 								<LikesYouButton />
 								<ButtonLink href={urls.discover("dates")} kind="tertiary" size="sm">{t("browse_profiles")}</ButtonLink>
 							</div>
 						</ModelCard>
-					)
-				: children}
-		</>
-	); */
+
+	return <>
+	<button type="button" onClick={loadMore}>more</button>
+		<Outlet />
+	</>
 }

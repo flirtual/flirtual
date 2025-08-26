@@ -30,7 +30,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const { activeConversationId } = props;
 	const HeaderIcon = activeConversationId ? ChevronLeft : X;
 
-	const { data, mutate, loadMore } = useConversations();
+	const { data, invalidate, loadMore } = useConversations();
 	const [loadMoreReference, loadMoreInView] = useInView();
 
 	const unreadConversations = useUnreadConversations();
@@ -76,8 +76,8 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 								size="sm"
 								onClick={async () => {
 									await Conversation.markRead()
-										.then(async () => await mutate())
-										.catch(toasts.addError);
+										.catch(toasts.addError)
+										.finally(invalidate)
 								}}
 							>
 								{t("mark_all_as_read")}

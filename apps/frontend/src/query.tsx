@@ -57,13 +57,14 @@ export function queueFetcher({ queryKey: [, kind], signal }: QueryFunctionContex
 export const likesYouKey = () => ["likes-you"] as const;
 export const likesYouFetcher = () => Matchmaking.likesYou();
 
-export function conversationsKey() {
-	return (page: number, list: ConversationList) => {
-		if (list && list.data.length < list.metadata.cursor.self.limit) return null;
-		if (page === 0) return ["conversations", null];
-		return ["conversations", list.metadata.cursor.next];
-	};
-}
+export const conversationsKey = () => ["conversations"] as const;
+// export function conversationsKey() {
+// 	return (page: number, list: ConversationList) => {
+// 		if (list && list.data.length < list.metadata.cursor.self.limit) return null;
+// 		if (page === 0) return ["conversations", null];
+// 		return ["conversations", list.metadata.cursor.next];
+// 	};
+// }
 export const conversationsFetcher = async ([, cursor]: [unknown, string]) => Conversation.list(cursor);
 
 export const plansKey = () => ["plans"] as const;
@@ -186,9 +187,11 @@ export async function saveQueries() {
 }
 
 export async function evictQueries() {
+	log("evictQueries()");
+
+	await queryClient.resetQueries();
 	return; // Disable for now.
 
-	log("evictQueries()");
 	queryCache.clear();
 	await setPreferences("queries", null);
 }
