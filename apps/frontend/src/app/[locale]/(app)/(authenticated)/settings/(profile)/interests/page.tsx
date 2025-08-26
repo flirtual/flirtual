@@ -17,12 +17,14 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export async function clientLoader() {
-	await Promise.all([
-		queryClient.prefetchQuery({ queryKey: attributeKey("interest-category"), queryFn: attributeFetcher }),
-		queryClient.prefetchQuery({ queryKey: attributeKey("interest"), queryFn: attributeFetcher })
-	]);
-}
+export const handle = {
+	async preload() {
+		await Promise.all([
+			queryClient.prefetchQuery({ queryKey: attributeKey("interest-category"), queryFn: attributeFetcher }),
+			queryClient.prefetchQuery({ queryKey: attributeKey("interest"), queryFn: attributeFetcher })
+		]);
+	}
+};
 
 export default function SettingsProfileInterestsPage() {
 	const { t } = useTranslation();

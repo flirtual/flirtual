@@ -17,9 +17,12 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export async function clientLoader() {
-	await queryClient.prefetchQuery({ queryKey: attributeKey("gender"), queryFn: attributeFetcher });
-}
+export const handle = {
+	preload: () => queryClient.prefetchQuery({
+		queryKey: attributeKey("gender"),
+		queryFn: attributeFetcher
+	})
+};
 
 export default function SettingsProfileMatchmakingPage() {
 	const { t } = useTranslation();

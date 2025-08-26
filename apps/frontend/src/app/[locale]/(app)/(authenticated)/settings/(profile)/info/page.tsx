@@ -17,19 +17,21 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export async function clientLoader() {
-	await Promise.all(([
-		"game",
-		"platform",
-		"sexuality",
-		"gender",
-		"country",
-		"language"
-	] as const).map((type) => queryClient.prefetchQuery({
-		queryKey: attributeKey(type),
-		queryFn: attributeFetcher
-	})));
-}
+export const handle = {
+	async preload() {
+		await Promise.all(([
+			"game",
+			"platform",
+			"sexuality",
+			"gender",
+			"country",
+			"language"
+		] as const).map((type) => queryClient.prefetchQuery({
+			queryKey: attributeKey(type),
+			queryFn: attributeFetcher
+		})));
+	}
+};
 
 export default function SettingsProfileInfoPage() {
 	const { t } = useTranslation();

@@ -18,12 +18,14 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export async function clientLoader() {
-	const session = await getSession();
-	if (!session) return;
+export const handle = {
+	async preload() {
+		const session = await getSession();
+		if (!session) return;
 
-	await queryClient.prefetchQuery({ queryKey: personalityKey(session.user.id), queryFn: personalityFetcher });
-}
+		await queryClient.prefetchQuery({ queryKey: personalityKey(session.user.id), queryFn: personalityFetcher });
+	}
+};
 
 export default function SettingsProfilePersonalityPage() {
 	const { t } = useTranslation();
