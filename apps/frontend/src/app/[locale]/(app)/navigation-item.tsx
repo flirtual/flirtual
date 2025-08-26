@@ -6,6 +6,7 @@ import RankedImage from "virtual:remote/ranked.jpg";
 
 import { Link } from "~/components/link";
 import { usePreferences } from "~/hooks/use-preferences";
+import { useMatch } from "~/i18n";
 
 export interface NavigationalSwitchItemProps {
 	href: string;
@@ -19,12 +20,10 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	Icon,
 	className,
 	strict,
+	href,
 	...props
 }) => {
-	// const location = useLocation();
-	// const active = urlEqual(toAbsoluteUrl(props.href), location, strict);
-	const active = false;
-	// todo:
+	const active = useMatch({ path: href });
 
 	const [rankedMode] = usePreferences("ranked_mode", false);
 	const { t } = useTranslation();
@@ -37,6 +36,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 				className,
 			)}
 			data-active={active ? "" : undefined}
+			href={href}
 		>
 			{active && (
 				<m.div
@@ -73,10 +73,8 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 
 export const NavigationItem: FC<
 	ComponentProps<typeof Link>
-> = ({ children, ...props }) => {
-	// const location = useLocation();
-	// todo:
-	const active = false;
+> = ({ children, href, ...props }) => {
+	const active = useMatch({ path: href as string });
 
 	return (
 		<Link
@@ -88,6 +86,7 @@ export const NavigationItem: FC<
 					: "hocus:bg-white-20 hocus:text-black-70 hocus:shadow-brand-1",
 				props.className
 			)}
+			href={href}
 		>
 			{children}
 		</Link>
