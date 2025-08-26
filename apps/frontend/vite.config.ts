@@ -6,11 +6,12 @@ import invariant from "tiny-invariant";
 import info from "unplugin-info/vite";
 import remoteAssets from "unplugin-remote-assets/vite";
 import { defineConfig, loadEnv } from "vite";
-import type { Plugin } from "vite";
 import { imagetools } from "vite-imagetools";
 import babel from "vite-plugin-babel";
 import { ViteImageOptimizer as imageOptimize } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
+
+import { hush } from "./vite-plugin-hush";
 
 function getManualChunk(moduleId: string) {
 	const [,, language] = /(?:\/@uppy\/locales\/lib\/|\/messages\/(attributes\.)?)([a-z-_]+)\.(?:json|js)$/i.exec(moduleId) || [];
@@ -20,52 +21,6 @@ function getManualChunk(moduleId: string) {
 	if (/node_modules\/@?(?:capacitor|capawesome|capgo|revenuecat|trapezedev)/i.test(moduleId)) return "native";
 
 	return null;
-}
-
-function muteWarningsPlugin(warningsToIgnore: Array<Array<string>>): Plugin {
-	if (warningsToIgnore.length === 0)
-		return {
-			name: "mute-warnings",
-		};
-
-	const messageCount: Array<number> = [];
-
-	return {
-		name: "mute-warnings",
-		enforce: "pre",
-		config: (userConfig) => ({
-			build: {
-				rollupOptions: {
-					onwarn(warning, defaultHandler) {
-						if (warning.code) {
-							const mutedWarningIndex = warningsToIgnore.findIndex(
-								([code, message]) =>
-									code === warning.code && warning.message.includes(message),
-							);
-
-							if (mutedWarningIndex !== -1) {
-								messageCount[mutedWarningIndex] ??= 0;
-								messageCount[mutedWarningIndex]++;
-								return;
-							}
-						}
-
-						if (userConfig.build?.rollupOptions?.onwarn) {
-							userConfig.build.rollupOptions.onwarn(warning, defaultHandler);
-						}
-						else {
-							defaultHandler(warning);
-						}
-					},
-				},
-			},
-		}),
-		closeBundle() {
-			if (messageCount.length === 0) return;
-
-			this.warn(`Silenced the following warnings: ${warningsToIgnore.map(([, message], index) => `\n  - ${message}: ${messageCount[index] || 0}x`).join("")}`);
-		},
-	};
 }
 
 export default defineConfig((config) => {
@@ -121,8 +76,8 @@ export default defineConfig((config) => {
 			strictPort: true,
 		},
 		plugins: [
-			muteWarningsPlugin([
-				["SOURCEMAP_ERROR", "Can't resolve original location of error"],
+			hush([
+				"Can't resolve original location of error"
 			]),
 			tsconfigPaths(),
 			babel({
@@ -192,7 +147,10 @@ export default defineConfig((config) => {
 				authToken: sentryAuthToken,
 				telemetry: false,
 				sourceMapsUploadOptions: {
-					filesToDeleteAfterUpload: "**/*.map"
+					filesToDeleteAfterUpload: [
+						"**/*.data",
+						"**/*.map"
+					]
 				},
 				bundleSizeOptimizations: {
 					excludeDebugStatements: true,
