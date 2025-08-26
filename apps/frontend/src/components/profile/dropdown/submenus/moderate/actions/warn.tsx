@@ -4,7 +4,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { OpenAI } from "~/api/openai";
-import { displayName, User } from "~/api/user";
+import { User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -99,7 +99,7 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 														data-mask
 														className="text-lg font-semibold leading-none"
 													>
-														{displayName(user)}
+														{user.profile.displayName || t("unnamed_user")}
 													</span>
 													<span className="font-mono text-sm brightness-75">
 														{user.id}
@@ -157,7 +157,7 @@ export const WarnAction: FC<{ user: User }> = ({ user }) => {
 										size="sm"
 										type={message.props.value ? "informative" : "warning"}
 									>
-										{displayName(user)}
+										{user.profile.displayName || t("unnamed_user")}
 										{" "}
 										still has an
 										{" "}

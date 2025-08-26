@@ -16,12 +16,9 @@ import { twMerge } from "tailwind-merge";
 import type { Paginate } from "~/api/common";
 import { emptyPaginate } from "~/api/common";
 import {
-	displayName,
-
 	searchSortKeys,
 	User,
 	UserStatuses,
-
 	userTags
 } from "~/api/user";
 import type { SearchOptions, UserTags } from "~/api/user";
@@ -56,8 +53,6 @@ const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
 	const user = useUser(userId);
 	if (!user) return null;
 
-	const name = displayName(user);
-
 	return (
 		<Link
 			className="flex w-fit items-center gap-4"
@@ -65,13 +60,7 @@ const ColumnDisplayName: FC<{ userId: string }> = ({ userId }) => {
 		>
 			<UserThumbnail user={user} />
 			<div className="flex flex-col">
-				{name === user.slug
-					? (
-							"-"
-						)
-					: (
-							<span className="truncate">{name}</span>
-						)}
+				{user.profile.displayName ? <span className="truncate">{user.profile.displayName }</span> : "-"}
 				<span className="truncate text-xs brightness-75">{user.slug}</span>
 			</div>
 		</Link>

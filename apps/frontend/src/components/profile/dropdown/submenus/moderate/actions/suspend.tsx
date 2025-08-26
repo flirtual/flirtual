@@ -7,7 +7,7 @@ import { withSuspense } from "with-suspense";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { OpenAI } from "~/api/openai";
-import { displayName, User } from "~/api/user";
+import { User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	Dialog,
@@ -111,7 +111,7 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 														data-mask
 														className="text-lg font-semibold leading-none"
 													>
-														{displayName(user)}
+														{user.profile.displayName || t("unnamed_user")}
 													</span>
 													<span className="font-mono text-sm brightness-75">
 														{user.id}

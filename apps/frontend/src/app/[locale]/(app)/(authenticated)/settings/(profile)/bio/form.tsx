@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { displayName } from "~/api/user";
 import { Profile } from "~/api/user/profile";
 import { ProfileImage } from "~/api/user/profile/images";
 import { Form } from "~/components/forms";
@@ -38,7 +37,7 @@ export const BiographyForm: FC = () => {
 	return (
 		<Form
 			fields={{
-				displayName: displayName(user),
+				displayName: user.profile.displayName || "",
 				images: profile.images.map((image) => ({
 					id: image.id,
 					src: urls.image(image),

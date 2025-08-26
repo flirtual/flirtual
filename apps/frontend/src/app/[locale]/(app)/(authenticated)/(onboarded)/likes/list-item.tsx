@@ -1,7 +1,7 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { LikeAndPassItem } from "~/api/matchmaking";
-import { displayName } from "~/api/user";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Link } from "~/components/link";
@@ -15,6 +15,8 @@ import { urls } from "~/urls";
 
 export const LikeListItem: FC<LikeAndPassItem> = ({ kind, profileId: userId }) => {
 	const user = useUser(userId);
+	const { t } = useTranslation();
+
 	if (!user) return null;
 
 	const Icon = kind === "love" ? HeartIcon : PeaceIcon;
@@ -30,7 +32,7 @@ export const LikeListItem: FC<LikeAndPassItem> = ({ kind, profileId: userId }) =
 			/>
 			<div className="flex w-full grow flex-col">
 				<h1 data-mask className="text-xl font-semibold desktop:text-2xl">
-					{displayName(user)}
+					{user.profile.displayName || t("unnamed_user")}
 				</h1>
 				<div className="flex w-full gap-2">
 					{user.bornAt && (

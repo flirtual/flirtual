@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from "react";
 
 import type { Session } from "~/api/auth";
-import { displayName } from "~/api/user";
 import { freshworksWidgetId } from "~/const";
 import { useLocale } from "~/i18n";
 import { queryClient, sessionKey } from "~/query";
@@ -50,7 +49,7 @@ export function useFreshworks() {
 		const session = queryClient.getQueryData<Session>(sessionKey());
 
 		window.FreshworksWidget("identify", "ticketForm", {
-			name: session?.user ? displayName(session?.user) : "",
+			name: session?.user ? session?.user.profile.displayName || session?.user?.slug : "",
 			email: session?.user?.email || ""
 		});
 

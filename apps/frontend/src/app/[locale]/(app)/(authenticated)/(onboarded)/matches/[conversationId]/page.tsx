@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 
 import type { Conversation } from "~/api/conversations";
 import type { User } from "~/api/user";
-import { displayName } from "~/api/user";
 import { InlineLink } from "~/components/inline-link";
 import { UserAvatar } from "~/components/user-avatar";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
@@ -18,6 +18,7 @@ export default function ConversationPage() {
 	const [conversation, _setConversation] = useState<Awaited<ReturnType<typeof Conversation.get>> | undefined>();
 	const [user, _setUser] = useState<Awaited<ReturnType<typeof User.get>> | undefined>();
 	const [loading, _setLoading] = useState(true);
+	const { t } = useTranslation();
 
 	/*
 	todo: wtf is this
@@ -83,7 +84,7 @@ export default function ConversationPage() {
 							width={40}
 						/>
 						<span data-mask className="font-montserrat text-2xl font-semibold text-white-20 desktop:font-extrabold">
-							{displayName(user)}
+							{user.profile.displayName || t("unnamed_user")}
 						</span>
 					</InlineLink>
 					<div className="ml-auto">

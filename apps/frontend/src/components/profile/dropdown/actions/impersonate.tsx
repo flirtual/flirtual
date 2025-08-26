@@ -3,7 +3,6 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Authentication } from "~/api/auth";
-import { displayName } from "~/api/user";
 import type { User } from "~/api/user";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { useOptionalSession } from "~/hooks/use-session";
@@ -32,14 +31,19 @@ export const ImpersonateAction: FC<{ user: User }> = ({ user }) => {
 						const newSession = await Authentication.revokeImpersonate();
 						await mutate(sessionKey(), newSession);
 
-						toasts.add(t("no_longer_impersonating_name", { name: displayName(user) }));
+						toasts.add(t("no_longer_impersonating_name", {
+							name: user.profile.displayName || t("unnamed_user")
+						}));
+
 						return;
 					}
 
 					const newSession = await Authentication.impersonate(user.id);
 					await mutate(sessionKey(), newSession);
 
-					toasts.add(t("impersonating_name", { name: displayName(user) }));
+					toasts.add(t("impersonating_name", {
+						name: user.profile.displayName || t("unnamed_user")
+					}));
 				}}
 			>
 				<VenetianMask className="size-5" />

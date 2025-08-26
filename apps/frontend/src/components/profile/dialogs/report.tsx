@@ -5,7 +5,6 @@ import { useSearchParams } from "react-router";
 
 import type { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
-import { displayName } from "~/api/user";
 import type { User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
@@ -101,7 +100,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 													data-mask
 													className="text-lg font-semibold leading-none"
 												>
-													{displayName(user)}
+													{user.profile.displayName || t("unnamed_user")}
 												</span>
 												{session?.user.tags?.includes("moderator") && (
 													<span className="font-mono text-sm brightness-75">

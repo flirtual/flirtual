@@ -1,7 +1,7 @@
 import { Flag } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import { displayName, User } from "~/api/user";
+import { User } from "~/api/user";
 import { useToast } from "~/hooks/use-toast";
 import { invalidate, relationshipKey } from "~/query";
 
@@ -21,7 +21,7 @@ export const BlockedActions: React.FC<{ user: User }> = ({ user }) => {
 				size="sm"
 				onClick={async () => {
 					await User.unblock(user.id)
-						.then(() => toasts.add(t("unblocked_name", { name: displayName(user) })))
+						.then(() => toasts.add(t("unblocked_name", { name: user.profile.displayName || t("unnamed_user") })))
 						.catch(toasts.addError);
 
 					await invalidate({ queryKey: relationshipKey(user.id) });

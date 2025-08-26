@@ -3,15 +3,14 @@ import type React from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { displayName } from "~/api/user";
+import type { User } from "~/api/user";
 import { urls } from "~/urls";
 
 import { Image } from "./image";
 import type { ImageProps } from "./image";
 
 export type UserAvatarProps = {
-	user: Parameters<typeof displayName>[0]
-		& Parameters<typeof urls.userAvatar>[0] | null;
+	user: User | null;
 	variant?: string;
 } & Omit<ImageProps, "alt" | "src">;
 
@@ -27,7 +26,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
 			{...props}
 			alt={t("extra_moving_jackdaw_twist", {
 				name: user
-					? displayName(user)
+					? user.profile.displayName || t("unnamed_user")
 					: t("anonymous")
 			})}
 			draggable={false}

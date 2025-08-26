@@ -23,7 +23,6 @@ import { withSuspense } from "with-suspense";
 import { Conversation } from "~/api/conversations";
 import { Report } from "~/api/report";
 import type { ListReportOptions } from "~/api/report";
-import { displayName } from "~/api/user";
 import { DateTimeRelative } from "~/components/datetime-relative";
 import { Dialog, DialogContent } from "~/components/dialog/dialog";
 import { Image } from "~/components/image";
@@ -67,7 +66,7 @@ const UserDisplayName: FC<{ userId?: string } & ComponentProps<"span">> = withSu
 
 	return (
 		<span {...props}>
-			{user ? displayName(user) : "Deleted user"}
+			{user ? user.profile.displayName || user.slug : "Deleted user"}
 		</span>
 	);
 }, {

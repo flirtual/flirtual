@@ -1,6 +1,5 @@
 import { Trans, useTranslation } from "react-i18next";
 
-import { displayName } from "~/api/user";
 import type { User } from "~/api/user";
 
 import { ModelCard } from "../model-card";
@@ -22,7 +21,7 @@ export const BlockedProfile: React.FC<{ user: User }> = ({ user }) => {
 						highlight: <span data-mask className="font-semibold" />
 					}}
 					i18nKey="giant_strong_thrush_startle"
-					values={{ name: displayName(user) }}
+					values={{ name: user.profile.displayName || t("unnamed_user") }}
 				/>
 			</span>
 			<BlockedActions user={user} />

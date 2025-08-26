@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 
 import type { ProspectKind } from "~/api/matchmaking";
-import { displayName, User } from "~/api/user";
+import { User } from "~/api/user";
 import { Button } from "~/components/button";
 import { DialogFooter } from "~/components/dialog/dialog";
 import { useQueue } from "~/hooks/use-queue";
@@ -39,7 +39,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 				<AlertDialogHeader>
 					<AlertDialogTitle>
 						{t("block_name", {
-							name: displayName(user)
+							name: user.profile.displayName || user.slug
 						})}
 					</AlertDialogTitle>
 				</AlertDialogHeader>
@@ -55,7 +55,7 @@ export const BlockDialog: FC<PropsWithChildren<{ user: User }>> = ({
 							size="sm"
 							onClick={async () => {
 								await User.block(user.id)
-									.then(() => toasts.add(t("blocked_name", { name: displayName(user) })))
+									.then(() => toasts.add(t("blocked_name", { name: user.profile.displayName || t("unnamed_user") })))
 									.catch(toasts.addError);
 
 								await invalidate({ queryKey: userKey(user.id) });

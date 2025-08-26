@@ -4,10 +4,7 @@ import type { WretchOptions } from "wretch";
 import { isUid } from "~/utilities";
 
 import type { Attribute } from "../attributes";
-import {
-	api
-
-} from "../common";
+import { api } from "../common";
 import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
 import type { Connection } from "../connections";
 import type { Subscription } from "../subscription";
@@ -96,12 +93,6 @@ export interface UserPreview {
 	dark: boolean;
 	attributes: Array<Attribute>;
 	avatarUrl: string;
-}
-
-export function displayName(
-	user: { profile: Pick<Profile, "displayName"> } & Pick<User, "slug">
-) {
-	return user.profile.displayName;
 }
 
 export const searchSortKeys = [

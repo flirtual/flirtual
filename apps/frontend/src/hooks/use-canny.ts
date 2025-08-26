@@ -1,5 +1,4 @@
 import type { Session } from "~/api/auth";
-import { displayName } from "~/api/user";
 import type { User } from "~/api/user";
 import { cannyAppId } from "~/const";
 import { queryClient, sessionKey } from "~/query";
@@ -49,7 +48,7 @@ function identify(user: User) {
 				appID: cannyAppId,
 				user: {
 					email: user.email,
-					name: displayName(user),
+					name: user.profile.displayName || user.slug,
 					id: user.id,
 					avatarURL: urls.userAvatar(user)
 				}

@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import type { Conversation } from "~/api/conversations";
-import { displayName } from "~/api/user";
 import { Badge } from "~/components/badge";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
@@ -87,7 +86,7 @@ export const ConversationListItem: FC<ConversationListItemProps> = (props) => {
 				<div className="flex w-1 grow flex-col p-4">
 					<div className="flex justify-between gap-4">
 						<span data-mask className="truncate font-montserrat text-lg font-semibold leading-tight">
-							{displayName(user)}
+							{user.profile.displayName || "Unnamed user"}
 						</span>
 						{user.tags?.includes("official")
 							? (

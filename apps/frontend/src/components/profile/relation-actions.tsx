@@ -2,7 +2,6 @@ import { Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Matchmaking } from "~/api/matchmaking";
-import { displayName } from "~/api/user";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
@@ -41,7 +40,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					type="button"
 					onClick={async () => {
 						await Matchmaking.unmatch(user.id)
-							.then(() => toasts.add(t("unmatched_name", { name: displayName(user) })))
+							.then(() => toasts.add(t("unmatched_name", { name: user.profile.displayName || t("unnamed_user") })))
 							.catch(toasts.addError);
 
 						await invalidate({ queryKey: relationshipKey(user.id) });
@@ -63,7 +62,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 									? "liked"
 									: "homied"
 								: "passed",
-						name: displayName(user)
+						name: user.profile.displayName || t("unnamed_user")
 					})}
 				</span>
 				<Button
@@ -87,7 +86,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 				<span className="text-xl text-theme-overlay [overflow-wrap:anywhere]">
 					{t(`mint_colossal_kettle_sense`, {
 						status: relationship.likedMe === "love" ? "liked" : "homied",
-						name: displayName(user)
+						name: user.profile.displayName || t("unnamed_user")
 					})}
 				</span>
 			</div>

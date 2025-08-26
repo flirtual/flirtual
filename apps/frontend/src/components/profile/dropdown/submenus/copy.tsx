@@ -11,7 +11,6 @@ import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { ConnectionType } from "~/api/connections";
-import { displayName } from "~/api/user";
 import type { User } from "~/api/user";
 import {
 	DropdownMenuItem,
@@ -43,7 +42,8 @@ export const ProfileDropdownCopySubmenu: FC<
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
 					className="gap-2"
-					onClick={() => Clipboard.write({ string: displayName(user) })}
+					disabled={!!user.profile.displayName}
+					onClick={() => Clipboard.write({ string: user.profile.displayName })}
 				>
 					<CaseSensitive className="size-5" />
 					{t("display_name")}

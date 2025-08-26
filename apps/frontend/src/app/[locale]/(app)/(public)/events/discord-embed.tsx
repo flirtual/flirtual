@@ -1,7 +1,6 @@
 import WidgetBot from "@widgetbot/react-embed";
 import { Suspense } from "react";
 
-import { displayName } from "~/api/user";
 import { useOptionalSession } from "~/hooks/use-session";
 import { lazy } from "~/lazy";
 import { urls } from "~/urls";
@@ -15,7 +14,7 @@ const DiscordEmbed_: React.FC = () => {
 			channel="862116319700582440"
 			height="600"
 			server="455219574036496404"
-			username={session?.user ? displayName(session?.user) : undefined}
+			username={session?.user.profile.displayName}
 			width="100%"
 		/>
 	);

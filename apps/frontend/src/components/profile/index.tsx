@@ -2,7 +2,6 @@ import type { ComponentProps, CSSProperties } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
-import { displayName } from "~/api/user";
 import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
 import { yearsAgo } from "~/date";
@@ -91,7 +90,7 @@ export function Profile({
 									session.user.tags?.includes("moderator") && "select-text"
 								)}
 							>
-								{displayName(user) || t("unnamed")}
+								{user.profile.displayName || t("unnamed_user")}
 								{" "}
 							</span>
 							{user.bornAt && (
@@ -124,7 +123,11 @@ export function Profile({
 								<ActivityIndicator lastActiveAt={new Date(user.activeAt)} />
 							)}
 							{relationship?.timeDiff !== undefined && user.profile.timezone && (
-								<TimeDiff diff={relationship.timeDiff} displayName={displayName(user)} timezone={user.profile.timezone} />
+								<TimeDiff
+									diff={relationship.timeDiff}
+									displayName={user.profile.displayName || t("unnamed_user")}
+									timezone={user.profile.timezone}
+								/>
 							)}
 						</div>
 					</div>
@@ -206,7 +209,7 @@ export function Profile({
 									: (
 											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
 												{t("fuzzy_calm_ant_nudge", {
-													name: displayName(user)
+													name: user.profile.displayName || t("unnamed_user")
 												})}
 											</span>
 										)

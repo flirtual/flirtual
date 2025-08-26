@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 
-import { displayName, User } from "~/api/user";
+import { User } from "~/api/user";
 import { Button } from "~/components/button";
 import {
 	AlertDialog,
@@ -161,7 +161,7 @@ export const ProfileDropdownModerateSubmenu: FC<
 										delete the account
 										{" "}
 										<InlineLink href={urls.profile(user)}>
-											{displayName(user)}
+											{user.profile.displayName || t("unnamed_user")}
 										</InlineLink>
 										{" "}
 										and it will be unrecoverable.
