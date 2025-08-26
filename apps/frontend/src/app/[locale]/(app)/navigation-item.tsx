@@ -11,6 +11,7 @@ import { useMatch } from "~/i18n";
 export interface NavigationalSwitchItemProps {
 	href: string;
 	Icon: FC<ComponentProps<"svg">>;
+	iconClassName?: string;
 	className?: string;
 	strict?: boolean;
 	id?: string;
@@ -18,6 +19,7 @@ export interface NavigationalSwitchItemProps {
 
 export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 	Icon,
+	iconClassName,
 	className,
 	strict,
 	href,
@@ -57,7 +59,7 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 					layoutId="switch-indicator"
 				/>
 			)}
-			<Icon className={twMerge("z-10 aspect-square h-6 desktop:h-8", active && "fill-white-10")} />
+			<Icon className={twMerge("z-10 aspect-square h-6 desktop:h-8", iconClassName, active && "fill-white-10")} />
 			{(rankedMode && (props.id === "date-mode-switch" || props.id === "homie-mode-switch") && (
 				<span className={twMerge(
 					"z-10 pr-2",

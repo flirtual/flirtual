@@ -41,11 +41,13 @@ const NavigationContent: FC = () => {
 					className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 					href={urls.landing}
 					Icon={HomeIcon}
+					iconClassName="group-hocus:fill-white-20"
 				/>
 				<NavigationalSwitchItem
 					className="data-[active]:bg-brand-gradient-pink hocus:bg-brand-gradient-pink"
 					href={urls.login()}
 					Icon={LoginIcon}
+					iconClassName="group-hocus:fill-white-20"
 					strict={false}
 				/>
 			</NavigationalSwitch>
