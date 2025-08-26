@@ -115,7 +115,7 @@ export default defineConfig((config) => {
 			}
 		},
 		server: {
-			host: hostname,
+			host: "0.0.0.0",
 			origin,
 			port: 3000,
 			strictPort: true,
