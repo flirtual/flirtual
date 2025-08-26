@@ -16,11 +16,11 @@ export default {
 	buildDirectory: "dist",
 	buildEnd: sentryOnBuildEnd,
 	prerender: [
-		...locales.map((locale) => `/${locale}`),
 		...[
-			"/login",
-			"/sign-up",
-			"/forgot",
+			"",
+			// "/login",
+			// "/sign-up",
+			// "/forgot",
 
 			"/about",
 			"/branding",

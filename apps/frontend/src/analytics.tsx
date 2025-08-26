@@ -15,7 +15,9 @@ import {
 import { device } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 
-export function initialize() {
+import { log } from "./log";
+
+export function initializeAnalytics() {
 	Sentry.init({
 		enabled: sentryEnabled,
 		dsn: sentryDsn,
@@ -30,6 +32,8 @@ export function initialize() {
 		],
 		ignoreErrors: [],
 	});
+
+	log("Analytics initialized");
 }
 
 function Identity() {

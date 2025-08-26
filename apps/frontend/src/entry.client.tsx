@@ -1,25 +1,11 @@
 import { App } from "@capacitor/app";
 import { startTransition, StrictMode } from "react";
+import { flushSync } from "react-dom";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
+import { log } from "./log";
 import { preloadAll } from "./query";
-import { isRedirectError } from "./redirect";
-
-startTransition(() => {
-	hydrateRoot(
-		document,
-		<StrictMode>
-			<HydratedRouter />
-		</StrictMode>,
-		{
-			onCaughtError: (error) => {
-				if (isRedirectError(error)) return;
-				console.error("onCaughtError", error);
-			},
-		}
-	);
-});
 
 App.addListener("appUrlOpen", async (event) => {
 	const url = new URL(event.url);
@@ -28,7 +14,7 @@ App.addListener("appUrlOpen", async (event) => {
 	location.href = href;
 });
 
-import("./analytics").then(({ initialize }) => initialize());
+import("./analytics").then(({ initializeAnalytics }) => initializeAnalytics());
 
 // await restoreQueries();
 //
@@ -40,3 +26,17 @@ import("./analytics").then(({ initialize }) => initialize());
 //
 preloadAll();
 //
+
+// eslint-disable-next-line react-dom/no-flush-sync
+flushSync(() => {
+	startTransition(() => {
+		hydrateRoot(
+			document,
+			<StrictMode>
+				<HydratedRouter />
+			</StrictMode>,
+		);
+	});
+});
+
+log("Client-side hydration complete");
