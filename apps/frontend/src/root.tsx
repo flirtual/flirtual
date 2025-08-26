@@ -159,7 +159,7 @@ const BeforeRenderScript: FC = memo(() => {
 		const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 		const theme = globalThis.theme = localTheme === "system" ? prefersDark : localTheme;
-		const themeStyle = globalThis.themeStyle = location.pathname.replace(localePathnameRegex, "") === friendsPathname ? "friend" : "default";
+		const themeStyle = globalThis.themeStyle = location.pathname.replace(localePathnameRegex, "/") === friendsPathname ? "friend" : "default";
 
 		Object.assign(document.body.dataset, { theme, themeStyle });
 

@@ -12,7 +12,8 @@ export function isLocale(locale: string): locale is Locale {
 	return locales.includes(locale as Locale);
 }
 
-export const localePathnameRegex = new RegExp(`^\/(${locales.join("|")})?`);
+// eslint-disable-next-line regexp/no-optional-assertion
+export const localePathnameRegex = new RegExp(`^\/(${locales.join("|")})?(\/|$)?`);
 
 export const localeNames: Record<Locale, string> = {
 	en: "English",
