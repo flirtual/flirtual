@@ -196,7 +196,13 @@ defmodule Flirtual.Matchmaking do
         value =
           prospects
           |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
-          |> Enum.map(&elem(&1, 0))
+          |> Enum.map(
+            &%{
+              id: elem(&1, 0),
+              score: elem(&1, 1),
+              completed: false
+            }
+          )
 
         log(:debug, ["computing", user.id, kind], value)
         value
