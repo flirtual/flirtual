@@ -15,6 +15,10 @@ export default {
 		const currentLocale = getLocale(url.pathname, url.pathname);
 		if (!currentLocale) {
 			const recommendedLocale = getRecommendedLocale(request.headers.get("accept-language")) || defaultLocale;
+
+			const probablyLoggedIn = request.headers.get("cookie")?.includes("session=");
+			if (url.pathname === "/") url.pathname = probablyLoggedIn ? "/dates" : "/";
+
 			const newUrl = new URL(createPath(replaceLanguage(url, recommendedLocale, url.pathname)), url);
 
 			return new Response(null, {
@@ -22,7 +26,7 @@ export default {
 				headers: {
 					location: newUrl.href,
 					"cache-control": "public, max-age=3600, immutable",
-					vary: "accept-language",
+					vary: "accept-language, cookie",
 				}
 			});
 		}
