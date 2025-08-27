@@ -114,12 +114,16 @@ export default defineConfig((config) => {
 			imageOptimize({
 				cache: true,
 				cacheLocation: "./node_modules/.cache/vite-image-optimizer",
-				logStats: false
+				logStats: false,
+				test: /\.svg$/i
 			}),
 			imagetools({
 				exclude: [],
+				// include: "**\/*.\{heif,avif,jpeg,jpg,png,tiff,webp,gif\}?*",
+				// https://github.com/JonasKruckenberg/imagetools/issues/317
+				include: "**\/*.\{heif,avif,jpeg,jpg,png,tiff,webp\}?*",
 				defaultDirectives: (url) => {
-					if (url.searchParams.has("raw")) return url.searchParams;
+					if (url.searchParams.has("raw")) return new URLSearchParams();
 
 					return new URLSearchParams({
 						// lossless: "",
