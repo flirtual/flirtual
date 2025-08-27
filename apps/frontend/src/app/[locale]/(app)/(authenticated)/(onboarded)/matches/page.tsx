@@ -1,11 +1,15 @@
-import { defaultLocale, i18n } from "~/i18n";
+import invariant from "tiny-invariant";
+
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 
 import type { Route } from "./+types/page";
 import { ConversationAside } from "./aside";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),

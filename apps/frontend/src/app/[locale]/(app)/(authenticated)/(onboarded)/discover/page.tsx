@@ -1,7 +1,10 @@
-import { useMatches, useParams } from "react-router";
+import invariant from "tiny-invariant";
 
-import { defaultLocale, i18n } from "~/i18n";
+import { prospectKinds } from "~/api/matchmaking";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
+import { preload, queueFetcher, queueKey } from "~/query";
 
 import type { Route } from "./+types/page";
 import { Queue } from "./queue";
@@ -11,10 +14,10 @@ const discoverGroups = ["dates", "homies"] as const;
 export type DiscoverGroup = (typeof discoverGroups)[number];
 
 export const meta: Route.MetaFunction = (options) => {
-	const { params: { locale }, matches } = options;
+	const { params: { locale }, matches: [,,,,{ id: group }] } = options;
+	invariant(isLocale(locale));
 
-	const { id: group } = matches[4];
-	const t = i18n.getFixedT(locale ?? defaultLocale);
+	const t = i18n.getFixedT(locale);
 
 	return metaMerge([
 		...rootMeta(options),
@@ -28,13 +31,24 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
+export const handle = {
+	preload: () => Promise.all(
+		prospectKinds.map((prospectKind) => preload({
+			queryKey: queueKey(prospectKind),
+			queryFn: queueFetcher
+		}))
+	)
+};
+
+export const clientLoader = handle.preload;
+
 export default function DiscoverPage({ matches: [,,,,{ id: group }] }: Route.ComponentProps) {
 	return (
 		<Queue
 			kind={({
 				dates: "love",
 				homies: "friend"
-			} as const)[group as DiscoverGroup] ?? "love"}
+			} as const)[group] ?? "love"}
 		/>
 	);
 }

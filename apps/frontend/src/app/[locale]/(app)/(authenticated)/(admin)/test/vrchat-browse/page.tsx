@@ -10,6 +10,7 @@ import type { ComponentProps, DispatchWithoutAction, FC } from "react";
 import { useInView } from "react-intersection-observer";
 import { capitalize, uniqueBy } from "remeda";
 import { twMerge } from "tailwind-merge";
+import invariant from "tiny-invariant";
 import { withSuspense } from "with-suspense";
 
 import type { World, WorldCategory } from "~/api/vrchat";
@@ -24,7 +25,8 @@ import {
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "~/components/drawer";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { Image } from "~/components/image";
-import { defaultLocale, i18n } from "~/i18n";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { useInfiniteQuery } from "~/query";
 import { urls } from "~/urls";
@@ -249,7 +251,9 @@ const WorldCategoryContent = withSuspense<{
 });
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
+
 	return metaMerge([...rootMeta(options), { title: t("page_title", { name: "VRChat Browse Test" }) }]);
 };
 
