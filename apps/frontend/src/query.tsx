@@ -36,7 +36,7 @@ export function attributeFetcher<T extends AttributeType>({ queryKey: [, type], 
 	return Attribute.list(type, { signal });
 }
 
-export const userKey = (userId: string) => ["user", userId] as const;
+export const userKey = (userId?: string | null) => ["user", userId || null] as const;
 export function userFetcher({ queryKey: [, userId], signal }: QueryFunctionContext<ReturnType<typeof userKey>>) {
 	return isUid(userId)
 		? User.get(userId, { signal })
@@ -57,14 +57,9 @@ export const likesYouKey = () => ["likes-you"] as const;
 export const likesYouFetcher = () => Matchmaking.likesYou();
 
 export const conversationsKey = () => ["conversations"] as const;
-// export function conversationsKey() {
-// 	return (page: number, list: ConversationList) => {
-// 		if (list && list.data.length < list.metadata.cursor.self.limit) return null;
-// 		if (page === 0) return ["conversations", null];
-// 		return ["conversations", list.metadata.cursor.next];
-// 	};
-// }
-export const conversationsFetcher = async ([, cursor]: [unknown, string]) => Conversation.list(cursor);
+
+export const conversationKey = (conversationId: string) => ["conversation", conversationId] as const;
+export const conversationFetcher = async ({ queryKey: [, conversationId], signal }: QueryFunctionContext<ReturnType<typeof conversationKey>>) => Conversation.get(conversationId, { signal });
 
 export const plansKey = () => ["plans"] as const;
 export const plansFetcher = () => Plan.list();

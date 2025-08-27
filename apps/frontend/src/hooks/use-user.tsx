@@ -10,14 +10,16 @@ import {
 
 import { useSession } from "./use-session";
 
-export function useUser(userId: string): User | null {
+export function useUser(userId?: string | null): User | null {
 	const { user: self } = useSession();
 
 	const user = useQuery({
 		queryKey: userKey(userId),
-		queryFn: (context) => self.id === userId
-			? self
-			: userFetcher(context),
+		queryFn: (context) => userId
+			? self.id === userId
+				? self
+				: userFetcher(context)
+			: null,
 	});
 
 	if (user?.id === self.id) return self;

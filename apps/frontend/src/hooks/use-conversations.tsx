@@ -1,7 +1,7 @@
 import { use } from "react";
 
 import { Conversation } from "~/api/conversations";
-import { conversationsKey, invalidate, queryClient, useInfiniteQuery } from "~/query";
+import { conversationFetcher, conversationKey, conversationsKey, invalidate, queryClient, useInfiniteQuery, useQuery } from "~/query";
 
 export function preloadConversations() {
 	return queryClient.prefetchInfiniteQuery({
@@ -26,4 +26,11 @@ export function useConversations() {
 		loadMore: fetchNextPage,
 		invalidate: () => invalidate({ queryKey: conversationsKey() })
 	};
+}
+
+export function useConversation(conversationId: string) {
+	return useQuery({
+		queryKey: conversationKey(conversationId),
+		queryFn: conversationFetcher,
+	});
 }

@@ -1,3 +1,5 @@
+import type { WretchOptions } from "wretch";
+
 import { api } from "./common";
 import type { CreatedAtModel } from "./common";
 import type { ProspectKind } from "./matchmaking";
@@ -40,9 +42,10 @@ export type ConversationList = Paginate<Conversation>;
 
 export const Conversation = {
 	api: api.url("conversations"),
-	get(conversationId: string) {
+	get(conversationId: string, options: WretchOptions = {}) {
 		return this.api
 			.url(`/${conversationId}`)
+			.options(options)
 			.get()
 			.notFound(() => null)
 			.json<Conversation | null>();
