@@ -1,6 +1,7 @@
 import type { ComponentProps, CSSProperties } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
+import { withSuspense } from "with-suspense";
 
 import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
@@ -22,6 +23,7 @@ import { GenderPills } from "./pill/genders";
 import { ProfileImageDisplay } from "./profile-image-display";
 import { ProfilePrompts } from "./prompts";
 import { RelationActions } from "./relation-actions";
+import { ProfileSkeleton } from "./skeleton";
 import { TimeDiff } from "./time-diff";
 import { ProfileVerificationBadge } from "./verification-badge";
 
@@ -31,14 +33,14 @@ export type ProfileProps = {
 	hideModeratorInfo?: boolean;
 } & ComponentProps<"div">;
 
-export function Profile({
+export const Profile = withSuspense(({
 	userId,
 	direct = false,
 	hideModeratorInfo = false,
 	className,
 	id,
 	...elementProps
-}: ProfileProps) {
+}: ProfileProps) => {
 	const session = useSession();
 
 	const user = useUser(userId);
@@ -254,4 +256,6 @@ export function Profile({
 			</div>
 		</div>
 	);
-}
+}, {
+	fallback: <ProfileSkeleton />
+});
