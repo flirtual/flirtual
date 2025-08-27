@@ -1,6 +1,7 @@
 import invariant from "tiny-invariant";
 
 import { prospectKinds } from "~/api/matchmaking";
+import { preloadProfileAttributes } from "~/components/profile";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
@@ -32,12 +33,13 @@ export const meta: Route.MetaFunction = (options) => {
 };
 
 export const handle = {
-	preload: () => Promise.all(
-		prospectKinds.map((prospectKind) => preload({
+	preload: () => Promise.all([
+		preloadProfileAttributes(),
+		...prospectKinds.map((prospectKind) => preload({
 			queryKey: queueKey(prospectKind),
 			queryFn: queueFetcher
 		}))
-	)
+	])
 };
 
 export const clientLoader = handle.preload;

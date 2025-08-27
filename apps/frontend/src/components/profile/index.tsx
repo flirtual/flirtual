@@ -8,6 +8,7 @@ import { Html } from "~/components/html";
 import { yearsAgo } from "~/date";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
+import { attributeFetcher, attributeKey, preload, relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/query";
 import { urls } from "~/urls";
 
 import { CopyClick } from "../copy-click";
@@ -26,6 +27,32 @@ import { RelationActions } from "./relation-actions";
 import { ProfileSkeleton } from "./skeleton";
 import { TimeDiff } from "./time-diff";
 import { ProfileVerificationBadge } from "./verification-badge";
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function preloadProfileAttributes() {
+	await Promise.all(([
+		"country",
+		"game",
+		"gender",
+		"interest",
+		"kink",
+		"language",
+		"platform",
+		"prompt",
+		"relationship",
+		"report-reason",
+		"sexuality"
+	] as const).map((type) => preload({ queryKey: attributeKey(type), queryFn: attributeFetcher })));
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function preloadProfile(userId: string) {
+	await Promise.all([
+		preload({ queryKey: userKey(userId), queryFn: userFetcher }),
+		preload({ queryKey: relationshipKey(userId), queryFn: relationshipFetcher }),
+		preloadProfileAttributes()
+	]);
+}
 
 export type ProfileProps = {
 	userId: string;

@@ -1,21 +1,19 @@
-import ms from "ms.macro";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 import type { Issue } from "~/api/common";
 import { isWretchError } from "~/api/common";
 import type { Queue, QueueIssue } from "~/api/matchmaking";
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
+import { preloadProfile } from "~/components/profile";
 import { log } from "~/log";
 import {
 	invalidate,
 	mutate,
-	preload,
 	queueKey,
 	useMutation,
 	useQuery,
-	userFetcher,
-	userKey
 } from "~/query";
+import { emptyArray } from "~/utilities";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
@@ -43,14 +41,11 @@ export function useQueue(mode: ProspectKind = "love") {
 	});
 
 	const previous = "previous" in queue ? queue.previous : null;
-	const next = "next" in queue ? queue.next : [];
+	const next = "next" in queue ? queue.next : emptyArray;
 
 	const error = "error" in queue ? queue.error : null;
 
-	Promise.all(next.map((userId) => preload({
-		queryKey: userKey(userId),
-		queryFn: userFetcher
-	})));
+	useEffect(() => void Promise.all(next.map((userId) => preloadProfile(userId))), [next]);
 
 	const [current] = next;
 

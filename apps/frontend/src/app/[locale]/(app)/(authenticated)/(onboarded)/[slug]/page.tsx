@@ -2,10 +2,16 @@ import { Suspense } from "react";
 import type { FC } from "react";
 import { useParams } from "react-router";
 
-import { Profile } from "~/components/profile";
+import { preloadProfileAttributes, Profile } from "~/components/profile";
 import { useRelationship, useUser } from "~/hooks/use-user";
 
 import { QueueActions } from "../discover/queue-actions";
+
+export const handle = {
+	preload: preloadProfileAttributes
+};
+
+export const clientLoader = handle.preload;
 
 const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 	const user = useUser(userId);
