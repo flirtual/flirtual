@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 import { config } from "dotenv";
 
-config({ path: ".env" });
+config({ path: ".env.local" });
 const frontendUrl = new URL(process.env.VITE_ORIGIN!);
 const frontendScheme = frontendUrl.protocol.slice(0, -1);
 
