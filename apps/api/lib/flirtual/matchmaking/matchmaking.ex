@@ -121,7 +121,7 @@ defmodule Flirtual.Matchmaking do
        %{
          previous:
            (grouped_prospects[true] || [])
-           |> Enum.at(0)
+           |> Enum.at(-1)
            |> case do
              nil -> nil
              prospect -> Map.get(prospect, :id)
@@ -349,8 +349,16 @@ defmodule Flirtual.Matchmaking do
           with %User{} <- target,
                {_, _} <-
                  Prospect
-                 |> where(profile_id: ^user.id, target_id: ^target.id)
+                 |> where(profile_id: ^user.id, target_id: ^target.id, kind: ^mode)
                  |> Repo.update_all(set: [completed: true]),
+               {_, _} <-
+                 Prospect
+                 |> where(
+                   [prospect],
+                   prospect.profile_id == ^user.id and prospect.target_id == ^target.id and
+                     prospect.kind != ^mode
+                 )
+                 |> Repo.delete_all(),
                {:ok, item} <-
                  %LikesAndPasses{}
                  |> cast(

@@ -25,9 +25,9 @@ export function useQueue(mode: ProspectKind = "love") {
 
 	const queue = useQuery<Queue | QueueIssue, typeof queryKey>({
 		queryKey,
-		queryFn: async ({ queryKey: [, mode] }) =>
+		queryFn: async ({ queryKey: [, mode], signal }) =>
 			Matchmaking
-				.queue(mode)
+				.queue(mode, { signal })
 				.catch((reason) => {
 					if (!isWretchError(reason)) throw reason;
 					const issue = reason.json as Issue;
@@ -35,11 +35,11 @@ export function useQueue(mode: ProspectKind = "love") {
 					if (!["confirm_email", "finish_profile"].includes(issue.error)) throw reason;
 					return issue as QueueIssue;
 				}),
-		refetchInterval: ms("1m"),
-		staleTime: 0,
-		meta: {
-			cacheTime: 0
-		}
+		// refetchInterval: ms("1m"),
+		// staleTime: 0,
+		// meta: {
+		// 	cacheTime: 0
+		// }
 	});
 
 	const previous = "previous" in queue ? queue.previous : null;
@@ -104,7 +104,8 @@ export function useQueue(mode: ProspectKind = "love") {
 				: await Matchmaking.queueAction({ type: action, kind, mode, userId });
 
 			return queue;
-		}
+		},
+		onSettled: () => invalidateQueue(({ love: "friend", friend: "love" } as const)[mode])
 	});
 
 	return {
