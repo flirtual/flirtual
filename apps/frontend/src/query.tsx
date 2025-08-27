@@ -123,6 +123,9 @@ export const queryClient = new QueryClient({
 	},
 });
 
+// @ts-expect-error: https://github.com/DeeCode-inc/tanstack-query-chrome-devtools
+globalThis.__TANSTACK_QUERY_CLIENT__ = queryClient;
+
 const queryCache = queryClient.getQueryCache();
 
 interface Meta extends Record<string, unknown> {
