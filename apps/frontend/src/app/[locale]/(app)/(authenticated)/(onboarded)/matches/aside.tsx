@@ -77,7 +77,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 								onClick={async () => {
 									await Conversation.markRead()
 										.catch(toasts.addError)
-										.finally(invalidate)
+										.finally(invalidate);
 								}}
 							>
 								{t("mark_all_as_read")}

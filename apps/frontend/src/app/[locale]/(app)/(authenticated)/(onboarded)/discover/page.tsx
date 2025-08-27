@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useMatches, useParams } from "react-router";
 
 import { defaultLocale, i18n } from "~/i18n";
 import { metaMerge, rootMeta } from "~/meta";
@@ -19,16 +19,16 @@ export const meta: Route.MetaFunction = (options) => {
 	return metaMerge([
 		...rootMeta(options),
 		{
-			title: group === "homies"
-				? t("homie_mode")
-				: t("browse")
+			title: t("page_title", {
+				name: group === "homies"
+					? t("homie_mode")
+					: t("browse")
+			})
 		}
 	]);
 };
 
-export default function DiscoverPage() {
-	const { group } = useParams();
-
+export default function DiscoverPage({ matches: [,,,,{ id: group }] }: Route.ComponentProps) {
 	return (
 		<Queue
 			kind={({
