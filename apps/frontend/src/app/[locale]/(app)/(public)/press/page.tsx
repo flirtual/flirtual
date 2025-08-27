@@ -1,9 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
+import invariant from "tiny-invariant";
 
 import { ButtonLink } from "~/components/button";
 import { ModelCard } from "~/components/model-card";
-import { defaultLocale, i18n } from "~/i18n";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
@@ -11,7 +13,8 @@ import type { Route } from "./+types/page";
 import { PressItem } from "./press-item";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),

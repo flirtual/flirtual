@@ -1,16 +1,19 @@
 import { useTranslation } from "react-i18next";
+import invariant from "tiny-invariant";
 
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
 import { SupersededPolicy } from "~/components/superseded-policy";
-import { defaultLocale, i18n } from "~/i18n";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
 import type { Route } from "./+types/page";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),

@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
+import invariant from "tiny-invariant";
 
 import { ModelCard } from "~/components/model-card";
-import { defaultLocale, i18n } from "~/i18n";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { attributeFetcher, attributeKey, queryClient } from "~/query";
 
@@ -9,7 +11,8 @@ import type { Route } from "./+types/page";
 import { NsfwForm } from "./form";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),
@@ -17,9 +20,12 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export async function clientLoader() {
-	await queryClient.prefetchQuery({ queryKey: attributeKey("kink"), queryFn: attributeFetcher });
-}
+export const handle = {
+	preload: () => queryClient.prefetchQuery({
+		queryKey: attributeKey("kink"),
+		queryFn: attributeFetcher
+	})
+};
 
 export default function SettingsProfileNsfwPage() {
 	const { t } = useTranslation();

@@ -1,7 +1,9 @@
 import { Outlet } from "react-router";
+import invariant from "tiny-invariant";
 
 import { isDesktop, useBreakpoint } from "~/hooks/use-breakpoint";
 import { defaultLocale, i18n, Navigate, redirect } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
@@ -9,6 +11,7 @@ import type { Route } from "./+types/layout";
 import { SettingsNavigation } from "./navigation";
 
 export const meta: Route.MetaFunction = (options) => {
+	invariant(isLocale(options.params.locale));
 	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
 
 	return metaMerge([

@@ -37,7 +37,8 @@ export default {
 			"/terms-20230530",
 		]
 			.map((path) => locales.map((locale) => `/${locale}${path}`))
-			.flat(),
+			.flat()
+			.sort(),
 
 		"/manifest.json",
 		"/robots.txt",

@@ -1,22 +1,22 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
+import { withSuspense } from "with-suspense";
 
 import { ButtonLink } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Image } from "~/components/image";
 import { useLikesYou } from "~/hooks/use-likes-you";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
 import { urls } from "~/urls";
 
-export const LikesYouButton: FC = () => {
-	const session = useOptionalSession();
-	const likes = useLikesYou();
+export const LikesYouButton: FC = withSuspense(() => {
 	const { t } = useTranslation();
 
-	if (!session) return null;
-	const { user } = session;
+	const { user } = useSession();
+	const likes = useLikesYou();
 
 	return (
 		<ButtonLink
@@ -72,4 +72,19 @@ export const LikesYouButton: FC = () => {
 			</div>
 		</ButtonLink>
 	);
-};
+}, {
+	fallback: () => {
+		const { t } = useTranslation();
+		const { user } = useSession();
+
+		return (
+			<ButtonLink
+				className="w-full"
+				href={user.subscription?.active ? urls.likes : urls.subscription.default}
+				size="sm"
+			>
+				{t("see_who_likes_you")}
+			</ButtonLink>
+		);
+	}
+});

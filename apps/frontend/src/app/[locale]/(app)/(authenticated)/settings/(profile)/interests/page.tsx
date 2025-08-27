@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
+import invariant from "tiny-invariant";
 
 import { ModelCard } from "~/components/model-card";
-import { defaultLocale, i18n } from "~/i18n";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { attributeFetcher, attributeKey, queryClient } from "~/query";
 
@@ -9,7 +11,8 @@ import type { Route } from "./+types/page";
 import { InterestsForm } from "./form";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),
@@ -17,12 +20,14 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export async function clientLoader() {
-	await Promise.all([
-		queryClient.prefetchQuery({ queryKey: attributeKey("interest-category"), queryFn: attributeFetcher }),
-		queryClient.prefetchQuery({ queryKey: attributeKey("interest"), queryFn: attributeFetcher })
-	]);
-}
+export const handle = {
+	async preload() {
+		await Promise.all([
+			queryClient.prefetchQuery({ queryKey: attributeKey("interest-category"), queryFn: attributeFetcher }),
+			queryClient.prefetchQuery({ queryKey: attributeKey("interest"), queryFn: attributeFetcher })
+		]);
+	}
+};
 
 export default function SettingsProfileInterestsPage() {
 	const { t } = useTranslation();

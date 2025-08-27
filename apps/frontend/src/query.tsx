@@ -11,7 +11,6 @@ import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
 import { Config } from "./api/config";
 import { Conversation } from "./api/conversations";
-import type { ConversationList } from "./api/conversations";
 import type { ProspectKind } from "./api/matchmaking";
 import { Matchmaking } from "./api/matchmaking";
 import { Plan } from "./api/plan";
@@ -123,6 +122,9 @@ export const queryClient = new QueryClient({
 		},
 	},
 });
+
+// @ts-expect-error: https://github.com/DeeCode-inc/tanstack-query-chrome-devtools
+globalThis.__TANSTACK_QUERY_CLIENT__ = queryClient;
 
 const queryCache = queryClient.getQueryCache();
 

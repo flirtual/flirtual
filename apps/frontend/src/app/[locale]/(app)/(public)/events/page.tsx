@@ -1,4 +1,5 @@
 import { Trans, useTranslation } from "react-i18next";
+import invariant from "tiny-invariant";
 import Image2 from "virtual:remote/660c7e75-9634-45d1-a306-628eeef0a620";
 import Image1 from "virtual:remote/b593e4e1-bef3-4ab8-b9ea-74628ebf694b";
 
@@ -6,7 +7,8 @@ import { ButtonLink } from "~/components/button";
 import { Image } from "~/components/image";
 import { InlineLink } from "~/components/inline-link";
 import { ModelCard } from "~/components/model-card";
-import { defaultLocale, i18n } from "~/i18n";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
@@ -15,7 +17,8 @@ import { DiscordEmbed } from "./discord-embed";
 import { Livestream } from "./livestream";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),

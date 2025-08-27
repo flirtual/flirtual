@@ -1,4 +1,5 @@
 import { Trans, useTranslation } from "react-i18next";
+import invariant from "tiny-invariant";
 import Image0d6b9258 from "virtual:remote/0d6b9258-a330-47cd-9964-eb0143f34825";
 import Image2451ca85 from "virtual:remote/2451ca85-8a4b-4c49-9d2b-d12a403271cb";
 import Image273de50f from "virtual:remote/273de50f-7a03-4918-bd7c-331e11a00949";
@@ -12,7 +13,8 @@ import { InlineLink } from "~/components/inline-link";
 import { FlirtualLogo } from "~/components/logo";
 import { ModelCard } from "~/components/model-card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
-import { defaultLocale, i18n } from "~/i18n";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
@@ -21,7 +23,8 @@ import { TeamList } from "./team-list";
 import { TimelineItem } from "./timeline-item";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),

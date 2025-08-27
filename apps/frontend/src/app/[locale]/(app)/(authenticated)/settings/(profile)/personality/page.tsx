@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
+import invariant from "tiny-invariant";
 
 import { ModelCard } from "~/components/model-card";
 import { getSession } from "~/hooks/use-session";
-import { defaultLocale, i18n } from "~/i18n";
+import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { personalityFetcher, personalityKey, queryClient } from "~/query";
 
@@ -10,7 +12,8 @@ import type { Route } from "./+types/page";
 import { PersonalityForm } from "./form";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),
@@ -18,12 +21,14 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export async function clientLoader() {
-	const session = await getSession();
-	if (!session) return;
+export const handle = {
+	async preload() {
+		const session = await getSession();
+		if (!session) return;
 
-	await queryClient.prefetchQuery({ queryKey: personalityKey(session.user.id), queryFn: personalityFetcher });
-}
+		await queryClient.prefetchQuery({ queryKey: personalityKey(session.user.id), queryFn: personalityFetcher });
+	}
+};
 
 export default function SettingsProfilePersonalityPage() {
 	const { t } = useTranslation();

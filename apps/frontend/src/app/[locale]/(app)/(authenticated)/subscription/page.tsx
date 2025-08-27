@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
+import invariant from "tiny-invariant";
 
 import { ModelCard } from "~/components/model-card";
 import { getSession } from "~/hooks/use-session";
-import { defaultLocale, i18n, redirect } from "~/i18n";
+import { i18n, redirect } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 import { urls } from "~/urls";
 
@@ -10,7 +12,8 @@ import type { Route } from "./+types/page";
 import { SubscriptionForm } from "./form";
 
 export const meta: Route.MetaFunction = (options) => {
-	const t = i18n.getFixedT(options.params.locale ?? defaultLocale);
+	invariant(isLocale(options.params.locale));
+	const t = i18n.getFixedT(options.params.locale);
 
 	return metaMerge([
 		...rootMeta(options),
