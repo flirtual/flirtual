@@ -24,6 +24,7 @@ export default {
 			if (url.pathname === "/") url.pathname = probablyLoggedIn ? "/dates" : "/";
 
 			const newUrl = new URL(createPath(replaceLanguage(url, locale, url.pathname)), url);
+			newUrl.searchParams.delete("language");
 
 			return new Response(null, {
 				status: 301,
