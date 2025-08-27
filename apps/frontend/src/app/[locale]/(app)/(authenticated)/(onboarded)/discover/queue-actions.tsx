@@ -65,7 +65,8 @@ export const QueueActions: FC<{
 		previous,
 		like,
 		pass,
-		undo
+		undo,
+		mutating
 	} = useQueue(mode);
 
 	return (
@@ -78,7 +79,7 @@ export const QueueActions: FC<{
 							<m.button
 								id="undo-button"
 								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
-								disabled={!previous}
+								disabled={!previous || mutating}
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
@@ -98,6 +99,7 @@ export const QueueActions: FC<{
 								<m.button
 									id="like-button"
 									className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:opacity-50"
+									disabled={mutating}
 									type="button"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
@@ -120,6 +122,7 @@ export const QueueActions: FC<{
 							<m.button
 								id="friend-button"
 								className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:opacity-50"
+								disabled={mutating}
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
@@ -141,6 +144,7 @@ export const QueueActions: FC<{
 							<m.button
 								id="pass-button"
 								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
+								disabled={mutating}
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}

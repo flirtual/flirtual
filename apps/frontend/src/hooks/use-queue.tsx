@@ -81,7 +81,7 @@ export function useQueue(mode: ProspectKind = "love") {
 		};
 	}), [queryKey]);
 
-	const { mutateAsync } = useMutation<Queue, {
+	const { mutateAsync, isPending: mutating } = useMutation<Queue, {
 		action: "like" | "pass" | "undo";
 		userId: string;
 		kind: ProspectKind;
@@ -116,6 +116,7 @@ export function useQueue(mode: ProspectKind = "love") {
 		pass: (kind: ProspectKind = mode, userId: string = current!) => mutateAsync({ action: "pass", userId, kind }),
 		undo: (kind: ProspectKind = mode) => mutateAsync({ action: "undo", userId: current!, kind }),
 		invalidate: () => invalidateQueue(mode),
+		mutating,
 		forward,
 		backward
 	};
