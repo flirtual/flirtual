@@ -17,6 +17,7 @@ import {
 import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useNavigate } from "~/i18n";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const Finish1Form: FC = () => {
@@ -66,7 +67,8 @@ export const Finish1Form: FC = () => {
 					Profile.updatePrompts(user.id, values.prompts)
 				]);
 
-				navigate(urls.finish(2));
+				await invalidate({ queryKey: sessionKey() });
+				await navigate(urls.finish(2));
 			}}
 		>
 			{({ FormField }) => (

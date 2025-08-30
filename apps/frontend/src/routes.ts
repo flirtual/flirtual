@@ -115,8 +115,8 @@ export default [
 				page("terms", "(app)/(public)/terms"),
 				page("terms-20230530", "(app)/(public)/terms-20230530"),
 			]),
-		]),
-		route("*", "not-found")
+			route("*", "not-found")
+		])
 	]),
 
 	// Static files, not in public folder.

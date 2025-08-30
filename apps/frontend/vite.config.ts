@@ -119,9 +119,9 @@ export default defineConfig((config) => {
 			}),
 			imagetools({
 				exclude: [],
-				// include: "**\/*.\{heif,avif,jpeg,jpg,png,tiff,webp,gif\}?*",
+				// include: /^[^?]+\.(avif|gif|heif|jpeg|jpg|png|tiff|webp)(\?.*)?$/
 				// https://github.com/JonasKruckenberg/imagetools/issues/317
-				include: "**\/*.\{heif,avif,jpeg,jpg,png,tiff,webp\}?*",
+				include: /^[^?]+\.(avif|heif|jpeg|jpg|png|tiff|webp)(\?.*)?$/,
 				defaultDirectives: (url) => {
 					if (url.searchParams.has("raw")) return new URLSearchParams();
 

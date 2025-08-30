@@ -17,7 +17,7 @@ import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
-import { mutate, sessionKey } from "~/query";
+import { invalidate, mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const BiographyForm: FC = () => {
@@ -48,7 +48,7 @@ export const BiographyForm: FC = () => {
 			}}
 			className="flex flex-col gap-8"
 			onSubmit={async ({ displayName, biography, ...values }) => {
-				const [profile, images, prompts] = await Promise.all([
+				await Promise.all([
 					Profile.update(user.id, {
 						displayName,
 						biography: html(biography),
@@ -68,17 +68,7 @@ export const BiographyForm: FC = () => {
 
 				toasts.add(t("cuddly_few_llama_catch"));
 
-				await mutate(sessionKey(), {
-					...session,
-					user: {
-						...user,
-						profile: {
-							...profile,
-							images,
-							prompts
-						}
-					}
-				});
+				await invalidate({ queryKey: sessionKey() });
 			}}
 		>
 			{({ FormField }) => (

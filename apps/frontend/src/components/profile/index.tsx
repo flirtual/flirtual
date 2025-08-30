@@ -186,6 +186,7 @@ export const Profile = withSuspense(({
 															|| user.profile.discord!
 															: null
 													}
+													asChild={false}
 													className="data-[copy-click]:hover:underline"
 												/>
 											)

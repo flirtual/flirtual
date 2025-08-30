@@ -134,7 +134,7 @@ defmodule Flirtual.Users do
       |> validate_predicate(
         &(not User.valid_password?(&2, &1)),
         {:password, {:value, user.password_hash}},
-        message: "New password cannot be the same as the old password"
+        message: "password_must_be_different"
       )
     end
   end

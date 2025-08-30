@@ -18,6 +18,7 @@ import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
+import { useToast } from "~/hooks/use-toast";
 import { defaultLocale, useLocale, useNavigate } from "~/i18n";
 import { mutate, sessionKey, useMutation } from "~/query";
 import { urls } from "~/urls";
@@ -65,6 +66,8 @@ const ProfileColorSelect: FC = () => {
 	const [theme] = useTheme();
 	const { user } = useSession();
 	const navigate = useNavigate();
+	const toast = useToast();
+	const { t } = useTranslation();
 
 	const defaultColors = defaultProfileColors[theme];
 	const colors: ProfileColors = (user.profile as unknown as { previewColors: ProfileColors }).previewColors || {
@@ -113,6 +116,9 @@ const ProfileColorSelect: FC = () => {
 		mutate<Session | null>(sessionKey(), (session) => {
 			if (!session) return session;
 
+			if ((session.user.profile as unknown as { previewColors: ProfileColors }).previewColors)
+				toast.add(t("ideal_super_skunk_empower"));
+
 			return {
 				...session,
 				user: {
@@ -125,9 +131,7 @@ const ProfileColorSelect: FC = () => {
 				}
 			};
 		});
-	}, [reset]);
-
-	const { t } = useTranslation();
+	}, [t, toast]);
 
 	return (
 		<div className="flex w-full flex-col gap-8">

@@ -1033,7 +1033,7 @@ defmodule Flirtual.User do
   end
 
   def validate_password_confirmation(changeset, options \\ []) do
-    message = Keyword.get(options, :message, :password_does_not_match)
+    message = Keyword.get(options, :message, "password_does_not_match")
     changeset |> validate_confirmation(:password, message: message)
   end
 
@@ -1055,8 +1055,7 @@ defmodule Flirtual.User do
     with {:ok, user} <-
            user
            |> put_password(password)
-           |> Repo.update(),
-         {_, _} <- Session.delete(user_id: user.id) do
+           |> Repo.update() do
       {:ok, user}
     end
   end

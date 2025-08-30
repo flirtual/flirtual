@@ -27,10 +27,7 @@ export const UserForms: React.FC = () => {
 				requireChange={false}
 				onSubmit={async () => {
 					await User.resendConfirmEmail()
-						.then(async (user) => {
-							await toasts.add(t("salty_novel_octopus_surge"));
-							await mutate<Session | null>(sessionKey(), (session) => ({ ...session, user }));
-						})
+						.then(() => toasts.add(t("salty_novel_octopus_surge")))
 						.catch(toasts.addError);
 
 					await invalidate({ queryKey: sessionKey() });

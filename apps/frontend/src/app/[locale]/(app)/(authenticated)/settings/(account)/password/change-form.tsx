@@ -1,31 +1,36 @@
 import { useTranslation } from "react-i18next";
 
-import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputText } from "~/components/inputs";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useSession } from "~/hooks/use-session";
+import { useToast } from "~/hooks/use-toast";
 import { mutate, sessionKey } from "~/query";
 
-export const PasswordChangeForm: React.FC = () => {
-	const session = useOptionalSession();
-	const { t } = useTranslation();
+const initialValues = {
+	password: "",
+	passwordConfirmation: "",
+	currentPassword: ""
+};
 
-	if (!session) return null;
+export const PasswordChangeForm: React.FC = () => {
+	const session = useSession();
+	const toasts = useToast();
+	const { t } = useTranslation();
 
 	return (
 		<Form
-			fields={{
-				password: "",
-				passwordConfirmation: "",
-				currentPassword: ""
-			}}
 			className="flex flex-col gap-8"
+			fields={initialValues}
 			requireChange={["password", "passwordConfirmation", "currentPassword"]}
-			onSubmit={async (body) => {
+			onSubmit={async (body, { reset }) => {
 				const user = await User.updatePassword(session.user.id, body);
-				await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
+				reset(initialValues);
+
+				toasts.add(t("password_changed"));
+
+				await mutate(sessionKey(), { ...session, user });
 			}}
 		>
 			{({ FormField }) => (

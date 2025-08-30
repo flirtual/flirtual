@@ -14,6 +14,7 @@ defmodule FlirtualWeb.UsersController do
   import Flirtual.Attribute, only: [validate_attribute: 3]
 
   alias Flirtual.{ObanWorkers, Policy, Repo, User, Users}
+  alias Flirtual.User.Session
   alias Flirtual.User.Profile.Block
   alias FlirtualWeb.SessionController
 
@@ -212,11 +213,14 @@ defmodule FlirtualWeb.UsersController do
         else: Users.get(user_id)
       )
 
+    token = get_session(conn, :token)
+
     if is_nil(user) or Policy.cannot?(conn, :update, user) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, user} <- Users.update_password(user, params) do
-        conn |> SessionController.logout() |> json(Policy.transform(conn, user))
+      with {:ok, user} <- Users.update_password(user, params),
+           {_, _} <- Session.delete_others(user_id: user.id, token: token) do
+        conn |> json(Policy.transform(conn, user))
       end
     end
   end
@@ -230,7 +234,8 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def confirm_reset_password(conn, params) do
-    with {:ok, _} <- Users.confirm_reset_password(params) do
+    with {:ok, user} <- Users.confirm_reset_password(params),
+         {_, _} <- Session.delete(user_id: user.id) do
       conn |> json(%{success: true})
     end
   end

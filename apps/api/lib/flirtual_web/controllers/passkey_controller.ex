@@ -146,11 +146,11 @@ defmodule FlirtualWeb.PasskeyController do
            ),
          login_user <- User.get(user_id),
          %User{banned_at: nil} <- login_user do
-      {_, conn} = SessionController.create(conn, login_user)
+      {session, conn} = SessionController.create(conn, login_user)
 
       conn
       |> put_status(:ok)
-      |> json(%{})
+      |> json(session)
     else
       %User{} ->
         {:error, {:unauthorized, :account_banned}}

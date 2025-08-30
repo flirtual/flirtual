@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import type { Session } from "~/api/auth";
 import { Subscription } from "~/api/subscription";
 import { User } from "~/api/user";
@@ -10,20 +12,19 @@ import {
 import { ModelCard } from "~/components/model-card";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { useLocale } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
+import { throwRedirect } from "~/redirect";
 import { urls } from "~/urls";
 
 export const ReactivationForm: React.FC = () => {
 	const { user } = useSession();
 
 	const { t } = useTranslation();
-	const [locale] = useLocale();
 
 	const toasts = useToast();
 
 	if (!user.deactivatedAt)
-		redirect({ href: urls.settings.deactivateAccount, locale });
+		throwRedirect(urls.settings.deactivateAccount);
 
 	return (
 		<ModelCard

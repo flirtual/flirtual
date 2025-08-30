@@ -20,7 +20,7 @@ export const LikesYouButton: FC = withSuspense(() => {
 
 	return (
 		<ButtonLink
-			className="w-full"
+			className="h-fit min-h-11 w-full py-1"
 			href={user.subscription?.active ? urls.likes : urls.subscription.default}
 			size="sm"
 		>
@@ -49,7 +49,7 @@ export const LikesYouButton: FC = withSuspense(() => {
 				>
 					{t("see_who_likes_you")}
 					{" "}
-					<span data-mask className="whitespace-nowrap">
+					<span data-mask className="-mt-1 whitespace-nowrap">
 						{likes.count.love && (
 							<>
 								(

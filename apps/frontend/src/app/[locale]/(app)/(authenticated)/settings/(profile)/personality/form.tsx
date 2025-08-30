@@ -15,6 +15,7 @@ import {
 	invalidate,
 	personalityFetcher,
 	personalityKey,
+	sessionKey,
 	useQuery,
 } from "~/query";
 
@@ -45,7 +46,10 @@ export const PersonalityForm: FC = () => {
 			fields={personality}
 			onSubmit={async (body) => {
 				await Personality.update(user.id, body);
-				await invalidate({ queryKey: personalityKey(user.id) });
+				await Promise.all([
+					invalidate({ queryKey: personalityKey(user.id) }),
+					invalidate({ queryKey: sessionKey() })
+				]);
 				toasts.add(t("wide_stock_skate_radiate"));
 			}}
 		>

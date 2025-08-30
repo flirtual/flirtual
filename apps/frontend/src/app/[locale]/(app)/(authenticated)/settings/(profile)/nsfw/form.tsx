@@ -20,7 +20,7 @@ import {
 import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { mutate, sessionKey } from "~/query";
+import { invalidate, mutate, sessionKey } from "~/query";
 
 export const NsfwForm: React.FC = () => {
 	const session = useSession();
@@ -56,17 +56,20 @@ export const NsfwForm: React.FC = () => {
 
 				toasts.add(t("born_sweet_nils_thrive"));
 
-				await mutate<Session>(sessionKey(), (session) => ({
-					...session,
-					user: {
-						...session.user,
-						profile: newProfile,
-						preferences: {
-							...newPreferences,
-							privacy: newPrivacy
+				await Promise.all([
+					mutate<Session>(sessionKey(), (session) => ({
+						...session,
+						user: {
+							...session.user,
+							profile: newProfile,
+							preferences: {
+								...newPreferences,
+								privacy: newPrivacy
+							}
 						}
-					}
-				}));
+					})),
+					invalidate({ queryKey: ["user"], exact: false })
+				]);
 			}}
 		>
 			{({ FormField, fields }) => (

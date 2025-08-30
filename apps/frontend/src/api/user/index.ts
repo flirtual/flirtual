@@ -232,7 +232,7 @@ export const User = {
 		return api.url("auth/email/confirm").json({ token }).post().json<unknown>();
 	},
 	resendConfirmEmail() {
-		return api.url("auth/email/confirm").delete().json<User>();
+		return api.url("auth/email/confirm").delete().json<unknown>();
 	},
 	deactivate(userId: string) {
 		return this.api.url(`/${userId}/deactivate`).post().json<User>();

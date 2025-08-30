@@ -377,6 +377,7 @@
 		"invalid_password": "Incorrect password, please try again or log out and reset your password.",
 		"email_domain_blocked": "Sorry, your email service has been blocked due to abuse.",
 		"email_must_be_different": "New email cannot be the same as the old email.",
+		"password_must_be_different": "New password cannot be the same as the old password.",
 		"account_banned": "You have been suspended, please check your account email for details and appeal instructions.",
 		"connection_account_not_found": "No Flirtual account found for this Discord user. Ensure you are logged into the correct Discord account. If you haven't linked your Discord account, log in with your email and password first, then add your Discord account in the Connections settings.",
 		"connection_verify_email": "Please verify your email with Discord and try again.",
@@ -616,6 +617,7 @@
 	"royal_home_leopard_tickle": "Your email address has been confirmed successfully.",
 	"salty_novel_octopus_surge": "Resent confirmation email",
 	"email_changed": "Email changed",
+	"password_changed": "Password changed",
 	"neat_plane_slug_savor": "Saved appearance",
 	"merry_arable_alligator_coax": "Saved connections",
 	"reactivated_account": "Reactivated account",
@@ -905,5 +907,6 @@
 	"flirtual_bug_report": "Flirtual bug report",
 	"copied": "Copied",
 	"copy_details": "Copy details",
-	"unnamed_user": "Unnamed user"
+	"unnamed_user": "Unnamed user",
+	"ideal_super_skunk_empower": "Get Premium to customize your profile colors!"
 }

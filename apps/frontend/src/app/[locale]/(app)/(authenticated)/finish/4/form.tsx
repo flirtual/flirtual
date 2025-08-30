@@ -10,6 +10,7 @@ import { FormButton } from "~/components/forms/button";
 import { InputLabel, InputSwitch } from "~/components/inputs";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useNavigate } from "~/i18n";
+import { invalidate, personalityKey, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import { usePersonality } from "../../settings/(profile)/personality/form";
@@ -34,7 +35,11 @@ export const Finish4Form: React.FC = () => {
 			onSubmit={async (body) => {
 				await Profile.Personality.update(user.id, body);
 
-				navigate(urls.finish(5));
+				await Promise.all([
+					invalidate({ queryKey: personalityKey(user.id) }),
+					invalidate({ queryKey: sessionKey() })
+				]);
+				await navigate(urls.finish(5));
 			}}
 		>
 			{({ FormField }) => (

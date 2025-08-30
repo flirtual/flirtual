@@ -20,6 +20,7 @@ import type {
 } from "react-router";
 
 import { server } from "~/const";
+import { isInternalHref } from "~/urls";
 
 import { log as _log } from "../log";
 import {
@@ -159,6 +160,11 @@ export function useNavigate() {
 
 	return useCallback<NavigateFunction>((toOrDelta: To | number, { locale, ...options }: NavigateOptions = {}) => {
 		if (typeof toOrDelta === "number") return navigate(toOrDelta);
+
+		if (!isInternalHref(toOrDelta) && typeof toOrDelta === "string") {
+			window.location.href = toOrDelta;
+			return;
+		}
 
 		locale ??= getLocale(toOrDelta) || defaultLocale;
 		return navigate(replaceLanguage(toOrDelta, locale), options);

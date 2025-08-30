@@ -1,6 +1,7 @@
 import { HelpCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+import type { Session } from "~/api/auth";
 import { Preferences } from "~/api/user/preferences";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
@@ -9,6 +10,7 @@ import { InputLabel, InputLabelHint, InputSwitch } from "~/components/inputs";
 import { InputPrivacySelect } from "~/components/inputs/specialized";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
+import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const PrivacyForm: React.FC = () => {
@@ -27,6 +29,13 @@ export const PrivacyForm: React.FC = () => {
 				reset(privacy);
 
 				toasts.add(t("blue_lost_quail_support"));
+
+				await mutate<Session>(
+					sessionKey(),
+					(session) => session
+						? { ...session, user: { ...session.user, preferences: { ...session.user.preferences, privacy } } }
+						: session
+				);
 			}}
 		>
 			{({ FormField }) => (

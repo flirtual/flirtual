@@ -12,7 +12,10 @@ import { Button } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { useDevice } from "~/hooks/use-device";
 import { useQueue } from "~/hooks/use-queue";
+import { useSession } from "~/hooks/use-session";
+import { useDefaultTour } from "~/hooks/use-tour";
 
 function Key({ label }: { label: string }) {
 	return (
@@ -57,6 +60,14 @@ const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	);
 };
 
+function DefaultTour() {
+	const { user } = useSession();
+	const { vision } = useDevice();
+	useDefaultTour(!user.moderatorMessage && !vision);
+
+	return null;
+}
+
 export const QueueActions: FC<{
 	kind: ProspectKind;
 }> = ({ kind: mode }) => {
@@ -70,138 +81,48 @@ export const QueueActions: FC<{
 	} = useQueue(mode);
 
 	return (
-		<div className="flex h-32 w-full items-center justify-center">
-			<div className="fixed bottom-24 z-20 flex flex-col items-center justify-center gap-2">
-				<QueueDebugger kind={mode} />
-				<div className="flex items-center gap-2 text-white-10">
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<m.button
-								id="undo-button"
-								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
-								disabled={!previous || mutating}
-								type="button"
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={() => undo()}
-							>
-								<Undo2 className="size-7" strokeWidth={3} />
-							</m.button>
-						</TooltipTrigger>
-						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-							<span className="pt-1">{t("undo")}</span>
-							<Key label="H" />
-						</TooltipContent>
-					</Tooltip>
-					{mode === "love" && (
+		<>
+			<DefaultTour />
+			<div className="flex h-32 w-full items-center justify-center">
+				<div className="fixed bottom-24 z-20 flex flex-col items-center justify-center gap-2">
+					<QueueDebugger kind={mode} />
+					<div className="flex items-center gap-2 text-white-10">
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<m.button
-									id="like-button"
-									className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:opacity-50"
-									disabled={mutating}
+									id="undo-button"
+									className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
+									disabled={!previous || mutating}
 									type="button"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
-									onClick={() => like()}
-								>
-									<HeartIcon
-										className="w-[2.125rem] shrink-0"
-										gradient={false}
-									/>
-								</m.button>
-							</TooltipTrigger>
-							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-								<span className="pt-1">{t("like")}</span>
-								<Key label="J" />
-							</TooltipContent>
-						</Tooltip>
-					)}
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<m.button
-								id="friend-button"
-								className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:opacity-50"
-								disabled={mutating}
-								type="button"
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={() => like("friend")}
-							>
-								<PeaceIcon
-									className="w-[2.125rem] shrink-0"
-									gradient={false}
-								/>
-							</m.button>
-						</TooltipTrigger>
-						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-							<span className="pt-1">{t("homie")}</span>
-							<Key label={mode === "love" ? "K" : "J"} />
-						</TooltipContent>
-					</Tooltip>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<m.button
-								id="pass-button"
-								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
-								disabled={mutating}
-								type="button"
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={() => pass()}
-							>
-								<X className="size-7" strokeWidth={3} />
-							</m.button>
-						</TooltipTrigger>
-						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-							<span className="pt-1">{t("pass")}</span>
-							<Key label="L" />
-						</TooltipContent>
-					</Tooltip>
-				</div>
-			</div>
-		</div>
-	);
-
-	return (
-
-		<div className="h-[5.5rem] w-full desktop:h-0">
-			<div className="pointer-events-none fixed bottom-[max(calc(var(--safe-area-inset-bottom,0rem)+3.375rem),4.5rem)] left-0 z-20 flex w-full flex-col items-center justify-center gap-3 px-2 pb-4 vision:bottom-2 desktop:bottom-0 desktop:py-8">
-				<div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-xl py-2 text-white-10 desktop:gap-3">
-					{/* {!explicitUserId && (
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<button
-									className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
-									disabled={!Array.isArray(queue) || !queue[0]}
-									id="undo-button"
-									type="button"
-									onClick={undo}
+									onClick={() => undo()}
 								>
 									<Undo2 className="size-7" strokeWidth={3} />
-								</button>
+								</m.button>
 							</TooltipTrigger>
 							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
 								<span className="pt-1">{t("undo")}</span>
 								<Key label="H" />
 							</TooltipContent>
 						</Tooltip>
-					)} */}
-					<div className="flex flex-row items-center gap-1.5 desktop:gap-3">
 						{mode === "love" && (
 							<Tooltip>
 								<TooltipTrigger asChild>
-									<button
+									<m.button
 										id="like-button"
 										className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:opacity-50"
+										disabled={mutating}
 										type="button"
+										whileHover={{ scale: 1.05 }}
+										whileTap={{ scale: 0.95 }}
 										onClick={() => like()}
 									>
 										<HeartIcon
 											className="w-[2.125rem] shrink-0"
 											gradient={false}
 										/>
-									</button>
+									</m.button>
 								</TooltipTrigger>
 								<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
 									<span className="pt-1">{t("like")}</span>
@@ -211,42 +132,48 @@ export const QueueActions: FC<{
 						)}
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<button
+								<m.button
 									id="friend-button"
 									className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:opacity-50"
+									disabled={mutating}
 									type="button"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
 									onClick={() => like("friend")}
 								>
 									<PeaceIcon
 										className="w-[2.125rem] shrink-0"
 										gradient={false}
 									/>
-								</button>
+								</m.button>
 							</TooltipTrigger>
 							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
 								<span className="pt-1">{t("homie")}</span>
 								<Key label={mode === "love" ? "K" : "J"} />
 							</TooltipContent>
 						</Tooltip>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<m.button
+									id="pass-button"
+									className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
+									disabled={mutating}
+									type="button"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={() => pass()}
+								>
+									<X className="size-7" strokeWidth={3} />
+								</m.button>
+							</TooltipTrigger>
+							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+								<span className="pt-1">{t("pass")}</span>
+								<Key label="L" />
+							</TooltipContent>
+						</Tooltip>
 					</div>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<button
-								id="pass-button"
-								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
-								type="button"
-								onClick={() => pass()}
-							>
-								<X className="size-7" strokeWidth={3} />
-							</button>
-						</TooltipTrigger>
-						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-							<span className="pt-1">{t("pass")}</span>
-							<Key label="L" />
-						</TooltipContent>
-					</Tooltip>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };

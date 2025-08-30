@@ -122,7 +122,7 @@ export const Authentication = {
 	passkey: {
 		api: api.url("auth/passkey"),
 		authenticate(options: AuthenticatePasskeyOptions) {
-			return this.api.url("/authenticate").json(options).post().res();
+			return this.api.url("/authenticate").json(options).post().json<Session>();
 		},
 		async authenticationChallenge() {
 			const { publicKey } = await this.api

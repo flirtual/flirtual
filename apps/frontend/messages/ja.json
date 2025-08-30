@@ -377,6 +377,7 @@
 		"invalid_password": "パスワードが間違っています。再試行するかログアウトしてパスワードをリセットしてください。",
 		"email_domain_blocked": "申し訳ありませんが、あなたのメールサービスは濫用のためブロックされています。",
 		"email_must_be_different": "新しいメールアドレスは古いメールアドレスと同じにすることはできません。",
+		"password_must_be_different": "新しいパスワードは、以前のパスワードと同じにできません。",
 		"account_banned": "アカウントが停止されました。詳細と異議申し立て手順についてはアカウントのメールを確認してください。",
 		"connection_account_not_found": "このDiscordユーザーに関連付けられたFlirtualアカウントが見つかりません。このDiscordアカウントにログインしていることを確認してください。Discordアカウントをリンクしていない場合、まずメールとパスワードでログインし、その後接続設定でDiscordアカウントを追加してください。",
 		"connection_verify_email": "Discordでメールを確認してもう一度お試しください。",
@@ -616,6 +617,7 @@
 	"royal_home_leopard_tickle": "メールアドレスの確認が完了しました。",
 	"salty_novel_octopus_surge": "確認メールを再送信",
 	"email_changed": "メールアドレスが変更されました",
+	"password_changed": "パスワードが変更されました",
 	"neat_plane_slug_savor": "保存された外観",
 	"merry_arable_alligator_coax": "保存された接続",
 	"reactivated_account": "再開したアカウント",
@@ -902,5 +904,6 @@
 	"flirtual_logo": "Flirtualロゴ",
 	"translate": "翻訳",
 	"source_code": "ソースコード",
-	"unnamed_user": "名無しのユーザー"
+	"unnamed_user": "名無しのユーザー",
+	"ideal_super_skunk_empower": "プレミアムプランでプロフィールカラーをカスタマイズしよう！"
 }

@@ -67,12 +67,14 @@ export const PasswordPasskeyForm: React.FC = () => {
 				.create(challenge)
 				.catch((reason) => {
 					if (reason instanceof Error && reason.name === "InvalidStateError") {
-						toasts.add({
+						return toasts.add({
 							type: "warning",
 							value: t("level_nice_cheetah_drum")
 						});
 					}
+					toasts.addError(reason);
 				})) as PublicKeyCredential;
+
 			if (!credential) return;
 
 			const response

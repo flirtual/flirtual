@@ -2,8 +2,10 @@ import { useTranslation } from "react-i18next";
 import { withSuspense } from "with-suspense";
 
 import { InlineLink } from "~/components/inline-link";
+import { ProfileDropdown } from "~/components/profile/dropdown";
 import { UserAvatar } from "~/components/user-avatar";
 import { useConversation } from "~/hooks/use-conversations";
+import { useSession } from "~/hooks/use-session";
 import { ConversationChatbox } from "~/hooks/use-talkjs";
 import { useUser } from "~/hooks/use-user";
 import { throwRedirect } from "~/redirect";
@@ -13,6 +15,7 @@ import { LeaveButton } from "./leave-button";
 import { VRChatButton } from "./vrchat-button";
 
 export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }) => {
+	const { user: me } = useSession();
 	const { t } = useTranslation();
 
 	const conversation = useConversation(conversationId);
@@ -38,7 +41,8 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 						{user.profile.displayName || t("unnamed_user")}
 					</span>
 				</InlineLink>
-				<div className="ml-auto">
+				<div className="ml-auto flex items-center gap-4 text-white-20">
+					{(me.tags?.includes("moderator") || me.tags?.includes("admin")) && <ProfileDropdown userId={user.id} />}
 					{user.tags?.includes("official")
 						? (
 								<LeaveButton conversationId={conversationId} />

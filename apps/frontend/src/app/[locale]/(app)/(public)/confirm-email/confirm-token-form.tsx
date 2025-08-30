@@ -31,7 +31,7 @@ export const ConfirmTokenForm: React.FC<{ token: string }> = ({ token }) => {
 			toasts.add(t("royal_home_leopard_tickle"));
 
 			await invalidate({ queryKey: sessionKey() });
-			await navigate(urls.default);
+			await navigate(urls.discover("dates"));
 		}
 	});
 

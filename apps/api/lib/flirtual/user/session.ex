@@ -116,6 +116,14 @@ defmodule Flirtual.User.Session do
     Session |> where_token(token) |> delete_all()
   end
 
+  def delete_others(user_id: user_id, token: token)
+      when is_binary(user_id) and is_binary(token) do
+    Session
+    |> where(user_id: ^user_id)
+    |> where_not_token(token)
+    |> delete_all()
+  end
+
   def delete_all(query) do
     query
     |> Repo.delete_all()
@@ -124,6 +132,11 @@ defmodule Flirtual.User.Session do
   def where_token(query, encoded_token) do
     hashed_token = Session.hash_token(Session.decode_token(encoded_token))
     query |> where(hashed_token: ^hashed_token)
+  end
+
+  def where_not_token(query, encoded_token) do
+    hashed_token = Session.hash_token(Session.decode_token(encoded_token))
+    query |> where([session], session.hashed_token != ^hashed_token)
   end
 
   def where_not_expired(query) do

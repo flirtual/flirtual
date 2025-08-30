@@ -84,7 +84,10 @@ function useKylesWebAuthnImplementation() {
 								)
 							}
 						})
-						.then(() => navigate(next()))
+						.then(async (session) => {
+							await mutate(sessionKey(), session);
+							await navigate(next());
+						})
 						.catch((reason) => {
 							if (isWretchError(reason)) {
 								toasts.addError(t(`errors.${reason.json.error}` as any));
