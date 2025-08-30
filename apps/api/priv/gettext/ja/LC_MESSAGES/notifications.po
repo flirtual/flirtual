@@ -8,8 +8,16 @@
 ### to merge POT files into PO files.
 msgid ""
 msgstr ""
+"PO-Revision-Date: 2025-02-18 01:09+0000\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/flirtual/"
+"notifications/ja/>\n"
 "Language: ja\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.10.1-dev\n"
 
 #: lib/flirtual/mailer.ex:48
 #: lib/flirtual/mailer.ex:295
@@ -43,8 +51,8 @@ msgstr "アカウントが無効になりました"
 #, elixir-autogen, elixir-format
 msgid "confirm_email.body_html"
 msgstr ""
-"<p>あと少しです。以下のボタンをタップしてメールアドレスを確認してください。確認"
-"が完了すると、すぐにマッチメイキングを開始できます！</p>\n"
+"<p>あと少しです。以下のボタンをタップしてメールアドレスを確認してください。確"
+"認が完了すると、すぐにマッチメイキングを開始できます！</p>\n"
 "\n"
 "<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>"
 
@@ -67,13 +75,13 @@ msgstr "アカウントを確認してください"
 #, elixir-autogen, elixir-format
 msgid "reset_password.body_html"
 msgstr ""
-"<p>あと少しです。以下のボタンをタップしてパスワードをリセットしてください。完了"
-"すると、ログインできるようになります！</p>\n"
+"<p>あと少しです。以下のボタンをタップしてパスワードをリセットしてください。完"
+"了すると、ログインできるようになります！</p>\n"
 "\n"
 "<p><a href=\"%{action_url}\" class=\"btn\">続行</a></p>\n"
 "\n"
-"<p>このリクエストに心当たりがない場合は、本メールを無視していただいて構いません。"
-"</p>"
+"<p>このリクエストに心当たりがない場合は、本メールを無視していただいて構いませ"
+"ん。</p>"
 
 #: lib/flirtual/user/email.ex:86
 #, elixir-autogen, elixir-format
@@ -84,7 +92,8 @@ msgstr ""
 "\n"
 "%{action_url}\n"
 "\n"
-"このリクエストに心当たりがない場合は、このメールを無視していただいて構いません。"
+"このリクエストに心当たりがない場合は、このメールを無視していただいて構いませ"
+"ん。"
 
 #: lib/flirtual/user/email.ex:81
 #: lib/flirtual/user/email.ex:94
@@ -96,29 +105,29 @@ msgstr "パスワードリセットのリクエスト"
 #, elixir-autogen, elixir-format
 msgid "suspended.body_html"
 msgstr ""
-"<p>Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると判断"
-"しました。</p>\n"
+"<p>Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると"
+"判断しました。</p>\n"
 "\n"
 "<p><strong>理由</strong>: %{message}</p>\n"
 "\n"
-"<p>お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立てた"
-"い場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメッセージ"
-"に返信してください。30日以内に申し立てに対する返答がない場合は、審査され、却下さ"
-"れたものとみなします。</p><p>Flirtualチーム</p>"
+"<p>お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立"
+"てたい場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメ"
+"ッセージに返信してください。30日以内に申し立てに対する返答がない場合は、審査"
+"され、却下されたものとみなします。</p><p>Flirtualチーム</p>"
 
 #: lib/flirtual/user/email.ex:15
 #, elixir-autogen, elixir-format
 msgid "suspended.body_text"
 msgstr ""
-"Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると判断し"
-"ました。\n"
+"Flirtualのモデレーションチームが、お客様のアカウントが規則に違反していると判"
+"断しました。\n"
 "\n"
 "違反理由: %{message}\n"
 "\n"
-"お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立てたい"
-"場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメッセージに"
-"返信してください。30日以内に申し立てに対する返答がない場合は、審査され、却下され"
-"たものとみなします。\n"
+"お客様のアカウントデータは30日間保持されます。アカウントの凍結解除を申し立て"
+"たい場合、またはただちにアカウントを削除してほしい場合は、30日以内にこのメッ"
+"セージに返信してください。30日以内に申し立てに対する返答がない場合は、審査さ"
+"れ、却下されたものとみなします。\n"
 "\n"
 "Flirtualチーム"
 
@@ -130,135 +139,169 @@ msgid "continue"
 msgstr "続行"
 
 #: lib/flirtual/user/email.ex:154
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "email_changed.body_html"
 msgstr ""
+"<p>あなたのFirtualアカウントのEメールアドレスは%{user.email}に変更されました"
+"。</p>\n"
+"\n"
+" "
+"<p>このリクエストを行わなかった場合は、すぐにこのEメールに返信し、アカウント"
+"を確保してください。</p>"
 
 #: lib/flirtual/user/email.ex:153
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "email_changed.body_text"
 msgstr ""
+"Firtualアカウントのメールアドレスが%{user.email}に変更されました。\n"
+"\n"
+"このリクエストを行っていない場合は、すぐにこのメールに返信してください。"
 
 #: lib/flirtual/user/email.ex:152
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "email_changed.subject"
-msgstr ""
+msgstr "メールアドレスが変更されました"
 
 #: lib/flirtual/user/email.ex:134
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "password_changed.body_html"
 msgstr ""
+"<p></p>\n"
+"\n"
+"<p> <a href=\"#{action_url}\""
+">もし、あなたがこのリクエストをしていないのであれば、 "
+"すぐにパスワードをリセットするか、このメールに返信してください。</a></p>"
 
 #: lib/flirtual/user/email.ex:132
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "password_changed.body_text"
 msgstr ""
+"誰かが、できればあなたが、Firtualアカウントのパスワードを変更しました。\n"
+"\n"
+" このリクエストを行わなかった場合、すぐに %{action_url} "
+"でパスワードをリセットするか、サポートが必要な場合はこのメールに返信してくだ"
+"さい。"
 
 #: lib/flirtual/user/email.ex:130
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "password_changed.subject"
-msgstr ""
+msgstr "パスワードが変更されました"
 
 #: lib/flirtual/user/email.ex:205
 #: lib/flirtual/user/email.ex:217
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "message"
-msgstr ""
+msgstr "メッセージ"
 
 #: lib/flirtual/user/email.ex:191
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "new_match.looking_for_date_ideas"
 msgstr ""
+"デートのアイデアをお探しですか？私たちのDiscordサーバーの#date-"
+"worldsチャンネルをチェックしてください： https://discord.gg/flirtual"
 
 #: lib/flirtual/user/email.ex:200
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "new_match.looking_for_date_ideas_html"
 msgstr ""
+"<p>デートのアイデアをお探しですか？<a href=\"https://discord.gg/flirtual\""
+">Discord サーバー</a> の #date-worlds チャンネルをチェックしてください。</p>"
 
 #: lib/flirtual/user/email.ex:213
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "send_them_a_message"
-msgstr ""
+msgstr "メッセージを送る"
 
 #: lib/flirtual/user/push.ex:13
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready"
-msgstr ""
+msgstr "あなたの毎日のプロフィールは準備ができています！"
 
 #: lib/flirtual/user/push.ex:15
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "daily_profiles_ready_message"
-msgstr ""
+msgstr "Flirtualはバーチャルリアリティのためのオンラインデートアプリです。タップして"
+"ご覧ください！"
 
 #: lib/flirtual/user/email.ex:189
 #: lib/flirtual/user/email.ex:198
 #: lib/flirtual/user/push.ex:46
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "homied_you"
-msgstr ""
+msgstr "名前}があなたをホメています。メッセージを送る"
 
 #: lib/flirtual/user/email.ex:182
 #: lib/flirtual/user/push.ex:40
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "its_a_match"
-msgstr ""
+msgstr "マッチします！💞"
 
 #: lib/flirtual/user/email.ex:183
 #: lib/flirtual/user/push.ex:41
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "its_a_match_homie"
-msgstr ""
+msgstr "マッチングする！✌️"
 
 #: lib/flirtual/user/email.ex:188
 #: lib/flirtual/user/email.ex:197
 #: lib/flirtual/user/push.ex:45
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "liked_you"
-msgstr ""
+msgstr "名前}さんがあなたに「いいね!メッセージを送る"
 
 #: lib/flirtual/user/email.ex:276
 #: lib/flirtual/user/push.ex:68
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "someone_liked_you"
 msgid_plural "x_people_liked_you"
-msgstr[0] ""
+msgstr[0] "今週、%{数}人があなたに「いいね！」をしました！"
 
 #: lib/flirtual/user/email.ex:285
 #: lib/flirtual/user/push.ex:76
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles_to_see_if_its_a_match"
-msgstr ""
+msgstr "プロフィールをブラウズして、マッチするかどうか確認しましょう。"
 
 #: lib/flirtual/user/push.ex:74
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you_and_match"
-msgstr ""
+msgstr "誰があなたを好きか見て、一致する。"
 
 #: lib/flirtual/user/email.ex:306
 #, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles"
-msgstr ""
+msgstr "プロフィールを閲覧する"
 
 #: lib/flirtual/user/email.ex:295
 #, elixir-autogen, elixir-format, fuzzy
 msgid "browse_profiles_to_see_if_its_a_match_html"
 msgstr ""
+"<a href=\"%{action_url}\""
+">プロフィールを閲覧</a>して、マッチするかどうかを確認しましょう。</p> "
+"<p>または<a href=\"https://flirtu.al/subscription\""
+">プレミアムにアップグレード</a>して、誰があなたに好意を持っているかをすぐに確"
+"認し、他のマッチを見逃すことはありません。"
 
 #: lib/flirtual/user/email.ex:288
-#, elixir-autogen, elixir-format
+#, elixir-autogen, elixir-format, fuzzy
 msgid "or_upgrade_to_premium"
 msgstr ""
+"また、プレミアムにアップグレードすると、誰があなたに好意を持っているかをすぐ"
+"に確認でき、他のマッチングを見逃すことがなくなります: https://flirtu.al/"
+"subscription"
 
 #: lib/flirtual/user/email.ex:284
 #: lib/flirtual/user/email.ex:294
 #: lib/flirtual/user/email.ex:305
 #, elixir-autogen, elixir-format, fuzzy
 msgid "see_who_likes_you"
-msgstr ""
+msgstr "いいねした人を見る"
 
 #: lib/flirtual/user/email.ex:281
 #: lib/flirtual/user/email.ex:291
 #, elixir-autogen, elixir-format, fuzzy
 msgid "this_week_1_person_liked_you"
 msgid_plural "this_week_x_people_liked_you"
-msgstr[0] ""
+msgstr[0] "今週 "
+"%{count}人がFirtualであなたのプロフィールに「いいね！」または「ホメて」くれま"
+"した！"
