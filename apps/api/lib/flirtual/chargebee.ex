@@ -5,6 +5,18 @@ defmodule Flirtual.Chargebee do
 
   import Ecto.Changeset
 
+  # https://www.chargebee.com/docs/billing/2.0/customers/supported-locales
+  def to_valid_locale(locale) do
+    case locale do
+      "ja" -> "en"
+      "ko" -> "en"
+      "nl" -> "en"
+      "ru" -> "en"
+      "sv" -> "en"
+      _ -> locale
+    end
+  end
+
   def checkout(%User{chargebee_id: nil} = user, %Plan{purchasable: true} = plan) do
     with {:ok, customer} <- update_customer(user) do
       Map.put(user, :chargebee_id, customer.id)
@@ -42,12 +54,23 @@ defmodule Flirtual.Chargebee do
                  "checkout_existing_for_items",
                  %{
                    layout: "in_app",
-                   customer: %{id: chargebee_id},
+                   customer: %{
+                     id: chargebee_id,
+                     locale: to_valid_locale(user.preferences.language)
+                   },
                    subscription: %{id: user.subscription.chargebee_id},
                    subscription_items: [
                      %{item_price_id: plan.chargebee_id}
                    ],
-                   replace_item_list: true
+                   replace_item_list: true,
+                   redirect_url:
+                     Application.fetch_env!(:flirtual, :frontend_origin)
+                     |> URI.merge("/subscription?success=true")
+                     |> URI.to_string(),
+                   cancel_url:
+                     Application.fetch_env!(:flirtual, :frontend_origin)
+                     |> URI.merge("/subscription")
+                     |> URI.to_string()
                  }
                ) do
           {:ok, url}
@@ -64,10 +87,21 @@ defmodule Flirtual.Chargebee do
                  "checkout_new_for_items",
                  %{
                    layout: "in_app",
-                   customer: %{id: chargebee_id},
+                   customer: %{
+                     id: chargebee_id,
+                     locale: to_valid_locale(user.preferences.language)
+                   },
                    subscription_items: [
                      %{item_price_id: plan.chargebee_id}
-                   ]
+                   ],
+                   redirect_url:
+                     Application.fetch_env!(:flirtual, :frontend_origin)
+                     |> URI.merge("/subscription?success=true")
+                     |> URI.to_string(),
+                   cancel_url:
+                     Application.fetch_env!(:flirtual, :frontend_origin)
+                     |> URI.merge("/subscription")
+                     |> URI.to_string()
                  }
                ) do
           {:ok, url}
@@ -94,11 +128,22 @@ defmodule Flirtual.Chargebee do
                  "checkout_one_time_for_items",
                  %{
                    layout: "in_app",
-                   customer: %{id: chargebee_id},
+                   customer: %{
+                     id: chargebee_id,
+                     locale: to_valid_locale(user.preferences.language)
+                   },
                    item_prices: [
                      %{item_price_id: plan.chargebee_id}
                    ],
-                   currency_code: "usd"
+                   currency_code: "usd",
+                   redirect_url:
+                     Application.fetch_env!(:flirtual, :frontend_origin)
+                     |> URI.merge("/subscription?success=true")
+                     |> URI.to_string(),
+                   cancel_url:
+                     Application.fetch_env!(:flirtual, :frontend_origin)
+                     |> URI.merge("/subscription")
+                     |> URI.to_string()
                  }
                ) do
           {:ok, url}
@@ -116,13 +161,13 @@ defmodule Flirtual.Chargebee do
     end
   end
 
-  def manage(%User{chargebee_id: chargebee_id}) do
+  def manage(%User{chargebee_id: chargebee_id} = user) do
     with {:ok,
           %Chargebeex.PortalSession{
             access_url: url
           }} <-
            Chargebeex.PortalSession.create(%{
-             customer: %{id: chargebee_id}
+             customer: %{id: chargebee_id, locale: to_valid_locale(user.preferences.language)}
            }) do
       {:ok, url}
     end
@@ -131,7 +176,10 @@ defmodule Flirtual.Chargebee do
   # User isn't an existing Chargebee Customer, create one.
   def update_customer(%User{chargebee_id: nil} = user) do
     with {:ok, customer} <-
-           Chargebeex.Customer.create(%{email: user.email, locale: user.preferences.language}),
+           Chargebeex.Customer.create(%{
+             email: user.email,
+             locale: to_valid_locale(user.preferences.language)
+           }),
          {:ok, _} <-
            change(user, %{chargebee_id: customer.id})
            |> Repo.update() do
@@ -143,7 +191,7 @@ defmodule Flirtual.Chargebee do
   def update_customer(%User{chargebee_id: chargebee_id} = user) when is_binary(chargebee_id) do
     Chargebeex.Customer.update(chargebee_id, %{
       email: user.email,
-      locale: user.preferences.language
+      locale: to_valid_locale(user.preferences.language)
     })
   end
 
