@@ -22,7 +22,6 @@
 		},
 		"resolveJsonModule": true,
 		"types": [
-			"node",
 			"vite/client",
 			"unplugin-info/client",
 			"unplugin-remote-assets/client"
@@ -38,5 +37,8 @@
 		"**/.server/**/*",
 		"**/.client/**/*",
 		".react-router/types/**/*"
+	],
+	"exclude": [
+		"src/worker.ts"
 	]
 }

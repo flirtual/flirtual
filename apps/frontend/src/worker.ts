@@ -1,3 +1,6 @@
+/// <reference types="@cloudflare/workers-types" />
+/// <reference types="../worker-configuration.d.ts" />
+
 import { env } from "cloudflare:workers";
 import { createPath } from "react-router";
 

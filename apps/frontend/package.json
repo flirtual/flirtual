@@ -3,7 +3,7 @@
 	"packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
 	"scripts": {
 		"dev": "react-router dev",
-		"typegen": "wrangler types && react-router typegen",
+		"typegen": "wrangler types --include-runtime false && react-router typegen",
 		"build": "rm -rf .sonda && pnpm -s typegen && react-router build",
 		"build:preview": "sh -c 'name=${1:-$(whoami)} && VITE_PREVIEW=\"$name\" pnpm -s build --mode=\"$name\"' --",
 		"release": "sh -c 'branch=${WORKERS_CI_BRANCH:-$(git rev-parse --abbrev-ref HEAD)}; [ -z \"$branch\" ] || [ \"$branch\" = \"HEAD\" ] && { echo \"Error: No branch detected or in detached HEAD state\" >&2; exit 1; }; [ \"$branch\" = \"production\" ] && pnpm production || ([ \"$branch\" = \"main\" ] && pnpm canary || pnpm preview \"$branch\")'",

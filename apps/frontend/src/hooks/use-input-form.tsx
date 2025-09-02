@@ -227,6 +227,7 @@ export function useInputForm<T extends { [s: string]: unknown }>(
 
 	const fields: UseInputForm<T>["fields"] = useMemo(
 		() =>
+			// @ts-expect-error: ???
 			fromEntries(
 				[
 					...entries(values),

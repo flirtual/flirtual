@@ -39,6 +39,8 @@ export function attributeFetcher<T extends AttributeType>({ queryKey: [, type], 
 
 export const userKey = (userId?: string | null) => ["user", userId || null] as const;
 export function userFetcher({ queryKey: [, userId], signal }: QueryFunctionContext<ReturnType<typeof userKey>>) {
+	if (!userId) return null;
+
 	return isUid(userId)
 		? User.get(userId, { signal })
 		: User.getBySlug(userId, { signal });
