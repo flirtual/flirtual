@@ -9,6 +9,7 @@ import { use, useDebugValue, useEffect, useState } from "react";
 import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
+import { isWretchError } from "./api/common";
 import { Config } from "./api/config";
 import { Conversation } from "./api/conversations";
 import type { ProspectKind } from "./api/matchmaking";
@@ -110,7 +111,13 @@ export const queryClient = new QueryClient({
 		queries: {
 			experimental_prefetchInRender: true,
 			throwOnError: true,
-			retry: !development,
+			retry: development
+				// Never retry failed queries in development.
+				? false
+				: (attempt, error) => {
+						if (isWretchError(error) && [400, 401, 403, 429].includes(error.status)) return false;
+						return true;
+					},
 			retryDelay: (attempt) => Math.min(100 * 2 ** attempt, 60000),
 			staleTime: ms("5m"),
 			gcTime: ms("1h"),
