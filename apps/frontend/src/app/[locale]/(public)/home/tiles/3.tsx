@@ -23,8 +23,10 @@ import BrandNewYorkTimes from "virtual:remote/dc248f6f-aee6-4318-b473-6fe2d6db07
 import ImageE812eb97 from "virtual:remote/e812eb97-03ba-4309-a2e1-42cddadc4497";
 import ImageFa83b674 from "virtual:remote/fa83b674-ccc4-4dce-9573-917fc0a0c090";
 import BrandiDateAwards from "virtual:remote/fd92ab0f-d264-4a69-813f-bea13def2c46";
+import { withSuspense } from "with-suspense";
 
 import { Image } from "~/components/image";
+import { useUserCount } from "~/hooks/use-user";
 import { useMessages } from "~/i18n";
 
 import { Tile, TileAnchor } from ".";
@@ -60,11 +62,19 @@ const brandImages = [
 	BrandiDateAwards
 ];
 
-export function Testimonial({ id }: TileProps) {
+const Header = withSuspense(() => {
 	const { t } = useTranslation();
+	const userCount = useUserCount();
+	return t("even_major_hare_believe", { userCount });
+}, {
+	fallback: () => {
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		const { t } = useTranslation();
+		return t("even_major_hare_believe", { userCount: 100000 }); ;
+	}
+});
 
-	const userCount = 1000;
-
+export function Testimonial({ id }: TileProps) {
 	const {
 		acidic_advertisement_request_cough: brandNames
 	} = useMessages();
@@ -74,9 +84,7 @@ export function Testimonial({ id }: TileProps) {
 			<div className="flex justify-center p-8 desktop:p-16 desktop:py-12">
 				<TileAnchor id={id}>
 					<span className="font-montserrat text-3xl font-extrabold desktop:text-4xl">
-						{t("even_major_hare_believe", {
-							userCount
-						})}
+						<Header />
 					</span>
 				</TileAnchor>
 			</div>

@@ -4,6 +4,8 @@ import {
 	relationshipFetcher,
 	relationshipKey,
 	useQuery,
+	userCountFetcher,
+	userCountKey,
 	userFetcher,
 	userKey,
 } from "~/query";
@@ -30,5 +32,12 @@ export function useRelationship(userId: string): Relationship | null {
 	return useQuery({
 		queryKey: relationshipKey(userId),
 		queryFn: relationshipFetcher,
+	});
+}
+
+export function useUserCount() {
+	return useQuery({
+		queryKey: userCountKey(),
+		queryFn: userCountFetcher
 	});
 }

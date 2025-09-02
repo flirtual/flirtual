@@ -1,3 +1,5 @@
+import { queryClient, userCountFetcher, userCountKey } from "~/query";
+
 import { TileGuide, TileProvider } from "./tiles";
 import { Hero } from "./tiles/0";
 import { AvatarProfiles } from "./tiles/1";
@@ -12,6 +14,15 @@ const tiles = [
 	Testimonial,
 	CallToAction
 ];
+
+export const handle = {
+	async preload() {
+		await queryClient.prefetchQuery({
+			queryKey: userCountKey(),
+			queryFn: userCountFetcher
+		});
+	}
+};
 
 export default function LandingPage() {
 	return (

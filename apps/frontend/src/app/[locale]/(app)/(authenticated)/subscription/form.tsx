@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { InlineLink } from "~/components/inline-link";
 import { useSession } from "~/hooks/use-session";
+import { useUserCount } from "~/hooks/use-user";
 import { useLocale } from "~/i18n";
 import { urls } from "~/urls";
 
@@ -20,7 +21,7 @@ export const SubscriptionForm: FC = () => {
 	const { t } = useTranslation();
 
 	const { user: { subscription } } = useSession();
-	const userCount = 1000; // TODO: Replace with actual user count
+	const userCount = useUserCount();
 
 	return (
 		<>

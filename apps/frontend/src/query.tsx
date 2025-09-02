@@ -49,6 +49,9 @@ export function relationshipFetcher({ queryKey: [, userId], signal }: QueryFunct
 	return User.getRelationship(userId, { signal });
 }
 
+export const userCountKey = () => ["user-count"] as const;
+export const userCountFetcher = () => User.getApproximateCount();
+
 export const queueKey = (kind: ProspectKind) => ["queue", kind] as const;
 export function queueFetcher({ queryKey: [, kind], signal }: QueryFunctionContext<ReturnType<typeof queueKey>>) {
 	return Matchmaking.queue(kind, { signal });

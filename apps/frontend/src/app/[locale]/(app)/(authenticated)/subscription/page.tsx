@@ -6,7 +6,7 @@ import { getSession } from "~/hooks/use-session";
 import { i18n, redirect } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
-import { invalidate, sessionKey } from "~/query";
+import { invalidate, queryClient, sessionKey, userCountFetcher, userCountKey } from "~/query";
 import { urls } from "~/urls";
 
 import type { Route } from "./+types/page";
@@ -22,6 +22,15 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
+export const handle = {
+	async preload() {
+		await queryClient.prefetchQuery({
+			queryKey: userCountKey(),
+			queryFn: userCountFetcher
+		});
+	}
+};
+
 export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 	const session = await getSession();
 	if (!session) return;
@@ -32,6 +41,8 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 
 	if (new URL(request.url).searchParams.get("success") === "true")
 		invalidate({ queryKey: sessionKey() });
+
+	await handle.preload();
 }
 
 clientLoader.hydrate = true as const;
