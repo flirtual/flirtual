@@ -20,7 +20,7 @@ const DiscordEmbed_: React.FC = () => {
 	);
 };
 
-const LazyDiscordEmbed = lazy(() => Promise.resolve({ default: DiscordEmbed_ }));
+const LazyDiscordEmbed = lazy(() => DiscordEmbed_);
 
 export const DiscordEmbed: React.FC = () => (
 	<Suspense fallback={<div style={{ height: 600, width: "100%" }} />}>
