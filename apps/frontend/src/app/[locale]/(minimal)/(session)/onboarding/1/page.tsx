@@ -3,6 +3,7 @@ import invariant from "tiny-invariant";
 
 import { ModelCard } from "~/components/model-card";
 import { i18n } from "~/i18n";
+import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 
 import type { Route } from "./+types/page";
