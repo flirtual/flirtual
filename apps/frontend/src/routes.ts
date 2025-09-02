@@ -91,11 +91,13 @@ export default [
 				]),
 				layout("(app)/(authenticated)/(admin)", [
 					page("stats", "(app)/(authenticated)/(admin)/stats"),
-					page("test/vrchat-browse", "(app)/(authenticated)/(admin)/test/vrchat-browse"),
 				]),
 				layout("(app)/(authenticated)/(moderator)", [
 					page("reports", "(app)/(authenticated)/(moderator)/reports"),
 					page("search", "(app)/(authenticated)/(moderator)/search"),
+				]),
+				layout("(app)/(authenticated)/(debugger)", [
+					page("test/vrchat-browse", "(app)/(authenticated)/(debugger)/test/vrchat-browse"),
 				]),
 			]),
 			layout("(app)/(public)", [

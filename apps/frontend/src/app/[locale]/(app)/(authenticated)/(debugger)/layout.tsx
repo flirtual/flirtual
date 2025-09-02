@@ -7,7 +7,7 @@ import { urls } from "~/urls";
 export default function Layout() {
 	const { user: { tags } } = useSession();
 
-	if (!tags?.includes("admin"))
+	if (!tags?.includes("debugger"))
 		return throwRedirect(urls.default);
 
 	return <Outlet />;
