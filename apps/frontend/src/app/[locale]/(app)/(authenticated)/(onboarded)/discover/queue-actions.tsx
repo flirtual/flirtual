@@ -63,7 +63,8 @@ const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
 
 export const QueueActions: FC<{
 	kind: ProspectKind;
-}> = ({ kind: mode }) => {
+	explicitUserId?: string;
+}> = ({ kind: mode, explicitUserId }) => {
 	const { t } = useTranslation();
 	const {
 		previous,
@@ -78,25 +79,27 @@ export const QueueActions: FC<{
 			<div className="fixed bottom-24 z-20 flex flex-col items-center justify-center gap-2">
 				<QueueDebugger kind={mode} />
 				<div className="flex items-center gap-2 text-white-10">
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<m.button
-								id="undo-button"
-								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
-								disabled={!previous || mutating}
-								type="button"
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={() => undo()}
-							>
-								<Undo2 className="size-7" strokeWidth={3} />
-							</m.button>
-						</TooltipTrigger>
-						<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
-							<span className="pt-1">{t("undo")}</span>
-							<Key label="H" />
-						</TooltipContent>
-					</Tooltip>
+					{!explicitUserId && (
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<m.button
+									id="undo-button"
+									className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
+									disabled={!previous || mutating}
+									type="button"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={() => undo()}
+								>
+									<Undo2 className="size-7" strokeWidth={3} />
+								</m.button>
+							</TooltipTrigger>
+							<TooltipContent className="flex gap-3 px-3 py-1.5 native:hidden">
+								<span className="pt-1">{t("undo")}</span>
+								<Key label="H" />
+							</TooltipContent>
+						</Tooltip>
+					)}
 					{mode === "love" && (
 						<Tooltip>
 							<TooltipTrigger asChild>
@@ -107,7 +110,7 @@ export const QueueActions: FC<{
 									type="button"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
-									onClick={() => like()}
+									onClick={() => like("love", explicitUserId)}
 								>
 									<HeartIcon
 										className="w-[2.125rem] shrink-0"
@@ -130,7 +133,7 @@ export const QueueActions: FC<{
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								onClick={() => like("friend")}
+								onClick={() => like("friend", explicitUserId)}
 							>
 								<PeaceIcon
 									className="w-[2.125rem] shrink-0"
@@ -152,7 +155,7 @@ export const QueueActions: FC<{
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
-								onClick={() => pass()}
+								onClick={() => pass(undefined, explicitUserId)}
 							>
 								<X className="size-7" strokeWidth={3} />
 							</m.button>
