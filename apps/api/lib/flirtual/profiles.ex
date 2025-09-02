@@ -242,9 +242,6 @@ defmodule Flirtual.Profiles do
               changeset
               |> put_change(:vrchat, "")
               |> put_change(:vrchat_name, vrchat_input)
-
-            {:error, :invalid_input} ->
-              add_error(changeset, :vrchat, "invalid_vrchat")
           end
       end
     end

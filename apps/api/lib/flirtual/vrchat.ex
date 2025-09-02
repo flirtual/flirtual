@@ -165,8 +165,6 @@ defmodule Flirtual.VRChat do
     end
   end
 
-  def resolve_input(_), do: {:error, :invalid_input}
-
   def classify_input("usr_" <> _ = input) do
     # Most common user ID format: usr_<uuid>
     if Regex.match?(
