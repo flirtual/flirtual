@@ -1,5 +1,4 @@
 import { AnimatePresence, m } from "motion/react";
-import { Suspense } from "react";
 import type { FC } from "react";
 
 import type { ProspectKind } from "~/api/matchmaking";

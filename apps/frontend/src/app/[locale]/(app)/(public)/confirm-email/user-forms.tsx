@@ -1,7 +1,6 @@
 import ms from "ms.macro";
 import { Trans, useTranslation } from "react-i18next";
 
-import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { CopyClick } from "~/components/copy-click";
 import { Form, FormButton } from "~/components/forms";
@@ -9,7 +8,7 @@ import { InputLabel, InputText } from "~/components/inputs";
 import { useInterval } from "~/hooks/use-interval";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { invalidate, mutate, sessionKey } from "~/query";
+import { invalidate, sessionKey } from "~/query";
 
 export const UserForms: React.FC = () => {
 	const { user } = useSession();

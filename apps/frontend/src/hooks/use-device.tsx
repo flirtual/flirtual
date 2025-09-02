@@ -30,6 +30,7 @@ const [
 		osVersion,
 	},
 	id
+// eslint-disable-next-line antfu/no-top-level-await
 ] = await Promise.all([
 	client
 		? App.getInfo().catch(() => ({} as Partial<AppInfo>))

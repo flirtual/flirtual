@@ -81,7 +81,7 @@ const ProfileColorSelect: FC = () => {
 	const [grassTouched, setGrassTouched] = useState(0);
 	const [touchingGrass, setTouchingGrass] = useState(false);
 
-	const { mutateAsync, reset } = useMutation({
+	const { mutateAsync } = useMutation({
 		mutationKey: sessionKey(),
 
 		onMutate: async (colors: ProfileColors) => {

@@ -17,7 +17,7 @@ import { useAttributeTranslation } from "~/hooks/use-attribute";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { html } from "~/html";
-import { invalidate, mutate, sessionKey } from "~/query";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 export const BiographyForm: FC = () => {
