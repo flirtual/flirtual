@@ -34,6 +34,9 @@ const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
 		invalidate
 	} = useQueue(kind);
 
+	const { user: { tags } } = useSession();
+	if (!tags?.includes("debugger")) return null;
+
 	return (
 		<div className="flex gap-2">
 			<Button
