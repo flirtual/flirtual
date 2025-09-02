@@ -29,7 +29,7 @@ const ProfileQueueActions: FC<{ userId: string }> = ({ userId }) => {
 
 	return (
 		<QueueActions
-			// explicitUserId={userId}
+			explicitUserId={userId}
 			kind="love"
 		/>
 	);

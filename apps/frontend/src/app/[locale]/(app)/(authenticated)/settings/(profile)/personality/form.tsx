@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { entries, shuffle } from "remeda";
+import { keys, shuffle } from "remeda";
 
 import {
 	Personality,
@@ -38,7 +38,9 @@ export const PersonalityForm: FC = () => {
 	const toasts = useToast();
 	const { t } = useTranslation();
 
-	const questions = useMemo(() => (shuffle(entries(personality))), [personality]);
+	// shuffle once
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const questions = useMemo(() => shuffle(keys(personality)), []);
 
 	return (
 		<Form
@@ -58,7 +60,7 @@ export const PersonalityForm: FC = () => {
 					<InputLabel>
 						{t("quiet_gross_skate_honor")}
 					</InputLabel>
-					{questions.map(([name]) => (
+					{questions.map((name) => (
 						<FormField key={name} name={name}>
 							{(field) => (
 								<div className="flex items-center justify-between gap-4">

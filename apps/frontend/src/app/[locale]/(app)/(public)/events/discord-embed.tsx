@@ -10,7 +10,7 @@ const DiscordEmbed_: React.FC = () => {
 
 	return (
 		<WidgetBot
-			avatar={session?.user ? urls.userAvatar(session?.user) : undefined}
+			avatar={session?.user ? urls.userAvatar(session?.user, "icon") : undefined}
 			channel="862116319700582440"
 			height="600"
 			server="455219574036496404"
@@ -20,7 +20,7 @@ const DiscordEmbed_: React.FC = () => {
 	);
 };
 
-const LazyDiscordEmbed = lazy(() => Promise.resolve({ default: DiscordEmbed_ }));
+const LazyDiscordEmbed = lazy(() => DiscordEmbed_);
 
 export const DiscordEmbed: React.FC = () => (
 	<Suspense fallback={<div style={{ height: 600, width: "100%" }} />}>

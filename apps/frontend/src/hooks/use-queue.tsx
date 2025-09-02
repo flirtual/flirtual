@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import type { Issue } from "~/api/common";
 import { isWretchError } from "~/api/common";
@@ -10,6 +10,7 @@ import {
 	invalidate,
 	mutate,
 	queueKey,
+	relationshipKey,
 	useMutation,
 	useQuery,
 } from "~/query";
@@ -19,7 +20,7 @@ export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ que
 
 export function useQueue(mode: ProspectKind = "love") {
 	if (!ProspectKind.includes(mode)) mode = "love";
-	const queryKey = queueKey(mode);
+	const queryKey = useMemo(() => queueKey(mode), [mode]);
 
 	const queue = useQuery<Queue | QueueIssue, typeof queryKey>({
 		queryKey,
@@ -76,17 +77,31 @@ export function useQueue(mode: ProspectKind = "love") {
 		};
 	}), [queryKey]);
 
+	const remove = useCallback((userId: string) => mutate<Queue>(queryKey, (queue) => {
+		if (!queue) return queue;
+
+		return {
+			...queue,
+			next: queue.next.filter((id) => id !== userId),
+		};
+	}), [queryKey]);
+
 	const { mutateAsync, isPending: mutating } = useMutation<Queue, {
 		action: "like" | "pass" | "undo";
 		userId: string;
 		kind: ProspectKind;
 	}>({
 		mutationKey: queryKey,
-		onMutate: ({ action }) => ({
-			like: forward,
-			pass: forward,
-			undo: backward
-		})[action](),
+		onMutate: ({ action, userId }) => {
+			if (userId !== current)
+				return remove(userId);
+
+			return ({
+				like: forward,
+				pass: forward,
+				undo: backward
+			})[action]();
+		},
 		mutationFn: async ({
 			action,
 			userId,
@@ -97,6 +112,8 @@ export function useQueue(mode: ProspectKind = "love") {
 			const { queue } = action === "undo"
 				? await Matchmaking.undo({ mode })
 				: await Matchmaking.queueAction({ type: action, kind, mode, userId });
+
+			invalidate({ queryKey: relationshipKey(userId) });
 
 			return queue;
 		},
@@ -113,6 +130,7 @@ export function useQueue(mode: ProspectKind = "love") {
 		invalidate: () => invalidateQueue(mode),
 		mutating,
 		forward,
-		backward
+		backward,
+		remove
 	};
 }

@@ -86,6 +86,7 @@ export function useTour(
 		if (defaultStart) start();
 
 		return () => {
+			setScrollLocked(false);
 			shepherd.off("complete", onComplete);
 			shepherd.off("cancel", onComplete);
 

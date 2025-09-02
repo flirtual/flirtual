@@ -42,13 +42,16 @@ export const NavigationalSwitchItem: FC<NavigationalSwitchItemProps> = ({
 		>
 			{active && (
 				<m.div
-					style={rankedMode && props.id === "date-mode-switch"
-						? {
-								backgroundImage: `url(${RankedImage})`,
-								backgroundSize: "cover",
-								backgroundPosition: "center"
-							}
-						: undefined}
+					style={{
+						originY: "0px",
+						...(rankedMode && props.id === "date-mode-switch"
+							? {
+									backgroundImage: `url(${RankedImage})`,
+									backgroundSize: "cover",
+									backgroundPosition: "center"
+								}
+							: undefined)
+					}}
 					transition={{
 						type: "spring",
 						duration: 0.5,
