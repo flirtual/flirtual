@@ -145,7 +145,7 @@ export const ProfileImageDisplay: React.FC<ProfileImageDisplayProps> = ({
 	children,
 	current
 }) => {
-	const images = user.profile.images.slice(0, 15);
+	const images = useMemo(() => user.profile.images.slice(0, 15), [user.profile.images]);
 	const firstImageId = images[0]?.id;
 	const [expandedImage, setExpandedImage] = useState(false);
 	const session = useOptionalSession();
