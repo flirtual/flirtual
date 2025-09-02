@@ -3,6 +3,7 @@ import { ChevronDown, Languages } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { withSuspense } from "with-suspense";
 
+import { useOptionalSession } from "~/hooks/use-session";
 import { i18n, localeNames, locales, useLocale } from "~/i18n";
 
 import {
@@ -34,6 +35,9 @@ export const InputLanguageSelect = withSuspense(InputLanguageSelect_);
 
 export const InlineLanguageSelect: React.FC<{ className?: string }> = ({ className }) => {
 	const [locale, setLocale] = useLocale();
+	const session = useOptionalSession();
+
+	if (!session || !session.user.tags?.includes("debugger")) return null;
 
 	return (
 		<Select value={locale} onValueChange={setLocale}>

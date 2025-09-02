@@ -1,3 +1,5 @@
+import type { Locale } from "~/i18n";
+
 import { api } from "../common";
 
 export const PrivacyPreferenceOptions = ["everyone", "matches", "me"] as const;
@@ -5,10 +7,6 @@ export type PrivacyPreferenceOption = (typeof PrivacyPreferenceOptions)[number];
 
 export const PreferenceThemes = ["light", "dark", "system"] as const;
 export type PreferenceTheme = (typeof PreferenceThemes)[number];
-
-// export const PreferenceLanguages = ["en", "de", "es", "fr", "ja", "ko", "nl", "pt", "pt-BR", "ru", "sv"] as const;
-export const PreferenceLanguages = ["en", "ja"] as const;
-export type PreferenceLanguage = (typeof PreferenceLanguages)[number];
 
 export interface PrivacyPreferences {
 	analytics: boolean;
@@ -30,7 +28,7 @@ export interface NotificationPreferences {
 export interface Preferences {
 	nsfw: boolean;
 	theme: PreferenceTheme;
-	language?: PreferenceLanguage;
+	language?: Locale;
 	emailNotifications: NotificationPreferences;
 	pushNotifications: NotificationPreferences;
 	privacy: PrivacyPreferences;

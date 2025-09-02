@@ -1,6 +1,7 @@
 import { toSnakeCase } from "remeda";
 import type { WretchOptions } from "wretch";
 
+import type { Locale } from "~/i18n";
 import { isUid } from "~/utilities";
 
 import type { Attribute } from "../attributes";
@@ -8,7 +9,6 @@ import { api } from "../common";
 import type { DatedModel, Paginate, PaginateOptions, UuidModel } from "../common";
 import type { Connection } from "../connections";
 import type { Subscription } from "../subscription";
-import type { PreferenceLanguage } from "./preferences";
 import { Preferences } from "./preferences";
 import type { Profile } from "./profile";
 import type { Relationship } from "./relationship";
@@ -143,7 +143,7 @@ export const User = {
 		notifications: boolean;
 		serviceAgreement: boolean;
 		captcha: string;
-		language: PreferenceLanguage;
+		language: Locale;
 	}) {
 		return this.api.json(options).post().json<User>();
 	},

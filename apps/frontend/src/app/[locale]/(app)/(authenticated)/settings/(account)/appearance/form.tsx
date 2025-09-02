@@ -293,35 +293,38 @@ const InputFontSize: FC = () => {
 
 export const AppearanceForm: FC = () => {
 	const [locale] = useLocale();
+	const { user: { tags } } = useSession();
 
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation();
 
 	return (
 		<div className="flex flex-col gap-8">
-			<div className="flex flex-col gap-2">
-				<InputLabel
-					inline
-					hint={(
-						<InputLabelHint>
-							<Trans
-								components={{
-									link: <InlineLink href={urls.resources.translate(locale)} />
-								}}
-								i18nKey={locale === defaultLocale ? "help_translate_others" : "help_translate"}
-								values={{ language: tAttribute[locale]?.name || locale }}
-							/>
-						</InputLabelHint>
-					)}
-				>
-					<span className="flex gap-2">
-						{t("language")}
-						{" "}
-						<NewBadge className="inline-block" />
-					</span>
-				</InputLabel>
-				<InputLanguageSelect />
-			</div>
+			{tags?.includes("debugger") && (
+				<div className="flex flex-col gap-2">
+					<InputLabel
+						inline
+						hint={(
+							<InputLabelHint>
+								<Trans
+									components={{
+										link: <InlineLink href={urls.resources.translate(locale)} />
+									}}
+									i18nKey={locale === defaultLocale ? "help_translate_others" : "help_translate"}
+									values={{ language: tAttribute[locale]?.name || locale }}
+								/>
+							</InputLabelHint>
+						)}
+					>
+						<span className="flex gap-2">
+							{t("language")}
+							{" "}
+							<NewBadge className="inline-block" />
+						</span>
+					</InputLabel>
+					<InputLanguageSelect />
+				</div>
+			)}
 			<div className="flex flex-col gap-2 vision:hidden">
 				<InputLabel>{t("theme")}</InputLabel>
 				<div className="grid grid-cols-3 gap-4">
