@@ -6,6 +6,7 @@ import { getSession } from "~/hooks/use-session";
 import { i18n, redirect } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
+import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
 import type { Route } from "./+types/page";
@@ -21,13 +22,16 @@ export const meta: Route.MetaFunction = (options) => {
 	]);
 };
 
-export async function clientLoader() {
+export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 	const session = await getSession();
 	if (!session) return;
 
 	const { user: { emailConfirmedAt } } = session;
 	if (!emailConfirmedAt)
 		return redirect(urls.confirmEmail({ to: urls.subscription.default }));
+
+	if (new URL(request.url).searchParams.get("success") === "true")
+		invalidate({ queryKey: sessionKey() });
 }
 
 clientLoader.hydrate = true as const;

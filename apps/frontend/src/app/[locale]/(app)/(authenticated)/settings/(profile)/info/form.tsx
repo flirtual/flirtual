@@ -216,7 +216,7 @@ export const InfoForm: FC = () => {
 						{(field) => (
 							<>
 								<InputLabel>{t("language")}</InputLabel>
-								<InputLanguageAutocomplete {...field.props} />
+								<InputLanguageAutocomplete limit={5} {...field.props} />
 							</>
 						)}
 					</FormField>

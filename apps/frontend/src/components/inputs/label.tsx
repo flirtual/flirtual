@@ -35,7 +35,7 @@ export const InputLabel: React.FC<InputLabelProps> = (props) => {
 			)}
 		>
 			{children}
-			{typeof hint === "string"
+			{["number", "string"].includes(typeof hint)
 				? (
 						<InputLabelHint>{hint}</InputLabelHint>
 					)
