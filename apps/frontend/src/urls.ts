@@ -143,7 +143,7 @@ export const urls = {
 	finish: (finishIndex: FinishPage) => `/finish/${finishIndex}`,
 	subscription: {
 		default: "/subscription",
-		success: url("/subscription", { success: "yes" })
+		success: url("/subscription", { success: "true" })
 	},
 	confirmEmail: (
 		query: any = {}
