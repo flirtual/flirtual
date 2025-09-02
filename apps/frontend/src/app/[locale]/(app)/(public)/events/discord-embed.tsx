@@ -10,7 +10,7 @@ const DiscordEmbed_: React.FC = () => {
 
 	return (
 		<WidgetBot
-			avatar={session?.user ? urls.userAvatar(session?.user) : undefined}
+			avatar={session?.user ? urls.userAvatar(session?.user, "icon") : undefined}
 			channel="862116319700582440"
 			height="600"
 			server="455219574036496404"

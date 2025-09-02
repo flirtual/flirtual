@@ -50,7 +50,7 @@ function identify(user: User) {
 					email: user.email,
 					name: user.profile.displayName || user.slug,
 					id: user.id,
-					avatarURL: urls.userAvatar(user)
+					avatarURL: urls.userAvatar(user, "icon")
 				}
 			},
 			resolve
