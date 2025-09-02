@@ -33,6 +33,7 @@ import EmojiYonk from "virtual:remote/static/emoji/yonk.png";
 
 import { talkjsAppId } from "~/const";
 import { useLocale } from "~/i18n";
+import { conversationsKey, invalidate } from "~/query";
 import { emptyArray } from "~/utilities";
 
 import { useDevice } from "./use-device";
@@ -70,11 +71,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 		setUnreadConversations([]);
 		if (!session) return;
 
-		const messageSubscription = session.onMessage(async () => {
-			// todo:
-			// await mutate(conversationsKey);
-			// // router.refresh();
-		});
+		const messageSubscription = session.onMessage(() => invalidate({ queryKey: conversationsKey() }));
 
 		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
 
