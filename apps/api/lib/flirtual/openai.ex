@@ -14,8 +14,8 @@ defmodule Flirtual.OpenAI do
       {:ok, %{:choices => choices}} ->
         {:ok, Enum.at(choices, 0)["message"]["content"]}
 
-      {:error, _} ->
-        {:error, :failed}
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 end

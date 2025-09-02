@@ -15,10 +15,9 @@ defmodule FlirtualWeb.OpenAIController do
         |> json(%{text: text})
         |> halt()
       else
-        _ ->
+        {:error, reason} ->
           conn
-          |> put_status(:bad_request)
-          |> json(%{error: :bad_request})
+          |> put_error(:internal_server_error, :openai_failed, %{original_reason: reason})
           |> halt()
       end
     end
