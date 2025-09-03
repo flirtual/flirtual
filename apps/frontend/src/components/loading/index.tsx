@@ -14,9 +14,11 @@ import { LongerThanUsual } from "./longer-than-usual";
 export function Loading({
 	longerThanUsual: _longerThanUsual,
 	className,
+	light,
 	children
 }: PropsWithChildren<{
 	className?: string;
+	light?: boolean;
 	longerThanUsual?: boolean;
 }>) {
 	const [longerThanUsual, setLongerThanUsual] = useState(_longerThanUsual);
@@ -25,19 +27,21 @@ export function Loading({
 	return (
 		<div className={twMerge("flex min-h-screen w-full flex-col items-center justify-center opacity-75", className)}>
 			<div className="w-2/3 max-w-sm animate-pulse desktop:w-1/2">
+				{light !== true && (
+					<Image
+						priority
+						alt=""
+						className="hidden w-full vision:block dark:block"
+						draggable={false}
+						height={1000}
+						src={FlirtualWhite}
+						width={3468}
+					/>
+				)}
 				<Image
 					priority
 					alt=""
-					className="hidden w-full vision:block dark:block"
-					draggable={false}
-					height={1000}
-					src={FlirtualWhite}
-					width={3468}
-				/>
-				<Image
-					priority
-					alt=""
-					className="block w-full vision:hidden dark:hidden"
+					className={twMerge("w-full", light !== true && "block vision:hidden dark:hidden")}
 					draggable={false}
 					height={1000}
 					src={FlirtualBlack}
