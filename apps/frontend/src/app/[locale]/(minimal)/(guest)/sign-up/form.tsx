@@ -15,12 +15,15 @@ import {
 	InputText
 } from "~/components/inputs";
 import { useLocale } from "~/i18n";
+import { useOptimisticRoute } from "~/preload";
 import { mutate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
-export const Onboarding0Form: FC = () => {
+export const SignUpForm: FC = () => {
 	const { t } = useTranslation();
 	const [locale] = useLocale();
+
+	useOptimisticRoute(urls.onboarding(1));
 
 	return (
 		<Form

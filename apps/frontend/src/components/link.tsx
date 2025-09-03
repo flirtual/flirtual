@@ -6,14 +6,13 @@ import {
 	Link as _Link,
 	createPath,
 	matchPath,
-	matchRoutes,
 	resolvePath,
 	useLocation
 } from "react-router";
 
-import { client } from "~/const";
 import { replaceLanguage, useLocale } from "~/i18n";
 import type { Locale } from "~/i18n";
+import { preloadRoute } from "~/preload";
 import { isInternalHref } from "~/urls";
 
 export type LinkProps = {
@@ -42,7 +41,7 @@ export function Link({
 	const [locale] = useLocale();
 	const hrefLang = _hrefLang || locale;
 
-	const { to, internal, active, matches } = useMemo(() => {
+	const { to, internal, active } = useMemo(() => {
 		const internal = _href ? isInternalHref(_href) : true;
 
 		const to = internal && _href
@@ -52,12 +51,7 @@ export function Link({
 		const pattern = _pattern || (internal && to ? { path: resolvePath(to, location.pathname).pathname } : undefined);
 		const active = _active || (pattern && matchPath(pattern, location.pathname) !== null) || false;
 
-		const matches = client
-			// @ts-expect-error: React Router internal.
-			? matchRoutes(globalThis.__reactRouterDataRouter.routes, to) || []
-			: [];
-
-		return { to, internal, matches, active };
+		return { to, internal, active };
 	}, [_active, _href, _pattern, hrefLang, location.pathname]);
 
 	const Component = asChild
@@ -72,15 +66,7 @@ export function Link({
 			data-external={internal ? undefined : ""}
 			hrefLang={hrefLang}
 			prefetch="intent"
-			onPointerEnter={() => {
-				Promise.all(matches.map(async ({ route }) => {
-					// @ts-expect-error: React Router internal.
-					const handle = route.handle || await route.lazy?.handle();
-					if (!handle || typeof handle !== "object" || !handle.preload) return null;
-
-					return handle.preload();
-				}));
-			}}
+			onPointerEnter={() => preloadRoute(to)}
 			{...props}
 			ref={reference}
 			target={target || (internal ? undefined : "_blank")}

@@ -7,7 +7,7 @@ import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
 
 import type { Route } from "./+types/page";
-import { Onboarding0Form } from "./form";
+import { SignUpForm } from "./form";
 
 export const meta: Route.MetaFunction = (options) => {
 	invariant(isLocale(options.params.locale));
@@ -29,7 +29,7 @@ export default function Onboarding0Page() {
 			className="shrink-0 desktop:max-w-xl"
 			title={t("create_account")}
 		>
-			<Onboarding0Form />
+			<SignUpForm />
 		</ModelCard>
 	);
 }
