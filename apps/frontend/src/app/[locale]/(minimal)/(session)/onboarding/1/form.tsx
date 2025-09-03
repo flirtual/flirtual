@@ -23,6 +23,7 @@ import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useConfig } from "~/hooks/use-config";
 import { useSession } from "~/hooks/use-session";
 import { useNavigate } from "~/i18n";
+import { useOptimisticRoute } from "~/preload";
 import { invalidate, sessionKey } from "~/query";
 import { urls } from "~/urls";
 
@@ -42,6 +43,8 @@ export const Onboarding1Form: FC = () => {
 	const interests = useAttributes("interest");
 
 	const tAttribute = useAttributeTranslation();
+
+	useOptimisticRoute(urls.onboarding(2));
 
 	return (
 		<Form

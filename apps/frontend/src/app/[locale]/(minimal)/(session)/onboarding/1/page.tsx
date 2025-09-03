@@ -5,6 +5,7 @@ import { ModelCard } from "~/components/model-card";
 import { i18n } from "~/i18n";
 import { isLocale } from "~/i18n/languages";
 import { metaMerge, rootMeta } from "~/meta";
+import { attributeFetcher, attributeKey, queryClient } from "~/query";
 
 import type { Route } from "./+types/page";
 import { Onboarding1Form } from "./form";
@@ -18,6 +19,20 @@ export const meta: Route.MetaFunction = (options) => {
 		{ title: t("page_title", { name: t("about_you") }) }
 	]);
 };
+
+export const handle = {
+	preload: () => Promise.all(([
+		"game",
+		"gender",
+		"interest",
+		"country",
+	] as const).map((type) => queryClient.prefetchQuery({
+		queryKey: attributeKey(type),
+		queryFn: attributeFetcher
+	})))
+};
+
+export const clientLoader = handle.preload;
 
 export default function Onboarding1Page() {
 	const { t } = useTranslation();
