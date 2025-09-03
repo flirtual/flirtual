@@ -75,7 +75,7 @@ async function load(locale: Locale) {
 			// https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
 			switch (locale) {
 				case "en": return (await import("@uppy/locales/lib/en_US.js")).default.strings;
-				case "ja": return (await import("@uppy/locales/lib/ja_JP.js")).default.strings;
+				// case "ja": return (await import("@uppy/locales/lib/ja_JP.js")).default.strings;
 				default: return {};
 			}
 		})()

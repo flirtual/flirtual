@@ -21,7 +21,7 @@ export const localeNames: Record<Locale, string> = {
 	// de: "Deutsch",
 	// es: "Español",
 	// fr: "Français",
-	ja: "日本語",
+	// ja: "日本語",
 	// ko: "한국어",
 	// nl: "Nederlands",
 	// pt: "Português",
