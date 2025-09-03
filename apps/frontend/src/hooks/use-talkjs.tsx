@@ -34,6 +34,7 @@ import EmojiYonk from "virtual:remote/static/emoji/yonk.png";
 import { talkjsAppId } from "~/const";
 import { useLocale } from "~/i18n";
 import { conversationsKey, invalidate } from "~/query";
+import { absoluteUrl } from "~/urls";
 import { emptyArray } from "~/utilities";
 
 import { useDevice } from "./use-device";
@@ -146,7 +147,7 @@ export const customEmojis = Object.fromEntries(
 	emojis.map(({ name, url, hidden = false }) => [
 		`:${name}:`,
 		{
-			url,
+			url: absoluteUrl(url).href,
 			hidden
 		}
 	])
