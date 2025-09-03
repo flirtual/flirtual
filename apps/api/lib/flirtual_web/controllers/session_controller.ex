@@ -1,6 +1,5 @@
 defmodule FlirtualWeb.SessionController do
   use FlirtualWeb, :controller
-  use Tracing
   require Logger
 
   import Plug.Conn
@@ -163,15 +162,12 @@ defmodule FlirtualWeb.SessionController do
   end
 
   defp renew_session(conn) do
-    span do
       conn
       |> configure_session(renew: true)
       |> clear_session()
-    end
   end
 
   def fetch_current_session(conn, _) do
-    span do
       with {token, conn} when not is_nil(token) <- ensure_session_token(conn),
            %Session{} = session <- Session.get(token: token),
            {:ok, session} <- Session.maybe_update_activity(session),
@@ -189,11 +185,9 @@ defmodule FlirtualWeb.SessionController do
           |> assign(:session, nil)
           |> assign(:user, nil)
       end
-    end
   end
 
   defp ensure_session_token(conn) do
-    span do
       if token = get_session(conn, :token) do
         {token, conn}
       else
@@ -205,6 +199,5 @@ defmodule FlirtualWeb.SessionController do
           {nil, conn}
         end
       end
-    end
   end
 end

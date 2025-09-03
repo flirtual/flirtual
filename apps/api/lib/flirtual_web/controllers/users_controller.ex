@@ -1,6 +1,5 @@
 defmodule FlirtualWeb.UsersController do
   use FlirtualWeb, :controller
-  use Tracing
 
   require Logger
 
@@ -30,7 +29,6 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def get(conn, %{"user_id" => user_id}) do
-    span do
       user =
         if(conn.assigns[:session].user.id === user_id,
           do: conn.assigns[:session].user,
@@ -44,7 +42,6 @@ defmodule FlirtualWeb.UsersController do
         # |> cache_control([:public, {"max-age", [minute: 5]}])
         |> json_with_etag(Policy.transform(conn, user))
       end
-    end
   end
 
   def get_relationship(conn, %{"user_id" => user_id}) do

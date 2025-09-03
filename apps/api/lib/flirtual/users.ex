@@ -1,6 +1,4 @@
 defmodule Flirtual.Users do
-  use Tracing
-
   import Ecto.Query
   import Ecto.Changeset
   import Flirtual.Utilities.Changeset
@@ -30,51 +28,41 @@ defmodule Flirtual.Users do
 
   def get(id)
       when is_binary(id) do
-    span do
       User
       |> where([user], user.id == ^id)
       |> preload(^User.default_assoc())
       |> Repo.one()
-    end
   end
 
   def get_by_username(username)
       when is_binary(username) do
-    span do
       User
       |> where([user], user.username == ^username)
       |> preload(^User.default_assoc())
       |> Repo.one()
-    end
   end
 
   def get_by_slug(slug)
       when is_binary(slug) do
-    span do
       User
       |> where([user], user.slug == ^slug)
       |> preload(^User.default_assoc())
       |> Repo.one()
-    end
   end
 
   def by_ids(user_ids) do
-    span do
       User
       |> where([user], user.id in ^user_ids)
       |> preload(^User.default_assoc())
       |> Repo.all()
-    end
   end
 
   def get_by_email(email)
       when is_binary(email) do
-    span do
       User
       |> where([user], user.email == ^email)
       |> preload(^User.default_assoc())
       |> Repo.one()
-    end
   end
 
   def get_by_login_and_password(login, password)

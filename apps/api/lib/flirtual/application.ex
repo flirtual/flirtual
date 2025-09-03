@@ -17,16 +17,6 @@ defmodule Flirtual.Application do
     Oban.Telemetry.attach_default_logger()
     Flirtual.ObanReporter.attach()
 
-    OpentelemetryOban.setup()
-
-    :ok = OpentelemetryBandit.setup()
-    :ok = OpentelemetryPhoenix.setup(adapter: :bandit)
-
-    :ok =
-      Flirtual.Repo.config()
-      |> Keyword.fetch!(:telemetry_prefix)
-      |> OpentelemetryEcto.setup(db_statement: :enabled)
-
     children =
       [
         # Start the Cluster supervisor
