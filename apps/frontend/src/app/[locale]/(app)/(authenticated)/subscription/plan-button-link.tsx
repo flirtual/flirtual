@@ -44,7 +44,7 @@ export const PlanButtonLink: FC<
 							{/* eslint-disable-next-line react-dom/no-missing-iframe-sandbox */}
 							<iframe
 								className="z-10 max-h-[90vh] max-w-full rounded-[1.25rem] bg-transparent"
-								height={561}
+								height={630}
 								src={purchaseUrl}
 								width={479}
 							/>
