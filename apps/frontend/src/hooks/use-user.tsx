@@ -4,8 +4,8 @@ import {
 	relationshipFetcher,
 	relationshipKey,
 	useQuery,
-	userCountFetcher,
-	userCountKey,
+	// 	userCountFetcher,
+	// 	userCountKey,
 	userFetcher,
 	userKey,
 } from "~/query";
@@ -35,9 +35,12 @@ export function useRelationship(userId: string): Relationship | null {
 	});
 }
 
+// eslint-disable-next-line react-hooks-extra/no-unnecessary-use-prefix
 export function useUserCount() {
-	return useQuery({
-		queryKey: userCountKey(),
-		queryFn: userCountFetcher
-	});
+	return 150_000;
+
+	// return useQuery({
+	// 	queryKey: userCountKey(),
+	// 	queryFn: userCountFetcher
+	// });
 }
