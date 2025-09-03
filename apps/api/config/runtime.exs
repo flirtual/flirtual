@@ -12,7 +12,7 @@ if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
   config :flirtual, FlirtualWeb.Endpoint, server: true
 end
 
-staging = System.get_env("STAGING", "") === "1"
+canary = System.get_env("CANARY", "") === "1"
 
 config :flirtual, Flirtual.ObanWorkers,
   enabled_workers:
@@ -115,7 +115,8 @@ config :flirtual,
   origin: origin,
   session_signing_salt: System.fetch_env!("SESSION_SIGNING_SALT"),
   image_access_token: System.fetch_env!("IMAGE_ACCESS_TOKEN"),
-  feedback_access_token: System.fetch_env!("FEEDBACK_ACCESS_TOKEN")
+  feedback_access_token: System.fetch_env!("FEEDBACK_ACCESS_TOKEN"),
+  canary: canary
 
 config :flirtual, FlirtualWeb.Endpoint,
   secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
@@ -170,6 +171,6 @@ if config_env() == :prod do
 
   config :sentry,
     dsn: System.fetch_env!("SENTRY_DSN"),
-    environment_name: if(staging, do: :staging, else: :production),
+    environment_name: if(canary, do: :canary, else: :production),
     release: System.get_env("GIT_COMMIT_SHA")
 end
