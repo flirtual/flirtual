@@ -77,10 +77,10 @@ export const PlanCard: FC<PlanCardProps> = (props) => {
 			className={twMerge(
 				"relative flex flex-col justify-between gap-16 rounded-xl p-6 vision:text-black-80",
 				highlight
-					? "bg-white-20 shadow-brand-inset dark:bg-black-80"
+					? "bg-white-10/80 shadow-brand-inset dark:bg-black-70/75"
 					: [
 							containerClassName,
-							"bg-white-25 vision:bg-white-25/70 dark:bg-black-80"
+							"bg-white-25 vision:bg-white-25/70 dark:bg-black-60/50"
 						],
 				duration === "lifetime" && (description ? "gap-4" : "desktop:flex-row")
 			)}
