@@ -37,7 +37,7 @@ export function useRelationship(userId: string): Relationship | null {
 
 // eslint-disable-next-line react-hooks-extra/no-unnecessary-use-prefix
 export function useUserCount() {
-	return 150_000;
+	return 100_000;
 
 	// return useQuery({
 	// 	queryKey: userCountKey(),

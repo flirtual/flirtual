@@ -542,7 +542,11 @@ defmodule Flirtual.Users do
            user <- Repo.preload(user, User.default_assoc()),
            :ok <- Flag.check_honeypot(user.id, attrs[:url]),
            :ok <- Flag.check_email_flags(user.id, attrs[:email]),
-           :ok <- Hash.check_hash(user.id, "email", attrs[:email]),
+           :ok <-
+             (case Application.get_env(:flirtual, :canary, false) do
+                true -> :ok
+                false -> Hash.check_hash(user.id, "email", attrs[:email])
+              end),
            {:ok, _} <- Talkjs.update_user(user),
            {:ok, _} <-
              Listmonk.create_subscriber(user),

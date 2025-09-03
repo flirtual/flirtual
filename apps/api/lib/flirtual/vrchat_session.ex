@@ -13,7 +13,7 @@ defmodule Flirtual.VRChatSession do
   end
 
   def invalidate_session do
-    GenServer.cast(@name, :invalidate_session)
+    GenServer.call(@name, :invalidate_session)
   end
 
   @impl true
