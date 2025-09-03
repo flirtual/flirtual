@@ -124,10 +124,6 @@ config :flirtual, FlirtualWeb.Endpoint,
     port: origin.port
   ]
 
-config :opentelemetry_exporter,
-  otlp_protocol: :http_protobuf,
-  otlp_endpoint: System.fetch_env!("OTLP_ENDPOINT")
-
 if config_env() == :prod do
   app_name =
     System.get_env("FLY_APP_NAME") ||

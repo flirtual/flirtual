@@ -2,7 +2,6 @@ defmodule FlirtualWeb.Router do
   use FlirtualWeb, :router
   use Plug.ErrorHandler
   use Flirtual.Logger, :router
-  use Tracing
 
   import Phoenix.Router
   import Plug.Conn
@@ -15,17 +14,14 @@ defmodule FlirtualWeb.Router do
   end
 
   def require_authenticated_user(conn, _opts) do
-    span do
       if conn.assigns[:session] do
         conn
       else
         conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
       end
-    end
   end
 
   def fetch_authorization_token(conn, _) do
-    span do
       with authorization_header when is_list(authorization_header) <-
              get_req_header(conn, "authorization"),
            authorization_value when is_binary(authorization_value) <-
@@ -40,11 +36,9 @@ defmodule FlirtualWeb.Router do
           |> put_error(:unauthorized, :invalid_credentials)
           |> halt()
       end
-    end
   end
 
   def require_valid_user(conn, _opts) do
-    span do
       user = conn.assigns[:session].user
 
       if user.deactivated_at !== nil do
@@ -54,7 +48,6 @@ defmodule FlirtualWeb.Router do
       else
         conn
       end
-    end
   end
 
   scope "/", FlirtualWeb do
