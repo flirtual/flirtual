@@ -28,41 +28,41 @@ defmodule Flirtual.Users do
 
   def get(id)
       when is_binary(id) do
-      User
-      |> where([user], user.id == ^id)
-      |> preload(^User.default_assoc())
-      |> Repo.one()
+    User
+    |> where([user], user.id == ^id)
+    |> preload(^User.default_assoc())
+    |> Repo.one()
   end
 
   def get_by_username(username)
       when is_binary(username) do
-      User
-      |> where([user], user.username == ^username)
-      |> preload(^User.default_assoc())
-      |> Repo.one()
+    User
+    |> where([user], user.username == ^username)
+    |> preload(^User.default_assoc())
+    |> Repo.one()
   end
 
   def get_by_slug(slug)
       when is_binary(slug) do
-      User
-      |> where([user], user.slug == ^slug)
-      |> preload(^User.default_assoc())
-      |> Repo.one()
+    User
+    |> where([user], user.slug == ^slug)
+    |> preload(^User.default_assoc())
+    |> Repo.one()
   end
 
   def by_ids(user_ids) do
-      User
-      |> where([user], user.id in ^user_ids)
-      |> preload(^User.default_assoc())
-      |> Repo.all()
+    User
+    |> where([user], user.id in ^user_ids)
+    |> preload(^User.default_assoc())
+    |> Repo.all()
   end
 
   def get_by_email(email)
       when is_binary(email) do
-      User
-      |> where([user], user.email == ^email)
-      |> preload(^User.default_assoc())
-      |> Repo.one()
+    User
+    |> where([user], user.email == ^email)
+    |> preload(^User.default_assoc())
+    |> Repo.one()
   end
 
   def get_by_login_and_password(login, password)

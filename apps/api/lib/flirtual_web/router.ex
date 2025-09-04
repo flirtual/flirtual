@@ -14,40 +14,40 @@ defmodule FlirtualWeb.Router do
   end
 
   def require_authenticated_user(conn, _opts) do
-      if conn.assigns[:session] do
-        conn
-      else
-        conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
-      end
+    if conn.assigns[:session] do
+      conn
+    else
+      conn |> put_error(:unauthorized, :invalid_credentials) |> halt()
+    end
   end
 
   def fetch_authorization_token(conn, _) do
-      with authorization_header when is_list(authorization_header) <-
-             get_req_header(conn, "authorization"),
-           authorization_value when is_binary(authorization_value) <-
-             List.first(authorization_header),
-           [token_type, token] <- String.split(authorization_value, " ") do
+    with authorization_header when is_list(authorization_header) <-
+           get_req_header(conn, "authorization"),
+         authorization_value when is_binary(authorization_value) <-
+           List.first(authorization_header),
+         [token_type, token] <- String.split(authorization_value, " ") do
+      conn
+      |> assign(:authorization_token_type, token_type)
+      |> assign(:authorization_token, token)
+    else
+      _ ->
         conn
-        |> assign(:authorization_token_type, token_type)
-        |> assign(:authorization_token, token)
-      else
-        _ ->
-          conn
-          |> put_error(:unauthorized, :invalid_credentials)
-          |> halt()
-      end
+        |> put_error(:unauthorized, :invalid_credentials)
+        |> halt()
+    end
   end
 
   def require_valid_user(conn, _opts) do
-      user = conn.assigns[:session].user
+    user = conn.assigns[:session].user
 
-      if user.deactivated_at !== nil do
-        conn
-        |> put_error(:forbidden, :account_deactivated)
-        |> halt()
-      else
-        conn
-      end
+    if user.deactivated_at !== nil do
+      conn
+      |> put_error(:forbidden, :account_deactivated)
+      |> halt()
+    else
+      conn
+    end
   end
 
   scope "/", FlirtualWeb do

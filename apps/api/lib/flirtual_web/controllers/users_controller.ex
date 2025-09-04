@@ -29,19 +29,19 @@ defmodule FlirtualWeb.UsersController do
   end
 
   def get(conn, %{"user_id" => user_id}) do
-      user =
-        if(conn.assigns[:session].user.id === user_id,
-          do: conn.assigns[:session].user,
-          else: Users.get(user_id)
-        )
+    user =
+      if(conn.assigns[:session].user.id === user_id,
+        do: conn.assigns[:session].user,
+        else: Users.get(user_id)
+      )
 
-      if is_nil(user) or Policy.cannot?(conn, :read, user) do
-        {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
-      else
-        conn
-        # |> cache_control([:public, {"max-age", [minute: 5]}])
-        |> json_with_etag(Policy.transform(conn, user))
-      end
+    if is_nil(user) or Policy.cannot?(conn, :read, user) do
+      {:error, {:not_found, :user_not_found, %{user_id: user_id}}}
+    else
+      conn
+      # |> cache_control([:public, {"max-age", [minute: 5]}])
+      |> json_with_etag(Policy.transform(conn, user))
+    end
   end
 
   def get_relationship(conn, %{"user_id" => user_id}) do
