@@ -39,6 +39,6 @@
 		".react-router/types/**/*"
 	],
 	"exclude": [
-		"src/worker.ts"
+		"src/worker/**/*"
 	]
 }
