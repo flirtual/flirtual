@@ -80,15 +80,18 @@ jobs:
   release:
     strategy:
       matrix:
+        environment: [production, canary]
         include:
-          - environment: canary
-            branch: main
-            url: https://canary.flirtual.com
           - environment: production
             branch: production
             url: https://flirtual.com
+          - environment: canary
+            branch: main
+            url: https://canary.flirtual.com
+        exclude:
+          - environment: ${{ github.ref != 'refs/heads/production' && 'production' }}
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
+    continue-on-error: true
     environment:
       name: ${{ matrix.environment }}
       url: ${{ matrix.url }}
@@ -97,22 +100,26 @@ jobs:
         working-directory: apps/frontend
     steps:
       - uses: actions/checkout@v5
+        if: github.ref == 'refs/heads/${{ matrix.branch }}'
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
+        if: github.ref == 'refs/heads/${{ matrix.branch }}'
         with:
           version: 10
           run_install: false
 
       - name: Install Node.js
         uses: actions/setup-node@v4
+        if: github.ref == 'refs/heads/${{ matrix.branch }}'
         with:
           node-version: 24
           cache: pnpm
           cache-dependency-path: apps/frontend/pnpm-lock.yaml
 
       - name: Install dependencies
+        if: github.ref == 'refs/heads/${{ matrix.branch }}'
         run: pnpm install
 
-      - run:
-          pnpm release
+      - run: pnpm release
+        if: github.ref == 'refs/heads/${{ matrix.branch }}'
