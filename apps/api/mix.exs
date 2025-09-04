@@ -50,6 +50,8 @@ defmodule Flirtual.MixProject do
       {:fly_postgres, "~> 0.3.4"},
       {:redisgraph, "~> 0.1.0"},
       {:elasticsearch, "~> 1.1.0"},
+      {:ex_aws, "~> 2.5"},
+      {:ex_aws_s3, "~> 2.5"},
       {:stripity_stripe, "~> 3.1.1"},
       {:chargebeex, "~> 0.4.0"},
       {:phoenix_html, "~> 4.1.1"},

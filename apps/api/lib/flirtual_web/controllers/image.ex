@@ -6,6 +6,7 @@ defmodule FlirtualWeb.ImageController do
   alias Flirtual.{Discord, ObanWorkers, Policy, User}
   alias Flirtual.User.Profile.Image
   alias Flirtual.User.Profile.Image.Moderation
+  alias Ecto.UUID
 
   action_fallback(FlirtualWeb.FallbackController)
 
@@ -17,6 +18,22 @@ defmodule FlirtualWeb.ImageController do
       nil -> {:error, {:not_found, :image_not_found, %{image_id: image_id}}}
       value -> value
     end
+  end
+
+  def upload(conn, _) do
+    id = UUID.generate()
+
+    bucket =
+      case Application.get_env(:flirtual, :canary) do
+        true -> "pfpup-canary"
+        _ -> "pfpup"
+      end
+
+    {:ok, signed_url} =
+      ExAws.Config.new(:s3, []) |> ExAws.S3.presigned_url(:put, bucket, id, [])
+
+    conn
+    |> json(%{id: id, signed_url: signed_url})
   end
 
   def view(conn, %{"image_id" => image_id, "type" => variant}) do

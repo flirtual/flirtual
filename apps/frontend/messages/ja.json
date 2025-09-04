@@ -755,7 +755,6 @@
 	"warm_gray_poodle_reap": "注意してください: 音楽ストリーミング プロフィールに本名やその他の個人情報が記載されている場合は、公開されます。",
 	"profile_colors": "プロフィールの色",
 	"theme": "テーマ",
-	"default": "デフォルト",
 	"peachy_petal": "ピーチペタル",
 	"minty_fresh": "クールミント",
 	"3d_movie": "3Dムービー",
@@ -905,5 +904,7 @@
 	"translate": "翻訳",
 	"source_code": "ソースコード",
 	"unnamed_user": "名無しのユーザー",
-	"ideal_super_skunk_empower": "プレミアムプランでプロフィールカラーをカスタマイズしよう！"
+	"ideal_super_skunk_empower": "プレミアムプランでプロフィールカラーをカスタマイズしよう！",
+	"default": "デフォルト",
+	"each_ideal_seahorse_bump": "1つ以上の画像のアップロードに失敗しました。後ほど再度お試しください。"
 }

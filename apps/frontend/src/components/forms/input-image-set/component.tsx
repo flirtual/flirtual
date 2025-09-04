@@ -1,15 +1,12 @@
 import AwsS3 from "@uppy/aws-s3";
 import Compressor from "@uppy/compressor";
 import Uppy from "@uppy/core";
-import type { UppyFile } from "@uppy/core";
 import DropTarget from "@uppy/drop-target";
 import GoldenRetriever from "@uppy/golden-retriever";
 import ImageEditor from "@uppy/image-editor";
 import { Dashboard, DragDrop, StatusBar } from "@uppy/react";
-import RemoteSources from "@uppy/remote-sources";
 import { ImagePlus } from "lucide-react";
 import {
-
 	useCallback,
 	useEffect,
 	useState
@@ -19,10 +16,11 @@ import { useTranslation } from "react-i18next";
 import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
-import { uppyCompanionUrl } from "~/const";
+import { Image } from "~/api/images";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
+import { useToast } from "~/hooks/use-toast";
 import { urls } from "~/urls";
 
 import {
@@ -66,19 +64,9 @@ export interface InputImageSetProps {
 	max?: number;
 }
 
-type UppyfileMeta = Record<string, unknown>;
+// eslint-disable-next-line ts/consistent-type-definitions
+type UppyfileMeta = { id: string };
 type UppyfileData = Record<string, unknown>;
-
-type MultipartFile = {
-	s3Multipart: {
-		key: string;
-		uploadId: string;
-	};
-} & UppyFile<UppyfileMeta, UppyfileData>;
-
-type UploadedMultipartFile = {
-	uploadURL: string;
-} & MultipartFile;
 
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const { value, onChange, type = "profile", max } = props;
@@ -90,6 +78,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const [uppyVisible, setUppyVisible] = useState(false);
 	const [dragging, setDragging] = useState(false);
 	const [fullPreviewId, setFullPreviewId] = useState<string | null>(null);
+	const toast = useToast();
 	const { t } = useTranslation();
 	const uppyLocale = t("uppy", { returnObjects: true });
 
@@ -159,23 +148,30 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 			})
 			.use(GoldenRetriever, {})
 			.use(AwsS3, {
-				endpoint: uppyCompanionUrl,
-				shouldUseMultipart: true,
-				limit: 15
+				shouldUseMultipart: false,
+				limit: 15,
+				async getUploadParameters(file) {
+					const { id, signedUrl } = await Image.upload();
+					file.meta.id = id;
+
+					return {
+						url: signedUrl,
+						method: "PUT"
+					};
+				},
 			})
-			.on("complete", (result) => {
-				const files = result.successful as Array<UploadedMultipartFile>;
-				const keys = files.map((file) => file.s3Multipart.key);
-				void handleUppyComplete(keys);
+			.on("complete", ({ successful = [], failed = [] }) => {
+				if (failed.length > 0) toast.add({
+					type: "error",
+					value: t("each_ideal_seahorse_bump")
+				});
+
+				void handleUppyComplete(successful.map((file) => file.meta.id));
 				setUppyVisible(false);
 			});
 
 		if (type === "profile") {
 			uppyInstance
-				.use(RemoteSources, {
-					companionUrl: uppyCompanionUrl,
-					sources: session.user.tags?.includes("debugger") ? ["Facebook"] : []
-				})
 				.use(ImageEditor, {
 					actions: {
 						revert: false,
@@ -200,7 +196,7 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 		}
 
 		setUppy(uppyInstance);
-	}, [session, handleUppyComplete, type, native, t, uppyLocale]);
+	}, [session, handleUppyComplete, type, native, t, uppyLocale, toast]);
 
 	const sortableItems = value.map(({ id }, index) => id || index);
 

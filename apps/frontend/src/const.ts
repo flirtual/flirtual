@@ -44,9 +44,10 @@ export const freshworksWidgetId = import.meta.env.VITE_FRESHWORKS_WIDGET_ID as s
 
 export const rcAppleKey = import.meta.env.VITE_RC_APPL_PUBLIC_KEY as string;
 export const rcGoogleKey = import.meta.env.VITE_RC_GOOG_PUBLIC_KEY as string;
-export const uppyCompanionUrl = import.meta.env.VITE_UPPY_COMPANION_URL as string;
-export const uppyBucketOrigin = import.meta.env.VITE_UPPY_BUCKET_ORIGIN as string;
 export const picoAppId = import.meta.env.VITE_PICO_APP_ID as string;
+
+export const bucketContentOrigin = import.meta.env.VITE_BUCKET_CONTENT_ORIGIN as string;
+export const bucketUploadsOrigin = import.meta.env.VITE_BUCKET_UPLOADS_ORIGIN as string;
 
 export const region = import.meta.env.VERCEL_REGION as string;
 

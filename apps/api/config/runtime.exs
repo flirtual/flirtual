@@ -85,6 +85,14 @@ config :flirtual, Flirtual.FCM,
 
 config :joken, default_signer: System.fetch_env!("JOKEN_SECRET")
 
+config :ex_aws,
+  access_key_id: System.fetch_env!("R2_ACCESS_KEY_ID"),
+  secret_access_key: System.fetch_env!("R2_SECRET_ACCESS_KEY"),
+  s3: [
+    host: System.fetch_env!("R2_HOSTNAME"),
+    region: "auto"
+  ]
+
 config :stripity_stripe,
   api_key: System.fetch_env!("STRIPE_ACCESS_TOKEN"),
   signing_secret: System.fetch_env!("STRIPE_SIGNING_SECRET"),

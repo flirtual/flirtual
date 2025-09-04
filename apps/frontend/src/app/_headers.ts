@@ -8,9 +8,7 @@ import {
 	preview,
 	sentryDsn,
 	sentryEnabled,
-	sentryReportTo,
-	uppyBucketOrigin,
-	uppyCompanionUrl
+	sentryReportTo
 } from "~/const";
 import { polyfillBaseUrl } from "~/polyfill";
 import { bucketOrigins } from "~/urls";
@@ -117,8 +115,6 @@ const data = [
 						"blob:",
 						new URL(apiOrigin).host,
 						...bucketOrigins.map((origin) => new URL(origin).host),
-						new URL(uppyCompanionUrl).host,
-						new URL(uppyBucketOrigin).host,
 						// https://talkjs.com/docs/Features/Security_Settings/Content_Security_Policy/
 						"*.talkjs.com",
 						"wss://*.talkjs.com",

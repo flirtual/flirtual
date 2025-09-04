@@ -8,7 +8,7 @@ import type { User } from "./api/user";
 import type { Profile } from "./api/user/profile";
 import type { ProfileImage } from "./api/user/profile/images";
 import type { DiscoverGroup } from "./app/[locale]/(app)/(authenticated)/(onboarded)/discover/page";
-import { apiUrl, siteOrigin } from "./const";
+import { apiUrl, bucketContentOrigin, bucketUploadsOrigin, siteOrigin } from "./const";
 import { defaultLocale } from "./i18n";
 import type { Locale } from "./i18n";
 import { escapeVRChat } from "./vrchat";
@@ -79,8 +79,8 @@ export type BucketName = typeof bucketNames[number];
 
 export const bucketOriginMap = {
 	static: "https://static.flirtual.com",
-	content: "https://content.flirtual.com",
-	uploads: "https://uploads.flirtual.com"
+	content: bucketContentOrigin,
+	uploads: bucketUploadsOrigin
 } as const satisfies Record<BucketName, string>;
 
 export const bucketOrigins = Object.values(bucketOriginMap);

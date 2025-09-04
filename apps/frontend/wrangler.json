@@ -2,14 +2,32 @@
 	"$schema": "https://unpkg.com/wrangler@latest/config-schema.json",
 	"name": "flirtual",
 	"workers_dev": false,
-	"main": "../../src/worker.ts",
-	"compatibility_date": "2025-04-03",
+	"main": "../../src/worker/index.ts",
+	"compatibility_date": "2025-09-01",
+	"compatibility_flags": [],
 	"env": {
 		"canary": {
 			"routes": [
 				{
 					"pattern": "canary.flirtual.com",
 					"custom_domain": true
+				}
+			],
+			"queues": {
+				"consumers": [
+					{
+						"queue": "pfp-upload-canary"
+					}
+				]
+			},
+			"r2_buckets": [
+				{
+					"binding": "SOURCE_BUCKET",
+					"bucket_name": "pfpup-canary"
+				},
+				{
+					"binding": "DESTINATION_BUCKET",
+					"bucket_name": "pfp-canary"
 				}
 			]
 		}
@@ -31,5 +49,22 @@
 			"!/robots.txt",
 			"!/sitemap.xml"
 		]
-	}
+	},
+	"queues": {
+		"consumers": [
+			{
+				"queue": "pfp-upload"
+			}
+		]
+	},
+	"r2_buckets": [
+		{
+			"binding": "SOURCE_BUCKET",
+			"bucket_name": "pfpup"
+		},
+		{
+			"binding": "DESTINATION_BUCKET",
+			"bucket_name": "pfp"
+		}
+	]
 }
