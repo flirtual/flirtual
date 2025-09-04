@@ -1,5 +1,18 @@
 /* eslint-disable no-console */
 import { env } from "cloudflare:workers";
+import invariant from "tiny-invariant";
+
+const {
+	BASE_ORIGIN: baseOrigin,
+	BUCKET_UPLOADS_ORIGIN: bucketUploadsOrigin,
+	API_URL: apiUrl,
+	IMAGE_ACCESS_TOKEN: imageAccessToken,
+} = env;
+
+invariant(baseOrigin, "BASE_ORIGIN is not defined");
+invariant(bucketUploadsOrigin, "BUCKET_UPLOADS_ORIGIN is not defined");
+invariant(apiUrl, "API_URL is not defined");
+invariant(imageAccessToken, "IMAGE_ACCESS_TOKEN is not defined");
 
 const imageVariants = [
 	{
@@ -47,14 +60,14 @@ export const queue: ExportedHandler<Env, {
 	};
 }>["queue"] = async ({ messages }) => {
 	await Promise.all(messages.map(async (message) => {
-		const { id: messageId, body } = message;
+		const { id: messageId, body, attempts } = message;
 
 		try {
 			const id = crypto.randomUUID();
 			const blurId = crypto.randomUUID();
 
 			const key = body.object.key;
-			const url = `https://${body.bucket}.${new URL(env.BASE_ORIGIN).hostname}/${key}`;
+			const originalUrl = new URL(key, bucketUploadsOrigin).href;
 
 			const head = await env.SOURCE_BUCKET.head(key);
 			if (!head || !head.httpMetadata?.contentType) return message.ack();
@@ -62,23 +75,25 @@ export const queue: ExportedHandler<Env, {
 			const type = head.httpMetadata.contentType;
 
 			if (!["image/gif", "image/jpeg", "image/png", "image/webp"].includes(type)) {
-				console.log(`Message ${messageId}: skipping ${url} (${type})`);
+				console.log(`Message ${messageId}: skipping ${originalUrl} due to unsupported type ${type}`);
 				return message.ack();
 			}
 
-			console.log(`Message ${messageId}: ${url} -> ${id} ${blurId} (${type})`);
-
+			console.log(`Message ${messageId}: ${originalUrl} → ${JSON.stringify({ id, blurId, type })}`);
 			await Promise.all(imageVariants.map(async (option) => {
-				const result = await fetch(`${env.BASE_ORIGIN}/cdn-cgi/image/fit=${option.fit},width=${option.width},height=${option.height}${option.blur ? `,blur=${option.blur}` : ""},quality=90,metadata=none/${url}`);
+				const variantUrl = `${baseOrigin}/cdn-cgi/image/fit=${option.fit},width=${option.width},height=${option.height}${option.blur ? `,blur=${option.blur}` : ""},quality=90,metadata=none/${originalUrl}`;
+				console.log(`↓ ${option.name}: ${variantUrl}`);
+
+				const result = await fetch(variantUrl);
 				const blob = await result.blob();
 
 				await env.DESTINATION_BUCKET.put(`${option.name === "blur" ? blurId : id}/${option.name}`, blob);
 			}));
 
-			await fetch(`${env.API_URL}/images/variants`, {
+			await fetch(`${apiUrl}/images/variants`, {
 				method: "post",
 				headers: {
-					authorization: `Bearer ${env.IMAGE_ACCESS_TOKEN}`,
+					authorization: `Bearer ${imageAccessToken}`,
 					"content-type": "application/json"
 				},
 				body: JSON.stringify({
@@ -92,7 +107,7 @@ export const queue: ExportedHandler<Env, {
 		}
 		catch (reason) {
 			console.error(reason);
-			message.retry({ delaySeconds: 5 });
+			message.retry({ delaySeconds: attempts ** 2 });
 		}
 	}));
 };
