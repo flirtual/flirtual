@@ -160,6 +160,7 @@ if config_env() == :prod do
 
   config :flirtual, Flirtual.Elasticsearch,
     url: System.fetch_env!("ELASTICSEARCH_URL"),
+    index_prefix: System.get_env("ELASTICSEARCH_INDEX_PREFIX"),
     default_headers: [
       {"authorization", "ApiKey " <> System.fetch_env!("ELASTICSEARCH_ACCESS_TOKEN")}
     ]
