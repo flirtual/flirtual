@@ -82,20 +82,43 @@ jobs:
       matrix:
         environment: [production, canary]
         include:
+          - environment: production
+            branch: production
+            url: https://flirtual.com
           - environment: canary
             branch: main
             url: https://canary.flirtual.com
-          - environment: production
-            branch: main
-            url: https://flirtual.com
+        exclude:
+          - environment: ${{ github.ref != 'refs/heads/production' && 'production' }}
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/${{ matrix.branch }}'
+    continue-on-error: true
     environment:
       name: ${{ matrix.environment }}
       url: ${{ matrix.url }}
     defaults:
       run:
         working-directory: apps/frontend
+    env:
+      VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
+      VITE_TALKJS_APP_ID: ${{ vars.VITE_TALKJS_APP_ID }}
+      VITE_RC_APPL_PUBLIC_KEY: ${{ vars.VITE_RC_APPL_PUBLIC_KEY }}
+      VITE_RC_GOOG_PUBLIC_KEY: ${{ vars.VITE_RC_GOOG_PUBLIC_KEY }}
+      VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
+      VITE_SENTRY_ORGANIZATION: ${{ vars.VITE_SENTRY_ORGANIZATION }}
+      VITE_SENTRY_PROJECT_ID: ${{ vars.VITE_SENTRY_PROJECT_ID }}
+      VITE_SENTRY_REPORT_TO: ${{ vars.VITE_SENTRY_REPORT_TO }}
+      VITE_CLOUDFLARE_BEACON_ID: ${{ vars.VITE_CLOUDFLARE_BEACON_ID }}
+      VITE_CANNY_APP_ID: ${{ vars.VITE_CANNY_APP_ID }}
+      VITE_FRESHWORKS_WIDGET_ID: ${{ vars.VITE_FRESHWORKS_WIDGET_ID }}
+      VITE_UPPY_COMPANION_URL: ${{ vars.VITE_UPPY_COMPANION_URL }}
+      VITE_UPPY_BUCKET_ORIGIN: ${{ vars.VITE_UPPY_BUCKET_ORIGIN }}
+      VITE_API_URL: ${{ vars.VITE_API_URL }}
+      VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
+      VITE_PICO_APP_ID: ${{ vars.VITE_PICO_APP_ID }}
+      VITE_PLATFORM_OVERRIDE: ${{ vars.VITE_PLATFORM_OVERRIDE }}
+      VITE_BUCKET_CONTENT_ORIGIN: ${{ vars.VITE_BUCKET_CONTENT_ORIGIN }}
+      VITE_BUCKET_UPLOADS_ORIGIN: ${{ vars.VITE_BUCKET_UPLOADS_ORIGIN }}
+      VITE_BUCKET_UPLOADS_SIGNED_ORIGIN: ${{ vars.VITE_BUCKET_UPLOADS_SIGNED_ORIGIN }}
     steps:
       - uses: actions/checkout@v5
 
@@ -115,5 +138,4 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run:
-          pnpm release
+      - run: pnpm release
