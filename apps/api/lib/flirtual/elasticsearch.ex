@@ -52,6 +52,7 @@ defmodule Flirtual.Elasticsearch do
       index_name,
       %{
         "mappings" => %{
+          "dynamic" => "false",
           "properties" => %{
             "id" => %{
               "type" => "keyword"
@@ -101,6 +102,12 @@ defmodule Flirtual.Elasticsearch do
             "languages" => %{
               "type" => "keyword"
             },
+            "platforms" => %{
+              "type" => "keyword"
+            },
+            "nsfw" => %{
+              "type" => "boolean"
+            },
             "liked" => %{
               "type" => "keyword"
             },
@@ -109,6 +116,9 @@ defmodule Flirtual.Elasticsearch do
             },
             "blocked" => %{
               "type" => "keyword"
+            },
+            "hidden_from_nonvisible" => %{
+              "type" => "boolean"
             }
           }
         }
