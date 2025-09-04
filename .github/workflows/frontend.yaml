@@ -83,13 +83,10 @@ jobs:
         environment: [production, canary]
         include:
           - environment: canary
-            branch: main
             url: https://canary.flirtual.com
           - environment: production
-            branch: main
             url: https://flirtual.com
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/${{ matrix.branch }}'
     environment:
       name: ${{ matrix.environment }}
       url: ${{ matrix.url }}
