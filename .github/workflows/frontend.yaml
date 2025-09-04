@@ -98,28 +98,44 @@ jobs:
     defaults:
       run:
         working-directory: apps/frontend
+    env:
+      VITE_TURNSTILE_SITE_KEY: ${{ variables.VITE_TURNSTILE_SITE_KEY }}
+      VITE_TALKJS_APP_ID: ${{ variables.VITE_TALKJS_APP_ID }}
+      VITE_RC_APPL_PUBLIC_KEY: ${{ variables.VITE_RC_APPL_PUBLIC_KEY }}
+      VITE_RC_GOOG_PUBLIC_KEY: ${{ variables.VITE_RC_GOOG_PUBLIC_KEY }}
+      VITE_SENTRY_DSN: ${{ variables.VITE_SENTRY_DSN }}
+      VITE_SENTRY_ORGANIZATION: ${{ variables.VITE_SENTRY_ORGANIZATION }}
+      VITE_SENTRY_PROJECT_ID: ${{ variables.VITE_SENTRY_PROJECT_ID }}
+      VITE_SENTRY_REPORT_TO: ${{ variables.VITE_SENTRY_REPORT_TO }}
+      VITE_CLOUDFLARE_BEACON_ID: ${{ variables.VITE_CLOUDFLARE_BEACON_ID }}
+      VITE_CANNY_APP_ID: ${{ variables.VITE_CANNY_APP_ID }}
+      VITE_FRESHWORKS_WIDGET_ID: ${{ variables.VITE_FRESHWORKS_WIDGET_ID }}
+      VITE_UPPY_COMPANION_URL: ${{ variables.VITE_UPPY_COMPANION_URL }}
+      VITE_UPPY_BUCKET_ORIGIN: ${{ variables.VITE_UPPY_BUCKET_ORIGIN }}
+      VITE_API_URL: ${{ variables.VITE_API_URL }}
+      VITE_ORIGIN: ${{ variables.VITE_ORIGIN }}
+      VITE_PICO_APP_ID: ${{ variables.VITE_PICO_APP_ID }}
+      VITE_PLATFORM_OVERRIDE: ${{ variables.VITE_PLATFORM_OVERRIDE }}
+      VITE_BUCKET_CONTENT_ORIGIN: ${{ variables.VITE_BUCKET_CONTENT_ORIGIN }}
+      VITE_BUCKET_UPLOADS_ORIGIN: ${{ variables.VITE_BUCKET_UPLOADS_ORIGIN }}
+      VITE_BUCKET_UPLOADS_SIGNED_ORIGIN: ${{ variables.VITE_BUCKET_UPLOADS_SIGNED_ORIGIN }}
     steps:
       - uses: actions/checkout@v5
-        if: github.ref == 'refs/heads/${{ matrix.branch }}'
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
-        if: github.ref == 'refs/heads/${{ matrix.branch }}'
         with:
           version: 10
           run_install: false
 
       - name: Install Node.js
         uses: actions/setup-node@v4
-        if: github.ref == 'refs/heads/${{ matrix.branch }}'
         with:
           node-version: 24
           cache: pnpm
           cache-dependency-path: apps/frontend/pnpm-lock.yaml
 
       - name: Install dependencies
-        if: github.ref == 'refs/heads/${{ matrix.branch }}'
         run: pnpm install
 
       - run: pnpm release
-        if: github.ref == 'refs/heads/${{ matrix.branch }}'
