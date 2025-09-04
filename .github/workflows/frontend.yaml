@@ -21,20 +21,20 @@ jobs:
       run:
         working-directory: apps/frontend
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - run: echo "::add-matcher::.github/annotation-eslint.json"
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9
+          version: 10
           run_install: false
 
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: pnpm
           cache-dependency-path: apps/frontend/pnpm-lock.yaml
 
@@ -43,6 +43,7 @@ jobs:
 
       - name: ESLint
         run: ./node_modules/.bin/eslint -f stylish
+
   typescript:
     runs-on: ubuntu-latest
     permissions:
@@ -51,20 +52,20 @@ jobs:
       run:
         working-directory: apps/frontend
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - run: echo "::add-matcher::.github/annotation-typescript.json"
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9
+          version: 10
           run_install: false
 
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: pnpm
           cache-dependency-path: apps/frontend/pnpm-lock.yaml
 
@@ -75,3 +76,44 @@ jobs:
         run: |
           ./node_modules/.bin/tsc --pretty false --noEmit | sed -E "s#^.+\(.+\): error TS.+\$#$PWD/\0#"
           exit ${PIPESTATUS[0]}
+
+  release:
+    strategy:
+      matrix:
+        environment: [production, canary]
+        include:
+          - environment: canary
+            branch: main
+            url: https://canary.flirtual.com
+          - environment: production
+            branch: main
+            url: https://flirtual.com
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/${{ matrix.branch }}'
+    environment:
+      name: ${{ matrix.environment }}
+      url: ${{ matrix.url }}
+    defaults:
+      run:
+        working-directory: apps/frontend
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: apps/frontend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run:
+          pnpm release
