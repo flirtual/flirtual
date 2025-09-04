@@ -54,7 +54,7 @@ export const queue: ExportedHandler<Env, {
 			const blurId = crypto.randomUUID();
 
 			const key = body.object.key;
-			const url = `https://${body.bucket}.${new URL(env.VITE_ORIGIN).hostname}/${key}`;
+			const url = `https://${body.bucket}.${new URL(env.BASE_ORIGIN).hostname}/${key}`;
 
 			const head = await env.SOURCE_BUCKET.head(key);
 			if (!head || !head.httpMetadata?.contentType) return message.ack();
@@ -69,13 +69,13 @@ export const queue: ExportedHandler<Env, {
 			console.log(`Message ${messageId}: ${url} -> ${id} ${blurId} (${type})`);
 
 			await Promise.all(imageVariants.map(async (option) => {
-				const result = await fetch(`${env.VITE_ORIGIN}/cdn-cgi/image/fit=${option.fit},width=${option.width},height=${option.height}${option.blur ? `,blur=${option.blur}` : ""},quality=90,metadata=none/${url}`);
+				const result = await fetch(`${env.BASE_ORIGIN}/cdn-cgi/image/fit=${option.fit},width=${option.width},height=${option.height}${option.blur ? `,blur=${option.blur}` : ""},quality=90,metadata=none/${url}`);
 				const blob = await result.blob();
 
 				await env.DESTINATION_BUCKET.put(`${option.name === "blur" ? blurId : id}/${option.name}`, blob);
 			}));
 
-			await fetch(`${env.VITE_API_URL}/images/variants`, {
+			await fetch(`${env.API_URL}/images/variants`, {
 				method: "post",
 				headers: {
 					authorization: `Bearer ${env.IMAGE_ACCESS_TOKEN}`,
