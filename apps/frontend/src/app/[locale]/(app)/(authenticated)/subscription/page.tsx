@@ -1,3 +1,4 @@
+import ms from "ms.macro";
 import { useTranslation } from "react-i18next";
 import invariant from "tiny-invariant";
 
@@ -39,8 +40,21 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 	if (!emailConfirmedAt)
 		return redirect(urls.confirmEmail({ to: urls.subscription.default }));
 
-	if (new URL(request.url).searchParams.get("success") === "true")
+	if (new URL(request.url).searchParams.get("success") === "true") {
 		invalidate({ queryKey: sessionKey() });
+
+		// We poll for up to 1 minute to see if the user's subscription status has updated.
+		// This is to handle the case where the webhook from the payment processor
+		// has not yet been processed by the time the user is redirected back.
+		[
+			ms("5s"),
+			ms("15s"),
+			ms("30s"),
+			ms("1m"),
+		].map((timeout) =>
+			setTimeout(() => invalidate({ queryKey: sessionKey() }), timeout)
+		);
+	}
 
 	await handle.preload();
 }
