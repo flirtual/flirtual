@@ -10,3 +10,7 @@ export function yearsAgo(date: Date): number {
 	if (today.getTime() < dateThisYear.getTime()) diff--;
 	return diff;
 }
+
+export function endOfYear(date: Date = new Date()): Date {
+	return new Date(date.getFullYear(), 11, 31);
+}

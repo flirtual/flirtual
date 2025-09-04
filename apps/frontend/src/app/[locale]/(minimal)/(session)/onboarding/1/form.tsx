@@ -14,6 +14,7 @@ import {
 } from "~/components/inputs";
 import { InputCheckboxList } from "~/components/inputs/checkbox-list";
 import { InputCountrySelect } from "~/components/inputs/specialized";
+import { endOfYear } from "~/date";
 import {
 
 	useAttributes,
@@ -98,7 +99,7 @@ export const Onboarding1Form: FC = () => {
 								</InputLabel>
 								<InputDateSelect
 									{...field.props}
-									max="now"
+									max={endOfYear()}
 									min={new Date("1900/01/01")}
 								/>
 							</>

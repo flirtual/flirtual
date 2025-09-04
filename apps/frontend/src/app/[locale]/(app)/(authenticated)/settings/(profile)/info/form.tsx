@@ -18,6 +18,7 @@ import {
 	InputCountrySelect,
 	InputLanguageAutocomplete
 } from "~/components/inputs/specialized";
+import { endOfYear } from "~/date";
 import {
 
 	useAttributes,
@@ -113,7 +114,7 @@ export const InfoForm: FC = () => {
 								</InputLabel>
 								<InputDateSelect
 									{...field.props}
-									max="now"
+									max={endOfYear()}
 									min={new Date("1900/01/01")}
 								/>
 							</>
