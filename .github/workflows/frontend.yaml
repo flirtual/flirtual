@@ -83,7 +83,6 @@ jobs:
         environment: [production, canary]
         exclude:
           - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
-          - environment: ${{ github.ref != 'refs/heads/main' && 'canary' || null }}
     runs-on: ubuntu-latest
     continue-on-error: true
     environment: ${{ matrix.environment }}

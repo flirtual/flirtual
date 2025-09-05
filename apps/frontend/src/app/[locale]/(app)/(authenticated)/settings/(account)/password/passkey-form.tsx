@@ -61,7 +61,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 		mutationKey: sessionKey(),
 		mutationFn: async () => {
 			const challenge
-						= await Authentication.passkey.registrationChallenge(false);
+				= await Authentication.passkey.registrationChallenge(false);
 
 			const credential = (await navigator.credentials
 				.create(challenge)
@@ -78,7 +78,7 @@ export const PasswordPasskeyForm: React.FC = () => {
 			if (!credential) return;
 
 			const response
-						= credential.response as AuthenticatorAttestationResponse;
+				= credential.response as AuthenticatorAttestationResponse;
 
 			await Authentication.passkey
 				.create({
