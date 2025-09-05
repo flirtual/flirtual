@@ -54,20 +54,26 @@ defmodule Flirtual.User.Profile.Image do
   def url(_, variant \\ "full")
 
   def url(%Image{blur_id: blur_id}, "blur") when is_binary(blur_id) do
-    URI.new!("https://content.flirtual.com")
-    |> URI.merge(blur_id <> "/blur")
-    |> URI.to_string()
+    url(:content, external_id <> "/blur")
   end
 
   def url(%Image{external_id: external_id}, variant) when is_binary(external_id) do
-    URI.new!("https://content.flirtual.com")
-    |> URI.merge(external_id <> "/" <> variant)
-    |> URI.to_string()
+    url(:content, external_id <> "/" <> variant)
   end
 
   def url(%Image{original_file: original_file}, _) when is_binary(original_file) do
-    URI.new!("https://uploads.flirtual.com/")
-    |> URI.merge(original_file |> URI.encode())
+    url(:uploads, original_file)
+  end
+
+  def url(:content, path) when is_binary(path) do
+    URI.new!(Application.get_env(:flirtual, :content_origin))
+    |> URI.merge(path |> URI.encode())
+    |> URI.to_string()
+  end
+
+  def url(:uploads, path) when is_binary(path) do
+    URI.new!(Application.get_env(:flirtual, :uploads_origin))
+    |> URI.merge(path |> URI.encode())
     |> URI.to_string()
   end
 

@@ -120,6 +120,8 @@ origin = URI.parse(System.fetch_env!("ORIGIN"))
 config :flirtual,
   root_origin: URI.parse(System.fetch_env!("ROOT_ORIGIN")),
   frontend_origin: URI.parse(System.fetch_env!("FRONTEND_ORIGIN")),
+  content_origin: URI.parse(System.fetch_env!("BUCKET_CONTENT_ORIGIN")),
+  uploads_origin: URI.parse(System.fetch_env!("BUCKET_UPLOADS_ORIGIN")),
   origin: origin,
   session_signing_salt: System.fetch_env!("SESSION_SIGNING_SALT"),
   image_access_token: System.fetch_env!("IMAGE_ACCESS_TOKEN"),
