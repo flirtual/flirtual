@@ -167,7 +167,8 @@ export const Profile = withSuspense(({
 					<RelationActions direct={direct} userId={user.id} />
 					{(session.user.tags?.includes("admin")
 						|| session.user.tags?.includes("moderator")
-						|| relationship?.matched)
+						|| relationship?.matched
+						|| myProfile)
 					&& (discordConnection
 						|| user.profile.discord
 						|| user.profile.vrchatName)

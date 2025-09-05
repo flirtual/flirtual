@@ -1,3 +1,6 @@
+/// <reference types="@cloudflare/workers-types" />
+/// <reference types="../../worker-configuration.d.ts" />
+
 /* eslint-disable no-console */
 import { env } from "cloudflare:workers";
 import invariant from "tiny-invariant";
