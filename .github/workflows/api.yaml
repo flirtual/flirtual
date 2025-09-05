@@ -95,7 +95,7 @@ jobs:
             .deploy.strategy = "immediate" |
             .services[0].auto_stop_machines = true |
             .services[0].auto_start_machines = true |
-            .services[0].min_machines_running = 0 |
+            .services[0].min_machines_running = 1 |
             .vm[0].size = "shared-cpu-2x"
           ' > fly-canary.json
 
