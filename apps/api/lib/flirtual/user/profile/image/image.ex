@@ -54,7 +54,7 @@ defmodule Flirtual.User.Profile.Image do
   def url(_, variant \\ "full")
 
   def url(%Image{blur_id: blur_id}, "blur") when is_binary(blur_id) do
-    url(:content, external_id <> "/blur")
+    url(:content, blur_id <> "/blur")
   end
 
   def url(%Image{external_id: external_id}, variant) when is_binary(external_id) do
