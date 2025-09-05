@@ -47,7 +47,7 @@ export const Conversation = withSuspense<{ id: string }>(({ id: conversationId }
 						? (
 								<LeaveButton conversationId={conversationId} />
 							)
-						: user.tags?.includes("debugger") && (
+						: me.tags?.includes("debugger") && (
 							<VRChatButton conversationId={conversationId} user={user} />
 						)}
 				</div>
