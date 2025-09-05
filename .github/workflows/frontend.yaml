@@ -81,20 +81,11 @@ jobs:
     strategy:
       matrix:
         environment: [production, canary]
-        include:
-          - environment: production
-            branch: production
-            url: https://flirtual.com
-          - environment: canary
-            branch: main
-            url: https://canary.flirtual.com
         exclude:
-          - environment: ${{ github.ref != 'refs/heads/production' && 'production' }}
+          - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
     runs-on: ubuntu-latest
     continue-on-error: true
-    environment:
-      name: ${{ matrix.environment }}
-      url: ${{ matrix.url }}
+    environment: ${{ matrix.environment }}
     defaults:
       run:
         working-directory: apps/frontend
