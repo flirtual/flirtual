@@ -45,6 +45,7 @@ export default defineConfig((config) => {
 		build: {
 			assetsDir: "static",
 			minify: true,
+			sourcemap: true,
 			target: [
 				"chrome106",
 				"edge106",
@@ -153,8 +154,8 @@ export default defineConfig((config) => {
 				sourceMapsUploadOptions: {
 					filesToDeleteAfterUpload: [
 						"**/*.data",
-						"**/*.map"
-					]
+						mode === "production" && "**/*.map"
+					].filter(Boolean)
 				},
 				bundleSizeOptimizations: {
 					excludeDebugStatements: true,
