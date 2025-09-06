@@ -1,4 +1,5 @@
 import { Clipboard } from "@capacitor/clipboard";
+import { captureEvent } from "@sentry/react-router";
 import { Copy } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,15 +21,18 @@ export const DebugInfo: React.FC = () => {
 	const [seeMore, setSeeMore] = useState(false);
 	const session = useOptionalSession();
 
+	const eventId = useMemo(() => captureEvent({ message: "Debug info" }), []);
+
 	const data = useMemo(() => JSON.stringify({
 		at: new Date().toISOString(),
+		eventId,
 		production,
 		sha: commitId,
 		locale,
 		user: session?.user.id || null,
 		sudoerId: session?.sudoerId,
 		device
-	}), [device, locale, session?.sudoerId, session?.user.id]);
+	}), [eventId, device, locale, session?.sudoerId, session?.user.id]);
 
 	const copy = useCallback(() => Clipboard.write({ string: `\`\`\`json\n${data}\n\`\`\`` }), [data]);
 

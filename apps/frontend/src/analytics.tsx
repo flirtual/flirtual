@@ -7,6 +7,7 @@ import {
 	apiOrigin,
 	client,
 	cloudflareBeaconId,
+	preview,
 	production,
 	sentryDsn,
 	sentryEnabled,
@@ -23,14 +24,15 @@ export function initializeAnalytics() {
 		dsn: sentryDsn,
 		sampleRate: 1,
 		tracesSampleRate: 1,
-		profilesSampleRate: 1,
-		replaysOnErrorSampleRate: 0,
-		replaysSessionSampleRate: 0,
+		replaysOnErrorSampleRate: 1,
+		replaysSessionSampleRate: preview ? 1 : 0,
 		tracePropagationTargets: [
 			siteOrigin,
 			apiOrigin,
 		],
 		ignoreErrors: [],
+		environment: preview || "production",
+		sendDefaultPii: !production
 	});
 
 	log("Analytics initialized");
