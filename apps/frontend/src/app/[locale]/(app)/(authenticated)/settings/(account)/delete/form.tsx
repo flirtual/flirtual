@@ -82,7 +82,7 @@ export const DeleteForm: FC = () => {
 											<p>
 												<Trans
 													components={{
-														link: <InlineLink href={urls.settings.deactivateAccount} />
+														deactivateLink: <InlineLink href={urls.settings.deactivateAccount} />
 													}}
 													i18nKey="brave_bald_bison_trim"
 												/>
