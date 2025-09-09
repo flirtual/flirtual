@@ -7,6 +7,7 @@ import { ButtonLink } from "~/components/button";
 import { Form } from "~/components/forms";
 import { FormButton } from "~/components/forms/button";
 import { InputImageSet } from "~/components/forms/input-image-set";
+import type { ImageSetValue } from "~/components/forms/input-image-set";
 import { InputPrompts } from "~/components/forms/prompts";
 import {
 	InputEditor,
@@ -38,10 +39,14 @@ export const Finish1Form: FC = () => {
 		<Form
 			fields={{
 				displayName: user.profile.displayName || "",
-				images: user.profile.images.map((image) => ({
+				images: user.profile.images.map((image): ImageSetValue => ({
 					id: image.id,
 					src: urls.image(image),
-					fullSrc: urls.image(image, "full")
+					fullSrc: urls.image(image, "full"),
+					authorId: image.authorId,
+					authorName: image.authorName,
+					worldId: image.worldId,
+					worldName: image.worldName
 				})),
 				biography: user.profile.biography || "",
 				prompts: user.profile.prompts
@@ -57,7 +62,13 @@ export const Finish1Form: FC = () => {
 					}),
 					Profile.Image.create(
 						user.id,
-						values.images.map((image) => image.id).filter(Boolean)
+						values.images.map((image) => ({
+							id: image.id,
+							authorId: image.authorId,
+							authorName: image.authorName,
+							worldId: image.worldId,
+							worldName: image.worldName
+						})).filter((file) => file.id)
 					).then((images) =>
 						Profile.Image.update(
 							user.id,

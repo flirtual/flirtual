@@ -3,12 +3,20 @@ import Gradient from "virtual:remote/e8212f93-af6f-4a2c-ac11-cb328bbc4aa4";
 import { api } from "~/api/common";
 import type { DatedModel, UuidModel } from "~/api/common";
 
+export interface ProfileImageMetadata {
+	authorId: string;
+	authorName?: string;
+	worldId: string;
+	worldName?: string;
+}
+
 export type ProfileImage = {
 	originalFile?: string;
 	externalId?: string;
 	scanned?: boolean;
 }
-& DatedModel & UuidModel;
+& DatedModel
+& Partial<ProfileImageMetadata> & UuidModel;
 
 export const notFoundImage = {
 	id: "not-found",
@@ -18,10 +26,10 @@ export const notFoundImage = {
 };
 
 export const ProfileImage = {
-	create(userId: string, imageIds: Array<string>) {
+	create(userId: string, files: Array<{ id: string } & Partial<ProfileImageMetadata>>) {
 		return api
 			.url(`users/${userId}/profile/images`)
-			.json(imageIds)
+			.json(files)
 			.put()
 			.json<Array<ProfileImage>>();
 	},

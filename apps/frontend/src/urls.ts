@@ -117,6 +117,8 @@ export const urls = {
 		`https://vrchat.com/home/search/users/${encodeURIComponent(
 			escapeVRChat(name)
 		)}`,
+	vrchatWorld: (worldId: string) =>
+		`https://vrchat.com/home/world/${worldId}`,
 
 	// pages
 	default: "/",

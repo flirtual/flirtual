@@ -434,10 +434,10 @@ defmodule Flirtual.Profiles do
       |> Enum.with_index()
       |> Enum.map(fn {file, file_idx} ->
         existing_complete_image =
-          if(is_shortuuid(file),
+          if(is_shortuuid(file["id"]),
             do:
               Image
-              |> where(id: ^file)
+              |> where(id: ^file["id"])
               |> Repo.one(),
             else: nil
           )
@@ -445,7 +445,7 @@ defmodule Flirtual.Profiles do
         if is_nil(existing_complete_image) do
           existing_incomplete_image =
             Image
-            |> where(original_file: ^file)
+            |> where(original_file: ^file["id"])
             |> order_by([image], desc: image.created_at)
             |> Repo.one()
 
@@ -454,17 +454,25 @@ defmodule Flirtual.Profiles do
               Image.changeset(existing_incomplete_image, %{
                 profile_id: profile.user_id,
                 order: image_count + file_idx,
-                updated_at: now
+                updated_at: now,
+                author_id: file["author_id"],
+                author_name: file["author_name"],
+                world_id: file["world_id"],
+                world_name: file["world_name"]
               })
             else
               %Image{}
               |> Image.changeset(%{
                 id: Ecto.ShortUUID.generate(),
                 profile_id: profile.user_id,
-                original_file: file,
+                original_file: file["id"],
                 order: image_count + file_idx,
                 updated_at: now,
-                created_at: now
+                created_at: now,
+                author_id: file["author_id"],
+                author_name: file["author_name"],
+                world_id: file["world_id"],
+                world_name: file["world_name"]
               })
             end
 

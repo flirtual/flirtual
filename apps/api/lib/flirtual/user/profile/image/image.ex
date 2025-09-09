@@ -21,6 +21,10 @@ defmodule Flirtual.User.Profile.Image do
     field(:scanned, :boolean, default: false)
     field(:failed, :boolean, default: false)
     field(:order, :integer)
+    field(:author_id, :string)
+    field(:author_name, :string)
+    field(:world_id, :string)
+    field(:world_name, :string)
 
     timestamps()
   end
@@ -34,7 +38,11 @@ defmodule Flirtual.User.Profile.Image do
       :blur_id,
       :scanned,
       :failed,
-      :order
+      :order,
+      :author_id,
+      :author_name,
+      :world_id,
+      :world_name
     ])
     |> validate_required([:original_file])
     |> validate_uid(:profile_id)
@@ -134,7 +142,11 @@ defmodule Flirtual.User.Profile.Image do
         :external_id,
         :scanned,
         :updated_at,
-        :created_at
+        :created_at,
+        :author_id,
+        :author_name,
+        :world_id,
+        :world_name
       ]
   end
 end

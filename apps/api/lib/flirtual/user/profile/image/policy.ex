@@ -76,7 +76,11 @@ defmodule Flirtual.User.Profile.Image.Policy do
     :original_file,
     :scanned,
     :created_at,
-    :updated_at
+    :updated_at,
+    :author_id,
+    :author_name,
+    :world_id,
+    :world_name
   ]
 
   def transform(

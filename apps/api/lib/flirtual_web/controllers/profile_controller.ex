@@ -114,14 +114,14 @@ defmodule FlirtualWeb.ProfileController do
     end
   end
 
-  def create_images(conn, %{"user_id" => user_id, "_json" => file_ids}) do
+  def create_images(conn, %{"user_id" => user_id, "_json" => files}) do
     user = Users.get(user_id)
     profile = %Profile{user.profile | user: user}
 
     if is_nil(user) or Policy.cannot?(conn, :update, profile) do
       {:error, {:forbidden, :missing_permission, %{user_id: user_id}}}
     else
-      with {:ok, images} <- Profiles.create_images(profile, file_ids) do
+      with {:ok, images} <- Profiles.create_images(profile, files) do
         conn |> json(Policy.transform(conn, images))
       end
     end
