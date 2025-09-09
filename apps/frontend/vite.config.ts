@@ -158,10 +158,7 @@ export default defineConfig((config) => {
 					].filter(Boolean)
 				},
 				bundleSizeOptimizations: {
-					excludeDebugStatements: true,
-					excludeReplayIframe: true,
-					excludeReplayShadowDom: true,
-					excludeReplayWorker: true
+					excludeDebugStatements: true
 				}
 			}, config)
 		],
