@@ -1,14 +1,14 @@
 import ms from "ms.macro";
 import type { Dispatch, FC, ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import type { Session } from "react-router";
 import FlirtualBlack from "virtual:remote/static/flirtual-black.svg";
 import FlirtualWhite from "virtual:remote/static/flirtual-white.svg";
 import { withSuspense } from "with-suspense";
 
+import type { Session } from "~/api/auth";
 import { User } from "~/api/user";
 import { Image } from "~/components/image";
-import { useOptionalSession } from "~/hooks/use-session";
+import { useOptionalSession, useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useNavigate } from "~/i18n";
 import { mutate, sessionKey } from "~/query";
@@ -28,13 +28,19 @@ export const ModerationMessageDialog: FC = withSuspense(() => {
 
 	return (
 		<TrustAndSafetyDialog
-			onAcknowledge={() =>
-				User.acknowledgeWarn(session.user.id)
-					.then(async () => {
-						const user = await toasts.add(t("message_acknowledged"));
+			onAcknowledge={async (silently = false) => {
+				if (silently) {
+					await mutate<Session>(sessionKey(), (session) => ({ ...session, user: { ...session.user, moderatorMessage: null } }));
+					return;
+				}
+
+				await User.acknowledgeWarn(session.user.id)
+					.then(async (user) => {
+						await toasts.add(t("message_acknowledged"));
 						await mutate<Session>(sessionKey(), (session) => ({ ...session, user }));
 					})
-					.catch(toasts.addError)}
+					.catch(toasts.addError);
+			}}
 		>
 			{session.user.moderatorMessage}
 		</TrustAndSafetyDialog>
@@ -107,15 +113,13 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 
 export const TrustAndSafetyDialog: FC<{
 	children: ReactNode;
-	onAcknowledge?: () => void;
+	onAcknowledge?: (silently?: boolean) => void;
 	onOpenChange?: Dispatch<boolean>;
 	actions?: ReactNode;
 	closable?: boolean;
 }> = ({ children, actions, closable = false, onAcknowledge, onOpenChange }) => {
-	const session = useOptionalSession();
+	const { sudoerId } = useSession();
 	const { t } = useTranslation();
-
-	if (!session) return null;
 
 	return (
 		<DrawerOrDialog open closable={closable} onOpenChange={onOpenChange}>
@@ -148,10 +152,23 @@ export const TrustAndSafetyDialog: FC<{
 						</div>
 						<div className="flex flex-col gap-2">
 							{actions || (
-								<Button size="sm" onClick={onAcknowledge}>
-									{t("i_acknowledge")}
-								</Button>
+								<>
+									{onAcknowledge && (
+										<>
+											<Button size="sm" onClick={() => onAcknowledge?.()}>
+												{t("i_acknowledge")}
+											</Button>
+											{sudoerId && (
+												<Button kind="tertiary" size="sm" onClick={() => onAcknowledge?.(true)}>
+													Close without acknowledging
+												</Button>
+											)}
+										</>
+									)}
+
+								</>
 							)}
+
 							<span className="flex flex-row justify-center gap-4 font-nunito text-xs">
 								<InlineLink href={urls.resources.communityGuidelines}>
 									{t("community_guidelines")}
