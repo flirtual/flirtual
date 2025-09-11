@@ -2,8 +2,9 @@ import { useCallback, useEffect, useMemo } from "react";
 
 import type { Issue } from "~/api/common";
 import { isWretchError } from "~/api/common";
-import type { Queue, QueueIssue } from "~/api/matchmaking";
+import type { Queue, QueueActionIssue, QueueIssue } from "~/api/matchmaking";
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
+import { OutOfLikesPasses } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/out-of-likes-passes";
 import { preloadProfile } from "~/components/profile";
 import { log } from "~/log";
 import {
@@ -16,11 +17,14 @@ import {
 } from "~/query";
 import { emptyArray } from "~/utilities";
 
+import { useDialog } from "./use-dialog";
+
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
 export function useQueue(mode: ProspectKind = "love") {
 	if (!ProspectKind.includes(mode)) mode = "love";
 	const queryKey = useMemo(() => queueKey(mode), [mode]);
+	const dialogs = useDialog();
 
 	const queue = useQuery<Queue | QueueIssue, typeof queryKey>({
 		queryKey,
@@ -86,7 +90,7 @@ export function useQueue(mode: ProspectKind = "love") {
 		};
 	}), [queryKey]);
 
-	const { mutateAsync, isPending: mutating } = useMutation<Queue, {
+	const { mutateAsync, isPending: mutating } = useMutation<Queue | QueueIssue | undefined, {
 		action: "like" | "pass" | "undo";
 		userId: string;
 		kind: ProspectKind;
@@ -109,13 +113,41 @@ export function useQueue(mode: ProspectKind = "love") {
 		}) => {
 			log(action, { userId, kind, mode });
 
-			const { queue } = action === "undo"
-				? await Matchmaking.undo({ mode })
-				: await Matchmaking.queueAction({ type: action, kind, mode, userId });
+			try {
+				const { queue } = action === "undo"
+					? await Matchmaking.undo({ mode })
+					: await Matchmaking.queueAction({ type: action, kind, mode, userId });
 
-			invalidate({ queryKey: relationshipKey(userId) });
+				await invalidate({ queryKey: relationshipKey(userId) });
 
-			return queue;
+				return queue;
+			}
+			catch (reason) {
+				if (!isWretchError(reason)) throw reason;
+
+				const issue = reason.json as QueueActionIssue;
+
+				if (issue.error === "confirm_email" || issue.error === "finish_profile") return issue;
+
+				await invalidate({ queryKey });
+				if (issue.error === "already_responded") return;
+
+				if (issue.error !== "out_of_likes" && issue.error !== "out_of_passes") throw reason;
+				const { details: { reset_at } } = issue;
+
+				const dialog = (
+					<OutOfLikesPasses
+						reset={async () => {
+							await invalidate({ queryKey });
+							dialogs.remove(dialog);
+						}}
+						mode={mode}
+						resetAt={reset_at}
+					/>
+				);
+
+				dialogs.add(dialog);
+			}
 		},
 		onSettled: () => invalidateQueue(({ love: "friend", friend: "love" } as const)[mode])
 	});
