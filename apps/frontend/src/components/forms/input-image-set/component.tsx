@@ -17,6 +17,7 @@ import { groupBy } from "remeda";
 import { twMerge } from "tailwind-merge";
 
 import { Image } from "~/api/images";
+import type { ProfileImageMetadata } from "~/api/user/profile/images";
 import { useDevice } from "~/hooks/use-device";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useTheme } from "~/hooks/use-theme";
@@ -42,6 +43,7 @@ import {
 	SortableItemOverlay,
 	useCurrentSortableItem
 } from "../sortable";
+import VRChatMetadata from "./vrchat-metadata";
 
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
@@ -50,11 +52,12 @@ import "@uppy/drag-drop/dist/style.min.css";
 import "@uppy/status-bar/dist/style.min.css";
 import "./index.css";
 
-export interface ImageSetValue {
+export type ImageSetValue = {
 	id: string;
 	src: string;
 	fullSrc: string;
 }
+& Partial<ProfileImageMetadata>;
 
 export interface InputImageSetProps {
 	value: Array<ImageSetValue>;
@@ -64,8 +67,7 @@ export interface InputImageSetProps {
 	max?: number;
 }
 
-// eslint-disable-next-line ts/consistent-type-definitions
-type UppyfileMeta = { id: string };
+type UppyfileMeta = { id: string } & Partial<ProfileImageMetadata>;
 type UppyfileData = Record<string, unknown>;
 
 export const InputImageSet: FC<InputImageSetProps> = (props) => {
@@ -85,15 +87,19 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 	const fullPreviewImage = value.find(({ id }) => id === fullPreviewId);
 
 	const handleUppyComplete = useCallback(
-		async (fileKeys: Array<string>) => {
+		async (filesMeta: Array<UppyfileMeta>) => {
 			if (!session) return;
 
 			onChange([
 				...value,
-				...fileKeys.map((key) => ({
-					id: key,
-					src: urls.media(key, "uploads"),
-					fullSrc: urls.media(key, "uploads")
+				...filesMeta.map((meta) => ({
+					id: meta.id,
+					src: urls.media(meta.id, "uploads"),
+					fullSrc: urls.media(meta.id, "uploads"),
+					authorId: meta.authorId,
+					authorName: meta.authorName,
+					worldId: meta.worldId,
+					worldName: meta.worldName
 				}))
 			]);
 		},
@@ -133,7 +139,35 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 				},
 				pluralize: (n) => n === 1 ? 0 : 1
 			}
-		})
+		});
+
+		if (type === "profile") {
+			uppyInstance
+				.use(ImageEditor, {
+					actions: {
+						revert: false,
+						rotate: true,
+						granularRotate: false,
+						flip: false,
+						zoomIn: false,
+						zoomOut: false,
+						cropSquare: false,
+						cropWidescreen: false,
+						cropWidescreenVertical: false
+					},
+					cropperOptions: {
+						viewMode: 1,
+						dragMode: "none",
+						aspectRatio: 1,
+						guides: false,
+						center: false,
+						croppedCanvasOptions: {}
+					}
+				})
+				.use(VRChatMetadata, {});
+		}
+
+		uppyInstance
 			.use(DropTarget, {
 				target: document.body,
 				onDrop: () => {
@@ -166,34 +200,9 @@ export const InputImageSet: FC<InputImageSetProps> = (props) => {
 					value: t("each_ideal_seahorse_bump")
 				});
 
-				void handleUppyComplete(successful.map((file) => file.meta.id));
+				void handleUppyComplete(successful.map((file) => file.meta));
 				setUppyVisible(false);
 			});
-
-		if (type === "profile") {
-			uppyInstance
-				.use(ImageEditor, {
-					actions: {
-						revert: false,
-						rotate: true,
-						granularRotate: false,
-						flip: false,
-						zoomIn: false,
-						zoomOut: false,
-						cropSquare: false,
-						cropWidescreen: false,
-						cropWidescreenVertical: false
-					},
-					cropperOptions: {
-						viewMode: 1,
-						dragMode: "none",
-						aspectRatio: 1,
-						guides: false,
-						center: false,
-						croppedCanvasOptions: {}
-					}
-				});
-		}
 
 		setUppy(uppyInstance);
 	}, [session, handleUppyComplete, type, native, t, uppyLocale, toast]);

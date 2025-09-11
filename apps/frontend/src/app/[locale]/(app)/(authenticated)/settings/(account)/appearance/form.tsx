@@ -308,7 +308,7 @@ export const AppearanceForm: FC = () => {
 							<InputLabelHint>
 								<Trans
 									components={{
-										link: <InlineLink href={urls.resources.translate(locale)} />
+										translateLink: <InlineLink href={urls.resources.translate(locale)} />
 									}}
 									i18nKey={locale === defaultLocale ? "help_translate_others" : "help_translate"}
 									values={{ language: tAttribute[locale]?.name || locale }}

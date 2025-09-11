@@ -15,6 +15,7 @@ import { invalidate, userKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Dialog, DialogContent, DialogTitle } from "../dialog/dialog";
+import { InlineLink } from "../inline-link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import { UserImage } from "../user-avatar";
 
@@ -97,7 +98,7 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 
 	return (
 		<div className="flex w-full items-center justify-between gap-4 bg-brand-gradient p-4 text-white-20">
-			<span>
+			<div className="select-children">
 				<Trans
 					values={{
 						uploaded: formattedUploadTime,
@@ -105,7 +106,27 @@ const ImageToolbar: React.FC<{ image: ProfileImage; user: User }> = ({ image, us
 					}}
 					i18nKey="strong_trite_squid_grasp"
 				/>
-			</span>
+				{image.authorId && image.worldId && (
+					<>
+						{" "}
+						<Trans
+							components={{
+								name: (
+									<InlineLink className="text-white-10 underline" href={urls.vrchatProfile(image.authorId)}>
+										{image.authorName || image.authorId}
+									</InlineLink>
+								),
+								world: (
+									<InlineLink className="text-white-10 underline" href={urls.vrchatWorld(image.worldId)}>
+										{image.worldName || image.worldId}
+									</InlineLink>
+								)
+							}}
+							i18nKey="lost_sour_moose_tend"
+						/>
+					</>
+				)}
+			</div>
 			<div className="flex gap-4 text-white-20">
 				<Tooltip>
 					<TooltipTrigger asChild>

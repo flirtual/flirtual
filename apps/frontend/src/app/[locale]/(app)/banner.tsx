@@ -62,7 +62,7 @@ export const AppBanner: FC = () => {
 			<Banner>
 				<Trans
 					components={{
-						link: (
+						bannerLink: (
 							<BannerLink
 								href={
 									session.user.status === "registered"
@@ -83,7 +83,7 @@ export const AppBanner: FC = () => {
 			<Banner>
 				<Trans
 					components={{
-						link: <BannerLink href="/confirm-email" />
+						bannerLink: <BannerLink href="/confirm-email" />
 					}}
 					i18nKey="exuberant_green_horse_fowl"
 				/>

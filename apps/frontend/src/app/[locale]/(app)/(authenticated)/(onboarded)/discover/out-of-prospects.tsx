@@ -30,7 +30,7 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 									<p>
 										<Trans
 											components={{
-												link: <InlineLink href={urls.settings.matchmaking()} />
+												settingsLink: <InlineLink href={urls.settings.matchmaking()} />
 											}}
 											i18nKey="round_stout_iguana_stab"
 										/>
@@ -39,7 +39,7 @@ export const OutOfProspects: FC<OutOfProspectsProps> = ({ mode }) => {
 									<p>
 										<Trans
 											components={{
-												link: <InlineLink href={urls.discover("homies")} />
+												browseLink: <InlineLink href={urls.discover("homies")} />
 											}}
 											i18nKey="main_large_goat_succeed"
 										/>

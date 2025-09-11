@@ -41,7 +41,7 @@ export default function ConversationsLayout() {
 					</summary>
 					<Trans
 						components={{
-							link: <InlineLink href={urls.socials.discord} />
+							discordLink: <InlineLink href={urls.socials.discord} />
 						}}
 						i18nKey="heavy_weak_hare_spin"
 					/>

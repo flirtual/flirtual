@@ -88,6 +88,7 @@
 		"debug": "^4.4.1",
 		"deepmerge": "^4.3.1",
 		"dotenv": "^16.6.1",
+		"exifreader": "^4.31.2",
 		"fast-fuzzy": "^1.12.0",
 		"i18next": "^25.5.0",
 		"i18next-icu": "^2.4.0",
@@ -179,5 +180,11 @@
 		"vite-tsconfig-paths": "^5.1.4",
 		"wrangler": "^4.34.0",
 		"xml-formatter": "^3.6.6"
+	},
+	"exifreader": {
+		"include": {
+			"png": true,
+			"xmp": true
+		}
 	}
 }

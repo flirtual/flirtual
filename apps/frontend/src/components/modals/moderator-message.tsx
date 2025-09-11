@@ -103,7 +103,7 @@ export const DiscordSpamDialog: FC = withSuspense(() => {
 		>
 			<Trans
 				components={{
-					link: <InlineLink href={urls.settings.connections} />,
+					connectLink: <InlineLink href={urls.settings.connections} />,
 				}}
 				i18nKey="tense_active_gibbon_dare"
 			/>
