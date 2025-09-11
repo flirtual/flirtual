@@ -4,10 +4,12 @@ import type { Issue } from "~/api/common";
 import { isWretchError } from "~/api/common";
 import type { Queue, QueueActionIssue, QueueIssue } from "~/api/matchmaking";
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
+import { ItsAMatch } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/its-a-match";
 import { OutOfLikesPasses } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/out-of-likes-passes";
 import { preloadProfile } from "~/components/profile";
 import { log } from "~/log";
 import {
+	conversationsKey,
 	invalidate,
 	mutate,
 	queueKey,
@@ -15,14 +17,18 @@ import {
 	useMutation,
 	useQuery,
 } from "~/query";
-import { emptyArray } from "~/utilities";
+import { emptyArray, newConversationId } from "~/utilities";
 
 import { useDialog } from "./use-dialog";
+import { useSession } from "./use-session";
+import { useUnreadConversations } from "./use-talkjs";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
 export function useQueue(mode: ProspectKind = "love") {
 	if (!ProspectKind.includes(mode)) mode = "love";
+	const { user: { id: meId } } = useSession();
+	const { setUnreadConversations } = useUnreadConversations();
 	const queryKey = useMemo(() => queueKey(mode), [mode]);
 	const dialogs = useDialog();
 
@@ -114,11 +120,34 @@ export function useQueue(mode: ProspectKind = "love") {
 			log(action, { userId, kind, mode });
 
 			try {
-				const { queue } = action === "undo"
+				const { queue, match, matchKind, userId: finalUserId } = action === "undo"
 					? await Matchmaking.undo({ mode })
 					: await Matchmaking.queueAction({ type: action, kind, mode, userId });
 
-				await invalidate({ queryKey: relationshipKey(userId) });
+				const [conversationId] = await Promise.all([
+					newConversationId(meId, finalUserId),
+					invalidate({ queryKey: relationshipKey(finalUserId) }),
+					invalidate({ queryKey: conversationsKey() })
+				]);
+
+				if (action === "undo")
+					// HACK: Talk.js doesn't send us an update event when we manually delete a conversation on un-match.
+					setUnreadConversations((unreadConversations) => {
+						return unreadConversations.filter(({ conversation }) => conversation.id !== conversationId);
+					});
+
+				if (match) {
+					const dialog = (
+						<ItsAMatch
+							conversationId={conversationId}
+							kind={matchKind}
+							userId={userId}
+							onClose={() => dialogs.remove(dialog)}
+						/>
+					);
+
+					dialogs.add(dialog);
+				}
 
 				return queue;
 			}

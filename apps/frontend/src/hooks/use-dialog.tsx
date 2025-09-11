@@ -1,4 +1,4 @@
-import { createContext, use, useCallback, useMemo, useState } from "react";
+import { createContext, Fragment, use, useCallback, useMemo, useState } from "react";
 import type { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from "react";
 
 const DialogContext = createContext({} as { dialogs: Array<ReactNode>; setDialogs: Dispatch<SetStateAction<Array<ReactNode>>> });
@@ -9,8 +9,9 @@ export function DialogProvider({ children }: PropsWithChildren) {
 
 	return (
 		<DialogContext value={value}>
-			{dialogs}
 			{children}
+			{/* eslint-disable-next-line react/no-array-index-key */}
+			{dialogs.map((dialog, index) => <Fragment key={index}>{dialog}</Fragment>)}
 		</DialogContext>
 	);
 }
