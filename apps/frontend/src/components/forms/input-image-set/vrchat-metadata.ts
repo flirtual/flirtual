@@ -4,6 +4,14 @@ import * as ExifReader from "exifreader";
 
 import type { ProfileImageMetadata } from "~/api/user/profile/images";
 
+// Fix for stray null byte in legacy VRChat images
+class CleanDOMParser {
+	public parseFromString(xmlString: string, mimeType?: string): Document {
+		const cleanXml = xmlString.replace(/^\0+/, "");
+		return (new DOMParser()).parseFromString(cleanXml, (mimeType || "application/xml") as DOMParserSupportedType);
+	}
+}
+
 interface VRCXData {
 	application: string;
 	author: {
@@ -30,7 +38,10 @@ export default class VRChatMetadata<M extends Meta, B extends Body> extends Base
 	private async extractMetadata(blob: Blob): Promise<ProfileImageMetadata | null> {
 		try {
 			const buffer = await blob.arrayBuffer();
-			const tags = ExifReader.load(buffer, { expanded: true });
+			const tags = ExifReader.load(buffer, {
+				expanded: true,
+				domParser: new CleanDOMParser()
+			});
 
 			// Standard format
 			if (tags.xmp?.Author && tags.xmp?.AuthorID && tags.xmp?.WorldID && tags.xmp?.WorldDisplayName) {
