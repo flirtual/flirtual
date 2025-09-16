@@ -19,6 +19,7 @@ export type LinkProps = {
 	active?: boolean;
 	asChild?: boolean;
 	as?: string;
+	internal?: boolean;
 } & {
 	href: Parameters<typeof _Link>[0]["to"] | null;
 	pattern?: PathPattern<string>;
@@ -34,6 +35,7 @@ export function Link({
 	hrefLang: _hrefLang,
 	as = "span",
 	target,
+	internal: _internal,
 	...props
 }: { ref?: Ref<HTMLAnchorElement> | null } & LinkProps) {
 	const location = useLocation();
@@ -42,7 +44,9 @@ export function Link({
 	const hrefLang = _hrefLang || locale;
 
 	const { to, internal, active } = useMemo(() => {
-		const internal = _href ? isInternalHref(_href) : true;
+		const internal = _internal === undefined
+			? (_href ? isInternalHref(_href) : true)
+			: _internal;
 
 		const to = internal && _href
 			? createPath(replaceLanguage(_href, hrefLang, location.pathname))
@@ -52,7 +56,7 @@ export function Link({
 		const active = _active || (pattern && matchPath(pattern, location.pathname) !== null) || false;
 
 		return { to, internal, active };
-	}, [_active, _href, _pattern, hrefLang, location.pathname]);
+	}, [_active, _href, _pattern, hrefLang, _internal, location.pathname]);
 
 	const Component = asChild
 		? Slot

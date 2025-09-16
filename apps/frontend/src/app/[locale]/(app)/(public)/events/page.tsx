@@ -66,7 +66,13 @@ export default function EventsPage() {
 				/>
 				<h2 className="text-xl font-semibold">{t("tidy_wise_robin_urge")}</h2>
 				<p>{t("careful_wise_bumblebee_walk")}</p>
-				<ButtonLink href="/speeddate" target="_blank">{t("tidy_wise_robin_urge")}</ButtonLink>
+				<ButtonLink
+					href="/speeddate"
+					internal={false}
+					target="_blank"
+				>
+					{t("tidy_wise_robin_urge")}
+				</ButtonLink>
 				<Image
 					alt={t("inclusive_simple_alligator_zap")}
 					className="mt-4 w-full max-w-sm rounded-xl shadow-brand-1"
@@ -78,7 +84,13 @@ export default function EventsPage() {
 					{t("inclusive_simple_alligator_zap")}
 				</h2>
 				<p>{t("sweet_mellow_ant_hunt")}</p>
-				<ButtonLink href="/club" target="_blank">{t("inclusive_simple_alligator_zap")}</ButtonLink>
+				<ButtonLink
+					href="/club"
+					internal={false}
+					target="_blank"
+				>
+					{t("inclusive_simple_alligator_zap")}
+				</ButtonLink>
 				<p>
 					<Trans
 						components={{
