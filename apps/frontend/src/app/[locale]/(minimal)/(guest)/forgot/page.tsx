@@ -23,7 +23,12 @@ export default function ForgotPage() {
 	const { t } = useTranslation();
 
 	return (
-		<ModelCard branded miniFooter title={t("reset_password")}>
+		<ModelCard
+			branded
+			brandedLink
+			miniFooter
+			title={t("reset_password")}
+		>
 			<ForgotPasswordForm />
 		</ModelCard>
 	);

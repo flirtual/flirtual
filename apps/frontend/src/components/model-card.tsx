@@ -4,10 +4,12 @@ import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 import { InlineThemeSelect } from "~/app/[locale]/(app)/(authenticated)/settings/(account)/appearance/theme-preview";
+import { urls } from "~/urls";
 import { emptyObject } from "~/utilities";
 
 import { InlineLanguageSelect } from "./inputs/specialized/language-select";
 import { SupportButton } from "./layout/support-button";
+import { Link } from "./link";
 import { FlirtualLogo } from "./logo";
 
 export type ModelCardProps = {
@@ -15,6 +17,7 @@ export type ModelCardProps = {
 	titleProps?: React.ComponentProps<"div">;
 	containerProps?: React.ComponentProps<"div">;
 	branded?: boolean;
+	brandedLink?: boolean;
 	miniFooter?: boolean;
 	inset?: boolean;
 } & React.ComponentProps<"div">;
@@ -25,18 +28,21 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 	titleProps = emptyObject,
 	containerProps = emptyObject,
 	branded = false,
+	brandedLink = false,
 	miniFooter = false,
 	inset = true,
 	...props
 }) => {
 	const { t } = useTranslation();
 
+	const BrandedComponent = brandedLink ? Link : "div";
+
 	return (
 		<>
 			{branded && (
-				<div className="motion-preset-bounce mx-auto mb-8 hidden desktop:block">
+				<BrandedComponent className="motion-preset-bounce mx-auto mb-8 hidden desktop:block" href={urls.landing}>
 					<FlirtualLogo className="h-20" />
-				</div>
+				</BrandedComponent>
 			)}
 			<div
 				{...props}
