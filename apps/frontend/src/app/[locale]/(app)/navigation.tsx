@@ -75,7 +75,7 @@ const NavigationContent: FC = () => {
 
 export function Navigation() {
 	return (
-		<header className="sticky bottom-0 z-50 order-last flex w-screen flex-col items-center justify-center bg-brand-gradient text-white-20 shadow-brand-1 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
+		<header className="sticky bottom-0 z-30 order-last flex w-screen flex-col items-center justify-center bg-brand-gradient text-white-20 shadow-brand-1 vision:hidden desktop:bottom-auto desktop:top-0 desktop:order-none">
 			{development && <BuildInformation />}
 			<div className="flex size-full items-center justify-evenly gap-4 px-5 pb-[max(calc(var(--safe-area-inset-bottom,0rem)-0.625rem),0.5rem)] pt-2 font-nunito text-white-20 desktop:w-auto desktop:pb-2">
 				<NavigationContent />

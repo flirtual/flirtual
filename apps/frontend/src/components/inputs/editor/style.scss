@@ -59,7 +59,7 @@
         }
 
         .ql-picker-options {
-          @apply w-max absolute top-7 left-0 p-2 mt-2 z-40 rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70;
+          @apply w-max absolute top-7 left-0 p-2 mt-2 z-50 rounded-xl bg-white-20 shadow-brand-1 dark:bg-black-70;
 
           &[aria-hidden="true"] {
             display: none !important;
