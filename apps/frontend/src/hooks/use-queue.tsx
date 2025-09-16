@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react";
 
-import type { Issue } from "~/api/common";
 import { isWretchError } from "~/api/common";
 import type { Queue, QueueActionIssue, QueueIssue } from "~/api/matchmaking";
 import { Matchmaking, ProspectKind } from "~/api/matchmaking";
@@ -13,6 +12,7 @@ import {
 	invalidate,
 	likesYouKey,
 	mutate,
+	queueFetcher,
 	queueKey,
 	relationshipKey,
 	useMutation,
@@ -43,16 +43,7 @@ export function useQueue(mode: ProspectKind = "love") {
 
 	const queue = useQuery<Queue | QueueIssue, typeof queryKey>({
 		queryKey,
-		queryFn: async ({ queryKey: [, mode], signal }) =>
-			Matchmaking
-				.queue(mode, { signal })
-				.catch((reason) => {
-					if (!isWretchError(reason)) throw reason;
-					const issue = reason.json as Issue;
-
-					if (!["confirm_email", "finish_profile"].includes(issue.error)) throw reason;
-					return issue as QueueIssue;
-				}),
+		queryFn: queueFetcher,
 		// refetchInterval: ms("1m"),
 		// staleTime: 0,
 		// meta: {

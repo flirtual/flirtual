@@ -10,9 +10,10 @@ import type { AttributeType } from "./api/attributes";
 import { Attribute } from "./api/attributes";
 import { Authentication } from "./api/auth";
 import { isWretchError } from "./api/common";
+import type { Issue } from "./api/common";
 import { Config } from "./api/config";
 import { Conversation } from "./api/conversations";
-import type { ProspectKind } from "./api/matchmaking";
+import type { ProspectKind, QueueIssue } from "./api/matchmaking";
 import { Matchmaking } from "./api/matchmaking";
 import { Plan } from "./api/plan";
 import { User } from "./api/user";
@@ -56,7 +57,14 @@ export const userCountFetcher = () => User.getApproximateCount();
 
 export const queueKey = (kind: ProspectKind) => ["queue", kind] as const;
 export function queueFetcher({ queryKey: [, kind], signal }: QueryFunctionContext<ReturnType<typeof queueKey>>) {
-	return Matchmaking.queue(kind, { signal });
+	return Matchmaking.queue(kind, { signal })
+		.catch((reason) => {
+			if (!isWretchError(reason)) throw reason;
+			const issue = reason.json as Issue;
+
+			if (!["confirm_email", "finish_profile"].includes(issue.error)) throw reason;
+			return issue as QueueIssue;
+		});
 }
 
 export const likesYouKey = () => ["likes-you"] as const;
