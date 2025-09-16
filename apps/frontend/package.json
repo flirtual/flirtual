@@ -58,6 +58,7 @@
 		"@revenuecat/purchases-capacitor": "10.2.1",
 		"@sentry/react": "^10.10.0",
 		"@sentry/react-router": "^10.10.0",
+		"@shgysk8zer0/polyfills": "0.4.12",
 		"@tailwindcss/forms": "^0.5.10",
 		"@tanstack/query-persist-client-core": "^5.86.0",
 		"@tanstack/react-query": "^5.86.0",

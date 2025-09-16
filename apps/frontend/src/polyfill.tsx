@@ -5,6 +5,8 @@ import { preload } from "react-dom";
 import { production } from "./const";
 import type { Locale } from "./i18n";
 
+import "@shgysk8zer0/polyfills/cookieStore.js";
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const polyfillBaseUrl = new URL(`https://cdnjs.cloudflare.com/polyfill/v3/polyfill${production ? ".min" : ""}.js`);
 

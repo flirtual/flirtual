@@ -24,7 +24,7 @@ export default {
 
 			const locale = (legacyLocale && isLocale(legacyLocale) && legacyLocale) || recommendedLocale;
 
-			const probablyLoggedIn = request.headers.get("cookie")?.includes("session=");
+			const probablyLoggedIn = request.headers.get("cookie")?.includes("logged_in=");
 			if (url.pathname === "/") url.pathname = probablyLoggedIn ? "/dates" : "/";
 
 			const newUrl = new URL(createPath(replaceLanguage(url, locale, url.pathname)), url);
