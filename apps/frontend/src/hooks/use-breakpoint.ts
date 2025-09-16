@@ -3,7 +3,7 @@ import { useDebugValue } from "react";
 import { useMediaQuery, useMediaQueryCallback } from "./use-media-query";
 
 const breakpoints = {
-	desktop: 768,
+	desktop: 960,
 	wide: 1024
 } as const;
 

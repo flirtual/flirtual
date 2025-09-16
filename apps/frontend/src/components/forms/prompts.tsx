@@ -50,7 +50,7 @@ const EditPromptDialog: FC<{
 					</DialogTitle>
 					<DialogDescription className="sr-only" />
 				</DialogHeader>
-				<DialogBody className="grid w-full gap-4">
+				<DialogBody className="grid gap-4">
 					<InputSelect
 						options={filteredPrompts.map((promptId) => ({
 							id: promptId,
