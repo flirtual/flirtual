@@ -73,7 +73,7 @@ export const ItsAMatch: FC<ItsAMatchProps> = ({ userId, conversationId, kind, on
 							/>
 						</div>
 						<div className="flex flex-col gap-2">
-							<ButtonLink href={urls.conversations.of(conversationId)}>
+							<ButtonLink href={urls.conversations.of(conversationId)} onClick={onClose}>
 								{t("send_a_message")}
 							</ButtonLink>
 							<Button kind="tertiary" size="sm" onClick={onClose}>
