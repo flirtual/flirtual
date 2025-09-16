@@ -11,6 +11,7 @@ import { log } from "~/log";
 import {
 	conversationsKey,
 	invalidate,
+	likesYouKey,
 	mutate,
 	queueKey,
 	relationshipKey,
@@ -24,6 +25,12 @@ import { useSession } from "./use-session";
 import { useUnreadConversations } from "./use-talkjs";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
+
+export const invalidateMatch = (userId: string) => Promise.all([
+	invalidate({ queryKey: relationshipKey(userId) }),
+	invalidate({ queryKey: likesYouKey() }),
+	invalidate({ queryKey: conversationsKey() })
+]);
 
 export function useQueue(mode: ProspectKind = "love") {
 	if (!ProspectKind.includes(mode)) mode = "love";
@@ -126,8 +133,7 @@ export function useQueue(mode: ProspectKind = "love") {
 
 				const [conversationId] = await Promise.all([
 					newConversationId(meId, finalUserId),
-					invalidate({ queryKey: relationshipKey(finalUserId) }),
-					invalidate({ queryKey: conversationsKey() })
+					invalidateMatch(finalUserId)
 				]);
 
 				if (action === "undo")

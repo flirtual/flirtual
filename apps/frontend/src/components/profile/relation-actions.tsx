@@ -9,6 +9,7 @@ import { invalidate, relationshipKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
+import { invalidateMatch } from "~/hooks/use-queue";
 
 export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 	userId,
@@ -43,7 +44,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 							.then(() => toasts.add(t("unmatched_name", { name: user.profile.displayName || t("unnamed_user") })))
 							.catch(toasts.addError);
 
-						await invalidate({ queryKey: relationshipKey(user.id) });
+						await invalidateMatch(user.id);
 					}}
 				>
 					{t("unmatch")}
