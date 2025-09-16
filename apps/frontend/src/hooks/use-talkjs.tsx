@@ -76,7 +76,10 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 
 		const messageSubscription = session.onMessage(() => invalidate({ queryKey: conversationsKey() }));
 
-		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
+		const unreadSubscription = session.unreads.onChange((unreadConversations) => {
+			invalidate({ queryKey: conversationsKey() });
+			setUnreadConversations(unreadConversations);
+		});
 
 		return () => {
 			unreadSubscription.unsubscribe();
