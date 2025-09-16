@@ -1,6 +1,6 @@
 {
 	"type": "module",
-	"packageManager": "pnpm@10.15.1",
+	"packageManager": "pnpm@10.16.1",
 	"scripts": {
 		"dev": "react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
