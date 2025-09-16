@@ -26,11 +26,13 @@ import { useUnreadConversations } from "./use-talkjs";
 
 export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ queryKey: queueKey(mode) });
 
-export const invalidateMatch = (userId: string) => Promise.all([
-	invalidate({ queryKey: relationshipKey(userId) }),
-	invalidate({ queryKey: likesYouKey() }),
-	invalidate({ queryKey: conversationsKey() })
-]);
+export function invalidateMatch(userId: string) {
+	return Promise.all([
+		invalidate({ queryKey: relationshipKey(userId) }),
+		invalidate({ queryKey: likesYouKey() }),
+		invalidate({ queryKey: conversationsKey() })
+	]);
+}
 
 export function useQueue(mode: ProspectKind = "love") {
 	if (!ProspectKind.includes(mode)) mode = "love";

@@ -11,7 +11,7 @@ export function ProfileSkeleton({ className }: { className?: string }) {
 			<div className="flex w-full flex-col overflow-hidden bg-transparent text-black-70 dark:text-white-20 desktop:rounded-[1.25rem] desktop:bg-white-20 desktop:shadow-brand-inset dark:desktop:bg-black-70">
 				{/* Profile picture */}
 				<div className="relative w-full shrink-0 overflow-hidden">
-					<div className="relative flex w-full aspect-square shrink-0 bg-black-70">
+					<div className="relative flex aspect-square w-full shrink-0 bg-black-70">
 						<div className="size-full bg-white-10/20 bg-brand-gradient" />
 						<div className="absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent via-black-90/20 to-black-90/60">
 							<div className="absolute bottom-0 flex w-full flex-col gap-2 p-8">

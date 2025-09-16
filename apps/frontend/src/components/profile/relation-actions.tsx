@@ -2,6 +2,7 @@ import { Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Matchmaking } from "~/api/matchmaking";
+import { invalidateMatch } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
@@ -9,7 +10,6 @@ import { invalidate, relationshipKey } from "~/query";
 import { urls } from "~/urls";
 
 import { Button, ButtonLink } from "../button";
-import { invalidateMatch } from "~/hooks/use-queue";
 
 export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 	userId,
