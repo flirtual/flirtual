@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo } from "react";
 
 import { isWretchError } from "~/api/common";
 import type { Queue, QueueActionIssue, QueueIssue } from "~/api/matchmaking";
-import { Matchmaking, ProspectKind } from "~/api/matchmaking";
+import { Matchmaking, ProspectKind, prospectKinds } from "~/api/matchmaking";
 import { ItsAMatch } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/its-a-match";
 import { OutOfLikesPasses } from "~/app/[locale]/(app)/(authenticated)/(onboarded)/discover/out-of-likes-passes";
 import { preloadProfile } from "~/components/profile";
@@ -17,6 +17,7 @@ import {
 	relationshipKey,
 	useMutation,
 	useQuery,
+	userKey,
 } from "~/query";
 import { emptyArray, newConversationId } from "~/utilities";
 
@@ -28,6 +29,7 @@ export const invalidateQueue = (mode: ProspectKind = "love") => invalidate({ que
 
 export function invalidateMatch(userId: string) {
 	return Promise.all([
+		invalidate({ queryKey: userKey(userId) }),
 		invalidate({ queryKey: relationshipKey(userId) }),
 		invalidate({ queryKey: likesYouKey() }),
 		invalidate({ queryKey: conversationsKey() })
@@ -87,14 +89,16 @@ export function useQueue(mode: ProspectKind = "love") {
 		};
 	}), [queryKey]);
 
-	const remove = useCallback((userId: string) => mutate<Queue>(queryKey, (queue) => {
+	const remove = useCallback((userId: string, kind: ProspectKind = mode) => mutate<Queue>(queueKey(kind), (queue) => {
 		if (!queue) return queue;
 
 		return {
 			...queue,
 			next: queue.next.filter((id) => id !== userId),
 		};
-	}), [queryKey]);
+	}), [mode]);
+
+	const removeAll = useCallback((userId: string) => Promise.all(prospectKinds.map((kind) => remove(userId, kind))), [])
 
 	const { mutateAsync, isPending: mutating } = useMutation<Queue | QueueIssue | undefined, {
 		action: "like" | "pass" | "undo";
@@ -191,6 +195,7 @@ export function useQueue(mode: ProspectKind = "love") {
 		mutating,
 		forward,
 		backward,
-		remove
+		remove,
+		removeAll
 	};
 }
