@@ -25,6 +25,7 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import type { AttributeTranslation } from "~/hooks/use-attribute";
 import { useDialog } from "~/hooks/use-dialog";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
@@ -85,10 +86,9 @@ const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ u
 								await i18n.loadLanguages(targetLocale);
 
 								const targetT = i18n.getFixedT(user.preferences?.language ?? defaultLocale);
-								const { "ban-reasons": banReasons } = targetT("attributes", { returnObjects: true });
+								const attributes = targetT("attributes", { returnObjects: true });
 
-								// @ts-expect-error: yes.
-								message = banReasons[reasonId]?.details || message;
+								message = (attributes[reasonId] as AttributeTranslation<"ban-reason">)?.details || message;
 							}
 
 							const newTarget = await User.suspend(targetId, { reasonId, message });
