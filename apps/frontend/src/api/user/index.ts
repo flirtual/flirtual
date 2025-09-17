@@ -317,7 +317,7 @@ export const User = {
 		currentPassword: string;
 		captcha: string;
 	}) {
-		return api.url("auth/user").json(options).delete().json<User>();
+		return this.api.json(options).delete().json<User>();
 	},
 	delete(userId: string) {
 		return this.api.url(`/${userId}`).delete().json<User>();
