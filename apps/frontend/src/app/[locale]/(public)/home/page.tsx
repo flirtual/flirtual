@@ -5,14 +5,14 @@ import { Hero } from "./tiles/0";
 import { AvatarProfiles } from "./tiles/1";
 import { Carousel } from "./tiles/2";
 import { Testimonial } from "./tiles/3";
-import { CallToAction } from "./tiles/4";
+import { TheEnd } from "./tiles/4";
 
 const tiles = [
 	Hero,
 	AvatarProfiles,
 	Carousel,
 	Testimonial,
-	CallToAction
+	TheEnd
 ];
 
 export const handle = {

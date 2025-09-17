@@ -1,6 +1,5 @@
-import { Trans, useTranslation } from "react-i18next";
+import { Trans } from "react-i18next";
 
-import { ButtonLink } from "~/components/button";
 import { DownloadButton } from "~/components/download-button";
 import {
 	AppleIcon,
@@ -15,11 +14,9 @@ import { urls } from "~/urls";
 
 import { Tile, TileAnchor } from ".";
 import type { TileProps } from ".";
-import { SignUpButton } from "../sign-up-button";
+import { CallToAction } from "../call-to-action";
 
-export function CallToAction({ id }: TileProps) {
-	const { t } = useTranslation();
-
+export function TheEnd({ id }: TileProps) {
 	return (
 		<Tile id={id} className="h-auto !min-h-inherit content-center">
 			<div className="-mt-32 flex grow flex-col items-center px-8 pb-8 desktop:mt-0 desktop:px-24">
@@ -37,12 +34,7 @@ export function CallToAction({ id }: TileProps) {
 							</h1>
 						</TileAnchor>
 					</div>
-					<div className="hidden grid-cols-2 flex-col gap-2 desktop:grid">
-						<SignUpButton />
-						<ButtonLink href={urls.login()} kind="secondary" size="sm">
-							{t("login")}
-						</ButtonLink>
-					</div>
+					<CallToAction className="hidden desktop:grid" />
 					<div className="flex flex-col items-center gap-4 native:hidden vision:hidden">
 						<div className="flex w-fit flex-wrap justify-center gap-4 gap-y-2 desktop:grid desktop:grid-cols-2">
 							<DownloadButton

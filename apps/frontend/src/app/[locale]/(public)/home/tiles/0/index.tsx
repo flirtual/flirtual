@@ -1,13 +1,11 @@
 import { Trans, useTranslation } from "react-i18next";
 
-import { ButtonLink } from "~/components/button";
 import { InlineLanguageSelect } from "~/components/inputs/specialized/language-select";
 import { FlirtualLogo } from "~/components/logo";
-import { urls } from "~/urls";
 
 import { Tile, TileAnchor } from "..";
 import type { TileProps } from "..";
-import { SignUpButton } from "../../sign-up-button";
+import { CallToAction } from "../../call-to-action";
 import { BackgroundVideo } from "./background-video";
 
 export function Hero({ id }: TileProps) {
@@ -34,12 +32,7 @@ export function Hero({ id }: TileProps) {
 				<h1 className="mt-2 max-w-4xl text-balance text-center text-lg text-white-10 desktop:mt-4 desktop:text-2xl desktop:tall:text-3xl">
 					{t("calm_calm_alligator_taste")}
 				</h1>
-				<div className="mt-12 hidden grid-cols-2 flex-col gap-2 desktop:grid">
-					<SignUpButton tabIndex={1} />
-					<ButtonLink href={urls.login()} kind="secondary" size="sm" tabIndex={2}>
-						{t("log_in")}
-					</ButtonLink>
-				</div>
+				<CallToAction className="mt-12 hidden desktop:grid" />
 			</div>
 			<BackgroundVideo />
 		</Tile>
