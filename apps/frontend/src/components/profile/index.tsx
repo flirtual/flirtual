@@ -68,7 +68,7 @@ export const Profile = withSuspense(({
 	id,
 	...elementProps
 }: ProfileProps) => {
-	const session = useSession();
+	const { user: me } = useSession();
 
 	const user = useUser(userId);
 	const relationship = useRelationship(userId);
@@ -78,7 +78,7 @@ export const Profile = withSuspense(({
 	if (!user) return null;
 
 	if (relationship?.blocked) return <BlockedProfile user={user} />;
-	const myProfile = session.user.id === user.id;
+	const myProfile = me.id === user.id;
 
 	const discordConnection = user.connections?.find(
 		(connection) => connection.type === "discord"
@@ -116,7 +116,7 @@ export const Profile = withSuspense(({
 							<span
 								className={twMerge(
 									"text-shadow-brand col-span-10 line-clamp-1 shrink break-all text-4xl font-bold",
-									session.user.tags?.includes("moderator") && "select-text"
+									me.tags?.includes("moderator") && "select-text"
 								)}
 							>
 								{user.profile.displayName || t("unnamed_user")}
@@ -165,8 +165,8 @@ export const Profile = withSuspense(({
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} userId={user.id} />
-					{(session.user.tags?.includes("admin")
-						|| session.user.tags?.includes("moderator")
+					{(me.tags?.includes("admin")
+						|| me.tags?.includes("moderator")
 						|| relationship?.matched
 						|| myProfile)
 					&& (discordConnection
@@ -182,7 +182,7 @@ export const Profile = withSuspense(({
 											copy: (
 												<CopyClick
 													value={
-														session.user.status === "visible"
+														me.status === "visible"
 															? discordConnection?.displayName
 															|| user.profile.discord!
 															: null
@@ -231,7 +231,7 @@ export const Profile = withSuspense(({
 					)}
 					{user.profile.new && !myProfile
 						? (
-								session?.user.profile.new
+								me.profile.new
 									? (
 											<span className="text-xl italic vision:text-white-20 dark:text-white-20">
 												{t("strong_home_bullock_taste")}
@@ -251,7 +251,7 @@ export const Profile = withSuspense(({
 								<Html
 									className={twMerge(
 										"text-xl",
-										session.user.status === "visible" && "select-children"
+										me.status === "visible" && "select-children"
 									)}
 								>
 									{user.profile.biography.replaceAll(

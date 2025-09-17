@@ -9,22 +9,24 @@ import {
 	userFetcher,
 	userKey,
 } from "~/query";
+import { isUid } from "~/utilities";
 
 import { useSession } from "./use-session";
 
 export function useUser(userId?: string | null): User | null {
-	const { user: self } = useSession();
+	const { user: me } = useSession();
 
 	const user = useQuery({
 		queryKey: userKey(userId),
-		queryFn: (context) => userId
-			? self.id === userId
-				? self
-				: userFetcher(context)
-			: null,
+		queryFn: (context) => {
+			if (userId && (isUid(userId) ? me.id === userId : me.slug === userId))
+				return me;
+
+			return userFetcher(context);
+		}
 	});
 
-	if (user?.id === self.id) return self;
+	if (user?.id === me.id) return me;
 	return user;
 }
 
