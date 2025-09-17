@@ -1,6 +1,6 @@
 import { Gavel, Languages } from "lucide-react";
-import { useMemo, useState } from "react";
-import type { FC, PropsWithChildren } from "react";
+import { useMemo } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { withSuspense } from "with-suspense";
@@ -15,8 +15,7 @@ import {
 	DialogContent,
 	DialogFooter,
 	DialogHeader,
-	DialogTitle,
-	DialogTrigger
+	DialogTitle
 } from "~/components/dialog/dialog";
 import { DropdownMenuItem } from "~/components/dropdown";
 import { Form, FormButton, FormMessage } from "~/components/forms";
@@ -26,12 +25,13 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
+import { useDialog } from "~/hooks/use-dialog";
 import { useQueue } from "~/hooks/use-queue";
 import { useToast } from "~/hooks/use-toast";
 import { defaultLocale, i18n, useLocale } from "~/i18n";
 import { mutate, userKey } from "~/query";
 
-const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ user, children }) => {
+const SuspendDialog: FC<{ user: User; onClose: () => void }> = withSuspense(({ user, onClose }) => {
 	const toasts = useToast();
 
 	const [query] = useSearchParams();
@@ -51,17 +51,19 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 	const { t } = useTranslation();
 	const tAttribute = useAttributeTranslation("ban-reason");
 
-	const [open, setOpen] = useState(false);
-
 	const expectedLanguageName = tAttribute[user.preferences?.language ?? "en"]?.name
 		?? languageNames.of(user.preferences?.language ?? "en")
 		?? user.preferences?.language;
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>
-				{children}
-			</DialogTrigger>
+		<Dialog
+			defaultOpen
+			onOpenChange={(open) => {
+				if (!open) {
+					onClose();
+				}
+			}}
+		>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Ban profile</DialogTitle>
@@ -95,7 +97,7 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 							await forwardQueue();
 
 							toasts.add(t("account_banned"));
-							setOpen(false);
+							onClose();
 						}}
 					>
 						{({ FormField, fields: { message, reasonId } }) => (
@@ -186,7 +188,7 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 									<Button
 										kind="tertiary"
 										size="sm"
-										onClick={() => setOpen(false)}
+										onClick={() => onClose()}
 									>
 										Cancel
 									</Button>
@@ -199,24 +201,25 @@ const SuspendDialog: FC<PropsWithChildren<{ user: User }>> = withSuspense(({ use
 			</DialogContent>
 		</Dialog>
 	);
-}, {
-	fallback: ({ children }) => children
 });
 
 export const SuspendAction: FC<{ user: User }> = ({ user }) => {
+	const dialogs = useDialog();
+
 	return (
-		<SuspendDialog user={user}>
-			<DropdownMenuItem
-				asChild
-				className="text-red-500"
-				disabled={!!user.bannedAt}
-				onSelect={(event) => event.preventDefault()}
-			>
-				<button className="w-full gap-2" type="button">
-					<Gavel className="size-5" />
-					Ban
-				</button>
-			</DropdownMenuItem>
-		</SuspendDialog>
+		<DropdownMenuItem
+			asChild
+			className="text-red-500"
+			disabled={!!user.bannedAt}
+			onSelect={() => {
+				const dialog = <SuspendDialog user={user} onClose={() => dialogs.remove(dialog)} />;
+				dialogs.add(dialog);
+			}}
+		>
+			<button className="w-full gap-2" type="button">
+				<Gavel className="size-5" />
+				Ban
+			</button>
+		</DropdownMenuItem>
 	);
 };
