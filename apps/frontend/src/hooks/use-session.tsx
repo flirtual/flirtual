@@ -1,4 +1,5 @@
 import { PushNotifications } from "@capacitor/push-notifications";
+import ms from "ms.macro";
 import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
@@ -47,7 +48,11 @@ export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | n
 
 	if (client)
 		session
-			? cookieStore.set("logged_in", "")
+			? cookieStore.set({
+					name: "logged_in",
+					value: "",
+					expires: (Date.now() + ms("1y")) / 1000
+				})
 			: cookieStore.delete("logged_in");
 
 	return session;
