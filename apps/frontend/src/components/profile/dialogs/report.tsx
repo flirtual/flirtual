@@ -1,9 +1,7 @@
 import { useState } from "react";
 import type { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router";
 
-import type { ProspectKind } from "~/api/matchmaking";
 import { Report } from "~/api/report";
 import type { User } from "~/api/user";
 import { Button } from "~/components/button";

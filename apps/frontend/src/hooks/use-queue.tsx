@@ -98,7 +98,9 @@ export function useQueue(mode: ProspectKind = "love") {
 		};
 	}), [mode]);
 
-	const removeAll = useCallback((userId: string) => Promise.all(prospectKinds.map((kind) => remove(userId, kind))), [])
+	const removeAll = useCallback(async (userId: string) => {
+		await Promise.all(prospectKinds.map((kind) => remove(userId, kind)));
+	}, [remove]);
 
 	const { mutateAsync, isPending: mutating } = useMutation<Queue | QueueIssue | undefined, {
 		action: "like" | "pass" | "undo";
