@@ -1,8 +1,7 @@
 import { MoveLeft, MoveRight, RefreshCw, Undo2, X } from "lucide-react";
 import { m } from "motion/react";
-import type {
-	FC,
-} from "react";
+import { useCallback } from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import type {
@@ -12,6 +11,7 @@ import { Button } from "~/components/button";
 import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { useGlobalEventListener } from "~/hooks/use-event-listener";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 
@@ -73,6 +73,24 @@ export const QueueActions: FC<{
 		undo,
 		mutating
 	} = useQueue(mode);
+
+	useGlobalEventListener(
+		"document",
+		"keydown",
+		useCallback(
+			(event) => {
+				if (document.querySelector("[data-radix-focus-guard]") || event.ctrlKey || event.metaKey)
+					return;
+
+				if (event.key === "h") void undo();
+				if (event.key === "j") void like();
+				if (event.key === "k") void like("friend");
+				if (event.key === "l") void pass();
+				event.preventDefault();
+			},
+			[like, pass, undo]
+		)
+	);
 
 	return (
 		<div className="flex h-32 w-full items-center justify-center">

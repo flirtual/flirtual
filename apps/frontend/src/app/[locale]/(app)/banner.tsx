@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 import { InlineLink } from "~/components/inline-link";
 import type { InlineLinkProps } from "~/components/inline-link";
 import { useOptionalSession } from "~/hooks/use-session";
+import { urls } from "~/urls";
 
 export const BannerLink: FC<PropsWithChildren<InlineLinkProps>> = ({
 	href,
@@ -34,7 +35,7 @@ export function Banner({ children, className, ref, icon = defaultBannerIcon }: B
 	return (
 		<div
 			className={twMerge(
-				"z-50 flex w-full justify-center bg-black-70 text-white-20",
+				"flex w-full justify-center bg-black-70 text-white-20",
 				className
 			)}
 			ref={ref}
@@ -83,7 +84,7 @@ export const AppBanner: FC = () => {
 			<Banner>
 				<Trans
 					components={{
-						bannerLink: <BannerLink href="/confirm-email" />
+						bannerLink: <BannerLink href={urls.confirmEmail()} />
 					}}
 					i18nKey="exuberant_green_horse_fowl"
 				/>

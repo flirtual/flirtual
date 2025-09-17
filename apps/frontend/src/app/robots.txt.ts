@@ -22,7 +22,6 @@ ${development || preview
 	: "Allow"}: /
 
 Host: ${siteOrigin}
-Sitemap: ${siteOrigin}/sitemap.xml
 `.trim();
 
 export const loader = () => data;

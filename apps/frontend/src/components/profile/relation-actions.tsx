@@ -2,6 +2,7 @@ import { Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Matchmaking } from "~/api/matchmaking";
+import { invalidateMatch } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
@@ -43,7 +44,7 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 							.then(() => toasts.add(t("unmatched_name", { name: user.profile.displayName || t("unnamed_user") })))
 							.catch(toasts.addError);
 
-						await invalidate({ queryKey: relationshipKey(user.id) });
+						await invalidateMatch(user.id);
 					}}
 				>
 					{t("unmatch")}

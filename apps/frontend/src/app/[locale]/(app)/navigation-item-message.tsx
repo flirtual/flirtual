@@ -10,7 +10,8 @@ import { NavigationItem } from "./navigation-item";
 
 export const NavigationItemMessage: FC = () => {
 	const [locale] = useLocale();
-	const conversationCount = clamp(useUnreadConversations().length, { min: 0, max: 99 });
+	const { unreadConversations } = useUnreadConversations();
+	const conversationCount = clamp(unreadConversations.length, { min: 0, max: 99 });
 
 	return (
 		<NavigationItem id="conversation-button" href={urls.conversations.list()}>

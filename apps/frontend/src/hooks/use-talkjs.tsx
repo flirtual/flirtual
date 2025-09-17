@@ -7,9 +7,10 @@ import {
 	useMemo,
 	useState
 } from "react";
-import type { CSSProperties, FC, PropsWithChildren } from "react";
+import type { CSSProperties, Dispatch, FC, PropsWithChildren, SetStateAction } from "react";
 import type React from "react";
 import { useTranslation } from "react-i18next";
+import { doNothing } from "remeda";
 import Talk from "talkjs";
 import type { ChatboxOptions } from "talkjs/types/talk.types";
 import EmojiBonk from "virtual:remote/static/emoji/bonk.gif";
@@ -43,9 +44,10 @@ import { useOptionalSession } from "./use-session";
 import { useTheme } from "./use-theme";
 
 const TalkjsContext = createContext<Talk.Session | null>(null);
-const UnreadConversationContext = createContext<Array<Talk.UnreadConversation>>(
-	[]
-);
+const UnreadConversationContext = createContext({} as {
+	unreadConversations: Array<Talk.UnreadConversation>;
+	setUnreadConversations: Dispatch<SetStateAction<Array<Talk.UnreadConversation>>>;
+});
 
 const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	const [ready, setReady] = useState(false);
@@ -74,7 +76,10 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 
 		const messageSubscription = session.onMessage(() => invalidate({ queryKey: conversationsKey() }));
 
-		const unreadSubscription = session.unreads.onChange(setUnreadConversations);
+		const unreadSubscription = session.unreads.onChange((unreadConversations) => {
+			invalidate({ queryKey: conversationsKey() });
+			setUnreadConversations(unreadConversations);
+		});
 
 		return () => {
 			unreadSubscription.unsubscribe();
@@ -86,9 +91,14 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 	// 	return () => session?.destroy();
 	// }, [session]);
 
+	const unreadConversationContext = useMemo(() => ({
+		unreadConversations,
+		setUnreadConversations
+	}), [unreadConversations]);
+
 	return (
 		<TalkjsContext value={session}>
-			<UnreadConversationContext value={unreadConversations}>
+			<UnreadConversationContext value={unreadConversationContext}>
 				{children}
 			</UnreadConversationContext>
 		</TalkjsContext>
@@ -99,9 +109,11 @@ if (!talkjsAppId)
 	warnOnce("Talk.js is not configured properly, conversations & related features are disabled. To enable them, set \"NEXT_PUBLIC_TALKJS_APP_ID\" in your environment.");
 
 const FallbackProvider: FC<PropsWithChildren> = ({ children }) => {
+	const value = useMemo(() => ({ unreadConversations: emptyArray, setUnreadConversations: doNothing }), []);
+
 	return (
 		<TalkjsContext value={null}>
-			<UnreadConversationContext value={emptyArray}>
+			<UnreadConversationContext value={value}>
 				{children}
 			</UnreadConversationContext>
 		</TalkjsContext>

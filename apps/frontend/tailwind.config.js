@@ -155,7 +155,7 @@ module.exports = {
 			}
 		},
 		screens: {
-			desktop: "768px",
+			desktop: "960px",
 			wide: "1024px",
 			tall: { raw: "(min-height: 800px)" }
 		}

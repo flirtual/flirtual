@@ -35,7 +35,7 @@ export const Queue: FC<{ kind: ProspectKind }> = ({ kind }) => {
 		<>
 			{kind === "love" && <DefaultTour />}
 
-			<div className="relative max-w-full gap-4 overflow-hidden">
+			<div className="relative w-full max-w-full gap-4 overflow-hidden desktop:w-auto">
 				<AnimatePresence initial={false}>
 					<m.div
 						key={current}

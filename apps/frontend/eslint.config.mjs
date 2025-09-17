@@ -9,7 +9,6 @@ export default configure({
 		}
 	},
 	ignores: [
-		"next-env.d.ts",
 		"paraglide/",
 		"src/paraglide/",
 		"messages/",

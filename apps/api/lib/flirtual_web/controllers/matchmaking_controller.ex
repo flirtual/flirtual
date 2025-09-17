@@ -116,11 +116,12 @@ defmodule FlirtualWeb.MatchmakingController do
     user = conn.assigns[:session].user
     kind = to_atom(mode, :love)
 
-    with {:ok, _} <- Matchmaking.undo(user, kind),
+    with {:ok, prospect} <- Matchmaking.undo(user, kind),
          {:ok, queue} <- Matchmaking.queue_information(user, kind) do
       conn
       |> json(%{
-        queue: queue
+        queue: queue,
+        user_id: prospect.target_id
       })
     end
   end

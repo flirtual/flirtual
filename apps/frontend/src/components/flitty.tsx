@@ -312,7 +312,7 @@ export default function Flitty() {
 			style={
 				position || { right: 20, bottom: 20 }
 			}
-			className="fixed z-[9999] mb-[calc(42px+env(safe-area-inset-bottom))] w-[200px] pl-[60px] desktop:mb-0"
+			className="fixed z-[999] mb-[calc(42px+env(safe-area-inset-bottom))] w-[200px] pl-[60px] desktop:mb-0"
 			ref={flittyReference}
 			onClick={handleFlittyClick}
 		>

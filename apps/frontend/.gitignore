@@ -2,8 +2,6 @@
 npm-debug.log
 
 node_modules
-.next
-.vercel
 dist
 build
 .sonda
@@ -12,7 +10,6 @@ build
 # Sentry Auth Token
 .sentryclirc
 
-# next dev --experimental-https
 certificates
 
 # eslint

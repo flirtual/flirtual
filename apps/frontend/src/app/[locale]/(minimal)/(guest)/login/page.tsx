@@ -25,6 +25,7 @@ export default function LoginPage() {
 	return (
 		<ModelCard
 			branded
+			brandedLink
 			miniFooter
 			className="shrink-0 desktop:max-w-xl"
 			title={t("log_in")}

@@ -1,5 +1,5 @@
 .shepherd-modal-overlay-container {
-	@apply left-0 top-0 opacity-0 w-screen z-[9997] transition-opacity duration-300 ease-in-out overflow-hidden pointer-events-none fixed;
+	@apply left-0 top-0 opacity-0 w-screen z-[997] transition-opacity duration-300 ease-in-out overflow-hidden pointer-events-none fixed;
 
 	&.shepherd-modal-is-visible {
 		@apply opacity-50 h-screen;
@@ -18,7 +18,7 @@
 
 
 .shepherd-element {
-	@apply z-[9997] p-4 outline-none bg-transparent w-full max-w-sm opacity-0 invisible transition-opacity duration-300 ease-in-out;
+	@apply z-[997] p-4 outline-none bg-transparent w-full max-w-sm opacity-0 invisible transition-opacity duration-300 ease-in-out;
 
 	&.shepherd-enabled {
 		@apply visible opacity-100;
@@ -30,7 +30,7 @@
 
 	&[data-popper-placement^="top"] {
 		.shepherd-arrow {
-			@apply w-8 h-8 z-[9998] bottom-0 absolute;
+			@apply w-8 h-8 z-[998] bottom-0 absolute;
 			clip-path: inset(50% -100% -100% -100%);
 
 			&::before {

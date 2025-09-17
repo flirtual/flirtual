@@ -46,8 +46,7 @@
 			"!/browserconfig.xml",
 			"!/manifest.json",
 			"!/pico_authentication.json",
-			"!/robots.txt",
-			"!/sitemap.xml"
+			"!/robots.txt"
 		]
 	},
 	"queues": {

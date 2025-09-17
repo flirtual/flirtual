@@ -9,6 +9,7 @@ import { preload, queueFetcher, queueKey } from "~/query";
 
 import type { Route } from "./+types/page";
 import { Queue } from "./queue";
+import { useRatingPrompt } from "./rating-prompt";
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 const discoverGroups = ["dates", "homies"] as const;
@@ -45,6 +46,8 @@ export const handle = {
 export const clientLoader = handle.preload;
 
 export default function DiscoverPage({ matches: [,,,,{ id: group }] }: Route.ComponentProps) {
+	useRatingPrompt();
+
 	return (
 		<Queue
 			kind={({

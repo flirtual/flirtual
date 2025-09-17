@@ -27,10 +27,9 @@ import {
 	useAttributes,
 	useAttributeTranslation
 } from "~/hooks/use-attribute";
-import { useQueue } from "~/hooks/use-queue";
+import { invalidateMatch, useQueue } from "~/hooks/use-queue";
 import { useOptionalSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
-import { invalidate, userKey } from "~/query";
 
 export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 	user,
@@ -42,10 +41,7 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 
 	const toasts = useToast();
 
-	const [query] = useSearchParams();
-	const kind = (query.get("kind") || "love") as ProspectKind;
-
-	const { forward: forwardQueue } = useQueue(kind);
+	const { removeAll: removeFromQueue } = useQueue();
 
 	const reasons = useAttributes("report-reason");
 	const defaultReason = reasons[0]!;
@@ -82,8 +78,10 @@ export const ReportDialog: FC<PropsWithChildren<{ user: User }>> = ({
 								images: values.images.map((image) => image.id).filter(Boolean)
 							});
 
-							await invalidate({ queryKey: userKey(user.id) });
-							await forwardQueue();
+							await Promise.all([
+								invalidateMatch(user.id),
+								removeFromQueue(user.id)
+							]);
 
 							toasts.add(t("day_front_cat_cry"));
 							setOpen(false);

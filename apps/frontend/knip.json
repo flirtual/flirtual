@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": [
+    "@capacitor/keyboard",
+    "@capacitor/assets",
+    "@eslint-react/eslint-plugin",
+    "babel-plugin-dev-expression",
+    "babel-plugin-macros",
+    "eslint-plugin-react-hooks",
+    "eslint-plugin-react-refresh",
+    "vite-plugin-checker"
+  ],
+  "ignoreBinaries": [
+    "adb"
+  ],
+  "ignoreUnresolved": [
+    "~build/*"
+  ]
+}

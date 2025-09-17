@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router";
 
 import type { Session } from "~/api/auth";
 import { Authentication } from "~/api/auth";
+import { client } from "~/const";
 import type {
 	MinimalQueryOptions
 } from "~/query";
@@ -37,12 +38,19 @@ export const getSession = () => queryClient.ensureQueryData<Session | null>({ qu
 export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | null> = {}): Session | null {
 	// postpone(useOptionalSession.name);
 
-	return useQuery({
+	const session = useQuery({
 		placeholderData: null,
 		...queryOptions,
 		queryKey: sessionKey(),
 		queryFn: sessionFetcher,
 	});
+
+	if (client)
+		session
+			? cookieStore.set("logged_in", "")
+			: cookieStore.delete("logged_in");
+
+	return session;
 }
 
 export function useGuest() {
