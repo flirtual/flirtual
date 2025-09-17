@@ -33,7 +33,7 @@ export const ConversationAside: FC<ConversationAsideProps> = (props) => {
 	const { data, invalidate, loadMore } = useConversations();
 	const [loadMoreReference, loadMoreInView] = useInView();
 
-	const unreadConversations = useUnreadConversations();
+	const { unreadConversations } = useUnreadConversations();
 
 	useLayoutEffect(() => {
 		if (!loadMoreInView) return;
