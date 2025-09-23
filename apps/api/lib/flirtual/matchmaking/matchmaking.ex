@@ -92,44 +92,61 @@ defmodule Flirtual.Matchmaking do
       DateTime.compare(reset_at, DateTime.utc_now()) == :lt
   end
 
+  @trial_likes_limit 7
+  @trial_total_limit 15
+
+  defp trial_user?(%User{} = user) do
+    user.status in [:registered, :onboarded] || is_nil(user.email_confirmed_at)
+  end
+
+  defp trial_likes_left?(%User{} = user) do
+    user.likes_count + user.passes_count >= @trial_total_limit ||
+      user.likes_count >= @trial_likes_limit
+  end
+
+  @prospect_foresight 2
+
   def queue_information(%User{} = user, mode) do
-    {:ok, existing_next_prospects} = next_prospects(user, mode)
+    {:ok, all_prospects} = get_user_prospects(user, mode)
+    incomplete_prospects = all_prospects |> Enum.filter(&(!&1.completed))
 
-    if(
-      (user.likes_count + user.passes_count >= 15 || user.likes_count >= 7) &&
-        (user.status in [:registered, :onboarded] ||
-           (user.status == :finished_profile && is_nil(user.email_confirmed_at)))
-    ) do
-      {:error,
-       {:forbidden,
-        case user.status do
-          :finished_profile -> :confirm_email
-          _ -> :finish_profile
-        end}}
+    if(trial_user?(user) && trial_likes_left?(user)) do
+      {
+        :error,
+        {
+          :forbidden,
+          case user.status do
+            :finished_profile -> :confirm_email
+            _ -> :finish_profile
+          end
+        }
+      }
     else
-      {:ok, prospects} =
-        if(existing_next_prospects == [],
-          do: compute_next_prospects(user, mode),
-          else: {:ok, existing_next_prospects}
-        )
+      retained_prospects = get_retained_prospects(all_prospects)
 
-      # {:ok, previous} = previous_prospect(user, mode)
+      {:ok, prospects} =
+        if(length(incomplete_prospects) <= @prospect_foresight,
+          do: refresh_prospects(user, mode, retained_prospects),
+          else: {:ok, all_prospects}
+        )
 
       grouped_prospects = Enum.group_by(prospects, & &1.completed)
 
       {:ok,
        %{
+         # completed prospects.
          previous:
            (grouped_prospects[true] || [])
            |> Enum.at(-1)
            |> case do
              nil -> nil
-             prospect -> Map.get(prospect, :id)
+             prospect -> Map.get(prospect, :user_id)
            end,
+         # uncompleted prospects.
          next:
            (grouped_prospects[false] || [])
-           |> Enum.take(2)
-           |> Enum.map(&Map.get(&1, :id))
+           |> Enum.take(@prospect_foresight)
+           |> Enum.map(&Map.get(&1, :user_id))
        }}
     end
   end
@@ -145,67 +162,153 @@ defmodule Flirtual.Matchmaking do
     {:ok, prospect}
   end
 
-  defp next_prospects(user, kind) do
+  def get_user_prospects(user) do
     prospects =
       Prospect
-      # |> where(profile_id: ^user.id, kind: ^kind, completed: false)
-      |> where(profile_id: ^user.id, kind: ^kind)
+      |> where(profile_id: ^user.id)
       |> order_by(desc: :completed, desc: :score, desc: :target_id)
       |> select([prospect], %{
-        id: prospect.target_id,
+        user_id: prospect.target_id,
+        kind: prospect.kind,
         score: prospect.score,
         completed: prospect.completed
       })
-      # |> select([prospect], prospect.target_id)
-      # |> limit(2)
       |> Repo.all()
 
     {:ok, prospects}
   end
 
-  defp compute_next_prospects(user, kind) do
+  def get_user_prospects(user, kind) do
+    prospects =
+      Prospect
+      |> where(profile_id: ^user.id, kind: ^kind)
+      |> order_by(desc: :completed, desc: :score, desc: :target_id)
+      |> select([prospect], %{
+        user_id: prospect.target_id,
+        kind: prospect.kind,
+        score: prospect.score,
+        completed: prospect.completed
+      })
+      |> Repo.all()
+
+    {:ok, prospects}
+  end
+
+  def refresh_prospects(%User{} = user) do
+    {:ok, all_prospects} =
+      get_user_prospects(user)
+
+    prospects_by_kind =
+      all_prospects
+      |> Enum.sort(&(&1.score >= &2.score))
+      |> Enum.group_by(& &1.kind)
+
+    [
+      :love,
+      :friend
+    ]
+    |> Enum.map(fn kind ->
+      retained_prospects = get_retained_prospects(prospects_by_kind[kind] || [])
+      Task.async(fn -> refresh_prospects(user, kind, retained_prospects) end)
+    end)
+    |> Task.await_many()
+  end
+
+  def get_new_prospects(user, kind) do
     query = generate_query(user, kind)
 
-    Repo.transaction(fn ->
-      with {:ok, resp} <- Elasticsearch.search(:users, query),
-           prospects = Enum.map(resp["hits"]["hits"], &{&1["_id"], &1["_score"]}),
-           prospects =
-             User
-             |> where(
-               [user],
-               user.id in ^Enum.map(prospects, &elem(&1, 0)) and user.status == :visible
-             )
-             |> select([user], user.id)
-             |> Repo.all()
-             |> Enum.map(fn user_id ->
-               {user_id, prospects |> Enum.find(&(elem(&1, 0) == user_id)) |> elem(1)}
-             end),
-           {:ok, _} <- Prospect.delete_all(profile_id: user.id, kind: kind),
-           {:ok, _} <-
-             Prospect.insert_all(
-               prospects
-               |> Enum.map(fn {prospect_id, score} ->
-                 %{
-                   profile_id: user.id,
-                   target_id: prospect_id,
-                   kind: kind,
-                   score: score
-                 }
-               end)
-             ) do
-        value =
-          prospects
-          |> Enum.sort(&(elem(&1, 1) > elem(&2, 1)))
-          |> Enum.map(
-            &%{
-              id: elem(&1, 0),
-              score: elem(&1, 1),
-              completed: false
-            }
-          )
+    with {:ok, resp} <- Elasticsearch.search(:users, query) do
+      elasticsearch_prospects =
+        resp["hits"]["hits"]
+        |> Enum.map(&%{user_id: &1["_id"], score: &1["_score"]})
 
-        log(:debug, ["computing", user.id, kind], value)
-        value
+      scores_by_user_id =
+        Map.new(elasticsearch_prospects, &{&1.user_id, &1.score})
+
+      elasticsearch_user_ids = Map.keys(scores_by_user_id)
+
+      prospects =
+        User
+        |> where([u], u.id in ^elasticsearch_user_ids and u.status == :visible)
+        |> select([u], u.id)
+        |> Repo.all()
+        |> Enum.map(fn user_id ->
+          %{
+            user_id: user_id,
+            score: Map.get(scores_by_user_id, user_id)
+          }
+        end)
+        |> Enum.sort_by(& &1.score, :desc)
+
+      {:ok, prospects}
+    end
+  end
+
+  def get_retained_prospects(prospects) do
+    prospects_by_completion = Enum.group_by(prospects, & &1.completed)
+
+    retained_prospects =
+      [
+        # your top uncompleted prospects, as directly visible to you.
+        (prospects_by_completion[false] || [])
+        |> Enum.take(@prospect_foresight)
+        |> Enum.sort(&(&1.score <= &2.score)),
+        # your last like/pass or undo.
+        (prospects_by_completion[true] || []) |> Enum.at(-1)
+      ]
+      |> List.flatten()
+      |> Enum.reject(&is_nil/1)
+      |> Enum.uniq_by(& &1.user_id)
+  end
+
+  defp refresh_prospects(user, kind, retained_prospects \\ []) do
+    Repo.transaction(fn ->
+      with {:ok, prospects} <- get_new_prospects(user, kind),
+           {:ok, _} <- Prospect.delete_all(profile_id: user.id, kind: kind) do
+        retained_prospect_ids = MapSet.new(retained_prospects, & &1.user_id)
+
+        filtered_prospects =
+          prospects
+          |> Enum.reject(&(&1.user_id in retained_prospect_ids))
+
+        highest_score =
+          filtered_prospects
+          |> List.first(%{score: 0.0})
+          |> Map.get(:score)
+
+        bumped_retained_prospects =
+          retained_prospects
+          |> Enum.with_index()
+          |> Enum.map(fn {prospect, index} ->
+            %{prospect | score: highest_score + index + 1}
+          end)
+
+        all_prospects = filtered_prospects ++ bumped_retained_prospects
+
+        prospect_attrs =
+          Enum.map(all_prospects, fn prospect ->
+            %{
+              profile_id: user.id,
+              target_id: prospect.user_id,
+              kind: kind,
+              score: prospect.score,
+              completed: Map.get(prospect, :completed, false)
+            }
+          end)
+
+        case Prospect.insert_all(prospect_attrs) do
+          {:ok, _} ->
+            result =
+              all_prospects
+              |> Enum.sort_by(& &1.score, :desc)
+              |> Enum.map(&format_prospect/1)
+
+            log(:debug, ["computing", user.id, kind], result)
+            result
+
+          {:error, reason} ->
+            Repo.rollback(reason)
+        end
       else
         {:error, reason} -> Repo.rollback(reason)
         reason -> Repo.rollback(reason)
@@ -213,11 +316,12 @@ defmodule Flirtual.Matchmaking do
     end)
   end
 
-  def reset_prospects(%User{} = user) do
-    with {:ok, _} <- compute_next_prospects(user, :love),
-         {:ok, _} <- compute_next_prospects(user, :friend) do
-      :ok
-    end
+  defp format_prospect(prospect) do
+    %{
+      user_id: prospect.user_id,
+      score: prospect.score,
+      completed: Map.get(prospect, :completed, false)
+    }
   end
 
   def schedule_reset_notification(user, reset_at) do
@@ -312,8 +416,7 @@ defmodule Flirtual.Matchmaking do
     kind = Keyword.get(opts, :kind, :love)
     mode = Keyword.get(opts, :mode, kind)
 
-    {:ok, next} = next_prospects(user, mode)
-    target_id = Keyword.get(opts, :target_id) || Enum.at(next, 0)
+    target_id = Keyword.get(opts, :target_id)
     target = Keyword.get(opts, :target) || User.get(target_id)
 
     queue_keys = queue_fields(mode)

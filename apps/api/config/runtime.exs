@@ -17,8 +17,8 @@ canary = System.get_env("CANARY", "") === "1"
 config :flirtual, Flirtual.ObanWorkers,
   enabled_workers:
     if(config_env() == :prod,
-      do: [:chargebee, :elasticsearch, :listmonk, :premium_reset, :talkjs],
-      else: [:elasticsearch, :premium_reset]
+      do: [:chargebee, :elasticsearch, :listmonk, :refresh_prospects, :talkjs],
+      else: [:elasticsearch, :refresh_prospects]
     ),
   enabled_cron_tasks:
     if(config_env() == :prod,

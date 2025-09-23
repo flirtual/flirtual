@@ -1,4 +1,4 @@
-defmodule Flirtual.ObanWorkers.PremiumReset do
+defmodule Flirtual.ObanWorkers.RefreshProspects do
   use Oban.Worker, unique: [period: :infinity, states: [:available, :scheduled]]
 
   alias Flirtual.{Matchmaking, Subscription, User}
@@ -16,7 +16,6 @@ defmodule Flirtual.ObanWorkers.PremiumReset do
   def process_users(user_ids) do
     user_ids
     |> Enum.map(&User.get/1)
-    |> Enum.filter(&Subscription.active?(&1.subscription))
-    |> Enum.each(&Matchmaking.reset_prospects/1)
+    |> Enum.each(&Matchmaking.refresh_prospects/1)
   end
 end

@@ -1,10 +1,10 @@
 defmodule Flirtual.ObanWorkers do
-  alias Flirtual.ObanWorkers.{Chargebee, Elasticsearch, Listmonk, PremiumReset, Talkjs}
+  alias Flirtual.ObanWorkers.{Chargebee, Elasticsearch, Listmonk, RefreshProspects, Talkjs}
   alias Flirtual.User
 
   def update_user(
         user_ids,
-        workers \\ [:chargebee, :elasticsearch, :listmonk, :premium_reset, :talkjs]
+        workers \\ [:chargebee, :elasticsearch, :listmonk, :refresh_prospects, :talkjs]
       )
 
   def update_user(%User{id: user_id}, workers) do
@@ -31,7 +31,7 @@ defmodule Flirtual.ObanWorkers do
             :chargebee -> Chargebee.new(args)
             :elasticsearch -> Elasticsearch.new(args)
             :listmonk -> Listmonk.new(args)
-            :premium_reset -> PremiumReset.new(args)
+            :refresh_prospects -> RefreshProspects.new(args)
             :talkjs -> Talkjs.new(args)
           end
 

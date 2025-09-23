@@ -159,7 +159,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              |> where(profile_id: ^profile_id, type: :like)
              |> where([lap], lap.target_id in ^liked_users)
              |> Repo.delete_all(),
-           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :premium_reset]) do
+           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :refresh_prospects]) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -173,7 +173,7 @@ defmodule Flirtual.User.Profile.LikesAndPasses do
              LikesAndPasses
              |> where(profile_id: ^profile_id, type: :pass)
              |> Repo.delete_all(),
-           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :premium_reset]) do
+           {:ok, _} <- ObanWorkers.update_user(profile_id, [:elasticsearch, :refresh_prospects]) do
         count
       else
         {:error, reason} -> Repo.rollback(reason)

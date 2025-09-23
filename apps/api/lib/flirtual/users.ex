@@ -96,7 +96,12 @@ defmodule Flirtual.Users do
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :premium_reset, :talkjs]) do
+             ObanWorkers.update_user(user.id, [
+               :elasticsearch,
+               :listmonk,
+               :refresh_prospects,
+               :talkjs
+             ]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -371,7 +376,12 @@ defmodule Flirtual.Users do
              |> Repo.update(),
            {:ok, user} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(user.id, [:elasticsearch, :listmonk, :premium_reset, :talkjs]) do
+             ObanWorkers.update_user(user.id, [
+               :elasticsearch,
+               :listmonk,
+               :refresh_prospects,
+               :talkjs
+             ]) do
         user
       else
         {:error, reason} -> Repo.rollback(reason)

@@ -23,7 +23,8 @@ defmodule Flirtual.Profiles do
              profile
              |> Profile.update_personality_changeset(attrs)
              |> Repo.update(),
-           {:ok, _} <- ObanWorkers.update_user(profile.user_id, [:elasticsearch, :premium_reset]) do
+           {:ok, _} <-
+             ObanWorkers.update_user(profile.user_id, [:elasticsearch, :refresh_prospects]) do
         profile
       else
         {:error, reason} -> Repo.rollback(reason)
@@ -314,7 +315,7 @@ defmodule Flirtual.Profiles do
              ObanWorkers.update_user(profile.user_id, [
                :elasticsearch,
                :listmonk,
-               :premium_reset,
+               :refresh_prospects,
                :talkjs
              ]) do
         profile
@@ -334,7 +335,7 @@ defmodule Flirtual.Profiles do
            user = User.get(preferences.profile_id),
            {:ok, _} <- User.update_status(user),
            {:ok, _} <-
-             ObanWorkers.update_user(preferences.profile_id, [:elasticsearch, :premium_reset]) do
+             ObanWorkers.update_user(preferences.profile_id, [:elasticsearch, :refresh_prospects]) do
         preferences
       else
         {:error, reason} -> Repo.rollback(reason)
