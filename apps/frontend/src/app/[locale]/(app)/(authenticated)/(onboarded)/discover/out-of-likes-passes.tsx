@@ -6,6 +6,7 @@ import { ButtonLink } from "~/components/button";
 import { DialogBody, DialogDescription, DialogHeader, DialogTitle } from "~/components/dialog/dialog";
 import { DrawerOrDialog } from "~/components/drawer-or-dialog";
 import { InlineLink } from "~/components/inline-link";
+import { useLocationChanged } from "~/hooks/use-location-changed";
 import { urls } from "~/urls";
 
 import { Countdown } from "./countdown";
@@ -18,6 +19,7 @@ export interface OutOfLikesPassesProps {
 
 export const OutOfLikesPasses: FC<OutOfLikesPassesProps> = ({ mode, resetAt, reset }) => {
 	const { t } = useTranslation();
+	useLocationChanged(reset);
 
 	return (
 		<DrawerOrDialog
