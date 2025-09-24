@@ -2,7 +2,7 @@ import { Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Matchmaking } from "~/api/matchmaking";
-import { invalidateMatch } from "~/hooks/use-queue";
+import { invalidateMatch, invalidateQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 import { useToast } from "~/hooks/use-toast";
 import { useRelationship, useUser } from "~/hooks/use-user";
@@ -44,7 +44,11 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 							.then(() => toasts.add(t("unmatched_name", { name: user.profile.displayName || t("unnamed_user") })))
 							.catch(toasts.addError);
 
-						await invalidateMatch(user.id);
+						await Promise.all([
+							invalidateMatch(user.id),
+							invalidateQueue("love"),
+							invalidateQueue("friend")
+						]);
 					}}
 				>
 					{t("unmatch")}
@@ -72,10 +76,14 @@ export const RelationActions: React.FC<{ userId: string; direct: boolean }> = ({
 					size="sm"
 					onClick={async () => {
 						await Matchmaking.unmatch(user.id).catch(toasts.addError);
-						await invalidate({ queryKey: relationshipKey(user.id) });
+						await Promise.all([
+							invalidate({ queryKey: relationshipKey(user.id) }),
+							invalidateQueue("love"),
+							invalidateQueue("friend")
+						]);
 					}}
 				>
-					Undo
+					{t("undo")}
 				</Button>
 			</div>
 		);
