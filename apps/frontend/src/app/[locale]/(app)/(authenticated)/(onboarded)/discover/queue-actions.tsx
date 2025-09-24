@@ -1,6 +1,7 @@
 import { MoveLeft, MoveRight, RefreshCw, Undo2, X } from "lucide-react";
 import { m } from "motion/react";
-import { useCallback } from "react";
+import ms from "ms.macro";
+import { useCallback, useState } from "react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -12,6 +13,7 @@ import { HeartIcon } from "~/components/icons/gradient/heart";
 import { PeaceIcon } from "~/components/icons/gradient/peace";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useGlobalEventListener } from "~/hooks/use-event-listener";
+import { useTimeout } from "~/hooks/use-interval";
 import { useQueue } from "~/hooks/use-queue";
 import { useSession } from "~/hooks/use-session";
 
@@ -38,20 +40,20 @@ const QueueDebugger: FC<{ kind: ProspectKind }> = ({ kind }) => {
 	return (
 		<div className="flex gap-2">
 			<Button
-				className="disabled:opacity-50"
+				className="disabled:brightness-90"
 				disabled={!previous}
 				Icon={MoveLeft}
 				size="xs"
 				onClick={backward}
 			/>
 			<Button
-				className="disabled:opacity-50"
+				className="disabled:brightness-90"
 				Icon={RefreshCw}
 				size="xs"
 				onClick={invalidate}
 			/>
 			<Button
-				className="disabled:opacity-50"
+				className="disabled:brightness-90"
 				disabled={!current}
 				Icon={MoveRight}
 				size="xs"
@@ -73,6 +75,13 @@ export const QueueActions: FC<{
 		undo,
 		mutating
 	} = useQueue(mode);
+
+	const [didAction, setDidAction] = useState(false);
+
+	if (mutating && !didAction) setDidAction(true);
+	useTimeout(() => setDidAction(false), ms("1s"), didAction);
+
+	const tooFast = mutating || didAction;
 
 	useGlobalEventListener(
 		"document",
@@ -102,8 +111,8 @@ export const QueueActions: FC<{
 							<TooltipTrigger asChild>
 								<m.button
 									id="undo-button"
-									className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
-									disabled={!previous || mutating}
+									className="flex h-fit items-center rounded-full border border-black-50/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
+									disabled={!previous || tooFast}
 									type="button"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
@@ -123,8 +132,8 @@ export const QueueActions: FC<{
 							<TooltipTrigger asChild>
 								<m.button
 									id="like-button"
-									className="flex items-center justify-center rounded-full bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:opacity-50"
-									disabled={mutating}
+									className="flex items-center justify-center rounded-full border border-black-50/25 bg-brand-gradient p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]"
+									disabled={tooFast}
 									type="button"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
@@ -146,8 +155,8 @@ export const QueueActions: FC<{
 						<TooltipTrigger asChild>
 							<m.button
 								id="friend-button"
-								className="flex items-center justify-center rounded-full bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:opacity-50"
-								disabled={mutating}
+								className="flex items-center justify-center rounded-full border border-black-50/25 bg-gradient-to-tr from-theme-friend-1 to-theme-friend-2 p-4 shadow-brand-1 transition-all disabled:brightness-90 dark:disabled:brightness-[80%]"
+								disabled={tooFast}
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
@@ -168,8 +177,8 @@ export const QueueActions: FC<{
 						<TooltipTrigger asChild>
 							<m.button
 								id="pass-button"
-								className="flex h-fit items-center rounded-full bg-black-60 p-3 shadow-brand-1 transition-all disabled:opacity-50"
-								disabled={mutating}
+								className="flex h-fit items-center rounded-full border border-black-90/25 bg-white-30 p-3 text-black-50 shadow-brand-1 transition-all disabled:!scale-100 disabled:text-black-10 dark:bg-black-50 dark:text-white-10 dark:disabled:text-black-10"
+								disabled={tooFast}
 								type="button"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}

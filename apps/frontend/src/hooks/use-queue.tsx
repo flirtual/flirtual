@@ -130,10 +130,8 @@ export function useQueue(mode: ProspectKind = "love") {
 					? await Matchmaking.undo({ mode })
 					: await Matchmaking.queueAction({ type: action, kind, mode, userId });
 
-				const [conversationId] = await Promise.all([
-					newConversationId(meId, finalUserId),
-					invalidateMatch(finalUserId)
-				]);
+				void invalidateMatch(finalUserId);
+				const conversationId = await newConversationId(meId, finalUserId);
 
 				if (action === "undo")
 					// HACK: Talk.js doesn't send us an update event when we manually delete a conversation on un-match.

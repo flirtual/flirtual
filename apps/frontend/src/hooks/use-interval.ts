@@ -26,7 +26,7 @@ export function useInterval(callback: () => void, every: number) {
 	return { ref: reference, clear, reset };
 }
 
-export function useTimeout(callback: () => void, every: number) {
+export function useTimeout(callback: () => void, every: number, condition = true) {
 	const reference = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const clear = useCallback(() => {
@@ -42,9 +42,11 @@ export function useTimeout(callback: () => void, every: number) {
 	}, [clear, callback, every]);
 
 	useEffect(() => {
+		if (!condition) return;
+
 		reset();
 		return () => clear();
-	}, [reset, clear]);
+	}, [reset, clear, condition]);
 
 	useDebugValue(reference.current);
 
