@@ -42,9 +42,13 @@ defmodule Flirtual.User.Profile.Prospect do
     |> Repo.all()
   end
 
-  def reverse(%Prospect{profile_id: profile_id, target_id: target_id} = prospect) do
+  def reverse(%Prospect{profile_id: profile_id, target_id: target_id, kind: kind} = prospect) do
     Repo.transaction(fn ->
       with {:ok, _} <- LikesAndPasses.delete_all(profile_id: profile_id, target_id: target_id),
+           {_, _} <-
+             Prospect
+             |> where([p], p.id != ^prospect.id and p.kind == ^kind)
+             |> Repo.delete_all(),
            {:ok, prospect} <-
              prospect
              |> change(%{completed: false})
