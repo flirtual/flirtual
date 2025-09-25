@@ -75,6 +75,13 @@ export default defineConfig((config) => {
 			origin,
 			port: 3000,
 			strictPort: true,
+			watch: {
+				ignored: [
+					"android/**",
+					"ios/**",
+					"visionos/**"
+				]
+			}
 		},
 		plugins: [
 			hush([

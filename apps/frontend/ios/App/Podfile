@@ -1,4 +1,4 @@
-require_relative '../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios/scripts/pods_helpers'
+require_relative '../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios/scripts/pods_helpers'
 
 platform :ios, '15.0'
 use_frameworks!
@@ -9,27 +9,24 @@ use_frameworks!
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-  pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios'
-  pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@7.1.0_@capacitor+core@7.1.0/node_modules/@capacitor/ios'
-  pod 'CapacitorCommunityInAppReview', :path => '../../node_modules/.pnpm/@capacitor-community+in-app-review@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor-community/in-app-review'
-  pod 'CapacitorCommunitySafeArea', :path => '../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-alpha.1_@capacitor+core@7.1.0/node_modules/@capacitor-community/safe-area'
-  pod 'CapacitorApp', :path => '../../node_modules/.pnpm/@capacitor+app@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/app'
-  pod 'CapacitorClipboard', :path => '../../node_modules/.pnpm/@capacitor+clipboard@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/clipboard'
-  pod 'CapacitorDevice', :path => '../../node_modules/.pnpm/@capacitor+device@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/device'
-  pod 'CapacitorDialog', :path => '../../node_modules/.pnpm/@capacitor+dialog@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/dialog'
-  pod 'CapacitorKeyboard', :path => '../../node_modules/.pnpm/@capacitor+keyboard@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/keyboard'
-  pod 'CapacitorLocalNotifications', :path => '../../node_modules/.pnpm/@capacitor+local-notifications@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/local-notifications'
-  pod 'CapacitorPreferences', :path => '../../node_modules/.pnpm/@capacitor+preferences@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/preferences'
-  pod 'CapacitorPushNotifications', :path => '../../node_modules/.pnpm/@capacitor+push-notifications@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/push-notifications'
-  pod 'CapacitorScreenOrientation', :path => '../../node_modules/.pnpm/@capacitor+screen-orientation@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/screen-orientation'
-  pod 'CapacitorShare', :path => '../../node_modules/.pnpm/@capacitor+share@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/share'
-  pod 'CapacitorStatusBar', :path => '../../node_modules/.pnpm/@capacitor+status-bar@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/status-bar'
-  pod 'CapacitorToast', :path => '../../node_modules/.pnpm/@capacitor+toast@7.0.0_@capacitor+core@7.1.0/node_modules/@capacitor/toast'
-  pod 'CapawesomeTeamCapacitorDatetimePicker', :path => '../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@7.0.1_@capacitor+core@7.1.0/node_modules/@capawesome-team/capacitor-datetime-picker'
-  pod 'CapawesomeCapacitorAppUpdate', :path => '../../node_modules/.pnpm/@capawesome+capacitor-app-update@7.0.1_@capacitor+core@7.1.0/node_modules/@capawesome/capacitor-app-update'
-  pod 'CapgoInappbrowser', :path => '../../node_modules/.pnpm/@capgo+inappbrowser@7.6.8_@capacitor+core@7.1.0/node_modules/@capgo/inappbrowser'
-  pod 'RevenuecatPurchasesCapacitor', :path => '../../node_modules/.pnpm/@revenuecat+purchases-capacitor@10.2.1_@capacitor+core@7.1.0/node_modules/@revenuecat/purchases-capacitor'
-  pod 'CapacitorNativeSettings', :path => '../../node_modules/.pnpm/capacitor-native-settings@7.0.1_@capacitor+core@7.1.0/node_modules/capacitor-native-settings'
+  pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@7.4.3_@capacitor+core@7.4.3/node_modules/@capacitor/ios'
+  pod 'CapacitorCommunityInAppReview', :path => '../../node_modules/.pnpm/@capacitor-community+in-app-review@7.0.1_@capacitor+core@7.4.3/node_modules/@capacitor-community/in-app-review'
+  pod 'CapacitorCommunitySafeArea', :path => '../../node_modules/.pnpm/@capacitor-community+safe-area@7.0.0-alpha.1_@capacitor+core@7.4.3/node_modules/@capacitor-community/safe-area'
+  pod 'CapacitorApp', :path => '../../node_modules/.pnpm/@capacitor+app@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/app'
+  pod 'CapacitorClipboard', :path => '../../node_modules/.pnpm/@capacitor+clipboard@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/clipboard'
+  pod 'CapacitorDevice', :path => '../../node_modules/.pnpm/@capacitor+device@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/device'
+  pod 'CapacitorDialog', :path => '../../node_modules/.pnpm/@capacitor+dialog@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/dialog'
+  pod 'CapacitorKeyboard', :path => '../../node_modules/.pnpm/@capacitor+keyboard@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/keyboard'
+  pod 'CapacitorPreferences', :path => '../../node_modules/.pnpm/@capacitor+preferences@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/preferences'
+  pod 'CapacitorPushNotifications', :path => '../../node_modules/.pnpm/@capacitor+push-notifications@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/push-notifications'
+  pod 'CapacitorShare', :path => '../../node_modules/.pnpm/@capacitor+share@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/share'
+  pod 'CapacitorToast', :path => '../../node_modules/.pnpm/@capacitor+toast@7.0.2_@capacitor+core@7.4.3/node_modules/@capacitor/toast'
+  pod 'CapawesomeTeamCapacitorDatetimePicker', :path => '../../node_modules/.pnpm/@capawesome-team+capacitor-datetime-picker@7.0.1_@capacitor+core@7.4.3/node_modules/@capawesome-team/capacitor-datetime-picker'
+  pod 'CapawesomeCapacitorAppUpdate', :path => '../../node_modules/.pnpm/@capawesome+capacitor-app-update@7.0.1_@capacitor+core@7.4.3/node_modules/@capawesome/capacitor-app-update'
+  pod 'CapgoInappbrowser', :path => '../../node_modules/.pnpm/@capgo+inappbrowser@7.6.8_@capacitor+core@7.4.3/node_modules/@capgo/inappbrowser'
+  pod 'RevenuecatPurchasesCapacitor', :path => '../../node_modules/.pnpm/@revenuecat+purchases-capacitor@10.2.1_@capacitor+core@7.4.3/node_modules/@revenuecat/purchases-capacitor'
+  pod 'CapacitorNativeSettings', :path => '../../node_modules/.pnpm/capacitor-native-settings@7.0.2_@capacitor+core@7.4.3/node_modules/capacitor-native-settings'
 end
 
 target 'Flirtual' do
