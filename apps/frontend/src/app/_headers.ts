@@ -95,11 +95,7 @@ const data = [
 						"'self'",
 						"blob:",
 						"data:",
-						...bucketOrigins.map((origin) => new URL(origin).host),
-						// Country flag icons.
-						"cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/flags/4x3/",
-						// ???
-						"play-lh.googleusercontent.com"
+						...bucketOrigins.map((origin) => new URL(origin).host)
 					],
 					"media-src": [
 						"'self'",

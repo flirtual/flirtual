@@ -7,8 +7,15 @@ import { useLocale } from "~/i18n";
 
 import { Pill } from "./pill";
 
-export function getCountryImage(countryId: string) {
-	return `https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.2.3/flags/4x3/${countryId}.svg`;
+const countryFlags = import.meta.glob("./*.svg", {
+	base: "../../../../node_modules/flag-icons/flags/4x3",
+	eager: true,
+	import: "default",
+	query: "?no-inline"
+});
+
+export function getCountryImage(countryId: string): string {
+	return countryFlags[`./${countryId}.svg`] as string;
 }
 
 const _countryNames: Record<string, Intl.DisplayNames> = {};
