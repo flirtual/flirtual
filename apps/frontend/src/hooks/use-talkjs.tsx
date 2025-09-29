@@ -106,7 +106,7 @@ const TalkjsProvider_: React.FC<React.PropsWithChildren> = ({ children }) => {
 };
 
 if (!talkjsAppId)
-	warnOnce("Talk.js is not configured properly, conversations & related features are disabled. To enable them, set \"NEXT_PUBLIC_TALKJS_APP_ID\" in your environment.");
+	warnOnce("Talk.js is not configured properly, conversations & related features are disabled. To enable them, set \"VITE_TALKJS_APP_ID\" in your environment.");
 
 const FallbackProvider: FC<PropsWithChildren> = ({ children }) => {
 	const value = useMemo(() => ({ unreadConversations: emptyArray, setUnreadConversations: doNothing }), []);
