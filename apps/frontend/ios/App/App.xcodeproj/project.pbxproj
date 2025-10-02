@@ -10,7 +10,6 @@
 		2714E35A2A426DBB00458704 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2714E3592A426DBB00458704 /* StoreKit.framework */; };
 		27D784832E8E23AC006DD767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		27D784852E8E23AC006DD767 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2714E3592A426DBB00458704 /* StoreKit.framework */; };
-		27D784882E8E23AC006DD767 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 27F9569A2E8B4D33009ED19C /* AppIcon.icon */; };
 		27D784892E8E23AC006DD767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		27D7848A2E8E23AC006DD767 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		27D7848B2E8E23AC006DD767 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
@@ -18,6 +17,7 @@
 		27D7848D2E8E23AC006DD767 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		27D7848E2E8E23AC006DD767 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		27D784962E8E4BB4006DD767 /* Pods_Flirtual.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */; };
+		27D7849A2E8E50B1006DD767 /* Beta-AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 27D784992E8E50B1006DD767 /* Beta-AppIcon.icon */; };
 		27F9569B2E8B4D33009ED19C /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 27F9569A2E8B4D33009ED19C /* AppIcon.icon */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		4A512B420D991E32E6504B69 /* Pods_Flirtual.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */; };
@@ -35,6 +35,7 @@
 		2714E3592A426DBB00458704 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		27D784932E8E23AC006DD767 /* Flirtual Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flirtual Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27D784942E8E23AC006DD767 /* Beta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Beta-Info.plist"; path = "/Users/kyle/Developer/flirtual/flirtual/apps/frontend/ios/App/Beta-Info.plist"; sourceTree = "<absolute>"; };
+		27D784992E8E50B1006DD767 /* Beta-AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "Beta-AppIcon.icon"; sourceTree = "<group>"; };
 		27F9569A2E8B4D33009ED19C /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				27F9569A2E8B4D33009ED19C /* AppIcon.icon */,
+				27D784992E8E50B1006DD767 /* Beta-AppIcon.icon */,
 				2714E3582A426D6600458704 /* Flirtual.entitlements */,
 				504EC3061FED79650016851F /* App */,
 				504EC3051FED79650016851F /* Products */,
@@ -216,9 +218,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27D784882E8E23AC006DD767 /* AppIcon.icon in Resources */,
 				27D784892E8E23AC006DD767 /* LaunchScreen.storyboard in Resources */,
 				27D7848A2E8E23AC006DD767 /* public in Resources */,
+				27D7849A2E8E50B1006DD767 /* Beta-AppIcon.icon in Resources */,
 				27D7848B2E8E23AC006DD767 /* Assets.xcassets in Resources */,
 				27D7848C2E8E23AC006DD767 /* capacitor.config.json in Resources */,
 				27D7848D2E8E23AC006DD767 /* Main.storyboard in Resources */,
@@ -321,13 +323,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8EAC74EA29D39B6CB675FE0B /* Pods-Flirtual.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Beta-AppIcon";
 				CODE_SIGN_ENTITLEMENTS = "Flirtual Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				INFOPLIST_FILE = "Beta-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
+				INFOPLIST_KEY_CFBundleDisplayName = "Flirtual Beta";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -347,13 +349,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8544F29D29759FEDE31214A6 /* Pods-Flirtual.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Beta-AppIcon";
 				CODE_SIGN_ENTITLEMENTS = "Flirtual Beta.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 997W5KLYVR;
 				INFOPLIST_FILE = "Beta-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
+				INFOPLIST_KEY_CFBundleDisplayName = "Flirtual Beta";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
