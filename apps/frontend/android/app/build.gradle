@@ -3,11 +3,11 @@ apply plugin: 'com.android.application'
 android {
     namespace "zone.homie.flirtual.pwa"
     compileSdk rootProject.ext.compileSdkVersion
+
     defaultConfig {
-        applicationId "zone.homie.flirtual.pwa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 26
+        versionCode 28
         versionName '1.2.12.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
@@ -16,6 +16,19 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+
+    flavorDimensions "environment"
+    productFlavors {
+        production {
+            dimension "environment"
+            applicationId "zone.homie.flirtual.pwa"
+        }
+        beta {
+            dimension "environment"
+            applicationId "zone.homie.flirtual.beta"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
