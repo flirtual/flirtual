@@ -17,6 +17,7 @@
 		27D7848C2E8E23AC006DD767 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		27D7848D2E8E23AC006DD767 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		27D7848E2E8E23AC006DD767 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
+		27D784962E8E4BB4006DD767 /* Pods_Flirtual.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */; };
 		27F9569B2E8B4D33009ED19C /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 27F9569A2E8B4D33009ED19C /* AppIcon.icon */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		4A512B420D991E32E6504B69 /* Pods_Flirtual.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */; };
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27D784852E8E23AC006DD767 /* StoreKit.framework in Frameworks */,
+				27D784962E8E4BB4006DD767 /* Pods_Flirtual.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,9 +139,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 27D784902E8E23AC006DD767 /* Build configuration list for PBXNativeTarget "Flirtual Beta" */;
 			buildPhases = (
+				6634F4EFEBD30273BCE97C65 /* [CP] Check Pods Manifest.lock */,
 				27D784822E8E23AC006DD767 /* Sources */,
 				27D784842E8E23AC006DD767 /* Frameworks */,
 				27D784872E8E23AC006DD767 /* Resources */,
+				9592DBEFFC6D2A0C8D5DEB22 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
