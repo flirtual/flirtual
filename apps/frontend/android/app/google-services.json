@@ -2,9 +2,28 @@
   "project_info": {
     "project_number": "490794512096",
     "project_id": "flirtual-firebase",
-    "storage_bucket": "flirtual-firebase.appspot.com"
+    "storage_bucket": "flirtual-firebase.firebasestorage.app"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490794512096:android:1bdd1a3bb0cf33238baa85",
+        "android_client_info": {
+          "package_name": "zone.homie.flirtual.beta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcLCSfzlcFe2-0Karmbe-VHA4qz7Ui0Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:490794512096:android:a05d15a643d800858baa85",

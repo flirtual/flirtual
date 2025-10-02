@@ -17,7 +17,7 @@ import ImageAe8bdc6b from "virtual:remote/ae8bdc6b-2073-491a-9d09-58fce4223d4e";
 import ImageCff9ca62 from "virtual:remote/cff9ca62-2ec5-4467-8bb1-5ec0972f0a5e";
 import ImageDcfbd0d6 from "virtual:remote/dcfbd0d6-1f35-44b9-9f4e-d9c50a368907";
 
-import { siteOrigin } from "~/const";
+import { appBundleId, siteOrigin } from "~/const";
 import { urls } from "~/urls";
 
 export function loader() {
@@ -134,7 +134,7 @@ export function loader() {
 		],
 		description:
 			"The first VR dating app. Join thousands for dates in VR apps like VRChat.",
-		ovr_package_name: "zone.homie.flirtual.pwa",
+		ovr_package_name: appBundleId,
 		iarc_rating_id: "6e4124cb-ab7a-416e-aeb3-f93a42787fa4",
 		screenshots: [
 			{
@@ -180,7 +180,7 @@ export function loader() {
 			{
 				platform: "play",
 				url: urls.apps.google,
-				id: "zone.homie.flirtual.pwa"
+				id: appBundleId
 			},
 			{
 				platform: "windows",

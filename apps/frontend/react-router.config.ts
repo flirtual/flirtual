@@ -44,6 +44,9 @@ export default {
 		"/robots.txt",
 		"/pico_authentication.json",
 		"/.well-known/security.txt",
+		"/.well-known/assetlinks.json",
+		"/.well-known/apple-app-site-association",
+		"/.well-known/apple-developer-merchantid-domain-association",
 		"/_redirects",
 		"/_headers",
 		"/wrangler.json"

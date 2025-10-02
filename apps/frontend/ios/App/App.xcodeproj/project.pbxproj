@@ -8,8 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		2714E35A2A426DBB00458704 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2714E3592A426DBB00458704 /* StoreKit.framework */; };
+		27D784832E8E23AC006DD767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
+		27D784852E8E23AC006DD767 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2714E3592A426DBB00458704 /* StoreKit.framework */; };
+		27D784882E8E23AC006DD767 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 27F9569A2E8B4D33009ED19C /* AppIcon.icon */; };
+		27D784892E8E23AC006DD767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
+		27D7848A2E8E23AC006DD767 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
+		27D7848B2E8E23AC006DD767 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
+		27D7848C2E8E23AC006DD767 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
+		27D7848D2E8E23AC006DD767 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
+		27D7848E2E8E23AC006DD767 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		27F9569B2E8B4D33009ED19C /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 27F9569A2E8B4D33009ED19C /* AppIcon.icon */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
+		4A512B420D991E32E6504B69 /* Pods_Flirtual.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		504EC3081FED79650016851F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
@@ -22,6 +32,8 @@
 /* Begin PBXFileReference section */
 		2714E3582A426D6600458704 /* Flirtual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flirtual.entitlements; sourceTree = "<group>"; };
 		2714E3592A426DBB00458704 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		27D784932E8E23AC006DD767 /* Flirtual Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flirtual Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		27D784942E8E23AC006DD767 /* Beta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Beta-Info.plist"; path = "/Users/kyle/Developer/flirtual/flirtual/apps/frontend/ios/App/Beta-Info.plist"; sourceTree = "<absolute>"; };
 		27F9569A2E8B4D33009ED19C /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
@@ -32,20 +44,29 @@
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
-		8790A0AA5D177BE334F3B8A0 /* Pods-Flirtual.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flirtual.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flirtual/Pods-Flirtual.debug.xcconfig"; sourceTree = "<group>"; };
+		8544F29D29759FEDE31214A6 /* Pods-Flirtual.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flirtual.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flirtual/Pods-Flirtual.release.xcconfig"; sourceTree = "<group>"; };
+		8EAC74EA29D39B6CB675FE0B /* Pods-Flirtual.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flirtual.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flirtual/Pods-Flirtual.debug.xcconfig"; sourceTree = "<group>"; };
 		AA9733435BC1F064FD4CE607 /* Pods_Flirtual.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flirtual.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
-		DAC8D7FFF09DACDF24F7AC1F /* Pods-Flirtual.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flirtual.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flirtual/Pods-Flirtual.release.xcconfig"; sourceTree = "<group>"; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		27D784842E8E23AC006DD767 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27D784852E8E23AC006DD767 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		504EC3011FED79650016851F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2714E35A2A426DBB00458704 /* StoreKit.framework in Frameworks */,
 				712FDA1FA5B212B716509D5A /* Pods_Flirtual.framework in Frameworks */,
+				4A512B420D991E32E6504B69 /* Pods_Flirtual.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +91,7 @@
 				504EC3051FED79650016851F /* Products */,
 				7F8756D8B27F46E3366F6CEA /* Pods */,
 				27E2DDA53C4D2A4D1A88CE4A /* Frameworks */,
+				27D784942E8E23AC006DD767 /* Beta-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				504EC3041FED79650016851F /* Flirtual.app */,
+				27D784932E8E23AC006DD767 /* Flirtual Beta.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,8 +124,8 @@
 			children = (
 				FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */,
 				AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */,
-				8790A0AA5D177BE334F3B8A0 /* Pods-Flirtual.debug.xcconfig */,
-				DAC8D7FFF09DACDF24F7AC1F /* Pods-Flirtual.release.xcconfig */,
+				8EAC74EA29D39B6CB675FE0B /* Pods-Flirtual.debug.xcconfig */,
+				8544F29D29759FEDE31214A6 /* Pods-Flirtual.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -110,6 +133,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		27D784802E8E23AC006DD767 /* Flirtual Beta */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 27D784902E8E23AC006DD767 /* Build configuration list for PBXNativeTarget "Flirtual Beta" */;
+			buildPhases = (
+				27D784822E8E23AC006DD767 /* Sources */,
+				27D784842E8E23AC006DD767 /* Frameworks */,
+				27D784872E8E23AC006DD767 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Flirtual Beta";
+			productName = App;
+			productReference = 27D784932E8E23AC006DD767 /* Flirtual Beta.app */;
+			productType = "com.apple.product-type.application";
+		};
 		504EC3031FED79650016851F /* Flirtual */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504EC3161FED79650016851F /* Build configuration list for PBXNativeTarget "Flirtual" */;
@@ -138,6 +178,9 @@
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0920;
 				TargetAttributes = {
+					27D784802E8E23AC006DD767 = {
+						ProvisioningStyle = Automatic;
+					};
 					504EC3031FED79650016851F = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1100;
@@ -159,11 +202,26 @@
 			projectRoot = "";
 			targets = (
 				504EC3031FED79650016851F /* Flirtual */,
+				27D784802E8E23AC006DD767 /* Flirtual Beta */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		27D784872E8E23AC006DD767 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27D784882E8E23AC006DD767 /* AppIcon.icon in Resources */,
+				27D784892E8E23AC006DD767 /* LaunchScreen.storyboard in Resources */,
+				27D7848A2E8E23AC006DD767 /* public in Resources */,
+				27D7848B2E8E23AC006DD767 /* Assets.xcassets in Resources */,
+				27D7848C2E8E23AC006DD767 /* capacitor.config.json in Resources */,
+				27D7848D2E8E23AC006DD767 /* Main.storyboard in Resources */,
+				27D7848E2E8E23AC006DD767 /* config.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		504EC3021FED79650016851F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,6 +275,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		27D784822E8E23AC006DD767 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27D784832E8E23AC006DD767 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		504EC3001FED79650016851F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -247,6 +313,57 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		27D784912E8E23AC006DD767 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EAC74EA29D39B6CB675FE0B /* Pods-Flirtual.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Flirtual Beta.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 24;
+				DEVELOPMENT_TEAM = 997W5KLYVR;
+				INFOPLIST_FILE = "Beta-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.14;
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
+				PRODUCT_BUNDLE_IDENTIFIER = zone.homie.flirtual.beta;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		27D784922E8E23AC006DD767 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8544F29D29759FEDE31214A6 /* Pods-Flirtual.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Flirtual Beta.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 24;
+				DEVELOPMENT_TEAM = 997W5KLYVR;
+				INFOPLIST_FILE = "Beta-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Flirtual;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.14;
+				PRODUCT_BUNDLE_IDENTIFIER = zone.homie.flirtual.beta;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		504EC3141FED79650016851F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -356,7 +473,7 @@
 		};
 		504EC3171FED79650016851F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8790A0AA5D177BE334F3B8A0 /* Pods-Flirtual.debug.xcconfig */;
+			baseConfigurationReference = 8EAC74EA29D39B6CB675FE0B /* Pods-Flirtual.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Flirtual.entitlements;
@@ -382,7 +499,7 @@
 		};
 		504EC3181FED79650016851F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DAC8D7FFF09DACDF24F7AC1F /* Pods-Flirtual.release.xcconfig */;
+			baseConfigurationReference = 8544F29D29759FEDE31214A6 /* Pods-Flirtual.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Flirtual.entitlements;
@@ -408,6 +525,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		27D784902E8E23AC006DD767 /* Build configuration list for PBXNativeTarget "Flirtual Beta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27D784912E8E23AC006DD767 /* Debug */,
+				27D784922E8E23AC006DD767 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		504EC2FF1FED79650016851F /* Build configuration list for PBXProject "App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
