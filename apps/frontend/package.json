@@ -13,8 +13,7 @@
 		"android:build": "cap sync android && cd ./android && ./gradlew build",
 		"android:uninstall": "adb uninstall zone.homie.flirtual.pwa",
 		"android:install": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk",
-		"clean": "rm -rf node_modules dist .react-router .sonda && pnpm install --force",
-		"postinstall": "pnpm -s typegen"
+		"clean": "rm -rf node_modules dist .react-router .sonda && pnpm install --force"
 	},
 	"dependencies": {
 		"@capacitor-community/in-app-review": "^7.0.1",
