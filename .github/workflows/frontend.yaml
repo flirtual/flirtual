@@ -73,6 +73,11 @@ jobs:
         run: pnpm install
 
       - name: Typegen
+        env:
+          VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
+          VITE_SENTRY_ORGANIZATION: ${{ vars.VITE_SENTRY_ORGANIZATION }}
+          VITE_SENTRY_PROJECT_ID: ${{ vars.VITE_SENTRY_PROJECT_ID }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: pnpm typegen
 
       - name: TypeScript
