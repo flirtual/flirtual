@@ -45,7 +45,13 @@ jobs:
         run: ./node_modules/.bin/eslint -f stylish
 
   typescript:
+    strategy:
+      matrix:
+        environment: [production, canary]
+        exclude:
+          - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
     runs-on: ubuntu-latest
+    environment: ${{ matrix.environment }}
     permissions:
       checks: write
     defaults:
