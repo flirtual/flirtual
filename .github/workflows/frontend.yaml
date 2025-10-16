@@ -72,6 +72,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Typegen
+        run: pnpm typegen
+
       - name: TypeScript
         run: |
           ./node_modules/.bin/tsc --pretty false --noEmit | sed -E "s#^.+\(.+\): error TS.+\$#$PWD/\0#"
