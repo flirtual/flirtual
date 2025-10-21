@@ -8,7 +8,7 @@ const frontendScheme = frontendUrl.protocol.slice(0, -1);
 export default {
 	appId: "zone.homie.flirtual.pwa",
 	appName: "Flirtual",
-	webDir: "public",
+	webDir: "dist/client",
 	server: {
 		androidScheme: frontendScheme,
 		hostname: frontendUrl.hostname,

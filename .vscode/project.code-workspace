@@ -39,6 +39,10 @@
 		{
 			"name": "📊 Tempo",
 			"path": "../apps/tempo"
+		},
+		{
+			"name": "👷 Trace",
+			"path": "../apps/trace"
 		}
 	],
 	"settings": {

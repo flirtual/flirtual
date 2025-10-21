@@ -1,0 +1,9 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "trace",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-10-11",
+	"observability": {
+		"enabled": true
+	}
+}
