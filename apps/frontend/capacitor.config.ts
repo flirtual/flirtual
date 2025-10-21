@@ -13,7 +13,6 @@ invariant(appId, "VITE_APP_BUNDLE_ID is not set");
 export default {
 	appId,
 	appName: "Flirtual",
-	webDir: "dist/client",
 	server: {
 		androidScheme: frontendScheme,
 		hostname: frontendUrl.hostname,
