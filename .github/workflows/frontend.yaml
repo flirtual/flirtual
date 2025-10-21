@@ -45,7 +45,13 @@ jobs:
         run: ./node_modules/.bin/eslint -f stylish
 
   typescript:
+    strategy:
+      matrix:
+        environment: [production, canary]
+        exclude:
+          - environment: ${{ github.ref != 'refs/heads/production' && 'production' || null }}
     runs-on: ubuntu-latest
+    environment: ${{ matrix.environment }}
     permissions:
       checks: write
     defaults:
@@ -71,6 +77,14 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Typegen
+        env:
+          VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
+          VITE_SENTRY_ORGANIZATION: ${{ vars.VITE_SENTRY_ORGANIZATION }}
+          VITE_SENTRY_PROJECT_ID: ${{ vars.VITE_SENTRY_PROJECT_ID }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: pnpm typegen
 
       - name: TypeScript
         run: |
@@ -105,11 +119,15 @@ jobs:
       VITE_UPPY_BUCKET_ORIGIN: ${{ vars.VITE_UPPY_BUCKET_ORIGIN }}
       VITE_API_URL: ${{ vars.VITE_API_URL }}
       VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
+      VITE_APP_BUNDLE_ID: ${{ vars.VITE_APP_BUNDLE_ID }}
       VITE_PICO_APP_ID: ${{ vars.VITE_PICO_APP_ID }}
       VITE_PLATFORM_OVERRIDE: ${{ vars.VITE_PLATFORM_OVERRIDE }}
       VITE_BUCKET_CONTENT_ORIGIN: ${{ vars.VITE_BUCKET_CONTENT_ORIGIN }}
       VITE_BUCKET_UPLOADS_ORIGIN: ${{ vars.VITE_BUCKET_UPLOADS_ORIGIN }}
       VITE_BUCKET_UPLOADS_SIGNED_ORIGIN: ${{ vars.VITE_BUCKET_UPLOADS_SIGNED_ORIGIN }}
+      VITE_ASSETLINKS_JSON: ${{ vars.VITE_ASSETLINKS_JSON }}
+      VITE_APPLE_APP_SITE_ASSOCIATION_JSON: ${{ vars.VITE_APPLE_APP_SITE_ASSOCIATION_JSON }}
+      VITE_APPLE_DEVELOPER_MERCHANTID_DOMAIN_ASSOCIATION: ${{ vars.VITE_APPLE_DEVELOPER_MERCHANTID_DOMAIN_ASSOCIATION }}
 
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

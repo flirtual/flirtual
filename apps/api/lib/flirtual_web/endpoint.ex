@@ -13,8 +13,12 @@ defmodule FlirtualWeb.Endpoint do
   def get_origins() do
     MapSet.new([
       Application.fetch_env!(:flirtual, :root_origin),
+      Application.fetch_env!(:flirtual, :origin),
       Application.fetch_env!(:flirtual, :frontend_origin),
-      Application.fetch_env!(:flirtual, :origin)
+      Application.fetch_env!(:flirtual, :frontend_origin)
+      |> URI.new!()
+      |> Map.put(:scheme, "capacitor")
+      |> Map.put(:port, nil)
     ])
     |> MapSet.to_list()
     |> Enum.map(&to_string/1)

@@ -318,11 +318,11 @@ export function useMutation<T = unknown, Variables = void, Context = unknown>({
 					id: hashKey(mutationKey),
 				}
 			: undefined,
-		onSuccess: (data, variables, context) => {
+		onSuccess: (data, variables, onMutateResult, context) => {
 			if (mutationKey && data !== undefined)
 				mutate(mutationKey, data);
 
-			return onSuccess?.(data, variables, context);
+			return onSuccess?.(data, variables, onMutateResult, context);
 		},
 	}, queryClient);
 }

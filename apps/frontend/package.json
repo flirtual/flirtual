@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "react-router dev",
 		"typegen": "wrangler types --include-runtime false && react-router typegen",
-		"build": "rm -rf .sonda && react-router build",
+		"build": "rm -rf .sonda && pnpm typegen && react-router build",
 		"build:preview": "sh -c 'name=${1:-$(whoami)} && VITE_PREVIEW=\"$name\" pnpm -s build --mode=\"$name\"' --",
 		"release": "sh -c 'branch=${WORKERS_CI_BRANCH:-$(git rev-parse --abbrev-ref HEAD)}; [ -z \"$branch\" ] || [ \"$branch\" = \"HEAD\" ] && { echo \"Error: No branch detected or in detached HEAD state\" >&2; exit 1; }; [ \"$branch\" = \"production\" ] && pnpm production || ([ \"$branch\" = \"main\" ] && pnpm canary || pnpm preview \"$branch\")'",
 		"production": "pnpm -s build && wrangler deploy",
@@ -13,8 +13,7 @@
 		"android:build": "cap sync android && cd ./android && ./gradlew build",
 		"android:uninstall": "adb uninstall zone.homie.flirtual.pwa",
 		"android:install": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk",
-		"clean": "rm -rf node_modules dist .react-router .sonda && pnpm install --force",
-		"postinstall": "pnpm -s typegen"
+		"clean": "rm -rf node_modules dist .react-router .sonda && pnpm install --force"
 	},
 	"dependencies": {
 		"@capacitor-community/in-app-review": "^7.0.1",

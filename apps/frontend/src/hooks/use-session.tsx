@@ -51,7 +51,7 @@ export function useOptionalSession(queryOptions: MinimalQueryOptions<Session | n
 			? cookieStore.set({
 					name: "logged_in",
 					value: "",
-					expires: (Date.now() + ms("1y")) / 1000
+					expires: (Date.now() + ms("1y"))
 				})
 			: cookieStore.delete("logged_in");
 
