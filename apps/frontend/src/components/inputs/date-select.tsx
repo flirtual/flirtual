@@ -1,9 +1,11 @@
-import { DatetimePicker } from "@capawesome-team/capacitor-datetime-picker";
+import { DatetimePicker, ErrorCode } from "@capawesome-team/capacitor-datetime-picker";
 import { useCallback, useRef, useState } from "react";
 
 import { useClickOutside } from "~/hooks/use-click-outside";
 import { useDevice } from "~/hooks/use-device";
 import { useTheme } from "~/hooks/use-theme";
+import { useToast } from "~/hooks/use-toast";
+import { useMutation } from "~/query";
 
 import { Popover } from "../popover";
 import {
@@ -168,29 +170,33 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 	const [selectedDate, setSelectedDate] = useState(value);
 	const [theme] = useTheme();
 
-	const openDatePicker = async () => {
-		try {
-			const date = await DatetimePicker.present({
-				mode: "date",
-				locale: "en-US",
-				value: selectedDate.toISOString(),
-				theme,
-				min:
-					min && (min === "now" ? new Date().toISOString() : min.toISOString()),
-				max:
-					max && (max === "now" ? new Date().toISOString() : max.toISOString())
-			});
+	const toast = useToast();
 
-			if (date.value) {
-				const newDate = new Date(date.value);
-				setSelectedDate(newDate);
-				onChange(newDate);
-			}
+	const { mutate } = useMutation({
+		mutationKey: ["date-picker"],
+		mutationFn: async () => DatetimePicker.present({
+			mode: "date",
+			locale: "en-US",
+			value: selectedDate.toISOString(),
+			theme,
+			min:
+					min && (min === "now" ? new Date().toISOString() : min.toISOString()),
+			max:
+					max && (max === "now" ? new Date().toISOString() : max.toISOString())
+		}),
+		onSuccess: ({ value }) => {
+			const newDate = new Date(value);
+
+			setSelectedDate(newDate);
+			onChange(newDate);
+		},
+		onError: (error) => {
+			if ("code" in error && typeof error.code === "string" && [ErrorCode.canceled, ErrorCode.dismissed].includes(error.code))
+				return;
+
+			toast.addError(error);
 		}
-		catch (reason) {
-			console.error("Failed to open date picker", reason);
-		}
-	};
+	});
 
 	return (
 		<InputText
@@ -198,8 +204,7 @@ const InputDateSelectNative: React.FC<InputDateSelectNativeProps> = ({
 			className="w-full"
 			type="date"
 			value={selectedDate.toLocaleDateString(undefined, { weekday: undefined })}
-			onClick={openDatePicker}
-			onFocus={openDatePicker}
+			onClick={() => mutate()}
 		/>
 	);
 };
