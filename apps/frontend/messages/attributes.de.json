@@ -1839,5 +1839,61 @@
 		"DBQsu388Xfn2KcE5oW2ae2": {
 			"name": "osu!"
 		}
+	},
+	"platform": {
+		"FEX8jjr4P9aeBurRUTLhU7": {
+			"name": "Pico"
+		},
+		"MLWTjDZEuacyr2qwbXEw4K": {
+			"name": "Ganzkörper-Tracking"
+		},
+		"n6sSShVCXahjazwqEraKCG": {
+			"name": "PlayStation VR"
+		},
+		"6BdtcWSEHNwX6ba9nzd2Yc": {
+			"name": "Computer"
+		},
+		"RNaigbGdB7H4ZMw5c8ysbi": {
+			"name": "Meta Quest"
+		},
+		"3Kagenz7boB64Ke6vEAKv6": {
+			"name": "PCVR"
+		},
+		"x5T9enPhP8WpYwnoottGDL": {
+			"name": "Locomotion Laufband"
+		},
+		"qhAm6Z9kGRP5opGfnrVYda": {
+			"name": "Oculus Rift"
+		},
+		"fyBa2tUpgEgqBPda4BpXAE": {
+			"name": "Mobile VR"
+		},
+		"aNGgneQH5YX4HyWpNEUpmQ": {
+			"name": "Sonstige VR"
+		},
+		"pzkBdEYqgAZiSEBZAcJMPZ": {
+			"name": "Haptikanzug"
+		},
+		"UpyGwuCHANjYmM2P269dFm": {
+			"name": "Link zur Suche"
+		},
+		"d52VH6CyRaVPQvAwoStEoY": {
+			"name": "SteamVR"
+		},
+		"N458aYKyg6hweVbyDEMDAR": {
+			"name": "VIVE Standalone"
+		},
+		"Qb3Ar9wqh7mAMwdevJCfYS": {
+			"name": "Android XR"
+		},
+		"c255sGSiJpMNnm6NTUcvx6": {
+			"name": "Apple Vision"
+		},
+		"WQVnXwQzfThHr7yczTjm3C": {
+			"name": "Windows Mixed Reality"
+		},
+		"m4S2N4Jn2f3WDbJm7bcbgQ": {
+			"name": "Gesichtsverfolgung"
+		}
 	}
 }

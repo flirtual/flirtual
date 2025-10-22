@@ -1747,5 +1747,61 @@
 		"ase": {
 			"name": "lenguaje de signos americano"
 		}
+	},
+	"platform": {
+		"MLWTjDZEuacyr2qwbXEw4K": {
+			"name": "Seguimiento de todo el cuerpo"
+		},
+		"m4S2N4Jn2f3WDbJm7bcbgQ": {
+			"name": "Seguimiento facial"
+		},
+		"N458aYKyg6hweVbyDEMDAR": {
+			"name": "VIVE Standalone"
+		},
+		"Qb3Ar9wqh7mAMwdevJCfYS": {
+			"name": "Android XR"
+		},
+		"c255sGSiJpMNnm6NTUcvx6": {
+			"name": "Visión Apple"
+		},
+		"WQVnXwQzfThHr7yczTjm3C": {
+			"name": "Windows Realidad Mixta"
+		},
+		"fyBa2tUpgEgqBPda4BpXAE": {
+			"name": "RV móvil"
+		},
+		"RNaigbGdB7H4ZMw5c8ysbi": {
+			"name": "Meta Quest"
+		},
+		"3Kagenz7boB64Ke6vEAKv6": {
+			"name": "PCVR"
+		},
+		"UpyGwuCHANjYmM2P269dFm": {
+			"name": "Enlace Quest"
+		},
+		"qhAm6Z9kGRP5opGfnrVYda": {
+			"name": "Oculus Rift"
+		},
+		"d52VH6CyRaVPQvAwoStEoY": {
+			"name": "SteamVR"
+		},
+		"FEX8jjr4P9aeBurRUTLhU7": {
+			"name": "Pico"
+		},
+		"n6sSShVCXahjazwqEraKCG": {
+			"name": "PlayStation VR"
+		},
+		"aNGgneQH5YX4HyWpNEUpmQ": {
+			"name": "Otras RV"
+		},
+		"6BdtcWSEHNwX6ba9nzd2Yc": {
+			"name": "Escritorio"
+		},
+		"pzkBdEYqgAZiSEBZAcJMPZ": {
+			"name": "Traje háptico"
+		},
+		"x5T9enPhP8WpYwnoottGDL": {
+			"name": "Cinta de correr locomotion"
+		}
 	}
 }
