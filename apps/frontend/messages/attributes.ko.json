@@ -2822,6 +2822,12 @@
 		"d52VH6CyRaVPQvAwoStEoY": {
 			"name": "SteamVR"
 		},
+		"N458aYKyg6hweVbyDEMDAR": {
+			"name": "VIVE Standalone"
+		},
+		"Qb3Ar9wqh7mAMwdevJCfYS": {
+			"name": "Android XR"
+		},
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
 		},
@@ -2832,10 +2838,13 @@
 			"name": "기타 VR"
 		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
-			"name": "시선/얼굴 추적"
+			"name": "얼굴 추적"
 		},
 		"RNaigbGdB7H4ZMw5c8ysbi": {
 			"name": "메타 퀘스트"
+		},
+		"3Kagenz7boB64Ke6vEAKv6": {
+			"name": "PCVR"
 		},
 		"6BdtcWSEHNwX6ba9nzd2Yc": {
 			"name": "데스크톱"

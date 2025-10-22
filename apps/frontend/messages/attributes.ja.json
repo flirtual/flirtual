@@ -2160,6 +2160,9 @@
 		"RNaigbGdB7H4ZMw5c8ysbi": {
 			"name": "Meta Quest"
 		},
+		"3Kagenz7boB64Ke6vEAKv6": {
+			"name": "PCVR"
+		},
 		"UpyGwuCHANjYmM2P269dFm": {
 			"name": "Quest Link"
 		},
@@ -2168,6 +2171,12 @@
 		},
 		"d52VH6CyRaVPQvAwoStEoY": {
 			"name": "SteamVR"
+		},
+		"N458aYKyg6hweVbyDEMDAR": {
+			"name": "VIVE Standalone"
+		},
+		"Qb3Ar9wqh7mAMwdevJCfYS": {
+			"name": "Android XR"
 		},
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
@@ -2194,7 +2203,7 @@
 			"name": "フルボディトラッキング"
 		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
-			"name": "アイトラッキング/フェイストラッキング"
+			"name": "フェイストラッキング"
 		},
 		"pzkBdEYqgAZiSEBZAcJMPZ": {
 			"name": "ハプティックスーツ"

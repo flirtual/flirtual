@@ -2772,6 +2772,9 @@
 		"RNaigbGdB7H4ZMw5c8ysbi": {
 			"name": "Meta Quest"
 		},
+		"3Kagenz7boB64Ke6vEAKv6": {
+			"name": "PCVR"
+		},
 		"x5T9enPhP8WpYwnoottGDL": {
 			"name": "Locomotion Laufband"
 		},
@@ -2793,6 +2796,12 @@
 		"d52VH6CyRaVPQvAwoStEoY": {
 			"name": "SteamVR"
 		},
+		"N458aYKyg6hweVbyDEMDAR": {
+			"name": "VIVE Standalone"
+		},
+		"Qb3Ar9wqh7mAMwdevJCfYS": {
+			"name": "Android XR"
+		},
 		"c255sGSiJpMNnm6NTUcvx6": {
 			"name": "Apple Vision"
 		},
@@ -2800,7 +2809,7 @@
 			"name": "Windows Mixed Reality"
 		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
-			"name": "Augen- und Gesichtsverfolgung"
+			"name": "Gesichtsverfolgung"
 		}
 	},
 	"prompt": {

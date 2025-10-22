@@ -2689,10 +2689,16 @@
 			"name": "Seguimiento de todo el cuerpo"
 		},
 		"m4S2N4Jn2f3WDbJm7bcbgQ": {
-			"name": "Seguimiento ocular/facial"
+			"name": "Seguimiento facial"
+		},
+		"N458aYKyg6hweVbyDEMDAR": {
+			"name": "VIVE Standalone"
+		},
+		"Qb3Ar9wqh7mAMwdevJCfYS": {
+			"name": "Android XR"
 		},
 		"c255sGSiJpMNnm6NTUcvx6": {
-			"name": "Visión de Apple"
+			"name": "Visión Apple"
 		},
 		"WQVnXwQzfThHr7yczTjm3C": {
 			"name": "Windows Realidad Mixta"
@@ -2702,6 +2708,9 @@
 		},
 		"RNaigbGdB7H4ZMw5c8ysbi": {
 			"name": "Meta Quest"
+		},
+		"3Kagenz7boB64Ke6vEAKv6": {
+			"name": "PCVR"
 		},
 		"UpyGwuCHANjYmM2P269dFm": {
 			"name": "Enlace Quest"
@@ -2728,7 +2737,7 @@
 			"name": "Traje háptico"
 		},
 		"x5T9enPhP8WpYwnoottGDL": {
-			"name": "Cinta de correr Locomotion"
+			"name": "Cinta de correr locomotion"
 		}
 	},
 	"ban-reason": {
