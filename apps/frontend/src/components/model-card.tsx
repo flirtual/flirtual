@@ -78,8 +78,8 @@ export const ModelCard: React.FC<ModelCardProps> = ({
 			</div>
 			{miniFooter && (
 				<footer className={twMerge(
-					// todo: "mb-8 mt-auto flex grid-cols-3 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mb-0 desktop:mt-8 desktop:grid",
-					"mb-8 mt-auto flex grid-cols-2 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mb-0 desktop:mt-8 desktop:grid",
+					// todo language select: "mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] mt-auto flex grid-cols-3 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mb-0 desktop:mt-8 desktop:grid",
+					"mb-[max(calc(var(--safe-area-inset-bottom,0rem)+1.5rem),2rem)] mt-auto flex grid-cols-2 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-8 desktop:mb-0 desktop:mt-8 desktop:grid",
 				)}
 				>
 					<InlineLanguageSelect />
