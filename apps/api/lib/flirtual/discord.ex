@@ -484,7 +484,7 @@ defmodule Flirtual.Discord do
                   value:
                     report.images
                     |> Enum.map(fn image ->
-                      "[📎 View file](#{Image.url(image)})"
+                      "[📎 View file](#{Image.url(:uploads, image)})"
                     end)
                     |> Enum.join("\n")
                 },
