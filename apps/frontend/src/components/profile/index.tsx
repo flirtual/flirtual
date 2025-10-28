@@ -6,6 +6,7 @@ import { withSuspense } from "with-suspense";
 import { gradientTextColor } from "~/colors";
 import { Html } from "~/components/html";
 import { yearsAgo } from "~/date";
+import { usePreferences } from "~/hooks/use-preferences";
 import { useSession } from "~/hooks/use-session";
 import { useRelationship, useUser } from "~/hooks/use-user";
 import { attributeFetcher, attributeKey, preload, relationshipFetcher, relationshipKey, userFetcher, userKey } from "~/query";
@@ -74,6 +75,11 @@ export const Profile = withSuspense(({
 	const relationship = useRelationship(userId);
 
 	const { t } = useTranslation();
+
+	const [moderatorInfoVisible] = usePreferences(
+		"profile-moderator-info-visible",
+		false
+	);
 
 	if (!user) return null;
 
@@ -165,8 +171,7 @@ export const Profile = withSuspense(({
 				<div className="flex h-full grow flex-col gap-6 break-words p-8">
 					{myProfile && <PersonalActions user={user} />}
 					<RelationActions direct={direct} userId={user.id} />
-					{(me.tags?.includes("admin")
-						|| me.tags?.includes("moderator")
+					{(((me.tags?.includes("admin") || me.tags?.includes("moderator")) && moderatorInfoVisible)
 						|| relationship?.matched
 						|| myProfile)
 					&& (discordConnection
