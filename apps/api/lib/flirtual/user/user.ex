@@ -757,6 +757,7 @@ defmodule Flirtual.User do
                user: user,
                moderator: moderator,
                message: message,
+               shadowbanned: shadowban,
                at: now
              ) do
         user

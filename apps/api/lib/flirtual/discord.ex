@@ -346,13 +346,14 @@ defmodule Flirtual.Discord do
         user: %User{} = user,
         moderator: %User{} = moderator,
         message: message,
+        shadowbanned: shadowbanned,
         at: warned_at
       ) do
     webhook(:moderation_actions, %{
       embeds: [
         %{
           author: webhook_author(user),
-          title: "User warned",
+          title: "User warned" <> if(shadowbanned, do: " + shadowbanned", else: ""),
           description: message,
           color: @warn_color,
           footer: webhook_author_footer(moderator),
