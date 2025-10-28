@@ -35,7 +35,7 @@
 		2714E3582A426D6600458704 /* Flirtual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flirtual.entitlements; sourceTree = "<group>"; };
 		2714E3592A426DBB00458704 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		27D784932E8E23AC006DD767 /* Flirtual Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flirtual Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		27D784942E8E23AC006DD767 /* Beta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Beta-Info.plist"; path = "/Users/kyle/Developer/flirtual/flirtual/apps/frontend/ios/App/Beta-Info.plist"; sourceTree = "<absolute>"; };
+		27D784942E8E23AC006DD767 /* Beta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Beta-Info.plist"; path = "Beta-Info.plist"; sourceTree = "<group>"; };
 		27D784992E8E50B1006DD767 /* Beta-AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "Beta-AppIcon.icon"; sourceTree = "<group>"; };
 		27F9569A2E8B4D33009ED19C /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
